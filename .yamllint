@@ -1,0 +1,6 @@
+# yamllint ~ default configuration file
+# https://yamllint.readthedocs.io/en/stable/configuration.html
+#
+# yaml-language-server: $schema=https://www.schemastore.org/yamllint.json
+
+extends: "node_modules/yamllint-config-nick2bad4u/.yamllint"

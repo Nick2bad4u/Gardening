@@ -1,0 +1,13 @@
+{
+    "markdown.validate.ignoredLinks": [
+        "#security-snyk-bot",
+        "#infra-snyk-bot",
+        "#infra-Nick2bad4u",
+        "#maintenance-snyk-bot",
+        "#security-dependabot[bot]"
+    ],
+    "sonarlint.connectedMode.project": {
+        "connectionId": "nick2bad4u",
+        "projectKey": "Nick2bad4u_nick2bad4u-repo-template"
+    }
+}

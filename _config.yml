@@ -1,0 +1,15 @@
+description: "Reusable starter repository for Nick2bad4u TypeScript/npm projects."
+plugins:
+    - "jekyll-sitemap"
+    - "jekyll-seo-tag"
+    - "jekyll-paginate"
+    - "jekyll-feed"
+    - "jekyll-archives"
+    - "jekyll-language-plugin"
+    - "jekyll-algolia"
+    - "jekyll-mentions"
+    - "jekyll-admin"
+    - "jekyll-loading-lazy"
+remote_theme: "pages-themes/hacker@v0.2.0"
+title: "Nick2bad4u Repo Template"
+url: "https://nick2bad4u.github.io/nick2bad4u-repo-template" # the base hostname & protocol for your site
