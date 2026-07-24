@@ -28,7 +28,7 @@ starting schedule. The concrete timer and acclimation steps are in the
 | Advertised coverage | 2 × 4 ft |
 | Manufacturer efficacy | 2.75 µmol/J |
 | Manufacturer PPFD figure | 691 µmol/m²/s at 12 in |
-| Dimming | 25%, 50%, 75%, 100%, or off are documented manual/GrowHub setpoints; the app is advertised as 25–100%, but its increment size is not published |
+| Dimming | VIVOSUN publishes 25%, 50%, 75%, 100%, and off as Manual Mode/Grow Hub presets and advertises a 25–100% app range; the installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and accepts 1% increments throughout that range |
 | Air movement | Integrated circulation fan, plus the option to adjust the setup based on plant response |
 
 The PPFD figure is a manufacturer measurement, not the amount every plant will

@@ -37,16 +37,20 @@ exposure is working.
 
 | Period | Starting setting |
 | --- | --- |
-| Days 1–7 | 25% power, 20 in above the tallest tip, 8:00 a.m.–8:00 p.m. |
-| Days 8–14 | Lower to 18 in and hold 25% |
-| Days 15–21 | Raise to 24 in and switch to the documented 50% setpoint |
-| Days 22–35 | Hold 50% while lowering to 22 in, then 20 in, one week at each height |
-| Days 36 onward | Lower to and maintain 18 in at 50% |
-| Optional fine control | Use 40/45/50/55% only if the installed app visibly accepts and retains 5% steps |
+| Days 1–7 | 40% power, 20 in above the tallest tip, 8:00 a.m.–8:00 p.m. |
+| Days 8–14 | Lower to 18 in and hold 40% |
+| Days 15–21 | Hold 18 in and increase to 45% |
+| Days 22–35 | Hold 18 in at 50% |
+| Days 36 onward | Use 55% only if healthy; otherwise remain at 50% and 18 in |
 
 Do not jump directly from the current exposure to 100% power at 12 inches. The
 AW200SE is powerful enough that acclimation still matters. Keep a normal dark
 period; 12 hours on and 12 hours off is a practical baseline.
+
+The installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and
+supports every whole-percent setting from 25% through 100%. If E25/app control
+is unavailable, the full operating schedule includes a fallback that uses the
+coarser manual presets plus height changes.
 
 Plants already acclimated to strong outdoor light can begin closer to the middle
 of that range, but watch them after the move because a close lamp exposes the

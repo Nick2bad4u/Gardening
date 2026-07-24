@@ -21,7 +21,7 @@ For the settings to enter into the E25, use the separate
 | Approximate photon output | About 550 µmol/s if 200 W and 2.75 µmol/J describe the same operating point; this is a calculation, not a separately published test result |
 | Spectrum | Advertised 380–780 nm output, including white LEDs, 660 nm deep red, and 730 nm far red |
 | Manual dim levels | Off, 25%, 50%, 75%, and 100% |
-| App/controller range | Advertised as 25–100% plus schedules and grow recipes; VIVOSUN does not publish the app's increment size |
+| App/controller range | VIVOSUN advertises 25–100% but does not publish the increment size; the installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and accepts every whole-percent setting in that range |
 | Integrated fan | Up to 84 CFM; advertised 33 dB |
 | Durability claims | 50,000-hour life and IP65 fixture rating |
 | Controller network | 2.4 GHz Wi-Fi; one E25 controls its attached device, with RJ45 light chaining supported |
@@ -215,26 +215,25 @@ six-week table and outdoor-day rules.
 
 1. Set the wings to **standard or wide**.
 2. Measure from the **tallest living tip**, not the shelf. Begin at **20
-   inches** at 25% for seven days, then use **18 inches** at 25% for a second
+   inches** at 40% for seven days, then use **18 inches** at 40% for a second
    week.
 3. Run a fixed **12 hours on / 12 hours off**. A schedule such as 8 a.m.–8 p.m.
    is easy to inspect and leaves a real dark period.
-4. Begin at the documented **25%** setpoint. The older planter's month outdoors
-   provides some
-   acclimation, but brief sun in bright shade is not the same as a stationary
-   close lamp.
+4. The installed AW200SE/E25/VIVOSUN app combination has verified 1% adjustment
+   from 25% to 100%, so the schedule can use small changes. The older planter's
+   month outdoors provides some acclimation, but brief sun in bright shade is
+   not the same as a stationary close lamp.
 5. Put the variegated moon cactus, Dragon's Egg, and the pale side of the
    variegated blue torch toward an edge. Put rainbow hedgehog, *Astrophytum*,
    golden torch, and Old Man of the Andes nearer the stronger zone.
 6. Raise short high-light pots on stable risers instead of lowering the lamp
    until a tall plant is too close.
-7. On Day 15, raise the fixture to **24 inches** while selecting the documented
-   **50%** setpoint. Lower it to 22, 20, and finally 18 inches in one-week
-   steps, advancing only while the plants remain healthy.
-8. Use **50% at 18 inches** as the likely steady indoor setting, arranged by
-   zones. If the installed app proves that it retains 5% steps, 55% and at most
-   60% remain optional evidence-based increases; 75–100% is not the default
-   goal.
+7. On Day 15, hold the fixture at **18 inches** and increase to **45%**. Use
+   **50%** from Day 22 and hold it for two weeks before considering another
+   increase.
+8. Use **50–55% at 18 inches** as the likely steady indoor range, arranged by
+   zones. Use 55% only while the plants remain healthy; 60% is an optional
+   evidence-based ceiling, and 75–100% is not the default goal.
 
 If plants spend meaningful hours outside, outdoor and indoor DLI add together.
 Do not automatically give a full 12-hour lamp day after a sunny outdoor day.

@@ -20,44 +20,43 @@ plant tip**, not to the table, pot rim, or soil.
 | Photoperiod | 12 hours on, 12 hours dark |
 | Wing position | Standard initially; use wide if the plant footprint needs more edge coverage |
 | Starting height | 20 in above the tallest living tip |
-| Starting intensity | 25% |
+| Starting intensity | 40% |
 | Optional sunrise/sunset | Enable the app's fade if desired; instant on/off is also fine |
 
 The exact clock time can be shifted, but move both ends together and keep the
 12-hour day.
 
-### Can this light use 5% steps?
+### Dimming controls verified on this setup
 
-VIVOSUN documents **25%, 50%, 75%, 100%, and off** for the fixture's manual
-mode/GrowHub controls. It separately describes the VIVOSUN app as supporting
-**25–100%**, but it does not state the app's increment size. That range is not
-enough evidence to promise that every E25/app version accepts 40%, 45%, or 55%.
+VIVOSUN lists **25%, 50%, 75%, 100%, and off** for “Manual Mode/Grow Hub.” It
+separately lists **25–100%** for the VIVOSUN app, but does not state the app's
+increment size.
 
-The primary schedule below therefore uses only the documented 25% and 50%
-setpoints. If the installed app visibly accepts and retains 5% steps, the
-optional fine-control schedule is also available below.
+On 2026-07-24, the installed AW200SE/E25/VIVOSUN app combination was tested and
+confirmed to accept every whole-percent setting from 25% through 100%. The 5%
+changes in this schedule are therefore available on this setup. This is a direct
+observation of the current hardware, firmware, and app combination, not a
+promise about every E25 or app version.
 
 ## Six-week acclimation
 
-Most weeks change only one variable. The Day 15 transition deliberately pairs
-the jump from 25% to 50% with raising the fixture from 18 to 24 in; VIVOSUN
-lists 24 in/50% as its gentlest VSA200SE application setting. If any step causes
-fresh bleaching, hard tan patches, or unusual surface heat, use the recovery
-rule instead of advancing.
+The verified 1% control makes it possible to use a smooth ramp in which most
+weeks change only one variable. If any step causes fresh bleaching, hard tan
+patches, or unusual surface heat, use the recovery rule instead of advancing.
 
 | Period | Height above tallest tip | App intensity | Action |
 | --- | ---: | ---: | --- |
-| Days 1–7 | 20 in | 25% | Initial stationary-light acclimation. There is no official 20-inch PPFD grid. |
-| Days 8–14 | 18 in | 25% | Lower the fixture 2 in; make no power change. |
-| Days 15–21 | 24 in | 50% | Raise the fixture while moving to the next documented power setpoint. |
-| Days 22–28 | 22 in | 50% | Lower the fixture 2 in; make no power change. |
-| Days 29–35 | 20 in | 50% | Lower another 2 in if all lit surfaces remain healthy. |
-| Days 36–42 | 18 in | 50% | Reach the intended steady height. |
-| Day 43 onward | Keep 18 in | 50% | Use this as the documented-control steady setting. |
+| Days 1–7 | 20 in | 40% | Initial stationary-light acclimation. There is no official 20-inch PPFD grid. |
+| Days 8–14 | 18 in | 40% | Lower the fixture 2 in; make no power change. |
+| Days 15–21 | 18 in | 45% | Increase by 5 percentage points; make no height change. |
+| Days 22–28 | 18 in | 50% | Increase by another 5 percentage points. |
+| Days 29–35 | 18 in | 50% | Hold steady for a second week and judge new growth. |
+| Days 36–42 | 18 in | 55% only if healthy | Use 55% if all lit surfaces remain healthy; otherwise remain at 50%. |
+| Day 43 onward | Keep 18 in | 50–55% | Hold the lowest setting that produces compact, normally colored new growth. |
 
 Do not advance merely because the next date arrived. Remaining at a taller
-50% position is a successful outcome if new growth is compact and normally
-colored.
+distance or at 50% is a successful outcome if new growth is compact and
+normally colored.
 
 The outdoor-acclimated plants should not need the gentlest possible start.
 However, if a plant has spent more than about two weeks in weak indoor light
@@ -65,18 +64,19 @@ before Day 1, place it at an edge or on a lower stable surface so its tip is
 effectively 22–24 in from the light for the first week. A local placement
 change is easier than changing the whole collection for one plant.
 
-### Optional fine-control path
+### Manual-control fallback
 
-Use this only after confirming that the current VIVOSUN app accepts and retains
-the entered percentages:
+If E25/app control is unavailable and only the published 25% and 50% presets can
+be selected, use distance to soften the jump:
 
-| Period | Height | App intensity |
+| Period | Height | Manual intensity |
 | --- | ---: | ---: |
-| Days 1–7 | 20 in | 40% |
-| Days 8–14 | 18 in | 40% |
-| Days 15–21 | 18 in | 45% |
-| Days 22–35 | 18 in | 50% |
-| Days 36 onward | 18 in | 55% only if healthy; otherwise remain at 50% |
+| Days 1–7 | 20 in | 25% |
+| Days 8–14 | 18 in | 25% |
+| Days 15–21 | 24 in | 50% |
+| Days 22–28 | 22 in | 50% |
+| Days 29–35 | 20 in | 50% |
+| Days 36 onward | 18 in | 50% |
 
 ## What the schedule means in PPFD and DLI
 
@@ -100,9 +100,10 @@ separate single specification of 691 µmol/m²/s at 12 inches. The two official
 datasets do not reconcile, and reflective tent walls raise edge readings.
 Expect an open table to have lower and less uniform edges.
 
-At the planned 50% steady setting, the tent-map estimate covers much of the
-collection's working 10–22 mol/m²/day range. An app-confirmed 55% setting is an
-optional increase, not a requirement. Horizontal placement supplies the rest:
+At the planned 50–55% steady range, the tent-map estimate covers much of the
+collection's working 10–22 mol/m²/day range. The 55% setting is an optional
+increase for healthy plants, not a requirement. Horizontal placement supplies
+the rest:
 
 - Put the rainbow hedgehog, *Astrophytum*, Old Man of the Andes, Indigo Wave,
   golden torch, and the greener side of the blue torch nearer the stronger
@@ -137,9 +138,9 @@ If fresh bleaching, yellow-tan hard patches, papery tissue, or unusual surface
 heat appears:
 
 1. Raise the light to 22–24 in.
-2. If fine control is confirmed, reduce intensity by 10 percentage points.
-   Otherwise, keep 50% at the greater distance; use 25% if new damage still
-   appears.
+2. Reduce intensity by 10 percentage points, such as 55% to 45% or 50% to 40%.
+   If E25/app control is unavailable, use 50% at the greater distance; use the
+   25% manual preset if new damage still appears.
 3. Hold that setting for 10–14 days.
 4. Judge only new damage or new growth; old scars will not reverse.
 5. Resume with one change at a time after the plant is stable.
@@ -147,21 +148,20 @@ heat appears:
 ### Rule for too little light
 
 If new growth remains narrow, pale, weak-spined, widely spaced, or strongly
-leaning after at least two weeks at 50% and 18 in:
+leaning after at least two weeks at 50–55% and 18 in:
 
 1. Move that plant inward or raise its pot.
 2. Confirm that another plant is not shading it.
-3. If the app supports fine control and several center plants still show the
-   same response, try 55%, then at most 60%, at 18 in.
+3. If several center plants still show the same response, increase by 5
+   percentage points, up to at most 60%, at 18 in.
 4. Hold each supported increase for two weeks before considering another
-   change. If only 25% steps are available, measure first rather than jumping
-   directly from 50% to 75%.
+   change. If E25/app control is unavailable, measure first rather than jumping
+   directly from the 50% manual preset to 75%.
 
-Sixty percent, when the app actually supports it, is the provisional ceiling
-for the mixed collection—not a hard limit on the hardware. At 18 in its
-tent-map center estimate is already about 514 µmol/m²/s and 22.2 mol/m²/day
-over 12 hours. Do not use 75–100% as the default simply because the fixture
-offers it.
+Sixty percent is the provisional ceiling for the mixed collection—not a hard
+limit on the hardware. At 18 in its tent-map center estimate is already about
+514 µmol/m²/s and 22.2 mol/m²/day over 12 hours. Do not use 75–100% as the
+default simply because the fixture offers it.
 
 ## Sunrise, sunset, and natural day length
 
