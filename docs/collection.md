@@ -2,8 +2,14 @@
 
 Last updated: 2026-07-24
 
-This is the current working inventory. A label is useful evidence, but not a
-guarantee; photo-only identifications are deliberately marked as probable.
+This is the current working inventory plus historical records for plants
+removed from the collection. A label is useful evidence, but not a guarantee;
+photo-only identifications are deliberately marked as probable.
+
+Each record now has a [deep plant profile](./plants/) and a six-image
+[licensed reference gallery](../assets/plants/). Reference photos document the
+working taxon; they do not increase the confidence of a photo-only collection
+ID.
 
 ## Confidence guide
 
@@ -58,12 +64,15 @@ the rosette.
 | Rehab-01 | Variegated [*Pilosocereus pachycladus*](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A196722-2) | Blue torch cactus | Probable | Alive. The smooth yellow vertical areas look more like stable variegation than damage. *Pilosocereus azureus* is an older trade name. |
 | Rehab-02 | [*Cleistocactus colademononis*](https://powo.science.kew.org/taxon/77077298-1) | Monkey tail cactus | High | Alive and previously produced a red-orange flower. It has been trimmed several times to remove stretched growth and is now growing better after about a month outside in bright shade with a little direct sun. |
 | Rehab-03 | [*Echinopsis spachiana*](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A88507-2) | Golden torch cactus | Probable | Alive. The better photo shows continuous ribs, which rules against the earlier *Mammillaria* guess. |
-| Rehab-04 | Probably [*Mammillaria bombycina*](https://www.rhs.org.uk/plants/106175/mammillaria-bombycina/details) | Silken pincushion cactus | Probable | Presumed dead. It was green in the older photo but is now almost entirely brown, shrunken, and has no visible active crown. A final check and removal are planned. |
+| Rehab-04 | Probably [*Mammillaria bombycina*](https://www.rhs.org.uk/plants/106175/mammillaria-bombycina/details) | Silken pincushion cactus | Probable | Removed 2026-07-24. Final inspection found only a tiny patch of green flesh near the top—too little viable tissue to salvage. The probable ID and older photos remain as a historical record. |
 
 The thin green whip visible in an older photo belongs to the monkey tail. It is
 etiolated growth from the low-light period, not a fifth cactus. Some of that
 stretched growth has since been trimmed. The improved new growth after a month
 outside is a good sign that its current light exposure is working.
+
+Rehab-04 is no longer part of the planter or the active lighting and watering
+plan. Its inventory ID is intentionally not being reused.
 
 ## Identification follow-ups
 
@@ -71,5 +80,4 @@ The most useful future evidence would be:
 
 - flowers from Succulent-01 and Succulent-03;
 - a clear close-up of the ribs, areoles, and base of Rehab-01;
-- any surviving green tissue or new crown growth on Rehab-04; and
 - original nursery tags or receipts for the probable IDs.

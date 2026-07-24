@@ -13,21 +13,33 @@ starting points, but plant response matters more than chasing an exact number.
 
 ## Grow light
 
+See the [AW200SE/E25 deep guide](./equipment/vivosun-aw200se.md) for the raw
+manufacturer PPFD grids, the unresolved difference between its published PPFD
+figures, DLI/lux conversions, plant-by-plant targets, placement, and the simple
+starting schedule. The concrete timer and acclimation steps are in the
+[AW200SE operating schedule](./equipment/aw200se-operating-schedule.md).
+
 | Item | Current equipment |
 | --- | --- |
 | Light | [VIVOSUN AeroLight Wing AW200SE](https://vivosun.com/en-US/vivosun-smart-grow-system-aerolight-a200se-compatible-with-growhub-e25-controller-p142504424325359396-v142527788947495192) |
 | Controller | VIVOSUN GrowHub E25 Controller |
+| Mount | Adjustable ceiling mount; light installed, with the plant table still pending |
 | Rated power | 200 W |
 | Advertised coverage | 2 × 4 ft |
 | Manufacturer efficacy | 2.75 µmol/J |
 | Manufacturer PPFD figure | 691 µmol/m²/s at 12 in |
-| Dimming | 25%, 50%, 75%, 100%, or off manually; finer adjustment is available through the controller/app |
+| Dimming | 25%, 50%, 75%, 100%, or off are documented manual/GrowHub setpoints; the app is advertised as 25–100%, but its increment size is not published |
 | Air movement | Integrated circulation fan, plus the option to adjust the setup based on plant response |
 
 The PPFD figure is a manufacturer measurement, not the amount every plant will
 receive. Distance, dimming, position under the wing, plant height, and reflected
 light all change the actual canopy level. Light distance should be measured from
 the tallest plant tip, not from the shelf or pot rim.
+
+The manufacturer also publishes a 5 × 5 reflective-tent map whose 12-inch
+center reads 1,214 µmol/m²/s and whose calculated mean is about 870. That does
+not agree with the 691 figure in the product table. Both are retained and
+explained in the deep guide rather than forcing them into a false single answer.
 
 ## Individual pots and medium
 
@@ -53,8 +65,9 @@ observation rather than a calendar.
 
 - The succulent planter contains an echeveria, elephant bush, silver teaspoons,
   and copper spoons.
-- The older cactus planter contains a blue torch, monkey tail, golden torch, and
-  one presumed-dead pincushion cactus.
+- The older cactus planter now contains a blue torch, monkey tail, and golden
+  torch. It previously also contained Rehab-04, a probable silken pincushion
+  cactus removed on 2026-07-24 after only a tiny patch of green flesh remained.
 - Decorative moss around the older cacti makes the soil and plant bases harder
   to inspect. Removing it is useful during rehabilitation.
 - Drainage in both shared planters still needs to be confirmed.

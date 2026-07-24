@@ -24,6 +24,12 @@ conditions can change that speed.
 
 ## Starting the AW200SE
 
+The complete [AW200SE/E25 guide](./equipment/vivosun-aw200se.md) has the
+manufacturer's PPFD maps, DLI and lux math, and working ranges for every current
+plant. The [operating schedule](./equipment/aw200se-operating-schedule.md)
+contains the exact E25 settings and outdoor-day overrides; the table below is
+the short version.
+
 The older mixed planter spent years in weak light, but it has now had about a
 month outside in bright shade with a little direct sun. That counts as partial
 acclimation, and the monkey tail’s improved growth suggests the current outdoor
@@ -31,10 +37,12 @@ exposure is working.
 
 | Period | Starting setting |
 | --- | --- |
-| First week under the light | 40–50% power, 18–24 in above the tallest tip, 12 hours per day |
-| Following weeks | Increase by roughly 10–15 percentage points per week only while new growth remains healthy |
-| Provisional destination | About 50–75% at 18–24 in, then adjust for the actual shelf and plant response |
-| Gentler fallback | For any plant coming directly from weak indoor light, start at 25% and 20–24 in for its first week |
+| Days 1–7 | 25% power, 20 in above the tallest tip, 8:00 a.m.–8:00 p.m. |
+| Days 8–14 | Lower to 18 in and hold 25% |
+| Days 15–21 | Raise to 24 in and switch to the documented 50% setpoint |
+| Days 22–35 | Hold 50% while lowering to 22 in, then 20 in, one week at each height |
+| Days 36 onward | Lower to and maintain 18 in at 50% |
+| Optional fine control | Use 40/45/50/55% only if the installed app visibly accepts and retains 5% steps |
 
 Do not jump directly from the current exposure to 100% power at 12 inches. The
 AW200SE is powerful enough that acclimation still matters. Keep a normal dark
@@ -113,24 +121,30 @@ The blue torch, monkey tail, and golden torch all have living green growing
 points in the recent photos. Their old lean, scars, and uneven growth can remain
 while healthy new growth improves.
 
-## Presumed-dead cactus check
+## Removed cactus: historical record
 
-Before removing Rehab-04:
+Rehab-04 was removed on 2026-07-24. The final inspection found only a tiny
+patch of green flesh near the top, which was not enough viable tissue to
+salvage. It is no longer part of the watering, lighting, or recovery plan.
+
+The decision checklist is retained for the collection history:
 
 1. Remove enough decorative moss to see and reach the cactus base.
 2. Test it gently. A living, dehydrated cactus can be wrinkled but should retain
    some firmness; a dead dry plant may feel hollow or brittle, while rot is
    usually soft or mushy.
-3. Look closely for any green crown tissue or a firm living offset.
+3. Look closely for a firm green crown or offset with enough healthy tissue to
+   survive separation. A tiny isolated green patch is not necessarily viable.
 4. If still uncertain, make one tiny, shallow scratch in an inconspicuous area
    with a clean blade. Green or moist pale tissue means stop and reassess; dry
    brown tissue throughout supports removing it.
 5. If it is dry-dead or rotten, remove the plant and loose dead root material.
    Leave the surrounding planter dry while checking the neighboring bases.
 
-A full emergency repot is not automatically necessary. Do it if the shared mix
-stays wet for a long time, smells sour, lacks a drainage route, or another
-cactus develops a soft or dark base. Iowa State Extension has a useful
+A full emergency repot was not automatically required by removing one dead
+plant. It becomes useful if the shared mix stays wet for a long time, smells
+sour, lacks a drainage route, or another cactus develops a soft or dark base.
+Iowa State Extension has a useful
 [overview of succulent rot and light problems](https://yardandgarden.extension.iastate.edu/how-to/common-problems-and-issues-succulents).
 
 ## Useful reference points

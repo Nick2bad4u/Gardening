@@ -1,0 +1,979 @@
+[CmdletBinding()]
+param(
+    [ValidateRange(2, 10)]
+    [int] $ImagesPerPlant = 6,
+
+    [string[]] $PlantSlug
+)
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
+
+$plantCatalog = @(
+    [pscustomobject]@{
+        Id = 'Starter-01'
+        Slug = 'oreocereus-trollii'
+        ScientificName = 'Oreocereus trollii'
+        CommonName = 'Old Man of the Andes'
+        CommonsCategory = 'Oreocereus trollii'
+        CommonsSearch = 'Oreocereus trollii'
+        INaturalistName = 'Oreocereus trollii'
+        ScopeNote = 'Species-reference photographs.'
+    },
+    [pscustomobject]@{
+        Id = 'Starter-02'
+        Slug = 'stenocactus-phyllacanthus'
+        ScientificName = 'Stenocactus phyllacanthus'
+        CommonName = 'Grass-blade cactus'
+        CommonsCategory = 'Stenocactus phyllacanthus'
+        CommonsSearch = 'Stenocactus phyllacanthus'
+        INaturalistName = 'Stenocactus phyllacanthus'
+        ScopeNote = 'Species-reference photographs.'
+    },
+    [pscustomobject]@{
+        Id = 'Starter-03'
+        Slug = 'echinocereus-rigidissimus-rubispinus'
+        ScientificName = 'Echinocereus rigidissimus subsp. rubispinus'
+        CommonName = 'Rainbow hedgehog cactus'
+        CommonsCategory = 'Echinocereus rigidissimus subsp. rubispinus'
+        CommonsSearch = 'Echinocereus rigidissimus rubispinus'
+        INaturalistName = 'Echinocereus rigidissimus rubispinus'
+        ScopeNote = 'Subspecies-reference photographs.'
+    },
+    [pscustomobject]@{
+        Id = 'Starter-04'
+        Slug = 'nyctocereus-serpentinus'
+        ScientificName = 'Nyctocereus serpentinus'
+        CommonName = 'Serpent cactus'
+        CommonsCategory = 'Nyctocereus serpentinus'
+        CommonsSearch = 'Nyctocereus serpentinus Peniocereus'
+        INaturalistName = 'Nyctocereus serpentinus'
+        ScopeNote = 'Species-reference photographs; some sources use Peniocereus serpentinus.'
+    },
+    [pscustomobject]@{
+        Id = 'Starter-05'
+        Slug = 'mammillaria-plumosa'
+        ScientificName = 'Mammillaria plumosa'
+        CommonName = 'Feather cactus'
+        CommonsCategory = 'Mammillaria plumosa'
+        CommonsSearch = 'Mammillaria plumosa'
+        INaturalistName = 'Mammillaria plumosa'
+        ScopeNote = 'Species-reference photographs.'
+    },
+    [pscustomobject]@{
+        Id = 'Starter-06'
+        Slug = 'echinopsis-subdenudata'
+        ScientificName = 'Echinopsis subdenudata'
+        CommonName = 'Domino cactus'
+        CommonsCategory = 'Echinopsis subdenudata'
+        CommonsSearch = 'Echinopsis subdenudata Domino cactus'
+        INaturalistName = 'Echinopsis ancistrophora'
+        ScopeNote = 'Species-reference photographs; current Kew taxonomy treats this name as a synonym of Echinopsis ancistrophora.'
+    },
+    [pscustomobject]@{
+        Id = 'Starter-07'
+        Slug = 'gymnocalycium-mihanovichii-variegated'
+        ScientificName = 'Gymnocalycium mihanovichii'
+        CommonName = 'Variegated moon cactus'
+        CommonsCategory = 'Gymnocalycium mihanovichii'
+        CommonsSearch = 'Gymnocalycium mihanovichii variegated moon cactus'
+        INaturalistName = 'Gymnocalycium mihanovichii'
+        ScopeNote = 'The archive includes normal, variegated, and grafted examples of the species; not every photograph matches this own-root plant.'
+    },
+    [pscustomobject]@{
+        Id = 'Starter-08'
+        Slug = 'gymnocalycium-saglionis'
+        ScientificName = 'Gymnocalycium saglionis'
+        CommonName = 'Giant chin cactus'
+        CommonsCategory = 'Gymnocalycium saglionis'
+        CommonsSearch = 'Gymnocalycium saglionis'
+        INaturalistName = 'Gymnocalycium saglionis'
+        ScopeNote = 'Species-reference photographs.'
+    },
+    [pscustomobject]@{
+        Id = 'Starter-09'
+        Slug = 'myrtillocactus-geometrizans-indigo-wave'
+        ScientificName = 'Myrtillocactus geometrizans'
+        CommonName = 'Indigo Wave'
+        CommonsCategory = 'Myrtillocactus geometrizans'
+        CommonsSearch = 'Myrtillocactus geometrizans monstrose Indigo Wave'
+        INaturalistName = 'Myrtillocactus geometrizans'
+        ScopeNote = 'Most photographs show the normal species; the collection plant is the monstrose trade selection sold as Indigo Wave.'
+    },
+    [pscustomobject]@{
+        Id = 'Starter-10'
+        Slug = 'cereus-forbesii-ming-thing'
+        ScientificName = 'Cereus forbesii'
+        CommonName = 'Ming Thing'
+        CommonsCategory = 'Cereus forbesii'
+        CommonsSearch = 'Cereus forbesii Ming Thing monstrose'
+        INaturalistName = 'Cereus forbesii'
+        ScopeNote = 'The archive mixes normal species references with any reusable Ming Thing images found; the collection plant is the monstrose cultivar.'
+    },
+    [pscustomobject]@{
+        Id = 'Starter-11'
+        Slug = 'euphorbia-obesa-hybrid'
+        ScientificName = 'Euphorbia obesa'
+        CommonName = 'Dragon''s Egg'
+        CommonsCategory = 'Euphorbia obesa'
+        CommonsSearch = 'Euphorbia obesa'
+        INaturalistName = 'Euphorbia obesa'
+        ScopeNote = 'Species-reference photographs; the collection plant is probably an E. obesa-type hybrid or selection rather than a documented wild form.'
+    },
+    [pscustomobject]@{
+        Id = 'Starter-12'
+        Slug = 'astrophytum-ornatum'
+        ScientificName = 'Astrophytum ornatum'
+        CommonName = 'Monk''s hood cactus'
+        CommonsCategory = 'Astrophytum ornatum'
+        CommonsSearch = 'Astrophytum ornatum'
+        INaturalistName = 'Astrophytum ornatum'
+        ScopeNote = 'Species-reference photographs.'
+    },
+    [pscustomobject]@{
+        Id = 'Succulent-01'
+        Slug = 'echeveria-pulidonis'
+        ScientificName = 'Echeveria pulidonis'
+        CommonName = 'Pulido''s echeveria'
+        CommonsCategory = 'Echeveria pulidonis'
+        CommonsSearch = 'Echeveria pulidonis'
+        INaturalistName = 'Echeveria pulidonis'
+        ScopeNote = 'Species-reference photographs; the collection ID remains provisional because close hybrids are common.'
+    },
+    [pscustomobject]@{
+        Id = 'Succulent-02'
+        Slug = 'portulacaria-afra'
+        ScientificName = 'Portulacaria afra'
+        CommonName = 'Elephant bush'
+        CommonsCategory = 'Portulacaria afra'
+        CommonsSearch = 'Portulacaria afra spekboom'
+        INaturalistName = 'Portulacaria afra'
+        ScopeNote = 'Species-reference photographs; the yellow-green collection plant may be a golden cultivar.'
+    },
+    [pscustomobject]@{
+        Id = 'Succulent-03'
+        Slug = 'kalanchoe-bracteata'
+        ScientificName = 'Kalanchoe bracteata'
+        CommonName = 'Silver teaspoons'
+        CommonsCategory = 'Kalanchoe bracteata'
+        CommonsSearch = 'Kalanchoe bracteata silver teaspoons'
+        INaturalistName = 'Kalanchoe bracteata'
+        ScopeNote = 'Species-reference photographs; the collection ID remains provisional pending flowers.'
+    },
+    [pscustomobject]@{
+        Id = 'Succulent-04'
+        Slug = 'kalanchoe-orgyalis'
+        ScientificName = 'Kalanchoe orgyalis'
+        CommonName = 'Copper spoons'
+        CommonsCategory = 'Kalanchoe orgyalis'
+        CommonsSearch = 'Kalanchoe orgyalis copper spoons'
+        INaturalistName = 'Kalanchoe orgyalis'
+        ScopeNote = 'Species-reference photographs.'
+    },
+    [pscustomobject]@{
+        Id = 'Rehab-01'
+        Slug = 'pilosocereus-pachycladus-variegated'
+        ScientificName = 'Pilosocereus pachycladus'
+        CommonName = 'Blue torch cactus'
+        CommonsCategory = 'Pilosocereus pachycladus'
+        CommonsSearch = 'Pilosocereus pachycladus blue torch'
+        INaturalistName = 'Pilosocereus pachycladus'
+        ScopeNote = 'Most photographs show normal wild plants; the collection plant appears variegated and its ID remains provisional.'
+    },
+    [pscustomobject]@{
+        Id = 'Rehab-02'
+        Slug = 'cleistocactus-colademononis'
+        ScientificName = 'Cleistocactus colademononis'
+        CommonName = 'Monkey tail cactus'
+        CommonsCategory = 'Cleistocactus colademononis'
+        CommonsSearch = 'Cleistocactus colademononis monkey tail flower'
+        INaturalistName = 'Cleistocactus colademononis'
+        ScopeNote = 'Species-reference photographs.'
+    },
+    [pscustomobject]@{
+        Id = 'Rehab-03'
+        Slug = 'echinopsis-spachiana'
+        ScientificName = 'Echinopsis spachiana'
+        CommonName = 'Golden torch cactus'
+        CommonsCategory = 'Echinopsis spachiana'
+        CommonsSearch = 'Echinopsis spachiana Trichocereus golden torch'
+        INaturalistName = 'Echinopsis spachiana'
+        ScopeNote = 'Species-reference photographs; the collection ID remains provisional.'
+    },
+    [pscustomobject]@{
+        Id = 'Rehab-04'
+        Slug = 'mammillaria-bombycina'
+        ScientificName = 'Mammillaria bombycina'
+        CommonName = 'Silken pincushion cactus'
+        CommonsCategory = 'Mammillaria bombycina'
+        CommonsSearch = 'Mammillaria bombycina'
+        INaturalistName = 'Mammillaria bombycina'
+        ScopeNote = 'Species-reference photographs for the archived Rehab-04 record; the plant was removed on 2026-07-24 and its photo-based ID remains provisional.'
+    }
+)
+
+# Manual visual-QA exclusions. These pages were returned by broad Commons
+# category/search results but are either the wrong taxon or visually misleading
+# for the stated gallery.
+$rejectedSourceUrls = @(
+    'https://commons.wikimedia.org/wiki/File:Echinopsis_arachnacantha_subsp._torrecillasensis1PAKAL.jpg',
+    'https://commons.wikimedia.org/wiki/File:Echinopsis_arachnacantha_subsp._torrecillasensis2PAKAL.jpg',
+    'https://commons.wikimedia.org/wiki/File:Cactus_an%C3%A3o.JPG',
+    'https://commons.wikimedia.org/wiki/File:May29@629am.jpg',
+    'https://commons.wikimedia.org/wiki/File:Kalanchoe_orgyalis_Garfield_Park.jpg'
+)
+
+$selectedPlants = $plantCatalog
+if (@($PlantSlug).Count -gt 0) {
+    $unknownSlugs = @($PlantSlug | Where-Object { $_ -notin $plantCatalog.Slug })
+    if ($unknownSlugs.Count -gt 0) {
+        throw "Unknown plant slug(s): $($unknownSlugs -join ', ')"
+    }
+
+    $selectedPlants = @($plantCatalog | Where-Object { $_.Slug -in $PlantSlug })
+}
+
+$repoRoot = Split-Path -Parent $PSScriptRoot
+$assetRoot = Join-Path $repoRoot 'assets\plants'
+$manifestPath = Join-Path $assetRoot 'photo-manifest.json'
+$attributionPath = Join-Path $assetRoot 'ATTRIBUTION.md'
+$indexPath = Join-Path $assetRoot 'README.md'
+
+New-Item -ItemType Directory -Path $assetRoot -Force | Out-Null
+
+function ConvertFrom-HtmlText {
+    param([AllowEmptyString()][string] $Value)
+
+    if ([string]::IsNullOrWhiteSpace($Value)) {
+        return ''
+    }
+
+    $withoutTags = [regex]::Replace($Value, '<[^>]+>', ' ')
+    $decoded = [System.Net.WebUtility]::HtmlDecode($withoutTags)
+    return ([regex]::Replace($decoded, '\s+', ' ')).Trim()
+}
+
+function Get-ExtendedMetadataValue {
+    param(
+        [Parameter(Mandatory)]
+        [object] $Metadata,
+
+        [Parameter(Mandatory)]
+        [string] $Name
+    )
+
+    $property = $Metadata.PSObject.Properties[$Name]
+    if ($null -eq $property -or $null -eq $property.Value) {
+        return ''
+    }
+
+    return ConvertFrom-HtmlText ([string] $property.Value.value)
+}
+
+function Get-LicenseUrl {
+    param(
+        [AllowEmptyString()][string] $LicenseName,
+        [AllowEmptyString()][string] $ProvidedUrl
+    )
+
+    if (-not [string]::IsNullOrWhiteSpace($ProvidedUrl)) {
+        return $ProvidedUrl
+    }
+
+    switch -Regex ($LicenseName) {
+        'CC0|Public domain' {
+            return 'https://creativecommons.org/publicdomain/zero/1.0/'
+        }
+        'CC BY-SA' {
+            return 'https://creativecommons.org/licenses/by-sa/4.0/'
+        }
+        'CC BY' {
+            return 'https://creativecommons.org/licenses/by/4.0/'
+        }
+        default {
+            return ''
+        }
+    }
+}
+
+function Get-PhotoSubject {
+    param([string] $Text)
+
+    switch -Regex ($Text) {
+        'seedling|juvenile|young plant|one.month|one.year|germinat' {
+            return 'young'
+        }
+        'flower|flor|bloom|blossom|inflorescence|cyath' {
+            return 'flower'
+        }
+        'fruit|berry|berries|seed|capsule' {
+            return 'fruit-seed'
+        }
+        'habitat|wild|nature|natural|reserve|park|parque|cerro|valley|desert|karoo|caatinga' {
+            return 'habitat'
+        }
+        'spine|areole|detail|close|macro|leaf|leaves|rib' {
+            return 'detail'
+        }
+        default {
+            return 'habit'
+        }
+    }
+}
+
+function Invoke-JsonRequest {
+    param(
+        [Parameter(Mandatory)]
+        [string] $Uri,
+
+        [Parameter(Mandatory)]
+        [hashtable] $Query
+    )
+
+    $headers = @{
+        'User-Agent' = 'Gardening-research/1.0 (personal collection documentation; Wikimedia and iNaturalist attribution preserved)'
+    }
+
+    for ($attempt = 1; $attempt -le 2; $attempt++) {
+        try {
+            return Invoke-RestMethod -Uri $Uri -Body $Query -Method Get -Headers $headers
+        } catch {
+            if ($attempt -eq 4) {
+                throw
+            }
+
+            Start-Sleep -Seconds ([math]::Pow(2, $attempt - 1))
+        }
+    }
+}
+
+function Get-ResponseItemList {
+    param(
+        [AllowNull()]
+        [object] $Container,
+
+        [Parameter(Mandatory)]
+        [string] $PropertyName
+    )
+
+    if ($null -eq $Container) {
+        return @()
+    }
+
+    $property = $Container.PSObject.Properties[$PropertyName]
+    if ($null -eq $property -or $null -eq $property.Value) {
+        return @()
+    }
+
+    return @($property.Value)
+}
+
+function Get-WikimediaCandidateList {
+    param([Parameter(Mandatory)][object] $Plant)
+
+    $apiUri = 'https://commons.wikimedia.org/w/api.php'
+    $baseQuery = @{
+        action = 'query'
+        format = 'json'
+        formatversion = '2'
+        maxlag = '5'
+        prop = 'imageinfo'
+        iiprop = 'url|mime|extmetadata'
+        # Wikimedia asks bulk consumers to use standard thumbnail widths so the
+        # CDN can serve cached derivatives instead of rendering custom sizes.
+        iiurlwidth = '1280'
+    }
+
+    $categoryQuery = $baseQuery.Clone()
+    $categoryQuery.generator = 'categorymembers'
+    $categoryQuery.gcmtitle = "Category:$($Plant.CommonsCategory)"
+    $categoryQuery.gcmtype = 'file'
+    $categoryQuery.gcmlimit = '75'
+
+    $responses = [System.Collections.Generic.List[object]]::new()
+    $responses.Add((Invoke-JsonRequest -Uri $apiUri -Query $categoryQuery))
+
+    $categoryResponse = $responses[0]
+    $categoryQueryResult = if ($null -eq $categoryResponse.PSObject.Properties['query']) {
+        $null
+    } else {
+        $categoryResponse.query
+    }
+    $categoryPages = @(Get-ResponseItemList -Container $categoryQueryResult -PropertyName 'pages')
+    if ($categoryPages.Count -lt [math]::Min(4, $ImagesPerPlant)) {
+        Start-Sleep -Milliseconds 900
+        $searchQuery = $baseQuery.Clone()
+        $searchQuery.generator = 'search'
+        $searchQuery.gsrsearch = "`"$($Plant.ScientificName)`" filetype:bitmap"
+        $searchQuery.gsrnamespace = '6'
+        $searchQuery.gsrlimit = '40'
+        $responses.Add((Invoke-JsonRequest -Uri $apiUri -Query $searchQuery))
+    }
+
+    Start-Sleep -Milliseconds 900
+    $stageSearchQuery = $baseQuery.Clone()
+    $stageSearchQuery.generator = 'search'
+    $stageSearchQuery.gsrsearch = "`"$($Plant.ScientificName)`" flower filetype:bitmap"
+    $stageSearchQuery.gsrnamespace = '6'
+    $stageSearchQuery.gsrlimit = '40'
+    $responses.Add((Invoke-JsonRequest -Uri $apiUri -Query $stageSearchQuery))
+
+    $candidates = [System.Collections.Generic.List[object]]::new()
+    foreach ($response in $responses) {
+        $queryResult = if ($null -eq $response.PSObject.Properties['query']) {
+            $null
+        } else {
+            $response.query
+        }
+        foreach ($page in @(Get-ResponseItemList -Container $queryResult -PropertyName 'pages')) {
+            $imageInfoItems = @(Get-ResponseItemList -Container $page -PropertyName 'imageinfo')
+            if ($imageInfoItems.Count -eq 0) {
+                continue
+            }
+
+            $imageInfo = $imageInfoItems[0]
+            if ([string] $imageInfo.mime -notmatch '^image/(?:jpeg|png|webp)$') {
+                continue
+            }
+
+            $metadata = $imageInfo.extmetadata
+            $licenseName = Get-ExtendedMetadataValue -Metadata $metadata -Name 'LicenseShortName'
+            if ($licenseName -notmatch '(?i)^(?:CC0|CC BY(?:-SA)?|Public domain)') {
+                continue
+            }
+
+            $description = Get-ExtendedMetadataValue -Metadata $metadata -Name 'ImageDescription'
+            $objectName = Get-ExtendedMetadataValue -Metadata $metadata -Name 'ObjectName'
+            $combinedText = "$($page.title) $objectName $description"
+            $licenseUrl = Get-ExtendedMetadataValue -Metadata $metadata -Name 'LicenseUrl'
+            $downloadUrl = if ([string]::IsNullOrWhiteSpace([string] $imageInfo.thumburl)) {
+                [string] $imageInfo.url
+            } else {
+                [string] $imageInfo.thumburl
+            }
+
+            $candidates.Add([pscustomobject]@{
+                PageId = [string] $page.pageid
+                Title = (ConvertFrom-HtmlText ([string] $page.title)).Replace('File:', '')
+                Description = $description
+                Author = Get-ExtendedMetadataValue -Metadata $metadata -Name 'Artist'
+                License = $licenseName
+                LicenseUrl = Get-LicenseUrl -LicenseName $licenseName -ProvidedUrl $licenseUrl
+                SourceUrl = [string] $imageInfo.descriptionurl
+                DownloadUrl = $downloadUrl
+                Mime = [string] $imageInfo.mime
+                Subject = Get-PhotoSubject -Text $combinedText
+            })
+        }
+    }
+
+    return @($candidates | Sort-Object PageId -Unique)
+}
+
+function Select-DiversePhotoList {
+    param(
+        [Parameter(Mandatory)]
+        [object[]] $Candidates,
+
+        [Parameter(Mandatory)]
+        [int] $Limit
+    )
+
+    $selected = [System.Collections.Generic.List[object]]::new()
+    $subjects = @('young', 'flower', 'fruit-seed', 'habitat', 'habit', 'detail')
+
+    foreach ($subject in $subjects) {
+        if ($selected.Count -ge $Limit) {
+            break
+        }
+
+        $selectedSourceUrls = @($selected | ForEach-Object { $_.SourceUrl })
+        $candidate = $Candidates |
+            Where-Object { $_.Subject -eq $subject -and $_.SourceUrl -notin $selectedSourceUrls } |
+            Select-Object -First 1
+        if ($null -ne $candidate) {
+            $selected.Add($candidate)
+        }
+    }
+
+    foreach ($candidate in $Candidates) {
+        if ($selected.Count -ge $Limit) {
+            break
+        }
+
+        $selectedSourceUrls = @($selected | ForEach-Object { $_.SourceUrl })
+        if ($candidate.SourceUrl -notin $selectedSourceUrls) {
+            $selected.Add($candidate)
+        }
+    }
+
+    return @($selected)
+}
+
+function Get-INaturalistCandidateList {
+    param([Parameter(Mandatory)][object] $Plant)
+
+    $query = @{
+        taxon_name = $Plant.INaturalistName
+        quality_grade = 'research'
+        photos = 'true'
+        captive = 'false'
+        photo_license = 'cc0,cc-by,cc-by-sa'
+        per_page = '30'
+        order_by = 'votes'
+        order = 'desc'
+    }
+
+    $response = Invoke-JsonRequest -Uri 'https://api.inaturalist.org/v1/observations' -Query $query
+    $candidates = [System.Collections.Generic.List[object]]::new()
+
+    foreach ($observation in @(Get-ResponseItemList -Container $response -PropertyName 'results')) {
+        $photos = @(Get-ResponseItemList -Container $observation -PropertyName 'photos')
+        if ($photos.Count -eq 0) {
+            continue
+        }
+
+        $photo = $photos[0]
+        $licenseName = ([string] $photo.license_code).ToUpperInvariant()
+        if ($licenseName -notin @('CC0', 'CC-BY', 'CC-BY-SA')) {
+            continue
+        }
+
+        $downloadUrl = ([string] $photo.url) -replace '/square\.', '/large.'
+        $licenseDisplay = $licenseName -replace '-', ' '
+        $candidates.Add([pscustomobject]@{
+            ObservationId = [string] $observation.id
+            PhotoId = [string] $photo.id
+            Title = "$($Plant.ScientificName) in habitat"
+            Description = "Research-grade iNaturalist observation from $($observation.place_guess), observed $($observation.observed_on)."
+            Author = [string] $photo.attribution
+            License = $licenseDisplay
+            LicenseUrl = Get-LicenseUrl -LicenseName $licenseDisplay -ProvidedUrl ''
+            SourceUrl = "https://www.inaturalist.org/observations/$($observation.id)"
+            DownloadUrl = $downloadUrl
+            Mime = if ($downloadUrl -match '\.png(?:\?|$)') { 'image/png' } else { 'image/jpeg' }
+            Subject = 'habitat'
+            ObservedOn = [string] $observation.observed_on
+            Location = [string] $observation.place_guess
+        })
+    }
+
+    return @($candidates)
+}
+
+function Get-FileExtension {
+    param([Parameter(Mandatory)][string] $Mime)
+
+    switch ($Mime) {
+        'image/png' { return '.png' }
+        'image/webp' { return '.webp' }
+        default { return '.jpg' }
+    }
+}
+
+function Save-RemoteImage {
+    param(
+        [Parameter(Mandatory)]
+        [string] $Uri,
+
+        [Parameter(Mandatory)]
+        [string] $Destination
+    )
+
+    function Test-ImageSignature {
+        param([Parameter(Mandatory)][string] $Path)
+
+        if (-not (Test-Path -LiteralPath $Path) -or (Get-Item -LiteralPath $Path).Length -lt 1024) {
+            return $false
+        }
+
+        $stream = [System.IO.File]::OpenRead($Path)
+        try {
+            $bytes = [byte[]]::new(12)
+            $read = $stream.Read($bytes, 0, $bytes.Length)
+            if ($read -lt 12) {
+                return $false
+            }
+
+            $isJpeg = $bytes[0] -eq 0xff -and $bytes[1] -eq 0xd8 -and $bytes[2] -eq 0xff
+            $isPng = $bytes[0] -eq 0x89 -and $bytes[1] -eq 0x50 -and $bytes[2] -eq 0x4e -and $bytes[3] -eq 0x47
+            $isWebP = [Text.Encoding]::ASCII.GetString($bytes, 0, 4) -eq 'RIFF' -and
+                [Text.Encoding]::ASCII.GetString($bytes, 8, 4) -eq 'WEBP'
+            return $isJpeg -or $isPng -or $isWebP
+        } finally {
+            $stream.Dispose()
+        }
+    }
+
+    if (Test-ImageSignature -Path $Destination) {
+        return
+    }
+
+    if (Test-Path -LiteralPath $Destination) {
+        Remove-Item -LiteralPath $Destination -Force
+    }
+
+    $headers = @{
+        'User-Agent' = 'Gardening-research/1.0 (personal collection documentation; source and license recorded)'
+    }
+    $partialPath = "$Destination.partial"
+
+    for ($attempt = 1; $attempt -le 4; $attempt++) {
+        try {
+            Invoke-WebRequest -Uri $Uri -OutFile $partialPath -Headers $headers
+            if (-not (Test-ImageSignature -Path $partialPath)) {
+                throw "Downloaded file is not a recognized JPEG, PNG, or WebP image: $Uri"
+            }
+
+            Move-Item -LiteralPath $partialPath -Destination $Destination -Force
+            return
+        } catch {
+            if (Test-Path -LiteralPath $partialPath) {
+                Remove-Item -LiteralPath $partialPath -Force
+            }
+
+            if ($attempt -eq 2) {
+                throw
+            }
+
+            Start-Sleep -Seconds 5
+        }
+    }
+}
+
+function ConvertTo-MarkdownCell {
+    param([AllowEmptyString()][string] $Value)
+
+    $singleLine = ($Value -replace '\r?\n', ' ').Trim()
+    return (($singleLine -replace '\\', '\\') -replace '\|', '\|' -replace '\[', '\[' -replace '\]', '\]')
+}
+
+function ConvertTo-MarkdownLinkTarget {
+    param([Parameter(Mandatory)][string] $Value)
+
+    # Angle-bracket destinations safely preserve parentheses that commonly
+    # occur in Wikimedia file-page URLs.
+    return "(<$($Value -replace '>', '%3E')>)"
+}
+
+function Get-ProfileGroup {
+    param([Parameter(Mandatory)][string] $InventoryId)
+
+    if ($InventoryId.StartsWith('Starter-', [StringComparison]::Ordinal)) {
+        return 'starter'
+    }
+    if ($InventoryId.StartsWith('Succulent-', [StringComparison]::Ordinal)) {
+        return 'succulents'
+    }
+    if ($InventoryId.StartsWith('Rehab-', [StringComparison]::Ordinal)) {
+        return 'rehab'
+    }
+
+    throw "Unknown inventory group for $InventoryId"
+}
+
+$existingRecords = @()
+$parsedManifest = $null
+if (Test-Path -LiteralPath $manifestPath) {
+    $parsedManifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+    $existingRecords = @(
+        $parsedManifest.photos |
+            Where-Object { $_.source_url -notin $rejectedSourceUrls }
+    )
+}
+
+$records = [System.Collections.Generic.List[object]]::new()
+foreach ($record in $existingRecords) {
+    $catalogPlant = $plantCatalog |
+        Where-Object { $_.Slug -eq $record.plant_slug } |
+        Select-Object -First 1
+    if ($null -ne $catalogPlant) {
+        $record.plant_id = $catalogPlant.Id
+        $record.plant_slug = $catalogPlant.Slug
+        $record.scientific_name = $catalogPlant.ScientificName
+        $record.common_name = $catalogPlant.CommonName
+        $record.scope_note = $catalogPlant.ScopeNote
+    }
+
+    $records.Add($record)
+}
+
+foreach ($plant in $selectedPlants) {
+    Write-Information "Collecting licensed photographs for $($plant.Id) $($plant.ScientificName)..." -InformationAction Continue
+
+    $plantDirectory = Join-Path $assetRoot $plant.Slug
+    New-Item -ItemType Directory -Path $plantDirectory -Force | Out-Null
+
+    $plantRecords = @($records | Where-Object { $_.plant_slug -eq $plant.Slug })
+    $needed = [math]::Max(0, $ImagesPerPlant - $plantRecords.Count)
+
+    if ($needed -gt 0) {
+        $existingCommonsCount = @($plantRecords | Where-Object { $_.source -eq 'Wikimedia Commons' }).Count
+        $commonsTarget = [math]::Min($needed, [math]::Max(0, 4 - $existingCommonsCount))
+        if ($commonsTarget -gt 0) {
+            $commonsCandidates = Get-WikimediaCandidateList -Plant $plant
+            $existingSourceUrls = @($records | ForEach-Object { $_.source_url }) + $rejectedSourceUrls
+            $commonsCandidates = @(
+                $commonsCandidates |
+                    Where-Object { $_.SourceUrl -notin $existingSourceUrls }
+            )
+            $selectedCommons = Select-DiversePhotoList -Candidates $commonsCandidates -Limit $commonsTarget
+
+            foreach ($photo in $selectedCommons) {
+                $extension = Get-FileExtension -Mime $photo.Mime
+                $fileName = "commons-$($photo.PageId)-$($photo.Subject)$extension"
+                $destination = Join-Path $plantDirectory $fileName
+                try {
+                    Save-RemoteImage -Uri $photo.DownloadUrl -Destination $destination
+                } catch {
+                    Write-Warning "Skipping Wikimedia file after repeated download errors: $($photo.SourceUrl)"
+                    continue
+                }
+                Start-Sleep -Milliseconds 1500
+
+                $relativePath = [System.IO.Path]::GetRelativePath($repoRoot, $destination).Replace('\', '/')
+                $hash = (Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash.ToLowerInvariant()
+                $records.Add([pscustomobject]@{
+                    plant_id = $plant.Id
+                    plant_slug = $plant.Slug
+                    scientific_name = $plant.ScientificName
+                    common_name = $plant.CommonName
+                    scope_note = $plant.ScopeNote
+                    file = $relativePath
+                    subject = $photo.Subject
+                    title = $photo.Title
+                    description = $photo.Description
+                    source = 'Wikimedia Commons'
+                    source_url = $photo.SourceUrl
+                    author = $photo.Author
+                    license = $photo.License
+                    license_url = $photo.LicenseUrl
+                    observed_on = ''
+                    location = ''
+                    sha256 = $hash
+                })
+            }
+        }
+
+        $plantRecords = @($records | Where-Object { $_.plant_slug -eq $plant.Slug })
+        $needed = [math]::Max(0, $ImagesPerPlant - $plantRecords.Count)
+    }
+
+    if ($needed -gt 0) {
+        Start-Sleep -Milliseconds 900
+        $inaturalistCandidates = Get-INaturalistCandidateList -Plant $plant
+        $existingSourceUrls = @($records | ForEach-Object { $_.source_url }) + $rejectedSourceUrls
+        $selectedINaturalist = @(
+            $inaturalistCandidates |
+                Where-Object { $_.SourceUrl -notin $existingSourceUrls } |
+                Select-Object -First $needed
+        )
+
+        foreach ($photo in $selectedINaturalist) {
+            $extension = Get-FileExtension -Mime $photo.Mime
+            $fileName = "inaturalist-$($photo.ObservationId)-$($photo.PhotoId)-habitat$extension"
+            $destination = Join-Path $plantDirectory $fileName
+            try {
+                Save-RemoteImage -Uri $photo.DownloadUrl -Destination $destination
+            } catch {
+                Write-Warning "Skipping iNaturalist file after repeated download errors: $($photo.SourceUrl)"
+                continue
+            }
+            Start-Sleep -Milliseconds 1000
+
+            $relativePath = [System.IO.Path]::GetRelativePath($repoRoot, $destination).Replace('\', '/')
+            $hash = (Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash.ToLowerInvariant()
+            $records.Add([pscustomobject]@{
+                plant_id = $plant.Id
+                plant_slug = $plant.Slug
+                scientific_name = $plant.ScientificName
+                common_name = $plant.CommonName
+                scope_note = $plant.ScopeNote
+                file = $relativePath
+                subject = $photo.Subject
+                title = $photo.Title
+                description = $photo.Description
+                source = 'iNaturalist'
+                source_url = $photo.SourceUrl
+                author = $photo.Author
+                license = $photo.License
+                license_url = $photo.LicenseUrl
+                observed_on = $photo.ObservedOn
+                location = $photo.Location
+                sha256 = $hash
+            })
+        }
+    }
+
+    $plantRecords = @($records | Where-Object { $_.plant_slug -eq $plant.Slug })
+    $needed = [math]::Max(0, $ImagesPerPlant - $plantRecords.Count)
+    if ($needed -gt 0) {
+        Start-Sleep -Milliseconds 1200
+        $commonsCandidates = Get-WikimediaCandidateList -Plant $plant
+        $existingSourceUrls = @($records | ForEach-Object { $_.source_url }) + $rejectedSourceUrls
+        $commonsCandidates = @(
+            $commonsCandidates |
+                Where-Object { $_.SourceUrl -notin $existingSourceUrls }
+        )
+        $selectedCommons = Select-DiversePhotoList -Candidates $commonsCandidates -Limit $needed
+
+        foreach ($photo in $selectedCommons) {
+            $extension = Get-FileExtension -Mime $photo.Mime
+            $fileName = "commons-$($photo.PageId)-$($photo.Subject)$extension"
+            $destination = Join-Path $plantDirectory $fileName
+            try {
+                Save-RemoteImage -Uri $photo.DownloadUrl -Destination $destination
+            } catch {
+                Write-Warning "Skipping Wikimedia file after repeated download errors: $($photo.SourceUrl)"
+                continue
+            }
+            Start-Sleep -Milliseconds 1500
+
+            $relativePath = [System.IO.Path]::GetRelativePath($repoRoot, $destination).Replace('\', '/')
+            $hash = (Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash.ToLowerInvariant()
+            $records.Add([pscustomobject]@{
+                plant_id = $plant.Id
+                plant_slug = $plant.Slug
+                scientific_name = $plant.ScientificName
+                common_name = $plant.CommonName
+                scope_note = $plant.ScopeNote
+                file = $relativePath
+                subject = $photo.Subject
+                title = $photo.Title
+                description = $photo.Description
+                source = 'Wikimedia Commons'
+                source_url = $photo.SourceUrl
+                author = $photo.Author
+                license = $photo.License
+                license_url = $photo.LicenseUrl
+                observed_on = ''
+                location = ''
+                sha256 = $hash
+            })
+        }
+    }
+
+    Start-Sleep -Milliseconds 900
+}
+
+$sortedRecords = @($records | Sort-Object plant_id, source, file)
+$generatedAt = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
+if ($null -ne $parsedManifest) {
+    $previousRecords = @(
+        $parsedManifest.photos |
+            Where-Object { $_.source_url -notin $rejectedSourceUrls } |
+            Sort-Object plant_id, source, file
+    )
+    $previousJson = $previousRecords | ConvertTo-Json -Depth 8 -Compress
+    $currentJson = $sortedRecords | ConvertTo-Json -Depth 8 -Compress
+    if ($previousJson -ceq $currentJson) {
+        $existingGeneratedAt = [string] $parsedManifest.generated_at
+        if ($existingGeneratedAt -match '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$') {
+            $generatedAt = $existingGeneratedAt
+        } else {
+            $parsedGeneratedAt = [datetime]::MinValue
+            if ([datetime]::TryParse($existingGeneratedAt, [ref] $parsedGeneratedAt)) {
+                $generatedAt = $parsedGeneratedAt.ToString('yyyy-MM-ddTHH:mm:ssZ')
+            }
+        }
+    }
+}
+
+$manifest = [ordered]@{
+    schema_version = 1
+    generated_at = $generatedAt
+    policy = 'Only CC0, CC BY, CC BY-SA, and public-domain images are downloaded. Attribution and source links are retained per file.'
+    photos = $sortedRecords
+}
+$manifest | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $manifestPath -Encoding utf8
+
+foreach ($plant in $plantCatalog) {
+    $plantRecords = @($sortedRecords | Where-Object { $_.plant_slug -eq $plant.Slug })
+    if ($plantRecords.Count -eq 0) {
+        continue
+    }
+
+    $plantDirectory = Join-Path $assetRoot $plant.Slug
+    $profilePath = Join-Path $plantDirectory 'README.md'
+    $profileLines = [System.Collections.Generic.List[string]]::new()
+    $profileLines.Add("# $($plant.CommonName) photo archive")
+    $profileLines.Add('')
+    $profileLines.Add("*$($plant.ScientificName)* - $($plant.Id)")
+    $profileLines.Add('')
+    $profileLines.Add($plant.ScopeNote)
+    $profileLines.Add('')
+    $profileGroup = Get-ProfileGroup -InventoryId $plant.Id
+    $profileLines.Add(
+        "Collection research: [open the plant profile](../../../docs/plants/$profileGroup/$($plant.Slug).md)."
+    )
+    $profileLines.Add('')
+    $profileLines.Add('## Gallery')
+    $profileLines.Add('')
+    foreach ($record in $plantRecords) {
+        $fileName = Split-Path -Leaf $record.file
+        $altText = ConvertTo-MarkdownCell "$($record.common_name): $($record.subject)"
+        $profileLines.Add("![$altText](./$fileName)")
+        $profileLines.Add('')
+        $profileLines.Add(
+            "*$($record.subject)* - [$((ConvertTo-MarkdownCell $record.title))]$((ConvertTo-MarkdownLinkTarget $record.source_url)); " +
+            "$((ConvertTo-MarkdownCell $record.author)); " +
+            "[$($record.license)]$((ConvertTo-MarkdownLinkTarget $record.license_url))."
+        )
+        $profileLines.Add('')
+    }
+    $profileLines.Add('## File details')
+    $profileLines.Add('')
+    $profileLines.Add('| File | Subject | Source | Creator | License |')
+    $profileLines.Add('| --- | --- | --- | --- | --- |')
+    foreach ($record in $plantRecords) {
+        $fileName = Split-Path -Leaf $record.file
+        $profileLines.Add(
+            "| [$fileName](./$fileName) | $((ConvertTo-MarkdownCell $record.subject)) | " +
+            "[$($record.source)]$((ConvertTo-MarkdownLinkTarget $record.source_url)) | $((ConvertTo-MarkdownCell $record.author)) | " +
+            "[$($record.license)]$((ConvertTo-MarkdownLinkTarget $record.license_url)) |"
+        )
+    }
+    $profileLines.Add('')
+    $profileLines.Add('Metadata and SHA-256 hashes are also available in [the global manifest](../photo-manifest.json).')
+    $profileLines | Set-Content -LiteralPath $profilePath -Encoding utf8
+}
+
+$indexLines = [System.Collections.Generic.List[string]]::new()
+$indexLines.Add('# Plant photo archive')
+$indexLines.Add('')
+$indexLines.Add('These are locally saved reference photographs with reusable licenses. A photo')
+$indexLines.Add('shows the documented taxon or its stated reference scope; it is not proof that')
+$indexLines.Add('the collection plant has the same identification.')
+$indexLines.Add('')
+$indexLines.Add('| Inventory ID | Plant | Photos | Research | Archive |')
+$indexLines.Add('| --- | --- | ---: | --- | --- |')
+foreach ($plant in $plantCatalog) {
+    $count = @($sortedRecords | Where-Object { $_.plant_slug -eq $plant.Slug }).Count
+    $archive = if ($count -gt 0) { "[open](./$($plant.Slug)/)" } else { 'not collected yet' }
+    $profileGroup = Get-ProfileGroup -InventoryId $plant.Id
+    $profileLink = "[profile](../../docs/plants/$profileGroup/$($plant.Slug).md)"
+    $indexLines.Add("| $($plant.Id) | *$($plant.ScientificName)* - $($plant.CommonName) | $count | $profileLink | $archive |")
+}
+$indexLines.Add('')
+$indexLines.Add('See [ATTRIBUTION.md](./ATTRIBUTION.md) for a compact attribution table and')
+$indexLines.Add('[photo-manifest.json](./photo-manifest.json) for machine-readable metadata and hashes.')
+$indexLines | Set-Content -LiteralPath $indexPath -Encoding utf8
+
+$attributionLines = [System.Collections.Generic.List[string]]::new()
+$attributionLines.Add('# Photo attribution')
+$attributionLines.Add('')
+$attributionLines.Add('Every downloaded image is listed here. Follow the source and license links for')
+$attributionLines.Add('the complete terms and original-resolution file.')
+$attributionLines.Add('')
+$attributionLines.Add('| Local file | Plant | Source | Creator | License |')
+$attributionLines.Add('| --- | --- | --- | --- | --- |')
+foreach ($record in $sortedRecords) {
+    $attributionLines.Add(
+        "| [$($record.file)](../../$($record.file)) | *$($record.scientific_name)* | " +
+        "[$($record.source)]$((ConvertTo-MarkdownLinkTarget $record.source_url)) | $((ConvertTo-MarkdownCell $record.author)) | " +
+        "[$($record.license)]$((ConvertTo-MarkdownLinkTarget $record.license_url)) |"
+    )
+}
+$attributionLines | Set-Content -LiteralPath $attributionPath -Encoding utf8
+
+Write-Information "Photo archive now contains $($sortedRecords.Count) licensed images." -InformationAction Continue
