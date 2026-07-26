@@ -22,7 +22,7 @@ probable until a good flower and mature stem details are available.
 
 Kew accepts *E. spachiana* as native from Bolivia into northwestern Argentina,
 where it grows in seasonally dry shrubland. Charles Lemaire first published the
-species in 1840. Friedrich and Rowley made the currently accepted *Echinopsis*
+species in 1839. Friedrich and Rowley made the currently accepted *Echinopsis*
 combination in 1974. The genus boundaries around *Echinopsis*,
 *Trichocereus*, and *Soehrensia* have changed repeatedly, so all three names
 remain easy to find.

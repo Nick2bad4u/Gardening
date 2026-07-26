@@ -14,9 +14,9 @@ An identification marked **probable** is still a working hypothesis. Its page
 describes the best current match and calls out evidence that could confirm or
 change it.
 
-The [pot-label reference](./labels.md) collects the label-maker text, native
-origins, first-description years, table slots, and rotation codes for all
-living plants.
+The [pot-label reference](./labels.md) collects SUPVAN E11 print layouts, short
+table-position IDs, native origins, first-description years, warnings, and the
+three special orientation labels for all living plants.
 
 ## Starter cactus group
 

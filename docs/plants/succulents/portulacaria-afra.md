@@ -16,7 +16,10 @@
 Opposite pairs of small round leaves on flexible reddish stems make the species
 ID strong. The collection plant's chartreuse tips could be genetics, strong
 light response, or young growth. A named golden cultivar should not be assigned
-from color alone.
+from color alone. SANBI describes 'Aurea' as a cultivated form whose small
+round leaves turn yellow in sun and notes that most named forms originated at
+the Karoo Desert National Botanical Garden. That confirms the cultivar exists,
+but it does not establish that this unlabeled plant is that clone.
 
 ## Origin, ecology, and unusual physiology
 

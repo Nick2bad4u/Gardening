@@ -34,8 +34,12 @@ ribs—the opposite of this cultivar's chaotic-looking folds.
 
 The species was published as *Cereus geometrizans* in 1837. Michelangelo
 Console made the accepted *Myrtillocactus* combination in 1897. Reliable
-published history for the particular 'Indigo Wave' trade clone is scarce, so
-the repo does not invent a breeder or origin story for it.
+published history for the particular 'Indigo Wave' trade clone is scarce.
+Current retailer records confirm it as an Altman Reserve *Myrtillocactus*
+selection, and sellers frequently describe it as crested or `f. cristata`, but
+no reliable breeder or release year was found. The repo therefore does not
+invent a cultivar-origin story or add a formal rank that was not on the
+collection label.
 
 ## Care in this collection
 
@@ -69,5 +73,6 @@ colored even though it is not symmetrical.
 ## Sources
 
 - [Kew Plants of the World Online: *Myrtillocactus geometrizans*](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A135710-1)
+- [Lowe's: Altman Reserve Myrtillocactus Indigo Wave](https://www.lowes.com/pd/Altman-Plants-WEB-ALT-RSV-2-5in-MYRTILLOCACTUS-GEOMETRIZANS-INDIGO-WAVE/5019184203)
 - [University of Arizona Arboretum: *Myrtillocactus geometrizans*](https://apps.cals.arizona.edu/arboretum/taxon.aspx?id=991)
 - [Royal Botanic Garden Edinburgh: garambullo fruit](https://stories.rbge.org.uk/archives/9827)

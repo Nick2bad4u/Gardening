@@ -21,8 +21,10 @@ of health.
 ## Origin, history, and mature form
 
 This is another Malagasy dry-country shrub. Kew accepts the species as native
-to southern Madagascar and records *K. antanosiana* as a synonym. John Gilbert
-Baker published *K. orgyalis* in 1882.
+to Madagascar and records *K. antanosiana* as a synonym. John Gilbert Baker
+published *K. orgyalis* in 1882. More specific locality claims appear in
+horticultural sources, but the label keeps the range at the level supported by
+the current Kew record.
 
 In time it can reach roughly 3–6 ft, with woody branching stems and thick
 spoon-shaped leaves. Clusters of small yellow flowers appear on mature plants.

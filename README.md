@@ -17,8 +17,9 @@ light without turning the hobby into a science project.
   pot layout, rotations, local daylight, and outdoor-day overrides
 - [Plant collection](docs/collection.md) — compact inventory, working IDs,
   confidence, and current status
-- [Pot labels](docs/plants/labels.md) — label-ready names, native origins,
-  description years, table slots, and rotation codes
+- [Pot labels](docs/plants/labels.md) — SUPVAN E11-ready names, short table
+  positions, verified origins and description years, warnings, and the three
+  special orientation labels
 - [Setup and equipment](docs/setup.md) — light, controllers, AeroWave, meters,
   pots, soil, and current arrangement
 - [Care notes](docs/care-notes.md) — the practical light, water, airflow, and

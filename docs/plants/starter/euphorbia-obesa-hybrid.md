@@ -13,10 +13,11 @@
 | Species common names | Baseball plant, sea-urchin euphorbia |
 | Family | Euphorbiaceae—not the cactus family |
 
-“Dragon's Egg” is an unstandardized sales name, not a botanical identity. The
+“Dragon's Egg” is an Altman Plants retail name, not a botanical identity. The
 ribbed ball and tiny structures at the crown resemble *E. obesa*, but the
-unusual texture and form could reflect another euphorbia parent. Until a breeder
-or propagation label supplies the cross, writing it as pure *E. obesa* would be
+unusual texture and form could reflect another euphorbia parent. Current retail
+records do not publish parentage or a release year. Until a breeder or
+propagation label supplies the cross, writing it as pure *E. obesa* would be
 more confidence than the evidence supports.
 
 ## Wild *Euphorbia obesa*

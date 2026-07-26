@@ -31,12 +31,14 @@ Charles Förster published the species in 1846. Kew accepts it and includes
 *Cereus hankeanus*, another name common in older horticulture, in its synonymy.
 The normal species is assessed as Least Concern.
 
-The exact history of 'Ming Thing' is poorly documented. Sellers and collector
-pages repeat conflicting parentage and origin stories, and some plants under the
-name may not be one genetically identical clone. The defensible description is
-a monstrose *Cereus forbesii*-type cultivar widely traded as 'Ming Thing'.
-Species photos are useful for botanical context, not as a visual twin of the
-collection plant.
+NC State Extension confirms 'Ming Thing' as a monstrose *Cereus forbesii*
+cultivar and describes the form as a naturally occurring mutation. Its breeder,
+first nursery, and release year are not documented in the botanical and
+extension sources checked. Sellers and collector pages repeat conflicting
+origin stories, and some plants under the name may not be one genetically
+identical clone. The defensible description is a monstrose *Cereus
+forbesii*-type cultivar widely traded as 'Ming Thing'. Species photos are useful
+for botanical context, not as a visual twin of the collection plant.
 
 ## What monstrose growth means
 

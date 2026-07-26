@@ -33,6 +33,7 @@ starting schedule. The concrete timer and acclimation steps are in the
 | Dimming | VIVOSUN publishes 25%, 50%, 75%, 100%, and off as Manual Mode/Grow Hub presets and advertises a 25–100% app range; the installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and accepts 1% increments throughout that range |
 | Cross-canopy fan | [VIVOSUN AeroWave E6 Gen2](https://vivosun.com/en-US/vivosun-aerowave-e6-6-inch-clip-on-fan-compatible-with-growhub-e42-e25-p140926625940348007-v140926625940348006), 12 W, up to 320 CFM, 90° horizontal oscillation, and a separate E25 connection through its Type-C control port |
 | Air movement | AW200SE integrated fan at its lowest gentle Natural Wind setting plus the AeroWave at provisional Level 2–3 of 10 in Natural Wind, oscillating across the canopy |
+| Label printer | [SUPVAN E11](https://www.amazon.com/dp/B0DKS89T75?th=1), 203 dpi monochrome thermal printer with 15 mm maximum media width; see the [pot-label print reference](./plants/labels.md) |
 
 The two E25s are independent control paths. The AW200SE's RJ45 connector is
 only for compatible AeroLight daisy chains; it is not an Ethernet connection
