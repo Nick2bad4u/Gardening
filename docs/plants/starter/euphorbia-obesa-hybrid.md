@@ -28,10 +28,11 @@ Young plants are round and older ones become slightly columnar, usually with
 eight broad ribs and patterned gray-green skin.
 
 Peter MacOwan found the plant in 1897 and sent material to Kew. It flowered
-there in 1899, when Joseph Dalton Hooker published the name; *obesa* refers to
-the rounded “obese” form. Intense collecting and habitat pressure devastated
-some populations. South Africa lists it as Endangered, protects exact locality
-data, and regulates trade. Nursery-propagated plants are the ethical source.
+there in 1899; Joseph Dalton Hooker's formal botanical publication followed in
+1903. *obesa* refers to the rounded “obese” form. Intense collecting and
+habitat pressure devastated some populations. South Africa lists it as
+Endangered, protects exact locality data, and regulates trade.
+Nursery-propagated plants are the ethical source.
 
 The crown makes cyathia, the tiny specialized flower structures of
 *Euphorbia*, rather than cactus flowers. Wild *E. obesa* plants are normally

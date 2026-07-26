@@ -12,13 +12,15 @@ light without turning the hobby into a science project.
 - [AW200SE and E25 deep guide](docs/equipment/vivosun-aw200se.md) — PPFD maps,
   DLI/lux conversions, distances, dimming, placement, and a simple starting
   program
-- [AW200SE operating schedule](docs/equipment/aw200se-operating-schedule.md) —
-  exact E25 timer, six-week intensity ramp, height rules, and outdoor-day
-  overrides
+- [Fenton AW200SE and AeroWave operating schedule](docs/equipment/aw200se-operating-schedule.md) —
+  dated move-in plan, two E25 programs, light and airflow ramps, fan placement,
+  pot layout, rotations, local daylight, and outdoor-day overrides
 - [Plant collection](docs/collection.md) — compact inventory, working IDs,
   confidence, and current status
-- [Setup and equipment](docs/setup.md) — light, controller, pots, soil, and
-  current arrangement
+- [Pot labels](docs/plants/labels.md) — label-ready names, native origins,
+  description years, table slots, and rotation codes
+- [Setup and equipment](docs/setup.md) — light, controllers, AeroWave, meters,
+  pots, soil, and current arrangement
 - [Care notes](docs/care-notes.md) — the practical light, water, airflow, and
   recovery plan
 - [Licensed photo archive](assets/plants/) — 120 reference photos with creator,

@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-07-24
+Last updated: 2026-07-25
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
@@ -27,25 +27,31 @@ conditions can change that speed.
 The complete [AW200SE/E25 guide](./equipment/vivosun-aw200se.md) has the
 manufacturer's PPFD maps, DLI and lux math, and working ranges for every current
 plant. The [operating schedule](./equipment/aw200se-operating-schedule.md)
-contains the exact E25 settings and outdoor-day overrides; the table below is
-the short version.
+is the canonical dated plan for the Fenton move indoors, both E25 controllers,
+light and AeroWave settings, fan placement and strength, pot layout, rotation,
+local daylight, and outdoor-day overrides.
 
 The older mixed planter spent years in weak light, but it has now had about a
 month outside in bright shade with a little direct sun. That counts as partial
-acclimation, and the monkey tail’s improved growth suggests the current outdoor
+acclimation, and the monkey tail's improved growth suggests the current outdoor
 exposure is working.
 
-| Period | Starting setting |
+| Date | Starting setting |
 | --- | --- |
-| Days 1–7 | 40% power, 20 in above the tallest tip, 8:00 a.m.–8:00 p.m. |
-| Days 8–14 | Lower to 18 in and hold 40% |
-| Days 15–21 | Hold 18 in and increase to 45% |
-| Days 22–35 | Hold 18 in at 50% |
-| Days 36 onward | Use 55% only if healthy; otherwise remain at 50% and 18 in |
+| Aug. 30, 2026 | Permanently arrange the collection indoors. |
+| Aug. 31 | 40% power, 20 in above the tallest tip, 8:00 a.m.–8:00 p.m. |
+| Sept. 7 | Lower to 18 in and hold 40%. |
+| Sept. 14 | Hold 18 in and increase to 45%. |
+| Sept. 21 | Hold 18 in and increase to 50%. |
+| Sept. 28 | Hold 50% for a second week. |
+| Oct. 5 | Use 55% only if every lit surface is healthy; otherwise remain at 50%. |
+| Oct. 12 | Begin the steady 50–55% setting at 18 in. |
+| Oct. 19 | Begin the monthly Fenton sunrise/sunset timer in the full schedule. |
 
 Do not jump directly from the current exposure to 100% power at 12 inches. The
 AW200SE is powerful enough that acclimation still matters. Keep a normal dark
-period; 12 hours on and 12 hours off is a practical baseline.
+period. Use 12 hours on and 12 hours off through October 18, then use the
+seasonal Fenton timer in the full schedule.
 
 The installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and
 supports every whole-percent setting from 25% through 100%. If E25/app control
@@ -59,6 +65,26 @@ same surface for hours without the sun changing angle.
 If using outdoor sun for acclimation instead, begin with bright shade or one to
 two hours of morning sun and add exposure gradually. Avoid introducing full
 summer sun and high grow-light intensity at the same time.
+
+### AeroWave airflow
+
+Use the AW200SE's integrated fan at its lowest gentle Natural Wind setting. The
+separate AeroWave E6 Gen2 begins at 8:15 a.m. and ends at 7:45 p.m. during the
+indoor ramp, using its own E25:
+
+- Natural Wind Level 2 of 10;
+- oscillation Level 4 of 5; and
+- a centered position behind the table, 24–36 in from the nearest plant.
+
+Those numeric wind levels are provisional until the second E25 is installed.
+If the current app exposes fewer levels, begin at its lowest nonzero Natural
+Wind setting and use the same airflow test from the canonical schedule.
+
+After the September 6 inspection, Level 3 is acceptable only if the outer
+columns receive almost no airflow and the closest plants are not being pushed.
+Do not automatically increase fan strength with light intensity. Plant rocking,
+flattened hairs, moving top dressing, or one side drying much faster mean the
+fan is too close, too strong, or aimed too narrowly.
 
 ### Reading the plants
 
@@ -95,7 +121,7 @@ Most of the starter cacti can share the high-light, soak-and-dry baseline after
 acclimation. Individual pots make it easy to move a more sensitive plant toward
 the edge or delay its next watering.
 
-The Dragon’s Egg is a euphorbia rather than a cactus. Its watering style can
+The Dragon's Egg is a euphorbia rather than a cactus. Its watering style can
 still be similar, but a damaged euphorbia can release irritating milky latex.
 Wear gloves, keep sap away from skin and eyes, and wash exposed skin promptly.
 The [RHS euphorbia guide](https://www.rhs.org.uk/plants/euphorbia/growing-guide)
@@ -116,7 +142,7 @@ and separation will be easier than trying to split the difference forever.
 
 The monkey tail may use water a little faster during active growth than the
 upright desert cacti, but the shared planter still needs to dry between
-waterings. Its stretched growth has been trimmed several times, and the new
+waterings. Its stretched growth has been trimmed multiple times, and the new
 growth is improving after about a month outside in bright shade with brief
 direct sun. Continue judging the current growing tips rather than the shape of
 old low-light growth.
@@ -127,7 +153,7 @@ while healthy new growth improves.
 
 ## Removed cactus: historical record
 
-Rehab-04 was removed on 2026-07-24. The final inspection found only a tiny
+Rehab-04 was removed on 2026-07-24. The final inspection found only a small
 patch of green flesh near the top, which was not enough viable tissue to
 salvage. It is no longer part of the watering, lighting, or recovery plan.
 
@@ -138,8 +164,8 @@ The decision checklist is retained for the collection history:
    some firmness; a dead dry plant may feel hollow or brittle, while rot is
    usually soft or mushy.
 3. Look closely for a firm green crown or offset with enough healthy tissue to
-   survive separation. A tiny isolated green patch is not necessarily viable.
-4. If still uncertain, make one tiny, shallow scratch in an inconspicuous area
+   survive separation. A small isolated green patch is not necessarily viable.
+4. If still uncertain, make one shallow scratch in an inconspicuous area
    with a clean blade. Green or moist pale tissue means stop and reassess; dry
    brown tissue throughout supports removing it.
 5. If it is dry-dead or rotten, remove the plant and loose dead root material.

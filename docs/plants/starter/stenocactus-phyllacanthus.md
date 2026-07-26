@@ -8,7 +8,7 @@
 
 | Kind | Name |
 | --- | --- |
-| Accepted botanical name | *Stenocactus phyllacanthus* (Mart.) A.Berger |
+| Accepted botanical name | *Stenocactus phyllacanthus* (A.Dietr.) A.Berger |
 | Common and collector names | Grass-blade cactus; brain cactus is used loosely for several *Stenocactus* species |
 | Older genus often seen | *Echinofossulocactus* |
 | Name clue | *phyllacanthus* refers to the conspicuously flattened, leaflike central spines |
@@ -32,11 +32,11 @@ the plant. Small pale yellow or cream flowers, often with a darker mid-stripe,
 form near the crown in spring.
 
 The genus has a famously tangled naming history. Many hobby references still
-use *Echinofossulocactus*, while Kew accepts *Stenocactus*. The species was
-first described under *Echinocactus*; Alwin Berger published the currently
-accepted combination in 1929. Kew lists its IUCN category as Data Deficient,
-which means there was not enough evidence for a confident risk estimate—not
-that the plant was proved secure.
+use *Echinofossulocactus*, while Kew accepts *Stenocactus*. Albert Dietrich
+first described it under *Echinocactus* in 1836; Alwin Berger published the
+currently accepted combination in 1929. Kew lists its IUCN category as Data
+Deficient, which means there was not enough evidence for a confident risk
+estimate—not that the plant was proved secure.
 
 ## Care in this collection
 

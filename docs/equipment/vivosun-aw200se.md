@@ -1,14 +1,14 @@
 # VIVOSUN AeroLight Wing AW200SE and GrowHub E25
 
-Last updated: 2026-07-24
+Last updated: 2026-07-25
 
 This guide converts the manufacturer's cannabis-oriented data into a practical
 starting point for this cactus and succulent collection. The numerical targets
 are deliberately ranges. Exact species trials are unavailable for most of these
 plants, and a reflective tent map is not a measurement of an open shelf.
 
-For the settings to enter into the E25, use the separate
-[AW200SE operating schedule](./aw200se-operating-schedule.md).
+For the settings to enter into the two E25 controllers, use the separate
+[AW200SE and AeroWave operating schedule](./aw200se-operating-schedule.md).
 
 ## Hardware summary
 
@@ -23,8 +23,9 @@ For the settings to enter into the E25, use the separate
 | Manual dim levels | Off, 25%, 50%, 75%, and 100% |
 | App/controller range | VIVOSUN advertises 25–100% but does not publish the increment size; the installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and accepts every whole-percent setting in that range |
 | Integrated fan | Up to 84 CFM; advertised 33 dB |
+| External circulation | AeroWave E6 Gen2; 12 W, up to 320 CFM, 90° horizontal oscillation, 10 E25/app speed levels, and 5 oscillation levels |
 | Durability claims | 50,000-hour life and IP65 fixture rating |
-| Controller network | 2.4 GHz Wi-Fi; one E25 controls its attached device, with RJ45 light chaining supported |
+| Controller network | 2.4 GHz Wi-Fi; one E25 controls the AW200SE and a second E25 controls the AeroWave; RJ45 chaining is for compatible AeroLights, not the fan |
 | Climate sensing | The E25 itself is not the room's temperature/RH probe; VIVOSUN points to the separate AeroLab THB1S sensor for climate data |
 
 The adjustable wings have three useful geometries. VIVOSUN says the **wide**
@@ -158,10 +159,10 @@ For a fixed light:
 | 1,000 | 43.2 | 55,000–70,000 lx |
 
 Apogee shows why no universal lux conversion exists: its factors range from
-about 54 lux per µmol/m²/s for sunlight to 74 for white fluorescent light, with
-several broad white horticultural sources around 59–65. VIVOSUN does not publish
-an AW200SE-specific conversion. Using **55–70 lux per PPFD** is a deliberately
-wide estimate for this mixed white/red/far-red fixture:
+about 54 lux per µmol/m²/s for sunlight to 74 for white fluorescent light.
+Published broad-white horticultural sources cluster around 59–65. VIVOSUN does
+not publish an AW200SE-specific conversion. Using **55–70 lux per PPFD** is a
+deliberately wide estimate for this mixed white/red/far-red fixture:
 
 `rough PPFD range = lux ÷ 70 to lux ÷ 55`
 
@@ -272,9 +273,10 @@ measurement.
 
 ## E25 and airflow use
 
-The E25 is useful mainly for repeatability:
+The two E25 controllers are useful mainly for repeatability:
 
 - put the light on a fixed daily schedule;
+- put the AeroWave inside that light window on its own shorter schedule;
 - change dimming deliberately rather than by accidental button presses;
 - use the app's automatic programs only after checking what hours and
   intensities they actually send;
@@ -282,10 +284,24 @@ The E25 is useful mainly for repeatability:
   without additional sensors; and
 - keep 2.4 GHz Wi-Fi available during pairing.
 
-Use the integrated fan for gentle circulation, not a constant hard blast at one
-crown. Slight leaf or hair movement and quick drying after watering are useful.
-Rocking pots, desiccated tips, or one side drying much faster than the rest mean
-the airflow is too concentrated.
+VIVOSUN says each separately controlled device needs its own E25. Keep the
+light's E25 in the AW200SE Type-C controller port and connect the second E25 to
+the AeroWave Type-C port with the supplied cable. The light's RJ45 ports do not
+join the AeroWave to the existing controller. Compatible AeroLights can share
+an E25 through an RJ45 light chain, but AeroWave fans do not directly
+daisy-chain fan-to-fan; multiple fans need separate E25s or the supported
+multi-port/splitter arrangement of an E42/E42A-class controller.
+
+Use the integrated fan at its lowest gentle Natural Wind setting. The external
+AeroWave supplies the cross-canopy sweep: start at Natural Wind Level 2 of 10
+with Level 4 of 5 oscillation, then use Level 3 only if the far edges receive
+almost no air and the nearest plants remain calm. The canonical schedule caps
+it at 11 hours 30 minutes per day and gives the exact placement and seasonal
+timer values.
+
+Slight intermittent leaf, hair, or tissue-strip movement is useful. Rocking
+plants, flattened hairs, moving top dressing, desiccated tips, or one side
+drying much faster than the rest mean the airflow is too concentrated.
 
 At full rated light power for 12 hours, the fixture uses approximately
 **2.4 kWh/day or 72 kWh per 30-day month**. At an idealized 50% it is about
@@ -297,6 +313,9 @@ perfectly. Multiply monthly kWh by the local electricity rate for cost.
 - [VIVOSUN AW200SE product specifications](https://vivosun.com/en-US/vivosun-smart-grow-system-aerolight-a200se-compatible-with-growhub-e25-controller-p142504424325359396-v142527788947495192)
 - [VIVOSUN AeroLight SE manual and stage chart](https://vivosun.com/en-AU/support/guide/aerolightse)
 - [VIVOSUN GrowHub E25 guide](https://vivosun.com/support/guide/growhub-e25)
+- [VIVOSUN AeroWave E6 Gen2 specifications](https://vivosun.com/en-US/vivosun-aerowave-e6-6-inch-clip-on-fan-compatible-with-growhub-e42-e25-p140926625940348007-v140926625940348006)
+- [VIVOSUN AeroWave E Series manual](https://vivosun.com/en-GB/support/guide/aerowave)
+- [VIVOSUN E42A Type-C splitter for multiple fans](https://vivosun.com/en-GB/vivosun-2-in-1-type-c-splitter-compatible-with-growhub-aerowave-p144564522569585355-v144564522569585354)
 - [Apogee Instruments: PPFD-to-lux conversions by light source](https://www.apogeeinstruments.com/conversion-ppfd-to-lux/)
 - [Apogee Instruments: instantaneous PPFD to DLI](https://www.apogeeinstruments.com/conversion-instantaneous-ppfd-to-integrated-ppfd/)
 - [Horticulturae: DLI responses in *Echeveria* cultivars](https://doi.org/10.3390/horticulturae12050551)

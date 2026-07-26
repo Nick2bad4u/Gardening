@@ -1,6 +1,6 @@
 # Plant profiles
 
-Last updated: 2026-07-24
+Last updated: 2026-07-25
 
 These pages combine botanical background with practical notes for current and
 historical collection records. They are reference guides, not fixed watering
@@ -13,6 +13,10 @@ DLI, lux, distance, and placement ranges used in the profiles.
 An identification marked **probable** is still a working hypothesis. Its page
 describes the best current match and calls out evidence that could confirm or
 change it.
+
+The [pot-label reference](./labels.md) collects the label-maker text, native
+origins, first-description years, table slots, and rotation codes for all
+living plants.
 
 ## Starter cactus group
 
