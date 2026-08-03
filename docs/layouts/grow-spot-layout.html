@@ -1,0 +1,3908 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+        />
+        <meta
+            name="description"
+            content="Browser-ready diagrams for the cactus and succulent grow spot."
+        />
+        <link
+            rel="icon"
+            href="data:,"
+        />
+        <title>Indoor grow-spot layout</title>
+        <script>
+            (() => {
+                const themeKey = "gardening-site-theme";
+                const legacyThemeKey = "gardening-indoor-calendar-theme";
+                try {
+                    const savedTheme =
+                        localStorage.getItem(themeKey) ??
+                        localStorage.getItem(legacyThemeKey);
+                    document.documentElement.dataset.theme =
+                        savedTheme === "dark" || savedTheme === "light"
+                            ? savedTheme
+                            : matchMedia("(prefers-color-scheme: dark)").matches
+                              ? "dark"
+                              : "light";
+                    if (savedTheme === "dark" || savedTheme === "light") {
+                        localStorage.setItem(themeKey, savedTheme);
+                    }
+                } catch {
+                    document.documentElement.dataset.theme = "light";
+                }
+            })();
+        </script>
+        <style>
+            :root {
+                color-scheme: light;
+                --bg: #f5f1e8;
+                --surface: #fffdf7;
+                --surface-2: #eee7d9;
+                --ink: #1f2922;
+                --muted: #68716b;
+                --line: #cfc6b5;
+                --green: #397658;
+                --green-soft: #dcecdf;
+                --gold: #b58129;
+                --gold-soft: #f4e5bd;
+                --blue: #39728e;
+                --blue-soft: #dcebf1;
+                --violet: #796397;
+                --violet-soft: #e9e1f1;
+                --danger: #a14c3e;
+                --shadow: 0 18px 45px rgb(58 51 38 / 10%);
+            }
+
+            html[data-theme="dark"] {
+                color-scheme: dark;
+                --bg: #151a17;
+                --surface: #1d241f;
+                --surface-2: #252e28;
+                --ink: #edf2ed;
+                --muted: #aab6ae;
+                --line: #3a463e;
+                --green: #75bd91;
+                --green-soft: #243d2d;
+                --gold: #d8ad58;
+                --gold-soft: #44371f;
+                --blue: #73b5d1;
+                --blue-soft: #213944;
+                --violet: #b4a0d0;
+                --violet-soft: #372e44;
+                --danger: #e18b7e;
+                --shadow: 0 18px 45px rgb(0 0 0 / 28%);
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                background:
+                    radial-gradient(
+                        circle at 10% 0%,
+                        rgb(57 118 88 / 9%),
+                        transparent 28rem
+                    ),
+                    var(--bg);
+                color: var(--ink);
+                font-family:
+                    Inter,
+                    ui-sans-serif,
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+                line-height: 1.5;
+                margin: 0;
+            }
+
+            button,
+            input,
+            select {
+                font: inherit;
+            }
+
+            a {
+                color: var(--green);
+            }
+
+            .page {
+                margin: 0 auto;
+                max-width: 1180px;
+                padding: 34px 24px 70px;
+            }
+
+            .hero {
+                align-items: end;
+                display: flex;
+                gap: 28px;
+                justify-content: space-between;
+                margin-bottom: 24px;
+            }
+
+            .eyebrow {
+                color: var(--green);
+                font-size: 0.78rem;
+                font-weight: 700;
+                letter-spacing: 0.15em;
+                margin: 0 0 7px;
+                text-transform: uppercase;
+            }
+
+            h1,
+            h2,
+            h3,
+            p {
+                margin-top: 0;
+            }
+
+            h1 {
+                font-size: clamp(2rem, 5vw, 3.7rem);
+                letter-spacing: -0.05em;
+                line-height: 0.98;
+                margin-bottom: 12px;
+                max-width: 760px;
+            }
+
+            h2 {
+                font-size: clamp(1.45rem, 3vw, 2.1rem);
+                letter-spacing: -0.025em;
+                line-height: 1.1;
+                margin-bottom: 8px;
+            }
+
+            h3 {
+                font-size: 1rem;
+                letter-spacing: 0.02em;
+                margin-bottom: 10px;
+            }
+
+            .lede {
+                color: var(--muted);
+                margin-bottom: 0;
+                max-width: 760px;
+            }
+
+            .hero-actions {
+                display: flex;
+                flex: 0 0 auto;
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: flex-end;
+            }
+
+            .button {
+                align-items: center;
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: 999px;
+                color: var(--ink);
+                cursor: pointer;
+                display: inline-flex;
+                font-weight: 650;
+                gap: 7px;
+                min-height: 42px;
+                padding: 9px 15px;
+                text-decoration: none;
+            }
+
+            .button.primary {
+                background: var(--green);
+                border-color: var(--green);
+                color: white;
+            }
+
+            .button:hover {
+                transform: translateY(-1px);
+            }
+
+            .button:focus-visible,
+            .tab:focus-visible {
+                outline: 3px solid var(--blue);
+                outline-offset: 3px;
+            }
+
+            .viewpoint {
+                align-items: center;
+                background: var(--blue-soft);
+                border-left: 4px solid var(--blue);
+                display: grid;
+                gap: 5px 18px;
+                grid-template-columns: auto 1fr;
+                margin-bottom: 18px;
+                padding: 13px 16px;
+            }
+
+            .viewpoint strong {
+                grid-row: 1 / span 2;
+            }
+
+            .viewpoint span {
+                color: var(--muted);
+            }
+
+            .tabs-shell {
+                align-items: center;
+                display: flex;
+                gap: 12px;
+                justify-content: space-between;
+                margin-bottom: 24px;
+            }
+
+            .diagram-tabs {
+                background: var(--surface-2);
+                border: 1px solid var(--line);
+                border-radius: 14px;
+                display: flex;
+                gap: 8px;
+                max-width: 100%;
+                overflow-x: auto;
+                padding: 6px;
+            }
+
+            .tab {
+                background: transparent;
+                border: 0;
+                border-radius: 9px;
+                color: var(--ink);
+                cursor: pointer;
+                font-size: 0.9rem;
+                font-weight: 700;
+                min-height: 40px;
+                padding: 8px 13px;
+                white-space: nowrap;
+            }
+
+            .tab[aria-selected="true"] {
+                background: var(--green);
+                color: white;
+            }
+
+            .assumption {
+                align-items: center;
+                background: var(--gold-soft);
+                border-left: 4px solid var(--gold);
+                border-radius: 0 10px 10px 0;
+                display: flex;
+                gap: 12px;
+                margin-bottom: 28px;
+                padding: 13px 16px;
+            }
+
+            .assumption strong {
+                white-space: nowrap;
+            }
+
+            .section {
+                margin-top: 42px;
+                scroll-margin-top: 18px;
+            }
+
+            .tab-panel {
+                margin-top: 28px;
+            }
+
+            .tab-panel[hidden] {
+                display: none;
+            }
+
+            .section-heading {
+                align-items: end;
+                display: flex;
+                gap: 20px;
+                justify-content: space-between;
+                margin-bottom: 16px;
+            }
+
+            .section-heading p {
+                color: var(--muted);
+                margin-bottom: 0;
+                max-width: 680px;
+            }
+
+            .diagram-shell {
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: 18px;
+                box-shadow: var(--shadow);
+                overflow: hidden;
+            }
+
+            .diagram-header {
+                align-items: center;
+                background: var(--surface-2);
+                border-bottom: 1px solid var(--line);
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                justify-content: space-between;
+                padding: 12px 16px;
+            }
+
+            .diagram-header strong {
+                font-size: 0.92rem;
+            }
+
+            .diagram-header span {
+                color: var(--muted);
+                font-size: 0.84rem;
+            }
+
+            .diagram {
+                display: block;
+                height: auto;
+                width: 100%;
+            }
+
+            .room-grid {
+                display: grid;
+                grid-template-columns: minmax(0, 1.65fr) minmax(250px, 0.7fr);
+            }
+
+            .key {
+                border-left: 1px solid var(--line);
+                display: grid;
+                padding: 22px;
+            }
+
+            .key-list {
+                display: grid;
+                gap: 16px;
+                margin: 0;
+            }
+
+            .key-item {
+                display: grid;
+                gap: 2px;
+                grid-template-columns: 12px 1fr;
+            }
+
+            .key-item::before {
+                background: var(--green);
+                border-radius: 999px;
+                content: "";
+                height: 8px;
+                margin-top: 7px;
+                width: 8px;
+            }
+
+            .key-item dt {
+                font-weight: 700;
+                grid-column: 2;
+            }
+
+            .key-item dd {
+                color: var(--muted);
+                font-size: 0.9rem;
+                grid-column: 2;
+                margin: 0;
+            }
+
+            .tables-grid {
+                display: grid;
+                gap: 18px;
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            }
+
+            .plant-interaction-note {
+                align-items: center;
+                background: var(--green-soft);
+                border: 1px solid var(--green);
+                border-radius: 12px;
+                display: flex;
+                gap: 10px;
+                margin: 0 0 18px;
+                padding: 10px 12px;
+            }
+
+            .plant-interaction-note::before {
+                background: var(--green);
+                border-radius: 999px;
+                content: "i";
+                flex: 0 0 auto;
+                font-size: 0.75rem;
+                font-weight: 850;
+                height: 22px;
+                line-height: 22px;
+                text-align: center;
+                width: 22px;
+            }
+
+            .plant-interaction-note p {
+                margin: 0;
+            }
+
+            .table-panel {
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: 18px;
+                overflow: hidden;
+            }
+
+            .panel-copy {
+                border-top: 1px solid var(--line);
+                padding: 18px;
+            }
+
+            .panel-copy p:last-child {
+                margin-bottom: 0;
+            }
+
+            .plant-detail-card {
+                background: var(--surface-2);
+                border: 1px solid var(--line);
+                border-radius: 14px;
+                margin: 0 18px 18px;
+                min-height: 250px;
+                padding: 16px;
+                transition:
+                    border-color 140ms ease,
+                    box-shadow 140ms ease;
+            }
+
+            .plant-detail-card.is-populated {
+                border-color: var(--green);
+                box-shadow: 0 10px 26px rgb(22 58 39 / 10%);
+            }
+
+            .plant-detail-kicker {
+                color: var(--green);
+                font-size: 0.72rem;
+                font-weight: 800;
+                letter-spacing: 0.08em;
+                margin: 0 0 4px;
+                text-transform: uppercase;
+            }
+
+            .plant-detail-card h3 {
+                font-size: clamp(1.05rem, 2vw, 1.28rem);
+                margin: 0;
+            }
+
+            .plant-detail-botanical {
+                color: var(--muted);
+                font-style: italic;
+                margin: 3px 0 14px;
+            }
+
+            .plant-detail-grid {
+                display: grid;
+                gap: 10px 14px;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                margin: 0;
+            }
+
+            .plant-detail-grid div {
+                border-top: 1px solid var(--line);
+                min-width: 0;
+                padding-top: 8px;
+            }
+
+            .plant-detail-grid dt {
+                color: var(--muted);
+                font-size: 0.68rem;
+                font-weight: 800;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+            }
+
+            .plant-detail-grid dd {
+                font-size: 0.84rem;
+                margin: 2px 0 0;
+                overflow-wrap: anywhere;
+            }
+
+            .plant-detail-link {
+                display: inline-flex;
+                font-size: 0.82rem;
+                font-weight: 750;
+                margin-top: 13px;
+            }
+
+            .plant-detail-link[hidden] {
+                display: none;
+            }
+
+            .muted {
+                color: var(--muted);
+            }
+
+            .controls {
+                align-items: end;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 14px;
+            }
+
+            .field {
+                display: grid;
+                gap: 5px;
+                min-width: 0;
+            }
+
+            .field label {
+                color: var(--muted);
+                font-size: 0.78rem;
+                font-weight: 700;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+            }
+
+            .field input,
+            .field select {
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                color: var(--ink);
+                min-width: 0;
+                min-height: 40px;
+                padding: 7px 10px;
+                width: 100%;
+            }
+
+            .switch {
+                align-items: center;
+                display: flex;
+                gap: 8px;
+                min-height: 40px;
+            }
+
+            .switch input {
+                height: 18px;
+                width: 18px;
+            }
+
+            .switch label {
+                color: var(--ink);
+                cursor: pointer;
+                font-size: 0.9rem;
+                font-weight: 650;
+            }
+
+            .pot-key {
+                display: grid;
+                gap: 8px;
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                margin-top: 18px;
+            }
+
+            .pot-key-item {
+                border-top: 1px solid var(--line);
+                display: grid;
+                gap: 2px;
+                padding-top: 8px;
+            }
+
+            .pot-key-item code {
+                color: var(--green);
+                font-weight: 800;
+            }
+
+            .pot-key-item span {
+                font-size: 0.82rem;
+            }
+
+            .layout-note {
+                background: var(--blue-soft);
+                border-left: 4px solid var(--blue);
+                margin-top: 18px;
+                padding: 12px 14px;
+            }
+
+            .layout-note p {
+                margin-bottom: 0;
+            }
+
+            .height-grid {
+                display: grid;
+                grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.8fr);
+            }
+
+            .measurement-panel {
+                border-left: 1px solid var(--line);
+                padding: 20px;
+            }
+
+            .measurement-grid {
+                display: grid;
+                gap: 12px;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .result {
+                background: var(--green-soft);
+                border-left: 4px solid var(--green);
+                margin-top: 16px;
+                padding: 13px 14px;
+            }
+
+            .result strong {
+                display: block;
+                margin-bottom: 3px;
+            }
+
+            .riser-table-wrap {
+                overflow-x: auto;
+            }
+
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            th,
+            td {
+                border-bottom: 1px solid var(--line);
+                padding: 10px 9px;
+                text-align: left;
+                vertical-align: middle;
+            }
+
+            th {
+                color: var(--muted);
+                font-size: 0.76rem;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+            }
+
+            td {
+                font-size: 0.9rem;
+            }
+
+            td input {
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: 6px;
+                color: var(--ink);
+                max-width: 94px;
+                min-height: 34px;
+                padding: 5px 7px;
+                width: 100%;
+            }
+
+            .recommendation {
+                color: var(--green);
+                font-weight: 750;
+                white-space: nowrap;
+            }
+
+            .riser-inventory {
+                display: grid;
+                gap: 10px;
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                margin-top: 18px;
+            }
+
+            .riser {
+                background: var(--surface);
+                border-top: 4px solid var(--gold);
+                padding: 12px;
+            }
+
+            .riser strong,
+            .riser span {
+                display: block;
+            }
+
+            .riser span {
+                color: var(--muted);
+                font-size: 0.82rem;
+                margin-top: 3px;
+            }
+
+            .footer {
+                border-top: 1px solid var(--line);
+                color: var(--muted);
+                font-size: 0.86rem;
+                margin-top: 48px;
+                padding-top: 18px;
+            }
+
+            .diagram .room-shell {
+                fill: none;
+                stroke: var(--line);
+                stroke-width: 2;
+            }
+
+            .diagram .fixture-footprint {
+                fill: rgb(181 129 41 / 7%);
+                stroke: var(--gold);
+                stroke-dasharray: 9 7;
+                stroke-width: 2;
+            }
+
+            .diagram .centerline {
+                stroke: var(--gold);
+                stroke-dasharray: 4 7;
+                stroke-width: 1.5;
+            }
+
+            .diagram .window {
+                fill: var(--blue-soft);
+                stroke: var(--blue);
+                stroke-width: 2;
+            }
+
+            .diagram .divider {
+                fill: #303732;
+                stroke: #171c18;
+                stroke-width: 2;
+            }
+
+            .diagram .mylar {
+                fill: #d7d9d6;
+                stroke: var(--blue);
+                stroke-width: 2;
+            }
+
+            .diagram .floor-mylar {
+                fill: rgb(215 217 214 / 28%);
+                stroke: var(--blue);
+                stroke-dasharray: 5 5;
+                stroke-width: 1.5;
+            }
+
+            .diagram .blackout {
+                fill: var(--surface-2);
+                stroke: var(--line);
+                stroke-width: 2;
+            }
+
+            .diagram .wall {
+                stroke: var(--line);
+                stroke-width: 5;
+            }
+
+            .diagram .glass {
+                fill: rgb(57 114 142 / 10%);
+                stroke: var(--blue);
+                stroke-width: 3;
+            }
+
+            .diagram .wood {
+                fill: #d6b178;
+                stroke: #8d6736;
+                stroke-width: 3;
+            }
+
+            .diagram .light {
+                fill: var(--gold-soft);
+                stroke: var(--gold);
+                stroke-width: 2;
+            }
+
+            .diagram .older-planter {
+                fill: var(--green-soft);
+                stroke: var(--green);
+                stroke-width: 2;
+            }
+
+            .diagram .succulent-planter {
+                fill: var(--violet-soft);
+                stroke: var(--violet);
+                stroke-width: 2;
+            }
+
+            .diagram .pot {
+                fill: var(--surface);
+                stroke: var(--green);
+                stroke-width: 2;
+            }
+
+            .diagram .pot-edge {
+                fill: var(--surface);
+                stroke: var(--blue);
+                stroke-width: 3;
+            }
+
+            .diagram [data-plant-marker] {
+                cursor: help;
+                outline: none;
+            }
+
+            .diagram
+                [data-plant-marker]
+                :is(.pot, .pot-edge, .older-planter, .succulent-planter) {
+                transform-box: fill-box;
+                transform-origin: center;
+                transition:
+                    filter 140ms ease,
+                    stroke 140ms ease,
+                    stroke-width 140ms ease,
+                    transform 140ms ease;
+            }
+
+            .diagram
+                [data-plant-marker]:is(:hover, :focus, .is-active)
+                :is(.pot, .pot-edge, .older-planter, .succulent-planter) {
+                filter: drop-shadow(0 5px 7px rgb(22 58 39 / 24%));
+                stroke: var(--gold);
+                stroke-width: 5;
+                transform: scale(1.035);
+            }
+
+            .diagram
+                [data-plant-marker]:is(:hover, :focus, .is-active)
+                .pot-id {
+                fill: var(--gold);
+            }
+
+            .diagram .riser-lane {
+                display: none;
+                fill: rgb(181 129 41 / 13%);
+                stroke: var(--gold);
+                stroke-dasharray: 6 5;
+                stroke-width: 2;
+            }
+
+            .show-risers .diagram .riser-lane {
+                display: block;
+            }
+
+            .diagram .riser-label {
+                display: none;
+            }
+
+            .show-risers .diagram .riser-label {
+                display: block;
+            }
+
+            .diagram .fan {
+                fill: var(--blue-soft);
+                stroke: var(--blue);
+                stroke-width: 2.5;
+            }
+
+            .diagram .fan-blade {
+                fill: none;
+                stroke: var(--blue);
+                stroke-width: 2;
+            }
+
+            .diagram .airflow {
+                fill: rgb(57 114 142 / 8%);
+                stroke: var(--blue);
+                stroke-dasharray: 7 6;
+                stroke-width: 2;
+            }
+
+            .diagram .camera {
+                fill: var(--violet-soft);
+                stroke: var(--violet);
+                stroke-width: 2;
+            }
+
+            .diagram .camera-view {
+                fill: rgb(121 99 151 / 7%);
+                stroke: var(--violet);
+                stroke-dasharray: 6 5;
+                stroke-width: 1.5;
+            }
+
+            .diagram .tail {
+                fill: none;
+                stroke: var(--green);
+                stroke-linecap: round;
+                stroke-width: 8;
+            }
+
+            .diagram .echeveria {
+                fill: var(--violet-soft);
+                stroke: var(--violet);
+                stroke-width: 2;
+            }
+
+            .diagram .measure {
+                stroke: var(--gold);
+                stroke-width: 2;
+            }
+
+            .diagram .target {
+                stroke: var(--green);
+                stroke-dasharray: 8 7;
+                stroke-width: 2;
+            }
+
+            .diagram .table-leg {
+                stroke: var(--line);
+                stroke-width: 5;
+            }
+
+            .diagram .cable {
+                fill: none;
+                stroke: var(--violet);
+                stroke-linecap: round;
+                stroke-width: 4;
+            }
+
+            .diagram .safe-zone {
+                fill: rgb(121 99 151 / 8%);
+                stroke: var(--violet);
+                stroke-dasharray: 7 6;
+                stroke-width: 2;
+            }
+
+            .diagram .water-drop {
+                fill: var(--blue-soft);
+                stroke: var(--blue);
+                stroke-width: 2;
+            }
+
+            .diagram .label-plate {
+                fill: var(--surface);
+                fill-opacity: 0.9;
+            }
+
+            .diagram .svg-label {
+                fill: var(--ink);
+                font-family:
+                    Inter,
+                    ui-sans-serif,
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+                font-size: 15px;
+                font-weight: 650;
+            }
+
+            .diagram .svg-small {
+                fill: var(--muted);
+                font-family:
+                    Inter,
+                    ui-sans-serif,
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+                font-size: 12px;
+                font-weight: 550;
+            }
+
+            .diagram .pot-id {
+                fill: var(--ink);
+                font-family:
+                    Inter,
+                    ui-sans-serif,
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+                font-size: 16px;
+                font-weight: 800;
+            }
+
+            html[data-theme="dark"] .diagram .wood {
+                fill: #725838;
+                stroke: #c69a61;
+            }
+
+            html[data-theme="dark"] .diagram .divider {
+                fill: #111613;
+                stroke: #6c756f;
+            }
+
+            html[data-theme="dark"] .diagram .mylar {
+                fill: #68706b;
+            }
+
+            html[data-theme="dark"] .button.primary,
+            html[data-theme="dark"] .tab[aria-selected="true"] {
+                color: #101713;
+            }
+
+            @media (max-width: 820px) {
+                .hero,
+                .section-heading {
+                    align-items: flex-start;
+                    flex-direction: column;
+                }
+
+                .room-grid,
+                .tables-grid,
+                .height-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .key,
+                .measurement-panel {
+                    border-left: 0;
+                    border-top: 1px solid var(--line);
+                }
+
+                .pot-key,
+                .riser-inventory {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+
+                .plant-detail-card {
+                    min-height: 0;
+                }
+            }
+
+            @media (max-width: 520px) {
+                .page {
+                    padding: 24px 14px 48px;
+                }
+
+                .hero-actions {
+                    justify-content: flex-start;
+                    width: 100%;
+                }
+
+                .hero-actions .button {
+                    justify-content: center;
+                    width: 100%;
+                }
+
+                .assumption {
+                    align-items: flex-start;
+                    flex-direction: column;
+                }
+
+                .viewpoint {
+                    align-items: flex-start;
+                    grid-template-columns: 1fr;
+                }
+
+                .viewpoint strong {
+                    grid-row: auto;
+                }
+
+                .tabs-shell {
+                    align-items: stretch;
+                    flex-direction: column;
+                }
+
+                .diagram-tabs {
+                    display: grid;
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                    overflow-x: visible;
+                    width: 100%;
+                }
+
+                .tab {
+                    white-space: normal;
+                }
+
+                .measurement-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .pot-key,
+                .riser-inventory {
+                    grid-template-columns: 1fr;
+                }
+
+                .plant-detail-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                th,
+                td {
+                    padding: 8px 6px;
+                }
+            }
+
+            @media print {
+                :root,
+                html[data-theme="dark"] {
+                    color-scheme: light;
+                    --bg: #f5f1e8;
+                    --surface: #fffdf7;
+                    --surface-2: #eee7d9;
+                    --ink: #1f2922;
+                    --muted: #68716b;
+                    --line: #cfc6b5;
+                    --green: #397658;
+                    --green-soft: #dcecdf;
+                    --gold: #b58129;
+                    --gold-soft: #f4e5bd;
+                    --blue: #39728e;
+                    --blue-soft: #dcebf1;
+                    --violet: #796397;
+                    --violet-soft: #e9e1f1;
+                    --danger: #a14c3e;
+                    --shadow: none;
+                }
+
+                html[data-theme="dark"] .diagram .wood {
+                    fill: #d6b178;
+                    stroke: #8d6736;
+                }
+
+                html[data-theme="dark"] .diagram .divider {
+                    fill: #303732;
+                    stroke: #171c18;
+                }
+
+                html[data-theme="dark"] .diagram .mylar {
+                    fill: #d7d9d6;
+                }
+
+                body {
+                    background: white;
+                }
+
+                .page {
+                    max-width: none;
+                    padding: 0;
+                }
+
+                .hero-actions,
+                .tabs-shell,
+                .controls {
+                    display: none;
+                }
+
+                .diagram-shell,
+                .table-panel {
+                    break-inside: avoid;
+                    box-shadow: none;
+                }
+
+                .section {
+                    break-before: page;
+                }
+
+                .tab-panel[hidden] {
+                    display: block !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main
+            class="page show-risers"
+            id="layout-page"
+        >
+            <header class="hero">
+                <div>
+                    <p class="eyebrow">Indoor grow spot · installed layout</p>
+                    <h1
+                        >Round table at the window. Wooden table toward the
+                        room.</h1
+                    >
+                    <p class="lede">
+                        The two 18-inch-high surfaces run end to end along the
+                        bay: the round shared-planter table at the window end
+                        and the wooden cactus table toward the room. Their
+                        centerlines follow the fixture’s long axis; they do not
+                        sit side by side across the 36-inch width.
+                    </p>
+                </div>
+                <div class="hero-actions">
+                    <a
+                        class="button"
+                        href="./indoor-acclimation-calendar.html"
+                    >
+                        Open calendar
+                    </a>
+                    <button
+                        class="button"
+                        id="theme-toggle"
+                        type="button"
+                        aria-pressed="false"
+                    >
+                        <span id="theme-label">Dark mode</span>
+                    </button>
+                    <button
+                        class="button primary"
+                        id="print-layout"
+                        type="button"
+                    >
+                        Print diagrams
+                    </button>
+                </div>
+            </header>
+
+            <aside
+                class="viewpoint"
+                aria-label="Diagram viewpoint"
+            >
+                <strong>Orientation used everywhere</strong>
+                <span>Looking from the room toward the window.</span>
+                <span
+                    >LEFT = divider and fan · RIGHT = white wall and camera ·
+                    WINDOW END = round table · ROOM END = wooden table.</span
+                >
+            </aside>
+
+            <div class="tabs-shell">
+                <nav
+                    class="diagram-tabs"
+                    role="tablist"
+                    aria-label="Grow-spot diagrams"
+                >
+                    <button
+                        class="tab"
+                        id="tab-room"
+                        type="button"
+                        role="tab"
+                        aria-controls="room"
+                        aria-selected="true"
+                        data-tab="room"
+                    >
+                        Room layout
+                    </button>
+                    <button
+                        class="tab"
+                        id="tab-tables"
+                        type="button"
+                        role="tab"
+                        aria-controls="tables"
+                        aria-selected="false"
+                        data-tab="tables"
+                    >
+                        Plant map
+                    </button>
+                    <button
+                        class="tab"
+                        id="tab-height"
+                        type="button"
+                        role="tab"
+                        aria-controls="height"
+                        aria-selected="false"
+                        data-tab="height"
+                    >
+                        Height + risers
+                    </button>
+                    <button
+                        class="tab"
+                        id="tab-wiring"
+                        type="button"
+                        role="tab"
+                        aria-controls="wiring"
+                        aria-selected="false"
+                        data-tab="wiring"
+                    >
+                        Wiring
+                    </button>
+                </nav>
+            </div>
+
+            <aside
+                class="assumption"
+                aria-label="Confirmed dimensions and remaining measurements"
+            >
+                <strong>Confirmed from the installed setup:</strong>
+                <span>
+                    the bay is 36 inches wide by about 60 inches long; both
+                    tabletops are 18 inches high; the round glass table is 24
+                    inches across; the wooden table is 16 × 13 inches; and the
+                    AW200SE is about 26 inches across the wing tips. Tape-photo
+                    plant heights now seed the riser calculator.
+                </span>
+            </aside>
+
+            <section
+                class="section tab-panel"
+                id="room"
+                role="tabpanel"
+                aria-labelledby="tab-room"
+            >
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Diagram 1</p>
+                        <h2>Room placement</h2>
+                    </div>
+                    <p>
+                        The fixture’s long axis runs window-to-room above two
+                        end-to-end tables. Centering its 26-inch wing span
+                        across the 36-inch bay leaves about five inches of
+                        physical side clearance per wing.
+                    </p>
+                </div>
+
+                <div class="diagram-shell">
+                    <div class="diagram-header">
+                        <strong>Top-down room view</strong>
+                        <span>Window at top · couch/room at bottom</span>
+                    </div>
+                    <div class="room-grid">
+                        <svg
+                            class="diagram"
+                            viewBox="0 0 760 650"
+                            role="img"
+                            aria-labelledby="room-title room-desc"
+                        >
+                            <title id="room-title">
+                                Top-down grow-room layout
+                            </title>
+                            <desc id="room-desc">
+                                Looking down with the window at the top and room
+                                at the bottom, a twenty-four inch round table is
+                                nearest the window and a sixteen by thirteen
+                                inch wooden table sits below it toward the room.
+                                The two tables run end to end on the grow
+                                light’s long centerline rather than side by side
+                                across the bay.
+                            </desc>
+
+                            <rect
+                                x="197"
+                                y="72"
+                                width="366"
+                                height="510"
+                                rx="12"
+                                class="room-shell"
+                            ></rect>
+                            <rect
+                                x="227"
+                                y="72"
+                                width="306"
+                                height="25"
+                                rx="4"
+                                class="window"
+                            ></rect>
+                            <rect
+                                x="267"
+                                y="76"
+                                width="226"
+                                height="17"
+                                rx="2"
+                                class="blackout"
+                            ></rect>
+                            <text
+                                x="380"
+                                y="56"
+                                class="svg-label"
+                                text-anchor="middle"
+                            >
+                                WINDOW · LOWER PANEL BLOCKED
+                            </text>
+
+                            <rect
+                                x="197"
+                                y="97"
+                                width="30"
+                                height="455"
+                                rx="3"
+                                class="divider"
+                            ></rect>
+                            <rect
+                                x="227"
+                                y="105"
+                                width="14"
+                                height="438"
+                                class="mylar"
+                            ></rect>
+                            <text
+                                x="183"
+                                y="326"
+                                class="svg-small"
+                                text-anchor="middle"
+                                transform="rotate(-90 183 326)"
+                            >
+                                BLACK DIVIDER
+                            </text>
+                            <text
+                                x="253"
+                                y="326"
+                                class="svg-small"
+                                text-anchor="middle"
+                                transform="rotate(-90 253 326)"
+                            >
+                                FULL-HEIGHT MYLAR
+                            </text>
+
+                            <line
+                                x1="533"
+                                y1="97"
+                                x2="533"
+                                y2="552"
+                                class="wall"
+                            ></line>
+                            <text
+                                x="550"
+                                y="326"
+                                class="svg-small"
+                                text-anchor="middle"
+                                transform="rotate(90 550 326)"
+                            >
+                                WHITE WALL
+                            </text>
+
+                            <rect
+                                x="241"
+                                y="101"
+                                width="288"
+                                height="447"
+                                rx="8"
+                                class="floor-mylar"
+                            ></rect>
+                            <text
+                                x="266"
+                                y="535"
+                                class="svg-small"
+                            >
+                                FLOOR MYLAR / CARPET LINER
+                            </text>
+
+                            <rect
+                                x="278"
+                                y="106"
+                                width="204"
+                                height="408"
+                                rx="7"
+                                class="fixture-footprint"
+                            ></rect>
+                            <line
+                                x1="380"
+                                y1="106"
+                                x2="380"
+                                y2="514"
+                                class="centerline"
+                            ></line>
+
+                            <line
+                                x1="227"
+                                y1="112"
+                                x2="533"
+                                y2="112"
+                                class="measure"
+                            ></line>
+                            <line
+                                x1="227"
+                                y1="104"
+                                x2="227"
+                                y2="120"
+                                class="measure"
+                            ></line>
+                            <line
+                                x1="533"
+                                y1="104"
+                                x2="533"
+                                y2="120"
+                                class="measure"
+                            ></line>
+                            <rect
+                                x="341"
+                                y="99"
+                                width="78"
+                                height="25"
+                                rx="4"
+                                class="label-plate"
+                            ></rect>
+                            <text
+                                x="380"
+                                y="116"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                36 IN BAY
+                            </text>
+
+                            <rect
+                                x="269"
+                                y="129"
+                                width="222"
+                                height="39"
+                                rx="8"
+                                class="light"
+                            ></rect>
+                            <text
+                                x="380"
+                                y="145"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                AW200SE · ~26 IN WING SPAN
+                            </text>
+                            <text
+                                x="380"
+                                y="160"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                ~5 IN PHYSICAL CLEARANCE PER SIDE
+                            </text>
+
+                            <path
+                                d="M232 194L490 455L412 236Z"
+                                class="airflow"
+                            ></path>
+                            <path
+                                d="M526 470L324 176L237 504Z"
+                                class="camera-view"
+                            ></path>
+
+                            <line
+                                x1="574"
+                                y1="97"
+                                x2="574"
+                                y2="607"
+                                class="measure"
+                            ></line>
+                            <line
+                                x1="566"
+                                y1="97"
+                                x2="582"
+                                y2="97"
+                                class="measure"
+                            ></line>
+                            <line
+                                x1="566"
+                                y1="607"
+                                x2="582"
+                                y2="607"
+                                class="measure"
+                            ></line>
+                            <text
+                                x="594"
+                                y="352"
+                                class="svg-label"
+                                text-anchor="middle"
+                                transform="rotate(90 594 352)"
+                            >
+                                ~60 IN WINDOW TO DIVIDER END
+                            </text>
+
+                            <circle
+                                cx="380"
+                                cy="260"
+                                r="82"
+                                class="glass"
+                            ></circle>
+                            <rect
+                                x="317"
+                                y="178"
+                                width="126"
+                                height="37"
+                                rx="4"
+                                class="label-plate"
+                            ></rect>
+                            <text
+                                x="380"
+                                y="193"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                ROUND GLASS TABLE
+                            </text>
+                            <text
+                                x="380"
+                                y="208"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                WINDOW END · Ø
+                                <tspan data-round-diameter>24</tspan>
+                                IN
+                            </text>
+
+                            <rect
+                                x="310"
+                                y="235"
+                                width="64"
+                                height="68"
+                                rx="12"
+                                class="older-planter"
+                            ></rect>
+                            <rect
+                                x="386"
+                                y="235"
+                                width="64"
+                                height="68"
+                                rx="9"
+                                class="succulent-planter"
+                            ></rect>
+                            <text
+                                x="342"
+                                y="260"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                OLDER
+                            </text>
+                            <text
+                                x="342"
+                                y="277"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                CACTI
+                            </text>
+                            <text
+                                x="418"
+                                y="260"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                SHARED
+                            </text>
+                            <text
+                                x="418"
+                                y="277"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                SUCCULENTS
+                            </text>
+                            <path
+                                d="M347 286C351 303 352 320 352 337"
+                                class="tail"
+                            ></path>
+
+                            <rect
+                                x="326"
+                                y="377"
+                                width="108"
+                                height="132"
+                                rx="5"
+                                class="wood"
+                            ></rect>
+                            <rect
+                                x="320"
+                                y="379"
+                                width="120"
+                                height="37"
+                                rx="4"
+                                class="label-plate"
+                            ></rect>
+                            <text
+                                x="380"
+                                y="394"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                WOODEN TABLE
+                            </text>
+                            <text
+                                x="380"
+                                y="409"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                ROOM END · 13 × 16 IN
+                            </text>
+
+                            <g
+                                aria-label="Three columns by four rows of individual pots"
+                            >
+                                <circle
+                                    cx="344"
+                                    cy="429"
+                                    r="9"
+                                    class="pot-edge"
+                                ></circle>
+                                <circle
+                                    cx="380"
+                                    cy="429"
+                                    r="9"
+                                    class="pot"
+                                ></circle>
+                                <circle
+                                    cx="416"
+                                    cy="429"
+                                    r="9"
+                                    class="pot"
+                                ></circle>
+                                <circle
+                                    cx="344"
+                                    cy="452"
+                                    r="9"
+                                    class="pot-edge"
+                                ></circle>
+                                <circle
+                                    cx="380"
+                                    cy="452"
+                                    r="9"
+                                    class="pot"
+                                ></circle>
+                                <circle
+                                    cx="416"
+                                    cy="452"
+                                    r="9"
+                                    class="pot"
+                                ></circle>
+                                <circle
+                                    cx="344"
+                                    cy="475"
+                                    r="9"
+                                    class="pot-edge"
+                                ></circle>
+                                <circle
+                                    cx="380"
+                                    cy="475"
+                                    r="9"
+                                    class="pot"
+                                ></circle>
+                                <circle
+                                    cx="416"
+                                    cy="475"
+                                    r="9"
+                                    class="pot"
+                                ></circle>
+                                <circle
+                                    cx="344"
+                                    cy="498"
+                                    r="9"
+                                    class="pot-edge"
+                                ></circle>
+                                <circle
+                                    cx="380"
+                                    cy="498"
+                                    r="9"
+                                    class="pot"
+                                ></circle>
+                                <circle
+                                    cx="416"
+                                    cy="498"
+                                    r="9"
+                                    class="pot"
+                                ></circle>
+                            </g>
+
+                            <g aria-label="Fan and diagonal airflow">
+                                <circle
+                                    cx="208"
+                                    cy="180"
+                                    r="28"
+                                    class="fan"
+                                ></circle>
+                                <path
+                                    d="M208 157Q228 180 208 203Q188 180 208 157M185 180Q208 160 231 180Q208 200 185 180"
+                                    class="fan-blade"
+                                ></path>
+                                <text
+                                    x="208"
+                                    y="142"
+                                    class="svg-small"
+                                    text-anchor="middle"
+                                >
+                                    E6 POLE MOUNT
+                                </text>
+                            </g>
+
+                            <g aria-label="Camera and field of view">
+                                <rect
+                                    x="516"
+                                    y="457"
+                                    width="27"
+                                    height="21"
+                                    rx="4"
+                                    class="camera"
+                                ></rect>
+                                <circle
+                                    cx="517"
+                                    cy="467"
+                                    r="4"
+                                    class="camera"
+                                ></circle>
+                                <text
+                                    x="526"
+                                    y="500"
+                                    class="svg-small"
+                                    text-anchor="end"
+                                >
+                                    GROWCAM
+                                </text>
+                            </g>
+
+                            <rect
+                                x="276"
+                                y="582"
+                                width="208"
+                                height="17"
+                                rx="4"
+                                class="room-shell"
+                            ></rect>
+                            <text
+                                x="380"
+                                y="631"
+                                class="svg-label"
+                                text-anchor="middle"
+                            >
+                                ROOM / COUCH SIDE
+                            </text>
+                        </svg>
+
+                        <aside class="key">
+                            <h3>Placement key</h3>
+                            <dl class="key-list">
+                                <div class="key-item">
+                                    <dt>Measured bay and fixture</dt>
+                                    <dd>
+                                        Keep the 26-inch wing span centered in
+                                        the 36-inch bay and the fixture’s long
+                                        axis aligned window-to-room. The dashed
+                                        box is the advertised 24 × 48-inch
+                                        working footprint, not a measured PPFD
+                                        boundary.
+                                    </dd>
+                                </div>
+                                <div class="key-item">
+                                    <dt>Tables run end to end</dt>
+                                    <dd>
+                                        Put the round table at the window end
+                                        and the wooden table toward the room,
+                                        then align their centerlines under the
+                                        fixture’s long axis. They are not side
+                                        by side across the 36-inch bay. Their
+                                        24-inch diameter plus the wooden table’s
+                                        16-inch depth uses about 40 inches of
+                                        the approximately 60-inch length;
+                                        distribute the remaining clearance
+                                        around the tables and between their
+                                        edges using the real fit.
+                                    </dd>
+                                </div>
+                                <div class="key-item">
+                                    <dt>Fan stays on the divider pole</dt>
+                                    <dd>
+                                        Raise the hub 4–8 inches above the
+                                        highest tip if the mount permits, then
+                                        aim down the occupied length while
+                                        oscillation carries air across both
+                                        surfaces.
+                                    </dd>
+                                </div>
+                                <div class="key-item">
+                                    <dt>Camera stays on the right wall</dt>
+                                    <dd>
+                                        Frame both tables lengthwise from the
+                                        wall. Keep the window out of the center
+                                        of the time-lapse.
+                                    </dd>
+                                </div>
+                                <div class="key-item">
+                                    <dt>Mylar is installed</dt>
+                                    <dd>
+                                        The left panel runs top-to-bottom. The
+                                        floor sheet is only a carpet liner; keep
+                                        trays above it and its aisle edge flat.
+                                    </dd>
+                                </div>
+                            </dl>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+
+            <section
+                class="section tab-panel"
+                id="tables"
+                role="tabpanel"
+                aria-labelledby="tab-tables"
+                hidden
+            >
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Diagram 2</p>
+                        <h2>Plant positions</h2>
+                    </div>
+                    <div class="controls">
+                        <div class="field">
+                            <label for="round-diameter"
+                                >Round table diameter</label
+                            >
+                            <input
+                                id="round-diameter"
+                                type="number"
+                                min="18"
+                                max="36"
+                                step="0.5"
+                                value="24"
+                            />
+                        </div>
+                        <div class="switch">
+                            <input
+                                id="show-risers"
+                                type="checkbox"
+                                checked
+                            />
+                            <label for="show-risers"
+                                >Show recommended riser shelves</label
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="plant-interaction-note">
+                    <p>
+                        <strong>Interactive plant map:</strong> hover a pot or
+                        planter to see its name, botanical ID, origin, and
+                        placement. Tap it on a phone or use Tab with a keyboard.
+                    </p>
+                </div>
+
+                <div class="tables-grid">
+                    <article class="table-panel">
+                        <div class="diagram-header">
+                            <strong>Wooden table · A1–D3</strong>
+                            <span
+                                >13 inches wide × 16 inches deep · room at
+                                bottom</span
+                            >
+                        </div>
+                        <svg
+                            class="diagram"
+                            viewBox="0 0 620 620"
+                            role="group"
+                            aria-labelledby="wood-title wood-desc"
+                        >
+                            <title id="wood-title">
+                                Twelve-position wooden cactus table
+                            </title>
+                            <desc id="wood-desc">
+                                Twelve cactus pots are arranged in three
+                                physical columns and four rows. The revised
+                                height-first plan puts the visibly shortest
+                                serpent cactus on the tallest acrylic riser and
+                                keeps the taller Old Man of the Andes on the
+                                shortest riser. The divider-side pot in each row
+                                stays directly on the wood, while the two pots
+                                toward the light center share a riser when both
+                                bases fit safely.
+                            </desc>
+
+                            <text
+                                x="310"
+                                y="31"
+                                class="svg-label"
+                                text-anchor="middle"
+                            >
+                                WINDOW SIDE
+                            </text>
+                            <text
+                                x="310"
+                                y="50"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                ROW 1 IS WINDOW-SIDE
+                            </text>
+                            <rect
+                                x="130"
+                                y="67"
+                                width="360"
+                                height="443"
+                                rx="8"
+                                class="wood"
+                            ></rect>
+
+                            <g
+                                aria-label="Recommended riser shelves beneath the two center-side pots in each row"
+                            >
+                                <rect
+                                    x="250"
+                                    y="86"
+                                    width="222"
+                                    height="76"
+                                    rx="9"
+                                    class="riser-lane"
+                                ></rect>
+                                <rect
+                                    x="250"
+                                    y="194"
+                                    width="222"
+                                    height="76"
+                                    rx="9"
+                                    class="riser-lane"
+                                ></rect>
+                                <rect
+                                    x="250"
+                                    y="302"
+                                    width="222"
+                                    height="76"
+                                    rx="9"
+                                    class="riser-lane"
+                                ></rect>
+                                <rect
+                                    x="250"
+                                    y="410"
+                                    width="222"
+                                    height="76"
+                                    rx="9"
+                                    class="riser-lane"
+                                ></rect>
+                            </g>
+
+                            <text
+                                x="92"
+                                y="130"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                ROW 1
+                            </text>
+                            <g
+                                data-plant-marker
+                                data-detail-target="wood"
+                                data-name="Variegated moon cactus"
+                                data-botanical="Variegated Gymnocalycium mihanovichii"
+                                data-record="A1 · Starter-07"
+                                data-origin="Paraguay and northeastern Argentina"
+                                data-placement="Row 1, divider side · direct on wood"
+                                data-status="Labeled selection · keep the palest side outward"
+                                data-profile="../plant-booklet/#gymnocalycium-mihanovichii-variegated"
+                                tabindex="0"
+                                role="img"
+                                aria-label="A1, Variegated moon cactus, Variegated Gymnocalycium mihanovichii, direct on wood"
+                            >
+                                <title>
+                                    A1 — Variegated moon cactus — direct on wood
+                                </title>
+                                <circle
+                                    cx="190"
+                                    cy="124"
+                                    r="42"
+                                    class="pot-edge"
+                                ></circle>
+                                <text
+                                    x="190"
+                                    y="130"
+                                    class="pot-id"
+                                    text-anchor="middle"
+                                >
+                                    A1
+                                </text>
+                            </g>
+                            <g
+                                data-plant-marker
+                                data-detail-target="wood"
+                                data-name="Serpent cactus"
+                                data-botanical="Nyctocereus serpentinus"
+                                data-record="A3 · Starter-04"
+                                data-origin="Mexico"
+                                data-placement="Row 1, fixture center · +5.11-inch riser with B1"
+                                data-status="Labeled · scrambling growth may need support"
+                                data-profile="../plant-booklet/#nyctocereus-serpentinus"
+                                tabindex="0"
+                                role="img"
+                                aria-label="A3, Serpent cactus, Nyctocereus serpentinus, on the 5.11-inch riser"
+                            >
+                                <title>
+                                    A3 — Serpent cactus — +5.11-inch riser
+                                </title>
+                                <circle
+                                    cx="310"
+                                    cy="124"
+                                    r="42"
+                                    class="pot"
+                                ></circle>
+                                <text
+                                    x="310"
+                                    y="130"
+                                    class="pot-id"
+                                    text-anchor="middle"
+                                >
+                                    A3
+                                </text>
+                            </g>
+                            <g
+                                data-plant-marker
+                                data-detail-target="wood"
+                                data-name="Grass-blade cactus"
+                                data-botanical="Stenocactus phyllacanthus"
+                                data-record="B1 · Starter-02"
+                                data-origin="Central, northeastern, Gulf, and southwestern Mexico"
+                                data-placement="Row 1, wall side · +5.11-inch riser with A3"
+                                data-status="Labeled · long, flattened sharp spines"
+                                data-profile="../plant-booklet/#stenocactus-phyllacanthus"
+                                tabindex="0"
+                                role="img"
+                                aria-label="B1, Grass-blade cactus, Stenocactus phyllacanthus, on the 5.11-inch riser"
+                            >
+                                <title>
+                                    B1 — Grass-blade cactus — +5.11-inch riser
+                                </title>
+                                <circle
+                                    cx="430"
+                                    cy="124"
+                                    r="42"
+                                    class="pot"
+                                ></circle>
+                                <text
+                                    x="430"
+                                    y="130"
+                                    class="pot-id"
+                                    text-anchor="middle"
+                                >
+                                    B1
+                                </text>
+                            </g>
+                            <text
+                                x="370"
+                                y="129"
+                                class="svg-small riser-label"
+                                text-anchor="middle"
+                            >
+                                +5.11
+                            </text>
+
+                            <text
+                                x="92"
+                                y="238"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                ROW 2
+                            </text>
+                            <g
+                                data-plant-marker
+                                data-detail-target="wood"
+                                data-name="Giant chin cactus"
+                                data-botanical="Gymnocalycium saglionis"
+                                data-record="C1 · Starter-08"
+                                data-origin="Northwestern Argentina"
+                                data-placement="Row 2, divider side · direct on wood"
+                                data-status="Labeled · heavy curved spines"
+                                data-profile="../plant-booklet/#gymnocalycium-saglionis"
+                                tabindex="0"
+                                role="img"
+                                aria-label="C1, Giant chin cactus, Gymnocalycium saglionis, direct on wood"
+                            >
+                                <title>
+                                    C1 — Giant chin cactus — direct on wood
+                                </title>
+                                <circle
+                                    cx="190"
+                                    cy="232"
+                                    r="42"
+                                    class="pot-edge"
+                                ></circle>
+                                <text
+                                    x="190"
+                                    y="238"
+                                    class="pot-id"
+                                    text-anchor="middle"
+                                >
+                                    C1
+                                </text>
+                            </g>
+                            <g
+                                data-plant-marker
+                                data-detail-target="wood"
+                                data-name="Old Man of the Andes"
+                                data-botanical="Oreocereus trollii"
+                                data-record="B2 · Starter-01"
+                                data-origin="Bolivia and northwestern Argentina"
+                                data-placement="Row 2, fixture center · +1.18-inch riser with C2"
+                                data-status="Labeled · sharp central spines hide under the wool"
+                                data-profile="../plant-booklet/#oreocereus-trollii"
+                                tabindex="0"
+                                role="img"
+                                aria-label="B2, Old Man of the Andes, Oreocereus trollii, on the 1.18-inch riser"
+                            >
+                                <title>
+                                    B2 — Old Man of the Andes — +1.18-inch riser
+                                </title>
+                                <circle
+                                    cx="310"
+                                    cy="232"
+                                    r="42"
+                                    class="pot"
+                                ></circle>
+                                <text
+                                    x="310"
+                                    y="238"
+                                    class="pot-id"
+                                    text-anchor="middle"
+                                >
+                                    B2
+                                </text>
+                            </g>
+                            <g
+                                data-plant-marker
+                                data-detail-target="wood"
+                                data-name="Rainbow hedgehog cactus"
+                                data-botanical="Echinocereus rigidissimus subsp. rubispinus"
+                                data-record="C2 · Starter-03"
+                                data-origin="Western Chihuahua, Mexico"
+                                data-placement="Row 2, wall side · +1.18-inch riser with B2"
+                                data-status="Labeled · acclimate carefully to stronger light"
+                                data-profile="../plant-booklet/#echinocereus-rigidissimus-rubispinus"
+                                tabindex="0"
+                                role="img"
+                                aria-label="C2, Rainbow hedgehog cactus, Echinocereus rigidissimus subspecies rubispinus, on the 1.18-inch riser"
+                            >
+                                <title>
+                                    C2 — Rainbow hedgehog cactus — +1.18-inch
+                                    riser
+                                </title>
+                                <circle
+                                    cx="430"
+                                    cy="232"
+                                    r="42"
+                                    class="pot"
+                                ></circle>
+                                <text
+                                    x="430"
+                                    y="238"
+                                    class="pot-id"
+                                    text-anchor="middle"
+                                >
+                                    C2
+                                </text>
+                            </g>
+                            <text
+                                x="370"
+                                y="237"
+                                class="svg-small riser-label"
+                                text-anchor="middle"
+                            >
+                                +1.18
+                            </text>
+
+                            <text
+                                x="92"
+                                y="346"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                ROW 3
+                            </text>
+                            <g
+                                data-plant-marker
+                                data-detail-target="wood"
+                                data-name="Dragon's Egg"
+                                data-botanical="Probable Euphorbia obesa-type hybrid"
+                                data-record="D1 · Starter-11"
+                                data-origin="Reference species: Eastern Cape, South Africa; hybrid origin unknown"
+                                data-placement="Row 3, divider side · direct on wood"
+                                data-status="Probable ID · caustic milky sap"
+                                data-profile="../plant-booklet/#euphorbia-obesa-hybrid"
+                                tabindex="0"
+                                role="img"
+                                aria-label="D1, Dragon's Egg, probable Euphorbia obesa-type hybrid, direct on wood"
+                            >
+                                <title>
+                                    D1 — Dragon's Egg — direct on wood
+                                </title>
+                                <circle
+                                    cx="190"
+                                    cy="340"
+                                    r="42"
+                                    class="pot-edge"
+                                ></circle>
+                                <text
+                                    x="190"
+                                    y="346"
+                                    class="pot-id"
+                                    text-anchor="middle"
+                                >
+                                    D1
+                                </text>
+                            </g>
+                            <g
+                                data-plant-marker
+                                data-detail-target="wood"
+                                data-name="Ming Thing"
+                                data-botanical="Cereus forbesii 'Ming Thing'"
+                                data-record="D3 · Starter-10"
+                                data-origin="Species: Bolivia, Paraguay, and northern Argentina; cultivar origin unknown"
+                                data-placement="Row 3, fixture center · +3.93-inch riser with A2"
+                                data-status="High-confidence corrected ID · monstrose growth is normal"
+                                data-profile="../plant-booklet/#cereus-forbesii-ming-thing"
+                                tabindex="0"
+                                role="img"
+                                aria-label="D3, Ming Thing, Cereus forbesii Ming Thing, on the 3.93-inch riser"
+                            >
+                                <title>
+                                    D3 — Ming Thing — +3.93-inch riser
+                                </title>
+                                <circle
+                                    cx="310"
+                                    cy="340"
+                                    r="42"
+                                    class="pot"
+                                ></circle>
+                                <text
+                                    x="310"
+                                    y="346"
+                                    class="pot-id"
+                                    text-anchor="middle"
+                                >
+                                    D3
+                                </text>
+                            </g>
+                            <g
+                                data-plant-marker
+                                data-detail-target="wood"
+                                data-name="Feather cactus"
+                                data-botanical="Mammillaria plumosa"
+                                data-record="A2 · Starter-05"
+                                data-origin="Coahuila, Nuevo León, and Tamaulipas, Mexico"
+                                data-placement="Row 3, wall side · +3.93-inch riser with D3"
+                                data-status="Labeled · fine spines hide under the feathery covering"
+                                data-profile="../plant-booklet/#mammillaria-plumosa"
+                                tabindex="0"
+                                role="img"
+                                aria-label="A2, Feather cactus, Mammillaria plumosa, on the 3.93-inch riser"
+                            >
+                                <title>
+                                    A2 — Feather cactus — +3.93-inch riser
+                                </title>
+                                <circle
+                                    cx="430"
+                                    cy="340"
+                                    r="42"
+                                    class="pot"
+                                ></circle>
+                                <text
+                                    x="430"
+                                    y="346"
+                                    class="pot-id"
+                                    text-anchor="middle"
+                                >
+                                    A2
+                                </text>
+                            </g>
+                            <text
+                                x="370"
+                                y="345"
+                                class="svg-small riser-label"
+                                text-anchor="middle"
+                            >
+                                +3.93
+                            </text>
+
+                            <text
+                                x="92"
+                                y="454"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                ROW 4
+                            </text>
+                            <g
+                                data-plant-marker
+                                data-detail-target="wood"
+                                data-name="Indigo Wave"
+                                data-botanical="Myrtillocactus geometrizans 'Indigo Wave'"
+                                data-record="B3 · Starter-09"
+                                data-origin="Species: Mexico; trade-selection origin unknown"
+                                data-placement="Row 4, divider side · direct on wood"
+                                data-status="Labeled trade selection · do not rub off the blue wax"
+                                data-profile="../plant-booklet/#myrtillocactus-geometrizans-indigo-wave"
+                                tabindex="0"
+                                role="img"
+                                aria-label="B3, Indigo Wave, Myrtillocactus geometrizans Indigo Wave, direct on wood"
+                            >
+                                <title>B3 — Indigo Wave — direct on wood</title>
+                                <circle
+                                    cx="190"
+                                    cy="448"
+                                    r="42"
+                                    class="pot-edge"
+                                ></circle>
+                                <text
+                                    x="190"
+                                    y="454"
+                                    class="pot-id"
+                                    text-anchor="middle"
+                                >
+                                    B3
+                                </text>
+                            </g>
+                            <g
+                                data-plant-marker
+                                data-detail-target="wood"
+                                data-name="Domino cactus"
+                                data-botanical="Echinopsis subdenudata"
+                                data-record="D2 · Starter-06"
+                                data-origin="Bolivia into northwestern Argentina"
+                                data-placement="Row 4, fixture center · +2.75-inch riser with C3"
+                                data-status="Labeled horticultural name · do not leave wet"
+                                data-profile="../plant-booklet/#echinopsis-subdenudata"
+                                tabindex="0"
+                                role="img"
+                                aria-label="D2, Domino cactus, Echinopsis subdenudata, on the 2.75-inch riser"
+                            >
+                                <title>
+                                    D2 — Domino cactus — +2.75-inch riser
+                                </title>
+                                <circle
+                                    cx="310"
+                                    cy="448"
+                                    r="42"
+                                    class="pot"
+                                ></circle>
+                                <text
+                                    x="310"
+                                    y="454"
+                                    class="pot-id"
+                                    text-anchor="middle"
+                                >
+                                    D2
+                                </text>
+                            </g>
+                            <g
+                                data-plant-marker
+                                data-detail-target="wood"
+                                data-name="Monk's hood cactus"
+                                data-botanical="Astrophytum ornatum"
+                                data-record="C3 · Starter-12"
+                                data-origin="Northeastern and Gulf Mexico to Veracruz"
+                                data-placement="Row 4, wall side · +2.75-inch riser with D2"
+                                data-status="Labeled · long sharp spines"
+                                data-profile="../plant-booklet/#astrophytum-ornatum"
+                                tabindex="0"
+                                role="img"
+                                aria-label="C3, Monk's hood cactus, Astrophytum ornatum, on the 2.75-inch riser"
+                            >
+                                <title>
+                                    C3 — Monk's hood cactus — +2.75-inch riser
+                                </title>
+                                <circle
+                                    cx="430"
+                                    cy="448"
+                                    r="42"
+                                    class="pot"
+                                ></circle>
+                                <text
+                                    x="430"
+                                    y="454"
+                                    class="pot-id"
+                                    text-anchor="middle"
+                                >
+                                    C3
+                                </text>
+                            </g>
+                            <text
+                                x="370"
+                                y="453"
+                                class="svg-small riser-label"
+                                text-anchor="middle"
+                            >
+                                +2.75
+                            </text>
+
+                            <line
+                                x1="130"
+                                y1="540"
+                                x2="490"
+                                y2="540"
+                                class="measure"
+                            ></line>
+                            <line
+                                x1="130"
+                                y1="532"
+                                x2="130"
+                                y2="548"
+                                class="measure"
+                            ></line>
+                            <line
+                                x1="490"
+                                y1="532"
+                                x2="490"
+                                y2="548"
+                                class="measure"
+                            ></line>
+                            <text
+                                x="310"
+                                y="564"
+                                class="svg-label"
+                                text-anchor="middle"
+                            >
+                                13 IN WIDE
+                            </text>
+                            <line
+                                x1="528"
+                                y1="67"
+                                x2="528"
+                                y2="510"
+                                class="measure"
+                            ></line>
+                            <line
+                                x1="520"
+                                y1="67"
+                                x2="536"
+                                y2="67"
+                                class="measure"
+                            ></line>
+                            <line
+                                x1="520"
+                                y1="510"
+                                x2="536"
+                                y2="510"
+                                class="measure"
+                            ></line>
+                            <text
+                                x="552"
+                                y="289"
+                                class="svg-label"
+                                text-anchor="middle"
+                                transform="rotate(90 552 289)"
+                            >
+                                16 IN DEEP
+                            </text>
+                            <text
+                                x="310"
+                                y="603"
+                                class="svg-label"
+                                text-anchor="middle"
+                            >
+                                INSPECTION AISLE / ROOM SIDE
+                            </text>
+                        </svg>
+                        <div
+                            class="plant-detail-card"
+                            data-plant-panel="wood"
+                            aria-live="polite"
+                            aria-atomic="true"
+                        >
+                            <p class="plant-detail-kicker">Wooden table</p>
+                            <h3 data-plant-field="name"
+                                >Hover, tap, or focus a pot</h3
+                            >
+                            <p
+                                class="plant-detail-botanical"
+                                data-plant-field="botanical"
+                            >
+                                Plant details will appear here without covering
+                                the diagram.
+                            </p>
+                            <dl class="plant-detail-grid">
+                                <div>
+                                    <dt>Label / record</dt>
+                                    <dd data-plant-field="record">A1–D3</dd>
+                                </div>
+                                <div>
+                                    <dt>Native origin</dt>
+                                    <dd data-plant-field="origin"
+                                        >Select a pot</dd
+                                    >
+                                </div>
+                                <div>
+                                    <dt>Placement</dt>
+                                    <dd data-plant-field="placement"
+                                        >Direct or riser details</dd
+                                    >
+                                </div>
+                                <div>
+                                    <dt>ID / watch point</dt>
+                                    <dd data-plant-field="status"
+                                        >Identification confidence and
+                                        warning</dd
+                                    >
+                                </div>
+                            </dl>
+                            <a
+                                class="plant-detail-link"
+                                data-plant-profile
+                                href="../plant-booklet/"
+                                hidden
+                                >Open full plant profile →</a
+                            >
+                        </div>
+                        <div class="panel-copy">
+                            <p>
+                                A1–D3 are permanent plant IDs, not grid
+                                coordinates. The left pot in every physical row
+                                remains direct on the wood; the two right pots
+                                use the labeled riser toward the fixture center.
+                                The risers now follow the visible height tiers:
+                                A3 moves to +5.11, while B2 and C2 use only
+                                +1.18.
+                            </p>
+                            <p class="muted">
+                                Each acrylic top is only 2.95 inches wide. Two
+                                4-inch pots are the practical maximum, not
+                                three. Center each saucer and press its rim from
+                                several directions; if either pot rocks, use one
+                                named pot on that shelf or leave the row direct.
+                                Never stack.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="table-panel">
+                        <div class="diagram-header">
+                            <strong>Round table · two shared planters</strong>
+                            <span
+                                >Planning diameter:
+                                <span data-round-diameter>24</span> inches</span
+                            >
+                        </div>
+                        <svg
+                            class="diagram"
+                            viewBox="0 0 620 520"
+                            role="group"
+                            aria-labelledby="glass-title glass-desc"
+                        >
+                            <title id="glass-title">
+                                Round table shared-planter layout
+                            </title>
+                            <desc id="glass-desc">
+                                The older cactus planter is on the left half of
+                                the round table with its monkey tail trailing
+                                over the open room-side arc. The succulent
+                                planter is on the right half with its echeveria
+                                side facing inward.
+                            </desc>
+
+                            <text
+                                x="310"
+                                y="34"
+                                class="svg-label"
+                                text-anchor="middle"
+                            >
+                                WINDOW SIDE
+                            </text>
+                            <circle
+                                cx="310"
+                                cy="252"
+                                r="190"
+                                class="glass"
+                            ></circle>
+                            <line
+                                x1="310"
+                                y1="70"
+                                x2="310"
+                                y2="434"
+                                class="centerline"
+                            ></line>
+
+                            <g
+                                data-plant-marker
+                                data-detail-target="glass"
+                                data-name="Older cactus planter · 3 living plants"
+                                data-botanical="Pilosocereus pachycladus · Cleistocactus colademononis · Echinopsis spachiana"
+                                data-record="A4-B4 · Rehab-01, Rehab-02, Rehab-03"
+                                data-origin="Northeastern Brazil · Santa Cruz, Bolivia · Bolivia to northwestern Argentina"
+                                data-placement="Left half · direct on glass · monkey tail toward the open room arc"
+                                data-status="Blue torch and golden torch IDs are probable; monkey tail ID is high confidence"
+                                data-profile="../plant-booklet/#contents"
+                                data-link-label="Open collection guide →"
+                                tabindex="0"
+                                role="img"
+                                aria-label="A4-B4 older cactus planter with variegated blue torch, monkey tail, and golden torch cacti"
+                            >
+                                <title>
+                                    A4-B4 — Variegated blue torch, monkey tail,
+                                    and golden torch cacti
+                                </title>
+                                <rect
+                                    x="144"
+                                    y="164"
+                                    width="142"
+                                    height="154"
+                                    rx="23"
+                                    class="older-planter"
+                                ></rect>
+                                <text
+                                    x="215"
+                                    y="225"
+                                    class="svg-label"
+                                    text-anchor="middle"
+                                >
+                                    OLDER CACTI
+                                </text>
+                                <text
+                                    x="215"
+                                    y="247"
+                                    class="svg-small"
+                                    text-anchor="middle"
+                                >
+                                    A4–B4 label
+                                </text>
+                                <path
+                                    d="M247 284C271 319 285 350 291 392"
+                                    class="tail"
+                                ></path>
+                            </g>
+
+                            <g
+                                data-plant-marker
+                                data-detail-target="glass"
+                                data-name="Shared succulent planter · 4 living plants"
+                                data-botanical="Echeveria pulidonis · Portulacaria afra · Kalanchoe bracteata · Kalanchoe orgyalis"
+                                data-record="C4-D4 · Succulent-01 through Succulent-04"
+                                data-origin="Mexico · eastern and southern Africa · Madagascar"
+                                data-placement="Right half · direct on glass · echeveria faces fixture center"
+                                data-status="Echeveria and silver-teaspoons IDs are probable; Kalanchoe is toxic to pets"
+                                data-profile="../plant-booklet/#contents"
+                                data-link-label="Open collection guide →"
+                                tabindex="0"
+                                role="img"
+                                aria-label="C4-D4 shared planter with Pulido's echeveria, elephant bush, silver teaspoons, and copper spoons"
+                            >
+                                <title>
+                                    C4-D4 — Pulido's echeveria, elephant bush,
+                                    silver teaspoons, and copper spoons
+                                </title>
+                                <rect
+                                    x="334"
+                                    y="164"
+                                    width="142"
+                                    height="154"
+                                    rx="16"
+                                    class="succulent-planter"
+                                ></rect>
+                                <text
+                                    x="405"
+                                    y="225"
+                                    class="svg-label"
+                                    text-anchor="middle"
+                                >
+                                    SUCCULENTS
+                                </text>
+                                <text
+                                    x="405"
+                                    y="247"
+                                    class="svg-small"
+                                    text-anchor="middle"
+                                >
+                                    C4–D4 label
+                                </text>
+                                <path
+                                    d="M405 264L412 278L427 274L417 286L429 297L413 295L405 310L397 295L381 297L393 286L383 274L398 278Z"
+                                    class="echeveria"
+                                ></path>
+                                <text
+                                    x="405"
+                                    y="344"
+                                    class="svg-small"
+                                    text-anchor="middle"
+                                >
+                                    ECHEVERIA → CENTER
+                                </text>
+                            </g>
+
+                            <text
+                                x="310"
+                                y="458"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                TAIL CLEAR OF WOOD + WALL CABLES
+                            </text>
+
+                            <text
+                                x="123"
+                                y="105"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                DIVIDER / MYLAR
+                            </text>
+                            <text
+                                x="497"
+                                y="105"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                WHITE WALL
+                            </text>
+                            <text
+                                x="310"
+                                y="483"
+                                class="svg-label"
+                                text-anchor="middle"
+                            >
+                                OPEN ROOM / ACCESS SIDE
+                            </text>
+                        </svg>
+                        <div
+                            class="plant-detail-card"
+                            data-plant-panel="glass"
+                            aria-live="polite"
+                            aria-atomic="true"
+                        >
+                            <p class="plant-detail-kicker">Round glass table</p>
+                            <h3 data-plant-field="name"
+                                >Hover, tap, or focus a planter</h3
+                            >
+                            <p
+                                class="plant-detail-botanical"
+                                data-plant-field="botanical"
+                            >
+                                The living plants and placement notes will
+                                appear here.
+                            </p>
+                            <dl class="plant-detail-grid">
+                                <div>
+                                    <dt>Label / records</dt>
+                                    <dd data-plant-field="record"
+                                        >A4-B4 or C4-D4</dd
+                                    >
+                                </div>
+                                <div>
+                                    <dt>Native origins</dt>
+                                    <dd data-plant-field="origin"
+                                        >Select a planter</dd
+                                    >
+                                </div>
+                                <div>
+                                    <dt>Placement</dt>
+                                    <dd data-plant-field="placement"
+                                        >Both planters stay directly on
+                                        glass</dd
+                                    >
+                                </div>
+                                <div>
+                                    <dt>ID / watch points</dt>
+                                    <dd data-plant-field="status"
+                                        >Identification confidence and
+                                        warnings</dd
+                                    >
+                                </div>
+                            </dl>
+                            <a
+                                class="plant-detail-link"
+                                data-plant-profile
+                                href="../plant-booklet/#contents"
+                                hidden
+                                >Open collection guide →</a
+                            >
+                        </div>
+                        <div class="panel-copy">
+                            <p>
+                                Keep both planters directly on the glass. The
+                                older planter uses the open room-side arc that
+                                clears both the wooden table and wall cables.
+                                The 2026-07-31 GrowCam photo shows the two
+                                planters reversed; swap them when the risers go
+                                in.
+                            </p>
+                            <p class="muted">
+                                The A4–B4 and C4–D4 text can remain on the
+                                printed labels as durable planter IDs; they no
+                                longer describe a fourth row on the wooden
+                                table.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+
+                <div
+                    class="pot-key"
+                    aria-label="Pot position key"
+                >
+                    <div class="pot-key-item"
+                        ><code>A1</code><span>Variegated moon cactus</span></div
+                    >
+                    <div class="pot-key-item"
+                        ><code>B1</code><span>Grass-blade cactus</span></div
+                    >
+                    <div class="pot-key-item"
+                        ><code>C1</code><span>Giant chin cactus</span></div
+                    >
+                    <div class="pot-key-item"
+                        ><code>D1</code><span>Dragon’s Egg</span></div
+                    >
+                    <div class="pot-key-item"
+                        ><code>A2</code><span>Feather cactus</span></div
+                    >
+                    <div class="pot-key-item"
+                        ><code>B2</code><span>Old Man of the Andes</span></div
+                    >
+                    <div class="pot-key-item"
+                        ><code>C2</code><span>Rainbow hedgehog</span></div
+                    >
+                    <div class="pot-key-item"
+                        ><code>D2</code><span>Domino cactus</span></div
+                    >
+                    <div class="pot-key-item"
+                        ><code>A3</code><span>Serpent cactus</span></div
+                    >
+                    <div class="pot-key-item"
+                        ><code>B3</code><span>Indigo Wave</span></div
+                    >
+                    <div class="pot-key-item"
+                        ><code>C3</code><span>Monk’s hood</span></div
+                    >
+                    <div class="pot-key-item"
+                        ><code>D3</code><span>Ming Thing</span></div
+                    >
+                </div>
+            </section>
+
+            <section
+                class="section tab-panel"
+                id="height"
+                role="tabpanel"
+                aria-labelledby="tab-height"
+                hidden
+            >
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Diagram 3</p>
+                        <h2>Height, light, fan, and risers</h2>
+                    </div>
+                    <div class="field">
+                        <label for="light-clearance">Light clearance</label>
+                        <select id="light-clearance">
+                            <option
+                                value="20"
+                                selected
+                                >20 inches · acclimation</option
+                            >
+                            <option value="18">18 inches · maintained</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="diagram-shell">
+                    <div class="diagram-header">
+                        <strong>Long-axis side elevation</strong>
+                        <span
+                            >Window at left · room at right · measure from the
+                            highest living tip</span
+                        >
+                    </div>
+                    <div class="height-grid">
+                        <svg
+                            class="diagram"
+                            viewBox="0 0 760 620"
+                            role="img"
+                            aria-labelledby="height-title height-desc"
+                        >
+                            <title id="height-title">
+                                Long-axis elevation of the end-to-end grow
+                                layout
+                            </title>
+                            <desc id="height-desc">
+                                Viewed from the divider toward the white wall,
+                                the window is on the left and the room is on the
+                                right. The round glass table is at the window
+                                end and the wooden cactus table is beyond it
+                                toward the room. Both tabletops are eighteen
+                                inches from the floor. The tallest shared cactus
+                                is about twelve and one-half to thirteen inches
+                                above the glass, while starter tips begin about
+                                four to seven inches above the wood before
+                                risers.
+                            </desc>
+
+                            <text
+                                x="74"
+                                y="24"
+                                class="svg-small"
+                            >
+                                WINDOW END · ROUND TABLE / FAN
+                            </text>
+                            <text
+                                x="686"
+                                y="24"
+                                class="svg-small"
+                                text-anchor="end"
+                            >
+                                ROOM END · WOODEN TABLE
+                            </text>
+
+                            <rect
+                                x="185"
+                                y="46"
+                                width="390"
+                                height="34"
+                                rx="6"
+                                class="light"
+                            ></rect>
+                            <line
+                                x1="245"
+                                y1="0"
+                                x2="245"
+                                y2="46"
+                                class="table-leg"
+                            ></line>
+                            <line
+                                x1="515"
+                                y1="0"
+                                x2="515"
+                                y2="46"
+                                class="table-leg"
+                            ></line>
+                            <text
+                                x="380"
+                                y="69"
+                                class="svg-label"
+                                text-anchor="middle"
+                            >
+                                AW200SE
+                            </text>
+
+                            <line
+                                x1="76"
+                                y1="580"
+                                x2="684"
+                                y2="580"
+                                class="wall"
+                            ></line>
+
+                            <rect
+                                x="100"
+                                y="400"
+                                width="285"
+                                height="24"
+                                rx="5"
+                                class="glass"
+                            ></rect>
+                            <line
+                                x1="145"
+                                y1="424"
+                                x2="127"
+                                y2="580"
+                                class="table-leg"
+                            ></line>
+                            <line
+                                x1="340"
+                                y1="424"
+                                x2="358"
+                                y2="580"
+                                class="table-leg"
+                            ></line>
+                            <text
+                                x="242"
+                                y="449"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                ROUND TABLE · 18 IN HIGH
+                            </text>
+
+                            <rect
+                                x="430"
+                                y="400"
+                                width="230"
+                                height="24"
+                                rx="4"
+                                class="wood"
+                            ></rect>
+                            <line
+                                x1="465"
+                                y1="424"
+                                x2="450"
+                                y2="580"
+                                class="table-leg"
+                            ></line>
+                            <line
+                                x1="625"
+                                y1="424"
+                                x2="640"
+                                y2="580"
+                                class="table-leg"
+                            ></line>
+                            <text
+                                x="545"
+                                y="449"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                WOOD TABLE · 18 IN HIGH
+                            </text>
+
+                            <ellipse
+                                cx="242"
+                                cy="380"
+                                rx="82"
+                                ry="18"
+                                class="older-planter"
+                            ></ellipse>
+                            <path
+                                d="M165 380L179 400H305L319 380Z"
+                                class="older-planter"
+                            ></path>
+                            <rect
+                                x="229"
+                                y="270"
+                                width="26"
+                                height="110"
+                                rx="13"
+                                class="older-planter"
+                            ></rect>
+                            <path
+                                d="M207 300C187 328 179 352 188 379"
+                                class="tail"
+                            ></path>
+                            <text
+                                x="242"
+                                y="235"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                TALLEST SHARED: 12.5–13 IN
+                            </text>
+
+                            <path
+                                d="M445 400L452 382H490L497 400Z"
+                                class="pot"
+                            ></path>
+                            <rect
+                                x="463"
+                                y="335"
+                                width="16"
+                                height="47"
+                                rx="8"
+                                class="older-planter"
+                            ></rect>
+                            <text
+                                x="471"
+                                y="325"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                DIRECT
+                            </text>
+
+                            <rect
+                                x="515"
+                                y="361"
+                                width="88"
+                                height="39"
+                                rx="5"
+                                class="riser-lane"
+                                style="display: block"
+                            ></rect>
+                            <path
+                                d="M529 361L536 344H578L585 361Z"
+                                class="pot"
+                            ></path>
+                            <rect
+                                x="551"
+                                y="293"
+                                width="16"
+                                height="51"
+                                rx="8"
+                                class="older-planter"
+                            ></rect>
+
+                            <rect
+                                x="602"
+                                y="388"
+                                width="48"
+                                height="12"
+                                rx="4"
+                                class="riser-lane"
+                                style="display: block"
+                            ></rect>
+                            <path
+                                d="M599 388L606 371H644L651 388Z"
+                                class="pot"
+                            ></path>
+                            <rect
+                                x="617"
+                                y="300"
+                                width="16"
+                                height="71"
+                                rx="8"
+                                class="older-planter"
+                            ></rect>
+                            <text
+                                x="545"
+                                y="467"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                4–7 IN STARTER BAND + RISERS
+                            </text>
+
+                            <line
+                                x1="105"
+                                y1="270"
+                                x2="660"
+                                y2="270"
+                                class="target"
+                            ></line>
+                            <text
+                                x="380"
+                                y="258"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                HIGHEST LIVING TIP REFERENCE
+                            </text>
+
+                            <line
+                                x1="690"
+                                y1="80"
+                                x2="690"
+                                y2="270"
+                                class="measure"
+                            ></line>
+                            <line
+                                x1="680"
+                                y1="80"
+                                x2="700"
+                                y2="80"
+                                class="measure"
+                            ></line>
+                            <line
+                                x1="680"
+                                y1="270"
+                                x2="700"
+                                y2="270"
+                                class="measure"
+                            ></line>
+                            <text
+                                x="714"
+                                y="180"
+                                class="svg-label"
+                                text-anchor="middle"
+                                transform="rotate(90 714 180)"
+                            >
+                                <tspan data-clearance>20</tspan>
+                                IN LIGHT-TO-TIP
+                            </text>
+
+                            <line
+                                x1="78"
+                                y1="400"
+                                x2="78"
+                                y2="580"
+                                class="measure"
+                            ></line>
+                            <line
+                                x1="68"
+                                y1="400"
+                                x2="88"
+                                y2="400"
+                                class="measure"
+                            ></line>
+                            <line
+                                x1="68"
+                                y1="580"
+                                x2="88"
+                                y2="580"
+                                class="measure"
+                            ></line>
+                            <text
+                                x="54"
+                                y="495"
+                                class="svg-label"
+                                text-anchor="middle"
+                                transform="rotate(-90 54 495)"
+                            >
+                                18 IN TABLE SURFACE
+                            </text>
+
+                            <circle
+                                cx="65"
+                                cy="210"
+                                r="32"
+                                class="fan"
+                            ></circle>
+                            <path
+                                d="M65 184Q87 210 65 236Q43 210 65 184M39 210Q65 188 91 210Q65 232 39 210"
+                                class="fan-blade"
+                            ></path>
+                            <line
+                                x1="65"
+                                y1="242"
+                                x2="65"
+                                y2="270"
+                                class="measure"
+                            ></line>
+                            <text
+                                x="107"
+                                y="205"
+                                class="svg-small"
+                            >
+                                FAN HUB
+                            </text>
+                            <text
+                                x="107"
+                                y="223"
+                                class="svg-small"
+                            >
+                                4–8 IN ABOVE TIP
+                            </text>
+
+                            <text
+                                x="380"
+                                y="610"
+                                class="svg-label"
+                                text-anchor="middle"
+                            >
+                                VIEWED FROM DIVIDER TOWARD WHITE WALL · WINDOW
+                                LEFT / ROOM RIGHT
+                            </text>
+                        </svg>
+
+                        <aside class="measurement-panel">
+                            <h3>Tape-photo measurements</h3>
+                            <div class="measurement-grid">
+                                <div class="field">
+                                    <label for="target-canopy"
+                                        >Target starter canopy above wood</label
+                                    >
+                                    <input
+                                        id="target-canopy"
+                                        type="number"
+                                        min="0"
+                                        step="0.25"
+                                        value="8.5"
+                                    />
+                                </div>
+                                <div class="field">
+                                    <label for="sample-tip"
+                                        >Selected tip above wood</label
+                                    >
+                                    <input
+                                        id="sample-tip"
+                                        type="number"
+                                        min="0"
+                                        step="0.25"
+                                        value="5.5"
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                class="result"
+                                aria-live="polite"
+                            >
+                                <strong id="riser-result"
+                                    >Calculating from the recorded
+                                    measurements.</strong
+                                >
+                                <span id="riser-detail">
+                                    The calculator will choose the available
+                                    lift that places the selected tip closest to
+                                    the target starter canopy.
+                                </span>
+                            </div>
+                            <div class="layout-note">
+                                <p>
+                                    The 8.5-inch target is a practical starting
+                                    band, not a reason to force every species to
+                                    the exact same height. Replace “selected
+                                    tip” with a fresh measurement for each pot.
+                                    Keep A1 lower at the outer edge if its pale
+                                    tissue reacts, and keep both shared planters
+                                    direct.
+                                </p>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+
+                <div
+                    class="riser-inventory"
+                    aria-label="Available acrylic riser sizes"
+                >
+                    <div class="riser">
+                        <strong>+1.18 in</strong>
+                        <span>7.87 × 2.95-inch top</span>
+                    </div>
+                    <div class="riser">
+                        <strong>+2.75 in</strong>
+                        <span>8.26 × 2.95-inch top</span>
+                    </div>
+                    <div class="riser">
+                        <strong>+3.93 in</strong>
+                        <span>8.66 × 2.95-inch top</span>
+                    </div>
+                    <div class="riser">
+                        <strong>+5.11 in</strong>
+                        <span>9.05 × 2.95-inch top</span>
+                    </div>
+                </div>
+
+                <div class="layout-note">
+                    <p>
+                        Install one riser left-to-right beneath the two
+                        center-side pots in each physical row, as shown above.
+                        This is a photo-derived starting plan: A3/B1 use +5.11,
+                        D3/A2 use +3.93, D2/C3 use +2.75, and B2/C2 use +1.18.
+                        A1, C1, D1, and B3 stay direct. Because every acrylic
+                        top is only 2.95 inches wide, dry-fit the attached
+                        saucers before trusting a two-pot shelf. Three pots will
+                        not fit safely. Use one pot per riser or leave the row
+                        direct if either pot rocks, tips, or slides; never stack
+                        the stands.
+                    </p>
+                </div>
+            </section>
+
+            <section
+                class="section tab-panel"
+                id="wiring"
+                role="tabpanel"
+                aria-labelledby="tab-wiring"
+                hidden
+            >
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Diagram 4</p>
+                        <h2>Wiring and drip loop</h2>
+                    </div>
+                    <p>
+                        A cable should dip below its connection before rising to
+                        the outlet or controller. Water reaches the low point
+                        and falls away from the electrical connection.
+                    </p>
+                </div>
+
+                <div class="diagram-shell">
+                    <div class="diagram-header">
+                        <strong>Right-wall cable path</strong>
+                        <span
+                            >Connection high · loop low · electrical equipment
+                            off the floor</span
+                        >
+                    </div>
+                    <div class="room-grid">
+                        <svg
+                            class="diagram"
+                            viewBox="0 0 760 520"
+                            role="img"
+                            aria-labelledby="drip-title drip-desc"
+                        >
+                            <title id="drip-title">
+                                Safe cable drip loop beside the grow tables
+                            </title>
+                            <desc id="drip-desc">
+                                The camera and controller cable descends below a
+                                wall outlet, curves through a low point where
+                                water can drip off, and then rises into the
+                                protected electrical connection. Trays and the
+                                watering area remain below and away from the
+                                outlet.
+                            </desc>
+
+                            <line
+                                x1="605"
+                                y1="45"
+                                x2="605"
+                                y2="465"
+                                class="wall"
+                            ></line>
+                            <rect
+                                x="548"
+                                y="89"
+                                width="57"
+                                height="78"
+                                rx="7"
+                                class="safe-zone"
+                            ></rect>
+                            <rect
+                                x="560"
+                                y="105"
+                                width="33"
+                                height="48"
+                                rx="4"
+                                class="camera"
+                            ></rect>
+                            <circle
+                                cx="569"
+                                cy="128"
+                                r="5"
+                                class="camera"
+                            ></circle>
+                            <text
+                                x="532"
+                                y="112"
+                                class="svg-label"
+                                text-anchor="end"
+                            >
+                                WALL CAMERA
+                            </text>
+
+                            <rect
+                                x="558"
+                                y="206"
+                                width="47"
+                                height="55"
+                                rx="5"
+                                class="safe-zone"
+                            ></rect>
+                            <circle
+                                cx="570"
+                                cy="222"
+                                r="4"
+                                class="pot"
+                            ></circle>
+                            <circle
+                                cx="591"
+                                cy="222"
+                                r="4"
+                                class="pot"
+                            ></circle>
+                            <text
+                                x="540"
+                                y="224"
+                                class="svg-label"
+                                text-anchor="end"
+                            >
+                                OUTLET / ADAPTER
+                            </text>
+                            <text
+                                x="540"
+                                y="244"
+                                class="svg-small"
+                                text-anchor="end"
+                            >
+                                ABOVE WATERING ZONE
+                            </text>
+
+                            <path
+                                d="M575 153C575 191 527 217 527 298C527 371 581 390 581 259"
+                                class="cable"
+                            ></path>
+                            <text
+                                x="438"
+                                y="322"
+                                class="svg-label"
+                                text-anchor="middle"
+                            >
+                                LOW POINT
+                            </text>
+                            <text
+                                x="438"
+                                y="343"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                WATER FALLS AWAY HERE
+                            </text>
+                            <line
+                                x1="476"
+                                y1="345"
+                                x2="546"
+                                y2="380"
+                                class="measure"
+                            ></line>
+                            <path
+                                d="M533 388C525 401 520 411 520 424C520 436 529 444 539 444C550 444 558 436 558 424C558 411 550 401 542 388Z"
+                                class="water-drop"
+                            ></path>
+
+                            <rect
+                                x="112"
+                                y="365"
+                                width="306"
+                                height="35"
+                                rx="7"
+                                class="glass"
+                            ></rect>
+                            <path
+                                d="M146 365L153 337H205L212 365Z"
+                                class="older-planter"
+                            ></path>
+                            <path
+                                d="M276 365L283 337H335L342 365Z"
+                                class="succulent-planter"
+                            ></path>
+                            <rect
+                                x="88"
+                                y="400"
+                                width="360"
+                                height="48"
+                                rx="8"
+                                class="floor-mylar"
+                            ></rect>
+                            <text
+                                x="265"
+                                y="388"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                ROUND TABLE / WATERING ZONE
+                            </text>
+                            <text
+                                x="268"
+                                y="431"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                FLOOR MYLAR BELOW
+                            </text>
+
+                            <line
+                                x1="70"
+                                y1="468"
+                                x2="650"
+                                y2="468"
+                                class="target"
+                            ></line>
+                            <text
+                                x="73"
+                                y="495"
+                                class="svg-small"
+                            >
+                                FLOOR — NO POWER STRIP OR CONNECTOR HERE
+                            </text>
+                        </svg>
+
+                        <aside class="key">
+                            <h3>Use this on every hanging cable</h3>
+                            <dl class="key-list">
+                                <div class="key-item">
+                                    <dt>Make one low bend</dt>
+                                    <dd>
+                                        Route the cable below the outlet,
+                                        adapter, E25, or camera connection
+                                        before it rises into that connection.
+                                    </dd>
+                                </div>
+                                <div class="key-item">
+                                    <dt>Clip the upper run</dt>
+                                    <dd>
+                                        Secure the cable to the right wall so
+                                        the loop cannot swing into plants, the
+                                        fan, or the aisle.
+                                    </dd>
+                                </div>
+                                <div class="key-item">
+                                    <dt>Keep the low point clear</dt>
+                                    <dd>
+                                        The bend belongs outside trays and
+                                        watering paths. It should not rest on
+                                        the floor Mylar or carpet.
+                                    </dd>
+                                </div>
+                            </dl>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                Installed layout updated 2026-08-03 for a 36 × approximately
+                60-inch bay; two end-to-end 18-inch-high tables; centered
+                26-inch AW200SE wing span; wall-mounted GrowCam; divider-pole
+                fan; full-height and floor Mylar; and the photo-derived
+                height-first riser plan. The round table occupies the window end
+                and the wooden table occupies the room end.
+            </footer>
+        </main>
+
+        <script>
+            (() => {
+                const page = document.getElementById("layout-page");
+                const diameterInput = document.getElementById("round-diameter");
+                const riserToggle = document.getElementById("show-risers");
+                const clearanceSelect =
+                    document.getElementById("light-clearance");
+                const printButton = document.getElementById("print-layout");
+                const themeToggle = document.getElementById("theme-toggle");
+                const themeLabel = document.getElementById("theme-label");
+                const tabs = [
+                    ...document.querySelectorAll('[role="tab"][data-tab]'),
+                ];
+                const panels = [
+                    ...document.querySelectorAll('[role="tabpanel"]'),
+                ];
+                const themeStorageKey = "gardening-site-theme";
+                const measurementIds = ["target-canopy", "sample-tip"];
+                const measurements = measurementIds.map((id) =>
+                    document.getElementById(id)
+                );
+                const result = document.getElementById("riser-result");
+                const detail = document.getElementById("riser-detail");
+                const availableLifts = [0, 1.18, 2.75, 3.93, 5.11];
+                const plantMarkers = [
+                    ...document.querySelectorAll("[data-plant-marker]"),
+                ];
+                const plantPanels = new Map(
+                    [...document.querySelectorAll("[data-plant-panel]")].map(
+                        (panel) => [panel.dataset.plantPanel, panel]
+                    )
+                );
+                const plantFieldNames = [
+                    "name",
+                    "botanical",
+                    "record",
+                    "origin",
+                    "placement",
+                    "status",
+                ];
+
+                function activateTab(
+                    tabId,
+                    { updateHash = false, moveFocus = false } = {}
+                ) {
+                    const nextTab =
+                        tabs.find((tab) => tab.dataset.tab === tabId) ??
+                        tabs[0];
+                    panels.forEach((panel) => {
+                        panel.hidden = panel.id !== nextTab.dataset.tab;
+                    });
+                    tabs.forEach((tab) => {
+                        tab.setAttribute(
+                            "aria-selected",
+                            tab === nextTab ? "true" : "false"
+                        );
+                    });
+
+                    if (updateHash) {
+                        try {
+                            history.replaceState(
+                                null,
+                                "",
+                                `#${nextTab.dataset.tab}`
+                            );
+                        } catch {
+                            // The selected tab still works when file URL history is restricted.
+                        }
+                    }
+                    if (moveFocus) nextTab.focus();
+                }
+
+                function syncThemeControl() {
+                    const darkMode =
+                        document.documentElement.dataset.theme === "dark";
+                    themeLabel.textContent = darkMode
+                        ? "Light mode"
+                        : "Dark mode";
+                    themeToggle.setAttribute(
+                        "aria-pressed",
+                        darkMode ? "true" : "false"
+                    );
+                }
+
+                function updateDiameter() {
+                    const value = Number(diameterInput.value);
+                    const display =
+                        Number.isFinite(value) && value > 0 ? value : "—";
+                    document
+                        .querySelectorAll("[data-round-diameter]")
+                        .forEach((node) => {
+                            node.textContent = String(display);
+                        });
+                }
+
+                function updateClearance() {
+                    document
+                        .querySelectorAll("[data-clearance]")
+                        .forEach((node) => {
+                            node.textContent = clearanceSelect.value;
+                        });
+                }
+
+                function updateRiserRecommendation() {
+                    const values = measurements.map((input) =>
+                        Number(input.value)
+                    );
+                    const complete = measurements.every(
+                        (input, index) =>
+                            input.value !== "" && Number.isFinite(values[index])
+                    );
+
+                    if (!complete) {
+                        result.textContent = "Enter both canopy measurements.";
+                        detail.textContent =
+                            "The calculator will choose the available lift that places the selected tip closest to the target starter canopy.";
+                        return;
+                    }
+
+                    const [targetCanopy, sampleTip] = values;
+                    const recommendation = availableLifts.reduce(
+                        (best, lift) => {
+                            const bestDifference = Math.abs(
+                                sampleTip + best - targetCanopy
+                            );
+                            const nextDifference = Math.abs(
+                                sampleTip + lift - targetCanopy
+                            );
+                            return nextDifference < bestDifference
+                                ? lift
+                                : best;
+                        }
+                    );
+                    const finalTip = sampleTip + recommendation;
+                    const difference = finalTip - targetCanopy;
+
+                    result.textContent =
+                        recommendation === 0
+                            ? "Keep this pot directly on the wooden table."
+                            : `Use the +${recommendation.toFixed(2)}-inch riser.`;
+                    detail.textContent = `Estimated final tip: ${finalTip.toFixed(2)} inches above the wood; ${Math.abs(difference).toFixed(2)} inches ${difference < 0 ? "below" : difference > 0 ? "above" : "from"} the target.`;
+                }
+
+                function showPlantDetails(marker) {
+                    const target = marker.dataset.detailTarget;
+                    const panel = plantPanels.get(target);
+                    if (!panel) return;
+
+                    for (const fieldName of plantFieldNames) {
+                        const field = panel.querySelector(
+                            `[data-plant-field="${fieldName}"]`
+                        );
+                        if (field) {
+                            field.textContent =
+                                marker.dataset[fieldName] ?? "Not recorded";
+                        }
+                    }
+
+                    const profileLink = panel.querySelector(
+                        "[data-plant-profile]"
+                    );
+                    if (profileLink) {
+                        profileLink.hidden = !marker.dataset.profile;
+                        if (marker.dataset.profile) {
+                            profileLink.href = marker.dataset.profile;
+                            profileLink.textContent =
+                                marker.dataset.linkLabel ??
+                                "Open full plant profile →";
+                        }
+                    }
+
+                    plantMarkers.forEach((candidate) => {
+                        if (candidate.dataset.detailTarget === target) {
+                            candidate.classList.toggle(
+                                "is-active",
+                                candidate === marker
+                            );
+                        }
+                    });
+                    panel.classList.add("is-populated");
+                    panel.dataset.activePlant = marker.dataset.record ?? "";
+                }
+
+                diameterInput.addEventListener("input", updateDiameter);
+                riserToggle.addEventListener("change", () => {
+                    page.classList.toggle("show-risers", riserToggle.checked);
+                });
+                clearanceSelect.addEventListener("change", updateClearance);
+                measurements.forEach((input) => {
+                    input.addEventListener("input", updateRiserRecommendation);
+                });
+                plantMarkers.forEach((marker) => {
+                    marker.addEventListener("pointerenter", () => {
+                        showPlantDetails(marker);
+                    });
+                    marker.addEventListener("focus", () => {
+                        showPlantDetails(marker);
+                    });
+                    marker.addEventListener("click", () => {
+                        marker.focus({ preventScroll: true });
+                        showPlantDetails(marker);
+                    });
+                });
+                tabs.forEach((tab, index) => {
+                    tab.addEventListener("click", () => {
+                        activateTab(tab.dataset.tab, { updateHash: true });
+                    });
+                    tab.addEventListener("keydown", (event) => {
+                        let nextIndex;
+                        if (event.key === "ArrowRight")
+                            nextIndex = (index + 1) % tabs.length;
+                        if (event.key === "ArrowLeft") {
+                            nextIndex = (index - 1 + tabs.length) % tabs.length;
+                        }
+                        if (event.key === "Home") nextIndex = 0;
+                        if (event.key === "End") nextIndex = tabs.length - 1;
+                        if (nextIndex === undefined) return;
+                        event.preventDefault();
+                        activateTab(tabs[nextIndex].dataset.tab, {
+                            updateHash: true,
+                            moveFocus: true,
+                        });
+                    });
+                });
+                window.addEventListener("hashchange", () => {
+                    activateTab(location.hash.slice(1));
+                });
+                themeToggle.addEventListener("click", () => {
+                    const nextTheme =
+                        document.documentElement.dataset.theme === "dark"
+                            ? "light"
+                            : "dark";
+                    document.documentElement.dataset.theme = nextTheme;
+                    try {
+                        localStorage.setItem(themeStorageKey, nextTheme);
+                    } catch {
+                        // The theme still works for this page view when storage is unavailable.
+                    }
+                    syncThemeControl();
+                });
+                printButton.addEventListener("click", () => window.print());
+
+                activateTab(location.hash.slice(1));
+                page.classList.toggle("show-risers", riserToggle.checked);
+                syncThemeControl();
+                updateDiameter();
+                updateClearance();
+                updateRiserRecommendation();
+            })();
+        </script>
+    </body>
+</html>

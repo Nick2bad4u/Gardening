@@ -1,0 +1,2666 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+        />
+        <meta
+            name="description"
+            content="Graphic August and September 2026 indoor acclimation calendar for the Fenton cactus and succulent collection."
+        />
+        <link
+            rel="icon"
+            href="data:,"
+        />
+        <title>2026 indoor acclimation calendar</title>
+        <script>
+            (() => {
+                const themeKey = "gardening-site-theme";
+                const legacyThemeKey = "gardening-indoor-calendar-theme";
+                const emptyDaysKey = "gardening-indoor-calendar-hide-empty";
+                try {
+                    const savedTheme =
+                        localStorage.getItem(themeKey) ??
+                        localStorage.getItem(legacyThemeKey);
+                    document.documentElement.dataset.theme =
+                        savedTheme === "dark" || savedTheme === "light"
+                            ? savedTheme
+                            : matchMedia("(prefers-color-scheme: dark)").matches
+                              ? "dark"
+                              : "light";
+                    if (savedTheme === "dark" || savedTheme === "light") {
+                        localStorage.setItem(themeKey, savedTheme);
+                    }
+                    if (localStorage.getItem(emptyDaysKey) === "true") {
+                        document.documentElement.classList.add(
+                            "hide-empty-days"
+                        );
+                    }
+                } catch {
+                    document.documentElement.dataset.theme = "light";
+                }
+            })();
+        </script>
+        <style>
+            :root {
+                color-scheme: light;
+                --ink: #18221c;
+                --muted: #5d6b61;
+                --paper: #f7f4ec;
+                --card: #fffdf7;
+                --line: #d9d7ca;
+                --forest: #204f3a;
+                --leaf: #3e7958;
+                --prep: #e7b44d;
+                --prep-soft: #fff3cf;
+                --move: #16877b;
+                --move-soft: #dff4ef;
+                --light: #de723f;
+                --light-soft: #ffeadf;
+                --check: #557b3c;
+                --check-soft: #e8f2dd;
+                --sensor: #3978a8;
+                --sensor-soft: #e2f0fa;
+                --season: #7656a4;
+                --season-soft: #eee6f8;
+                --shadow: 0 14px 35px rgb(33 55 42 / 10%);
+                --day: #fffdf8;
+                --subtle: #f0eee6;
+                --blank-a: #f7f5ee;
+                --blank-b: #f1efe7;
+                --legend-bg: rgb(255 253 247 / 75%);
+                --forest-solid: #204f3a;
+                --priority-border: #e7cd86;
+                --priority-tag-bg: #fff8e7;
+                --priority-tag-ink: #69480b;
+                --priority-ink: #5d4a1f;
+                --sun-ink: #8a5c12;
+                --sensor-border: #bdd8ec;
+                --sensor-title: #285b80;
+                --sensor-text: #36576f;
+                --next-border: #d8cae8;
+                --next-title: #533877;
+                --light-ink: #71351d;
+                --check-ink: #335020;
+                --move-ink: #0a5a53;
+                --sensor-ink: #255779;
+                --season-ink: #503477;
+            }
+
+            html[data-theme="dark"] {
+                color-scheme: dark;
+                --ink: #edf5ef;
+                --muted: #aab9af;
+                --paper: #101612;
+                --card: #18211b;
+                --line: #354239;
+                --forest: #8ad1a4;
+                --leaf: #69a97f;
+                --prep: #deb457;
+                --prep-soft: #3a311d;
+                --move: #53c5b6;
+                --move-soft: #193b36;
+                --light: #f08b57;
+                --light-soft: #42291f;
+                --check: #8ab169;
+                --check-soft: #263920;
+                --sensor: #6aaad7;
+                --sensor-soft: #1d3548;
+                --season: #aa8bd2;
+                --season-soft: #342a42;
+                --shadow: 0 14px 35px rgb(0 0 0 / 28%);
+                --day: #151d17;
+                --subtle: #202a23;
+                --blank-a: #171f19;
+                --blank-b: #1b241d;
+                --legend-bg: rgb(24 33 27 / 88%);
+                --forest-solid: #32694d;
+                --priority-border: #725f2d;
+                --priority-tag-bg: #4a3b19;
+                --priority-tag-ink: #f3d688;
+                --priority-ink: #e2cf9c;
+                --sun-ink: #e4b967;
+                --sensor-border: #315b78;
+                --sensor-title: #a9d2ed;
+                --sensor-text: #bfd9e9;
+                --next-border: #58476d;
+                --next-title: #d4bbed;
+                --light-ink: #ffc5a7;
+                --check-ink: #cce2bb;
+                --move-ink: #aee7df;
+                --sensor-ink: #c0dff2;
+                --season-ink: #dfcff2;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                margin: 0;
+                min-width: 0;
+                color: var(--ink);
+                background:
+                    radial-gradient(
+                        circle at 8% 2%,
+                        rgb(231 180 77 / 20%),
+                        transparent 28rem
+                    ),
+                    radial-gradient(
+                        circle at 94% 15%,
+                        rgb(22 135 123 / 13%),
+                        transparent 30rem
+                    ),
+                    var(--paper);
+                font-family:
+                    Inter,
+                    ui-sans-serif,
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+                line-height: 1.45;
+            }
+
+            html[data-theme="dark"] body {
+                background:
+                    radial-gradient(
+                        circle at 8% 2%,
+                        rgb(210 162 68 / 12%),
+                        transparent 28rem
+                    ),
+                    radial-gradient(
+                        circle at 94% 15%,
+                        rgb(57 166 151 / 10%),
+                        transparent 30rem
+                    ),
+                    var(--paper);
+            }
+
+            button {
+                font: inherit;
+            }
+
+            .nf {
+                display: inline-block;
+                font-family:
+                    "Hack Nerd Font", "Hack Nerd Font Mono",
+                    "Symbols Nerd Font Mono", "Symbols Nerd Font", monospace;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 1;
+            }
+
+            html.no-nerd-font .nf {
+                display: none;
+            }
+
+            .shell {
+                width: min(1500px, calc(100% - 32px));
+                margin: 0 auto;
+                padding: 30px 0 64px;
+            }
+
+            .hero {
+                position: relative;
+                overflow: hidden;
+                padding: clamp(24px, 4vw, 52px);
+                color: #f9fff9;
+                background:
+                    linear-gradient(
+                        120deg,
+                        rgb(16 55 39 / 97%),
+                        rgb(32 79 58 / 94%)
+                    ),
+                    #183c2d;
+                border-radius: 28px;
+                box-shadow: var(--shadow);
+            }
+
+            .hero::after {
+                position: absolute;
+                right: -80px;
+                bottom: -130px;
+                width: 390px;
+                height: 390px;
+                content: "";
+                border: 42px solid rgb(255 255 255 / 6%);
+                border-radius: 50%;
+            }
+
+            .eyebrow {
+                margin: 0 0 8px;
+                color: #bce2c9;
+                font-size: 0.76rem;
+                font-weight: 800;
+                letter-spacing: 0.16em;
+                text-transform: uppercase;
+            }
+
+            h1,
+            h2,
+            h3,
+            p {
+                margin-top: 0;
+            }
+
+            h1 {
+                max-width: 820px;
+                margin-bottom: 12px;
+                font-family: Georgia, "Times New Roman", serif;
+                font-size: clamp(2.25rem, 5.5vw, 5.2rem);
+                font-weight: 500;
+                letter-spacing: -0.045em;
+                line-height: 0.98;
+            }
+
+            .lede {
+                max-width: 760px;
+                margin-bottom: 24px;
+                color: #dcebe0;
+                font-size: clamp(1rem, 1.7vw, 1.2rem);
+            }
+
+            .hero-actions {
+                position: relative;
+                z-index: 1;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .button {
+                align-items: center;
+                display: inline-flex;
+                min-height: 42px;
+                padding: 10px 16px;
+                color: #204f3a;
+                background: #f8fff8;
+                border: 1px solid rgb(255 255 255 / 55%);
+                border-radius: 999px;
+                cursor: pointer;
+                font-weight: 800;
+                text-decoration: none;
+            }
+
+            .button .nf {
+                margin-right: 7px;
+            }
+
+            .button.secondary {
+                color: #f7fff7;
+                background: rgb(255 255 255 / 8%);
+            }
+
+            .button:focus-visible,
+            .event:focus-visible {
+                outline: 3px solid #89d8bd;
+                outline-offset: 3px;
+            }
+
+            .hero-stat {
+                display: inline-flex;
+                align-items: center;
+                min-height: 42px;
+                padding: 8px 14px;
+                color: #dcebe0;
+                background: rgb(255 255 255 / 7%);
+                border: 1px solid rgb(255 255 255 / 12%);
+                border-radius: 999px;
+                font-size: 0.88rem;
+                font-weight: 700;
+            }
+
+            .hero-stat .nf {
+                margin-right: 7px;
+            }
+
+            .section-heading h2 .nf,
+            .panel h3 .nf {
+                margin-right: 12px;
+            }
+
+            .live-dashboard {
+                position: relative;
+                z-index: 1;
+                display: grid;
+                grid-template-columns: 0.75fr 1.35fr 1fr;
+                gap: 1px;
+                margin-top: 18px;
+                overflow: hidden;
+                color: #effaf1;
+                background: rgb(255 255 255 / 14%);
+                border: 1px solid rgb(255 255 255 / 16%);
+                border-radius: 17px;
+            }
+
+            .live-block {
+                min-width: 0;
+                padding: 15px 17px;
+                background: rgb(5 31 21 / 44%);
+            }
+
+            .live-label {
+                display: block;
+                margin-bottom: 5px;
+                color: #bce2c9;
+                font-size: 0.69rem;
+                font-weight: 800;
+                letter-spacing: 0.09em;
+                text-transform: uppercase;
+            }
+
+            .live-label .nf {
+                margin-right: 6px;
+            }
+
+            .live-clock {
+                display: block;
+                color: #fff;
+                font-family:
+                    "Hack Nerd Font Mono", "Cascadia Mono", "SFMono-Regular",
+                    Consolas, monospace;
+                font-size: clamp(1.35rem, 2.4vw, 2rem);
+                font-variant-numeric: tabular-nums;
+                font-weight: 700;
+                line-height: 1.1;
+            }
+
+            .live-date,
+            .next-event-time,
+            .progress-caption {
+                display: block;
+                margin-top: 5px;
+                color: #c8dbce;
+                font-size: 0.76rem;
+            }
+
+            .next-event-title {
+                display: block;
+                overflow: hidden;
+                color: #fff;
+                font-size: clamp(1rem, 1.6vw, 1.25rem);
+                line-height: 1.2;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .countdown {
+                color: #ffe09a;
+                font-family:
+                    "Hack Nerd Font Mono", "Cascadia Mono", "SFMono-Regular",
+                    Consolas, monospace;
+                font-variant-numeric: tabular-nums;
+                font-weight: 800;
+            }
+
+            .progress-heading {
+                display: flex;
+                justify-content: space-between;
+                gap: 12px;
+                color: #fff;
+                font-size: 0.84rem;
+                font-weight: 800;
+            }
+
+            .progress-track {
+                height: 8px;
+                margin-top: 10px;
+                overflow: hidden;
+                background: rgb(255 255 255 / 13%);
+                border-radius: 999px;
+            }
+
+            .progress-bar {
+                display: block;
+                width: 0;
+                height: 100%;
+                background: linear-gradient(90deg, #e8b74e, #7cd6a2);
+                border-radius: inherit;
+                transition: width 500ms ease;
+            }
+
+            .section {
+                margin-top: 32px;
+            }
+
+            .section-heading {
+                display: flex;
+                align-items: end;
+                justify-content: space-between;
+                gap: 20px;
+                margin-bottom: 15px;
+            }
+
+            .section-heading h2 {
+                margin-bottom: 3px;
+                font-family: Georgia, "Times New Roman", serif;
+                font-size: clamp(1.55rem, 3vw, 2.35rem);
+                font-weight: 500;
+                letter-spacing: -0.025em;
+            }
+
+            .section-heading h2 .nf,
+            .panel h3 .nf {
+                margin-right: 8px;
+                color: var(--forest);
+                font-size: 0.82em;
+            }
+
+            .section-heading p {
+                margin-bottom: 0;
+                color: var(--muted);
+            }
+
+            .prep-strip {
+                display: grid;
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                overflow: hidden;
+                background: var(--card);
+                border: 1px solid var(--line);
+                border-radius: 20px;
+                box-shadow: var(--shadow);
+            }
+
+            .prep-day {
+                position: relative;
+                min-height: 162px;
+                padding: 20px;
+                border-right: 1px solid var(--line);
+            }
+
+            .prep-day:last-child {
+                border-right: 0;
+            }
+
+            .prep-day.today,
+            .day.today,
+            .agenda-day.today {
+                box-shadow: inset 0 0 0 2px var(--prep);
+            }
+
+            .prep-day.move-day {
+                background: linear-gradient(
+                    145deg,
+                    var(--move-soft),
+                    var(--card) 80%
+                );
+            }
+
+            .prep-date {
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
+                gap: 8px;
+                margin-bottom: 13px;
+            }
+
+            .prep-date strong {
+                color: var(--forest);
+                font-size: 1.55rem;
+            }
+
+            .prep-date span {
+                color: var(--muted);
+                font-size: 0.72rem;
+                font-weight: 800;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+
+            .prep-day h3 {
+                margin-bottom: 7px;
+                font-size: 1rem;
+            }
+
+            .prep-day p {
+                margin-bottom: 0;
+                color: var(--muted);
+                font-size: 0.87rem;
+            }
+
+            .prep-day a {
+                color: inherit;
+                font-weight: 800;
+                text-underline-offset: 3px;
+            }
+
+            .priority-note {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 13px;
+                margin-top: 14px;
+                padding: 16px 18px;
+                background: var(--prep-soft);
+                border: 1px solid var(--priority-border);
+                border-radius: 16px;
+            }
+
+            .priority-note strong {
+                align-self: start;
+                padding: 3px 8px;
+                color: var(--priority-tag-ink);
+                background: var(--priority-tag-bg);
+                border-radius: 7px;
+                font-size: 0.75rem;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+            }
+
+            .priority-note p {
+                margin: 0;
+                color: var(--priority-ink);
+            }
+
+            .legend {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-bottom: 13px;
+            }
+
+            .legend-item {
+                display: inline-flex;
+                align-items: center;
+                gap: 15px;
+                padding: 6px 10px;
+                color: var(--muted);
+                background: var(--legend-bg);
+                border: 1px solid var(--line);
+                border-radius: 999px;
+                font-size: 0.78rem;
+                font-weight: 700;
+            }
+
+            .legend-icon {
+                color: var(--swatch);
+                font-size: 0.92rem;
+            }
+
+            .months {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 20px;
+            }
+
+            .month {
+                overflow: hidden;
+                background: var(--card);
+                border: 1px solid var(--line);
+                border-radius: 22px;
+                box-shadow: var(--shadow);
+            }
+
+            .month-header {
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
+                gap: 14px;
+                padding: 19px 20px 14px;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .month-header h3 {
+                margin: 0;
+                font-family: Georgia, "Times New Roman", serif;
+                font-size: 1.65rem;
+                font-weight: 500;
+            }
+
+            .month-header span {
+                color: var(--muted);
+                font-size: 0.78rem;
+                font-weight: 700;
+            }
+
+            .weekdays,
+            .month-grid {
+                display: grid;
+                grid-template-columns: repeat(7, minmax(0, 1fr));
+            }
+
+            .weekday {
+                padding: 8px 4px;
+                color: var(--muted);
+                background: var(--subtle);
+                border-right: 1px solid var(--line);
+                font-size: 0.67rem;
+                font-weight: 800;
+                letter-spacing: 0.08em;
+                text-align: center;
+                text-transform: uppercase;
+            }
+
+            .weekday:last-child {
+                border-right: 0;
+            }
+
+            .day {
+                min-width: 0;
+                min-height: 146px;
+                padding: 8px;
+                background: var(--day);
+                border-right: 1px solid var(--line);
+                border-bottom: 1px solid var(--line);
+            }
+
+            .day:nth-child(7n) {
+                border-right: 0;
+            }
+
+            .day.blank {
+                background: repeating-linear-gradient(
+                    -45deg,
+                    var(--blank-a),
+                    var(--blank-a) 6px,
+                    var(--blank-b) 6px,
+                    var(--blank-b) 12px
+                );
+            }
+
+            .day-number {
+                display: inline-grid;
+                width: 26px;
+                height: 26px;
+                margin-bottom: 5px;
+                place-items: center;
+                color: var(--muted);
+                border-radius: 50%;
+                font-size: 0.78rem;
+                font-weight: 800;
+            }
+
+            .day.has-events .day-number {
+                color: #fff;
+                background: var(--forest-solid);
+            }
+
+            .event {
+                display: block;
+                width: 100%;
+                margin: 3px 0 0;
+                padding: 6px 7px;
+                color: var(--event-ink);
+                background: var(--event-bg);
+                border: 0;
+                border-left: 3px solid var(--event-color);
+                border-radius: 7px;
+                cursor: pointer;
+                font-size: clamp(0.61rem, 0.7vw, 0.72rem);
+                font-weight: 750;
+                line-height: 1.25;
+                text-align: left;
+                overflow-wrap: anywhere;
+            }
+
+            .event::before {
+                content: "○ ";
+            }
+
+            .event .nf {
+                margin-right: 15px;
+                color: var(--event-color);
+            }
+
+            .event.done {
+                opacity: 0.6;
+                text-decoration: line-through;
+            }
+
+            .event.done::before {
+                content: "✓ ";
+            }
+
+            .event.light {
+                --event-color: var(--light);
+                --event-bg: var(--light-soft);
+                --event-ink: var(--light-ink);
+            }
+
+            .event.check {
+                --event-color: var(--check);
+                --event-bg: var(--check-soft);
+                --event-ink: var(--check-ink);
+            }
+
+            .event.move {
+                --event-color: var(--move);
+                --event-bg: var(--move-soft);
+                --event-ink: var(--move-ink);
+            }
+
+            .event.sensor {
+                --event-color: var(--sensor);
+                --event-bg: var(--sensor-soft);
+                --event-ink: var(--sensor-ink);
+            }
+
+            .event.season {
+                --event-color: var(--season);
+                --event-bg: var(--season-soft);
+                --event-ink: var(--season-ink);
+            }
+
+            .mobile-agenda {
+                display: none;
+                gap: 8px;
+                padding: 12px;
+            }
+
+            .agenda-day {
+                display: grid;
+                grid-template-columns: 54px 1fr;
+                gap: 10px;
+                padding: 11px;
+                background: var(--day);
+                border: 1px solid var(--line);
+                border-radius: 12px;
+            }
+
+            .agenda-date {
+                color: var(--forest);
+                font-size: 0.78rem;
+                font-weight: 850;
+                text-align: center;
+                text-transform: uppercase;
+            }
+
+            .agenda-date strong {
+                display: block;
+                font-size: 1.4rem;
+                line-height: 1;
+            }
+
+            .agenda-events {
+                min-width: 0;
+            }
+
+            html.hide-empty-days .weekdays,
+            html.hide-empty-days .month-grid {
+                display: none;
+            }
+
+            html.hide-empty-days .mobile-agenda {
+                display: grid;
+            }
+
+            html.hide-empty-days .month {
+                align-self: start;
+            }
+
+            .phase-list {
+                display: grid;
+                grid-template-columns: repeat(7, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .phase {
+                position: relative;
+                min-width: 0;
+                padding: 16px 14px 14px;
+                overflow: hidden;
+                background: var(--card);
+                border: 1px solid var(--line);
+                border-radius: 16px;
+            }
+
+            .phase::before {
+                position: absolute;
+                inset: 0 auto 0 0;
+                width: 4px;
+                content: "";
+                background: var(--phase);
+            }
+
+            html[data-theme="dark"] .phase::before {
+                filter: brightness(1.35) saturate(0.9);
+            }
+
+            .phase-week {
+                margin-bottom: 10px;
+                color: var(--muted);
+                font-size: 0.68rem;
+                font-weight: 800;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+
+            .phase-setting {
+                display: block;
+                margin-bottom: 4px;
+                color: var(--forest);
+                font-size: 1.08rem;
+                font-weight: 850;
+            }
+
+            .phase-height {
+                margin-bottom: 11px;
+                color: var(--ink);
+                font-size: 0.8rem;
+                font-weight: 750;
+            }
+
+            .sun {
+                padding-top: 9px;
+                color: var(--muted);
+                border-top: 1px solid var(--line);
+                font-size: 0.73rem;
+            }
+
+            .sun strong {
+                display: block;
+                color: var(--sun-ink);
+                font-size: 0.76rem;
+            }
+
+            .daily-grid {
+                display: grid;
+                grid-template-columns: 1.1fr 0.9fr;
+                gap: 20px;
+            }
+
+            .panel {
+                padding: 22px;
+                background: var(--card);
+                border: 1px solid var(--line);
+                border-radius: 20px;
+                box-shadow: var(--shadow);
+            }
+
+            .panel h3 {
+                margin-bottom: 4px;
+                font-family: Georgia, "Times New Roman", serif;
+                font-size: 1.45rem;
+                font-weight: 500;
+            }
+
+            .panel-intro {
+                margin-bottom: 18px;
+                color: var(--muted);
+                font-size: 0.88rem;
+            }
+
+            .clock {
+                display: grid;
+                grid-template-columns: 90px 1fr;
+                gap: 0 14px;
+            }
+
+            .time,
+            .clock-task {
+                min-width: 0;
+                padding: 11px 0;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .time {
+                color: var(--forest);
+                font-size: 0.84rem;
+                font-weight: 850;
+            }
+
+            .clock-task {
+                font-size: 0.84rem;
+            }
+
+            .clock-task small {
+                display: block;
+                margin-top: 3px;
+                color: var(--muted);
+            }
+
+            .sensor-layout {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+                margin-bottom: 15px;
+            }
+
+            .sensor-card {
+                padding: 14px;
+                background: var(--sensor-soft);
+                border: 1px solid var(--sensor-border);
+                border-radius: 13px;
+            }
+
+            .sensor-card strong {
+                display: block;
+                margin-bottom: 5px;
+                color: var(--sensor-title);
+                font-size: 0.8rem;
+            }
+
+            .sensor-card span {
+                color: var(--sensor-text);
+                font-size: 0.79rem;
+            }
+
+            .range {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 10px;
+                align-items: start;
+                padding: 10px 0;
+                border-top: 1px solid var(--line);
+                font-size: 0.81rem;
+            }
+
+            .range-tag {
+                min-width: 76px;
+                padding: 4px 7px;
+                color: #fff;
+                background: var(--tag);
+                border-radius: 7px;
+                font-size: 0.68rem;
+                font-weight: 850;
+                text-align: center;
+                text-transform: uppercase;
+            }
+
+            .range p {
+                margin: 0;
+                color: var(--muted);
+            }
+
+            .after-ramp {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .next-card {
+                padding: 16px;
+                background: linear-gradient(
+                    145deg,
+                    var(--season-soft),
+                    var(--card) 85%
+                );
+                border: 1px solid var(--next-border);
+                border-radius: 15px;
+            }
+
+            .next-card strong {
+                display: block;
+                margin-bottom: 6px;
+                color: var(--next-title);
+            }
+
+            .next-card span {
+                display: block;
+                color: var(--muted);
+                font-size: 0.82rem;
+            }
+
+            .footer {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                gap: 12px;
+                margin-top: 24px;
+                padding: 18px 4px 0;
+                color: var(--muted);
+                border-top: 1px solid var(--line);
+                font-size: 0.8rem;
+            }
+
+            .footer a {
+                color: var(--forest);
+                font-weight: 800;
+            }
+
+            @media (max-width: 1220px) {
+                .months {
+                    grid-template-columns: 1fr;
+                }
+
+                .phase-list {
+                    grid-template-columns: repeat(4, minmax(0, 1fr));
+                }
+            }
+
+            @media (max-width: 820px) {
+                .shell {
+                    width: min(100% - 20px, 720px);
+                    padding-top: 10px;
+                }
+
+                .hero {
+                    border-radius: 20px;
+                }
+
+                .prep-strip {
+                    grid-template-columns: 1fr 1fr;
+                }
+
+                .prep-day:nth-child(2) {
+                    border-right: 0;
+                }
+
+                .prep-day:nth-child(-n + 2) {
+                    border-bottom: 1px solid var(--line);
+                }
+
+                .daily-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .phase-list {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+
+                .live-dashboard {
+                    grid-template-columns: 1fr 1.35fr;
+                }
+
+                .live-block:last-child {
+                    grid-column: 1 / -1;
+                }
+            }
+
+            @media (max-width: 640px) {
+                .section {
+                    margin-top: 24px;
+                }
+
+                .section-heading {
+                    align-items: start;
+                    flex-direction: column;
+                    gap: 4px;
+                }
+
+                .prep-strip {
+                    grid-template-columns: 1fr;
+                }
+
+                .prep-day {
+                    min-height: auto;
+                    border-right: 0;
+                    border-bottom: 1px solid var(--line);
+                }
+
+                .prep-day:last-child {
+                    border-bottom: 0;
+                }
+
+                .priority-note {
+                    grid-template-columns: 1fr;
+                }
+
+                .live-dashboard {
+                    grid-template-columns: 1fr;
+                }
+
+                .live-block:last-child {
+                    grid-column: auto;
+                }
+
+                .next-event-title {
+                    white-space: normal;
+                }
+
+                .weekday {
+                    padding: 7px 2px;
+                    font-size: 0.58rem;
+                }
+
+                .month-grid .day {
+                    min-height: 42px;
+                    padding: 7px 3px;
+                    text-align: center;
+                }
+
+                .month-grid .event {
+                    display: none;
+                }
+
+                .month-grid .day-number {
+                    margin-bottom: 0;
+                }
+
+                .mobile-agenda {
+                    display: grid;
+                }
+
+                .phase-list,
+                .sensor-layout,
+                .after-ramp {
+                    grid-template-columns: 1fr;
+                }
+
+                .clock {
+                    grid-template-columns: 72px 1fr;
+                    gap: 0 10px;
+                }
+
+                .panel {
+                    padding: 18px;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .progress-bar {
+                    transition: none;
+                }
+            }
+
+            @media print {
+                @page {
+                    size: landscape;
+                    margin: 0.35in;
+                }
+
+                html[data-theme="dark"] {
+                    color-scheme: light;
+                    --ink: #18221c;
+                    --muted: #5d6b61;
+                    --paper: #fff;
+                    --card: #fffdf7;
+                    --line: #d9d7ca;
+                    --forest: #204f3a;
+                    --leaf: #3e7958;
+                    --prep-soft: #fff3cf;
+                    --move: #16877b;
+                    --move-soft: #dff4ef;
+                    --light: #de723f;
+                    --light-soft: #ffeadf;
+                    --check: #557b3c;
+                    --check-soft: #e8f2dd;
+                    --sensor: #3978a8;
+                    --sensor-soft: #e2f0fa;
+                    --season: #7656a4;
+                    --season-soft: #eee6f8;
+                    --day: #fffdf8;
+                    --subtle: #f0eee6;
+                    --blank-a: #f7f5ee;
+                    --blank-b: #f1efe7;
+                    --legend-bg: rgb(255 253 247 / 75%);
+                    --forest-solid: #204f3a;
+                    --priority-border: #e7cd86;
+                    --priority-tag-bg: #fff8e7;
+                    --priority-tag-ink: #69480b;
+                    --priority-ink: #5d4a1f;
+                    --sun-ink: #8a5c12;
+                    --sensor-border: #bdd8ec;
+                    --sensor-title: #285b80;
+                    --sensor-text: #36576f;
+                    --next-border: #d8cae8;
+                    --next-title: #533877;
+                    --light-ink: #71351d;
+                    --check-ink: #335020;
+                    --move-ink: #0a5a53;
+                    --sensor-ink: #255779;
+                    --season-ink: #503477;
+                }
+
+                body,
+                html[data-theme="dark"] body {
+                    background: #fff;
+                    print-color-adjust: exact;
+                    -webkit-print-color-adjust: exact;
+                }
+
+                .shell {
+                    width: 100%;
+                    padding: 0;
+                }
+
+                .hero {
+                    padding: 22px 26px;
+                    border-radius: 0;
+                    box-shadow: none;
+                }
+
+                .hero h1 {
+                    font-size: 2.6rem;
+                }
+
+                .hero-actions,
+                .live-dashboard {
+                    display: none;
+                }
+
+                .section {
+                    break-inside: avoid;
+                    margin-top: 18px;
+                }
+
+                .prep-strip,
+                .month,
+                .panel {
+                    box-shadow: none;
+                }
+
+                .months {
+                    grid-template-columns: 1fr 1fr;
+                }
+
+                .day {
+                    min-height: 112px;
+                }
+
+                .phase-list {
+                    grid-template-columns: repeat(7, 1fr);
+                }
+
+                .footer {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main class="shell">
+            <header class="hero">
+                <p class="eyebrow">Fenton indoor season · 2026</p>
+                <h1>Cactus acclimation calendar</h1>
+                <p class="lede">
+                    The collection moved indoors and began a three-day equipment
+                    shakedown on Friday, July 31. The formal lamp ramp still
+                    starts Monday morning, changes one variable at a time, and
+                    reaches the seasonal timer on September 21.
+                </p>
+                <div class="hero-actions">
+                    <button
+                        class="button"
+                        id="print"
+                        type="button"
+                    >
+                        <span
+                            class="nf"
+                            aria-hidden="true"
+                            >&#xf02f;</span
+                        >
+                        Print calendar
+                    </button>
+                    <a
+                        class="button secondary"
+                        href="./grow-spot-layout.html#room"
+                    >
+                        Open layout
+                    </a>
+                    <button
+                        class="button secondary"
+                        id="theme-toggle"
+                        type="button"
+                        aria-pressed="false"
+                    >
+                        <span
+                            class="nf"
+                            id="theme-icon"
+                            aria-hidden="true"
+                            >&#xf186;</span
+                        >
+                        <span id="theme-label">Dark mode</span>
+                    </button>
+                    <button
+                        class="button secondary"
+                        id="empty-days-toggle"
+                        type="button"
+                        aria-controls="months"
+                        aria-pressed="false"
+                    >
+                        <span
+                            class="nf"
+                            id="empty-days-icon"
+                            aria-hidden="true"
+                            >&#xf070;</span
+                        >
+                        <span id="empty-days-label">Hide empty days</span>
+                    </button>
+                    <button
+                        class="button secondary"
+                        id="reset"
+                        type="button"
+                    >
+                        <span
+                            class="nf"
+                            aria-hidden="true"
+                            >&#xf0e2;</span
+                        >
+                        Clear checkmarks
+                    </button>
+                    <span class="hero-stat">
+                        <span
+                            class="nf"
+                            aria-hidden="true"
+                            >&#xf0eb;</span
+                        >
+                        Light 8 a.m.–8 p.m. during the ramp
+                    </span>
+                    <span class="hero-stat">
+                        <span
+                            class="nf"
+                            aria-hidden="true"
+                            >&#xf110;</span
+                        >
+                        Fan 8:15 a.m.–7:45 p.m.
+                    </span>
+                </div>
+                <div
+                    class="live-dashboard"
+                    aria-label="Live Fenton schedule status"
+                >
+                    <div class="live-block">
+                        <span class="live-label">
+                            <span
+                                class="nf"
+                                aria-hidden="true"
+                                >&#xf017;</span
+                            >
+                            Fenton time
+                        </span>
+                        <time
+                            class="live-clock"
+                            id="live-clock"
+                            >--:--:--</time
+                        >
+                        <span
+                            class="live-date"
+                            id="live-date"
+                            >Loading local time…</span
+                        >
+                    </div>
+                    <div class="live-block">
+                        <span class="live-label">
+                            <span
+                                class="nf"
+                                aria-hidden="true"
+                                >&#xf251;</span
+                            >
+                            Next scheduled
+                        </span>
+                        <strong
+                            class="next-event-title"
+                            id="next-event-title"
+                        >
+                            Loading schedule…
+                        </strong>
+                        <span class="next-event-time">
+                            <time id="next-event-time"></time>
+                            <span aria-hidden="true"> · </span>
+                            <span
+                                class="countdown"
+                                id="countdown"
+                            ></span>
+                        </span>
+                    </div>
+                    <div class="live-block">
+                        <span class="live-label">
+                            <span
+                                class="nf"
+                                aria-hidden="true"
+                                >&#xf201;</span
+                            >
+                            Acclimation progress
+                        </span>
+                        <div class="progress-heading">
+                            <span id="progress-stage">Three-day shakedown</span>
+                            <span id="progress-percent">0%</span>
+                        </div>
+                        <div
+                            class="progress-track"
+                            id="ramp-progress"
+                            role="progressbar"
+                            aria-label="Acclimation ramp progress"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            aria-valuenow="0"
+                        >
+                            <span
+                                class="progress-bar"
+                                id="progress-bar"
+                            ></span>
+                        </div>
+                        <span
+                            class="progress-caption"
+                            id="progress-caption"
+                        >
+                            Ramp begins August 3.
+                        </span>
+                    </div>
+                </div>
+            </header>
+
+            <section
+                class="section"
+                aria-labelledby="landing-title"
+            >
+                <div class="section-heading">
+                    <div>
+                        <h2 id="landing-title">
+                            <span
+                                class="nf"
+                                aria-hidden="true"
+                                >&#xf06c;</span
+                            >
+                            Installed landing sequence
+                        </h2>
+                        <p
+                            >Actual move-in, shakedown, riser finish, and Monday
+                            baseline.</p
+                        >
+                    </div>
+                </div>
+                <div class="prep-strip">
+                    <article
+                        class="prep-day"
+                        data-date="2026-07-30"
+                    >
+                        <div class="prep-date">
+                            <strong>Jul 30</strong>
+                            <span>Thursday</span>
+                        </div>
+                        <h3>Camera + reflector ready</h3>
+                        <p>
+                            The 256 GB card passed test recording. Full-height
+                            Mylar is on the divider, floor Mylar protects the
+                            carpet, and the light is rotated window-to-room.
+                        </p>
+                    </article>
+                    <article
+                        class="prep-day move-day"
+                        data-date="2026-07-31"
+                    >
+                        <div class="prep-date">
+                            <strong>Jul 31</strong>
+                            <span>Friday</span>
+                        </div>
+                        <h3>RO water + early move-in</h3>
+                        <p>
+                            Around 4 a.m., water only dry pots and drain.
+                            Arrange both tables, start the 40%-at-20-inch
+                            shakedown, and record the first sensor reading after
+                            conditions stabilize.
+                        </p>
+                    </article>
+                    <article
+                        class="prep-day"
+                        data-date="2026-08-01"
+                    >
+                        <div class="prep-date">
+                            <strong>Aug 1</strong>
+                            <span>Saturday</span>
+                        </div>
+                        <h3>Risers + cable safety</h3>
+                        <p>
+                            After lights-off, install the height-first
+                            three-by-four map: +5.11 under A3/B1, +1.18 under
+                            B2/C2, +3.93 under D3/A2, and +2.75 under D2/C3.
+                            Keep A1, C1, D1, and B3 direct. Then restore the
+                            20-inch LED-to-tip clearance; align the round table
+                            at the window end and the wooden table toward the
+                            room; secure wall cables,
+                            <a href="./grow-spot-layout.html#wiring"
+                                >add drip loops</a
+                            >, and finish the removable lower-window block.
+                        </p>
+                    </article>
+                    <article
+                        class="prep-day"
+                        data-date="2026-08-02"
+                    >
+                        <div class="prep-date">
+                            <strong>Aug 2</strong>
+                            <span>Sunday</span>
+                        </div>
+                        <h3>Lock the baseline</h3>
+                        <p>
+                            Hold 40% at 20 inches. Review the GrowCam framing,
+                            tissue-test the fan, inspect the lit surfaces,
+                            photograph the final riser layout, and log the
+                            sensor baseline.
+                        </p>
+                    </article>
+                </div>
+                <div class="priority-note">
+                    <strong>
+                        <span
+                            class="nf"
+                            aria-hidden="true"
+                            >&#xf071;</span
+                        >
+                        Important
+                    </strong>
+                    <p>
+                        Move-in is complete. Do not water again because a setup
+                        task or calendar date arrived; check below the rock
+                        layer and use pot weight. After riser work, always
+                        restore the scheduled LED-to-tip distance.
+                    </p>
+                </div>
+            </section>
+
+            <section
+                class="section"
+                aria-labelledby="calendar-title"
+            >
+                <div class="section-heading">
+                    <div>
+                        <h2 id="calendar-title">
+                            <span
+                                class="nf"
+                                aria-hidden="true"
+                                >&#xf073;</span
+                            >
+                            August–September calendar
+                        </h2>
+                        <p>
+                            Click a colored task to check it off. Checkmarks
+                            stay in this browser.
+                        </p>
+                    </div>
+                </div>
+                <div
+                    class="legend"
+                    aria-label="Calendar legend"
+                >
+                    <span class="legend-item">
+                        <i
+                            class="nf legend-icon"
+                            style="--swatch: var(--move)"
+                            aria-hidden="true"
+                            >&#xf0d1;</i
+                        >Move/setup
+                    </span>
+                    <span class="legend-item">
+                        <i
+                            class="nf legend-icon"
+                            style="--swatch: var(--light)"
+                            aria-hidden="true"
+                            >&#xf0eb;</i
+                        >Light change
+                    </span>
+                    <span class="legend-item">
+                        <i
+                            class="nf legend-icon"
+                            style="--swatch: var(--check)"
+                            aria-hidden="true"
+                            >&#xf00c;</i
+                        >Sunday check
+                    </span>
+                    <span class="legend-item">
+                        <i
+                            class="nf legend-icon"
+                            style="--swatch: var(--sensor)"
+                            aria-hidden="true"
+                            >&#xf030;</i
+                        >Sensor/camera
+                    </span>
+                    <span class="legend-item">
+                        <i
+                            class="nf legend-icon"
+                            style="--swatch: var(--season)"
+                            aria-hidden="true"
+                            >&#xf185;</i
+                        >Seasonal timer
+                    </span>
+                </div>
+                <div
+                    class="months"
+                    id="months"
+                ></div>
+            </section>
+
+            <section
+                class="section"
+                aria-labelledby="ramp-title"
+            >
+                <div class="section-heading">
+                    <div>
+                        <h2 id="ramp-title">
+                            <span
+                                class="nf"
+                                aria-hidden="true"
+                                >&#xf201;</span
+                            >
+                            The seven-week light ramp
+                        </h2>
+                        <p>
+                            Height is LED-to-tallest-tip. Sun times are rounded
+                            Fenton context, not the E25 timer during these
+                            weeks.
+                        </p>
+                    </div>
+                </div>
+                <div class="phase-list">
+                    <article
+                        class="phase"
+                        style="--phase: #bc8c2f"
+                    >
+                        <div class="phase-week">Aug 3–9 · Week 1</div>
+                        <span class="phase-setting">40% power</span>
+                        <div class="phase-height">20 in · fixed 8–8</div>
+                        <div class="sun"
+                            ><strong>Natural day 14 h 30 m</strong>6:30
+                            a.m.–9:00 p.m.</div
+                        >
+                    </article>
+                    <article
+                        class="phase"
+                        style="--phase: #d48a37"
+                    >
+                        <div class="phase-week">Aug 10–16 · Week 2</div>
+                        <span class="phase-setting">40% power</span>
+                        <div class="phase-height">Lower to 18 in</div>
+                        <div class="sun"
+                            ><strong>Natural day 14 h 15 m</strong>6:30
+                            a.m.–8:45 p.m.</div
+                        >
+                    </article>
+                    <article
+                        class="phase"
+                        style="--phase: #dd7741"
+                    >
+                        <div class="phase-week">Aug 17–23 · Week 3</div>
+                        <span class="phase-setting">45% power</span>
+                        <div class="phase-height">Hold 18 in</div>
+                        <div class="sun"
+                            ><strong>Natural day 13 h 45 m</strong>6:45
+                            a.m.–8:30 p.m.</div
+                        >
+                    </article>
+                    <article
+                        class="phase"
+                        style="--phase: #d86040"
+                    >
+                        <div class="phase-week">Aug 24–30 · Week 4</div>
+                        <span class="phase-setting">50% power</span>
+                        <div class="phase-height">Hold 18 in</div>
+                        <div class="sun"
+                            ><strong>Natural day 13 h 30 m</strong>6:45
+                            a.m.–8:15 p.m.</div
+                        >
+                    </article>
+                    <article
+                        class="phase"
+                        style="--phase: #b65046"
+                    >
+                        <div class="phase-week">Aug 31–Sep 6 · Week 5</div>
+                        <span class="phase-setting">Hold 50%</span>
+                        <div class="phase-height">Hold 18 in</div>
+                        <div class="sun"
+                            ><strong>Natural day 13 h 15 m</strong>7:00
+                            a.m.–8:15 p.m.</div
+                        >
+                    </article>
+                    <article
+                        class="phase"
+                        style="--phase: #8e4e56"
+                    >
+                        <div class="phase-week">Sep 7–13 · Week 6</div>
+                        <span class="phase-setting">50% or 55%</span>
+                        <div class="phase-height">55% only if healthy</div>
+                        <div class="sun"
+                            ><strong>Natural day 13 h</strong>7:00 a.m.–8:00
+                            p.m.</div
+                        >
+                    </article>
+                    <article
+                        class="phase"
+                        style="--phase: #6f556b"
+                    >
+                        <div class="phase-week">Sep 14–20 · Steady</div>
+                        <span class="phase-setting">50–55%</span>
+                        <div class="phase-height"
+                            >Lowest successful · 18 in</div
+                        >
+                        <div class="sun"
+                            ><strong>Natural day 12 h 30 m</strong>7:15
+                            a.m.–7:45 p.m.</div
+                        >
+                    </article>
+                </div>
+            </section>
+
+            <section
+                class="section daily-grid"
+                aria-label="Daily clock and sensor plan"
+            >
+                <article class="panel">
+                    <h3>
+                        <span
+                            class="nf"
+                            aria-hidden="true"
+                            >&#xf017;</span
+                        >
+                        Daily clock during the ramp
+                    </h3>
+                    <p class="panel-intro">
+                        Keep the clock stable through September 20. Monday
+                        changes happen before either device starts.
+                    </p>
+                    <div class="clock">
+                        <div class="time">7:45 a.m.</div>
+                        <div class="clock-task">
+                            Scheduled Monday adjustment
+                            <small
+                                >Also start the main time-lapse on August
+                                3.</small
+                            >
+                        </div>
+                        <div class="time">8:00 a.m.</div>
+                        <div class="clock-task"
+                            >AW200SE on + gentle integrated Natural Wind</div
+                        >
+                        <div class="time">8:15 a.m.</div>
+                        <div class="clock-task"
+                            >AeroWave on · Natural Wind Level 2 · oscillation
+                            4/5</div
+                        >
+                        <div class="time">7:30 p.m.</div>
+                        <div class="clock-task">
+                            Sensor read
+                            <small
+                                >Daily August 3–16; Sunday-only afterward.
+                                Sunday is also photo and inspection time.</small
+                            >
+                        </div>
+                        <div class="time">7:45 p.m.</div>
+                        <div class="clock-task">AeroWave off</div>
+                        <div class="time">8:00 p.m.</div>
+                        <div class="clock-task">
+                            AW200SE off
+                            <small
+                                >After the fade on Sundays, rotate the normal
+                                ROT90 pots clockwise.</small
+                            >
+                        </div>
+                    </div>
+                </article>
+
+                <article class="panel">
+                    <h3>
+                        <span
+                            class="nf"
+                            aria-hidden="true"
+                            >&#xf2c9;</span
+                        >
+                        Manual sensor plan
+                    </h3>
+                    <p class="panel-intro">
+                        Put it at canopy height in shade, between the tables if
+                        possible. Keep it outside the direct fan jet and off
+                        glass, Mylar, and wet trays.
+                    </p>
+                    <div class="sensor-layout">
+                        <div class="sensor-card">
+                            <strong>Aug 3–16</strong>
+                            <span
+                                >7:30 p.m. daily: current T/RH + both 24-hour
+                                ranges.</span
+                            >
+                        </div>
+                        <div class="sensor-card">
+                            <strong>Aug 17 onward</strong>
+                            <span
+                                >Sunday 7:30 p.m.: current, 24-hour, and
+                                all-time extremes.</span
+                            >
+                        </div>
+                    </div>
+                    <div class="range">
+                        <span
+                            class="range-tag"
+                            style="--tag: var(--leaf)"
+                            >Comfort</span
+                        >
+                        <p
+                            >About 65–85°F and 30–55% RH is a useful broad
+                            observation band.</p
+                        >
+                    </div>
+                    <div class="range">
+                        <span
+                            class="range-tag"
+                            style="--tag: #b46b2d"
+                            >Check</span
+                        >
+                        <p
+                            >Investigate a 24-hour low below 55°F or high above
+                            95°F.</p
+                        >
+                    </div>
+                    <div class="range">
+                        <span
+                            class="range-tag"
+                            style="--tag: var(--sensor)"
+                            >Humidity</span
+                        >
+                        <p>
+                            If the 24-hour RH minimum is above 60%, improve
+                            spacing/airflow and be cautious with cool,
+                            slow-drying pots. A brief maximum above 60% is fine.
+                        </p>
+                    </div>
+                </article>
+            </section>
+
+            <section
+                class="section"
+                aria-labelledby="next-title"
+            >
+                <div class="section-heading">
+                    <div>
+                        <h2 id="next-title">
+                            <span
+                                class="nf"
+                                aria-hidden="true"
+                                >&#xf135;</span
+                            >
+                            After the fixed ramp
+                        </h2>
+                        <p
+                            >Keep power and fan strength steady; change only the
+                            timer.</p
+                        >
+                    </div>
+                </div>
+                <div class="after-ramp">
+                    <article class="next-card">
+                        <strong>September 21</strong>
+                        <span
+                            >Light 7:15 a.m.–7:30 p.m. · fan 7:45 a.m.–7:15
+                            p.m.</span
+                        >
+                    </article>
+                    <article class="next-card">
+                        <strong>October 1</strong>
+                        <span
+                            >Light 7:30 a.m.–7:15 p.m. · fan 7:45 a.m.–7:00
+                            p.m.</span
+                        >
+                    </article>
+                    <article class="next-card">
+                        <strong>October 19</strong>
+                        <span
+                            >Light 8:00 a.m.–6:45 p.m. · fan 8:15 a.m.–6:30
+                            p.m.</span
+                        >
+                    </article>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <span
+                    >Graphic companion to the canonical written schedule ·
+                    updated 2026-07-31</span
+                >
+                <span>
+                    <a href="../equipment/aw200se-operating-schedule.md"
+                        >Written schedule</a
+                    >
+                    ·
+                    <a href="./grow-spot-layout.html">Grow-spot layout</a>
+                </span>
+            </footer>
+        </main>
+
+        <script>
+            const calendarData = {
+                "2026-08": {
+                    title: "August 2026",
+                    subtitle: "Shakedown + Weeks 1–5",
+                    startDay: 6,
+                    days: 31,
+                    events: {
+                        1: [
+                            {
+                                id: "aug01-risers",
+                                type: "move",
+                                text: "After off · install 3×4 riser map; restore 20 in",
+                            },
+                            {
+                                id: "aug01-cables",
+                                type: "check",
+                                text: "Secure cables + make drip loops",
+                            },
+                        ],
+                        2: [
+                            {
+                                id: "aug02-baseline",
+                                type: "sensor",
+                                text: "7:30 · inspect/photo/log baseline",
+                            },
+                            {
+                                id: "aug02-layout",
+                                type: "check",
+                                text: "After off · lock aligned tables + risers + camera",
+                            },
+                        ],
+                        3: [
+                            {
+                                id: "aug03-light",
+                                type: "light",
+                                text: "7:45 · time-lapse; 40% at 20 in",
+                            },
+                            {
+                                id: "aug03-sensor",
+                                type: "sensor",
+                                text: "Daily 7:30 sensor log begins",
+                            },
+                        ],
+                        9: [
+                            {
+                                id: "aug09-check",
+                                type: "check",
+                                text: "7:30 inspect/photo/log; rotate after off",
+                            },
+                            {
+                                id: "aug09-fan",
+                                type: "check",
+                                text: "Approve fan Level 3 only if needed",
+                            },
+                        ],
+                        10: [
+                            {
+                                id: "aug10-light",
+                                type: "light",
+                                text: "7:45 · lower to 18 in; hold 40%",
+                            },
+                        ],
+                        16: [
+                            {
+                                id: "aug16-check",
+                                type: "check",
+                                text: "7:30 inspect/photo/log; rotate after off",
+                            },
+                            {
+                                id: "aug16-sensor",
+                                type: "sensor",
+                                text: "Last daily sensor log",
+                            },
+                        ],
+                        17: [
+                            {
+                                id: "aug17-light",
+                                type: "light",
+                                text: "7:45 · raise to 45%; hold 18 in",
+                            },
+                            {
+                                id: "aug17-sensor",
+                                type: "sensor",
+                                text: "Sensor changes to Sunday routine",
+                            },
+                        ],
+                        23: [
+                            {
+                                id: "aug23-check",
+                                type: "check",
+                                text: "7:30 inspect/photo/log; rotate after off",
+                            },
+                        ],
+                        24: [
+                            {
+                                id: "aug24-light",
+                                type: "light",
+                                text: "7:45 · raise to 50%; hold 18 in",
+                            },
+                        ],
+                        30: [
+                            {
+                                id: "aug30-check",
+                                type: "check",
+                                text: "7:30 inspect/photo/log; rotate after off",
+                            },
+                        ],
+                        31: [
+                            {
+                                id: "aug31-light",
+                                type: "light",
+                                text: "7:45 · hold 50% for second week",
+                            },
+                        ],
+                    },
+                },
+                "2026-09": {
+                    title: "September 2026",
+                    subtitle: "Weeks 5–7 + seasonal timer",
+                    startDay: 2,
+                    days: 30,
+                    events: {
+                        6: [
+                            {
+                                id: "sep06-check",
+                                type: "check",
+                                text: "7:30 inspect/photo/log; rotate after off",
+                            },
+                            {
+                                id: "sep06-fan",
+                                type: "check",
+                                text: "Monthly fan grille check after off",
+                            },
+                        ],
+                        7: [
+                            {
+                                id: "sep07-light",
+                                type: "light",
+                                text: "7:45 · 55% only if every surface healthy",
+                            },
+                        ],
+                        13: [
+                            {
+                                id: "sep13-check",
+                                type: "check",
+                                text: "7:30 inspect/photo/log; rotate after off",
+                            },
+                        ],
+                        14: [
+                            {
+                                id: "sep14-light",
+                                type: "light",
+                                text: "7:45 · steady 50–55%; hold 18 in",
+                            },
+                            {
+                                id: "sep14-camera",
+                                type: "sensor",
+                                text: "After 8 PM · end acclimation time-lapse",
+                            },
+                        ],
+                        20: [
+                            {
+                                id: "sep20-check",
+                                type: "check",
+                                text: "Final fixed-ramp check + rotation",
+                            },
+                        ],
+                        21: [
+                            {
+                                id: "sep21-season",
+                                type: "season",
+                                text: "Seasonal timer · light 7:15–7:30",
+                            },
+                            {
+                                id: "sep21-fan",
+                                type: "season",
+                                text: "Fan 7:45–7:15",
+                            },
+                        ],
+                        27: [
+                            {
+                                id: "sep27-check",
+                                type: "check",
+                                text: "Weekly inspect/photo/log + rotation",
+                            },
+                        ],
+                    },
+                },
+            };
+
+            const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            const storageKey = "gardening-indoor-calendar-completed";
+            const themeStorageKey = "gardening-site-theme";
+            const emptyDaysStorageKey = "gardening-indoor-calendar-hide-empty";
+
+            function loadCompleted() {
+                try {
+                    return new Set(
+                        JSON.parse(localStorage.getItem(storageKey) || "[]")
+                    );
+                } catch {
+                    return new Set();
+                }
+            }
+
+            const completed = loadCompleted();
+
+            function saveCompleted() {
+                localStorage.setItem(
+                    storageKey,
+                    JSON.stringify([...completed])
+                );
+            }
+
+            function makeEvent(item) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = `event ${item.type}`;
+                button.dataset.eventId = item.id;
+                const eventIcons = {
+                    move: "\uf0d1",
+                    light: "\uf0eb",
+                    check: "\uf00c",
+                    sensor: "\uf030",
+                    season: "\uf185",
+                };
+                const icon = document.createElement("span");
+                icon.className = "nf";
+                icon.setAttribute("aria-hidden", "true");
+                icon.textContent = eventIcons[item.type] || "\uf073";
+                button.append(icon, document.createTextNode(item.text));
+                button.setAttribute(
+                    "aria-pressed",
+                    completed.has(item.id) ? "true" : "false"
+                );
+                button.title = "Mark this task complete";
+                if (completed.has(item.id)) button.classList.add("done");
+                button.addEventListener("click", () => {
+                    if (completed.has(item.id)) {
+                        completed.delete(item.id);
+                    } else {
+                        completed.add(item.id);
+                    }
+                    saveCompleted();
+                    syncEventButtons(item.id);
+                });
+                return button;
+            }
+
+            function syncEventButtons(id) {
+                document
+                    .querySelectorAll(`[data-event-id="${id}"]`)
+                    .forEach((button) => {
+                        const isDone = completed.has(id);
+                        button.classList.toggle("done", isDone);
+                        button.setAttribute(
+                            "aria-pressed",
+                            isDone ? "true" : "false"
+                        );
+                    });
+            }
+
+            function buildMonth(data, monthKey) {
+                const article = document.createElement("article");
+                article.className = "month";
+
+                const header = document.createElement("header");
+                header.className = "month-header";
+                const heading = document.createElement("h3");
+                heading.textContent = data.title;
+                const subtitle = document.createElement("span");
+                subtitle.textContent = data.subtitle;
+                header.append(heading, subtitle);
+
+                const weekdayRow = document.createElement("div");
+                weekdayRow.className = "weekdays";
+                weekdayRow.setAttribute("aria-hidden", "true");
+                weekdays.forEach((day) => {
+                    const label = document.createElement("div");
+                    label.className = "weekday";
+                    label.textContent = day;
+                    weekdayRow.append(label);
+                });
+
+                const grid = document.createElement("div");
+                grid.className = "month-grid";
+                for (let index = 0; index < data.startDay; index += 1) {
+                    const blank = document.createElement("div");
+                    blank.className = "day blank";
+                    grid.append(blank);
+                }
+
+                for (let day = 1; day <= data.days; day += 1) {
+                    const events = data.events[day] || [];
+                    const isoDate = `${monthKey}-${String(day).padStart(2, "0")}`;
+                    const cell = document.createElement("div");
+                    cell.className = `day${events.length ? " has-events" : ""}`;
+                    cell.dataset.date = isoDate;
+                    const number = document.createElement("span");
+                    number.className = "day-number";
+                    number.textContent = day;
+                    cell.append(number);
+                    events.forEach((item) => cell.append(makeEvent(item)));
+                    grid.append(cell);
+                }
+
+                const remainder = (data.startDay + data.days) % 7;
+                if (remainder) {
+                    for (let index = remainder; index < 7; index += 1) {
+                        const blank = document.createElement("div");
+                        blank.className = "day blank";
+                        grid.append(blank);
+                    }
+                }
+
+                const agenda = document.createElement("div");
+                agenda.className = "mobile-agenda";
+                Object.entries(data.events).forEach(([day, events]) => {
+                    const isoDate = `${monthKey}-${String(day).padStart(2, "0")}`;
+                    const row = document.createElement("div");
+                    row.className = "agenda-day";
+                    row.dataset.date = isoDate;
+                    const date = document.createElement("div");
+                    date.className = "agenda-date";
+                    const dateObject = new Date(
+                        Number(data.title.slice(-4)),
+                        data.title.startsWith("August") ? 7 : 8,
+                        Number(day)
+                    );
+                    date.innerHTML = `${weekdays[dateObject.getDay()]}<strong>${day}</strong>`;
+                    const eventList = document.createElement("div");
+                    eventList.className = "agenda-events";
+                    events.forEach((item) => eventList.append(makeEvent(item)));
+                    row.append(date, eventList);
+                    agenda.append(row);
+                });
+
+                article.append(header, weekdayRow, grid, agenda);
+                return article;
+            }
+
+            const months = document.querySelector("#months");
+            Object.entries(calendarData).forEach(([monthKey, month]) =>
+                months.append(buildMonth(month, monthKey))
+            );
+
+            const themeToggle = document.querySelector("#theme-toggle");
+            const emptyDaysToggle =
+                document.querySelector("#empty-days-toggle");
+            const themeIcon = document.querySelector("#theme-icon");
+            const themeLabel = document.querySelector("#theme-label");
+            const emptyDaysIcon = document.querySelector("#empty-days-icon");
+            const emptyDaysLabel = document.querySelector("#empty-days-label");
+            const fentonTimeZone = "America/Detroit";
+            const timedSchedule = [];
+
+            function addScheduledEvent(at, title) {
+                timedSchedule.push({ at: new Date(at), title });
+            }
+
+            function forEachDate(startDate, endDate, callback) {
+                const cursor = new Date(`${startDate}T12:00:00Z`);
+                const end = new Date(`${endDate}T12:00:00Z`);
+                while (cursor <= end) {
+                    callback(
+                        cursor.toISOString().slice(0, 10),
+                        cursor.getUTCDay()
+                    );
+                    cursor.setUTCDate(cursor.getUTCDate() + 1);
+                }
+            }
+
+            function addDailySchedule(startDate, endDate, times) {
+                forEachDate(startDate, endDate, (date, dayOfWeek) => {
+                    times.forEach(({ time, title, sundayTitle }) => {
+                        const eventTitle =
+                            dayOfWeek === 0 && sundayTitle
+                                ? sundayTitle
+                                : title;
+                        addScheduledEvent(
+                            `${date}T${time}:00-04:00`,
+                            eventTitle
+                        );
+                    });
+                });
+            }
+
+            addScheduledEvent(
+                "2026-07-31T04:00:00-04:00",
+                "RO-water only dry pots; drain fully"
+            );
+
+            addDailySchedule("2026-07-31", "2026-08-02", [
+                {
+                    time: "08:00",
+                    title: "AW200SE shakedown on: 40% at 20 inches",
+                },
+                { time: "08:15", title: "AeroWave on: Natural Wind Level 2" },
+                {
+                    time: "19:30",
+                    title: "Sensor reading + inspect lit surfaces",
+                    sundayTitle: "Final baseline sensor reading + inspection",
+                },
+                { time: "19:45", title: "AeroWave off" },
+                { time: "20:00", title: "AW200SE off" },
+            ]);
+
+            addScheduledEvent(
+                "2026-08-01T20:05:00-04:00",
+                "Install the measured 3×4 riser map, restore 20 inches, and make cable drip loops"
+            );
+            addScheduledEvent(
+                "2026-08-02T20:05:00-04:00",
+                "Lock the aligned tables, riser layout, and GrowCam framing"
+            );
+            addScheduledEvent(
+                "2026-08-03T07:45:00-04:00",
+                "Start or verify time-lapse and Week 1 settings"
+            );
+
+            [
+                ["2026-08-10", "Lower the light to 18 inches; hold 40%"],
+                ["2026-08-17", "Raise the light to 45%; hold 18 inches"],
+                ["2026-08-24", "Raise the light to 50%; hold 18 inches"],
+                ["2026-08-31", "Hold 50% for a second week"],
+                ["2026-09-07", "Raise to 55% only if every surface is healthy"],
+                ["2026-09-14", "Settle at 50–55%; hold 18 inches"],
+            ].forEach(([date, title]) =>
+                addScheduledEvent(`${date}T07:45:00-04:00`, title)
+            );
+
+            forEachDate("2026-08-03", "2026-09-20", (date, dayOfWeek) => {
+                addScheduledEvent(`${date}T08:00:00-04:00`, "AW200SE on");
+                addScheduledEvent(`${date}T08:15:00-04:00`, "AeroWave on");
+
+                const dailySensorWindow = date <= "2026-08-16";
+                if (dailySensorWindow || dayOfWeek === 0) {
+                    addScheduledEvent(
+                        `${date}T19:30:00-04:00`,
+                        dayOfWeek === 0
+                            ? "Sensor reading + Sunday inspection"
+                            : "Sensor reading"
+                    );
+                }
+
+                addScheduledEvent(`${date}T19:45:00-04:00`, "AeroWave off");
+                addScheduledEvent(
+                    `${date}T20:00:00-04:00`,
+                    dayOfWeek === 0 ? "Light off + pot rotation" : "AW200SE off"
+                );
+            });
+
+            addScheduledEvent(
+                "2026-09-14T20:00:00-04:00",
+                "End the main acclimation time-lapse"
+            );
+            addScheduledEvent(
+                "2026-09-21T07:00:00-04:00",
+                "Set the September seasonal timers"
+            );
+            addScheduledEvent(
+                "2026-10-01T07:15:00-04:00",
+                "Update the October timers"
+            );
+            addScheduledEvent(
+                "2026-10-19T07:45:00-04:00",
+                "Update the mid-October timers"
+            );
+
+            addDailySchedule("2026-09-21", "2026-09-30", [
+                { time: "07:15", title: "AW200SE on" },
+                { time: "07:45", title: "AeroWave on" },
+                {
+                    time: "19:00",
+                    title: "",
+                    sundayTitle: "Sensor reading + Sunday inspection",
+                },
+                { time: "19:15", title: "AeroWave off" },
+                {
+                    time: "19:30",
+                    title: "AW200SE off",
+                    sundayTitle: "Light off + pot rotation",
+                },
+            ]);
+            addDailySchedule("2026-10-01", "2026-10-18", [
+                { time: "07:30", title: "AW200SE on" },
+                { time: "07:45", title: "AeroWave on" },
+                {
+                    time: "18:45",
+                    title: "",
+                    sundayTitle: "Sensor reading + Sunday inspection",
+                },
+                { time: "19:00", title: "AeroWave off" },
+                {
+                    time: "19:15",
+                    title: "AW200SE off",
+                    sundayTitle: "Light off + pot rotation",
+                },
+            ]);
+            addDailySchedule("2026-10-19", "2026-10-31", [
+                { time: "08:00", title: "AW200SE on" },
+                { time: "08:15", title: "AeroWave on" },
+                {
+                    time: "18:15",
+                    title: "",
+                    sundayTitle: "Sensor reading + Sunday inspection",
+                },
+                { time: "18:30", title: "AeroWave off" },
+                {
+                    time: "18:45",
+                    title: "AW200SE off",
+                    sundayTitle: "Light off + pot rotation",
+                },
+            ]);
+
+            timedSchedule.splice(
+                0,
+                timedSchedule.length,
+                ...timedSchedule
+                    .filter(({ title }) => title)
+                    .sort((left, right) => left.at - right.at)
+            );
+
+            const clockFormatter = new Intl.DateTimeFormat("en-US", {
+                timeZone: fentonTimeZone,
+                hour: "numeric",
+                minute: "2-digit",
+                second: "2-digit",
+            });
+            const dateFormatter = new Intl.DateTimeFormat("en-US", {
+                timeZone: fentonTimeZone,
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+            });
+            const eventFormatter = new Intl.DateTimeFormat("en-US", {
+                timeZone: fentonTimeZone,
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "2-digit",
+            });
+            const dateKeyFormatter = new Intl.DateTimeFormat("en-CA", {
+                timeZone: fentonTimeZone,
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            });
+            const rampStart = new Date("2026-08-03T08:00:00-04:00");
+            const rampEnd = new Date("2026-09-21T07:15:00-04:00");
+            const liveClock = document.querySelector("#live-clock");
+            const liveDate = document.querySelector("#live-date");
+            const nextEventTitle = document.querySelector("#next-event-title");
+            const nextEventTime = document.querySelector("#next-event-time");
+            const countdown = document.querySelector("#countdown");
+            const progressStage = document.querySelector("#progress-stage");
+            const progressPercent = document.querySelector("#progress-percent");
+            const rampProgress = document.querySelector("#ramp-progress");
+            const progressBar = document.querySelector("#progress-bar");
+            const progressCaption = document.querySelector("#progress-caption");
+            let highlightedDate = "";
+
+            function formatCountdown(milliseconds) {
+                const totalSeconds = Math.max(
+                    0,
+                    Math.floor(milliseconds / 1000)
+                );
+                const days = Math.floor(totalSeconds / 86400);
+                const hours = Math.floor((totalSeconds % 86400) / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+
+                if (days) return `${days}d ${hours}h ${minutes}m`;
+                if (hours) return `${hours}h ${minutes}m ${seconds}s`;
+                return `${minutes}m ${seconds}s`;
+            }
+
+            function fentonDateKey(date) {
+                const parts = Object.fromEntries(
+                    dateKeyFormatter
+                        .formatToParts(date)
+                        .filter(({ type }) => type !== "literal")
+                        .map(({ type, value }) => [type, value])
+                );
+                return `${parts.year}-${parts.month}-${parts.day}`;
+            }
+
+            function updateTodayHighlight(date) {
+                const dateKey = fentonDateKey(date);
+                if (dateKey === highlightedDate) return;
+                document
+                    .querySelectorAll(".today")
+                    .forEach((element) => element.classList.remove("today"));
+                document
+                    .querySelectorAll(`[data-date="${dateKey}"]`)
+                    .forEach((element) => element.classList.add("today"));
+                highlightedDate = dateKey;
+            }
+
+            function updateRampProgress(now) {
+                let percent;
+                let stage;
+                let caption;
+
+                if (now < rampStart) {
+                    percent = 0;
+                    stage = "Three-day shakedown";
+                    caption =
+                        "Hold 40% at 20 inches; formal Week 1 begins August 3.";
+                } else if (now < rampEnd) {
+                    percent = Math.min(
+                        100,
+                        Math.max(
+                            0,
+                            ((now - rampStart) / (rampEnd - rampStart)) * 100
+                        )
+                    );
+                    const week = Math.min(
+                        7,
+                        Math.floor(
+                            (now - rampStart) / (7 * 24 * 60 * 60 * 1000)
+                        ) + 1
+                    );
+                    stage = `Week ${week} of 7`;
+                    caption =
+                        "Fixed 8:00 a.m.–8:00 p.m. light period through September 20.";
+                } else {
+                    percent = 100;
+                    stage = "Ramp complete";
+                    caption = "Seasonal timer schedule is active.";
+                }
+
+                const roundedPercent = Math.round(percent);
+                progressStage.textContent = stage;
+                progressPercent.textContent = `${roundedPercent}%`;
+                progressBar.style.width = `${percent}%`;
+                progressCaption.textContent = caption;
+                rampProgress.setAttribute(
+                    "aria-valuenow",
+                    String(roundedPercent)
+                );
+            }
+
+            function updateLiveStatus() {
+                const now = new Date();
+                liveClock.textContent = clockFormatter.format(now);
+                liveClock.dateTime = now.toISOString();
+                liveDate.textContent = dateFormatter.format(now);
+
+                const nextEvent = timedSchedule.find(({ at }) => at > now);
+                if (nextEvent) {
+                    nextEventTitle.textContent = nextEvent.title;
+                    nextEventTime.textContent = eventFormatter.format(
+                        nextEvent.at
+                    );
+                    countdown.textContent = `in ${formatCountdown(nextEvent.at - now)}`;
+                } else {
+                    nextEventTitle.textContent =
+                        "No later calendar event is listed";
+                    nextEventTime.textContent =
+                        "Schedule currently ends October 31";
+                    countdown.textContent =
+                        "Add the next seasonal block when ready";
+                }
+
+                updateRampProgress(now);
+                updateTodayHighlight(now);
+            }
+
+            async function detectNerdFont() {
+                if (!document.fonts) return;
+                await document.fonts.ready;
+                const nerdFonts = [
+                    "Hack Nerd Font",
+                    "Hack Nerd Font Mono",
+                    "Symbols Nerd Font Mono",
+                    "Symbols Nerd Font",
+                ];
+                const available = nerdFonts.some((font) =>
+                    document.fonts.check(`12px "${font}"`)
+                );
+                document.documentElement.classList.toggle(
+                    "no-nerd-font",
+                    !available
+                );
+            }
+
+            function syncViewControls() {
+                const darkMode =
+                    document.documentElement.dataset.theme === "dark";
+                const emptyDaysHidden =
+                    document.documentElement.classList.contains(
+                        "hide-empty-days"
+                    );
+                themeIcon.textContent = darkMode ? "\uf185" : "\uf186";
+                themeLabel.textContent = darkMode ? "Light mode" : "Dark mode";
+                themeToggle.setAttribute(
+                    "aria-pressed",
+                    darkMode ? "true" : "false"
+                );
+                emptyDaysIcon.textContent = emptyDaysHidden
+                    ? "\uf06e"
+                    : "\uf070";
+                emptyDaysLabel.textContent = emptyDaysHidden
+                    ? "Show empty days"
+                    : "Hide empty days";
+                emptyDaysToggle.setAttribute(
+                    "aria-pressed",
+                    emptyDaysHidden ? "true" : "false"
+                );
+            }
+
+            themeToggle.addEventListener("click", () => {
+                const nextTheme =
+                    document.documentElement.dataset.theme === "dark"
+                        ? "light"
+                        : "dark";
+                document.documentElement.dataset.theme = nextTheme;
+                try {
+                    localStorage.setItem(themeStorageKey, nextTheme);
+                } catch {
+                    // The theme still works for this page view when storage is unavailable.
+                }
+                syncViewControls();
+            });
+
+            emptyDaysToggle.addEventListener("click", () => {
+                const hidden =
+                    document.documentElement.classList.toggle(
+                        "hide-empty-days"
+                    );
+                try {
+                    localStorage.setItem(emptyDaysStorageKey, String(hidden));
+                } catch {
+                    // The compact view still works for this page view when storage is unavailable.
+                }
+                syncViewControls();
+            });
+
+            detectNerdFont();
+            updateLiveStatus();
+            window.setInterval(updateLiveStatus, 1000);
+            syncViewControls();
+            document
+                .querySelector("#print")
+                .addEventListener("click", () => window.print());
+            document.querySelector("#reset").addEventListener("click", () => {
+                completed.clear();
+                saveCompleted();
+                document
+                    .querySelectorAll("[data-event-id]")
+                    .forEach((button) => {
+                        button.classList.remove("done");
+                        button.setAttribute("aria-pressed", "false");
+                    });
+            });
+        </script>
+    </body>
+</html>
