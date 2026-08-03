@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [ValidateRange(2, 10)]
-    [int] $ImagesPerPlant = 6,
+    [int] $ImagesPerPlant = 10,
 
     [string[]] $PlantSlug
 )
@@ -12,6 +12,7 @@ $ErrorActionPreference = 'Stop'
 $plantCatalog = @(
     [pscustomobject]@{
         Id = 'Starter-01'
+        LabelId = 'B2'
         Slug = 'oreocereus-trollii'
         ScientificName = 'Oreocereus trollii'
         CommonName = 'Old Man of the Andes'
@@ -22,6 +23,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Starter-02'
+        LabelId = 'B1'
         Slug = 'stenocactus-phyllacanthus'
         ScientificName = 'Stenocactus phyllacanthus'
         CommonName = 'Grass-blade cactus'
@@ -32,6 +34,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Starter-03'
+        LabelId = 'C2'
         Slug = 'echinocereus-rigidissimus-rubispinus'
         ScientificName = 'Echinocereus rigidissimus subsp. rubispinus'
         CommonName = 'Rainbow hedgehog cactus'
@@ -42,6 +45,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Starter-04'
+        LabelId = 'A3'
         Slug = 'nyctocereus-serpentinus'
         ScientificName = 'Nyctocereus serpentinus'
         CommonName = 'Serpent cactus'
@@ -52,6 +56,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Starter-05'
+        LabelId = 'A2'
         Slug = 'mammillaria-plumosa'
         ScientificName = 'Mammillaria plumosa'
         CommonName = 'Feather cactus'
@@ -62,6 +67,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Starter-06'
+        LabelId = 'D2'
         Slug = 'echinopsis-subdenudata'
         ScientificName = 'Echinopsis subdenudata'
         CommonName = 'Domino cactus'
@@ -72,6 +78,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Starter-07'
+        LabelId = 'A1'
         Slug = 'gymnocalycium-mihanovichii-variegated'
         ScientificName = 'Gymnocalycium mihanovichii'
         CommonName = 'Variegated moon cactus'
@@ -82,6 +89,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Starter-08'
+        LabelId = 'C1'
         Slug = 'gymnocalycium-saglionis'
         ScientificName = 'Gymnocalycium saglionis'
         CommonName = 'Giant chin cactus'
@@ -92,6 +100,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Starter-09'
+        LabelId = 'B3'
         Slug = 'myrtillocactus-geometrizans-indigo-wave'
         ScientificName = 'Myrtillocactus geometrizans'
         CommonName = 'Indigo Wave'
@@ -102,6 +111,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Starter-10'
+        LabelId = 'D3'
         Slug = 'cereus-forbesii-ming-thing'
         ScientificName = 'Cereus forbesii'
         CommonName = 'Ming Thing'
@@ -112,6 +122,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Starter-11'
+        LabelId = 'D1'
         Slug = 'euphorbia-obesa-hybrid'
         ScientificName = 'Euphorbia obesa'
         CommonName = 'Dragon''s Egg'
@@ -122,6 +133,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Starter-12'
+        LabelId = 'C3'
         Slug = 'astrophytum-ornatum'
         ScientificName = 'Astrophytum ornatum'
         CommonName = 'Monk''s hood cactus'
@@ -132,6 +144,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Succulent-01'
+        LabelId = 'C4-D4'
         Slug = 'echeveria-pulidonis'
         ScientificName = 'Echeveria pulidonis'
         CommonName = 'Pulido''s echeveria'
@@ -142,6 +155,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Succulent-02'
+        LabelId = 'C4-D4'
         Slug = 'portulacaria-afra'
         ScientificName = 'Portulacaria afra'
         CommonName = 'Elephant bush'
@@ -152,6 +166,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Succulent-03'
+        LabelId = 'C4-D4'
         Slug = 'kalanchoe-bracteata'
         ScientificName = 'Kalanchoe bracteata'
         CommonName = 'Silver teaspoons'
@@ -162,6 +177,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Succulent-04'
+        LabelId = 'C4-D4'
         Slug = 'kalanchoe-orgyalis'
         ScientificName = 'Kalanchoe orgyalis'
         CommonName = 'Copper spoons'
@@ -172,6 +188,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Rehab-01'
+        LabelId = 'A4-B4'
         Slug = 'pilosocereus-pachycladus-variegated'
         ScientificName = 'Pilosocereus pachycladus'
         CommonName = 'Blue torch cactus'
@@ -182,6 +199,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Rehab-02'
+        LabelId = 'A4-B4'
         Slug = 'cleistocactus-colademononis'
         ScientificName = 'Cleistocactus colademononis'
         CommonName = 'Monkey tail cactus'
@@ -192,6 +210,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Rehab-03'
+        LabelId = 'A4-B4'
         Slug = 'echinopsis-spachiana'
         ScientificName = 'Echinopsis spachiana'
         CommonName = 'Golden torch cactus'
@@ -202,6 +221,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Rehab-04'
+        LabelId = $null
         Slug = 'mammillaria-bombycina'
         ScientificName = 'Mammillaria bombycina'
         CommonName = 'Silken pincushion cactus'
@@ -223,14 +243,26 @@ $rejectedSourceUrls = @(
     'https://commons.wikimedia.org/wiki/File:Kalanchoe_orgyalis_Garfield_Park.jpg'
 )
 
+# File metadata does not always name a visible flower. These visually checked
+# overrides keep the lifecycle labels honest without guessing from plant size.
+$subjectOverrides = @{
+    'https://commons.wikimedia.org/wiki/File:Cereus_forbesii_7.jpg' = 'flower'
+    'https://commons.wikimedia.org/wiki/File:Gymnocalycium_saglionis_2019-06-09_04.jpg' = 'flower'
+    'https://commons.wikimedia.org/wiki/File:Gymnocalycium_saglionis_2019-06-09_01.jpg' = 'flower'
+    'https://www.inaturalist.org/observations/11066286' = 'flower'
+}
+
 $selectedPlants = $plantCatalog
-if (@($PlantSlug).Count -gt 0) {
-    $unknownSlugs = @($PlantSlug | Where-Object { $_ -notin $plantCatalog.Slug })
+$requestedPlantSlugs = @(
+    $PlantSlug | Where-Object { -not [string]::IsNullOrWhiteSpace($_) }
+)
+if ($requestedPlantSlugs.Count -gt 0) {
+    $unknownSlugs = @($requestedPlantSlugs | Where-Object { $_ -notin $plantCatalog.Slug })
     if ($unknownSlugs.Count -gt 0) {
         throw "Unknown plant slug(s): $($unknownSlugs -join ', ')"
     }
 
-    $selectedPlants = @($plantCatalog | Where-Object { $_.Slug -in $PlantSlug })
+    $selectedPlants = @($plantCatalog | Where-Object { $_.Slug -in $requestedPlantSlugs })
 }
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
@@ -334,7 +366,7 @@ function Invoke-JsonRequest {
         'User-Agent' = 'Gardening-research/1.0 (personal collection documentation; Wikimedia and iNaturalist attribution preserved)'
     }
 
-    for ($attempt = 1; $attempt -le 2; $attempt++) {
+    for ($attempt = 1; $attempt -le 4; $attempt++) {
         try {
             return Invoke-RestMethod -Uri $Uri -Body $Query -Method Get -Headers $headers
         } catch {
@@ -410,13 +442,15 @@ function Get-WikimediaCandidateList {
         $responses.Add((Invoke-JsonRequest -Uri $apiUri -Query $searchQuery))
     }
 
-    Start-Sleep -Milliseconds 900
-    $stageSearchQuery = $baseQuery.Clone()
-    $stageSearchQuery.generator = 'search'
-    $stageSearchQuery.gsrsearch = "`"$($Plant.ScientificName)`" flower filetype:bitmap"
-    $stageSearchQuery.gsrnamespace = '6'
-    $stageSearchQuery.gsrlimit = '40'
-    $responses.Add((Invoke-JsonRequest -Uri $apiUri -Query $stageSearchQuery))
+    foreach ($stageTerms in @('seedling juvenile', 'flower', 'fruit seed')) {
+        Start-Sleep -Milliseconds 900
+        $stageSearchQuery = $baseQuery.Clone()
+        $stageSearchQuery.generator = 'search'
+        $stageSearchQuery.gsrsearch = "`"$($Plant.ScientificName)`" $stageTerms filetype:bitmap"
+        $stageSearchQuery.gsrnamespace = '6'
+        $stageSearchQuery.gsrlimit = '40'
+        $responses.Add((Invoke-JsonRequest -Uri $apiUri -Query $stageSearchQuery))
+    }
 
     $candidates = [System.Collections.Generic.List[object]]::new()
     foreach ($response in $responses) {
@@ -476,7 +510,9 @@ function Select-DiversePhotoList {
         [object[]] $Candidates,
 
         [Parameter(Mandatory)]
-        [int] $Limit
+        [int] $Limit,
+
+        [string[]] $ExistingSubjects = @()
     )
 
     $selected = [System.Collections.Generic.List[object]]::new()
@@ -485,6 +521,9 @@ function Select-DiversePhotoList {
     foreach ($subject in $subjects) {
         if ($selected.Count -ge $Limit) {
             break
+        }
+        if ($subject -in $ExistingSubjects) {
+            continue
         }
 
         $selectedSourceUrls = @($selected | ForEach-Object { $_.SourceUrl })
@@ -632,7 +671,7 @@ function Save-RemoteImage {
                 Remove-Item -LiteralPath $partialPath -Force
             }
 
-            if ($attempt -eq 2) {
+            if ($attempt -eq 4) {
                 throw
             }
 
@@ -694,6 +733,9 @@ foreach ($record in $existingRecords) {
         $record.common_name = $catalogPlant.CommonName
         $record.scope_note = $catalogPlant.ScopeNote
     }
+    if ($subjectOverrides.ContainsKey([string] $record.source_url)) {
+        $record.subject = $subjectOverrides[[string] $record.source_url]
+    }
 
     $records.Add($record)
 }
@@ -708,8 +750,7 @@ foreach ($plant in $selectedPlants) {
     $needed = [math]::Max(0, $ImagesPerPlant - $plantRecords.Count)
 
     if ($needed -gt 0) {
-        $existingCommonsCount = @($plantRecords | Where-Object { $_.source -eq 'Wikimedia Commons' }).Count
-        $commonsTarget = [math]::Min($needed, [math]::Max(0, 4 - $existingCommonsCount))
+        $commonsTarget = $needed
         if ($commonsTarget -gt 0) {
             $commonsCandidates = Get-WikimediaCandidateList -Plant $plant
             $existingSourceUrls = @($records | ForEach-Object { $_.source_url }) + $rejectedSourceUrls
@@ -717,7 +758,11 @@ foreach ($plant in $selectedPlants) {
                 $commonsCandidates |
                     Where-Object { $_.SourceUrl -notin $existingSourceUrls }
             )
-            $selectedCommons = Select-DiversePhotoList -Candidates $commonsCandidates -Limit $commonsTarget
+            $existingSubjects = @($plantRecords | ForEach-Object { $_.subject })
+            $selectedCommons = Select-DiversePhotoList `
+                -Candidates $commonsCandidates `
+                -Limit $commonsTarget `
+                -ExistingSubjects $existingSubjects
 
             foreach ($photo in $selectedCommons) {
                 $extension = Get-FileExtension -Mime $photo.Mime
@@ -815,7 +860,11 @@ foreach ($plant in $selectedPlants) {
             $commonsCandidates |
                 Where-Object { $_.SourceUrl -notin $existingSourceUrls }
         )
-        $selectedCommons = Select-DiversePhotoList -Candidates $commonsCandidates -Limit $needed
+        $existingSubjects = @($plantRecords | ForEach-Object { $_.subject })
+        $selectedCommons = Select-DiversePhotoList `
+            -Candidates $commonsCandidates `
+            -Limit $needed `
+            -ExistingSubjects $existingSubjects
 
         foreach ($photo in $selectedCommons) {
             $extension = Get-FileExtension -Mime $photo.Mime
@@ -900,6 +949,13 @@ foreach ($plant in $plantCatalog) {
     $profileLines.Add('')
     $profileLines.Add("*$($plant.ScientificName)* - $($plant.Id)")
     $profileLines.Add('')
+    $labelId = if ([string]::IsNullOrWhiteSpace($plant.LabelId)) {
+        'none (historical record only)'
+    } else {
+        '`{0}`' -f $plant.LabelId
+    }
+    $profileLines.Add("Collection label ID: $labelId.")
+    $profileLines.Add('')
     $profileLines.Add($plant.ScopeNote)
     $profileLines.Add('')
     $profileGroup = Get-ProfileGroup -InventoryId $plant.Id
@@ -945,14 +1001,15 @@ $indexLines.Add('These are locally saved reference photographs with reusable lic
 $indexLines.Add('shows the documented taxon or its stated reference scope; it is not proof that')
 $indexLines.Add('the collection plant has the same identification.')
 $indexLines.Add('')
-$indexLines.Add('| Inventory ID | Plant | Photos | Research | Archive |')
-$indexLines.Add('| --- | --- | ---: | --- | --- |')
+$indexLines.Add('| Inventory ID | Label ID | Plant | Photos | Research | Archive |')
+$indexLines.Add('| --- | --- | --- | ---: | --- | --- |')
 foreach ($plant in $plantCatalog) {
     $count = @($sortedRecords | Where-Object { $_.plant_slug -eq $plant.Slug }).Count
     $archive = if ($count -gt 0) { "[open](./$($plant.Slug)/)" } else { 'not collected yet' }
     $profileGroup = Get-ProfileGroup -InventoryId $plant.Id
     $profileLink = "[profile](../../docs/plants/$profileGroup/$($plant.Slug).md)"
-    $indexLines.Add("| $($plant.Id) | *$($plant.ScientificName)* - $($plant.CommonName) | $count | $profileLink | $archive |")
+    $labelId = if ([string]::IsNullOrWhiteSpace($plant.LabelId)) { 'none' } else { '`{0}`' -f $plant.LabelId }
+    $indexLines.Add("| $($plant.Id) | $labelId | *$($plant.ScientificName)* - $($plant.CommonName) | $count | $profileLink | $archive |")
 }
 $indexLines.Add('')
 $indexLines.Add('See [ATTRIBUTION.md](./ATTRIBUTION.md) for a compact attribution table and')

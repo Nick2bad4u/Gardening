@@ -9,7 +9,9 @@ iNaturalist.
 .\scripts\fetch-plant-images.ps1
 ```
 
-The default target is six images per plant. Limit a refresh to one or more
+The default target is ten images per plant, with lifecycle searches preferring
+young plants, flowers, fruit or seed, habitat, mature habit, and useful close
+details. Some taxa have fewer reusable images available. Limit a refresh to one or more
 catalog slugs when needed:
 
 ```powershell
