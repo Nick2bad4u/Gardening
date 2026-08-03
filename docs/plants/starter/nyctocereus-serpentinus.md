@@ -1,20 +1,21 @@
 # Serpent cactus
 
-- Inventory: Starter-04 — *Nyctocereus serpentinus*
+- Inventory: Starter-04 — _Nyctocereus serpentinus_
+- Label ID: `A3`
 - Identification: **labeled**
 - Photo archive: [licensed reference images](../../../assets/plants/nyctocereus-serpentinus/)
 
 ## Names and identity
 
-| Kind | Name |
-| --- | --- |
-| Accepted botanical name | *Nyctocereus serpentinus* (Lag. & Rodr.) Britton & Rose |
-| Common names | Serpent cactus, snake cactus, night-blooming cereus |
-| Important synonym | *Peniocereus serpentinus* |
-| Name clue | *Nyctocereus* refers to night flowering; *serpentinus* describes the long, snake-like stems |
+| Kind                    | Name                                                                                        |
+| ----------------------- | ------------------------------------------------------------------------------------------- |
+| Accepted botanical name | _Nyctocereus serpentinus_ (Lag. & Rodr.) Britton & Rose                                     |
+| Common names            | Serpent cactus, snake cactus, night-blooming cereus                                         |
+| Important synonym       | _Peniocereus serpentinus_                                                                   |
+| Name clue               | _Nyctocereus_ refers to night flowering; _serpentinus_ describes the long, snake-like stems |
 
-Kew currently accepts *Nyctocereus* as a one-species genus. Other taxonomic
-treatments place this plant in *Peniocereus*, so both names appear in serious
+Kew currently accepts _Nyctocereus_ as a one-species genus. Other taxonomic
+treatments place this plant in _Peniocereus_, so both names appear in serious
 references. The original label's “Nyctocerus serpteninus” is just a misspelling
 of the accepted name.
 
@@ -32,19 +33,19 @@ pollination and are reported as edible. The combination of a relatively plain
 skinny stem and extravagant short-lived flower is typical of several unrelated
 plants sold loosely as “night-blooming cereus.”
 
-The species was first described in 1801, then placed in *Nyctocereus* by
+The species was first described in 1801, then placed in _Nyctocereus_ by
 Britton and Rose in 1909. Kew lists it as Least Concern in the wild and records
 introductions beyond Mexico, including parts of Australia and South Africa.
 
 ## Care in this collection
 
-| Topic | Practical approach |
-| --- | --- |
-| Grow-light position | Bright middle zone rather than the hottest center at first: about 10–18 mol/m²/day DLI, or 230–420 µmol/m²/s over 12 hours. |
-| Growth habit | Give it a stake, trellis, or eventual hanging route. A horizontal stem is not automatically unhealthy; unsupported scrambling is normal. |
-| Water | During warm active growth it can use water more regularly than the small globular cacti, but still wait for the pot to dry. Reduce sharply when growth slows. |
-| Mix and pot | Fast drainage remains essential. An established tuberous root system may eventually justify a deeper pot, but do not overpot a small specimen. |
-| Temperature | Favor warmth during growth and protect from frost. Keep a cool plant dry. |
+| Topic               | Practical approach                                                                                                                                            |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | Bright middle zone rather than the hottest center at first: about 10–18 mol/m²/day DLI, or 230–420 µmol/m²/s over 12 hours.                                   |
+| Growth habit        | Give it a stake, trellis, or eventual hanging route. A horizontal stem is not automatically unhealthy; unsupported scrambling is normal.                      |
+| Water               | During warm active growth it can use water more regularly than the small globular cacti, but still wait for the pot to dry. Reduce sharply when growth slows. |
+| Mix and pot         | Fast drainage remains essential. An established tuberous root system may eventually justify a deeper pot, but do not overpot a small specimen.                |
+| Temperature         | Favor warmth during growth and protect from frost. Keep a cool plant dry.                                                                                     |
 
 Judge light by the new stem: it should emerge with a useful diameter, regular
 ribs, and normal spine spacing. A thin pale extension means it wants more light;
@@ -65,6 +66,6 @@ fresh yellow or tan patches mean the increase was too abrupt.
 
 ## Sources
 
-- [Kew Plants of the World Online: *Nyctocereus serpentinus*](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A171152-2)
-- [Llifle cactus encyclopedia: *Nyctocereus serpentinus*](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/7251/Nyctocereus_serpentinus)
+- [Kew Plants of the World Online: _Nyctocereus serpentinus_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A171152-2)
+- [Llifle cactus encyclopedia: _Nyctocereus serpentinus_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/7251/Nyctocereus_serpentinus)
 - [International Plant Names Index record](https://www.ipni.org/n/171152-2)

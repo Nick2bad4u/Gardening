@@ -1,17 +1,18 @@
 # Elephant bush
 
-- Inventory: Succulent-02 — *Portulacaria afra*
+- Inventory: Succulent-02 — _Portulacaria afra_
+- Label ID: `C4-D4` — shared succulent planter
 - Identification: **high; golden cultivar possible but unconfirmed**
 - Photo archive: [licensed species-reference images](../../../assets/plants/portulacaria-afra/)
 
 ## Names and identity
 
-| Kind | Name |
-| --- | --- |
-| Accepted botanical name | *Portulacaria afra* Jacq. |
-| Common names | Elephant bush, spekboom, porkbush, elephant's food, purslane tree, dwarf jade |
-| Possible collection form | A yellow-green selection such as 'Aurea'; no cultivar label is available |
-| Important distinction | “Dwarf jade” is a resemblance name; this is not *Crassula ovata* |
+| Kind                     | Name                                                                          |
+| ------------------------ | ----------------------------------------------------------------------------- |
+| Accepted botanical name  | _Portulacaria afra_ Jacq.                                                     |
+| Common names             | Elephant bush, spekboom, porkbush, elephant's food, purslane tree, dwarf jade |
+| Possible collection form | A yellow-green selection such as 'Aurea'; no cultivar label is available      |
+| Important distinction    | “Dwarf jade” is a resemblance name; this is not _Crassula ovata_              |
 
 Opposite pairs of small round leaves on flexible reddish stems make the species
 ID strong. The collection plant's chartreuse tips could be genetics, strong
@@ -48,13 +49,13 @@ top-dressing exposure.
 
 ## Care in the shared planter
 
-| Topic | Practical approach |
-| --- | --- |
-| Grow-light position | Bright middle zone, roughly 8–17 mol/m²/day DLI or 185–395 µmol/m²/s over 12 hours. A golden form may prefer the lower half. |
-| Water | Water thoroughly once the shared planter dries. During warm active growth it may use water sooner than the cacti, but its leaves store a useful buffer. |
-| Pruning | Pinch or cut long stems above a leaf pair to keep the echeveria unshaded and encourage branching. |
-| Temperature | Warm growth is fastest; protect this African succulent from frost. |
-| Feeding | Sparse balanced fertilizer during active growth. Too much produces long, fragile internodes. |
+| Topic               | Practical approach                                                                                                                                      |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | Bright middle zone, roughly 8–17 mol/m²/day DLI or 185–395 µmol/m²/s over 12 hours. A golden form may prefer the lower half.                            |
+| Water               | Water thoroughly once the shared planter dries. During warm active growth it may use water sooner than the cacti, but its leaves store a useful buffer. |
+| Pruning             | Pinch or cut long stems above a leaf pair to keep the echeveria unshaded and encourage branching.                                                       |
+| Temperature         | Warm growth is fastest; protect this African succulent from frost.                                                                                      |
+| Feeding             | Sparse balanced fertilizer during active growth. Too much produces long, fragile internodes.                                                            |
 
 Strong compact growth has short gaps between leaf pairs. Long bare reaches and
 small widely spaced leaves point to inadequate light. A little red edging or
@@ -74,7 +75,7 @@ sunburn.
 
 ## Sources
 
-- [Kew Plants of the World Online: *Portulacaria afra*](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A699417-1/general-information)
-- [SANBI PlantZAfrica: *Portulacaria afra*](https://pza.sanbi.org/portulacaria-afra)
+- [Kew Plants of the World Online: _Portulacaria afra_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A699417-1/general-information)
+- [SANBI PlantZAfrica: _Portulacaria afra_](https://pza.sanbi.org/portulacaria-afra)
 - [SANBI Red List record](https://redlist.sanbi.org/species.php?species=3972-1)
 - [University of Wisconsin Extension: elephant bush](https://hort.extension.wisc.edu/articles/elephant-bush-portulacaria-afra/)

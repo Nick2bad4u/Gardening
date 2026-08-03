@@ -8,6 +8,12 @@
   the dated move indoors, two E25 programs, light and airflow ramps, AeroWave
   placement and oscillation, maintained light height, pot layout, rotations,
   local daylight, response rules, and outdoor-day overrides
+- [Graphic indoor acclimation calendar](../layouts/indoor-acclimation-calendar.html) —
+  browser and print view of the move-in, ramp, rotations, camera events, and
+  manual temperature/RH routine
+- [GrowCam C4 time-lapse and reflector plan](./growcam-c4-and-reflector.md) —
+  camera and Mylar placement for the photographed room, a 24-hour camera test,
+  the six-week time-lapse program, and final electrical and framing checks
 
 The short description of the whole physical setup remains in
 [setup.md](../setup.md). This directory holds the deeper equipment research.

@@ -1,17 +1,18 @@
 # Domino cactus
 
-- Inventory: Starter-06 — *Echinopsis subdenudata*
+- Inventory: Starter-06 — _Echinopsis subdenudata_
+- Label ID: `D2`
 - Identification: **labeled horticultural name**
 - Photo archive: [licensed reference images](../../../assets/plants/echinopsis-subdenudata/)
 
 ## Names and identity
 
-| Kind | Name |
-| --- | --- |
-| Familiar horticultural name | *Echinopsis subdenudata* Cárdenas |
-| Current Kew treatment | Synonym of *Echinopsis ancistrophora* Speg. |
-| Common names | Domino cactus, Easter lily cactus, night-blooming hedgehog |
-| Name clue | *subdenudata* means almost naked, referring to the nearly spineless body |
+| Kind                        | Name                                                                     |
+| --------------------------- | ------------------------------------------------------------------------ |
+| Familiar horticultural name | _Echinopsis subdenudata_ Cárdenas                                        |
+| Current Kew treatment       | Synonym of _Echinopsis ancistrophora_ Speg.                              |
+| Common names                | Domino cactus, Easter lily cactus, night-blooming hedgehog               |
+| Name clue                   | _subdenudata_ means almost naked, referring to the nearly spineless body |
 
 The round green body, broad ribs, and evenly spaced white woolly areoles give it
 the look of a domino. Some specimens have minute dark spines buried in those
@@ -19,10 +20,10 @@ areoles, so “spineless” should not be taken literally.
 
 ## Origin, taxonomy, and flowers
 
-Plants circulated as *E. subdenudata* come from the *E. ancistrophora* complex.
+Plants circulated as _E. subdenudata_ come from the _E. ancistrophora_ complex.
 Horticultural references often associate the form with Bolivia and Paraguay;
-Kew gives the accepted *E. ancistrophora* a native range from Bolivia into
-northwestern Argentina. Martín Cárdenas described *E. subdenudata* in 1956,
+Kew gives the accepted _E. ancistrophora_ a native range from Bolivia into
+northwestern Argentina. Martín Cárdenas described _E. subdenudata_ in 1956,
 but Kew now treats it as a synonym rather than a separate accepted species.
 Keeping the familiar name on a collection label is useful as long as that
 taxonomic status is documented.
@@ -36,13 +37,13 @@ pollinators rather than relying on a colorful daytime display.
 
 ## Care in this collection
 
-| Topic | Practical approach |
-| --- | --- |
-| Grow-light position | Bright middle zone: roughly 10–18 mol/m²/day DLI, or 230–420 µmol/m²/s over a 12-hour day, after acclimation. |
-| Water | Deep soak and full drainage after the pot dries. A plant in active growth or carrying buds may use water sooner than a dormant one. |
-| Winter | Cooler, bright, and dry conditions encourage a clean rest; do not force growth with warmth, water, and weak light. |
-| Pot and mix | The current drained pot works. Repot when pups crowd the rim or roots have replaced much of the mix. |
-| Feeding | Modest dilute fertilizer during warm growth can support flowering; avoid high-nitrogen feeding. |
+| Topic               | Practical approach                                                                                                                  |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | Bright middle zone: roughly 10–18 mol/m²/day DLI, or 230–420 µmol/m²/s over a 12-hour day, after acclimation.                       |
+| Water               | Deep soak and full drainage after the pot dries. A plant in active growth or carrying buds may use water sooner than a dormant one. |
+| Winter              | Cooler, bright, and dry conditions encourage a clean rest; do not force growth with warmth, water, and weak light.                  |
+| Pot and mix         | The current drained pot works. Repot when pups crowd the rim or roots have replaced much of the mix.                                |
+| Feeding             | Modest dilute fertilizer during warm growth can support flowering; avoid high-nitrogen feeding.                                     |
 
 Do not rotate a swelling bud into a completely different light environment every
 day. Routine minor rotation is fine, but stable conditions reduce avoidable bud
@@ -62,6 +63,6 @@ stress. The flower tube may lean toward open space before the bloom opens.
 
 ## Sources
 
-- [Kew Plants of the World Online: *Echinopsis subdenudata*](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A88512-2)
-- [Kew Plants of the World Online: accepted *Echinopsis ancistrophora*](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A132593-1)
-- [NParks Flora & Fauna Web: *Echinopsis subdenudata*](https://www.nparks.gov.sg/florafaunaweb/flora/5/9/5908)
+- [Kew Plants of the World Online: _Echinopsis subdenudata_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A88512-2)
+- [Kew Plants of the World Online: accepted _Echinopsis ancistrophora_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A132593-1)
+- [NParks Flora & Fauna Web: _Echinopsis subdenudata_](https://www.nparks.gov.sg/florafaunaweb/flora/5/9/5908)

@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-07-25
+Last updated: 2026-07-29
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
@@ -36,21 +36,21 @@ month outside in bright shade with a little direct sun. That counts as partial
 acclimation, and the monkey tail's improved growth suggests the current outdoor
 exposure is working.
 
-| Date | Starting setting |
-| --- | --- |
-| Aug. 30, 2026 | Permanently arrange the collection indoors. |
-| Aug. 31 | 40% power, 20 in above the tallest tip, 8:00 a.m.–8:00 p.m. |
-| Sept. 7 | Lower to 18 in and hold 40%. |
-| Sept. 14 | Hold 18 in and increase to 45%. |
-| Sept. 21 | Hold 18 in and increase to 50%. |
-| Sept. 28 | Hold 50% for a second week. |
-| Oct. 5 | Use 55% only if every lit surface is healthy; otherwise remain at 50%. |
-| Oct. 12 | Begin the steady 50–55% setting at 18 in. |
-| Oct. 19 | Begin the monthly Fenton sunrise/sunset timer in the full schedule. |
+| Date         | Starting setting                                                                                                  |
+| ------------ | ----------------------------------------------------------------------------------------------------------------- |
+| Aug. 2, 2026 | Water the dry, ready pots with RO water, drain for several hours, and permanently arrange the collection indoors. |
+| Aug. 3       | 40% power, 20 in above the tallest tip, 8:00 a.m.–8:00 p.m.                                                       |
+| Aug. 10      | Lower to 18 in and hold 40%.                                                                                      |
+| Aug. 17      | Hold 18 in and increase to 45%.                                                                                   |
+| Aug. 24      | Hold 18 in and increase to 50%.                                                                                   |
+| Aug. 31      | Hold 50% for a second week.                                                                                       |
+| Sept. 7      | Use 55% only if every lit surface is healthy; otherwise remain at 50%.                                            |
+| Sept. 14     | Begin the steady 50–55% setting at 18 in.                                                                         |
+| Sept. 21     | Begin the Fenton sunrise/sunset timer in the full schedule.                                                       |
 
 Do not jump directly from the current exposure to 100% power at 12 inches. The
 AW200SE is powerful enough that acclimation still matters. Keep a normal dark
-period. Use 12 hours on and 12 hours off through October 18, then use the
+period. Use 12 hours on and 12 hours off through September 20, then use the
 seasonal Fenton timer in the full schedule.
 
 The installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and
@@ -73,30 +73,48 @@ separate AeroWave E6 Gen2 begins at 8:15 a.m. and ends at 7:45 p.m. during the
 indoor ramp, using its own E25:
 
 - Natural Wind Level 2 of 10;
-- oscillation Level 4 of 5; and
-- a centered position behind the table, 24–36 in from the nearest plant.
+- oscillation activated with the fan's swivel button and set to Level 4 of 5
+  if the current app exposes that scale; and
+- the installed divider-pole position beside the window, aimed diagonally
+  across the round and wooden tables, with the hub 4–8 in above the highest tip
+  if the mount permits.
 
-Those numeric wind levels are provisional until the second E25 is installed.
-If the current app exposes fewer levels, begin at its lowest nonzero Natural
-Wind setting and use the same airflow test from the canonical schedule.
+The second E25 was installed and paired with the AeroWave in the VIVOSUN app on
+2026-07-28. VIVOSUN documents 10 E25/app Natural Wind levels and five
+oscillation levels for the E6 Gen2. The Level 2 starting value remains
+provisional until the final table is installed and passes the same airflow test
+from the canonical schedule.
 
-After the September 6 inspection, Level 3 is acceptable only if the outer
+After the August 9 inspection, Level 3 is acceptable only if the outer
 columns receive almost no airflow and the closest plants are not being pushed.
 Do not automatically increase fan strength with light intensity. Plant rocking,
 flattened hairs, moving top dressing, or one side drying much faster mean the
 fan is too close, too strong, or aimed too narrowly.
 
+### Room temperature and humidity
+
+Keep the manual temperature/RH sensor shaded at canopy height, outside the
+direct AeroWave stream and away from wet trays. Read it at 7:30 p.m. each day
+from August 3 through 16, then as part of the Sunday inspection. Record current
+temperature/RH plus the rolling 24-hour minimum and maximum; copy the all-time
+extremes on Sundays.
+
+Treat the readings as trends. Roughly 65–85°F and 30–55% RH are comfortable
+working observations for this mixed group. Investigate a 24-hour low below
+55°F, a high above 95°F, or a 24-hour RH minimum above 60%. A brief humidity
+peak above 60% is not an emergency.
+
 ### Reading the plants
 
-| Observation | Likely meaning | Response |
-| --- | --- | --- |
-| Fresh pale, bleached, yellow-tan, or hard brown patches on the lit side | Too much light too quickly | Reduce intensity or increase distance, then hold steady while the plant adjusts. |
-| New growth is narrow, pale, weak-spined, or leaning | Too little light | Increase light gradually or move the plant toward the center. |
-| New growth is compact and normally colored | Current level is working | Keep the setting stable instead of changing it just because more power is available. |
-| Base is soft, translucent, blackening, or smells bad | Possible rot | Isolate the plant from watering, inspect the roots/base, and remove dead tissue if needed. |
-| Body is slightly wrinkled but firm after the mix has dried | Plant may be ready for water | Water fully, then drain; do not give repeated small sips. |
+| Observation                                                             | Likely meaning               | Response                                                                                   |
+| ----------------------------------------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------------------ |
+| Fresh pale, bleached, yellow-tan, or hard brown patches on the lit side | Too much light too quickly   | Reduce intensity or increase distance, then hold steady while the plant adjusts.           |
+| New growth is narrow, pale, weak-spined, or leaning                     | Too little light             | Increase light gradually or move the plant toward the center.                              |
+| New growth is compact and normally colored                              | Current level is working     | Keep the setting stable instead of changing it just because more power is available.       |
+| Base is soft, translucent, blackening, or smells bad                    | Possible rot                 | Isolate the plant from watering, inspect the roots/base, and remove dead tissue if needed. |
+| Body is slightly wrinkled but firm after the mix has dried              | Plant may be ready for water | Water fully, then drain; do not give repeated small sips.                                  |
 
-The variegated *Gymnocalycium* and probable variegated blue torch have less
+The variegated _Gymnocalycium_ and probable variegated blue torch have less
 chlorophyll in their pale tissue. Keep them nearer an edge or otherwise slightly
 below the most intense part of the light until their response is known.
 

@@ -1,17 +1,18 @@
 # Giant chin cactus
 
-- Inventory: Starter-08 — *Gymnocalycium saglionis*
+- Inventory: Starter-08 — _Gymnocalycium saglionis_
+- Label ID: `C1`
 - Identification: **labeled**
 - Photo archive: [licensed reference images](../../../assets/plants/gymnocalycium-saglionis/)
 
 ## Names and identity
 
-| Kind | Name |
-| --- | --- |
-| Accepted botanical name | *Gymnocalycium saglionis* (Cels) Britton & Rose |
-| Common names | Giant chin cactus, giant *Gymnocalycium* |
-| Original name | *Echinocactus saglionis* Cels |
-| Dedication | Named for French cactus collector Joseph Saglio |
+| Kind                    | Name                                            |
+| ----------------------- | ----------------------------------------------- |
+| Accepted botanical name | _Gymnocalycium saglionis_ (Cels) Britton & Rose |
+| Common names            | Giant chin cactus, giant _Gymnocalycium_        |
+| Original name           | _Echinocactus saglionis_ Cels                   |
+| Dedication              | Named for French cactus collector Joseph Saglio |
 
 The broad body, blunt ribs, and bundles of heavy curved spines suit this name:
 it is one of the genuinely large members of a genus often sold as small windowsill
@@ -30,19 +31,19 @@ reddish-brown and fade gray. An entertaining diagnostic detail is that wet
 spines can look much more strongly red. Pale pinkish-white flowers form near the
 crown. Later fruits split across the side rather than opening neatly at the tip.
 
-Jean-François Cels published the species in 1847 as an *Echinocactus*. Britton
-and Rose transferred it to *Gymnocalycium* in 1922. As in Starter-07, the genus
+Jean-François Cels published the species in 1847 as an _Echinocactus_. Britton
+and Rose transferred it to _Gymnocalycium_ in 1922. As in Starter-07, the genus
 name refers to the smooth, hairless flower tube.
 
 ## Care in this collection
 
-| Topic | Practical approach |
-| --- | --- |
-| Grow-light position | Bright middle-to-high zone after acclimation: about 10–18 mol/m²/day DLI, or 230–420 µmol/m²/s over 12 hours. |
-| Outdoor light | Bright light with gradual direct-sun exposure. Young nursery plants appreciate acclimation more than massive habitat specimens suggest. |
-| Water | Full soak, complete drainage, then dry through. Reduce water sharply during cool slow growth. |
-| Pot | Do not jump straight to a mature-size container. Move up one practical size when roots or body genuinely crowd the current pot. |
-| Mix | Open, fast draining, and not excessively rich. Keep the body-to-soil line visible. |
+| Topic               | Practical approach                                                                                                                      |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | Bright middle-to-high zone after acclimation: about 10–18 mol/m²/day DLI, or 230–420 µmol/m²/s over 12 hours.                           |
+| Outdoor light       | Bright light with gradual direct-sun exposure. Young nursery plants appreciate acclimation more than massive habitat specimens suggest. |
+| Water               | Full soak, complete drainage, then dry through. Reduce water sharply during cool slow growth.                                           |
+| Pot                 | Do not jump straight to a mature-size container. Move up one practical size when roots or body genuinely crowd the current pot.         |
+| Mix                 | Open, fast draining, and not excessively rich. Keep the body-to-soil line visible.                                                      |
 
 The plant may flatten or contract modestly in a dry rest. That is safer than
 trying to maintain maximum summer plumpness in cool indoor conditions. Active
@@ -61,6 +62,6 @@ new growth should preserve its broad diameter and produce stout spine clusters.
 
 ## Sources
 
-- [Kew Plants of the World Online: *Gymnocalycium saglionis*](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A1155453-2)
+- [Kew Plants of the World Online: _Gymnocalycium saglionis_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A1155453-2)
 - [International Plant Names Index record](https://www.ipni.org/n/1155453-2)
-- [Llifle cactus encyclopedia: *Gymnocalycium saglionis*](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/1338/Gymnocalycium_saglionis)
+- [Llifle cactus encyclopedia: _Gymnocalycium saglionis_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/1338/Gymnocalycium_saglionis)

@@ -1,16 +1,17 @@
 # Feather cactus
 
-- Inventory: Starter-05 — *Mammillaria plumosa*
+- Inventory: Starter-05 — _Mammillaria plumosa_
+- Label ID: `A2`
 - Identification: **labeled**
 - Photo archive: [licensed reference images](../../../assets/plants/mammillaria-plumosa/)
 
 ## Names and identity
 
-| Kind | Name |
-| --- | --- |
-| Accepted botanical name | *Mammillaria plumosa* F.A.C.Weber |
-| Common names | Feather cactus, feather ball |
-| Name clue | *plumosa* means feathered |
+| Kind                    | Name                              |
+| ----------------------- | --------------------------------- |
+| Accepted botanical name | _Mammillaria plumosa_ F.A.C.Weber |
+| Common names            | Feather cactus, feather ball      |
+| Name clue               | _plumosa_ means feathered         |
 
 What looks like cotton is the cactus's normal armament. Each areole produces a
 ring of finely divided white radial spines that resemble tiny feathers and
@@ -28,7 +29,7 @@ Creamy-white to pale yellow or dull pink flowers appear in a ring near the top
 of the heads, often from late summer into the cooler season in cultivation.
 They can be partly concealed by the spines. The fruit develops within the wool
 and is much less conspicuous than the bright berries of many other
-*Mammillaria* species.
+_Mammillaria_ species.
 
 Frédéric Albert Constantin Weber published the species in 1898. Kew accepts the
 name and reports an IUCN status of Near Threatened. Its specialized limestone
@@ -37,13 +38,13 @@ preferable to plants without provenance.
 
 ## Care in this collection
 
-| Topic | Practical approach |
-| --- | --- |
-| Grow-light position | Bright but not an abrupt close-center blast. Start around 10–17 mol/m²/day DLI, approximately 230–395 µmol/m²/s over 12 hours. |
-| Water | Wet the mix thoroughly and let it drain; then wait for a full dry-down. Keep water out of a cool crown and reduce strongly in winter. |
-| Pot and mix | A wide, shallow pot can suit an expanding clump. The current individual pot is fine until heads reach its rim. Favor excellent mineral drainage. |
-| Temperature | A dry plant handles cool nights better than a damp one. Protect from hard frost and cold rain. |
-| Feeding | Dilute cactus feed during active growth only; soft fast growth is not an improvement. |
+| Topic               | Practical approach                                                                                                                               |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Grow-light position | Bright but not an abrupt close-center blast. Start around 10–17 mol/m²/day DLI, approximately 230–395 µmol/m²/s over 12 hours.                   |
+| Water               | Wet the mix thoroughly and let it drain; then wait for a full dry-down. Keep water out of a cool crown and reduce strongly in winter.            |
+| Pot and mix         | A wide, shallow pot can suit an expanding clump. The current individual pot is fine until heads reach its rim. Favor excellent mineral drainage. |
+| Temperature         | A dry plant handles cool nights better than a damp one. Protect from hard frost and cold rain.                                                   |
+| Feeding             | Dilute cactus feed during active growth only; soft fast growth is not an improvement.                                                            |
 
 Water the soil, not the wool. If the feathers get wet, airflow and warmth should
 let them dry quickly. Persistent mineral spotting is cosmetic; persistent damp
@@ -63,6 +64,6 @@ at the hidden body can become structural.
 
 ## Sources
 
-- [Kew Plants of the World Online: *Mammillaria plumosa*](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A151448-2)
-- [Royal Horticultural Society: *Mammillaria plumosa*](https://www.rhs.org.uk/plants/10832/mammillaria-plumosa/details)
+- [Kew Plants of the World Online: _Mammillaria plumosa_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A151448-2)
+- [Royal Horticultural Society: _Mammillaria plumosa_](https://www.rhs.org.uk/plants/10832/mammillaria-plumosa/details)
 - [International Plant Names Index record](https://www.ipni.org/n/151448-2)

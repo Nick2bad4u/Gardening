@@ -6,6 +6,9 @@ light without turning the hobby into a science project.
 
 ## Current notes
 
+- [Browser plant field guide](docs/plant-booklet/) — magazine-style cover,
+  searchable contents, one deep page per plant, licensed reference
+  photography, source links, dark mode, keyboard navigation, and print styling
 - [Plant profiles](docs/plants/) — names, origins, history, flowers, care,
   propagation, risks, sources, and links to photo galleries for all 20
   collection records (19 current and one historical)
@@ -15,17 +18,28 @@ light without turning the hobby into a science project.
 - [Fenton AW200SE and AeroWave operating schedule](docs/equipment/aw200se-operating-schedule.md) —
   dated move-in plan, two E25 programs, light and airflow ramps, fan placement,
   pot layout, rotations, local daylight, and outdoor-day overrides
+- [Graphic indoor acclimation calendar](docs/layouts/indoor-acclimation-calendar.html) —
+  browser and print view of the August 2 move-in, seven-week ramp, daily clock,
+  Sunday rotations, camera milestones, natural daylight, and sensor readings;
+  links directly to the layout and shares its light/dark theme
+- [GrowCam C4 time-lapse and reflector plan](docs/equipment/growcam-c4-and-reflector.md) —
+  camera framing, Mylar placement, a short recording test, and the main
+  acclimation time-lapse
+- [Browser grow-spot diagrams](docs/layouts/grow-spot-layout.html) — tabbed room,
+  wooden-table, round-table, height, fan, camera, and riser views with one
+  consistent room-facing orientation
 - [Plant collection](docs/collection.md) — compact inventory, working IDs,
   confidence, and current status
-- [Pot labels](docs/plants/labels.md) — SUPVAN E11-ready names, short table
-  positions, verified origins and description years, warnings, and the three
+- [Pot labels](docs/plants/labels.md) — SUPVAN E11-ready names, short plant IDs,
+  verified origins and description years, warnings, and the three
   special orientation labels
-- [Setup and equipment](docs/setup.md) — light, controllers, AeroWave, meters,
-  pots, soil, and current arrangement
+- [Setup and equipment](docs/setup.md) — light, controllers, AeroWave, GrowCam,
+  reflector, meters, pots, soil, and current arrangement
 - [Care notes](docs/care-notes.md) — the practical light, water, airflow, and
   recovery plan
-- [Licensed photo archive](assets/plants/) — 120 reference photos with creator,
-  source, license, and SHA-256 metadata
+- [Licensed lifecycle photo archive](assets/plants/) — 187 reference photos
+  covering available young plants, mature forms, flowers, fruit or seed,
+  details, and habitat, with creator, source, license, and SHA-256 metadata
 
 Plant names based only on photos are treated as working IDs and can be updated
 when a flower, label, or better close-up gives stronger evidence.

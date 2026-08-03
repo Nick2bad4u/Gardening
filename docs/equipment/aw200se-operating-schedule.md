@@ -1,40 +1,44 @@
-# Fenton AW200SE and AeroWave operating schedule
+# Fenton AW200SE, AeroWave, and GrowCam operating schedule
 
-Last updated: 2026-07-25
+Last updated: 2026-07-31
 
 This is the canonical dated schedule for the VIVOSUN AW200SE, AeroWave E6
-Gen2, their two GrowHub E25 controllers, and the current collection in Fenton,
-Michigan. It covers the 2026 move indoors, six-week light acclimation plus the
-first steady-state week, airflow, pot layout, rotations, local daylight, and
-the 2027 return outdoors.
+Gen2, GrowCam C4, reflector placement, the two GrowHub E25 controllers, and the
+current collection in Fenton, Michigan. It covers the 2026 move indoors,
+six-week light acclimation plus the first steady-state week, airflow, time-lapse
+recording, pot layout, rotations, local daylight, and the 2027 return outdoors.
 
-The dates assume the permanent indoor setup is ready on Sunday, August 30,
-2026. If the table is not ready, bring the plants indoors when the temperature
-rules require it and shift every ramp date together. Do not begin partway
-through the table.
+The collection moved indoors early on Friday, July 31, 2026, after its first
+RO-water watering and drainage. July 31–August 2 are equipment-shakedown days
+at the planned Week 1 settings. The formal light ramp still begins Monday,
+August 3, so the later height and power-change dates do not shift.
 
 All height measurements are from the LEDs to the **tallest living plant tip**,
 not to the table, pot rim, or soil.
 
 ## Calendar at a glance
 
-| Date | Event |
-| --- | --- |
-| July 24–August 29, 2026 | Continue the outdoor bright-shade routine while using the temperature and rain overrides below. |
-| Sunday, August 30, 6:00–8:00 p.m. | Inspect, label, photograph, and permanently arrange the collection; mount the AeroWave and pair its E25. |
-| Monday, August 31, 7:45 a.m. | Verify both E25 programs; the light starts at 8:00 a.m. and the AeroWave at 8:15 a.m. |
-| September 7 | Lower the fixture from 20 to 18 in; keep 40% power. |
-| September 14 | Increase from 40% to 45%. |
-| September 21 | Increase from 45% to 50%. |
-| September 28 | Hold 50% for a second week. |
-| October 5 | Increase to 55% only if every lit surface remains healthy; otherwise hold 50%. |
-| October 12 | Begin the steady 50–55% setting; make no other change that week. |
-| October 19 | Replace the fixed 8:00 a.m.–8:00 p.m. timer with the Fenton seasonal timer. |
+| Date                                | Event                                                                                                                                                   |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Thursday, July 30, 2026             | The 256 GB microSD card passed test recording. Install the full-height divider Mylar, floor liner, two tables, wall camera, and rotated AW200SE.        |
+| Friday, July 31, about 4:00 a.m.    | Water only the dry pots and shared planters with RO water, drain fully, empty every tray, and move the collection indoors.                              |
+| July 31–August 2                    | Run the three-day shakedown at 40%, 20 in, and 8:00 a.m.–8:00 p.m.; run the AeroWave at Level 2 from 8:15 a.m.–7:45 p.m.                                |
+| Saturday, August 1, after 8:00 p.m. | Dry-fit the group risers, restore the 20-inch LED-to-highest-tip clearance, secure the wall cables, add drip loops, and finish the lower-window block.  |
+| Sunday, August 2, 7:30–8:15 p.m.    | Inspect and photograph the final layout, tissue-test the fan, log the sensor baseline, verify the camera framing, and lock the risers after lights-off. |
+| Monday, August 3, 7:45 a.m.         | Verify both E25 programs and start or verify the production time-lapse; Week 1 begins at 8:00 a.m.                                                      |
+| August 10                           | Lower the fixture from 20 to 18 in; keep 40% power.                                                                                                     |
+| August 17                           | Increase from 40% to 45%.                                                                                                                               |
+| August 24                           | Increase from 45% to 50%.                                                                                                                               |
+| August 31                           | Hold 50% for a second week.                                                                                                                             |
+| September 7                         | Increase to 55% only if every lit surface remains healthy; otherwise hold 50%.                                                                          |
+| September 14                        | Begin the steady 50–55% setting; make no other change that week.                                                                                        |
+| September 21                        | Replace the fixed 8:00 a.m.–8:00 p.m. timer with the Fenton seasonal timer.                                                                             |
 
 ## Fenton outdoor cutoff
 
-The planned permanent move is **Sunday, August 30, 2026**. Move the collection
-inside earlier for any of these conditions:
+The permanent move was completed early on **Friday, July 31, 2026**. The
+original outdoor-cutoff rule was to move the collection inside for any of these
+conditions:
 
 - a forecast low of 50°F or colder;
 - two consecutive forecast nights below 55°F; or
@@ -50,32 +54,47 @@ The date is deliberately earlier than Fenton's first frost. Nearby Flint's
 53°F by September 8. Houseplant guidance commonly recommends moving tender
 plants inside when nights repeatedly approach 50–55°F.
 
-### August 30 move-in checklist
+### July 31 move-in and August 1–2 finishing checklist
 
-1. Inspect bodies, leaf undersides, areoles, pot rims, drainage holes, and
+1. Check below the top dressing and lift each pot. Water
+   only the dry, ready pots and shared planters with RO water. Soak the root
+   ball, let every container drain for several hours, and empty every tray.
+2. Inspect bodies, leaf undersides, areoles, pot rims, drainage holes, and
    top dressing for mealybugs, scale, spider mites, ants, or other hitchhikers.
-2. Wipe the pots and trays clean. If a plant must be rinsed, let it dry before
+3. Wipe the pots and trays clean. If a plant must be rinsed, let it dry before
    placing it under the lamp.
-3. Label every individual pot with its collection ID.
-4. Arrange the pots using the layout below.
-5. Mark the adjustable hanger positions for 18, 20, 22, and 24 in.
-6. Set the LEDs 20 in above the tallest living tip.
-7. Mount the AeroWave behind the center of the table using the placement rules
-   below. Secure its clamp, power cord, and E25 cable.
-8. Pair and name both E25 controllers, test the AeroWave sweep at Levels 1 and
-   2, and leave it at Level 2.
-9. Take one top-down and one front-view baseline photo.
-10. Do not water merely because the plants moved. Water only when the root zone
-   is actually dry and the plant is ready.
+4. Label every individual pot with its permanent short A1–D3 plant ID.
+5. Arrange the pots using the layout below.
+6. Mark the adjustable hanger positions for 18, 20, 22, and 24 in.
+7. Set the LEDs 20 in above the tallest living tip.
+8. Hang the Mylar flat from top to bottom on the plant-facing side of the black
+   divider. Keep the white wall, window side, front, and top open. Treat the
+   loose floor sheet as a carpet liner, not a spill basin; keep its aisle edge
+   flat and every tray above it.
+9. Set the AeroWave's divider-pole mount to the height and diagonal aim in the
+   placement rules below. Secure its clamp, power cord, and E25 cable.
+10. Confirm both previously paired E25 controllers, test the AeroWave sweep at
+    Levels 1 and 2, and leave it at Level 2.
+11. Mount and frame the GrowCam using the
+    [camera and reflector plan](./growcam-c4-and-reflector.md). Take one
+    top-down and one front-view baseline photo.
+12. Place the temperature/RH sensor at canopy height in open shade, between the
+    two tables if practical, outside the direct fan stream and away from wet
+    trays, glass, Mylar, and the lamp's radiant heat. Reset its all-time
+    minimum/maximum memory if possible and record the baseline.
+13. Record the post-Mylar lux or PAR grid and begin or verify the production
+    time-lapse by 7:45 a.m. August 3.
+14. After this move-in watering, return to the normal soak-and-dry rule. Do not
+    water again merely because the plants moved.
 
 ## Programs to enter in the two E25 controllers
 
 Keep the two control paths separate:
 
-| App name | Connection | Purpose |
-| --- | --- | --- |
-| `E25 — AW200SE light` | E25 in the AW200SE Type-C controller port | Light dimming, light timer, sunrise/sunset fade, and the fixture's integrated fan |
-| `E25 — AeroWave canopy fan` | Second E25 connected to the AeroWave Type-C port with the supplied cable | Cross-canopy fan mode, strength, oscillation, and timer |
+| App name                    | Connection                                                               | Purpose                                                                                         |
+| --------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| `E25 — AW200SE light`       | E25 in the AW200SE Type-C controller port                                | Light dimming, light timer, sunrise/sunset fade, and the fixture's integrated fan               |
+| `E25 — AeroWave canopy fan` | Second E25 connected to the AeroWave Type-C port with the supplied cable | Cross-canopy fan mode, strength, timer, and any oscillation controls exposed by the current app |
 
 Both devices retain their own AC power connections. The AW200SE's RJ45 ports
 are for compatible AeroLight daisy chains, not for the AeroWave. Do not connect
@@ -88,87 +107,143 @@ splitter arrangement on an E42/E42A-class controller.
 
 ### AW200SE E25 program
 
-| Setting | Value |
-| --- | --- |
-| Light mode | Cycle schedule; do not use a cannabis grow recipe |
-| On | 8:00 a.m. |
-| Off | 8:00 p.m. |
-| Photoperiod | 12 hours on, 12 hours dark |
-| Wing position | Standard initially; use wide if the plant footprint needs more edge coverage |
-| Starting height | 20 in above the tallest living tip |
-| Starting intensity | 40% |
-| Sunrise/sunset fade | Enable the app's fade; use its default duration |
-| Integrated fan | Natural Wind during the light period, at the lowest setting that produces gentle air movement without a constant hard blast |
+| Setting             | Value                                                                                                                       |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Light mode          | Cycle schedule; do not use a cannabis grow recipe                                                                           |
+| On                  | 8:00 a.m.                                                                                                                   |
+| Off                 | 8:00 p.m.                                                                                                                   |
+| Photoperiod         | 12 hours on, 12 hours dark                                                                                                  |
+| Wing position       | Standard initially; use wide if the plant footprint needs more edge coverage                                                |
+| Starting height     | 20 in above the tallest living tip                                                                                          |
+| Starting intensity  | 40%                                                                                                                         |
+| Sunrise/sunset fade | Enable the app's fade; use its default duration                                                                             |
+| Integrated fan      | Natural Wind during the light period, at the lowest setting that produces gentle air movement without a constant hard blast |
 
 ### AeroWave E25 program
 
-| Setting | Value |
-| --- | --- |
-| Fan mode | Natural Wind |
-| Starting strength | Level 2 of 10 |
-| Provisional steady strength | Level 3 of 10 only after the September 6 coverage check |
-| Oscillation | Level 4 of 5; use Level 5 only if the outer columns never enter the sweep |
-| On | 8:15 a.m. |
-| Off | 7:45 p.m. |
-| Daily runtime during ramp | 11 h 30 min |
-| Placement | Centered behind columns B–C, 24–36 in from the nearest back-row pot |
-| Aim | Across the upper canopy toward the front-center, not continuously at one plant or pot surface |
+| Setting                     | Value                                                                                                                                                        |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Fan mode                    | Natural Wind                                                                                                                                                 |
+| Starting strength           | Level 2 of 10                                                                                                                                                |
+| Provisional steady strength | Level 3 of 10 only after the August 9 coverage check                                                                                                         |
+| Oscillation                 | Activate with the fan's swivel button; if the app exposes the documented scale, use Level 4 of 5 and Level 5 only if the outer columns never enter the sweep |
+| On                          | 8:15 a.m.                                                                                                                                                    |
+| Off                         | 7:45 p.m.                                                                                                                                                    |
+| Daily runtime during ramp   | 11 h 30 min                                                                                                                                                  |
+| Placement                   | On the black divider pole beside the window; raise the hub 4–8 in above the highest tip if the mount permits                                                 |
+| Aim                         | Diagonally across the round and wooden tables toward the room-side center, not continuously at one plant or pot surface                                      |
 
 VIVOSUN's current manual lists 10 E25/app fan-speed levels, 10 E25/app Natural
-Wind levels, and 5 oscillation levels for the E6 Gen2. These numeric settings
-remain provisional until the second E25 and current app expose the controls. If
-the app offers fewer levels, start at the lowest nonzero Natural Wind setting
-and use the same tissue test rather than guessing an equivalent number.
+Wind levels, and 5 oscillation levels for the E6 Gen2. The second E25 was
+installed and paired in the VIVOSUN app on 2026-07-28. These numeric settings
+remain provisional only until the final fan placement passes the tissue test.
 
-Keep the fixed light and AeroWave programs through October 18 so the weekly
-results can be compared. The seasonal Fenton times begin October 19. The
+The same manual is internally inconsistent about oscillation: its control table
+lists five E25/app oscillation settings, while its installation section says
+oscillation must be activated or deactivated with the fan's swivel button.
+Treat the physical button as authoritative for on/off, use the app's level only
+if it appears, and test behavior after a power cycle before relying on a timer.
+
+Keep the fixed light and AeroWave programs through September 20 so the weekly
+results can be compared. The seasonal Fenton times begin September 21. The
 AeroWave begins 15 minutes after the light and stops 15 minutes before it
 during a 12-hour light day.
 
 The current AeroWave manual lists 10 fan-speed and 10 Natural Wind settings
 under E25/app control, while the product specification table separately lists
-five Natural Breeze speeds. Until the second E25 is installed, treat the
-10-level labels in this plan as provisional. If the current app exposes a
-different scale, begin at its lowest nonzero Natural Wind setting and repeat
-the tissue test before increasing it.
+five Natural Breeze speeds. Use the 10-level E25/app scale documented for the
+installed controller path, but let canopy movement and even coverage decide
+whether Level 2 or 3 is appropriate.
 
 The AeroWave is additional cross-canopy circulation. Keep the AW200SE's
 integrated fan at its lowest gentle Natural Wind setting rather than running
 both fans hard.
 
+### GrowCam and reflector program
+
+The GrowCam is independent of both E25 controllers. Its 256 GB microSD card is
+within VIVOSUN's supported maximum of 512 GB. Insert or reseat the card only
+while the camera is powered off.
+
+Before relying on the multiweek clip, run the
+[documented 24-hour camera test](./growcam-c4-and-reflector.md#full-day-validation-test).
+After the final August 2 layout, start the main 15-minute-interval time-lapse
+by 7:45 a.m. August 3 and end it after the light turns off September 14. Keep the
+camera fixed for the entire clip. If the app offers a daily capture window,
+match the initial 8:00 a.m.–8:00 p.m. light period; otherwise a 24-hour
+day/night sequence is acceptable.
+
+Use the full-height Mylar on the black left divider as the only vertical foil
+reflector at first. The loose floor sheet is a protective carpet liner rather
+than a second PPFD panel. The white right wall is already a diffuse reflector;
+do not cover it unless the post-install light grid still shows a dark edge after
+wing and pot-position adjustments.
+
+### Temperature and humidity readings
+
+The manual temperature/RH sensor is an observation tool, not another controller.
+Place it near canopy height between the tables, shaded from the LEDs and window,
+outside the AeroWave's direct jet, and clear of Mylar, wet trays, and the glass
+table. Direct light or contact with a warm or wet surface can distort the
+reading.
+
+Use its current, rolling 24-hour minimum/maximum, and all-time
+minimum/maximum displays without turning the hobby into a logging project:
+
+| Period               | Reading routine                                                                                                                                              |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Aug. 2 setup         | Reset the all-time memory if the sensor permits, then record the first stable indoor reading after the final layout is running.                              |
+| Aug. 3–16            | Read it once each day at 7:30 p.m. Record current temperature/RH and both 24-hour ranges. The same time each day makes the rolling values easier to compare. |
+| Aug. 9 and 16        | During the Sunday inspection, also record the all-time minimum/maximum and note any cold-window or lamp-heat pattern.                                        |
+| Aug. 17 onward       | Read it during the Sunday 7:30 p.m. inspection. Add an extra reading after a major weather, fan, reflector, or light change.                                 |
+| First Sunday monthly | Copy the all-time extremes into the notes. Keep the all-time memory running from move-in unless a deliberate new comparison period is needed.                |
+
+A broad **65–85°F** canopy temperature and roughly **30–55% RH** are
+comfortable working observations for this mixed group, not hard targets. Check
+the placement and room conditions if the 24-hour temperature drops below 55°F
+or rises above 95°F. If the 24-hour RH minimum itself remains above 60%, the
+space stayed humid for the full day: improve spacing or airflow and be
+especially conservative about watering cool, slow-drying pots. A brief RH
+maximum above 60% is not by itself a problem.
+
 ### AeroWave placement and airflow test
 
-Use the following order of preference:
+Use the installed divider-pole mount:
 
-1. Mount the AeroWave behind the center of the table, aligned between columns B
-   and C and 24–36 in from the nearest back-row pot. Use a stable rack member
-   or stand that fits the clamp; VIVOSUN lists a 16–22 mm compatible pole size.
-2. Place the fan hub roughly 4–8 in above the tallest living tip. Tilt it
-   slightly downward so the sweep passes across the upper halves of the plants
-   and through the gaps between pots.
-3. Center the 90° sweep on the gap between B3 and C3. The fan should pass over
-   both outer columns without dwelling on Starter-07, the monkey tail, or the
-   succulent planter.
-4. If there is no safe center mounting point, mount it beyond either short end
-   of the table, at least 30 in from the closest plant, and aim diagonally
-   across the grid.
+1. Keep the AeroWave on the black divider pole beside the window. The rigid pole
+   mount is preferable to fabric, Mylar, the light hanger, or a movable table.
+2. Raise the fan hub roughly 4–8 in above the tallest living tip if the mount
+   permits. Tilt it slightly downward so the sweep crosses the upper halves of
+   both shared planters and the A1–D3 grid.
+3. Aim diagonally toward the room-side center of the wooden table. The fan
+   should reach the far D-column without dwelling on the variegated moon cactus,
+   monkey tail, or succulent planter.
+4. Leave intake clearance beside the window and watch for a cold draft after
+   the outdoor season. Reduce the fan or redirect it before allowing cold window
+   air to blow continuously across the closest planter.
 5. Keep the fan, E25, adapter, and connections outside watering spill paths.
-   Provide a drip loop and do not attach the fan to the light hanger or power
-   cable.
+   Provide a drip loop and keep the sweep clear of the GrowCam cable and Mylar.
 
-Test airflow with a narrow strip of tissue held at A4, the B2–C3 center, and D4.
-The strip should flutter when the sweep reaches it, but plant bodies should not
-rock, hairs should not remain flattened, loose top dressing should not move,
-and one pot should not dry dramatically faster than its neighbors.
+A **drip loop** is a low bend in a hanging cable before it rises into an
+outlet, adapter, controller, or camera connection. Water following the cable
+falls from the bend instead of entering the connection. The
+[grow-spot diagrams](../layouts/grow-spot-layout.html) show the safe cable
+path in the **Wiring** tab.
+
+Test airflow with a narrow strip of tissue at the closest shared planter, the
+center of the round table, A1, the B2–C3 center, and D3. The strip should flutter
+when the sweep reaches it, but plant bodies should not rock, hairs should not
+remain flattened, loose top dressing should not move, and one pot should not
+dry dramatically faster than its neighbors.
 
 ### AeroWave strength and oscillation decisions
 
-| Date | Strength | Oscillation | Action |
-| --- | ---: | ---: | --- |
-| Aug. 30 setup | Test Level 1, then Level 2 | 4 of 5 | Confirm a clear sweep with no cord pull, clamp movement, hard blast, or collision. |
-| Aug. 31–Sept. 6 | Level 2 of 10 | 4 of 5 | Starting setting; leave it unchanged while checking all three tissue-test positions. |
-| Sept. 6 after the light fades | Keep Level 2, or approve Level 3 | Keep 4 of 5 | Approve Level 3 only if the closest plants remain calm and A4 or D4 receives almost no airflow. |
-| Sept. 7 onward | Approved Level 2 or 3 | 4 of 5 | Hold the lowest level that reaches the whole occupied footprint. |
+| Date                         |                         Strength | Oscillation | Action                                                                                          |
+| ---------------------------- | -------------------------------: | ----------: | ----------------------------------------------------------------------------------------------- |
+| Aug. 2 setup                 |       Test Level 1, then Level 2 |      4 of 5 | Confirm a clear sweep with no cord pull, clamp movement, hard blast, or collision.              |
+| Aug. 3–9                     |                    Level 2 of 10 |      4 of 5 | Starting setting; leave it unchanged while checking all tissue-test positions.                  |
+| Aug. 9 after the light fades | Keep Level 2, or approve Level 3 | Keep 4 of 5 | Approve Level 3 only if the closest plants remain calm and A1 or D3 receives almost no airflow. |
+| Aug. 10 onward               |            Approved Level 2 or 3 |      4 of 5 | Hold the lowest level that reaches the whole occupied footprint.                                |
 
 Do not increase fan strength merely because light power increases. Reposition
 the fan or widen the sweep before using more power. Level 4 of 10 is the
@@ -198,15 +273,15 @@ patches, or unusual surface heat, use the recovery rule instead of advancing.
 The Fenton sun times are rounded to the nearest 15 minutes and are context, not
 the E25 timer during the ramp.
 
-| Dates | Days | Height above tallest tip | App intensity | E25 time | Fenton sunrise–sunset at start | Action |
-| --- | ---: | ---: | ---: | --- | --- | --- |
-| Aug. 31–Sept. 6 | 1–7 | 20 in | 40% | 8 a.m.–8 p.m. | 7:00 a.m.–8:15 p.m. | Initial stationary-light acclimation; there is no official 20-inch PPFD grid. |
-| Sept. 7–13 | 8–14 | 18 in | 40% | 8 a.m.–8 p.m. | 7:00 a.m.–8:00 p.m. | At 7:45 a.m. Sept. 7, lower the fixture 2 in and make no power change. |
-| Sept. 14–20 | 15–21 | 18 in | 45% | 8 a.m.–8 p.m. | 7:15 a.m.–7:45 p.m. | At 7:45 a.m. Sept. 14, increase by 5 percentage points. |
-| Sept. 21–27 | 22–28 | 18 in | 50% | 8 a.m.–8 p.m. | 7:15 a.m.–7:30 p.m. | At 7:45 a.m. Sept. 21, increase by another 5 percentage points. |
-| Sept. 28–Oct. 4 | 29–35 | 18 in | 50% | 8 a.m.–8 p.m. | 7:30 a.m.–7:15 p.m. | Hold for a second week and judge new growth. |
-| Oct. 5–11 | 36–42 | 18 in | 55% only if healthy | 8 a.m.–8 p.m. | 7:30 a.m.–7:15 p.m. | Use 55% only if every lit surface remains healthy; otherwise hold 50%. |
-| Oct. 12–18 | 43–49 | 18 in | 50–55% | 8 a.m.–8 p.m. | 7:45 a.m.–7:00 p.m. | Hold the lowest successful power and change nothing else this week. |
+| Dates           |  Days | Height above tallest tip |       App intensity | E25 time      | Fenton sunrise–sunset at start | Action                                                                        |
+| --------------- | ----: | -----------------------: | ------------------: | ------------- | ------------------------------ | ----------------------------------------------------------------------------- |
+| Aug. 3–9        |   1–7 |                    20 in |                 40% | 8 a.m.–8 p.m. | 6:30 a.m.–9:00 p.m.            | Initial stationary-light acclimation; there is no official 20-inch PPFD grid. |
+| Aug. 10–16      |  8–14 |                    18 in |                 40% | 8 a.m.–8 p.m. | 6:30 a.m.–8:45 p.m.            | At 7:45 a.m. Aug. 10, lower the fixture 2 in and make no power change.        |
+| Aug. 17–23      | 15–21 |                    18 in |                 45% | 8 a.m.–8 p.m. | 6:45 a.m.–8:30 p.m.            | At 7:45 a.m. Aug. 17, increase by 5 percentage points.                        |
+| Aug. 24–30      | 22–28 |                    18 in |                 50% | 8 a.m.–8 p.m. | 6:45 a.m.–8:15 p.m.            | At 7:45 a.m. Aug. 24, increase by another 5 percentage points.                |
+| Aug. 31–Sept. 6 | 29–35 |                    18 in |                 50% | 8 a.m.–8 p.m. | 7:00 a.m.–8:15 p.m.            | Hold for a second week and judge new growth.                                  |
+| Sept. 7–13      | 36–42 |                    18 in | 55% only if healthy | 8 a.m.–8 p.m. | 7:00 a.m.–8:00 p.m.            | Use 55% only if every lit surface remains healthy; otherwise hold 50%.        |
+| Sept. 14–20     | 43–49 |                    18 in |              50–55% | 8 a.m.–8 p.m. | 7:15 a.m.–7:45 p.m.            | Hold the lowest successful power and change nothing else this week.           |
 
 Do not advance merely because the next date arrived. Remaining at a taller
 distance or at 50% is a successful outcome if new growth is compact and
@@ -223,71 +298,133 @@ change is easier than changing the whole collection for one plant.
 If E25/app control is unavailable and only the published 25% and 50% presets can
 be selected, use distance to soften the jump:
 
-| Period | Height | Manual intensity |
-| --- | ---: | ---: |
-| Days 1–7 | 20 in | 25% |
-| Days 8–14 | 18 in | 25% |
-| Days 15–21 | 24 in | 50% |
-| Days 22–28 | 22 in | 50% |
-| Days 29–35 | 20 in | 50% |
-| Days 36 onward | 18 in | 50% |
+| Period         | Height | Manual intensity |
+| -------------- | -----: | ---------------: |
+| Days 1–7       |  20 in |              25% |
+| Days 8–14      |  18 in |              25% |
+| Days 15–21     |  24 in |              50% |
+| Days 22–28     |  22 in |              50% |
+| Days 29–35     |  20 in |              50% |
+| Days 36 onward |  18 in |              50% |
 
 ## Final pot layout
 
-Center the entire occupied grid beneath the fixture's long axis. “Back” means
-the side away from the aisle; “front” is the side used for inspection and for
-the monkey tail to trail over safely. The grid shows relative light zones, not
-exact scale; expand or compress the spacing to fit the final table while
-preserving the same order.
+The tape-measure set from 2026-07-31 changes the planning geometry:
 
-| Row | A: left edge | B: center-left | C: center-right | D: right edge |
-| --- | --- | --- | --- | --- |
-| 1: back | Starter-07, variegated moon cactus | Starter-02, *Stenocactus* | Starter-08, giant chin cactus | Starter-11, Dragon's Egg |
-| 2 | Starter-05, feather cactus | Starter-01, Old Man of the Andes | Starter-03, rainbow hedgehog | Starter-06, domino cactus |
-| 3 | Starter-04, serpent cactus | Starter-09, Indigo Wave | Starter-12, monk's hood | Starter-10, Ming Thing |
-| 4: front | Older planter, outer half | Older planter, brighter half | Succulent planter, brighter half | Succulent planter, outer half |
+1. The divider-to-wall bay is 36 in wide and about 60 in long.
+2. The wooden and round glass tabletops are both 18 in above the floor.
+3. Put the 24 in round table at the window end and the 16 × 13 in wooden table
+   toward the room. Keep them separate and end to end along the approximately
+   60 in length, with their centerlines beneath the long axis of the fixture.
+   They do not fit side by side across the 36 in width. Their 24 in diameter plus 16 in
+   wooden-table depth uses about 40 in of the bay length, leaving about 20 in to
+   distribute around and between the tables using the actual physical fit.
+4. Center the approximately 26 in wing-tip width of the AW200SE in the 36 in
+   bay. This leaves about 5 in from each wing tip to the divider/wall when the
+   fixture is centered. The physical fixture width is not the same as its light
+   footprint; keep the wings standard or wide during the ramp.
+5. Leave enough space between the table edges that they do not transfer wobble
+   or pinch a monkey-tail stem.
 
-The zones are:
+The [browser grow-spot diagrams](../layouts/grow-spot-layout.html) show the
+room, tables, fan sweep, camera view, clearance, and riser measurements.
 
-- **High center:** B2, C2, B3, and C3.
-- **Bright middle:** B1, C1, A2, D2, A3, and D3.
-- **Gentler edge:** A1 and D1.
-- **Shared planters:** A4–B4 and C4–D4 use orientation to put each plant in its
-  appropriate brighter or gentler section.
+The A1–D3 values remain permanent plant IDs; they are not coordinates. Arrange
+the 12 pots in the three-column by four-row pattern that actually fits the
+wooden table. Looking from the room toward the window:
+
+| Physical row     | Divider-side pot, direct on wood | Two pots sharing the row riser toward the light center          |
+| ---------------- | -------------------------------- | --------------------------------------------------------------- |
+| 1: window side   | A1, variegated moon cactus       | A3, serpent cactus + B1, grass-blade cactus on **+5.11 in**     |
+| 2: center-window | C1, giant chin cactus            | B2, Old Man of the Andes + C2, rainbow hedgehog on **+1.18 in** |
+| 3: center-room   | D1, Dragon's Egg                 | D3, Ming Thing + A2, feather cactus on **+3.93 in**             |
+| 4: room side     | B3, Indigo Wave                  | D2, domino cactus + C3, monk's hood on **+2.75 in**             |
+
+This is a height-first starting plan with light-tolerance exceptions. Aim to
+bring the main starter canopy into roughly the same 8–9 in band above the wood,
+not to force every tip onto an exact plane:
+
+- A1 stays direct in the gentler outer position; keep its palest side away from
+  the fixture center.
+- A3 is visibly shorter than B2 in the tape photos, so A3 moves to the tallest
+  riser while B2 uses only the shortest riser. Give A3 a support and do not use
+  the tall stand if its attached saucer rocks.
+- C1 and D1 stay direct in the outer column because they are medium-height,
+  moderate-light plants. The probable _Euphorbia_ hybrid does not need the
+  highest tier.
+- B3 stays direct because its raised monstrose growth is already in the taller
+  starter tier. Recheck its highest living point rather than the end of a
+  sideways crest.
+- The two raised columns occupy the stronger part of the wooden table. Start
+  with the table centered on the long axis of the fixture. If the measured light
+  center misses the wood, fine-tune the fixture laterally within safe
+  wall/divider clearance rather than moving a sensitive pot onto a taller riser.
+- **Shared planters:** the printed A4–B4 and C4–D4 values remain durable planter
+  IDs, but they no longer describe a fourth row on the wooden table.
 
 Orient the shared planters as follows:
 
-- Put the older mixed planter at the front so the monkey tail can trail without
-  being crushed. Keep the pale side of the variegated blue torch facing toward
-  A/outward rather than toward the central hotspot. Give the greener blue-torch
-  tissue and golden torch as much of the B/brighter half as the fixed planting
-  allows.
-- Put the succulent planter across C4–D4 with the echeveria side facing inward
-  toward C. Keep the golden elephant bush and taller kalanchoes from shading
-  the echeveria; prune them later if orientation no longer solves the problem.
+- Put the older mixed planter on the divider/left half of the round table. Keep
+  the pale side of the variegated blue torch facing outward toward the divider,
+  and let the monkey tail trail over the open room-side arc between the wooden
+  table and wall cables. Dry-fit the stem path before rotating the planter.
+- Put the succulent planter on the white-wall/right half of the round table with
+  the echeveria side facing inward toward the fixture axis. Keep the golden
+  elephant bush and taller kalanchoes from shading it; prune them later if
+  orientation no longer solves the problem.
 
-If a short high-light pot is more than about 6 in below the tallest tip, use a
-wide, stable riser under that pot. Do not lower the whole light toward a short
-plant while the tallest cactus is already at the scheduled clearance.
+The GrowCam photo taken before the risers shows these shared planters reversed.
+Swap them when installing the risers: older cacti toward the fixture/divider
+side, succulent planter toward the white wall.
+
+Keep both shared planters directly on the glass. The measurement photos put the
+tallest older-planter tip at about 12.5–13 in above the glass, the succulent
+canopy at about 8–9 in, and the individual starter tips at roughly 4–7 in
+above the wood. Because both tabletops are 18 in high, the general formula
+simplifies to:
+
+`needed lift = round tabletop height + shared tip height - wooden tabletop height - individual tip height`
+
+`needed lift = 12.5–13 in reference tip - individual tip above wood`
+
+For leveling the starter pots against one another, use the more useful working
+formula:
+
+`starter lift = 8.5 in target canopy - individual tip above wood`
+
+Then choose the available riser height closest to that lift. The browser
+layout's calculator does this comparison. The 8.5 in target is provisional;
+adjust it after measuring every pot directly.
+
+Use the four assignments above as the photo-derived starting layout. They keep
+every raised tip below the shared reference while putting A3 on the largest
+lift and B2/C2 on the smallest. Put each riser across one physical row under the
+two named pots. The tops are only 2.95 in wide and 7.87–9.05 in long. Two 4 in
+pots are the practical maximum; three will not fit safely. Center each attached
+saucer over the strip and press gently at several rim points. If either pot
+rocks, tips, slides, or crowds its neighbor, use the stand for one pot
+only or leave that row direct. Do not stack the acrylic stands, and do not lower
+the whole light toward a short plant while the tallest cactus is already at the
+scheduled clearance.
 
 ### Rotation and inspection times
 
 Use one simple weekly routine:
 
-| Time | Task |
-| --- | --- |
-| Every Sunday, 30 minutes before the programmed off time | Photograph the same front and top views; inspect new growth, lit surfaces, bases, and pests while the light is on. This is 7:30 p.m. during the ramp. |
-| Every Sunday after that day's fade finishes | Rotate Starter-01 through Starter-06 and Starter-08 through Starter-12 by 90° clockwise in their existing slots. This is shortly after 8:00 p.m. during the ramp. |
-| Same Sunday check | Keep Starter-07's palest tissue facing away from the center; do not rotate it blindly. |
-| Same Sunday check | Do not routinely rotate either shared planter; preserve the blue-torch and echeveria orientations above. |
-| Same Sunday check | Measure the tallest tip and restore the scheduled clearance if growth changed it; check trays and pot stability. |
-| Same Sunday check | Repeat the tissue test at A4, center, and D4; check the AeroWave clamp, sweep, cables, and nearest plants for uneven drying. |
-| First Sunday of each month, after shutoff | Unplug the AeroWave, inspect the grille for dust, and wipe it according to the manual after the blades stop. |
-| Scheduled Mondays at 7:45 a.m. | Make that week's light change and any previously approved AeroWave change before either device starts. |
+| Time                                                    | Task                                                                                                                                                                               |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Every Sunday, 30 minutes before the programmed off time | Photograph the same front and top views; inspect new growth, lit surfaces, bases, and pests while the light is on. This is 7:30 p.m. during the ramp.                              |
+| Every Sunday after that day's fade finishes             | Rotate Starter-01 through Starter-06 and Starter-08 through Starter-12 by 90° clockwise in their existing slots. This is shortly after 8:00 p.m. during the ramp.                  |
+| Same Sunday check                                       | Keep Starter-07's palest tissue facing away from the center; do not rotate it blindly.                                                                                             |
+| Same Sunday check                                       | Do not routinely rotate either shared planter; preserve the blue-torch and echeveria orientations above.                                                                           |
+| Same Sunday check                                       | Measure the tallest tip and restore the scheduled clearance if growth changed it; check trays and pot stability.                                                                   |
+| Same Sunday check                                       | Repeat the tissue test at the closest shared planter, round-table center, A1, B2–C3 center, and D3; check the AeroWave clamp, sweep, cables, and nearest plants for uneven drying. |
+| First Sunday of each month, after shutoff               | Unplug the AeroWave, inspect the grille for dust, and wipe it according to the manual after the blades stop.                                                                       |
+| Scheduled Mondays at 7:45 a.m.                          | Make that week's light change and any previously approved AeroWave change before either device starts.                                                                             |
 
-The first scheduled rotation is Sunday, September 6. Repeat it September 13,
-20, and 27; October 4, 11, and 18; then continue weekly using the current
-seasonal off time.
+The first scheduled rotation is Sunday, August 9. Repeat it August 16, 23, and
+30; September 6, 13, and 20; then continue weekly using the current seasonal
+off time.
 
 Rotation means turning a pot in place, not moving it into another light zone.
 Do not automatically trade edge and center pots. If one side of the fixture
@@ -302,14 +439,14 @@ scale that map linearly with dim percentage and convert it to a 12-hour DLI.
 They are planning estimates, not measurements of the future open table.
 
 | Power at 18 in | Estimated PPFD: min / mean / center | Estimated 12 h DLI: min / mean / center |
-| ---: | ---: | ---: |
-| 25% | 143 / 177 / 214 | 6.2 / 7.6 / 9.2 |
-| 40% | 229 / 283 / 342 | 9.9 / 12.2 / 14.8 |
-| 45% | 258 / 318 / 385 | 11.1 / 13.7 / 16.6 |
-| 50% | 287 / 353 / 428 | 12.4 / 15.3 / 18.5 |
-| 55% | 315 / 389 / 471 | 13.6 / 16.8 / 20.3 |
-| 60% | 344 / 424 / 514 | 14.9 / 18.3 / 22.2 |
-| 75% | 430 / 530 / 642 | 18.6 / 22.9 / 27.7 |
+| -------------: | ----------------------------------: | --------------------------------------: |
+|            25% |                     143 / 177 / 214 |                         6.2 / 7.6 / 9.2 |
+|            40% |                     229 / 283 / 342 |                       9.9 / 12.2 / 14.8 |
+|            45% |                     258 / 318 / 385 |                      11.1 / 13.7 / 16.6 |
+|            50% |                     287 / 353 / 428 |                      12.4 / 15.3 / 18.5 |
+|            55% |                     315 / 389 / 471 |                      13.6 / 16.8 / 20.3 |
+|            60% |                     344 / 424 / 514 |                      14.9 / 18.3 / 22.2 |
+|            75% |                     430 / 530 / 642 |                      18.6 / 22.9 / 27.7 |
 
 These numbers are deliberately based on the full map rather than VIVOSUN's
 separate single specification of 691 µmol/m²/s at 12 inches. The two official
@@ -321,7 +458,7 @@ collection's working 10–22 mol/m²/day range. The 55% setting is an optional
 increase for healthy plants, not a requirement. Horizontal placement supplies
 the rest:
 
-- Put the rainbow hedgehog, *Astrophytum*, Old Man of the Andes, Indigo Wave,
+- Put the rainbow hedgehog, _Astrophytum_, Old Man of the Andes, Indigo Wave,
   golden torch, and the greener side of the blue torch nearer the stronger
   center zone.
 - Put the variegated moon cactus, Dragon's Egg, and the pale side of the blue
@@ -336,7 +473,7 @@ The full plant-by-plant ranges remain in the
 ## Height-adjustment rules
 
 Height is adjusted during acclimation and becomes a maintained clearance after
-October 11.
+September 13.
 
 1. Mark the adjustable hanger positions for 18, 20, 22, and 24 in once the
    table is installed.
@@ -387,7 +524,7 @@ say that it automatically looks up astronomical sunrise or sunset, and it does
 not document the fade duration. Treat it as a transition effect inside the
 schedule, not as a location-aware daylight service.
 
-On October 19, keep the successful 50% or 55% light power and the approved
+On September 21, keep the successful 50% or 55% light power and the approved
 AeroWave strength. Change only the two timers.
 Thereafter, update both E25 controllers on the listed dates. Times use Fenton
 coordinates 42.7978° N, 83.7049° W, follow local daylight-saving time, and are
@@ -400,21 +537,23 @@ light. On longer days, center an 11-hour-30-minute fan period inside the light
 window. This stays below the manual's 12-hour daily-use condition for its stated
 service-life and warranty expectations.
 
-| Effective date | Light E25 | AeroWave E25 | Programmed light day | Note |
-| --- | --- | --- | ---: | --- |
-| Oct. 19, 2026 | 8:00 a.m.–6:45 p.m. | 8:15 a.m.–6:30 p.m. | 10 h 45 min | First seasonal-timer change; keep power and fan strength unchanged. |
-| Nov. 1, 2026 | 7:15 a.m.–5:30 p.m. | 7:30 a.m.–5:15 p.m. | 10 h 15 min | Daylight saving time ends; verify both app clocks. |
-| Dec. 1, 2026 | 7:45 a.m.–5:00 p.m. | 8:00 a.m.–4:45 p.m. | 9 h 15 min | Winter setting. |
-| Jan. 1, 2027 | 8:00 a.m.–5:15 p.m. | 8:15 a.m.–5:00 p.m. | 9 h 15 min | Winter setting. |
-| Feb. 1, 2027 | 7:45 a.m.–5:45 p.m. | 8:00 a.m.–5:30 p.m. | 10 h | Resume increasing natural day length. |
-| Mar. 1, 2027 | 7:15 a.m.–6:30 p.m. | 7:30 a.m.–6:15 p.m. | 11 h 15 min | Check that new growth remains compact. |
-| Mar. 14, 2027 | 7:45 a.m.–7:45 p.m. | 8:00 a.m.–7:30 p.m. | 12 h | Daylight saving time begins; verify both app clocks. |
-| Apr. 1, 2027 | 7:15 a.m.–8:00 p.m. | 7:45 a.m.–7:15 p.m. | 12 h 45 min | Center the capped fan period inside the light window. |
-| May 1, 2027 | 6:30 a.m.–8:30 p.m. | 7:45 a.m.–7:15 p.m. | 14 h | Seasonal maximum; outdoor days override both devices. |
-| June 1, 2027 | 6:30 a.m.–8:30 p.m. | 7:45 a.m.–7:15 p.m. | 14 h | Indoor fallback; outdoor days override both devices. |
-| July 1, 2027 | 6:30 a.m.–8:30 p.m. | 7:45 a.m.–7:15 p.m. | 14 h | Indoor fallback; outdoor days override both devices. |
-| Aug. 1, 2027 | 6:45 a.m.–8:45 p.m. | 8:00 a.m.–7:30 p.m. | 14 h | Indoor fallback; outdoor days override both devices. |
-| Sept. 1, 2027 | 7:00 a.m.–8:15 p.m. | 7:45 a.m.–7:15 p.m. | 13 h 15 min | Begin shortening the indoor day. |
+| Effective date | Light E25           | AeroWave E25        | Programmed light day | Note                                                                |
+| -------------- | ------------------- | ------------------- | -------------------: | ------------------------------------------------------------------- |
+| Sept. 21, 2026 | 7:15 a.m.–7:30 p.m. | 7:45 a.m.–7:15 p.m. |          12 h 15 min | First seasonal-timer change; keep power and fan strength unchanged. |
+| Oct. 1, 2026   | 7:30 a.m.–7:15 p.m. | 7:45 a.m.–7:00 p.m. |          11 h 45 min | October setting.                                                    |
+| Oct. 19, 2026  | 8:00 a.m.–6:45 p.m. | 8:15 a.m.–6:30 p.m. |          10 h 45 min | Mid-October update; keep power and fan strength unchanged.          |
+| Nov. 1, 2026   | 7:15 a.m.–5:30 p.m. | 7:30 a.m.–5:15 p.m. |          10 h 15 min | Daylight saving time ends; verify both app clocks.                  |
+| Dec. 1, 2026   | 7:45 a.m.–5:00 p.m. | 8:00 a.m.–4:45 p.m. |           9 h 15 min | Winter setting.                                                     |
+| Jan. 1, 2027   | 8:00 a.m.–5:15 p.m. | 8:15 a.m.–5:00 p.m. |           9 h 15 min | Winter setting.                                                     |
+| Feb. 1, 2027   | 7:45 a.m.–5:45 p.m. | 8:00 a.m.–5:30 p.m. |                 10 h | Resume increasing natural day length.                               |
+| Mar. 1, 2027   | 7:15 a.m.–6:30 p.m. | 7:30 a.m.–6:15 p.m. |          11 h 15 min | Check that new growth remains compact.                              |
+| Mar. 14, 2027  | 7:45 a.m.–7:45 p.m. | 8:00 a.m.–7:30 p.m. |                 12 h | Daylight saving time begins; verify both app clocks.                |
+| Apr. 1, 2027   | 7:15 a.m.–8:00 p.m. | 7:45 a.m.–7:15 p.m. |          12 h 45 min | Center the capped fan period inside the light window.               |
+| May 1, 2027    | 6:30 a.m.–8:30 p.m. | 7:45 a.m.–7:15 p.m. |                 14 h | Seasonal maximum; outdoor days override both devices.               |
+| June 1, 2027   | 6:30 a.m.–8:30 p.m. | 7:45 a.m.–7:15 p.m. |                 14 h | Indoor fallback; outdoor days override both devices.                |
+| July 1, 2027   | 6:30 a.m.–8:30 p.m. | 7:45 a.m.–7:15 p.m. |                 14 h | Indoor fallback; outdoor days override both devices.                |
+| Aug. 1, 2027   | 6:45 a.m.–8:45 p.m. | 8:00 a.m.–7:30 p.m. |                 14 h | Indoor fallback; outdoor days override both devices.                |
+| Sept. 1, 2027  | 7:00 a.m.–8:15 p.m. | 7:45 a.m.–7:15 p.m. |          13 h 15 min | Begin shortening the indoor day.                                    |
 
 The astronomical calculations are planning values. Atmospheric conditions can
 shift observed sunrise or sunset by roughly five minutes, which is irrelevant
@@ -424,13 +563,13 @@ At 18 in and the documented 50% setpoint, changing the day length changes the
 tent-map DLI approximately as follows:
 
 | Natural day length | Mean-map DLI | Center-map DLI |
-| ---: | ---: | ---: |
-| 9 h | 11.4 | 13.9 |
-| 10 h | 12.7 | 15.4 |
-| 11 h | 14.0 | 16.9 |
-| 12 h | 15.3 | 18.5 |
-| 13 h | 16.5 | 20.0 |
-| 14 h | 17.8 | 21.6 |
+| -----------------: | -----------: | -------------: |
+|                9 h |         11.4 |           13.9 |
+|               10 h |         12.7 |           15.4 |
+|               11 h |         14.0 |           16.9 |
+|               12 h |         15.3 |           18.5 |
+|               13 h |         16.5 |           20.0 |
+|               14 h |         17.8 |           21.6 |
 
 Those seasonal changes remain inside a useful broad range for much of the
 collection. Keep gentler and variegated plants at the edge, especially during
@@ -441,27 +580,27 @@ long summer programs.
 After a winter under the lamp, the collection must acclimate to outdoor light
 again.
 
-Keep the collection indoors throughout the August 31–October 18, 2026, ramp.
+Keep the collection indoors throughout the August 3–September 20, 2026, ramp.
 Routine outdoor trips during those seven weeks would add an unknown amount of
 sunlight and make the weekly comparisons unreliable.
 
-| Date or trigger | Action |
-| --- | --- |
-| May 15, 2027 onward | On warm, dry days, use bright shade outdoors for 2–4 hours and bring the plants back inside well before a cool evening. |
-| After seven successful outings | Add about 30–60 minutes of gentle morning or late-day direct sun every few outings. Avoid intense midday sun. |
-| June 15, 2027 target | Leave the collection outside overnight only if the 10-day forecast shows every night at 55°F or warmer and no prolonged rain. Otherwise keep using daytime outings. |
-| Any outdoor date | Move inside for a forecast low of 50°F, repeated nights below 55°F, prolonged rain, or saturated cold pots. |
+| Date or trigger                | Action                                                                                                                                                              |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| May 15, 2027 onward            | On warm, dry days, use bright shade outdoors for 2–4 hours and bring the plants back inside well before a cool evening.                                             |
+| After seven successful outings | Add about 30–60 minutes of gentle morning or late-day direct sun every few outings. Avoid intense midday sun.                                                       |
+| June 15, 2027 target           | Leave the collection outside overnight only if the 10-day forecast shows every night at 55°F or warmer and no prolonged rain. Otherwise keep using daytime outings. |
+| Any outdoor date               | Move inside for a forecast low of 50°F, repeated nights below 55°F, prolonged rain, or saturated cold pots.                                                         |
 
 Sun and lamp exposure add together. Keep both E25 programs during the initial
 ramp, or their current seasonal programs afterward, but manually skip
 unnecessary indoor light and fan time:
 
-| Outdoor exposure that day | Indoor-device action |
-| --- | --- |
-| No outdoor time or a fully rainy day | Run the normal scheduled light and AeroWave programs. |
-| A few hours in bright shade | When brought inside, use only the time remaining in each device's current program. |
-| At least roughly 2 hours of direct sun or most of the day outdoors | Leave both the grow light and AeroWave off for the rest of that day. |
-| Outdoors all day | Leave both indoor devices off. |
+| Outdoor exposure that day                                          | Indoor-device action                                                               |
+| ------------------------------------------------------------------ | ---------------------------------------------------------------------------------- |
+| No outdoor time or a fully rainy day                               | Run the normal scheduled light and AeroWave programs.                              |
+| A few hours in bright shade                                        | When brought inside, use only the time remaining in each device's current program. |
+| At least roughly 2 hours of direct sun or most of the day outdoors | Leave both the grow light and AeroWave off for the rest of that day.               |
+| Outdoors all day                                                   | Leave both indoor devices off.                                                     |
 
 Never add “make-up” hours after the programmed off time. If the outdoor
 exposure is hard to judge, choose the lower-light option; one modest day is
@@ -469,20 +608,37 @@ safer than stacking a full outdoor day with a full indoor DLI.
 
 ## Final table calibration
 
-Before August 31, record:
+Recorded on 2026-07-31:
+
+- occupied bay: 36 in wide by about 60 in long;
+- both tabletop surfaces: 18 in from the floor;
+- round glass top: 24 in diameter;
+- wooden top: 16 × 13 in;
+- AW200SE: about 26 in from wing tip to wing tip;
+- tallest shared-cactus tip: about 12.5–13 in above the glass; and
+- current starter-tip band: roughly 4–7 in above the wood before risers.
+
+After installing the risers, record:
 
 - the occupied table width and depth;
 - light-to-tip distance for the tallest and shortest plants;
 - wing position;
 - whether walls or reflective surfaces are nearby; and
-- a phone-lux or PAR reading at a 3 × 5 grid across the plant footprint;
+- a phone-lux or PAR reading at a 3 × 5 grid across the plant footprint after
+  the left-side Mylar is installed;
 - AeroWave-to-nearest-plant distance, height, vertical angle, and oscillation
   level; and
-- whether the Level 2 tissue test reaches A4, center, and D4 without moving top
-  dressing or rocking plants.
+- whether the Level 2 tissue test reaches the closest shared planter,
+  round-table center, A1, B2–C3 center, and D3 without moving top dressing or
+  rocking plants;
+- GrowCam lens height, distance, angle, and whether all labels and growth tips
+  remain in frame; and
+- whether the 24-hour time-lapse test exported and played correctly.
 
-Those measurements can replace the reflective-tent estimates without changing
-the ramp's basic order or the seasonal timer dates.
+The exact tape photos are indexed in
+[`assets/measurements`](../../assets/measurements/README.md). These measurements
+replace the earlier assumed table geometry without changing the ramp's basic
+order or seasonal timer dates.
 
 ## Sources
 
@@ -491,12 +647,16 @@ the ramp's basic order or the seasonal timer dates.
 - [VIVOSUN GrowHub E25 guide](https://vivosun.com/support/guide/growhub-e25)
 - [VIVOSUN AeroWave E6 Gen2 specifications](https://vivosun.com/en-US/vivosun-aerowave-e6-6-inch-clip-on-fan-compatible-with-growhub-e42-e25-p140926625940348007-v140926625940348006)
 - [VIVOSUN AeroWave E Series manual](https://vivosun.com/en-GB/support/guide/aerowave)
+- [VIVOSUN GrowCam C4 product page](https://vivosun.com/en-GB/vivosun-growcam-smart-camera-p161215462517181360-v161215462517181359)
+- [VIVOSUN GrowCam C4 manual](https://vivosun.com/en-AU/support/guide/growcam-c4)
+- [VIVOSUN 6 mil diamond Mylar product listing](https://www.amazon.com/dp/B01MZ72PAH?th=1)
 - [VIVOSUN E42A Type-C splitter for multiple fans](https://vivosun.com/en-GB/vivosun-2-in-1-type-c-splitter-compatible-with-growhub-aerowave-p144564522569585355-v144564522569585354)
 - [VIVOSUN Smart Grow System FAQ: Sunrise/Sunset mode](https://vivosun.com/growing_guide/vivosun-smart-grow-system-faqs)
 - [National Weather Service: Flint September normals](https://www.weather.gov/dtx/FNT_Sep_rec)
 - [Illinois Extension: moving houseplants indoors below 55°F](https://extension.illinois.edu/blogs/good-growing/2022-09-09-tips-moving-houseplants-indoors-and-overwinter-care)
 - [Iowa State Extension: moving houseplants indoors near 50°F](https://yardandgarden.extension.iastate.edu/faq/how-and-when-do-i-bring-my-houseplants-back-indoors-winter)
 - [NOAA Solar Calculator and calculation details](https://gml.noaa.gov/grad/solcalc/calcdetails.html)
+- [USNO Astronomical Applications Department data services](https://aa.usno.navy.mil/data/api)
 - [Fenton sunrise and sunset cross-check](https://www.timeanddate.com/sun/%404992612)
 - [University of Minnesota Extension: outdoor cactus and succulent acclimation](https://extension.umn.edu/gardening-minnesota/cacti-and-succulents)
 - [Detailed calculations and research notes](./vivosun-aw200se.md)

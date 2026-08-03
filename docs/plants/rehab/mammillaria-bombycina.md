@@ -1,21 +1,22 @@
 # Silken pincushion cactus
 
-- Inventory: Rehab-04 — probable *Mammillaria bombycina*
+- Inventory: Rehab-04 — probable _Mammillaria bombycina_
+- Label ID: none — removed; historical record only
 - Identification: **probable from an older green photo**
 - Status: **removed 2026-07-24; historical record**
 - Photo archive: [licensed living-species reference images](../../../assets/plants/mammillaria-bombycina/)
 
 ## Names and identification
 
-| Kind | Name |
-| --- | --- |
-| Best historical photo match | *Mammillaria bombycina* Quehl |
-| Common names | Silken pincushion cactus, silky pincushion |
-| Name clue | *bombycina* means silky or cottony |
+| Kind                        | Name                                       |
+| --------------------------- | ------------------------------------------ |
+| Best historical photo match | _Mammillaria bombycina_ Quehl              |
+| Common names                | Silken pincushion cactus, silky pincushion |
+| Name clue                   | _bombycina_ means silky or cottony         |
 
-The older image showed a clustered green *Mammillaria* with white radial spines,
+The older image showed a clustered green _Mammillaria_ with white radial spines,
 wool around the areoles, and longer reddish-brown central spines. That is a good
-match for *M. bombycina*, but the final almost-black shrunken plant no longer
+match for _M. bombycina_, but the final almost-black shrunken plant no longer
 showed enough living diagnostic tissue for a confident identification.
 
 ## What a living plant would be
@@ -69,15 +70,15 @@ indoors.
 No viable offset was recovered. These notes remain for a future replacement or
 for a genuinely living offset from another plant:
 
-| Topic | Practical approach |
-| --- | --- |
-| Isolation | Separate it from dead tissue with a sterile blade and let the cut dry fully. |
-| Rooting | Rest it on dry, airy cactus mix; introduce water cautiously only after the wound is sealed and roots begin. |
-| Light | Bright filtered recovery light, then a gradual ramp toward roughly 10–18 mol/m²/day DLI. |
-| Water | Never compensate for missing roots with frequent water. Until roots exist, wet soil mainly feeds rot. |
+| Topic     | Practical approach                                                                                          |
+| --------- | ----------------------------------------------------------------------------------------------------------- |
+| Isolation | Separate it from dead tissue with a sterile blade and let the cut dry fully.                                |
+| Rooting   | Rest it on dry, airy cactus mix; introduce water cautiously only after the wound is sealed and roots begin. |
+| Light     | Bright filtered recovery light, then a gradual ramp toward roughly 10–18 mol/m²/day DLI.                    |
+| Water     | Never compensate for missing roots with frequent water. Until roots exist, wet soil mainly feeds rot.       |
 
 ## Sources
 
-- [Kew Plants of the World Online: *Mammillaria bombycina*](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A150678-2/general-information)
-- [Royal Horticultural Society: *Mammillaria bombycina*](https://www.rhs.org.uk/plants/106175/mammillaria-bombycina/details)
+- [Kew Plants of the World Online: _Mammillaria bombycina_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A150678-2/general-information)
+- [Royal Horticultural Society: _Mammillaria bombycina_](https://www.rhs.org.uk/plants/106175/mammillaria-bombycina/details)
 - [International Plant Names Index record](https://www.ipni.org/n/150678-2)

@@ -12,21 +12,21 @@ For the settings to enter into the two E25 controllers, use the separate
 
 ## Hardware summary
 
-| Specification | AW200SE / E25 information |
-| --- | --- |
-| Nominal light power | 200 W |
-| Fixture size and weight | About 26 × 13 × 2.3 in; 6.9 lb |
-| Advertised coverage | 2 × 4 ft |
-| Photon efficacy | 2.75 µmol/J |
-| Approximate photon output | About 550 µmol/s if 200 W and 2.75 µmol/J describe the same operating point; this is a calculation, not a separately published test result |
-| Spectrum | Advertised 380–780 nm output, including white LEDs, 660 nm deep red, and 730 nm far red |
-| Manual dim levels | Off, 25%, 50%, 75%, and 100% |
-| App/controller range | VIVOSUN advertises 25–100% but does not publish the increment size; the installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and accepts every whole-percent setting in that range |
-| Integrated fan | Up to 84 CFM; advertised 33 dB |
-| External circulation | AeroWave E6 Gen2; 12 W, up to 320 CFM, 90° horizontal oscillation, 10 E25/app speed levels, and 5 oscillation levels |
-| Durability claims | 50,000-hour life and IP65 fixture rating |
-| Controller network | 2.4 GHz Wi-Fi; one E25 controls the AW200SE and a second E25 controls the AeroWave; RJ45 chaining is for compatible AeroLights, not the fan |
-| Climate sensing | The E25 itself is not the room's temperature/RH probe; VIVOSUN points to the separate AeroLab THB1S sensor for climate data |
+| Specification             | AW200SE / E25 information                                                                                                                                                                            |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Nominal light power       | 200 W                                                                                                                                                                                                |
+| Fixture size and weight   | About 26 × 13 × 2.3 in; 6.9 lb                                                                                                                                                                       |
+| Advertised coverage       | 2 × 4 ft                                                                                                                                                                                             |
+| Photon efficacy           | 2.75 µmol/J                                                                                                                                                                                          |
+| Approximate photon output | About 550 µmol/s if 200 W and 2.75 µmol/J describe the same operating point; this is a calculation, not a separately published test result                                                           |
+| Spectrum                  | Advertised 380–780 nm output, including white LEDs, 660 nm deep red, and 730 nm far red                                                                                                              |
+| Manual dim levels         | Off, 25%, 50%, 75%, and 100%                                                                                                                                                                         |
+| App/controller range      | VIVOSUN advertises 25–100% but does not publish the increment size; the installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and accepts every whole-percent setting in that range |
+| Integrated fan            | Up to 84 CFM; advertised 33 dB                                                                                                                                                                       |
+| External circulation      | AeroWave E6 Gen2; 12 W, up to 320 CFM, 90° horizontal oscillation, 10 E25/app speed levels, and 5 oscillation levels                                                                                 |
+| Durability claims         | 50,000-hour life and IP65 fixture rating                                                                                                                                                             |
+| Controller network        | 2.4 GHz Wi-Fi; one E25 controls the AW200SE and a second E25 controls the AeroWave; RJ45 chaining is for compatible AeroLights, not the fan                                                          |
+| Climate sensing           | The E25 itself is not the room's temperature/RH probe; VIVOSUN points to the separate AeroLab THB1S sensor for climate data                                                                          |
 
 The adjustable wings have three useful geometries. VIVOSUN says the **wide**
 position increases coverage about 10%, while the **narrow** position increases
@@ -44,10 +44,10 @@ The product specification table gives a single figure of **691 µmol/m²/s at
 VIVOSUN 4 × 2 reflective tent, gives much higher 12-inch values:
 
 | Height | Map minimum | 25-point mean | Center | Map maximum | Minimum ÷ mean |
-| ---: | ---: | ---: | ---: | ---: | ---: |
-| 12 in | 615 | 870 | 1,214 | 1,214 | 71% |
-| 14 in | 616 | 812 | 1,066 | 1,066 | 76% |
-| 18 in | 573 | 707 | 856 | 856 | 81% |
+| -----: | ----------: | ------------: | -----: | ----------: | -------------: |
+|  12 in |         615 |           870 |  1,214 |       1,214 |            71% |
+|  14 in |         616 |           812 |  1,066 |       1,066 |            76% |
+|  18 in |         573 |           707 |    856 |         856 |            81% |
 
 The means above are calculations from the printed grid, rounded to the nearest
 whole number. The 12-inch map average of about 870 does not reconcile with the
@@ -72,28 +72,28 @@ measurements can be compared with the original claim.
 
 ### 12 in at 100%
 
-| | | | | |
-| ---: | ---: | ---: | ---: | ---: |
-| 620 | 760 | 793 | 752 | 615 |
-| 795 | 1,000 | 1,052 | 995 | 788 |
+|     |       |       |       |     |
+| --: | ----: | ----: | ----: | --: |
+| 620 |   760 |   793 |   752 | 615 |
+| 795 | 1,000 | 1,052 |   995 | 788 |
 | 899 | 1,150 | 1,214 | 1,149 | 894 |
 | 801 | 1,006 | 1,062 | 1,009 | 797 |
-| 625 | 765 | 806 | 768 | 622 |
+| 625 |   765 |   806 |   768 | 622 |
 
 ### 14 in at 100%
 
-| | | | | |
-| ---: | ---: | ---: | ---: | ---: |
-| 621 | 747 | 779 | 739 | 616 |
-| 742 | 912 | 958 | 906 | 736 |
+|     |       |       |       |     |
+| --: | ----: | ----: | ----: | --: |
+| 621 |   747 |   779 |   739 | 616 |
+| 742 |   912 |   958 |   906 | 736 |
 | 814 | 1,011 | 1,066 | 1,010 | 810 |
-| 746 | 917 | 966 | 919 | 744 |
-| 624 | 751 | 790 | 752 | 622 |
+| 746 |   917 |   966 |   919 | 744 |
+| 624 |   751 |   790 |   752 | 622 |
 
 ### 18 in at 100%
 
-| | | | | |
-| ---: | ---: | ---: | ---: | ---: |
+|     |     |     |     |     |
+| --: | --: | --: | --: | --: |
 | 579 | 669 | 700 | 663 | 573 |
 | 666 | 776 | 807 | 772 | 660 |
 | 697 | 821 | 856 | 819 | 693 |
@@ -110,14 +110,14 @@ multiply a 100% map value by the selected fraction:
 This is a planning estimate, not calibration. Driver behavior, wall reflections,
 wing angle, and meter uncertainty prevent exact scaling.
 
-| Height | Location | 25% estimate | 50% estimate | 75% estimate | 100% map |
-| ---: | --- | ---: | ---: | ---: | ---: |
-| 12 in | Grid mean | 217 | 435 | 652 | 870 |
-| 12 in | Center | 304 | 607 | 911 | 1,214 |
-| 14 in | Grid mean | 203 | 406 | 609 | 812 |
-| 14 in | Center | 267 | 533 | 800 | 1,066 |
-| 18 in | Grid mean | 177 | 353 | 530 | 707 |
-| 18 in | Center | 214 | 428 | 642 | 856 |
+| Height | Location  | 25% estimate | 50% estimate | 75% estimate | 100% map |
+| -----: | --------- | -----------: | -----------: | -----------: | -------: |
+|  12 in | Grid mean |          217 |          435 |          652 |      870 |
+|  12 in | Center    |          304 |          607 |          911 |    1,214 |
+|  14 in | Grid mean |          203 |          406 |          609 |      812 |
+|  14 in | Center    |          267 |          533 |          800 |    1,066 |
+|  18 in | Grid mean |          177 |          353 |          530 |      707 |
+|  18 in | Center    |          214 |          428 |          642 |      856 |
 
 At 18 inches and 50%, the tent-map estimate is already about 353 average and
 428 at center. Over 12 hours that is roughly 15.3 and 18.5 mol/m²/day DLI—solid
@@ -145,18 +145,18 @@ For a fixed light:
 ### Twelve-hour conversion table
 
 | Average PPFD | DLI over 12 h | Very rough AW200SE lux range |
-| ---: | ---: | ---: |
-| 100 | 4.3 | 5,500–7,000 lx |
-| 150 | 6.5 | 8,250–10,500 lx |
-| 200 | 8.6 | 11,000–14,000 lx |
-| 250 | 10.8 | 13,750–17,500 lx |
-| 300 | 13.0 | 16,500–21,000 lx |
-| 350 | 15.1 | 19,250–24,500 lx |
-| 400 | 17.3 | 22,000–28,000 lx |
-| 500 | 21.6 | 27,500–35,000 lx |
-| 600 | 25.9 | 33,000–42,000 lx |
-| 800 | 34.6 | 44,000–56,000 lx |
-| 1,000 | 43.2 | 55,000–70,000 lx |
+| -----------: | ------------: | ---------------------------: |
+|          100 |           4.3 |               5,500–7,000 lx |
+|          150 |           6.5 |              8,250–10,500 lx |
+|          200 |           8.6 |             11,000–14,000 lx |
+|          250 |          10.8 |             13,750–17,500 lx |
+|          300 |          13.0 |             16,500–21,000 lx |
+|          350 |          15.1 |             19,250–24,500 lx |
+|          400 |          17.3 |             22,000–28,000 lx |
+|          500 |          21.6 |             27,500–35,000 lx |
+|          600 |          25.9 |             33,000–42,000 lx |
+|          800 |          34.6 |             44,000–56,000 lx |
+|        1,000 |          43.2 |             55,000–70,000 lx |
 
 Apogee shows why no universal lux conversion exists: its factors range from
 about 54 lux per µmol/m²/s for sunlight to 74 for white fluorescent light.
@@ -177,34 +177,34 @@ native exposure, growth form, variegation, broad succulent research, and the
 need to avoid stretching under indoor light. Most exact taxa have never been
 tested in controlled DLI trials.
 
-| ID | Plant | Working DLI | 12 h average PPFD | Placement cue |
-| --- | --- | ---: | ---: | --- |
-| Starter-01 | *Oreocereus trollii* | 12–20 | 280–460 | High light |
-| Starter-02 | *Stenocactus phyllacanthus* | 10–18 | 230–420 | Bright middle/high |
-| Starter-03 | *Echinocereus rigidissimus* subsp. *rubispinus* | 14–24 | 325–555 | High light after acclimation |
-| Starter-04 | *Nyctocereus serpentinus* | 10–18 | 230–420 | Bright middle; allow support |
-| Starter-05 | *Mammillaria plumosa* | 10–17 | 230–395 | Bright; avoid a wet crown |
-| Starter-06 | *Echinopsis subdenudata* | 10–18 | 230–420 | Bright middle |
-| Starter-07 | Variegated *Gymnocalycium mihanovichii* | 6–12 | 140–280 | Edge/gentler zone |
-| Starter-08 | *Gymnocalycium saglionis* | 10–18 | 230–420 | Bright middle |
-| Starter-09 | 'Indigo Wave' | 12–22 | 280–510 | Middle/high; watch raised ridges |
-| Starter-10 | 'Ming Thing' | 10–18 | 230–420 | Middle; uneven surface |
-| Starter-11 | *Euphorbia obesa*-type hybrid | 8–15 | 185–350 | Middle/edge |
-| Starter-12 | *Astrophytum ornatum* | 12–22 | 280–510 | High light |
-| Succulent-01 | Probable *Echeveria pulidonis* | 10–18 | 230–420 | Brightest side of planter |
-| Succulent-02 | *Portulacaria afra* | 8–17 | 185–395 | Middle; lower if golden |
-| Succulent-03 | Probable *Kalanchoe bracteata* | 8–16 | 185–370 | Middle |
-| Succulent-04 | *Kalanchoe orgyalis* | 8–17 | 185–395 | Middle |
-| Rehab-01 | Variegated *Pilosocereus pachycladus* | 12–22 | 280–510 | High light, pale side off hotspot |
-| Rehab-02 | *Cleistocactus colademononis* | 10–18 | 230–420 | Bright middle |
-| Rehab-03 | Probable *Echinopsis spachiana* | 12–22 | 280–510 | High light |
-| Rehab-04 | Probable *Mammillaria bombycina* | — | — | Removed 2026-07-24; historical record only, with no viable salvage retained |
+| Inventory ID | Label ID | Plant                                           | Working DLI | 12 h average PPFD | Placement cue                                                               |
+| ------------ | -------- | ----------------------------------------------- | ----------: | ----------------: | --------------------------------------------------------------------------- |
+| Starter-01   | `B2`     | _Oreocereus trollii_                            |       12–20 |           280–460 | High light                                                                  |
+| Starter-02   | `B1`     | _Stenocactus phyllacanthus_                     |       10–18 |           230–420 | Bright middle/high                                                          |
+| Starter-03   | `C2`     | _Echinocereus rigidissimus_ subsp. _rubispinus_ |       14–24 |           325–555 | High light after acclimation                                                |
+| Starter-04   | `A3`     | _Nyctocereus serpentinus_                       |       10–18 |           230–420 | Bright middle; allow support                                                |
+| Starter-05   | `A2`     | _Mammillaria plumosa_                           |       10–17 |           230–395 | Bright; avoid a wet crown                                                   |
+| Starter-06   | `D2`     | _Echinopsis subdenudata_                        |       10–18 |           230–420 | Bright middle                                                               |
+| Starter-07   | `A1`     | Variegated _Gymnocalycium mihanovichii_         |        6–12 |           140–280 | Edge/gentler zone                                                           |
+| Starter-08   | `C1`     | _Gymnocalycium saglionis_                       |       10–18 |           230–420 | Bright middle                                                               |
+| Starter-09   | `B3`     | 'Indigo Wave'                                   |       12–22 |           280–510 | Middle/high; watch raised ridges                                            |
+| Starter-10   | `D3`     | 'Ming Thing'                                    |       10–18 |           230–420 | Middle; uneven surface                                                      |
+| Starter-11   | `D1`     | _Euphorbia obesa_-type hybrid                   |        8–15 |           185–350 | Middle/edge                                                                 |
+| Starter-12   | `C3`     | _Astrophytum ornatum_                           |       12–22 |           280–510 | High light                                                                  |
+| Succulent-01 | `C4-D4`  | Probable _Echeveria pulidonis_                  |       10–18 |           230–420 | Brightest side of planter                                                   |
+| Succulent-02 | `C4-D4`  | _Portulacaria afra_                             |        8–17 |           185–395 | Middle; lower if golden                                                     |
+| Succulent-03 | `C4-D4`  | Probable _Kalanchoe bracteata_                  |        8–16 |           185–370 | Middle                                                                      |
+| Succulent-04 | `C4-D4`  | _Kalanchoe orgyalis_                            |        8–17 |           185–395 | Middle                                                                      |
+| Rehab-01     | `A4-B4`  | Variegated _Pilosocereus pachycladus_           |       12–22 |           280–510 | High light, pale side off hotspot                                           |
+| Rehab-02     | `A4-B4`  | _Cleistocactus colademononis_                   |       10–18 |           230–420 | Bright middle                                                               |
+| Rehab-03     | `A4-B4`  | Probable _Echinopsis spachiana_                 |       12–22 |           280–510 | High light                                                                  |
+| Rehab-04     | —        | Probable _Mammillaria bombycina_                |           — |                 — | Removed 2026-07-24; historical record only, with no viable salvage retained |
 
 Research support is strongest for the general direction, not every row. A
-recent *Echeveria* cultivar experiment found 12.8 DLI produced more compact
-growth and better performance than 4.8. A study of six other *Kalanchoe*
+recent _Echeveria_ cultivar experiment found 12.8 DLI produced more compact
+growth and better performance than 4.8. A study of six other _Kalanchoe_
 species found improvements as DLI rose from 4.3 to 8.6 or 17.2, depending on
-species. A classic *Opuntia* CAM study reported light saturation near 700
+species. A classic _Opuntia_ CAM study reported light saturation near 700
 µmol/m²/s under its conditions; that result should not be pasted onto every
 cactus genus.
 
@@ -225,7 +225,7 @@ six-week table and outdoor-day rules.
    month outdoors provides some acclimation, but brief sun in bright shade is
    not the same as a stationary close lamp.
 5. Put the variegated moon cactus, Dragon's Egg, and the pale side of the
-   variegated blue torch toward an edge. Put rainbow hedgehog, *Astrophytum*,
+   variegated blue torch toward an edge. Put rainbow hedgehog, _Astrophytum_,
    golden torch, and Old Man of the Andes nearer the stronger zone.
 6. Raise short high-light pots on stable risers instead of lowering the lamp
    until a tall plant is too close.
@@ -242,14 +242,14 @@ Preserve at least an ordinary nighttime dark period.
 
 ### What to watch
 
-| New observation | Interpretation | Adjustment |
-| --- | --- | --- |
-| Compact new growth, normal color, stronger spines | Setting is working | Hold it steady |
-| Narrow pale tip, wider areole spacing, open echeveria center | Too little light | Move inward/raise pot or increase power gradually |
-| Fresh bleached, hard tan, or papery patch facing lamp | Increase was too fast | Move outward or raise/dim lamp |
-| Purple/red/copper color without tissue damage | Often protective pigment | Watch, but do not react to color alone |
-| Soft translucent base or black spread | Water/root problem, not a request for more light | Isolate watering and inspect |
-| Plant surface stays unusually hot | Excess radiant load or poor airflow | Increase distance/air movement |
+| New observation                                              | Interpretation                                   | Adjustment                                        |
+| ------------------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------- |
+| Compact new growth, normal color, stronger spines            | Setting is working                               | Hold it steady                                    |
+| Narrow pale tip, wider areole spacing, open echeveria center | Too little light                                 | Move inward/raise pot or increase power gradually |
+| Fresh bleached, hard tan, or papery patch facing lamp        | Increase was too fast                            | Move outward or raise/dim lamp                    |
+| Purple/red/copper color without tissue damage                | Often protective pigment                         | Watch, but do not react to color alone            |
+| Soft translucent base or black spread                        | Water/root problem, not a request for more light | Isolate watering and inspect                      |
+| Plant surface stays unusually hot                            | Excess radiant load or poor airflow              | Increase distance/air movement                    |
 
 ## Measuring the real shelf
 
@@ -318,6 +318,6 @@ perfectly. Multiply monthly kWh by the local electricity rate for cost.
 - [VIVOSUN E42A Type-C splitter for multiple fans](https://vivosun.com/en-GB/vivosun-2-in-1-type-c-splitter-compatible-with-growhub-aerowave-p144564522569585355-v144564522569585354)
 - [Apogee Instruments: PPFD-to-lux conversions by light source](https://www.apogeeinstruments.com/conversion-ppfd-to-lux/)
 - [Apogee Instruments: instantaneous PPFD to DLI](https://www.apogeeinstruments.com/conversion-instantaneous-ppfd-to-integrated-ppfd/)
-- [Horticulturae: DLI responses in *Echeveria* cultivars](https://doi.org/10.3390/horticulturae12050551)
-- [University of Minnesota: DLI responses in six *Kalanchoe* species](https://experts.umn.edu/en/publications/photosynthetic-daily-light-integral-impacts-growth-and-flowering-/)
-- [Plant Physiology: light response in CAM *Opuntia ficus-indica*](https://pmc.ncbi.nlm.nih.gov/articles/PMC1065988/)
+- [Horticulturae: DLI responses in _Echeveria_ cultivars](https://doi.org/10.3390/horticulturae12050551)
+- [University of Minnesota: DLI responses in six _Kalanchoe_ species](https://experts.umn.edu/en/publications/photosynthetic-daily-light-integral-impacts-growth-and-flowering-/)
+- [Plant Physiology: light response in CAM _Opuntia ficus-indica_](https://pmc.ncbi.nlm.nih.gov/articles/PMC1065988/)
