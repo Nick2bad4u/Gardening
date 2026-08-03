@@ -1,0 +1,3 @@
+# prettier-plugin-powershell 2.1.x corrupts this valid script's multiline pipelines.
+# Keep the PowerShell parser and PSScriptAnalyzer as its formatting/quality gates.
+scripts/fetch-plant-images.ps1
