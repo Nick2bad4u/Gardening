@@ -54,7 +54,7 @@ docs/docusaurus/docs/
 docs/docusaurus/node_modules/
 
 # Non-prose instruction and GitHub template files
-**/AGENTS.md
+**/AGENTS*.md
 **/agent-commit-message-instructions.md
 .github/agent-commit-message-instructions.md
 .github/ISSUE_TEMPLATE/**/*.md
