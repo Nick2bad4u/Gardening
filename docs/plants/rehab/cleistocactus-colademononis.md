@@ -1,7 +1,7 @@
 # Monkey tail cactus
 
 - Inventory: Rehab-02 — _Cleistocactus colademononis_
-- Label ID: `A4-B4` — shared older cactus planter
+- Label ID: `#1` — shared rehab cactus planter; formerly `A4-B4`
 - Identification: **high; the red-orange flower strongly supports it**
 - Photo archive: [licensed reference images](../../../assets/plants/cleistocactus-colademononis/)
 

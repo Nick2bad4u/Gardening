@@ -478,12 +478,20 @@ main {
     --profile-accent: var(--moss);
 }
 
+.profile-page[data-group="cacti"] {
+    --profile-accent: #6f8e52;
+}
+
 .profile-page[data-group="succulents"] {
     --profile-accent: var(--clay);
 }
 
 .profile-page[data-group="rehab"] {
     --profile-accent: var(--gold);
+}
+
+.profile-page[data-group="houseplants"] {
+    --profile-accent: #35816b;
 }
 
 .profile-hero {
@@ -499,6 +507,43 @@ main {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.hero-photo-placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background:
+        radial-gradient(
+            circle at 25% 30%,
+            rgb(255 255 255 / 12%),
+            transparent 22%
+        ),
+        repeating-linear-gradient(
+            135deg,
+            transparent 0 18px,
+            rgb(255 255 255 / 4%) 18px 20px
+        ),
+        linear-gradient(135deg, #1a2d22, #435a3e);
+}
+
+.hero-photo-placeholder span {
+    padding: 0.55rem 0.85rem;
+    border: 1px solid rgb(255 255 255 / 28%);
+    border-radius: 999px;
+    color: rgb(255 255 255 / 70%);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.archive-pending {
+    padding: 0.75rem;
+    border: 1px dashed var(--line);
+    border-radius: 0.65rem;
+    background: var(--page-soft);
 }
 
 .hero-shade {

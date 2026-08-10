@@ -3,6 +3,8 @@
 - Inventory: Starter-10 — _Cereus forbesii_ 'Ming Thing'
 - Label ID: `D3`
 - Identification: **high confidence; original label rejected**
+- Acquired from: Altman Reserve
+- Acquired on: 2026-07-15
 - Photo archive: [licensed species-reference images](../../../assets/plants/cereus-forbesii-ming-thing/)
 
 ## Identification and names

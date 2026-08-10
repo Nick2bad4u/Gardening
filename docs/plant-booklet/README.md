@@ -3,13 +3,16 @@
 [`index.html`](./index.html) is the magazine-style browser guide for the full
 collection. It has a cover, searchable contents, keyboard and button
 navigation, light and dark themes, print styling, and one deep-linkable reading
-page for each of the 20 plant records. Nineteen profiles are current; Rehab-04
-is retained as a clearly marked historical record.
+page for each of the 28 plant records. Twenty-seven profiles are current;
+Rehab-04 is retained as a clearly marked historical record.
 
 The publication works when `index.html` is opened directly from disk. Its plant
 text and source list come from the Markdown profiles under
 [`docs/plants`](../plants/). Its local species-reference photographs and
-credits come from [`assets/plants`](../../assets/plants/).
+credits come from [`assets/plants`](../../assets/plants/). All 28 records have
+archived reusable-license reference galleries. Cultivar, hybrid, and probable
+profiles retain their scope notes so reference photography is not mistaken for
+proof of the collection identification.
 
 Do not edit the generated plant text in `index.html` by hand. Update a source
 profile or the photo manifest, then rebuild:

@@ -31,18 +31,32 @@ const groups = [
             "Twelve individually potted plants with permanent A1-D3 label IDs.",
     },
     {
-        key: "succulents",
-        eyebrow: "C4-D4 shared planter",
-        title: "Mixed succulents",
+        key: "cacti",
+        eyebrow: "August cactus additions",
+        title: "New individual cacti",
         description:
-            "Four species sharing the rectangular planter on the glass table.",
+            "Six individually potted cacti with permanent E1-F3 labels.",
+    },
+    {
+        key: "succulents",
+        eyebrow: "Shared planter and Kiwi aeonium",
+        title: "Succulents",
+        description:
+            "Four species in the shared planter plus the individually potted Kiwi aeonium.",
     },
     {
         key: "rehab",
-        eyebrow: "A4-B4 older planter and archive",
+        eyebrow: "Older planter and archive",
         title: "Older and rehabilitation plants",
         description:
             "Three living cactus records plus the retained historical record for Rehab-04.",
+    },
+    {
+        key: "houseplants",
+        eyebrow: "Tropical houseplant",
+        title: "Houseplants",
+        description:
+            "The money tree follows its own light and watering rules rather than the cactus baseline.",
     },
 ];
 
@@ -129,6 +143,8 @@ function parseProfile(markdown, group, fileName) {
         identificationMarkdown:
             metadata.identification ?? "Working identification",
         statusMarkdown: metadata.status ?? "Current collection record",
+        acquiredFromMarkdown: metadata["acquired from"] ?? "",
+        acquiredOnMarkdown: metadata["acquired on"] ?? "",
         bodyMarkdown: lines.slice(firstSectionIndex).join("\n").trim(),
         historical:
             inventoryId === "Rehab-04" ||
@@ -301,12 +317,6 @@ async function loadProfiles() {
             const profile = parseProfile(markdown, group, fileName);
             const photos = photosBySlug.get(profile.slug) ?? [];
 
-            if (photos.length < 3) {
-                throw new Error(
-                    `${profile.inventoryId} has ${photos.length} archived photos; at least three are required.`
-                );
-            }
-
             const bodyHtml = externalizeLinks(
                 String(await markdownProcessor.process(profile.bodyMarkdown))
             );
@@ -318,6 +328,12 @@ async function loadProfiles() {
                 profile.identificationMarkdown
             );
             const statusHtml = await renderInline(profile.statusMarkdown);
+            const acquiredFromHtml = profile.acquiredFromMarkdown
+                ? await renderInline(profile.acquiredFromMarkdown)
+                : "";
+            const acquiredOnHtml = profile.acquiredOnMarkdown
+                ? await renderInline(profile.acquiredOnMarkdown)
+                : "";
 
             profiles.push({
                 ...profile,
@@ -326,7 +342,11 @@ async function loadProfiles() {
                 labelHtml,
                 identificationHtml,
                 statusHtml,
-                scopeNote: photos[0].scope_note,
+                acquiredFromHtml,
+                acquiredOnHtml,
+                scopeNote:
+                    photos[0]?.scope_note ??
+                    "Reference photography is not archived yet; this page currently uses the collection record and linked research sources.",
                 selectedPhotos: choosePhotos(photos),
                 allPhotos: [...photos].sort(
                     (left, right) =>
@@ -406,12 +426,33 @@ function renderProfile(profile, pageNumber, totalProfiles) {
     const archivePath = `../../assets/plants/${profile.slug}/README.md`;
     const sourceProfilePath = `../plants/${profile.group}/${profile.fileName}`;
     const searchText = stripMarkdown(
-        `${profile.inventoryId} ${profile.labelMarkdown} ${profile.title} ${profile.scientificMarkdown} ${profile.identificationMarkdown} ${profile.bodyMarkdown}`
+        `${profile.inventoryId} ${profile.labelMarkdown} ${profile.title} ${profile.scientificMarkdown} ${profile.identificationMarkdown} ${profile.acquiredFromMarkdown} ${profile.acquiredOnMarkdown} ${profile.bodyMarkdown}`
     ).toLowerCase();
+
+    const acquisitionDetails = [
+        profile.acquiredFromHtml
+            ? `<div><dt>Acquired from</dt><dd>${profile.acquiredFromHtml}</dd></div>`
+            : "",
+        profile.acquiredOnHtml
+            ? `<div><dt>Acquired on</dt><dd><time datetime="${escapeHtml(stripMarkdown(profile.acquiredOnMarkdown))}">${profile.acquiredOnHtml}</time></dd></div>`
+            : "",
+    ].join("");
+
+    const hasPhotos = profile.photoCount > 0;
+    const heroMedia = heroPhoto
+        ? `<img src="${escapeHtml(photoPath(heroPhoto))}" alt="${escapeHtml(heroPhoto.title)}" loading="lazy" decoding="async">`
+        : `<div class="hero-photo-placeholder" aria-hidden="true"><span>Reference photographs pending</span></div>`;
+    const railPhotos = [
+        detailPhoto ? renderPhoto(detailPhoto, "portrait-photo") : "",
+        habitatPhoto ? renderPhoto(habitatPhoto, "landscape-photo") : "",
+    ].join("\n");
+    const archiveLink = hasPhotos
+        ? `<a href="${escapeHtml(archivePath)}">Open all ${profile.photoCount} archived photos and credits <span aria-hidden="true">→</span></a>`
+        : `<p class="archive-pending"><strong>Licensed reference gallery pending.</strong> The research profile is complete; no local photo archive is being implied.</p>`;
 
     return `<article class="book-page profile-page" id="${escapeHtml(profile.slug)}" data-page="${escapeHtml(profile.slug)}" data-group="${escapeHtml(profile.group)}" data-title="${escapeHtml(profile.title)}" data-search="${escapeHtml(searchText)}" hidden>
     <header class="profile-hero">
-      <img src="${escapeHtml(photoPath(heroPhoto))}" alt="${escapeHtml(heroPhoto.title)}" loading="lazy" decoding="async">
+      ${heroMedia}
       <div class="hero-shade"></div>
       <div class="hero-topline">
         <span>${escapeHtml(profile.eyebrow)}</span>
@@ -426,7 +467,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         <p>${profile.scientificHtml}</p>
         <h1>${escapeHtml(profile.title)}</h1>
       </div>
-      <figcaption class="hero-credit">${renderCredit(heroPhoto, true)}</figcaption>
+      ${heroPhoto ? `<figcaption class="hero-credit">${renderCredit(heroPhoto, true)}</figcaption>` : ""}
     </header>
 
     <div class="profile-intro">
@@ -435,6 +476,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         <div><dt>Permanent label</dt><dd>${profile.labelHtml}</dd></div>
         <div><dt>Identification</dt><dd>${profile.identificationHtml}</dd></div>
         <div><dt>Status</dt><dd>${profile.statusHtml}</dd></div>
+        ${acquisitionDetails}
       </dl>
       <p><strong>Photo scope:</strong> ${escapeHtml(profile.scopeNote)}</p>
     </div>
@@ -445,14 +487,13 @@ function renderProfile(profile, pageNumber, totalProfiles) {
       </div>
 
       <aside class="profile-rail" aria-label="Reference photographs and record links">
-        ${renderPhoto(detailPhoto, "portrait-photo")}
-        ${renderPhoto(habitatPhoto, "landscape-photo")}
+        ${railPhotos}
         <section class="record-links">
           <p class="kicker">Keep digging</p>
           <h2>Research trail</h2>
           <a href="${escapeHtml(sourceProfilePath)}">Open the source profile <span aria-hidden="true">→</span></a>
-          <a href="${escapeHtml(archivePath)}">Open all ${profile.photoCount} archived photos and credits <span aria-hidden="true">→</span></a>
-          <p>Identification confidence belongs to the collection plant. The photographs illustrate the working species and may show mature or wild plants.</p>
+          ${archiveLink}
+          <p>Identification confidence belongs to the collection plant. Any photographs illustrate the working species and may show mature or wild plants.</p>
         </section>
       </aside>
     </div>
@@ -525,7 +566,7 @@ async function renderBooklet(profiles) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <meta name="description" content="A browser field guide to the twenty cactus and succulent records in the Fenton collection.">
+  <meta name="description" content="A browser field guide to the cactus, succulent, and houseplant records in the Fenton collection.">
   <title>The Fenton Collection · Plant field guide</title>
   <script>
     (() => {
@@ -576,8 +617,8 @@ async function renderBooklet(profiles) {
     <section class="book-page contents-page" id="contents" data-page="contents" data-title="Contents" hidden>
       <header class="contents-heading">
         <p>The Fenton Collection · Summer 2026</p>
-        <h1>Twenty plants,<br>twenty stories.</h1>
-        <span>Each profile combines collection history, botanical identity, native habitat, mature form, flowers, indoor care, propagation, risks, source links, and credited species-reference photography.</span>
+        <h1>${profiles.filter((profile) => !profile.historical).length} living plants,<br>${profiles.length} stories.</h1>
+        <span>Each profile combines collection history, botanical identity, native habitat, mature form, flowers, indoor care, propagation, risks, and source links. Licensed species-reference galleries are included where archived.</span>
       </header>
       <div class="contents-columns">${contents}</div>
       <aside class="contents-note">
@@ -605,8 +646,8 @@ async function renderBooklet(profiles) {
 async function main() {
     const profiles = await loadProfiles();
 
-    if (profiles.length !== 20) {
-        throw new Error(`Expected 20 profiles but found ${profiles.length}.`);
+    if (profiles.length !== 28) {
+        throw new Error(`Expected 28 profiles but found ${profiles.length}.`);
     }
 
     const renderedOutput = await renderBooklet(profiles);

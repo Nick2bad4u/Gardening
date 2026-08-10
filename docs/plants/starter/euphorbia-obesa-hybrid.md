@@ -3,6 +3,8 @@
 - Inventory: Starter-11 — probable _Euphorbia obesa_-type hybrid or selection
 - Label ID: `D1`
 - Identification: **probable; exact parentage unknown**
+- Acquired from: Altman Reserve
+- Acquired on: 2026-07-23
 - Photo archive: [licensed _E. obesa_ reference images](../../../assets/plants/euphorbia-obesa-hybrid/)
 
 ## Identity and the important correction

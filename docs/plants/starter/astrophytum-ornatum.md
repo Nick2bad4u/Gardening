@@ -3,6 +3,8 @@
 - Inventory: Starter-12 — _Astrophytum ornatum_
 - Label ID: `C3`
 - Identification: **labeled**
+- Acquired from: Costa Farms
+- Acquired on: 2026-07-23
 - Photo archive: [licensed reference images](../../../assets/plants/astrophytum-ornatum/)
 
 ## Names and identity

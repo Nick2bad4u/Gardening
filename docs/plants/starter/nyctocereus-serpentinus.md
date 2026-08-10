@@ -3,6 +3,8 @@
 - Inventory: Starter-04 — _Nyctocereus serpentinus_
 - Label ID: `A3`
 - Identification: **labeled**
+- Acquired from: Costa Farms
+- Acquired on: 2026-07-23
 - Photo archive: [licensed reference images](../../../assets/plants/nyctocereus-serpentinus/)
 
 ## Names and identity

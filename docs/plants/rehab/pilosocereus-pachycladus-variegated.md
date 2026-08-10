@@ -1,7 +1,7 @@
 # Variegated blue torch cactus
 
 - Inventory: Rehab-01 — probable variegated _Pilosocereus pachycladus_
-- Label ID: `A4-B4` — shared older cactus planter
+- Label ID: `#1` — shared rehab cactus planter; formerly `A4-B4`
 - Identification: **probable; better areole/base photos or flowers could revise it**
 - Photo archive: [licensed normal-species reference images](../../../assets/plants/pilosocereus-pachycladus-variegated/)
 

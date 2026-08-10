@@ -2,7 +2,7 @@
 
 _Echinopsis spachiana_ - Rehab-03
 
-Collection label ID: `A4-B4`.
+Collection label ID: `#1; formerly A4-B4`.
 
 Species-reference photographs; the collection ID remains provisional.
 

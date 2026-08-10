@@ -3,6 +3,8 @@
 - Inventory: Starter-05 — _Mammillaria plumosa_
 - Label ID: `A2`
 - Identification: **labeled**
+- Acquired from: Altman Reserve
+- Acquired on: 2026-07-15
 - Photo archive: [licensed reference images](../../../assets/plants/mammillaria-plumosa/)
 
 ## Names and identity

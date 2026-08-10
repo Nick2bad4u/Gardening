@@ -32,3 +32,12 @@ retained under a filename that records the likely Ming Thing mislabel.
 
 Current names, confidence levels, and corrections remain in the
 [collection inventory](../../docs/collection.md).
+
+## August additions
+
+The six new cacti and Kiwi aeonium came from Carlsons' Greenhouse on Torrey
+Road; the money tree came from Lowe's. No August nursery-card photographs have
+been archived here yet. The `E1`–`F3` and `#1`–`#4` mappings were copied from
+the physical labels on 2026-08-10. Add photographs and
+original tag text before treating any new retail identification as archived
+provenance.

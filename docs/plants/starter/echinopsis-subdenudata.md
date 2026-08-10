@@ -3,6 +3,8 @@
 - Inventory: Starter-06 — _Echinopsis subdenudata_
 - Label ID: `D2`
 - Identification: **labeled horticultural name**
+- Acquired from: Costa Farms
+- Acquired on: 2026-07-23
 - Photo archive: [licensed reference images](../../../assets/plants/echinopsis-subdenudata/)
 
 ## Names and identity

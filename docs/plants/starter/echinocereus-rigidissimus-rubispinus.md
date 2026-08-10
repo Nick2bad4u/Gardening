@@ -3,6 +3,8 @@
 - Inventory: Starter-03 — _Echinocereus rigidissimus_ subsp. _rubispinus_
 - Label ID: `C2`
 - Identification: **labeled**
+- Acquired from: Costa Farms
+- Acquired on: 2026-07-15
 - Photo archive: [licensed reference images](../../../assets/plants/echinocereus-rigidissimus-rubispinus/)
 
 ## Names and identity

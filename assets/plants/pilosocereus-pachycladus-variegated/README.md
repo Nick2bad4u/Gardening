@@ -2,7 +2,7 @@
 
 _Pilosocereus pachycladus_ - Rehab-01
 
-Collection label ID: `A4-B4`.
+Collection label ID: `#1; formerly A4-B4`.
 
 Most photographs show normal wild plants; the collection plant appears variegated and its ID remains provisional.
 

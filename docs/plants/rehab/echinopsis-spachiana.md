@@ -1,7 +1,7 @@
 # Golden torch cactus
 
 - Inventory: Rehab-03 — probable _Echinopsis spachiana_
-- Label ID: `A4-B4` — shared older cactus planter
+- Label ID: `#1` — shared rehab cactus planter; formerly `A4-B4`
 - Identification: **probable**
 - Photo archive: [licensed species-reference images](../../../assets/plants/echinopsis-spachiana/)
 

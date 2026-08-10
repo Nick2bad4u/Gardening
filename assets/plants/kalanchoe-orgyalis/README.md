@@ -2,7 +2,7 @@
 
 _Kalanchoe orgyalis_ - Succulent-04
 
-Collection label ID: `C4-D4`.
+Collection label ID: `#2; formerly C4-D4`.
 
 Species-reference photographs.
 

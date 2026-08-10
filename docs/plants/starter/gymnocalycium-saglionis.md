@@ -3,6 +3,8 @@
 - Inventory: Starter-08 — _Gymnocalycium saglionis_
 - Label ID: `C1`
 - Identification: **labeled**
+- Acquired from: Costa Farms
+- Acquired on: 2026-07-15
 - Photo archive: [licensed reference images](../../../assets/plants/gymnocalycium-saglionis/)
 
 ## Names and identity

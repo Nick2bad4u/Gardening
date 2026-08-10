@@ -3,6 +3,8 @@
 - Inventory: Starter-07 — _Gymnocalycium mihanovichii_
 - Label ID: `A1`
 - Identification: **labeled; own-root variegated plant**
+- Acquired from: Costa Farms
+- Acquired on: 2026-07-23
 - Photo archive: [licensed reference images](../../../assets/plants/gymnocalycium-mihanovichii-variegated/)
 
 ## Names and identity

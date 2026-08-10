@@ -3,6 +3,8 @@
 - Inventory: Starter-01 — _Oreocereus trollii_
 - Label ID: `B2`
 - Identification: **labeled**
+- Acquired from: Altman Reserve
+- Acquired on: 2026-07-15
 - Photo archive: [licensed reference images](../../../assets/plants/oreocereus-trollii/)
 
 ## Names and identity

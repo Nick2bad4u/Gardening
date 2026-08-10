@@ -82,10 +82,12 @@ $plantCatalog = @(
         Slug = 'gymnocalycium-mihanovichii-variegated'
         ScientificName = 'Gymnocalycium mihanovichii'
         CommonName = 'Variegated moon cactus'
-        CommonsCategory = 'Gymnocalycium mihanovichii'
-        CommonsSearch = 'Gymnocalycium mihanovichii variegated moon cactus'
+        # Deliberately avoid the broad species category here: its first results
+        # are dominated by chlorophyll-free grafted scions, unlike this plant.
+        CommonsCategory = 'Gymnocalycium mihanovichii variegata'
+        CommonsSearch = 'Gymnocalycium mihanovichii variegata'
         INaturalistName = 'Gymnocalycium mihanovichii'
-        ScopeNote = 'The archive includes normal, variegated, and grafted examples of the species; not every photograph matches this own-root plant.'
+        ScopeNote = 'Own-root variegated examples are prioritized; normal wild forms remain as species context. Grafted chlorophyll-free scions are excluded.'
     },
     [pscustomobject]@{
         Id = 'Starter-08'
@@ -143,8 +145,75 @@ $plantCatalog = @(
         ScopeNote = 'Species-reference photographs.'
     },
     [pscustomobject]@{
+        Id = 'Cactus-01'
+        LabelId = 'E1'
+        Slug = 'espostoa-melanostele-nana'
+        ScientificName = 'Espostoa melanostele subsp. nana'
+        CommonName = 'Dwarf old man cactus'
+        CommonsCategory = 'Espostoa melanostele'
+        CommonsSearch = 'Espostoa melanostele nana'
+        INaturalistName = 'Espostoa melanostele'
+        ScopeNote = 'Species-reference photographs; the collection ID is probable and E. lanata remains the main alternative.'
+    },
+    [pscustomobject]@{
+        Id = 'Cactus-02'
+        LabelId = 'E2'
+        Slug = 'chamaelobivia-hybrid'
+        ScientificName = 'Echinopsis hybrid, Chamaelobivia Group'
+        CommonName = 'Chamaelobivia / peanut cactus hybrid'
+        # Commons retains this broad photo category under the older name.
+        CommonsCategory = 'Chamaecereus silvestrii'
+        CommonsSearch = 'Echinopsis chamaecereus'
+        INaturalistName = 'Echinopsis chamaecereus'
+        ScopeNote = 'Peanut-cactus ancestry reference photographs; the collection plant is a horticultural hybrid with no known wild range or cultivar name.'
+    },
+    [pscustomobject]@{
+        Id = 'Cactus-03'
+        LabelId = 'E3'
+        Slug = 'mammillaria-melanocentra'
+        ScientificName = 'Mammillaria melanocentra'
+        CommonName = 'Black-centered pincushion cactus'
+        CommonsCategory = 'Mammillaria melanocentra'
+        CommonsSearch = 'Mammillaria melanocentra'
+        INaturalistName = 'Mammillaria melanocentra'
+        ScopeNote = 'Species-reference photographs; the collection ID is probable and M. mystax remains the main alternative.'
+    },
+    [pscustomobject]@{
+        Id = 'Cactus-04'
+        LabelId = 'F3'
+        Slug = 'parodia-leninghausii'
+        ScientificName = 'Parodia leninghausii'
+        CommonName = 'Yellow tower cactus'
+        CommonsCategory = 'Parodia leninghausii'
+        CommonsSearch = 'Parodia leninghausii Notocactus'
+        INaturalistName = 'Parodia leninghausii'
+        ScopeNote = 'Species-reference photographs.'
+    },
+    [pscustomobject]@{
+        Id = 'Cactus-05'
+        LabelId = 'F2'
+        Slug = 'myrtillocactus-geometrizans-fukurokuryuzinboku'
+        ScientificName = 'Myrtillocactus geometrizans Fukurokuryuzinboku'
+        CommonName = 'Boobie cactus'
+        CommonsCategory = 'Myrtillocactus geometrizans'
+        CommonsSearch = 'Myrtillocactus geometrizans Fukurokuryuzinboku'
+        INaturalistName = 'Myrtillocactus geometrizans'
+        ScopeNote = 'Species-reference photographs may show the normal species; the collection plant is the monstrose cultivar Fukurokuryuzinboku.'
+    },
+    [pscustomobject]@{
+        Id = 'Cactus-06'
+        LabelId = 'F1'
+        Slug = 'mammillaria-zeilmanniana'
+        ScientificName = 'Mammillaria zeilmanniana'
+        CommonName = 'Rose pincushion cactus'
+        CommonsCategory = 'Mammillaria zeilmanniana'
+        CommonsSearch = 'Mammillaria zeilmanniana'
+        INaturalistName = 'Mammillaria zeilmanniana'
+        ScopeNote = 'Species-reference photographs.'
+    },
+    [pscustomobject]@{
         Id = 'Succulent-01'
-        LabelId = 'C4-D4'
+        LabelId = '#2; formerly C4-D4'
         Slug = 'echeveria-pulidonis'
         ScientificName = 'Echeveria pulidonis'
         CommonName = 'Pulido''s echeveria'
@@ -155,7 +224,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Succulent-02'
-        LabelId = 'C4-D4'
+        LabelId = '#2; formerly C4-D4'
         Slug = 'portulacaria-afra'
         ScientificName = 'Portulacaria afra'
         CommonName = 'Elephant bush'
@@ -166,7 +235,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Succulent-03'
-        LabelId = 'C4-D4'
+        LabelId = '#2; formerly C4-D4'
         Slug = 'kalanchoe-bracteata'
         ScientificName = 'Kalanchoe bracteata'
         CommonName = 'Silver teaspoons'
@@ -177,7 +246,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Succulent-04'
-        LabelId = 'C4-D4'
+        LabelId = '#2; formerly C4-D4'
         Slug = 'kalanchoe-orgyalis'
         ScientificName = 'Kalanchoe orgyalis'
         CommonName = 'Copper spoons'
@@ -187,8 +256,19 @@ $plantCatalog = @(
         ScopeNote = 'Species-reference photographs.'
     },
     [pscustomobject]@{
+        Id = 'Succulent-05'
+        LabelId = '#4'
+        Slug = 'aeonium-haworthii-dream-color'
+        ScientificName = 'Aeonium haworthii Dream Color'
+        CommonName = 'Kiwi aeonium'
+        CommonsCategory = 'Aeonium haworthii'
+        CommonsSearch = 'Aeonium haworthii Kiwi Dream Color'
+        INaturalistName = 'Aeonium haworthii'
+        ScopeNote = 'Species-reference photographs may show the underlying species; the collection plant is the variegated cultivar Dream Color.'
+    },
+    [pscustomobject]@{
         Id = 'Rehab-01'
-        LabelId = 'A4-B4'
+        LabelId = '#1; formerly A4-B4'
         Slug = 'pilosocereus-pachycladus-variegated'
         ScientificName = 'Pilosocereus pachycladus'
         CommonName = 'Blue torch cactus'
@@ -199,7 +279,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Rehab-02'
-        LabelId = 'A4-B4'
+        LabelId = '#1; formerly A4-B4'
         Slug = 'cleistocactus-colademononis'
         ScientificName = 'Cleistocactus colademononis'
         CommonName = 'Monkey tail cactus'
@@ -210,7 +290,7 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Rehab-03'
-        LabelId = 'A4-B4'
+        LabelId = '#1; formerly A4-B4'
         Slug = 'echinopsis-spachiana'
         ScientificName = 'Echinopsis spachiana'
         CommonName = 'Golden torch cactus'
@@ -229,6 +309,17 @@ $plantCatalog = @(
         CommonsSearch = 'Mammillaria bombycina'
         INaturalistName = 'Mammillaria bombycina'
         ScopeNote = 'Species-reference photographs for the archived Rehab-04 record; the plant was removed on 2026-07-24 and its photo-based ID remains provisional.'
+    },
+    [pscustomobject]@{
+        Id = 'Houseplant-01'
+        LabelId = '#3'
+        Slug = 'pachira-glabra'
+        ScientificName = 'Pachira glabra'
+        CommonName = 'Money tree'
+        CommonsCategory = 'Pachira glabra'
+        CommonsSearch = 'Pachira glabra'
+        INaturalistName = 'Pachira glabra'
+        ScopeNote = 'Species-reference photographs; the retail money-tree name is often confused with P. aquatica, so the original tag remains useful evidence.'
     }
 )
 
@@ -240,7 +331,15 @@ $rejectedSourceUrls = @(
     'https://commons.wikimedia.org/wiki/File:Echinopsis_arachnacantha_subsp._torrecillasensis2PAKAL.jpg',
     'https://commons.wikimedia.org/wiki/File:Cactus_an%C3%A3o.JPG',
     'https://commons.wikimedia.org/wiki/File:May29@629am.jpg',
-    'https://commons.wikimedia.org/wiki/File:Kalanchoe_orgyalis_Garfield_Park.jpg'
+    'https://commons.wikimedia.org/wiki/File:Kalanchoe_orgyalis_Garfield_Park.jpg',
+    'https://commons.wikimedia.org/wiki/File:2010._%D0%92%D1%8B%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0_%D1%86%D0%B2%D0%B5%D1%82%D0%BE%D0%B2_%D0%B2_%D0%94%D0%BE%D0%BD%D0%B5%D1%86%D0%BA%D0%B5_%D0%BD%D0%B0_%D0%B4%D0%B5%D0%BD%D1%8C_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D0%B0_98.jpg',
+    # Grafted, chlorophyll-free moon-cactus scions. The collection plant is a
+    # green-and-variegated Gymnocalycium growing on its own roots.
+    'https://commons.wikimedia.org/wiki/File:2010._%D0%92%D1%8B%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0_%D1%86%D0%B2%D0%B5%D1%82%D0%BE%D0%B2_%D0%B2_%D0%94%D0%BE%D0%BD%D0%B5%D1%86%D0%BA%D0%B5_%D0%BD%D0%B0_%D0%B4%D0%B5%D0%BD%D1%8C_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D0%B0_100.jpg',
+    'https://commons.wikimedia.org/wiki/File:2010._%D0%92%D1%8B%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0_%D1%86%D0%B2%D0%B5%D1%82%D0%BE%D0%B2_%D0%B2_%D0%94%D0%BE%D0%BD%D0%B5%D1%86%D0%BA%D0%B5_%D0%BD%D0%B0_%D0%B4%D0%B5%D0%BD%D1%8C_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D0%B0_101.jpg',
+    'https://commons.wikimedia.org/wiki/File:2010._%D0%92%D1%8B%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0_%D1%86%D0%B2%D0%B5%D1%82%D0%BE%D0%B2_%D0%B2_%D0%94%D0%BE%D0%BD%D0%B5%D1%86%D0%BA%D0%B5_%D0%BD%D0%B0_%D0%B4%D0%B5%D0%BD%D1%8C_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D0%B0_39.jpg',
+    'https://commons.wikimedia.org/wiki/File:2010._%D0%92%D1%8B%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0_%D1%86%D0%B2%D0%B5%D1%82%D0%BE%D0%B2_%D0%B2_%D0%94%D0%BE%D0%BD%D0%B5%D1%86%D0%BA%D0%B5_%D0%BD%D0%B0_%D0%B4%D0%B5%D0%BD%D1%8C_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D0%B0_75.jpg',
+    'https://commons.wikimedia.org/wiki/File:Euphorbia_clava_-_Botanischer_Garten,_Frankfurt_am_Main_-_DSC02365.JPG'
 )
 
 # File metadata does not always name a visible flower. These visually checked
@@ -250,6 +349,26 @@ $subjectOverrides = @{
     'https://commons.wikimedia.org/wiki/File:Gymnocalycium_saglionis_2019-06-09_04.jpg' = 'flower'
     'https://commons.wikimedia.org/wiki/File:Gymnocalycium_saglionis_2019-06-09_01.jpg' = 'flower'
     'https://www.inaturalist.org/observations/11066286' = 'flower'
+    'https://commons.wikimedia.org/wiki/File:%E4%BB%99%E4%BA%BA%E6%8E%8C-%E7%B7%8B%E7%89%A1%E4%B8%B9%E9%8C%A6_Gymnocalycium_mihanovichii_variegata_-%E9%A6%99%E6%B8%AF%E5%85%AC%E5%9C%92_Hong_Kong_Park-_(9216072982).jpg' = 'flower'
+    'https://commons.wikimedia.org/wiki/File:Espostoa_melanostele_pm01.jpg' = 'flower'
+    'https://commons.wikimedia.org/wiki/File:Espostoa_melanostele_pm02.jpg' = 'flower'
+    'https://commons.wikimedia.org/wiki/File:Espostoa_melanostele_at_Hampton_Court.jpg' = 'habit'
+    'https://commons.wikimedia.org/wiki/File:Echinopsis_chamaecereus.2006-06-09.1.uellue.jpg' = 'flower'
+    'https://commons.wikimedia.org/wiki/File:Echinopsis_chamaecereus.2006-06-09.2.uellue.jpg' = 'flower'
+    'https://commons.wikimedia.org/wiki/File:Echilopsis_chomaecereus-1-sunny_brook-yercaud-salem-India.jpg' = 'habit'
+    'https://commons.wikimedia.org/wiki/File:Echilopsis_chomaecereus-2-sunny_brook-yercaud-salem-India.jpg' = 'habit'
+    'https://commons.wikimedia.org/wiki/File:Mammillaria_melanocentra_pm_1.JPG' = 'flower'
+    'https://commons.wikimedia.org/wiki/File:Mammillaria_melanocentra_(8717382905).jpg' = 'flower'
+    'https://commons.wikimedia.org/wiki/File:Mammillaria_melanocentra_(3422604664).jpg' = 'flower'
+    'https://commons.wikimedia.org/wiki/File:Parodia_leninghausii_and_Gasteria_batesiana,_Huntington.jpg' = 'habit'
+    'https://commons.wikimedia.org/wiki/File:Mercado_(Dolores_Hidalgo,_Guanajuato)_I.jpg' = 'fruit-seed'
+    'https://commons.wikimedia.org/wiki/File:Mammillaria-zeilmanniana-20080330.JPG' = 'flower'
+    'https://commons.wikimedia.org/wiki/File:Aeonium_haworthii_1w.jpg' = 'flower'
+    'https://commons.wikimedia.org/wiki/File:Aeonium_haworthii_2w.jpg' = 'flower'
+    'https://commons.wikimedia.org/wiki/File:Aeonium_haworthii_3w.jpg' = 'flower'
+    'https://commons.wikimedia.org/wiki/File:Image_is_Aeonium_haworthii,_also_known_as_Haworth%27s_aeonium_or_pinwheel..jpg' = 'habit'
+    'https://commons.wikimedia.org/wiki/File:Pachira_glabra_D5150066.jpg' = 'fruit-seed'
+    'https://commons.wikimedia.org/wiki/File:Pachira_glabra-3-NRI_Layout-bengaluru-India.jpg' = 'habit'
 }
 
 $selectedPlants = $plantCatalog
@@ -309,6 +428,10 @@ function Get-LicenseUrl {
     )
 
     if (-not [string]::IsNullOrWhiteSpace($ProvidedUrl)) {
+        if ($ProvidedUrl -match '^http://creativecommons\.org/') {
+            return $ProvidedUrl -replace '^http://', 'https://'
+        }
+
         return $ProvidedUrl
     }
 
@@ -366,15 +489,21 @@ function Invoke-JsonRequest {
         'User-Agent' = 'Gardening-research/1.0 (personal collection documentation; Wikimedia and iNaturalist attribution preserved)'
     }
 
-    for ($attempt = 1; $attempt -le 4; $attempt++) {
+    # Commons can temporarily return 429 responses during an otherwise small,
+    # sequential refresh. Keep the retry window long enough to cross that
+    # cooldown instead of abandoning the whole manifest near the end.
+    $maximumAttempts = 6
+    for ($attempt = 1; $attempt -le $maximumAttempts; $attempt++) {
         try {
             return Invoke-RestMethod -Uri $Uri -Body $Query -Method Get -Headers $headers
         } catch {
-            if ($attempt -eq 4) {
+            if ($attempt -eq $maximumAttempts) {
                 throw
             }
 
-            Start-Sleep -Seconds ([math]::Pow(2, $attempt - 1))
+            $delaySeconds = [math]::Min(30, [math]::Pow(2, $attempt))
+            Write-Warning "Request failed; retrying in $delaySeconds seconds (attempt $attempt of $maximumAttempts)."
+            Start-Sleep -Seconds $delaySeconds
         }
     }
 }
@@ -416,6 +545,15 @@ function Get-WikimediaCandidateList {
         iiurlwidth = '1280'
     }
 
+    $searchName = if (
+        $null -ne $Plant.PSObject.Properties['CommonsSearch'] -and
+        -not [string]::IsNullOrWhiteSpace([string] $Plant.CommonsSearch)
+    ) {
+        [string] $Plant.CommonsSearch
+    } else {
+        [string] $Plant.ScientificName
+    }
+
     $categoryQuery = $baseQuery.Clone()
     $categoryQuery.generator = 'categorymembers'
     $categoryQuery.gcmtitle = "Category:$($Plant.CommonsCategory)"
@@ -436,7 +574,7 @@ function Get-WikimediaCandidateList {
         Start-Sleep -Milliseconds 900
         $searchQuery = $baseQuery.Clone()
         $searchQuery.generator = 'search'
-        $searchQuery.gsrsearch = "`"$($Plant.ScientificName)`" filetype:bitmap"
+        $searchQuery.gsrsearch = "`"$searchName`" filetype:bitmap"
         $searchQuery.gsrnamespace = '6'
         $searchQuery.gsrlimit = '40'
         $responses.Add((Invoke-JsonRequest -Uri $apiUri -Query $searchQuery))
@@ -446,7 +584,7 @@ function Get-WikimediaCandidateList {
         Start-Sleep -Milliseconds 900
         $stageSearchQuery = $baseQuery.Clone()
         $stageSearchQuery.generator = 'search'
-        $stageSearchQuery.gsrsearch = "`"$($Plant.ScientificName)`" $stageTerms filetype:bitmap"
+        $stageSearchQuery.gsrsearch = "`"$searchName`" $stageTerms filetype:bitmap"
         $stageSearchQuery.gsrnamespace = '6'
         $stageSearchQuery.gsrlimit = '40'
         $responses.Add((Invoke-JsonRequest -Uri $apiUri -Query $stageSearchQuery))
@@ -507,6 +645,7 @@ function Get-WikimediaCandidateList {
 function Select-DiversePhotoList {
     param(
         [Parameter(Mandatory)]
+        [AllowEmptyCollection()]
         [object[]] $Candidates,
 
         [Parameter(Mandatory)]
@@ -704,8 +843,14 @@ function Get-ProfileGroup {
     if ($InventoryId.StartsWith('Succulent-', [StringComparison]::Ordinal)) {
         return 'succulents'
     }
+    if ($InventoryId.StartsWith('Cactus-', [StringComparison]::Ordinal)) {
+        return 'cacti'
+    }
     if ($InventoryId.StartsWith('Rehab-', [StringComparison]::Ordinal)) {
         return 'rehab'
+    }
+    if ($InventoryId.StartsWith('Houseplant-', [StringComparison]::Ordinal)) {
+        return 'houseplants'
     }
 
     throw "Unknown inventory group for $InventoryId"
@@ -771,6 +916,7 @@ foreach ($plant in $selectedPlants) {
                 try {
                     Save-RemoteImage -Uri $photo.DownloadUrl -Destination $destination
                 } catch {
+                    $rejectedSourceUrls += [string] $photo.SourceUrl
                     Write-Warning "Skipping Wikimedia file after repeated download errors: $($photo.SourceUrl)"
                     continue
                 }
@@ -821,6 +967,7 @@ foreach ($plant in $selectedPlants) {
             try {
                 Save-RemoteImage -Uri $photo.DownloadUrl -Destination $destination
             } catch {
+                $rejectedSourceUrls += [string] $photo.SourceUrl
                 Write-Warning "Skipping iNaturalist file after repeated download errors: $($photo.SourceUrl)"
                 continue
             }
@@ -873,6 +1020,7 @@ foreach ($plant in $selectedPlants) {
             try {
                 Save-RemoteImage -Uri $photo.DownloadUrl -Destination $destination
             } catch {
+                $rejectedSourceUrls += [string] $photo.SourceUrl
                 Write-Warning "Skipping Wikimedia file after repeated download errors: $($photo.SourceUrl)"
                 continue
             }

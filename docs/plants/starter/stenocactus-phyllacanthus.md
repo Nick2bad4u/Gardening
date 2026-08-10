@@ -3,6 +3,8 @@
 - Inventory: Starter-02 — _Stenocactus phyllacanthus_
 - Label ID: `B1`
 - Identification: **labeled**
+- Acquired from: Costa Farms
+- Acquired on: 2026-07-15
 - Photo archive: [licensed reference images](../../../assets/plants/stenocactus-phyllacanthus/)
 
 ## Names and identity

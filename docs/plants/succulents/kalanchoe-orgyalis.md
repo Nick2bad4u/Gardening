@@ -1,7 +1,9 @@
 # Copper spoons
 
 - Inventory: Succulent-04 — _Kalanchoe orgyalis_
-- Label ID: `C4-D4` — shared succulent planter
+- Label ID: `#2` — shared succulent planter; formerly `C4-D4`
+- Acquired from: Gerych's Greenhouse, as part of the mixed succulent planter
+- Acquired on: 2026-07-27
 - Identification: **high**
 - Photo archive: [licensed species-reference images](../../../assets/plants/kalanchoe-orgyalis/)
 

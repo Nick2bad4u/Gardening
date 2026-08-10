@@ -3,6 +3,8 @@
 - Inventory: Starter-09 — _Myrtillocactus geometrizans_ 'Indigo Wave'
 - Label ID: `B3`
 - Identification: **labeled trade selection**
+- Acquired from: Altman Reserve
+- Acquired on: 2026-07-15
 - Photo archive: [licensed species-reference images](../../../assets/plants/myrtillocactus-geometrizans-indigo-wave/)
 
 ## Names and identity

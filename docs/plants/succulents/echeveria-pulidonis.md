@@ -1,8 +1,10 @@
 # Pulido's echeveria
 
 - Inventory: Succulent-01 — probable _Echeveria pulidonis_ or close hybrid
-- Label ID: `C4-D4` — shared succulent planter
+- Label ID: `#2` — shared succulent planter; formerly `C4-D4`
 - Identification: **probable; flowers would improve confidence**
+- Acquired from: Gerych's Greenhouse, as part of the mixed succulent planter
+- Acquired on: 2026-07-27
 - Photo archive: [licensed species-reference images](../../../assets/plants/echeveria-pulidonis/)
 
 ## Names and identification
