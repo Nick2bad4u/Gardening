@@ -6,6 +6,9 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
 
 ## Current notes
 
+- [Live plant tracker](docs/layouts/plant-tracker.html) — embedded Google Sheet
+  with one row per physical pot or shared planter, automatic days-since-water,
+  measurements, notes, filters, and direct edit/full-screen links
 - [Browser plant field guide](docs/plant-booklet/) — magazine-style cover,
   searchable contents, one deep page per plant, licensed reference galleries
   for all 28 records, collection and nursery-label photos where archived,
@@ -52,3 +55,10 @@ when a flower, label, or better close-up gives stronger evidence.
 The collection is meant to stay fun. The numerical light targets are starting
 ranges, not rules; compact healthy new growth matters more than chasing one
 perfect meter reading.
+
+The public browser tools are available from the
+[GitHub Pages field guide](https://nick2bad4u.github.io/Gardening/): the live
+[plant tracker](https://nick2bad4u.github.io/Gardening/layouts/plant-tracker.html),
+[grow-spot layout](https://nick2bad4u.github.io/Gardening/layouts/grow-spot-layout.html),
+and [indoor acclimation calendar](https://nick2bad4u.github.io/Gardening/layouts/indoor-acclimation-calendar.html)
+cross-link to one another.

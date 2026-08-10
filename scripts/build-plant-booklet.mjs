@@ -676,6 +676,9 @@ async function renderBooklet(profiles) {
     <nav class="drawer-nav" aria-label="Plant profiles">
       <a class="drawer-special" href="#cover" data-page-link="cover"><span>Cover</span><small>Start of the guide</small></a>
       <a class="drawer-special" href="#contents" data-page-link="contents"><span>Printed contents</span><small>All profiles at a glance</small></a>
+      <a class="drawer-special" href="../layouts/plant-tracker.html"><span>Plant tracker</span><small>Live weights, watering, and measurements</small></a>
+      <a class="drawer-special" href="../layouts/grow-spot-layout.html"><span>Grow-spot layout</span><small>Tables, risers, light, fan, and camera</small></a>
+      <a class="drawer-special" href="../layouts/indoor-acclimation-calendar.html"><span>Acclimation calendar</span><small>Dated light and airflow schedule</small></a>
       ${navigation}
     </nav>
   </dialog>

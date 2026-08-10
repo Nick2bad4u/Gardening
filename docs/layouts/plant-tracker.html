@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+        />
+        <meta
+            name="description"
+            content="Live Google Sheets tracker for the Fenton cactus, succulent, and houseplant collection."
+        />
+        <title>Plant tracker · Fenton collection</title>
+        <script>
+            (() => {
+                const saved = localStorage.getItem("gardening-site-theme");
+                const dark = saved
+                    ? saved === "dark"
+                    : matchMedia("(prefers-color-scheme: dark)").matches;
+                document.documentElement.dataset.theme = dark
+                    ? "dark"
+                    : "light";
+            })();
+        </script>
+        <link
+            rel="icon"
+            href="../plant-booklet/favicon.svg"
+        />
+        <link
+            rel="stylesheet"
+            href="./plant-tracker.css"
+        />
+    </head>
+    <body>
+        <a
+            class="skip-link"
+            href="#tracker-frame"
+            >Skip to spreadsheet</a
+        >
+
+        <nav
+            class="site-nav"
+            aria-label="Collection tools"
+        >
+            <a
+                class="brand"
+                href="../plant-booklet/"
+            >
+                <span
+                    class="brand-mark"
+                    aria-hidden="true"
+                    >✦</span
+                >
+                <span>
+                    <strong>Fenton collection</strong>
+                    <small>Plant tracker</small>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a href="../plant-booklet/">Field guide</a>
+                <a href="./grow-spot-layout.html">Grow-spot layout</a>
+                <a href="./indoor-acclimation-calendar.html">Calendar</a>
+                <button
+                    id="theme-toggle"
+                    type="button"
+                    aria-pressed="false"
+                >
+                    Dark mode
+                </button>
+            </div>
+        </nav>
+
+        <main>
+            <header class="hero">
+                <div>
+                    <p class="eyebrow">Live care sheet · 22 containers</p>
+                    <h1>Measure once. Update one row.</h1>
+                    <p class="lede">
+                        The Google Sheet is the single editable tracker for
+                        weight, last watering, height, width, water amount,
+                        condition, and notes. The shared planters each have one
+                        row because they are measured as a single container.
+                    </p>
+                </div>
+                <div class="hero-actions">
+                    <a
+                        class="button primary"
+                        href="https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=0#gid=0"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Edit in Google Sheets
+                    </a>
+                    <a
+                        class="button"
+                        href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSlR11VjUWkf8xO7HGvYwpZmxZohxV-wpSTYQRfgLw0UIpXBXJ8O0Rik-ySoNWY-EyqWdQ2kzdXtgZR/pubhtml"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Open full-screen view
+                    </a>
+                </div>
+            </header>
+
+            <section
+                class="quick-notes"
+                aria-label="Tracker tips"
+            >
+                <article>
+                    <span>01</span>
+                    <div>
+                        <strong>Use the label row</strong>
+                        <p>
+                            IDs match the pots. <code>#1</code> and
+                            <code>#2</code> intentionally represent whole shared
+                            planters.
+                        </p>
+                    </div>
+                </article>
+                <article>
+                    <span>02</span>
+                    <div>
+                        <strong>Make weight comparable</strong>
+                        <p>
+                            Weigh at roughly the same point in the watering
+                            cycle—ideally just before watering—and add an
+                            exception in Notes.
+                        </p>
+                    </div>
+                </article>
+                <article>
+                    <span>03</span>
+                    <div>
+                        <strong>Let the sheet do the math</strong>
+                        <p>
+                            “Days since water” updates from the last-watered
+                            date. It is an observation, not a watering deadline.
+                        </p>
+                    </div>
+                </article>
+            </section>
+
+            <section
+                class="sheet-panel"
+                aria-labelledby="sheet-title"
+            >
+                <header>
+                    <div>
+                        <p class="eyebrow">Published read-only view</p>
+                        <h2 id="sheet-title">Garden Plant Tracker</h2>
+                        <p
+                            id="sheet-status"
+                            aria-live="polite"
+                        >
+                            Google republishes saved changes automatically. Use
+                            Refresh view if the embed is briefly behind.
+                        </p>
+                    </div>
+                    <button
+                        class="button"
+                        id="refresh-sheet"
+                        type="button"
+                    >
+                        Refresh view
+                    </button>
+                </header>
+                <div class="sheet-frame-wrap">
+                    <iframe
+                        id="tracker-frame"
+                        title="Published Garden Plant Tracker spreadsheet"
+                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSlR11VjUWkf8xO7HGvYwpZmxZohxV-wpSTYQRfgLw0UIpXBXJ8O0Rik-ySoNWY-EyqWdQ2kzdXtgZR/pubhtml?widget=true&amp;headers=false"
+                        loading="eager"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                    ></iframe>
+                </div>
+                <p class="mobile-note">
+                    On a phone, swipe inside the sheet to move across columns.
+                    The full-screen link is roomier; the Google Sheets app is
+                    best for editing.
+                </p>
+            </section>
+        </main>
+
+        <footer>
+            <span>Fenton collection · personal gardening notebook</span>
+            <span>
+                <a href="../plant-booklet/">Field guide</a> ·
+                <a href="./grow-spot-layout.html">Layout</a> ·
+                <a href="./indoor-acclimation-calendar.html">Calendar</a>
+            </span>
+        </footer>
+
+        <script>
+            (() => {
+                const root = document.documentElement;
+                const themeButton = document.getElementById("theme-toggle");
+                const refreshButton = document.getElementById("refresh-sheet");
+                const frame = document.getElementById("tracker-frame");
+                const status = document.getElementById("sheet-status");
+                const frameUrl = frame.src;
+
+                function updateThemeButton() {
+                    const dark = root.dataset.theme === "dark";
+                    themeButton.textContent = dark ? "Light mode" : "Dark mode";
+                    themeButton.setAttribute("aria-pressed", String(dark));
+                }
+
+                themeButton.addEventListener("click", () => {
+                    root.dataset.theme =
+                        root.dataset.theme === "dark" ? "light" : "dark";
+                    localStorage.setItem(
+                        "gardening-site-theme",
+                        root.dataset.theme
+                    );
+                    updateThemeButton();
+                });
+
+                refreshButton.addEventListener("click", () => {
+                    status.textContent = "Refreshing the published sheet…";
+                    const separator = frameUrl.includes("?") ? "&" : "?";
+                    frame.src = `${frameUrl}${separator}refresh=${Date.now()}`;
+                });
+
+                frame.addEventListener("load", () => {
+                    status.textContent =
+                        "Published view loaded. Google republishes saved sheet changes automatically.";
+                });
+
+                updateThemeButton();
+            })();
+        </script>
+    </body>
+</html>

@@ -2,6 +2,14 @@
 
 Last updated: 2026-08-10
 
+Open [plant-tracker.html](./plant-tracker.html) for the live, read-only embedded
+Google Sheet and its Google-account edit link. The sheet has one row for each
+of the 22 physical pots or shared planters, not one row for each profile: `#1`
+and `#2` are weighed and watered as whole containers. Google Sheets is the
+single editable source of truth; this repository does not keep a second
+tracker-data copy. Its automatic "Days since water" result is observational
+rather than a watering deadline.
+
 Open [indoor-acclimation-calendar.html](./indoor-acclimation-calendar.html) for
 the browser/print calendar covering the July move-in, August light ramp,
 second-table expansion, weekly adjustments and rotations, manual
@@ -51,3 +59,9 @@ The 2026-07-31 tape photos are indexed in
 shared-planter height bands inform the original-table riser calculator. The new
 plants still need direct tabletop-to-tip measurements and exact current table
 positions before their riser or marker assignments are final.
+
+The deployed URLs are:
+
+- [Plant tracker](https://nick2bad4u.github.io/Gardening/layouts/plant-tracker.html)
+- [Grow-spot layout](https://nick2bad4u.github.io/Gardening/layouts/grow-spot-layout.html)
+- [Indoor acclimation calendar](https://nick2bad4u.github.io/Gardening/layouts/indoor-acclimation-calendar.html)

@@ -12,6 +12,7 @@ import { fileURLToPath } from "node:url";
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, "..");
 const bookletDirectory = path.join(repositoryRoot, "docs", "plant-booklet");
+const layoutsDirectory = path.join(repositoryRoot, "docs", "layouts");
 const outputDirectory = path.join(repositoryRoot, ".pages-site");
 const repositoryBlobUrl = "https://github.com/Nick2bad4u/Gardening/blob/main";
 const pagesUrl = "https://nick2bad4u.github.io/Gardening/";
@@ -34,6 +35,40 @@ function githubBlob(relativePath) {
     return `${repositoryBlobUrl}/${relativePath}`;
 }
 
+function addCanonical(html, url) {
+    return html.replace(
+        "</title>",
+        `</title>\n        <link rel="canonical" href="${url}">`
+    );
+}
+
+async function publishLayout(fileName) {
+    const sourceHtml = await readFile(
+        path.join(layoutsDirectory, fileName),
+        "utf8"
+    );
+    const publishedHtml = addCanonical(
+        sourceHtml,
+        `${pagesUrl}layouts/${fileName}`
+    )
+        .replaceAll("../plant-booklet/", "../")
+        .replaceAll(
+            /href="\.\.\/equipment\/([^"?#]+\.md)"/g,
+            (_match, relativePath) =>
+                `href="${githubBlob(`docs/equipment/${relativePath}`)}"`
+        );
+
+    if (/\.\.\/plant-booklet\//.test(publishedHtml)) {
+        throw new Error(
+            `${fileName} still contains an unpublished booklet path.`
+        );
+    }
+
+    const destination = path.join(outputDirectory, "layouts", fileName);
+    await mkdir(path.dirname(destination), { recursive: true });
+    await writeFile(destination, publishedHtml, "utf8");
+}
+
 async function main() {
     const sourceHtml = await readFile(
         path.join(bookletDirectory, "index.html"),
@@ -47,11 +82,8 @@ async function main() {
         ].map((match) => match[1])
     );
 
-    let publishedHtml = sourceHtml
-        .replace(
-            "</title>",
-            `</title>\n  <link rel="canonical" href="${pagesUrl}">`
-        )
+    let publishedHtml = addCanonical(sourceHtml, pagesUrl)
+        .replaceAll(/href="\.\.\/layouts\//g, 'href="./layouts/')
         .replaceAll(
             /href="\.\.\/plants\/([^"?#]+)"/g,
             (_match, relativePath) =>
@@ -83,6 +115,7 @@ async function main() {
 
     await rm(outputDirectory, { recursive: true, force: true });
     await mkdir(outputDirectory, { recursive: true });
+    await mkdir(path.join(outputDirectory, "layouts"), { recursive: true });
 
     let assetBytes = 0;
     for (const relativePath of assetReferences) {
@@ -113,10 +146,17 @@ async function main() {
             "utf8"
         ),
         writeFile(path.join(outputDirectory, ".nojekyll"), "", "utf8"),
+        publishLayout("grow-spot-layout.html"),
+        publishLayout("indoor-acclimation-calendar.html"),
+        publishLayout("plant-tracker.html"),
+        copyFile(
+            path.join(layoutsDirectory, "plant-tracker.css"),
+            path.join(outputDirectory, "layouts", "plant-tracker.css")
+        ),
     ]);
 
     console.log(
-        `Built GitHub Pages artifact with ${assetReferences.size} images (${(assetBytes / 1024 / 1024).toFixed(1)} MiB).`
+        `Built GitHub Pages artifact with the field guide, three collection tools, and ${assetReferences.size} images (${(assetBytes / 1024 / 1024).toFixed(1)} MiB).`
     );
 }
 

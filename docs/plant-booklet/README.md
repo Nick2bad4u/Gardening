@@ -6,11 +6,13 @@ navigation, light and dark themes, print styling, and one deep-linkable reading
 page for each of the 28 plant records. Twenty-seven profiles are current;
 Rehab-04 is retained as a clearly marked historical record.
 
-The GitHub Pages build publishes the booklet at the repository's Pages URL. It
-contains only the generated reader, its styles and script, the licensed
-reference photographs it uses, and web-sized user collection photographs. It
-does not publish the rest of the private repository. GitHub Pages must be
-enabled for the repository before the deployment workflow can complete.
+The GitHub Pages build publishes the booklet at the repository's Pages URL,
+along with the plant tracker, grow-spot layout, and indoor acclimation calendar.
+It contains only the generated reader, its styles and script, the three
+standalone browser tools, the licensed reference photographs it uses, and
+web-sized user collection photographs. It does not publish the rest of the
+repository. GitHub Pages must be enabled for the repository before the
+deployment workflow can complete.
 
 The publication works when `index.html` is opened directly from disk. Its plant
 text and source list come from the Markdown profiles under
