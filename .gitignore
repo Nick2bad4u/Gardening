@@ -946,3 +946,4 @@ docs/docusaurus/static/img/coverage.svg
 .lychee.report.md
 .lycheecache
 .playwright-cli/
+.pages-site/

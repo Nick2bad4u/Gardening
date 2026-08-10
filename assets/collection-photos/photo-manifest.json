@@ -1,0 +1,394 @@
+{
+    "copyright_notice": "Collection and nursery-label photographs are user-owned and are not licensed for reuse. Copyright Nick; all rights reserved.",
+    "plants": [
+        {
+            "plant_slug": "oreocereus-trollii",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-starter-group.webp",
+                    "source_file": "assets/measurements/2026-07-31-growcam-overhead-layout.png",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Overhead GrowCam view of the twelve starter cacti on the wooden table",
+                    "caption": "B2 is included in this overhead view of the twelve-pot starter group."
+                },
+                {
+                    "file": "assets/collection-photos/nursery-oreocereus-trollii.webp",
+                    "source_file": "assets/nursery-labels/oreocereus-trollii-front.jpg",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-07-23",
+                    "alt": "Front of the nursery card supplied with the Oreocereus trollii cactus",
+                    "caption": "Nursery-card evidence retained with the collection record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "stenocactus-phyllacanthus",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-starter-group.webp",
+                    "source_file": "assets/measurements/2026-07-31-growcam-overhead-layout.png",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Overhead GrowCam view of the twelve starter cacti on the wooden table",
+                    "caption": "B1 is included in this overhead view of the twelve-pot starter group."
+                },
+                {
+                    "file": "assets/collection-photos/nursery-stenocactus-phyllacanthus.webp",
+                    "source_file": "assets/nursery-labels/stenocactus-phyllacanthus-front.jpg",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-07-23",
+                    "alt": "Front of the nursery card supplied with the Stenocactus phyllacanthus cactus",
+                    "caption": "Nursery-card evidence retained with the collection record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "echinocereus-rigidissimus-rubispinus",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-starter-group.webp",
+                    "source_file": "assets/measurements/2026-07-31-growcam-overhead-layout.png",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Overhead GrowCam view of the twelve starter cacti on the wooden table",
+                    "caption": "C2 is included in this overhead view of the twelve-pot starter group."
+                },
+                {
+                    "file": "assets/collection-photos/nursery-echinocereus-rigidissimus-rubispinus.webp",
+                    "source_file": "assets/nursery-labels/echinocereus-rigidissimus-rubispinus-front.jpg",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-07-23",
+                    "alt": "Front of the nursery card supplied with the rainbow hedgehog cactus",
+                    "caption": "Nursery-card evidence retained with the collection record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "nyctocereus-serpentinus",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-starter-group.webp",
+                    "source_file": "assets/measurements/2026-07-31-growcam-overhead-layout.png",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Overhead GrowCam view of the twelve starter cacti on the wooden table",
+                    "caption": "A3 is included in this overhead view of the twelve-pot starter group."
+                },
+                {
+                    "file": "assets/collection-photos/nursery-nyctocereus-serpentinus.webp",
+                    "source_file": "assets/nursery-labels/nyctocereus-serpentinus-back.jpg",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-07-23",
+                    "alt": "Back of the nursery card supplied with the Nyctocereus serpentinus cactus",
+                    "caption": "Nursery-card evidence retained with the collection record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "mammillaria-plumosa",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-starter-group.webp",
+                    "source_file": "assets/measurements/2026-07-31-growcam-overhead-layout.png",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Overhead GrowCam view of the twelve starter cacti on the wooden table",
+                    "caption": "A2 is included in this overhead view of the twelve-pot starter group."
+                },
+                {
+                    "file": "assets/collection-photos/nursery-mammillaria-plumosa.webp",
+                    "source_file": "assets/nursery-labels/mammillaria-plumosa-front.jpg",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-07-23",
+                    "alt": "Front of the nursery card supplied with the Mammillaria plumosa cactus",
+                    "caption": "Nursery-card evidence retained with the collection record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "echinopsis-subdenudata",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-starter-group.webp",
+                    "source_file": "assets/measurements/2026-07-31-growcam-overhead-layout.png",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Overhead GrowCam view of the twelve starter cacti on the wooden table",
+                    "caption": "D2 is included in this overhead view of the twelve-pot starter group."
+                },
+                {
+                    "file": "assets/collection-photos/nursery-echinopsis-subdenudata.webp",
+                    "source_file": "assets/nursery-labels/echinopsis-subdenudata-back.jpg",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-07-23",
+                    "alt": "Back of the nursery card supplied with the Echinopsis subdenudata cactus",
+                    "caption": "Nursery-card evidence retained with the collection record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "gymnocalycium-mihanovichii-variegated",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-starter-group.webp",
+                    "source_file": "assets/measurements/2026-07-31-growcam-overhead-layout.png",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Overhead GrowCam view of the twelve starter cacti on the wooden table",
+                    "caption": "A1 is included in this overhead view of the twelve-pot starter group."
+                },
+                {
+                    "file": "assets/collection-photos/nursery-gymnocalycium-mihanovichii-variegated.webp",
+                    "source_file": "assets/nursery-labels/gymnocalycium-mihanovichii-variegated-front.jpg",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-07-23",
+                    "alt": "Front of the nursery card supplied with the own-root variegated moon cactus",
+                    "caption": "Nursery-card evidence retained with the own-root collection record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "gymnocalycium-saglionis",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-starter-group.webp",
+                    "source_file": "assets/measurements/2026-07-31-growcam-overhead-layout.png",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Overhead GrowCam view of the twelve starter cacti on the wooden table",
+                    "caption": "C1 is included in this overhead view of the twelve-pot starter group."
+                },
+                {
+                    "file": "assets/collection-photos/nursery-gymnocalycium-saglionis.webp",
+                    "source_file": "assets/nursery-labels/gymnocalycium-saglionis-front.jpg",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-07-23",
+                    "alt": "Front of the nursery card supplied with the Gymnocalycium saglionis cactus",
+                    "caption": "Nursery-card evidence retained with the collection record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "myrtillocactus-geometrizans-indigo-wave",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-starter-group.webp",
+                    "source_file": "assets/measurements/2026-07-31-growcam-overhead-layout.png",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Overhead GrowCam view of the twelve starter cacti on the wooden table",
+                    "caption": "B3 is included in this overhead view of the twelve-pot starter group."
+                },
+                {
+                    "file": "assets/collection-photos/nursery-myrtillocactus-geometrizans-indigo-wave.webp",
+                    "source_file": "assets/nursery-labels/myrtillocactus-geometrizans-indigo-wave-front.jpg",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-07-23",
+                    "alt": "Front of the nursery card supplied with the Indigo Wave cactus",
+                    "caption": "Nursery-card evidence retained with the collection record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "cereus-forbesii-ming-thing",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-starter-group.webp",
+                    "source_file": "assets/measurements/2026-07-31-growcam-overhead-layout.png",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Overhead GrowCam view of the twelve starter cacti on the wooden table",
+                    "caption": "D3 is included in this overhead view of the twelve-pot starter group."
+                },
+                {
+                    "file": "assets/collection-photos/nursery-cereus-forbesii-ming-thing.webp",
+                    "source_file": "assets/nursery-labels/ming-thing-mislabeled-opuntia-front.jpg",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-07-23",
+                    "alt": "Front of the nursery card that mislabeled the Ming Thing cactus as an Opuntia",
+                    "caption": "Historical nursery card retained as evidence of the original mislabel."
+                }
+            ]
+        },
+        {
+            "plant_slug": "euphorbia-obesa-hybrid",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-starter-group.webp",
+                    "source_file": "assets/measurements/2026-07-31-growcam-overhead-layout.png",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Overhead GrowCam view of the twelve starter cacti on the wooden table",
+                    "caption": "D1 is included in this overhead view of the twelve-pot starter group."
+                },
+                {
+                    "file": "assets/collection-photos/nursery-euphorbia-dragons-egg.webp",
+                    "source_file": "assets/nursery-labels/euphorbia-dragons-egg-front.jpg",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-07-23",
+                    "alt": "Front of the nursery card using the Dragon's Egg trade name",
+                    "caption": "Nursery-card evidence for the Dragon's Egg trade name; the botanical identification remains probable."
+                }
+            ]
+        },
+        {
+            "plant_slug": "astrophytum-ornatum",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-starter-group.webp",
+                    "source_file": "assets/measurements/2026-07-31-growcam-overhead-layout.png",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Overhead GrowCam view of the twelve starter cacti on the wooden table",
+                    "caption": "C3 is included in this overhead view of the twelve-pot starter group."
+                },
+                {
+                    "file": "assets/collection-photos/nursery-astrophytum-ornatum.webp",
+                    "source_file": "assets/nursery-labels/astrophytum-ornatum-front.jpg",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-07-23",
+                    "alt": "Front of the nursery card supplied with the Astrophytum ornatum cactus",
+                    "caption": "Nursery-card evidence retained with the collection record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "chamaelobivia-hybrid",
+            "photos": [],
+            "pending_note": "A repository photo of E2 has not been added yet. The hybrid-group identification remains documented from the supplied description."
+        },
+        {
+            "plant_slug": "espostoa-melanostele-nana",
+            "photos": [],
+            "pending_note": "A repository photo of E1 has not been added yet. Keep the probable identification wording when a photo is added."
+        },
+        {
+            "plant_slug": "mammillaria-melanocentra",
+            "photos": [],
+            "pending_note": "A repository photo of E3 has not been added yet. Keep the cf. identification wording when a photo is added."
+        },
+        {
+            "plant_slug": "mammillaria-zeilmanniana",
+            "photos": [],
+            "pending_note": "A repository photo of F1 has not been added yet."
+        },
+        {
+            "plant_slug": "myrtillocactus-geometrizans-fukurokuryuzinboku",
+            "photos": [],
+            "pending_note": "A repository photo of F2 has not been added yet."
+        },
+        {
+            "plant_slug": "parodia-leninghausii",
+            "photos": [],
+            "pending_note": "A repository photo of F3 has not been added yet."
+        },
+        {
+            "plant_slug": "echeveria-pulidonis",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-shared-succulent-planter.webp",
+                    "source_file": "assets/measurements/2026-07-31-succulent-planter-height-01.jpg",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Side view of the shared succulent planter with a tape measure beside it",
+                    "caption": "The probable Echeveria is part of shared planter #2 in this height record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "kalanchoe-bracteata",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-shared-succulent-planter.webp",
+                    "source_file": "assets/measurements/2026-07-31-succulent-planter-height-01.jpg",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Side view of the shared succulent planter with a tape measure beside it",
+                    "caption": "The probable Kalanchoe bracteata is part of shared planter #2 in this height record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "kalanchoe-orgyalis",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-shared-succulent-planter.webp",
+                    "source_file": "assets/measurements/2026-07-31-succulent-planter-height-01.jpg",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Side view of the shared succulent planter with a tape measure beside it",
+                    "caption": "The Copper Spoons plant is part of shared planter #2 in this height record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "portulacaria-afra",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-shared-succulent-planter.webp",
+                    "source_file": "assets/measurements/2026-07-31-succulent-planter-height-01.jpg",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Side view of the shared succulent planter with a tape measure beside it",
+                    "caption": "The elephant bush is part of shared planter #2 in this height record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "aeonium-haworthii-dream-color",
+            "photos": [],
+            "pending_note": "A repository photo of individually potted #4 has not been added yet."
+        },
+        {
+            "plant_slug": "pilosocereus-pachycladus-variegated",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-shared-rehab-planter.webp",
+                    "source_file": "assets/measurements/2026-07-31-older-planter-height.jpg",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Shared rehabilitation cactus planter with a tape measure beside the plants",
+                    "caption": "The probable variegated Pilosocereus is part of shared planter #1 in this height record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "cleistocactus-colademononis",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-shared-rehab-planter.webp",
+                    "source_file": "assets/measurements/2026-07-31-older-planter-height.jpg",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Shared rehabilitation cactus planter with a tape measure beside the plants",
+                    "caption": "The monkey tail cactus is part of shared planter #1 in this height record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "echinopsis-spachiana",
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-07-31-shared-rehab-planter.webp",
+                    "source_file": "assets/measurements/2026-07-31-older-planter-height.jpg",
+                    "kind": "collection",
+                    "captured_on": "2026-07-31",
+                    "alt": "Shared rehabilitation cactus planter with a tape measure beside the plants",
+                    "caption": "The probable Echinopsis spachiana is part of shared planter #1 in this height record."
+                }
+            ]
+        },
+        {
+            "plant_slug": "mammillaria-bombycina",
+            "photos": [],
+            "pending_note": "No repository photo is archived for this removed historical plant."
+        },
+        {
+            "plant_slug": "pachira-glabra",
+            "photos": [],
+            "pending_note": "A repository photo of the money tree labeled #3 has not been added yet."
+        }
+    ],
+    "schema_version": 1
+}

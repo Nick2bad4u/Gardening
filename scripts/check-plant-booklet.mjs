@@ -13,6 +13,12 @@ const manifestPath = path.join(
     "plants",
     "photo-manifest.json"
 );
+const collectionManifestPath = path.join(
+    repositoryRoot,
+    "assets",
+    "collection-photos",
+    "photo-manifest.json"
+);
 const profileGroups = [
     "starter",
     "cacti",
@@ -30,6 +36,7 @@ const allowedSubjects = new Set([
 ]);
 const allowedLicense =
     /^(?:CC0|CC BY(?: SA|-SA)?|CC BY-SA \d|Public domain|No restrictions)/i;
+const allowedCollectionKinds = new Set(["collection", "nursery-label"]);
 
 function assert(condition, message) {
     if (!condition) throw new Error(message);
@@ -78,14 +85,96 @@ async function main() {
         html,
         clientScript,
         manifest,
+        collectionManifest,
         profiles,
     ] = await Promise.all([
         readFile(bookletPath, "utf8"),
         readFile(path.join(bookletDirectory, "booklet.js"), "utf8"),
         readFile(manifestPath, "utf8").then(JSON.parse),
+        readFile(collectionManifestPath, "utf8").then(JSON.parse),
         discoverProfiles(),
     ]);
     const profileSlugs = profiles.map((profile) => profile.slug);
+
+    assert(
+        collectionManifest.schema_version === 1,
+        "Collection-photo manifest has an unsupported schema version."
+    );
+    assert(
+        /all rights reserved/i.test(collectionManifest.copyright_notice ?? ""),
+        "Collection-photo manifest must preserve the user-photo copyright notice."
+    );
+    assert(
+        Array.isArray(collectionManifest.plants),
+        "Collection-photo manifest has no plants array."
+    );
+    const collectionSlugs = collectionManifest.plants.map(
+        (record) => record.plant_slug
+    );
+    assert(
+        new Set(collectionSlugs).size === collectionSlugs.length,
+        "Collection-photo manifest contains duplicate plant records."
+    );
+    assert(
+        JSON.stringify([...collectionSlugs].sort()) ===
+            JSON.stringify(profileSlugs),
+        "Collection-photo manifest does not match the Markdown profile files."
+    );
+
+    let expectedCollectionPhotos = 0;
+    let expectedPendingPhotos = 0;
+    for (const record of collectionManifest.plants) {
+        assert(
+            Array.isArray(record.photos),
+            `${record.plant_slug} has no collection photos array.`
+        );
+        expectedCollectionPhotos += record.photos.length;
+        if (record.photos.length === 0) {
+            expectedPendingPhotos += 1;
+            assert(
+                typeof record.pending_note === "string" &&
+                    record.pending_note.trim().length > 0,
+                `${record.plant_slug} needs a photo-pending note.`
+            );
+        }
+
+        for (const photo of record.photos) {
+            assert(
+                allowedCollectionKinds.has(photo.kind),
+                `${record.plant_slug} has unsupported collection photo kind ${photo.kind}.`
+            );
+            assert(
+                /^assets\/collection-photos\/[a-z0-9.-]+\.webp$/.test(
+                    photo.file
+                ),
+                `${record.plant_slug} has an invalid web-photo path.`
+            );
+            assert(
+                /^assets\/(?:measurements|nursery-labels)\/[a-z0-9.-]+\.(?:jpg|png)$/.test(
+                    photo.source_file
+                ),
+                `${record.plant_slug} has an invalid original-photo path.`
+            );
+            assert(
+                /^\d{4}-\d{2}-\d{2}$/.test(photo.captured_on),
+                `${record.plant_slug} has an invalid capture date.`
+            );
+            assert(
+                typeof photo.alt === "string" && photo.alt.trim().length > 0,
+                `${record.plant_slug} has a collection photo without alt text.`
+            );
+            assert(
+                typeof photo.caption === "string" &&
+                    photo.caption.trim().length > 0,
+                `${record.plant_slug} has a collection photo without a caption.`
+            );
+
+            for (const file of [photo.file, photo.source_file]) {
+                const fileStats = await stat(path.join(repositoryRoot, file));
+                assert(fileStats.size > 1024, `${file} is unexpectedly small.`);
+            }
+        }
+    }
 
     const pageSlugs = [...html.matchAll(/<article\b[^>]*>/g)]
         .map((match) => match[0])
@@ -233,6 +322,27 @@ async function main() {
         `Expected ${photoRecords.length} gallery figures; found ${galleryPhotoCount}.`
     );
 
+    const collectionPanelCount = (
+        html.match(/class="collection-gallery"/g) ?? []
+    ).length;
+    const collectionPhotoCount = (html.match(/class="collection-photo"/g) ?? [])
+        .length;
+    const pendingPhotoCount = (
+        html.match(/class="collection-photo-pending"/g) ?? []
+    ).length;
+    assert(
+        collectionPanelCount === profiles.length,
+        `Expected ${profiles.length} collection-photo panels; found ${collectionPanelCount}.`
+    );
+    assert(
+        collectionPhotoCount === expectedCollectionPhotos,
+        `Expected ${expectedCollectionPhotos} collection photos; found ${collectionPhotoCount}.`
+    );
+    assert(
+        pendingPhotoCount === expectedPendingPhotos,
+        `Expected ${expectedPendingPhotos} pending-photo panels; found ${pendingPhotoCount}.`
+    );
+
     for (const reference of new Set(localReferences(html))) {
         const absolutePath = path.resolve(bookletDirectory, reference);
         await stat(absolutePath).catch(() => {
@@ -246,7 +356,7 @@ async function main() {
     new Function(clientScript);
 
     console.log(
-        `Plant booklet verified: ${pageSlugs.length} profiles, ${photoRecords.length} credited photos, ${ids.length} unique IDs.`
+        `Plant booklet verified: ${pageSlugs.length} profiles, ${photoRecords.length} licensed reference photos, ${expectedCollectionPhotos} collection-photo placements, ${ids.length} unique IDs.`
     );
     console.log(coverageLines.join("\n"));
 }

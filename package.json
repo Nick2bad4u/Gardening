@@ -3,6 +3,7 @@
     "private": true,
     "scripts": {
         "build:booklet": "node scripts/build-plant-booklet.mjs",
+        "build:pages": "npm run build:booklet && node scripts/build-pages-site.mjs",
         "changelog:generate": "git cliff --config node_modules/gitcliff-config-nick2bad4u/cliff.toml --github-repo Nick2bad4u/Gardening --output CHANGELOG.md",
         "changelog:preview": "git cliff --config node_modules/gitcliff-config-nick2bad4u/cliff.toml --github-repo Nick2bad4u/Gardening --unreleased",
         "changelog:release-notes": "git cliff --config node_modules/gitcliff-config-nick2bad4u/cliff.toml --github-repo Nick2bad4u/Gardening --current",

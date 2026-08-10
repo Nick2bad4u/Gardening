@@ -8,8 +8,8 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
 
 - [Browser plant field guide](docs/plant-booklet/) — magazine-style cover,
   searchable contents, one deep page per plant, licensed reference galleries
-  for all 28 records, source links, dark mode, keyboard navigation, and print
-  styling
+  for all 28 records, collection and nursery-label photos where archived,
+  source links, dark mode, keyboard navigation, mobile layout, and print styling
 - [Plant profiles](docs/plants/) — names, origins, history, flowers, care,
   propagation, risks, sources, and photo-archive status for all 28 collection
   records (27 current and one historical)
@@ -42,7 +42,7 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
   current arrangement
 - [Care notes](docs/care-notes.md) — the practical light, water, airflow, and
   recovery plan, including separate Kiwi aeonium and money-tree rules
-- [Licensed lifecycle photo archive](assets/plants/) — 187 reference photos
+- [Licensed lifecycle photo archive](assets/plants/) — 246 reference photos
   covering available young plants, mature forms, flowers, fruit or seed,
   details, and habitat, with creator, source, license, and SHA-256 metadata
 

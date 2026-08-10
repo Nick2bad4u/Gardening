@@ -678,6 +678,127 @@ main {
     font-size: 0.78rem;
 }
 
+.collection-gallery {
+    padding: clamp(2rem, 5vw, 4.5rem);
+    border-top: 1px solid var(--line);
+    background: var(--page);
+}
+
+.collection-gallery > header {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(18rem, 1.2fr);
+    gap: 2rem;
+    align-items: end;
+    margin-bottom: 1.5rem;
+}
+
+.collection-gallery .kicker {
+    margin-bottom: 0.35rem;
+    color: var(--profile-accent);
+}
+
+.collection-gallery h2 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 1;
+}
+
+.collection-gallery > header > p {
+    max-width: 48rem;
+    margin: 0;
+    color: var(--muted-ink);
+    line-height: 1.55;
+}
+
+.collection-photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+    gap: 1.2rem;
+}
+
+.collection-photo {
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 0.9rem;
+    background: var(--page-soft);
+}
+
+.collection-photo > a {
+    display: block;
+    overflow: hidden;
+    background: var(--page-soft);
+}
+
+.collection-photo img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    transition: transform 220ms ease;
+}
+
+.collection-photo[data-photo-kind="nursery-label"] img {
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+}
+
+.collection-photo > a:hover img {
+    transform: scale(1.02);
+}
+
+.collection-photo figcaption {
+    display: grid;
+    gap: 0.35rem;
+    padding: 1rem;
+    color: var(--muted-ink);
+    font-size: 0.76rem;
+    line-height: 1.4;
+}
+
+.collection-photo figcaption strong {
+    color: var(--ink);
+    font-size: 0.88rem;
+}
+
+.collection-photo figcaption a {
+    width: fit-content;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+    text-underline-offset: 0.18em;
+}
+
+.collection-photo-pending {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1rem;
+    align-items: center;
+    padding: 1.25rem;
+    border: 1px dashed var(--line-strong);
+    border-radius: 0.9rem;
+    background: var(--page-soft);
+    color: var(--muted-ink);
+}
+
+.collection-photo-pending > span {
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    place-items: center;
+    color: var(--profile-accent);
+    font-size: 1.5rem;
+}
+
+.collection-photo-pending p {
+    margin: 0;
+}
+
 .profile-layout {
     display: grid;
     grid-template-columns: minmax(0, 1.65fr) minmax(17rem, 0.7fr);
@@ -1234,6 +1355,11 @@ main {
     .lifecycle-gallery > header {
         grid-template-columns: 1fr;
     }
+
+    .collection-gallery > header {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
 }
 
 @media (max-width: 680px) {
@@ -1378,6 +1504,10 @@ main {
         padding: 2rem 1.2rem;
     }
 
+    .collection-gallery {
+        padding: 2rem 1.2rem;
+    }
+
     .lifecycle-gallery {
         padding: 2rem 1.2rem;
     }
@@ -1448,7 +1578,8 @@ main {
     }
 
     .reader-progress span,
-    .reference-photo img {
+    .reference-photo img,
+    .collection-photo img {
         transition: none;
     }
 }
@@ -1527,6 +1658,27 @@ main {
         grid-template-columns: 1.7fr 0.7fr;
         gap: 0.25in;
         padding: 0.3in 0.25in;
+    }
+
+    .collection-gallery {
+        padding: 0.25in;
+        break-inside: avoid;
+    }
+
+    .collection-gallery > header {
+        grid-template-columns: 1fr;
+        gap: 0.08in;
+        margin-bottom: 0.12in;
+    }
+
+    .collection-photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.12in;
+    }
+
+    .collection-photo figcaption {
+        padding: 0.08in;
+        font-size: 6pt;
     }
 
     .prose {

@@ -21,6 +21,12 @@ const photoManifestPath = path.join(
     "plants",
     "photo-manifest.json"
 );
+const collectionPhotoManifestPath = path.join(
+    repositoryRoot,
+    "assets",
+    "collection-photos",
+    "photo-manifest.json"
+);
 
 const groups = [
     {
@@ -205,6 +211,52 @@ function photoPath(photo) {
     return `../../${photo.file.replaceAll("\\", "/")}`;
 }
 
+function collectionPhotoKind(kind) {
+    return kind === "nursery-label"
+        ? "Your nursery-label evidence"
+        : "Your collection";
+}
+
+function renderCollectionPhoto(photo) {
+    const imagePath = `../../${photo.file.replaceAll("\\", "/")}`;
+    const sourcePath = `../../${photo.source_file.replaceAll("\\", "/")}`;
+
+    return `<figure class="collection-photo" data-photo-kind="${escapeHtml(photo.kind)}">
+    <a href="${escapeHtml(imagePath)}">
+      <img src="${escapeHtml(imagePath)}" alt="${escapeHtml(photo.alt)}" loading="lazy" decoding="async">
+    </a>
+    <figcaption>
+      <span class="photo-kind">${escapeHtml(collectionPhotoKind(photo.kind))}</span>
+      <strong>${escapeHtml(photo.caption)}</strong>
+      <span>Photographed <time datetime="${escapeHtml(photo.captured_on)}">${escapeHtml(photo.captured_on)}</time> · © Nick, all rights reserved</span>
+      <a href="${escapeHtml(sourcePath)}">Open the original evidence file</a>
+    </figcaption>
+  </figure>`;
+}
+
+function renderCollectionGallery(profile) {
+    const photos = profile.collectionRecord.photos;
+    const content = photos.length
+        ? `<div class="collection-photo-grid">
+        ${photos.map((photo) => renderCollectionPhoto(photo)).join("\n")}
+      </div>`
+        : `<div class="collection-photo-pending">
+        <span aria-hidden="true">+</span>
+        <p><strong>Collection photo pending.</strong> ${escapeHtml(profile.collectionRecord.pending_note)}</p>
+      </div>`;
+
+    return `<section class="collection-gallery" aria-labelledby="${escapeHtml(profile.slug)}-collection-heading">
+    <header>
+      <div>
+        <p class="kicker">Collection evidence</p>
+        <h2 id="${escapeHtml(profile.slug)}-collection-heading">Your plant</h2>
+      </div>
+      <p>These user-owned photographs document this collection record. They are separate from the reusable-license species references below.</p>
+    </header>
+    ${content}
+  </section>`;
+}
+
 function renderCredit(photo, short = false) {
     const subject = photo.subject.replace("-", " and ");
     if (short) {
@@ -291,10 +343,16 @@ function renderLifecycleGallery(profile) {
 }
 
 async function loadProfiles() {
-    const manifest = JSON.parse(await readFile(photoManifestPath, "utf8"));
+    const [manifest, collectionManifest] = await Promise.all([
+        readFile(photoManifestPath, "utf8").then(JSON.parse),
+        readFile(collectionPhotoManifestPath, "utf8").then(JSON.parse),
+    ]);
     const photosBySlug = Map.groupBy(
         manifest.photos,
         (photo) => photo.plant_slug
+    );
+    const collectionPhotosBySlug = new Map(
+        collectionManifest.plants.map((record) => [record.plant_slug, record])
     );
     const profiles = [];
 
@@ -316,6 +374,13 @@ async function loadProfiles() {
             );
             const profile = parseProfile(markdown, group, fileName);
             const photos = photosBySlug.get(profile.slug) ?? [];
+            const collectionRecord = collectionPhotosBySlug.get(profile.slug);
+
+            if (!collectionRecord) {
+                throw new Error(
+                    `Collection-photo manifest has no record for ${profile.slug}.`
+                );
+            }
 
             const bodyHtml = externalizeLinks(
                 String(await markdownProcessor.process(profile.bodyMarkdown))
@@ -354,6 +419,7 @@ async function loadProfiles() {
                         (lifecycleOrder.get(right.subject) ?? 99)
                 ),
                 photoCount: photos.length,
+                collectionRecord,
             });
         }
     }
@@ -481,6 +547,8 @@ function renderProfile(profile, pageNumber, totalProfiles) {
       <p><strong>Photo scope:</strong> ${escapeHtml(profile.scopeNote)}</p>
     </div>
 
+    ${renderCollectionGallery(profile)}
+
     <div class="profile-layout">
       <div class="profile-copy prose">
         ${profile.bodyHtml}
@@ -568,6 +636,7 @@ async function renderBooklet(profiles) {
   <meta name="color-scheme" content="light dark">
   <meta name="description" content="A browser field guide to the cactus, succulent, and houseplant records in the Fenton collection.">
   <title>The Fenton Collection · Plant field guide</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <script>
     (() => {
       const saved = localStorage.getItem("gardening-theme");

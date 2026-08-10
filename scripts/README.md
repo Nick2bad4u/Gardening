@@ -1,5 +1,25 @@
 # Repository scripts
 
+## Plant booklet and GitHub Pages
+
+`build-plant-booklet.mjs` regenerates the standalone field guide from the
+Markdown profiles, licensed-photo manifest, and user collection-photo manifest.
+`check-plant-booklet.mjs` checks the generated pages, image records, copyright
+separation, and local links.
+
+```powershell
+npm run build:booklet
+npm run check:booklet
+```
+
+`build-pages-site.mjs` creates the ignored `.pages-site/` deployment artifact.
+It publishes only the reader files and images used by the booklet; source
+profile and original-evidence links point back to the GitHub repository.
+
+```powershell
+npm run build:pages
+```
+
 ## `fetch-plant-images.ps1`
 
 Builds the licensed reference-photo archive from Wikimedia Commons and
