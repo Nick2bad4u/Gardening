@@ -1,6 +1,6 @@
 # GrowCam C4 time-lapse and reflector plan
 
-Last updated: 2026-07-31
+Last updated: 2026-08-08
 
 This guide places the GrowCam C4 and Mylar around the open AW200SE table without
 turning the area into an enclosed grow tent. The camera is for a stable
@@ -28,12 +28,14 @@ recording is active.
 - The plant area has a black divider on the left, a white wall on the
   right, a window behind it, and an open room side in front.
 - The 36 in wide by approximately 60 in long bay holds a 24 in round glass
-  table at the window end and a 16 × 13 in wooden table toward the room. They
-  run end to end beneath the window-to-room long axis of the fixture rather
-  than side by side across the bay.
+  table at the window end and two identical 16 × 13 in wooden tables toward the
+  room. They run end to end beneath the window-to-room long axis of the fixture
+  rather than side by side across the bay. Their nominal longitudinal footprint
+  is about 56 in before gaps and leg interference.
 - Both tabletops are 18 in high. The AW200SE is approximately 26 in from wing
   tip to wing tip.
-- The GrowCam is fixed to the white wall and frames both tables from above.
+- The GrowCam is fixed to the white wall and must frame all three surfaces from
+  above.
 - Full-height Mylar covers the divider; a separate loose sheet protects the
   carpet.
 - The lower-right power and controller area is close to the watering zone; keep
@@ -68,8 +70,8 @@ and lamp power at once would make plant response harder to interpret.
 ### GrowCam
 
 The preferred camera position is a rigid point on the right wall, slightly
-toward the room side of the wooden table, aimed diagonally down and lengthwise
-toward the round table and Mylar-lined divider.
+toward the room side of the second wooden table, aimed diagonally down and
+lengthwise toward the round table and Mylar-lined divider.
 
 This direction keeps the bright window out of the center of the image, uses the
 divider as a cleaner background, and avoids mounting the camera on fabric that
@@ -93,9 +95,10 @@ plant audio is not wanted. Although the hardware is listed as IP54, the manual
 calls it a dry indoor device; keep it and its 5 V connection outside watering
 and spray paths.
 
-Mark the final mount position and angle. Once a production time-lapse begins,
-do not move the camera; end the clip and start a new one if the table or camera
-must move.
+Mark the final mount position and angle. The second wooden table and eight new
+plants materially change the scene, so end the earlier clip and start a fresh
+production clip once all three surfaces and labels are framed. After that,
+start a new clip whenever a table or camera must move.
 
 ### AeroWave and electrical equipment
 
@@ -134,6 +137,11 @@ exported from the current app version.
 
 Start the production clip before the light turns on Monday, August 3, after
 the final table, Mylar, plants, labels, camera, and fan are fixed.
+
+That first clip is now the pre-expansion record. After the second wooden table
+and eight additions are placed on August 8–9, verify that every pot fits in the
+frame and start a new clip. The E/F cactus mapping and the `#1`–`#4` numbered
+mapping are now recorded; use those permanent labels in notes.
 
 | Setting              | Starting value                                                                               |
 | -------------------- | -------------------------------------------------------------------------------------------- |

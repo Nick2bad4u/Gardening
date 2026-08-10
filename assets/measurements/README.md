@@ -28,6 +28,13 @@ These are layout measurements, not survey-grade readings. Perspective, plant
 lean, spines, and the exact tape position can shift an apparent tip by about
 half an inch. Recheck a specific pot after placing it on a riser.
 
+An identical second 16 × 13 × 18 in wooden table was added in August. It is
+not shown in this July 31 photo set. Together, the 24 in round-table diameter
+and two 16 in wooden-table depths nominally occupy about 56 in of the measured
+60 in bay before gaps and leg interference. The six new cacti, Kiwi aeonium,
+and money tree still need direct tabletop-to-tip measurements; no riser is
+assigned to them yet.
+
 The photographs establish height tiers rather than 12 exact individual
 readings. The revised starting plan aims for a main starter canopy around 8–9
 inches above the wood:

@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-07-29
+Last updated: 2026-08-08
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
@@ -11,8 +11,9 @@ need a separate spreadsheet of rules for every species.
    low-light period or a major move.
 2. Water thoroughly enough to wet the root ball, let the pot drain, and empty
    the tray.
-3. Wait until the mix is dry through and the pot feels light before watering
-   again.
+3. For cacti and succulents, wait until the mix is dry through and the pot
+   feels light before watering again. The money tree uses the separate tropical
+   rule below.
 4. Keep gentle air movement across the group without aiming a harsh, constant
    blast at one plant.
 5. Inspect new growth and plant bases. Old scars and stretched growth will not
@@ -76,8 +77,8 @@ indoor ramp, using its own E25:
 - oscillation activated with the fan's swivel button and set to Level 4 of 5
   if the current app exposes that scale; and
 - the installed divider-pole position beside the window, aimed diagonally
-  across the round and wooden tables, with the hub 4–8 in above the highest tip
-  if the mount permits.
+  across the round table and both wooden tables, with the hub 4–8 in above the
+  highest cactus tip if the mount permits.
 
 The second E25 was installed and paired with the AeroWave in the VIVOSUN app on
 2026-07-28. VIVOSUN documents 10 E25/app Natural Wind levels and five
@@ -85,8 +86,9 @@ oscillation levels for the E6 Gen2. The Level 2 starting value remains
 provisional until the final table is installed and passes the same airflow test
 from the canonical schedule.
 
-After the August 9 inspection, Level 3 is acceptable only if the outer
-columns receive almost no airflow and the closest plants are not being pushed.
+After the August 9 inspection, Level 3 is acceptable only if the outer parts of
+all three surfaces receive almost no airflow and the closest plants are not
+being pushed.
 Do not automatically increase fan strength with light intensity. Plant rocking,
 flattened hairs, moving top dressing, or one side drying much faster mean the
 fan is too close, too strong, or aimed too narrowly.
@@ -117,6 +119,29 @@ peak above 60% is not an emergency.
 The variegated _Gymnocalycium_ and probable variegated blue torch have less
 chlorophyll in their pale tissue. Keep them nearer an edge or otherwise slightly
 below the most intense part of the light until their response is known.
+
+### August additions
+
+Do not reset the established collection's schedule. Treat the second wooden
+table as an acclimation overlay:
+
+| Plant group   | Initial position                                                                              | Watering and light rule                                                                                                 |
+| ------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Six new cacti | Outer half of the second wooden table; no riser until each tabletop-to-tip height is measured | Join the cactus schedule only after seven stable days without fresh bleaching or hard tan patches.                      |
+| Kiwi aeonium  | Outer or room-side edge of the second wooden table                                            | Give bright light below the cactus center; let much of the pot dry, but do not force a prolonged desert-cactus drought. |
+| Money tree    | Window/periphery, outside the fixture hotspot; shade cloth available but not automatic        | Water when the upper mix dries instead of waiting for the entire 6 in pot to become cactus-dry.                         |
+
+Two or three days without money-tree scorch is encouraging but not a complete
+acclimation test. Use the shade cloth if leaves bleach or develop crisp tan
+patches, and move the plant farther from the fixture before raising the whole
+light. Its tall canopy must not become the reference used to set cactus light
+clearance.
+
+The new cactus mapping is `E1` dwarf old man, `E2` Chamaelobivia, `E3`
+black-centered pincushion, `F1` rose pincushion, `F2` boobie cactus, and `F3`
+yellow tower. The numbered mapping is `#1` shared rehab cactus planter, `#2`
+shared succulent planter, `#3` money tree, and `#4` Kiwi aeonium. These are
+plant or planter IDs, not provisional table-position coordinates.
 
 ## Water and rain
 
@@ -168,6 +193,18 @@ old low-light growth.
 The blue torch, monkey tail, and golden torch all have living green growing
 points in the recent photos. Their old lean, scars, and uneven growth can remain
 while healthy new growth improves.
+
+### Kiwi aeonium and money tree
+
+The Kiwi aeonium is a succulent, but it is not a full-center desert cactus.
+Keep its variegated rosettes at the lower-light edge and rotate the pot 90°
+weekly unless a future one-sided growth reason is documented.
+
+The money tree is _Pachira glabra_, a tropical tree reported under a retail
+name that is often confused with _Pachira aquatica_. Keep its original tag or a
+clear photograph if available. The current 6 in pot is enough; reserve the 8 in
+pot until roots have genuinely filled the smaller container. Rotate it 90°
+weekly for even window growth.
 
 ## Removed cactus: historical record
 

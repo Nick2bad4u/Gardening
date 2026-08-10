@@ -1532,7 +1532,14 @@
                         Move-in is complete. Do not water again because a setup
                         task or calendar date arrived; check below the rock
                         layer and use pot weight. After riser work, always
-                        restore the scheduled LED-to-tip distance.
+                        restore the scheduled LED-to-tip distance. The purifier
+                        may run on low, but the new dehumidifier stays off
+                        unless the manual sensor shows sustained excess
+                        humidity. The August expansion adds a second wooden
+                        table and eight plants without resetting the established
+                        light ramp. Keep the additions at the perimeter with no
+                        new risers until measured. The money tree uses its
+                        tropical watering rule, not the cactus dry-down.
                     </p>
                 </div>
             </section>
@@ -1737,6 +1744,14 @@
                         changes happen before either device starts.
                     </p>
                     <div class="clock">
+                        <div class="time">All day</div>
+                        <div class="clock-task">
+                            Core Mini-P on low
+                            <small
+                                >DH-CS01 stays off unless the sustained-RH rule
+                                triggers it.</small
+                            >
+                        </div>
                         <div class="time">7:45 a.m.</div>
                         <div class="clock-task">
                             Scheduled Monday adjustment
@@ -1836,7 +1851,12 @@
                         <p>
                             If the 24-hour RH minimum is above 60%, improve
                             spacing/airflow and be cautious with cool,
-                            slow-drying pots. A brief maximum above 60% is fine.
+                            slow-drying pots. A brief maximum above 60% is fine;
+                            use the
+                            <a href="../equipment/air-treatment.md"
+                                >sensor-driven dehumidifier rule</a
+                            >
+                            rather than running it every day.
                         </p>
                     </div>
                 </article>
@@ -1890,7 +1910,7 @@
             <footer class="footer">
                 <span
                     >Graphic companion to the canonical written schedule ·
-                    updated 2026-07-31</span
+                    updated 2026-08-08</span
                 >
                 <span>
                     <a href="../equipment/aw200se-operating-schedule.md"
@@ -1898,6 +1918,8 @@
                     >
                     ·
                     <a href="./grow-spot-layout.html">Grow-spot layout</a>
+                    ·
+                    <a href="../equipment/air-treatment.md">Air treatment</a>
                 </span>
             </footer>
         </main>
@@ -1946,7 +1968,41 @@
                                 text: "Daily 7:30 sensor log begins",
                             },
                         ],
+                        4: [
+                            {
+                                id: "aug04-air-baseline",
+                                type: "sensor",
+                                text: "Air-treatment baseline · purifier low",
+                            },
+                            {
+                                id: "aug04-dehumidifier",
+                                type: "check",
+                                text: "DH-CS01 off unless sustained RH triggers it",
+                            },
+                        ],
+                        8: [
+                            {
+                                id: "aug08-expansion",
+                                type: "move",
+                                text: "Add second wood table + 8 new plants",
+                            },
+                            {
+                                id: "aug08-camera",
+                                type: "check",
+                                text: "Reframe all 3 surfaces + start fresh clip",
+                            },
+                        ],
                         9: [
+                            {
+                                id: "aug09-new-plants",
+                                type: "check",
+                                text: "New plants perimeter; no risers until measured",
+                            },
+                            {
+                                id: "aug09-labels",
+                                type: "check",
+                                text: "E/F + #1–#4 label mappings recorded",
+                            },
                             {
                                 id: "aug09-check",
                                 type: "check",

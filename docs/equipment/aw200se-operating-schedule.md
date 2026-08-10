@@ -1,38 +1,43 @@
-# Fenton AW200SE, AeroWave, and GrowCam operating schedule
+# Fenton AW200SE, AeroWave, GrowCam, and air-treatment operating schedule
 
-Last updated: 2026-07-31
+Last updated: 2026-08-08
 
 This is the canonical dated schedule for the VIVOSUN AW200SE, AeroWave E6
-Gen2, GrowCam C4, reflector placement, the two GrowHub E25 controllers, and the
-current collection in Fenton, Michigan. It covers the 2026 move indoors,
-six-week light acclimation plus the first steady-state week, airflow, time-lapse
-recording, pot layout, rotations, local daylight, and the 2027 return outdoors.
+Gen2, GrowCam C4, reflector placement, the two GrowHub E25 controllers, the
+TABYIK DH-CS01 dehumidifier, the Levoit Core Mini-P air purifier, and the current
+collection in Fenton, Michigan. It covers the 2026 move indoors, six-week light
+acclimation plus the first steady-state week, airflow, time-lapse recording,
+room-air response, pot layout, rotations, local daylight, and the 2027 return
+outdoors.
 
 The collection moved indoors early on Friday, July 31, 2026, after its first
 RO-water watering and drainage. July 31–August 2 are equipment-shakedown days
 at the planned Week 1 settings. The formal light ramp still begins Monday,
 August 3, so the later height and power-change dates do not shift.
 
-All height measurements are from the LEDs to the **tallest living plant tip**,
-not to the table, pot rim, or soil.
+All height measurements are from the LEDs to the **tallest cactus or succulent
+tip inside the direct grow-light footprint**, not to the table, pot rim, soil,
+or peripheral money-tree canopy.
 
 ## Calendar at a glance
 
-| Date                                | Event                                                                                                                                                   |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Thursday, July 30, 2026             | The 256 GB microSD card passed test recording. Install the full-height divider Mylar, floor liner, two tables, wall camera, and rotated AW200SE.        |
-| Friday, July 31, about 4:00 a.m.    | Water only the dry pots and shared planters with RO water, drain fully, empty every tray, and move the collection indoors.                              |
-| July 31–August 2                    | Run the three-day shakedown at 40%, 20 in, and 8:00 a.m.–8:00 p.m.; run the AeroWave at Level 2 from 8:15 a.m.–7:45 p.m.                                |
-| Saturday, August 1, after 8:00 p.m. | Dry-fit the group risers, restore the 20-inch LED-to-highest-tip clearance, secure the wall cables, add drip loops, and finish the lower-window block.  |
-| Sunday, August 2, 7:30–8:15 p.m.    | Inspect and photograph the final layout, tissue-test the fan, log the sensor baseline, verify the camera framing, and lock the risers after lights-off. |
-| Monday, August 3, 7:45 a.m.         | Verify both E25 programs and start or verify the production time-lapse; Week 1 begins at 8:00 a.m.                                                      |
-| August 10                           | Lower the fixture from 20 to 18 in; keep 40% power.                                                                                                     |
-| August 17                           | Increase from 40% to 45%.                                                                                                                               |
-| August 24                           | Increase from 45% to 50%.                                                                                                                               |
-| August 31                           | Hold 50% for a second week.                                                                                                                             |
-| September 7                         | Increase to 55% only if every lit surface remains healthy; otherwise hold 50%.                                                                          |
-| September 14                        | Begin the steady 50–55% setting; make no other change that week.                                                                                        |
-| September 21                        | Replace the fixed 8:00 a.m.–8:00 p.m. timer with the Fenton seasonal timer.                                                                             |
+| Date                                | Event                                                                                                                                                                            |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Thursday, July 30, 2026             | The 256 GB microSD card passed test recording. Install the full-height divider Mylar, floor liner, original tables, wall camera, and rotated AW200SE.                            |
+| Friday, July 31, about 4:00 a.m.    | Water only the dry pots and shared planters with RO water, drain fully, empty every tray, and move the collection indoors.                                                       |
+| July 31–August 2                    | Run the three-day shakedown at 40%, 20 in, and 8:00 a.m.–8:00 p.m.; run the AeroWave at Level 2 from 8:15 a.m.–7:45 p.m.                                                         |
+| Saturday, August 1, after 8:00 p.m. | Dry-fit the group risers, restore the 20-inch LED-to-highest-tip clearance, secure the wall cables, add drip loops, and finish the lower-window block.                           |
+| Sunday, August 2, 7:30–8:15 p.m.    | Inspect and photograph the final layout, tissue-test the fan, log the sensor baseline, verify the camera framing, and lock the risers after lights-off.                          |
+| Monday, August 3, 7:45 a.m.         | Verify both E25 programs and start or verify the production time-lapse; Week 1 begins at 8:00 a.m.                                                                               |
+| Tuesday, August 4                   | Add the Core Mini-P on low at the room-side end; record an appliances-off RH baseline and leave the DH-CS01 off unless sustained humidity triggers it.                           |
+| August 8–9                          | Add the second identical wooden table, six cacti, Kiwi aeonium, and money tree. Start a fresh camera clip; use perimeter placement and no new risers until heights are measured. |
+| August 10                           | Lower the fixture from 20 to 18 in; keep 40% power.                                                                                                                              |
+| August 17                           | Increase from 40% to 45%.                                                                                                                                                        |
+| August 24                           | Increase from 45% to 50%.                                                                                                                                                        |
+| August 31                           | Hold 50% for a second week.                                                                                                                                                      |
+| September 7                         | Increase to 55% only if every lit surface remains healthy; otherwise hold 50%.                                                                                                   |
+| September 14                        | Begin the steady 50–55% setting; make no other change that week.                                                                                                                 |
+| September 21                        | Replace the fixed 8:00 a.m.–8:00 p.m. timer with the Fenton seasonal timer.                                                                                                      |
 
 ## Fenton outdoor cutoff
 
@@ -63,7 +68,10 @@ plants inside when nights repeatedly approach 50–55°F.
    top dressing for mealybugs, scale, spider mites, ants, or other hitchhikers.
 3. Wipe the pots and trays clean. If a plant must be rinsed, let it dry before
    placing it under the lamp.
-4. Label every individual pot with its permanent short A1–D3 plant ID.
+4. Keep the original individual pots labeled A1–D3. The six August cacti use
+   their recorded `E1`–`F3` labels. The shared rehab cactus planter is `#1`, the
+   shared succulent planter is `#2`, the money tree is `#3`, and the Kiwi
+   aeonium is `#4`.
 5. Arrange the pots using the layout below.
 6. Mark the adjustable hanger positions for 18, 20, 22, and 24 in.
 7. Set the LEDs 20 in above the tallest living tip.
@@ -79,7 +87,7 @@ plants inside when nights repeatedly approach 50–55°F.
     [camera and reflector plan](./growcam-c4-and-reflector.md). Take one
     top-down and one front-view baseline photo.
 12. Place the temperature/RH sensor at canopy height in open shade, between the
-    two tables if practical, outside the direct fan stream and away from wet
+    plant surfaces if practical, outside the direct fan stream and away from wet
     trays, glass, Mylar, and the lamp's radiant heat. Reset its all-time
     minimum/maximum memory if possible and record the baseline.
 13. Record the post-Mylar lux or PAR grid and begin or verify the production
@@ -121,17 +129,17 @@ splitter arrangement on an E42/E42A-class controller.
 
 ### AeroWave E25 program
 
-| Setting                     | Value                                                                                                                                                        |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Fan mode                    | Natural Wind                                                                                                                                                 |
-| Starting strength           | Level 2 of 10                                                                                                                                                |
-| Provisional steady strength | Level 3 of 10 only after the August 9 coverage check                                                                                                         |
-| Oscillation                 | Activate with the fan's swivel button; if the app exposes the documented scale, use Level 4 of 5 and Level 5 only if the outer columns never enter the sweep |
-| On                          | 8:15 a.m.                                                                                                                                                    |
-| Off                         | 7:45 p.m.                                                                                                                                                    |
-| Daily runtime during ramp   | 11 h 30 min                                                                                                                                                  |
-| Placement                   | On the black divider pole beside the window; raise the hub 4–8 in above the highest tip if the mount permits                                                 |
-| Aim                         | Diagonally across the round and wooden tables toward the room-side center, not continuously at one plant or pot surface                                      |
+| Setting                     | Value                                                                                                                                                                            |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Fan mode                    | Natural Wind                                                                                                                                                                     |
+| Starting strength           | Level 2 of 10                                                                                                                                                                    |
+| Provisional steady strength | Level 3 of 10 only after the August 9 coverage check                                                                                                                             |
+| Oscillation                 | Activate with the fan's swivel button; if the app exposes the documented scale, use Level 4 of 5 and Level 5 only if the outer edges of all three surfaces never enter the sweep |
+| On                          | 8:15 a.m.                                                                                                                                                                        |
+| Off                         | 7:45 p.m.                                                                                                                                                                        |
+| Daily runtime during ramp   | 11 h 30 min                                                                                                                                                                      |
+| Placement                   | On the black divider pole beside the window; raise the hub 4–8 in above the highest tip if the mount permits                                                                     |
+| Aim                         | Diagonally across the round table and both wooden tables toward the room-side center, not continuously at one plant or pot surface                                               |
 
 VIVOSUN's current manual lists 10 E25/app fan-speed levels, 10 E25/app Natural
 Wind levels, and 5 oscillation levels for the E6 Gen2. The second E25 was
@@ -204,7 +212,40 @@ the placement and room conditions if the 24-hour temperature drops below 55°F
 or rises above 95°F. If the 24-hour RH minimum itself remains above 60%, the
 space stayed humid for the full day: improve spacing or airflow and be
 especially conservative about watering cool, slow-drying pots. A brief RH
-maximum above 60% is not by itself a problem.
+maximum above 60% is not by itself a problem. The
+[air-treatment decision table](./air-treatment.md#simple-operating-plan) adds a
+sensor-driven response without making the small dehumidifier part of the normal
+daily schedule.
+
+### Air purifier and dehumidifier
+
+These appliances remain independent of the two E25 controllers:
+
+| Device             | Normal state                                                                    | Change it when                                                                                                                         |
+| ------------------ | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Levoit Core Mini-P | Low continuously; lights-on hours are acceptable if nighttime noise is annoying | Use high for 30–60 minutes after dusty plant work, then return to low                                                                  |
+| TABYIK DH-CS01     | Off                                                                             | Run for 12–24 hours only when current RH is above 60% at both a morning and evening check, or the 24-hour RH minimum remains above 60% |
+
+Start both beyond the second wooden table on the open-room side, outside the
+nominal 60 in plant bay, direct light footprint, and watering area. The three
+end-to-end surfaces leave no credible appliance bay. Put the purifier on the divider side with
+its 360° intake open. Put the dehumidifier on the white-wall side with its rear
+intake facing the open room and at least 6 in of starting clearance. Use
+separate rigid trays or boards over the floor Mylar, leave 8–12 in between the
+units, and keep their cords out of the aisle.
+
+The DH-CS01 has one speed and no humidistat. Its advertised 450 mL/day rating
+comes from a confined 86°F/80% RH test and is not a realistic expectation at
+the collection's usual 30–55% RH. Do not run it automatically after watering,
+and stop it once current RH returns to 45–55%. If sustained high humidity does
+not improve after 24–48 hours, find the moisture source or use room HVAC/a
+humidistat-equipped unit rather than expecting this mini Peltier appliance to
+control the open room.
+
+The Core Mini-P filters room air but does not lower humidity or replace the
+AeroWave's cross-canopy circulation. Leave its aroma pad dry. Full placement,
+commissioning, maintenance, and safety guidance is in the dedicated
+[air-treatment guide](./air-treatment.md).
 
 ### AeroWave placement and airflow test
 
@@ -212,12 +253,12 @@ Use the installed divider-pole mount:
 
 1. Keep the AeroWave on the black divider pole beside the window. The rigid pole
    mount is preferable to fabric, Mylar, the light hanger, or a movable table.
-2. Raise the fan hub roughly 4–8 in above the tallest living tip if the mount
+2. Raise the fan hub roughly 4–8 in above the tallest cactus tip if the mount
    permits. Tilt it slightly downward so the sweep crosses the upper halves of
-   both shared planters and the A1–D3 grid.
-3. Aim diagonally toward the room-side center of the wooden table. The fan
-   should reach the far D-column without dwelling on the variegated moon cactus,
-   monkey tail, or succulent planter.
+   both shared planters, the A1–D3 grid, and the second wooden table.
+3. Aim diagonally toward the room-side center of the second wooden table. The
+   fan should reach its far edge without dwelling on the variegated moon cactus,
+   monkey tail, Kiwi aeonium, money tree, or succulent planter.
 4. Leave intake clearance beside the window and watch for a cold draft after
    the outdoor season. Reduce the fan or redirect it before allowing cold window
    air to blow continuously across the closest planter.
@@ -231,7 +272,8 @@ falls from the bend instead of entering the connection. The
 path in the **Wiring** tab.
 
 Test airflow with a narrow strip of tissue at the closest shared planter, the
-center of the round table, A1, the B2–C3 center, and D3. The strip should flutter
+center of the round table, A1, the B2–C3 center, D3, and the center and far edge
+of the second wooden table. The strip should flutter
 when the sweep reaches it, but plant bodies should not rock, hairs should not
 remain flattened, loose top dressing should not move, and one pot should not
 dry dramatically faster than its neighbors.
@@ -312,13 +354,15 @@ be selected, use distance to soften the jump:
 The tape-measure set from 2026-07-31 changes the planning geometry:
 
 1. The divider-to-wall bay is 36 in wide and about 60 in long.
-2. The wooden and round glass tabletops are both 18 in above the floor.
-3. Put the 24 in round table at the window end and the 16 × 13 in wooden table
-   toward the room. Keep them separate and end to end along the approximately
-   60 in length, with their centerlines beneath the long axis of the fixture.
-   They do not fit side by side across the 36 in width. Their 24 in diameter plus 16 in
-   wooden-table depth uses about 40 in of the bay length, leaving about 20 in to
-   distribute around and between the tables using the actual physical fit.
+2. The two wooden and round glass tabletops are all 18 in above the floor.
+3. Put the 24 in round table at the window end and the two identical 16 × 13 in
+   wooden tables toward the room. Keep all three separate and end to end along
+   the approximately 60 in length, with their centerlines beneath the long axis
+   of the fixture. They do not fit side by side across the 36 in width. Their
+   24 in diameter plus two 16 in wooden-table depths uses about 56 in of the bay
+   length, leaving only about 4 in before real gaps and leg interference. Move
+   the air-treatment devices beyond the nominal bay rather than squeezing them
+   into that remainder.
 4. Center the approximately 26 in wing-tip width of the AW200SE in the 36 in
    bay. This leaves about 5 in from each wing tip to the divider/wall when the
    fixture is centered. The physical fixture width is not the same as its light
@@ -328,6 +372,8 @@ The tape-measure set from 2026-07-31 changes the planning geometry:
 
 The [browser grow-spot diagrams](../layouts/grow-spot-layout.html) show the
 room, tables, fan sweep, camera view, clearance, and riser measurements.
+
+### Original wooden table — A1–D3
 
 The A1–D3 values remain permanent plant IDs; they are not coordinates. Arrange
 the 12 pots in the three-column by four-row pattern that actually fits the
@@ -359,8 +405,28 @@ not to force every tip onto an exact plane:
   with the table centered on the long axis of the fixture. If the measured light
   center misses the wood, fine-tune the fixture laterally within safe
   wall/divider clearance rather than moving a sensitive pot onto a taller riser.
-- **Shared planters:** the printed A4–B4 and C4–D4 values remain durable planter
-  IDs, but they no longer describe a fourth row on the wooden table.
+- **Shared planters:** the rehab cactus planter is `#1` and the succulent
+  planter is `#2`; `A4-B4` and `C4-D4` remain historical cross-references only.
+
+### Second wooden table — provisional August layout
+
+The E/F and numbered mappings are confirmed, but these rows remain provisional
+positions—not a claim that the current pots are still arranged this way.
+Looking from the room toward the window:
+
+| Physical row   | Provisional occupants                                                  | Starting treatment                                                                     |
+| -------------- | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| 1: window side | `E1` dwarf old man; `E2` Chamaelobivia; `E3` black-centered pincushion | Outer-to-middle cactus zone; all direct on wood until measured.                        |
+| 2: center      | `F3` yellow tower; `F2` boobie cactus; `F1` rose pincushion            | Outer-to-middle cactus zone; all direct on wood until measured.                        |
+| 3: room side   | `#4` Succulent-05 Kiwi aeonium; `#3` Houseplant-01 money tree          | Lower-light edge; money tree nearest window/periphery and outside the fixture hotspot. |
+
+The six new cacti are mostly in 4 in pots; the boobie cactus is in a small 3 in
+pot and the Chamaelobivia is in a small 4 in pot. The Kiwi aeonium is in a 5 in
+pot and the money tree is in a 6 in pot. This is a tight 16 in-long dry fit, so
+leave a pot off the table temporarily if rims overlap, a saucer overhangs, or
+air cannot pass between plants. Add no riser until each tabletop-to-tip height
+and the final clearance are recorded. The money tree's height is not the
+reference for cactus fixture clearance.
 
 Orient the shared planters as follows:
 
@@ -380,7 +446,7 @@ side, succulent planter toward the white wall.
 Keep both shared planters directly on the glass. The measurement photos put the
 tallest older-planter tip at about 12.5–13 in above the glass, the succulent
 canopy at about 8–9 in, and the individual starter tips at roughly 4–7 in
-above the wood. Because both tabletops are 18 in high, the general formula
+above the wood. Because all three tabletops are 18 in high, the general formula
 simplifies to:
 
 `needed lift = round tabletop height + shared tip height - wooden tabletop height - individual tip height`
@@ -415,6 +481,7 @@ Use one simple weekly routine:
 | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Every Sunday, 30 minutes before the programmed off time | Photograph the same front and top views; inspect new growth, lit surfaces, bases, and pests while the light is on. This is 7:30 p.m. during the ramp.                              |
 | Every Sunday after that day's fade finishes             | Rotate Starter-01 through Starter-06 and Starter-08 through Starter-12 by 90° clockwise in their existing slots. This is shortly after 8:00 p.m. during the ramp.                  |
+| Same Sunday check                                       | Rotate Cactus-01 through Cactus-06, Succulent-05, and Houseplant-01 by 90° clockwise unless a future one-sided exception is documented. Keep each plant in its current zone.       |
 | Same Sunday check                                       | Keep Starter-07's palest tissue facing away from the center; do not rotate it blindly.                                                                                             |
 | Same Sunday check                                       | Do not routinely rotate either shared planter; preserve the blue-torch and echeveria orientations above.                                                                           |
 | Same Sunday check                                       | Measure the tallest tip and restore the scheduled clearance if growth changed it; check trays and pot stability.                                                                   |
@@ -611,9 +678,9 @@ safer than stacking a full outdoor day with a full indoor DLI.
 Recorded on 2026-07-31:
 
 - occupied bay: 36 in wide by about 60 in long;
-- both tabletop surfaces: 18 in from the floor;
+- all three tabletop surfaces: 18 in from the floor;
 - round glass top: 24 in diameter;
-- wooden top: 16 × 13 in;
+- two identical wooden tops: 16 × 13 in each;
 - AW200SE: about 26 in from wing tip to wing tip;
 - tallest shared-cactus tip: about 12.5–13 in above the glass; and
 - current starter-tip band: roughly 4–7 in above the wood before risers.
@@ -621,6 +688,8 @@ Recorded on 2026-07-31:
 After installing the risers, record:
 
 - the occupied table width and depth;
+- individual tabletop-to-tip heights for the six new cacti, Kiwi aeonium, and
+  money tree;
 - light-to-tip distance for the tallest and shortest plants;
 - wing position;
 - whether walls or reflective surfaces are nearby; and
@@ -629,11 +698,15 @@ After installing the risers, record:
 - AeroWave-to-nearest-plant distance, height, vertical angle, and oscillation
   level; and
 - whether the Level 2 tissue test reaches the closest shared planter,
-  round-table center, A1, B2–C3 center, and D3 without moving top dressing or
-  rocking plants;
+  round-table center, A1, B2–C3 center, D3, and both zones of the second wooden
+  table without moving top dressing or rocking plants;
 - GrowCam lens height, distance, angle, and whether all labels and growth tips
   remain in frame; and
-- whether the 24-hour time-lapse test exported and played correctly.
+- whether the 24-hour time-lapse test exported and played correctly;
+- final Core Mini-P and DH-CS01 positions beyond the nominal plant bay, intake
+  clearances, and cord paths; and
+- the first appliances-off baseline plus any 12–24-hour dehumidifier response
+  check that the sensor actually triggers.
 
 The exact tape photos are indexed in
 [`assets/measurements`](../../assets/measurements/README.md). These measurements
@@ -652,6 +725,9 @@ order or seasonal timer dates.
 - [VIVOSUN 6 mil diamond Mylar product listing](https://www.amazon.com/dp/B01MZ72PAH?th=1)
 - [VIVOSUN E42A Type-C splitter for multiple fans](https://vivosun.com/en-GB/vivosun-2-in-1-type-c-splitter-compatible-with-growhub-aerowave-p144564522569585355-v144564522569585354)
 - [VIVOSUN Smart Grow System FAQ: Sunrise/Sunset mode](https://vivosun.com/growing_guide/vivosun-smart-grow-system-faqs)
+- [TABYIK DH-CS01 product listing](https://www.amazon.com/dp/B0CMTP3GH8?th=1)
+- [Levoit Core Mini-P official product page](https://levoit.com/products/core-mini-p-air-purifier)
+- [Levoit Core Mini-P official manual](https://levoit.com/cdn/shop/files/HEAPAPLVNUS0098A_0106A_LAP-C161-WUS_LAP-C161-KUS_Core_Mini_Air_Purifier_manual_US_A2-241212.pdf?v=15178800528105950096)
 - [National Weather Service: Flint September normals](https://www.weather.gov/dtx/FNT_Sep_rec)
 - [Illinois Extension: moving houseplants indoors below 55°F](https://extension.illinois.edu/blogs/good-growing/2022-09-09-tips-moving-houseplants-indoors-and-overwinter-care)
 - [Iowa State Extension: moving houseplants indoors near 50°F](https://yardandgarden.extension.iastate.edu/faq/how-and-when-do-i-bring-my-houseplants-back-indoors-winter)
