@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+        />
+        <meta
+            name="description"
+            content="Individual watering, weight, growth, baseline, and observation history for the Fenton plant collection."
+        />
+        <title>Plant history · Fenton collection</title>
+        <script>
+            (() => {
+                const saved = localStorage.getItem("gardening-site-theme");
+                const dark = saved
+                    ? saved === "dark"
+                    : matchMedia("(prefers-color-scheme: dark)").matches;
+                document.documentElement.dataset.theme = dark
+                    ? "dark"
+                    : "light";
+            })();
+        </script>
+        <link
+            rel="icon"
+            href="../plant-booklet/favicon.svg"
+        />
+        <link
+            rel="stylesheet"
+            href="./plant-tracker.css"
+        />
+    </head>
+    <body>
+        <a
+            class="skip-link"
+            href="#history"
+            >Skip to history</a
+        >
+
+        <nav
+            class="site-nav"
+            aria-label="Collection tools"
+        >
+            <a
+                class="brand"
+                href="./plant-tracker.html"
+            >
+                <span
+                    class="brand-mark"
+                    aria-hidden="true"
+                    >✦</span
+                >
+                <span>
+                    <strong>Fenton collection</strong>
+                    <small>Plant history</small>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a href="./plant-tracker.html">All plants</a>
+                <a href="../plant-booklet/">Field guide</a>
+                <a href="./grow-spot-layout.html">Layout</a>
+                <button
+                    id="theme-toggle"
+                    type="button"
+                    aria-pressed="false"
+                >
+                    Dark mode
+                </button>
+            </div>
+        </nav>
+
+        <main>
+            <header class="hero history-hero">
+                <div>
+                    <p
+                        class="eyebrow"
+                        id="plant-label"
+                    >
+                        Loading plant…
+                    </p>
+                    <h1 id="plant-name">Plant history</h1>
+                    <p
+                        class="scientific-heading"
+                        id="plant-scientific"
+                    ></p>
+                    <p class="lede">
+                        Every watering, weight, size check, and observation is
+                        kept as its own event. Calculations use the full log,
+                        while weight baselines use only the active pot setup.
+                    </p>
+                </div>
+                <div class="hero-actions">
+                    <a
+                        class="button primary"
+                        id="edit-history"
+                        href="https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=2015971861#gid=2015971861"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Open Quick log
+                    </a>
+                    <a
+                        class="button"
+                        id="sheet-plant-page"
+                        href="https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=1875598047#gid=1875598047"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Open Sheets plant page
+                    </a>
+                    <a
+                        class="button"
+                        href="./plant-tracker.html"
+                    >
+                        Back to all plants
+                    </a>
+                </div>
+            </header>
+
+            <nav
+                class="plant-pager"
+                aria-label="Previous and next plants"
+            >
+                <a id="previous-plant">← Previous plant</a>
+                <a id="next-plant">Next plant →</a>
+            </nav>
+
+            <p
+                class="page-status"
+                id="page-status"
+                aria-live="polite"
+            >
+                Loading published history from Google Sheets…
+            </p>
+
+            <section
+                class="metric-grid"
+                aria-label="Latest observations"
+            >
+                <article>
+                    <span>Last watered</span>
+                    <strong id="last-watered">—</strong>
+                    <small id="water-days">No watering logged</small>
+                </article>
+                <article>
+                    <span>Latest weight</span>
+                    <strong id="latest-weight">—</strong>
+                    <small id="weight-checked">Not checked yet</small>
+                </article>
+                <article>
+                    <span>Latest height</span>
+                    <strong id="latest-height">—</strong>
+                    <small id="height-checked">Not checked yet</small>
+                </article>
+                <article>
+                    <span>Latest width</span>
+                    <strong id="latest-width">—</strong>
+                    <small id="width-checked">Not checked yet</small>
+                </article>
+            </section>
+
+            <section
+                class="analytics-panel"
+                aria-labelledby="trend-title"
+            >
+                <header>
+                    <div>
+                        <p class="eyebrow">Calculated from the log</p>
+                        <h2 id="trend-title">Trend snapshot</h2>
+                        <p>
+                            A blank card means there are not enough independent
+                            readings yet. Estimated starting measurements remain
+                            visible but become more useful after real
+                            follow-ups.
+                        </p>
+                    </div>
+                </header>
+                <div class="trend-grid">
+                    <article>
+                        <span>Weight change</span>
+                        <strong id="weight-change">—</strong>
+                        <small id="weight-change-detail">Needs 2 weights</small>
+                    </article>
+                    <article>
+                        <span>3-reading weight mean</span>
+                        <strong id="weight-moving-average">—</strong>
+                        <small id="weight-average-detail"
+                            >Active pot setup only</small
+                        >
+                    </article>
+                    <article>
+                        <span>Dry-weight spread</span>
+                        <strong id="dry-spread">—</strong>
+                        <small id="dry-spread-detail"
+                            >Needs 2 dry weights</small
+                        >
+                    </article>
+                    <article>
+                        <span>Wet-weight spread</span>
+                        <strong id="wet-spread">—</strong>
+                        <small id="wet-spread-detail"
+                            >Needs 2 wet weights</small
+                        >
+                    </article>
+                    <article>
+                        <span>Height trend</span>
+                        <strong id="height-trend">—</strong>
+                        <small id="height-trend-detail">Needs 2 heights</small>
+                    </article>
+                    <article>
+                        <span>Width trend</span>
+                        <strong id="width-trend">—</strong>
+                        <small id="width-trend-detail">Needs 2 widths</small>
+                    </article>
+                    <article>
+                        <span>Watering interval</span>
+                        <strong id="watering-average">—</strong>
+                        <small id="watering-detail">Needs 2 water events</small>
+                    </article>
+                    <article>
+                        <span>Observation coverage</span>
+                        <strong id="observation-span">—</strong>
+                        <small id="observation-span-detail"
+                            >No dated history</small
+                        >
+                    </article>
+                </div>
+            </section>
+
+            <section
+                class="baseline-panel"
+                aria-labelledby="baseline-title"
+            >
+                <header>
+                    <div>
+                        <p class="eyebrow">Current pot setup</p>
+                        <h2 id="baseline-title">Dry/wet weight baseline</h2>
+                        <p>
+                            The averages use only the active pot setup. A
+                            baseline becomes ready after at least two dry and
+                            two wet readings.
+                        </p>
+                    </div>
+                    <span
+                        class="status-badge"
+                        id="baseline-status"
+                        >Waiting for data</span
+                    >
+                </header>
+                <div class="baseline-grid">
+                    <article>
+                        <span>Pot setup</span>
+                        <strong id="pot-setup">1</strong>
+                        <small>Increment after repotting</small>
+                    </article>
+                    <article>
+                        <span>Dry average</span>
+                        <strong id="dry-average">—</strong>
+                        <small id="dry-samples">0 samples</small>
+                    </article>
+                    <article>
+                        <span>Wet average</span>
+                        <strong id="wet-average">—</strong>
+                        <small id="wet-samples">0 samples</small>
+                    </article>
+                    <article>
+                        <span>Water capacity</span>
+                        <strong id="water-capacity">—</strong>
+                        <small>Wet average minus dry average</small>
+                    </article>
+                    <article>
+                        <span>Estimated water remaining</span>
+                        <strong id="water-remaining">—</strong>
+                        <small>Only shown after a usable baseline</small>
+                    </article>
+                </div>
+                <p class="baseline-note">
+                    Pot weight is a trend, not a watering command. Plant feel,
+                    weather, soil condition, and recent growth still matter.
+                </p>
+            </section>
+
+            <section
+                class="charts-panel"
+                aria-labelledby="charts-title"
+            >
+                <header>
+                    <div>
+                        <p class="eyebrow">Interactive history</p>
+                        <h2 id="charts-title">Trends over time</h2>
+                        <p>
+                            Hover or keyboard-focus a chart point for its exact
+                            value. Growth rates are descriptive slopes, not
+                            forecasts.
+                        </p>
+                    </div>
+                    <label class="range-control">
+                        <span>Chart range</span>
+                        <select id="chart-range">
+                            <option value="all">All history</option>
+                            <option value="30">Last 30 days</option>
+                            <option value="90">Last 90 days</option>
+                            <option value="365">Last year</option>
+                        </select>
+                    </label>
+                </header>
+                <div class="chart-grid">
+                    <article class="chart-card">
+                        <header>
+                            <div>
+                                <h3>Pot weight</h3>
+                                <p
+                                    >Current pot setup; dry and wet means appear
+                                    when available.</p
+                                >
+                            </div>
+                        </header>
+                        <div
+                            class="chart-canvas"
+                            id="weight-chart"
+                        ></div>
+                        <p
+                            class="chart-summary"
+                            id="weight-chart-summary"
+                        ></p>
+                    </article>
+                    <article class="chart-card">
+                        <header>
+                            <div>
+                                <h3>Plant dimensions</h3>
+                                <p
+                                    >Height and width stay separate even when
+                                    measured on different days.</p
+                                >
+                            </div>
+                        </header>
+                        <div
+                            class="chart-canvas"
+                            id="growth-chart"
+                        ></div>
+                        <p
+                            class="chart-summary"
+                            id="growth-chart-summary"
+                        ></p>
+                    </article>
+                    <article class="chart-card">
+                        <header>
+                            <div>
+                                <h3>Watering intervals</h3>
+                                <p
+                                    >Elapsed days between recorded
+                                    soak-to-runoff events.</p
+                                >
+                            </div>
+                        </header>
+                        <div
+                            class="chart-canvas"
+                            id="watering-chart"
+                        ></div>
+                        <p
+                            class="chart-summary"
+                            id="watering-chart-summary"
+                        ></p>
+                    </article>
+                </div>
+            </section>
+
+            <section
+                class="history-panel"
+                id="history"
+                aria-labelledby="history-title"
+            >
+                <header>
+                    <div>
+                        <p class="eyebrow">Append-only log</p>
+                        <h2 id="history-title">Observation history</h2>
+                        <p>
+                            Blank cells mean that item was not checked during
+                            that observation.
+                        </p>
+                    </div>
+                    <div class="history-actions">
+                        <strong id="history-count">—</strong>
+                        <button
+                            class="button"
+                            id="export-history"
+                            type="button"
+                        >
+                            Export this plant CSV
+                        </button>
+                    </div>
+                </header>
+                <div class="history-controls">
+                    <label>
+                        <span>Search this history</span>
+                        <input
+                            id="history-search"
+                            type="search"
+                            placeholder="Notes, condition, date…"
+                            autocomplete="off"
+                        />
+                    </label>
+                    <label>
+                        <span>Event type</span>
+                        <select id="history-event-filter">
+                            <option value="all">All events</option>
+                        </select>
+                    </label>
+                </div>
+                <div
+                    class="sheet-frame-wrap history-table-wrap"
+                    tabindex="0"
+                    aria-label="Scrollable plant observation history"
+                >
+                    <table id="history-table">
+                        <caption>
+                            Watering, measurement, weight, and condition events
+                            for this plant
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Event</th>
+                                <th scope="col">Weight state</th>
+                                <th scope="col">Weight</th>
+                                <th scope="col">Height</th>
+                                <th scope="col">Width</th>
+                                <th scope="col">Condition / soil</th>
+                                <th scope="col">Notes</th>
+                                <th scope="col">Pot setup</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td
+                                    class="loading-cell"
+                                    colspan="9"
+                                >
+                                    Loading this plant’s history…
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section
+                class="logging-guide"
+                aria-labelledby="logging-title"
+            >
+                <div>
+                    <p class="eyebrow">Google Sheets workflow</p>
+                    <h2 id="logging-title">How to add a reading</h2>
+                    <p class="public-note">
+                        Notes appear on this public page. Keep private details
+                        and precise home-location information out of the sheet.
+                    </p>
+                </div>
+                <ol>
+                    <li>
+                        Open <strong>Quick log</strong> and find the permanent
+                        row for this plant. The P-number remains stable even if
+                        its physical pot label changes.
+                    </li>
+                    <li>
+                        Fill only what you checked. Weight, height, width,
+                        watering, and condition do not need to happen together.
+                    </li>
+                    <li>
+                        For weights, use <code>Dry</code> immediately before a
+                        soak, <code>Wet</code> after runoff has stopped, and
+                        <code>Routine</code> for an in-between reading.
+                    </li>
+                    <li>
+                        Tick <strong>Save</strong>. The logger appends one or
+                        more event-specific History rows and clears the input
+                        fields; older readings are never overwritten.
+                    </li>
+                    <li>
+                        Increase <code>Pot setup</code> after the pot, medium,
+                        top dressing, or normally weighed saucer changes.
+                    </li>
+                </ol>
+            </section>
+        </main>
+
+        <footer>
+            <span>Fenton collection · personal gardening notebook</span>
+            <span>
+                <a href="./plant-tracker.html">All plants</a> ·
+                <a href="../plant-booklet/">Field guide</a> ·
+                <a href="./indoor-acclimation-calendar.html">Calendar</a>
+            </span>
+        </footer>
+
+        <script
+            type="module"
+            src="./plant-history.js"
+        ></script>
+    </body>
+</html>

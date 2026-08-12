@@ -8,7 +8,7 @@
         />
         <meta
             name="description"
-            content="Live Google Sheets tracker for the Fenton cactus, succulent, and houseplant collection."
+            content="Live watering, weight, size, and observation tracker for the Fenton plant collection."
         />
         <title>Plant tracker · Fenton collection</title>
         <script>
@@ -34,8 +34,8 @@
     <body>
         <a
             class="skip-link"
-            href="#tracker-frame"
-            >Skip to spreadsheet</a
+            href="#tracker-table-wrap"
+            >Skip to tracker</a
         >
 
         <nav
@@ -71,70 +71,95 @@
         </nav>
 
         <main>
-            <header class="hero">
+            <header class="hero tracker-hero">
                 <div>
-                    <p class="eyebrow">Live care sheet · 22 containers</p>
-                    <h1>Measure once. Update one row.</h1>
+                    <p class="eyebrow">Live care log · 22 containers</p>
+                    <h1>One row per observation—not per chore.</h1>
                     <p class="lede">
-                        The Google Sheet is the single editable tracker for
-                        weight, last watering, height, width, water amount,
-                        condition, and notes. The shared planters each have one
-                        row because they are measured as a single container.
+                        Watering, weight, height, width, and condition can be
+                        logged independently on the Google Sheets Quick log.
+                        Ticking Save archives a new History row, and every pot
+                        label links to its own calculations and charts. Blanks
+                        mean “not checked this time,” not missing work.
                     </p>
                 </div>
                 <div class="hero-actions">
                     <a
                         class="button primary"
-                        href="https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=0#gid=0"
+                        href="https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=2015971861#gid=2015971861"
                         target="_blank"
                         rel="noreferrer"
                     >
-                        Edit in Google Sheets
+                        Open Quick log
                     </a>
                     <a
                         class="button"
-                        href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSlR11VjUWkf8xO7HGvYwpZmxZohxV-wpSTYQRfgLw0UIpXBXJ8O0Rik-ySoNWY-EyqWdQ2kzdXtgZR/pubhtml"
+                        href="https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=1875598047#gid=1875598047"
                         target="_blank"
                         rel="noreferrer"
                     >
-                        Open full-screen view
+                        Open workbook dashboard
                     </a>
                 </div>
             </header>
 
             <section
+                class="tracker-stats"
+                aria-label="Collection log summary"
+            >
+                <article>
+                    <span>Containers</span>
+                    <strong id="container-count">—</strong>
+                </article>
+                <article>
+                    <span>Observations</span>
+                    <strong id="observation-count">—</strong>
+                </article>
+                <article>
+                    <span>Weight baselines ready</span>
+                    <strong id="baseline-count">—</strong>
+                </article>
+                <article>
+                    <span>Latest activity</span>
+                    <strong id="latest-activity">—</strong>
+                </article>
+            </section>
+
+            <section
                 class="quick-notes"
-                aria-label="Tracker tips"
+                aria-label="Logging rules"
             >
                 <article>
                     <span>01</span>
                     <div>
-                        <strong>Use the label row</strong>
+                        <strong>Save one observation</strong>
                         <p>
-                            IDs match the pots. <code>#1</code> and
-                            <code>#2</code> intentionally represent whole shared
-                            planters.
+                            Fill any combination of fields on that plant's Quick
+                            log row, then tick <code>Save</code>. The old values
+                            remain in append-only History.
                         </p>
                     </div>
                 </article>
                 <article>
                     <span>02</span>
                     <div>
-                        <strong>Make weight comparable</strong>
+                        <strong>Build the weight baseline</strong>
                         <p>
-                            Weigh at roughly the same point in the watering
-                            cycle—ideally just before watering—and add an
-                            exception in Notes.
+                            Mark weights <code>Dry</code>, <code>Wet</code>, or
+                            <code>Routine</code>. Two dry and two wet readings
+                            make the baseline ready; earlier readings remain
+                            provisional.
                         </p>
                     </div>
                 </article>
                 <article>
                     <span>03</span>
                     <div>
-                        <strong>Let the sheet do the math</strong>
+                        <strong>Reset after repotting</strong>
                         <p>
-                            “Days since water” updates from the last-watered
-                            date. It is an observation, not a watering deadline.
+                            Increase <code>Pot setup</code> after changing the
+                            pot, medium, or top dressing. Old readings remain in
+                            history without affecting the new average.
                         </p>
                     </div>
                 </article>
@@ -146,14 +171,13 @@
             >
                 <header>
                     <div>
-                        <p class="eyebrow">Published read-only view</p>
-                        <h2 id="sheet-title">Garden Plant Tracker</h2>
+                        <p class="eyebrow">Published read-only dashboard</p>
+                        <h2 id="sheet-title">Current plant status</h2>
                         <p
                             id="sheet-status"
                             aria-live="polite"
                         >
-                            Google republishes saved changes automatically. Use
-                            Refresh view if the embed is briefly behind.
+                            Loading the latest Google Sheets observations…
                         </p>
                     </div>
                     <button
@@ -161,22 +185,94 @@
                         id="refresh-sheet"
                         type="button"
                     >
-                        Refresh view
+                        Refresh data
                     </button>
                 </header>
-                <div class="sheet-frame-wrap">
-                    <iframe
-                        id="tracker-frame"
-                        title="Published Garden Plant Tracker spreadsheet"
-                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSlR11VjUWkf8xO7HGvYwpZmxZohxV-wpSTYQRfgLw0UIpXBXJ8O0Rik-ySoNWY-EyqWdQ2kzdXtgZR/pubhtml?widget=true&amp;headers=false"
-                        loading="eager"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                    ></iframe>
+
+                <div class="tracker-controls">
+                    <label>
+                        <span>Find a plant</span>
+                        <input
+                            id="tracker-search"
+                            type="search"
+                            placeholder="ID, name, or species"
+                            autocomplete="off"
+                        />
+                    </label>
+                    <label>
+                        <span>Show</span>
+                        <select id="baseline-filter">
+                            <option value="all">All containers</option>
+                            <option value="needs-baseline">
+                                Needs a weight baseline
+                            </option>
+                            <option value="has-weight">Has a weight</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Sort</span>
+                        <select id="tracker-sort">
+                            <option value="label">Tracker order</option>
+                            <option value="water">Longest since water</option>
+                            <option value="activity">Newest activity</option>
+                            <option value="name">Plant name</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div
+                    class="water-legend"
+                    aria-label="Days since watering color scale"
+                >
+                    <span><i class="recent"></i>0 days</span>
+                    <span><i class="middle"></i>14 days</span>
+                    <span><i class="longest"></i>28+ days</span>
+                    <small>Elapsed time only—not a watering deadline.</small>
+                </div>
+
+                <div
+                    class="sheet-frame-wrap"
+                    id="tracker-table-wrap"
+                    tabindex="0"
+                    aria-label="Scrollable plant tracker"
+                >
+                    <table id="tracker-table">
+                        <caption>
+                            Current collection values derived from the Google
+                            Sheets observation history
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Label</th>
+                                <th scope="col">Plant</th>
+                                <th scope="col">Last watered</th>
+                                <th scope="col">Days</th>
+                                <th scope="col">Weight</th>
+                                <th scope="col">Weight trend</th>
+                                <th scope="col">Height</th>
+                                <th scope="col">Width</th>
+                                <th scope="col">Condition</th>
+                                <th scope="col">Last activity</th>
+                                <th scope="col">History</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td
+                                    class="loading-cell"
+                                    colspan="11"
+                                >
+                                    Loading published observations…
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <p class="mobile-note">
-                    On a phone, swipe inside the sheet to move across columns.
-                    The full-screen link is roomier; the Google Sheets app is
-                    best for editing.
+                    On a phone, swipe inside the table to see every column. The
+                    pot label stays pinned on the left; tap it to open that
+                    plant’s complete history. Permanent P-numbers keep those
+                    URLs stable after label changes.
                 </p>
             </section>
         </main>
@@ -190,44 +286,9 @@
             </span>
         </footer>
 
-        <script>
-            (() => {
-                const root = document.documentElement;
-                const themeButton = document.getElementById("theme-toggle");
-                const refreshButton = document.getElementById("refresh-sheet");
-                const frame = document.getElementById("tracker-frame");
-                const status = document.getElementById("sheet-status");
-                const frameUrl = frame.src;
-
-                function updateThemeButton() {
-                    const dark = root.dataset.theme === "dark";
-                    themeButton.textContent = dark ? "Light mode" : "Dark mode";
-                    themeButton.setAttribute("aria-pressed", String(dark));
-                }
-
-                themeButton.addEventListener("click", () => {
-                    root.dataset.theme =
-                        root.dataset.theme === "dark" ? "light" : "dark";
-                    localStorage.setItem(
-                        "gardening-site-theme",
-                        root.dataset.theme
-                    );
-                    updateThemeButton();
-                });
-
-                refreshButton.addEventListener("click", () => {
-                    status.textContent = "Refreshing the published sheet…";
-                    const separator = frameUrl.includes("?") ? "&" : "?";
-                    frame.src = `${frameUrl}${separator}refresh=${Date.now()}`;
-                });
-
-                frame.addEventListener("load", () => {
-                    status.textContent =
-                        "Published view loaded. Google republishes saved sheet changes automatically.";
-                });
-
-                updateThemeButton();
-            })();
-        </script>
+        <script
+            type="module"
+            src="./plant-tracker.js"
+        ></script>
     </body>
 </html>

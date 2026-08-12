@@ -1,14 +1,30 @@
 # Grow-spot diagrams
 
-Last updated: 2026-08-10
+Last updated: 2026-08-11
 
-Open [plant-tracker.html](./plant-tracker.html) for the live, read-only embedded
-Google Sheet and its Google-account edit link. The sheet has one row for each
-of the 22 physical pots or shared planters, not one row for each profile: `#1`
-and `#2` are weighed and watered as whole containers. Google Sheets is the
-single editable source of truth; this repository does not keep a second
-tracker-data copy. Its automatic "Days since water" result is observational
-rather than a watering deadline.
+Open [plant-tracker.html](./plant-tracker.html) for the live collection
+dashboard backed by Google Sheets. The finished workbook includes Dashboard,
+Insights, Baselines, a combined History, and one native sheet page for each
+container. Its permanent-row `Quick log` accepts watering, weight, height,
+width, and condition independently. The
+[companion Apps Script logger](../../scripts/google-sheets/README.md) appends
+event-specific rows to `History`, so entering a new weight never destroys the
+prior weight. Google Sheets remains the single editable source of truth.
+
+Each of the 22 physical pots or shared planters has a permanent internal ID from
+`P01` through `P22` and links to a stable
+[history URL](./plant-history.html?id=P01) with independent last-checked dates,
+searchable and exportable history, dry/wet statistics, weight and growth
+changes, watering-interval calculations, responsive SVG trend charts, and
+range controls. Current pot labels such as `A1` and `#2` remain visible, and an
+old label-style history URL is accepted as an alias while that label is current.
+The `Baselines` tab and history page use only the active pot setup for dry and
+wet pot-weight averages; they do not invent starting weights.
+
+The tracker does not record water volume. A `Water` event means the container
+was soaked until runoff. `#1` and `#2` are still weighed and watered as whole
+containers. “Days since water” and the estimated remaining-water percentage
+are observations, not watering deadlines.
 
 Open [indoor-acclimation-calendar.html](./indoor-acclimation-calendar.html) for
 the browser/print calendar covering the July move-in, August light ramp,
@@ -42,9 +58,9 @@ The page reflects the current working arrangement:
 - the purifier and dehumidifier start beyond the nominal bay on the open-room
   side, outside the fixture footprint and watering area.
 
-The new cactus mapping is `E1` dwarf old man, `E2` Chamaelobivia, `E3`
-black-centered pincushion, `F1` rose pincushion, `F2` boobie cactus, and `F3`
-yellow tower. The numbered mapping is `#1` shared rehab cactus planter, `#2`
+The new cactus mapping is `E1` dwarf old man, `E2` Chamaelobivia, `E3` woolly
+nipple cactus, `F1` hook-spined pincushion, `F2` boobie cactus, and `F3` yellow
+tower. The numbered mapping is `#1` shared rehab cactus planter, `#2`
 shared succulent planter, `#3` money tree, and `#4` Kiwi aeonium. The former
 `A4-B4` and `C4-D4` planter IDs remain historical cross-references only.
 
@@ -63,5 +79,6 @@ positions before their riser or marker assignments are final.
 The deployed URLs are:
 
 - [Plant tracker](https://nick2bad4u.github.io/Gardening/layouts/plant-tracker.html)
+- [Example individual history page](https://nick2bad4u.github.io/Gardening/layouts/plant-history.html?id=P01)
 - [Grow-spot layout](https://nick2bad4u.github.io/Gardening/layouts/grow-spot-layout.html)
 - [Indoor acclimation calendar](https://nick2bad4u.github.io/Gardening/layouts/indoor-acclimation-calendar.html)

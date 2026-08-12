@@ -928,6 +928,7 @@ storybook/stories/__screenshots__/
 assets/prettier-plugin-multiline-arrays/
 codeql-agent-results/
 gha-creds-*.json
+/output/
 reports/
 TODO.md
 temp/

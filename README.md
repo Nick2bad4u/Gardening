@@ -6,9 +6,10 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
 
 ## Current notes
 
-- [Live plant tracker](docs/layouts/plant-tracker.html) — embedded Google Sheet
-  with one row per physical pot or shared planter, automatic days-since-water,
-  measurements, notes, filters, and direct edit/full-screen links
+- [Live plant tracker](docs/layouts/plant-tracker.html) — a mobile-friendly view
+  of the Google Sheets log with current status, search and filters, stable
+  per-plant history URLs, dry/wet baselines, calculations, charts, and direct
+  links back to the editable workbook
 - [Browser plant field guide](docs/plant-booklet/) — magazine-style cover,
   searchable contents, one deep page per plant, licensed reference galleries
   for all 28 records, collection and nursery-label photos where archived,

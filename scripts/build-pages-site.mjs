@@ -149,14 +149,31 @@ async function main() {
         publishLayout("grow-spot-layout.html"),
         publishLayout("indoor-acclimation-calendar.html"),
         publishLayout("plant-tracker.html"),
+        publishLayout("plant-history.html"),
         copyFile(
             path.join(layoutsDirectory, "plant-tracker.css"),
             path.join(outputDirectory, "layouts", "plant-tracker.css")
         ),
+        copyFile(
+            path.join(layoutsDirectory, "plant-tracker-data.js"),
+            path.join(outputDirectory, "layouts", "plant-tracker-data.js")
+        ),
+        copyFile(
+            path.join(layoutsDirectory, "plant-tracker.js"),
+            path.join(outputDirectory, "layouts", "plant-tracker.js")
+        ),
+        copyFile(
+            path.join(layoutsDirectory, "plant-history.js"),
+            path.join(outputDirectory, "layouts", "plant-history.js")
+        ),
+        copyFile(
+            path.join(layoutsDirectory, "plant-charts.js"),
+            path.join(outputDirectory, "layouts", "plant-charts.js")
+        ),
     ]);
 
     console.log(
-        `Built GitHub Pages artifact with the field guide, three collection tools, and ${assetReferences.size} images (${(assetBytes / 1024 / 1024).toFixed(1)} MiB).`
+        `Built GitHub Pages artifact with the field guide, four collection tools, and ${assetReferences.size} images (${(assetBytes / 1024 / 1024).toFixed(1)} MiB).`
     );
 }
 
