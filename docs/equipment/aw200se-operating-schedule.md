@@ -414,11 +414,11 @@ The E/F and numbered mappings are confirmed, but these rows remain provisional
 positions—not a claim that the current pots are still arranged this way.
 Looking from the room toward the window:
 
-| Physical row   | Provisional occupants                                                  | Starting treatment                                                                     |
-| -------------- | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| 1: window side | `E1` dwarf old man; `E2` Chamaelobivia; `E3` black-centered pincushion | Outer-to-middle cactus zone; all direct on wood until measured.                        |
-| 2: center      | `F3` yellow tower; `F2` boobie cactus; `F1` rose pincushion            | Outer-to-middle cactus zone; all direct on wood until measured.                        |
-| 3: room side   | `#4` Succulent-05 Kiwi aeonium; `#3` Houseplant-01 money tree          | Lower-light edge; money tree nearest window/periphery and outside the fixture hotspot. |
+| Physical row   | Provisional occupants                                              | Starting treatment                                                                     |
+| -------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| 1: window side | `E1` dwarf old man; `E2` Chamaelobivia; `E3` woolly nipple cactus  | Outer-to-middle cactus zone; all direct on wood until measured.                        |
+| 2: center      | `F3` yellow tower; `F2` boobie cactus; `F1` hook-spined pincushion | Outer-to-middle cactus zone; all direct on wood until measured.                        |
+| 3: room side   | `#4` Succulent-05 Kiwi aeonium; `#3` Houseplant-01 money tree      | Lower-light edge; money tree nearest window/periphery and outside the fixture hotspot. |
 
 The six new cacti are mostly in 4 in pots; the boobie cactus is in a small 3 in
 pot and the Chamaelobivia is in a small 4 in pot. The Kiwi aeonium is in a 5 in

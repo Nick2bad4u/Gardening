@@ -18,6 +18,11 @@
 The golden-spined young globe becomes a tall column with age. Mature plants
 can produce repeated bursts of pale-yellow flowers around the crown.
 
+The 2026-08-11 close photographs are consistent with this identification: the
+plant has numerous narrow ribs, fine golden radial spines, longer flexible
+golden central spines, and denser golden growth at the crown. No conflicting
+character was visible, so the high-confidence working ID is unchanged.
+
 ## Origin, form, and publication
 
 The species is native to Rio Grande do Sul in southern Brazil. It was first

@@ -43,14 +43,14 @@ publication years, warnings, and orientation instructions.
 The physical `E1`–`E3` and `F1`–`F3` mappings were copied from the pots on
 2026-08-10.
 
-| Inventory ID | Label ID | Profile                                                                                                                         | Identification status                |
-| ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
-| Cactus-01    | `E1`     | [Dwarf old man cactus (_Espostoa melanostele_ subsp. _nana_)](./cacti/espostoa-melanostele-nana.md)                             | Probable; _E. lanata_ is alternative |
-| Cactus-02    | `E2`     | [Chamaelobivia / peanut cactus hybrid (_Echinopsis_ hybrid)](./cacti/chamaelobivia-hybrid.md)                                   | Secure at hybrid-group level         |
-| Cactus-03    | `E3`     | [Black-centered pincushion (_Mammillaria melanocentra_)](./cacti/mammillaria-melanocentra.md)                                   | Probable; _M. mystax_ is alternative |
-| Cactus-04    | `F3`     | [Yellow tower cactus (_Parodia leninghausii_)](./cacti/parodia-leninghausii.md)                                                 | High                                 |
-| Cactus-05    | `F2`     | [Boobie cactus (_Myrtillocactus geometrizans_ 'Fukurokuryuzinboku')](./cacti/myrtillocactus-geometrizans-fukurokuryuzinboku.md) | Very high                            |
-| Cactus-06    | `F1`     | [Rose pincushion (_Mammillaria zeilmanniana_)](./cacti/mammillaria-zeilmanniana.md)                                             | High                                 |
+| Inventory ID | Label ID | Profile                                                                                                                         | Identification status                                     |
+| ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| Cactus-01    | `E1`     | [Dwarf old man cactus (_Espostoa melanostele_ subsp. _nana_)](./cacti/espostoa-melanostele-nana.md)                             | Probable; _E. lanata_ is alternative                      |
+| Cactus-02    | `E2`     | [Chamaelobivia / peanut cactus hybrid (_Echinopsis_ hybrid)](./cacti/chamaelobivia-hybrid.md)                                   | Secure at hybrid-group level                              |
+| Cactus-03    | `E3`     | [Woolly nipple cactus (_Mammillaria mammillaris_)](./cacti/mammillaria-mammillaris.md)                                          | Probable; revised from _M._ cf. _melanocentra_            |
+| Cactus-04    | `F3`     | [Yellow tower cactus (_Parodia leninghausii_)](./cacti/parodia-leninghausii.md)                                                 | High                                                      |
+| Cactus-05    | `F2`     | [Boobie cactus (_Myrtillocactus geometrizans_ 'Fukurokuryuzinboku')](./cacti/myrtillocactus-geometrizans-fukurokuryuzinboku.md) | Very high                                                 |
+| Cactus-06    | `F1`     | [Hook-spined pincushion (_Mammillaria_ cf. _rekoi_)](./cacti/mammillaria-rekoi.md)                                              | Probable; _M. crinita_ complex or hybrid remains possible |
 
 ## Succulents
 

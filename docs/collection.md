@@ -113,16 +113,17 @@ These six cacti came from
 permanent `E1`–`E3` and `F1`–`F3` mappings were recorded from the physical pots
 on 2026-08-10.
 
-| Inventory ID | Label ID | Working identification                                                                                                        | Common name                          | Confidence         | Pot and notes                                                               |
-| ------------ | -------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ------------------ | --------------------------------------------------------------------------- |
-| Cactus-01    | `E1`     | [_Espostoa melanostele_ subsp. _nana_](./plants/cacti/espostoa-melanostele-nana.md), with _E. lanata_ as the main alternative | Dwarf old man cactus                 | Probable           | 4-inch pot; compact woolly column with hidden spines                        |
-| Cactus-02    | `E2`     | [_Echinopsis_ hybrid, Chamaelobivia Group](./plants/cacti/chamaelobivia-hybrid.md)                                            | Chamaelobivia / peanut cactus hybrid | Secure group level | Small 4-inch pot; exact cultivar requires flowers or a nursery label        |
-| Cactus-03    | `E3`     | [_Mammillaria_ cf. _melanocentra_](./plants/cacti/mammillaria-melanocentra.md), with _M. mystax_ as the principal alternative | Black-centered pincushion cactus     | Probable           | 4-inch pot; the red projection reported with the ID is fruit                |
-| Cactus-04    | `F3`     | [_Parodia leninghausii_](./plants/cacti/parodia-leninghausii.md)                                                              | Yellow tower / golden ball cactus    | High               | 4-inch pot; corrects the supplied spelling “lenninghausii”                  |
-| Cactus-05    | `F2`     | [_Myrtillocactus geometrizans_ 'Fukurokuryuzinboku'](./plants/cacti/myrtillocactus-geometrizans-fukurokuryuzinboku.md)        | Boobie / breast cactus               | Very high          | Small 3-inch pot; rounded monstrose lobes are normal                        |
-| Cactus-06    | `F1`     | [_Mammillaria zeilmanniana_](./plants/cacti/mammillaria-zeilmanniana.md)                                                      | Rose pincushion cactus               | High               | 4-inch pot; white radial spines and reddish central spines include one hook |
+| Inventory ID | Label ID | Working identification                                                                                                        | Common name                          | Confidence         | Pot and notes                                                                   |
+| ------------ | -------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ------------------ | ------------------------------------------------------------------------------- |
+| Cactus-01    | `E1`     | [_Espostoa melanostele_ subsp. _nana_](./plants/cacti/espostoa-melanostele-nana.md), with _E. lanata_ as the main alternative | Dwarf old man cactus                 | Probable           | 4-inch pot; compact woolly column with hidden spines                            |
+| Cactus-02    | `E2`     | [_Echinopsis_ hybrid, Chamaelobivia Group](./plants/cacti/chamaelobivia-hybrid.md)                                            | Chamaelobivia / peanut cactus hybrid | Secure group level | Small 4-inch pot; exact cultivar requires flowers or a nursery label            |
+| Cactus-03    | `E3`     | [_Mammillaria mammillaris_](./plants/cacti/mammillaria-mammillaris.md); formerly _M._ cf. _melanocentra_                      | Woolly nipple cactus                 | Probable           | 4-inch pot; tiny cream flowers and a red club-shaped fruit support the revision |
+| Cactus-04    | `F3`     | [_Parodia leninghausii_](./plants/cacti/parodia-leninghausii.md)                                                              | Yellow tower / golden ball cactus    | High               | 4-inch pot; corrects the supplied spelling “lenninghausii”                      |
+| Cactus-05    | `F2`     | [_Myrtillocactus geometrizans_ 'Fukurokuryuzinboku'](./plants/cacti/myrtillocactus-geometrizans-fukurokuryuzinboku.md)        | Boobie / breast cactus               | Very high          | Small 3-inch pot; rounded monstrose lobes are normal                            |
+| Cactus-06    | `F1`     | [_Mammillaria_ cf. _rekoi_](./plants/cacti/mammillaria-rekoi.md), with the _M. crinita_ complex or a hybrid as alternatives   | Hook-spined pincushion cactus        | Probable           | 4-inch pot; fine radial spines and hooked lower centrals need flower follow-up  |
 
-Only Cactus-01 and Cactus-03 keep `PROB.` on their eventual permanent labels.
+Only Cactus-01, Cactus-03, and Cactus-06 keep `PROB.` on their eventual
+permanent labels.
 The Chamaelobivia cultivar is unknown, but the label identifies the secure
 hybrid group rather than claiming a cultivar.
 
@@ -145,7 +146,8 @@ The most useful future evidence would be:
 - flowers from Succulent-01 and Succulent-03;
 - a clear close-up of the ribs, areoles, and base of Rehab-01;
 - mature areole and spine photographs for Cactus-01;
-- flowers, fruit, and close tubercle photographs for Cactus-03;
+- an open flower beside a ruler for Cactus-03;
+- flowers, mature fruit, and mature-areole close-ups for Cactus-06;
 - flowers or a nursery cultivar label for Cactus-02;
 - the original Lowe's tag and diagnostic photographs for Houseplant-01; and
 - original nursery tags or receipts for the probable IDs.

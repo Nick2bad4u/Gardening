@@ -177,36 +177,36 @@ native exposure, growth form, variegation, broad succulent research, and the
 need to avoid stretching under indoor light. Most exact taxa have never been
 tested in controlled DLI trials.
 
-| Inventory ID  | Label ID | Plant                                              | Working DLI | 12 h average PPFD | Placement cue                                                               |
-| ------------- | -------- | -------------------------------------------------- | ----------: | ----------------: | --------------------------------------------------------------------------- |
-| Starter-01    | `B2`     | _Oreocereus trollii_                               |       12–20 |           280–460 | High light                                                                  |
-| Starter-02    | `B1`     | _Stenocactus phyllacanthus_                        |       10–18 |           230–420 | Bright middle/high                                                          |
-| Starter-03    | `C2`     | _Echinocereus rigidissimus_ subsp. _rubispinus_    |       14–24 |           325–555 | High light after acclimation                                                |
-| Starter-04    | `A3`     | _Nyctocereus serpentinus_                          |       10–18 |           230–420 | Bright middle; allow support                                                |
-| Starter-05    | `A2`     | _Mammillaria plumosa_                              |       10–17 |           230–395 | Bright; avoid a wet crown                                                   |
-| Starter-06    | `D2`     | _Echinopsis subdenudata_                           |       10–18 |           230–420 | Bright middle                                                               |
-| Starter-07    | `A1`     | Variegated _Gymnocalycium mihanovichii_            |        6–12 |           140–280 | Edge/gentler zone                                                           |
-| Starter-08    | `C1`     | _Gymnocalycium saglionis_                          |       10–18 |           230–420 | Bright middle                                                               |
-| Starter-09    | `B3`     | 'Indigo Wave'                                      |       12–22 |           280–510 | Middle/high; watch raised ridges                                            |
-| Starter-10    | `D3`     | 'Ming Thing'                                       |       10–18 |           230–420 | Middle; uneven surface                                                      |
-| Starter-11    | `D1`     | _Euphorbia obesa_-type hybrid                      |        8–15 |           185–350 | Middle/edge                                                                 |
-| Starter-12    | `C3`     | _Astrophytum ornatum_                              |       12–22 |           280–510 | High light                                                                  |
-| Cactus-01     | `E1`     | Probable _Espostoa melanostele_ subsp. _nana_      |       12–20 |           280–460 | Bright middle/high after edge acclimation                                   |
-| Cactus-02     | `E2`     | _Echinopsis_ hybrid, Chamaelobivia Group           |       10–18 |           230–420 | Bright middle; inspect dense clump                                          |
-| Cactus-03     | `E3`     | Probable _Mammillaria melanocentra_                |       10–18 |           230–420 | Bright middle/high after edge acclimation                                   |
-| Cactus-04     | `F3`     | _Parodia leninghausii_                             |       12–22 |           280–510 | High light after acclimation; watch growing column                          |
-| Cactus-05     | `F2`     | _Myrtillocactus geometrizans_ 'Fukurokuryuzinboku' |       10–18 |           230–420 | Bright middle; keep waxy folds off hotspot                                  |
-| Cactus-06     | `F1`     | _Mammillaria zeilmanniana_                         |       10–18 |           230–420 | Bright middle                                                               |
-| Succulent-01  | `#2`     | Probable _Echeveria pulidonis_                     |       10–18 |           230–420 | Brightest side of planter                                                   |
-| Succulent-02  | `#2`     | _Portulacaria afra_                                |        8–17 |           185–395 | Middle; lower if golden                                                     |
-| Succulent-03  | `#2`     | Probable _Kalanchoe bracteata_                     |        8–16 |           185–370 | Middle                                                                      |
-| Succulent-04  | `#2`     | _Kalanchoe orgyalis_                               |        8–17 |           185–395 | Middle                                                                      |
-| Succulent-05  | `#4`     | _Aeonium haworthii_ 'Dream Color'                  |        8–15 |           185–350 | Outer/room-side zone; protect variegated rosettes                           |
-| Rehab-01      | `#1`     | Variegated _Pilosocereus pachycladus_              |       12–22 |           280–510 | High light, pale side off hotspot                                           |
-| Rehab-02      | `#1`     | _Cleistocactus colademononis_                      |       10–18 |           230–420 | Bright middle                                                               |
-| Rehab-03      | `#1`     | Probable _Echinopsis spachiana_                    |       12–22 |           280–510 | High light                                                                  |
-| Rehab-04      | —        | Probable _Mammillaria bombycina_                   |           — |                 — | Removed 2026-07-24; historical record only, with no viable salvage retained |
-| Houseplant-01 | `#3`     | _Pachira glabra_                                   |        5–12 |           115–280 | Bright window/periphery; not in cactus hotspot                              |
+| Inventory ID  | Label ID | Plant                                              | Working DLI | 12 h average PPFD | Placement cue                                                                |
+| ------------- | -------- | -------------------------------------------------- | ----------: | ----------------: | ---------------------------------------------------------------------------- |
+| Starter-01    | `B2`     | _Oreocereus trollii_                               |       12–20 |           280–460 | High light                                                                   |
+| Starter-02    | `B1`     | _Stenocactus phyllacanthus_                        |       10–18 |           230–420 | Bright middle/high                                                           |
+| Starter-03    | `C2`     | _Echinocereus rigidissimus_ subsp. _rubispinus_    |       14–24 |           325–555 | High light after acclimation                                                 |
+| Starter-04    | `A3`     | _Nyctocereus serpentinus_                          |       10–18 |           230–420 | Bright middle; allow support                                                 |
+| Starter-05    | `A2`     | _Mammillaria plumosa_                              |       10–17 |           230–395 | Bright; avoid a wet crown                                                    |
+| Starter-06    | `D2`     | _Echinopsis subdenudata_                           |       10–18 |           230–420 | Bright middle                                                                |
+| Starter-07    | `A1`     | Variegated _Gymnocalycium mihanovichii_            |        6–12 |           140–280 | Edge/gentler zone                                                            |
+| Starter-08    | `C1`     | _Gymnocalycium saglionis_                          |       10–18 |           230–420 | Bright middle                                                                |
+| Starter-09    | `B3`     | 'Indigo Wave'                                      |       12–22 |           280–510 | Middle/high; watch raised ridges                                             |
+| Starter-10    | `D3`     | 'Ming Thing'                                       |       10–18 |           230–420 | Middle; uneven surface                                                       |
+| Starter-11    | `D1`     | _Euphorbia obesa_-type hybrid                      |        8–15 |           185–350 | Middle/edge                                                                  |
+| Starter-12    | `C3`     | _Astrophytum ornatum_                              |       12–22 |           280–510 | High light                                                                   |
+| Cactus-01     | `E1`     | Probable _Espostoa melanostele_ subsp. _nana_      |       12–20 |           280–460 | Bright middle/high after edge acclimation                                    |
+| Cactus-02     | `E2`     | _Echinopsis_ hybrid, Chamaelobivia Group           |       10–18 |           230–420 | Bright middle; inspect dense clump                                           |
+| Cactus-03     | `E3`     | Probable _Mammillaria mammillaris_                 |       10–18 |           230–420 | Bright middle; move outward if the body develops persistent red stress color |
+| Cactus-04     | `F3`     | _Parodia leninghausii_                             |       12–22 |           280–510 | High light after acclimation; watch growing column                           |
+| Cactus-05     | `F2`     | _Myrtillocactus geometrizans_ 'Fukurokuryuzinboku' |       10–18 |           230–420 | Bright middle; keep waxy folds off hotspot                                   |
+| Cactus-06     | `F1`     | Probable _Mammillaria_ cf. _rekoi_                 |       10–18 |           230–420 | Bright middle; use compact new growth as the response signal                 |
+| Succulent-01  | `#2`     | Probable _Echeveria pulidonis_                     |       10–18 |           230–420 | Brightest side of planter                                                    |
+| Succulent-02  | `#2`     | _Portulacaria afra_                                |        8–17 |           185–395 | Middle; lower if golden                                                      |
+| Succulent-03  | `#2`     | Probable _Kalanchoe bracteata_                     |        8–16 |           185–370 | Middle                                                                       |
+| Succulent-04  | `#2`     | _Kalanchoe orgyalis_                               |        8–17 |           185–395 | Middle                                                                       |
+| Succulent-05  | `#4`     | _Aeonium haworthii_ 'Dream Color'                  |        8–15 |           185–350 | Outer/room-side zone; protect variegated rosettes                            |
+| Rehab-01      | `#1`     | Variegated _Pilosocereus pachycladus_              |       12–22 |           280–510 | High light, pale side off hotspot                                            |
+| Rehab-02      | `#1`     | _Cleistocactus colademononis_                      |       10–18 |           230–420 | Bright middle                                                                |
+| Rehab-03      | `#1`     | Probable _Echinopsis spachiana_                    |       12–22 |           280–510 | High light                                                                   |
+| Rehab-04      | —        | Probable _Mammillaria bombycina_                   |           — |                 — | Removed 2026-07-24; historical record only, with no viable salvage retained  |
+| Houseplant-01 | `#3`     | _Pachira glabra_                                   |        5–12 |           115–280 | Bright window/periphery; not in cactus hotspot                               |
 
 Research support is strongest for the general direction, not every row. A
 recent _Echeveria_ cultivar experiment found 12.8 DLI produced more compact

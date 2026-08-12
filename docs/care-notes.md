@@ -137,9 +137,9 @@ patches, and move the plant farther from the fixture before raising the whole
 light. Its tall canopy must not become the reference used to set cactus light
 clearance.
 
-The new cactus mapping is `E1` dwarf old man, `E2` Chamaelobivia, `E3`
-black-centered pincushion, `F1` rose pincushion, `F2` boobie cactus, and `F3`
-yellow tower. The numbered mapping is `#1` shared rehab cactus planter, `#2`
+The new cactus mapping is `E1` dwarf old man, `E2` Chamaelobivia, `E3` woolly
+nipple cactus, `F1` hook-spined pincushion, `F2` boobie cactus, and `F3` yellow
+tower. The numbered mapping is `#1` shared rehab cactus planter, `#2`
 shared succulent planter, `#3` money tree, and `#4` Kiwi aeonium. These are
 plant or planter IDs, not provisional table-position coordinates.
 

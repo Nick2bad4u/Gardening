@@ -170,13 +170,13 @@ $plantCatalog = @(
     [pscustomobject]@{
         Id = 'Cactus-03'
         LabelId = 'E3'
-        Slug = 'mammillaria-melanocentra'
-        ScientificName = 'Mammillaria melanocentra'
-        CommonName = 'Black-centered pincushion cactus'
-        CommonsCategory = 'Mammillaria melanocentra'
-        CommonsSearch = 'Mammillaria melanocentra'
-        INaturalistName = 'Mammillaria melanocentra'
-        ScopeNote = 'Species-reference photographs; the collection ID is probable and M. mystax remains the main alternative.'
+        Slug = 'mammillaria-mammillaris'
+        ScientificName = 'Mammillaria mammillaris'
+        CommonName = 'Woolly nipple cactus'
+        CommonsCategory = 'Mammillaria mammillaris'
+        CommonsSearch = 'Mammillaria mammillaris'
+        INaturalistName = 'Mammillaria mammillaris'
+        ScopeNote = 'Species-reference photographs; the collection ID is probable and replaces the former M. cf. melanocentra record after review of close photographs.'
     },
     [pscustomobject]@{
         Id = 'Cactus-04'
@@ -203,13 +203,13 @@ $plantCatalog = @(
     [pscustomobject]@{
         Id = 'Cactus-06'
         LabelId = 'F1'
-        Slug = 'mammillaria-zeilmanniana'
-        ScientificName = 'Mammillaria zeilmanniana'
-        CommonName = 'Rose pincushion cactus'
-        CommonsCategory = 'Mammillaria zeilmanniana'
-        CommonsSearch = 'Mammillaria zeilmanniana'
-        INaturalistName = 'Mammillaria zeilmanniana'
-        ScopeNote = 'Species-reference photographs.'
+        Slug = 'mammillaria-rekoi'
+        ScientificName = 'Mammillaria rekoi'
+        CommonName = 'Hook-spined pincushion cactus'
+        CommonsCategory = 'Mammillaria rekoi'
+        CommonsSearch = 'Mammillaria rekoi'
+        INaturalistName = 'Mammillaria rekoi'
+        ScopeNote = 'Species-reference photographs; the collection ID remains probable, with the M. crinita complex or a horticultural hybrid as alternatives.'
     },
     [pscustomobject]@{
         Id = 'Succulent-01'
@@ -357,12 +357,8 @@ $subjectOverrides = @{
     'https://commons.wikimedia.org/wiki/File:Echinopsis_chamaecereus.2006-06-09.2.uellue.jpg' = 'flower'
     'https://commons.wikimedia.org/wiki/File:Echilopsis_chomaecereus-1-sunny_brook-yercaud-salem-India.jpg' = 'habit'
     'https://commons.wikimedia.org/wiki/File:Echilopsis_chomaecereus-2-sunny_brook-yercaud-salem-India.jpg' = 'habit'
-    'https://commons.wikimedia.org/wiki/File:Mammillaria_melanocentra_pm_1.JPG' = 'flower'
-    'https://commons.wikimedia.org/wiki/File:Mammillaria_melanocentra_(8717382905).jpg' = 'flower'
-    'https://commons.wikimedia.org/wiki/File:Mammillaria_melanocentra_(3422604664).jpg' = 'flower'
     'https://commons.wikimedia.org/wiki/File:Parodia_leninghausii_and_Gasteria_batesiana,_Huntington.jpg' = 'habit'
     'https://commons.wikimedia.org/wiki/File:Mercado_(Dolores_Hidalgo,_Guanajuato)_I.jpg' = 'fruit-seed'
-    'https://commons.wikimedia.org/wiki/File:Mammillaria-zeilmanniana-20080330.JPG' = 'flower'
     'https://commons.wikimedia.org/wiki/File:Aeonium_haworthii_1w.jpg' = 'flower'
     'https://commons.wikimedia.org/wiki/File:Aeonium_haworthii_2w.jpg' = 'flower'
     'https://commons.wikimedia.org/wiki/File:Aeonium_haworthii_3w.jpg' = 'flower'
@@ -871,13 +867,20 @@ foreach ($record in $existingRecords) {
     $catalogPlant = $plantCatalog |
         Where-Object { $_.Slug -eq $record.plant_slug } |
         Select-Object -First 1
-    if ($null -ne $catalogPlant) {
-        $record.plant_id = $catalogPlant.Id
-        $record.plant_slug = $catalogPlant.Slug
-        $record.scientific_name = $catalogPlant.ScientificName
-        $record.common_name = $catalogPlant.CommonName
-        $record.scope_note = $catalogPlant.ScopeNote
+    if ($null -eq $catalogPlant) {
+        continue
     }
+
+    $recordPath = Join-Path $repoRoot ([string] $record.file).Replace('/', '\')
+    if (-not (Test-Path -LiteralPath $recordPath -PathType Leaf)) {
+        continue
+    }
+
+    $record.plant_id = $catalogPlant.Id
+    $record.plant_slug = $catalogPlant.Slug
+    $record.scientific_name = $catalogPlant.ScientificName
+    $record.common_name = $catalogPlant.CommonName
+    $record.scope_note = $catalogPlant.ScopeNote
     if ($subjectOverrides.ContainsKey([string] $record.source_url)) {
         $record.subject = $subjectOverrides[[string] $record.source_url]
     }
