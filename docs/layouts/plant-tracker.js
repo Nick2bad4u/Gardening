@@ -81,6 +81,15 @@ function renderRow(plant) {
     }
     row.append(daysCell);
 
+    const dryTimeCell = element(
+        "td",
+        plant["Est. time to dry"] || "Collecting",
+        "dry-time-cell"
+    );
+    dryTimeCell.title =
+        "Workbook estimate from established wet-to-dry weight cycles; use it as an observation, not a watering deadline.";
+    row.append(dryTimeCell);
+
     const weightCell = element("td");
     weightCell.append(
         datedValue(
@@ -221,7 +230,7 @@ function renderTable() {
             "No plants match the current search and filter.",
             "loading-cell"
         );
-        cell.colSpan = 11;
+        cell.colSpan = 12;
         row.append(cell);
         tableBody.replaceChildren(row);
         return;
@@ -266,7 +275,7 @@ async function loadData() {
             `Live data unavailable: ${error.message}`,
             "loading-cell error-cell"
         );
-        cell.colSpan = 11;
+        cell.colSpan = 12;
         row.append(cell);
         tableBody.replaceChildren(row);
         status.textContent =

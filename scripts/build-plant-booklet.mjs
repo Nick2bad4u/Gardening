@@ -186,15 +186,36 @@ function photoScore(photo, desiredSubject, isHero = false) {
     return desiredBonus + (subjectScores[photo.subject] ?? 10) + sourceBonus;
 }
 
-function choosePhotos(photos) {
+const heroPhotoFiles = new Map([
+    [
+        "mammillaria-rekoi",
+        "assets/plants/mammillaria-rekoi/commons-19440517-habit.jpg",
+    ],
+]);
+
+function choosePhotos(photos, slug) {
     const remaining = [...photos];
     const choices = [];
+    const heroFile = heroPhotoFiles.get(slug);
 
-    for (const desired of [
-        "habit",
-        "flower",
-        "habitat",
-    ]) {
+    if (heroFile) {
+        const heroIndex = remaining.findIndex(
+            (photo) => photo.file.replaceAll("\\", "/") === heroFile
+        );
+        if (heroIndex === -1) {
+            throw new Error(`Configured hero photo is missing for ${slug}`);
+        }
+        choices.push(remaining.splice(heroIndex, 1)[0]);
+    }
+
+    const desiredSubjects = choices.length
+        ? ["flower", "habitat"]
+        : [
+              "habit",
+              "flower",
+              "habitat",
+          ];
+    for (const desired of desiredSubjects) {
         if (!remaining.length) break;
         remaining.sort(
             (left, right) =>
@@ -412,7 +433,7 @@ async function loadProfiles() {
                 scopeNote:
                     photos[0]?.scope_note ??
                     "Reference photography is not archived yet; this page currently uses the collection record and linked research sources.",
-                selectedPhotos: choosePhotos(photos),
+                selectedPhotos: choosePhotos(photos, profile.slug),
                 allPhotos: [...photos].sort(
                     (left, right) =>
                         (lifecycleOrder.get(left.subject) ?? 99) -
@@ -659,6 +680,7 @@ async function renderBooklet(profiles) {
       <span id="reader-count">The Fenton Collection</span>
     </div>
     <div class="reader-actions">
+      <a class="icon-button" href="https://photos.app.goo.gl/h6AXurNQ7ZLBFsJG6" target="_blank" rel="noreferrer"><span aria-hidden="true">▧</span><span>Photos</span></a>
       <button class="icon-button" id="theme-toggle" type="button" aria-pressed="false"><span aria-hidden="true">◐</span><span>Theme</span></button>
       <button class="icon-button" id="print-booklet" type="button"><span aria-hidden="true">▣</span><span>Print</span></button>
     </div>
@@ -676,6 +698,7 @@ async function renderBooklet(profiles) {
     <nav class="drawer-nav" aria-label="Plant profiles">
       <a class="drawer-special" href="#cover" data-page-link="cover"><span>Cover</span><small>Start of the guide</small></a>
       <a class="drawer-special" href="#contents" data-page-link="contents"><span>Printed contents</span><small>All profiles at a glance</small></a>
+      <a class="drawer-special" href="https://photos.app.goo.gl/h6AXurNQ7ZLBFsJG6" target="_blank" rel="noreferrer"><span>Plant photo album</span><small>Open the shared collection in Google Photos</small></a>
       <a class="drawer-special" href="../layouts/plant-tracker.html"><span>Plant tracker</span><small>Live weights, watering, and measurements</small></a>
       <a class="drawer-special" href="../layouts/grow-spot-layout.html"><span>Grow-spot layout</span><small>Tables, risers, light, fan, and camera</small></a>
       <a class="drawer-special" href="../layouts/indoor-acclimation-calendar.html"><span>Acclimation calendar</span><small>Dated light and airflow schedule</small></a>

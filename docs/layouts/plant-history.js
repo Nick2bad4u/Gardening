@@ -56,7 +56,10 @@ function setCheckedValue(valueSelector, dateSelector, event, field, unit) {
 
 function tableCell(value, className) {
     const cell = document.createElement("td");
-    cell.textContent = value || "—";
+    cell.textContent =
+        value === "" || value === null || value === undefined
+            ? "—"
+            : String(value);
     if (className) cell.className = className;
     return cell;
 }
@@ -100,7 +103,7 @@ function renderHistory() {
                 : "No observations have been logged for this plant yet.",
             "loading-cell"
         );
-        cell.colSpan = 9;
+        cell.colSpan = 11;
         row.append(cell);
         tableBody.replaceChildren(row);
     } else {
@@ -116,6 +119,8 @@ function renderHistory() {
             row.append(tableCell(formatMeasurement(event["Width (cm)"], "cm")));
             row.append(tableCell(event["Condition / soil"], "condition-cell"));
             row.append(tableCell(event.Notes, "notes-cell"));
+            row.append(tableCell(formatDate(event["Water cycle start"])));
+            row.append(tableCell(event["Days after water"]));
             row.append(tableCell(event["Pot setup"] || "1"));
             return row;
         });
@@ -356,6 +361,8 @@ function exportHistory() {
         "Pot setup",
         "Pot label at entry",
         "Plant / planter",
+        "Water cycle start",
+        "Days after water",
     ];
     const rows = sortedEvents(currentPlant.events, false).map((event) =>
         headers.map((header) => csvCell(event[header])).join(",")
@@ -472,7 +479,7 @@ async function loadPlant() {
         setText("#page-status", error.message);
         const row = document.createElement("tr");
         const cell = tableCell(error.message, "loading-cell error-cell");
-        cell.colSpan = 9;
+        cell.colSpan = 11;
         row.append(cell);
         tableBody.replaceChildren(row);
     }

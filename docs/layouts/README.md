@@ -1,6 +1,6 @@
 # Grow-spot diagrams
 
-Last updated: 2026-08-11
+Last updated: 2026-08-12
 
 Open [plant-tracker.html](./plant-tracker.html) for the live collection
 dashboard backed by Google Sheets. The finished workbook includes Dashboard,
@@ -9,14 +9,19 @@ container. Its permanent-row `Quick log` accepts watering, weight, height,
 width, and condition independently. The
 [companion Apps Script logger](../../scripts/google-sheets/README.md) appends
 event-specific rows to `History`, so entering a new weight never destroys the
-prior weight. Google Sheets remains the single editable source of truth.
+prior weight. The
+[mobile entry app](https://script.google.com/macros/s/AKfycbytpdMto4ZAqOf49igDNoGYr-J6fmSRDNJOKP4-dKDFRmM2YkTCKJp3kmhrD4gOJShF/exec)
+provides the phone-first input surface. Google Sheets remains the single
+editable source of truth.
 
 Each of the 22 physical pots or shared planters has a permanent internal ID from
 `P01` through `P22` and links to a stable
 [history URL](./plant-history.html?id=P01) with independent last-checked dates,
 searchable and exportable history, dry/wet statistics, weight and growth
 changes, watering-interval calculations, responsive SVG trend charts, and
-range controls. Current pot labels such as `A1` and `#2` remain visible, and an
+range controls. The public tables also show the workbook's estimated dry time,
+Water-cycle start, and days-after-water fields as observation aids rather than
+care deadlines. Current pot labels such as `A1` and `#2` remain visible, and an
 old label-style history URL is accepted as an alias while that label is current.
 The `Baselines` tab and history page use only the active pot setup for dry and
 wet pot-weight averages; they do not invent starting weights.

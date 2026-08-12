@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "2.0.0",
+    version: "2.1.0",
     quickLogSheet: "Quick log",
     trackerSheet: "Plant tracker",
     historySheet: "History",
@@ -20,7 +20,8 @@ const GARDEN_LOGGER = Object.freeze({
     bulkRow: 3,
     bulkEventColumn: 2,
     bulkApplyColumn: 3,
-    historyColumns: 13,
+    historyInputColumns: 13,
+    currentPotLabelColumn: 15,
 });
 
 const QUICK_LOG_HEADERS = Object.freeze([
@@ -52,6 +53,8 @@ const HISTORY_HEADERS = Object.freeze([
     "Pot setup",
     "Pot label at entry",
     "Plant / planter",
+    "Water cycle start",
+    "Days after water",
 ]);
 
 const TRACKER_HEADERS = Object.freeze([
@@ -60,6 +63,7 @@ const TRACKER_HEADERS = Object.freeze([
     "Scientific name / contents",
     "Last watered",
     "Days since water",
+    "Est. time to dry",
     "Weight (g)",
     "Weight checked",
     "Height (cm)",
@@ -362,12 +366,12 @@ function archiveQuickLogRow_(quickLog, rowNumber) {
         ];
     });
 
-    const targetRow = Math.max(history.getLastRow() + 1, 2);
+    const targetRow = Math.max(lastPopulatedRowInColumn_(history, 1) + 1, 2);
     const targetRange = history.getRange(
         targetRow,
         1,
         rows.length,
-        GARDEN_LOGGER.historyColumns
+        GARDEN_LOGGER.historyInputColumns
     );
     const formatSourceRow = Math.max(
         2,
@@ -378,7 +382,7 @@ function archiveQuickLogRow_(quickLog, rowNumber) {
             formatSourceRow,
             1,
             1,
-            GARDEN_LOGGER.historyColumns
+            GARDEN_LOGGER.historyInputColumns
         );
         source.copyTo(
             targetRange,
@@ -428,7 +432,7 @@ function getPlantSnapshot_(spreadsheet, plantId) {
         throw new Error(`Plant ID ${plantId} is missing from Plant tracker.`);
     return {
         name: cleanText_(row[1]),
-        potLabel: cleanText_(row[13]),
+        potLabel: cleanText_(row[GARDEN_LOGGER.currentPotLabelColumn - 1]),
     };
 }
 
@@ -466,6 +470,19 @@ function lastPlantRow_(quickLog) {
         throw new Error("Quick log has no plant rows.");
     }
     return lastRow;
+}
+
+function lastPopulatedRowInColumn_(sheet, columnNumber) {
+    const lastCandidateRow = sheet.getLastRow();
+    if (lastCandidateRow < 2) return 1;
+
+    const values = sheet
+        .getRange(2, columnNumber, lastCandidateRow - 1, 1)
+        .getDisplayValues();
+    for (let index = values.length - 1; index >= 0; index -= 1) {
+        if (cleanText_(values[index][0])) return index + 2;
+    }
+    return 1;
 }
 
 function uniqueEventNames_(values) {

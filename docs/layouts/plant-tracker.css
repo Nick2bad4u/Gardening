@@ -608,6 +608,12 @@ code {
     white-space: normal !important;
 }
 
+.dry-time-cell {
+    max-width: 12rem;
+    color: var(--muted);
+    white-space: normal !important;
+}
+
 #tracker-table .water-days {
     color: #173127;
     font-weight: 800;

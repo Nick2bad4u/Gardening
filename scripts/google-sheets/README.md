@@ -10,6 +10,11 @@ input row, while every saved event becomes a new append-only row on `History`.
 The Dashboard, Insights, Baselines, individual plant tabs, and public website
 all read from that shared history.
 
+For phone entry, open the
+[mobile entry app](https://script.google.com/macros/s/AKfycbytpdMto4ZAqOf49igDNoGYr-J6fmSRDNJOKP4-dKDFRmM2YkTCKJp3kmhrD4gOJShF/exec).
+It writes to the same workbook and may ask you to sign in to the Google account
+that has access.
+
 Google Sheets formulas cannot preserve a value after an input cell is
 overwritten. The bound Apps Script in
 [`plant-tracker.gs`](./plant-tracker.gs) supplies that write-time archive step.
@@ -61,6 +66,12 @@ installable trigger is not required.
   input row without touching History.
 - A Water event means the container was soaked until runoff; water volume is
   intentionally not recorded.
+- `History` columns N and O calculate the applicable Water-cycle start and days
+  after watering. The logger writes only columns A through M so it does not
+  overwrite those array formulas.
+- `Baselines` uses completed wet-to-dry cycles to estimate drying time, which is
+  shown in `Plant tracker`. Treat that estimate as context, not a watering
+  deadline.
 
 The workbook and public pages are personal but publicly viewable. Do not put
 private addresses, credentials, or precise home-location information in Notes.

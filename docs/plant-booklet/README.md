@@ -14,6 +14,11 @@ web-sized user collection photographs. It does not publish the rest of the
 repository. GitHub Pages must be enabled for the repository before the
 deployment workflow can complete.
 
+The reader links to the
+[shared plant photo album](https://photos.app.goo.gl/h6AXurNQ7ZLBFsJG6).
+Google Photos sends `X-Frame-Options: SAMEORIGIN`, so the album cannot be
+reliably embedded in this GitHub Pages site; it opens in its own tab instead.
+
 The publication works when `index.html` is opened directly from disk. Its plant
 text and source list come from the Markdown profiles under
 [`docs/plants`](../plants/). Its local species-reference photographs and

@@ -158,6 +158,7 @@ button {
     border-radius: 999px;
     color: var(--ink);
     background: transparent;
+    text-decoration: none;
     cursor: pointer;
 }
 
