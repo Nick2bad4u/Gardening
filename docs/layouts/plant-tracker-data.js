@@ -41,6 +41,31 @@ const plantSheetGids = Object.freeze({
     P22: 294692157,
 });
 
+// Documented collection pot sizes. The latest Repot observation supersedes
+// these starting values on the public history page.
+const initialPotSizeByPlant = Object.freeze({
+    P01: "4 in",
+    P02: "4 in",
+    P03: "4 in",
+    P04: "4 in",
+    P05: "4 in",
+    P06: "4 in",
+    P07: "4 in",
+    P08: "4 in",
+    P09: "4 in",
+    P10: "4 in",
+    P11: "4 in",
+    P12: "4 in",
+    P13: "4 in",
+    P14: "small 4 in",
+    P15: "4 in",
+    P16: "4 in",
+    P17: "small 3 in",
+    P18: "4 in",
+    P21: "6 in",
+    P22: "5 in",
+});
+
 sheetUrls.plantPage = (plantId) => {
     const gid = plantSheetGids[plantId];
     return gid
@@ -118,12 +143,21 @@ export function parseDate(value) {
         );
     }
 
-    match = String(value).match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+    match = String(value).match(
+        /^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM))?$/i
+    );
     if (match) {
+        let hour = Number(match[4] || 0);
+        const meridiem = String(match[7] || "").toUpperCase();
+        if (meridiem === "AM" && hour === 12) hour = 0;
+        if (meridiem === "PM" && hour < 12) hour += 12;
         return new Date(
             Number(match[3]),
             Number(match[1]) - 1,
-            Number(match[2])
+            Number(match[2]),
+            hour,
+            Number(match[5] || 0),
+            Number(match[6] || 0)
         );
     }
     return null;
@@ -279,7 +313,7 @@ function wateringDetails(events) {
     };
 }
 
-export function calculateSummary(events) {
+export function calculateSummary(events, plantId = "") {
     const activePotSetup = Math.max(
         1,
         ...events.map((event) => numericValue(event["Pot setup"]) ?? 1)
@@ -291,10 +325,20 @@ export function calculateSummary(events) {
         (event) => numericValue(event["Weight (g)"]) !== null
     );
     const dryWeights = activeWeights
-        .filter((event) => event["Weight state"].trim().toLowerCase() === "dry")
+        .filter(
+            (event) =>
+                String(event["Weight state"] ?? "")
+                    .trim()
+                    .toLowerCase() === "dry"
+        )
         .map((event) => numericValue(event["Weight (g)"]));
     const wetWeights = activeWeights
-        .filter((event) => event["Weight state"].trim().toLowerCase() === "wet")
+        .filter(
+            (event) =>
+                String(event["Weight state"] ?? "")
+                    .trim()
+                    .toLowerCase() === "wet"
+        )
         .map((event) => numericValue(event["Weight (g)"]));
     const dryAverage = average(dryWeights);
     const wetAverage = average(wetWeights);
@@ -312,9 +356,29 @@ export function calculateSummary(events) {
     );
     const latestCondition = newest(
         events,
-        (event) => event["Condition / soil"].trim() !== ""
+        (event) => String(event["Condition / soil"] ?? "").trim() !== ""
     );
     const latestActivity = newest(events, () => true);
+    const eventNamed = (name) =>
+        events.filter(
+            (event) =>
+                String(event.Event ?? "")
+                    .trim()
+                    .toLowerCase() === name.toLowerCase()
+        );
+    const nutrientEvents = eventNamed("Water").filter(
+        (event) =>
+            String(event["Nutrients used"] ?? "")
+                .trim()
+                .toLowerCase() === "yes"
+    );
+    const repotEvents = eventNamed("Repot");
+    const flowerEvents = eventNamed("Flower");
+    const photoEvents = eventNamed("Photo").filter((event) =>
+        String(event["Photo URL"] ?? "").trim()
+    );
+    const pestEvents = eventNamed("Pest");
+    const checkEvents = eventNamed("Check");
     const heightSeries = measurementSeries(events, "Height (cm)");
     const widthSeries = measurementSeries(events, "Width (cm)");
     const weightSeries = measurementSeries(activeEvents, "Weight (g)").map(
@@ -378,6 +442,26 @@ export function calculateSummary(events) {
         latestWeight,
         latestWeightValue,
         latestWidth,
+        currentPotSize:
+            newest(repotEvents, (event) =>
+                String(event["Pot size"] ?? "").trim()
+            )?.["Pot size"] ||
+            initialPotSizeByPlant[plantId] ||
+            "Not logged",
+        eventCounts: {
+            checks: checkEvents.length,
+            flowers: flowerEvents.length,
+            nutrients: nutrientEvents.length,
+            pests: pestEvents.length,
+            photos: photoEvents.length,
+            repots: repotEvents.length,
+        },
+        latestCheck: newest(checkEvents, () => true),
+        latestFlower: newest(flowerEvents, () => true),
+        latestNutrients: newest(nutrientEvents, () => true),
+        latestPest: newest(pestEvents, () => true),
+        latestPhoto: newest(photoEvents, () => true),
+        latestRepot: newest(repotEvents, () => true),
         observationSpanDays:
             datedEvents.length > 1
                 ? daysBetween(datedEvents[0].Date, datedEvents.at(-1).Date)
@@ -425,7 +509,7 @@ export async function loadCollectionData() {
             return {
                 ...plant,
                 events,
-                summary: calculateSummary(events),
+                summary: calculateSummary(events, plant["Plant ID"]),
             };
         }),
     };

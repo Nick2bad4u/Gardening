@@ -37,6 +37,7 @@ const allowedSubjects = new Set([
 const allowedLicense =
     /^(?:CC0|CC BY(?: SA|-SA)?|CC BY-SA \d|Public domain|No restrictions)/i;
 const allowedCollectionKinds = new Set(["collection", "nursery-label"]);
+const expectedTrackedProfiles = 27;
 
 function assert(condition, message) {
     if (!condition) throw new Error(message);
@@ -341,6 +342,19 @@ async function main() {
     assert(
         pendingPhotoCount === expectedPendingPhotos,
         `Expected ${expectedPendingPhotos} pending-photo panels; found ${pendingPhotoCount}.`
+    );
+    assert(
+        (html.match(/Open the live care history/g) ?? []).length ===
+            expectedTrackedProfiles,
+        `Expected ${expectedTrackedProfiles} live history links.`
+    );
+    assert(
+        html.includes('id="surprise-plant"'),
+        "The booklet is missing the random-profile link."
+    );
+    assert(
+        html.includes("localStorage.getItem(themeKey)"),
+        "The booklet does not use the shared site theme key."
     );
 
     for (const reference of new Set(localReferences(html))) {

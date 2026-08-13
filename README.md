@@ -13,9 +13,10 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
 - [Browser plant field guide](docs/plant-booklet/) — magazine-style cover,
   searchable contents, one deep page per plant, licensed reference galleries
   for all 28 records, collection and nursery-label photos where archived,
-  source links, dark mode, keyboard navigation, mobile layout, and print styling
-- [Shared plant photo album](https://photos.app.goo.gl/h6AXurNQ7ZLBFsJG6) —
-  current collection photographs in Google Photos
+  source and live-history links, a random-profile jump, dark mode, keyboard
+  navigation, mobile layout, and print styling
+- [Plant photo album entry](docs/layouts/photo-album.html) — a mobile-friendly
+  collection cover with the current shared Google Photos album link
 - [Plant profiles](docs/plants/) — names, origins, history, flowers, care,
   propagation, risks, sources, and photo-archive status for all 28 collection
   records (27 current and one historical)
@@ -63,5 +64,6 @@ The public browser tools are available from the
 [GitHub Pages field guide](https://nick2bad4u.github.io/Gardening/): the live
 [plant tracker](https://nick2bad4u.github.io/Gardening/layouts/plant-tracker.html),
 [grow-spot layout](https://nick2bad4u.github.io/Gardening/layouts/grow-spot-layout.html),
-and [indoor acclimation calendar](https://nick2bad4u.github.io/Gardening/layouts/indoor-acclimation-calendar.html)
-cross-link to one another and the shared plant photo album.
+[indoor acclimation calendar](https://nick2bad4u.github.io/Gardening/layouts/indoor-acclimation-calendar.html),
+and [photo album entry](https://nick2bad4u.github.io/Gardening/layouts/photo-album.html)
+cross-link to one another.

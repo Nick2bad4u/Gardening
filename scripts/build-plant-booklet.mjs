@@ -78,6 +78,36 @@ const lifecycleOrder = new Map(
     lifecycleStages.map(([subject], index) => [subject, index])
 );
 
+const trackerIdByInventoryId = new Map([
+    ["Starter-07", "P01"],
+    ["Starter-05", "P02"],
+    ["Starter-04", "P03"],
+    ["Starter-02", "P04"],
+    ["Starter-01", "P05"],
+    ["Starter-09", "P06"],
+    ["Starter-08", "P07"],
+    ["Starter-03", "P08"],
+    ["Starter-12", "P09"],
+    ["Starter-11", "P10"],
+    ["Starter-06", "P11"],
+    ["Starter-10", "P12"],
+    ["Cactus-01", "P13"],
+    ["Cactus-02", "P14"],
+    ["Cactus-03", "P15"],
+    ["Cactus-06", "P16"],
+    ["Cactus-05", "P17"],
+    ["Cactus-04", "P18"],
+    ["Rehab-01", "P19"],
+    ["Rehab-02", "P19"],
+    ["Rehab-03", "P19"],
+    ["Succulent-01", "P20"],
+    ["Succulent-02", "P20"],
+    ["Succulent-03", "P20"],
+    ["Succulent-04", "P20"],
+    ["Houseplant-01", "P21"],
+    ["Succulent-05", "P22"],
+]);
+
 const markdownProcessor = remark().use(remarkGfm).use(remarkHtml, {
     sanitize: false,
 });
@@ -512,6 +542,10 @@ function renderProfile(profile, pageNumber, totalProfiles) {
     ] = profile.selectedPhotos;
     const archivePath = `../../assets/plants/${profile.slug}/README.md`;
     const sourceProfilePath = `../plants/${profile.group}/${profile.fileName}`;
+    const trackerId = trackerIdByInventoryId.get(profile.inventoryId);
+    const historyLink = trackerId
+        ? `<a href="../layouts/plant-history.html?id=${encodeURIComponent(trackerId)}">Open the live care history <span aria-hidden="true">→</span></a>`
+        : "";
     const searchText = stripMarkdown(
         `${profile.inventoryId} ${profile.labelMarkdown} ${profile.title} ${profile.scientificMarkdown} ${profile.identificationMarkdown} ${profile.acquiredFromMarkdown} ${profile.acquiredOnMarkdown} ${profile.bodyMarkdown}`
     ).toLowerCase();
@@ -580,6 +614,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         <section class="record-links">
           <p class="kicker">Keep digging</p>
           <h2>Research trail</h2>
+          ${historyLink}
           <a href="${escapeHtml(sourceProfilePath)}">Open the source profile <span aria-hidden="true">→</span></a>
           ${archiveLink}
           <p>Identification confidence belongs to the collection plant. Any photographs illustrate the working species and may show mature or wild plants.</p>
@@ -621,7 +656,7 @@ function renderCover(profiles) {
     <div class="cover-masthead">
       <p>Nick's indoor garden · Fenton, Michigan</p>
       <h1>The Fenton<br>Collection</h1>
-      <span>A browser field guide to cactus and succulent personalities</span>
+      <span>A browser field guide to cactus, succulent, and houseplant personalities</span>
     </div>
     <div class="cover-footer">
       <div><strong>${profiles.filter((profile) => !profile.historical).length}</strong><span>living plants</span></div>
@@ -660,9 +695,12 @@ async function renderBooklet(profiles) {
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <script>
     (() => {
-      const saved = localStorage.getItem("gardening-theme");
+      const themeKey = "gardening-site-theme";
+      const legacyThemeKey = "gardening-theme";
+      const saved = localStorage.getItem(themeKey) ?? localStorage.getItem(legacyThemeKey);
       const dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
       document.documentElement.dataset.theme = dark ? "dark" : "light";
+      if (saved) localStorage.setItem(themeKey, saved);
     })();
   </script>
   <link rel="stylesheet" href="./booklet.css">
@@ -680,7 +718,7 @@ async function renderBooklet(profiles) {
       <span id="reader-count">The Fenton Collection</span>
     </div>
     <div class="reader-actions">
-      <a class="icon-button" href="https://photos.app.goo.gl/h6AXurNQ7ZLBFsJG6" target="_blank" rel="noreferrer"><span aria-hidden="true">▧</span><span>Photos</span></a>
+      <a class="icon-button" href="../layouts/photo-album.html"><span aria-hidden="true">▧</span><span>Photos</span></a>
       <button class="icon-button" id="theme-toggle" type="button" aria-pressed="false"><span aria-hidden="true">◐</span><span>Theme</span></button>
       <button class="icon-button" id="print-booklet" type="button"><span aria-hidden="true">▣</span><span>Print</span></button>
     </div>
@@ -698,10 +736,11 @@ async function renderBooklet(profiles) {
     <nav class="drawer-nav" aria-label="Plant profiles">
       <a class="drawer-special" href="#cover" data-page-link="cover"><span>Cover</span><small>Start of the guide</small></a>
       <a class="drawer-special" href="#contents" data-page-link="contents"><span>Printed contents</span><small>All profiles at a glance</small></a>
-      <a class="drawer-special" href="https://photos.app.goo.gl/h6AXurNQ7ZLBFsJG6" target="_blank" rel="noreferrer"><span>Plant photo album</span><small>Open the shared collection in Google Photos</small></a>
       <a class="drawer-special" href="../layouts/plant-tracker.html"><span>Plant tracker</span><small>Live weights, watering, and measurements</small></a>
       <a class="drawer-special" href="../layouts/grow-spot-layout.html"><span>Grow-spot layout</span><small>Tables, risers, light, fan, and camera</small></a>
       <a class="drawer-special" href="../layouts/indoor-acclimation-calendar.html"><span>Acclimation calendar</span><small>Dated light and airflow schedule</small></a>
+      <a class="drawer-special" href="../layouts/photo-album.html"><span>Plant photo album</span><small>Collection photos and Google Photos link</small></a>
+      <a class="drawer-special" id="surprise-plant" href="#${escapeHtml(profiles[0].slug)}"><span>Surprise me</span><small>Jump to a random plant story</small></a>
       ${navigation}
     </nav>
   </dialog>

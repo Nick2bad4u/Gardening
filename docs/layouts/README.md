@@ -52,7 +52,8 @@ The page reflects the current working arrangement:
 - A1–D3 stay on the original 16 × 13 in wooden table with the measured riser
   assignments;
 - the six August cacti, Kiwi aeonium, and money tree use the second wooden
-  table provisionally, with no new risers until their heights are measured;
+  table provisionally, with no new risers until their tabletop-to-tip heights
+  are measured;
 - all three surfaces run end to end beneath the AW200SE's window-to-room long
   axis, not side by side across the bay;
 - the nominal 24 + 16 + 16 in longitudinal footprint is about 56 in, leaving
@@ -77,9 +78,11 @@ room.
 
 The 2026-07-31 tape photos are indexed in
 [`assets/measurements`](../../assets/measurements/README.md). Their starter and
-shared-planter height bands inform the original-table riser calculator. The new
-plants still need direct tabletop-to-tip measurements and exact current table
-positions before their riser or marker assignments are final.
+shared-planter height bands inform the original-table riser calculator. The
+tracker contains plant-body height readings recorded on 2026-08-10 for E1-F3
+and #4, but those readings do not include the pots. The newer plants still need
+direct tabletop-to-tip measurements and exact current table positions before
+their riser or marker assignments are final.
 
 The deployed URLs are:
 
@@ -87,3 +90,4 @@ The deployed URLs are:
 - [Example individual history page](https://nick2bad4u.github.io/Gardening/layouts/plant-history.html?id=P01)
 - [Grow-spot layout](https://nick2bad4u.github.io/Gardening/layouts/grow-spot-layout.html)
 - [Indoor acclimation calendar](https://nick2bad4u.github.io/Gardening/layouts/indoor-acclimation-calendar.html)
+- [Plant photo album entry](https://nick2bad4u.github.io/Gardening/layouts/photo-album.html)

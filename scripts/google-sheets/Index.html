@@ -1,0 +1,2398 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <base target="_top" />
+        <meta charset="utf-8" />
+        <title>Garden care logger</title>
+        <style>
+            :root {
+                color-scheme: light;
+                --forest: #183d26;
+                --forest-2: #286b3f;
+                --leaf: #73a63f;
+                --leaf-soft: #e6f1df;
+                --cream: #fbfaf4;
+                --paper: #ffffff;
+                --ink: #173123;
+                --muted: #617065;
+                --line: #d8e2d7;
+                --amber: #e7ad2e;
+                --blue: #397fb5;
+                --danger: #a63c36;
+                --shadow: 0 10px 30px rgba(24, 61, 38, 0.12);
+                --card: rgba(255, 255, 255, 0.96);
+                --card-soft: #f4f7f2;
+                --control: #ffffff;
+                --hero-start: #153721;
+                --hero-end: #286b3f;
+            }
+
+            :root[data-theme="dark"] {
+                color-scheme: dark;
+                --forest: #d2ebd3;
+                --forest-2: #75c58c;
+                --leaf-soft: #243d2d;
+                --cream: #101712;
+                --paper: #172019;
+                --ink: #e8f2e9;
+                --muted: #a9b8ab;
+                --line: #38493c;
+                --card: rgba(23, 32, 25, 0.97);
+                --card-soft: #202c23;
+                --control: #111914;
+                --hero-start: #14251a;
+                --hero-end: #235a36;
+                --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+            [hidden] {
+                display: none !important;
+            }
+
+            html,
+            body {
+                margin: 0;
+                min-height: 100%;
+                background:
+                    radial-gradient(
+                        circle at 100% 0,
+                        rgba(115, 166, 63, 0.18),
+                        transparent 34%
+                    ),
+                    var(--cream);
+                color: var(--ink);
+                font-family:
+                    Arial,
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+            }
+
+            body {
+                padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+            }
+
+            button,
+            input,
+            select,
+            textarea {
+                font: inherit;
+            }
+
+            button {
+                touch-action: manipulation;
+            }
+
+            .app {
+                width: min(100%, 1180px);
+                margin: 0 auto;
+                padding: 18px 14px 44px;
+            }
+
+            .app-shell {
+                display: grid;
+                grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+                gap: 18px;
+                align-items: start;
+            }
+
+            .sidebar {
+                position: sticky;
+                top: 12px;
+                display: grid;
+                gap: 14px;
+                max-height: calc(100vh - 24px);
+            }
+
+            .sidebar .card,
+            .workbench .card {
+                margin-top: 0;
+            }
+
+            .workbench {
+                min-width: 0;
+            }
+
+            .hero {
+                position: relative;
+                overflow: hidden;
+                padding: 24px 22px;
+                border-radius: 24px;
+                background: linear-gradient(
+                    135deg,
+                    var(--hero-start),
+                    var(--hero-end)
+                );
+                color: #fff;
+                box-shadow: var(--shadow);
+            }
+
+            .hero::after {
+                content: "";
+                position: absolute;
+                width: 180px;
+                height: 180px;
+                right: -55px;
+                top: -70px;
+                border: 28px solid rgba(255, 255, 255, 0.08);
+                border-radius: 50%;
+            }
+
+            .hero-tools {
+                position: relative;
+                z-index: 1;
+                display: flex;
+                justify-content: flex-end;
+                gap: 8px;
+                margin: -8px -8px 2px 0;
+            }
+
+            .icon-button {
+                min-width: 44px;
+                min-height: 44px;
+                border: 1px solid rgba(255, 255, 255, 0.28);
+                border-radius: 13px;
+                background: rgba(255, 255, 255, 0.1);
+                color: #fff;
+                cursor: pointer;
+            }
+
+            .eyebrow {
+                margin: 0 0 7px;
+                color: #cfe5c5;
+                font-size: 12px;
+                font-weight: 800;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+            }
+
+            h1 {
+                margin: 0;
+                max-width: 520px;
+                font-size: clamp(26px, 7vw, 38px);
+                line-height: 1.04;
+                letter-spacing: -0.03em;
+            }
+
+            .hero p {
+                margin: 10px 0 0;
+                max-width: 520px;
+                color: #e3f0de;
+                font-size: 14px;
+                line-height: 1.45;
+            }
+
+            .status-line {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 14px;
+                font-size: 12px;
+                color: #d7ead0;
+            }
+
+            .status-dot {
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background: #c8e879;
+                box-shadow: 0 0 0 5px rgba(200, 232, 121, 0.15);
+            }
+
+            .card {
+                margin-top: 14px;
+                padding: 18px;
+                border: 1px solid var(--line);
+                border-radius: 20px;
+                background: var(--card);
+                box-shadow: 0 5px 18px rgba(24, 61, 38, 0.07);
+            }
+
+            .card-title {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                gap: 12px;
+                margin-bottom: 14px;
+            }
+
+            h2 {
+                margin: 0;
+                font-size: 18px;
+                letter-spacing: -0.015em;
+            }
+
+            .hint {
+                color: var(--muted);
+                font-size: 12px;
+                line-height: 1.4;
+            }
+
+            label.field-label {
+                display: block;
+                margin: 0 0 7px;
+                color: #355242;
+                font-size: 12px;
+                font-weight: 800;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+            }
+
+            :root[data-theme="dark"] label.field-label {
+                color: #b7d8bd;
+            }
+
+            input,
+            select,
+            textarea {
+                width: 100%;
+                min-height: 48px;
+                border: 1px solid #cdd9cd;
+                border-radius: 13px;
+                background: var(--control);
+                color: var(--ink);
+                padding: 11px 13px;
+                outline: none;
+                transition:
+                    border-color 120ms ease,
+                    box-shadow 120ms ease;
+            }
+
+            input:focus,
+            select:focus,
+            textarea:focus {
+                border-color: var(--forest-2);
+                box-shadow: 0 0 0 4px rgba(40, 107, 63, 0.12);
+            }
+
+            input[type="number"] {
+                font-variant-numeric: tabular-nums;
+            }
+
+            textarea {
+                min-height: 96px;
+                resize: vertical;
+                line-height: 1.4;
+            }
+
+            .plant-search {
+                margin-bottom: 8px;
+            }
+
+            .plant-summary {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 12px;
+                margin-top: 12px;
+                padding: 14px;
+                border-radius: 15px;
+                background: var(--leaf-soft);
+            }
+
+            .plant-name {
+                font-weight: 800;
+            }
+            .plant-meta {
+                margin-top: 4px;
+                color: #506153;
+                font-size: 12px;
+                line-height: 1.4;
+            }
+            :root[data-theme="dark"] .plant-meta {
+                color: var(--muted);
+            }
+            .plant-id {
+                align-self: start;
+                padding: 5px 8px;
+                border-radius: 999px;
+                background: var(--control);
+                color: var(--forest-2);
+                font-size: 12px;
+                font-weight: 800;
+            }
+
+            .metrics {
+                display: grid;
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 8px;
+                margin-top: 10px;
+            }
+
+            .metric {
+                min-width: 0;
+                padding: 9px;
+                border: 1px solid
+                    color-mix(in srgb, var(--line) 85%, transparent);
+                border-radius: 11px;
+                background: var(--control);
+                color: var(--ink);
+            }
+
+            :root[data-theme="dark"] .metric {
+                background: #111914;
+                border-color: #465a4b;
+            }
+
+            .plant-links,
+            .global-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-top: 11px;
+            }
+
+            .link-pill {
+                display: inline-flex;
+                align-items: center;
+                min-height: 40px;
+                padding: 8px 11px;
+                border: 1px solid var(--line);
+                border-radius: 999px;
+                background: var(--control);
+                color: var(--forest-2);
+                font-size: 12px;
+                font-weight: 800;
+                text-decoration: none;
+            }
+
+            .global-links .link-pill {
+                border-color: rgba(255, 255, 255, 0.26);
+                background: rgba(255, 255, 255, 0.11);
+                color: #fff;
+            }
+
+            .metric-label {
+                color: var(--muted);
+                font-size: 10px;
+                text-transform: uppercase;
+            }
+            .metric-value {
+                margin-top: 3px;
+                font-size: 13px;
+                font-weight: 800;
+                overflow-wrap: anywhere;
+            }
+
+            .chips,
+            .segments {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 9px;
+            }
+
+            .chip,
+            .segment {
+                min-height: 46px;
+                border: 1px solid #cbd8cb;
+                border-radius: 13px;
+                background: var(--control);
+                color: var(--ink);
+                font-weight: 800;
+                cursor: pointer;
+            }
+
+            .chip[aria-pressed="true"] {
+                border-color: var(--forest-2);
+                background: var(--forest-2);
+                color: #fff;
+                box-shadow: 0 4px 12px rgba(40, 107, 63, 0.2);
+            }
+
+            .chip[data-event="Water"][aria-pressed="true"] {
+                background: var(--blue);
+                border-color: var(--blue);
+            }
+            .chip[data-event="Weigh"][aria-pressed="true"] {
+                background: #765c9f;
+                border-color: #765c9f;
+            }
+            .chip[data-event="Measure"][aria-pressed="true"] {
+                background: #a86732;
+                border-color: #a86732;
+            }
+
+            .segment[aria-pressed="true"] {
+                border-color: var(--amber);
+                background: #fff1bd;
+                color: #5e4606;
+            }
+
+            .fields {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 13px;
+            }
+
+            .field.full {
+                grid-column: 1 / -1;
+            }
+
+            .conditional {
+                display: none;
+                margin-top: 14px;
+                padding-top: 14px;
+                border-top: 1px dashed #d5dfd5;
+            }
+
+            .conditional.visible {
+                display: block;
+            }
+
+            .event-panel {
+                padding: 14px;
+                border: 1px solid var(--line);
+                border-radius: 15px;
+                background: var(--card-soft);
+            }
+
+            .event-panel h3 {
+                margin: 0 0 5px;
+                font-size: 15px;
+            }
+
+            .event-panel .hint {
+                margin: 0 0 12px;
+            }
+
+            .event-stack {
+                display: grid;
+                gap: 10px;
+                margin-top: 14px;
+            }
+
+            .setup-note {
+                display: flex;
+                align-items: flex-start;
+                gap: 10px;
+                margin-top: 12px;
+                padding: 11px 12px;
+                border-left: 4px solid var(--amber);
+                border-radius: 10px;
+                background: color-mix(
+                    in srgb,
+                    var(--amber) 12%,
+                    var(--control)
+                );
+                color: var(--muted);
+                font-size: 12px;
+                line-height: 1.45;
+            }
+
+            .mode-tabs {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                margin-bottom: 14px;
+                padding: 7px;
+                border: 1px solid var(--line);
+                border-radius: 16px;
+                background: var(--card);
+            }
+
+            .mode-tab {
+                min-height: 46px;
+                border: 0;
+                border-radius: 11px;
+                background: transparent;
+                color: var(--muted);
+                font-weight: 800;
+                cursor: pointer;
+            }
+
+            .mode-tab[aria-selected="true"] {
+                background: var(--forest-2);
+                color: #fff;
+            }
+
+            .bulk-list {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px;
+                max-height: 360px;
+                overflow: auto;
+                padding: 4px;
+            }
+
+            .bulk-plant {
+                display: grid;
+                grid-template-columns: auto minmax(0, 1fr);
+                gap: 10px;
+                align-items: start;
+                padding: 11px;
+                border: 1px solid var(--line);
+                border-radius: 12px;
+                background: var(--control);
+                cursor: pointer;
+            }
+
+            .bulk-plant input {
+                width: 20px;
+                min-height: 20px;
+                margin: 1px 0 0;
+                accent-color: var(--forest-2);
+            }
+
+            .bulk-name {
+                display: block;
+                font-size: 13px;
+                font-weight: 800;
+            }
+
+            .bulk-meta {
+                display: block;
+                margin-top: 3px;
+                color: var(--muted);
+                font-size: 11px;
+            }
+
+            .bulk-tools {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: space-between;
+                margin: 10px 0;
+            }
+
+            .sidebar-recent {
+                min-height: 0;
+                overflow: auto;
+            }
+
+            .sidebar-recent > summary {
+                display: none;
+            }
+
+            .control-row {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-top: 12px;
+            }
+
+            .control-row input[type="checkbox"] {
+                width: 22px;
+                min-height: 22px;
+                accent-color: var(--forest-2);
+            }
+
+            .control-row label {
+                color: var(--muted);
+                font-size: 13px;
+            }
+
+            .actions {
+                position: sticky;
+                bottom: 0;
+                z-index: 5;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+                margin-top: 14px;
+                padding: 12px;
+                border: 1px solid var(--line);
+                border-radius: 18px;
+                background: color-mix(in srgb, var(--cream) 94%, transparent);
+                backdrop-filter: blur(14px);
+                box-shadow: 0 -8px 22px rgba(24, 61, 38, 0.08);
+            }
+
+            .primary,
+            .secondary,
+            .text-button {
+                min-height: 52px;
+                border-radius: 14px;
+                font-weight: 800;
+                cursor: pointer;
+            }
+
+            .primary {
+                border: 0;
+                background: var(--forest-2);
+                color: #fff;
+            }
+
+            .secondary {
+                border: 1px solid var(--forest-2);
+                background: var(--control);
+                color: var(--forest-2);
+            }
+
+            .primary:disabled,
+            .secondary:disabled {
+                opacity: 0.55;
+                cursor: wait;
+            }
+
+            .text-button {
+                min-height: 36px;
+                border: 0;
+                background: transparent;
+                color: var(--forest-2);
+            }
+
+            .recent-list {
+                display: grid;
+                gap: 8px;
+            }
+
+            .recent-item {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 10px;
+                padding: 11px 12px;
+                border-radius: 12px;
+                background: var(--card-soft);
+            }
+
+            .recent-main {
+                font-size: 13px;
+                font-weight: 800;
+            }
+            .recent-sub {
+                margin-top: 3px;
+                color: var(--muted);
+                font-size: 11px;
+            }
+            .event-badge {
+                align-self: center;
+                padding: 5px 8px;
+                border-radius: 999px;
+                background: #dfece0;
+                color: var(--forest-2);
+                font-size: 11px;
+                font-weight: 800;
+            }
+
+            :root[data-theme="dark"] .event-badge {
+                background: #233329;
+                color: #c9e4ce;
+            }
+
+            :root[data-theme="dark"] .primary,
+            :root[data-theme="dark"] .mode-tab[aria-selected="true"],
+            :root[data-theme="dark"] .chip[aria-pressed="true"] {
+                color: #102419;
+            }
+
+            :root[data-theme="dark"]
+                .chip[data-event="Water"][aria-pressed="true"],
+            :root[data-theme="dark"]
+                .chip[data-event="Weigh"][aria-pressed="true"],
+            :root[data-theme="dark"]
+                .chip[data-event="Measure"][aria-pressed="true"] {
+                color: #fff;
+            }
+
+            .toast {
+                position: fixed;
+                left: 50%;
+                bottom: calc(92px + env(safe-area-inset-bottom));
+                z-index: 20;
+                width: min(calc(100% - 28px), 600px);
+                transform: translate(-50%, 18px);
+                padding: 13px 15px;
+                border-radius: 14px;
+                background: var(--forest);
+                color: #fff;
+                box-shadow: var(--shadow);
+                opacity: 0;
+                pointer-events: none;
+                transition:
+                    opacity 160ms ease,
+                    transform 160ms ease;
+            }
+
+            .toast.visible {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+            .toast.error {
+                background: var(--danger);
+            }
+
+            :root[data-theme="dark"] .toast {
+                background: #183d26;
+            }
+
+            :root[data-theme="dark"] .toast.error {
+                background: var(--danger);
+            }
+
+            .loading {
+                display: grid;
+                place-items: center;
+                min-height: 220px;
+                color: var(--muted);
+                text-align: center;
+            }
+
+            .spinner {
+                width: 34px;
+                height: 34px;
+                margin-bottom: 12px;
+                border: 4px solid #dce7d9;
+                border-top-color: var(--forest-2);
+                border-radius: 50%;
+                animation: spin 0.8s linear infinite;
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            @media (max-width: 860px) {
+                .app-shell {
+                    grid-template-columns: 1fr;
+                }
+                .sidebar {
+                    position: static;
+                    max-height: none;
+                }
+                .sidebar-recent {
+                    max-height: 320px;
+                }
+                .sidebar-recent > summary {
+                    display: block;
+                    padding: 14px 16px;
+                    color: var(--forest-2);
+                    font-weight: 800;
+                    cursor: pointer;
+                }
+                .sidebar-recent > .recent-inner {
+                    padding-top: 0;
+                }
+            }
+
+            @media (max-width: 520px) {
+                .app {
+                    padding: 10px 10px 34px;
+                }
+                .hero {
+                    padding: 21px 18px;
+                    border-radius: 19px;
+                }
+                .card {
+                    padding: 15px;
+                    border-radius: 17px;
+                }
+                .chips {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                }
+                .fields {
+                    grid-template-columns: 1fr;
+                }
+                .metrics {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+                .bulk-list {
+                    grid-template-columns: 1fr;
+                    max-height: 300px;
+                }
+                .field.full {
+                    grid-column: auto;
+                }
+                .actions {
+                    padding: 9px;
+                    border-radius: 15px;
+                }
+                .primary,
+                .secondary {
+                    min-height: 50px;
+                    font-size: 13px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main class="app">
+            <div class="app-shell">
+                <aside class="sidebar">
+                    <header class="hero">
+                        <div class="hero-tools">
+                            <button
+                                id="themeToggle"
+                                class="icon-button"
+                                type="button"
+                                aria-label="Use dark theme"
+                                aria-pressed="false"
+                                >☾</button
+                            >
+                        </div>
+                        <p class="eyebrow">Garden Plant Tracker</p>
+                        <h1>Garden care logger</h1>
+                        <p
+                            >Pick a plant, tap everything you did, and save
+                            once. The spreadsheet handles History, trends, and
+                            plant pages.</p
+                        >
+                        <div class="status-line"
+                            ><span class="status-dot"></span
+                            ><span id="connectionStatus"
+                                >Connecting to the garden log…</span
+                            ></div
+                        >
+                        <nav
+                            id="globalLinks"
+                            class="global-links"
+                            aria-label="Garden links"
+                        ></nav>
+                    </header>
+
+                    <details
+                        id="recentCard"
+                        class="card sidebar-recent"
+                        open
+                        hidden
+                    >
+                        <summary>Recent History</summary>
+                        <div class="recent-inner">
+                            <div class="card-title"
+                                ><h2>Recent History</h2
+                                ><span class="hint">Newest first</span></div
+                            >
+                            <div
+                                id="recentList"
+                                class="recent-list"
+                            ></div>
+                        </div>
+                    </details>
+                </aside>
+
+                <div class="workbench">
+                    <section
+                        id="loading"
+                        class="card loading"
+                    >
+                        <div
+                            ><div class="spinner"></div
+                            ><strong>Loading your plants…</strong></div
+                        >
+                    </section>
+
+                    <div
+                        id="modeTabs"
+                        class="mode-tabs"
+                        role="tablist"
+                        aria-label="Entry mode"
+                        hidden
+                    >
+                        <button
+                            id="singleModeTab"
+                            class="mode-tab"
+                            type="button"
+                            role="tab"
+                            aria-selected="true"
+                            aria-controls="entryForm"
+                            >✎ Single plant</button
+                        >
+                        <button
+                            id="bulkModeTab"
+                            class="mode-tab"
+                            type="button"
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="bulkWaterForm"
+                            >💧 Watering round</button
+                        >
+                    </div>
+
+                    <form
+                        id="entryForm"
+                        hidden
+                        novalidate
+                    >
+                        <section class="card">
+                            <h2>1. Choose plant</h2>
+                            <label
+                                class="field-label"
+                                for="plantSearch"
+                                >Find by name, ID, or label</label
+                            >
+                            <input
+                                id="plantSearch"
+                                class="plant-search"
+                                type="search"
+                                placeholder="Search plants…"
+                                autocomplete="off"
+                            />
+                            <select
+                                id="plantSelect"
+                                aria-label="Plant"
+                            ></select>
+                            <div
+                                id="plantSummary"
+                                class="plant-summary"
+                                aria-live="polite"
+                            ></div>
+                        </section>
+
+                        <section class="card">
+                            <div class="card-title"
+                                ><h2>2. What happened?</h2
+                                ><span class="hint">Choose several</span></div
+                            >
+                            <div
+                                id="eventChips"
+                                class="chips"
+                            ></div>
+
+                            <div
+                                id="weightSection"
+                                class="conditional"
+                            >
+                                <label class="field-label">Weight state</label>
+                                <div
+                                    id="weightStates"
+                                    class="segments"
+                                >
+                                    <button
+                                        type="button"
+                                        class="segment"
+                                        data-state="Dry"
+                                        aria-pressed="false"
+                                        >Dry</button
+                                    >
+                                    <button
+                                        type="button"
+                                        class="segment"
+                                        data-state="Wet"
+                                        aria-pressed="false"
+                                        >Wet</button
+                                    >
+                                    <button
+                                        type="button"
+                                        class="segment"
+                                        data-state="Routine"
+                                        aria-pressed="false"
+                                        >Routine</button
+                                    >
+                                </div>
+                                <div
+                                    class="field"
+                                    style="margin-top: 12px"
+                                >
+                                    <label
+                                        class="field-label"
+                                        for="weight"
+                                        >Weight (g)</label
+                                    >
+                                    <input
+                                        id="weight"
+                                        type="number"
+                                        inputmode="decimal"
+                                        min="0.1"
+                                        step="0.1"
+                                        placeholder="e.g. 432.1"
+                                    />
+                                    <input
+                                        id="potSetup"
+                                        type="hidden"
+                                        value="1"
+                                    />
+                                </div>
+                            </div>
+
+                            <div
+                                id="measureSection"
+                                class="conditional"
+                            >
+                                <div class="fields">
+                                    <div class="field">
+                                        <label
+                                            class="field-label"
+                                            for="height"
+                                            >Height (cm)</label
+                                        >
+                                        <input
+                                            id="height"
+                                            type="number"
+                                            inputmode="decimal"
+                                            min="0.1"
+                                            step="0.1"
+                                            placeholder="Optional"
+                                        />
+                                    </div>
+                                    <div class="field">
+                                        <label
+                                            class="field-label"
+                                            for="width"
+                                            >Width (cm)</label
+                                        >
+                                        <input
+                                            id="width"
+                                            type="number"
+                                            inputmode="decimal"
+                                            min="0.1"
+                                            step="0.1"
+                                            placeholder="Optional"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="event-stack">
+                                <div
+                                    id="waterSection"
+                                    class="conditional event-panel"
+                                >
+                                    <h3>💧 Water details</h3>
+                                    <p class="hint"
+                                        >Record whether this watering included
+                                        nutrients.</p
+                                    >
+                                    <div class="fields">
+                                        <div class="field">
+                                            <label
+                                                class="field-label"
+                                                for="nutrientsUsed"
+                                                >Nutrients?</label
+                                            >
+                                            <select id="nutrientsUsed"
+                                                ><option value=""
+                                                    >Choose yes or no</option
+                                                ><option value="No"
+                                                    >No — plain water</option
+                                                ><option value="Yes"
+                                                    >Yes — fertilizer /
+                                                    supplement</option
+                                                ></select
+                                            >
+                                        </div>
+                                        <div
+                                            id="nutrientProductField"
+                                            class="field"
+                                            hidden
+                                        >
+                                            <label
+                                                class="field-label"
+                                                for="nutrientProduct"
+                                                >Product / mix</label
+                                            >
+                                            <input
+                                                id="nutrientProduct"
+                                                maxlength="160"
+                                                placeholder="e.g. MSU 13-3-15"
+                                            />
+                                        </div>
+                                        <div
+                                            id="nutrientAmountField"
+                                            class="field full"
+                                            hidden
+                                        >
+                                            <label
+                                                class="field-label"
+                                                for="nutrientAmount"
+                                                >Amount / concentration</label
+                                            >
+                                            <input
+                                                id="nutrientAmount"
+                                                maxlength="120"
+                                                placeholder="e.g. 0.5 g per gallon"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    id="checkSection"
+                                    class="conditional event-panel"
+                                >
+                                    <h3>✓ Plant check</h3>
+                                    <p class="hint"
+                                        >Condition belongs to a Check event so
+                                        it is dated and easy to compare.</p
+                                    >
+                                    <label
+                                        class="field-label"
+                                        for="condition"
+                                        >Condition / soil</label
+                                    >
+                                    <input
+                                        id="condition"
+                                        type="text"
+                                        maxlength="240"
+                                        placeholder="Firm; dry below top dressing"
+                                    />
+                                </div>
+                                <div
+                                    id="repotSection"
+                                    class="conditional event-panel"
+                                >
+                                    <h3>🪴 Repot details</h3>
+                                    <p
+                                        id="currentPotSize"
+                                        class="hint"
+                                        >Current pot: not logged</p
+                                    >
+                                    <label
+                                        class="field-label"
+                                        for="potSize"
+                                        >New pot size</label
+                                    >
+                                    <input
+                                        id="potSize"
+                                        maxlength="80"
+                                        placeholder="e.g. 6 in round"
+                                    />
+                                    <p class="setup-note"
+                                        ><span aria-hidden="true">↗</span
+                                        ><span
+                                            >Saving a Repot advances this plant
+                                            to the next pot setup
+                                            automatically.</span
+                                        ></p
+                                    >
+                                </div>
+                                <div
+                                    id="flowerSection"
+                                    class="conditional event-panel"
+                                >
+                                    <h3>✿ Flower details</h3>
+                                    <div class="fields">
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="flowerCount"
+                                                >Open flowers / buds</label
+                                            ><input
+                                                id="flowerCount"
+                                                type="number"
+                                                inputmode="numeric"
+                                                min="1"
+                                                step="1"
+                                                placeholder="Optional count"
+                                        /></div>
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="flowerDetails"
+                                                >Description</label
+                                            ><input
+                                                id="flowerDetails"
+                                                maxlength="240"
+                                                placeholder="Color, ring, buds, fruit…"
+                                        /></div>
+                                    </div>
+                                </div>
+                                <div
+                                    id="photoSection"
+                                    class="conditional event-panel"
+                                >
+                                    <h3>📷 Photo</h3>
+                                    <p class="hint"
+                                        >Paste a Google Photos share link. It
+                                        stays with this dated event.</p
+                                    >
+                                    <label
+                                        class="field-label"
+                                        for="photoUrl"
+                                        >Google Photos link</label
+                                    >
+                                    <input
+                                        id="photoUrl"
+                                        type="url"
+                                        inputmode="url"
+                                        placeholder="https://photos.app.goo.gl/…"
+                                    />
+                                </div>
+                                <div
+                                    id="pestSection"
+                                    class="conditional event-panel"
+                                >
+                                    <h3>⚠ Pest / issue</h3>
+                                    <div class="fields">
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="pestIssue"
+                                                >What did you find?</label
+                                            ><input
+                                                id="pestIssue"
+                                                maxlength="240"
+                                                placeholder="Mealybug in crown; soft spot…"
+                                        /></div>
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="pestTreatment"
+                                                >Treatment / action</label
+                                            ><input
+                                                id="pestTreatment"
+                                                maxlength="240"
+                                                placeholder="Isolated; swabbed; monitoring…"
+                                        /></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="card">
+                            <div class="card-title"
+                                ><h2>3. Details</h2
+                                ><button
+                                    id="clearButton"
+                                    type="button"
+                                    class="text-button"
+                                    >Clear entry</button
+                                ></div
+                            >
+                            <div class="fields">
+                                <div class="field full">
+                                    <label
+                                        class="field-label"
+                                        for="observedAt"
+                                        >Started at</label
+                                    >
+                                    <input
+                                        id="observedAt"
+                                        type="datetime-local"
+                                    />
+                                </div>
+                                <div class="field full">
+                                    <label
+                                        class="field-label"
+                                        for="notes"
+                                        >Notes</label
+                                    >
+                                    <textarea
+                                        id="notes"
+                                        maxlength="1500"
+                                        placeholder="Anything worth remembering…"
+                                    ></textarea>
+                                </div>
+                            </div>
+                            <div class="control-row">
+                                <input
+                                    id="keepEvents"
+                                    type="checkbox"
+                                    checked
+                                />
+                                <label for="keepEvents"
+                                    >Keep selected event buttons after saving
+                                    (useful during watering rounds)</label
+                                >
+                            </div>
+                        </section>
+
+                        <div class="actions">
+                            <button
+                                id="saveButton"
+                                class="primary"
+                                type="submit"
+                                >Save observation</button
+                            >
+                            <button
+                                id="saveNextButton"
+                                class="secondary"
+                                type="button"
+                                >Save &amp; next plant</button
+                            >
+                        </div>
+                    </form>
+
+                    <form
+                        id="bulkWaterForm"
+                        hidden
+                        novalidate
+                    >
+                        <section class="card">
+                            <div class="card-title"
+                                ><h2>Water several plants</h2
+                                ><span
+                                    id="bulkCount"
+                                    class="hint"
+                                    >0 selected</span
+                                ></div
+                            >
+                            <p class="hint"
+                                >One save creates one Water row per selected
+                                plant. Use single-plant mode for weights because
+                                each pot has a different reading.</p
+                            >
+                            <input
+                                id="bulkSearch"
+                                type="search"
+                                placeholder="Filter plants by name, ID, or label…"
+                                autocomplete="off"
+                            />
+                            <div class="bulk-tools">
+                                <button
+                                    id="bulkSelectVisible"
+                                    class="text-button"
+                                    type="button"
+                                    >Select visible</button
+                                >
+                                <button
+                                    id="bulkClear"
+                                    class="text-button"
+                                    type="button"
+                                    >Clear selection</button
+                                >
+                            </div>
+                            <div
+                                id="bulkPlantList"
+                                class="bulk-list"
+                            ></div>
+                        </section>
+                        <section class="card">
+                            <div class="card-title"
+                                ><h2>Watering details</h2
+                                ><span class="hint"
+                                    >Shared by selected plants</span
+                                ></div
+                            >
+                            <div class="fields">
+                                <div class="field full"
+                                    ><label
+                                        class="field-label"
+                                        for="bulkObservedAt"
+                                        >Started at</label
+                                    ><input
+                                        id="bulkObservedAt"
+                                        type="datetime-local"
+                                /></div>
+                                <div class="field"
+                                    ><label
+                                        class="field-label"
+                                        for="bulkNutrientsUsed"
+                                        >Nutrients?</label
+                                    ><select id="bulkNutrientsUsed"
+                                        ><option value=""
+                                            >Choose yes or no</option
+                                        ><option value="No"
+                                            >No — plain water</option
+                                        ><option value="Yes"
+                                            >Yes — fertilizer /
+                                            supplement</option
+                                        ></select
+                                    ></div
+                                >
+                                <div
+                                    id="bulkNutrientProductField"
+                                    class="field"
+                                    hidden
+                                    ><label
+                                        class="field-label"
+                                        for="bulkNutrientProduct"
+                                        >Product / mix</label
+                                    ><input
+                                        id="bulkNutrientProduct"
+                                        maxlength="160"
+                                        placeholder="e.g. MSU 13-3-15"
+                                /></div>
+                                <div
+                                    id="bulkNutrientAmountField"
+                                    class="field full"
+                                    hidden
+                                    ><label
+                                        class="field-label"
+                                        for="bulkNutrientAmount"
+                                        >Amount / concentration</label
+                                    ><input
+                                        id="bulkNutrientAmount"
+                                        maxlength="120"
+                                        placeholder="e.g. 0.5 g per gallon"
+                                /></div>
+                                <div class="field full"
+                                    ><label
+                                        class="field-label"
+                                        for="bulkNotes"
+                                        >Notes</label
+                                    ><textarea
+                                        id="bulkNotes"
+                                        maxlength="1500"
+                                        placeholder="Shared notes for this watering round…"
+                                    ></textarea>
+                                </div>
+                            </div>
+                        </section>
+                        <div class="actions">
+                            <button
+                                id="bulkSaveButton"
+                                class="primary"
+                                type="submit"
+                                >Save watering round</button
+                            >
+                            <button
+                                id="bulkResetButton"
+                                class="secondary"
+                                type="button"
+                                >Clear round</button
+                            >
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <div
+            id="toast"
+            class="toast"
+            role="status"
+            aria-live="polite"
+        ></div>
+
+        <script>
+            const state = {
+                bootstrap: null,
+                filteredPlants: [],
+                events: new Set(),
+                weightState: "Routine",
+                bulkSelected: new Set(),
+                bulkFilteredPlants: [],
+                entryMode: "single",
+                saving: false,
+                advanceAfterSave: false,
+                pendingSave: null,
+                saveTimer: null,
+                theme: "light",
+            };
+
+            const PENDING_SAVE_KEY = "gardenLoggerPendingSaveV1";
+            const ROUND_STATE_KEY = "gardenLoggerRoundStateV1";
+            const WEIGHT_STATE_KEY = "gardenLoggerWeightStateV1";
+            const BULK_PENDING_KEY = "gardenLoggerBulkPendingV1";
+            const THEME_KEY = "gardenLoggerThemeV1";
+            const SAVE_WATCHDOG_MS = 20000;
+
+            const $ = (id) => document.getElementById(id);
+
+            function preferredTheme() {
+                const saved = localStorage.getItem(THEME_KEY);
+                if (saved === "light" || saved === "dark") return saved;
+                return window.matchMedia("(prefers-color-scheme: dark)").matches
+                    ? "dark"
+                    : "light";
+            }
+
+            function applyTheme(theme) {
+                state.theme = theme === "dark" ? "dark" : "light";
+                document.documentElement.dataset.theme = state.theme;
+                localStorage.setItem(THEME_KEY, state.theme);
+                const button = $("themeToggle");
+                button.textContent = state.theme === "dark" ? "☀" : "☾";
+                button.setAttribute(
+                    "aria-pressed",
+                    state.theme === "dark" ? "true" : "false"
+                );
+                button.setAttribute(
+                    "aria-label",
+                    `Use ${state.theme === "dark" ? "light" : "dark"} theme`
+                );
+            }
+
+            function persistRoundState() {
+                localStorage.setItem(
+                    ROUND_STATE_KEY,
+                    JSON.stringify({
+                        keepEvents: $("keepEvents").checked,
+                        events: [...state.events],
+                    })
+                );
+                sessionStorage.setItem(WEIGHT_STATE_KEY, state.weightState);
+            }
+
+            function restoreRoundState() {
+                try {
+                    const saved = JSON.parse(
+                        localStorage.getItem(ROUND_STATE_KEY) || "null"
+                    );
+                    if (saved) {
+                        $("keepEvents").checked = saved.keepEvents !== false;
+                    }
+                    if (saved && $("keepEvents").checked) {
+                        state.events = new Set(
+                            Array.isArray(saved.events) ? saved.events : []
+                        );
+                    }
+                    const savedWeightState =
+                        sessionStorage.getItem(WEIGHT_STATE_KEY);
+                    state.weightState = ["Dry", "Wet", "Routine"].includes(
+                        savedWeightState
+                    )
+                        ? savedWeightState
+                        : "Routine";
+                } catch (error) {
+                    localStorage.removeItem(ROUND_STATE_KEY);
+                }
+            }
+
+            function createLink(label, href) {
+                const link = document.createElement("a");
+                link.className = "link-pill";
+                link.href = href;
+                link.target = "_blank";
+                link.rel = "noopener";
+                link.textContent = label;
+                return link;
+            }
+
+            function renderGlobalLinks() {
+                const links = state.bootstrap.links;
+                const container = $("globalLinks");
+                container.replaceChildren(
+                    createLink("✦ Field guide", links.fieldGuide),
+                    createLink("▦ Plant tracker", links.tracker),
+                    createLink("◇ Grow-spot layout", links.layout),
+                    createLink("◫ Calendar", links.calendar),
+                    createLink("▧ Photos", links.photos),
+                    createLink("✎ Quick log sheet", links.quickLog),
+                    createLink("▤ Spreadsheet", links.spreadsheet)
+                );
+            }
+
+            function localDateTimeValue(value) {
+                const date = value ? new Date(value) : new Date();
+                const shifted = new Date(
+                    date.getTime() - date.getTimezoneOffset() * 60000
+                );
+                return shifted.toISOString().slice(0, 16);
+            }
+
+            function escapeText(value) {
+                return value === null || value === undefined
+                    ? ""
+                    : String(value);
+            }
+
+            function showToast(message, isError = false, duration = 4200) {
+                const toast = $("toast");
+                toast.textContent = message;
+                toast.classList.toggle("error", isError);
+                toast.classList.add("visible");
+                clearTimeout(showToast.timer);
+                showToast.timer = setTimeout(
+                    () => toast.classList.remove("visible"),
+                    duration
+                );
+            }
+
+            function setSaving(saving) {
+                state.saving = saving;
+                $("saveButton").disabled = saving;
+                $("saveNextButton").disabled = saving;
+                $("clearButton").disabled = saving;
+                $("bulkSaveButton").disabled = saving;
+                $("bulkResetButton").disabled = saving;
+                $("saveButton").textContent = saving
+                    ? "Saving…"
+                    : "Save observation";
+                $("connectionStatus").textContent = saving
+                    ? "Writing to History…"
+                    : "Connected to the spreadsheet";
+            }
+
+            function createRequestId() {
+                if (
+                    window.crypto &&
+                    typeof window.crypto.randomUUID === "function"
+                ) {
+                    return window.crypto.randomUUID();
+                }
+                const random = Math.random().toString(36).slice(2);
+                return `garden-${Date.now().toString(36)}-${random}`;
+            }
+
+            function comparablePayload(payload) {
+                return {
+                    plantId: payload.plantId,
+                    events: [...payload.events].sort(),
+                    observedAt: payload.observedAt,
+                    weightState: payload.weightState,
+                    weight: String(payload.weight || ""),
+                    height: String(payload.height || ""),
+                    width: String(payload.width || ""),
+                    condition: payload.condition,
+                    notes: payload.notes,
+                    potSetup: String(payload.potSetup || ""),
+                    nutrientsUsed: payload.nutrientsUsed,
+                    nutrientProduct: payload.nutrientProduct,
+                    nutrientAmount: payload.nutrientAmount,
+                    potSize: payload.potSize,
+                    flowerCount: String(payload.flowerCount || ""),
+                    flowerDetails: payload.flowerDetails,
+                    photoUrl: payload.photoUrl,
+                    pestIssue: payload.pestIssue,
+                    pestTreatment: payload.pestTreatment,
+                };
+            }
+
+            function payloadFingerprint(payload) {
+                return JSON.stringify(comparablePayload(payload));
+            }
+
+            function persistPendingSave(pendingSave) {
+                state.pendingSave = pendingSave;
+                localStorage.setItem(
+                    PENDING_SAVE_KEY,
+                    JSON.stringify(pendingSave)
+                );
+            }
+
+            function clearPendingSave() {
+                state.pendingSave = null;
+                localStorage.removeItem(PENDING_SAVE_KEY);
+            }
+
+            function readPendingSave() {
+                try {
+                    const value = JSON.parse(
+                        localStorage.getItem(PENDING_SAVE_KEY) || "null"
+                    );
+                    if (!value || !value.requestId || !value.payload)
+                        return null;
+                    return value;
+                } catch (error) {
+                    localStorage.removeItem(PENDING_SAVE_KEY);
+                    return null;
+                }
+            }
+
+            function clearSaveTimer() {
+                clearTimeout(state.saveTimer);
+                state.saveTimer = null;
+            }
+
+            function renderPlantOptions(query = "", preferredId = "") {
+                const normalized = query.trim().toLowerCase();
+                const plants = state.bootstrap.plants.filter((plant) =>
+                    [plant.id, plant.name, plant.scientificName, plant.label]
+                        .join(" ")
+                        .toLowerCase()
+                        .includes(normalized)
+                );
+                state.filteredPlants = plants;
+                const select = $("plantSelect");
+                const currentId =
+                    preferredId ||
+                    select.value ||
+                    localStorage.getItem("gardenPlantId") ||
+                    "";
+                select.replaceChildren();
+                plants.forEach((plant) => {
+                    const option = document.createElement("option");
+                    option.value = plant.id;
+                    option.textContent = `${plant.name} · ${plant.id}${plant.label ? ` · label ${plant.label}` : ""}`;
+                    select.append(option);
+                });
+                if (plants.some((plant) => plant.id === currentId))
+                    select.value = currentId;
+                renderPlantSummary();
+            }
+
+            function selectedPlant() {
+                return (
+                    state.bootstrap.plants.find(
+                        (plant) => plant.id === $("plantSelect").value
+                    ) || null
+                );
+            }
+
+            function renderPlantSummary() {
+                const plant = selectedPlant();
+                const summary = $("plantSummary");
+                summary.replaceChildren();
+                if (!plant) {
+                    const empty = document.createElement("div");
+                    empty.textContent = "No plants match that search.";
+                    summary.append(empty);
+                    return;
+                }
+                localStorage.setItem("gardenPlantId", plant.id);
+                $("potSetup").value = plant.potSetup || 1;
+                $("currentPotSize").textContent =
+                    `Current pot: ${plant.currentPotSize || "not logged"}`;
+
+                const left = document.createElement("div");
+                const name = document.createElement("div");
+                name.className = "plant-name";
+                name.textContent = plant.name;
+                const meta = document.createElement("div");
+                meta.className = "plant-meta";
+                meta.textContent = [
+                    plant.scientificName,
+                    plant.label
+                        ? `Current label ${plant.label}`
+                        : "No current label",
+                ]
+                    .filter(Boolean)
+                    .join(" · ");
+                left.append(name, meta);
+
+                const badge = document.createElement("div");
+                badge.className = "plant-id";
+                badge.textContent = plant.id;
+
+                const metrics = document.createElement("div");
+                metrics.className = "metrics";
+                const metricData = [
+                    ["Last water", plant.lastWatered || "—"],
+                    [
+                        "Days",
+                        plant.daysSinceWater === ""
+                            ? "—"
+                            : plant.daysSinceWater,
+                    ],
+                    [
+                        "Latest weight",
+                        plant.latestWeight === ""
+                            ? "—"
+                            : `${plant.latestWeight} g`,
+                    ],
+                    ["Pot", plant.currentPotSize || "—"],
+                ];
+                metricData.forEach(([label, value]) => {
+                    const metric = document.createElement("div");
+                    metric.className = "metric";
+                    const labelNode = document.createElement("div");
+                    labelNode.className = "metric-label";
+                    labelNode.textContent = label;
+                    const valueNode = document.createElement("div");
+                    valueNode.className = "metric-value";
+                    valueNode.textContent = escapeText(value);
+                    metric.append(labelNode, valueNode);
+                    metrics.append(metric);
+                });
+                const plantLinks = document.createElement("div");
+                plantLinks.className = "plant-links";
+                plantLinks.append(
+                    createLink("Plant guide", plant.fieldGuideUrl),
+                    createLink("History & charts", plant.historyUrl)
+                );
+                left.append(metrics);
+                left.append(plantLinks);
+                summary.append(left, badge);
+            }
+
+            function renderEventChips() {
+                const container = $("eventChips");
+                container.replaceChildren();
+                state.bootstrap.events.forEach((eventName) => {
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.className = "chip";
+                    button.dataset.event = eventName;
+                    button.setAttribute(
+                        "aria-pressed",
+                        state.events.has(eventName) ? "true" : "false"
+                    );
+                    button.textContent = eventName;
+                    button.addEventListener("click", () =>
+                        toggleEvent(eventName)
+                    );
+                    container.append(button);
+                });
+                renderWeightState();
+                updateConditionalFields();
+            }
+
+            function renderWeightState() {
+                document.querySelectorAll(".segment").forEach((button) => {
+                    button.setAttribute(
+                        "aria-pressed",
+                        button.dataset.state === state.weightState
+                            ? "true"
+                            : "false"
+                    );
+                });
+            }
+
+            function toggleEvent(eventName, forceOn = false) {
+                if (forceOn || !state.events.has(eventName))
+                    state.events.add(eventName);
+                else state.events.delete(eventName);
+                document.querySelectorAll(".chip").forEach((button) => {
+                    button.setAttribute(
+                        "aria-pressed",
+                        state.events.has(button.dataset.event)
+                            ? "true"
+                            : "false"
+                    );
+                });
+                updateConditionalFields();
+                persistRoundState();
+            }
+
+            function setWeightState(nextState) {
+                state.weightState = nextState;
+                if (state.weightState === "Wet") toggleEvent("Water", true);
+                renderWeightState();
+                updateConditionalFields();
+                persistRoundState();
+            }
+
+            function updateConditionalFields() {
+                const showWeight =
+                    state.events.has("Water") ||
+                    state.events.has("Weigh") ||
+                    state.weightState ||
+                    $("weight").value;
+                const showMeasure =
+                    state.events.has("Measure") ||
+                    $("height").value ||
+                    $("width").value;
+                $("weightSection").classList.toggle(
+                    "visible",
+                    Boolean(showWeight)
+                );
+                $("measureSection").classList.toggle(
+                    "visible",
+                    Boolean(showMeasure)
+                );
+                [
+                    ["waterSection", "Water"],
+                    ["checkSection", "Check"],
+                    ["repotSection", "Repot"],
+                    ["flowerSection", "Flower"],
+                    ["photoSection", "Photo"],
+                    ["pestSection", "Pest"],
+                ].forEach(([sectionId, eventName]) => {
+                    $(sectionId).classList.toggle(
+                        "visible",
+                        state.events.has(eventName)
+                    );
+                });
+                updateNutrientFields("", $("nutrientsUsed").value);
+            }
+
+            function updateNutrientFields(prefix, value) {
+                const productFieldId = prefix
+                    ? `${prefix}NutrientProductField`
+                    : "nutrientProductField";
+                const amountFieldId = prefix
+                    ? `${prefix}NutrientAmountField`
+                    : "nutrientAmountField";
+                $(productFieldId).hidden = value !== "Yes";
+                $(amountFieldId).hidden = value !== "Yes";
+            }
+
+            function renderRecent(entries) {
+                const card = $("recentCard");
+                const list = $("recentList");
+                list.replaceChildren();
+                if (!entries || !entries.length) {
+                    card.hidden = true;
+                    return;
+                }
+                entries.forEach((entry) => {
+                    const item = document.createElement("div");
+                    item.className = "recent-item";
+                    const left = document.createElement("div");
+                    const main = document.createElement("div");
+                    main.className = "recent-main";
+                    main.textContent = `${entry.name || entry.plantId}${entry.weight !== "" ? ` · ${entry.weight} g` : ""}`;
+                    const sub = document.createElement("div");
+                    sub.className = "recent-sub";
+                    sub.textContent = `${entry.observedAt}${entry.weightState ? ` · ${entry.weightState}` : ""}`;
+                    const badge = document.createElement("div");
+                    badge.className = "event-badge";
+                    badge.textContent = entry.event;
+                    left.append(main, sub);
+                    item.append(left, badge);
+                    list.append(item);
+                });
+                card.hidden = false;
+            }
+
+            function setEntryMode(mode) {
+                state.entryMode = mode === "bulk" ? "bulk" : "single";
+                const bulk = state.entryMode === "bulk";
+                $("entryForm").hidden = bulk;
+                $("bulkWaterForm").hidden = !bulk;
+                $("singleModeTab").setAttribute("aria-selected", String(!bulk));
+                $("bulkModeTab").setAttribute("aria-selected", String(bulk));
+                if (bulk) renderBulkPlants();
+            }
+
+            function renderBulkPlants(query = "") {
+                const normalized = query.trim().toLowerCase();
+                const plants = state.bootstrap.plants.filter((plant) =>
+                    [plant.id, plant.name, plant.scientificName, plant.label]
+                        .join(" ")
+                        .toLowerCase()
+                        .includes(normalized)
+                );
+                state.bulkFilteredPlants = plants;
+                const list = $("bulkPlantList");
+                list.replaceChildren();
+                plants.forEach((plant) => {
+                    const label = document.createElement("label");
+                    label.className = "bulk-plant";
+                    const checkbox = document.createElement("input");
+                    checkbox.type = "checkbox";
+                    checkbox.value = plant.id;
+                    checkbox.checked = state.bulkSelected.has(plant.id);
+                    checkbox.addEventListener("change", () => {
+                        if (checkbox.checked) state.bulkSelected.add(plant.id);
+                        else state.bulkSelected.delete(plant.id);
+                        renderBulkCount();
+                    });
+                    const text = document.createElement("span");
+                    const name = document.createElement("span");
+                    name.className = "bulk-name";
+                    name.textContent = plant.name;
+                    const meta = document.createElement("span");
+                    meta.className = "bulk-meta";
+                    meta.textContent = `${plant.id}${plant.label ? ` · ${plant.label}` : ""} · ${plant.daysSinceWater === "" ? "no water age" : `${plant.daysSinceWater} days`}`;
+                    text.append(name, meta);
+                    label.append(checkbox, text);
+                    list.append(label);
+                });
+                renderBulkCount();
+            }
+
+            function renderBulkCount() {
+                const count = state.bulkSelected.size;
+                $("bulkCount").textContent = `${count} selected`;
+                $("bulkSaveButton").textContent = count
+                    ? `Save water for ${count}`
+                    : "Save watering round";
+            }
+
+            function bulkPayload() {
+                const observedValue = $("bulkObservedAt").value;
+                const observedDate = new Date(observedValue);
+                if (!observedValue || Number.isNaN(observedDate.getTime())) {
+                    throw new Error("Choose a valid watering date and time.");
+                }
+                if (!state.bulkSelected.size) {
+                    throw new Error("Choose at least one plant to water.");
+                }
+                return {
+                    plantIds: [...state.bulkSelected],
+                    observedAt: observedDate.toISOString(),
+                    nutrientsUsed: $("bulkNutrientsUsed").value,
+                    nutrientProduct: $("bulkNutrientProduct").value.trim(),
+                    nutrientAmount: $("bulkNutrientAmount").value.trim(),
+                    notes: $("bulkNotes").value.trim(),
+                };
+            }
+
+            function clearBulkRound() {
+                state.bulkSelected.clear();
+                [
+                    "bulkNutrientProduct",
+                    "bulkNutrientAmount",
+                    "bulkNotes",
+                ].forEach((id) => ($(id).value = ""));
+                $("bulkNutrientsUsed").value = "";
+                $("bulkObservedAt").value = localDateTimeValue();
+                localStorage.removeItem(BULK_PENDING_KEY);
+                renderBulkPlants($("bulkSearch").value);
+                updateNutrientFields("bulk", "");
+            }
+
+            function readBulkPendingSave() {
+                try {
+                    const value = JSON.parse(
+                        localStorage.getItem(BULK_PENDING_KEY) || "null"
+                    );
+                    if (!value || !value.requestId || !value.payload)
+                        return null;
+                    return value;
+                } catch (error) {
+                    localStorage.removeItem(BULK_PENDING_KEY);
+                    return null;
+                }
+            }
+
+            function restoreBulkPendingSave() {
+                const pending = readBulkPendingSave();
+                if (!pending) return false;
+                const payload = pending.payload;
+                state.bulkSelected = new Set(
+                    Array.isArray(payload.plantIds) ? payload.plantIds : []
+                );
+                $("bulkObservedAt").value = localDateTimeValue(
+                    payload.observedAt
+                );
+                $("bulkNutrientsUsed").value = payload.nutrientsUsed || "";
+                $("bulkNutrientProduct").value = payload.nutrientProduct || "";
+                $("bulkNutrientAmount").value = payload.nutrientAmount || "";
+                $("bulkNotes").value = payload.notes || "";
+                updateNutrientFields("bulk", payload.nutrientsUsed || "");
+                setEntryMode("bulk");
+                showToast(
+                    "Recovered the watering round that was waiting for Google. Tap Save again to confirm it; retries will not create duplicates.",
+                    false,
+                    10000
+                );
+                return true;
+            }
+
+            function submitBulkWater() {
+                if (state.saving) return;
+                let payload;
+                try {
+                    payload = bulkPayload();
+                } catch (error) {
+                    showToast(error.message, true);
+                    return;
+                }
+                const stored = readBulkPendingSave();
+                const pending =
+                    stored &&
+                    JSON.stringify(stored.payload) === JSON.stringify(payload)
+                        ? stored
+                        : { requestId: createRequestId(), payload };
+                localStorage.setItem(BULK_PENDING_KEY, JSON.stringify(pending));
+                setSaving(true);
+                google.script.run
+                    .withSuccessHandler((result) => {
+                        localStorage.removeItem(BULK_PENDING_KEY);
+                        setSaving(false);
+                        showToast(result.message);
+                        clearBulkRound();
+                        refreshRecent();
+                    })
+                    .withFailureHandler((error) => {
+                        setSaving(false);
+                        showToast(
+                            error && error.message
+                                ? error.message
+                                : "Google did not confirm the watering round. It is preserved; tap Save again.",
+                            true,
+                            10000
+                        );
+                    })
+                    .saveBulkWaterObservation({
+                        ...pending.payload,
+                        requestId: pending.requestId,
+                    });
+            }
+
+            function clearEntry(options = {}) {
+                if (state.pendingSave && !options.afterSave) {
+                    const discard = window.confirm(
+                        "This entry may still be finishing in the spreadsheet. Clear it anyway? A late save could still appear in History."
+                    );
+                    if (!discard) return;
+                    clearPendingSave();
+                }
+                const keepEvents =
+                    options.keepEvents ?? $("keepEvents").checked;
+                if (!keepEvents) state.events.clear();
+                [
+                    "weight",
+                    "height",
+                    "width",
+                    "condition",
+                    "notes",
+                    "nutrientProduct",
+                    "nutrientAmount",
+                    "potSize",
+                    "flowerCount",
+                    "flowerDetails",
+                    "photoUrl",
+                    "pestIssue",
+                    "pestTreatment",
+                ].forEach((id) => {
+                    $(id).value = "";
+                });
+                $("nutrientsUsed").value = "";
+                $("observedAt").value = localDateTimeValue();
+                renderWeightState();
+                persistRoundState();
+                renderEventChips();
+            }
+
+            function advancePlant() {
+                const plants = state.bootstrap.plants;
+                const currentIndex = plants.findIndex(
+                    (plant) => plant.id === $("plantSelect").value
+                );
+                const next =
+                    plants[(currentIndex + 1 + plants.length) % plants.length];
+                $("plantSearch").value = "";
+                renderPlantOptions("", next.id);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+
+            function payloadFromForm() {
+                const observedValue = $("observedAt").value;
+                const observedDate = new Date(observedValue);
+                if (!observedValue || Number.isNaN(observedDate.getTime()))
+                    throw new Error(
+                        "Choose a valid observation date and time."
+                    );
+                return {
+                    plantId: $("plantSelect").value,
+                    events: [...state.events],
+                    observedAt: observedDate.toISOString(),
+                    weightState: state.weightState,
+                    weight: $("weight").value,
+                    height: $("height").value,
+                    width: $("width").value,
+                    condition: $("condition").value.trim(),
+                    notes: $("notes").value.trim(),
+                    potSetup: $("potSetup").value,
+                    nutrientsUsed: $("nutrientsUsed").value,
+                    nutrientProduct: $("nutrientProduct").value.trim(),
+                    nutrientAmount: $("nutrientAmount").value.trim(),
+                    potSize: $("potSize").value.trim(),
+                    flowerCount: $("flowerCount").value,
+                    flowerDetails: $("flowerDetails").value.trim(),
+                    photoUrl: $("photoUrl").value.trim(),
+                    pestIssue: $("pestIssue").value.trim(),
+                    pestTreatment: $("pestTreatment").value.trim(),
+                };
+            }
+
+            function refreshRecent() {
+                google.script.run
+                    .withSuccessHandler(renderRecent)
+                    .withFailureHandler(() => {})
+                    .getRecentWebObservations();
+            }
+
+            function restorePendingSave() {
+                const pending = readPendingSave();
+                if (!pending) return false;
+                const payload = pending.payload;
+                persistPendingSave(pending);
+                renderPlantOptions("", payload.plantId);
+                state.events = new Set(
+                    Array.isArray(payload.events) ? payload.events : []
+                );
+                if (payload.weightState) {
+                    state.weightState = payload.weightState;
+                    sessionStorage.setItem(WEIGHT_STATE_KEY, state.weightState);
+                }
+                $("observedAt").value = localDateTimeValue(payload.observedAt);
+                $("weight").value = payload.weight || "";
+                $("height").value = payload.height || "";
+                $("width").value = payload.width || "";
+                $("condition").value = payload.condition || "";
+                $("notes").value = payload.notes || "";
+                $("potSetup").value = payload.potSetup || 1;
+                [
+                    "nutrientsUsed",
+                    "nutrientProduct",
+                    "nutrientAmount",
+                    "potSize",
+                    "flowerCount",
+                    "flowerDetails",
+                    "photoUrl",
+                    "pestIssue",
+                    "pestTreatment",
+                ].forEach((id) => {
+                    $(id).value = payload[id] || "";
+                });
+                renderWeightState();
+                renderEventChips();
+                showToast(
+                    "Recovered the entry that was waiting for Google. Tap Save again to confirm it; retries will not create duplicates.",
+                    false,
+                    10000
+                );
+                return true;
+            }
+
+            function submitEntry(advanceAfterSave) {
+                if (state.saving) return;
+                let payload;
+                try {
+                    payload = payloadFromForm();
+                } catch (error) {
+                    showToast(error.message, true);
+                    return;
+                }
+                let pending = state.pendingSave;
+                if (
+                    pending &&
+                    payloadFingerprint(pending.payload) !==
+                        payloadFingerprint(payload)
+                ) {
+                    showToast(
+                        "A previous version of this entry may still be saving. Restore its values or use Clear entry before starting a different reading.",
+                        true,
+                        10000
+                    );
+                    return;
+                }
+
+                if (!pending) {
+                    pending = {
+                        requestId: createRequestId(),
+                        payload,
+                        startedAt: new Date().toISOString(),
+                    };
+                }
+                pending.advanceAfterSave = advanceAfterSave;
+                persistPendingSave(pending);
+                state.advanceAfterSave = advanceAfterSave;
+                setSaving(true);
+                const requestId = pending.requestId;
+                const requestPayload = { ...pending.payload, requestId };
+                clearSaveTimer();
+                state.saveTimer = setTimeout(() => {
+                    if (
+                        !state.pendingSave ||
+                        state.pendingSave.requestId !== requestId
+                    )
+                        return;
+                    setSaving(false);
+                    $("connectionStatus").textContent =
+                        "Save still processing · retry is safe";
+                    showToast(
+                        "Google is taking longer than expected. The entry is preserved on this phone. Wait a moment, then tap Save again; the retry cannot add a duplicate.",
+                        true,
+                        12000
+                    );
+                }, SAVE_WATCHDOG_MS);
+                google.script.run
+                    .withSuccessHandler((result) => {
+                        if (
+                            !state.pendingSave ||
+                            state.pendingSave.requestId !== requestId
+                        )
+                            return;
+                        clearSaveTimer();
+                        clearPendingSave();
+                        setSaving(false);
+                        showToast(result.message);
+                        clearEntry({ afterSave: true });
+                        if (state.advanceAfterSave) advancePlant();
+                        refreshRecent();
+                    })
+                    .withFailureHandler((error) => {
+                        if (
+                            !state.pendingSave ||
+                            state.pendingSave.requestId !== requestId
+                        )
+                            return;
+                        clearSaveTimer();
+                        setSaving(false);
+                        $("connectionStatus").textContent =
+                            "Entry kept · retry is safe";
+                        const message =
+                            error && error.message
+                                ? error.message
+                                : "Google did not confirm the save. Your entry is still on this phone; wait a moment and tap Save again.";
+                        showToast(message, true, 10000);
+                    })
+                    .saveWebObservation(requestPayload);
+            }
+
+            function showLoadFailure(error, step = "loading garden data") {
+                const detail =
+                    error && error.message
+                        ? error.message
+                        : "Try refreshing this page.";
+                const loading = $("loading");
+                loading.textContent = `Could not finish ${step}: ${detail}`;
+                loading.classList.add("error");
+                $("connectionStatus").textContent = "Connection failed";
+            }
+
+            function initialize(bootstrap) {
+                let step = "reading the spreadsheet response";
+                try {
+                    state.bootstrap = bootstrap;
+                    $("connectionStatus").textContent =
+                        `Connected · logger ${bootstrap.version}`;
+                    $("observedAt").value = localDateTimeValue(
+                        bootstrap.serverTime
+                    );
+                    step = "restoring saved round settings";
+                    restoreRoundState();
+                    step = "building navigation";
+                    renderGlobalLinks();
+                    step = "building the plant selector";
+                    renderPlantOptions();
+                    step = "building event controls";
+                    renderEventChips();
+                    step = "building recent history";
+                    renderRecent(bootstrap.recent);
+                    step = "opening the entry workspace";
+                    $("loading").hidden = true;
+                    $("modeTabs").hidden = false;
+                    $("bulkObservedAt").value = localDateTimeValue(
+                        bootstrap.serverTime
+                    );
+                    setEntryMode("single");
+                    step = "restoring an unfinished entry";
+                    if (!restorePendingSave()) restoreBulkPendingSave();
+                } catch (error) {
+                    showLoadFailure(error, step);
+                }
+            }
+
+            $("plantSearch").addEventListener("input", (event) =>
+                renderPlantOptions(event.target.value)
+            );
+            $("plantSelect").addEventListener("change", renderPlantSummary);
+            $("themeToggle").addEventListener("click", () =>
+                applyTheme(state.theme === "dark" ? "light" : "dark")
+            );
+            $("keepEvents").addEventListener("change", persistRoundState);
+            $("singleModeTab").addEventListener("click", () =>
+                setEntryMode("single")
+            );
+            $("bulkModeTab").addEventListener("click", () =>
+                setEntryMode("bulk")
+            );
+            $("weightStates").addEventListener("click", (event) => {
+                const button = event.target.closest("[data-state]");
+                if (button) setWeightState(button.dataset.state);
+            });
+            $("weight").addEventListener("input", () => {
+                if ($("weight").value) toggleEvent("Weigh", true);
+                updateConditionalFields();
+            });
+            ["height", "width"].forEach((id) => {
+                $(id).addEventListener("input", () => {
+                    if ($(id).value) toggleEvent("Measure", true);
+                    updateConditionalFields();
+                });
+            });
+            $("nutrientsUsed").addEventListener("change", (event) =>
+                updateNutrientFields("", event.target.value)
+            );
+            $("bulkNutrientsUsed").addEventListener("change", (event) =>
+                updateNutrientFields("bulk", event.target.value)
+            );
+            $("bulkSearch").addEventListener("input", (event) =>
+                renderBulkPlants(event.target.value)
+            );
+            $("bulkSelectVisible").addEventListener("click", () => {
+                state.bulkFilteredPlants.forEach((plant) =>
+                    state.bulkSelected.add(plant.id)
+                );
+                renderBulkPlants($("bulkSearch").value);
+            });
+            $("bulkClear").addEventListener("click", () => {
+                state.bulkSelected.clear();
+                renderBulkPlants($("bulkSearch").value);
+            });
+            $("bulkResetButton").addEventListener("click", clearBulkRound);
+            $("bulkWaterForm").addEventListener("submit", (event) => {
+                event.preventDefault();
+                submitBulkWater();
+            });
+            $("clearButton").addEventListener("click", () =>
+                clearEntry({ keepEvents: false })
+            );
+            $("entryForm").addEventListener("submit", (event) => {
+                event.preventDefault();
+                submitEntry(false);
+            });
+            $("saveNextButton").addEventListener("click", () =>
+                submitEntry(true)
+            );
+
+            applyTheme(preferredTheme());
+
+            google.script.run
+                .withSuccessHandler(initialize)
+                .withFailureHandler((error) => showLoadFailure(error))
+                .getWebAppBootstrap();
+        </script>
+    </body>
+</html>

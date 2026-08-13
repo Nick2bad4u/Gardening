@@ -417,6 +417,17 @@ function Get-ExtendedMetadataValue {
     return ConvertFrom-HtmlText ([string] $property.Value.value)
 }
 
+function Get-NormalizedAuthorName {
+    param([AllowEmptyString()][string] $Value)
+
+    $authorName = ConvertFrom-HtmlText $Value
+    if ($authorName -eq 'Unknown author Unknown author') {
+        return 'Unknown author'
+    }
+
+    return $authorName
+}
+
 function Get-LicenseUrl {
     param(
         [AllowEmptyString()][string] $LicenseName,
@@ -424,8 +435,8 @@ function Get-LicenseUrl {
     )
 
     if (-not [string]::IsNullOrWhiteSpace($ProvidedUrl)) {
-        if ($ProvidedUrl -match '^http://creativecommons\.org/') {
-            return $ProvidedUrl -replace '^http://', 'https://'
+        if ($ProvidedUrl -match '^http[:]//creativecommons[.]org/') {
+            return $ProvidedUrl -replace '^http[:]', 'https:'
         }
 
         return $ProvidedUrl
@@ -624,7 +635,7 @@ function Get-WikimediaCandidateList {
                 PageId = [string] $page.pageid
                 Title = (ConvertFrom-HtmlText ([string] $page.title)).Replace('File:', '')
                 Description = $description
-                Author = Get-ExtendedMetadataValue -Metadata $metadata -Name 'Artist'
+                Author = Get-NormalizedAuthorName (Get-ExtendedMetadataValue -Metadata $metadata -Name 'Artist')
                 License = $licenseName
                 LicenseUrl = Get-LicenseUrl -LicenseName $licenseName -ProvidedUrl $licenseUrl
                 SourceUrl = [string] $imageInfo.descriptionurl
@@ -723,7 +734,7 @@ function Get-INaturalistCandidateList {
             Author = [string] $photo.attribution
             License = $licenseDisplay
             LicenseUrl = Get-LicenseUrl -LicenseName $licenseDisplay -ProvidedUrl ''
-            SourceUrl = "https://www.inaturalist.org/observations/$($observation.id)"
+            SourceUrl = 'https://www.inaturalist.org/observations/' + [string] $observation.id
             DownloadUrl = $downloadUrl
             Mime = if ($downloadUrl -match '\.png(?:\?|$)') { 'image/png' } else { 'image/jpeg' }
             Subject = 'habitat'

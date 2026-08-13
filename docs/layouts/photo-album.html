@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+        />
+        <meta
+            name="description"
+            content="Entry page for the Fenton plant collection's shared Google Photos album."
+        />
+        <title>Plant photo album · Fenton collection</title>
+        <script>
+            (() => {
+                const saved = localStorage.getItem("gardening-site-theme");
+                const dark = saved
+                    ? saved === "dark"
+                    : matchMedia("(prefers-color-scheme: dark)").matches;
+                document.documentElement.dataset.theme = dark
+                    ? "dark"
+                    : "light";
+            })();
+        </script>
+        <link
+            rel="icon"
+            href="../plant-booklet/favicon.svg"
+        />
+        <link
+            rel="stylesheet"
+            href="./plant-tracker.css"
+        />
+    </head>
+    <body>
+        <a
+            class="skip-link"
+            href="#album"
+            >Skip to album</a
+        >
+
+        <nav
+            class="site-nav"
+            aria-label="Collection tools"
+        >
+            <a
+                class="brand"
+                href="../plant-booklet/"
+            >
+                <span
+                    class="brand-mark"
+                    aria-hidden="true"
+                    >✦</span
+                >
+                <span>
+                    <strong>Fenton collection</strong>
+                    <small>Photo album</small>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a href="../plant-booklet/">✦ Field guide</a>
+                <a href="./plant-tracker.html">▦ Plant tracker</a>
+                <a href="./grow-spot-layout.html">◇ Grow-spot layout</a>
+                <a href="./indoor-acclimation-calendar.html">◫ Calendar</a>
+                <button
+                    id="theme-toggle"
+                    type="button"
+                    aria-pressed="false"
+                >
+                    Dark mode
+                </button>
+            </div>
+        </nav>
+
+        <main id="album">
+            <section class="album-entry">
+                <figure class="album-cover">
+                    <img
+                        src="../../assets/collection-photos/2026-07-31-starter-group.webp"
+                        alt="Overhead view of the cactus and succulent collection under the grow light"
+                    />
+                    <figcaption> Collection view · July 31, 2026 </figcaption>
+                </figure>
+
+                <div class="album-copy">
+                    <p class="eyebrow">Living collection · Google Photos</p>
+                    <h1>The garden, between log entries.</h1>
+                    <p class="lede">
+                        Open the shared album for current plant photographs,
+                        close-ups, flowers, setup changes, and progress
+                        pictures. It stays in Google Photos so new images can be
+                        added without rebuilding this site.
+                    </p>
+                    <div class="album-actions">
+                        <a
+                            class="button primary album-button"
+                            href="https://photos.google.com/share/AF1QipPczXuH_suX83Sz-W-jJEfi7NUcc73y5TcSrZzn_-bKLhzVMTxiSj0udEYX6utbKQ?key=WEdxZ2FRb3UwOW4yYVRzb0tNc3UzYkxMQkhsWTBR"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            Open the Google Photos album
+                        </a>
+                        <a
+                            class="button"
+                            href="../plant-booklet/"
+                            >Return to the field guide</a
+                        >
+                    </div>
+                    <p class="album-note">
+                        Anyone with the shared Google Photos link may be able to
+                        view the album. Google Photos opens in a separate tab
+                        because it does not support reliable embedding here.
+                    </p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <span>Fenton plant collection</span>
+            <span>Collection photographs © Nick · all rights reserved</span>
+        </footer>
+
+        <script>
+            const themeToggle = document.querySelector("#theme-toggle");
+
+            function applyTheme(theme) {
+                document.documentElement.dataset.theme = theme;
+                localStorage.setItem("gardening-site-theme", theme);
+                const dark = theme === "dark";
+                themeToggle.textContent = dark ? "Light mode" : "Dark mode";
+                themeToggle.setAttribute("aria-pressed", String(dark));
+            }
+
+            themeToggle.addEventListener("click", () => {
+                applyTheme(
+                    document.documentElement.dataset.theme === "dark"
+                        ? "light"
+                        : "dark"
+                );
+            });
+
+            applyTheme(document.documentElement.dataset.theme || "light");
+        </script>
+    </body>
+</html>

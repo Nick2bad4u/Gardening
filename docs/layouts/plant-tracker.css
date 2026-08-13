@@ -284,6 +284,79 @@ h2 {
     background: var(--accent);
 }
 
+.album-entry {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
+    min-height: min(42rem, calc(100vh - 13rem));
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 1.5rem;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.album-cover {
+    position: relative;
+    min-height: 32rem;
+    margin: 0;
+    overflow: hidden;
+    background: var(--surface-strong);
+}
+
+.album-cover::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgb(11 23 16 / 68%));
+    content: "";
+    pointer-events: none;
+}
+
+.album-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.album-cover figcaption {
+    position: absolute;
+    z-index: 1;
+    right: 1.25rem;
+    bottom: 1rem;
+    left: 1.25rem;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.album-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(1.5rem, 5vw, 4rem);
+}
+
+.album-copy h1 {
+    max-width: 10ch;
+}
+
+.album-actions {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 2rem;
+}
+
+.album-button {
+    min-height: 3.25rem;
+}
+
+.album-note {
+    margin: 1.25rem 0 0;
+    color: var(--muted);
+    font-size: 0.86rem;
+}
+
 .tracker-stats,
 .metric-grid,
 .baseline-grid,
@@ -398,6 +471,32 @@ code {
     justify-content: space-between;
     gap: 1.5rem;
     padding: 0.4rem 0.35rem 1rem;
+}
+
+.panel-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    justify-content: flex-end;
+}
+
+body.table-maximized {
+    overflow: hidden;
+}
+
+.sheet-panel.is-maximized {
+    position: fixed;
+    inset: 0.5rem;
+    z-index: 100;
+    display: grid;
+    grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+    overflow: hidden;
+    border-radius: 1rem;
+}
+
+.sheet-panel.is-maximized .sheet-frame-wrap {
+    max-height: none;
+    min-height: 0;
 }
 
 .sheet-panel > header p:last-child,
@@ -543,6 +642,35 @@ code {
     font-weight: 800;
 }
 
+#tracker-table th[data-sort] {
+    padding: 0;
+}
+
+#tracker-table th[data-sort] button {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0.62rem 0.75rem;
+    border: 0;
+    color: inherit;
+    background: transparent;
+    font: inherit;
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+#tracker-table th[data-sort] button:hover,
+#tracker-table th[data-sort] button:focus-visible {
+    background: rgba(255, 255, 255, 0.13);
+    outline: 2px solid rgba(255, 255, 255, 0.75);
+    outline-offset: -3px;
+}
+
+#tracker-table th[aria-sort="ascending"] button,
+#tracker-table th[aria-sort="descending"] button {
+    color: #fff3b2;
+}
+
 #tracker-table tbody tr:nth-child(even) td,
 #history-table tbody tr:nth-child(even) td {
     background: var(--table-alt);
@@ -606,6 +734,20 @@ code {
     max-width: 28rem;
     min-width: 12rem;
     white-space: normal !important;
+}
+
+.event-details-cell {
+    line-height: 1.55;
+}
+
+.event-details-cell a,
+.care-milestones a {
+    color: var(--accent-strong);
+    font-weight: 800;
+}
+
+.care-milestones {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .dry-time-cell {
@@ -936,6 +1078,32 @@ code {
     opacity: 0.86;
 }
 
+.activity-water {
+    fill: var(--chart-weight) !important;
+}
+
+.activity-repot {
+    fill: var(--chart-width) !important;
+}
+
+.activity-flower {
+    fill: #c85b93 !important;
+}
+
+.activity-photo {
+    fill: #8068b2 !important;
+}
+
+.activity-pest {
+    fill: var(--warning) !important;
+}
+
+.activity-check,
+.activity-measure,
+.activity-weigh {
+    fill: var(--accent) !important;
+}
+
 .chart-interval-bar:focus {
     outline: none;
     stroke: var(--text);
@@ -1072,8 +1240,13 @@ footer a:focus-visible {
 
     .hero,
     .quick-notes,
-    .logging-guide {
+    .logging-guide,
+    .album-entry {
         grid-template-columns: 1fr;
+    }
+
+    .album-cover {
+        min-height: clamp(19rem, 62vw, 30rem);
     }
 
     .hero-actions {
@@ -1118,6 +1291,14 @@ footer a:focus-visible {
 
     .hero {
         border-radius: 1rem;
+    }
+
+    .album-entry {
+        border-radius: 1rem;
+    }
+
+    .album-copy {
+        padding: 1.25rem;
     }
 
     h1 {

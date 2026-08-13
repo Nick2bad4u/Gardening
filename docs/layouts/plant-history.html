@@ -57,9 +57,11 @@
                 </span>
             </a>
             <div class="nav-links">
-                <a href="./plant-tracker.html">All plants</a>
-                <a href="../plant-booklet/">Field guide</a>
-                <a href="./grow-spot-layout.html">Layout</a>
+                <a href="./plant-tracker.html">▦ All plants</a>
+                <a href="../plant-booklet/">✦ Field guide</a>
+                <a href="./grow-spot-layout.html">◇ Grow-spot layout</a>
+                <a href="./indoor-acclimation-calendar.html">◫ Calendar</a>
+                <a href="./photo-album.html">▧ Photos</a>
                 <button
                     id="theme-toggle"
                     type="button"
@@ -98,8 +100,15 @@
                         target="_blank"
                         rel="noreferrer"
                     >
-                        Open Quick log
+                        ✎ Open Quick log
                     </a>
+                    <a
+                        class="button"
+                        href="https://script.google.com/macros/s/AKfycbytpdMto4ZAqOf49igDNoGYr-J6fmSRDNJOKP4-dKDFRmM2YkTCKJp3kmhrD4gOJShF/exec"
+                        target="_blank"
+                        rel="noreferrer"
+                        >📱 Open mobile logger</a
+                    >
                     <a
                         class="button"
                         id="sheet-plant-page"
@@ -107,13 +116,13 @@
                         target="_blank"
                         rel="noreferrer"
                     >
-                        Open Sheets plant page
+                        ▦ Open Sheets plant page
                     </a>
                     <a
                         class="button"
                         href="./plant-tracker.html"
                     >
-                        Back to all plants
+                        ← Back to all plants
                     </a>
                 </div>
             </header>
@@ -225,6 +234,67 @@
                             >No dated history</small
                         >
                     </article>
+                </div>
+            </section>
+
+            <section
+                class="analytics-panel"
+                aria-labelledby="care-title"
+            >
+                <header>
+                    <div>
+                        <p class="eyebrow">Structured care history</p>
+                        <h2 id="care-title">Care milestones</h2>
+                        <p
+                            >Counts come from dated Water, Repot, Flower, Photo,
+                            Pest, and Check events. A zero means nothing has
+                            been logged yet.</p
+                        >
+                    </div>
+                </header>
+                <div class="trend-grid care-milestones">
+                    <article
+                        ><span>Current pot size</span
+                        ><strong id="current-pot-size">—</strong
+                        ><small id="latest-repot-detail"
+                            >No repot logged</small
+                        ></article
+                    >
+                    <article
+                        ><span>Nutrient waterings</span
+                        ><strong id="nutrient-count">0</strong
+                        ><small id="latest-nutrient-detail"
+                            >No fertilizer logged</small
+                        ></article
+                    >
+                    <article
+                        ><span>Flower events</span
+                        ><strong id="flower-count">0</strong
+                        ><small id="latest-flower-detail"
+                            >No flowers logged</small
+                        ></article
+                    >
+                    <article
+                        ><span>Photo links</span
+                        ><strong id="photo-count">0</strong
+                        ><small id="latest-photo-detail"
+                            >No photos logged</small
+                        ></article
+                    >
+                    <article
+                        ><span>Pest / issue events</span
+                        ><strong id="pest-count">0</strong
+                        ><small id="latest-pest-detail"
+                            >No issues logged</small
+                        ></article
+                    >
+                    <article
+                        ><span>Plant checks</span
+                        ><strong id="check-count">0</strong
+                        ><small id="latest-check-detail"
+                            >No checks logged</small
+                        ></article
+                    >
                 </div>
             </section>
 
@@ -363,6 +433,25 @@
                             id="watering-chart-summary"
                         ></p>
                     </article>
+                    <article class="chart-card">
+                        <header
+                            ><div
+                                ><h3>Care activity</h3
+                                ><p
+                                    >Water, nutrient, repot, flower, photo,
+                                    check, and pest milestones.</p
+                                ></div
+                            ></header
+                        >
+                        <div
+                            class="chart-canvas"
+                            id="activity-chart"
+                        ></div>
+                        <p
+                            class="chart-summary"
+                            id="activity-chart-summary"
+                        ></p>
+                    </article>
                 </div>
             </section>
 
@@ -426,7 +515,7 @@
                                 <th scope="col">Weight</th>
                                 <th scope="col">Height</th>
                                 <th scope="col">Width</th>
-                                <th scope="col">Condition / soil</th>
+                                <th scope="col">Event details</th>
                                 <th scope="col">Notes</th>
                                 <th scope="col">Water cycle start</th>
                                 <th scope="col">Days after water</th>
@@ -480,8 +569,10 @@
                         fields; older readings are never overwritten.
                     </li>
                     <li>
-                        Increase <code>Pot setup</code> after the pot, medium,
-                        top dressing, or normally weighed saucer changes.
+                        In the mobile logger, <strong>Repot</strong> records the
+                        old and new pot size and advances <code>Pot setup</code>
+                        automatically. Setup 1 means the first tracked whole-pot
+                        configuration—not a 1-inch pot.
                     </li>
                 </ol>
             </section>
@@ -492,7 +583,8 @@
             <span>
                 <a href="./plant-tracker.html">All plants</a> ·
                 <a href="../plant-booklet/">Field guide</a> ·
-                <a href="./indoor-acclimation-calendar.html">Calendar</a>
+                <a href="./indoor-acclimation-calendar.html">Calendar</a> ·
+                <a href="./photo-album.html">Photos</a>
             </span>
         </footer>
 

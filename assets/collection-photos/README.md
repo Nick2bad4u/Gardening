@@ -15,3 +15,8 @@ under [`assets/plants`](../plants/).
 Nine profiles currently have an explicit photo-pending record because no
 corresponding image file is stored in the repository. Do not substitute a
 similar plant or a reference photograph as collection evidence.
+
+To add a Google Photos picture, download the original, create a web-sized local
+derivative here, and record it in `photo-manifest.json`. A Google Photos share
+URL may be logged as a dated Photo event, but transient Google-hosted image URLs
+must not be used as booklet assets.

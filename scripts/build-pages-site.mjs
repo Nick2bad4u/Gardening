@@ -16,6 +16,13 @@ const layoutsDirectory = path.join(repositoryRoot, "docs", "layouts");
 const outputDirectory = path.join(repositoryRoot, ".pages-site");
 const repositoryBlobUrl = "https://github.com/Nick2bad4u/Gardening/blob/main";
 const pagesUrl = "https://nick2bad4u.github.io/Gardening/";
+const layoutFileNames = [
+    "grow-spot-layout.html",
+    "indoor-acclimation-calendar.html",
+    "plant-tracker.html",
+    "plant-history.html",
+    "photo-album.html",
+];
 
 async function copyRelativeFile(relativePath) {
     const source = path.join(repositoryRoot, relativePath);
@@ -53,6 +60,10 @@ async function publishLayout(fileName) {
     )
         .replaceAll("../plant-booklet/", "../")
         .replaceAll(
+            /\b(src|href)="\.\.\/\.\.\/(assets\/collection-photos\/[^"?#]+)"/g,
+            '$1="../$2"'
+        )
+        .replaceAll(
             /href="\.\.\/equipment\/([^"?#]+\.md)"/g,
             (_match, relativePath) =>
                 `href="${githubBlob(`docs/equipment/${relativePath}`)}"`
@@ -70,16 +81,20 @@ async function publishLayout(fileName) {
 }
 
 async function main() {
-    const sourceHtml = await readFile(
-        path.join(bookletDirectory, "index.html"),
-        "utf8"
-    );
+    const [sourceHtml, ...layoutSources] = await Promise.all([
+        readFile(path.join(bookletDirectory, "index.html"), "utf8"),
+        ...layoutFileNames.map((fileName) =>
+            readFile(path.join(layoutsDirectory, fileName), "utf8")
+        ),
+    ]);
     const assetReferences = new Set(
-        [
-            ...sourceHtml.matchAll(
-                /\bsrc="\.\.\/\.\.\/(assets\/(?:plants|collection-photos)\/[^"?#]+)"/g
-            ),
-        ].map((match) => match[1])
+        [sourceHtml, ...layoutSources]
+            .flatMap((html) => [
+                ...html.matchAll(
+                    /\bsrc="\.\.\/\.\.\/(assets\/(?:plants|collection-photos)\/[^"?#]+)"/g
+                ),
+            ])
+            .map((match) => match[1])
     );
 
     let publishedHtml = addCanonical(sourceHtml, pagesUrl)
@@ -146,10 +161,7 @@ async function main() {
             "utf8"
         ),
         writeFile(path.join(outputDirectory, ".nojekyll"), "", "utf8"),
-        publishLayout("grow-spot-layout.html"),
-        publishLayout("indoor-acclimation-calendar.html"),
-        publishLayout("plant-tracker.html"),
-        publishLayout("plant-history.html"),
+        ...layoutFileNames.map((fileName) => publishLayout(fileName)),
         copyFile(
             path.join(layoutsDirectory, "plant-tracker.css"),
             path.join(outputDirectory, "layouts", "plant-tracker.css")
@@ -173,7 +185,7 @@ async function main() {
     ]);
 
     console.log(
-        `Built GitHub Pages artifact with the field guide, four collection tools, and ${assetReferences.size} images (${(assetBytes / 1024 / 1024).toFixed(1)} MiB).`
+        `Built GitHub Pages artifact with the field guide, five collection tools, and ${assetReferences.size} images (${(assetBytes / 1024 / 1024).toFixed(1)} MiB).`
     );
 }
 

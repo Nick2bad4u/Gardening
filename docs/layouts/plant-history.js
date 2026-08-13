@@ -11,7 +11,11 @@ import {
     plantLabel,
     sheetUrls,
 } from "./plant-tracker-data.js";
-import { renderIntervalChart, renderLineChart } from "./plant-charts.js";
+import {
+    renderActivityChart,
+    renderIntervalChart,
+    renderLineChart,
+} from "./plant-charts.js";
 
 const requestedId = new URLSearchParams(location.search).get("id");
 const tableBody = document.querySelector("#history-table tbody");
@@ -61,6 +65,68 @@ function tableCell(value, className) {
             ? "—"
             : String(value);
     if (className) cell.className = className;
+    return cell;
+}
+
+function eventDetails(event) {
+    const parts = [];
+    const eventName = String(event.Event ?? "")
+        .trim()
+        .toLowerCase();
+    if (eventName === "water") {
+        const nutrients = event["Nutrients used"];
+        if (nutrients === "Yes") {
+            parts.push(
+                `Nutrients: ${event["Nutrient product"] || "product not logged"}${event["Nutrient amount"] ? ` · ${event["Nutrient amount"]}` : ""}`
+            );
+        } else if (nutrients === "No") parts.push("Plain water");
+    }
+    if (eventName === "repot") {
+        parts.push(
+            `${event["Previous pot size"] || "previous size not logged"} → ${event["Pot size"] || "new size not logged"}`
+        );
+    }
+    if (eventName === "flower") {
+        if (event["Flower count"]) {
+            const flowerCount = Number(event["Flower count"]);
+            parts.push(
+                `${event["Flower count"]} ${flowerCount === 1 ? "flower / bud" : "flowers / buds"}`
+            );
+        }
+        if (event["Flower details"]) parts.push(event["Flower details"]);
+    }
+    if (eventName === "pest") {
+        if (event["Pest / issue"]) parts.push(event["Pest / issue"]);
+        if (event["Treatment / action"])
+            parts.push(`Action: ${event["Treatment / action"]}`);
+    }
+    if (eventName === "check" && event["Condition / soil"])
+        parts.push(event["Condition / soil"]);
+    if (event["Photo URL"])
+        parts.push({ href: event["Photo URL"], label: "Open Google Photos ↗" });
+    return parts;
+}
+
+function eventDetailsCell(event) {
+    const cell = document.createElement("td");
+    cell.className = "condition-cell event-details-cell";
+    const details = eventDetails(event);
+    if (!details.length) {
+        cell.textContent = "—";
+        return cell;
+    }
+    details.forEach((detail, index) => {
+        if (index) cell.append(document.createElement("br"));
+        if (typeof detail === "string") cell.append(detail);
+        else {
+            const link = document.createElement("a");
+            link.href = detail.href;
+            link.target = "_blank";
+            link.rel = "noreferrer";
+            link.textContent = detail.label;
+            cell.append(link);
+        }
+    });
     return cell;
 }
 
@@ -117,7 +183,7 @@ function renderHistory() {
                 tableCell(formatMeasurement(event["Height (cm)"], "cm"))
             );
             row.append(tableCell(formatMeasurement(event["Width (cm)"], "cm")));
-            row.append(tableCell(event["Condition / soil"], "condition-cell"));
+            row.append(eventDetailsCell(event));
             row.append(tableCell(event.Notes, "notes-cell"));
             row.append(tableCell(formatDate(event["Water cycle start"])));
             row.append(tableCell(event["Days after water"]));
@@ -338,6 +404,31 @@ function renderCharts(summary) {
             ? `${intervals.length} interval${intervals.length === 1 ? "" : "s"} shown; elapsed time is not a watering deadline.`
             : "Log Water only when the container is actually soaked to runoff."
     );
+
+    const activityEvents = currentPlant.events
+        .map((event) => {
+            const eventName = String(event.Event ?? "").trim();
+            return {
+                date: parseDate(event.Date),
+                label:
+                    eventName === "Water" && event["Nutrients used"] === "Yes"
+                        ? `Water + ${event["Nutrient product"] || "nutrients"}`
+                        : eventName || "Care event",
+                className: `activity-${eventName.toLowerCase() || "other"}`,
+            };
+        })
+        .filter((event) => event.date && inChartRange(event));
+    renderActivityChart(document.querySelector("#activity-chart"), {
+        ariaLabel: `Care activity timeline for ${plantLabel(currentPlant)}`,
+        emptyMessage: "No care events in this chart range yet.",
+        events: activityEvents,
+    });
+    setText(
+        "#activity-chart-summary",
+        activityEvents.length
+            ? `${activityEvents.length} care ${activityEvents.length === 1 ? "event" : "events"} shown in this range.`
+            : "Add a dated event to begin this timeline."
+    );
 }
 
 function csvCell(value) {
@@ -363,6 +454,16 @@ function exportHistory() {
         "Plant / planter",
         "Water cycle start",
         "Days after water",
+        "Nutrients used",
+        "Nutrient product",
+        "Nutrient amount",
+        "Previous pot size",
+        "Pot size",
+        "Flower count",
+        "Flower details",
+        "Photo URL",
+        "Pest / issue",
+        "Treatment / action",
     ];
     const rows = sortedEvents(currentPlant.events, false).map((event) =>
         headers.map((header) => csvCell(event[header])).join(",")
@@ -440,6 +541,52 @@ function renderPlant(plant, plants, index) {
         summary.remainingFraction === null
             ? "—"
             : `${Math.round(summary.remainingFraction * 100)}%`
+    );
+    setText("#current-pot-size", summary.currentPotSize);
+    setText("#nutrient-count", String(summary.eventCounts.nutrients));
+    setText("#flower-count", String(summary.eventCounts.flowers));
+    setText("#photo-count", String(summary.eventCounts.photos));
+    setText("#pest-count", String(summary.eventCounts.pests));
+    setText("#check-count", String(summary.eventCounts.checks));
+    setText(
+        "#latest-repot-detail",
+        summary.latestRepot
+            ? `Repotted ${formatDate(summary.latestRepot.Date)}`
+            : "No repot logged"
+    );
+    setText(
+        "#latest-nutrient-detail",
+        summary.latestNutrients
+            ? `${summary.latestNutrients["Nutrient product"] || "Nutrients"} · ${formatDate(summary.latestNutrients.Date)}`
+            : "No fertilizer logged"
+    );
+    setText(
+        "#latest-flower-detail",
+        summary.latestFlower
+            ? `${summary.latestFlower["Flower details"] || "Flower logged"} · ${formatDate(summary.latestFlower.Date)}`
+            : "No flowers logged"
+    );
+    const photoDetail = document.querySelector("#latest-photo-detail");
+    photoDetail.replaceChildren();
+    if (summary.latestPhoto) {
+        const link = document.createElement("a");
+        link.href = summary.latestPhoto["Photo URL"];
+        link.target = "_blank";
+        link.rel = "noreferrer";
+        link.textContent = `Latest photo · ${formatDate(summary.latestPhoto.Date)} ↗`;
+        photoDetail.append(link);
+    } else photoDetail.textContent = "No photos logged";
+    setText(
+        "#latest-pest-detail",
+        summary.latestPest
+            ? `${summary.latestPest["Pest / issue"] || "Issue logged"} · ${formatDate(summary.latestPest.Date)}`
+            : "No issues logged"
+    );
+    setText(
+        "#latest-check-detail",
+        summary.latestCheck
+            ? `${summary.latestCheck["Condition / soil"] || "Check logged"} · ${formatDate(summary.latestCheck.Date)}`
+            : "No checks logged"
     );
     const badge = document.querySelector("#baseline-status");
     badge.textContent = summary.baselineStatus;

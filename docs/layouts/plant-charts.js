@@ -340,3 +340,78 @@ export function renderIntervalChart(
         }
     });
 }
+
+export function renderActivityChart(
+    container,
+    { ariaLabel, emptyMessage, events }
+) {
+    const points = events
+        .map((event) => ({
+            date: event.date,
+            label: event.label,
+            className: event.className || "activity-other",
+        }))
+        .filter(
+            (event) =>
+                event.date instanceof Date &&
+                !Number.isNaN(event.date.getTime())
+        )
+        .sort((left, right) => left.date - right.date);
+    if (!points.length) {
+        renderEmpty(container, emptyMessage);
+        return;
+    }
+
+    let minimumTime = Math.min(...points.map((point) => point.date.getTime()));
+    let maximumTime = Math.max(...points.map((point) => point.date.getTime()));
+    if (minimumTime === maximumTime) {
+        minimumTime -= 43_200_000;
+        maximumTime += 43_200_000;
+    }
+    const svg = chartFrame(container, ariaLabel);
+    const plotWidth = WIDTH - MARGIN.left - MARGIN.right;
+    const x = (time) =>
+        MARGIN.left +
+        ((time - minimumTime) / (maximumTime - minimumTime)) * plotWidth;
+    const y = HEIGHT / 2;
+    svg.append(
+        svgElement("line", {
+            x1: MARGIN.left,
+            x2: WIDTH - MARGIN.right,
+            y1: y,
+            y2: y,
+            class: "chart-grid-line",
+        })
+    );
+    points.forEach((point, index) => {
+        const circle = svgElement("circle", {
+            cx: x(point.date.getTime()),
+            cy: y + ((index % 3) - 1) * 28,
+            r: 8,
+            tabindex: 0,
+            class: `chart-point ${point.className}`,
+        });
+        circle.append(
+            svgElement(
+                "title",
+                {},
+                `${point.label} · ${formatShortDate(point.date)}`
+            )
+        );
+        svg.append(circle);
+    });
+    [minimumTime, maximumTime].forEach((time, index) => {
+        svg.append(
+            svgElement(
+                "text",
+                {
+                    x: index ? WIDTH - MARGIN.right : MARGIN.left,
+                    y: HEIGHT - 24,
+                    "text-anchor": index ? "end" : "start",
+                    class: "chart-axis-label",
+                },
+                formatShortDate(new Date(time))
+            )
+        );
+    });
+}

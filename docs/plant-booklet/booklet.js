@@ -20,6 +20,7 @@
     const searchStatus = document.querySelector("#search-status");
     const themeToggle = document.querySelector("#theme-toggle");
     const printButton = document.querySelector("#print-booklet");
+    const surprisePlant = document.querySelector("#surprise-plant");
     let currentIndex = 0;
 
     function pageName(page) {
@@ -157,11 +158,21 @@
     nextButton.addEventListener("click", () => goToIndex(currentIndex + 1));
     printButton.addEventListener("click", () => window.print());
 
+    surprisePlant.addEventListener("click", (event) => {
+        event.preventDefault();
+        const choices = profilePages.filter(
+            (page) => page.dataset.page !== pages[currentIndex]?.dataset.page
+        );
+        const randomPage = choices[Math.floor(Math.random() * choices.length)];
+        if (contentsDialog.open) contentsDialog.close();
+        if (randomPage) location.hash = randomPage.dataset.page;
+    });
+
     themeToggle.addEventListener("click", () => {
         const dark = document.documentElement.dataset.theme === "dark";
         const nextTheme = dark ? "light" : "dark";
         document.documentElement.dataset.theme = nextTheme;
-        localStorage.setItem("gardening-theme", nextTheme);
+        localStorage.setItem("gardening-site-theme", nextTheme);
         updateThemeButton();
     });
 

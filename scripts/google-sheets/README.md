@@ -18,7 +18,8 @@ that has access.
 Google Sheets formulas cannot preserve a value after an input cell is
 overwritten. The bound Apps Script in
 [`plant-tracker.gs`](./plant-tracker.gs) supplies that write-time archive step.
-It does not need a web-app deployment, database, or external service.
+[`Index.html`](./Index.html) is the mobile entry UI, and
+[`appsscript.json`](./appsscript.json) records the project runtime settings.
 
 ## One-time installation
 
@@ -29,13 +30,30 @@ or update it in the workbook once:
 1. Open the [Garden Plant Tracker Quick log](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=2015971861#gid=2015971861).
 2. Choose **Extensions → Apps Script**.
 3. Replace the complete `Code.gs` contents with
-   [`plant-tracker.gs`](./plant-tracker.gs), then save.
+   [`plant-tracker.gs`](./plant-tracker.gs), replace `Index.html` with
+   [`Index.html`](./Index.html), and enable the manifest file before replacing
+   it with [`appsscript.json`](./appsscript.json). Save the project.
 4. Select `installGardenLogger` in the function menu and click **Run** once.
    Approve access to this spreadsheet when Google asks.
 5. Return to the workbook and refresh it. A **Garden logger** menu should
    appear.
 6. Enter a short test note on one `Quick log` plant row and tick **Save**.
    Confirm that a new row appears at the bottom of `History`.
+7. For the phone interface, create a versioned web-app deployment or update the
+   existing deployment to the new version. Keep **Execute as** set to the
+   deploying user and access limited to the account that owns the workbook.
+
+The mobile app remembers the selected plant and theme on that device. Selected
+round events can be retained between plants, while the weight state defaults to
+`Routine` and remembers the last Dry/Wet/Routine choice only for the current
+browser session. It deliberately clears measurements after each confirmed save.
+The desktop view keeps links and recent History in a sidebar; phone layouts
+stack those surfaces above the single-entry and watering-round tabs.
+
+Apps Script serves HTML inside Google's own sandboxed wrapper. The Google
+authorship banner belongs to that wrapper and cannot be hidden by this project's
+HTML or CSS. `doGet()` supplies the cactus favicon and mobile-capable metadata;
+use the browser's **Add to Home screen** command to create a phone shortcut.
 
 The reserved `onEdit` function is a simple spreadsheet trigger. Once the code
 is saved in the workbook, ticking a checkbox runs it automatically; an
@@ -53,22 +71,30 @@ installable trigger is not required.
   A weight with no state is stored as `Routine`.
 - Height and width can be entered together or independently; both belong to one
   Measure row.
-- Condition and Notes are attached to the first event created by that Save so
-  the text is not repeated across several history rows.
+- Condition / soil belongs to a Check row. Notes are attached to the first event
+  created by a Save so text is not repeated across several history rows.
 - The current pot label and plant name are copied from `Plant tracker` at save
   time. Earlier History rows retain the label that was physically on the pot
   when the observation was made.
-- Increase `Pot setup` after changing the pot, medium, top dressing, or a saucer
-  normally included in the weight. Old readings stay in History but do not
-  affect the active dry/wet baseline.
+- `Pot setup` identifies a complete weighed configuration, not pot diameter.
+  Every plant is currently on setup 1 because no tracked Repot has created a
+  second configuration. The mobile Repot event records old/new pot size and
+  advances the setup automatically. Old readings remain in History without
+  affecting the new dry/wet baseline.
 - Row 3 can apply one Event to all plant rows or clear every Event cell. The
   **Garden logger → Clear selected Quick log row** command clears one unfinished
   input row without touching History.
 - A Water event means the container was soaked until runoff; water volume is
   intentionally not recorded.
-- `History` columns N and O calculate the applicable Water-cycle start and days
-  after watering. The logger writes only columns A through M so it does not
-  overwrite those array formulas.
+- `History` A:L stores core observation data; M:O holds workbook-derived values;
+  P stores a hidden retry ID; and Q:Z stores structured nutrient, repot, flower,
+  photo, pest, and treatment details. The logger does not overwrite the N:O
+  array formulas.
+- The Watering round tab can append one Water row for every selected plant with
+  shared nutrient and note details. Use single-plant mode when each pot also
+  needs its own wet weight.
+- Photo events accept Google Photos share links. The public plant history opens
+  the link; booklet display still requires a local collection-photo derivative.
 - `Baselines` uses completed wet-to-dry cycles to estimate drying time, which is
   shown in `Plant tracker`. Treat that estimate as context, not a watering
   deadline.

@@ -16,7 +16,13 @@ const refreshButton = document.querySelector("#refresh-sheet");
 const searchInput = document.querySelector("#tracker-search");
 const baselineFilter = document.querySelector("#baseline-filter");
 const sortSelect = document.querySelector("#tracker-sort");
+const sheetPanel = document.querySelector(".sheet-panel");
+const maximizeButton = document.querySelector("#maximize-table");
+const sortHeaders = [
+    ...document.querySelectorAll("#tracker-table th[data-sort]"),
+];
 let collection = null;
+let sortDirection = "asc";
 
 function element(tagName, text, className) {
     const node = document.createElement(tagName);
@@ -199,15 +205,28 @@ function visiblePlants() {
     const labelOrder = new Map(
         collection.plants.map((plant, index) => [plant["Plant ID"], index])
     );
-    return plants.sort((left, right) => {
+    const sorted = plants.sort((left, right) => {
         if (sortSelect.value === "water") {
             return (
-                (daysSince(right.summary.lastWater?.Date ?? "") ?? -1) -
-                (daysSince(left.summary.lastWater?.Date ?? "") ?? -1)
+                (daysSince(left.summary.lastWater?.Date ?? "") ?? -1) -
+                (daysSince(right.summary.lastWater?.Date ?? "") ?? -1)
             );
         }
         if (sortSelect.value === "activity") {
-            return latestActivityTime(right) - latestActivityTime(left);
+            return latestActivityTime(left) - latestActivityTime(right);
+        }
+        if (sortSelect.value === "water-date") {
+            return (
+                (parseDate(left.summary.lastWater?.Date ?? "")?.getTime() ??
+                    0) -
+                (parseDate(right.summary.lastWater?.Date ?? "")?.getTime() ?? 0)
+            );
+        }
+        if (sortSelect.value === "weight") {
+            return (
+                (left.summary.latestWeightValue ?? -Infinity) -
+                (right.summary.latestWeightValue ?? -Infinity)
+            );
         }
         if (sortSelect.value === "name") {
             return collator.compare(
@@ -219,6 +238,42 @@ function visiblePlants() {
             labelOrder.get(left["Plant ID"]) - labelOrder.get(right["Plant ID"])
         );
     });
+    return sortDirection === "desc" ? sorted.reverse() : sorted;
+}
+
+function updateSortHeaders() {
+    sortHeaders.forEach((header) => {
+        const active = header.dataset.sort === sortSelect.value;
+        header.setAttribute(
+            "aria-sort",
+            active
+                ? sortDirection === "asc"
+                    ? "ascending"
+                    : "descending"
+                : "none"
+        );
+    });
+}
+
+function setSort(key, toggleDirection = false) {
+    if (toggleDirection && sortSelect.value === key) {
+        sortDirection = sortDirection === "asc" ? "desc" : "asc";
+    } else {
+        sortSelect.value = key;
+        sortDirection = ["water", "activity"].includes(key) ? "desc" : "asc";
+    }
+    updateSortHeaders();
+    if (collection) renderTable();
+}
+
+function setMaximized(maximized) {
+    sheetPanel.classList.toggle("is-maximized", maximized);
+    document.body.classList.toggle("table-maximized", maximized);
+    maximizeButton.setAttribute("aria-pressed", String(maximized));
+    maximizeButton.textContent = maximized
+        ? "× Restore page"
+        : "⛶ Maximize table";
+    if (maximized) document.querySelector("#tracker-table-wrap").focus();
 }
 
 function renderTable() {
@@ -289,5 +344,23 @@ installThemeToggle(document.querySelector("#theme-toggle"));
 refreshButton.addEventListener("click", loadData);
 searchInput.addEventListener("input", () => collection && renderTable());
 baselineFilter.addEventListener("change", () => collection && renderTable());
-sortSelect.addEventListener("change", () => collection && renderTable());
+sortSelect.addEventListener("change", () => setSort(sortSelect.value));
+sortHeaders.forEach((header) => {
+    header
+        .querySelector("button")
+        .addEventListener("click", () => setSort(header.dataset.sort, true));
+});
+maximizeButton.addEventListener("click", () =>
+    setMaximized(!sheetPanel.classList.contains("is-maximized"))
+);
+document.addEventListener("keydown", (event) => {
+    if (
+        event.key === "Escape" &&
+        sheetPanel.classList.contains("is-maximized")
+    ) {
+        setMaximized(false);
+        maximizeButton.focus();
+    }
+});
+updateSortHeaders();
 loadData();

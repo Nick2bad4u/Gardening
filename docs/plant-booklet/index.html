@@ -22,13 +22,18 @@
         />
         <script>
             (() => {
-                const saved = localStorage.getItem("gardening-theme");
+                const themeKey = "gardening-site-theme";
+                const legacyThemeKey = "gardening-theme";
+                const saved =
+                    localStorage.getItem(themeKey) ??
+                    localStorage.getItem(legacyThemeKey);
                 const dark = saved
                     ? saved === "dark"
                     : matchMedia("(prefers-color-scheme: dark)").matches;
                 document.documentElement.dataset.theme = dark
                     ? "dark"
                     : "light";
+                if (saved) localStorage.setItem(themeKey, saved);
             })();
         </script>
         <link
@@ -70,9 +75,7 @@
             <div class="reader-actions">
                 <a
                     class="icon-button"
-                    href="https://photos.app.goo.gl/h6AXurNQ7ZLBFsJG6"
-                    target="_blank"
-                    rel="noreferrer"
+                    href="../layouts/photo-album.html"
                     ><span aria-hidden="true">▧</span><span>Photos</span></a
                 >
                 <button
@@ -149,16 +152,6 @@
                 >
                 <a
                     class="drawer-special"
-                    href="https://photos.app.goo.gl/h6AXurNQ7ZLBFsJG6"
-                    target="_blank"
-                    rel="noreferrer"
-                    ><span>Plant photo album</span
-                    ><small
-                        >Open the shared collection in Google Photos</small
-                    ></a
-                >
-                <a
-                    class="drawer-special"
                     href="../layouts/plant-tracker.html"
                     ><span>Plant tracker</span
                     ><small>Live weights, watering, and measurements</small></a
@@ -174,6 +167,19 @@
                     href="../layouts/indoor-acclimation-calendar.html"
                     ><span>Acclimation calendar</span
                     ><small>Dated light and airflow schedule</small></a
+                >
+                <a
+                    class="drawer-special"
+                    href="../layouts/photo-album.html"
+                    ><span>Plant photo album</span
+                    ><small>Collection photos and Google Photos link</small></a
+                >
+                <a
+                    class="drawer-special"
+                    id="surprise-plant"
+                    href="#oreocereus-trollii"
+                    ><span>Surprise me</span
+                    ><small>Jump to a random plant story</small></a
                 >
                 <section class="drawer-group">
                     <h2>Starter cacti</h2>
@@ -731,8 +737,8 @@
                     <p>Nick's indoor garden · Fenton, Michigan</p>
                     <h1>The Fenton<br />Collection</h1>
                     <span
-                        >A browser field guide to cactus and succulent
-                        personalities</span
+                        >A browser field guide to cactus, succulent, and
+                        houseplant personalities</span
                     >
                 </div>
                 <div class="cover-footer">
@@ -1711,6 +1717,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P05"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a href="../plants/starter/oreocereus-trollii.md"
                                 >Open the source profile
                                 <span aria-hidden="true">→</span></a
@@ -2625,6 +2635,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P04"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a
                                 href="../plants/starter/stenocactus-phyllacanthus.md"
                                 >Open the source profile
@@ -3556,6 +3570,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P08"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a
                                 href="../plants/starter/echinocereus-rigidissimus-rubispinus.md"
                                 >Open the source profile
@@ -4353,6 +4371,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P03"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a
                                 href="../plants/starter/nyctocereus-serpentinus.md"
                                 >Open the source profile
@@ -5256,6 +5278,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P02"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a href="../plants/starter/mammillaria-plumosa.md"
                                 >Open the source profile
                                 <span aria-hidden="true">→</span></a
@@ -6157,6 +6183,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P11"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a
                                 href="../plants/starter/echinopsis-subdenudata.md"
                                 >Open the source profile
@@ -7092,6 +7122,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P01"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a
                                 href="../plants/starter/gymnocalycium-mihanovichii-variegated.md"
                                 >Open the source profile
@@ -7940,6 +7974,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P07"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a
                                 href="../plants/starter/gymnocalycium-saglionis.md"
                                 >Open the source profile
@@ -8901,6 +8939,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P06"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a
                                 href="../plants/starter/myrtillocactus-geometrizans-indigo-wave.md"
                                 >Open the source profile
@@ -9852,6 +9894,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P12"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a
                                 href="../plants/starter/cereus-forbesii-ming-thing.md"
                                 >Open the source profile
@@ -10764,6 +10810,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P10"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a
                                 href="../plants/starter/euphorbia-obesa-hybrid.md"
                                 >Open the source profile
@@ -11661,6 +11711,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P09"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a href="../plants/starter/astrophytum-ornatum.md"
                                 >Open the source profile
                                 <span aria-hidden="true">→</span></a
@@ -12462,6 +12516,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P13"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a
                                 href="../plants/cacti/espostoa-melanostele-nana.md"
                                 >Open the source profile
@@ -13194,6 +13252,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P14"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a href="../plants/cacti/chamaelobivia-hybrid.md"
                                 >Open the source profile
                                 <span aria-hidden="true">→</span></a
@@ -13944,6 +14006,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P15"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a href="../plants/cacti/mammillaria-mammillaris.md"
                                 >Open the source profile
                                 <span aria-hidden="true">→</span></a
@@ -14593,6 +14659,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P18"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a href="../plants/cacti/parodia-leninghausii.md"
                                 >Open the source profile
                                 <span aria-hidden="true">→</span></a
@@ -15243,6 +15313,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P17"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a
                                 href="../plants/cacti/myrtillocactus-geometrizans-fukurokuryuzinboku.md"
                                 >Open the source profile
@@ -16015,6 +16089,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P16"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a href="../plants/cacti/mammillaria-rekoi.md"
                                 >Open the source profile
                                 <span aria-hidden="true">→</span></a
@@ -16912,6 +16990,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P20"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a
                                 href="../plants/succulents/echeveria-pulidonis.md"
                                 >Open the source profile
@@ -17744,6 +17826,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P20"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a href="../plants/succulents/portulacaria-afra.md"
                                 >Open the source profile
                                 <span aria-hidden="true">→</span></a
@@ -18631,6 +18717,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P20"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a
                                 href="../plants/succulents/kalanchoe-bracteata.md"
                                 >Open the source profile
@@ -19396,6 +19486,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P20"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a href="../plants/succulents/kalanchoe-orgyalis.md"
                                 >Open the source profile
                                 <span aria-hidden="true">→</span></a
@@ -20188,6 +20282,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P22"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a
                                 href="../plants/succulents/aeonium-haworthii-dream-color.md"
                                 >Open the source profile
@@ -20971,6 +21069,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P19"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a
                                 href="../plants/rehab/pilosocereus-pachycladus-variegated.md"
                                 >Open the source profile
@@ -21872,6 +21974,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P19"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a
                                 href="../plants/rehab/cleistocactus-colademononis.md"
                                 >Open the source profile
@@ -22619,6 +22725,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P19"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a href="../plants/rehab/echinopsis-spachiana.md"
                                 >Open the source profile
                                 <span aria-hidden="true">→</span></a
@@ -23432,7 +23542,7 @@
                                 >
                                 <span>Cactii grown from seed.jpg</span>
                                 <span
-                                    >Unknown author Unknown author ·
+                                    >Unknown author ·
                                     <a
                                         href="https://commons.wikimedia.org/wiki/File:Cactii_grown_from_seed.jpg"
                                         target="_blank"
@@ -23491,6 +23601,7 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+
                             <a href="../plants/rehab/mammillaria-bombycina.md"
                                 >Open the source profile
                                 <span aria-hidden="true">→</span></a
@@ -23656,7 +23767,7 @@
                                 <strong>Cactii grown from seed.jpg</strong>
 
                                 <span
-                                    >Unknown author Unknown author ·
+                                    >Unknown author ·
                                     <a
                                         href="https://commons.wikimedia.org/wiki/File:Cactii_grown_from_seed.jpg"
                                         target="_blank"
@@ -24269,6 +24380,10 @@
                         <section class="record-links">
                             <p class="kicker">Keep digging</p>
                             <h2>Research trail</h2>
+                            <a href="../layouts/plant-history.html?id=P21"
+                                >Open the live care history
+                                <span aria-hidden="true">→</span></a
+                            >
                             <a href="../plants/houseplants/pachira-glabra.md"
                                 >Open the source profile
                                 <span aria-hidden="true">→</span></a

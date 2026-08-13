@@ -57,9 +57,10 @@
                 </span>
             </a>
             <div class="nav-links">
-                <a href="../plant-booklet/">Field guide</a>
-                <a href="./grow-spot-layout.html">Grow-spot layout</a>
-                <a href="./indoor-acclimation-calendar.html">Calendar</a>
+                <a href="../plant-booklet/">✦ Field guide</a>
+                <a href="./grow-spot-layout.html">◇ Grow-spot layout</a>
+                <a href="./indoor-acclimation-calendar.html">◫ Calendar</a>
+                <a href="./photo-album.html">▧ Photos</a>
                 <button
                     id="theme-toggle"
                     type="button"
@@ -74,13 +75,12 @@
             <header class="hero tracker-hero">
                 <div>
                     <p class="eyebrow">Live care log · 22 containers</p>
-                    <h1>One row per observation—not per chore.</h1>
+                    <h1>Plant care dashboard</h1>
                     <p class="lede">
-                        Watering, weight, height, width, and condition can be
-                        logged independently on the Google Sheets Quick log.
-                        Ticking Save archives a new History row, and every pot
-                        label links to its own calculations and charts. Blanks
-                        mean “not checked this time,” not missing work.
+                        See every plant’s latest water, weight, size, condition,
+                        and care activity in one place. Each label opens a
+                        permanent history page with baselines, trends, photos,
+                        repots, fertilizer, flowers, and pest notes.
                     </p>
                 </div>
                 <div class="hero-actions">
@@ -90,7 +90,7 @@
                         target="_blank"
                         rel="noreferrer"
                     >
-                        Open Quick log
+                        ✎ Open Quick log
                     </a>
                     <a
                         class="button"
@@ -98,15 +98,13 @@
                         target="_blank"
                         rel="noreferrer"
                     >
-                        Open mobile entry app
+                        📱 Open mobile entry app
                     </a>
                     <a
                         class="button"
-                        href="https://photos.app.goo.gl/h6AXurNQ7ZLBFsJG6"
-                        target="_blank"
-                        rel="noreferrer"
+                        href="./photo-album.html"
                     >
-                        Open plant photo album
+                        📷 Open plant photo album
                     </a>
                     <a
                         class="button"
@@ -114,7 +112,7 @@
                         target="_blank"
                         rel="noreferrer"
                     >
-                        Open workbook dashboard
+                        ▦ Open workbook dashboard
                     </a>
                 </div>
             </header>
@@ -196,13 +194,21 @@
                             Loading the latest Google Sheets observations…
                         </p>
                     </div>
-                    <button
-                        class="button"
-                        id="refresh-sheet"
-                        type="button"
-                    >
-                        Refresh data
-                    </button>
+                    <div class="panel-actions">
+                        <button
+                            class="button"
+                            id="maximize-table"
+                            type="button"
+                            aria-pressed="false"
+                            >⛶ Maximize table</button
+                        >
+                        <button
+                            class="button"
+                            id="refresh-sheet"
+                            type="button"
+                            >↻ Refresh data</button
+                        >
+                    </div>
                 </header>
 
                 <div class="tracker-controls">
@@ -230,7 +236,9 @@
                         <select id="tracker-sort">
                             <option value="label">Tracker order</option>
                             <option value="water">Longest since water</option>
+                            <option value="water-date">Water date</option>
                             <option value="activity">Newest activity</option>
+                            <option value="weight">Latest weight</option>
                             <option value="name">Plant name</option>
                         </select>
                     </label>
@@ -259,17 +267,51 @@
                         </caption>
                         <thead>
                             <tr>
-                                <th scope="col">Label</th>
-                                <th scope="col">Plant</th>
-                                <th scope="col">Last watered</th>
-                                <th scope="col">Days</th>
+                                <th
+                                    scope="col"
+                                    data-sort="label"
+                                    aria-sort="none"
+                                    ><button type="button">Label ↕</button></th
+                                >
+                                <th
+                                    scope="col"
+                                    data-sort="name"
+                                    aria-sort="none"
+                                    ><button type="button">Plant ↕</button></th
+                                >
+                                <th
+                                    scope="col"
+                                    data-sort="water-date"
+                                    aria-sort="none"
+                                    ><button type="button"
+                                        >Last watered ↕</button
+                                    ></th
+                                >
+                                <th
+                                    scope="col"
+                                    data-sort="water"
+                                    aria-sort="none"
+                                    ><button type="button">Days ↕</button></th
+                                >
                                 <th scope="col">Est. dry time</th>
-                                <th scope="col">Weight</th>
+                                <th
+                                    scope="col"
+                                    data-sort="weight"
+                                    aria-sort="none"
+                                    ><button type="button">Weight ↕</button></th
+                                >
                                 <th scope="col">Weight trend</th>
                                 <th scope="col">Height</th>
                                 <th scope="col">Width</th>
                                 <th scope="col">Condition</th>
-                                <th scope="col">Last activity</th>
+                                <th
+                                    scope="col"
+                                    data-sort="activity"
+                                    aria-sort="none"
+                                    ><button type="button"
+                                        >Last activity ↕</button
+                                    ></th
+                                >
                                 <th scope="col">History</th>
                             </tr>
                         </thead>
@@ -299,7 +341,8 @@
             <span>
                 <a href="../plant-booklet/">Field guide</a> ·
                 <a href="./grow-spot-layout.html">Layout</a> ·
-                <a href="./indoor-acclimation-calendar.html">Calendar</a>
+                <a href="./indoor-acclimation-calendar.html">Calendar</a> ·
+                <a href="./photo-album.html">Photos</a>
             </span>
         </footer>
 
