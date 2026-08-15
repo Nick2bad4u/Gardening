@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-08-14
+Last updated: 2026-08-15
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
@@ -37,18 +37,18 @@ month outside in bright shade with a little direct sun. That counts as partial
 acclimation, and the monkey tail's improved growth suggests the current outdoor
 exposure is working.
 
-| Date          | Starting setting                                                                                                                                       |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| July 31, 2026 | Water the dry, ready pots with RO water, drain for several hours, move the collection indoors, and begin the 40%-at-20-inch shakedown.                 |
-| Aug. 3        | 40% power, 20 in above the tallest tip, 8:00 a.m.–8:00 p.m.                                                                                            |
-| Aug. 10       | Planned: lower to 18 in and hold 40%; completion was not separately recorded.                                                                          |
-| Aug. 14       | Actual update: hold 18 in and increase to 45%; add the second opposing pole fan and repot the affected cacti into the new 60:40 Molly's/perlite blend. |
-| Aug. 17       | Hold 45% at 18 in; do not make another change three days after the actual increase.                                                                    |
-| Aug. 24       | Hold 45% for another week while evaluating repot recovery and the first measured dry-down.                                                             |
-| Aug. 31       | Increase to 50% only if new tissue remains healthy and the new mix is behaving predictably; otherwise hold 45%.                                        |
-| Sept. 7       | Hold 50% for a second week, or remain at the lowest successful setting.                                                                                |
-| Sept. 14      | Try 55% only if every lit surface remains healthy; 50% is already a successful steady setting.                                                         |
-| Sept. 21      | Begin the Fenton sunrise/sunset timer in the full schedule.                                                                                            |
+| Date          | Starting setting                                                                                                                                  |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| July 31, 2026 | Water the dry, ready pots with RO water, drain for several hours, move the collection indoors, and begin the 40%-at-20-inch shakedown.            |
+| Aug. 3        | 40% power, 20 in above the tallest tip, 8:00 a.m.–8:00 p.m.                                                                                       |
+| Aug. 10       | Planned: lower to 18 in and hold 40%; completion was not separately recorded.                                                                     |
+| Aug. 14       | Actual update: hold 18 in and increase to 45%; add the second E6 Gen2/E25 and repot `P01`–`P18` into the new 3:2-by-volume Molly's/perlite blend. |
+| Aug. 17       | Hold 45% at 18 in; do not make another change three days after the actual increase.                                                               |
+| Aug. 24       | Hold 45% for another week while evaluating repot recovery and the first measured dry-down.                                                        |
+| Aug. 31       | Increase to 50% only if new tissue remains healthy and the new mix is behaving predictably; otherwise hold 45%.                                   |
+| Sept. 7       | Hold 50% for a second week, or remain at the lowest successful setting.                                                                           |
+| Sept. 14      | Try 55% only if every lit surface remains healthy; 50% is already a successful steady setting.                                                    |
+| Sept. 21      | Begin the Fenton sunrise/sunset timer in the full schedule.                                                                                       |
 
 Do not jump directly from the current exposure to 100% power at 12 inches. The
 AW200SE is powerful enough that acclimation still matters. Keep a normal dark
@@ -72,14 +72,11 @@ summer sun and high grow-light intensity at the same time.
 
 Use the AW200SE's integrated fan at its lowest gentle Natural Wind setting. Two
 pole-mounted circulation fans now approach the canopy from opposing directions.
-The original is the documented AeroWave E6 Gen2; the second was reported as an
-“AeroSun,” but its exact model and control path have not been recorded. Keep
-both inside the 8:15 a.m.–7:45 p.m. indoor fan window when their controls permit
-it:
+Both are VIVOSUN AeroWave E6 Gen2 units with independent E25 controllers. The
+second is clipped high on the opposite end of the black divider and aimed
+slightly downward. Keep both inside the 8:15 a.m.–7:45 p.m. indoor fan window:
 
-- Natural Wind Level 1–2 of 10 on the confirmed E6 Gen2;
-- the new fan at the lowest setting that passes the tissue test, without
-  assuming it uses the E6's numeric scale;
+- Natural Wind Level 1–2 of 10 on each E6 Gen2;
 - oscillation activated on each fan when supported, with the E6's app scale set
   to Level 4 of 5 if that control appears;
 - offset arcs and vertical angles so the two jets cross gently rather than
@@ -87,10 +84,10 @@ it:
 - the installed divider-pole positions, aimed across the round table and both
   wooden tables without rocking plants, flattening hairs, or moving grit.
 
-The first fan's E25 was installed and paired in the VIVOSUN app on 2026-07-28.
-VIVOSUN documents 10 E25/app Natural Wind levels and five oscillation levels for
-the E6 Gen2. The second fan's exact model and controller or splitter path still
-need to be recorded. Do not assume the light's RJ45 port controls it.
+The first fan's E25 was installed and paired in the VIVOSUN app on 2026-07-28;
+the second fan has its own E25 rather than using the light's RJ45 port or a
+fan-to-fan chain. VIVOSUN documents 10 E25/app Natural Wind levels and five
+oscillation levels for each E6 Gen2.
 
 With two fans, Level 3 is not the new default. Use the tissue test at both ends
 and the center of all three surfaces; reposition or narrow an arc before raising
@@ -153,23 +150,26 @@ plant or planter IDs, not provisional table-position coordinates.
 ### August 14 dry-down reset
 
 The prior medium was still producing a measured **10–20 g/day pot-weight loss
-on day 14 after watering**. That means the affected pots had not reached a
+on day 14 after watering**. That means the individual pots had not reached a
 stable dry-weight floor, although part of the change was plant water use rather
 than evaporation from the medium.
 
-The affected cacti were emergency-repotted into a reported **60:40 Molly's
-Succulent Mix/perlite blend**, retaining only old medium attached to the roots.
-Molly's is already a gritty soilless mix that the manufacturer sells for use
-without amendment, so another 40% perlite is an aggressive drainage choice. A
-complete dry-down within seven days is plausible in these small pots under the
-current light and paired airflow, and it may happen sooner. Treat that as a
-measurement target, not a seven-day watering schedule.
+All 18 individual cactus-display pots (`P01`–`P18`, labels `A1`–`F3`) were
+emergency-repotted into **60% Molly's Succulent Mix and 40% horticultural
+perlite by volume**, measured as three cups Molly's to two cups perlite. Only
+old medium attached to the roots was retained. Molly's is sold as usable on its
+own and its manufacturer also permits mixing in amendments. The extra perlite
+is an intentional lower-retention choice for this indoor setup, not a required
+universal recipe. A complete dry-down within seven days is plausible, and it
+may happen sooner. Treat that as a measurement target, not a seven-day watering
+schedule.
 
 For the first two or three comparable watering cycles:
 
-1. Start a new pot-setup number in the tracker for every container that was
-   actually repotted. Keep all pre-repot weights in history.
-2. After the next normal full soak and complete tray drainage, weigh each pot at
+1. Use pot setup 2 for `P01`–`P18`. Keep every pre-repot setup-1 weight in
+   history rather than averaging it into the new baseline.
+2. Record a dry setup-2 weight before the first watering. After the next normal
+   full soak and complete tray drainage, weigh each pot at
    the same elapsed time and with the same saucer convention used for every
    later reading.
 3. Weigh at roughly the same time each day until the curve approaches a stable
@@ -183,9 +183,15 @@ For the first two or three comparable watering cycles:
    automatically harmful, but watch for premature wrinkling and be prepared to
    check readiness sooner. Do not give small daily sips to slow the curve.
 
-The exact repotted IDs and whether the 60:40 ratio was measured by volume still
-need to be copied from the physical log. Until then, the repository records a
-collection-level event without pretending every container changed.
+Because the repot disturbed the roots, the 15 days since the July 31 watering
+do not by themselves make the plants due immediately. If roots were intact or
+only lightly disturbed, the first full watering is planned for the morning of
+**August 21**, seven days after repotting. If roots were cut, torn substantially,
+or trimmed for rot, use **August 21–24** instead. Use plain RO water without
+fertilizer for this first post-repot soak, water slowly and evenly to runoff,
+empty every tray, and record wet weights after a consistent 30–60-minute drain.
+This dated delay is a cautious recovery step for this collection, not a claim
+that every dry cactus must always wait seven days after repotting.
 
 - Judge dryness below the rocky top layer, not from the appearance of the rocks.
 - A normal watering should soak the mix rather than only wetting the surface.

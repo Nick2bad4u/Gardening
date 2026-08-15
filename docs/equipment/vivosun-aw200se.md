@@ -1,6 +1,6 @@
 # VIVOSUN AeroLight Wing AW200SE and GrowHub E25
 
-Last updated: 2026-08-14
+Last updated: 2026-08-15
 
 This guide converts the manufacturer's cannabis-oriented data into a practical
 starting point for this cactus and succulent collection. The numerical targets
@@ -12,21 +12,21 @@ For the settings to enter into the confirmed controller paths, use the separate
 
 ## Hardware summary
 
-| Specification             | AW200SE / E25 information                                                                                                                                                                                                                                                      |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Nominal light power       | 200 W                                                                                                                                                                                                                                                                          |
-| Fixture size and weight   | About 26 × 13 × 2.3 in; 6.9 lb                                                                                                                                                                                                                                                 |
-| Advertised coverage       | 2 × 4 ft                                                                                                                                                                                                                                                                       |
-| Photon efficacy           | 2.75 µmol/J                                                                                                                                                                                                                                                                    |
-| Approximate photon output | About 550 µmol/s if 200 W and 2.75 µmol/J describe the same operating point; this is a calculation, not a separately published test result                                                                                                                                     |
-| Spectrum                  | Advertised 380–780 nm output, including white LEDs, 660 nm deep red, and 730 nm far red                                                                                                                                                                                        |
-| Manual dim levels         | Off, 25%, 50%, 75%, and 100%                                                                                                                                                                                                                                                   |
-| App/controller range      | VIVOSUN advertises 25–100% but does not publish the increment size; the installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and accepts every whole-percent setting in that range                                                                           |
-| Integrated fan            | Up to 84 CFM; advertised 33 dB                                                                                                                                                                                                                                                 |
-| External circulation      | Two pole-mounted fans aimed from opposing directions. Fan 1 is an AeroWave E6 Gen2: 12 W, up to 320 CFM, 90° horizontal oscillation, 10 E25/app speed levels, and 5 oscillation levels. Fan 2 was reported as an “AeroSun”; its exact model and settings scale remain pending. |
-| Durability claims         | 50,000-hour life and IP65 fixture rating                                                                                                                                                                                                                                       |
-| Controller network        | 2.4 GHz Wi-Fi; one E25 controls the AW200SE and a second confirmed E25 controls fan 1. Fan 2's controller or splitter path is not yet recorded; RJ45 chaining is for compatible AeroLights, not either fan.                                                                    |
-| Climate sensing           | The E25 itself is not the room's temperature/RH probe; VIVOSUN points to the separate AeroLab THB1S sensor for climate data                                                                                                                                                    |
+| Specification             | AW200SE / E25 information                                                                                                                                                                                                                               |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Nominal light power       | 200 W                                                                                                                                                                                                                                                   |
+| Fixture size and weight   | About 26 × 13 × 2.3 in; 6.9 lb                                                                                                                                                                                                                          |
+| Advertised coverage       | 2 × 4 ft                                                                                                                                                                                                                                                |
+| Photon efficacy           | 2.75 µmol/J                                                                                                                                                                                                                                             |
+| Approximate photon output | About 550 µmol/s if 200 W and 2.75 µmol/J describe the same operating point; this is a calculation, not a separately published test result                                                                                                              |
+| Spectrum                  | Advertised 380–780 nm output, including white LEDs, 660 nm deep red, and 730 nm far red                                                                                                                                                                 |
+| Manual dim levels         | Off, 25%, 50%, 75%, and 100%                                                                                                                                                                                                                            |
+| App/controller range      | VIVOSUN advertises 25–100% but does not publish the increment size; the installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and accepts every whole-percent setting in that range                                                    |
+| Integrated fan            | Up to 84 CFM; advertised 33 dB                                                                                                                                                                                                                          |
+| External circulation      | Two AeroWave E6 Gen2 pole fans aimed from opposing ends of the black divider, each rated 12 W and up to 320 CFM, with 90° horizontal oscillation, 10 E25/app speed levels, and 5 oscillation levels. Fan 2 is clipped high and aimed slightly downward. |
+| Durability claims         | 50,000-hour life and IP65 fixture rating                                                                                                                                                                                                                |
+| Controller network        | 2.4 GHz Wi-Fi; three independent E25 paths control the AW200SE and the two E6 Gen2 units. Fan 2 has its own E25. RJ45 chaining is for compatible AeroLights, not either fan, and the fans are not daisy-chained.                                        |
+| Climate sensing           | The E25 itself is not the room's temperature/RH probe; VIVOSUN points to the separate AeroLab THB1S sensor for climate data                                                                                                                             |
 
 The adjustable wings have three useful geometries. VIVOSUN says the **wide**
 position increases coverage about 10%, while the **narrow** position increases
@@ -303,22 +303,19 @@ The confirmed E25 controllers are useful mainly for repeatability:
 - keep 2.4 GHz Wi-Fi available during pairing.
 
 VIVOSUN says each separately controlled device needs its own controller path.
-Keep the light's E25 in the AW200SE Type-C controller port and the second
-confirmed E25 on the original AeroWave. The light's RJ45 ports do not join a fan
-to the existing controller. Compatible AeroLights can share an E25 through an
-RJ45 light chain, but AeroWave fans do not directly daisy-chain fan-to-fan;
-multiple fans need separate E25s or the supported multi-port/splitter
-arrangement of an E42/E42A-class controller. Record fan 2's actual path before
-assuming it has independent app control.
+Keep the light's E25 in the AW200SE Type-C controller port and one E25 on each
+E6 Gen2. The light's RJ45 ports do not join a fan to the existing controller.
+Compatible AeroLights can share an E25 through an RJ45 light chain, but
+AeroWave fans do not directly daisy-chain fan-to-fan; the installed setup uses
+three independent E25 paths rather than a splitter.
 
 Use the integrated fan at its lowest gentle Natural Wind setting. The two pole
-fans supply opposing, offset cross-canopy sweeps. Begin the confirmed E6 at
-Natural Wind Level 1–2 of 10 with Level 4 of 5 oscillation where supported. Put
-fan 2 on its lowest setting that passes the same tissue test until its exact
-model and scale are recorded. Test each alone and then both together. Reposition
-before raising either fan. The canonical schedule caps a confirmed E6 at 11
-hours 30 minutes per day and gives the placement and seasonal timer values;
-apply the same runtime claim to fan 2 only after its model is confirmed.
+fans supply opposing, offset cross-canopy sweeps. Begin both E6 Gen2 units at
+Natural Wind Level 1–2 of 10 with Level 4 of 5 oscillation where supported. Fan
+2 is clipped high on the opposite divider end and points slightly downward.
+Test each alone and then both together. Reposition before raising either fan.
+The canonical schedule caps each E6 at 11 hours 30 minutes per day and gives the
+placement and seasonal timer values.
 
 Slight intermittent leaf, hair, or tissue-strip movement is useful. Rocking
 plants, flattened hairs, moving top dressing, desiccated tips, or one side

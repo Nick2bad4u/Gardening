@@ -24,8 +24,9 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
   DLI/lux conversions, distances, dimming, placement, and a simple starting
   program
 - [Fenton AW200SE and paired-fan operating schedule](docs/equipment/aw200se-operating-schedule.md) —
-  dated move-in plan, confirmed controller paths, revised 18-inch/45% light
-  phase, paired airflow, August 14 medium reset and seven-day dry-down trial,
+  dated move-in plan, three independent E25 controller paths, revised
+  18-inch/45% light phase, paired E6 Gen2 airflow, August 14 setup-2 medium
+  reset and measured dry-down trial,
   pot layout, rotations, local daylight, and outdoor-day overrides
 - [Graphic indoor acclimation calendar](docs/layouts/indoor-acclimation-calendar.html) —
   browser and print view of the July 31 move-in, revised light ramp, daily clock,

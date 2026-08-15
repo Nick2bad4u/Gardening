@@ -1,6 +1,6 @@
 # Plant profiles
 
-Last updated: 2026-08-14
+Last updated: 2026-08-15
 
 These 28 pages cover 27 living plants and one historical record. They combine
 botanical background with practical notes for the current pots, fast-draining
@@ -8,10 +8,11 @@ mix, rain avoidance, and AW200SE indoor setup. They are reference guides, not
 fixed watering schedules.
 
 The collection-level [setup record](../setup.md#august-14-substrate-airflow-and-light-reset)
-documents the August 14 emergency change to a reported 60:40 Molly's/perlite
-blend. The exact affected plant IDs are still pending, so individual profiles
-retain general fast-draining-mix guidance instead of claiming an unverified
-per-pot change.
+documents the August 14 move of all 18 individually potted cactus-display
+plants (`P01`–`P18`, labels `A1`–`F3`) to pot setup 2: three parts Molly's
+Succulent Mix to two parts perlite by volume. Their setup-1 weights remain
+historical. The two shared planters, money tree, and Kiwi aeonium
+(`P19`–`P22`) were not part of that repot.
 
 The [AW200SE/E25 guide](../equipment/vivosun-aw200se.md) explains the PPFD,
 DLI, lux, distance, and placement ranges behind the lighting advice. The same

@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-08-14
+Last updated: 2026-08-15
 
 This is the current working inventory plus historical records for plants
 removed from the collection. A label is useful evidence, but not a guarantee;
@@ -30,20 +30,24 @@ table coordinates. They are shown beside the longer historical inventory IDs.
 The plant inventory and the care configuration are separate records. On
 2026-08-14 the owner reported three changes to the cactus setup:
 
-- a second pole-mounted circulation fan was added to send a gentle sweep from
-  the opposing direction;
-- after affected pots were still losing about 10–20 g/day on day 14 after
-  watering, those cacti were emergency-repotted into a reported 60:40 blend of
-  Molly's Succulent Mix to perlite, retaining only old medium attached to the
-  roots; and
+- a second VIVOSUN AeroWave E6 Gen2, with its own E25 controller, was clipped
+  high on the opposite end of the black divider and aimed slightly downward;
+- after pots were still losing about 10–20 g/day on day 14 after watering, all
+  18 individually potted cactus-display plants (`P01`–`P18`, labels `A1`–`F3`)
+  were emergency-repotted into three parts Molly's Succulent Mix to two parts
+  horticultural perlite by volume—three cups to two cups—retaining only old
+  medium attached to the roots; and
 - the AW200SE was set to 18 in above the tallest lit cactus or succulent tip and
   raised to 45% power.
 
-The exact repotted container IDs, ratio basis, and second-fan model/controller
-path are still pending. The previous Back to the Roots medium and its weight
-trend remain in [setup history](./setup.md#august-14-substrate-airflow-and-light-reset)
-rather than being erased. Existing pre-repot weight readings must stay attached
-to their old pot setup in the tracker.
+This change advances `P01`–`P18` to **pot setup 2**. `P19`–`P22`—the two shared
+planters, money tree, and Kiwi aeonium—were not part of this repot. `P10`/`D1`
+is botanically a _Euphorbia_, but it is included because it is one of the 18
+individual pots in the cactus display. The previous Back to the Roots medium
+and its weight trend remain in
+[setup history](./setup.md#august-14-substrate-airflow-and-light-reset) rather
+than being erased. Pre-repot weights stay attached to pot setup 1 and are not
+averaged into the new blend's baseline.
 
 ## Starter cactus group
 

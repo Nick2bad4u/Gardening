@@ -1,6 +1,6 @@
 # Grow-spot diagrams
 
-Last updated: 2026-08-14
+Last updated: 2026-08-15
 
 Open [plant-tracker.html](./plant-tracker.html) for the live collection
 dashboard backed by Google Sheets. The finished workbook includes Dashboard,
@@ -58,9 +58,9 @@ The page reflects the current working arrangement:
   axis, not side by side across the bay;
 - the nominal 24 + 16 + 16 in longitudinal footprint is about 56 in, leaving
   only about 4 in before real gaps and leg interference;
-- two pole-mounted circulation fans provide opposing, offset sweeps across all
-  three surfaces; the original is the confirmed AeroWave E6 Gen2 and the second
-  model/controller path still needs to be copied from the hardware;
+- two AeroWave E6 Gen2 fans, each with its own E25, provide opposing, offset
+  sweeps across all three surfaces; the second is clipped high at the opposite
+  divider end and aimed slightly downward;
 - the current AW200SE phase is 45% at 18 in, effective 2026-08-14;
 - the GrowCam stays on the right wall and frames all three surfaces; and
 - the purifier and dehumidifier start beyond the nominal bay on the open-room
