@@ -23,11 +23,12 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
 - [AW200SE and E25 deep guide](docs/equipment/vivosun-aw200se.md) — PPFD maps,
   DLI/lux conversions, distances, dimming, placement, and a simple starting
   program
-- [Fenton AW200SE and AeroWave operating schedule](docs/equipment/aw200se-operating-schedule.md) —
-  dated move-in plan, two E25 programs, light and airflow ramps, fan placement,
+- [Fenton AW200SE and paired-fan operating schedule](docs/equipment/aw200se-operating-schedule.md) —
+  dated move-in plan, confirmed controller paths, revised 18-inch/45% light
+  phase, paired airflow, August 14 medium reset and seven-day dry-down trial,
   pot layout, rotations, local daylight, and outdoor-day overrides
 - [Graphic indoor acclimation calendar](docs/layouts/indoor-acclimation-calendar.html) —
-  browser and print view of the August 2 move-in, seven-week ramp, daily clock,
+  browser and print view of the July 31 move-in, revised light ramp, daily clock,
   Sunday rotations, camera milestones, natural daylight, and sensor readings;
   links directly to the layout and shares its light/dark theme
 - [GrowCam C4 time-lapse and reflector plan](docs/equipment/growcam-c4-and-reflector.md) —
@@ -37,16 +38,16 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
   placement and use of the TABYIK DH-CS01 dehumidifier and Levoit Core Mini-P
   air purifier
 - [Browser grow-spot diagrams](docs/layouts/grow-spot-layout.html) — tabbed room,
-  two wooden-table, round-table, height, fan, camera, and riser views with one
-  consistent room-facing orientation
+  two wooden-table, round-table, height, paired-fan, camera, and riser views with
+  one consistent room-facing orientation
 - [Plant collection](docs/collection.md) — compact inventory, working IDs,
   confidence, label-mapping status, and current status
 - [Pot labels](docs/plants/labels.md) — SUPVAN E11-ready names, short plant IDs,
   verified origins and description years, warnings, and the three
   special orientation labels
-- [Setup and equipment](docs/setup.md) — light, controllers, AeroWave, GrowCam,
-  reflector, room-air devices, meters, pots, soil, three plant surfaces, and
-  current arrangement
+- [Setup and equipment](docs/setup.md) — light, controllers, paired fans,
+  GrowCam, reflector, room-air devices, meters, pots, current and historical
+  media, three plant surfaces, and current arrangement
 - [Care notes](docs/care-notes.md) — the practical light, water, airflow, and
   recovery plan, including separate Kiwi aeonium and money-tree rules
 - [Licensed lifecycle photo archive](assets/plants/) — 246 reference photos

@@ -47,7 +47,7 @@ in 1982. The earlier 1895 date is the one used on the collection label.
 
 ## Sources
 
-- [Kew Plants of the World Online: _Parodia leninghausii_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:183414-2)
+- [Kew Plants of the World Online: _Parodia leninghausii_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:77106741-1)
 - [International Plant Names Index: current combination](https://www.ipni.org/n/183414-2)
 - [International Plant Names Index: 1895 basionym](https://www.ipni.org/n/137708-1)
 - [GBIF Backbone Taxonomy record](https://www.gbif.org/species/8565818)

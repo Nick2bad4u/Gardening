@@ -14,7 +14,7 @@ recorded that day: `#1` is the shared rehab cactus planter, `#2` is the shared
 succulent planter, `#3` is the money tree, and `#4` is the Kiwi aeonium.
 
 The ID-to-plant mapping comes from the
-[AW200SE and AeroWave operating schedule](../equipment/aw200se-operating-schedule.md#final-pot-layout).
+[AW200SE and paired-fan operating schedule](../equipment/aw200se-operating-schedule.md#final-pot-layout).
 
 ## SUPVAN E11 print setup
 

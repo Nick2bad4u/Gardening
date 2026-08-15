@@ -1,11 +1,17 @@
 # Plant profiles
 
-Last updated: 2026-08-10
+Last updated: 2026-08-14
 
 These 28 pages cover 27 living plants and one historical record. They combine
 botanical background with practical notes for the current pots, fast-draining
 mix, rain avoidance, and AW200SE indoor setup. They are reference guides, not
 fixed watering schedules.
+
+The collection-level [setup record](../setup.md#august-14-substrate-airflow-and-light-reset)
+documents the August 14 emergency change to a reported 60:40 Molly's/perlite
+blend. The exact affected plant IDs are still pending, so individual profiles
+retain general fast-draining-mix guidance instead of claiming an unverified
+per-pot change.
 
 The [AW200SE/E25 guide](../equipment/vivosun-aw200se.md) explains the PPFD,
 DLI, lux, distance, and placement ranges behind the lighting advice. The same

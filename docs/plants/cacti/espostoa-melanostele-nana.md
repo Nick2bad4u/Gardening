@@ -35,7 +35,7 @@ accepted subspecies combination in 2002.
 | Grow-light position | Bright cactus zone, but begin on the outer half of the second wooden table while the new acquisition settles.  |
 | Water               | Soak the root ball, drain fully, and wait for a complete dry-down. Keep the wool and crown dry when practical. |
 | Pot and mix         | The current 4-inch pot is suitable while the base remains uncrowded; keep the neck visible above top dressing. |
-| Airflow             | Gentle moving air helps wet wool dry; do not aim the AeroWave hard enough to flatten it.                       |
+| Airflow             | Gentle moving air helps wet wool dry; do not aim either pole fan hard enough to flatten it.                    |
 
 ## Rotation, propagation, and watch points
 

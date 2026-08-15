@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-08-10
+Last updated: 2026-08-14
 
 This is the current working inventory plus historical records for plants
 removed from the collection. A label is useful evidence, but not a guarantee;
@@ -24,6 +24,26 @@ table coordinates. They are shown beside the longer historical inventory IDs.
   strong match.
 - **Probable** — the best current photo match, but a flower or closer diagnostic
   photo could change it.
+
+## Collection setup history
+
+The plant inventory and the care configuration are separate records. On
+2026-08-14 the owner reported three changes to the cactus setup:
+
+- a second pole-mounted circulation fan was added to send a gentle sweep from
+  the opposing direction;
+- after affected pots were still losing about 10–20 g/day on day 14 after
+  watering, those cacti were emergency-repotted into a reported 60:40 blend of
+  Molly's Succulent Mix to perlite, retaining only old medium attached to the
+  roots; and
+- the AW200SE was set to 18 in above the tallest lit cactus or succulent tip and
+  raised to 45% power.
+
+The exact repotted container IDs, ratio basis, and second-fan model/controller
+path are still pending. The previous Back to the Roots medium and its weight
+trend remain in [setup history](./setup.md#august-14-substrate-airflow-and-light-reset)
+rather than being erased. Existing pre-repot weight readings must stay attached
+to their old pot setup in the tracker.
 
 ## Starter cactus group
 

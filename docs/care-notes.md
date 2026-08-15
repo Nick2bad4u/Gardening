@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-08-08
+Last updated: 2026-08-14
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
@@ -28,26 +28,27 @@ conditions can change that speed.
 The complete [AW200SE/E25 guide](./equipment/vivosun-aw200se.md) has the
 manufacturer's PPFD maps, DLI and lux math, and working ranges for every current
 plant. The [operating schedule](./equipment/aw200se-operating-schedule.md)
-is the canonical dated plan for the Fenton move indoors, both E25 controllers,
-light and AeroWave settings, fan placement and strength, pot layout, rotation,
-local daylight, and outdoor-day overrides.
+is the canonical dated plan for the Fenton move indoors, confirmed and pending
+controller paths, light and paired-fan settings, placement and strength, pot
+layout, rotation, local daylight, and outdoor-day overrides.
 
 The older mixed planter spent years in weak light, but it has now had about a
 month outside in bright shade with a little direct sun. That counts as partial
 acclimation, and the monkey tail's improved growth suggests the current outdoor
 exposure is working.
 
-| Date         | Starting setting                                                                                                  |
-| ------------ | ----------------------------------------------------------------------------------------------------------------- |
-| Aug. 2, 2026 | Water the dry, ready pots with RO water, drain for several hours, and permanently arrange the collection indoors. |
-| Aug. 3       | 40% power, 20 in above the tallest tip, 8:00 a.m.–8:00 p.m.                                                       |
-| Aug. 10      | Lower to 18 in and hold 40%.                                                                                      |
-| Aug. 17      | Hold 18 in and increase to 45%.                                                                                   |
-| Aug. 24      | Hold 18 in and increase to 50%.                                                                                   |
-| Aug. 31      | Hold 50% for a second week.                                                                                       |
-| Sept. 7      | Use 55% only if every lit surface is healthy; otherwise remain at 50%.                                            |
-| Sept. 14     | Begin the steady 50–55% setting at 18 in.                                                                         |
-| Sept. 21     | Begin the Fenton sunrise/sunset timer in the full schedule.                                                       |
+| Date          | Starting setting                                                                                                                                       |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| July 31, 2026 | Water the dry, ready pots with RO water, drain for several hours, move the collection indoors, and begin the 40%-at-20-inch shakedown.                 |
+| Aug. 3        | 40% power, 20 in above the tallest tip, 8:00 a.m.–8:00 p.m.                                                                                            |
+| Aug. 10       | Planned: lower to 18 in and hold 40%; completion was not separately recorded.                                                                          |
+| Aug. 14       | Actual update: hold 18 in and increase to 45%; add the second opposing pole fan and repot the affected cacti into the new 60:40 Molly's/perlite blend. |
+| Aug. 17       | Hold 45% at 18 in; do not make another change three days after the actual increase.                                                                    |
+| Aug. 24       | Hold 45% for another week while evaluating repot recovery and the first measured dry-down.                                                             |
+| Aug. 31       | Increase to 50% only if new tissue remains healthy and the new mix is behaving predictably; otherwise hold 45%.                                        |
+| Sept. 7       | Hold 50% for a second week, or remain at the lowest successful setting.                                                                                |
+| Sept. 14      | Try 55% only if every lit surface remains healthy; 50% is already a successful steady setting.                                                         |
+| Sept. 21      | Begin the Fenton sunrise/sunset timer in the full schedule.                                                                                            |
 
 Do not jump directly from the current exposure to 100% power at 12 inches. The
 AW200SE is powerful enough that acclimation still matters. Keep a normal dark
@@ -67,31 +68,35 @@ If using outdoor sun for acclimation instead, begin with bright shade or one to
 two hours of morning sun and add exposure gradually. Avoid introducing full
 summer sun and high grow-light intensity at the same time.
 
-### AeroWave airflow
+### Paired AeroWave airflow
 
-Use the AW200SE's integrated fan at its lowest gentle Natural Wind setting. The
-separate AeroWave E6 Gen2 begins at 8:15 a.m. and ends at 7:45 p.m. during the
-indoor ramp, using its own E25:
+Use the AW200SE's integrated fan at its lowest gentle Natural Wind setting. Two
+pole-mounted circulation fans now approach the canopy from opposing directions.
+The original is the documented AeroWave E6 Gen2; the second was reported as an
+“AeroSun,” but its exact model and control path have not been recorded. Keep
+both inside the 8:15 a.m.–7:45 p.m. indoor fan window when their controls permit
+it:
 
-- Natural Wind Level 2 of 10;
-- oscillation activated with the fan's swivel button and set to Level 4 of 5
-  if the current app exposes that scale; and
-- the installed divider-pole position beside the window, aimed diagonally
-  across the round table and both wooden tables, with the hub 4–8 in above the
-  highest cactus tip if the mount permits.
+- Natural Wind Level 1–2 of 10 on the confirmed E6 Gen2;
+- the new fan at the lowest setting that passes the tissue test, without
+  assuming it uses the E6's numeric scale;
+- oscillation activated on each fan when supported, with the E6's app scale set
+  to Level 4 of 5 if that control appears;
+- offset arcs and vertical angles so the two jets cross gently rather than
+  meeting head-on or dwelling on one row; and
+- the installed divider-pole positions, aimed across the round table and both
+  wooden tables without rocking plants, flattening hairs, or moving grit.
 
-The second E25 was installed and paired with the AeroWave in the VIVOSUN app on
-2026-07-28. VIVOSUN documents 10 E25/app Natural Wind levels and five
-oscillation levels for the E6 Gen2. The Level 2 starting value remains
-provisional until the final table is installed and passes the same airflow test
-from the canonical schedule.
+The first fan's E25 was installed and paired in the VIVOSUN app on 2026-07-28.
+VIVOSUN documents 10 E25/app Natural Wind levels and five oscillation levels for
+the E6 Gen2. The second fan's exact model and controller or splitter path still
+need to be recorded. Do not assume the light's RJ45 port controls it.
 
-After the August 9 inspection, Level 3 is acceptable only if the outer parts of
-all three surfaces receive almost no airflow and the closest plants are not
-being pushed.
-Do not automatically increase fan strength with light intensity. Plant rocking,
-flattened hairs, moving top dressing, or one side drying much faster mean the
-fan is too close, too strong, or aimed too narrowly.
+With two fans, Level 3 is not the new default. Use the tissue test at both ends
+and the center of all three surfaces; reposition or narrow an arc before raising
+either fan. Do not automatically increase fan strength with light intensity.
+Plant rocking, flattened hairs, moving top dressing, or one side drying much
+faster mean a fan is too close, too strong, or aimed too narrowly.
 
 ### Room temperature and humidity
 
@@ -144,6 +149,43 @@ shared succulent planter, `#3` money tree, and `#4` Kiwi aeonium. These are
 plant or planter IDs, not provisional table-position coordinates.
 
 ## Water and rain
+
+### August 14 dry-down reset
+
+The prior medium was still producing a measured **10–20 g/day pot-weight loss
+on day 14 after watering**. That means the affected pots had not reached a
+stable dry-weight floor, although part of the change was plant water use rather
+than evaporation from the medium.
+
+The affected cacti were emergency-repotted into a reported **60:40 Molly's
+Succulent Mix/perlite blend**, retaining only old medium attached to the roots.
+Molly's is already a gritty soilless mix that the manufacturer sells for use
+without amendment, so another 40% perlite is an aggressive drainage choice. A
+complete dry-down within seven days is plausible in these small pots under the
+current light and paired airflow, and it may happen sooner. Treat that as a
+measurement target, not a seven-day watering schedule.
+
+For the first two or three comparable watering cycles:
+
+1. Start a new pot-setup number in the tracker for every container that was
+   actually repotted. Keep all pre-repot weights in history.
+2. After the next normal full soak and complete tray drainage, weigh each pot at
+   the same elapsed time and with the same saucer convention used for every
+   later reading.
+3. Weigh at roughly the same time each day until the curve approaches a stable
+   floor. Use the weight trend together with dryness below the top dressing and
+   plant firmness; no single gram threshold proves the whole root ball is dry.
+4. A repeatable four-to-seven-day dry-down is a useful starting result. If a pot
+   still has a clear downward trend after day 7 on two cycles, check drainage
+   holes, trapped tray water, top-dressing depth, pot size, and airflow before
+   repotting again.
+5. If the mix reaches its floor in only two or three days, that is not
+   automatically harmful, but watch for premature wrinkling and be prepared to
+   check readiness sooner. Do not give small daily sips to slow the curve.
+
+The exact repotted IDs and whether the 60:40 ratio was measured by volume still
+need to be copied from the physical log. Until then, the repository records a
+collection-level event without pretending every container changed.
 
 - Judge dryness below the rocky top layer, not from the appearance of the rocks.
 - A normal watering should soak the mix rather than only wetting the surface.
@@ -238,3 +280,5 @@ Iowa State Extension has a useful
 - [University of Nebraska–Lincoln: acclimating cacti to stronger light](https://lancaster.unl.edu/cacti-care/)
 - [University of Maryland Extension: excess light on indoor plants](https://extension.umd.edu/resource/excess-light-indoor-plants)
 - [Iowa State Extension: common succulent problems](https://yardandgarden.extension.iastate.edu/how-to/common-problems-and-issues-succulents)
+- [Molly's Succulent Mix: official product details and ingredients](https://veryplants.com/products/mollys-succulent-mix-premium-gritty-soil-mix)
+- [University of Minnesota Extension: cactus and succulent potting mix and watering](https://extension.umn.edu/gardening-minnesota/cacti-and-succulents)

@@ -1201,9 +1201,10 @@
                         the original A1–D3 table, and the new-plant table toward
                         the room. Their centerlines follow the fixture’s long
                         axis; they do not sit side by side across the 36-inch
-                        width. The new air purifier and dehumidifier start
-                        beyond the second wooden table, outside the nominal bay
-                        at the open-room end.
+                        width. Two pole-mounted fans now provide opposing,
+                        offset sweeps from the divider side. The new air
+                        purifier and dehumidifier start beyond the second wooden
+                        table, outside the nominal bay at the open-room end.
                     </p>
                 </div>
                 <div class="hero-actions">
@@ -1256,8 +1257,8 @@
                 <strong>Orientation used everywhere</strong>
                 <span>Looking from the room toward the window.</span>
                 <span
-                    >LEFT = divider and fan · RIGHT = white wall and camera ·
-                    WINDOW END = round table · ROOM END = two wooden
+                    >LEFT = divider and paired fans · RIGHT = white wall and
+                    camera · WINDOW END = round table · ROOM END = two wooden
                     tables.</span
                 >
             </aside>
@@ -1324,8 +1325,11 @@
                     the bay is 36 inches wide by about 60 inches long; all three
                     tabletops are 18 inches high; the round glass table is 24
                     inches across; both wooden tables are 16 × 13 inches; and
-                    the AW200SE is about 26 inches across the wing tips.
-                    Tape-photo plant heights now seed the riser calculator.
+                    the AW200SE is about 26 inches across the wing tips. The
+                    current light phase is 45% at 18 inches, effective August
+                    14. Two pole fans are installed; their exact hub heights and
+                    fan 2 controller path remain to be recorded. Tape-photo
+                    plant heights now seed the riser calculator.
                 </span>
             </aside>
 
@@ -1373,7 +1377,10 @@
                                 across the bay. A Core Mini-P purifier and
                                 DH-CS01 dehumidifier sit beyond the second
                                 wooden table and nominal bay at the open-room
-                                end, outside the light footprint.
+                                end, outside the light footprint. Two fan
+                                symbols on the divider side show the paired
+                                opposing sweeps conceptually; their exact hub
+                                heights are not encoded in this top-down view.
                             </desc>
 
                             <rect
@@ -1558,6 +1565,10 @@
 
                             <path
                                 d="M232 194L490 610L412 236Z"
+                                class="airflow"
+                            ></path>
+                            <path
+                                d="M232 570L470 225L320 548Z"
                                 class="airflow"
                             ></path>
                             <path
@@ -1877,7 +1888,9 @@
                                 ></circle>
                             </g>
 
-                            <g aria-label="Fan and diagonal airflow">
+                            <g
+                                aria-label="Two pole-mounted fans with opposing diagonal airflow"
+                            >
                                 <circle
                                     cx="208"
                                     cy="180"
@@ -1894,7 +1907,25 @@
                                     class="svg-small"
                                     text-anchor="middle"
                                 >
-                                    E6 POLE MOUNT
+                                    PAIRED POLE FANS
+                                </text>
+                                <circle
+                                    cx="208"
+                                    cy="565"
+                                    r="28"
+                                    class="fan"
+                                ></circle>
+                                <path
+                                    d="M208 542Q228 565 208 588Q188 565 208 542M185 565Q208 545 231 565Q208 585 185 565"
+                                    class="fan-blade"
+                                ></path>
+                                <text
+                                    x="208"
+                                    y="610"
+                                    class="svg-small"
+                                    text-anchor="middle"
+                                >
+                                    OPPOSING / OFFSET SWEEPS
                                 </text>
                             </g>
 
@@ -2033,13 +2064,12 @@
                                     </dd>
                                 </div>
                                 <div class="key-item">
-                                    <dt>Fan stays on the divider pole</dt>
+                                    <dt>Paired fans stay on divider poles</dt>
                                     <dd>
-                                        Raise the hub 4–8 inches above the
-                                        highest tip if the mount permits, then
-                                        aim down the occupied length while
-                                        oscillation carries air across all three
-                                        surfaces.
+                                        Keep both rigid mounts clear of the
+                                        Mylar, offset their heights and arcs,
+                                        and aim from opposing directions. Exact
+                                        hub heights remain measurements to log.
                                     </dd>
                                 </div>
                                 <div class="key-item">
@@ -3548,17 +3578,17 @@
                 <div class="section-heading">
                     <div>
                         <p class="eyebrow">Diagram 3</p>
-                        <h2>Height, light, fan, and risers</h2>
+                        <h2>Height, light, paired fans, and risers</h2>
                     </div>
                     <div class="field">
                         <label for="light-clearance">Light clearance</label>
                         <select id="light-clearance">
+                            <option value="20">20 inches · historical</option>
                             <option
-                                value="20"
+                                value="18"
                                 selected
-                                >20 inches · acclimation</option
+                                >18 inches · current</option
                             >
-                            <option value="18">18 inches · maintained</option>
                         </select>
                     </div>
                 </div>
@@ -3595,7 +3625,10 @@
                                 four to seven inches above the wood before
                                 risers. The August additions have not yet been
                                 measured and remain directly on the second wood
-                                table.
+                                table. The fixture is currently forty-five
+                                percent at eighteen inches. Two fan symbols at
+                                the window end represent vertically offset pole
+                                mounts, not exact measured hub heights.
                             </desc>
 
                             <text
@@ -3603,7 +3636,7 @@
                                 y="24"
                                 class="svg-small"
                             >
-                                WINDOW END · ROUND TABLE / FAN
+                                WINDOW END · ROUND TABLE / FANS
                             </text>
                             <text
                                 x="686"
@@ -3643,6 +3676,14 @@
                                 text-anchor="middle"
                             >
                                 AW200SE
+                            </text>
+                            <text
+                                x="380"
+                                y="102"
+                                class="svg-small"
+                                text-anchor="middle"
+                            >
+                                CURRENT · 45% · 18 IN LED-TO-TIP
                             </text>
 
                             <line
@@ -3872,7 +3913,7 @@
                                 text-anchor="middle"
                                 transform="rotate(90 714 180)"
                             >
-                                <tspan data-clearance>20</tspan>
+                                <tspan data-clearance>18</tspan>
                                 IN LIGHT-TO-TIP
                             </text>
 
@@ -3909,19 +3950,29 @@
 
                             <circle
                                 cx="65"
-                                cy="210"
-                                r="32"
+                                cy="190"
+                                r="27"
                                 class="fan"
                             ></circle>
                             <path
-                                d="M65 184Q87 210 65 236Q43 210 65 184M39 210Q65 188 91 210Q65 232 39 210"
+                                d="M65 166Q84 190 65 214Q46 190 65 166M41 190Q65 171 89 190Q65 209 41 190"
+                                class="fan-blade"
+                            ></path>
+                            <circle
+                                cx="65"
+                                cy="255"
+                                r="27"
+                                class="fan"
+                            ></circle>
+                            <path
+                                d="M65 231Q84 255 65 279Q46 255 65 231M41 255Q65 236 89 255Q65 274 41 255"
                                 class="fan-blade"
                             ></path>
                             <line
                                 x1="65"
-                                y1="242"
+                                y1="282"
                                 x2="65"
-                                y2="270"
+                                y2="300"
                                 class="measure"
                             ></line>
                             <text
@@ -3929,14 +3980,14 @@
                                 y="205"
                                 class="svg-small"
                             >
-                                FAN HUB
+                                2× FAN HUBS
                             </text>
                             <text
                                 x="107"
                                 y="223"
                                 class="svg-small"
                             >
-                                4–8 IN ABOVE TIP
+                                OFFSET · EXACT HEIGHTS PENDING
                             </text>
 
                             <text
@@ -4271,7 +4322,7 @@
                                     <dd>
                                         Secure the cable to the right wall so
                                         the loop cannot swing into plants, the
-                                        fan, or the aisle.
+                                        fans, or the aisle.
                                     </dd>
                                 </div>
                                 <div class="key-item">
@@ -4289,16 +4340,17 @@
             </section>
 
             <footer class="footer">
-                Installed layout updated 2026-08-10 for a 36 × approximately
+                Installed layout updated 2026-08-14 for a 36 × approximately
                 60-inch bay; three end-to-end 18-inch-high surfaces; centered
-                26-inch AW200SE wing span; wall-mounted GrowCam; divider-pole
-                fan; room-end Core Mini-P and DH-CS01 starting positions;
-                full-height and floor Mylar; and the photo-derived height-first
-                riser plan. The round table occupies the window end and the two
-                wooden tables continue toward the room. Plant-body heights for
-                E1–F3 and #4 were logged on August 10, but tabletop-to-tip
-                measurements and exact positions remain pending; the E/F and
-                #1–#4 mappings are confirmed.
+                26-inch AW200SE wing span; current 45% power at 18 inches;
+                wall-mounted GrowCam; paired divider-pole fans with opposing,
+                offset sweeps; room-end Core Mini-P and DH-CS01 starting
+                positions; full-height and floor Mylar; and the photo-derived
+                height-first riser plan. The round table occupies the window end
+                and the two wooden tables continue toward the room. Plant-body
+                heights for E1–F3 and #4 were logged on August 10, but
+                tabletop-to-tip measurements and exact positions remain pending;
+                the E/F and #1–#4 mappings are confirmed.
             </footer>
         </main>
 

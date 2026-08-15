@@ -1,14 +1,14 @@
 # Setup and equipment
 
-Last updated: 2026-08-08
+Last updated: 2026-08-14
 
 ## Current routine
 
 The collection is in Fenton, Michigan. The cacti and succulents spend dry
 summer weather outside and come inside when rain or cold is expected. The
-permanent 2026 move indoors began August 2 after the first RO-water watering
+permanent 2026 move indoors began July 31 after the first RO-water watering
 and several hours of drainage, followed by the dated
-[AW200SE and AeroWave operating schedule](./equipment/aw200se-operating-schedule.md).
+[AW200SE and paired-fan operating schedule](./equipment/aw200se-operating-schedule.md).
 
 This is a hobby setup, not a laboratory. Manufacturer output figures are useful
 starting points, but plant response matters more than chasing an exact number.
@@ -19,44 +19,49 @@ See the [AW200SE/E25 deep guide](./equipment/vivosun-aw200se.md) for the raw
 manufacturer PPFD grids, the unresolved difference between its published PPFD
 figures, DLI/lux conversions, plant-by-plant targets, placement, and the simple
 starting schedule. The concrete timer and acclimation steps are in the
-[AW200SE and AeroWave operating schedule](./equipment/aw200se-operating-schedule.md).
+[AW200SE and paired-fan operating schedule](./equipment/aw200se-operating-schedule.md).
 
-| Item                     | Current equipment                                                                                                                                                                                                                                                                    |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Light                    | [VIVOSUN AeroLight Wing AW200SE](https://vivosun.com/en-US/vivosun-smart-grow-system-aerolight-a200se-compatible-with-growhub-e25-controller-p142504424325359396-v142527788947495192)                                                                                                |
-| Controllers              | Two installed VIVOSUN GrowHub E25 Controllers: one for the AW200SE and one paired with the AeroWave in the VIVOSUN app on 2026-07-28                                                                                                                                                 |
-| Location                 | Fenton, Michigan                                                                                                                                                                                                                                                                     |
-| Mount                    | Adjustable ceiling mount; the approximately 26 in AW200SE wing span is centered in the 36 in divider-to-wall bay over all three plant surfaces                                                                                                                                       |
-| Tables                   | A 24 in round glass table at the window end followed by two identical 16 × 13 in wooden tables toward the room; all are 18 in high and aligned end to end beneath the window-to-room long axis of the fixture                                                                        |
-| Rated power              | 200 W                                                                                                                                                                                                                                                                                |
-| Advertised coverage      | 2 × 4 ft                                                                                                                                                                                                                                                                             |
-| Manufacturer efficacy    | 2.75 µmol/J                                                                                                                                                                                                                                                                          |
-| Manufacturer PPFD figure | 691 µmol/m²/s at 12 in                                                                                                                                                                                                                                                               |
-| Dimming                  | VIVOSUN publishes 25%, 50%, 75%, 100%, and off as Manual Mode/Grow Hub presets and advertises a 25–100% app range; the installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and accepts 1% increments throughout that range                                        |
-| Cross-canopy fan         | [VIVOSUN AeroWave E6 Gen2](https://vivosun.com/en-US/vivosun-aerowave-e6-6-inch-clip-on-fan-compatible-with-growhub-e42-e25-p140926625940348007-v140926625940348006), 12 W, up to 320 CFM, 90° horizontal oscillation, and a separate E25 connection through its Type-C control port |
-| Air movement             | AW200SE integrated fan at its lowest gentle Natural Wind setting plus the AeroWave at provisional Level 2–3 of 10 in Natural Wind, oscillating across the canopy                                                                                                                     |
-| Camera                   | [VIVOSUN GrowCam C4](https://vivosun.com/en-GB/vivosun-growcam-smart-camera-p161215462517181360-v161215462517181359), 2K, 117° field of view, 2.4 GHz Wi-Fi, wall-mounted above the plants with a tested 256 GB microSD card for time-lapse                                          |
-| Reflector                | [VIVOSUN 6 mil diamond Mylar, 4 × 25 ft](https://www.amazon.com/dp/B01MZ72PAH?th=1), installed top-to-bottom on the black divider with a separate loose sheet protecting the carpet; the white wall remains uncovered                                                                |
-| Room sensor              | Unspecified manual temperature/RH display with current, rolling 24-hour minimum/maximum, and all-time minimum/maximum readings                                                                                                                                                       |
-| Dehumidifier             | [TABYIK DH-CS01](https://www.amazon.com/dp/B0CMTP3GH8?th=1), a 1,000 mL single-speed Peltier unit used only when the manual sensor shows sustained excess humidity                                                                                                                   |
-| Air purifier             | [Levoit Core Mini-P](https://levoit.com/products/core-mini-p-air-purifier), model LAP-C161-WUS, 7 W and 34 CFM CADR, run on low for background dust/pollen removal                                                                                                                   |
-| Water container          | 5-gallon HDPE #2 drinking-water jug for RO water, stored covered in the unused shower                                                                                                                                                                                                |
-| Label printer            | [SUPVAN E11](https://www.amazon.com/dp/B0DKS89T75?th=1), 203 dpi monochrome thermal printer with 15 mm maximum media width; see the [pot-label print reference](./plants/labels.md)                                                                                                  |
+| Item                     | Current equipment                                                                                                                                                                                                                                                                                                                                                                         |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Light                    | [VIVOSUN AeroLight Wing AW200SE](https://vivosun.com/en-US/vivosun-smart-grow-system-aerolight-a200se-compatible-with-growhub-e25-controller-p142504424325359396-v142527788947495192)                                                                                                                                                                                                     |
+| Controllers              | Two confirmed VIVOSUN GrowHub E25 Controllers: one for the AW200SE and one paired with the original AeroWave in the VIVOSUN app on 2026-07-28; the second fan's controller or splitter path has not yet been recorded                                                                                                                                                                     |
+| Location                 | Fenton, Michigan                                                                                                                                                                                                                                                                                                                                                                          |
+| Mount                    | Adjustable ceiling mount; the approximately 26 in AW200SE wing span is centered in the 36 in divider-to-wall bay over all three plant surfaces                                                                                                                                                                                                                                            |
+| Tables                   | A 24 in round glass table at the window end followed by two identical 16 × 13 in wooden tables toward the room; all are 18 in high and aligned end to end beneath the window-to-room long axis of the fixture                                                                                                                                                                             |
+| Rated power              | 200 W                                                                                                                                                                                                                                                                                                                                                                                     |
+| Advertised coverage      | 2 × 4 ft                                                                                                                                                                                                                                                                                                                                                                                  |
+| Manufacturer efficacy    | 2.75 µmol/J                                                                                                                                                                                                                                                                                                                                                                               |
+| Manufacturer PPFD figure | 691 µmol/m²/s at 12 in                                                                                                                                                                                                                                                                                                                                                                    |
+| Dimming                  | VIVOSUN publishes 25%, 50%, 75%, 100%, and off as Manual Mode/Grow Hub presets and advertises a 25–100% app range; the installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and accepts 1% increments throughout that range                                                                                                                                             |
+| Cross-canopy fans        | Two pole-mounted circulation fans aimed from opposing directions. The original is a [VIVOSUN AeroWave E6 Gen2](https://vivosun.com/en-US/vivosun-aerowave-e6-6-inch-clip-on-fan-compatible-with-growhub-e42-e25-p140926625940348007-v140926625940348006), 12 W, up to 320 CFM, with 90° horizontal oscillation. The second was reported as an “AeroSun”; its exact model remains pending. |
+| Air movement             | AW200SE integrated fan at its lowest gentle Natural Wind setting plus both pole fans on gentle, offset oscillating sweeps; use Level 1–2 on the confirmed E6 and the lowest successful setting on fan 2 rather than assuming both fans share one scale                                                                                                                                    |
+| Current light setting    | 18 in from the LEDs to the tallest cactus or succulent tip in the direct footprint, 45% power, 8:00 a.m.–8:00 p.m.; reported active on 2026-08-14                                                                                                                                                                                                                                         |
+| Camera                   | [VIVOSUN GrowCam C4](https://vivosun.com/en-GB/vivosun-growcam-smart-camera-p161215462517181360-v161215462517181359), 2K, 117° field of view, 2.4 GHz Wi-Fi, wall-mounted above the plants with a tested 256 GB microSD card for time-lapse                                                                                                                                               |
+| Reflector                | [VIVOSUN 6 mil diamond Mylar, 4 × 25 ft](https://www.amazon.com/dp/B01MZ72PAH?th=1), installed top-to-bottom on the black divider with a separate loose sheet protecting the carpet; the white wall remains uncovered                                                                                                                                                                     |
+| Room sensor              | Unspecified manual temperature/RH display with current, rolling 24-hour minimum/maximum, and all-time minimum/maximum readings                                                                                                                                                                                                                                                            |
+| Dehumidifier             | [TABYIK DH-CS01](https://www.amazon.com/dp/B0CMTP3GH8?th=1), a 1,000 mL single-speed Peltier unit used only when the manual sensor shows sustained excess humidity                                                                                                                                                                                                                        |
+| Air purifier             | [Levoit Core Mini-P](https://levoit.com/products/core-mini-p-air-purifier), model LAP-C161-WUS, 7 W and 34 CFM CADR, run on low for background dust/pollen removal                                                                                                                                                                                                                        |
+| Water container          | 5-gallon HDPE #2 drinking-water jug for RO water, stored covered in the unused shower                                                                                                                                                                                                                                                                                                     |
+| Label printer            | [SUPVAN E11](https://www.amazon.com/dp/B0DKS89T75?th=1), 203 dpi monochrome thermal printer with 15 mm maximum media width; see the [pot-label print reference](./plants/labels.md)                                                                                                                                                                                                       |
 
-The two E25s are independent control paths. The AW200SE's RJ45 connector is
-only for compatible AeroLight daisy chains; it is not an Ethernet connection
-for the AeroWave. AeroWave fans do not directly daisy-chain fan-to-fan; with
-E25 control, each fan needs its own E25. Both powered devices retain their own
-AC connections. VIVOSUN's Type-C splitter is an E42A accessory for branching
-multiple compatible fans, not a way to combine this light and fan under one
-E25.
+The two confirmed E25s are independent control paths. The AW200SE's RJ45
+connector is only for compatible AeroLight daisy chains; it is not an Ethernet
+connection for either canopy fan. AeroWave fans do not directly daisy-chain
+fan-to-fan. With E25 controllers, each independently controlled fan needs its
+own controller path; VIVOSUN's supported multi-fan splitter arrangement belongs
+to E42/E42A-class hardware, not the light's RJ45 socket. The connection used by
+the newly added second fan still needs to be recorded before this document can
+claim a third E25 or shared control.
 
-The AeroWave is mounted to the black divider pole beside the window. Raise its
-hub 4–8 in above the highest living tip if the pole mount permits, then aim it
-diagonally across the round table and both wooden tables. Its
-11-hour-30-minute maximum
-daily program stays inside the light window. See the
-[AeroWave program and placement rules](./equipment/aw200se-operating-schedule.md#aerowave-e25-program).
+Both canopy fans are now mounted on the black divider pole and approach the
+plant run from opposing directions. Offset their vertical angles and
+oscillation arcs so their moving air crosses the canopy without forming one
+constant wind tunnel or making the fans fight directly into each other. Start
+the E6 at Level 1–2 and fan 2 at its lowest useful setting, use the tissue test
+across all three surfaces, and keep their daily programs inside the light
+window when their controls permit it. Exact hub heights, second-fan model, and
+second-fan control path remain measurements to record. See the
+[paired-fan program and placement rules](./equipment/aw200se-operating-schedule.md#paired-canopy-fan-program).
 
 The July 31 measurement set established a 36 in wide by approximately 60 in
 long bay, and the August expansion adds a second identical wooden table. All
@@ -116,25 +121,49 @@ The new dehumidifier does not have a humidistat, so leave it off during normal
 maximum above 60% is fine, while current RH above 60% at both a morning and
 evening check or a 24-hour minimum above 60% justifies a 12–24-hour trial. The
 Core Mini-P can run on low continuously, but it does not lower humidity or
-replace the AeroWave. See the dedicated
+replace the paired canopy fans. See the dedicated
 [air-treatment guide](./equipment/air-treatment.md) for placement and the full
 decision table.
 
+## August 14 substrate, airflow, and light reset
+
+On 2026-08-14 the owner reported that the previous cactus medium was still
+losing about **10–20 g of pot weight per day on day 14 after watering**. That is
+direct evidence that those pots had not reached a stable dry-weight floor. The
+loss includes both evaporation and plant water use, so it is not a literal
+measurement of how many grams of water remained around the roots.
+
+The affected cacti were emergency-repotted into a reported **60:40 blend of
+Molly's Succulent Mix to perlite**. The ratio basis and exact affected container
+IDs have not yet been recorded. Only the old medium that stayed attached to the
+roots was retained. This is a new pot-medium configuration, so old wet and dry
+weight baselines must remain historical rather than being averaged with the new
+setup.
+
+The same update added the second pole fan, lowered the AW200SE to **18 in**, and
+raised it to **45%**. The power change came three days ahead of the former
+August 17 step; August 14 is also the first explicitly confirmed 18-inch
+measurement. Hold those light and airflow settings steady while the first
+new-medium dry-down is measured; the next power increase is now conditional
+rather than automatic.
+
 ## Individual pots and medium
 
-| Part                  | Current product                                                                                    | Relevant details                                                                                                                                                                                                                                                                                                                                             |
-| --------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Original cactus pots  | [SQKH 4-inch pots, six-pack](https://www.amazon.com/dp/B0DNSJG1FL)                                 | Polypropylene pots with bottom drainage holes and individual trays; still used by the A1–D3 starter group.                                                                                                                                                                                                                                                   |
-| August cactus pots    | Existing nursery and repotted containers                                                           | Most new cacti are in 4 in pots. The boobie cactus is in a small 3 in pot and the Chamaelobivia is in a small 4 in pot.                                                                                                                                                                                                                                      |
-| Kiwi aeonium pot      | Carlson's Greenhouse 5 in pot                                                                      | Current pot for Succulent-05.                                                                                                                                                                                                                                                                                                                                |
-| Money-tree pot        | [Amazon Basics 6 in pot with drainage holes and ridges](https://www.amazon.com/dp/B0F4QBMJMN?th=1) | Current 6 in matte-white pot for Houseplant-01 after transplanting from its Lowe's 4 in nursery pot.                                                                                                                                                                                                                                                         |
-| Future money-tree pot | [Amazon Basics 8 in pot with saucer](https://www.amazon.com/dp/B0F4QB8C8M?th=1)                    | Stored for later; do not move up until the 6 in root ball is genuinely crowded. The polypropylene pot has drainage holes and a ridged saucer.                                                                                                                                                                                                                |
-| Soil                  | [Back to the Roots Succulent & Cacti Mix, 12 qt](https://www.amazon.com/dp/B0CLZ2YL9R)             | Peat-free packaged mix containing aged bark, perlite, horticultural sand, limestone, and a small amount of organic plant food. See the [manufacturer product page](https://backtotheroots.com/products/organic-succulents-cacti-mix-specialty-blend-6-qt) and [soil FAQ](https://backtotheroots.com/pages/soilFAQ-specialty-blend-succulents-and-cacti-mix). |
-| Top dressing          | [YISZM gritty mix, 2 lb](https://www.amazon.com/dp/B0DFBTR9J9)                                     | Approximately 5–8 mm mineral grit including lava rock and zeolite. It is being used as a thin decorative top layer.                                                                                                                                                                                                                                          |
+| Part                               | Current product                                                                                                                  | Relevant details                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Original cactus pots               | [SQKH 4-inch pots, six-pack](https://www.amazon.com/dp/B0DNSJG1FL)                                                               | Polypropylene pots with bottom drainage holes and individual trays; still used by the A1–D3 starter group.                                                                                                                                                                                                                                                                                                                                                        |
+| August cactus pots                 | Existing nursery and repotted containers                                                                                         | Most new cacti are in 4 in pots. The boobie cactus is in a small 3 in pot and the Chamaelobivia is in a small 4 in pot.                                                                                                                                                                                                                                                                                                                                           |
+| Kiwi aeonium pot                   | Carlson's Greenhouse 5 in pot                                                                                                    | Current pot for Succulent-05.                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Money-tree pot                     | [Amazon Basics 6 in pot with drainage holes and ridges](https://www.amazon.com/dp/B0F4QBMJMN?th=1)                               | Current 6 in matte-white pot for Houseplant-01 after transplanting from its Lowe's 4 in nursery pot.                                                                                                                                                                                                                                                                                                                                                              |
+| Future money-tree pot              | [Amazon Basics 8 in pot with saucer](https://www.amazon.com/dp/B0F4QB8C8M?th=1)                                                  | Stored for later; do not move up until the 6 in root ball is genuinely crowded. The polypropylene pot has drainage holes and a ridged saucer.                                                                                                                                                                                                                                                                                                                     |
+| Reported medium for affected cacti | [Molly's Succulent Mix](https://veryplants.com/products/mollys-succulent-mix-premium-gritty-soil-mix) plus horticultural perlite | Reported 60 parts Molly's to 40 parts perlite; exact mixing basis and affected IDs pending. Molly's is a soilless gritty blend of akadama, pine bark, lava rock, Hyuga, pumice, and mycorrhizae, and the manufacturer says it contains no commercial fertilizer. Only old medium clinging to roots was retained during the emergency repot.                                                                                                                       |
+| Historical medium                  | [Back to the Roots Succulent & Cacti Mix, 12 qt](https://www.amazon.com/dp/B0CLZ2YL9R)                                           | Previous peat-free packaged mix containing aged bark, perlite, horticultural sand, limestone, and a small amount of organic plant food. Retained as history because it was associated with the day-14 10–20 g/day loss observation. See the [manufacturer product page](https://backtotheroots.com/products/organic-succulents-cacti-mix-specialty-blend-6-qt) and [soil FAQ](https://backtotheroots.com/pages/soilFAQ-specialty-blend-succulents-and-cacti-mix). |
+| Top dressing                       | [YISZM gritty mix, 2 lb](https://www.amazon.com/dp/B0DFBTR9J9)                                                                   | Approximately 5–8 mm mineral grit including lava rock and zeolite. It is being used as a thin decorative top layer.                                                                                                                                                                                                                                                                                                                                               |
 
 The starter group and six August cacti are individually potted, which makes
-watering and rearranging for light much easier. The gritty top dressing is thin
-enough to be reasonable;
+watering and rearranging for light much easier. Until the repot scope is
+confirmed, do not silently mark every one of those containers as changed in the
+tracker. The gritty top dressing is thin enough to be reasonable;
 leave enough visibility around plant bases to notice trapped moisture, softness,
 or discoloration.
 
@@ -178,10 +207,13 @@ starter-tip band. The second wooden table repeats the 16 × 13 × 18 in
 dimensions. The remaining measurements that will make the next lighting plan
 more precise are:
 
-- lamp-to-tallest-tip distance;
+- the plant ID used as the 18-inch tallest-tip light reference;
 - each individual pot's tabletop-to-tip height after final riser placement;
 - tabletop-to-tip heights for the six new cacti, Kiwi aeonium, and money tree;
-- final AeroWave hub height and distance to the nearest plant;
+- final original-AeroWave hub height and distance to the nearest plant;
+- exact model, hub height, controller path, and app program for the second fan;
+- exact container IDs included in the August 14 emergency repot and whether the
+  60:40 ratio was measured by volume or another method;
 - the final GrowCam mount position, angle, framing, and 24-hour test result;
 - a lux or PAR grid after the left-side Mylar is installed;
 - the first two weeks of indoor temperature and humidity ranges;

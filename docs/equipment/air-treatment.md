@@ -1,11 +1,11 @@
 # Grow-room dehumidifier and air purifier
 
-Last updated: 2026-08-08
+Last updated: 2026-08-14
 
 These two small appliances support the open-table grow area, but neither one is
 a plant controller. The manual temperature/RH sensor remains the decision tool,
-the AeroWave remains the cross-canopy fan, and the normal soak-and-dry watering
-rule does not change.
+the two pole-mounted circulation fans provide cross-canopy air movement, and the
+normal soak-and-dry watering rule does not change.
 
 ## Current equipment
 
@@ -22,7 +22,7 @@ control. This unit has no humidistat, target-RH setting, drain hose, or timer.
 
 Levoit rates the Core Mini-P for 254 ft² at one air change per hour or 53 ft² at
 4.8 changes per hour. It removes airborne particles and some odors; it does
-**not** lower humidity and does not replace the oscillating canopy fan.
+**not** lower humidity and does not replace the oscillating canopy fans.
 
 ## Starting placement
 
@@ -31,7 +31,7 @@ outside the nominal 60 in plant bay and the grow light's direct footprint. The
 24 in round table plus two 16 in table depths nominally uses 56 in before gaps
 and leg interference, so the remaining space is not an appliance bay. This
 placement keeps the devices away from the window, watering work, camera view,
-and strongest AeroWave sweep.
+and strongest paired-fan sweep.
 
 1. Put each appliance on its own rigid, stable board or shallow waterproof tray
    above the loose floor Mylar. The Mylar is a carpet liner, not a basin.
@@ -72,6 +72,11 @@ Do **not** start the dehumidifier automatically after every watering. Empty the
 pot trays, keep normal airflow, and let the sensor show whether the room
 actually stayed humid. A short post-watering maximum above 60% is acceptable if
 the current reading and 24-hour minimum return to the normal band.
+
+The August 14 emergency repot and added perlite can create fine dust. Run the
+Core Mini-P on high only after the work surface is cleaned and all loose medium
+has settled, then return it to low. Do not use either canopy fan to blow repotting
+dust through the room or into the purifier.
 
 The DH-CS01 works best in warm, humid conditions; the listing gives 59–95°F as
 its suitable range and says performance becomes more obvious as humidity rises.

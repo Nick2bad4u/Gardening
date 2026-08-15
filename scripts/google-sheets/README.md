@@ -77,10 +77,13 @@ installable trigger is not required.
   time. Earlier History rows retain the label that was physically on the pot
   when the observation was made.
 - `Pot setup` identifies a complete weighed configuration, not pot diameter.
-  Every plant is currently on setup 1 because no tracked Repot has created a
-  second configuration. The mobile Repot event records old/new pot size and
-  advances the setup automatically. Old readings remain in History without
-  affecting the new dry/wet baseline.
+  The August 14 emergency medium change creates a new setup for every affected
+  container, even when the same physical pot and top dressing were reused. The
+  exact affected IDs are still pending, so the live workbook may continue to
+  show setup 1 until those physical records are entered. Use one mobile `Repot`
+  event per affected container; it records the change and advances the setup
+  automatically. Do not edit old History rows or average old-medium weights
+  into the new dry/wet baseline.
 - Row 3 can apply one Event to all plant rows or clear every Event cell. The
   **Garden logger → Clear selected Quick log row** command clears one unfinished
   input row without touching History.

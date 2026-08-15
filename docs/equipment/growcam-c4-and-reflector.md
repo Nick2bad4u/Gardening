@@ -1,6 +1,6 @@
 # GrowCam C4 time-lapse and reflector plan
 
-Last updated: 2026-08-08
+Last updated: 2026-08-14
 
 This guide places the GrowCam C4 and Mylar around the open AW200SE table without
 turning the area into an enclosed grow tent. The camera is for a stable
@@ -24,7 +24,8 @@ recording is active.
 
 ## What the July 31 installed photos establish
 
-- The centered AW200SE is hung in front of the window over both aligned tables.
+- The centered AW200SE is hung in front of the window over the aligned
+  three-surface table run.
 - The plant area has a black divider on the left, a white wall on the
   right, a window behind it, and an open room side in front.
 - The 36 in wide by approximately 60 in long bay holds a 24 in round glass
@@ -32,8 +33,8 @@ recording is active.
   room. They run end to end beneath the window-to-room long axis of the fixture
   rather than side by side across the bay. Their nominal longitudinal footprint
   is about 56 in before gaps and leg interference.
-- Both tabletops are 18 in high. The AW200SE is approximately 26 in from wing
-  tip to wing tip.
+- All three tabletops are 18 in high. The AW200SE is approximately 26 in from
+  wing tip to wing tip.
 - The GrowCam is fixed to the white wall and must frame all three surfaces from
   above.
 - Full-height Mylar covers the divider; a separate loose sheet protects the
@@ -54,7 +55,7 @@ black divider. Leave the white right wall uncovered because it already provides
 broad, diffuse reflection.
 
 1. Hang the film flat and taut from the divider's rigid frame, not loose where
-   the AeroWave can make it flap.
+   either pole fan can make it flap.
 2. Keep the installed full-height sheet clear of the lamp, driver, and open top.
 3. Leave the window side and room-facing side open for access, heat escape, and
    airflow.
@@ -75,7 +76,7 @@ lengthwise toward the round table and Mylar-lined divider.
 
 This direction keeps the bright window out of the center of the image, uses the
 divider as a cleaner background, and avoids mounting the camera on fabric that
-can move. Do not attach it to the AeroWave, light, adjustable light hangers, or
+can move. Do not attach it to either fan, the light, adjustable light hangers, or
 anything that vibrates.
 
 Use the following starting geometry, then frame with the live view:
@@ -100,16 +101,15 @@ plants materially change the scene, so end the earlier clip and start a fresh
 production clip once all three surfaces and labels are framed. After that,
 start a new clip whenever a table or camera must move.
 
-### AeroWave and electrical equipment
+### Paired fans and electrical equipment
 
-The AeroWave remains separate from the camera:
+Both pole fans remain separate from the camera:
 
-- keep the current rigid divider-pole mount beside the window; never clamp it to
-  the fabric or Mylar;
-- keep the hub 4–8 in above the tallest plant tip and use the tissue test from
-  the [operating schedule](./aw200se-operating-schedule.md#aerowave-placement-and-airflow-test);
-- make sure its sweep cannot strike the camera cable or move the Mylar; and
-- raise the power strip, adapters, and both E25 controllers off the floor and
+- keep both rigid divider-pole mounts clear of the fabric and Mylar;
+- offset the fan bodies, intakes, cords, and arcs so they cannot collide, and use the tissue test from
+  the [operating schedule](./aw200se-operating-schedule.md#paired-pole-fan-placement-and-airflow-test);
+- make sure neither sweep can strike the camera cable, the other fan, or the Mylar; and
+- raise the power strip, adapters, and all controllers off the floor and
   outside the watering path, with drip loops below every connection.
 
 ## Time-lapse program
@@ -136,12 +136,18 @@ exported from the current app version.
 ### Main acclimation time-lapse
 
 Start the production clip before the light turns on Monday, August 3, after
-the final table, Mylar, plants, labels, camera, and fan are fixed.
+the final table, Mylar, plants, labels, camera, and original fan are fixed.
 
 That first clip is now the pre-expansion record. After the second wooden table
 and eight additions are placed on August 8–9, verify that every pot fits in the
 frame and start a new clip. The E/F cactus mapping and the `#1`–`#4` numbered
 mapping are now recorded; use those permanent labels in notes.
+
+The August 14 emergency repot, second pole fan, and 45%-at-18-inch change form
+another useful visual boundary. Once the repotted pots and both fan mounts are
+stable, end the previous clip and start a fresh one labeled with that date. Do
+not move the camera merely to show the new fans if every plant and label is
+already framed.
 
 | Setting              | Starting value                                                                               |
 | -------------------- | -------------------------------------------------------------------------------------------- |
@@ -179,7 +185,8 @@ Before starting the main clip:
 - the window is not the dominant background;
 - Mylar is taut and cannot enter the fan sweep;
 - a post-Mylar lux or PAR grid has been recorded;
-- the fan reaches the canopy without moving the camera or reflector;
+- both fans reach their assigned canopy zones without moving the camera,
+  reflector, or each other;
 - power equipment is raised outside the watering path; and
 - the app recognizes the 256 GB card and exports the 24-hour test.
 
@@ -193,4 +200,4 @@ added later.
 - [VIVOSUN GrowCam C4 manual](https://vivosun.com/en-AU/support/guide/growcam-c4)
 - [VIVOSUN AeroWave E Series manual](https://vivosun.com/en-GB/support/guide/aerowave)
 - [VIVOSUN 6 mil diamond Mylar product listing](https://www.amazon.com/dp/B01MZ72PAH?th=1)
-- [AW200SE and AeroWave operating schedule](./aw200se-operating-schedule.md)
+- [AW200SE and paired-fan operating schedule](./aw200se-operating-schedule.md)

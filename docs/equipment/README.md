@@ -4,10 +4,11 @@
   specifications, manufacturer PPFD maps, DLI/lux conversions, placement, a
   simple starting program, and working targets for the 27 current plants plus
   one historical collection record
-- [Fenton AW200SE and AeroWave operating schedule](./aw200se-operating-schedule.md) —
-  the dated move indoors, two E25 programs, light and airflow ramps, AeroWave
-  placement and oscillation, maintained light height, three-surface pot layout, rotations,
-  local daylight, response rules, and outdoor-day overrides
+- [Fenton AW200SE and paired-fan operating schedule](./aw200se-operating-schedule.md) —
+  the dated move indoors, confirmed and pending controller paths, revised
+  18-inch/45% light phase, paired airflow, August 14 medium reset and dry-down
+  trial, three-surface pot layout, rotations, local daylight, response rules,
+  and outdoor-day overrides
 - [Graphic indoor acclimation calendar](../layouts/indoor-acclimation-calendar.html) —
   browser and print view of the move-in, ramp, rotations, camera events, and
   manual temperature/RH routine

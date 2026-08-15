@@ -1,6 +1,6 @@
 # Grow-spot diagrams
 
-Last updated: 2026-08-12
+Last updated: 2026-08-14
 
 Open [plant-tracker.html](./plant-tracker.html) for the live collection
 dashboard backed by Google Sheets. The finished workbook includes Dashboard,
@@ -38,7 +38,7 @@ temperature/RH readings, natural daylight context, and September seasonal
 timer.
 
 Open [grow-spot-layout.html](./grow-spot-layout.html) in a browser for the
-current room, table, plant-position, height, fan, camera, and riser diagrams.
+current room, table, plant-position, height, paired-fan, camera, and riser diagrams.
 Its views are tabbed and its theme choice is shared with the calendar. Hover,
 tap, or keyboard-focus any plant marker to reveal its common and botanical
 names, inventory record, label status, origin, placement, identification
@@ -58,8 +58,10 @@ The page reflects the current working arrangement:
   axis, not side by side across the bay;
 - the nominal 24 + 16 + 16 in longitudinal footprint is about 56 in, leaving
   only about 4 in before real gaps and leg interference;
-- the AeroWave stays on the divider pole and blows diagonally across all three
-  surfaces;
+- two pole-mounted circulation fans provide opposing, offset sweeps across all
+  three surfaces; the original is the confirmed AeroWave E6 Gen2 and the second
+  model/controller path still needs to be copied from the hardware;
+- the current AW200SE phase is 45% at 18 in, effective 2026-08-14;
 - the GrowCam stays on the right wall and frames all three surfaces; and
 - the purifier and dehumidifier start beyond the nominal bay on the open-room
   side, outside the fixture footprint and watering area.
@@ -71,7 +73,7 @@ shared succulent planter, `#3` money tree, and `#4` Kiwi aeonium. The former
 `A4-B4` and `C4-D4` planter IDs remain historical cross-references only.
 
 Every diagram labels its viewpoint. In the top-down view, the window is at the
-top, the room is at the bottom, the divider and fan are on the left, and the
+top, the room is at the bottom, the divider and paired fans are on the left, and the
 white wall and camera are on the right. The round table comes first at the
 window; the original and second wooden tables follow lengthwise toward the
 room.
