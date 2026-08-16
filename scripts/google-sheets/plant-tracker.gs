@@ -887,19 +887,6 @@ function buildEventNamesFromList_(
 }
 
 function eventDetailsFromPayload_(payload, eventNames, plant) {
-    const hasEvent = (eventName) => eventNames.includes(eventName);
-    const nutrientsUsed = cleanText_(payload && payload.nutrientsUsed);
-    const nutrientProduct = cleanText_(payload && payload.nutrientProduct);
-    const nutrientAmount = cleanText_(payload && payload.nutrientAmount);
-    const potSize = cleanText_(payload && payload.potSize);
-    const flowerCount = optionalPositiveInteger_(
-        payload && payload.flowerCount,
-        "Flower count"
-    );
-    const flowerDetails = cleanText_(payload && payload.flowerDetails);
-    const photoUrl = cleanText_(payload && payload.photoUrl);
-    const pestIssue = cleanText_(payload && payload.pestIssue);
-    const pestTreatment = cleanText_(payload && payload.pestTreatment);
     const details = {
         nutrientsUsed: "",
         nutrientProduct: "",
@@ -913,56 +900,93 @@ function eventDetailsFromPayload_(payload, eventNames, plant) {
         pestTreatment: "",
     };
 
-    if (hasEvent("Water")) {
-        if (!NUTRIENT_OPTIONS.includes(nutrientsUsed)) {
-            throw new Error("For Water, choose whether nutrients were used.");
-        }
-        if (nutrientsUsed === "Yes" && (!nutrientProduct || !nutrientAmount)) {
-            throw new Error(
-                "Enter both the nutrient product and amount used with this watering."
-            );
-        }
-        details.nutrientsUsed = nutrientsUsed;
-        if (nutrientsUsed === "Yes") {
-            details.nutrientProduct = nutrientProduct;
-            details.nutrientAmount = nutrientAmount;
-        }
-    }
-    if (hasEvent("Repot")) {
-        if (!potSize) {
-            throw new Error("Enter the new pot size for the Repot event.");
-        }
-        details.previousPotSize = cleanText_(plant && plant.currentPotSize);
-        details.potSize = potSize;
-    }
-    if (hasEvent("Flower")) {
-        if (flowerCount === "" && !flowerDetails) {
-            throw new Error(
-                "Enter a flower count, a description, or both for the Flower event."
-            );
-        }
-        details.flowerCount = flowerCount;
-        details.flowerDetails = flowerDetails;
-    }
-    if (hasEvent("Photo")) {
-        if (!isGooglePhotosShareUrl_(photoUrl)) {
-            throw new Error(
-                "Photo needs a Google Photos share link from photos.google.com or photos.app.goo.gl."
-            );
-        }
-        details.photoUrl = photoUrl;
-    }
-    if (hasEvent("Pest")) {
-        if (!pestIssue || !pestTreatment) {
-            throw new Error(
-                "Describe both the pest or issue and the treatment or action taken."
-            );
-        }
-        details.pestIssue = pestIssue;
-        details.pestTreatment = pestTreatment;
-    }
+    addWaterDetails_(details, payload, eventNames);
+    addRepotDetails_(details, payload, eventNames, plant);
+    addFlowerDetails_(details, payload, eventNames);
+    addPhotoDetails_(details, payload, eventNames);
+    addPestDetails_(details, payload, eventNames);
 
     return details;
+}
+
+function addWaterDetails_(details, payload, eventNames) {
+    if (!eventNames.includes("Water")) return;
+
+    const nutrientsUsed = cleanText_(payload && payload.nutrientsUsed);
+    const nutrientProduct = cleanText_(payload && payload.nutrientProduct);
+    const nutrientAmount = cleanText_(payload && payload.nutrientAmount);
+    if (!NUTRIENT_OPTIONS.includes(nutrientsUsed)) {
+        throw new Error("For Water, choose whether nutrients were used.");
+    }
+    if (nutrientsUsed === "Yes" && (!nutrientProduct || !nutrientAmount)) {
+        throw new Error(
+            "Enter both the nutrient product and amount used with this watering."
+        );
+    }
+
+    details.nutrientsUsed = nutrientsUsed;
+    if (nutrientsUsed === "Yes") {
+        details.nutrientProduct = nutrientProduct;
+        details.nutrientAmount = nutrientAmount;
+    }
+}
+
+function addRepotDetails_(details, payload, eventNames, plant) {
+    if (!eventNames.includes("Repot")) return;
+
+    const potSize = cleanText_(payload && payload.potSize);
+    if (!potSize) {
+        throw new Error("Enter the new pot size for the Repot event.");
+    }
+
+    details.previousPotSize = cleanText_(plant && plant.currentPotSize);
+    details.potSize = potSize;
+}
+
+function addFlowerDetails_(details, payload, eventNames) {
+    if (!eventNames.includes("Flower")) return;
+
+    const flowerCount = optionalPositiveInteger_(
+        payload && payload.flowerCount,
+        "Flower count"
+    );
+    const flowerDetails = cleanText_(payload && payload.flowerDetails);
+    if (flowerCount === "" && !flowerDetails) {
+        throw new Error(
+            "Enter a flower count, a description, or both for the Flower event."
+        );
+    }
+
+    details.flowerCount = flowerCount;
+    details.flowerDetails = flowerDetails;
+}
+
+function addPhotoDetails_(details, payload, eventNames) {
+    if (!eventNames.includes("Photo")) return;
+
+    const photoUrl = cleanText_(payload && payload.photoUrl);
+    if (!isGooglePhotosShareUrl_(photoUrl)) {
+        throw new Error(
+            "Photo needs a Google Photos share link from photos.google.com or photos.app.goo.gl."
+        );
+    }
+
+    details.photoUrl = photoUrl;
+}
+
+function addPestDetails_(details, payload, eventNames) {
+    if (!eventNames.includes("Pest")) return;
+
+    const pestIssue = cleanText_(payload && payload.pestIssue);
+    const pestTreatment = cleanText_(payload && payload.pestTreatment);
+    if (!pestIssue || !pestTreatment) {
+        throw new Error(
+            "Describe both the pest or issue and the treatment or action taken."
+        );
+    }
+
+    details.pestIssue = pestIssue;
+    details.pestTreatment = pestTreatment;
 }
 
 function isGooglePhotosShareUrl_(value) {
