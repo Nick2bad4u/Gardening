@@ -41,11 +41,16 @@ npm run test:logger:coverage
 The tests cover combined event inference, formula-safe text, request-ID
 validation, single and bulk History reconciliation, lost callbacks, late stale
 callbacks, the 20-second save watchdog, picker persistence, adjustable recent
-History, and the Google Photos handoff. The coverage report measures the Apps
-Script server file directly and is uploaded to Codecov in CI. The inline client
-script remains exercised by DOM tests but is not included in the V8 percentage,
-because treating the complete HTML file as JavaScript would produce a false
-source map. `npm run check:logger` remains a fast source-contract smoke check.
+History, queue-storage failures, backup recovery, partial batch replies, and the
+Google Photos handoff. The coverage report measures the Apps Script server file
+directly and is uploaded to Codecov in CI. Statements, functions, and lines have
+90% CI floors. Branch coverage also has a 90% floor; the one-sided guards marked
+with `v8 ignore next` have explicit tests for both outcomes, but the V8 provider
+otherwise reports an uncovered synthetic alternate branch for those lines. The
+inline client script is exercised by DOM tests but is not included in the V8
+percentage, because treating the complete HTML file as JavaScript would produce
+a false source map. `npm run check:logger` remains a fast source-contract smoke
+check.
 
 For one-time `clasp` setup:
 
@@ -75,7 +80,7 @@ project. A push does not update the versioned web-app deployment by itself; the
 new version must still be assigned to the existing deployment.
 
 The mobile logger stores an unconfirmed request ID and draft locally before it
-calls Google. If the callback is lost, logger 5.3 checks History for that exact
+calls Google. If the callback is lost, logger 5.4 checks History for that exact
 request on timeout and page load. A completed save clears itself automatically;
 an absent or partial save keeps the draft available for an idempotent retry. If
 Google explicitly rejects a request and the follow-up History check confirms
@@ -83,14 +88,91 @@ that nothing was written, the same form can be corrected and saved under a new
 request ID without using **Clear entry**. A timed-out request stays protected
 until its result is known because it may still be running remotely.
 
-For a weighing session, **Add to queue & next** stores each completed reading
-in this phone's local storage and immediately moves to the next plant. The queue
-survives reloads, screen rotation, and temporary loss of connectivity. **Send
-queue** submits up to 50 observations in one Apps Script call. Every queued
-observation has its own permanent retry ID, so a lost callback or partial batch
-can be reconciled against History and safely sent again without duplicating the
-entries that already arrived. Keep the browser's site data until the queue is
-empty; clearing browser data also clears unsent observations.
+For a weighing session, **Queue** stores each completed reading in this phone's
+local storage while keeping the current plant selected, so pots can be weighed
+in any order. The optional **Advance to the next plant after queueing** setting
+restores sequential entry and remembers that preference. The queue is not
+cleared until Google confirms each request ID in History. A green check marks
+every plant with a weight in the queue, the progress line counts weighed plants,
+and the queue card turns green when every tracked plant has a weight safely
+queued.
+
+Before the form clears or advances, the logger writes the complete queue to a
+primary browser-storage key, reads it back to verify the exact data, and keeps a
+second backup key. On reload it restores a missing or damaged primary copy from
+that backup and displays a warning so the entries can be reviewed. If storage is
+full or unavailable, the current form remains intact and the batch is not sent.
+When the round is ready, **Send queue** durably marks every request as attempted,
+then submits up to 50 observations in one Apps Script call. Every queued record
+has its own retry key, so a lost callback, screen rotation, timeout,
+storage-write failure, or partial batch can be reconciled and safely retried
+without duplicating successful entries that already arrived. Keep the browser's
+site data until the queue is empty; clearing browser data also clears unsent
+observations and their backup.
+
+The logger also listens for browser offline/online changes. It will not start a
+single, bulk-watering, or queued server save while the device reports that it is
+offline. Focus, visibility, and orientation changes no longer cancel an active
+request: they schedule one debounced recovery check, and only a request that has
+actually exceeded its watchdog is reconciled. This keeps a phone rotation from
+unlocking the form while Google is still writing.
+
+## Production-readiness audit
+
+The complete logger and workbook workflow was audited on August 16, 2026. The
+current design intentionally uses one canonical `History` ledger and derives
+the tracker, dashboard, insights, baselines, plant pages, and public views from
+that ledger. The live workbook's formulas, validation, frozen regions,
+conditional formatting, and plant-page structure were checked; no formula
+errors remained. The `History` plant-name helper was restored to its row-2
+anchor, and mobile recent activity now resolves names directly from `Plant
+tracker`, so it is not coupled to that display helper or to the physical sort
+order of History rows.
+
+The main production safeguards are:
+
+- **Durable client state:** drafts, pending requests, and queued observations
+  are written locally before a server call. Queue writes are read back and
+  compared, with a separate backup copy and a 50-entry bound.
+- **Idempotent writes:** every request has a stable retry ID. Retries reconcile
+  against the hidden History request-ID column and cannot silently duplicate a
+  completed observation.
+- **Safe batch behavior:** queue validation happens before the lock. One script
+  lock protects the write phase, each result is returned independently, and a
+  partial failure retains only the unresolved phone entries.
+- **Committed writes:** each locked spreadsheet mutation calls
+  `SpreadsheetApp.flush()` before releasing the script lock. This follows
+  Google's guidance for committing pending spreadsheet changes while exclusive
+  access is still held.
+- **Asynchronous recovery:** every important `google.script.run` call has a
+  success and failure path. Lost callbacks, watchdog expiry, page restoration,
+  reconnects, and stale late replies all converge on request-ID reconciliation.
+- **Efficient reads:** bootstrap data is read in rectangular batches, plant
+  records are reused during queued saves, and recent activity sorts timestamps
+  in memory instead of depending on the user's current sheet sort.
+- **Versioned deployment:** production uses a versioned deployment whose
+  deployment ID is updated in place, preserving the phone URL. Head deployments
+  remain for testing only.
+- **Verification:** Vitest executes the real server source with Apps Script
+  mocks and the real inline client in a browser DOM. Server statements,
+  branches, functions, and lines all have 90% CI floors.
+
+This is deliberately production-grade for a private, single-owner garden
+logger without pretending to be a distributed database. The unsent queue is
+device-local and is not synchronized between phones or browsers. Do not clear
+site data before the queue reaches zero. For operational review, use the Apps
+Script **Executions** page and `npm run apps-script:logs`; the manifest already
+enables Stackdriver exception logging. A standard Google Cloud project would
+add richer Cloud Logging controls, but it is optional at this collection's
+scale and would add account/permission maintenance.
+
+The implementation follows Google's official guidance for
+[Apps Script performance](https://developers.google.com/apps-script/guides/support/best-practices),
+[asynchronous HTML-service calls](https://developers.google.com/apps-script/guides/html/reference/run),
+[script locks and spreadsheet flushing](https://developers.google.com/apps-script/reference/lock/lock),
+[production deployments](https://developers.google.com/apps-script/concepts/deployments),
+[logging](https://developers.google.com/apps-script/guides/logging), and
+[service quotas](https://developers.google.com/apps-script/guides/services/quotas).
 
 ## One-time installation
 

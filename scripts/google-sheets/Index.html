@@ -347,6 +347,34 @@
                 box-shadow: 0 3px 10px rgba(40, 107, 63, 0.18);
             }
 
+            .label-choice.queued-weighed {
+                border-color: #27864b;
+                background: #d9f2df;
+                color: #174d2b;
+                box-shadow: inset 0 0 0 1px rgba(39, 134, 75, 0.18);
+            }
+
+            .label-choice.queued-weighed::after {
+                content: " ✓";
+            }
+
+            .label-choice.queued-weighed[aria-pressed="true"] {
+                background: #27864b;
+                color: #fff;
+            }
+
+            :root[data-theme="dark"] .label-choice.queued-weighed {
+                border-color: #73c98e;
+                background: #203e2b;
+                color: #d9f2df;
+            }
+
+            :root[data-theme="dark"]
+                .label-choice.queued-weighed[aria-pressed="true"] {
+                background: #3a9f5d;
+                color: #fff;
+            }
+
             .plant-summary {
                 display: grid;
                 grid-template-columns: 1fr auto;
@@ -654,6 +682,46 @@
                     var(--forest-2) 30%,
                     var(--line)
                 );
+            }
+
+            .queue-card.queue-complete {
+                border-color: #27864b;
+                background: color-mix(in srgb, #d9f2df 42%, var(--card));
+                box-shadow: inset 0 0 0 1px rgba(39, 134, 75, 0.12);
+            }
+
+            .queue-progress {
+                margin: 8px 0 0;
+                color: var(--muted);
+                font-size: 12px;
+                font-weight: 800;
+            }
+
+            .queue-card.queue-complete .queue-progress {
+                color: #1d6b3a;
+            }
+
+            :root[data-theme="dark"] .queue-card.queue-complete {
+                background: color-mix(in srgb, #203e2b 72%, var(--card));
+            }
+
+            :root[data-theme="dark"]
+                .queue-card.queue-complete
+                .queue-progress {
+                color: #9cdeb0;
+            }
+
+            .queue-storage-warning {
+                margin: 10px 0 0;
+                padding: 10px 12px;
+                border: 1px solid
+                    color-mix(in srgb, var(--danger) 45%, var(--line));
+                border-radius: 10px;
+                background: color-mix(in srgb, var(--danger) 8%, var(--card));
+                color: var(--danger);
+                font-size: 12px;
+                font-weight: 750;
+                line-height: 1.45;
             }
 
             .queue-header,
@@ -1107,6 +1175,16 @@
                             on this device until one batch sends them to
                             History.</p
                         >
+                        <p
+                            id="queueProgress"
+                            class="queue-progress"
+                        ></p>
+                        <p
+                            id="queueStorageWarning"
+                            class="queue-storage-warning"
+                            role="alert"
+                            hidden
+                        ></p>
                         <div
                             id="queueList"
                             class="queue-list"
@@ -1551,6 +1629,16 @@
                                     (useful during watering rounds)</label
                                 >
                             </div>
+                            <div class="control-row">
+                                <input
+                                    id="advanceAfterQueue"
+                                    type="checkbox"
+                                />
+                                <label for="advanceAfterQueue"
+                                    >Advance to the next plant after
+                                    queueing</label
+                                >
+                            </div>
                         </section>
 
                         <div class="actions">
@@ -1561,10 +1649,10 @@
                                 >Save observation</button
                             >
                             <button
-                                id="saveNextButton"
+                                id="queueButton"
                                 class="secondary"
                                 type="button"
-                                >Add to queue &amp; next</button
+                                >Queue</button
                             >
                         </div>
                     </form>
@@ -1725,10 +1813,15 @@
                 pendingSave: null,
                 saveTimer: null,
                 saveAttempt: 0,
+                saveStartedAt: 0,
+                saveTimeoutMs: 0,
+                resumeTimer: null,
                 theme: "light",
                 plantPickerMode: "list",
                 recentLimit: 10,
                 queue: [],
+                queueStorageAvailable: true,
+                queueStorageWarning: "",
             };
 
             const PENDING_SAVE_KEY = "gardenLoggerPendingSaveV1";
@@ -1739,6 +1832,10 @@
             const PLANT_PICKER_MODE_KEY = "gardenLoggerPlantPickerModeV1";
             const RECENT_LIMIT_KEY = "gardenLoggerRecentLimitV1";
             const OBSERVATION_QUEUE_KEY = "gardenLoggerObservationQueueV1";
+            const OBSERVATION_QUEUE_BACKUP_KEY =
+                "gardenLoggerObservationQueueBackupV1";
+            const OBSERVATION_QUEUE_RECOVERY_KEY =
+                "gardenLoggerObservationQueueRecoveryV1";
             const SAVE_WATCHDOG_MS = 20000;
             const QUEUE_WATCHDOG_MS = 45000;
 
@@ -1773,6 +1870,7 @@
                     ROUND_STATE_KEY,
                     JSON.stringify({
                         keepEvents: $("keepEvents").checked,
+                        advanceAfterQueue: $("advanceAfterQueue").checked,
                         events: [...state.events],
                     })
                 );
@@ -1786,6 +1884,8 @@
                     );
                     if (saved) {
                         $("keepEvents").checked = saved.keepEvents !== false;
+                        $("advanceAfterQueue").checked =
+                            saved.advanceAfterQueue === true;
                     }
                     if (saved && $("keepEvents").checked) {
                         state.events = new Set(
@@ -1857,7 +1957,7 @@
             function setSaving(saving) {
                 state.saving = saving;
                 $("saveButton").disabled = saving;
-                $("saveNextButton").disabled = saving;
+                $("queueButton").disabled = saving;
                 $("clearButton").disabled = saving;
                 $("queueSendButton").disabled = saving || !state.queue.length;
                 $("queueClearButton").disabled = saving || !state.queue.length;
@@ -1937,26 +2037,138 @@
                 }
             }
 
-            function readObservationQueue() {
+            function parseObservationQueue(serialized) {
+                const value = JSON.parse(serialized || "[]");
+                if (!Array.isArray(value))
+                    throw new Error("The stored queue is not a list.");
+                if (value.length > 50)
+                    throw new Error("The stored queue exceeds 50 entries.");
+
+                const requestIds = new Set();
+                value.forEach((entry) => {
+                    if (
+                        !entry ||
+                        !/^[A-Za-z0-9_-]{12,100}$/.test(
+                            String(entry.requestId || "")
+                        ) ||
+                        !entry.payload ||
+                        typeof entry.payload !== "object" ||
+                        !entry.payload.plantId
+                    ) {
+                        throw new Error(
+                            "The stored queue contains an incomplete entry."
+                        );
+                    }
+                    if (requestIds.has(entry.requestId))
+                        throw new Error(
+                            "The stored queue contains a duplicate request ID."
+                        );
+                    requestIds.add(entry.requestId);
+                });
+                return value;
+            }
+
+            function preserveBrokenQueue(primary, backup, error) {
+                const recovery = JSON.stringify({
+                    preservedAt: new Date().toISOString(),
+                    error:
+                        error instanceof Error ? error.message : String(error),
+                    primary,
+                    backup,
+                });
                 try {
-                    const value = JSON.parse(
-                        localStorage.getItem(OBSERVATION_QUEUE_KEY) || "[]"
+                    localStorage.setItem(
+                        OBSERVATION_QUEUE_RECOVERY_KEY,
+                        recovery
                     );
-                    if (!Array.isArray(value)) throw new Error("Invalid queue");
-                    return value.filter(
-                        (entry) => entry && entry.requestId && entry.payload
-                    );
+                } catch (recoveryError) {
+                    // The warning below is still shown when browser storage is
+                    // unavailable, even if a recovery copy cannot be written.
+                }
+            }
+
+            function readObservationQueue() {
+                let primary = null;
+                let backup = null;
+                try {
+                    primary = localStorage.getItem(OBSERVATION_QUEUE_KEY);
+                    backup = localStorage.getItem(OBSERVATION_QUEUE_BACKUP_KEY);
+                    if (primary === null && backup === null) return [];
+                    if (primary === null) {
+                        const queue = parseObservationQueue(backup || "[]");
+                        localStorage.setItem(
+                            OBSERVATION_QUEUE_KEY,
+                            backup || "[]"
+                        );
+                        state.queueStorageWarning =
+                            "The main phone queue was missing, so the logger restored its verified backup. Review the entries before sending.";
+                        return queue;
+                    }
+
+                    try {
+                        const queue = parseObservationQueue(primary);
+                        try {
+                            localStorage.setItem(
+                                OBSERVATION_QUEUE_BACKUP_KEY,
+                                primary
+                            );
+                        } catch (backupError) {
+                            state.queueStorageWarning =
+                                "The queue is saved, but its extra browser backup could not be refreshed.";
+                        }
+                        return queue;
+                    } catch (primaryError) {
+                        const queue = parseObservationQueue(backup || "[]");
+                        localStorage.setItem(
+                            OBSERVATION_QUEUE_KEY,
+                            backup || "[]"
+                        );
+                        state.queueStorageWarning =
+                            "The main phone queue was damaged, so the logger restored its verified backup. Review the entries before sending.";
+                        preserveBrokenQueue(primary, backup, primaryError);
+                        return queue;
+                    }
                 } catch (error) {
-                    localStorage.removeItem(OBSERVATION_QUEUE_KEY);
+                    state.queueStorageAvailable = false;
+                    state.queueStorageWarning =
+                        "Phone storage is unavailable or the queue could not be recovered. Do not start a weighing round in queue mode until browser storage is available.";
+                    preserveBrokenQueue(primary, backup, error);
                     return [];
                 }
             }
 
-            function persistObservationQueue() {
-                localStorage.setItem(
-                    OBSERVATION_QUEUE_KEY,
-                    JSON.stringify(state.queue)
-                );
+            function persistObservationQueue(nextQueue) {
+                if (!state.queueStorageAvailable) {
+                    throw new Error(
+                        "Phone storage is unavailable. The queue was not changed, and the current form was kept."
+                    );
+                }
+                const serialized = JSON.stringify(nextQueue);
+                parseObservationQueue(serialized);
+                try {
+                    localStorage.setItem(OBSERVATION_QUEUE_KEY, serialized);
+                    if (
+                        localStorage.getItem(OBSERVATION_QUEUE_KEY) !==
+                        serialized
+                    ) {
+                        throw new Error("Queue verification did not match.");
+                    }
+                    try {
+                        localStorage.setItem(
+                            OBSERVATION_QUEUE_BACKUP_KEY,
+                            serialized
+                        );
+                    } catch (backupError) {
+                        state.queueStorageWarning =
+                            "The queue is saved, but its extra browser backup could not be refreshed.";
+                    }
+                    state.queue = nextQueue;
+                    return true;
+                } catch (error) {
+                    state.queueStorageWarning =
+                        "The phone could not durably store this queue change. Nothing was cleared; free browser storage or reload before retrying.";
+                    throw new Error(state.queueStorageWarning);
+                }
             }
 
             function inferredPayloadEvents(payload) {
@@ -1969,6 +2181,20 @@
                 if (!events.size && payload.condition) events.add("Check");
                 if (!events.size && payload.notes) events.add("Note");
                 return [...events];
+            }
+
+            function queuedWeighedPlantIds() {
+                return new Set(
+                    state.queue
+                        .filter(
+                            (entry) =>
+                                entry.payload.weight &&
+                                inferredPayloadEvents(entry.payload).includes(
+                                    "Weigh"
+                                )
+                        )
+                        .map((entry) => entry.payload.plantId)
+                );
             }
 
             function validateQueuedPayload(payload) {
@@ -2035,11 +2261,24 @@
                 const card = $("queueCard");
                 const list = $("queueList");
                 const count = state.queue.length;
+                const weighedPlantIds = queuedWeighedPlantIds();
+                const plantCount = state.bootstrap
+                    ? state.bootstrap.plants.length
+                    : 0;
+                const allPlantsWeighed =
+                    plantCount > 0 && weighedPlantIds.size === plantCount;
                 $("queueCount").textContent = String(count);
                 $("queueCount").setAttribute(
                     "aria-label",
                     `${count} queued observation${count === 1 ? "" : "s"}`
                 );
+                card.classList.toggle("queue-complete", allPlantsWeighed);
+                $("queueProgress").textContent = allPlantsWeighed
+                    ? `✓ All ${plantCount} plants have a weight safely queued on this device.`
+                    : `${weighedPlantIds.size} of ${plantCount} plants have a weight safely queued.`;
+                const warning = $("queueStorageWarning");
+                warning.textContent = state.queueStorageWarning;
+                warning.hidden = !state.queueStorageWarning;
                 list.replaceChildren();
 
                 if (!count) {
@@ -2087,12 +2326,64 @@
                     });
                 }
 
-                card.hidden = state.entryMode === "bulk" || !count;
+                card.hidden =
+                    state.entryMode === "bulk" ||
+                    (!count && !state.queueStorageWarning);
                 $("queueSendButton").disabled = state.saving || !count;
                 $("queueClearButton").disabled = state.saving || !count;
                 $("queueSendButton").textContent = count
                     ? `Send ${count} queued`
                     : "Send queue";
+                renderQueuedPlantIndicators(weighedPlantIds);
+            }
+
+            function renderQueuedPlantIndicators(
+                weighedPlantIds = queuedWeighedPlantIds()
+            ) {
+                document
+                    .querySelectorAll(".label-choice[data-plant-id]")
+                    .forEach((button) => {
+                        const weighed = weighedPlantIds.has(
+                            button.dataset.plantId
+                        );
+                        button.classList.toggle("queued-weighed", weighed);
+                        button.dataset.queuedWeighed = String(weighed);
+                        const plant = state.bootstrap.plants.find(
+                            (candidate) =>
+                                candidate.id === button.dataset.plantId
+                        );
+                        if (!plant) return;
+                        const status = weighed ? ", weight safely queued" : "";
+                        button.title = `${plant.name} · ${plant.id}${status}`;
+                        button.setAttribute(
+                            "aria-label",
+                            `${plant.label ? `Label ${plant.label}, ` : ""}${plant.name}, ${plant.id}${status}`
+                        );
+                    });
+
+                $("plantSelect")
+                    .querySelectorAll("option")
+                    .forEach((option) => {
+                        const plant = state.bootstrap.plants.find(
+                            (candidate) => candidate.id === option.value
+                        );
+                        if (!plant) return;
+                        option.textContent = `${weighedPlantIds.has(plant.id) ? "✓ " : ""}${plant.name} · ${plant.id}${plant.label ? ` · label ${plant.label}` : ""}`;
+                    });
+
+                const summary = $("plantSummary");
+                const selected = selectedPlant();
+                summary.classList.toggle(
+                    "queued-weighed",
+                    Boolean(selected && weighedPlantIds.has(selected.id))
+                );
+                const badge = summary.querySelector(".plant-id");
+                if (badge && selected) {
+                    const weighed = weighedPlantIds.has(selected.id);
+                    badge.textContent = weighed
+                        ? `✓ ${selected.id} queued`
+                        : selected.id;
+                }
             }
 
             function addCurrentEntryToQueue() {
@@ -2130,18 +2421,21 @@
                             "This exact observation is already in the phone queue."
                         );
                     }
-                    state.queue.push({
-                        requestId: createRequestId(),
-                        payload,
-                        addedAt: new Date().toISOString(),
-                    });
-                    persistObservationQueue();
+                    const nextQueue = [
+                        ...state.queue,
+                        {
+                            requestId: createRequestId(),
+                            payload,
+                            addedAt: new Date().toISOString(),
+                        },
+                    ];
+                    persistObservationQueue(nextQueue);
                     renderObservationQueue();
                     showToast(
                         `${selectedPlant().name} added to the phone queue.`
                     );
                     clearEntry({ afterSave: true });
-                    advancePlant();
+                    if ($("advanceAfterQueue").checked) advancePlant();
                 } catch (error) {
                     showToast(error.message, true, 8000);
                 }
@@ -2149,11 +2443,16 @@
 
             function removeQueuedObservation(requestId) {
                 if (state.saving) return;
-                state.queue = state.queue.filter(
-                    (entry) => entry.requestId !== requestId
-                );
-                persistObservationQueue();
-                renderObservationQueue();
+                try {
+                    persistObservationQueue(
+                        state.queue.filter(
+                            (entry) => entry.requestId !== requestId
+                        )
+                    );
+                    renderObservationQueue();
+                } catch (error) {
+                    showToast(error.message, true, 9000);
+                }
             }
 
             function clearObservationQueue() {
@@ -2164,10 +2463,13 @@
                     )
                 )
                     return;
-                state.queue = [];
-                persistObservationQueue();
-                renderObservationQueue();
-                showToast("Phone queue cleared.");
+                try {
+                    persistObservationQueue([]);
+                    renderObservationQueue();
+                    showToast("Phone queue cleared.");
+                } catch (error) {
+                    showToast(error.message, true, 9000);
+                }
             }
 
             function clearSaveTimer() {
@@ -2175,9 +2477,11 @@
                 state.saveTimer = null;
             }
 
-            function beginSaveAttempt() {
+            function beginSaveAttempt(timeoutMs = SAVE_WATCHDOG_MS) {
                 clearSaveTimer();
                 state.saveAttempt += 1;
+                state.saveStartedAt = Date.now();
+                state.saveTimeoutMs = timeoutMs;
                 setSaving(true);
                 return state.saveAttempt;
             }
@@ -2185,6 +2489,8 @@
             function finishSaveAttempt(attemptId) {
                 if (attemptId !== state.saveAttempt) return false;
                 clearSaveTimer();
+                state.saveStartedAt = 0;
+                state.saveTimeoutMs = 0;
                 setSaving(false);
                 return true;
             }
@@ -2192,7 +2498,16 @@
             function invalidateSaveAttempt() {
                 state.saveAttempt += 1;
                 clearSaveTimer();
+                state.saveStartedAt = 0;
+                state.saveTimeoutMs = 0;
                 setSaving(false);
+            }
+
+            function browserIsOnline() {
+                return (
+                    typeof navigator === "undefined" ||
+                    navigator.onLine !== false
+                );
             }
 
             function requestSaveStatus(pending, currentPending, handlers) {
@@ -2220,6 +2535,7 @@
 
             function renderPlantOptions(query = "", preferredId = "") {
                 const normalized = query.trim().toLowerCase();
+                const weighedPlantIds = queuedWeighedPlantIds();
                 const plants = state.bootstrap.plants.filter((plant) =>
                     [plant.id, plant.name, plant.scientificName, plant.label]
                         .join(" ")
@@ -2237,7 +2553,7 @@
                 plants.forEach((plant) => {
                     const option = document.createElement("option");
                     option.value = plant.id;
-                    option.textContent = `${plant.name} · ${plant.id}${plant.label ? ` · label ${plant.label}` : ""}`;
+                    option.textContent = `${weighedPlantIds.has(plant.id) ? "✓ " : ""}${plant.name} · ${plant.id}${plant.label ? ` · label ${plant.label}` : ""}`;
                     select.append(option);
                 });
                 if (plants.some((plant) => plant.id === currentId))
@@ -2248,6 +2564,7 @@
             function renderLabelPicker() {
                 const picker = $("labelPicker");
                 const currentId = $("plantSelect").value;
+                const weighedPlantIds = queuedWeighedPlantIds();
                 picker.replaceChildren();
                 state.bootstrap.plants.forEach((plant) => {
                     const button = document.createElement("button");
@@ -2255,10 +2572,14 @@
                     button.className = "label-choice";
                     button.dataset.plantId = plant.id;
                     button.textContent = plant.label || plant.id;
-                    button.title = `${plant.name} · ${plant.id}`;
+                    const weighed = weighedPlantIds.has(plant.id);
+                    button.classList.toggle("queued-weighed", weighed);
+                    button.dataset.queuedWeighed = String(weighed);
+                    const status = weighed ? ", weight safely queued" : "";
+                    button.title = `${plant.name} · ${plant.id}${status}`;
                     button.setAttribute(
                         "aria-label",
-                        `${plant.label ? `Label ${plant.label}, ` : ""}${plant.name}, ${plant.id}`
+                        `${plant.label ? `Label ${plant.label}, ` : ""}${plant.name}, ${plant.id}${status}`
                     );
                     button.setAttribute(
                         "aria-pressed",
@@ -2342,7 +2663,9 @@
 
                 const badge = document.createElement("div");
                 badge.className = "plant-id";
-                badge.textContent = plant.id;
+                badge.textContent = queuedWeighedPlantIds().has(plant.id)
+                    ? `✓ ${plant.id} queued`
+                    : plant.id;
 
                 const metrics = document.createElement("div");
                 metrics.className = "metrics";
@@ -2644,6 +2967,14 @@
 
             function submitBulkWater() {
                 if (state.saving) return;
+                if (!browserIsOnline()) {
+                    showToast(
+                        "This phone is offline. The watering round is still on screen; send it after the connection returns.",
+                        true,
+                        9000
+                    );
+                    return;
+                }
                 let payload;
                 try {
                     payload = bulkPayload();
@@ -2670,7 +3001,19 @@
                 if (!pending) {
                     pending = { requestId: createRequestId(), payload };
                 }
-                localStorage.setItem(BULK_PENDING_KEY, JSON.stringify(pending));
+                try {
+                    localStorage.setItem(
+                        BULK_PENDING_KEY,
+                        JSON.stringify(pending)
+                    );
+                } catch (error) {
+                    showToast(
+                        "The phone could not preserve this watering round, so it was not sent. Free browser storage and try again.",
+                        true,
+                        10000
+                    );
+                    return;
+                }
                 const requestId = pending.requestId;
                 const attemptId = beginSaveAttempt();
                 state.saveTimer = setTimeout(() => {
@@ -2850,12 +3193,30 @@
 
             function sendObservationQueue() {
                 if (state.saving || !state.queue.length) return;
-                state.queue = state.queue.map((entry) => ({
+                if (!browserIsOnline()) {
+                    showToast(
+                        "This phone is offline. The full queue remains stored here and can be sent when the connection returns.",
+                        true,
+                        9000
+                    );
+                    return;
+                }
+                const attemptedQueue = state.queue.map((entry) => ({
                     ...entry,
                     attemptedAt: new Date().toISOString(),
                     error: "",
                 }));
-                persistObservationQueue();
+                try {
+                    persistObservationQueue(attemptedQueue);
+                } catch (error) {
+                    renderObservationQueue();
+                    showToast(
+                        `${error.message} The queue was not sent because retry safety could not be guaranteed.`,
+                        true,
+                        12000
+                    );
+                    return;
+                }
                 renderObservationQueue();
 
                 const requestIds = state.queue.map((entry) => entry.requestId);
@@ -2863,7 +3224,7 @@
                     ...entry.payload,
                     requestId: entry.requestId,
                 }));
-                const attemptId = beginSaveAttempt();
+                const attemptId = beginSaveAttempt(QUEUE_WATCHDOG_MS);
                 $("connectionStatus").textContent =
                     `Sending ${requestPayloads.length} queued observation${requestPayloads.length === 1 ? "" : "s"}…`;
                 state.saveTimer = setTimeout(() => {
@@ -2910,7 +3271,7 @@
                         entry,
                     ])
                 );
-                state.queue = state.queue.flatMap((entry) => {
+                const nextQueue = state.queue.flatMap((entry) => {
                     const saved = resultByRequest.get(entry.requestId);
                     if (saved && saved.ok) return [];
                     return [
@@ -2923,7 +3284,19 @@
                         },
                     ];
                 });
-                persistObservationQueue();
+                try {
+                    persistObservationQueue(nextQueue);
+                } catch (error) {
+                    renderObservationQueue();
+                    $("connectionStatus").textContent =
+                        "History may be updated · queue retained for verification";
+                    showToast(
+                        "Google replied, but the phone could not update its queue copy. Reload to reconcile these request IDs with History; resending is also safe.",
+                        true,
+                        14000
+                    );
+                    return;
+                }
                 renderObservationQueue();
                 $("connectionStatus").textContent =
                     state.queue.length > 0
@@ -2948,7 +3321,7 @@
                             statuses.map((status) => [status.requestId, status])
                         );
                         let recovered = 0;
-                        state.queue = state.queue.flatMap((entry) => {
+                        const nextQueue = state.queue.flatMap((entry) => {
                             const status = statusByRequest.get(entry.requestId);
                             if (!status) return [entry];
                             if (status.state === "saved") {
@@ -2970,7 +3343,17 @@
                                 },
                             ];
                         });
-                        persistObservationQueue();
+                        try {
+                            persistObservationQueue(nextQueue);
+                        } catch (error) {
+                            renderObservationQueue();
+                            showToast(
+                                "History was checked, but the phone could not update its queue copy. The retained request IDs are safe to check or send again.",
+                                true,
+                                12000
+                            );
+                            return;
+                        }
                         renderObservationQueue();
                         if (recovered) {
                             showToast(
@@ -2986,6 +3369,7 @@
             }
 
             function refreshRecent() {
+                if (!browserIsOnline()) return;
                 google.script.run
                     .withSuccessHandler(renderRecent)
                     .withFailureHandler(() => {})
@@ -3037,6 +3421,14 @@
 
             function submitEntry(advanceAfterSave) {
                 if (state.saving) return;
+                if (!browserIsOnline()) {
+                    showToast(
+                        "This phone is offline. Use Queue to preserve this reading, then send the queue when the connection returns.",
+                        true,
+                        9000
+                    );
+                    return;
+                }
                 let payload;
                 try {
                     payload = payloadFromForm();
@@ -3069,7 +3461,16 @@
                     };
                 }
                 pending.advanceAfterSave = advanceAfterSave;
-                persistPendingSave(pending);
+                try {
+                    persistPendingSave(pending);
+                } catch (error) {
+                    showToast(
+                        "The phone could not preserve this entry, so it was not sent. Free browser storage or use the spreadsheet directly.",
+                        true,
+                        10000
+                    );
+                    return;
+                }
                 state.advanceAfterSave = advanceAfterSave;
                 const requestId = pending.requestId;
                 const requestPayload = { ...pending.payload, requestId };
@@ -3178,7 +3579,18 @@
 
             function resumeInterruptedWork() {
                 if (!state.bootstrap) return;
-                if (state.saving) invalidateSaveAttempt();
+                if (!browserIsOnline()) {
+                    if (!state.saving)
+                        $("connectionStatus").textContent =
+                            "Offline · entries stay on this phone";
+                    renderObservationQueue();
+                    return;
+                }
+                if (state.saving) {
+                    const elapsed = Date.now() - state.saveStartedAt;
+                    if (elapsed <= state.saveTimeoutMs + 1000) return;
+                    invalidateSaveAttempt();
+                }
 
                 const pending = readPendingSave();
                 if (pending) {
@@ -3202,6 +3614,14 @@
                     });
                 }
                 renderObservationQueue();
+            }
+
+            function scheduleInterruptedWorkCheck(delay = 250) {
+                clearTimeout(state.resumeTimer);
+                state.resumeTimer = window.setTimeout(() => {
+                    state.resumeTimer = null;
+                    resumeInterruptedWork();
+                }, delay);
             }
 
             function showLoadFailure(error, step = "loading garden data") {
@@ -3297,6 +3717,10 @@
                 applyTheme(state.theme === "dark" ? "light" : "dark")
             );
             $("keepEvents").addEventListener("change", persistRoundState);
+            $("advanceAfterQueue").addEventListener(
+                "change",
+                persistRoundState
+            );
             $("singleModeTab").addEventListener("click", () =>
                 setEntryMode("single")
             );
@@ -3360,18 +3784,36 @@
                 event.preventDefault();
                 submitEntry(false);
             });
-            $("saveNextButton").addEventListener("click", () =>
+            $("queueButton").addEventListener("click", () =>
                 addCurrentEntryToQueue()
             );
 
-            window.addEventListener("pageshow", resumeInterruptedWork);
-            window.addEventListener("focus", resumeInterruptedWork);
+            window.addEventListener("pageshow", () =>
+                scheduleInterruptedWorkCheck()
+            );
+            window.addEventListener("focus", () =>
+                scheduleInterruptedWorkCheck()
+            );
             window.addEventListener("orientationchange", () =>
-                window.setTimeout(resumeInterruptedWork, 250)
+                scheduleInterruptedWorkCheck(350)
             );
             document.addEventListener("visibilitychange", () => {
                 if (document.visibilityState === "visible")
-                    resumeInterruptedWork();
+                    scheduleInterruptedWorkCheck();
+            });
+            window.addEventListener("online", () => {
+                showToast("Connection restored. Checking saved work…");
+                scheduleInterruptedWorkCheck(100);
+            });
+            window.addEventListener("offline", () => {
+                if (!state.saving)
+                    $("connectionStatus").textContent =
+                        "Offline · entries stay on this phone";
+                showToast(
+                    "This phone is offline. Queue entries remain available and will not be discarded.",
+                    true,
+                    9000
+                );
             });
 
             applyTheme(preferredTheme());
