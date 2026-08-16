@@ -1,0 +1,128 @@
+# yaml-language-server: $schema=https://www.schemastore.org/pull-request-labeler.json
+#
+# =============================================================================
+# PR Labeler Configuration
+# =============================================================================
+#
+# This file configures automatic PR labeling rules (GitHub Action / labeler).
+# It also serves as the *source of label names* if you choose.
+# actions/labeler does not inspect PR titles or bodies. Keyword-based labels
+# therefore match the repository's required type/description head branches.
+
+# Limit changed-files based labels to 5
+changed-files-labels-limit: 5
+
+# Limit changed-files based labels to 100 files changed (default is 1000)
+max-files-changed: 100
+
+CI/CD:
+    - changed-files:
+          - any-glob-to-any-file:
+                - ".github/workflows/**"
+                - ".github/actions/**"
+                - ".github/*.yml"
+                - ".github/*.yaml"
+
+breaking change:
+    - head-branch:
+          - "^(?:breaking|major)/"
+
+bug:
+    - head-branch:
+          - "^(?:bug|fix|hotfix|patch)/"
+
+build:
+    - any:
+          - changed-files:
+                - any-glob-to-any-file:
+                      - "dist/**/*"
+                      - "plugin.mjs"
+                      - "plugin.d.mts"
+                      - "scripts/**/*"
+                      - "tsconfig.build.json"
+                      - "vite.config.ts"
+          - head-branch:
+                - "^(?:build|bundle|compile)/"
+
+configuration:
+    - changed-files:
+          - any-glob-to-any-file:
+                - "*.config.{js,ts,json}"
+                - "*.json"
+                - "*.yml"
+                - "*.yaml"
+                - ".eslint*"
+                - ".prettier*"
+                - ".github/labeler.yml"
+                - ".github/actionlint.yaml"
+                - "cliff.toml"
+                - "knip.config.ts"
+                - "node.config.json"
+                - "stryker.config.mjs"
+                - "tsconfig*.json"
+                - "vite.config.ts"
+
+dependencies:
+    - changed-files:
+          - any-glob-to-any-file:
+                - "package.json"
+                - "package-lock.json"
+                - "**/package.json"
+
+documentation:
+    - any:
+          - changed-files:
+                - any-glob-to-any-file:
+                      - "**/*.md"
+                      - "docs/**/*"
+                      - "README*"
+                      - "CHANGELOG.md"
+                      - "RELEASING.md"
+          - head-branch:
+                - "^(?:docs|documentation|readme)/"
+
+enhancement:
+    - head-branch:
+          - "^(?:enhancement|feat|feature|improve)/"
+
+good first issue:
+    - head-branch:
+          - "^(?:beginner|good-first-issue|starter)/"
+
+help wanted:
+    - head-branch:
+          - "^(?:help|help-wanted)/"
+
+performance:
+    - head-branch:
+          - "^(?:optimize|perf|performance)/"
+
+refactor:
+    - head-branch:
+          - "^(?:cleanup|refactor)/"
+
+rules:
+    - changed-files:
+          - any-glob-to-any-file:
+                - "src/rules/**/*.ts"
+                - "src/_internal/**/*.ts"
+                - "src/plugin.ts"
+
+security:
+    - head-branch:
+          - "^(?:cve|security|vuln|vulnerability)/"
+
+style:
+    - head-branch:
+          - "^(?:format|formatting|lint|style)/"
+
+testing:
+    - any:
+          - changed-files:
+                - any-glob-to-any-file:
+                      - "**/*.test.{js,ts,tsx}"
+                      - "**/*.spec.{js,ts,tsx}"
+                      - "test/**/*"
+                      - "__tests__/**/*"
+          - head-branch:
+                - "^(?:test|testing|tests)/"
