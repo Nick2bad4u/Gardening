@@ -257,6 +257,24 @@ function getWebAppBootstrap() {
     };
 }
 
+function normalizeWeightState_(value, weight) {
+    const weightState = cleanText_(value);
+    if (weightState && !WEIGHT_STATE_OPTIONS.includes(weightState)) {
+        throw new Error("Weight state must be Dry, Wet, or Routine.");
+    }
+    if (weight === "") return "";
+    return weightState || "Routine";
+}
+
+function validateMeasurementEvents_(eventNames, weight, height, width) {
+    if (eventNames.includes("Weigh") && weight === "") {
+        throw new Error("Enter a weight for the Weigh event.");
+    }
+    if (eventNames.includes("Measure") && height === "" && width === "") {
+        throw new Error("Enter a height or width for the Measure event.");
+    }
+}
+
 function saveWebObservation(payload) {
     const spreadsheet = getGardenSpreadsheet_();
     const plantId = cleanText_(payload && payload.plantId);
@@ -273,13 +291,7 @@ function saveWebObservation(payload) {
     const width = optionalPositiveNumber_(payload.width, "Width");
     const condition = cleanText_(payload.condition);
     const notes = cleanText_(payload.notes);
-    let weightState = cleanText_(payload.weightState);
-
-    if (weightState && !WEIGHT_STATE_OPTIONS.includes(weightState)) {
-        throw new Error("Weight state must be Dry, Wet, or Routine.");
-    }
-    if (weight === "") weightState = "";
-    if (weight !== "" && !weightState) weightState = "Routine";
+    const weightState = normalizeWeightState_(payload.weightState, weight);
 
     const eventNames = buildEventNamesFromList_(
         requestedEvents,
@@ -290,12 +302,7 @@ function saveWebObservation(payload) {
         condition,
         notes
     );
-    if (eventNames.includes("Weigh") && weight === "") {
-        throw new Error("Enter a weight for the Weigh event.");
-    }
-    if (eventNames.includes("Measure") && height === "" && width === "") {
-        throw new Error("Enter a height or width for the Measure event.");
-    }
+    validateMeasurementEvents_(eventNames, weight, height, width);
     const details = eventDetailsFromPayload_(payload, eventNames, plant);
 
     const requestId = normalizeRequestId_(payload && payload.requestId, true);
@@ -403,14 +410,18 @@ function saveBulkWaterObservation(payload) {
     }
 
     const duplicates = results.filter((result) => result.duplicate).length;
+    let message;
+    if (duplicates === plants.length) {
+        message = `This ${plants.length}-plant watering round was already saved. No duplicates were added.`;
+    } else {
+        const plantSuffix = plants.length === 1 ? "" : "s";
+        message = `Water saved for ${plants.length} plant${plantSuffix}.`;
+    }
     return {
         ok: true,
         plantCount: plants.length,
         duplicateCount: duplicates,
-        message:
-            duplicates === plants.length
-                ? `This ${plants.length}-plant watering round was already saved. No duplicates were added.`
-                : `Water saved for ${plants.length} plant${plants.length === 1 ? "" : "s"}.`,
+        message,
     };
 }
 
@@ -447,25 +458,31 @@ function getWebSaveStatus(payload) {
     const savedCount = requests.filter(
         (request) => request.state === "saved"
     ).length;
-    const state =
-        savedCount === requestIds.length
-            ? "saved"
-            : savedCount > 0 ||
-                requests.some((request) => request.state === "incomplete")
-              ? "partial"
-              : "missing";
+    let state = "missing";
+    if (savedCount === requestIds.length) {
+        state = "saved";
+    } else if (
+        savedCount > 0 ||
+        requests.some((request) => request.state === "incomplete")
+    ) {
+        state = "partial";
+    }
+
+    let message =
+        "This request is not in History yet. Retry with the same entry to save it safely.";
+    if (state === "saved") {
+        message = "The entry is already in History.";
+    } else if (state === "partial") {
+        message =
+            "Part of this request reached History. Retry with the same entry to finish it safely.";
+    }
 
     return {
         state,
         requestId,
         expectedCount: requestIds.length,
         savedCount,
-        message:
-            state === "saved"
-                ? "The entry is already in History."
-                : state === "partial"
-                  ? "Part of this request reached History. Retry with the same entry to finish it safely."
-                  : "This request is not in History yet. Retry with the same entry to save it safely.",
+        message,
     };
 }
 
@@ -883,6 +900,18 @@ function eventDetailsFromPayload_(payload, eventNames, plant) {
     const photoUrl = cleanText_(payload && payload.photoUrl);
     const pestIssue = cleanText_(payload && payload.pestIssue);
     const pestTreatment = cleanText_(payload && payload.pestTreatment);
+    const details = {
+        nutrientsUsed: "",
+        nutrientProduct: "",
+        nutrientAmount: "",
+        previousPotSize: "",
+        potSize: "",
+        flowerCount: "",
+        flowerDetails: "",
+        photoUrl: "",
+        pestIssue: "",
+        pestTreatment: "",
+    };
 
     if (hasEvent("Water")) {
         if (!NUTRIENT_OPTIONS.includes(nutrientsUsed)) {
@@ -893,42 +922,47 @@ function eventDetailsFromPayload_(payload, eventNames, plant) {
                 "Enter both the nutrient product and amount used with this watering."
             );
         }
+        details.nutrientsUsed = nutrientsUsed;
+        if (nutrientsUsed === "Yes") {
+            details.nutrientProduct = nutrientProduct;
+            details.nutrientAmount = nutrientAmount;
+        }
     }
-    if (hasEvent("Repot") && !potSize) {
-        throw new Error("Enter the new pot size for the Repot event.");
+    if (hasEvent("Repot")) {
+        if (!potSize) {
+            throw new Error("Enter the new pot size for the Repot event.");
+        }
+        details.previousPotSize = cleanText_(plant && plant.currentPotSize);
+        details.potSize = potSize;
     }
-    if (hasEvent("Flower") && flowerCount === "" && !flowerDetails) {
-        throw new Error(
-            "Enter a flower count, a description, or both for the Flower event."
-        );
+    if (hasEvent("Flower")) {
+        if (flowerCount === "" && !flowerDetails) {
+            throw new Error(
+                "Enter a flower count, a description, or both for the Flower event."
+            );
+        }
+        details.flowerCount = flowerCount;
+        details.flowerDetails = flowerDetails;
     }
-    if (hasEvent("Photo") && !isGooglePhotosShareUrl_(photoUrl)) {
-        throw new Error(
-            "Photo needs a Google Photos share link from photos.google.com or photos.app.goo.gl."
-        );
+    if (hasEvent("Photo")) {
+        if (!isGooglePhotosShareUrl_(photoUrl)) {
+            throw new Error(
+                "Photo needs a Google Photos share link from photos.google.com or photos.app.goo.gl."
+            );
+        }
+        details.photoUrl = photoUrl;
     }
-    if (hasEvent("Pest") && (!pestIssue || !pestTreatment)) {
-        throw new Error(
-            "Describe both the pest or issue and the treatment or action taken."
-        );
+    if (hasEvent("Pest")) {
+        if (!pestIssue || !pestTreatment) {
+            throw new Error(
+                "Describe both the pest or issue and the treatment or action taken."
+            );
+        }
+        details.pestIssue = pestIssue;
+        details.pestTreatment = pestTreatment;
     }
 
-    return {
-        nutrientsUsed: hasEvent("Water") ? nutrientsUsed : "",
-        nutrientProduct:
-            hasEvent("Water") && nutrientsUsed === "Yes" ? nutrientProduct : "",
-        nutrientAmount:
-            hasEvent("Water") && nutrientsUsed === "Yes" ? nutrientAmount : "",
-        previousPotSize: hasEvent("Repot")
-            ? cleanText_(plant && plant.currentPotSize)
-            : "",
-        potSize: hasEvent("Repot") ? potSize : "",
-        flowerCount: hasEvent("Flower") ? flowerCount : "",
-        flowerDetails: hasEvent("Flower") ? flowerDetails : "",
-        photoUrl: hasEvent("Photo") ? photoUrl : "",
-        pestIssue: hasEvent("Pest") ? pestIssue : "",
-        pestTreatment: hasEvent("Pest") ? pestTreatment : "",
-    };
+    return details;
 }
 
 function isGooglePhotosShareUrl_(value) {
@@ -1122,7 +1156,7 @@ function ensureHistoryRequestIdColumn_(history) {
     }
     if (current !== GARDEN_LOGGER.requestIdHeader) {
         throw new Error(
-            `History!${columnName_(GARDEN_LOGGER.requestIdColumn)}1 must be \"${GARDEN_LOGGER.requestIdHeader}\".`
+            `History!${columnName_(GARDEN_LOGGER.requestIdColumn)}1 must be "${GARDEN_LOGGER.requestIdHeader}".`
         );
     }
 }
@@ -1283,9 +1317,10 @@ function applyBulkEvent_(quickLog) {
         .getRange(GARDEN_LOGGER.firstInputRow, 1, rowCount, 1)
         .getDisplayValues();
     const clearEvents = selected === "Clear events";
-    const values = plantIds.map(([plantId]) => [
-        plantId ? (clearEvents ? "" : selected) : "",
-    ]);
+    const values = plantIds.map(([plantId]) => {
+        if (!plantId || clearEvents) return [""];
+        return [selected];
+    });
 
     quickLog
         .getRange(
@@ -1421,7 +1456,7 @@ function normalizeDate_(value) {
 
     const parsed = new Date(value);
     if (Number.isNaN(parsed.getTime())) {
-        throw new Error("Date is not valid.");
+        throw new TypeError("Date is not valid.");
     }
     return parsed;
 }
@@ -1505,7 +1540,7 @@ function assertHeaders_(sheet, expected, rowNumber) {
     expected.forEach((header, index) => {
         if (actual[index] !== header) {
             throw new Error(
-                `${sheet.getName()}!${columnName_(index + 1)}${rowNumber} must be \"${header}\".`
+                `${sheet.getName()}!${columnName_(index + 1)}${rowNumber} must be "${header}".`
             );
         }
     });
@@ -1530,7 +1565,7 @@ function columnName_(columnNumber) {
     let value = columnNumber;
     while (value > 0) {
         const remainder = (value - 1) % 26;
-        result = String.fromCharCode(65 + remainder) + result;
+        result = String.fromCodePoint(65 + remainder) + result;
         value = Math.floor((value - 1) / 26);
     }
     return result;
