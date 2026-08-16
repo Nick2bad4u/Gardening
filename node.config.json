@@ -1,0 +1,32 @@
+{
+    "$schema": "https://nodejs.org/docs/latest/node-config-schema.json",
+    "nodeOptions": {
+        "allow-fs-read": [
+            "./scripts",
+            "./test",
+            "./node_modules",
+            "./coverage",
+            "./docs",
+            "./assets",
+            "./.github",
+            "./package.json",
+            "./package-lock.json",
+            "./vitest.config.mjs",
+            "./codecov.yml",
+            "./README.md"
+        ],
+        "allow-fs-write": [
+            "./coverage",
+            "./temp",
+            "./.pages-site"
+        ],
+        "conditions": ["development", "node"],
+        "diagnostic-dir": "./temp",
+        "enable-source-maps": true,
+        "extra-info-on-fatal-exception": true,
+        "max-old-space-size-percentage": "80",
+        "trace-deprecation": false,
+        "trace-warnings": false,
+        "warnings": true
+    }
+}

@@ -948,3 +948,7 @@ docs/docusaurus/static/img/coverage.svg
 .lycheecache
 .playwright-cli/
 .pages-site/
+
+# Local Google Apps Script project mapping and OAuth credentials.
+.clasp.json
+.clasprc.json

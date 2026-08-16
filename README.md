@@ -1,5 +1,7 @@
 # Gardening
 
+[![Apps Script coverage](https://codecov.io/gh/Nick2bad4u/Gardening/graph/badge.svg?flag=apps-script-server)](https://app.codecov.io/gh/Nick2bad4u/Gardening)
+
 This is my low-pressure garden notebook. The current focus is my cactus,
 succulent, and small houseplant collection, especially learning how to use the
 VIVOSUN AW200SE grow light without turning the hobby into a science project.

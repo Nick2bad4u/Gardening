@@ -284,6 +284,69 @@
                 margin-bottom: 8px;
             }
 
+            .picker-toolbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+                margin: 10px 0;
+            }
+
+            .picker-modes {
+                display: inline-grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 4px;
+                padding: 4px;
+                border: 1px solid var(--line);
+                border-radius: 12px;
+                background: var(--card-soft);
+            }
+
+            .picker-mode {
+                min-height: 36px;
+                border: 0;
+                border-radius: 8px;
+                background: transparent;
+                color: var(--muted);
+                padding: 6px 12px;
+                font-size: 12px;
+                font-weight: 800;
+                cursor: pointer;
+            }
+
+            .picker-mode[aria-pressed="true"] {
+                background: var(--forest-2);
+                color: #fff;
+            }
+
+            .label-picker {
+                display: grid;
+                grid-template-columns: repeat(5, minmax(0, 1fr));
+                gap: 8px;
+            }
+
+            .label-picker[hidden],
+            .list-picker[hidden] {
+                display: none;
+            }
+
+            .label-choice {
+                min-height: 44px;
+                border: 1px solid var(--line);
+                border-radius: 11px;
+                background: var(--control);
+                color: var(--ink);
+                font-weight: 900;
+                cursor: pointer;
+            }
+
+            .label-choice[aria-pressed="true"] {
+                border-color: var(--forest-2);
+                background: var(--forest-2);
+                color: #fff;
+                box-shadow: 0 3px 10px rgba(40, 107, 63, 0.18);
+            }
+
             .plant-summary {
                 display: grid;
                 grid-template-columns: 1fr auto;
@@ -640,6 +703,23 @@
                 gap: 8px;
             }
 
+            .history-limit {
+                display: inline-flex;
+                align-items: center;
+                gap: 7px;
+                color: var(--muted);
+                font-size: 11px;
+                font-weight: 800;
+            }
+
+            .history-limit select {
+                width: auto;
+                min-height: 36px;
+                padding: 6px 28px 6px 9px;
+                border-radius: 9px;
+                font-size: 12px;
+            }
+
             .recent-item {
                 display: grid;
                 grid-template-columns: 1fr auto;
@@ -795,6 +875,13 @@
                     grid-template-columns: 1fr;
                     max-height: 300px;
                 }
+                .label-picker {
+                    grid-template-columns: repeat(4, minmax(0, 1fr));
+                }
+                .picker-toolbar {
+                    align-items: flex-start;
+                    flex-direction: column;
+                }
                 .field.full {
                     grid-column: auto;
                 }
@@ -855,7 +942,18 @@
                         <div class="recent-inner">
                             <div class="card-title"
                                 ><h2>Recent History</h2
-                                ><span class="hint">Newest first</span></div
+                                ><label class="history-limit"
+                                    >Show
+                                    <select
+                                        id="recentLimit"
+                                        aria-label="Number of recent history entries"
+                                    >
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select></label
+                                ></div
                             >
                             <div
                                 id="recentList"
@@ -910,22 +1008,60 @@
                     >
                         <section class="card">
                             <h2>1. Choose plant</h2>
-                            <label
-                                class="field-label"
-                                for="plantSearch"
-                                >Find by name, ID, or label</label
+                            <div class="picker-toolbar">
+                                <span class="hint"
+                                    >Use the searchable list or tap a pot
+                                    label.</span
+                                >
+                                <div
+                                    class="picker-modes"
+                                    role="group"
+                                    aria-label="Plant selector style"
+                                >
+                                    <button
+                                        id="listPickerMode"
+                                        class="picker-mode"
+                                        type="button"
+                                        aria-pressed="true"
+                                        >List</button
+                                    >
+                                    <button
+                                        id="labelPickerMode"
+                                        class="picker-mode"
+                                        type="button"
+                                        aria-pressed="false"
+                                        >Labels</button
+                                    >
+                                </div>
+                            </div>
+                            <div
+                                id="listPicker"
+                                class="list-picker"
                             >
-                            <input
-                                id="plantSearch"
-                                class="plant-search"
-                                type="search"
-                                placeholder="Search plants…"
-                                autocomplete="off"
-                            />
-                            <select
-                                id="plantSelect"
-                                aria-label="Plant"
-                            ></select>
+                                <label
+                                    class="field-label"
+                                    for="plantSearch"
+                                    >Find by name, ID, or label</label
+                                >
+                                <input
+                                    id="plantSearch"
+                                    class="plant-search"
+                                    type="search"
+                                    placeholder="Search plants…"
+                                    autocomplete="off"
+                                />
+                                <select
+                                    id="plantSelect"
+                                    aria-label="Plant"
+                                ></select>
+                            </div>
+                            <div
+                                id="labelPicker"
+                                class="label-picker"
+                                role="group"
+                                aria-label="Choose plant by pot label"
+                                hidden
+                            ></div>
                             <div
                                 id="plantSummary"
                                 class="plant-summary"
@@ -1186,8 +1322,18 @@
                                 >
                                     <h3>📷 Photo</h3>
                                     <p class="hint"
-                                        >Paste a Google Photos share link. It
-                                        stays with this dated event.</p
+                                        >Open Google Photos, select the photo,
+                                        use Share → Create link, then return
+                                        here and paste it. Your phone may open
+                                        the Google Photos app automatically.</p
+                                    >
+                                    <a
+                                        id="openGooglePhotos"
+                                        class="link-pill"
+                                        href="https://photos.google.com/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        >▧ Open Google Photos</a
                                     >
                                     <label
                                         class="field-label"
@@ -1451,7 +1597,10 @@
                 advanceAfterSave: false,
                 pendingSave: null,
                 saveTimer: null,
+                saveAttempt: 0,
                 theme: "light",
+                plantPickerMode: "list",
+                recentLimit: 10,
             };
 
             const PENDING_SAVE_KEY = "gardenLoggerPendingSaveV1";
@@ -1459,6 +1608,8 @@
             const WEIGHT_STATE_KEY = "gardenLoggerWeightStateV1";
             const BULK_PENDING_KEY = "gardenLoggerBulkPendingV1";
             const THEME_KEY = "gardenLoggerThemeV1";
+            const PLANT_PICKER_MODE_KEY = "gardenLoggerPlantPickerModeV1";
+            const RECENT_LIMIT_KEY = "gardenLoggerRecentLimitV1";
             const SAVE_WATCHDOG_MS = 20000;
 
             const $ = (id) => document.getElementById(id);
@@ -1659,6 +1810,49 @@
                 state.saveTimer = null;
             }
 
+            function beginSaveAttempt() {
+                clearSaveTimer();
+                state.saveAttempt += 1;
+                setSaving(true);
+                return state.saveAttempt;
+            }
+
+            function finishSaveAttempt(attemptId) {
+                if (attemptId !== state.saveAttempt) return false;
+                clearSaveTimer();
+                setSaving(false);
+                return true;
+            }
+
+            function invalidateSaveAttempt() {
+                state.saveAttempt += 1;
+                clearSaveTimer();
+                setSaving(false);
+            }
+
+            function requestSaveStatus(pending, currentPending, handlers) {
+                google.script.run
+                    .withSuccessHandler((result) => {
+                        const current = currentPending();
+                        if (!current || current.requestId !== pending.requestId)
+                            return;
+                        if (result.state === "saved") {
+                            handlers.saved(result);
+                            return;
+                        }
+                        if (handlers.unconfirmed) handlers.unconfirmed(result);
+                    })
+                    .withFailureHandler((error) => {
+                        if (handlers.failed) handlers.failed(error);
+                    })
+                    .getWebSaveStatus({
+                        requestId: pending.requestId,
+                        plantIds: Array.isArray(pending.payload.plantIds)
+                            ? pending.payload.plantIds
+                            : [],
+                    });
+            }
+
             function renderPlantOptions(query = "", preferredId = "") {
                 const normalized = query.trim().toLowerCase();
                 const plants = state.bootstrap.plants.filter((plant) =>
@@ -1686,6 +1880,61 @@
                 renderPlantSummary();
             }
 
+            function renderLabelPicker() {
+                const picker = $("labelPicker");
+                const currentId = $("plantSelect").value;
+                picker.replaceChildren();
+                state.bootstrap.plants.forEach((plant) => {
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.className = "label-choice";
+                    button.dataset.plantId = plant.id;
+                    button.textContent = plant.label || plant.id;
+                    button.title = `${plant.name} · ${plant.id}`;
+                    button.setAttribute(
+                        "aria-label",
+                        `${plant.label ? `Label ${plant.label}, ` : ""}${plant.name}, ${plant.id}`
+                    );
+                    button.setAttribute(
+                        "aria-pressed",
+                        String(plant.id === currentId)
+                    );
+                    picker.append(button);
+                });
+            }
+
+            function setPlantPickerMode(mode, persist = true) {
+                state.plantPickerMode = mode === "labels" ? "labels" : "list";
+                const labelsMode = state.plantPickerMode === "labels";
+                $("listPicker").hidden = labelsMode;
+                $("labelPicker").hidden = !labelsMode;
+                $("listPickerMode").setAttribute(
+                    "aria-pressed",
+                    String(!labelsMode)
+                );
+                $("labelPickerMode").setAttribute(
+                    "aria-pressed",
+                    String(labelsMode)
+                );
+                if (labelsMode) renderLabelPicker();
+                if (persist)
+                    localStorage.setItem(
+                        PLANT_PICKER_MODE_KEY,
+                        state.plantPickerMode
+                    );
+            }
+
+            function selectPlantById(plantId) {
+                if (
+                    !state.bootstrap.plants.some(
+                        (plant) => plant.id === plantId
+                    )
+                )
+                    return;
+                $("plantSearch").value = "";
+                renderPlantOptions("", plantId);
+            }
+
             function selectedPlant() {
                 return (
                     state.bootstrap.plants.find(
@@ -1705,6 +1954,7 @@
                     return;
                 }
                 localStorage.setItem("gardenPlantId", plant.id);
+                if (state.plantPickerMode === "labels") renderLabelPicker();
                 $("potSetup").value = plant.potSetup || 1;
                 $("currentPotSize").textContent =
                     `Current pot: ${plant.currentPotSize || "not logged"}`;
@@ -2036,23 +2286,58 @@
                     return;
                 }
                 const stored = readBulkPendingSave();
-                const pending =
-                    stored &&
-                    JSON.stringify(stored.payload) === JSON.stringify(payload)
-                        ? stored
-                        : { requestId: createRequestId(), payload };
+                let pending = stored;
+                if (
+                    pending &&
+                    JSON.stringify(pending.payload) !== JSON.stringify(payload)
+                ) {
+                    if (!pending.replaceable) {
+                        showToast(
+                            "A previous watering round may still be saving. Restore its values or wait for Google to confirm the result before changing the round.",
+                            true,
+                            10000
+                        );
+                        return;
+                    }
+                    pending = null;
+                }
+                if (!pending) {
+                    pending = { requestId: createRequestId(), payload };
+                }
                 localStorage.setItem(BULK_PENDING_KEY, JSON.stringify(pending));
-                setSaving(true);
+                const requestId = pending.requestId;
+                const attemptId = beginSaveAttempt();
+                state.saveTimer = setTimeout(() => {
+                    const current = readBulkPendingSave();
+                    if (
+                        attemptId !== state.saveAttempt ||
+                        !current ||
+                        current.requestId !== requestId
+                    )
+                        return;
+                    setSaving(false);
+                    $("connectionStatus").textContent =
+                        "Watering save still processing · checking History";
+                    showToast(
+                        "Google is taking longer than expected. The watering round is preserved while the logger checks whether it reached History.",
+                        true,
+                        12000
+                    );
+                    reconcileBulkSave(requestId);
+                }, SAVE_WATCHDOG_MS);
                 google.script.run
                     .withSuccessHandler((result) => {
-                        localStorage.removeItem(BULK_PENDING_KEY);
-                        setSaving(false);
-                        showToast(result.message);
-                        clearBulkRound();
-                        refreshRecent();
+                        if (attemptId !== state.saveAttempt) return;
+                        completeBulkSave(result, requestId);
                     })
                     .withFailureHandler((error) => {
-                        setSaving(false);
+                        const current = readBulkPendingSave();
+                        if (
+                            !current ||
+                            current.requestId !== requestId ||
+                            !finishSaveAttempt(attemptId)
+                        )
+                            return;
                         showToast(
                             error && error.message
                                 ? error.message
@@ -2060,11 +2345,64 @@
                             true,
                             10000
                         );
+                        reconcileBulkSave(requestId, {
+                            allowReplacementIfMissing: true,
+                        });
                     })
                     .saveBulkWaterObservation({
                         ...pending.payload,
-                        requestId: pending.requestId,
+                        requestId,
                     });
+            }
+
+            function completeBulkSave(result, requestId) {
+                const current = readBulkPendingSave();
+                if (!current || current.requestId !== requestId) return false;
+                invalidateSaveAttempt();
+                localStorage.removeItem(BULK_PENDING_KEY);
+                showToast(result.message);
+                clearBulkRound();
+                refreshRecent();
+                return true;
+            }
+
+            function reconcileBulkSave(requestId, options = {}) {
+                const pending = readBulkPendingSave();
+                if (!pending || pending.requestId !== requestId) return;
+                requestSaveStatus(pending, readBulkPendingSave, {
+                    saved: () =>
+                        completeBulkSave(
+                            {
+                                message:
+                                    "The watering round was already in History, so the recovered draft was cleared automatically.",
+                            },
+                            requestId
+                        ),
+                    unconfirmed: (result) => {
+                        $("connectionStatus").textContent =
+                            "Watering round kept · retry is safe";
+                        if (
+                            result.state === "missing" &&
+                            options.allowReplacementIfMissing
+                        ) {
+                            pending.replaceable = true;
+                            localStorage.setItem(
+                                BULK_PENDING_KEY,
+                                JSON.stringify(pending)
+                            );
+                            $("connectionStatus").textContent =
+                                "Watering save failed · edit and retry";
+                            showToast(
+                                "The failed watering request is not in History. Correct the round and save again; Clear entry is not needed.",
+                                true,
+                                12000
+                            );
+                            return;
+                        }
+                        if (result.state === "partial")
+                            showToast(result.message, true, 12000);
+                    },
+                });
             }
 
             function clearEntry(options = {}) {
@@ -2148,7 +2486,7 @@
                 google.script.run
                     .withSuccessHandler(renderRecent)
                     .withFailureHandler(() => {})
-                    .getRecentWebObservations();
+                    .getRecentWebObservations(state.recentLimit);
             }
 
             function restorePendingSave() {
@@ -2209,12 +2547,15 @@
                     payloadFingerprint(pending.payload) !==
                         payloadFingerprint(payload)
                 ) {
-                    showToast(
-                        "A previous version of this entry may still be saving. Restore its values or use Clear entry before starting a different reading.",
-                        true,
-                        10000
-                    );
-                    return;
+                    if (!pending.replaceable) {
+                        showToast(
+                            "A previous version of this entry may still be saving. Restore its values or wait for Google to confirm the result before changing the reading.",
+                            true,
+                            10000
+                        );
+                        return;
+                    }
+                    pending = null;
                 }
 
                 if (!pending) {
@@ -2227,12 +2568,12 @@
                 pending.advanceAfterSave = advanceAfterSave;
                 persistPendingSave(pending);
                 state.advanceAfterSave = advanceAfterSave;
-                setSaving(true);
                 const requestId = pending.requestId;
                 const requestPayload = { ...pending.payload, requestId };
-                clearSaveTimer();
+                const attemptId = beginSaveAttempt();
                 state.saveTimer = setTimeout(() => {
                     if (
+                        attemptId !== state.saveAttempt ||
                         !state.pendingSave ||
                         state.pendingSave.requestId !== requestId
                     )
@@ -2241,25 +2582,21 @@
                     $("connectionStatus").textContent =
                         "Save still processing · retry is safe";
                     showToast(
-                        "Google is taking longer than expected. The entry is preserved on this phone. Wait a moment, then tap Save again; the retry cannot add a duplicate.",
+                        "Google is taking longer than expected. The entry is preserved while the logger checks whether it already reached History.",
                         true,
                         12000
                     );
+                    reconcileSingleSave(requestId);
                 }, SAVE_WATCHDOG_MS);
                 google.script.run
                     .withSuccessHandler((result) => {
                         if (
+                            attemptId !== state.saveAttempt ||
                             !state.pendingSave ||
                             state.pendingSave.requestId !== requestId
                         )
                             return;
-                        clearSaveTimer();
-                        clearPendingSave();
-                        setSaving(false);
-                        showToast(result.message);
-                        clearEntry({ afterSave: true });
-                        if (state.advanceAfterSave) advancePlant();
-                        refreshRecent();
+                        completeSingleSave(result, requestId);
                     })
                     .withFailureHandler((error) => {
                         if (
@@ -2267,8 +2604,7 @@
                             state.pendingSave.requestId !== requestId
                         )
                             return;
-                        clearSaveTimer();
-                        setSaving(false);
+                        if (!finishSaveAttempt(attemptId)) return;
                         $("connectionStatus").textContent =
                             "Entry kept · retry is safe";
                         const message =
@@ -2276,8 +2612,65 @@
                                 ? error.message
                                 : "Google did not confirm the save. Your entry is still on this phone; wait a moment and tap Save again.";
                         showToast(message, true, 10000);
+                        reconcileSingleSave(requestId, {
+                            allowReplacementIfMissing: true,
+                        });
                     })
                     .saveWebObservation(requestPayload);
+            }
+
+            function completeSingleSave(result, requestId) {
+                if (
+                    !state.pendingSave ||
+                    state.pendingSave.requestId !== requestId
+                )
+                    return false;
+                const advanceAfterSave = Boolean(
+                    state.pendingSave.advanceAfterSave
+                );
+                invalidateSaveAttempt();
+                clearPendingSave();
+                showToast(result.message);
+                clearEntry({ afterSave: true });
+                if (advanceAfterSave) advancePlant();
+                refreshRecent();
+                return true;
+            }
+
+            function reconcileSingleSave(requestId, options = {}) {
+                const pending = state.pendingSave;
+                if (!pending || pending.requestId !== requestId) return;
+                requestSaveStatus(pending, () => state.pendingSave, {
+                    saved: () =>
+                        completeSingleSave(
+                            {
+                                message:
+                                    "The observation was already in History, so the recovered draft was cleared automatically.",
+                            },
+                            requestId
+                        ),
+                    unconfirmed: (result) => {
+                        $("connectionStatus").textContent =
+                            "Entry kept · retry is safe";
+                        if (
+                            result.state === "missing" &&
+                            options.allowReplacementIfMissing
+                        ) {
+                            pending.replaceable = true;
+                            persistPendingSave(pending);
+                            $("connectionStatus").textContent =
+                                "Save failed · edit and retry";
+                            showToast(
+                                "The failed request is not in History. Correct this entry and save again; Clear entry is not needed.",
+                                true,
+                                12000
+                            );
+                            return;
+                        }
+                        if (result.state === "partial")
+                            showToast(result.message, true, 12000);
+                    },
+                });
             }
 
             function showLoadFailure(error, step = "loading garden data") {
@@ -2306,10 +2699,21 @@
                     renderGlobalLinks();
                     step = "building the plant selector";
                     renderPlantOptions();
+                    setPlantPickerMode(
+                        localStorage.getItem(PLANT_PICKER_MODE_KEY),
+                        false
+                    );
                     step = "building event controls";
                     renderEventChips();
                     step = "building recent history";
+                    state.recentLimit = [10, 25, 50, 100].includes(
+                        Number(localStorage.getItem(RECENT_LIMIT_KEY))
+                    )
+                        ? Number(localStorage.getItem(RECENT_LIMIT_KEY))
+                        : 10;
+                    $("recentLimit").value = String(state.recentLimit);
                     renderRecent(bootstrap.recent);
+                    if (state.recentLimit !== 10) refreshRecent();
                     step = "opening the entry workspace";
                     $("loading").hidden = true;
                     $("modeTabs").hidden = false;
@@ -2318,7 +2722,11 @@
                     );
                     setEntryMode("single");
                     step = "restoring an unfinished entry";
-                    if (!restorePendingSave()) restoreBulkPendingSave();
+                    if (restorePendingSave()) {
+                        reconcileSingleSave(state.pendingSave.requestId);
+                    } else if (restoreBulkPendingSave()) {
+                        reconcileBulkSave(readBulkPendingSave().requestId);
+                    }
                 } catch (error) {
                     showLoadFailure(error, step);
                 }
@@ -2328,6 +2736,24 @@
                 renderPlantOptions(event.target.value)
             );
             $("plantSelect").addEventListener("change", renderPlantSummary);
+            $("listPickerMode").addEventListener("click", () =>
+                setPlantPickerMode("list")
+            );
+            $("labelPickerMode").addEventListener("click", () =>
+                setPlantPickerMode("labels")
+            );
+            $("labelPicker").addEventListener("click", (event) => {
+                const button = event.target.closest("[data-plant-id]");
+                if (button) selectPlantById(button.dataset.plantId);
+            });
+            $("recentLimit").addEventListener("change", (event) => {
+                state.recentLimit = Number(event.target.value);
+                localStorage.setItem(
+                    RECENT_LIMIT_KEY,
+                    String(state.recentLimit)
+                );
+                refreshRecent();
+            });
             $("themeToggle").addEventListener("click", () =>
                 applyTheme(state.theme === "dark" ? "light" : "dark")
             );

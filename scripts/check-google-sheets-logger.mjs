@@ -102,10 +102,17 @@ assert.deepEqual(
 
 assert.match(source, /LockService\.getScriptLock\(\)/);
 assert.doesNotMatch(source, /LockService\.getDocumentLock\(\)/);
+assert.match(source, /function getWebSaveStatus\(payload\)/);
+assert.match(source, /function savedRequestStatus_\(history, requestId\)/);
 assert.match(source, /setFaviconUrl\(GARDEN_LOGGER\.faviconUrl\)/);
-assert.match(source, /commons-10106507-habit\.png/);
+assert.match(source, /0fdb0739ffe391ade24deb6df2973a21\.png/);
 assert.match(html, /id="themeToggle"/);
 assert.match(html, /const ROUND_STATE_KEY = "gardenLoggerRoundStateV1"/);
+assert.match(html, /function reconcileSingleSave\(requestId, options = \{\}\)/);
+assert.match(html, /function reconcileBulkSave\(requestId, options = \{\}\)/);
+assert.match(html, /function beginSaveAttempt\(\)/);
+assert.match(html, /state\.saveTimer = setTimeout\(\(\) => \{/);
+assert.match(html, /pending\.replaceable = true;/);
 assert.match(html, /function renderWeightState\(\)/);
 assert.match(html, /renderWeightState\(\);\s*updateConditionalFields\(\);/);
 assert.doesNotMatch(
@@ -131,6 +138,11 @@ assert.match(
 );
 assert.match(html, /id="repotSection"/);
 assert.match(html, /id="photoUrl"/);
+assert.match(html, /id="labelPickerMode"/);
+assert.match(html, /gardenLoggerPlantPickerModeV1/);
+assert.match(html, /id="recentLimit"/);
+assert.match(html, /gardenLoggerRecentLimitV1/);
+assert.match(html, /id="openGooglePhotos"/);
 assert.match(html, /createLink\("History & charts", plant\.historyUrl\)/);
 assert.match(source, /const HISTORY_DETAIL_HEADERS/);
 assert.match(source, /ensureHistoryDetailColumns_\(history\)/);

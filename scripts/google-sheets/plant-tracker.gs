@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.0.0",
+    version: "5.2.0",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -48,8 +48,7 @@ const GARDEN_LOGGER = Object.freeze({
         "https://nick2bad4u.github.io/Gardening/layouts/indoor-acclimation-calendar.html",
     photosUrl:
         "https://nick2bad4u.github.io/Gardening/layouts/photo-album.html",
-    faviconUrl:
-        "https://nick2bad4u.github.io/Gardening/assets/plants/mammillaria-mammillaris/commons-10106507-habit.png",
+    faviconUrl: "https://i.gyazo.com/0fdb0739ffe391ade24deb6df2973a21.png",
 });
 
 const WEB_EVENT_OPTIONS = Object.freeze([
@@ -65,6 +64,7 @@ const WEB_EVENT_OPTIONS = Object.freeze([
 ]);
 
 const WEIGHT_STATE_OPTIONS = Object.freeze(["Dry", "Wet", "Routine"]);
+const RECENT_LIMIT_OPTIONS = Object.freeze([10, 25, 50, 100]);
 
 const QUICK_LOG_HEADERS = Object.freeze([
     "Plant ID",
@@ -414,13 +414,59 @@ function saveBulkWaterObservation(payload) {
     };
 }
 
-function getRecentWebObservations() {
+function getRecentWebObservations(limit) {
     const spreadsheet = getGardenSpreadsheet_();
     return getRecentObservations_(
         spreadsheet,
         spreadsheet.getSpreadsheetTimeZone(),
-        8
+        normalizeRecentLimit_(limit)
     );
+}
+
+/**
+ * Checks whether a browser save request reached History after its callback was
+ * lost. The browser keeps the same request ID across retries, so this read lets
+ * it clear an already-saved draft without asking the user to discard it.
+ */
+function getWebSaveStatus(payload) {
+    const spreadsheet = getGardenSpreadsheet_();
+    const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
+    assertHeaders_(history, HISTORY_HEADERS, 1);
+    ensureHistoryRequestIdColumn_(history);
+
+    const requestId = normalizeRequestId_(payload && payload.requestId, true);
+    const plantIds = uniqueTextValues_(
+        Array.isArray(payload && payload.plantIds) ? payload.plantIds : []
+    );
+    const requestIds = plantIds.length
+        ? plantIds.map((plantId) => `${requestId.slice(0, 88)}-${plantId}`)
+        : [requestId];
+    const requests = requestIds.map((candidateId) =>
+        savedRequestStatus_(history, candidateId)
+    );
+    const savedCount = requests.filter(
+        (request) => request.state === "saved"
+    ).length;
+    const state =
+        savedCount === requestIds.length
+            ? "saved"
+            : savedCount > 0 ||
+                requests.some((request) => request.state === "incomplete")
+              ? "partial"
+              : "missing";
+
+    return {
+        state,
+        requestId,
+        expectedCount: requestIds.length,
+        savedCount,
+        message:
+            state === "saved"
+                ? "The entry is already in History."
+                : state === "partial"
+                  ? "Part of this request reached History. Retry with the same entry to finish it safely."
+                  : "This request is not in History yet. Retry with the same entry to save it safely.",
+    };
 }
 
 function onEdit(event) {
@@ -1041,6 +1087,30 @@ function historyRowsForRequest_(history, requestId) {
         .sort((left, right) => left - right);
 }
 
+function savedRequestStatus_(history, requestId) {
+    const rowNumbers = historyRowsForRequest_(history, requestId);
+    if (!rowNumbers.length) return { state: "missing", requestId };
+
+    const firstRow = rowNumbers[0];
+    const contiguous = rowNumbers.every(
+        (rowNumber, index) => rowNumber === firstRow + index
+    );
+    if (!contiguous) return { state: "incomplete", requestId };
+
+    const values = history
+        .getRange(firstRow, 1, rowNumbers.length, GARDEN_LOGGER.historyColumns)
+        .getValues();
+    const complete = values.every(
+        (row) =>
+            row[0] instanceof Date && cleanText_(row[1]) && cleanText_(row[2])
+    );
+
+    return {
+        state: complete ? "saved" : "incomplete",
+        requestId,
+    };
+}
+
 function ensureHistoryRequestIdColumn_(history) {
     const cell = history.getRange(1, GARDEN_LOGGER.requestIdColumn);
     const current = cleanText_(cell.getDisplayValue());
@@ -1372,6 +1442,11 @@ function optionalPositiveInteger_(value, label) {
         throw new Error(`${label} must be a whole number of 1 or greater.`);
     }
     return number;
+}
+
+function normalizeRecentLimit_(value) {
+    const limit = Number(value);
+    return RECENT_LIMIT_OPTIONS.includes(limit) ? limit : 10;
 }
 
 function uniqueTextValues_(values) {

@@ -21,6 +21,68 @@ overwritten. The bound Apps Script in
 [`Index.html`](./Index.html) is the mobile entry UI, and
 [`appsscript.json`](./appsscript.json) records the project runtime settings.
 
+## Local development and tests
+
+[`clasp`](https://developers.google.com/apps-script/guides/clasp) synchronizes
+the checked-in files with the bound Apps Script project, lists deployments, and
+reads execution logs. It does **not** emulate `SpreadsheetApp`, `LockService`,
+`HtmlService`, or `google.script.run` on the local machine. The Vitest suite
+therefore runs the real `.gs` source in a controlled Apps Script mock and opens
+the real mobile HTML in a lightweight browser DOM.
+
+Install exactly from the lockfile and run the logger suite:
+
+```powershell
+npm ci
+npm run test:logger
+npm run test:logger:coverage
+```
+
+The tests cover combined event inference, formula-safe text, request-ID
+validation, single and bulk History reconciliation, lost callbacks, late stale
+callbacks, the 20-second save watchdog, picker persistence, adjustable recent
+History, and the Google Photos handoff. The coverage report measures the Apps
+Script server file directly and is uploaded to Codecov in CI. The inline client
+script remains exercised by DOM tests but is not included in the V8 percentage,
+because treating the complete HTML file as JavaScript would produce a false
+source map. `npm run check:logger` remains a fast source-contract smoke check.
+
+For one-time `clasp` setup:
+
+1. Enable the Apps Script API in your Google Apps Script user settings.
+2. Run `npm run apps-script:login`. Google opens the authorization flow; finish
+   that sign-in yourself.
+3. Open **Project Settings** in the bound Apps Script project and copy its
+   **Script ID**.
+4. Create a local `.clasp.json` at the repository root. It is intentionally
+   ignored by Git:
+
+   ```json
+   {
+    "scriptId": "PASTE_THE_BOUND_PROJECT_SCRIPT_ID_HERE",
+    "rootDir": "scripts/google-sheets"
+   }
+   ```
+
+5. Run `npm run apps-script:status` to verify that only `plant-tracker.gs`,
+   `Index.html`, and `appsscript.json` are in the push set.
+
+Useful read-only commands are `npm run apps-script:deployments`,
+`npm run apps-script:logs`, and `npm run apps-script:open`. Treat
+`apps-script:pull` and `apps-script:push` as synchronization operations:
+`pull` can replace local files, while `push` changes the remote Apps Script
+project. A push does not update the versioned web-app deployment by itself; the
+new version must still be assigned to the existing deployment.
+
+The mobile logger stores an unconfirmed request ID and draft locally before it
+calls Google. If the callback is lost, logger 5.2 checks History for that exact
+request on timeout and page load. A completed save clears itself automatically;
+an absent or partial save keeps the draft available for an idempotent retry. If
+Google explicitly rejects a request and the follow-up History check confirms
+that nothing was written, the same form can be corrected and saved under a new
+request ID without using **Clear entry**. A timed-out request stays protected
+until its result is known because it may still be running remotely.
+
 ## One-time installation
 
 The repository contains the logger source, but Google does not install a
@@ -43,12 +105,14 @@ or update it in the workbook once:
    existing deployment to the new version. Keep **Execute as** set to the
    deploying user and access limited to the account that owns the workbook.
 
-The mobile app remembers the selected plant and theme on that device. Selected
-round events can be retained between plants, while the weight state defaults to
-`Routine` and remembers the last Dry/Wet/Routine choice only for the current
-browser session. It deliberately clears measurements after each confirmed save.
-The desktop view keeps links and recent History in a sidebar; phone layouts
-stack those surfaces above the single-entry and watering-round tabs.
+The mobile app remembers the selected plant, theme, plant-picker style, and
+recent-History length on that device. The searchable selector can be switched
+to a compact grid containing every current pot label. Selected round events can
+be retained between plants, while the weight state defaults to `Routine` and
+remembers the last Dry/Wet/Routine choice only for the current browser session.
+It deliberately clears measurements after each confirmed save. The desktop
+view keeps links and recent History in a sidebar; phone layouts stack those
+surfaces above the single-entry and watering-round tabs.
 
 Apps Script serves HTML inside Google's own sandboxed wrapper. The Google
 authorship banner belongs to that wrapper and cannot be hidden by this project's
@@ -94,8 +158,12 @@ installable trigger is not required.
 - The Watering round tab can append one Water row for every selected plant with
   shared nutrient and note details. Use single-plant mode when each pot also
   needs its own wet weight.
-- Photo events accept Google Photos share links. The public plant history opens
-  the link; booklet display still requires a local collection-photo derivative.
+- Photo events accept Google Photos share links. **Open Google Photos** hands
+  off to the app when the phone/browser supports Google Photos links, otherwise
+  it opens the website. Select the image there, create a share link, return to
+  the logger, and paste it. A browser file picker cannot return a durable Google
+  Photos share URL. The public plant history opens the saved link; booklet
+  display still requires a local collection-photo derivative.
 - `Baselines` uses completed wet-to-dry cycles to estimate drying time, which is
   shown in `Plant tracker`. Treat that estimate as context, not a watering
   deadline.
