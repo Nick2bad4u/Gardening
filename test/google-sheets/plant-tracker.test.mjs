@@ -132,6 +132,16 @@ function createHistorySheet(observations = []) {
                 setNote: () => range,
                 setNotes: () => range,
                 setNumberFormat: () => range,
+                clearContent() {
+                    setRangeValues(
+                        row,
+                        column,
+                        Array.from({ length: rowCount }, () =>
+                            Array(columnCount).fill("")
+                        )
+                    );
+                    return range;
+                },
             };
             return range;
         },
@@ -423,7 +433,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.2.0");
+        expect(bootstrap.version).toBe("5.3.0");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -581,7 +591,7 @@ describe("Garden logger server logic", () => {
             globals: workbook.globals,
         });
 
-        const result = context.saveWebObservation({
+        const payload = {
             plantId: "P01",
             requestId: "garden-mobile-12345",
             observedAt: "2026-08-16T08:00:00-04:00",
@@ -608,7 +618,9 @@ describe("Garden logger server logic", () => {
             photoUrl: "https://photos.google.com/share/example",
             pestIssue: "None found",
             pestTreatment: "Routine inspection",
-        });
+        };
+        const result = context.saveWebObservation(payload);
+        const retry = context.saveWebObservation(payload);
 
         expect(result).toMatchObject({
             ok: true,
@@ -617,10 +629,85 @@ describe("Garden logger server logic", () => {
             historyRows: 8,
         });
         expect(result.events).toContain("Repot");
+        expect(retry).toMatchObject({ duplicate: true, historyRows: 8 });
         expect(workbook.history.__rows[1][10]).toBe(2);
         expect(
             workbook.sheets.get("Baselines").getRange(2, 3).getValues()[0][0]
         ).toBe(2);
+    });
+
+    it("saves a mixed phone queue in one retry-safe batch", () => {
+        const workbook = createLoggerWorkbook(["P01", "P02"]);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+
+        const result = context.saveWebObservationBatch([
+            {
+                plantId: "P01",
+                requestId: "garden-queue-one-12345",
+                observedAt: "2026-08-16T10:00:00-04:00",
+                events: ["Weigh"],
+                weightState: "Routine",
+                weight: 410,
+            },
+            {
+                plantId: "P02",
+                requestId: "garden-queue-two-12345",
+                observedAt: "2026-08-16T10:01:00-04:00",
+                events: ["Measure"],
+                height: 12,
+            },
+        ]);
+        expect(result).toMatchObject({
+            ok: true,
+            savedCount: 2,
+            failedCount: 0,
+        });
+        expect(result.results.map((entry) => entry.plantId)).toEqual([
+            "P01",
+            "P02",
+        ]);
+        expect(workbook.history.__rows.slice(1).map((row) => row[15])).toEqual([
+            "garden-queue-one-12345",
+            "garden-queue-two-12345",
+        ]);
+    });
+
+    it("keeps a bad queued item isolated while saving valid neighbors", () => {
+        const workbook = createLoggerWorkbook(["P01", "P02"]);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+
+        const result = context.saveWebObservationBatch([
+            {
+                plantId: "P01",
+                requestId: "garden-queue-good-12345",
+                observedAt: "2026-08-16T10:00:00-04:00",
+                events: ["Weigh"],
+                weight: 410,
+            },
+            {
+                plantId: "P02",
+                requestId: "garden-queue-bad-12345",
+                observedAt: "2026-08-16T10:01:00-04:00",
+                events: ["Measure"],
+            },
+        ]);
+
+        expect(result).toMatchObject({
+            ok: false,
+            savedCount: 1,
+            failedCount: 1,
+        });
+        expect(result.results[1]).toMatchObject({
+            ok: false,
+            requestId: "garden-queue-bad-12345",
+        });
+        expect(result.results[1].message).toMatch(/height or width/i);
     });
 
     it("archives an idempotent multi-plant watering round", () => {
@@ -720,6 +807,10 @@ describe("Garden logger server logic", () => {
 
         expect(calls).toContainEqual(["Open mobile entry", "openMobileEntry"]);
         expect(calls).toContainEqual([
+            "Remove selected History observations",
+            "removeSelectedHistoryObservations",
+        ]);
+        expect(calls).toContainEqual([
             "favicon",
             "https://i.gyazo.com/0fdb0739ffe391ade24deb6df2973a21.png",
         ]);
@@ -781,8 +872,57 @@ describe("Garden logger server logic", () => {
 
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.2.0");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.3.0");
         expect(calls.toast[1]).toBe("Garden logger verified");
+    });
+
+    it("clears selected History observations without touching helper columns", () => {
+        const history = createHistorySheet([
+            {
+                requestId: "garden-remove-12345",
+                values: [
+                    new Date("2026-08-12T12:00:00Z"),
+                    "P20",
+                    "Weigh",
+                    "Routine",
+                    1450,
+                ],
+            },
+        ]);
+        history.__rows[1][12] = "helper-name";
+        history.__rows[1][13] = "helper-cycle";
+        history.__rows[1][16] = "detail";
+        const selection = {
+            getRow: () => 2,
+            getLastRow: () => 2,
+        };
+        const activeSpreadsheet = {
+            getActiveRange: () => selection,
+            getActiveSheet: () => history,
+            getSheetByName: (name) => (name === "History" ? history : null),
+            toast: () => {},
+        };
+        const ui = {
+            Button: { YES: "YES" },
+            ButtonSet: { YES_NO: "YES_NO" },
+            alert: () => "YES",
+        };
+        const context = loadAppsScript(history, {
+            SpreadsheetApp: {
+                getActive: () => activeSpreadsheet,
+                getUi: () => ui,
+            },
+        });
+
+        context.removeSelectedHistoryObservations();
+
+        expect(history.__rows[1].slice(0, 12)).toEqual(Array(12).fill(""));
+        expect(history.__rows[1].slice(12, 15)).toEqual([
+            "helper-name",
+            "helper-cycle",
+            "",
+        ]);
+        expect(history.__rows[1].slice(15, 26)).toEqual(Array(11).fill(""));
     });
 
     it("covers validation, identity, and formatting helpers", () => {

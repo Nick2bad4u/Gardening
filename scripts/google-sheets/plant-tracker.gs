@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.2.0",
+    version: "5.3.0",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -143,6 +143,11 @@ function onOpen() {
         .addSeparator()
         .addItem("Open Quick log", "openQuickLog")
         .addItem("Open History", "openHistory")
+        .addSeparator()
+        .addItem(
+            "Remove selected History observations",
+            "removeSelectedHistoryObservations"
+        )
         .addToUi();
 }
 
@@ -275,10 +280,11 @@ function validateMeasurementEvents_(eventNames, weight, height, width) {
     }
 }
 
-function saveWebObservation(payload) {
-    const spreadsheet = getGardenSpreadsheet_();
+function prepareWebObservation_(spreadsheet, payload, plantRecords) {
     const plantId = cleanText_(payload && payload.plantId);
-    const plant = plantRecordForId_(spreadsheet, plantId);
+    const plant = plantRecords
+        ? plantRecords.get(plantId)
+        : plantRecordForId_(spreadsheet, plantId);
     if (!plant) throw new Error("Choose a valid plant.");
 
     const requestedEvents = Array.isArray(payload.events)
@@ -310,16 +316,9 @@ function saveWebObservation(payload) {
     const potSetup = eventNames.includes("Repot")
         ? plant.potSetup + 1
         : plant.potSetup;
-    const lock = LockService.getScriptLock();
-    if (!lock.tryLock(GARDEN_LOGGER.lockTimeoutMs)) {
-        throw new Error(
-            "Another reading is finishing. Your entry is still safe on this screen; wait a few seconds and tap Save again."
-        );
-    }
-
-    let result;
-    try {
-        result = appendObservation_(spreadsheet, {
+    return {
+        plant,
+        observation: {
             plantId,
             eventNames,
             observationDate,
@@ -333,13 +332,22 @@ function saveWebObservation(payload) {
             currentLabel: plant.label,
             requestId,
             details,
-        });
-        if (eventNames.includes("Repot")) {
-            updateBaselinePotSetup_(spreadsheet, plantId, result.potSetup);
-        }
-    } finally {
-        lock.releaseLock();
+        },
+    };
+}
+
+function appendPreparedWebObservation_(spreadsheet, prepared) {
+    const result = appendObservation_(spreadsheet, prepared.observation);
+    if (prepared.observation.eventNames.includes("Repot")) {
+        updateBaselinePotSetup_(
+            spreadsheet,
+            prepared.observation.plantId,
+            result.potSetup
+        );
     }
+
+    const { plant } = prepared;
+    const { requestId, plantId } = prepared.observation;
 
     return {
         ok: true,
@@ -355,6 +363,119 @@ function saveWebObservation(payload) {
         message: result.duplicate
             ? `${result.eventNames.join(" + ")} was already saved for ${plant.name}. No duplicate was added.`
             : `${result.eventNames.join(" + ")} saved for ${plant.name}.`,
+    };
+}
+
+function saveWebObservation(payload) {
+    const spreadsheet = getGardenSpreadsheet_();
+    const prepared = prepareWebObservation_(spreadsheet, payload);
+    const lock = LockService.getScriptLock();
+    if (!lock.tryLock(GARDEN_LOGGER.lockTimeoutMs)) {
+        throw new Error(
+            "Another reading is finishing. Your entry is still safe on this screen; wait a few seconds and tap Save again."
+        );
+    }
+
+    try {
+        return appendPreparedWebObservation_(spreadsheet, prepared);
+    } finally {
+        lock.releaseLock();
+    }
+}
+
+/**
+ * Saves a phone-side queue in one Apps Script request. Each item keeps its own
+ * request ID, so a retry can safely finish a partially completed batch without
+ * duplicating observations that already reached History.
+ */
+function saveWebObservationBatch(payloads) {
+    if (!Array.isArray(payloads) || payloads.length < 1) {
+        throw new Error("The observation queue is empty.");
+    }
+    if (payloads.length > 50) {
+        throw new Error("Send at most 50 queued observations at a time.");
+    }
+
+    const requestIds = payloads.map((payload) =>
+        normalizeRequestId_(payload && payload.requestId, true)
+    );
+    if (new Set(requestIds).size !== requestIds.length) {
+        throw new Error(
+            "Every queued observation must have a unique request ID."
+        );
+    }
+
+    const spreadsheet = getGardenSpreadsheet_();
+    const plantRecords = plantRecordsById_(spreadsheet);
+    const results = Array(payloads.length).fill(null);
+    const prepared = [];
+    payloads.forEach((payload, index) => {
+        try {
+            prepared.push({
+                index,
+                value: prepareWebObservation_(
+                    spreadsheet,
+                    payload,
+                    plantRecords
+                ),
+            });
+        } catch (error) {
+            results[index] = {
+                ok: false,
+                requestId: requestIds[index],
+                plantId: cleanText_(payload && payload.plantId),
+                message: error instanceof Error ? error.message : String(error),
+            };
+        }
+    });
+
+    if (!prepared.length) {
+        return batchObservationResult_(results);
+    }
+
+    const lock = LockService.getScriptLock();
+    if (!lock.tryLock(GARDEN_LOGGER.lockTimeoutMs)) {
+        throw new Error(
+            "Another reading is finishing. The queue remains on this phone; wait a few seconds and send it again."
+        );
+    }
+
+    try {
+        prepared.forEach(({ index, value: entry }) => {
+            try {
+                results[index] = appendPreparedWebObservation_(
+                    spreadsheet,
+                    entry
+                );
+            } catch (error) {
+                results[index] = {
+                    ok: false,
+                    requestId: entry.observation.requestId,
+                    plantId: entry.observation.plantId,
+                    plantName: entry.plant.name,
+                    message:
+                        error instanceof Error ? error.message : String(error),
+                };
+            }
+        });
+    } finally {
+        lock.releaseLock();
+    }
+
+    return batchObservationResult_(results);
+}
+
+function batchObservationResult_(results) {
+    const savedCount = results.filter((result) => result.ok).length;
+    return {
+        ok: savedCount === results.length,
+        savedCount,
+        failedCount: results.length - savedCount,
+        results,
+        message:
+            savedCount === results.length
+                ? `${savedCount} queued observation${savedCount === 1 ? "" : "s"} saved.`
+                : `${savedCount} queued observation${savedCount === 1 ? "" : "s"} saved; ${results.length - savedCount} still need attention.`,
     };
 }
 
@@ -486,6 +607,27 @@ function getWebSaveStatus(payload) {
     };
 }
 
+function getWebBatchSaveStatus(requestIds) {
+    if (!Array.isArray(requestIds) || requestIds.length > 50) {
+        throw new Error("Provide up to 50 queued request IDs.");
+    }
+    const normalized = requestIds.map((requestId) =>
+        normalizeRequestId_(requestId, true)
+    );
+    if (new Set(normalized).size !== normalized.length) {
+        throw new Error("Queued request IDs must be unique.");
+    }
+
+    const spreadsheet = getGardenSpreadsheet_();
+    const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
+    assertHeaders_(history, HISTORY_HEADERS, 1);
+    ensureHistoryRequestIdColumn_(history);
+    return normalized.map((requestId) => ({
+        requestId,
+        ...savedRequestStatus_(history, requestId),
+    }));
+}
+
 function onEdit(event) {
     if (!event || !event.range) return;
 
@@ -594,6 +736,108 @@ function openQuickLog() {
 
 function openHistory() {
     activateSheet_(GARDEN_LOGGER.historySheet, "A2");
+}
+
+/**
+ * Clears observation-owned History cells for the selected rows while keeping
+ * the sheet rows, formatting, and workbook helper formulas in M:O intact.
+ */
+function removeSelectedHistoryObservations() {
+    const spreadsheet = SpreadsheetApp.getActive();
+    const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
+    const activeSheet = spreadsheet.getActiveSheet();
+    const selection = spreadsheet.getActiveRange();
+    if (!selection || activeSheet.getName() !== GARDEN_LOGGER.historySheet) {
+        spreadsheet.toast(
+            "Select one or more observation rows on History first.",
+            "Nothing removed",
+            6
+        );
+        return;
+    }
+
+    const firstRow = Math.max(2, selection.getRow());
+    const lastRow = selection.getLastRow();
+    if (firstRow > lastRow) {
+        spreadsheet.toast(
+            "The History header cannot be removed.",
+            "Nothing removed",
+            6
+        );
+        return;
+    }
+    if (lastRow - firstRow + 1 > 100) {
+        throw new Error("Remove no more than 100 History rows at once.");
+    }
+
+    const values = history
+        .getRange(
+            firstRow,
+            1,
+            lastRow - firstRow + 1,
+            GARDEN_LOGGER.historyColumns
+        )
+        .getDisplayValues();
+    const observations = values
+        .map((row, index) => ({ rowNumber: firstRow + index, values: row }))
+        .filter(({ values: row }) =>
+            row.slice(0, GARDEN_LOGGER.historyColumns).some(cleanText_)
+        );
+    if (!observations.length) {
+        spreadsheet.toast(
+            "The selected History rows do not contain observations.",
+            "Nothing removed",
+            6
+        );
+        return;
+    }
+
+    const preview = observations
+        .slice(0, 8)
+        .map(
+            ({ rowNumber, values: row }) =>
+                `Row ${rowNumber}: ${[
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[4] && `${row[4]} g`,
+                ]
+                    .filter(Boolean)
+                    .join(" · ")}`
+        )
+        .join("\n");
+    const overflow =
+        observations.length > 8
+            ? `\n…and ${observations.length - 8} more selected observation(s).`
+            : "";
+    const ui = SpreadsheetApp.getUi();
+    const response = ui.alert(
+        `Remove ${observations.length} History observation${observations.length === 1 ? "" : "s"}?`,
+        `${preview}${overflow}\n\nThis clears the observation data and retry/details cells. History formulas, formatting, and row positions remain intact.`,
+        ui.ButtonSet.YES_NO
+    );
+    if (response !== ui.Button.YES) return;
+
+    observations.forEach(({ rowNumber }) => {
+        history
+            .getRange(rowNumber, 1, 1, GARDEN_LOGGER.historyColumns)
+            .clearContent();
+        history
+            .getRange(
+                rowNumber,
+                GARDEN_LOGGER.requestIdColumn,
+                1,
+                GARDEN_LOGGER.historyDetailStartColumn +
+                    GARDEN_LOGGER.historyDetailColumns -
+                    GARDEN_LOGGER.requestIdColumn
+            )
+            .clearContent();
+    });
+    spreadsheet.toast(
+        `${observations.length} observation${observations.length === 1 ? "" : "s"} removed. Derived views will recalculate.`,
+        "History corrected",
+        7
+    );
 }
 
 function archiveQuickLogRow_(quickLog, rowNumber) {
@@ -997,9 +1241,13 @@ function isGooglePhotosShareUrl_(value) {
 
 function plantRecordForId_(spreadsheet, plantId) {
     if (!plantId) return null;
+    return plantRecordsById_(spreadsheet).get(plantId) || null;
+}
+
+function plantRecordsById_(spreadsheet) {
     const tracker = requireSheet_(spreadsheet, GARDEN_LOGGER.plantTrackerSheet);
     const rowCount = Math.max(0, tracker.getLastRow() - 1);
-    if (rowCount === 0) return null;
+    if (rowCount === 0) return new Map();
     const trackerRange = tracker.getRange(
         2,
         1,
@@ -1008,39 +1256,42 @@ function plantRecordForId_(spreadsheet, plantId) {
     );
     const rows = trackerRange.getValues();
     const formulas = trackerRange.getFormulas();
-    const matches = rows
-        .map((row, index) => ({ row, formula: formulas[index] }))
-        .filter(({ row }) => cleanText_(row[0]) === plantId);
-    if (matches.length > 1) {
-        throw new Error(
-            `Plant ID ${plantId} appears more than once in Plant tracker.`
-        );
-    }
-    const match = matches[0];
-    if (!match) return null;
-    const row = match.row;
-
     const baselines = requireSheet_(spreadsheet, GARDEN_LOGGER.baselinesSheet);
     const baselineRowCount = Math.max(0, baselines.getLastRow() - 1);
     const baselineRows = baselineRowCount
         ? baselines.getRange(2, 1, baselineRowCount, 3).getValues()
         : [];
-    const baseline = baselineRows.find(
-        ([candidateId]) => cleanText_(candidateId) === plantId
+    assertUniqueIdsInRows_(baselineRows, GARDEN_LOGGER.baselinesSheet);
+    const potSetupByPlant = new Map(
+        baselineRows.map(([candidateId, , potSetup]) => [
+            cleanText_(candidateId),
+            potSetup || 1,
+        ])
     );
-
-    return {
-        id: plantId,
-        name: cleanText_(row[1]),
-        scientificName: cleanText_(row[2]),
-        label: cleanText_(row[GARDEN_LOGGER.currentLabelColumn - 1]),
-        currentPotSize:
-            latestPotSizesByPlant_(spreadsheet).get(plantId) || "Not logged",
-        fieldGuideUrl: fieldGuideUrlForRow_(match.formula),
-        potSetup: baseline
-            ? positiveInteger_(baseline[2] || 1, "Pot setup")
-            : 1,
-    };
+    const potSizes = latestPotSizesByPlant_(spreadsheet);
+    const records = new Map();
+    rows.forEach((row, index) => {
+        const plantId = cleanText_(row[0]);
+        if (!plantId) return;
+        if (records.has(plantId)) {
+            throw new Error(
+                `Plant ID ${plantId} appears more than once in Plant tracker.`
+            );
+        }
+        records.set(plantId, {
+            id: plantId,
+            name: cleanText_(row[1]),
+            scientificName: cleanText_(row[2]),
+            label: cleanText_(row[GARDEN_LOGGER.currentLabelColumn - 1]),
+            currentPotSize: potSizes.get(plantId) || "Not logged",
+            fieldGuideUrl: fieldGuideUrlForRow_(formulas[index]),
+            potSetup: positiveInteger_(
+                potSetupByPlant.get(plantId) || 1,
+                "Pot setup"
+            ),
+        });
+    });
+    return records;
 }
 
 function latestPotSizesByPlant_(spreadsheet) {
@@ -1486,7 +1737,7 @@ function normalizeDate_(value) {
 }
 
 function optionalPositiveNumber_(value, label) {
-    if (value === "" || value === null) return "";
+    if (value === "" || value === null || value === undefined) return "";
     const number = Number(value);
     if (!Number.isFinite(number) || number <= 0) {
         throw new Error(`${label} must be a positive number.`);

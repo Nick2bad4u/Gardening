@@ -106,6 +106,7 @@ function createScriptRunner(behaviors, calls) {
 function createLoggerWindow({
     pendingSave,
     saveStatus = "missing",
+    batchSaveStatus = "missing",
     storage = {},
 } = {}) {
     const window = new Window({
@@ -132,6 +133,13 @@ function createLoggerWindow({
                 state: saveStatus,
                 message: "Status checked",
             }),
+        getWebBatchSaveStatus: ({ args, success }) =>
+            success(
+                args[0].map((requestId) => ({
+                    requestId,
+                    state: batchSaveStatus,
+                }))
+            ),
         getRecentWebObservations: ({ success }) => success([]),
     };
     const createChain = createScriptRunner(behaviors, calls);
@@ -526,5 +534,144 @@ describe("Garden logger browser recovery", () => {
         expect(link.href).toBe("https://photos.google.com/");
         expect(link.target).toBe("_blank");
         expect(link.rel).toContain("noopener");
+    });
+
+    it("queues a reading locally and advances without waiting for Google", () => {
+        const { calls, window } = createLoggerWindow();
+        const weight = window.document.querySelector("#weight");
+        weight.value = "430";
+        weight.dispatchEvent(new window.Event("input", { bubbles: true }));
+
+        window.document
+            .querySelector("#saveNextButton")
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        const queue = JSON.parse(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+        expect(queue).toHaveLength(1);
+        expect(queue[0].payload).toMatchObject({
+            plantId: "P01",
+            weight: "430",
+        });
+        expect(window.document.querySelector("#plantSelect").value).toBe("P02");
+        expect(window.document.querySelector("#weight").value).toBe("");
+        expect(calls.some((call) => call.method === "saveWebObservation")).toBe(
+            false
+        );
+    });
+
+    it("sends the complete phone queue in one server request", () => {
+        const queued = [
+            {
+                requestId: "garden-queued-one-12345",
+                addedAt: "2026-08-16T12:00:00.000Z",
+                payload: {
+                    plantId: "P01",
+                    events: ["Weigh"],
+                    observedAt: "2026-08-16T12:00:00.000Z",
+                    weightState: "Routine",
+                    weight: "430",
+                    height: "",
+                    width: "",
+                    condition: "",
+                    notes: "",
+                    potSetup: "2",
+                    nutrientsUsed: "",
+                    nutrientProduct: "",
+                    nutrientAmount: "",
+                    potSize: "",
+                    flowerCount: "",
+                    flowerDetails: "",
+                    photoUrl: "",
+                    pestIssue: "",
+                    pestTreatment: "",
+                },
+            },
+        ];
+        const { behaviors, calls, window } = createLoggerWindow({
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify(queued),
+            },
+        });
+        behaviors.saveWebObservationBatch = ({ args, success }) =>
+            success({
+                ok: true,
+                savedCount: 1,
+                failedCount: 0,
+                message: "1 queued observation saved.",
+                results: [
+                    {
+                        ok: true,
+                        requestId: args[0][0].requestId,
+                        plantId: "P01",
+                    },
+                ],
+            });
+
+        window.document
+            .querySelector("#queueSendButton")
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        const batchCalls = calls.filter(
+            (call) => call.method === "saveWebObservationBatch"
+        );
+        expect(batchCalls).toHaveLength(1);
+        expect(batchCalls[0].args[0]).toHaveLength(1);
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBe("[]");
+        expect(window.document.querySelector("#queueCard").hidden).toBe(true);
+    });
+
+    it("reconciles an attempted queue after reload", () => {
+        const queued = [
+            {
+                requestId: "garden-queued-saved-12345",
+                attemptedAt: "2026-08-16T12:01:00.000Z",
+                payload: {
+                    plantId: "P01",
+                    events: ["Weigh"],
+                    observedAt: "2026-08-16T12:00:00.000Z",
+                    weightState: "Routine",
+                    weight: "431",
+                },
+            },
+        ];
+        const { window } = createLoggerWindow({
+            batchSaveStatus: "saved",
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify(queued),
+            },
+        });
+
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBe("[]");
+    });
+
+    it("unlocks and reconciles a save when the phone orientation changes", () => {
+        vi.useFakeTimers();
+        const { behaviors, calls, window } = createLoggerWindow();
+        behaviors.saveWebObservation = () => {};
+        const weight = window.document.querySelector("#weight");
+        weight.value = "432";
+        weight.dispatchEvent(new window.Event("input", { bubbles: true }));
+        window.document.querySelector("#entryForm").dispatchEvent(
+            new window.Event("submit", {
+                bubbles: true,
+                cancelable: true,
+            })
+        );
+
+        window.dispatchEvent(new window.Event("orientationchange"));
+        vi.advanceTimersByTime(250);
+
+        expect(window.document.querySelector("#saveButton").disabled).toBe(
+            false
+        );
+        expect(calls.some((call) => call.method === "getWebSaveStatus")).toBe(
+            true
+        );
     });
 });

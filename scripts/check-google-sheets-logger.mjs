@@ -142,15 +142,21 @@ assert.match(html, /id="labelPickerMode"/);
 assert.match(html, /gardenLoggerPlantPickerModeV1/);
 assert.match(html, /id="recentLimit"/);
 assert.match(html, /gardenLoggerRecentLimitV1/);
+assert.match(html, /gardenLoggerObservationQueueV1/);
+assert.match(html, /saveWebObservationBatch/);
+assert.match(html, /id="queueSendButton"/);
 assert.match(html, /id="openGooglePhotos"/);
 assert.match(html, /createLink\("History & charts", plant\.historyUrl\)/);
 assert.match(source, /const HISTORY_DETAIL_HEADERS/);
 assert.match(source, /ensureHistoryDetailColumns_\(history\)/);
 assert.match(
     source,
-    /updateBaselinePotSetup_\(spreadsheet, plantId, result\.potSetup\)/,
+    /updateBaselinePotSetup_\(\s*spreadsheet,\s*prepared\.observation\.plantId,\s*result\.potSetup\s*\)/,
     "Repot retries must reuse the pot setup stored in the archived row"
 );
+assert.match(source, /function saveWebObservationBatch\(payloads\)/);
+assert.match(source, /function getWebBatchSaveStatus\(requestIds\)/);
+assert.match(source, /function removeSelectedHistoryObservations\(\)/);
 
 const publishedHistoryDate = parseDate("8/12/2026 2:47 AM");
 assert.equal(publishedHistoryDate?.getFullYear(), 2026);

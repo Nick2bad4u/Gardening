@@ -75,13 +75,22 @@ project. A push does not update the versioned web-app deployment by itself; the
 new version must still be assigned to the existing deployment.
 
 The mobile logger stores an unconfirmed request ID and draft locally before it
-calls Google. If the callback is lost, logger 5.2 checks History for that exact
+calls Google. If the callback is lost, logger 5.3 checks History for that exact
 request on timeout and page load. A completed save clears itself automatically;
 an absent or partial save keeps the draft available for an idempotent retry. If
 Google explicitly rejects a request and the follow-up History check confirms
 that nothing was written, the same form can be corrected and saved under a new
 request ID without using **Clear entry**. A timed-out request stays protected
 until its result is known because it may still be running remotely.
+
+For a weighing session, **Add to queue & next** stores each completed reading
+in this phone's local storage and immediately moves to the next plant. The queue
+survives reloads, screen rotation, and temporary loss of connectivity. **Send
+queue** submits up to 50 observations in one Apps Script call. Every queued
+observation has its own permanent retry ID, so a lost callback or partial batch
+can be reconciled against History and safely sent again without duplicating the
+entries that already arrived. Keep the browser's site data until the queue is
+empty; clearing browser data also clears unsent observations.
 
 ## One-time installation
 
@@ -146,9 +155,16 @@ installable trigger is not required.
   container records the three-parts-Molly's/two-parts-perlite-by-volume change.
   Do not edit setup-1 History rows or average old-medium weights into the new
   dry/wet baseline. `P19`–`P22` remain on their existing setups.
-- Row 3 can apply one Event to all plant rows or clear every Event cell. The
-  **Garden logger → Clear selected Quick log row** command clears one unfinished
-  input row without touching History.
+- Row 3 can apply one Event to all plant rows or clear every Event cell.
+- To remove an incorrect saved observation, select its row on `History` and use
+  **Garden logger → Remove selected History observations**. Review the dated
+  Plant ID, event, and weight preview, then confirm. The command clears A:L and
+  P:Z for those rows while preserving the rows, formatting, and M:O helper
+  formulas. Dashboard, Baselines, Insights, plant pages, and the public tracker
+  recalculate from the corrected History ledger. Do not delete whole sheet rows
+  or erase calculated cells on a plant page. If the wrong observation was
+  removed accidentally, use **File → Version history** in Google Sheets to
+  restore or copy its source values back.
 - A Water event means the container was soaked until runoff; water volume is
   intentionally not recorded.
 - `History` A:L stores core observation data; M:O holds workbook-derived values;

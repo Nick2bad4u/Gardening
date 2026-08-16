@@ -648,6 +648,90 @@
                 font-size: 13px;
             }
 
+            .queue-card {
+                border-color: color-mix(
+                    in srgb,
+                    var(--forest-2) 30%,
+                    var(--line)
+                );
+            }
+
+            .queue-header,
+            .queue-tools,
+            .queue-item {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                justify-content: space-between;
+            }
+
+            .queue-count {
+                display: inline-grid;
+                min-width: 30px;
+                min-height: 30px;
+                place-items: center;
+                padding: 4px 9px;
+                border-radius: 999px;
+                background: var(--forest-2);
+                color: #fff;
+                font-size: 12px;
+                font-weight: 900;
+            }
+
+            .queue-list {
+                display: grid;
+                gap: 8px;
+                margin: 12px 0;
+            }
+
+            .queue-item {
+                align-items: flex-start;
+                padding: 11px 12px;
+                border-radius: 12px;
+                background: var(--card-soft);
+            }
+
+            .queue-main {
+                min-width: 0;
+            }
+
+            .queue-name {
+                font-size: 13px;
+                font-weight: 850;
+            }
+
+            .queue-meta,
+            .queue-empty,
+            .queue-error {
+                margin-top: 3px;
+                color: var(--muted);
+                font-size: 11px;
+            }
+
+            .queue-error {
+                color: var(--danger);
+                font-weight: 750;
+            }
+
+            .queue-remove {
+                flex: 0 0 auto;
+                min-width: 38px;
+                min-height: 38px;
+                border: 1px solid var(--line);
+                border-radius: 10px;
+                background: var(--control);
+                color: var(--danger);
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: 900;
+            }
+
+            .queue-tools .primary,
+            .queue-tools .secondary {
+                min-height: 44px;
+                padding: 8px 13px;
+            }
+
             .actions {
                 position: sticky;
                 bottom: 0;
@@ -1000,6 +1084,49 @@
                             >💧 Watering round</button
                         >
                     </div>
+
+                    <section
+                        id="queueCard"
+                        class="card queue-card"
+                        hidden
+                    >
+                        <div class="queue-header">
+                            <div>
+                                <p class="eyebrow">Phone queue</p>
+                                <h2>Observations waiting to send</h2>
+                            </div>
+                            <span
+                                id="queueCount"
+                                class="queue-count"
+                                aria-label="Queued observations"
+                                >0</span
+                            >
+                        </div>
+                        <p class="hint"
+                            >Add readings as you move from pot to pot. They stay
+                            on this device until one batch sends them to
+                            History.</p
+                        >
+                        <div
+                            id="queueList"
+                            class="queue-list"
+                            aria-live="polite"
+                        ></div>
+                        <div class="queue-tools">
+                            <button
+                                id="queueSendButton"
+                                class="primary"
+                                type="button"
+                                >Send queue</button
+                            >
+                            <button
+                                id="queueClearButton"
+                                class="secondary"
+                                type="button"
+                                >Clear queue</button
+                            >
+                        </div>
+                    </section>
 
                     <form
                         id="entryForm"
@@ -1437,7 +1564,7 @@
                                 id="saveNextButton"
                                 class="secondary"
                                 type="button"
-                                >Save &amp; next plant</button
+                                >Add to queue &amp; next</button
                             >
                         </div>
                     </form>
@@ -1601,6 +1728,7 @@
                 theme: "light",
                 plantPickerMode: "list",
                 recentLimit: 10,
+                queue: [],
             };
 
             const PENDING_SAVE_KEY = "gardenLoggerPendingSaveV1";
@@ -1610,7 +1738,9 @@
             const THEME_KEY = "gardenLoggerThemeV1";
             const PLANT_PICKER_MODE_KEY = "gardenLoggerPlantPickerModeV1";
             const RECENT_LIMIT_KEY = "gardenLoggerRecentLimitV1";
+            const OBSERVATION_QUEUE_KEY = "gardenLoggerObservationQueueV1";
             const SAVE_WATCHDOG_MS = 20000;
+            const QUEUE_WATCHDOG_MS = 45000;
 
             const $ = (id) => document.getElementById(id);
 
@@ -1729,6 +1859,8 @@
                 $("saveButton").disabled = saving;
                 $("saveNextButton").disabled = saving;
                 $("clearButton").disabled = saving;
+                $("queueSendButton").disabled = saving || !state.queue.length;
+                $("queueClearButton").disabled = saving || !state.queue.length;
                 $("bulkSaveButton").disabled = saving;
                 $("bulkResetButton").disabled = saving;
                 $("saveButton").textContent = saving
@@ -1803,6 +1935,239 @@
                     localStorage.removeItem(PENDING_SAVE_KEY);
                     return null;
                 }
+            }
+
+            function readObservationQueue() {
+                try {
+                    const value = JSON.parse(
+                        localStorage.getItem(OBSERVATION_QUEUE_KEY) || "[]"
+                    );
+                    if (!Array.isArray(value)) throw new Error("Invalid queue");
+                    return value.filter(
+                        (entry) => entry && entry.requestId && entry.payload
+                    );
+                } catch (error) {
+                    localStorage.removeItem(OBSERVATION_QUEUE_KEY);
+                    return [];
+                }
+            }
+
+            function persistObservationQueue() {
+                localStorage.setItem(
+                    OBSERVATION_QUEUE_KEY,
+                    JSON.stringify(state.queue)
+                );
+            }
+
+            function inferredPayloadEvents(payload) {
+                const events = new Set(
+                    Array.isArray(payload.events) ? payload.events : []
+                );
+                if (payload.weightState === "Wet") events.add("Water");
+                if (payload.weight) events.add("Weigh");
+                if (payload.height || payload.width) events.add("Measure");
+                if (!events.size && payload.condition) events.add("Check");
+                if (!events.size && payload.notes) events.add("Note");
+                return [...events];
+            }
+
+            function validateQueuedPayload(payload) {
+                const events = inferredPayloadEvents(payload);
+                if (!payload.plantId)
+                    throw new Error("Choose a plant before adding to queue.");
+                if (!events.length)
+                    throw new Error(
+                        "Choose an event or enter a measurement, condition, or note."
+                    );
+                if (events.includes("Weigh") && !payload.weight)
+                    throw new Error("Enter a weight for the Weigh event.");
+                if (
+                    events.includes("Measure") &&
+                    !payload.height &&
+                    !payload.width
+                )
+                    throw new Error(
+                        "Enter a height or width for the Measure event."
+                    );
+                if (
+                    events.includes("Water") &&
+                    !["Yes", "No"].includes(payload.nutrientsUsed)
+                )
+                    throw new Error(
+                        "For Water, choose whether nutrients were used."
+                    );
+                if (
+                    events.includes("Water") &&
+                    payload.nutrientsUsed === "Yes" &&
+                    (!payload.nutrientProduct || !payload.nutrientAmount)
+                )
+                    throw new Error(
+                        "Enter both the nutrient product and amount used."
+                    );
+                if (events.includes("Repot") && !payload.potSize)
+                    throw new Error("Enter the new pot size for Repot.");
+                if (
+                    events.includes("Flower") &&
+                    !payload.flowerCount &&
+                    !payload.flowerDetails
+                )
+                    throw new Error(
+                        "Enter a flower count, description, or both."
+                    );
+                if (
+                    events.includes("Photo") &&
+                    !/^https:\/\/(?:photos\.google\.com|photos\.app\.goo\.gl)(?:[/:?#]|$)/i.test(
+                        payload.photoUrl
+                    )
+                )
+                    throw new Error("Enter a Google Photos share link.");
+                if (
+                    events.includes("Pest") &&
+                    (!payload.pestIssue || !payload.pestTreatment)
+                )
+                    throw new Error(
+                        "Describe both the issue and the treatment or action."
+                    );
+                return events;
+            }
+
+            function renderObservationQueue() {
+                const card = $("queueCard");
+                const list = $("queueList");
+                const count = state.queue.length;
+                $("queueCount").textContent = String(count);
+                $("queueCount").setAttribute(
+                    "aria-label",
+                    `${count} queued observation${count === 1 ? "" : "s"}`
+                );
+                list.replaceChildren();
+
+                if (!count) {
+                    const empty = document.createElement("p");
+                    empty.className = "queue-empty";
+                    empty.textContent = "The phone queue is empty.";
+                    list.append(empty);
+                } else {
+                    state.queue.forEach((entry) => {
+                        const payload = entry.payload;
+                        const plant = state.bootstrap.plants.find(
+                            (candidate) => candidate.id === payload.plantId
+                        );
+                        const item = document.createElement("div");
+                        item.className = "queue-item";
+                        const main = document.createElement("div");
+                        main.className = "queue-main";
+                        const name = document.createElement("div");
+                        name.className = "queue-name";
+                        name.textContent = plant
+                            ? `${plant.label || plant.id} · ${plant.name}`
+                            : payload.plantId;
+                        const meta = document.createElement("div");
+                        meta.className = "queue-meta";
+                        const eventText =
+                            inferredPayloadEvents(payload).join(" + ");
+                        meta.textContent = `${eventText}${payload.weight ? ` · ${payload.weight} g` : ""}`;
+                        main.append(name, meta);
+                        if (entry.error) {
+                            const error = document.createElement("div");
+                            error.className = "queue-error";
+                            error.textContent = entry.error;
+                            main.append(error);
+                        }
+                        const remove = document.createElement("button");
+                        remove.type = "button";
+                        remove.className = "queue-remove";
+                        remove.dataset.removeQueue = entry.requestId;
+                        remove.title = `Remove ${name.textContent} from queue`;
+                        remove.setAttribute("aria-label", remove.title);
+                        remove.textContent = "×";
+                        remove.disabled = state.saving;
+                        item.append(main, remove);
+                        list.append(item);
+                    });
+                }
+
+                card.hidden = state.entryMode === "bulk" || !count;
+                $("queueSendButton").disabled = state.saving || !count;
+                $("queueClearButton").disabled = state.saving || !count;
+                $("queueSendButton").textContent = count
+                    ? `Send ${count} queued`
+                    : "Send queue";
+            }
+
+            function addCurrentEntryToQueue() {
+                if (state.saving) return;
+                if (state.pendingSave && !state.pendingSave.replaceable) {
+                    showToast(
+                        "The direct save is still being confirmed. Wait for it before adding another reading.",
+                        true,
+                        9000
+                    );
+                    return;
+                }
+                if (state.pendingSave && state.pendingSave.replaceable)
+                    clearPendingSave();
+                if (state.queue.length >= 50) {
+                    showToast(
+                        "Send the current 50 entries before adding more.",
+                        true
+                    );
+                    return;
+                }
+
+                try {
+                    const payload = payloadFromForm();
+                    validateQueuedPayload(payload);
+                    const fingerprint = payloadFingerprint(payload);
+                    if (
+                        state.queue.some(
+                            (entry) =>
+                                payloadFingerprint(entry.payload) ===
+                                fingerprint
+                        )
+                    ) {
+                        throw new Error(
+                            "This exact observation is already in the phone queue."
+                        );
+                    }
+                    state.queue.push({
+                        requestId: createRequestId(),
+                        payload,
+                        addedAt: new Date().toISOString(),
+                    });
+                    persistObservationQueue();
+                    renderObservationQueue();
+                    showToast(
+                        `${selectedPlant().name} added to the phone queue.`
+                    );
+                    clearEntry({ afterSave: true });
+                    advancePlant();
+                } catch (error) {
+                    showToast(error.message, true, 8000);
+                }
+            }
+
+            function removeQueuedObservation(requestId) {
+                if (state.saving) return;
+                state.queue = state.queue.filter(
+                    (entry) => entry.requestId !== requestId
+                );
+                persistObservationQueue();
+                renderObservationQueue();
+            }
+
+            function clearObservationQueue() {
+                if (state.saving || !state.queue.length) return;
+                if (
+                    !window.confirm(
+                        `Clear all ${state.queue.length} observations from this phone without sending them?`
+                    )
+                )
+                    return;
+                state.queue = [];
+                persistObservationQueue();
+                renderObservationQueue();
+                showToast("Phone queue cleared.");
             }
 
             function clearSaveTimer() {
@@ -2158,6 +2523,7 @@
                 $("singleModeTab").setAttribute("aria-selected", String(!bulk));
                 $("bulkModeTab").setAttribute("aria-selected", String(bulk));
                 if (bulk) renderBulkPlants();
+                renderObservationQueue();
             }
 
             function renderBulkPlants(query = "") {
@@ -2482,6 +2848,143 @@
                 };
             }
 
+            function sendObservationQueue() {
+                if (state.saving || !state.queue.length) return;
+                state.queue = state.queue.map((entry) => ({
+                    ...entry,
+                    attemptedAt: new Date().toISOString(),
+                    error: "",
+                }));
+                persistObservationQueue();
+                renderObservationQueue();
+
+                const requestIds = state.queue.map((entry) => entry.requestId);
+                const requestPayloads = state.queue.map((entry) => ({
+                    ...entry.payload,
+                    requestId: entry.requestId,
+                }));
+                const attemptId = beginSaveAttempt();
+                $("connectionStatus").textContent =
+                    `Sending ${requestPayloads.length} queued observation${requestPayloads.length === 1 ? "" : "s"}…`;
+                state.saveTimer = setTimeout(() => {
+                    if (attemptId !== state.saveAttempt) return;
+                    setSaving(false);
+                    $("connectionStatus").textContent =
+                        "Queue still processing · checking History";
+                    showToast(
+                        "Google is taking longer than expected. The full queue is still stored on this phone while the logger checks History.",
+                        true,
+                        12000
+                    );
+                    reconcileObservationQueue(requestIds);
+                }, QUEUE_WATCHDOG_MS);
+
+                google.script.run
+                    .withSuccessHandler((result) => {
+                        if (attemptId !== state.saveAttempt) return;
+                        completeObservationQueueBatch(result, attemptId);
+                    })
+                    .withFailureHandler((error) => {
+                        if (!finishSaveAttempt(attemptId)) return;
+                        $("connectionStatus").textContent =
+                            "Queue kept on phone · retry is safe";
+                        showToast(
+                            error && error.message
+                                ? error.message
+                                : "Google did not confirm the queue. Nothing was discarded.",
+                            true,
+                            12000
+                        );
+                        reconcileObservationQueue(requestIds, {
+                            allowRetryIfMissing: true,
+                        });
+                    })
+                    .saveWebObservationBatch(requestPayloads);
+            }
+
+            function completeObservationQueueBatch(result, attemptId) {
+                if (!finishSaveAttempt(attemptId)) return;
+                const resultByRequest = new Map(
+                    (result.results || []).map((entry) => [
+                        entry.requestId,
+                        entry,
+                    ])
+                );
+                state.queue = state.queue.flatMap((entry) => {
+                    const saved = resultByRequest.get(entry.requestId);
+                    if (saved && saved.ok) return [];
+                    return [
+                        {
+                            ...entry,
+                            attemptedAt: "",
+                            error:
+                                (saved && saved.message) ||
+                                "Google did not return a result for this entry. Send the queue again safely.",
+                        },
+                    ];
+                });
+                persistObservationQueue();
+                renderObservationQueue();
+                $("connectionStatus").textContent =
+                    state.queue.length > 0
+                        ? "Some queued entries need attention"
+                        : "Connected to the spreadsheet";
+                showToast(result.message, result.failedCount > 0, 9000);
+                refreshRecent();
+            }
+
+            function reconcileObservationQueue(requestIds, options = {}) {
+                const currentIds = new Set(
+                    state.queue.map((entry) => entry.requestId)
+                );
+                const ids = [...new Set(requestIds)].filter((requestId) =>
+                    currentIds.has(requestId)
+                );
+                if (!ids.length) return;
+
+                google.script.run
+                    .withSuccessHandler((statuses) => {
+                        const statusByRequest = new Map(
+                            statuses.map((status) => [status.requestId, status])
+                        );
+                        let recovered = 0;
+                        state.queue = state.queue.flatMap((entry) => {
+                            const status = statusByRequest.get(entry.requestId);
+                            if (!status) return [entry];
+                            if (status.state === "saved") {
+                                recovered += 1;
+                                return [];
+                            }
+                            return [
+                                {
+                                    ...entry,
+                                    attemptedAt:
+                                        status.state === "missing" &&
+                                        options.allowRetryIfMissing
+                                            ? ""
+                                            : entry.attemptedAt,
+                                    error:
+                                        status.state === "incomplete"
+                                            ? "Part of this observation reached History. Send the queue again to finish it safely."
+                                            : entry.error,
+                                },
+                            ];
+                        });
+                        persistObservationQueue();
+                        renderObservationQueue();
+                        if (recovered) {
+                            showToast(
+                                `${recovered} queued observation${recovered === 1 ? " was" : "s were"} already in History and cleared from this phone.`
+                            );
+                            refreshRecent();
+                        }
+                    })
+                    .withFailureHandler(() => {
+                        renderObservationQueue();
+                    })
+                    .getWebBatchSaveStatus(ids);
+            }
+
             function refreshRecent() {
                 google.script.run
                     .withSuccessHandler(renderRecent)
@@ -2673,6 +3176,34 @@
                 });
             }
 
+            function resumeInterruptedWork() {
+                if (!state.bootstrap) return;
+                if (state.saving) invalidateSaveAttempt();
+
+                const pending = readPendingSave();
+                if (pending) {
+                    persistPendingSave(pending);
+                    reconcileSingleSave(pending.requestId, {
+                        allowReplacementIfMissing: true,
+                    });
+                }
+                const bulkPending = readBulkPendingSave();
+                if (bulkPending) {
+                    reconcileBulkSave(bulkPending.requestId, {
+                        allowReplacementIfMissing: true,
+                    });
+                }
+                const attemptedQueue = state.queue
+                    .filter((entry) => entry.attemptedAt)
+                    .map((entry) => entry.requestId);
+                if (attemptedQueue.length) {
+                    reconcileObservationQueue(attemptedQueue, {
+                        allowRetryIfMissing: true,
+                    });
+                }
+                renderObservationQueue();
+            }
+
             function showLoadFailure(error, step = "loading garden data") {
                 const detail =
                     error && error.message
@@ -2695,6 +3226,7 @@
                     );
                     step = "restoring saved round settings";
                     restoreRoundState();
+                    state.queue = readObservationQueue();
                     step = "building navigation";
                     renderGlobalLinks();
                     step = "building the plant selector";
@@ -2727,6 +3259,13 @@
                     } else if (restoreBulkPendingSave()) {
                         reconcileBulkSave(readBulkPendingSave().requestId);
                     }
+                    const attemptedQueue = state.queue
+                        .filter((entry) => entry.attemptedAt)
+                        .map((entry) => entry.requestId);
+                    if (attemptedQueue.length)
+                        reconcileObservationQueue(attemptedQueue, {
+                            allowRetryIfMissing: true,
+                        });
                 } catch (error) {
                     showLoadFailure(error, step);
                 }
@@ -2805,13 +3344,35 @@
             $("clearButton").addEventListener("click", () =>
                 clearEntry({ keepEvents: false })
             );
+            $("queueList").addEventListener("click", (event) => {
+                const button = event.target.closest("[data-remove-queue]");
+                if (button) removeQueuedObservation(button.dataset.removeQueue);
+            });
+            $("queueSendButton").addEventListener(
+                "click",
+                sendObservationQueue
+            );
+            $("queueClearButton").addEventListener(
+                "click",
+                clearObservationQueue
+            );
             $("entryForm").addEventListener("submit", (event) => {
                 event.preventDefault();
                 submitEntry(false);
             });
             $("saveNextButton").addEventListener("click", () =>
-                submitEntry(true)
+                addCurrentEntryToQueue()
             );
+
+            window.addEventListener("pageshow", resumeInterruptedWork);
+            window.addEventListener("focus", resumeInterruptedWork);
+            window.addEventListener("orientationchange", () =>
+                window.setTimeout(resumeInterruptedWork, 250)
+            );
+            document.addEventListener("visibilitychange", () => {
+                if (document.visibilityState === "visible")
+                    resumeInterruptedWork();
+            });
 
             applyTheme(preferredTheme());
 
