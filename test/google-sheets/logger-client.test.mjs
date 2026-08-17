@@ -945,6 +945,80 @@ describe("Garden logger browser recovery", () => {
         );
     });
 
+    it("blocks a stale mobile hit target from submitting outside the visible Save button", () => {
+        const { calls, window } = createLoggerWindow();
+        const weight = window.document.querySelector("#weight");
+        const saveButton = window.document.querySelector("#saveButton");
+        weight.value = "433";
+        weight.dispatchEvent(new window.Event("input", { bubbles: true }));
+        saveButton.getBoundingClientRect = () => ({
+            bottom: 752,
+            height: 52,
+            left: 10,
+            right: 190,
+            top: 700,
+            width: 180,
+            x: 10,
+            y: 700,
+        });
+
+        saveButton.dispatchEvent(
+            new window.MouseEvent("click", {
+                bubbles: true,
+                cancelable: true,
+                clientX: 40,
+                clientY: 120,
+                detail: 1,
+            })
+        );
+
+        expect(calls.some((call) => call.method === "saveWebObservation")).toBe(
+            false
+        );
+        expect(window.document.documentElement.className).toContain(
+            "action-hit-recovery"
+        );
+        expect(window.document.querySelector("#toast").textContent).toMatch(
+            /misplaced tap/i
+        );
+        expect(weight.value).toBe("433");
+    });
+
+    it("still accepts a physical tap inside the visible Save button", () => {
+        const { calls, window } = createLoggerWindow();
+        const weight = window.document.querySelector("#weight");
+        const saveButton = window.document.querySelector("#saveButton");
+        weight.value = "434";
+        weight.dispatchEvent(new window.Event("input", { bubbles: true }));
+        saveButton.getBoundingClientRect = () => ({
+            bottom: 752,
+            height: 52,
+            left: 10,
+            right: 190,
+            top: 700,
+            width: 180,
+            x: 10,
+            y: 700,
+        });
+
+        saveButton.dispatchEvent(
+            new window.MouseEvent("click", {
+                bubbles: true,
+                cancelable: true,
+                clientX: 80,
+                clientY: 726,
+                detail: 1,
+            })
+        );
+
+        expect(calls.some((call) => call.method === "saveWebObservation")).toBe(
+            true
+        );
+        expect(window.document.documentElement.className).not.toContain(
+            "action-hit-recovery"
+        );
+    });
+
     it("keeps a queued round on the phone while offline", () => {
         const queued = [queuedWeight()];
         const { calls, window } = createLoggerWindow({

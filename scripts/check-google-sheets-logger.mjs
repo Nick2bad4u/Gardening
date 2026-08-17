@@ -150,6 +150,12 @@ assert.match(html, /id="queueSendButton"/);
 assert.match(html, /id="queueButton"[\s\S]*?>\s*Queue\s*</);
 assert.match(html, /id="advanceAfterQueue"/);
 assert.match(html, /queue-complete/);
+assert.match(html, /@media \(hover: none\) and \(pointer: coarse\)/);
+assert.match(html, /function guardActionButtonHit\(event\)/);
+assert.match(
+    html,
+    /document\.addEventListener\("click", guardActionButtonHit, true\)/
+);
 assert.match(html, /id="openGooglePhotos"/);
 assert.match(html, /createLink\("History & charts", plant\.historyUrl\)/);
 assert.match(source, /const HISTORY_DETAIL_HEADERS/);

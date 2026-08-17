@@ -147,6 +147,11 @@ The main production safeguards are:
 - **Asynchronous recovery:** every important `google.script.run` call has a
   success and failure path. Lost callbacks, watchdog expiry, page restoration,
   reconnects, and stale late replies all converge on request-ID reconciliation.
+- **Touch hit-test safety:** touch devices keep the action bar in normal
+  document flow instead of a sticky blurred compositor layer. A physical tap
+  reported on an action button is also rejected when its coordinates fall
+  outside that button's visible rectangle, preserving the current entry and
+  repairing the action-bar layout.
 - **Efficient reads:** bootstrap data is read in rectangular batches, plant
   records are reused during queued saves, and recent activity sorts timestamps
   in memory instead of depending on the user's current sheet sort.

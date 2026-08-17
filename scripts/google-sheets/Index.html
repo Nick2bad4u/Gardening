@@ -816,6 +816,26 @@
                 box-shadow: 0 -8px 22px rgba(24, 61, 38, 0.08);
             }
 
+            /*
+             * A sticky, blurred action bar depends on compositor hit testing
+             * after mobile viewport and orientation changes. Keep touch-device
+             * actions in normal document flow so a stale visual layer cannot
+             * become an invisible page-sized tap target.
+             */
+            @media (hover: none) and (pointer: coarse) {
+                .actions {
+                    position: static;
+                    z-index: auto;
+                    backdrop-filter: none;
+                }
+            }
+
+            :root.action-hit-recovery .actions {
+                position: static;
+                z-index: auto;
+                backdrop-filter: none;
+            }
+
             .primary,
             .secondary,
             .text-button {
@@ -1951,6 +1971,43 @@
                 showToast.timer = setTimeout(
                     () => toast.classList.remove("visible"),
                     duration
+                );
+            }
+
+            function clickLandsInsideElement(event, element) {
+                if (!event || event.detail === 0) return true;
+                const x = Number(event.clientX);
+                const y = Number(event.clientY);
+                if (!Number.isFinite(x) || !Number.isFinite(y)) return true;
+
+                const rect = element.getBoundingClientRect();
+                const tolerance = 2;
+                return (
+                    rect.width > 0 &&
+                    rect.height > 0 &&
+                    x >= rect.left - tolerance &&
+                    x <= rect.right + tolerance &&
+                    y >= rect.top - tolerance &&
+                    y <= rect.bottom + tolerance
+                );
+            }
+
+            function guardActionButtonHit(event) {
+                const actionButton = event.target.closest?.(".actions button");
+                if (
+                    !actionButton ||
+                    clickLandsInsideElement(event, actionButton)
+                )
+                    return;
+
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                document.documentElement.classList.add("action-hit-recovery");
+                actionButton.blur();
+                showToast(
+                    "Ignored a misplaced tap and repaired the action bar. Your entry is still on screen.",
+                    true,
+                    7000
                 );
             }
 
@@ -3761,6 +3818,7 @@
                 renderBulkPlants($("bulkSearch").value);
             });
             $("bulkResetButton").addEventListener("click", clearBulkRound);
+            document.addEventListener("click", guardActionButtonHit, true);
             $("bulkWaterForm").addEventListener("submit", (event) => {
                 event.preventDefault();
                 submitBulkWater();

@@ -496,7 +496,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.4.0");
+        expect(bootstrap.version).toBe("5.4.1");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -1046,7 +1046,7 @@ describe("Garden logger server logic", () => {
 
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.4.0");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.4.1");
         expect(calls.toast[1]).toBe("Garden logger verified");
     });
 
