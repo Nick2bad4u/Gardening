@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.4.1",
+    version: "5.5.0",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -174,6 +174,7 @@ function getWebAppBootstrap() {
     const spreadsheet = getGardenSpreadsheet_();
     const tracker = requireSheet_(spreadsheet, GARDEN_LOGGER.plantTrackerSheet);
     const baselines = requireSheet_(spreadsheet, GARDEN_LOGGER.baselinesSheet);
+    const historyRows = readHistorySnapshot_(spreadsheet);
     const trackerRowCount = Math.max(0, tracker.getLastRow() - 1);
     const trackerRange = trackerRowCount
         ? tracker.getRange(
@@ -196,7 +197,7 @@ function getWebAppBootstrap() {
             potSetup || 1,
         ])
     );
-    const potSizeByPlant = latestPotSizesByPlant_(spreadsheet);
+    const potSizeByPlant = latestPotSizesFromRows_(historyRows);
     const timeZone = spreadsheet.getSpreadsheetTimeZone();
 
     const plants = trackerValues
@@ -259,7 +260,12 @@ function getWebAppBootstrap() {
             photos: GARDEN_LOGGER.photosUrl,
         },
         plants,
-        recent: getRecentObservations_(spreadsheet, timeZone, 10, plantNames),
+        recent: recentObservationsFromRows_(
+            historyRows,
+            timeZone,
+            10,
+            plantNames
+        ),
     };
 }
 
@@ -1304,15 +1310,30 @@ function plantRecordsById_(spreadsheet) {
 }
 
 function latestPotSizesByPlant_(spreadsheet) {
-    const result = new Map(Object.entries(INITIAL_POT_SIZE_BY_PLANT));
-    const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
-    const lastRow = lastHistoryDataRow_(history);
-    if (lastRow < 2) return result;
+    return latestPotSizesFromRows_(readHistorySnapshot_(spreadsheet));
+}
 
-    const values = history
-        .getRange(2, 1, lastRow - 1, GARDEN_LOGGER.historyDetailStartColumn + 4)
-        .getDisplayValues();
-    values
+function readHistorySnapshot_(spreadsheet) {
+    const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
+    const rowCount = Math.max(0, history.getLastRow() - 1);
+    if (!rowCount) return [];
+
+    const columnCount = GARDEN_LOGGER.historyDetailStartColumn + 4;
+    const rows = history.getRange(2, 1, rowCount, columnCount).getValues();
+    let lastDataIndex = rows.length - 1;
+    while (
+        lastDataIndex >= 0 &&
+        !cleanText_(rows[lastDataIndex][0]) &&
+        !cleanText_(rows[lastDataIndex][1])
+    ) {
+        lastDataIndex -= 1;
+    }
+    return rows.slice(0, lastDataIndex + 1);
+}
+
+function latestPotSizesFromRows_(historyRows) {
+    const result = new Map(Object.entries(INITIAL_POT_SIZE_BY_PLANT));
+    historyRows
         .filter((row) => cleanText_(row[2]) === "Repot")
         .sort((left, right) => {
             const leftDate = new Date(left[0]).getTime() || 0;
@@ -1350,11 +1371,16 @@ function getRecentObservations_(
     limit,
     plantNames = plantNamesById_(spreadsheet)
 ) {
-    const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
-    const lastRow = lastHistoryDataRow_(history);
-    if (lastRow < 2) return [];
-    const rows = history.getRange(2, 1, lastRow - 1, 10).getValues();
-    return rows
+    return recentObservationsFromRows_(
+        readHistorySnapshot_(spreadsheet),
+        timeZone,
+        limit,
+        plantNames
+    );
+}
+
+function recentObservationsFromRows_(historyRows, timeZone, limit, plantNames) {
+    return historyRows
         .map((row, index) => ({ row, index }))
         .filter(({ row }) => cleanText_(row[1]) && cleanText_(row[2]))
         .sort((left, right) => {

@@ -323,6 +323,7 @@
                 display: grid;
                 grid-template-columns: repeat(5, minmax(0, 1fr));
                 gap: 8px;
+                touch-action: manipulation;
             }
 
             .label-picker[hidden],
@@ -830,7 +831,7 @@
                 }
             }
 
-            :root.action-hit-recovery .actions {
+            :root.mobile-hit-recovery .actions {
                 position: static;
                 z-index: auto;
                 backdrop-filter: none;
@@ -1348,6 +1349,7 @@
                                         id="weight"
                                         type="number"
                                         inputmode="decimal"
+                                        enterkeyhint="done"
                                         min="0.1"
                                         step="0.1"
                                         placeholder="e.g. 432.1"
@@ -1663,16 +1665,16 @@
 
                         <div class="actions">
                             <button
-                                id="saveButton"
+                                id="queueButton"
                                 class="primary"
-                                type="submit"
-                                >Save observation</button
+                                type="button"
+                                >Add to queue</button
                             >
                             <button
-                                id="queueButton"
+                                id="saveButton"
                                 class="secondary"
-                                type="button"
-                                >Queue</button
+                                type="submit"
+                                >Save now</button
                             >
                         </div>
                     </form>
@@ -1842,6 +1844,7 @@
                 queue: [],
                 queueStorageAvailable: true,
                 queueStorageWarning: "",
+                viewportRepairTimer: null,
             };
 
             const PENDING_SAVE_KEY = "gardenLoggerPendingSaveV1";
@@ -1992,8 +1995,26 @@
                 );
             }
 
-            function guardActionButtonHit(event) {
-                const actionButton = event.target.closest?.(".actions button");
+            function refreshMobileHitTargets() {
+                document.documentElement.classList.add("mobile-hit-recovery");
+                if (state.bootstrap && state.plantPickerMode === "labels") {
+                    renderLabelPicker();
+                }
+                document.body.getBoundingClientRect();
+            }
+
+            function scheduleMobileHitTargetRefresh(delay = 120) {
+                clearTimeout(state.viewportRepairTimer);
+                state.viewportRepairTimer = window.setTimeout(() => {
+                    state.viewportRepairTimer = null;
+                    refreshMobileHitTargets();
+                }, delay);
+            }
+
+            function guardMobileButtonHit(event) {
+                const actionButton = event.target.closest?.(
+                    ".actions button, .label-choice"
+                );
                 if (
                     !actionButton ||
                     clickLandsInsideElement(event, actionButton)
@@ -2002,10 +2023,10 @@
 
                 event.preventDefault();
                 event.stopImmediatePropagation();
-                document.documentElement.classList.add("action-hit-recovery");
                 actionButton.blur();
+                refreshMobileHitTargets();
                 showToast(
-                    "Ignored a misplaced tap and repaired the action bar. Your entry is still on screen.",
+                    "Ignored a misplaced tap and refreshed the mobile controls. Your entry is still on screen.",
                     true,
                     7000
                 );
@@ -2020,9 +2041,7 @@
                 $("queueClearButton").disabled = saving || !state.queue.length;
                 $("bulkSaveButton").disabled = saving;
                 $("bulkResetButton").disabled = saving;
-                $("saveButton").textContent = saving
-                    ? "Saving…"
-                    : "Save observation";
+                $("saveButton").textContent = saving ? "Saving…" : "Save now";
                 $("connectionStatus").textContent = saving
                     ? "Writing to History…"
                     : "Connected to the spreadsheet";
@@ -2824,10 +2843,7 @@
 
             function updateConditionalFields() {
                 const showWeight =
-                    state.events.has("Water") ||
-                    state.events.has("Weigh") ||
-                    state.weightState ||
-                    $("weight").value;
+                    state.events.has("Weigh") || $("weight").value;
                 const showMeasure =
                     state.events.has("Measure") ||
                     $("height").value ||
@@ -3818,7 +3834,7 @@
                 renderBulkPlants($("bulkSearch").value);
             });
             $("bulkResetButton").addEventListener("click", clearBulkRound);
-            document.addEventListener("click", guardActionButtonHit, true);
+            document.addEventListener("click", guardMobileButtonHit, true);
             $("bulkWaterForm").addEventListener("submit", (event) => {
                 event.preventDefault();
                 submitBulkWater();
@@ -3845,6 +3861,12 @@
             $("queueButton").addEventListener("click", () =>
                 addCurrentEntryToQueue()
             );
+            $("weight").addEventListener("keydown", (event) => {
+                if (event.key !== "Enter" || event.isComposing || event.repeat)
+                    return;
+                event.preventDefault();
+                addCurrentEntryToQueue();
+            });
 
             window.addEventListener("pageshow", () =>
                 scheduleInterruptedWorkCheck()
@@ -3852,9 +3874,18 @@
             window.addEventListener("focus", () =>
                 scheduleInterruptedWorkCheck()
             );
-            window.addEventListener("orientationchange", () =>
-                scheduleInterruptedWorkCheck(350)
+            window.addEventListener("orientationchange", () => {
+                scheduleMobileHitTargetRefresh(250);
+                scheduleInterruptedWorkCheck(350);
+            });
+            window.addEventListener("resize", () =>
+                scheduleMobileHitTargetRefresh()
             );
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener("resize", () =>
+                    scheduleMobileHitTargetRefresh()
+                );
+            }
             document.addEventListener("visibilitychange", () => {
                 if (document.visibilityState === "visible")
                     scheduleInterruptedWorkCheck();

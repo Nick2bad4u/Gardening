@@ -613,6 +613,50 @@ describe("Garden logger browser recovery", () => {
         ).toBe("1 of 2 plants have a weight safely queued.");
     });
 
+    it("keeps weight controls closed until a weight is being recorded", () => {
+        const { window } = createLoggerWindow();
+        const weightSection = window.document.querySelector("#weightSection");
+
+        expect(weightSection.classList.contains("visible")).toBe(false);
+
+        const weighChip = window.document.querySelector('[data-event="Weigh"]');
+        weighChip.dispatchEvent(new window.Event("click", { bubbles: true }));
+        expect(weightSection.classList.contains("visible")).toBe(true);
+
+        weighChip.dispatchEvent(new window.Event("click", { bubbles: true }));
+        expect(weightSection.classList.contains("visible")).toBe(false);
+    });
+
+    it("queues the current weight when Enter is pressed in the weight box", () => {
+        const { calls, window } = createLoggerWindow();
+        const weighChip = window.document.querySelector('[data-event="Weigh"]');
+        weighChip.dispatchEvent(new window.Event("click", { bubbles: true }));
+        const weight = window.document.querySelector("#weight");
+        weight.value = "431.2";
+        weight.dispatchEvent(new window.Event("input", { bubbles: true }));
+
+        weight.dispatchEvent(
+            new window.KeyboardEvent("keydown", {
+                key: "Enter",
+                bubbles: true,
+                cancelable: true,
+            })
+        );
+
+        const queue = JSON.parse(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+        expect(queue).toHaveLength(1);
+        expect(queue[0].payload).toMatchObject({
+            plantId: "P01",
+            weight: "431.2",
+        });
+        expect(weight.value).toBe("");
+        expect(calls.some((call) => call.method === "saveWebObservation")).toBe(
+            false
+        );
+    });
+
     it("can optionally advance after queueing and remembers that preference", () => {
         const { window } = createLoggerWindow();
         const advance = window.document.querySelector("#advanceAfterQueue");
@@ -976,7 +1020,7 @@ describe("Garden logger browser recovery", () => {
             false
         );
         expect(window.document.documentElement.className).toContain(
-            "action-hit-recovery"
+            "mobile-hit-recovery"
         );
         expect(window.document.querySelector("#toast").textContent).toMatch(
             /misplaced tap/i
@@ -1015,7 +1059,65 @@ describe("Garden logger browser recovery", () => {
             true
         );
         expect(window.document.documentElement.className).not.toContain(
-            "action-hit-recovery"
+            "mobile-hit-recovery"
+        );
+    });
+
+    it("blocks a stale label-grid target after a phone layout change", () => {
+        const { window } = createLoggerWindow({
+            storage: { gardenLoggerPlantPickerModeV1: "labels" },
+        });
+        const staleTarget = window.document.querySelector(
+            '[data-plant-id="P02"]'
+        );
+        staleTarget.getBoundingClientRect = () => ({
+            bottom: 160,
+            height: 48,
+            left: 10,
+            right: 70,
+            top: 112,
+            width: 60,
+            x: 10,
+            y: 112,
+        });
+
+        staleTarget.dispatchEvent(
+            new window.MouseEvent("click", {
+                bubbles: true,
+                cancelable: true,
+                clientX: 40,
+                clientY: 260,
+                detail: 1,
+            })
+        );
+
+        expect(window.document.querySelector("#plantSelect").value).toBe("P01");
+        expect(window.document.documentElement.className).toContain(
+            "mobile-hit-recovery"
+        );
+        expect(window.document.querySelector("#toast").textContent).toMatch(
+            /misplaced tap/i
+        );
+        expect(window.document.querySelector('[data-plant-id="P02"]')).not.toBe(
+            staleTarget
+        );
+    });
+
+    it("rebuilds label hit targets after orientation changes", () => {
+        vi.useFakeTimers();
+        const { window } = createLoggerWindow({
+            storage: { gardenLoggerPlantPickerModeV1: "labels" },
+        });
+        const original = window.document.querySelector('[data-plant-id="P01"]');
+
+        window.dispatchEvent(new window.Event("orientationchange"));
+        vi.advanceTimersByTime(250);
+
+        expect(window.document.querySelector('[data-plant-id="P01"]')).not.toBe(
+            original
+        );
+        expect(window.document.documentElement.className).toContain(
+            "mobile-hit-recovery"
         );
     });
 

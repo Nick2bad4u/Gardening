@@ -40,6 +40,7 @@ const historyDetailHeaders = [
 ];
 
 function createHistorySheet(observations = []) {
+    const rangeReads = [];
     const header = Array(26).fill("");
     historyHeaders.forEach((value, index) => {
         header[index] = value;
@@ -83,12 +84,14 @@ function createHistorySheet(observations = []) {
 
     return {
         __rows: rows,
+        __rangeReads: rangeReads,
         getName: () => "History",
         getLastRow: () => rows.length,
         getMaxRows: () => 100,
         hideColumns: () => {},
         insertRowsAfter: () => {},
         getRange(row, column, rowCount = 1, columnCount = 1) {
+            rangeReads.push({ row, column, rowCount, columnCount });
             const values = () =>
                 rangeValues(row, column, rowCount, columnCount);
             const range = {
@@ -449,7 +452,18 @@ describe("Garden logger server logic", () => {
     });
 
     it("builds the mobile bootstrap from tracker, baseline, and history data", () => {
-        const history = createHistorySheet();
+        const repotValues = Array(21).fill("");
+        repotValues[0] = new Date("2026-08-10T12:00:00Z");
+        repotValues[1] = "P01";
+        repotValues[2] = "Repot";
+        repotValues[9] = new Date("2026-08-10T12:01:00Z");
+        repotValues[20] = "5 in";
+        const history = createHistorySheet([
+            {
+                requestId: "garden-bootstrap-12345",
+                values: repotValues,
+            },
+        ]);
         const trackerHeader = Array(15).fill("");
         const trackerPlant = Array(15).fill("");
         trackerPlant[0] = "P01";
@@ -496,17 +510,51 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.4.1");
+        expect(bootstrap.version).toBe("5.5.0");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
             label: "A1",
             potSetup: 2,
-            currentPotSize: "4 in",
+            currentPotSize: "5 in",
             latestWeight: 412,
             fieldGuideUrl: "https://example.test/p01",
         });
-        expect(Array.from(bootstrap.recent)).toEqual([]);
+        expect(Array.from(bootstrap.recent)).toHaveLength(1);
+        expect(history.__rangeReads).toEqual([
+            { row: 2, column: 1, rowCount: 1, columnCount: 21 },
+        ]);
+    });
+
+    it("returns an empty History snapshot and trims reserved blank rows", () => {
+        const emptyHistory = createHistorySheet();
+        const emptyContext = loadAppsScript(emptyHistory);
+        expect(
+            Array.from(
+                emptyContext.readHistorySnapshot_({
+                    getSheetByName: () => emptyHistory,
+                })
+            )
+        ).toEqual([]);
+
+        const populatedHistory = createHistorySheet([
+            {
+                requestId: "garden-snapshot-12345",
+                values: [
+                    new Date("2026-08-16T10:00:00-04:00"),
+                    "P01",
+                    "Weigh",
+                ],
+            },
+        ]);
+        populatedHistory.__rows.push(Array(26).fill(""));
+        const populatedContext = loadAppsScript(populatedHistory);
+        const snapshot = populatedContext.readHistorySnapshot_({
+            getSheetByName: () => populatedHistory,
+        });
+
+        expect(Array.from(snapshot)).toHaveLength(1);
+        expect(snapshot[0][1]).toBe("P01");
     });
 
     it("sorts recent activity by timestamps and resolves names without History helpers", () => {
@@ -1046,7 +1094,7 @@ describe("Garden logger server logic", () => {
 
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.4.1");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.5.0");
         expect(calls.toast[1]).toBe("Garden logger verified");
     });
 

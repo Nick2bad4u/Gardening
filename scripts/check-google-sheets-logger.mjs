@@ -147,14 +147,14 @@ assert.match(html, /gardenLoggerRecentLimitV1/);
 assert.match(html, /gardenLoggerObservationQueueV1/);
 assert.match(html, /saveWebObservationBatch/);
 assert.match(html, /id="queueSendButton"/);
-assert.match(html, /id="queueButton"[\s\S]*?>\s*Queue\s*</);
+assert.match(html, /id="queueButton"[\s\S]*?>\s*Add to queue\s*</);
 assert.match(html, /id="advanceAfterQueue"/);
 assert.match(html, /queue-complete/);
 assert.match(html, /@media \(hover: none\) and \(pointer: coarse\)/);
-assert.match(html, /function guardActionButtonHit\(event\)/);
+assert.match(html, /function guardMobileButtonHit\(event\)/);
 assert.match(
     html,
-    /document\.addEventListener\("click", guardActionButtonHit, true\)/
+    /document\.addEventListener\("click", guardMobileButtonHit, true\)/
 );
 assert.match(html, /id="openGooglePhotos"/);
 assert.match(html, /createLink\("History & charts", plant\.historyUrl\)/);

@@ -80,7 +80,7 @@ project. A push does not update the versioned web-app deployment by itself; the
 new version must still be assigned to the existing deployment.
 
 The mobile logger stores an unconfirmed request ID and draft locally before it
-calls Google. If the callback is lost, logger 5.4 checks History for that exact
+calls Google. If the callback is lost, logger 5.5 checks History for that exact
 request on timeout and page load. A completed save clears itself automatically;
 an absent or partial save keeps the draft available for an idempotent retry. If
 Google explicitly rejects a request and the follow-up History check confirms
@@ -88,14 +88,17 @@ that nothing was written, the same form can be corrected and saved under a new
 request ID without using **Clear entry**. A timed-out request stays protected
 until its result is known because it may still be running remotely.
 
-For a weighing session, **Queue** stores each completed reading in this phone's
-local storage while keeping the current plant selected, so pots can be weighed
-in any order. The optional **Advance to the next plant after queueing** setting
-restores sequential entry and remembers that preference. The queue is not
-cleared until Google confirms each request ID in History. A green check marks
-every plant with a weight in the queue, the progress line counts weighed plants,
-and the queue card turns green when every tracked plant has a weight safely
-queued.
+For a weighing session, the primary **Add to queue** button stores each
+completed reading in this phone's local storage while keeping the current plant
+selected, so pots can be weighed in any order. Pressing Enter from the weight
+box performs the same queue action; **Save now** remains available as the
+secondary direct-to-Google path. The optional **Advance to the next plant after
+queueing** setting restores sequential entry and remembers that preference. The
+queue is not cleared until Google confirms each request ID in History. A green
+check marks every plant with a weight in the queue, the progress line counts
+weighed plants, and the queue card turns green when every tracked plant has a
+weight safely queued. Weight-state controls stay collapsed unless the Weigh
+event is active or a weight value is present.
 
 Before the form clears or advances, the logger writes the complete queue to a
 primary browser-storage key, reads it back to verify the exact data, and keeps a
@@ -148,13 +151,17 @@ The main production safeguards are:
   success and failure path. Lost callbacks, watchdog expiry, page restoration,
   reconnects, and stale late replies all converge on request-ID reconciliation.
 - **Touch hit-test safety:** touch devices keep the action bar in normal
-  document flow instead of a sticky blurred compositor layer. A physical tap
-  reported on an action button is also rejected when its coordinates fall
-  outside that button's visible rectangle, preserving the current entry and
-  repairing the action-bar layout.
-- **Efficient reads:** bootstrap data is read in rectangular batches, plant
-  records are reused during queued saves, and recent activity sorts timestamps
-  in memory instead of depending on the user's current sheet sort.
+  document flow instead of a sticky blurred compositor layer. Physical taps
+  reported on action buttons or label-grid choices are rejected when their
+  coordinates fall outside the visible target. Rotation and viewport resize
+  events rebuild the label targets and refresh layout geometry without
+  discarding the current entry.
+- **Efficient reads:** bootstrap data is read in rectangular batches. One
+  shared History snapshot supplies both current pot sizes and recent activity,
+  eliminating duplicate full-ledger scans while keeping manual spreadsheet
+  edits immediately visible. Plant records are also reused during queued saves,
+  and recent activity sorts timestamps in memory instead of depending on the
+  user's current sheet sort.
 - **Versioned deployment:** production uses a versioned deployment whose
   deployment ID is updated in place, preserving the phone URL. Head deployments
   remain for testing only.
