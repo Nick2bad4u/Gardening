@@ -274,6 +274,12 @@ describe("Garden logger browser recovery", () => {
             window.localStorage.getItem("gardenLoggerPendingSaveV1")
         ).not.toBeNull();
         expect(window.document.querySelector("#weight").value).toBe("421");
+        expect(window.document.querySelector("#measurementUnit").value).toBe(
+            "cm"
+        );
+        expect(window.document.querySelector("#heightLabel").textContent).toBe(
+            "Height (cm)"
+        );
         expect(window.document.querySelector("#saveButton").disabled).toBe(
             false
         );
@@ -611,6 +617,61 @@ describe("Garden logger browser recovery", () => {
         expect(
             window.document.querySelector("#queueProgress").textContent
         ).toBe("1 of 2 plants have a weight safely queued.");
+    });
+
+    it("defaults measurements to inches, remembers the method, and shows dimensions in the queue", () => {
+        const { window } = createLoggerWindow();
+        const unit = window.document.querySelector("#measurementUnit");
+        const quality = window.document.querySelector("#measurementQuality");
+        const method = window.document.querySelector("#measurementMethod");
+
+        expect(unit.value).toBe("in");
+        expect(quality.value).toBe("Measured");
+        expect(method.value).toBe("Ruler");
+        expect(window.document.querySelector("#heightLabel").textContent).toBe(
+            "Height (in)"
+        );
+
+        method.value = "Estimated from photo";
+        method.dispatchEvent(new window.Event("change", { bubbles: true }));
+        expect(quality.value).toBe("Estimated");
+        method.value = "Ruler";
+        method.dispatchEvent(new window.Event("change", { bubbles: true }));
+        expect(quality.value).toBe("Measured");
+
+        const height = window.document.querySelector("#height");
+        const width = window.document.querySelector("#width");
+        height.value = "3.35";
+        height.dispatchEvent(new window.Event("input", { bubbles: true }));
+        width.value = "2.5";
+        width.dispatchEvent(new window.Event("input", { bubbles: true }));
+        window.document
+            .querySelector("#queueButton")
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        const queue = JSON.parse(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+        expect(queue[0].payload).toMatchObject({
+            height: "3.35",
+            width: "2.5",
+            measurementUnit: "in",
+            measurementQuality: "Measured",
+            measurementMethod: "Ruler",
+        });
+        expect(window.document.querySelector("#queueList").textContent).toMatch(
+            /3\.35 × 2\.5 in/
+        );
+        expect(unit.value).toBe("in");
+        expect(method.value).toBe("Ruler");
+        expect(quality.value).toBe("Measured");
+        expect(
+            JSON.parse(window.localStorage.getItem("gardenLoggerRoundStateV1"))
+        ).toMatchObject({
+            measurementUnit: "in",
+            measurementQuality: "Measured",
+            measurementMethod: "Ruler",
+        });
     });
 
     it("keeps weight controls closed until a weight is being recorded", () => {

@@ -80,7 +80,7 @@ project. A push does not update the versioned web-app deployment by itself; the
 new version must still be assigned to the existing deployment.
 
 The mobile logger stores an unconfirmed request ID and draft locally before it
-calls Google. If the callback is lost, logger 5.5 checks History for that exact
+calls Google. If the callback is lost, logger 5.8 checks History for that exact
 request on timeout and page load. A completed save clears itself automatically;
 an absent or partial save keeps the draft available for an idempotent retry. If
 Google explicitly rejects a request and the follow-up History check confirms
@@ -99,6 +99,12 @@ check marks every plant with a weight in the queue, the progress line counts
 weighed plants, and the queue card turns green when every tracked plant has a
 weight safely queued. Weight-state controls stay collapsed unless the Weigh
 event is active or a weight value is present.
+
+Queued measurements are shown beside weight as `height × width unit` (or as a
+single labeled dimension), so an unsent ruler reading can be reviewed without
+reopening the draft. Measurement unit, quality, and method persist between
+entries. New measurements default to inches and `Ruler / tape measure`; choosing
+an estimated method automatically changes quality to `Estimated`.
 
 Before the form clears or advances, the logger writes the complete queue to a
 primary browser-storage key, reads it back to verify the exact data, and keeps a
@@ -140,6 +146,11 @@ The main production safeguards are:
 - **Idempotent writes:** every request has a stable retry ID. Retries reconcile
   against the hidden History request-ID column and cannot silently duplicate a
   completed observation.
+- **Native entry constraints:** `QuickCareLog` uses Google Sheets table column
+  types for row-level checkboxes, dropdowns, dates, and numbers. The installer
+  configures only the bulk controls so it does not conflict with those native
+  types, and warning-only protections guard the managed identity and History
+  provenance/status columns without blocking intentional maintenance.
 - **Safe batch behavior:** queue validation happens before the lock. One script
   lock protects the write phase, each result is returned independently, and a
   partial failure retains only the unresolved phone entries.
@@ -228,7 +239,7 @@ installable trigger is not required.
 
 ## Logging behavior
 
-- Editing Event, Weight state, Weight, Height, Width, Condition, or Notes stamps
+- Editing Event, Weight state, Weight, Height, Width, Plant condition, or Notes stamps
   `Started at` once. You can edit that timestamp before saving a backdated
   observation.
 - One Save can append several event-specific rows. For example, `Water` plus a
@@ -237,9 +248,17 @@ installable trigger is not required.
 - A `Wet` weight also records Water unless Water is already the selected event.
   A weight with no state is stored as `Routine`.
 - Height and width can be entered together or independently; both belong to one
-  Measure row.
-- Condition / soil belongs to a Check row. Notes are attached to the first event
-  created by a Save so text is not repeated across several history rows.
+  Measure row. The mobile logger accepts inches or centimeters and defaults to
+  inches. `History` keeps normalized centimeter values for comparable charts,
+  preserves the original entry unit, and calculates matching inch values. The
+  logger also records whether the dimensions were measured or estimated and how
+  they were obtained. Older pending drafts without an explicit unit remain
+  centimeters because the pre-5.8 form was centimeters-only.
+- Plant condition and soil moisture are separate Check fields. Growing medium
+  is recorded separately on Repot rows, so substrate descriptions no longer
+  masquerade as dated plant-condition observations. Notes are attached to the
+  first event created by a Save so text is not repeated across several history
+  rows.
 - The current pot label and plant name are copied from `Plant tracker` at save
   time. Earlier History rows retain the label that was physically on the pot
   when the observation was made.
@@ -250,21 +269,25 @@ installable trigger is not required.
   Do not edit setup-1 History rows or average old-medium weights into the new
   dry/wet baseline. `P19`–`P22` remain on their existing setups.
 - Row 3 can apply one Event to all plant rows or clear every Event cell.
-- To remove an incorrect saved observation, select its row on `History` and use
-  **Garden logger → Remove selected History observations**. Review the dated
-  Plant ID, event, and weight preview, then confirm. The command clears A:L and
-  P:Z for those rows while preserving the rows, formatting, and M:O helper
-  formulas. Dashboard, Baselines, Insights, plant pages, and the public tracker
-  recalculate from the corrected History ledger. Do not delete whole sheet rows
-  or erase calculated cells on a plant page. If the wrong observation was
-  removed accidentally, use **File → Version history** in Google Sheets to
-  restore or copy its source values back.
+- To exclude an incorrect saved observation, select its row on `History` and
+  use **Garden logger → Exclude selected History observations**. Review the
+  dated Plant ID, event, and weight preview, then confirm. The command preserves
+  the original record and marks it `Removed` with a timestamped correction
+  reason. Derived views ignore removed records, while the audit trail remains
+  available. Do not delete whole sheet rows or erase calculated cells on a
+  plant page.
 - A Water event means the container was soaked until runoff; water volume is
   intentionally not recorded.
-- `History` A:L stores core observation data; M:O holds workbook-derived values;
-  P stores a hidden retry ID; and Q:Z stores structured nutrient, repot, flower,
-  photo, pest, and treatment details. The logger does not overwrite the N:O
-  array formulas.
+- `History` A:L stores core observation data; M:O holds row-local derived
+  values; P stores a hidden retry ID; Q:Z stores structured nutrient, repot,
+  flower, photo, pest, and treatment details; AA:AJ stores durable
+  observation identity, source, quality, correction, soil-moisture, medium,
+  method, and status fields; and AK:AM stores the entry unit plus automatic
+  height/width inch conversions. A save writes the entire A:AM record block in one
+  call so a failed service call cannot strand a request ID apart from its
+  observation. The installer keeps 5,000 History rows available, and workbook
+  formulas use that same bound so new observations cannot outgrow the derived
+  dashboards silently.
 - The Watering round tab can append one Water row for every selected plant with
   shared nutrient and note details. Use single-plant mode when each pot also
   needs its own wet weight.

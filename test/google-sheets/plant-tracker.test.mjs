@@ -19,7 +19,7 @@ const historyHeaders = [
     "Weight (g)",
     "Height (cm)",
     "Width (cm)",
-    "Condition / soil",
+    "Plant condition",
     "Notes",
     "Recorded",
     "Pot setup",
@@ -39,9 +39,42 @@ const historyDetailHeaders = [
     "Treatment / action",
 ];
 
+const historyProvenanceHeaders = [
+    "Observation ID",
+    "Entry source",
+    "Observation quality",
+    "Save group / batch ID",
+    "Corrects observation ID",
+    "Correction reason",
+    "Soil moisture",
+    "Medium / substrate",
+    "Measurement method",
+    "Record status",
+];
+
+const historyMeasurementHeaders = [
+    "Measurement unit",
+    "Height (in)",
+    "Width (in)",
+];
+
+function createDataValidationBuilder() {
+    const builder = {
+        requireValueInList: () => builder,
+        requireNumberGreaterThan: () => builder,
+        requireNumberBetween: () => builder,
+        requireCheckbox: () => builder,
+        setAllowInvalid: () => builder,
+        build: () => ({}),
+    };
+    return builder;
+}
+
 function createHistorySheet(observations = []) {
     const rangeReads = [];
-    const header = Array(26).fill("");
+    const protections = [];
+    let maxRows = 100;
+    const header = Array(39).fill("");
     historyHeaders.forEach((value, index) => {
         header[index] = value;
     });
@@ -49,11 +82,17 @@ function createHistorySheet(observations = []) {
     historyDetailHeaders.forEach((value, index) => {
         header[16 + index] = value;
     });
+    historyProvenanceHeaders.forEach((value, index) => {
+        header[26 + index] = value;
+    });
+    historyMeasurementHeaders.forEach((value, index) => {
+        header[36 + index] = value;
+    });
 
     const rows = [
         header,
         ...observations.map(({ values, requestId }) => {
-            const row = Array(26).fill("");
+            const row = Array(39).fill("");
             values.forEach((value, index) => {
                 row[index] = value;
             });
@@ -75,7 +114,7 @@ function createHistorySheet(observations = []) {
     function setRangeValues(row, column, values) {
         values.forEach((currentRow, rowOffset) => {
             const targetRow = row - 1 + rowOffset;
-            rows[targetRow] ??= Array(26).fill("");
+            rows[targetRow] ??= Array(39).fill("");
             currentRow.forEach((value, columnOffset) => {
                 rows[targetRow][column - 1 + columnOffset] = value;
             });
@@ -85,11 +124,21 @@ function createHistorySheet(observations = []) {
     return {
         __rows: rows,
         __rangeReads: rangeReads,
+        __protections: protections,
         getName: () => "History",
         getLastRow: () => rows.length,
-        getMaxRows: () => 100,
+        getMaxColumns: () => rows[0].length,
+        getMaxRows: () => maxRows,
         hideColumns: () => {},
-        insertRowsAfter: () => {},
+        getProtections: () => protections,
+        insertColumnsAfter(column, count) {
+            rows.forEach((currentRow) => {
+                currentRow.splice(column, 0, ...Array(count).fill(""));
+            });
+        },
+        insertRowsAfter: (_row, count) => {
+            maxRows += count;
+        },
         getRange(row, column, rowCount = 1, columnCount = 1) {
             rangeReads.push({ row, column, rowCount, columnCount });
             const values = () =>
@@ -135,6 +184,12 @@ function createHistorySheet(observations = []) {
                 setNote: () => range,
                 setNotes: () => range,
                 setNumberFormat: () => range,
+                setDataValidation: () => range,
+                protect() {
+                    const protection = createProtection(range);
+                    protections.push(protection);
+                    return protection;
+                },
                 clearContent() {
                     setRangeValues(
                         row,
@@ -164,7 +219,9 @@ function loadAppsScript(history, options = {}) {
         URL,
         SpreadsheetApp: options.SpreadsheetApp ?? {
             flush: () => {},
+            newDataValidation: createDataValidationBuilder,
             openById: () => spreadsheet,
+            ProtectionType: { RANGE: "RANGE" },
         },
         Utilities: options.Utilities ?? {
             formatDate: (value) => value.toISOString(),
@@ -179,15 +236,24 @@ function loadAppsScript(history, options = {}) {
 
 function createDataSheet(name, rows, formulas = []) {
     let parent = null;
+    const protections = [];
     const sheet = {
         __rows: rows,
+        __protections: protections,
         __setParent(value) {
             parent = value;
         },
         getParent: () => parent,
         getName: () => name,
         getLastRow: () => rows.length,
+        getLastColumn: () =>
+            Math.max(
+                0,
+                ...rows.map((row) => row.length),
+                ...formulas.map((row) => row.length)
+            ),
         getMaxRows: () => Math.max(rows.length, 100),
+        getProtections: () => protections,
         getRange(row, column, rowCount = 1, columnCount = 1) {
             const select = (source) =>
                 Array.from({ length: rowCount }, (_, rowOffset) =>
@@ -232,6 +298,12 @@ function createDataSheet(name, rows, formulas = []) {
                 setBackground: () => range,
                 setNote: () => range,
                 setNumberFormat: () => range,
+                setDataValidation: () => range,
+                protect() {
+                    const protection = createProtection(range);
+                    protections.push(protection);
+                    return protection;
+                },
                 setValue(value) {
                     rows[row - 1] ??= [];
                     rows[row - 1][column - 1] = value;
@@ -255,17 +327,38 @@ function createDataSheet(name, rows, formulas = []) {
     return sheet;
 }
 
+function createProtection(initialRange) {
+    let description = "";
+    let protectedRange = initialRange;
+    let warningOnly = false;
+    const protection = {
+        getDescription: () => description,
+        getRange: () => protectedRange,
+        isWarningOnly: () => warningOnly,
+        setDescription(value) {
+            description = value;
+            return protection;
+        },
+        setRange(value) {
+            protectedRange = value;
+            return protection;
+        },
+        setWarningOnly(value) {
+            warningOnly = value;
+            return protection;
+        },
+    };
+    return protection;
+}
+
 function createLoggerWorkbook(plantIds = ["P01"]) {
     const trackerHeader = Array(15).fill("");
     const trackerRows = [trackerHeader];
     const trackerFormulas = [Array(15).fill("")];
-    const baselineRows = [
-        [
-            "Plant ID",
-            "Dry baseline",
-            "Pot setup",
-        ],
-    ];
+    const baselineHeader = Array(20).fill("");
+    baselineHeader[0] = "Plant ID";
+    baselineHeader[19] = "Pot setup";
+    const baselineRows = [baselineHeader];
 
     plantIds.forEach((plantId, index) => {
         const row = Array(15).fill("");
@@ -278,11 +371,10 @@ function createLoggerWorkbook(plantIds = ["P01"]) {
         const formulas = Array(15).fill("");
         formulas[13] = `=HYPERLINK("https://example.test/${plantId}","Guide")`;
         trackerFormulas.push(formulas);
-        baselineRows.push([
-            plantId,
-            "",
-            1,
-        ]);
+        const baselineRow = Array(20).fill("");
+        baselineRow[0] = plantId;
+        baselineRow[19] = 1;
+        baselineRows.push(baselineRow);
     });
 
     const history = createHistorySheet();
@@ -375,6 +467,51 @@ describe("Garden logger server logic", () => {
             context.validateMeasurementEvents_(["Measure"], "", "", "")
         ).toThrow(/height or width/i);
         context.validateMeasurementEvents_(["Check"], "", "", "");
+        expect(context.normalizeMeasurementQuality_("", ["Check"])).toBe("");
+        expect(context.normalizeMeasurementQuality_("", ["Measure"])).toBe(
+            "Estimated"
+        );
+        expect(
+            context.normalizeMeasurementQuality_("Measured", ["Measure"])
+        ).toBe("Measured");
+        expect(() =>
+            context.normalizeMeasurementQuality_("Approximate", ["Measure"])
+        ).toThrow(/Measured or Estimated/i);
+        expect(context.normalizeMeasurementMethod_("", ["Check"])).toBe("");
+        expect(context.normalizeMeasurementMethod_("", ["Measure"])).toBe(
+            "Unspecified"
+        );
+        expect(context.normalizeMeasurementMethod_("Ruler", ["Measure"])).toBe(
+            "Ruler"
+        );
+        expect(() =>
+            context.normalizeMeasurementMethod_("Laser", ["Measure"])
+        ).toThrow(/must be one of/i);
+        expect(context.normalizeMeasurementUnit_("", ["Check"])).toBe("");
+        expect(context.normalizeMeasurementUnit_("", ["Measure"])).toBe("cm");
+        expect(context.normalizeMeasurementUnit_("inches", ["Measure"])).toBe(
+            "in"
+        );
+        expect(() =>
+            context.normalizeMeasurementUnit_("feet", ["Measure"])
+        ).toThrow(/in or cm/i);
+        expect(context.measurementToCentimeters_(1.3, "in")).toBe(3.302);
+        expect(context.measurementToCentimeters_(12.7, "cm")).toBe(12.7);
+        expect(context.measurementToCentimeters_("", "in")).toBe("");
+        expect(
+            context.normalizeMeasurementQuality_(
+                "Estimated",
+                ["Measure"],
+                "Ruler"
+            )
+        ).toBe("Measured");
+        expect(
+            context.normalizeMeasurementQuality_(
+                "Measured",
+                ["Measure"],
+                "Estimated visually"
+            )
+        ).toBe("Estimated");
         expect(() =>
             context.prepareWebObservation_({}, { plantId: "P99" }, new Map())
         ).toThrow(/valid plant/i);
@@ -464,8 +601,9 @@ describe("Garden logger server logic", () => {
                 values: repotValues,
             },
         ]);
-        const trackerHeader = Array(15).fill("");
-        const trackerPlant = Array(15).fill("");
+        const trackerHeader = Array(28).fill("");
+        trackerHeader[27] = "Current pot size";
+        const trackerPlant = Array(28).fill("");
         trackerPlant[0] = "P01";
         trackerPlant[1] = "Old man of the Andes";
         trackerPlant[2] = "Oreocereus trollii";
@@ -473,7 +611,8 @@ describe("Garden logger server logic", () => {
         trackerPlant[4] = 15;
         trackerPlant[6] = 412;
         trackerPlant[14] = "A1";
-        const trackerFormulas = [trackerHeader, Array(15).fill("")];
+        trackerPlant[27] = "4 in";
+        const trackerFormulas = [trackerHeader, Array(28).fill("")];
         trackerFormulas[1][13] =
             '=HYPERLINK("https://example.test/p01","Guide")';
         const sheets = new Map([
@@ -490,12 +629,14 @@ describe("Garden logger server logic", () => {
                 createDataSheet("Baselines", [
                     [
                         "Plant ID",
-                        "Dry baseline",
+                        "Latest weight",
+                        "Last weighed",
                         "Pot setup",
                     ],
                     [
                         "P01",
-                        "",
+                        412,
+                        new Date("2026-08-16T12:00:00Z"),
                         2,
                     ],
                 ]),
@@ -510,19 +651,19 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.5.0");
+        expect(bootstrap.version).toBe("5.8.0");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
             label: "A1",
             potSetup: 2,
-            currentPotSize: "5 in",
+            currentPotSize: "4 in",
             latestWeight: 412,
             fieldGuideUrl: "https://example.test/p01",
         });
         expect(Array.from(bootstrap.recent)).toHaveLength(1);
         expect(history.__rangeReads).toEqual([
-            { row: 2, column: 1, rowCount: 1, columnCount: 21 },
+            { row: 2, column: 1, rowCount: 1, columnCount: 39 },
         ]);
     });
 
@@ -547,7 +688,7 @@ describe("Garden logger server logic", () => {
                 ],
             },
         ]);
-        populatedHistory.__rows.push(Array(26).fill(""));
+        populatedHistory.__rows.push(Array(39).fill(""));
         const populatedContext = loadAppsScript(populatedHistory);
         const snapshot = populatedContext.readHistorySnapshot_({
             getSheetByName: () => populatedHistory,
@@ -804,6 +945,32 @@ describe("Garden logger server logic", () => {
         expect(history.__rows[1][16]).toBe("Yes");
         expect(history.__rows[5][20]).toBe("5 in");
         expect(history.__rows[8][25]).toBe("Isolated and treated");
+        expect(history.__rows[1]).toHaveLength(39);
+        expect(history.__rows[1][12]).toMatch(/^=IF\(/);
+        expect(history.__rows[1][13]).toMatch(/\^\(Water\|Repot\)\$/);
+        expect(history.__rows[1][14]).toMatch(/^=IF\(/);
+        expect(history.__rows[1].slice(26, 36)).toEqual([
+            "garden-append-12345:1:water",
+            "Apps Script",
+            "Observed",
+            "garden-append-12345",
+            "",
+            "",
+            "",
+            "",
+            "Observed",
+            "Active",
+        ]);
+        expect(history.__rows[1].slice(36)).toEqual([
+            "",
+            '=IF(F2="","",F2/2.54)',
+            '=IF(G2="","",G2/2.54)',
+        ]);
+        expect(history.__rows[2][28]).toBe("Measured");
+        expect(history.__rows[2][34]).toBe("Scale");
+        expect(history.__rows[3][28]).toBe("Estimated");
+        expect(history.__rows[3][34]).toBe("Unspecified");
+        expect(history.__rows[3][36]).toBe("cm");
     });
 
     it("saves a complete mobile observation and advances a repot setup", () => {
@@ -832,6 +999,11 @@ describe("Garden logger server logic", () => {
             height: 13,
             width: 8,
             condition: "Firm",
+            soilMoisture: "Dry",
+            medium: "Mineral cactus mix",
+            measurementQuality: "Measured",
+            measurementMethod: "Ruler",
+            measurementUnit: "in",
             notes: "Mobile round",
             nutrientsUsed: "No",
             potSize: "5 in",
@@ -853,8 +1025,16 @@ describe("Garden logger server logic", () => {
         expect(result.events).toContain("Repot");
         expect(retry).toMatchObject({ duplicate: true, historyRows: 8 });
         expect(workbook.history.__rows[1][10]).toBe(2);
+        expect(workbook.history.__rows[3][28]).toBe("Measured");
+        expect(workbook.history.__rows[3][34]).toBe("Ruler");
+        expect(workbook.history.__rows[3][5]).toBe(33.02);
+        expect(workbook.history.__rows[3][6]).toBe(20.32);
+        expect(workbook.history.__rows[3][36]).toBe("in");
+        expect(workbook.history.__rows[3][37]).toBe('=IF(F4="","",F4/2.54)');
+        expect(workbook.history.__rows[4][32]).toBe("Dry");
+        expect(workbook.history.__rows[5][33]).toBe("Mineral cactus mix");
         expect(
-            workbook.sheets.get("Baselines").getRange(2, 3).getValues()[0][0]
+            workbook.sheets.get("Baselines").getRange(2, 20).getValues()[0][0]
         ).toBe(2);
     });
 
@@ -1029,7 +1209,7 @@ describe("Garden logger server logic", () => {
 
         expect(calls).toContainEqual(["Open mobile entry", "openMobileEntry"]);
         expect(calls).toContainEqual([
-            "Remove selected History observations",
+            "Exclude selected History observations",
             "removeSelectedHistoryObservations",
         ]);
         expect(calls).toContainEqual([
@@ -1054,11 +1234,12 @@ describe("Garden logger server logic", () => {
                 "Event",
                 "Weight state",
                 "Weight (g)",
-                "Height (cm)",
-                "Width (cm)",
-                "Condition / soil",
+                "Height",
+                "Width",
+                "Plant condition",
                 "Notes",
                 "Pot setup",
+                "Measurement unit",
             ],
         ];
         const quickLog = createDataSheet("Quick log", quickLogRows);
@@ -1075,7 +1256,9 @@ describe("Garden logger server logic", () => {
         const context = loadAppsScript(workbook.history, {
             SpreadsheetApp: {
                 getActive: () => workbook.spreadsheet,
+                newDataValidation: createDataValidationBuilder,
                 openById: () => workbook.spreadsheet,
+                ProtectionType: { RANGE: "RANGE" },
             },
             spreadsheet: workbook.spreadsheet,
             globals: {
@@ -1093,12 +1276,20 @@ describe("Garden logger server logic", () => {
         });
 
         context.installGardenLogger();
+        context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.5.0");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.8.0");
         expect(calls.toast[1]).toBe("Garden logger verified");
+        expect(quickLog.__protections).toHaveLength(1);
+        expect(workbook.history.__protections).toHaveLength(5);
+        expect(
+            workbook.history.__protections.every((protection) =>
+                protection.isWarningOnly()
+            )
+        ).toBe(true);
     });
 
-    it("clears selected History observations without touching helper columns", () => {
+    it("excludes selected History observations without destroying their audit trail", () => {
         const history = createHistorySheet([
             {
                 requestId: "garden-remove-12345",
@@ -1122,6 +1313,7 @@ describe("Garden logger server logic", () => {
             getActiveRange: () => selection,
             getActiveSheet: () => history,
             getSheetByName: (name) => (name === "History" ? history : null),
+            getSpreadsheetTimeZone: () => "America/New_York",
             toast: () => {},
         };
         const ui = {
@@ -1138,13 +1330,22 @@ describe("Garden logger server logic", () => {
 
         context.removeSelectedHistoryObservations();
 
-        expect(history.__rows[1].slice(0, 12)).toEqual(Array(12).fill(""));
+        expect(history.__rows[1].slice(0, 5)).toEqual([
+            new Date("2026-08-12T12:00:00Z"),
+            "P20",
+            "Weigh",
+            "Routine",
+            1450,
+        ]);
         expect(history.__rows[1].slice(12, 15)).toEqual([
             "helper-name",
             "helper-cycle",
             "",
         ]);
-        expect(history.__rows[1].slice(15, 26)).toEqual(Array(11).fill(""));
+        expect(history.__rows[1][15]).toBe("garden-remove-12345");
+        expect(history.__rows[1][16]).toBe("detail");
+        expect(history.__rows[1][31]).toMatch(/Excluded from active analysis/);
+        expect(history.__rows[1][35]).toBe("Removed");
     });
 
     it("covers validation, identity, and formatting helpers", () => {
@@ -1334,12 +1535,31 @@ describe("Garden logger server logic", () => {
         historyDetailHeaders.forEach((_, index) => {
             emptyHeaders.__rows[0][16 + index] = "";
         });
+        historyProvenanceHeaders.forEach((_, index) => {
+            emptyHeaders.__rows[0][26 + index] = "";
+        });
+        historyMeasurementHeaders.forEach((_, index) => {
+            emptyHeaders.__rows[0][36 + index] = "";
+        });
         errorContext.ensureHistoryRequestIdColumn_(emptyHeaders);
         errorContext.ensureHistoryDetailColumns_(emptyHeaders);
+        errorContext.ensureHistoryProvenanceColumns_(emptyHeaders);
+        errorContext.ensureHistoryMeasurementColumns_(emptyHeaders);
         expect(emptyHeaders.__rows[0][15]).toBe("Request ID");
         expect(emptyHeaders.__rows[0].slice(16, 26)).toEqual(
             historyDetailHeaders
         );
+        expect(emptyHeaders.__rows[0].slice(26, 36)).toEqual(
+            historyProvenanceHeaders
+        );
+        expect(emptyHeaders.__rows[0].slice(36, 39)).toEqual(
+            historyMeasurementHeaders
+        );
+        const badMeasurementHeader = createHistorySheet();
+        badMeasurementHeader.__rows[0][37] = "Inches";
+        expect(() =>
+            errorContext.ensureHistoryMeasurementColumns_(badMeasurementHeader)
+        ).toThrow(/must be "Height \(in\)"/i);
     });
 
     it("reports queue request status and rejects unsafe status queries", () => {
@@ -1401,11 +1621,12 @@ describe("Garden logger server logic", () => {
                 "Event",
                 "Weight state",
                 "Weight (g)",
-                "Height (cm)",
-                "Width (cm)",
-                "Condition / soil",
+                "Height",
+                "Width",
+                "Plant condition",
                 "Notes",
                 "Pot setup",
+                "Measurement unit",
             ],
             [
                 "P01",
@@ -1484,11 +1705,12 @@ describe("Garden logger server logic", () => {
                 "Event",
                 "Weight state",
                 "Weight (g)",
-                "Height (cm)",
-                "Width (cm)",
-                "Condition / soil",
+                "Height",
+                "Width",
+                "Plant condition",
                 "Notes",
                 "Pot setup",
+                "Measurement unit",
             ],
             [
                 "P01",
@@ -1544,11 +1766,12 @@ describe("Garden logger server logic", () => {
             "Event",
             "Weight state",
             "Weight (g)",
-            "Height (cm)",
-            "Width (cm)",
-            "Condition / soil",
+            "Height",
+            "Width",
+            "Plant condition",
             "Notes",
             "Pot setup",
+            "Measurement unit",
         ];
         const quickRows = [
             [],
@@ -1848,6 +2071,52 @@ describe("Garden logger server logic", () => {
         expect(defaultContext.getWebAppBootstrap().plants[0].potSetup).toBe(1);
     });
 
+    it("resolves reordered Baselines headers and rejects ambiguous schemas", () => {
+        const context = loadAppsScript(createHistorySheet());
+        const reordered = createDataSheet("Baselines", [
+            [
+                "Plant ID",
+                "Latest weight",
+                "Last weighed",
+                "Pot setup",
+            ],
+            [
+                "P01",
+                412,
+                new Date("2026-08-16T12:00:00Z"),
+                3,
+            ],
+        ]);
+
+        expect(
+            JSON.parse(JSON.stringify(context.baselinePotSetupData_(reordered)))
+        ).toEqual({ potSetupColumn: 4, rows: [["P01", 3]] });
+        expect(
+            context.optionalColumnForHeader_(
+                createDataSheet("Empty", [[]]),
+                "Plant ID"
+            )
+        ).toBe(0);
+        expect(() =>
+            context.optionalColumnForHeader_(
+                createDataSheet("Duplicate", [
+                    [
+                        "Plant ID",
+                        "Plant ID",
+                        "Pot setup",
+                    ],
+                ]),
+                "Plant ID"
+            )
+        ).toThrow(/more than one "Plant ID" header/i);
+        expect(() =>
+            context.requiredColumnForHeader_(
+                createDataSheet("Missing", [["Plant ID"]]),
+                "Pot setup"
+            )
+        ).toThrow(/missing the "Pot setup" header/i);
+    });
+
     it("returns durable per-item failures for invalid and failed queue entries", () => {
         const workbook = createLoggerWorkbook();
         const context = loadAppsScript(workbook.history, {
@@ -1959,6 +2228,13 @@ describe("Garden logger server logic", () => {
             photoUrl: "https://photos.app.goo.gl/abcdefghijkl",
             pestIssue: "Mites",
         });
+        expect(
+            context.eventDetailsFromPayload_(
+                { flowerDetails: "Single unopened bud" },
+                ["Flower"],
+                null
+            ).flowerDetails
+        ).toBe("Single unopened bud");
         expect(
             Array.from(
                 context.buildEventNamesFromList_(
@@ -2106,10 +2382,16 @@ describe("Garden logger server logic", () => {
         const emptyHeaders = createHistorySheet();
         emptyHeaders.__rows[0][15] = "";
         emptyHeaders.__rows[0].fill("", 16, 26);
+        emptyHeaders.__rows[0].fill("", 26, 36);
+        emptyHeaders.__rows[0].fill("", 36, 39);
         context.ensureHistoryRequestIdColumn_(emptyHeaders);
         context.ensureHistoryDetailColumns_(emptyHeaders);
+        context.ensureHistoryProvenanceColumns_(emptyHeaders);
+        context.ensureHistoryMeasurementColumns_(emptyHeaders);
         expect(emptyHeaders.__rows[0][15]).toBe("Request ID");
         expect(emptyHeaders.__rows[0][16]).toBe("Nutrients used");
+        expect(emptyHeaders.__rows[0][26]).toBe("Observation ID");
+        expect(emptyHeaders.__rows[0][36]).toBe("Measurement unit");
     });
 
     it("runs every Quick log onEdit path, including bulk and locked saves", () => {
@@ -2404,9 +2686,11 @@ describe("Garden logger server logic", () => {
 
         const growing = createHistorySheet();
         let inserted = 0;
-        growing.getMaxRows = () => 1;
+        let maxRows = 1;
+        growing.getMaxRows = () => maxRows;
         growing.insertRowsAfter = (_row, count) => {
             inserted += count;
+            maxRows += count;
         };
         const growingSpreadsheet = {
             getSheetByName: (name) => (name === "History" ? growing : null),
@@ -2426,7 +2710,7 @@ describe("Garden logger server logic", () => {
             currentLabel: "A1",
             details: {},
         });
-        expect(inserted).toBe(1);
+        expect(inserted).toBe(4999);
 
         const duplicateRequestId = "garden-valid-duplicate-12345";
         const duplicateHistory = createHistorySheet([
@@ -2520,11 +2804,12 @@ describe("Garden logger server logic", () => {
             "Event",
             "Weight state",
             "Weight (g)",
-            "Height (cm)",
-            "Width (cm)",
-            "Condition / soil",
+            "Height",
+            "Width",
+            "Plant condition",
             "Notes",
             "Pot setup",
+            "Measurement unit",
         ];
         const installQuick = createDataSheet("Quick log", quickHeaderRows);
         const installSheets = new Map([

@@ -1370,32 +1370,93 @@
                                     <div class="field">
                                         <label
                                             class="field-label"
+                                            for="measurementUnit"
+                                            >Measurement unit</label
+                                        >
+                                        <select id="measurementUnit">
+                                            <option
+                                                value="in"
+                                                selected
+                                            >
+                                                Inches (in)
+                                            </option>
+                                            <option value="cm">
+                                                Centimeters (cm)
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="field">
+                                        <label
+                                            id="heightLabel"
+                                            class="field-label"
                                             for="height"
-                                            >Height (cm)</label
+                                            >Height (in)</label
                                         >
                                         <input
                                             id="height"
                                             type="number"
                                             inputmode="decimal"
-                                            min="0.1"
-                                            step="0.1"
+                                            min="0.01"
+                                            step="0.01"
+                                            placeholder="Optional"
+                                        />
+                                    </div>
+                                    <div class="field">
+                                        <label
+                                            id="widthLabel"
+                                            class="field-label"
+                                            for="width"
+                                            >Width (in)</label
+                                        >
+                                        <input
+                                            id="width"
+                                            type="number"
+                                            inputmode="decimal"
+                                            min="0.01"
+                                            step="0.01"
                                             placeholder="Optional"
                                         />
                                     </div>
                                     <div class="field">
                                         <label
                                             class="field-label"
-                                            for="width"
-                                            >Width (cm)</label
+                                            for="measurementQuality"
+                                            >Measurement quality</label
                                         >
-                                        <input
-                                            id="width"
-                                            type="number"
-                                            inputmode="decimal"
-                                            min="0.1"
-                                            step="0.1"
-                                            placeholder="Optional"
-                                        />
+                                        <select id="measurementQuality">
+                                            <option value="Estimated">
+                                                Estimated
+                                            </option>
+                                            <option
+                                                value="Measured"
+                                                selected
+                                            >
+                                                Measured
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="field">
+                                        <label
+                                            class="field-label"
+                                            for="measurementMethod"
+                                            >Measurement method</label
+                                        >
+                                        <select id="measurementMethod">
+                                            <option value="Estimated visually">
+                                                Estimated visually
+                                            </option>
+                                            <option
+                                                value="Estimated from photo"
+                                            >
+                                                Estimated from photo
+                                            </option>
+                                            <option
+                                                value="Ruler"
+                                                selected
+                                                >Ruler / tape measure</option
+                                            >
+                                            <option value="Other">Other</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -1474,14 +1535,29 @@
                                     <label
                                         class="field-label"
                                         for="condition"
-                                        >Condition / soil</label
+                                        >Plant condition</label
                                     >
                                     <input
                                         id="condition"
                                         type="text"
                                         maxlength="240"
-                                        placeholder="Firm; dry below top dressing"
+                                        placeholder="Firm leaves; no discoloration"
                                     />
+                                    <label
+                                        class="field-label"
+                                        for="soilMoisture"
+                                        >Soil moisture</label
+                                    >
+                                    <select id="soilMoisture">
+                                        <option value="">Not checked</option>
+                                        <option value="Dry">Dry</option>
+                                        <option value="Slightly moist">
+                                            Slightly moist
+                                        </option>
+                                        <option value="Moist">Moist</option>
+                                        <option value="Wet">Wet</option>
+                                        <option value="Unknown">Unknown</option>
+                                    </select>
                                 </div>
                                 <div
                                     id="repotSection"
@@ -1502,6 +1578,16 @@
                                         id="potSize"
                                         maxlength="80"
                                         placeholder="e.g. 6 in round"
+                                    />
+                                    <label
+                                        class="field-label"
+                                        for="medium"
+                                        >Medium / substrate</label
+                                    >
+                                    <input
+                                        id="medium"
+                                        maxlength="160"
+                                        placeholder="e.g. Molly's mix + perlite"
                                     />
                                     <p class="setup-note"
                                         ><span aria-hidden="true">↗</span
@@ -1827,6 +1913,9 @@
                 filteredPlants: [],
                 events: new Set(),
                 weightState: "Routine",
+                measurementUnit: "in",
+                measurementQuality: "Measured",
+                measurementMethod: "Ruler",
                 bulkSelected: new Set(),
                 bulkFilteredPlants: [],
                 entryMode: "single",
@@ -1895,6 +1984,9 @@
                         keepEvents: $("keepEvents").checked,
                         advanceAfterQueue: $("advanceAfterQueue").checked,
                         events: [...state.events],
+                        measurementUnit: state.measurementUnit,
+                        measurementQuality: state.measurementQuality,
+                        measurementMethod: state.measurementMethod,
                     })
                 );
                 sessionStorage.setItem(WEIGHT_STATE_KEY, state.weightState);
@@ -1915,6 +2007,29 @@
                             Array.isArray(saved.events) ? saved.events : []
                         );
                     }
+                    state.measurementUnit = ["in", "cm"].includes(
+                        saved && saved.measurementUnit
+                    )
+                        ? saved.measurementUnit
+                        : "in";
+                    state.measurementQuality = [
+                        "Measured",
+                        "Estimated",
+                    ].includes(saved && saved.measurementQuality)
+                        ? saved.measurementQuality
+                        : "Measured";
+                    state.measurementMethod = [
+                        "Ruler",
+                        "Estimated from photo",
+                        "Estimated visually",
+                        "Other",
+                    ].includes(saved && saved.measurementMethod)
+                        ? saved.measurementMethod
+                        : "Ruler";
+                    $("measurementUnit").value = state.measurementUnit;
+                    $("measurementQuality").value = state.measurementQuality;
+                    $("measurementMethod").value = state.measurementMethod;
+                    renderMeasurementControls();
                     const savedWeightState =
                         sessionStorage.getItem(WEIGHT_STATE_KEY);
                     state.weightState = ["Dry", "Wet", "Routine"].includes(
@@ -2067,13 +2182,18 @@
                     weight: String(payload.weight || ""),
                     height: String(payload.height || ""),
                     width: String(payload.width || ""),
+                    measurementUnit: payload.measurementUnit || "cm",
                     condition: payload.condition,
+                    soilMoisture: payload.soilMoisture,
                     notes: payload.notes,
                     potSetup: String(payload.potSetup || ""),
                     nutrientsUsed: payload.nutrientsUsed,
                     nutrientProduct: payload.nutrientProduct,
                     nutrientAmount: payload.nutrientAmount,
                     potSize: payload.potSize,
+                    medium: payload.medium,
+                    measurementQuality: payload.measurementQuality,
+                    measurementMethod: payload.measurementMethod,
                     flowerCount: String(payload.flowerCount || ""),
                     flowerDetails: payload.flowerDetails,
                     photoUrl: payload.photoUrl,
@@ -2084,6 +2204,33 @@
 
             function payloadFingerprint(payload) {
                 return JSON.stringify(comparablePayload(payload));
+            }
+
+            function renderMeasurementControls() {
+                const unit = $("measurementUnit").value === "cm" ? "cm" : "in";
+                $("heightLabel").textContent = `Height (${unit})`;
+                $("widthLabel").textContent = `Width (${unit})`;
+            }
+
+            function syncMeasurementQualityToMethod() {
+                const method = $("measurementMethod").value;
+                if (method === "Ruler") {
+                    $("measurementQuality").value = "Measured";
+                } else if (
+                    method === "Estimated from photo" ||
+                    method === "Estimated visually"
+                ) {
+                    $("measurementQuality").value = "Estimated";
+                }
+            }
+
+            function queuedMeasurementText(payload) {
+                const height = String(payload.height || "");
+                const width = String(payload.width || "");
+                if (!height && !width) return "";
+                const unit = payload.measurementUnit || "cm";
+                if (height && width) return `${height} × ${width} ${unit}`;
+                return height ? `H ${height} ${unit}` : `W ${width} ${unit}`;
             }
 
             function persistPendingSave(pendingSave) {
@@ -2254,7 +2401,8 @@
                 if (payload.weightState === "Wet") events.add("Water");
                 if (payload.weight) events.add("Weigh");
                 if (payload.height || payload.width) events.add("Measure");
-                if (!events.size && payload.condition) events.add("Check");
+                if (payload.condition || payload.soilMoisture)
+                    events.add("Check");
                 if (!events.size && payload.notes) events.add("Note");
                 return [...events];
             }
@@ -2381,7 +2529,13 @@
                         meta.className = "queue-meta";
                         const eventText =
                             inferredPayloadEvents(payload).join(" + ");
-                        meta.textContent = `${eventText}${payload.weight ? ` · ${payload.weight} g` : ""}`;
+                        meta.textContent = [
+                            eventText,
+                            payload.weight ? `${payload.weight} g` : "",
+                            queuedMeasurementText(payload),
+                        ]
+                            .filter(Boolean)
+                            .join(" · ");
                         main.append(name, meta);
                         if (entry.error) {
                             const error = document.createElement("div");
@@ -3203,10 +3357,12 @@
                     "height",
                     "width",
                     "condition",
+                    "soilMoisture",
                     "notes",
                     "nutrientProduct",
                     "nutrientAmount",
                     "potSize",
+                    "medium",
                     "flowerCount",
                     "flowerDetails",
                     "photoUrl",
@@ -3216,6 +3372,10 @@
                     $(id).value = "";
                 });
                 $("nutrientsUsed").value = "";
+                $("measurementUnit").value = state.measurementUnit;
+                $("measurementQuality").value = state.measurementQuality;
+                $("measurementMethod").value = state.measurementMethod;
+                renderMeasurementControls();
                 $("observedAt").value = localDateTimeValue();
                 renderWeightState();
                 persistRoundState();
@@ -3249,13 +3409,18 @@
                     weight: $("weight").value,
                     height: $("height").value,
                     width: $("width").value,
+                    measurementUnit: $("measurementUnit").value,
                     condition: $("condition").value.trim(),
+                    soilMoisture: $("soilMoisture").value,
                     notes: $("notes").value.trim(),
                     potSetup: $("potSetup").value,
                     nutrientsUsed: $("nutrientsUsed").value,
                     nutrientProduct: $("nutrientProduct").value.trim(),
                     nutrientAmount: $("nutrientAmount").value.trim(),
                     potSize: $("potSize").value.trim(),
+                    medium: $("medium").value.trim(),
+                    measurementQuality: $("measurementQuality").value,
+                    measurementMethod: $("measurementMethod").value,
                     flowerCount: $("flowerCount").value,
                     flowerDetails: $("flowerDetails").value.trim(),
                     photoUrl: $("photoUrl").value.trim(),
@@ -3466,7 +3631,10 @@
                 $("weight").value = payload.weight || "";
                 $("height").value = payload.height || "";
                 $("width").value = payload.width || "";
+                // Payloads saved by the pre-5.8 form were always centimeters.
+                $("measurementUnit").value = payload.measurementUnit || "cm";
                 $("condition").value = payload.condition || "";
+                $("soilMoisture").value = payload.soilMoisture || "";
                 $("notes").value = payload.notes || "";
                 $("potSetup").value = payload.potSetup || 1;
                 [
@@ -3474,6 +3642,7 @@
                     "nutrientProduct",
                     "nutrientAmount",
                     "potSize",
+                    "medium",
                     "flowerCount",
                     "flowerDetails",
                     "photoUrl",
@@ -3482,6 +3651,11 @@
                 ].forEach((id) => {
                     $(id).value = payload[id] || "";
                 });
+                $("measurementQuality").value =
+                    payload.measurementQuality || "Estimated";
+                $("measurementMethod").value =
+                    payload.measurementMethod || "Estimated visually";
+                renderMeasurementControls();
                 renderWeightState();
                 renderEventChips();
                 showToast(
@@ -3794,6 +3968,21 @@
                 "change",
                 persistRoundState
             );
+            $("measurementUnit").addEventListener("change", (event) => {
+                state.measurementUnit = event.target.value;
+                renderMeasurementControls();
+                persistRoundState();
+            });
+            $("measurementMethod").addEventListener("change", (event) => {
+                state.measurementMethod = event.target.value;
+                syncMeasurementQualityToMethod();
+                state.measurementQuality = $("measurementQuality").value;
+                persistRoundState();
+            });
+            $("measurementQuality").addEventListener("change", (event) => {
+                state.measurementQuality = event.target.value;
+                persistRoundState();
+            });
             $("singleModeTab").addEventListener("click", () =>
                 setEntryMode("single")
             );
