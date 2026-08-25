@@ -89,6 +89,33 @@ assert.deepEqual(appSheetEntryHeaders, [
     "History rows",
     "Saved at",
 ]);
+const appSheetBulkHeaders = Array.from(
+    vm.runInContext("APP_SHEET_BULK_HEADERS", context)
+);
+assert.equal(appSheetBulkHeaders.length, 34);
+assert.deepEqual(appSheetBulkHeaders.slice(0, 4), [
+    "Round ID",
+    "Started at",
+    "Observed at",
+    "Weight state",
+]);
+assert.deepEqual(
+    appSheetBulkHeaders.slice(4, 26),
+    Array.from(
+        { length: 22 },
+        (_, index) => `P${String(index + 1).padStart(2, "0")} weight (g)`
+    )
+);
+assert.deepEqual(appSheetBulkHeaders.slice(-8), [
+    "Notes",
+    "Created by",
+    "Created at",
+    "Status",
+    "Status message",
+    "Request count",
+    "Saved count",
+    "Saved at",
+]);
 assert.deepEqual(
     Array.from(context.appSheetEventList_("Water; Weigh, Water")),
     ["Water", "Weigh"]
@@ -226,6 +253,12 @@ assert.match(
 assert.match(source, /function getWebBatchSaveStatus\(requests\)/);
 assert.match(source, /function processAppSheetEntry\(entryId\)/);
 assert.match(source, /function processQueuedAppSheetEntries\(\)/);
+assert.match(
+    source,
+    /function processQueuedAppSheetBulkEntries_\(spreadsheet\)/
+);
+assert.match(source, /function installAppSheetBulkSheet\(\)/);
+assert.match(source, /`appsheet-bulk-\$\{roundId\}-\$\{plantId\}`/);
 assert.match(source, /function installAppSheetQueueTrigger\(\)/);
 assert.match(source, /\.timeBased\(\)\.everyMinutes\(1\)\.create\(\)/);
 assert.match(source, /function appSheetPayloadFromRow_\(row, requestId\)/);

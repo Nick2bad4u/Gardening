@@ -6,13 +6,14 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.9.0",
+    version: "5.10.0",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
     plantTrackerSheet: "Plant tracker",
     baselinesSheet: "Baselines",
     appSheetEntriesSheet: "App entries",
+    appSheetBulkSheet: "App bulk",
     headerRow: 4,
     bulkControlRow: 3,
     firstInputRow: 5,
@@ -176,6 +177,52 @@ const APP_SHEET_ENTRY_HEADERS = Object.freeze([
 const APP_SHEET_QUEUE_STATUSES = Object.freeze(["Queued", "Retry"]);
 const APP_SHEET_QUEUE_LIMIT = 50;
 
+const APP_SHEET_BULK_PLANTS = Object.freeze([
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12",
+    "P13",
+    "P14",
+    "P15",
+    "P16",
+    "P17",
+    "P18",
+    "P19",
+    "P20",
+    "P21",
+    "P22",
+]);
+
+const APP_SHEET_BULK_HEADERS = Object.freeze([
+    "Round ID",
+    "Started at",
+    "Observed at",
+    "Weight state",
+    ...APP_SHEET_BULK_PLANTS.map((plantId) => `${plantId} weight (g)`),
+    "Notes",
+    "Created by",
+    "Created at",
+    "Status",
+    "Status message",
+    "Request count",
+    "Saved count",
+    "Saved at",
+]);
+
+const APP_SHEET_BULK_WEIGHT_START_INDEX = 4;
+const APP_SHEET_BULK_NOTES_INDEX =
+    APP_SHEET_BULK_WEIGHT_START_INDEX + APP_SHEET_BULK_PLANTS.length;
+const APP_SHEET_BULK_STATUS_INDEX = APP_SHEET_BULK_NOTES_INDEX + 3;
+
 const NUTRIENT_OPTIONS = Object.freeze(["Yes", "No"]);
 const MEASUREMENT_UNIT_OPTIONS = Object.freeze(["in", "cm"]);
 const MEASUREMENT_QUALITY_OPTIONS = Object.freeze(["Measured", "Estimated"]);
@@ -218,6 +265,7 @@ function onOpen() {
         .createMenu("Garden logger")
         .addItem("Open mobile entry", "openMobileEntry")
         .addItem("Verify logger", "installGardenLogger")
+        .addItem("Verify AppSheet bulk intake", "installAppSheetBulkSheet")
         .addSeparator()
         .addItem("Open Quick log", "openQuickLog")
         .addItem("Open History", "openHistory")
@@ -620,7 +668,10 @@ function processQueuedAppSheetEntries() {
 
     const rowCount = Math.max(0, entries.getLastRow() - 1);
     if (!rowCount) {
-        return appSheetQueueSummary_(0, [], 0, startedAt);
+        return finishAppSheetQueueRun_(
+            spreadsheet,
+            appSheetQueueSummary_(0, [], 0, startedAt)
+        );
     }
 
     const rows = entries
@@ -723,20 +774,7 @@ function processQueuedAppSheetEntries() {
         deferredCount,
         startedAt
     );
-    console.info(
-        JSON.stringify({
-            loggerVersion: GARDEN_LOGGER.version,
-            operation: "processQueuedAppSheetEntries",
-            queuedCount: summary.queuedCount,
-            processedCount: summary.processedCount,
-            savedCount: summary.savedCount,
-            needsCorrectionCount: summary.needsCorrectionCount,
-            retryCount: summary.retryCount,
-            deferredCount: summary.deferredCount,
-            elapsedMs: summary.elapsedMs,
-        })
-    );
-    return summary;
+    return finishAppSheetQueueRun_(spreadsheet, summary);
 }
 
 function appSheetQueueSummary_(
@@ -764,6 +802,399 @@ function appSheetQueueSummary_(
         deferredCount,
         elapsedMs: Date.now() - startedAt,
     };
+}
+
+function finishAppSheetQueueRun_(spreadsheet, entrySummary) {
+    const bulkSummary = processQueuedAppSheetBulkEntries_(spreadsheet);
+    const summary = {
+        ...entrySummary,
+        ok: entrySummary.ok && bulkSummary.ok,
+        bulk: bulkSummary,
+    };
+    console.info(
+        JSON.stringify({
+            loggerVersion: GARDEN_LOGGER.version,
+            operation: "processQueuedAppSheetEntries",
+            queuedCount: summary.queuedCount,
+            processedCount: summary.processedCount,
+            savedCount: summary.savedCount,
+            needsCorrectionCount: summary.needsCorrectionCount,
+            retryCount: summary.retryCount,
+            deferredCount: summary.deferredCount,
+            bulkQueuedCount: bulkSummary.queuedCount,
+            bulkProcessedCount: bulkSummary.processedCount,
+            bulkSavedRoundCount: bulkSummary.savedRoundCount,
+            bulkRequestedCount: bulkSummary.requestedCount,
+            bulkSavedRequestCount: bulkSummary.savedRequestCount,
+            bulkNeedsCorrectionCount: bulkSummary.needsCorrectionCount,
+            bulkRetryCount: bulkSummary.retryCount,
+            bulkDeferredCount: bulkSummary.deferredCount,
+            elapsedMs: summary.elapsedMs + bulkSummary.elapsedMs,
+        })
+    );
+    return summary;
+}
+
+/**
+ * Expands each queued AppSheet bulk-weight row into stable per-plant requests.
+ * A whole round is kept together, so a normal 22-plant round reaches the
+ * canonical writer in one saveWebObservationBatch() call.
+ */
+function processQueuedAppSheetBulkEntries_(spreadsheet) {
+    const startedAt = Date.now();
+    const bulkSheet = spreadsheet.getSheetByName(
+        GARDEN_LOGGER.appSheetBulkSheet
+    );
+    if (!bulkSheet) {
+        return appSheetBulkQueueSummary_(false, 0, [], 0, startedAt);
+    }
+    assertHeaders_(bulkSheet, APP_SHEET_BULK_HEADERS, 1);
+
+    const rowCount = Math.max(0, bulkSheet.getLastRow() - 1);
+    if (!rowCount) {
+        return appSheetBulkQueueSummary_(true, 0, [], 0, startedAt);
+    }
+
+    const rows = bulkSheet
+        .getRange(2, 1, rowCount, APP_SHEET_BULK_HEADERS.length)
+        .getValues();
+    const idCounts = new Map();
+    rows.forEach((row) => {
+        const roundId = cleanText_(row[0]);
+        if (roundId) {
+            idCounts.set(roundId, (idCounts.get(roundId) || 0) + 1);
+        }
+    });
+
+    const queued = rows
+        .map((row, index) => ({ row, rowNumber: index + 2 }))
+        .filter(({ row }) =>
+            APP_SHEET_QUEUE_STATUSES.includes(
+                cleanText_(row[APP_SHEET_BULK_STATUS_INDEX])
+            )
+        );
+    const receipts = [];
+    const pendingRounds = [];
+    let selectedRequestCount = 0;
+    let deferredCount = 0;
+
+    queued.forEach(({ row, rowNumber }) => {
+        const roundId = cleanText_(row[0]);
+        try {
+            if (!roundId) throw new Error("AppSheet Round ID is required.");
+            if (idCounts.get(roundId) !== 1) {
+                throw new Error(`AppSheet Round ID ${roundId} is duplicated.`);
+            }
+            const requests = appSheetBulkPayloadsFromRow_(row, roundId);
+            if (!requests.length) {
+                throw new Error(
+                    "Enter at least one plant weight before sending this round."
+                );
+            }
+            if (
+                selectedRequestCount > 0 &&
+                selectedRequestCount + requests.length > APP_SHEET_QUEUE_LIMIT
+            ) {
+                deferredCount += 1;
+                return;
+            }
+            selectedRequestCount += requests.length;
+            pendingRounds.push({ roundId, rowNumber, requests });
+        } catch (error) {
+            receipts.push({
+                rowNumber,
+                status: "Needs correction",
+                message: error instanceof Error ? error.message : String(error),
+                requestCount: 0,
+                savedCount: 0,
+                savedAt: "",
+            });
+        }
+    });
+
+    const pendingRequests = pendingRounds.flatMap(({ requests }) => requests);
+    if (pendingRequests.length) {
+        try {
+            const batch = saveWebObservationBatch(
+                pendingRequests.map(({ payload }) => payload)
+            );
+            let resultIndex = 0;
+            pendingRounds.forEach((round) => {
+                const results = round.requests.map((request) => ({
+                    plantId: request.plantId,
+                    result: batch.results[resultIndex++],
+                }));
+                const savedCount = results.filter(
+                    ({ result }) => result && result.ok
+                ).length;
+                const failures = results.filter(
+                    ({ result }) => !result || !result.ok
+                );
+                const hasDeterministicFailure = failures.some(
+                    ({ result }) => result && !result.retryable
+                );
+                const status = failures.length
+                    ? hasDeterministicFailure
+                        ? "Needs correction"
+                        : "Retry"
+                    : "Saved";
+                receipts.push({
+                    rowNumber: round.rowNumber,
+                    status,
+                    message: appSheetBulkResultMessage_(
+                        round.requests.length,
+                        savedCount,
+                        failures
+                    ),
+                    requestCount: round.requests.length,
+                    savedCount,
+                    savedAt: status === "Saved" ? new Date() : "",
+                });
+            });
+        } catch (error) {
+            const message =
+                error instanceof Error ? error.message : String(error);
+            pendingRounds.forEach((round) => {
+                receipts.push({
+                    rowNumber: round.rowNumber,
+                    status: "Retry",
+                    message,
+                    requestCount: round.requests.length,
+                    savedCount: 0,
+                    savedAt: "",
+                });
+            });
+        }
+    }
+
+    receipts.forEach((receipt) =>
+        writeAppSheetBulkReceipt_(bulkSheet, receipt.rowNumber, receipt)
+    );
+    SpreadsheetApp.flush();
+
+    const summary = appSheetBulkQueueSummary_(
+        true,
+        queued.length,
+        receipts,
+        deferredCount,
+        startedAt
+    );
+    console.info(
+        JSON.stringify({
+            loggerVersion: GARDEN_LOGGER.version,
+            operation: "processQueuedAppSheetBulkEntries",
+            queuedCount: summary.queuedCount,
+            processedCount: summary.processedCount,
+            savedRoundCount: summary.savedRoundCount,
+            requestedCount: summary.requestedCount,
+            savedRequestCount: summary.savedRequestCount,
+            needsCorrectionCount: summary.needsCorrectionCount,
+            retryCount: summary.retryCount,
+            deferredCount: summary.deferredCount,
+            elapsedMs: summary.elapsedMs,
+        })
+    );
+    return summary;
+}
+
+function appSheetBulkPayloadsFromRow_(row, roundId) {
+    const observedAt = row[2] || row[1] || "";
+    const weightState = cleanText_(row[3]) || "Routine";
+    const notes = cleanText_(row[APP_SHEET_BULK_NOTES_INDEX]);
+    return APP_SHEET_BULK_PLANTS.flatMap((plantId, index) => {
+        const weight = row[APP_SHEET_BULK_WEIGHT_START_INDEX + index];
+        if (!cleanText_(weight)) return [];
+        const requestId = normalizeRequestId_(
+            `appsheet-bulk-${roundId}-${plantId}`,
+            true
+        );
+        return [
+            {
+                plantId,
+                payload: {
+                    requestId,
+                    observedAt,
+                    plantId,
+                    events: ["Weigh"],
+                    weightState,
+                    weight,
+                    notes,
+                    entrySource: "AppSheet",
+                },
+            },
+        ];
+    });
+}
+
+function appSheetBulkResultMessage_(requestCount, savedCount, failures) {
+    if (!failures.length) {
+        return `${savedCount} weight${savedCount === 1 ? "" : "s"} saved.`;
+    }
+    const details = failures
+        .map(({ plantId, result }) => {
+            const message =
+                (result && result.message) ||
+                "The server returned no result for this plant.";
+            return `${plantId}: ${message}`;
+        })
+        .join(" ");
+    return `${savedCount} of ${requestCount} saved. ${details}`;
+}
+
+function writeAppSheetBulkReceipt_(sheet, rowNumber, receipt) {
+    sheet
+        .getRange(rowNumber, APP_SHEET_BULK_STATUS_INDEX + 1, 1, 5)
+        .setValues([
+            [
+                receipt.status,
+                safeSheetText_(receipt.message),
+                receipt.requestCount,
+                receipt.savedCount,
+                receipt.savedAt,
+            ],
+        ]);
+    sheet
+        .getRange(rowNumber, APP_SHEET_BULK_STATUS_INDEX + 5)
+        .setNumberFormat("M/d/yyyy h:mm:ss am/pm");
+}
+
+function appSheetBulkQueueSummary_(
+    installed,
+    queuedCount,
+    receipts,
+    deferredCount,
+    startedAt
+) {
+    const savedRoundCount = receipts.filter(
+        ({ status }) => status === "Saved"
+    ).length;
+    const needsCorrectionCount = receipts.filter(
+        ({ status }) => status === "Needs correction"
+    ).length;
+    const retryCount = receipts.filter(
+        ({ status }) => status === "Retry"
+    ).length;
+    return {
+        ok: needsCorrectionCount === 0 && retryCount === 0,
+        installed,
+        queuedCount,
+        processedCount: receipts.length,
+        savedRoundCount,
+        requestedCount: receipts.reduce(
+            (sum, receipt) => sum + (Number(receipt.requestCount) || 0),
+            0
+        ),
+        savedRequestCount: receipts.reduce(
+            (sum, receipt) => sum + (Number(receipt.savedCount) || 0),
+            0
+        ),
+        needsCorrectionCount,
+        retryCount,
+        deferredCount,
+        elapsedMs: Date.now() - startedAt,
+    };
+}
+
+/**
+ * Creates or verifies the flat AppSheet bulk-weight intake sheet. This is a
+ * staging surface only; the trigger moves queued rounds through the canonical
+ * History writer.
+ */
+function installAppSheetBulkSheet() {
+    const spreadsheet = getGardenSpreadsheet_();
+    let sheet = spreadsheet.getSheetByName(GARDEN_LOGGER.appSheetBulkSheet);
+    const created = !sheet;
+    if (!sheet) {
+        const entries = requireSheet_(
+            spreadsheet,
+            GARDEN_LOGGER.appSheetEntriesSheet
+        );
+        sheet = spreadsheet.insertSheet(
+            GARDEN_LOGGER.appSheetBulkSheet,
+            entries.getIndex()
+        );
+    }
+
+    if (!sheet.getLastRow()) {
+        sheet
+            .getRange(1, 1, 1, APP_SHEET_BULK_HEADERS.length)
+            .setValues([[...APP_SHEET_BULK_HEADERS]]);
+    }
+    assertHeaders_(sheet, APP_SHEET_BULK_HEADERS, 1);
+
+    const dataRowCount = Math.max(1, sheet.getMaxRows() - 1);
+    const weightStateValidation = SpreadsheetApp.newDataValidation()
+        .requireValueInList(WEIGHT_STATE_OPTIONS, true)
+        .setAllowInvalid(false)
+        .build();
+    const weightValidation = SpreadsheetApp.newDataValidation()
+        .requireNumberGreaterThan(0)
+        .setAllowInvalid(false)
+        .build();
+    const statusValidation = SpreadsheetApp.newDataValidation()
+        .requireValueInList(
+            ["Queued", "Retry", "Saved", "Needs correction"],
+            true
+        )
+        .setAllowInvalid(false)
+        .build();
+
+    sheet
+        .getRange(2, 4, dataRowCount, 1)
+        .setDataValidation(weightStateValidation);
+    sheet
+        .getRange(
+            2,
+            APP_SHEET_BULK_WEIGHT_START_INDEX + 1,
+            dataRowCount,
+            APP_SHEET_BULK_PLANTS.length
+        )
+        .setDataValidation(weightValidation)
+        .setNumberFormat("0.0");
+    sheet
+        .getRange(2, APP_SHEET_BULK_STATUS_INDEX + 1, dataRowCount, 1)
+        .setDataValidation(statusValidation);
+
+    sheet
+        .getRange(1, 1, 1, APP_SHEET_BULK_HEADERS.length)
+        .setBackground("#24533f")
+        .setFontColor("#ffffff")
+        .setFontWeight("bold");
+    sheet
+        .getRange(2, 2, dataRowCount, 2)
+        .setNumberFormat("M/d/yyyy h:mm:ss am/pm");
+    sheet
+        .getRange(2, APP_SHEET_BULK_NOTES_INDEX + 3, dataRowCount, 1)
+        .setNumberFormat("M/d/yyyy h:mm:ss am/pm");
+    sheet
+        .getRange(2, APP_SHEET_BULK_STATUS_INDEX + 5, dataRowCount, 1)
+        .setNumberFormat("M/d/yyyy h:mm:ss am/pm");
+    sheet.setFrozenRows(1);
+    sheet.setHiddenGridlines(true);
+    sheet.setColumnWidth(1, 130);
+    sheet.setColumnWidths(2, 3, 165);
+    sheet.setColumnWidths(
+        APP_SHEET_BULK_WEIGHT_START_INDEX + 1,
+        APP_SHEET_BULK_PLANTS.length,
+        105
+    );
+    sheet.setColumnWidth(APP_SHEET_BULK_NOTES_INDEX + 1, 280);
+    sheet.hideColumns(APP_SHEET_BULK_NOTES_INDEX + 2, 7);
+
+    const result = {
+        created,
+        sheet: GARDEN_LOGGER.appSheetBulkSheet,
+        columnCount: APP_SHEET_BULK_HEADERS.length,
+        plantCount: APP_SHEET_BULK_PLANTS.length,
+    };
+    console.info(
+        JSON.stringify({
+            loggerVersion: GARDEN_LOGGER.version,
+            operation: "installAppSheetBulkSheet",
+            ...result,
+        })
+    );
+    return result;
 }
 
 function installAppSheetQueueTrigger() {

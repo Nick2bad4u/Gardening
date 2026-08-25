@@ -92,6 +92,27 @@ const appSheetEntryHeaders = [
     "Saved at",
 ];
 
+const appSheetBulkPlants = Array.from(
+    { length: 22 },
+    (_, index) => `P${String(index + 1).padStart(2, "0")}`
+);
+
+const appSheetBulkHeaders = [
+    "Round ID",
+    "Started at",
+    "Observed at",
+    "Weight state",
+    ...appSheetBulkPlants.map((plantId) => `${plantId} weight (g)`),
+    "Notes",
+    "Created by",
+    "Created at",
+    "Status",
+    "Status message",
+    "Request count",
+    "Saved count",
+    "Saved at",
+];
+
 function createDataValidationBuilder() {
     const builder = {
         requireValueInList: () => builder,
@@ -352,6 +373,7 @@ function createDataSheet(name, rows, formulas = []) {
             parent = value;
         },
         getParent: () => parent,
+        getIndex: () => 1,
         getName: () => name,
         getLastRow: () => rows.length,
         getLastColumn: () =>
@@ -362,6 +384,11 @@ function createDataSheet(name, rows, formulas = []) {
             ),
         getMaxRows: () => Math.max(rows.length, 100),
         getProtections: () => protections,
+        hideColumns: () => sheet,
+        setColumnWidth: () => sheet,
+        setColumnWidths: () => sheet,
+        setFrozenRows: () => sheet,
+        setHiddenGridlines: () => sheet,
         getRange(row, column, rowCount = 1, columnCount = 1) {
             const select = (source) =>
                 Array.from({ length: rowCount }, (_, rowOffset) =>
@@ -404,6 +431,8 @@ function createDataSheet(name, rows, formulas = []) {
                     return range;
                 },
                 setBackground: () => range,
+                setFontColor: () => range,
+                setFontWeight: () => range,
                 setNote: () => range,
                 setNumberFormat: () => range,
                 setDataValidation: () => range,
@@ -497,10 +526,17 @@ function createLoggerWorkbook(plantIds = ["P01"], historyOptions = {}) {
             "App entries",
             createDataSheet("App entries", [[...appSheetEntryHeaders]]),
         ],
+        ["App bulk", createDataSheet("App bulk", [[...appSheetBulkHeaders]])],
     ]);
     const spreadsheet = {
         getSheetByName: (name) => sheets.get(name) ?? null,
         getSpreadsheetTimeZone: () => "America/New_York",
+        insertSheet(name) {
+            const sheet = createDataSheet(name, []);
+            sheet.__setParent(spreadsheet);
+            sheets.set(name, sheet);
+            return sheet;
+        },
     };
     sheets.forEach((sheet) => {
         if (sheet.__setParent) sheet.__setParent(spreadsheet);
@@ -763,7 +799,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.9.0");
+        expect(bootstrap.version).toBe("5.10.0");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -1702,6 +1738,394 @@ describe("Garden logger server logic", () => {
         });
     });
 
+    it("submits a 22-plant AppSheet weight round in one canonical batch", () => {
+        const workbook = createLoggerWorkbook(appSheetBulkPlants);
+        const round = Array(appSheetBulkHeaders.length).fill("");
+        round[0] = "BULK2201";
+        round[1] = new Date("2026-08-25T08:00:00-04:00");
+        round[2] = new Date("2026-08-25T08:05:00-04:00");
+        round[3] = "Routine";
+        appSheetBulkPlants.forEach((_plantId, index) => {
+            round[4 + index] = 300 + index;
+        });
+        round[26] = "Collection weight round.";
+        round[29] = "Queued";
+        workbook.sheets.get("App bulk").__rows.push(round);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+        const batches = [];
+        context.saveWebObservationBatch = (payloads) => {
+            batches.push(payloads);
+            return {
+                results: payloads.map(() => ({
+                    ok: true,
+                    retryable: false,
+                    historyRows: 1,
+                    message: "Weight saved.",
+                })),
+            };
+        };
+
+        const result = context.processQueuedAppSheetEntries();
+
+        expect(batches).toHaveLength(1);
+        expect(batches[0]).toHaveLength(22);
+        expect(batches[0].map(({ plantId }) => plantId)).toEqual(
+            appSheetBulkPlants
+        );
+        expect(batches[0].map(({ requestId }) => requestId)).toEqual(
+            appSheetBulkPlants.map(
+                (plantId) => `appsheet-bulk-BULK2201-${plantId}`
+            )
+        );
+        expect(batches[0][0]).toMatchObject({
+            events: ["Weigh"],
+            weightState: "Routine",
+            weight: 300,
+            notes: "Collection weight round.",
+            entrySource: "AppSheet",
+        });
+        expect(round[29]).toBe("Saved");
+        expect(round[30]).toBe("22 weights saved.");
+        expect(round[31]).toBe(22);
+        expect(round[32]).toBe(22);
+        expect(round[33]).toBeInstanceOf(Date);
+        expect(result).toMatchObject({
+            ok: true,
+            queuedCount: 0,
+            bulk: {
+                installed: true,
+                queuedCount: 1,
+                processedCount: 1,
+                savedRoundCount: 1,
+                requestedCount: 22,
+                savedRequestCount: 22,
+                needsCorrectionCount: 0,
+                retryCount: 0,
+                deferredCount: 0,
+            },
+        });
+    });
+
+    it("keeps a partially valid bulk round idempotent and editable", () => {
+        const workbook = createLoggerWorkbook(["P01", "P02"]);
+        const round = Array(appSheetBulkHeaders.length).fill("");
+        round[0] = "BULKFIX1";
+        round[3] = "Routine";
+        round[4] = 0;
+        round[5] = 420;
+        round[29] = "Queued";
+        workbook.sheets.get("App bulk").__rows.push(round);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+        const requestIds = [];
+        context.saveWebObservationBatch = (payloads) => {
+            requestIds.push(payloads.map(({ requestId }) => requestId));
+            return {
+                results: [
+                    {
+                        ok: false,
+                        retryable: false,
+                        message: "Weight must be greater than zero.",
+                    },
+                    {
+                        ok: true,
+                        retryable: false,
+                        historyRows: 1,
+                        message: "Weight saved.",
+                    },
+                ],
+            };
+        };
+
+        const first = context.processQueuedAppSheetEntries();
+
+        expect(round[29]).toBe("Needs correction");
+        expect(round[30]).toMatch(/1 of 2 saved.*P01.*greater than zero/i);
+        expect(round[31]).toBe(2);
+        expect(round[32]).toBe(1);
+        expect(first.bulk).toMatchObject({
+            savedRequestCount: 1,
+            needsCorrectionCount: 1,
+        });
+
+        round[4] = 410;
+        round[29] = "Retry";
+        context.saveWebObservationBatch = (payloads) => {
+            requestIds.push(payloads.map(({ requestId }) => requestId));
+            return {
+                results: payloads.map((_payload, index) => ({
+                    ok: true,
+                    duplicate: index === 1,
+                    retryable: false,
+                    historyRows: 1,
+                    message: "Weight saved.",
+                })),
+            };
+        };
+
+        const retry = context.processQueuedAppSheetEntries();
+
+        expect(requestIds).toEqual([
+            ["appsheet-bulk-BULKFIX1-P01", "appsheet-bulk-BULKFIX1-P02"],
+            ["appsheet-bulk-BULKFIX1-P01", "appsheet-bulk-BULKFIX1-P02"],
+        ]);
+        expect(round[29]).toBe("Saved");
+        expect(round[30]).toBe("2 weights saved.");
+        expect(round[32]).toBe(2);
+        expect(retry.bulk).toMatchObject({
+            savedRoundCount: 1,
+            savedRequestCount: 2,
+            needsCorrectionCount: 0,
+        });
+    });
+
+    it("isolates invalid bulk rounds and defers a whole round beyond the batch cap", () => {
+        const workbook = createLoggerWorkbook(appSheetBulkPlants);
+        const bulkSheet = workbook.sheets.get("App bulk");
+        const makeRound = (roundId, weightCount = 22) => {
+            const row = Array(appSheetBulkHeaders.length).fill("");
+            row[0] = roundId;
+            row[3] = "Routine";
+            for (let index = 0; index < weightCount; index += 1) {
+                row[4 + index] = 300 + index;
+            }
+            row[29] = "Queued";
+            bulkSheet.__rows.push(row);
+            return row;
+        };
+        const missingId = makeRound("", 1);
+        const duplicateOne = makeRound("DUPLICATE", 1);
+        const duplicateTwo = makeRound("DUPLICATE", 1);
+        const emptyRound = makeRound("EMPTY", 0);
+        const firstRound = makeRound("ROUND-A");
+        const secondRound = makeRound("ROUND-B");
+        const deferredRound = makeRound("ROUND-C");
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+        const batches = [];
+        context.saveWebObservationBatch = (payloads) => {
+            batches.push(payloads);
+            return {
+                results: payloads.map(() => ({ ok: true, retryable: false })),
+            };
+        };
+
+        const result = context.processQueuedAppSheetEntries();
+
+        expect(batches).toHaveLength(1);
+        expect(batches[0]).toHaveLength(44);
+        expect(missingId[29]).toBe("Needs correction");
+        expect(missingId[30]).toMatch(/Round ID is required/i);
+        expect(duplicateOne[29]).toBe("Needs correction");
+        expect(duplicateTwo[30]).toMatch(/duplicated/i);
+        expect(emptyRound[30]).toMatch(/at least one plant weight/i);
+        expect(firstRound[29]).toBe("Saved");
+        expect(secondRound[29]).toBe("Saved");
+        expect(deferredRound[29]).toBe("Queued");
+        expect(result.bulk).toMatchObject({
+            queuedCount: 7,
+            processedCount: 6,
+            savedRoundCount: 2,
+            requestedCount: 44,
+            savedRequestCount: 44,
+            needsCorrectionCount: 4,
+            deferredCount: 1,
+        });
+    });
+
+    it("handles an unavailable or entirely invalid AppSheet bulk intake", () => {
+        const missingWorkbook = createLoggerWorkbook(["P01"]);
+        missingWorkbook.sheets.delete("App bulk");
+        const missingContext = loadAppsScript(missingWorkbook.history, {
+            spreadsheet: missingWorkbook.spreadsheet,
+            globals: missingWorkbook.globals,
+        });
+
+        expect(
+            missingContext.processQueuedAppSheetEntries().bulk
+        ).toMatchObject({
+            installed: false,
+            queuedCount: 0,
+            processedCount: 0,
+        });
+
+        const invalidWorkbook = createLoggerWorkbook(["P01"]);
+        const invalidRound = Array(appSheetBulkHeaders.length).fill("");
+        invalidRound[4] = 350;
+        invalidRound[29] = "Queued";
+        invalidWorkbook.sheets.get("App bulk").__rows.push(invalidRound);
+        const invalidContext = loadAppsScript(invalidWorkbook.history, {
+            spreadsheet: invalidWorkbook.spreadsheet,
+            globals: invalidWorkbook.globals,
+        });
+        invalidContext.saveWebObservationBatch = () => {
+            throw new Error("No batch should be sent.");
+        };
+
+        const invalidResult = invalidContext.processQueuedAppSheetEntries();
+
+        expect(invalidRound[29]).toBe("Needs correction");
+        expect(invalidResult.bulk).toMatchObject({
+            processedCount: 1,
+            requestedCount: 0,
+            savedRequestCount: 0,
+        });
+
+        const malformedWorkbook = createLoggerWorkbook(["P01"]);
+        const malformedRound = Array(appSheetBulkHeaders.length).fill("");
+        malformedRound[0] = "MALFORMED";
+        malformedRound[4] = 350;
+        malformedRound[29] = "Queued";
+        malformedWorkbook.sheets.get("App bulk").__rows.push(malformedRound);
+        const malformedContext = loadAppsScript(malformedWorkbook.history, {
+            spreadsheet: malformedWorkbook.spreadsheet,
+            globals: malformedWorkbook.globals,
+        });
+        malformedContext.appSheetBulkPayloadsFromRow_ = () => {
+            throw "Malformed bulk row.";
+        };
+
+        malformedContext.processQueuedAppSheetEntries();
+
+        expect(malformedRound[29]).toBe("Needs correction");
+        expect(malformedRound[30]).toBe("Malformed bulk row.");
+    });
+
+    it("defaults single-weight bulk rows and reports incomplete transient results", () => {
+        const singleWorkbook = createLoggerWorkbook(["P01"]);
+        const singleRound = Array(appSheetBulkHeaders.length).fill("");
+        const startedAt = new Date("2026-08-25T08:00:00-04:00");
+        singleRound[0] = "SINGLE";
+        singleRound[1] = startedAt;
+        singleRound[4] = 350;
+        singleRound[29] = "Queued";
+        singleWorkbook.sheets.get("App bulk").__rows.push(singleRound);
+        const singleContext = loadAppsScript(singleWorkbook.history, {
+            spreadsheet: singleWorkbook.spreadsheet,
+            globals: singleWorkbook.globals,
+        });
+        let singlePayload;
+        singleContext.saveWebObservationBatch = (payloads) => {
+            [singlePayload] = payloads;
+            return { results: [{ ok: true, retryable: false }] };
+        };
+
+        singleContext.processQueuedAppSheetEntries();
+
+        expect(singlePayload).toMatchObject({
+            observedAt: startedAt,
+            weightState: "Routine",
+            weight: 350,
+        });
+        expect(singleRound[30]).toBe("1 weight saved.");
+
+        const retryWorkbook = createLoggerWorkbook([
+            "P01",
+            "P02",
+            "P03",
+        ]);
+        const retryRound = Array(appSheetBulkHeaders.length).fill("");
+        retryRound[0] = "INCOMPLETE";
+        retryRound[3] = "Wet";
+        retryRound[4] = 350;
+        retryRound[5] = 360;
+        retryRound[6] = 370;
+        retryRound[29] = "Queued";
+        retryWorkbook.sheets.get("App bulk").__rows.push(retryRound);
+        const retryContext = loadAppsScript(retryWorkbook.history, {
+            spreadsheet: retryWorkbook.spreadsheet,
+            globals: retryWorkbook.globals,
+        });
+        retryContext.saveWebObservationBatch = () => ({
+            results: [
+                { ok: true, retryable: false },
+                undefined,
+                { ok: false, retryable: true, message: "Try again." },
+            ],
+        });
+
+        const retryResult = retryContext.processQueuedAppSheetEntries();
+
+        expect(retryRound[29]).toBe("Retry");
+        expect(retryRound[30]).toMatch(
+            /1 of 3 saved.*P02.*no result.*P03.*Try again/i
+        );
+        expect(retryResult.bulk).toMatchObject({
+            savedRequestCount: 1,
+            retryCount: 1,
+        });
+    });
+
+    it("keeps bulk rounds retryable for Error and non-Error batch failures", () => {
+        [true, false].forEach((useError) => {
+            const workbook = createLoggerWorkbook(["P01"]);
+            const round = Array(appSheetBulkHeaders.length).fill("");
+            round[0] = useError ? "ERROR" : "STRING";
+            round[3] = "Routine";
+            round[4] = 350;
+            round[29] = "Queued";
+            workbook.sheets.get("App bulk").__rows.push(round);
+            const context = loadAppsScript(workbook.history, {
+                spreadsheet: workbook.spreadsheet,
+                globals: workbook.globals,
+            });
+            const failure = useError
+                ? vm.runInContext('new Error("Server offline.")', context)
+                : "Server offline.";
+            context.saveWebObservationBatch = () => {
+                throw failure;
+            };
+
+            const result = context.processQueuedAppSheetEntries();
+
+            expect(round[29]).toBe("Retry");
+            expect(round[30]).toBe("Server offline.");
+            expect(result.bulk.retryCount).toBe(1);
+        });
+    });
+
+    it("installs, initializes, and verifies the AppSheet bulk staging sheet", () => {
+        const existingWorkbook = createLoggerWorkbook(["P01"]);
+        const existingContext = loadAppsScript(existingWorkbook.history, {
+            spreadsheet: existingWorkbook.spreadsheet,
+            globals: existingWorkbook.globals,
+        });
+        expect(existingContext.installAppSheetBulkSheet()).toMatchObject({
+            created: false,
+            columnCount: 34,
+            plantCount: 22,
+        });
+
+        const emptyWorkbook = createLoggerWorkbook(["P01"]);
+        const emptySheet = createDataSheet("App bulk", []);
+        emptySheet.__setParent(emptyWorkbook.spreadsheet);
+        emptyWorkbook.sheets.set("App bulk", emptySheet);
+        const emptyContext = loadAppsScript(emptyWorkbook.history, {
+            spreadsheet: emptyWorkbook.spreadsheet,
+            globals: emptyWorkbook.globals,
+        });
+        expect(emptyContext.installAppSheetBulkSheet().created).toBe(false);
+        expect(emptySheet.__rows[0]).toEqual(appSheetBulkHeaders);
+
+        const missingWorkbook = createLoggerWorkbook(["P01"]);
+        missingWorkbook.sheets.delete("App bulk");
+        const missingContext = loadAppsScript(missingWorkbook.history, {
+            spreadsheet: missingWorkbook.spreadsheet,
+            globals: missingWorkbook.globals,
+        });
+        expect(missingContext.installAppSheetBulkSheet().created).toBe(true);
+        expect(missingWorkbook.sheets.get("App bulk").__rows[0]).toEqual(
+            appSheetBulkHeaders
+        );
+    });
+
     it("isolates missing and duplicated AppSheet queue identities", () => {
         const workbook = createLoggerWorkbook(["P01"]);
         const context = loadAppsScript(workbook.history, {
@@ -2240,7 +2664,7 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.9.0");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.10.0");
         expect(calls.toast[1]).toBe("Garden logger verified");
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);

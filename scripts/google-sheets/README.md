@@ -147,10 +147,11 @@ writing.
 ## AppSheet companion intake
 
 The AppSheet companion is a second phone-friendly entry surface, not a second
-database. Its writable table is the workbook's flat `App entries` sheet. The
-app must keep `Plant tracker`, `Baselines`, and `History` read-only; saved care
-records still enter the canonical ledger only through
-`processAppSheetEntry(entryId)` and `saveWebObservationBatch()` in
+database. Its writable tables are the workbook's flat `App entries` and
+`App bulk` staging sheets. The app must keep `Plant tracker`, `Baselines`, and
+`History` read-only; saved care records still enter the canonical ledger only
+through `processAppSheetEntry(entryId)`, `processQueuedAppSheetEntries()`, and
+`saveWebObservationBatch()` in
 [`plant-tracker.gs`](./plant-tracker.gs). Never configure an AppSheet form,
 action, or automation to add or edit `History` directly.
 
@@ -178,6 +179,18 @@ The AppSheet form contract is:
 - `Created by`, `Created at`, request ID, History row count, and the save receipt
   are system fields. Users may inspect the status but must not edit the receipt.
 
+The `App bulk` contract is deliberately narrower and faster: one row is one
+collection-wide weighing round. It stores `Round ID`, observation time, one
+shared weight state, optional shared notes, and P01-P22 gram fields. Empty
+plant fields are skipped. `processQueuedAppSheetEntries()` expands every
+nonblank weight into a deterministic `appsheet-bulk-{Round ID}-{Plant ID}`
+request and sends the complete round through one `saveWebObservationBatch()`
+call. A normal 22-plant round therefore reaches History as one canonical batch,
+while partial validation failures keep the round editable and retries recognize
+weights that were already saved. Run `installAppSheetBulkSheet()` once before
+adding the table to AppSheet; rerunning it only verifies the headers,
+validation, formatting, and hidden receipt columns.
+
 Keep the `Log care` form's column order explicit so receipt fields cannot drift
 back into the entry surface when the source schema changes. The form ends with
 `Treatment / action`, omits `Status`, `Status message`, and `Saved at`, and keeps
@@ -198,7 +211,8 @@ Instead, deploy the bridge with the existing bound logger and run
 `installAppSheetQueueTrigger()` once from its Apps Script editor. The
 idempotent installer keeps one time-driven trigger for
 `processQueuedAppSheetEntries()`. Every minute, that function processes up to
-50 `Queued` or `Retry` rows in one canonical batch through
+50 ordinary `Queued` or `Retry` observations and one or more complete bulk
+rounds totaling no more than 50 observations per canonical batch through
 `saveWebObservationBatch()`. This keeps AppSheet and the mobile logger inside
 the same project lock. AppSheet requires no access to an Apps Script project,
 and the companion app should not contain a second save bot. The status written
