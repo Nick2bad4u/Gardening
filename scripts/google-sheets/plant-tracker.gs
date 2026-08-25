@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.8.1",
+    version: "5.8.2",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -527,6 +527,7 @@ function saveWebObservationBatch(payloads) {
         throw new Error("Send at most 50 queued observations at a time.");
     }
 
+    const startedAt = Date.now();
     const results = Array(payloads.length).fill(null);
     const requestIds = payloads.map((payload, index) => {
         try {
@@ -580,6 +581,7 @@ function saveWebObservationBatch(payloads) {
         return batchObservationResult_(results);
     }
 
+    const preparedAt = Date.now();
     const lock = LockService.getScriptLock();
     if (!lock.tryLock(GARDEN_LOGGER.lockTimeoutMs)) {
         throw new Error(
@@ -587,9 +589,18 @@ function saveWebObservationBatch(payloads) {
         );
     }
 
-    const startedAt = Date.now();
+    const lockedAt = Date.now();
+    let writeTiming = {
+        validationCleanupMs: 0,
+        validationRowsCleared: 0,
+        historyWriteMs: 0,
+    };
     try {
-        appendPreparedWebObservationBatch_(spreadsheet, prepared, results);
+        writeTiming = appendPreparedWebObservationBatch_(
+            spreadsheet,
+            prepared,
+            results
+        );
         prepared
             .filter(
                 (item) =>
@@ -605,9 +616,11 @@ function saveWebObservationBatch(payloads) {
                 )
             );
     } finally {
+        const flushStartedAt = Date.now();
         try {
             flushAndReleaseLock_(lock);
         } finally {
+            const completedAt = Date.now();
             const completedResults = results.filter(Boolean);
             console.info(
                 JSON.stringify({
@@ -628,7 +641,13 @@ function saveWebObservationBatch(payloads) {
                     failureCount:
                         payloads.length -
                         completedResults.filter((result) => result.ok).length,
-                    elapsedMs: Date.now() - startedAt,
+                    prepareMs: preparedAt - startedAt,
+                    lockWaitMs: lockedAt - preparedAt,
+                    validationCleanupMs: writeTiming.validationCleanupMs,
+                    validationRowsCleared: writeTiming.validationRowsCleared,
+                    historyWriteMs: writeTiming.historyWriteMs,
+                    flushMs: completedAt - flushStartedAt,
+                    elapsedMs: completedAt - startedAt,
                 })
             );
         }
@@ -661,6 +680,11 @@ function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
     const newRows = [];
     let newRowsStart = 0;
     const pendingResults = [];
+    const writeTiming = {
+        validationCleanupMs: 0,
+        validationRowsCleared: 0,
+        historyWriteMs: 0,
+    };
 
     items.forEach(({ index, value: prepared }) => {
         const input = prepared.observation;
@@ -722,15 +746,30 @@ function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
         }
     });
 
-    repairs.forEach(({ targetRow, storedRows }) =>
-        writeStoredObservationRows_(history, targetRow, storedRows)
-    );
+    repairs.forEach(({ targetRow, storedRows }) => {
+        const timing = writeStoredObservationRows_(
+            history,
+            targetRow,
+            storedRows
+        );
+        writeTiming.validationCleanupMs += timing.validationCleanupMs;
+        writeTiming.validationRowsCleared += timing.validationRowsCleared;
+        writeTiming.historyWriteMs += timing.historyWriteMs;
+    });
     if (newRows.length) {
-        writeStoredObservationRows_(history, newRowsStart, newRows);
+        const timing = writeStoredObservationRows_(
+            history,
+            newRowsStart,
+            newRows
+        );
+        writeTiming.validationCleanupMs += timing.validationCleanupMs;
+        writeTiming.validationRowsCleared += timing.validationRowsCleared;
+        writeTiming.historyWriteMs += timing.historyWriteMs;
     }
     pendingResults.forEach(({ index, prepared, result }) => {
         results[index] = webObservationResult_(prepared, result);
     });
+    return writeTiming;
 }
 
 function historyObservationSnapshot_(history) {
@@ -1554,6 +1593,15 @@ function writeStoredObservationRows_(history, targetRow, storedRows) {
             requiredLastRow - history.getMaxRows()
         );
     }
+    const validationStartedAt = Date.now();
+    const validationRowsCleared = clearUnexpectedMeasurementValidations_(
+        history,
+        targetRow,
+        storedRows.length
+    )
+        ? storedRows.length
+        : 0;
+    const validationCompletedAt = Date.now();
     history
         .getRange(
             targetRow,
@@ -1568,6 +1616,26 @@ function writeStoredObservationRows_(history, targetRow, storedRows) {
     history
         .getRange(targetRow, 10, storedRows.length, 1)
         .setNumberFormat("M/d/yyyy h:mm:ss am/pm");
+    return {
+        validationCleanupMs: validationCompletedAt - validationStartedAt,
+        validationRowsCleared,
+        historyWriteMs: Date.now() - validationCompletedAt,
+    };
+}
+
+function clearUnexpectedMeasurementValidations_(history, targetRow, rowCount) {
+    const range = history.getRange(
+        targetRow,
+        GARDEN_LOGGER.historyMeasurementStartColumn + 1,
+        rowCount,
+        2
+    );
+    const validations = range.getDataValidations();
+    const unexpected = validations.some((row) =>
+        row.some((validation) => Boolean(validation))
+    );
+    if (unexpected) range.clearDataValidations();
+    return unexpected;
 }
 
 function observationWriteResult_(
@@ -2241,6 +2309,7 @@ function ensureHistoryMeasurementColumns_(history, configureColumn = false) {
             dataRows,
             2
         )
+        .clearDataValidations()
         .setNumberFormat("0.##");
 }
 

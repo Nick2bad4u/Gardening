@@ -42,7 +42,7 @@ The tests cover combined event inference, formula-safe text, request-ID
 validation, single and bulk History reconciliation, lost callbacks, late stale
 callbacks, the direct-save watchdog, picker persistence, adjustable recent
 History, queue-storage failures and rollback, backup recovery, 22-entry
-6/6/6/4 queue sessions, progressive confirmation, bounded retry timing,
+one-call queue sessions, success-path confirmation, bounded retry timing,
 deterministic failures, and the Google Photos handoff. The coverage report
 measures the Apps Script server file directly and is uploaded to Codecov in CI.
 Statements, functions, and lines have 90% CI floors. Branch coverage also has a
@@ -81,7 +81,7 @@ project. A push does not update the versioned web-app deployment by itself; the
 new version must still be assigned to the existing deployment.
 
 The mobile logger stores an unconfirmed request ID and draft locally before it
-calls Google. If the callback is lost, logger 5.8.1 checks History for that exact
+calls Google. If the callback is lost, logger 5.8.2 checks History for that exact
 request on timeout and page load. A completed save clears itself automatically;
 an absent or partial save keeps the draft available for an idempotent retry. If
 Google explicitly rejects a request and the follow-up History check confirms
@@ -113,18 +113,19 @@ second backup key. On reload it restores a missing or damaged primary copy from
 that backup and displays a warning so the entries can be reviewed. If storage is
 full or unavailable, the current form remains intact and nothing is sent.
 
-One tap on **Send queue** starts a send session. Logger 5.8.1 automatically
-submits six observations at a time, so a 22-plant weighing round uses 6/6/6/4
-server calls without more taps. Before each call, exactly that chunk is marked
-as attempted and both browser-storage copies are read back and verified. The
-server validates the History schema and reads its request IDs once, builds all
-new rows in memory, and commits the chunk with one contiguous History write and
-one spreadsheet flush. The endpoint still accepts up to 50 observations for
-compatibility with older open tabs.
+One tap on **Send queue** starts a send session. Logger 5.8.2 submits the entire
+durably stored queue—up to 50 observations—in one server call. Before the call,
+every submitted entry is marked as attempted and both browser-storage copies are
+read back and verified. The server validates the History schema and reads its
+request IDs once, builds all valid new rows in memory, and commits them with one
+contiguous History write and one spreadsheet flush. It also clears any stray
+data validation inherited by the derived inch columns before writing those rows.
 
-After each response, the logger checks the expected plant and row count in
-History before durably removing confirmed IDs. The queue stays visible with
-exact confirmed and remaining counts. Missing IDs receive at most three
+A complete successful callback is authoritative, so the client durably removes
+confirmed IDs without making a redundant History status request. It checks the
+expected plant and row count in History only after a failed callback, an
+incomplete success response, the execution limit, or reload recovery. The queue
+stays visible while sending. Missing IDs receive at most three grouped
 automatic retries after 2, 5, and 10 seconds; validation errors, incomplete
 History reservations, and request conflicts remain queued for review. The
 45-second queue watchdog is informational and never enables a competing send or
@@ -169,10 +170,10 @@ The main production safeguards are:
   types, and warning-only protections guard the managed identity and History
   provenance/status columns without blocking intentional maintenance.
 - **Safe batch behavior:** queue validation happens before the lock. One script
-  lock protects a chunk, the History identity/request columns are read once,
+  lock protects the whole submitted queue, the History identity/request columns are read once,
   ordinary observations are written contiguously, and each result is returned
-  independently. A partial failure retains only unresolved phone entries after
-  History verifies the saved shape.
+  independently. A complete callback removes successful phone entries directly;
+  failure recovery verifies History before retaining only unresolved entries.
 - **Committed writes:** each locked spreadsheet mutation calls
   `SpreadsheetApp.flush()` before releasing the script lock. This follows
   Google's guidance for committing pending spreadsheet changes while exclusive

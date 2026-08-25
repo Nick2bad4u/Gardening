@@ -146,7 +146,9 @@ assert.match(html, /id="recentLimit"/);
 assert.match(html, /gardenLoggerRecentLimitV1/);
 assert.match(html, /gardenLoggerObservationQueueV1/);
 assert.match(html, /saveWebObservationBatch/);
-assert.match(html, /const QUEUE_CHUNK_SIZE = 6;/);
+assert.match(html, /function sendObservationQueueBatch\(retryIds = null\)/);
+assert.match(html, /function applySuccessfulObservationBatch/);
+assert.doesNotMatch(html, /QUEUE_CHUNK_SIZE/);
 assert.match(html, /const QUEUE_EXECUTION_LIMIT_MS = 390000;/);
 assert.match(html, /const QUEUE_RETRY_DELAYS_MS = \[2000, 5000, 10000\];/);
 assert.match(html, /function queueStatusDescriptor\(entry\)/);
@@ -171,6 +173,11 @@ assert.match(
 );
 assert.match(source, /function saveWebObservationBatch\(payloads\)/);
 assert.match(source, /function appendPreparedWebObservationBatch_/);
+assert.match(source, /function clearUnexpectedMeasurementValidations_/);
+assert.match(
+    source,
+    /\.clearDataValidations\(\)\s*\.setNumberFormat\("0\.##"\)/
+);
 assert.match(source, /function getWebBatchSaveStatus\(requests\)/);
 assert.match(source, /function removeSelectedHistoryObservations\(\)/);
 

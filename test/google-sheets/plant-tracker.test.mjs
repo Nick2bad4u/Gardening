@@ -70,11 +70,22 @@ function createDataValidationBuilder() {
     return builder;
 }
 
-function createHistorySheet(observations = []) {
+function createHistorySheet(
+    observations = [],
+    { measurementValidations = false } = {}
+) {
     const rangeReads = [];
     const setValuesCalls = [];
+    const clearDataValidationCalls = [];
     const protections = [];
     let maxRows = 100;
+    const validationCells = new Set();
+    if (measurementValidations) {
+        for (let row = 2; row <= maxRows; row += 1) {
+            validationCells.add(`${row}:38`);
+            validationCells.add(`${row}:39`);
+        }
+    }
     const header = Array(39).fill("");
     historyHeaders.forEach((value, index) => {
         header[index] = value;
@@ -126,6 +137,8 @@ function createHistorySheet(observations = []) {
         __rows: rows,
         __rangeReads: rangeReads,
         __setValuesCalls: setValuesCalls,
+        __clearDataValidationCalls: clearDataValidationCalls,
+        __validationCells: validationCells,
         __protections: protections,
         getName: () => "History",
         getLastRow: () => rows.length,
@@ -152,6 +165,18 @@ function createHistorySheet(observations = []) {
                         currentRow.map((value) => String(value ?? ""))
                     ),
                 getValues: values,
+                getDataValidations: () =>
+                    Array.from({ length: rowCount }, (_, rowOffset) =>
+                        Array.from(
+                            { length: columnCount },
+                            (_, columnOffset) =>
+                                validationCells.has(
+                                    `${row + rowOffset}:${column + columnOffset}`
+                                )
+                                    ? {}
+                                    : null
+                        )
+                    ),
                 createTextFinder(query) {
                     let exact = false;
                     const finder = {
@@ -192,7 +217,48 @@ function createHistorySheet(observations = []) {
                 setNote: () => range,
                 setNotes: () => range,
                 setNumberFormat: () => range,
-                setDataValidation: () => range,
+                setDataValidation(validation) {
+                    for (
+                        let rowOffset = 0;
+                        rowOffset < rowCount;
+                        rowOffset += 1
+                    ) {
+                        for (
+                            let columnOffset = 0;
+                            columnOffset < columnCount;
+                            columnOffset += 1
+                        ) {
+                            const key = `${row + rowOffset}:${column + columnOffset}`;
+                            if (validation) validationCells.add(key);
+                            else validationCells.delete(key);
+                        }
+                    }
+                    return range;
+                },
+                clearDataValidations() {
+                    clearDataValidationCalls.push({
+                        row,
+                        column,
+                        rowCount,
+                        columnCount,
+                    });
+                    for (
+                        let rowOffset = 0;
+                        rowOffset < rowCount;
+                        rowOffset += 1
+                    ) {
+                        for (
+                            let columnOffset = 0;
+                            columnOffset < columnCount;
+                            columnOffset += 1
+                        ) {
+                            validationCells.delete(
+                                `${row + rowOffset}:${column + columnOffset}`
+                            );
+                        }
+                    }
+                    return range;
+                },
                 protect() {
                     const protection = createProtection(range);
                     protections.push(protection);
@@ -359,7 +425,7 @@ function createProtection(initialRange) {
     return protection;
 }
 
-function createLoggerWorkbook(plantIds = ["P01"]) {
+function createLoggerWorkbook(plantIds = ["P01"], historyOptions = {}) {
     const trackerHeader = Array(15).fill("");
     const trackerRows = [trackerHeader];
     const trackerFormulas = [Array(15).fill("")];
@@ -385,7 +451,7 @@ function createLoggerWorkbook(plantIds = ["P01"]) {
         baselineRows.push(baselineRow);
     });
 
-    const history = createHistorySheet();
+    const history = createHistorySheet([], historyOptions);
     const sheets = new Map([
         [
             "Plant tracker",
@@ -659,7 +725,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.8.1");
+        expect(bootstrap.version).toBe("5.8.2");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -1085,44 +1151,94 @@ describe("Garden logger server logic", () => {
         ]);
     });
 
-    it("writes a 22-plant weighing round as four contiguous constant-I/O chunks", () => {
+    it("clears inherited AL/AM validation before a batch write and in the installer", () => {
+        const workbook = createLoggerWorkbook(["P01"], {
+            measurementValidations: true,
+        });
+        let flushCount = 0;
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+            SpreadsheetApp: {
+                flush: () => {
+                    flushCount += 1;
+                },
+                newDataValidation: createDataValidationBuilder,
+                openById: () => workbook.spreadsheet,
+                ProtectionType: { RANGE: "RANGE" },
+            },
+        });
+
+        const result = context.saveWebObservationBatch([
+            {
+                plantId: "P01",
+                requestId: "garden-validation-repair-12345",
+                observedAt: "2026-08-16T10:00:00-04:00",
+                events: ["Measure"],
+                height: 5,
+                width: 4,
+                measurementUnit: "in",
+            },
+        ]);
+
+        expect(result).toMatchObject({ ok: true, savedCount: 1 });
+        expect(flushCount).toBe(1);
+        expect(workbook.history.__clearDataValidationCalls).toContainEqual({
+            row: 2,
+            column: 38,
+            rowCount: 1,
+            columnCount: 2,
+        });
+        expect(workbook.history.__validationCells.has("2:38")).toBe(false);
+        expect(workbook.history.__validationCells.has("3:38")).toBe(true);
+
+        context.ensureHistoryMeasurementColumns_(workbook.history, true);
+        expect(workbook.history.__clearDataValidationCalls).toContainEqual({
+            row: 2,
+            column: 38,
+            rowCount: 4999,
+            columnCount: 2,
+        });
+        expect(
+            [...workbook.history.__validationCells].some((key) =>
+                /:(38|39)$/.test(key)
+            )
+        ).toBe(false);
+        expect(workbook.history.__validationCells.has("2:37")).toBe(true);
+    });
+
+    it("writes a 22-plant weighing round in one contiguous constant-I/O batch", () => {
         const plantIds = Array.from(
             { length: 22 },
             (_, index) => `P${String(index + 1).padStart(2, "0")}`
         );
         const workbook = createLoggerWorkbook(plantIds);
+        let flushCount = 0;
         const context = loadAppsScript(workbook.history, {
             spreadsheet: workbook.spreadsheet,
             globals: workbook.globals,
+            SpreadsheetApp: {
+                flush: () => {
+                    flushCount += 1;
+                },
+                newDataValidation: createDataValidationBuilder,
+                openById: () => workbook.spreadsheet,
+                ProtectionType: { RANGE: "RANGE" },
+            },
         });
         const payloads = plantIds.map((plantId, index) => ({
             plantId,
-            requestId: `garden-chunk-${String(index + 1).padStart(2, "0")}-12345`,
+            requestId: `garden-one-call-${String(index + 1).padStart(2, "0")}-12345`,
             observedAt: `2026-08-16T10:${String(index).padStart(2, "0")}:00-04:00`,
             events: ["Weigh"],
             weightState: "Routine",
             weight: 400 + index,
         }));
-        const chunks = [
-            payloads.slice(0, 6),
-            payloads.slice(6, 12),
-            payloads.slice(12, 18),
-            payloads.slice(18),
-        ];
-        const operationCounts = [];
-        let previousRangeCount = 0;
-
-        chunks.forEach((chunk) => {
-            const result = context.saveWebObservationBatch(chunk);
-            expect(result).toMatchObject({
-                ok: true,
-                savedCount: chunk.length,
-                failedCount: 0,
-            });
-            operationCounts.push(
-                workbook.history.__rangeReads.length - previousRangeCount
-            );
-            previousRangeCount = workbook.history.__rangeReads.length;
+        const result = context.saveWebObservationBatch(payloads);
+        expect(result).toMatchObject({
+            ok: true,
+            savedCount: 22,
+            failedCount: 0,
         });
 
         const historyWrites = workbook.history.__setValuesCalls.filter(
@@ -1130,28 +1246,22 @@ describe("Garden logger server logic", () => {
                 call.row >= 2 && call.column === 1 && call.columnCount === 39
         );
         expect(historyWrites).toEqual([
-            { row: 2, column: 1, rowCount: 6, columnCount: 39 },
-            { row: 8, column: 1, rowCount: 6, columnCount: 39 },
-            { row: 14, column: 1, rowCount: 6, columnCount: 39 },
-            { row: 20, column: 1, rowCount: 4, columnCount: 39 },
+            { row: 2, column: 1, rowCount: 22, columnCount: 39 },
         ]);
-        expect(Math.max(...operationCounts)).toBeLessThan(20);
+        expect(flushCount).toBe(1);
+        expect(workbook.history.__rangeReads.length).toBeLessThan(20);
         expect(workbook.history.__rows.slice(1).map((row) => row[15])).toEqual(
             payloads.map((payload) => payload.requestId)
         );
 
-        chunks.forEach((chunk) => {
-            const retry = context.saveWebObservationBatch(chunk);
-            expect(retry.results.every((result) => result.duplicate)).toBe(
-                true
-            );
-        });
-        expect(workbook.history.__setValuesCalls).toHaveLength(4);
+        const retry = context.saveWebObservationBatch(payloads);
+        expect(retry.results.every((entry) => entry.duplicate)).toBe(true);
+        expect(workbook.history.__setValuesCalls).toHaveLength(1);
         expect(workbook.history.__rows).toHaveLength(23);
 
         const historyOperationCount = (count) => {
             const comparisonWorkbook = createLoggerWorkbook(
-                plantIds.slice(0, 6)
+                plantIds.slice(0, count)
             );
             const comparisonContext = loadAppsScript(
                 comparisonWorkbook.history,
@@ -1168,7 +1278,7 @@ describe("Garden logger server logic", () => {
             );
             return comparisonWorkbook.history.__rangeReads.length;
         };
-        expect(historyOperationCount(6)).toBe(historyOperationCount(1));
+        expect(historyOperationCount(22)).toBe(historyOperationCount(1));
     });
 
     it("keeps Water second after Weigh and preserves batch measurement metadata", () => {
@@ -1549,7 +1659,7 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.8.1");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.8.2");
         expect(calls.toast[1]).toBe("Garden logger verified");
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
@@ -2572,6 +2682,14 @@ describe("Garden logger server logic", () => {
             weight: 450,
             observedAt: "2026-08-16T12:00:00Z",
         };
+
+        const originalNormalizeRequestId = context.normalizeRequestId_;
+        context.normalizeRequestId_ = () => {
+            throw "invalid request ID";
+        };
+        const invalidRequestId = context.saveWebObservationBatch([payload]);
+        expect(invalidRequestId.results[0].message).toBe("invalid request ID");
+        context.normalizeRequestId_ = originalNormalizeRequestId;
 
         const originalPrepare = context.prepareWebObservation_;
         context.prepareWebObservation_ = () => {

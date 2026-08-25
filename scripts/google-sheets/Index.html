@@ -1954,7 +1954,6 @@
             const QUEUE_WATCHDOG_MS = 45000;
             const QUEUE_EXECUTION_LIMIT_MS = 390000;
             const QUEUE_STATUS_TIMEOUT_MS = 45000;
-            const QUEUE_CHUNK_SIZE = 6;
             const QUEUE_RETRY_DELAYS_MS = [2000, 5000, 10000];
 
             const $ = (id) => document.getElementById(id);
@@ -2669,7 +2668,9 @@
                 $("queueSendButton").disabled = state.saving || !count;
                 $("queueClearButton").disabled = state.saving || !count;
                 $("queueSendButton").textContent = sendSession
-                    ? `Sending ${sendSession.confirmedIds.size} of ${sendSession.initialTotal}…`
+                    ? sendSession.retryIndex
+                        ? `Retrying ${sendSession.currentIds.length}…`
+                        : `Sending all ${sendSession.initialTotal}…`
                     : count
                       ? `Send ${count} queued`
                       : "Send queue";
@@ -3557,9 +3558,6 @@
                 state.queueSendSession = {
                     id: state.saveAttempt,
                     initialTotal: state.queue.length,
-                    eligibleIds: new Set(
-                        state.queue.map((entry) => entry.requestId)
-                    ),
                     confirmedIds: new Set(),
                     currentIds: [],
                     retryIndex: 0,
@@ -3573,7 +3571,7 @@
                 state.saveTimeoutMs = QUEUE_EXECUTION_LIMIT_MS;
                 setSaving(true);
                 renderObservationQueue();
-                sendNextObservationQueueChunk();
+                sendObservationQueueBatch();
             }
 
             function queueStatusDescriptor(entry) {
@@ -3601,7 +3599,7 @@
                 session.statusTimer = null;
             }
 
-            function sendNextObservationQueueChunk(retryIds = null) {
+            function sendObservationQueueBatch(retryIds = null) {
                 const session = state.queueSendSession;
                 if (!session || !activeQueueSendSession(session)) return;
                 if (!browserIsOnline()) {
@@ -3618,12 +3616,8 @@
                 const entries = (
                     retryIds
                         ? retryIds.map((requestId) => queuedById.get(requestId))
-                        : state.queue.filter((entry) =>
-                              session.eligibleIds.has(entry.requestId)
-                          )
-                )
-                    .filter(Boolean)
-                    .slice(0, QUEUE_CHUNK_SIZE);
+                        : state.queue
+                ).filter(Boolean);
                 if (!entries.length) {
                     const remaining = state.queue.length;
                     finishObservationQueueSession(
@@ -3666,11 +3660,11 @@
                 state.saveTimeoutMs = QUEUE_EXECUTION_LIMIT_MS;
                 renderObservationQueue();
                 $("connectionStatus").textContent =
-                    `${session.confirmedIds.size} confirmed · sending ${requestPayloads.length} · ${state.queue.length} remaining`;
+                    `${session.confirmedIds.size} confirmed · sending all ${requestPayloads.length} queued observations`;
                 session.watchdogTimer = setTimeout(() => {
                     if (!activeQueueSendSession(session, callToken)) return;
                     $("connectionStatus").textContent =
-                        "Google is still processing this chunk…";
+                        "Google is still processing the whole queue…";
                     showToast(
                         "Google is still processing. The queue remains safely stored, and Send will stay disabled until this request finishes.",
                         false,
@@ -3683,7 +3677,7 @@
                     const statusToken = ++session.callToken;
                     $("connectionStatus").textContent =
                         "Execution window ended · checking History once";
-                    reconcileActiveObservationChunk(
+                    reconcileActiveObservationBatch(
                         session,
                         statusToken,
                         { results: [] },
@@ -3695,8 +3689,17 @@
                     .withSuccessHandler((result) => {
                         if (!activeQueueSendSession(session, callToken)) return;
                         clearQueueCallTimers(session);
+                        if (
+                            completeBatchResponseForIds(
+                                result,
+                                session.currentIds
+                            )
+                        ) {
+                            applySuccessfulObservationBatch(session, result);
+                            return;
+                        }
                         const statusToken = ++session.callToken;
-                        reconcileActiveObservationChunk(
+                        reconcileActiveObservationBatch(
                             session,
                             statusToken,
                             result || { results: [] }
@@ -3706,7 +3709,7 @@
                         if (!activeQueueSendSession(session, callToken)) return;
                         clearQueueCallTimers(session);
                         const statusToken = ++session.callToken;
-                        reconcileActiveObservationChunk(session, statusToken, {
+                        reconcileActiveObservationBatch(session, statusToken, {
                             results: [],
                             transportError: error,
                         });
@@ -3714,7 +3717,77 @@
                     .saveWebObservationBatch(requestPayloads);
             }
 
-            function reconcileActiveObservationChunk(
+            function completeBatchResponseForIds(batchResult, requestIds) {
+                if (!batchResult || !Array.isArray(batchResult.results)) {
+                    return false;
+                }
+                const expectedIds = new Set(requestIds);
+                const returnedIds = new Set();
+                for (const result of batchResult.results) {
+                    if (
+                        !result ||
+                        typeof result.requestId !== "string" ||
+                        typeof result.ok !== "boolean" ||
+                        (!result.ok && result.retryable !== false) ||
+                        !expectedIds.has(result.requestId) ||
+                        returnedIds.has(result.requestId)
+                    ) {
+                        return false;
+                    }
+                    returnedIds.add(result.requestId);
+                }
+                return returnedIds.size === expectedIds.size;
+            }
+
+            function applySuccessfulObservationBatch(session, batchResult) {
+                if (!activeQueueSendSession(session)) return;
+                const currentIds = new Set(session.currentIds);
+                const resultByRequest = new Map(
+                    batchResult.results.map((result) => [
+                        result.requestId,
+                        result,
+                    ])
+                );
+                const nextQueue = state.queue.flatMap((entry) => {
+                    if (!currentIds.has(entry.requestId)) return [entry];
+                    const result = resultByRequest.get(entry.requestId);
+                    if (result && result.ok) {
+                        session.confirmedIds.add(entry.requestId);
+                        return [];
+                    }
+                    return [
+                        {
+                            ...entry,
+                            attemptedAt: "",
+                            error:
+                                (result && result.message) ||
+                                "This entry needs correction before it can be sent.",
+                        },
+                    ];
+                });
+
+                try {
+                    persistObservationQueue(nextQueue, {
+                        requireBackup: true,
+                    });
+                } catch (error) {
+                    finishObservationQueueSession(
+                        "Google saved the batch, but the phone could not durably store the reduced queue. The full pre-confirmation queue remains available for idempotent recovery.",
+                        true
+                    );
+                    return;
+                }
+
+                const remaining = state.queue.length;
+                finishObservationQueueSession(
+                    remaining
+                        ? `${session.confirmedIds.size} confirmed · ${remaining} needs correction.`
+                        : `${session.confirmedIds.size} confirmed.`,
+                    remaining > 0
+                );
+            }
+
+            function reconcileActiveObservationBatch(
                 session,
                 callToken,
                 batchResult,
@@ -3726,7 +3799,10 @@
                     currentIds.has(entry.requestId)
                 );
                 if (!currentEntries.length) {
-                    sendNextObservationQueueChunk();
+                    finishObservationQueueSession(
+                        `${session.confirmedIds.size} confirmed.`,
+                        false
+                    );
                     return;
                 }
                 const descriptors = currentEntries.map(queueStatusDescriptor);
@@ -3742,7 +3818,7 @@
                     .withSuccessHandler((statuses) => {
                         if (!activeQueueSendSession(session, callToken)) return;
                         clearQueueCallTimers(session);
-                        applyReconciledObservationChunk(
+                        applyReconciledObservationBatch(
                             session,
                             statuses || [],
                             batchResult,
@@ -3760,7 +3836,7 @@
                     .getWebBatchSaveStatus(descriptors);
             }
 
-            function applyReconciledObservationChunk(
+            function applyReconciledObservationBatch(
                 session,
                 statuses,
                 batchResult,
@@ -3784,11 +3860,9 @@
                     const result = resultByRequest.get(entry.requestId);
                     if (status && status.state === "saved") {
                         session.confirmedIds.add(entry.requestId);
-                        session.eligibleIds.delete(entry.requestId);
                         return [];
                     }
                     if (status && status.state === "incomplete") {
-                        session.eligibleIds.delete(entry.requestId);
                         return [
                             {
                                 ...entry,
@@ -3798,7 +3872,6 @@
                         ];
                     }
                     if (!status || status.state !== "missing") {
-                        session.eligibleIds.delete(entry.requestId);
                         return [
                             {
                                 ...entry,
@@ -3808,7 +3881,6 @@
                         ];
                     }
                     if (result && result.retryable === false) {
-                        session.eligibleIds.delete(entry.requestId);
                         return [
                             {
                                 ...entry,
@@ -3820,7 +3892,6 @@
                         ];
                     }
                     if (hardStop) {
-                        session.eligibleIds.delete(entry.requestId);
                         return [
                             {
                                 ...entry,
@@ -3885,14 +3956,19 @@
                     session.retryTimer = setTimeout(() => {
                         session.retryTimer = null;
                         if (!activeQueueSendSession(session)) return;
-                        sendNextObservationQueueChunk(retryIds);
+                        sendObservationQueueBatch(retryIds);
                     }, delay);
                     return;
                 }
 
                 session.currentIds = [];
                 session.retryIndex = 0;
-                sendNextObservationQueueChunk();
+                finishObservationQueueSession(
+                    state.queue.length
+                        ? `${session.confirmedIds.size} confirmed · ${state.queue.length} needs correction.`
+                        : `${session.confirmedIds.size} confirmed.`,
+                    state.queue.length > 0
+                );
             }
 
             function finishObservationQueueSession(message, isError) {

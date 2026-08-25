@@ -868,7 +868,7 @@ describe("Garden logger browser recovery", () => {
         ).toMatch(/main phone queue was missing/i);
     });
 
-    it("sends one queued observation and verifies it in History", () => {
+    it("accepts a complete successful batch without a History status call", () => {
         const queued = [queuedWeight({ requestId: "garden-queued-one-12345" })];
         const { behaviors, calls, window } = createLoggerWindow({
             batchSaveStatus: "saved",
@@ -901,12 +901,15 @@ describe("Garden logger browser recovery", () => {
         expect(batchCalls).toHaveLength(1);
         expect(batchCalls[0].args[0]).toHaveLength(1);
         expect(
+            calls.filter((call) => call.method === "getWebBatchSaveStatus")
+        ).toHaveLength(0);
+        expect(
             window.localStorage.getItem("gardenLoggerObservationQueueV1")
         ).toBe("[]");
         expect(window.document.querySelector("#queueCard").hidden).toBe(true);
     });
 
-    it("sends 22 queued observations as 6/6/6/4 with progressive confirmation", () => {
+    it("sends all 22 queued observations in one durable server call", () => {
         const queued = Array.from({ length: 22 }, (_, index) =>
             queuedWeight({
                 requestId: `garden-round-${String(index + 1).padStart(2, "0")}-12345`,
@@ -928,48 +931,39 @@ describe("Garden logger browser recovery", () => {
             .querySelector("#queueSendButton")
             .dispatchEvent(new window.Event("click", { bubbles: true }));
 
-        expect(pending[0].args[0]).toHaveLength(6);
-        [
-            6,
-            6,
-            6,
-            4,
-        ].forEach((size, chunkIndex) => {
-            const current = pending.shift();
-            expect(current.args[0]).toHaveLength(size);
-            current.success({
+        expect(pending).toHaveLength(1);
+        expect(pending[0].args[0]).toHaveLength(22);
+        expect(
+            window.document.querySelector("#queueSendButton").textContent
+        ).toBe("Sending all 22…");
+        const attemptedPrimary = JSON.parse(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+        const attemptedBackup = JSON.parse(
+            window.localStorage.getItem("gardenLoggerObservationQueueBackupV1")
+        );
+        expect(attemptedPrimary).toHaveLength(22);
+        expect(attemptedPrimary.every((entry) => entry.attemptedAt)).toBe(true);
+        expect(attemptedBackup).toEqual(attemptedPrimary);
+
+        const current = pending.shift();
+        current.success({
+            ok: true,
+            savedCount: 22,
+            failedCount: 0,
+            results: current.args[0].map((payload) => ({
                 ok: true,
-                savedCount: size,
-                failedCount: 0,
-                results: current.args[0].map((payload) => ({
-                    ok: true,
-                    requestId: payload.requestId,
-                })),
-            });
-            if (chunkIndex < 3) {
-                const confirmed = (chunkIndex + 1) * 6;
-                expect(
-                    window.document.querySelector("#queueProgress").textContent
-                ).toBe(`${confirmed} confirmed · ${22 - confirmed} remaining`);
-                expect(
-                    window.document.querySelector("#queueSendButton")
-                        .textContent
-                ).toBe(`Sending ${confirmed} of 22…`);
-            }
+                requestId: payload.requestId,
+            })),
         });
 
         const batchCalls = calls.filter(
             (call) => call.method === "saveWebObservationBatch"
         );
-        expect(batchCalls.map((call) => call.args[0].length)).toEqual([
-            6,
-            6,
-            6,
-            4,
-        ]);
+        expect(batchCalls.map((call) => call.args[0].length)).toEqual([22]);
         expect(
             calls.filter((call) => call.method === "getWebBatchSaveStatus")
-        ).toHaveLength(4);
+        ).toHaveLength(0);
         expect(
             window.localStorage.getItem("gardenLoggerObservationQueueV1")
         ).toBe("[]");
@@ -1010,6 +1004,9 @@ describe("Garden logger browser recovery", () => {
         expect(
             calls.filter((call) => call.method === "saveWebObservationBatch")
         ).toHaveLength(1);
+        expect(
+            calls.filter((call) => call.method === "getWebBatchSaveStatus")
+        ).toHaveLength(0);
 
         vi.advanceTimersByTime(67000);
         pending.success({
@@ -1024,7 +1021,7 @@ describe("Garden logger browser recovery", () => {
         ).toBe("[]");
         expect(
             calls.filter((call) => call.method === "getWebBatchSaveStatus")
-        ).toHaveLength(1);
+        ).toHaveLength(0);
     });
 
     it("reconciles transient failures and retries after 2 and 5 seconds", () => {
@@ -1076,7 +1073,113 @@ describe("Garden logger browser recovery", () => {
         ).toBe("[]");
         expect(
             calls.filter((call) => call.method === "getWebBatchSaveStatus")
-        ).toHaveLength(3);
+        ).toHaveLength(2);
+    });
+
+    it("reconciles a nominal response that omits an expected request ID", () => {
+        const queued = [
+            queuedWeight({ requestId: "garden-omitted-one-12345" }),
+            queuedWeight({
+                requestId: "garden-omitted-two-12345",
+                plantId: "P02",
+            }),
+        ];
+        const { behaviors, calls, window } = createLoggerWindow({
+            batchSaveStatus: "saved",
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify(queued),
+            },
+        });
+        behaviors.saveWebObservationBatch = ({ success }) =>
+            success({
+                ok: true,
+                savedCount: 2,
+                failedCount: 0,
+                results: [
+                    {
+                        ok: true,
+                        requestId: "garden-omitted-one-12345",
+                    },
+                ],
+            });
+
+        window.document
+            .querySelector("#queueSendButton")
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        expect(
+            calls.filter((call) => call.method === "getWebBatchSaveStatus")
+        ).toHaveLength(1);
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBe("[]");
+    });
+
+    it("retries every confirmed-missing ID together after a failed whole-queue call", () => {
+        vi.useFakeTimers();
+        const queued = [
+            queuedWeight({ requestId: "garden-grouped-saved-12345" }),
+            queuedWeight({
+                requestId: "garden-grouped-missing-one-12345",
+                plantId: "P02",
+            }),
+            queuedWeight({ requestId: "garden-grouped-missing-two-12345" }),
+        ];
+        const { behaviors, calls, window } = createLoggerWindow({
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify(queued),
+            },
+        });
+        let attempts = 0;
+        behaviors.saveWebObservationBatch = ({ args, failure, success }) => {
+            attempts += 1;
+            if (attempts === 1) {
+                failure({ message: "Transient Google error" });
+                return;
+            }
+            success({
+                ok: true,
+                savedCount: args[0].length,
+                failedCount: 0,
+                results: args[0].map((payload) => ({
+                    ok: true,
+                    requestId: payload.requestId,
+                })),
+            });
+        };
+        behaviors.getWebBatchSaveStatus = ({ args, success }) =>
+            success(
+                args[0].map((request) => ({
+                    requestId: request.requestId,
+                    state: request.requestId.includes("saved")
+                        ? "saved"
+                        : "missing",
+                    expectedCount: request.expectedCount,
+                    savedCount: request.requestId.includes("saved") ? 1 : 0,
+                }))
+            );
+
+        window.document
+            .querySelector("#queueSendButton")
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        vi.advanceTimersByTime(2000);
+
+        const batchCalls = calls.filter(
+            (call) => call.method === "saveWebObservationBatch"
+        );
+        expect(batchCalls.map((call) => call.args[0].length)).toEqual([3, 2]);
+        expect(
+            batchCalls[1].args[0].map((payload) => payload.requestId)
+        ).toEqual([
+            "garden-grouped-missing-one-12345",
+            "garden-grouped-missing-two-12345",
+        ]);
+        expect(
+            calls.filter((call) => call.method === "getWebBatchSaveStatus")
+        ).toHaveLength(1);
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBe("[]");
     });
 
     it("stops after three bounded retries and preserves unresolved entries", () => {
@@ -1144,6 +1247,9 @@ describe("Garden logger browser recovery", () => {
         expect(
             calls.filter((call) => call.method === "saveWebObservationBatch")
         ).toHaveLength(1);
+        expect(
+            calls.filter((call) => call.method === "getWebBatchSaveStatus")
+        ).toHaveLength(0);
         const remaining = JSON.parse(
             window.localStorage.getItem("gardenLoggerObservationQueueV1")
         );
@@ -1155,7 +1261,7 @@ describe("Garden logger browser recovery", () => {
 
     it("retains the full queue if confirmed removal cannot be stored", () => {
         const queued = [queuedWeight()];
-        const { behaviors, window } = createLoggerWindow({
+        const { behaviors, calls, window } = createLoggerWindow({
             batchSaveStatus: "saved",
             storage: {
                 gardenLoggerObservationQueueV1: JSON.stringify(queued),
@@ -1297,7 +1403,7 @@ describe("Garden logger browser recovery", () => {
                 weight: "510",
             }),
         ];
-        const { behaviors, window } = createLoggerWindow({
+        const { behaviors, calls, window } = createLoggerWindow({
             storage: {
                 gardenLoggerObservationQueueV1: JSON.stringify(queued),
             },
@@ -1353,6 +1459,9 @@ describe("Garden logger browser recovery", () => {
         expect(window.document.querySelector("#queueList").textContent).toMatch(
             /Weight needs review/
         );
+        expect(
+            calls.filter((call) => call.method === "getWebBatchSaveStatus")
+        ).toHaveLength(0);
     });
 
     it("reconciles an attempted queue after reload", () => {
