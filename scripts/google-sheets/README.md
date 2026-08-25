@@ -180,23 +180,30 @@ The AppSheet form contract is:
   are system fields. Users may inspect the status but must not edit the receipt.
 
 The `App bulk` contract is deliberately narrower and faster: one row is one
-collection-wide weighing round. It stores `Round ID`, observation time, one
-shared weight state, optional shared notes, and P01-P22 gram fields. Empty
-plant fields are skipped. `processQueuedAppSheetEntries()` expands every
-nonblank weight into a deterministic `appsheet-bulk-{Round ID}-{Plant ID}`
-request and sends the complete round through one `saveWebObservationBatch()`
-call. A normal 22-plant round therefore reaches History as one canonical batch,
+collection-wide Water, Weigh, or Water + weigh round. It stores `Round ID`,
+observation time, one action selector, a compact EnumList of watered plant IDs,
+one shared weight state, optional shared notes, and P01-P22 gram fields. Empty
+weight fields are skipped. `processQueuedAppSheetEntries()` combines the
+selected watering IDs and nonblank weights into no more than one deterministic
+`appsheet-bulk-{Round ID}-{Plant ID}` request per plant and sends the complete
+round through one `saveWebObservationBatch()` call. A selected plant with a
+weight becomes one Water + Weigh request; a selected plant without a weight is
+Water-only; a non-selected plant with a weight is Weigh-only. Combined rounds
+default to `Wet`, while Weigh-only rounds default to `Routine`.
+
+A normal 22-plant round therefore reaches History as one canonical batch,
 while partial validation failures keep the round editable and retries recognize
-weights that were already saved. Run `installAppSheetBulkSheet()` once before
-adding the table to AppSheet; rerunning it only verifies the headers,
+plant updates that were already saved. Run `installAppSheetBulkSheet()` once
+before adding or regenerating the table in AppSheet. Rerunning it migrates the
+logger 5.10 weight-only header safely, then verifies the current headers,
 validation, formatting, and hidden receipt columns.
 
-Keep the `Log care` form's column order explicit so receipt fields cannot drift
+Keep the `Detailed log` form's column order explicit so receipt fields cannot drift
 back into the entry surface when the source schema changes. The form ends with
 `Treatment / action`, omits `Status`, `Status message`, and `Saved at`, and keeps
 Save/Cancel at the top for long phone forms. Read-only plant and History cards
 must not expose edit or delete actions; their action bars are limited to useful
-navigation such as `Log care`, the field guide, and the referenced plant. The
+navigation such as `Detailed log`, the field guide, and the referenced plant. The
 `Needs attention` view keeps Edit, plant/photo navigation, and `Retry save`, but
 does not expose Delete.
 
@@ -251,9 +258,9 @@ pages, and other presentation-only sheets; removing those definitions does not
 delete the underlying Google Sheets tabs.
 
 The visual identity assets are
-[`garden-plant-tracker-icon.png`](../../assets/appsheet/garden-plant-tracker-icon.png)
+[`garden-plant-tracker-icon-v2.png`](../../assets/appsheet/garden-plant-tracker-icon-v2.png)
 and
-[`garden-plant-tracker-launch.png`](../../assets/appsheet/garden-plant-tracker-launch.png).
+[`garden-plant-tracker-launch-v2.png`](../../assets/appsheet/garden-plant-tracker-launch-v2.png).
 Keep the compact cactus-and-scale icon for the app/header mark and use the wide
 plant-shelf artwork as the launch image. Both belong to this personal tracker;
 they are not evidence of a plant identification or licensed archive photos.

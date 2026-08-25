@@ -92,15 +92,17 @@ assert.deepEqual(appSheetEntryHeaders, [
 const appSheetBulkHeaders = Array.from(
     vm.runInContext("APP_SHEET_BULK_HEADERS", context)
 );
-assert.equal(appSheetBulkHeaders.length, 34);
-assert.deepEqual(appSheetBulkHeaders.slice(0, 4), [
+assert.equal(appSheetBulkHeaders.length, 36);
+assert.deepEqual(appSheetBulkHeaders.slice(0, 6), [
     "Round ID",
     "Started at",
     "Observed at",
+    "Round action",
+    "Watered plants",
     "Weight state",
 ]);
 assert.deepEqual(
-    appSheetBulkHeaders.slice(4, 26),
+    appSheetBulkHeaders.slice(6, 28),
     Array.from(
         { length: 22 },
         (_, index) => `P${String(index + 1).padStart(2, "0")} weight (g)`
@@ -258,6 +260,9 @@ assert.match(
     /function processQueuedAppSheetBulkEntries_\(spreadsheet\)/
 );
 assert.match(source, /function installAppSheetBulkSheet\(\)/);
+assert.match(source, /function migrateLegacyAppSheetBulkSheet_\(sheet\)/);
+assert.match(source, /function normalizeAppSheetBulkAction_\(value\)/);
+assert.match(source, /function appSheetBulkWateredPlants_\(value\)/);
 assert.match(source, /`appsheet-bulk-\$\{roundId\}-\$\{plantId\}`/);
 assert.match(source, /function installAppSheetQueueTrigger\(\)/);
 assert.match(source, /\.timeBased\(\)\.everyMinutes\(1\)\.create\(\)/);

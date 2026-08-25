@@ -101,6 +101,8 @@ const appSheetBulkHeaders = [
     "Round ID",
     "Started at",
     "Observed at",
+    "Round action",
+    "Watered plants",
     "Weight state",
     ...appSheetBulkPlants.map((plantId) => `${plantId} weight (g)`),
     "Notes",
@@ -112,6 +114,27 @@ const appSheetBulkHeaders = [
     "Saved count",
     "Saved at",
 ];
+const appSheetBulkLegacyHeaders = [
+    "Round ID",
+    "Started at",
+    "Observed at",
+    "Weight state",
+    ...appSheetBulkPlants.map((plantId) => `${plantId} weight (g)`),
+    "Notes",
+    "Created by",
+    "Created at",
+    "Status",
+    "Status message",
+    "Request count",
+    "Saved count",
+    "Saved at",
+];
+const appSheetBulkActionIndex = 3;
+const appSheetBulkWateredPlantsIndex = 4;
+const appSheetBulkWeightStateIndex = 5;
+const appSheetBulkWeightStartIndex = 6;
+const appSheetBulkNotesIndex = 28;
+const appSheetBulkStatusIndex = 31;
 
 function createDataValidationBuilder() {
     const builder = {
@@ -385,6 +408,15 @@ function createDataSheet(name, rows, formulas = []) {
         getMaxRows: () => Math.max(rows.length, 100),
         getProtections: () => protections,
         hideColumns: () => sheet,
+        insertColumnsAfter(column, count) {
+            rows.forEach((currentRow) => {
+                currentRow.splice(column, 0, ...Array(count).fill(""));
+            });
+            formulas.forEach((currentRow) => {
+                currentRow.splice(column, 0, ...Array(count).fill(""));
+            });
+            return sheet;
+        },
         setColumnWidth: () => sheet,
         setColumnWidths: () => sheet,
         setFrozenRows: () => sheet,
@@ -799,7 +831,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.10.0");
+        expect(bootstrap.version).toBe("5.11.0");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -1201,6 +1233,7 @@ describe("Garden logger server logic", () => {
                 events: ["Weigh"],
                 weightState: "Routine",
                 weight: 410,
+                entrySource: "AppSheet bulk",
             },
             {
                 plantId: "P02",
@@ -1232,6 +1265,7 @@ describe("Garden logger server logic", () => {
             "garden-queue-two-12345",
             "garden-queue-repot-12345",
         ]);
+        expect(workbook.history.__rows[1][27]).toBe("AppSheet bulk");
         expect(
             workbook.sheets.get("Baselines").getRange(2, 20).getValues()[0][0]
         ).toBe(2);
@@ -1744,12 +1778,13 @@ describe("Garden logger server logic", () => {
         round[0] = "BULK2201";
         round[1] = new Date("2026-08-25T08:00:00-04:00");
         round[2] = new Date("2026-08-25T08:05:00-04:00");
-        round[3] = "Routine";
+        round[appSheetBulkActionIndex] = "Weigh";
+        round[appSheetBulkWeightStateIndex] = "Routine";
         appSheetBulkPlants.forEach((_plantId, index) => {
-            round[4 + index] = 300 + index;
+            round[appSheetBulkWeightStartIndex + index] = 300 + index;
         });
-        round[26] = "Collection weight round.";
-        round[29] = "Queued";
+        round[appSheetBulkNotesIndex] = "Collection weight round.";
+        round[appSheetBulkStatusIndex] = "Queued";
         workbook.sheets.get("App bulk").__rows.push(round);
         const context = loadAppsScript(workbook.history, {
             spreadsheet: workbook.spreadsheet,
@@ -1785,13 +1820,15 @@ describe("Garden logger server logic", () => {
             weightState: "Routine",
             weight: 300,
             notes: "Collection weight round.",
-            entrySource: "AppSheet",
+            entrySource: "AppSheet bulk",
         });
-        expect(round[29]).toBe("Saved");
-        expect(round[30]).toBe("22 weights saved.");
-        expect(round[31]).toBe(22);
-        expect(round[32]).toBe(22);
-        expect(round[33]).toBeInstanceOf(Date);
+        expect(round[appSheetBulkStatusIndex]).toBe("Saved");
+        expect(round[appSheetBulkStatusIndex + 1]).toBe(
+            "22 plant updates saved."
+        );
+        expect(round[appSheetBulkStatusIndex + 2]).toBe(22);
+        expect(round[appSheetBulkStatusIndex + 3]).toBe(22);
+        expect(round[appSheetBulkStatusIndex + 4]).toBeInstanceOf(Date);
         expect(result).toMatchObject({
             ok: true,
             queuedCount: 0,
@@ -1809,14 +1846,200 @@ describe("Garden logger server logic", () => {
         });
     });
 
+    it("submits compact Water-only and combined AppSheet rounds", () => {
+        const runRound = (round) => {
+            const workbook = createLoggerWorkbook([
+                "P01",
+                "P02",
+                "P03",
+            ]);
+            workbook.sheets.get("App bulk").__rows.push(round);
+            const context = loadAppsScript(workbook.history, {
+                spreadsheet: workbook.spreadsheet,
+                globals: workbook.globals,
+            });
+            const batches = [];
+            context.saveWebObservationBatch = (payloads) => {
+                batches.push(payloads);
+                return {
+                    results: payloads.map(() => ({
+                        ok: true,
+                        retryable: false,
+                    })),
+                };
+            };
+            const result = context.processQueuedAppSheetEntries();
+            return { batches, result };
+        };
+
+        const waterRound = Array(appSheetBulkHeaders.length).fill("");
+        waterRound[0] = "WATER-ROUND";
+        waterRound[appSheetBulkActionIndex] = "Water";
+        waterRound[appSheetBulkWateredPlantsIndex] = "P01, P03";
+        waterRound[appSheetBulkStatusIndex] = "Queued";
+        const water = runRound(waterRound);
+
+        expect(water.batches).toHaveLength(1);
+        expect(water.batches[0]).toEqual([
+            expect.objectContaining({
+                plantId: "P01",
+                events: ["Water"],
+                weight: "",
+                weightState: "",
+            }),
+            expect.objectContaining({
+                plantId: "P03",
+                events: ["Water"],
+                weight: "",
+                weightState: "",
+            }),
+        ]);
+        expect(waterRound[appSheetBulkStatusIndex + 1]).toBe(
+            "2 plant updates saved."
+        );
+
+        const combinedRound = Array(appSheetBulkHeaders.length).fill("");
+        combinedRound[0] = "COMBINED-ROUND";
+        combinedRound[appSheetBulkActionIndex] = "Water + weigh";
+        combinedRound[appSheetBulkWateredPlantsIndex] = "P01 ; P02";
+        combinedRound[appSheetBulkWeightStartIndex] = 510;
+        combinedRound[appSheetBulkWeightStartIndex + 2] = 530;
+        combinedRound[appSheetBulkStatusIndex] = "Queued";
+        const combined = runRound(combinedRound);
+
+        expect(combined.batches).toHaveLength(1);
+        expect(combined.batches[0]).toEqual([
+            expect.objectContaining({
+                plantId: "P01",
+                events: ["Water", "Weigh"],
+                weight: 510,
+                weightState: "Wet",
+            }),
+            expect.objectContaining({
+                plantId: "P02",
+                events: ["Water"],
+                weight: "",
+                weightState: "",
+            }),
+            expect.objectContaining({
+                plantId: "P03",
+                events: ["Weigh"],
+                weight: 530,
+                weightState: "Wet",
+            }),
+        ]);
+        expect(combined.result.bulk).toMatchObject({
+            requestedCount: 3,
+            savedRequestCount: 3,
+            savedRoundCount: 1,
+        });
+    });
+
+    it("validates bulk modes and ignores fields hidden by the selected mode", () => {
+        const workbook = createLoggerWorkbook(["P01", "P02"]);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+        const makeRound = (action) => {
+            const row = Array(appSheetBulkHeaders.length).fill("");
+            row[0] = `MODE-${action || "DEFAULT"}`;
+            row[appSheetBulkActionIndex] = action;
+            return row;
+        };
+
+        expect(context.normalizeAppSheetBulkAction_("")).toBe("Weigh");
+        expect(() => context.normalizeAppSheetBulkAction_("Mist")).toThrow(
+            /must be one of: Water, Weigh, Water \+ weigh/i
+        );
+        expect([...context.appSheetBulkWateredPlants_("")]).toEqual([]);
+        expect([
+            ...context.appSheetBulkWateredPlants_([
+                "P01",
+                " P02 ",
+                "P01",
+            ]),
+        ]).toEqual(["P01", "P02"]);
+        expect(() => context.appSheetBulkWateredPlants_("P01, P99")).toThrow(
+            /Unknown watered plant ID: P99/i
+        );
+
+        const waterWithoutPlants = makeRound("Water");
+        expect(() =>
+            context.appSheetBulkPayloadsFromRow_(
+                waterWithoutPlants,
+                waterWithoutPlants[0]
+            )
+        ).toThrow(/at least one watered plant/i);
+
+        const weighWithoutWeights = makeRound("Weigh");
+        expect(() =>
+            context.appSheetBulkPayloadsFromRow_(
+                weighWithoutWeights,
+                weighWithoutWeights[0]
+            )
+        ).toThrow(/at least one plant weight/i);
+
+        const combinedWithoutWater = makeRound("Water + weigh");
+        combinedWithoutWater[appSheetBulkWeightStartIndex] = 350;
+        expect(() =>
+            context.appSheetBulkPayloadsFromRow_(
+                combinedWithoutWater,
+                combinedWithoutWater[0]
+            )
+        ).toThrow(/at least one watered plant/i);
+
+        const combinedWithoutWeight = makeRound("Water + weigh");
+        combinedWithoutWeight[appSheetBulkWateredPlantsIndex] = "P01";
+        expect(() =>
+            context.appSheetBulkPayloadsFromRow_(
+                combinedWithoutWeight,
+                combinedWithoutWeight[0]
+            )
+        ).toThrow(/at least one plant weight/i);
+
+        const waterWithHiddenWeight = makeRound("Water");
+        waterWithHiddenWeight[appSheetBulkWateredPlantsIndex] = "P01";
+        waterWithHiddenWeight[appSheetBulkWeightStartIndex] = 999;
+        expect(
+            context.appSheetBulkPayloadsFromRow_(
+                waterWithHiddenWeight,
+                waterWithHiddenWeight[0]
+            )
+        ).toEqual([
+            expect.objectContaining({
+                payload: expect.objectContaining({
+                    events: ["Water"],
+                    weight: "",
+                    weightState: "",
+                }),
+            }),
+        ]);
+
+        const zeroWeight = makeRound("Weigh");
+        zeroWeight[appSheetBulkWeightStartIndex] = 0;
+        expect(
+            context.appSheetBulkPayloadsFromRow_(zeroWeight, zeroWeight[0])
+        ).toEqual([
+            expect.objectContaining({
+                payload: expect.objectContaining({
+                    events: ["Weigh"],
+                    weight: 0,
+                    weightState: "Routine",
+                }),
+            }),
+        ]);
+    });
+
     it("keeps a partially valid bulk round idempotent and editable", () => {
         const workbook = createLoggerWorkbook(["P01", "P02"]);
         const round = Array(appSheetBulkHeaders.length).fill("");
         round[0] = "BULKFIX1";
-        round[3] = "Routine";
-        round[4] = 0;
-        round[5] = 420;
-        round[29] = "Queued";
+        round[appSheetBulkActionIndex] = "Weigh";
+        round[appSheetBulkWeightStateIndex] = "Routine";
+        round[appSheetBulkWeightStartIndex] = 0;
+        round[appSheetBulkWeightStartIndex + 1] = 420;
+        round[appSheetBulkStatusIndex] = "Queued";
         workbook.sheets.get("App bulk").__rows.push(round);
         const context = loadAppsScript(workbook.history, {
             spreadsheet: workbook.spreadsheet,
@@ -1844,17 +2067,19 @@ describe("Garden logger server logic", () => {
 
         const first = context.processQueuedAppSheetEntries();
 
-        expect(round[29]).toBe("Needs correction");
-        expect(round[30]).toMatch(/1 of 2 saved.*P01.*greater than zero/i);
-        expect(round[31]).toBe(2);
-        expect(round[32]).toBe(1);
+        expect(round[appSheetBulkStatusIndex]).toBe("Needs correction");
+        expect(round[appSheetBulkStatusIndex + 1]).toMatch(
+            /1 of 2 saved.*P01.*greater than zero/i
+        );
+        expect(round[appSheetBulkStatusIndex + 2]).toBe(2);
+        expect(round[appSheetBulkStatusIndex + 3]).toBe(1);
         expect(first.bulk).toMatchObject({
             savedRequestCount: 1,
             needsCorrectionCount: 1,
         });
 
-        round[4] = 410;
-        round[29] = "Retry";
+        round[appSheetBulkWeightStartIndex] = 410;
+        round[appSheetBulkStatusIndex] = "Retry";
         context.saveWebObservationBatch = (payloads) => {
             requestIds.push(payloads.map(({ requestId }) => requestId));
             return {
@@ -1874,9 +2099,11 @@ describe("Garden logger server logic", () => {
             ["appsheet-bulk-BULKFIX1-P01", "appsheet-bulk-BULKFIX1-P02"],
             ["appsheet-bulk-BULKFIX1-P01", "appsheet-bulk-BULKFIX1-P02"],
         ]);
-        expect(round[29]).toBe("Saved");
-        expect(round[30]).toBe("2 weights saved.");
-        expect(round[32]).toBe(2);
+        expect(round[appSheetBulkStatusIndex]).toBe("Saved");
+        expect(round[appSheetBulkStatusIndex + 1]).toBe(
+            "2 plant updates saved."
+        );
+        expect(round[appSheetBulkStatusIndex + 3]).toBe(2);
         expect(retry.bulk).toMatchObject({
             savedRoundCount: 1,
             savedRequestCount: 2,
@@ -1890,11 +2117,12 @@ describe("Garden logger server logic", () => {
         const makeRound = (roundId, weightCount = 22) => {
             const row = Array(appSheetBulkHeaders.length).fill("");
             row[0] = roundId;
-            row[3] = "Routine";
+            row[appSheetBulkActionIndex] = "Weigh";
+            row[appSheetBulkWeightStateIndex] = "Routine";
             for (let index = 0; index < weightCount; index += 1) {
-                row[4 + index] = 300 + index;
+                row[appSheetBulkWeightStartIndex + index] = 300 + index;
             }
-            row[29] = "Queued";
+            row[appSheetBulkStatusIndex] = "Queued";
             bulkSheet.__rows.push(row);
             return row;
         };
@@ -1921,14 +2149,20 @@ describe("Garden logger server logic", () => {
 
         expect(batches).toHaveLength(1);
         expect(batches[0]).toHaveLength(44);
-        expect(missingId[29]).toBe("Needs correction");
-        expect(missingId[30]).toMatch(/Round ID is required/i);
-        expect(duplicateOne[29]).toBe("Needs correction");
-        expect(duplicateTwo[30]).toMatch(/duplicated/i);
-        expect(emptyRound[30]).toMatch(/at least one plant weight/i);
-        expect(firstRound[29]).toBe("Saved");
-        expect(secondRound[29]).toBe("Saved");
-        expect(deferredRound[29]).toBe("Queued");
+        expect(missingId[appSheetBulkStatusIndex]).toBe("Needs correction");
+        expect(missingId[appSheetBulkStatusIndex + 1]).toMatch(
+            /Round ID is required/i
+        );
+        expect(duplicateOne[appSheetBulkStatusIndex]).toBe("Needs correction");
+        expect(duplicateTwo[appSheetBulkStatusIndex + 1]).toMatch(
+            /duplicated/i
+        );
+        expect(emptyRound[appSheetBulkStatusIndex + 1]).toMatch(
+            /at least one plant weight/i
+        );
+        expect(firstRound[appSheetBulkStatusIndex]).toBe("Saved");
+        expect(secondRound[appSheetBulkStatusIndex]).toBe("Saved");
+        expect(deferredRound[appSheetBulkStatusIndex]).toBe("Queued");
         expect(result.bulk).toMatchObject({
             queuedCount: 7,
             processedCount: 6,
@@ -1937,6 +2171,33 @@ describe("Garden logger server logic", () => {
             savedRequestCount: 44,
             needsCorrectionCount: 4,
             deferredCount: 1,
+        });
+    });
+
+    it("marks a round for correction when its derived request set is empty", () => {
+        const workbook = createLoggerWorkbook(["P01"]);
+        const round = Array(appSheetBulkHeaders.length).fill("");
+        round[0] = "EMPTY-DERIVED";
+        round[appSheetBulkActionIndex] = "Weigh";
+        round[appSheetBulkWeightStartIndex] = 410;
+        round[appSheetBulkStatusIndex] = "Queued";
+        workbook.sheets.get("App bulk").__rows.push(round);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+        context.appSheetBulkPayloadsFromRow_ = () => [];
+
+        const result = context.processQueuedAppSheetEntries();
+
+        expect(round[appSheetBulkStatusIndex]).toBe("Needs correction");
+        expect(round[appSheetBulkStatusIndex + 1]).toMatch(
+            /select at least one watered plant or enter at least one weight/i
+        );
+        expect(result.bulk).toMatchObject({
+            requestedCount: 0,
+            savedRequestCount: 0,
+            needsCorrectionCount: 1,
         });
     });
 
@@ -1958,8 +2219,9 @@ describe("Garden logger server logic", () => {
 
         const invalidWorkbook = createLoggerWorkbook(["P01"]);
         const invalidRound = Array(appSheetBulkHeaders.length).fill("");
-        invalidRound[4] = 350;
-        invalidRound[29] = "Queued";
+        invalidRound[appSheetBulkActionIndex] = "Weigh";
+        invalidRound[appSheetBulkWeightStartIndex] = 350;
+        invalidRound[appSheetBulkStatusIndex] = "Queued";
         invalidWorkbook.sheets.get("App bulk").__rows.push(invalidRound);
         const invalidContext = loadAppsScript(invalidWorkbook.history, {
             spreadsheet: invalidWorkbook.spreadsheet,
@@ -1971,7 +2233,7 @@ describe("Garden logger server logic", () => {
 
         const invalidResult = invalidContext.processQueuedAppSheetEntries();
 
-        expect(invalidRound[29]).toBe("Needs correction");
+        expect(invalidRound[appSheetBulkStatusIndex]).toBe("Needs correction");
         expect(invalidResult.bulk).toMatchObject({
             processedCount: 1,
             requestedCount: 0,
@@ -1981,8 +2243,9 @@ describe("Garden logger server logic", () => {
         const malformedWorkbook = createLoggerWorkbook(["P01"]);
         const malformedRound = Array(appSheetBulkHeaders.length).fill("");
         malformedRound[0] = "MALFORMED";
-        malformedRound[4] = 350;
-        malformedRound[29] = "Queued";
+        malformedRound[appSheetBulkActionIndex] = "Weigh";
+        malformedRound[appSheetBulkWeightStartIndex] = 350;
+        malformedRound[appSheetBulkStatusIndex] = "Queued";
         malformedWorkbook.sheets.get("App bulk").__rows.push(malformedRound);
         const malformedContext = loadAppsScript(malformedWorkbook.history, {
             spreadsheet: malformedWorkbook.spreadsheet,
@@ -1994,8 +2257,12 @@ describe("Garden logger server logic", () => {
 
         malformedContext.processQueuedAppSheetEntries();
 
-        expect(malformedRound[29]).toBe("Needs correction");
-        expect(malformedRound[30]).toBe("Malformed bulk row.");
+        expect(malformedRound[appSheetBulkStatusIndex]).toBe(
+            "Needs correction"
+        );
+        expect(malformedRound[appSheetBulkStatusIndex + 1]).toBe(
+            "Malformed bulk row."
+        );
     });
 
     it("defaults single-weight bulk rows and reports incomplete transient results", () => {
@@ -2004,8 +2271,8 @@ describe("Garden logger server logic", () => {
         const startedAt = new Date("2026-08-25T08:00:00-04:00");
         singleRound[0] = "SINGLE";
         singleRound[1] = startedAt;
-        singleRound[4] = 350;
-        singleRound[29] = "Queued";
+        singleRound[appSheetBulkWeightStartIndex] = 350;
+        singleRound[appSheetBulkStatusIndex] = "Queued";
         singleWorkbook.sheets.get("App bulk").__rows.push(singleRound);
         const singleContext = loadAppsScript(singleWorkbook.history, {
             spreadsheet: singleWorkbook.spreadsheet,
@@ -2024,7 +2291,9 @@ describe("Garden logger server logic", () => {
             weightState: "Routine",
             weight: 350,
         });
-        expect(singleRound[30]).toBe("1 weight saved.");
+        expect(singleRound[appSheetBulkStatusIndex + 1]).toBe(
+            "1 plant update saved."
+        );
 
         const retryWorkbook = createLoggerWorkbook([
             "P01",
@@ -2033,11 +2302,12 @@ describe("Garden logger server logic", () => {
         ]);
         const retryRound = Array(appSheetBulkHeaders.length).fill("");
         retryRound[0] = "INCOMPLETE";
-        retryRound[3] = "Wet";
-        retryRound[4] = 350;
-        retryRound[5] = 360;
-        retryRound[6] = 370;
-        retryRound[29] = "Queued";
+        retryRound[appSheetBulkActionIndex] = "Weigh";
+        retryRound[appSheetBulkWeightStateIndex] = "Wet";
+        retryRound[appSheetBulkWeightStartIndex] = 350;
+        retryRound[appSheetBulkWeightStartIndex + 1] = 360;
+        retryRound[appSheetBulkWeightStartIndex + 2] = 370;
+        retryRound[appSheetBulkStatusIndex] = "Queued";
         retryWorkbook.sheets.get("App bulk").__rows.push(retryRound);
         const retryContext = loadAppsScript(retryWorkbook.history, {
             spreadsheet: retryWorkbook.spreadsheet,
@@ -2053,8 +2323,8 @@ describe("Garden logger server logic", () => {
 
         const retryResult = retryContext.processQueuedAppSheetEntries();
 
-        expect(retryRound[29]).toBe("Retry");
-        expect(retryRound[30]).toMatch(
+        expect(retryRound[appSheetBulkStatusIndex]).toBe("Retry");
+        expect(retryRound[appSheetBulkStatusIndex + 1]).toMatch(
             /1 of 3 saved.*P02.*no result.*P03.*Try again/i
         );
         expect(retryResult.bulk).toMatchObject({
@@ -2068,9 +2338,10 @@ describe("Garden logger server logic", () => {
             const workbook = createLoggerWorkbook(["P01"]);
             const round = Array(appSheetBulkHeaders.length).fill("");
             round[0] = useError ? "ERROR" : "STRING";
-            round[3] = "Routine";
-            round[4] = 350;
-            round[29] = "Queued";
+            round[appSheetBulkActionIndex] = "Weigh";
+            round[appSheetBulkWeightStateIndex] = "Routine";
+            round[appSheetBulkWeightStartIndex] = 350;
+            round[appSheetBulkStatusIndex] = "Queued";
             workbook.sheets.get("App bulk").__rows.push(round);
             const context = loadAppsScript(workbook.history, {
                 spreadsheet: workbook.spreadsheet,
@@ -2085,8 +2356,8 @@ describe("Garden logger server logic", () => {
 
             const result = context.processQueuedAppSheetEntries();
 
-            expect(round[29]).toBe("Retry");
-            expect(round[30]).toBe("Server offline.");
+            expect(round[appSheetBulkStatusIndex]).toBe("Retry");
+            expect(round[appSheetBulkStatusIndex + 1]).toBe("Server offline.");
             expect(result.bulk.retryCount).toBe(1);
         });
     });
@@ -2099,7 +2370,8 @@ describe("Garden logger server logic", () => {
         });
         expect(existingContext.installAppSheetBulkSheet()).toMatchObject({
             created: false,
-            columnCount: 34,
+            migrated: false,
+            columnCount: 36,
             plantCount: 22,
         });
 
@@ -2124,6 +2396,49 @@ describe("Garden logger server logic", () => {
         expect(missingWorkbook.sheets.get("App bulk").__rows[0]).toEqual(
             appSheetBulkHeaders
         );
+
+        const legacyWorkbook = createLoggerWorkbook(["P01"]);
+        const legacyRow = Array(appSheetBulkLegacyHeaders.length).fill("");
+        legacyRow[0] = "LEGACY-ROUND";
+        legacyRow[3] = "Routine";
+        legacyRow[4] = 345;
+        legacyRow[29] = "Queued";
+        const legacySheet = createDataSheet("App bulk", [
+            [...appSheetBulkLegacyHeaders],
+            legacyRow,
+        ]);
+        legacySheet.__setParent(legacyWorkbook.spreadsheet);
+        legacyWorkbook.sheets.set("App bulk", legacySheet);
+        const legacyContext = loadAppsScript(legacyWorkbook.history, {
+            spreadsheet: legacyWorkbook.spreadsheet,
+            globals: legacyWorkbook.globals,
+        });
+
+        expect(legacyContext.installAppSheetBulkSheet()).toMatchObject({
+            created: false,
+            migrated: true,
+            columnCount: 36,
+        });
+        expect(legacySheet.__rows[0]).toEqual(appSheetBulkHeaders);
+        expect(legacySheet.__rows[1][appSheetBulkActionIndex]).toBe("Weigh");
+        expect(legacySheet.__rows[1][appSheetBulkWeightStateIndex]).toBe(
+            "Routine"
+        );
+        expect(legacySheet.__rows[1][appSheetBulkWeightStartIndex]).toBe(345);
+        expect(legacySheet.__rows[1][appSheetBulkStatusIndex]).toBe("Queued");
+
+        const shortSheet = createDataSheet("App bulk", [["Round ID"]]);
+        expect(legacyContext.migrateLegacyAppSheetBulkSheet_(shortSheet)).toBe(
+            false
+        );
+
+        const legacyHeaderOnly = createDataSheet("App bulk", [
+            [...appSheetBulkLegacyHeaders],
+        ]);
+        expect(
+            legacyContext.migrateLegacyAppSheetBulkSheet_(legacyHeaderOnly)
+        ).toBe(true);
+        expect(legacyHeaderOnly.__rows[0]).toEqual(appSheetBulkHeaders);
     });
 
     it("isolates missing and duplicated AppSheet queue identities", () => {
@@ -2664,7 +2979,7 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.10.0");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.11.0");
         expect(calls.toast[1]).toBe("Garden logger verified");
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
@@ -2953,9 +3268,14 @@ describe("Garden logger server logic", () => {
 
         expect(context.normalizeWebEntrySource_("")).toBe("Mobile logger");
         expect(context.normalizeWebEntrySource_("AppSheet")).toBe("AppSheet");
+        expect(context.normalizeWebEntrySource_("AppSheet bulk")).toBe(
+            "AppSheet bulk"
+        );
         expect(() =>
             context.normalizeWebEntrySource_("Unknown client")
-        ).toThrow(/Entry source must be Mobile logger or AppSheet/i);
+        ).toThrow(
+            /Entry source must be Mobile logger, AppSheet, or AppSheet bulk/i
+        );
 
         const validHeaders = createHistorySheet();
         context.ensureHistoryProvenanceColumns_(validHeaders);
@@ -4111,6 +4431,85 @@ describe("Garden logger server logic", () => {
         expect(emptyHeaders.__rows[0][16]).toBe("Nutrients used");
         expect(emptyHeaders.__rows[0][26]).toBe("Observation ID");
         expect(emptyHeaders.__rows[0][36]).toBe("Measurement unit");
+    });
+
+    it("distinguishes saved, partial, and noncontiguous request reservations", () => {
+        const completeRequestId = "garden-complete-12345";
+        const partialRequestId = "garden-partial-12345";
+        const noncontiguousRequestId = "garden-gapped-12345";
+        const history = createHistorySheet([
+            {
+                values: [
+                    new Date("2026-08-16T12:00:00Z"),
+                    "P01",
+                    "Weigh",
+                ],
+                requestId: completeRequestId,
+            },
+            {
+                values: [
+                    new Date("2026-08-16T12:00:00Z"),
+                    "P01",
+                    "Water",
+                ],
+                requestId: completeRequestId,
+            },
+            {
+                values: [
+                    new Date("2026-08-16T12:00:00Z"),
+                    "P02",
+                    "Weigh",
+                ],
+                requestId: noncontiguousRequestId,
+            },
+            {
+                values: [
+                    new Date("2026-08-16T12:00:00Z"),
+                    "P03",
+                    "Check",
+                ],
+                requestId: "garden-unrelated-12345",
+            },
+            {
+                values: [
+                    new Date("2026-08-16T12:00:00Z"),
+                    "P02",
+                    "Water",
+                ],
+                requestId: noncontiguousRequestId,
+            },
+            {
+                values: [
+                    "",
+                    "P04",
+                    "Measure",
+                ],
+                requestId: partialRequestId,
+            },
+        ]);
+        const context = loadAppsScript(history);
+
+        expect(
+            JSON.parse(
+                JSON.stringify(
+                    context.savedRequestStatus_(history, completeRequestId)
+                )
+            )
+        ).toEqual({ state: "saved", requestId: completeRequestId });
+        expect(
+            JSON.parse(
+                JSON.stringify(
+                    context.savedRequestStatus_(history, partialRequestId)
+                )
+            )
+        ).toEqual({ state: "incomplete", requestId: partialRequestId });
+        expect(
+            JSON.parse(
+                JSON.stringify(
+                    context.savedRequestStatus_(history, noncontiguousRequestId)
+                )
+            )
+        ).toEqual({ state: "incomplete", requestId: noncontiguousRequestId });
     });
 
     it("runs every Quick log onEdit path, including bulk and locked saves", () => {
