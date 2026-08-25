@@ -40,17 +40,18 @@ npm run test:logger:coverage
 
 The tests cover combined event inference, formula-safe text, request-ID
 validation, single and bulk History reconciliation, lost callbacks, late stale
-callbacks, the 20-second save watchdog, picker persistence, adjustable recent
-History, queue-storage failures, backup recovery, partial batch replies, and the
-Google Photos handoff. The coverage report measures the Apps Script server file
-directly and is uploaded to Codecov in CI. Statements, functions, and lines have
-90% CI floors. Branch coverage also has a 90% floor; the one-sided guards marked
-with `v8 ignore next` have explicit tests for both outcomes, but the V8 provider
-otherwise reports an uncovered synthetic alternate branch for those lines. The
-inline client script is exercised by DOM tests but is not included in the V8
-percentage, because treating the complete HTML file as JavaScript would produce
-a false source map. `npm run check:logger` remains a fast source-contract smoke
-check.
+callbacks, the direct-save watchdog, picker persistence, adjustable recent
+History, queue-storage failures and rollback, backup recovery, 22-entry
+6/6/6/4 queue sessions, progressive confirmation, bounded retry timing,
+deterministic failures, and the Google Photos handoff. The coverage report
+measures the Apps Script server file directly and is uploaded to Codecov in CI.
+Statements, functions, and lines have 90% CI floors. Branch coverage also has a
+90% floor; the one-sided guards marked with `v8 ignore next` have explicit tests
+for both outcomes, but the V8 provider otherwise reports an uncovered synthetic
+alternate branch for those lines. The inline client script is exercised by DOM
+tests but is not included in the V8 percentage, because treating the complete
+HTML file as JavaScript would produce a false source map. `npm run check:logger`
+remains a fast source-contract smoke check.
 
 For one-time `clasp` setup:
 
@@ -80,7 +81,7 @@ project. A push does not update the versioned web-app deployment by itself; the
 new version must still be assigned to the existing deployment.
 
 The mobile logger stores an unconfirmed request ID and draft locally before it
-calls Google. If the callback is lost, logger 5.8 checks History for that exact
+calls Google. If the callback is lost, logger 5.8.1 checks History for that exact
 request on timeout and page load. A completed save clears itself automatically;
 an absent or partial save keeps the draft available for an idempotent retry. If
 Google explicitly rejects a request and the follow-up History check confirms
@@ -110,21 +111,37 @@ Before the form clears or advances, the logger writes the complete queue to a
 primary browser-storage key, reads it back to verify the exact data, and keeps a
 second backup key. On reload it restores a missing or damaged primary copy from
 that backup and displays a warning so the entries can be reviewed. If storage is
-full or unavailable, the current form remains intact and the batch is not sent.
-When the round is ready, **Send queue** durably marks every request as attempted,
-then submits up to 50 observations in one Apps Script call. Every queued record
-has its own retry key, so a lost callback, screen rotation, timeout,
-storage-write failure, or partial batch can be reconciled and safely retried
-without duplicating successful entries that already arrived. Keep the browser's
-site data until the queue is empty; clearing browser data also clears unsent
-observations and their backup.
+full or unavailable, the current form remains intact and nothing is sent.
+
+One tap on **Send queue** starts a send session. Logger 5.8.1 automatically
+submits six observations at a time, so a 22-plant weighing round uses 6/6/6/4
+server calls without more taps. Before each call, exactly that chunk is marked
+as attempted and both browser-storage copies are read back and verified. The
+server validates the History schema and reads its request IDs once, builds all
+new rows in memory, and commits the chunk with one contiguous History write and
+one spreadsheet flush. The endpoint still accepts up to 50 observations for
+compatibility with older open tabs.
+
+After each response, the logger checks the expected plant and row count in
+History before durably removing confirmed IDs. The queue stays visible with
+exact confirmed and remaining counts. Missing IDs receive at most three
+automatic retries after 2, 5, and 10 seconds; validation errors, incomplete
+History reservations, and request conflicts remain queued for review. The
+45-second queue watchdog is informational and never enables a competing send or
+invalidates the original callback. Only after six minutes thirty seconds—past
+Apps Script's documented execution limit—does the client perform one final
+History reconciliation and stop the automatic session. Every unresolved request
+keeps its original retry ID, so later deliberate sends remain idempotent. Keep
+the browser's site data until the queue is empty; clearing browser data also
+clears unsent observations and their backup.
 
 The logger also listens for browser offline/online changes. It will not start a
 single, bulk-watering, or queued server save while the device reports that it is
 offline. Focus, visibility, and orientation changes no longer cancel an active
-request: they schedule one debounced recovery check, and only a request that has
-actually exceeded its watchdog is reconciled. This keeps a phone rotation from
-unlocking the form while Google is still writing.
+request. They schedule one debounced recovery check, while an active queue send
+remains exclusively controlled by its callback and six-minute-thirty-second
+limit. This keeps a phone rotation from unlocking the form while Google is still
+writing.
 
 ## Production-readiness audit
 
@@ -152,15 +169,18 @@ The main production safeguards are:
   types, and warning-only protections guard the managed identity and History
   provenance/status columns without blocking intentional maintenance.
 - **Safe batch behavior:** queue validation happens before the lock. One script
-  lock protects the write phase, each result is returned independently, and a
-  partial failure retains only the unresolved phone entries.
+  lock protects a chunk, the History identity/request columns are read once,
+  ordinary observations are written contiguously, and each result is returned
+  independently. A partial failure retains only unresolved phone entries after
+  History verifies the saved shape.
 - **Committed writes:** each locked spreadsheet mutation calls
   `SpreadsheetApp.flush()` before releasing the script lock. This follows
   Google's guidance for committing pending spreadsheet changes while exclusive
   access is still held.
 - **Asynchronous recovery:** every important `google.script.run` call has a
-  success and failure path. Lost callbacks, watchdog expiry, page restoration,
-  reconnects, and stale late replies all converge on request-ID reconciliation.
+  success and failure path. Queue callbacks remain valid past the informational
+  watchdog, missing IDs use bounded backoff, and page restoration reconciles
+  attempted IDs without silently resuming network writes.
 - **Touch hit-test safety:** touch devices keep the action bar in normal
   document flow instead of a sticky blurred compositor layer. Physical taps
   reported on action buttons or label-grid choices are rejected when their
@@ -171,8 +191,9 @@ The main production safeguards are:
   shared History snapshot supplies both current pot sizes and recent activity,
   eliminating duplicate full-ledger scans while keeping manual spreadsheet
   edits immediately visible. Plant records are also reused during queued saves,
-  and recent activity sorts timestamps in memory instead of depending on the
-  user's current sheet sort.
+  batch status checks scan all requested retry IDs together, and recent activity
+  sorts timestamps in memory instead of depending on the user's current sheet
+  sort.
 - **Versioned deployment:** production uses a versioned deployment whose
   deployment ID is updated in place, preserving the phone URL. Head deployments
   remain for testing only.

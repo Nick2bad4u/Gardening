@@ -72,6 +72,7 @@ function createDataValidationBuilder() {
 
 function createHistorySheet(observations = []) {
     const rangeReads = [];
+    const setValuesCalls = [];
     const protections = [];
     let maxRows = 100;
     const header = Array(39).fill("");
@@ -124,6 +125,7 @@ function createHistorySheet(observations = []) {
     return {
         __rows: rows,
         __rangeReads: rangeReads,
+        __setValuesCalls: setValuesCalls,
         __protections: protections,
         getName: () => "History",
         getLastRow: () => rows.length,
@@ -178,6 +180,12 @@ function createHistorySheet(observations = []) {
                     return range;
                 },
                 setValues(nextValues) {
+                    setValuesCalls.push({
+                        row,
+                        column,
+                        rowCount,
+                        columnCount,
+                    });
                     setRangeValues(row, column, nextValues);
                     return range;
                 },
@@ -651,7 +659,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.8.0");
+        expect(bootstrap.version).toBe("5.8.1");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -1077,6 +1085,154 @@ describe("Garden logger server logic", () => {
         ]);
     });
 
+    it("writes a 22-plant weighing round as four contiguous constant-I/O chunks", () => {
+        const plantIds = Array.from(
+            { length: 22 },
+            (_, index) => `P${String(index + 1).padStart(2, "0")}`
+        );
+        const workbook = createLoggerWorkbook(plantIds);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+        const payloads = plantIds.map((plantId, index) => ({
+            plantId,
+            requestId: `garden-chunk-${String(index + 1).padStart(2, "0")}-12345`,
+            observedAt: `2026-08-16T10:${String(index).padStart(2, "0")}:00-04:00`,
+            events: ["Weigh"],
+            weightState: "Routine",
+            weight: 400 + index,
+        }));
+        const chunks = [
+            payloads.slice(0, 6),
+            payloads.slice(6, 12),
+            payloads.slice(12, 18),
+            payloads.slice(18),
+        ];
+        const operationCounts = [];
+        let previousRangeCount = 0;
+
+        chunks.forEach((chunk) => {
+            const result = context.saveWebObservationBatch(chunk);
+            expect(result).toMatchObject({
+                ok: true,
+                savedCount: chunk.length,
+                failedCount: 0,
+            });
+            operationCounts.push(
+                workbook.history.__rangeReads.length - previousRangeCount
+            );
+            previousRangeCount = workbook.history.__rangeReads.length;
+        });
+
+        const historyWrites = workbook.history.__setValuesCalls.filter(
+            (call) =>
+                call.row >= 2 && call.column === 1 && call.columnCount === 39
+        );
+        expect(historyWrites).toEqual([
+            { row: 2, column: 1, rowCount: 6, columnCount: 39 },
+            { row: 8, column: 1, rowCount: 6, columnCount: 39 },
+            { row: 14, column: 1, rowCount: 6, columnCount: 39 },
+            { row: 20, column: 1, rowCount: 4, columnCount: 39 },
+        ]);
+        expect(Math.max(...operationCounts)).toBeLessThan(20);
+        expect(workbook.history.__rows.slice(1).map((row) => row[15])).toEqual(
+            payloads.map((payload) => payload.requestId)
+        );
+
+        chunks.forEach((chunk) => {
+            const retry = context.saveWebObservationBatch(chunk);
+            expect(retry.results.every((result) => result.duplicate)).toBe(
+                true
+            );
+        });
+        expect(workbook.history.__setValuesCalls).toHaveLength(4);
+        expect(workbook.history.__rows).toHaveLength(23);
+
+        const historyOperationCount = (count) => {
+            const comparisonWorkbook = createLoggerWorkbook(
+                plantIds.slice(0, 6)
+            );
+            const comparisonContext = loadAppsScript(
+                comparisonWorkbook.history,
+                {
+                    spreadsheet: comparisonWorkbook.spreadsheet,
+                    globals: comparisonWorkbook.globals,
+                }
+            );
+            comparisonContext.saveWebObservationBatch(
+                payloads.slice(0, count).map((payload) => ({
+                    ...payload,
+                    requestId: `${payload.requestId}-compare`,
+                }))
+            );
+            return comparisonWorkbook.history.__rangeReads.length;
+        };
+        expect(historyOperationCount(6)).toBe(historyOperationCount(1));
+    });
+
+    it("keeps Water second after Weigh and preserves batch measurement metadata", () => {
+        const workbook = createLoggerWorkbook(["P01", "P02"]);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+
+        const result = context.saveWebObservationBatch([
+            {
+                plantId: "P01",
+                requestId: "garden-wet-order-12345",
+                observedAt: "2026-08-16T10:00:00-04:00",
+                events: ["Weigh"],
+                weightState: "Wet",
+                weight: 1949,
+                nutrientsUsed: "No",
+            },
+            {
+                plantId: "P02",
+                requestId: "garden-measure-batch-12345",
+                observedAt: "2026-08-16T10:01:00-04:00",
+                events: ["Measure"],
+                height: 5,
+                width: 4,
+                measurementUnit: "in",
+                measurementQuality: "Measured",
+                measurementMethod: "Ruler",
+            },
+        ]);
+
+        expect(result.results.map((entry) => entry.historyRows)).toEqual([
+            2,
+            1,
+        ]);
+        expect(
+            workbook.history.__rows.slice(1, 3).map((row) => row[2])
+        ).toEqual(["Weigh", "Water"]);
+        expect(workbook.history.__rows[1][4]).toBe(1949);
+        expect(workbook.history.__rows[2][4]).toBe("");
+        expect(workbook.history.__rows[3][5]).toBe(12.7);
+        expect(workbook.history.__rows[3][6]).toBe(10.16);
+        expect(workbook.history.__rows[3][28]).toBe("Measured");
+        expect(workbook.history.__rows[3][34]).toBe("Ruler");
+        expect(workbook.history.__rows[3][36]).toBe("in");
+        const wetRetry = context.saveWebObservationBatch([
+            {
+                plantId: "P01",
+                requestId: "garden-wet-order-12345",
+                observedAt: "2026-08-16T10:00:00-04:00",
+                events: ["Weigh"],
+                weightState: "Wet",
+                weight: 1949,
+                nutrientsUsed: "No",
+            },
+        ]);
+        expect(wetRetry.results[0]).toMatchObject({
+            ok: true,
+            duplicate: true,
+            historyRows: 2,
+        });
+    });
+
     it("keeps a bad queued item isolated while saving valid neighbors", () => {
         const workbook = createLoggerWorkbook(["P01", "P02"]);
         const context = loadAppsScript(workbook.history, {
@@ -1098,18 +1254,133 @@ describe("Garden logger server logic", () => {
                 observedAt: "2026-08-16T10:01:00-04:00",
                 events: ["Measure"],
             },
+            {
+                plantId: "P01",
+                requestId: "short",
+                observedAt: "2026-08-16T10:02:00-04:00",
+                events: ["Weigh"],
+                weight: 411,
+            },
         ]);
 
         expect(result).toMatchObject({
             ok: false,
             savedCount: 1,
-            failedCount: 1,
+            failedCount: 2,
         });
         expect(result.results[1]).toMatchObject({
             ok: false,
             requestId: "garden-queue-bad-12345",
         });
         expect(result.results[1].message).toMatch(/height or width/i);
+        expect(result.results[2]).toMatchObject({
+            ok: false,
+            requestId: "short",
+            retryable: false,
+            errorCode: "VALIDATION",
+        });
+        expect(result.results[2].message).toMatch(/request ID is not valid/i);
+    });
+
+    it("keeps partial and conflicting request reservations non-retryable", () => {
+        const workbook = createLoggerWorkbook(["P01", "P02"]);
+        const partialRow = Array(39).fill("");
+        partialRow[0] = new Date("2026-08-16T12:00:00Z");
+        partialRow[1] = "P01";
+        partialRow[2] = "Weigh";
+        partialRow[15] = "garden-partial-batch-12345";
+        const conflictRow = Array(39).fill("");
+        conflictRow[0] = new Date("2026-08-16T12:01:00Z");
+        conflictRow[1] = "P02";
+        conflictRow[2] = "Weigh";
+        conflictRow[15] = "garden-conflict-batch-12345";
+        workbook.history.__rows.push(partialRow, conflictRow);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+
+        const result = context.saveWebObservationBatch([
+            {
+                plantId: "P01",
+                requestId: "garden-partial-batch-12345",
+                observedAt: "2026-08-16T12:00:00Z",
+                events: ["Weigh"],
+                weightState: "Wet",
+                weight: 450,
+                nutrientsUsed: "No",
+            },
+            {
+                plantId: "P02",
+                requestId: "garden-conflict-batch-12345",
+                observedAt: "2026-08-16T12:01:00Z",
+                events: ["Measure"],
+                height: 5,
+                measurementUnit: "in",
+            },
+        ]);
+
+        expect(result).toMatchObject({
+            ok: false,
+            savedCount: 0,
+            failedCount: 2,
+        });
+        expect(result.results).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    requestId: "garden-partial-batch-12345",
+                    retryable: false,
+                    errorCode: "HISTORY_CONFLICT",
+                }),
+                expect.objectContaining({
+                    requestId: "garden-conflict-batch-12345",
+                    retryable: false,
+                    errorCode: "HISTORY_CONFLICT",
+                }),
+            ])
+        );
+        expect(workbook.history.__setValuesCalls).toHaveLength(0);
+    });
+
+    it("repairs a correctly shaped but incomplete request reservation", () => {
+        const workbook = createLoggerWorkbook(["P01"]);
+        const reservedRow = Array(39).fill("");
+        reservedRow[1] = "P01";
+        reservedRow[2] = "Weigh";
+        reservedRow[15] = "garden-reserved-batch-12345";
+        workbook.history.__rows.push(reservedRow);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+        const payload = {
+            plantId: "P01",
+            requestId: "garden-reserved-batch-12345",
+            observedAt: "2026-08-16T12:00:00Z",
+            events: ["Weigh"],
+            weightState: "Routine",
+            weight: 450,
+        };
+
+        const result = context.saveWebObservationBatch([payload]);
+        const retry = context.saveWebObservationBatch([payload]);
+
+        expect(result).toMatchObject({
+            ok: true,
+            savedCount: 1,
+            failedCount: 0,
+        });
+        expect(retry.results[0]).toMatchObject({
+            ok: true,
+            duplicate: true,
+            historyRows: 1,
+        });
+        expect(workbook.history.__rows).toHaveLength(2);
+        expect(workbook.history.__rows[1][0]).toBeInstanceOf(Date);
+        expect(workbook.history.__rows[1][4]).toBe(450);
+        expect(workbook.history.__setValuesCalls).toEqual([
+            { row: 2, column: 1, rowCount: 1, columnCount: 39 },
+        ]);
     });
 
     it("archives an idempotent multi-plant watering round", () => {
@@ -1278,7 +1549,7 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.8.0");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.8.1");
         expect(calls.toast[1]).toBe("Garden logger verified");
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
@@ -1595,12 +1866,183 @@ describe("Garden logger server logic", () => {
                 state: "missing",
             },
         ]);
+        expect(
+            JSON.parse(
+                JSON.stringify(
+                    context.getWebBatchSaveStatus([
+                        {
+                            requestId,
+                            plantId: "P01",
+                        },
+                    ])
+                )
+            )
+        ).toEqual([
+            {
+                requestId,
+                state: "saved",
+                savedCount: 1,
+            },
+        ]);
+        expect(
+            JSON.parse(
+                JSON.stringify(
+                    context.getWebBatchSaveStatus([
+                        {
+                            requestId,
+                            plantId: "P01",
+                            expectedCount: 1,
+                        },
+                        {
+                            requestId: "garden-missing-67890",
+                            plantId: "P01",
+                            expectedCount: 2,
+                        },
+                    ])
+                )
+            )
+        ).toEqual([
+            {
+                requestId,
+                state: "saved",
+                savedCount: 1,
+                expectedCount: 1,
+            },
+            {
+                requestId: "garden-missing-67890",
+                state: "missing",
+                savedCount: 0,
+                expectedCount: 2,
+            },
+        ]);
+        const rangeCountBefore = history.__rangeReads.length;
+        context.getWebBatchSaveStatus(
+            Array.from({ length: 22 }, (_, index) => ({
+                requestId: `garden-status-${String(index).padStart(2, "0")}-12345`,
+                plantId: "P01",
+                expectedCount: 1,
+            }))
+        );
+        const twentyTwoStatusReads =
+            history.__rangeReads.length - rangeCountBefore;
+        const oneRangeCountBefore = history.__rangeReads.length;
+        context.getWebBatchSaveStatus([
+            {
+                requestId: "garden-one-status-12345",
+                plantId: "P01",
+                expectedCount: 1,
+            },
+        ]);
+        expect(history.__rangeReads.length - oneRangeCountBefore).toBe(
+            twentyTwoStatusReads
+        );
         expect(() => context.getWebBatchSaveStatus("not-an-array")).toThrow(
             /up to 50/i
         );
         expect(() =>
             context.getWebBatchSaveStatus([requestId, requestId])
         ).toThrow(/unique/i);
+        [
+            0,
+            11,
+            1.5,
+        ].forEach((expectedCount) => {
+            expect(() =>
+                context.getWebBatchSaveStatus([
+                    {
+                        requestId,
+                        plantId: "P01",
+                        expectedCount,
+                    },
+                ])
+            ).toThrow(/integer from 1 to 10/i);
+        });
+    });
+
+    it("reports wrong-plant, wrong-count, and noncontiguous batch shapes as incomplete", () => {
+        const requestId = "garden-shaped-status-12345";
+        const history = createHistorySheet([
+            {
+                requestId,
+                values: [
+                    new Date("2026-08-16T12:00:00Z"),
+                    "P01",
+                    "Weigh",
+                ],
+            },
+            {
+                requestId: "garden-between-status-12345",
+                values: [
+                    new Date("2026-08-16T12:00:30Z"),
+                    "P02",
+                    "Check",
+                ],
+            },
+            {
+                requestId,
+                values: [
+                    new Date("2026-08-16T12:01:00Z"),
+                    "P01",
+                    "Water",
+                ],
+            },
+        ]);
+        const spreadsheet = {
+            getSheetByName: (name) => (name === "History" ? history : null),
+        };
+        const context = loadAppsScript(history, { spreadsheet });
+
+        const [noncontiguous] = context.getWebBatchSaveStatus([
+            { requestId, plantId: "P01", expectedCount: 2 },
+        ]);
+        const [wrongPlant] = context.getWebBatchSaveStatus([
+            {
+                requestId: "garden-between-status-12345",
+                plantId: "P01",
+                expectedCount: 1,
+            },
+        ]);
+        const [wrongCount] = context.getWebBatchSaveStatus([
+            {
+                requestId: "garden-between-status-12345",
+                plantId: "P02",
+                expectedCount: 2,
+            },
+        ]);
+        expect(noncontiguous).toMatchObject({
+            state: "incomplete",
+            savedCount: 2,
+            expectedCount: 2,
+        });
+        expect(wrongPlant).toMatchObject({
+            state: "incomplete",
+            savedCount: 0,
+            expectedCount: 1,
+        });
+        expect(wrongCount).toMatchObject({
+            state: "incomplete",
+            savedCount: 1,
+            expectedCount: 2,
+        });
+    });
+
+    it("ignores completely blank rows when building a batch identity snapshot", () => {
+        const history = createHistorySheet([
+            {
+                requestId: "",
+                values: [
+                    "",
+                    "",
+                    "",
+                ],
+            },
+        ]);
+        const context = loadAppsScript(history);
+
+        const snapshot = context.historyObservationSnapshot_(history);
+
+        expect(snapshot.lastReservedRow).toBe(1);
+        expect(snapshot.rowsByRequest.size).toBe(0);
     });
 
     it("timestamps and infers Quick log events for partial edits", () => {
@@ -2140,22 +2582,60 @@ describe("Garden logger server logic", () => {
         expect(invalid.results[0].message).toBe("invalid queue item");
         context.prepareWebObservation_ = originalPrepare;
 
-        const originalAppend = context.appendPreparedWebObservation_;
+        const originalAppend = context.appendPreparedWebObservationBatch_;
         vm.runInContext(
-            'appendPreparedWebObservation_ = () => { throw new Error("spreadsheet write failed"); };',
+            'appendPreparedWebObservationBatch_ = () => { throw new Error("spreadsheet write failed"); };',
             context
         );
-        const failedError = context.saveWebObservationBatch([payload]);
-        expect(failedError.results[0].message).toBe("spreadsheet write failed");
+        expect(() => context.saveWebObservationBatch([payload])).toThrow(
+            "spreadsheet write failed"
+        );
 
-        context.appendPreparedWebObservation_ = () => {
-            throw "non-error failure";
-        };
-        const failedString = context.saveWebObservationBatch([
-            { ...payload, requestId: "garden-queue-edge-67890" },
+        vm.runInContext(
+            'appendPreparedWebObservationBatch_ = () => { throw "non-error failure"; };',
+            context
+        );
+        expect(() =>
+            context.saveWebObservationBatch([
+                { ...payload, requestId: "garden-queue-edge-67890" },
+            ])
+        ).toThrow("non-error failure");
+        context.appendPreparedWebObservationBatch_ = originalAppend;
+    });
+
+    it("normalizes a non-Error History conflict into a per-item batch result", () => {
+        const workbook = createLoggerWorkbook();
+        const existingRow = Array(39).fill("");
+        existingRow[0] = new Date("2026-08-16T12:00:00Z");
+        existingRow[1] = "P01";
+        existingRow[2] = "Weigh";
+        existingRow[15] = "garden-string-conflict-12345";
+        workbook.history.__rows.push(existingRow);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+        vm.runInContext(
+            'existingObservationResult_ = () => { throw "string conflict"; };',
+            context
+        );
+
+        const result = context.saveWebObservationBatch([
+            {
+                requestId: "garden-string-conflict-12345",
+                plantId: "P01",
+                events: ["Weigh"],
+                weight: 450,
+                observedAt: "2026-08-16T12:00:00Z",
+            },
         ]);
-        expect(failedString.results[0].message).toBe("non-error failure");
-        context.appendPreparedWebObservation_ = originalAppend;
+
+        expect(result.results[0]).toMatchObject({
+            ok: false,
+            retryable: false,
+            errorCode: "HISTORY_CONFLICT",
+            message: "string conflict",
+        });
     });
 
     it("rejects invalid and locked bulk watering rounds", () => {

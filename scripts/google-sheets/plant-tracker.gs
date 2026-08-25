@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.8.0",
+    version: "5.8.1",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -474,9 +474,12 @@ function appendPreparedWebObservation_(spreadsheet, prepared) {
         );
     }
 
+    return webObservationResult_(prepared, result);
+}
+
+function webObservationResult_(prepared, result) {
     const { plant } = prepared;
     const { requestId, plantId } = prepared.observation;
-
     return {
         ok: true,
         duplicate: result.duplicate,
@@ -524,10 +527,24 @@ function saveWebObservationBatch(payloads) {
         throw new Error("Send at most 50 queued observations at a time.");
     }
 
-    const requestIds = payloads.map((payload) =>
-        normalizeRequestId_(payload && payload.requestId, true)
-    );
-    if (new Set(requestIds).size !== requestIds.length) {
+    const results = Array(payloads.length).fill(null);
+    const requestIds = payloads.map((payload, index) => {
+        try {
+            return normalizeRequestId_(payload && payload.requestId, true);
+        } catch (error) {
+            results[index] = {
+                ok: false,
+                requestId: cleanText_(payload && payload.requestId),
+                plantId: cleanText_(payload && payload.plantId),
+                retryable: false,
+                errorCode: "VALIDATION",
+                message: error instanceof Error ? error.message : String(error),
+            };
+            return "";
+        }
+    });
+    const validRequestIds = requestIds.filter(Boolean);
+    if (new Set(validRequestIds).size !== validRequestIds.length) {
         throw new Error(
             "Every queued observation must have a unique request ID."
         );
@@ -535,9 +552,9 @@ function saveWebObservationBatch(payloads) {
 
     const spreadsheet = getGardenSpreadsheet_();
     const plantRecords = plantRecordsById_(spreadsheet);
-    const results = Array(payloads.length).fill(null);
     const prepared = [];
     payloads.forEach((payload, index) => {
+        if (results[index]) return;
         try {
             prepared.push({
                 index,
@@ -552,6 +569,8 @@ function saveWebObservationBatch(payloads) {
                 ok: false,
                 requestId: requestIds[index],
                 plantId: cleanText_(payload && payload.plantId),
+                retryable: false,
+                errorCode: "VALIDATION",
                 message: error instanceof Error ? error.message : String(error),
             };
         }
@@ -568,29 +587,55 @@ function saveWebObservationBatch(payloads) {
         );
     }
 
+    const startedAt = Date.now();
     try {
-        prepared.forEach(({ index, value: entry }) => {
-            try {
-                results[index] = appendPreparedWebObservation_(
+        appendPreparedWebObservationBatch_(spreadsheet, prepared, results);
+        prepared
+            .filter(
+                (item) =>
+                    results[item.index] &&
+                    results[item.index].ok &&
+                    item.value.observation.eventNames.includes("Repot")
+            )
+            .forEach((item) =>
+                updateBaselinePotSetup_(
                     spreadsheet,
-                    entry
-                );
-            } catch (error) {
-                results[index] = {
-                    ok: false,
-                    requestId: entry.observation.requestId,
-                    plantId: entry.observation.plantId,
-                    plantName: entry.plant.name,
-                    message:
-                        error instanceof Error ? error.message : String(error),
-                };
-            }
-        });
+                    item.value.observation.plantId,
+                    item.value.observation.potSetup
+                )
+            );
     } finally {
-        flushAndReleaseLock_(lock);
+        try {
+            flushAndReleaseLock_(lock);
+        } finally {
+            const completedResults = results.filter(Boolean);
+            console.info(
+                JSON.stringify({
+                    loggerVersion: GARDEN_LOGGER.version,
+                    operation: "saveWebObservationBatch",
+                    requestedCount: payloads.length,
+                    newRowCount: completedResults.reduce(
+                        (count, result) =>
+                            count +
+                            (result.ok && !result.duplicate
+                                ? result.historyRows
+                                : 0),
+                        0
+                    ),
+                    duplicateCount: completedResults.filter(
+                        (result) => result.ok && result.duplicate
+                    ).length,
+                    failureCount:
+                        payloads.length -
+                        completedResults.filter((result) => result.ok).length,
+                    elapsedMs: Date.now() - startedAt,
+                })
+            );
+        }
     }
 
-    return batchObservationResult_(results);
+    const batchResult = batchObservationResult_(results);
+    return batchResult;
 }
 
 function batchObservationResult_(results) {
@@ -605,6 +650,121 @@ function batchObservationResult_(results) {
                 ? `${savedCount} queued observation${savedCount === 1 ? "" : "s"} saved.`
                 : `${savedCount} queued observation${savedCount === 1 ? "" : "s"} saved; ${results.length - savedCount} still need attention.`,
     };
+}
+
+function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
+    const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
+    prepareHistoryForObservationWrites_(history);
+    const snapshot = historyObservationSnapshot_(history);
+    let nextRow = Math.max(snapshot.lastReservedRow + 1, 2);
+    const repairs = [];
+    const newRows = [];
+    let newRowsStart = 0;
+    const pendingResults = [];
+
+    items.forEach(({ index, value: prepared }) => {
+        const input = prepared.observation;
+        const requestId = input.requestId;
+        try {
+            const existing = snapshot.rowsByRequest.get(requestId) || [];
+            if (existing.length) {
+                const existingResult = existingObservationResult_(
+                    input,
+                    requestId,
+                    existing.map((entry) => entry.rowNumber),
+                    existing.map((entry) => entry.values)
+                );
+                if (existingResult) {
+                    results[index] = webObservationResult_(
+                        prepared,
+                        existingResult
+                    );
+                    return;
+                }
+            }
+
+            const targetRow = existing.length ? existing[0].rowNumber : nextRow;
+            const recordedAt = new Date();
+            const storedRows = storedObservationRows_(
+                input,
+                requestId,
+                targetRow,
+                recordedAt
+            );
+            if (existing.length) {
+                repairs.push({ targetRow, storedRows });
+            } else {
+                if (!newRowsStart) newRowsStart = targetRow;
+                newRows.push(...storedRows);
+                nextRow += storedRows.length;
+            }
+            pendingResults.push({
+                index,
+                prepared,
+                result: observationWriteResult_(
+                    input,
+                    requestId,
+                    targetRow,
+                    recordedAt,
+                    false
+                ),
+            });
+        } catch (error) {
+            results[index] = {
+                ok: false,
+                requestId,
+                plantId: input.plantId,
+                plantName: prepared.plant.name,
+                retryable: false,
+                errorCode: "HISTORY_CONFLICT",
+                message: error instanceof Error ? error.message : String(error),
+            };
+        }
+    });
+
+    repairs.forEach(({ targetRow, storedRows }) =>
+        writeStoredObservationRows_(history, targetRow, storedRows)
+    );
+    if (newRows.length) {
+        writeStoredObservationRows_(history, newRowsStart, newRows);
+    }
+    pendingResults.forEach(({ index, prepared, result }) => {
+        results[index] = webObservationResult_(prepared, result);
+    });
+}
+
+function historyObservationSnapshot_(history) {
+    const rowCount = Math.max(0, history.getLastRow() - 1);
+    const rowsByRequest = new Map();
+    /* v8 ignore next -- Empty and populated History snapshots are both tested; V8 reports a synthetic alternate branch. */
+    if (!rowCount) return { lastReservedRow: 1, rowsByRequest };
+
+    const identities = history.getRange(2, 1, rowCount, 3).getValues();
+    const recordedAndPotSetup = history
+        .getRange(2, 10, rowCount, 2)
+        .getValues();
+    const requestIds = history
+        .getRange(2, GARDEN_LOGGER.requestIdColumn, rowCount, 1)
+        .getDisplayValues();
+    let lastReservedRow = 1;
+    identities.forEach((identity, index) => {
+        const rowNumber = index + 2;
+        const requestId = cleanText_(requestIds[index][0]);
+        if (cleanText_(identity[0]) || cleanText_(identity[1]) || requestId) {
+            lastReservedRow = rowNumber;
+        }
+        if (!requestId) return;
+
+        const values = Array(GARDEN_LOGGER.historyColumns).fill("");
+        values[0] = identity[0];
+        values[1] = identity[1];
+        values[2] = identity[2];
+        values[9] = recordedAndPotSetup[index][0];
+        values[10] = recordedAndPotSetup[index][1];
+        if (!rowsByRequest.has(requestId)) rowsByRequest.set(requestId, []);
+        rowsByRequest.get(requestId).push({ rowNumber, values });
+    });
+    return { lastReservedRow, rowsByRequest };
 }
 
 function saveBulkWaterObservation(payload) {
@@ -739,14 +899,15 @@ function getWebSaveStatus(payload) {
     };
 }
 
-function getWebBatchSaveStatus(requestIds) {
-    if (!Array.isArray(requestIds) || requestIds.length > 50) {
+function getWebBatchSaveStatus(requests) {
+    if (!Array.isArray(requests) || requests.length > 50) {
         throw new Error("Provide up to 50 queued request IDs.");
     }
-    const normalized = requestIds.map((requestId) =>
-        normalizeRequestId_(requestId, true)
-    );
-    if (new Set(normalized).size !== normalized.length) {
+    const normalized = requests.map(normalizeBatchStatusRequest_);
+    if (
+        new Set(normalized.map(({ requestId }) => requestId)).size !==
+        normalized.length
+    ) {
         throw new Error("Queued request IDs must be unique.");
     }
 
@@ -754,10 +915,70 @@ function getWebBatchSaveStatus(requestIds) {
     const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
     assertHeaders_(history, HISTORY_HEADERS, 1);
     ensureHistoryRequestIdColumn_(history);
-    return normalized.map((requestId) => ({
-        requestId,
-        ...savedRequestStatus_(history, requestId),
-    }));
+    const snapshot = historyObservationSnapshot_(history);
+    return normalized.map((request) =>
+        savedRequestStatusFromSnapshot_(snapshot, request)
+    );
+}
+
+function normalizeBatchStatusRequest_(request) {
+    if (typeof request === "string") {
+        return { requestId: normalizeRequestId_(request, true) };
+    }
+    const requestId = normalizeRequestId_(request && request.requestId, true);
+    const plantId = cleanText_(request && request.plantId);
+    const rawExpectedCount = request && request.expectedCount;
+    if (rawExpectedCount === undefined || rawExpectedCount === null) {
+        return { requestId, plantId };
+    }
+    const expectedCount = Number(rawExpectedCount);
+    if (
+        !Number.isInteger(expectedCount) ||
+        expectedCount < 1 ||
+        expectedCount > WEB_EVENT_OPTIONS.length + 1
+    ) {
+        throw new Error(
+            "Expected History rows must be an integer from 1 to 10."
+        );
+    }
+    return { requestId, plantId, expectedCount };
+}
+
+function savedRequestStatusFromSnapshot_(snapshot, request) {
+    const entries = snapshot.rowsByRequest.get(request.requestId) || [];
+    const expectedCount = request.expectedCount;
+    const includeShape =
+        Boolean(request.plantId) || expectedCount !== undefined;
+    /* v8 ignore next -- Missing and present request IDs are both tested; V8 reports a synthetic alternate branch. */
+    if (!entries.length) {
+        return {
+            state: "missing",
+            requestId: request.requestId,
+            ...(includeShape ? { savedCount: 0 } : {}),
+            ...(expectedCount !== undefined ? { expectedCount } : {}),
+        };
+    }
+
+    const contiguous = entries.every(
+        (entry, index) => entry.rowNumber === entries[0].rowNumber + index
+    );
+    const completeEntries = entries.filter(
+        ({ values }) =>
+            values[0] instanceof Date &&
+            cleanText_(values[1]) &&
+            cleanText_(values[2]) &&
+            (!request.plantId || cleanText_(values[1]) === request.plantId)
+    );
+    const expectedShape =
+        (expectedCount === undefined || entries.length === expectedCount) &&
+        completeEntries.length === entries.length;
+    const state = contiguous && expectedShape ? "saved" : "incomplete";
+    return {
+        state,
+        requestId: request.requestId,
+        ...(includeShape ? { savedCount: completeEntries.length } : {}),
+        ...(expectedCount !== undefined ? { expectedCount } : {}),
+    };
 }
 
 function onEdit(event) {
@@ -1175,78 +1396,113 @@ function archiveQuickLogRow_(quickLog, rowNumber) {
 
 function appendObservation_(spreadsheet, input) {
     const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
-    assertHeaders_(history, HISTORY_HEADERS, 1);
-    ensureHistoryGrid_(history);
-    ensureHistoryRequestIdColumn_(history);
-    ensureHistoryDetailColumns_(history);
-    ensureHistoryProvenanceColumns_(history);
-    ensureHistoryMeasurementColumns_(history);
+    prepareHistoryForObservationWrites_(history);
 
     const requestId = normalizeRequestId_(input.requestId);
     const existingRequestRows = historyRowsForRequest_(history, requestId);
-    /* v8 ignore next -- New writes and matching retries are both tested; V8 reports a synthetic alternate branch. */
     if (existingRequestRows.length) {
-        const expectedRows = input.eventNames.length;
-        const firstRow = existingRequestRows[0];
-        const contiguous = existingRequestRows.every(
-            (rowNumber, index) => rowNumber === firstRow + index
-        );
-        if (existingRequestRows.length !== expectedRows || !contiguous) {
-            throw new Error(
-                "This saved request has an unexpected History shape. Open History and check the newest rows before retrying."
-            );
-        }
-
         const existingValues = history
-            .getRange(firstRow, 1, expectedRows, GARDEN_LOGGER.historyColumns)
+            .getRange(
+                existingRequestRows[0],
+                1,
+                existingRequestRows.length,
+                GARDEN_LOGGER.historyColumns
+            )
             .getValues();
-        const complete = existingValues.every(
-            (row) =>
-                row[0] instanceof Date &&
-                cleanText_(row[1]) &&
-                cleanText_(row[2])
+        const existingResult = existingObservationResult_(
+            input,
+            requestId,
+            existingRequestRows,
+            existingValues
         );
-        /* v8 ignore next -- Complete retries and interrupted reservations are both tested; V8 reports a synthetic alternate branch. */
-        if (complete) {
-            const sameRequest = existingValues.every(
-                (row, index) =>
-                    cleanText_(row[1]) === input.plantId &&
-                    cleanText_(row[2]) === input.eventNames[index]
-            );
-            /* v8 ignore next -- Matching and mismatched retries are both tested; V8 reports a synthetic alternate branch. */
-            if (!sameRequest) {
-                throw new Error(
-                    "This retry no longer matches the entry that was already saved. Refresh to restore the pending entry."
-                );
-            }
-            return {
-                duplicate: true,
-                requestId,
-                eventNames: [...input.eventNames],
-                historyRows: expectedRows,
-                observationDate: existingValues[0][0],
-                recordedAt:
-                    existingValues[0][9] instanceof Date
-                        ? existingValues[0][9]
-                        : new Date(),
-                potSetup: positiveInteger_(
-                    existingValues[0][10] || input.potSetup || 1,
-                    "Pot setup"
-                ),
-                targetRow: firstRow,
-            };
-        }
+        if (existingResult) return existingResult;
     }
 
     const targetRow = existingRequestRows.length
         ? existingRequestRows[0]
         : Math.max(lastHistoryReservedRow_(history) + 1, 2);
     const recordedAt = new Date();
+    const storedRows = storedObservationRows_(
+        input,
+        requestId,
+        targetRow,
+        recordedAt
+    );
+    writeStoredObservationRows_(history, targetRow, storedRows);
+    return observationWriteResult_(
+        input,
+        requestId,
+        targetRow,
+        recordedAt,
+        false
+    );
+}
+
+function prepareHistoryForObservationWrites_(history) {
+    assertHeaders_(history, HISTORY_HEADERS, 1);
+    ensureHistoryGrid_(history);
+    ensureHistoryRequestIdColumn_(history);
+    ensureHistoryDetailColumns_(history);
+    ensureHistoryProvenanceColumns_(history);
+    ensureHistoryMeasurementColumns_(history);
+}
+
+function existingObservationResult_(
+    input,
+    requestId,
+    existingRequestRows,
+    existingValues
+) {
+    const expectedRows = input.eventNames.length;
+    const firstRow = existingRequestRows[0];
+    const contiguous = existingRequestRows.every(
+        (rowNumber, index) => rowNumber === firstRow + index
+    );
+    if (existingRequestRows.length !== expectedRows || !contiguous) {
+        throw new Error(
+            "This saved request has an unexpected History shape. Open History and check the newest rows before retrying."
+        );
+    }
+
+    const complete = existingValues.every(
+        (row) =>
+            row[0] instanceof Date && cleanText_(row[1]) && cleanText_(row[2])
+    );
+    /* v8 ignore next -- Complete retries and incomplete reservations are both tested; V8 reports a synthetic alternate branch. */
+    if (!complete) return null;
+
+    const sameRequest = existingValues.every(
+        (row, index) =>
+            cleanText_(row[1]) === input.plantId &&
+            cleanText_(row[2]) === input.eventNames[index]
+    );
+    if (!sameRequest) {
+        throw new Error(
+            "This retry no longer matches the entry that was already saved. Refresh to restore the pending entry."
+        );
+    }
+    return observationWriteResult_(
+        input,
+        requestId,
+        firstRow,
+        existingValues[0][9] instanceof Date
+            ? existingValues[0][9]
+            : new Date(),
+        true,
+        existingValues[0][0],
+        positiveInteger_(
+            existingValues[0][10] || input.potSetup || 1,
+            "Pot setup"
+        )
+    );
+}
+
+function storedObservationRows_(input, requestId, targetRow, recordedAt) {
     const safeCondition = safeSheetText_(input.condition);
     const safeNotes = safeSheetText_(input.notes);
     const safeCurrentLabel = safeSheetText_(input.currentLabel);
     const details = input.details || {};
-    const storedRows = input.eventNames.map((eventName, index) => {
+    return input.eventNames.map((eventName, index) => {
         const rowNumber = targetRow + index;
         const primaryEvent = index === 0;
         const core = [
@@ -1288,7 +1544,9 @@ function appendObservation_(spreadsheet, input) {
             ...historyMeasurementRow_(input, eventName, rowNumber),
         ];
     });
+}
 
+function writeStoredObservationRows_(history, targetRow, storedRows) {
     const requiredLastRow = targetRow + storedRows.length - 1;
     if (requiredLastRow > history.getMaxRows()) {
         history.insertRowsAfter(
@@ -1310,14 +1568,24 @@ function appendObservation_(spreadsheet, input) {
     history
         .getRange(targetRow, 10, storedRows.length, 1)
         .setNumberFormat("M/d/yyyy h:mm:ss am/pm");
+}
 
+function observationWriteResult_(
+    input,
+    requestId,
+    targetRow,
+    recordedAt,
+    duplicate,
+    observationDate = input.observationDate,
+    potSetup = input.potSetup
+) {
     return {
-        duplicate: false,
+        duplicate,
         requestId,
         eventNames: [...input.eventNames],
-        historyRows: storedRows.length,
-        observationDate: input.observationDate,
-        potSetup: input.potSetup,
+        historyRows: input.eventNames.length,
+        observationDate,
+        potSetup,
         recordedAt,
         targetRow,
     };
@@ -1553,7 +1821,13 @@ function plantRecordsById_(spreadsheet) {
             potSetup || 1,
         ])
     );
-    const potSizes = latestPotSizesByPlant_(spreadsheet);
+    const needsPotSizeFallback = rows.some(
+        (row) => !cleanText_(row[currentPotSizeColumn - 1])
+    );
+    /* v8 ignore next -- Tracker-provided and History-fallback pot sizes are both tested; V8 reports a synthetic alternate branch. */
+    const potSizes = needsPotSizeFallback
+        ? latestPotSizesByPlant_(spreadsheet)
+        : new Map();
     const records = new Map();
     rows.forEach((row, index) => {
         const plantId = cleanText_(row[0]);

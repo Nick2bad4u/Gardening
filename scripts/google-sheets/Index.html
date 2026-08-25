@@ -1931,6 +1931,8 @@
                 plantPickerMode: "list",
                 recentLimit: 10,
                 queue: [],
+                queueSendSession: null,
+                queueSendSummary: null,
                 queueStorageAvailable: true,
                 queueStorageWarning: "",
                 viewportRepairTimer: null,
@@ -1950,6 +1952,10 @@
                 "gardenLoggerObservationQueueRecoveryV1";
             const SAVE_WATCHDOG_MS = 20000;
             const QUEUE_WATCHDOG_MS = 45000;
+            const QUEUE_EXECUTION_LIMIT_MS = 390000;
+            const QUEUE_STATUS_TIMEOUT_MS = 45000;
+            const QUEUE_CHUNK_SIZE = 6;
+            const QUEUE_RETRY_DELAYS_MS = [2000, 5000, 10000];
 
             const $ = (id) => document.getElementById(id);
 
@@ -2149,6 +2155,16 @@
 
             function setSaving(saving) {
                 state.saving = saving;
+                [$("entryForm"), $("bulkWaterForm")].forEach((form) =>
+                    form
+                        .querySelectorAll("button, input, select, textarea")
+                        .forEach((control) => {
+                            control.disabled = saving;
+                        })
+                );
+                [$("singleModeTab"), $("bulkModeTab")].forEach((button) => {
+                    button.disabled = saving;
+                });
                 $("saveButton").disabled = saving;
                 $("queueButton").disabled = saving;
                 $("clearButton").disabled = saving;
@@ -2360,7 +2376,10 @@
                 }
             }
 
-            function persistObservationQueue(nextQueue) {
+            function persistObservationQueue(
+                nextQueue,
+                { requireBackup = false } = {}
+            ) {
                 if (!state.queueStorageAvailable) {
                     throw new Error(
                         "Phone storage is unavailable. The queue was not changed, and the current form was kept."
@@ -2368,7 +2387,28 @@
                 }
                 const serialized = JSON.stringify(nextQueue);
                 parseObservationQueue(serialized);
+                const previousPrimary = localStorage.getItem(
+                    OBSERVATION_QUEUE_KEY
+                );
+                const previousBackup = localStorage.getItem(
+                    OBSERVATION_QUEUE_BACKUP_KEY
+                );
                 try {
+                    if (requireBackup) {
+                        localStorage.setItem(
+                            OBSERVATION_QUEUE_BACKUP_KEY,
+                            serialized
+                        );
+                        if (
+                            localStorage.getItem(
+                                OBSERVATION_QUEUE_BACKUP_KEY
+                            ) !== serialized
+                        ) {
+                            throw new Error(
+                                "Queue backup verification did not match."
+                            );
+                        }
+                    }
                     localStorage.setItem(OBSERVATION_QUEUE_KEY, serialized);
                     if (
                         localStorage.getItem(OBSERVATION_QUEUE_KEY) !==
@@ -2376,22 +2416,74 @@
                     ) {
                         throw new Error("Queue verification did not match.");
                     }
-                    try {
-                        localStorage.setItem(
-                            OBSERVATION_QUEUE_BACKUP_KEY,
-                            serialized
-                        );
-                    } catch (backupError) {
-                        state.queueStorageWarning =
-                            "The queue is saved, but its extra browser backup could not be refreshed.";
+                    if (!requireBackup) {
+                        try {
+                            localStorage.setItem(
+                                OBSERVATION_QUEUE_BACKUP_KEY,
+                                serialized
+                            );
+                        } catch (backupError) {
+                            state.queueStorageWarning =
+                                "The queue is saved, but its extra browser backup could not be refreshed.";
+                        }
                     }
                     state.queue = nextQueue;
                     return true;
                 } catch (error) {
+                    if (requireBackup) {
+                        try {
+                            if (previousBackup === null) {
+                                localStorage.removeItem(
+                                    OBSERVATION_QUEUE_BACKUP_KEY
+                                );
+                            } else {
+                                localStorage.setItem(
+                                    OBSERVATION_QUEUE_BACKUP_KEY,
+                                    previousBackup
+                                );
+                            }
+                            if (previousPrimary === null) {
+                                localStorage.removeItem(OBSERVATION_QUEUE_KEY);
+                            } else {
+                                localStorage.setItem(
+                                    OBSERVATION_QUEUE_KEY,
+                                    previousPrimary
+                                );
+                            }
+                        } catch (rollbackError) {
+                            // The in-memory queue and whichever pre-write copy
+                            // survived still preserve every unresolved ID.
+                        }
+                    }
                     state.queueStorageWarning =
                         "The phone could not durably store this queue change. Nothing was cleared; free browser storage or reload before retrying.";
                     throw new Error(state.queueStorageWarning);
                 }
+            }
+
+            function verifyObservationQueueCopies(requestIds) {
+                const expectedIds = new Set(requestIds);
+                const copies = [
+                    localStorage.getItem(OBSERVATION_QUEUE_KEY),
+                    localStorage.getItem(OBSERVATION_QUEUE_BACKUP_KEY),
+                ];
+                const verified = copies.every((serialized) => {
+                    if (serialized === null) return false;
+                    const storedIds = new Set(
+                        parseObservationQueue(serialized).map(
+                            (entry) => entry.requestId
+                        )
+                    );
+                    return [...expectedIds].every((requestId) =>
+                        storedIds.has(requestId)
+                    );
+                });
+                if (!verified) {
+                    throw new Error(
+                        "The phone could not verify both durable queue copies."
+                    );
+                }
+                return true;
             }
 
             function inferredPayloadEvents(payload) {
@@ -2485,6 +2577,13 @@
                 const card = $("queueCard");
                 const list = $("queueList");
                 const count = state.queue.length;
+                const sendSession = state.queueSendSession;
+                if (
+                    state.queueSendSummary &&
+                    state.queueSendSummary.remaining !== count
+                ) {
+                    state.queueSendSummary = null;
+                }
                 const weighedPlantIds = queuedWeighedPlantIds();
                 const plantCount = state.bootstrap
                     ? state.bootstrap.plants.length
@@ -2497,9 +2596,17 @@
                     `${count} queued observation${count === 1 ? "" : "s"}`
                 );
                 card.classList.toggle("queue-complete", allPlantsWeighed);
-                $("queueProgress").textContent = allPlantsWeighed
-                    ? `✓ All ${plantCount} plants have a weight safely queued on this device.`
-                    : `${weighedPlantIds.size} of ${plantCount} plants have a weight safely queued.`;
+                if (sendSession) {
+                    $("queueProgress").textContent =
+                        `${sendSession.confirmedIds.size} confirmed · ${count} remaining`;
+                } else if (state.queueSendSummary) {
+                    $("queueProgress").textContent =
+                        `${state.queueSendSummary.confirmed} confirmed · ${count} still safely queued`;
+                } else {
+                    $("queueProgress").textContent = allPlantsWeighed
+                        ? `✓ All ${plantCount} plants have a weight safely queued on this device.`
+                        : `${weighedPlantIds.size} of ${plantCount} plants have a weight safely queued.`;
+                }
                 const warning = $("queueStorageWarning");
                 warning.textContent = state.queueStorageWarning;
                 warning.hidden = !state.queueStorageWarning;
@@ -2561,9 +2668,11 @@
                     (!count && !state.queueStorageWarning);
                 $("queueSendButton").disabled = state.saving || !count;
                 $("queueClearButton").disabled = state.saving || !count;
-                $("queueSendButton").textContent = count
-                    ? `Send ${count} queued`
-                    : "Send queue";
+                $("queueSendButton").textContent = sendSession
+                    ? `Sending ${sendSession.confirmedIds.size} of ${sendSession.initialTotal}…`
+                    : count
+                      ? `Send ${count} queued`
+                      : "Send queue";
                 renderQueuedPlantIndicators(weighedPlantIds);
             }
 
@@ -2659,6 +2768,7 @@
                             addedAt: new Date().toISOString(),
                         },
                     ];
+                    state.queueSendSummary = null;
                     persistObservationQueue(nextQueue);
                     renderObservationQueue();
                     showToast(
@@ -2674,6 +2784,7 @@
             function removeQueuedObservation(requestId) {
                 if (state.saving) return;
                 try {
+                    state.queueSendSummary = null;
                     persistObservationQueue(
                         state.queue.filter(
                             (entry) => entry.requestId !== requestId
@@ -2694,6 +2805,7 @@
                 )
                     return;
                 try {
+                    state.queueSendSummary = null;
                     persistObservationQueue([]);
                     renderObservationQueue();
                     showToast("Phone queue cleared.");
@@ -3439,119 +3551,391 @@
                     );
                     return;
                 }
-                const attemptedQueue = state.queue.map((entry) => ({
-                    ...entry,
-                    attemptedAt: new Date().toISOString(),
-                    error: "",
-                }));
-                try {
-                    persistObservationQueue(attemptedQueue);
-                } catch (error) {
-                    renderObservationQueue();
-                    showToast(
-                        `${error.message} The queue was not sent because retry safety could not be guaranteed.`,
-                        true,
-                        12000
+                clearSaveTimer();
+                state.saveAttempt += 1;
+                state.queueSendSummary = null;
+                state.queueSendSession = {
+                    id: state.saveAttempt,
+                    initialTotal: state.queue.length,
+                    eligibleIds: new Set(
+                        state.queue.map((entry) => entry.requestId)
+                    ),
+                    confirmedIds: new Set(),
+                    currentIds: [],
+                    retryIndex: 0,
+                    callToken: 0,
+                    watchdogTimer: null,
+                    hardTimer: null,
+                    statusTimer: null,
+                    retryTimer: null,
+                };
+                state.saveStartedAt = Date.now();
+                state.saveTimeoutMs = QUEUE_EXECUTION_LIMIT_MS;
+                setSaving(true);
+                renderObservationQueue();
+                sendNextObservationQueueChunk();
+            }
+
+            function queueStatusDescriptor(entry) {
+                return {
+                    requestId: entry.requestId,
+                    plantId: entry.payload.plantId,
+                    expectedCount: inferredPayloadEvents(entry.payload).length,
+                };
+            }
+
+            function activeQueueSendSession(session, callToken) {
+                return (
+                    state.queueSendSession === session &&
+                    session.id === state.saveAttempt &&
+                    (callToken === undefined || callToken === session.callToken)
+                );
+            }
+
+            function clearQueueCallTimers(session) {
+                clearTimeout(session.watchdogTimer);
+                clearTimeout(session.hardTimer);
+                clearTimeout(session.statusTimer);
+                session.watchdogTimer = null;
+                session.hardTimer = null;
+                session.statusTimer = null;
+            }
+
+            function sendNextObservationQueueChunk(retryIds = null) {
+                const session = state.queueSendSession;
+                if (!session || !activeQueueSendSession(session)) return;
+                if (!browserIsOnline()) {
+                    finishObservationQueueSession(
+                        "The connection went offline. Every unresolved observation is still safely queued.",
+                        true
                     );
                     return;
                 }
-                renderObservationQueue();
 
-                const requestIds = state.queue.map((entry) => entry.requestId);
-                const requestPayloads = state.queue.map((entry) => ({
+                const queuedById = new Map(
+                    state.queue.map((entry) => [entry.requestId, entry])
+                );
+                const entries = (
+                    retryIds
+                        ? retryIds.map((requestId) => queuedById.get(requestId))
+                        : state.queue.filter((entry) =>
+                              session.eligibleIds.has(entry.requestId)
+                          )
+                )
+                    .filter(Boolean)
+                    .slice(0, QUEUE_CHUNK_SIZE);
+                if (!entries.length) {
+                    const remaining = state.queue.length;
+                    finishObservationQueueSession(
+                        remaining
+                            ? `${session.confirmedIds.size} confirmed · ${remaining} still safely queued. The remaining entries need review before another send.`
+                            : `All ${session.confirmedIds.size} observations were confirmed in History.`,
+                        remaining > 0
+                    );
+                    return;
+                }
+                if (!retryIds) session.retryIndex = 0;
+                session.currentIds = entries.map((entry) => entry.requestId);
+
+                const attemptedAt = new Date().toISOString();
+                const attemptedIds = new Set(session.currentIds);
+                const attemptedQueue = state.queue.map((entry) =>
+                    attemptedIds.has(entry.requestId)
+                        ? { ...entry, attemptedAt, error: "" }
+                        : entry
+                );
+                try {
+                    persistObservationQueue(attemptedQueue, {
+                        requireBackup: true,
+                    });
+                    verifyObservationQueueCopies(session.currentIds);
+                } catch (error) {
+                    finishObservationQueueSession(
+                        `${error.message} Nothing was sent because retry safety could not be guaranteed.`,
+                        true
+                    );
+                    return;
+                }
+
+                const requestPayloads = entries.map((entry) => ({
                     ...entry.payload,
                     requestId: entry.requestId,
                 }));
-                const attemptId = beginSaveAttempt(QUEUE_WATCHDOG_MS);
+                const callToken = ++session.callToken;
+                state.saveStartedAt = Date.now();
+                state.saveTimeoutMs = QUEUE_EXECUTION_LIMIT_MS;
+                renderObservationQueue();
                 $("connectionStatus").textContent =
-                    `Sending ${requestPayloads.length} queued observation${requestPayloads.length === 1 ? "" : "s"}…`;
-                state.saveTimer = setTimeout(() => {
-                    if (attemptId !== state.saveAttempt) return;
-                    setSaving(false);
+                    `${session.confirmedIds.size} confirmed · sending ${requestPayloads.length} · ${state.queue.length} remaining`;
+                session.watchdogTimer = setTimeout(() => {
+                    if (!activeQueueSendSession(session, callToken)) return;
                     $("connectionStatus").textContent =
-                        "Queue still processing · checking History";
+                        "Google is still processing this chunk…";
                     showToast(
-                        "Google is taking longer than expected. The full queue is still stored on this phone while the logger checks History.",
-                        true,
+                        "Google is still processing. The queue remains safely stored, and Send will stay disabled until this request finishes.",
+                        false,
                         12000
                     );
-                    reconcileObservationQueue(requestIds);
                 }, QUEUE_WATCHDOG_MS);
+                session.hardTimer = setTimeout(() => {
+                    if (!activeQueueSendSession(session, callToken)) return;
+                    clearQueueCallTimers(session);
+                    const statusToken = ++session.callToken;
+                    $("connectionStatus").textContent =
+                        "Execution window ended · checking History once";
+                    reconcileActiveObservationChunk(
+                        session,
+                        statusToken,
+                        { results: [] },
+                        { hardStop: true }
+                    );
+                }, QUEUE_EXECUTION_LIMIT_MS);
 
                 google.script.run
                     .withSuccessHandler((result) => {
-                        if (attemptId !== state.saveAttempt) return;
-                        completeObservationQueueBatch(result, attemptId);
+                        if (!activeQueueSendSession(session, callToken)) return;
+                        clearQueueCallTimers(session);
+                        const statusToken = ++session.callToken;
+                        reconcileActiveObservationChunk(
+                            session,
+                            statusToken,
+                            result || { results: [] }
+                        );
                     })
                     .withFailureHandler((error) => {
-                        if (!finishSaveAttempt(attemptId)) return;
-                        $("connectionStatus").textContent =
-                            "Queue kept on phone · retry is safe";
-                        showToast(
-                            error && error.message
-                                ? error.message
-                                : "Google did not confirm the queue. Nothing was discarded.",
-                            true,
-                            12000
-                        );
-                        reconcileObservationQueue(requestIds, {
-                            allowRetryIfMissing: true,
+                        if (!activeQueueSendSession(session, callToken)) return;
+                        clearQueueCallTimers(session);
+                        const statusToken = ++session.callToken;
+                        reconcileActiveObservationChunk(session, statusToken, {
+                            results: [],
+                            transportError: error,
                         });
                     })
                     .saveWebObservationBatch(requestPayloads);
             }
 
-            function completeObservationQueueBatch(result, attemptId) {
-                if (!finishSaveAttempt(attemptId)) return;
+            function reconcileActiveObservationChunk(
+                session,
+                callToken,
+                batchResult,
+                { hardStop = false } = {}
+            ) {
+                if (!activeQueueSendSession(session, callToken)) return;
+                const currentIds = new Set(session.currentIds);
+                const currentEntries = state.queue.filter((entry) =>
+                    currentIds.has(entry.requestId)
+                );
+                if (!currentEntries.length) {
+                    sendNextObservationQueueChunk();
+                    return;
+                }
+                const descriptors = currentEntries.map(queueStatusDescriptor);
+                session.statusTimer = setTimeout(() => {
+                    if (!activeQueueSendSession(session, callToken)) return;
+                    session.callToken += 1;
+                    finishObservationQueueSession(
+                        "History verification also took too long. No unresolved entry was removed; the queue is safe to send again later.",
+                        true
+                    );
+                }, QUEUE_STATUS_TIMEOUT_MS);
+                google.script.run
+                    .withSuccessHandler((statuses) => {
+                        if (!activeQueueSendSession(session, callToken)) return;
+                        clearQueueCallTimers(session);
+                        applyReconciledObservationChunk(
+                            session,
+                            statuses || [],
+                            batchResult,
+                            hardStop
+                        );
+                    })
+                    .withFailureHandler(() => {
+                        if (!activeQueueSendSession(session, callToken)) return;
+                        clearQueueCallTimers(session);
+                        finishObservationQueueSession(
+                            "Google returned from the save, but History could not be verified. Every unresolved entry remains safely queued.",
+                            true
+                        );
+                    })
+                    .getWebBatchSaveStatus(descriptors);
+            }
+
+            function applyReconciledObservationChunk(
+                session,
+                statuses,
+                batchResult,
+                hardStop
+            ) {
+                if (!activeQueueSendSession(session)) return;
+                const currentIds = new Set(session.currentIds);
+                const statusByRequest = new Map(
+                    statuses.map((status) => [status.requestId, status])
+                );
                 const resultByRequest = new Map(
-                    (result.results || []).map((entry) => [
-                        entry.requestId,
-                        entry,
+                    (batchResult.results || []).map((result) => [
+                        result.requestId,
+                        result,
                     ])
                 );
+                const retryIds = [];
                 const nextQueue = state.queue.flatMap((entry) => {
-                    const saved = resultByRequest.get(entry.requestId);
-                    if (saved && saved.ok) return [];
-                    return [
-                        {
-                            ...entry,
-                            attemptedAt: "",
-                            error:
-                                (saved && saved.message) ||
-                                "Google did not return a result for this entry. Send the queue again safely.",
-                        },
-                    ];
+                    if (!currentIds.has(entry.requestId)) return [entry];
+                    const status = statusByRequest.get(entry.requestId);
+                    const result = resultByRequest.get(entry.requestId);
+                    if (status && status.state === "saved") {
+                        session.confirmedIds.add(entry.requestId);
+                        session.eligibleIds.delete(entry.requestId);
+                        return [];
+                    }
+                    if (status && status.state === "incomplete") {
+                        session.eligibleIds.delete(entry.requestId);
+                        return [
+                            {
+                                ...entry,
+                                attemptedAt: "",
+                                error: "Part of this request exists in History, but its expected rows are incomplete or conflicting. It was not retried automatically.",
+                            },
+                        ];
+                    }
+                    if (!status || status.state !== "missing") {
+                        session.eligibleIds.delete(entry.requestId);
+                        return [
+                            {
+                                ...entry,
+                                attemptedAt: "",
+                                error: "Google did not return a usable History status for this entry. It was kept and not retried automatically.",
+                            },
+                        ];
+                    }
+                    if (result && result.retryable === false) {
+                        session.eligibleIds.delete(entry.requestId);
+                        return [
+                            {
+                                ...entry,
+                                attemptedAt: "",
+                                error:
+                                    result.message ||
+                                    "This entry needs correction before it can be sent.",
+                            },
+                        ];
+                    }
+                    if (hardStop) {
+                        session.eligibleIds.delete(entry.requestId);
+                        return [
+                            {
+                                ...entry,
+                                attemptedAt: "",
+                                error: "This entry was not confirmed before the execution window ended. It remains safe for a later deliberate send.",
+                            },
+                        ];
+                    }
+                    retryIds.push(entry.requestId);
+                    return [{ ...entry, attemptedAt: "", error: "" }];
                 });
+
                 try {
-                    persistObservationQueue(nextQueue);
+                    persistObservationQueue(nextQueue, {
+                        requireBackup: true,
+                    });
                 } catch (error) {
-                    renderObservationQueue();
-                    $("connectionStatus").textContent =
-                        "History may be updated · queue retained for verification";
-                    showToast(
-                        "Google replied, but the phone could not update its queue copy. Reload to reconcile these request IDs with History; resending is also safe.",
-                        true,
-                        14000
+                    finishObservationQueueSession(
+                        "History was checked, but the phone could not durably store the reduced queue. The full pre-confirmation queue remains available for idempotent recovery.",
+                        true
                     );
                     return;
                 }
                 renderObservationQueue();
-                $("connectionStatus").textContent =
-                    state.queue.length > 0
-                        ? "Some queued entries need attention"
-                        : "Connected to the spreadsheet";
-                showToast(result.message, result.failedCount > 0, 9000);
-                refreshRecent();
+
+                if (hardStop) {
+                    finishObservationQueueSession(
+                        `${session.confirmedIds.size} confirmed · ${state.queue.length} still safely queued after the execution limit.`,
+                        state.queue.length > 0
+                    );
+                    return;
+                }
+                if (retryIds.length) {
+                    if (session.retryIndex >= QUEUE_RETRY_DELAYS_MS.length) {
+                        const exhaustedIds = new Set(retryIds);
+                        const exhaustedQueue = state.queue.map((entry) =>
+                            exhaustedIds.has(entry.requestId)
+                                ? {
+                                      ...entry,
+                                      attemptedAt: "",
+                                      error: "Not confirmed after the initial send and three automatic retries. It remains safely queued for a later deliberate send.",
+                                  }
+                                : entry
+                        );
+                        try {
+                            persistObservationQueue(exhaustedQueue, {
+                                requireBackup: true,
+                            });
+                        } catch (error) {
+                            // The verified queue from immediately before this
+                            // cosmetic error update remains the durable source.
+                        }
+                        finishObservationQueueSession(
+                            `${session.confirmedIds.size} confirmed · ${state.queue.length} still safely queued after retries.`,
+                            true
+                        );
+                        return;
+                    }
+                    const delay = QUEUE_RETRY_DELAYS_MS[session.retryIndex++];
+                    $("connectionStatus").textContent =
+                        `${session.confirmedIds.size} confirmed · retrying ${retryIds.length} missing in ${delay / 1000}s`;
+                    session.retryTimer = setTimeout(() => {
+                        session.retryTimer = null;
+                        if (!activeQueueSendSession(session)) return;
+                        sendNextObservationQueueChunk(retryIds);
+                    }, delay);
+                    return;
+                }
+
+                session.currentIds = [];
+                session.retryIndex = 0;
+                sendNextObservationQueueChunk();
+            }
+
+            function finishObservationQueueSession(message, isError) {
+                const session = state.queueSendSession;
+                if (!session) return;
+                clearQueueCallTimers(session);
+                clearTimeout(session.retryTimer);
+                session.retryTimer = null;
+                const confirmed = session.confirmedIds.size;
+                const remaining = state.queue.length;
+                state.queueSendSession = null;
+                state.queueSendSummary = remaining
+                    ? { confirmed, remaining }
+                    : null;
+                state.saveAttempt += 1;
+                state.saveStartedAt = 0;
+                state.saveTimeoutMs = 0;
+                setSaving(false);
+                renderObservationQueue();
+                $("connectionStatus").textContent = remaining
+                    ? `${confirmed} confirmed · ${remaining} safely queued`
+                    : "Connected to the spreadsheet";
+                showToast(message, isError, isError ? 14000 : 9000);
+                if (confirmed) refreshRecent();
             }
 
             function reconcileObservationQueue(requestIds, options = {}) {
                 const currentIds = new Set(
                     state.queue.map((entry) => entry.requestId)
                 );
-                const ids = [...new Set(requestIds)].filter((requestId) =>
-                    currentIds.has(requestId)
-                );
+                const ids = [
+                    ...new Set(
+                        requestIds.map((request) =>
+                            typeof request === "string"
+                                ? request
+                                : request.requestId
+                        )
+                    ),
+                ].filter((requestId) => currentIds.has(requestId));
                 if (!ids.length) return;
+                const descriptors = state.queue
+                    .filter((entry) => ids.includes(entry.requestId))
+                    .map(queueStatusDescriptor);
 
                 google.script.run
                     .withSuccessHandler((statuses) => {
@@ -3576,7 +3960,7 @@
                                             : entry.attemptedAt,
                                     error:
                                         status.state === "incomplete"
-                                            ? "Part of this observation reached History. Send the queue again to finish it safely."
+                                            ? "Part of this observation reached History, but the expected rows are incomplete. It was kept for review and will not be resent automatically."
                                             : entry.error,
                                 },
                             ];
@@ -3603,7 +3987,7 @@
                     .withFailureHandler(() => {
                         renderObservationQueue();
                     })
-                    .getWebBatchSaveStatus(ids);
+                    .getWebBatchSaveStatus(descriptors);
             }
 
             function refreshRecent() {
@@ -3833,6 +4217,7 @@
                     renderObservationQueue();
                     return;
                 }
+                if (state.queueSendSession) return;
                 if (state.saving) {
                     const elapsed = Date.now() - state.saveStartedAt;
                     if (elapsed <= state.saveTimeoutMs + 1000) return;
