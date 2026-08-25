@@ -81,7 +81,7 @@ project. A push does not update the versioned web-app deployment by itself; the
 new version must still be assigned to the existing deployment.
 
 The mobile logger stores an unconfirmed request ID and draft locally before it
-calls Google. If the callback is lost, logger 5.8.2 checks History for that exact
+calls Google. If the callback is lost, logger 5.8.2 and later check History for that exact
 request on timeout and page load. A completed save clears itself automatically;
 an absent or partial save keeps the draft available for an idempotent retry. If
 Google explicitly rejects a request and the follow-up History check confirms
@@ -113,7 +113,7 @@ second backup key. On reload it restores a missing or damaged primary copy from
 that backup and displays a warning so the entries can be reviewed. If storage is
 full or unavailable, the current form remains intact and nothing is sent.
 
-One tap on **Send queue** starts a send session. Logger 5.8.2 submits the entire
+One tap on **Send queue** starts a send session. Logger 5.8.2 and later submit the entire
 durably stored queue—up to 50 observations—in one server call. Before the call,
 every submitted entry is marked as attempted and both browser-storage copies are
 read back and verified. The server validates the History schema and reads its
@@ -143,6 +143,106 @@ request. They schedule one debounced recovery check, while an active queue send
 remains exclusively controlled by its callback and six-minute-thirty-second
 limit. This keeps a phone rotation from unlocking the form while Google is still
 writing.
+
+## AppSheet companion intake
+
+The AppSheet companion is a second phone-friendly entry surface, not a second
+database. Its writable table is the workbook's flat `App entries` sheet. The
+app must keep `Plant tracker`, `Baselines`, and `History` read-only; saved care
+records still enter the canonical ledger only through
+`processAppSheetEntry(entryId)` and `saveWebObservationBatch()` in
+[`plant-tracker.gs`](./plant-tracker.gs). Never configure an AppSheet form,
+action, or automation to add or edit `History` directly.
+
+Each intake row has a stable `Entry ID` key and a deterministic
+`appsheet-{Entry ID}` request ID. That makes automation retries idempotent: a
+lost callback can safely call the bridge again without duplicating History
+events. One AppSheet entry may select several events, and the bridge applies the
+same validation, formulas, provenance, measurement conversion, pot-setup
+handling, and event ordering as the mobile logger. When Weigh and Water are
+recorded together, History stores Weigh first and Water second so the displayed
+order makes it clear that the weight is the post-watering reading.
+
+The AppSheet form contract is:
+
+- `Plant ID` is a required Ref to `Plant tracker`; `Events` is a required
+  EnumList containing Water, Weigh, Measure, Check, Repot, Flower, Photo, Pest,
+  and Other.
+- Event-specific fields use `Show_If` and `Required_If` rules. Weigh requires a
+  positive weight. Measure requires at least height or width and accepts inches
+  or centimeters. Water records whether nutrients were used. Repot requires a
+  pot size. Photo requires a URL, and Pest requires both the issue and action.
+- New measurements default to inches, `Measured`, and `Ruler`; the server still
+  normalizes chart values to centimeters while preserving the entered unit and
+  derived inch values.
+- `Created by`, `Created at`, request ID, History row count, and the save receipt
+  are system fields. Users may inspect the status but must not edit the receipt.
+
+Keep the `Log care` form's column order explicit so receipt fields cannot drift
+back into the entry surface when the source schema changes. The form ends with
+`Treatment / action`, omits `Status`, `Status message`, and `Saved at`, and keeps
+Save/Cancel at the top for long phone forms. Read-only plant and History cards
+must not expose edit or delete actions; their action bars are limited to useful
+navigation such as `Log care`, the field guide, and the referenced plant. The
+`Needs attention` view keeps Edit, plant/photo navigation, and `Retry save`, but
+does not expose Delete.
+
+New AppSheet rows start with `Status = Queued`. Do not configure an AppSheet
+**Call a script** task for this bridge. AppSheet currently supports only
+[standalone Apps Script projects](https://support.google.com/appsheet/answer/11997142),
+while the production logger is intentionally container-bound. Copying the
+writer into a standalone project would give it a separate script lock and allow
+the AppSheet and mobile writers to race.
+
+Instead, deploy the bridge with the existing bound logger and run
+`installAppSheetQueueTrigger()` once from its Apps Script editor. The
+idempotent installer keeps one time-driven trigger for
+`processQueuedAppSheetEntries()`. Every minute, that function processes up to
+50 `Queued` or `Retry` rows in one canonical batch through
+`saveWebObservationBatch()`. This keeps AppSheet and the mobile logger inside
+the same project lock. AppSheet requires no access to an Apps Script project,
+and the companion app should not contain a second save bot. The status written
+back to the intake row is authoritative:
+
+- `Saved` means the expected History event rows are complete.
+- `Needs correction` means the entry failed deterministic validation; keep the
+  row editable, show `Status message`, and require a deliberate retry after the
+  input is corrected.
+- `Retry` means infrastructure was busy or unavailable. Keep the original
+  request ID so the same entry remains safe to submit again.
+
+The prominent `Retry save` action is available only when `Status` is `Needs
+correction`. It changes only `Status` to `Retry`; it preserves the original
+request ID and every observation field. Keep the status column visible in
+receipt/detail views but hidden from forms with
+`CONTEXT("ViewType") <> "Form"`, so users cannot manually rewrite the receipt.
+Use narrow receipt formatting rather than recoloring the whole row: saved status
+and timestamp use a green success treatment, queued retries use amber, and
+`Needs correction` status/message use red. These rules make the current state
+scannable without masking the observation fields that need correction.
+
+Production access must require Google sign-in, must not allow every signed-in
+user, and should be restricted to the workbook owner or an explicit allowlist.
+The workbook uses spreadsheet formulas and queued form rows must reach the
+workbook promptly, so leave server caching, delta sync, and quick sync disabled;
+enable sync on start and automatic updates; and disable delayed sync. The bound
+trigger normally archives a queued entry within one minute, and the next app
+sync retrieves its receipt. The app may start offline so a field note can remain
+queued until connectivity returns, but do not cache every image and file for
+offline use.
+The app's primary views should expose the plant collection, current baselines,
+active History, new-care form, and any intake rows needing correction. Remove
+AppSheet table definitions for generated dashboards, individual `P01`–`P22`
+pages, and other presentation-only sheets; removing those definitions does not
+delete the underlying Google Sheets tabs.
+
+The visual identity assets are
+[`garden-plant-tracker-icon.png`](../../assets/appsheet/garden-plant-tracker-icon.png)
+and
+[`garden-plant-tracker-launch.png`](../../assets/appsheet/garden-plant-tracker-launch.png).
+Keep the compact cactus-and-scale icon for the app/header mark and use the wide
+plant-shelf artwork as the launch image. Both belong to this personal tracker;
+they are not evidence of a plant identification or licensed archive photos.
 
 ## Production-readiness audit
 

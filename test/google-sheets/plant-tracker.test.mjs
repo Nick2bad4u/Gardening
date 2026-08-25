@@ -58,6 +58,40 @@ const historyMeasurementHeaders = [
     "Width (in)",
 ];
 
+const appSheetEntryHeaders = [
+    "Entry ID",
+    "Started at",
+    "Plant ID",
+    "Events",
+    "Weight state",
+    "Weight (g)",
+    "Height",
+    "Width",
+    "Measurement unit",
+    "Plant condition",
+    "Soil moisture",
+    "Notes",
+    "Nutrients used",
+    "Nutrient product",
+    "Nutrient amount",
+    "Pot size",
+    "Medium / substrate",
+    "Measurement quality",
+    "Measurement method",
+    "Flower count",
+    "Flower details",
+    "Photo URL",
+    "Pest / issue",
+    "Treatment / action",
+    "Created by",
+    "Created at",
+    "Status",
+    "Status message",
+    "Request ID",
+    "History rows",
+    "Saved at",
+];
+
 function createDataValidationBuilder() {
     const builder = {
         requireValueInList: () => builder,
@@ -459,6 +493,10 @@ function createLoggerWorkbook(plantIds = ["P01"], historyOptions = {}) {
         ],
         ["Baselines", createDataSheet("Baselines", baselineRows)],
         ["History", history],
+        [
+            "App entries",
+            createDataSheet("App entries", [[...appSheetEntryHeaders]]),
+        ],
     ]);
     const spreadsheet = {
         getSheetByName: (name) => sheets.get(name) ?? null,
@@ -499,8 +537,8 @@ describe("Garden logger server logic", () => {
                 )
             )
         ).toEqual([
-            "Water",
             "Weigh",
+            "Water",
             "Measure",
             "Check",
         ]);
@@ -725,7 +763,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.8.2");
+        expect(bootstrap.version).toBe("5.9.0");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -1135,20 +1173,32 @@ describe("Garden logger server logic", () => {
                 events: ["Measure"],
                 height: 12,
             },
+            {
+                plantId: "P01",
+                requestId: "garden-queue-repot-12345",
+                observedAt: "2026-08-16T10:02:00-04:00",
+                events: ["Repot"],
+                potSize: "5 in",
+            },
         ]);
         expect(result).toMatchObject({
             ok: true,
-            savedCount: 2,
+            savedCount: 3,
             failedCount: 0,
         });
         expect(result.results.map((entry) => entry.plantId)).toEqual([
             "P01",
             "P02",
+            "P01",
         ]);
         expect(workbook.history.__rows.slice(1).map((row) => row[15])).toEqual([
             "garden-queue-one-12345",
             "garden-queue-two-12345",
+            "garden-queue-repot-12345",
         ]);
+        expect(
+            workbook.sheets.get("Baselines").getRange(2, 20).getValues()[0][0]
+        ).toBe(2);
     });
 
     it("clears inherited AL/AM validation before a batch write and in the installer", () => {
@@ -1341,6 +1391,537 @@ describe("Garden logger server logic", () => {
             duplicate: true,
             historyRows: 2,
         });
+    });
+
+    it("archives an AppSheet intake row through the canonical batch writer", () => {
+        const workbook = createLoggerWorkbook(["P01"]);
+        const entry = Array(appSheetEntryHeaders.length).fill("");
+        entry[0] = "A1B2C3D4";
+        entry[1] = new Date("2026-08-16T10:00:00-04:00");
+        entry[2] = "P01";
+        entry[3] = "Water, Weigh";
+        entry[4] = "Wet";
+        entry[5] = 1949;
+        entry[8] = "in";
+        entry[12] = "No";
+        entry[26] = "Queued";
+        workbook.sheets.get("App entries").__rows.push(entry);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+
+        const result = context.processAppSheetEntry("A1B2C3D4");
+
+        expect(result).toMatchObject({
+            ok: true,
+            duplicate: false,
+            entryId: "A1B2C3D4",
+            requestId: "appsheet-A1B2C3D4",
+            historyRows: 2,
+        });
+        expect(
+            workbook.history.__rows.slice(1, 3).map((row) => row[2])
+        ).toEqual(["Weigh", "Water"]);
+        expect(
+            workbook.history.__rows.slice(1, 3).map((row) => row[27])
+        ).toEqual(["AppSheet", "AppSheet"]);
+        expect(entry[26]).toBe("Saved");
+        expect(entry[28]).toBe("appsheet-A1B2C3D4");
+        expect(entry[29]).toBe(2);
+        expect(entry[30]).toBeInstanceOf(Date);
+
+        const retry = context.processAppSheetEntry("A1B2C3D4");
+        expect(retry).toMatchObject({
+            ok: true,
+            duplicate: true,
+            historyRows: 2,
+        });
+        expect(workbook.history.__rows).toHaveLength(3);
+    });
+
+    it("stores AppSheet measurement units and leaves validation errors editable", () => {
+        const workbook = createLoggerWorkbook(["P01", "P02"]);
+        const measurement = Array(appSheetEntryHeaders.length).fill("");
+        measurement[0] = "E5F6A7B8";
+        measurement[1] = new Date("2026-08-16T10:01:00-04:00");
+        measurement[2] = "P01";
+        measurement[3] = "Measure";
+        measurement[6] = 5;
+        measurement[7] = 4;
+        measurement[8] = "in";
+        measurement[17] = "Measured";
+        measurement[18] = "Ruler";
+        measurement[26] = "Queued";
+        const invalidWater = Array(appSheetEntryHeaders.length).fill("");
+        invalidWater[0] = "C9D0E1F2";
+        invalidWater[1] = new Date("2026-08-16T10:02:00-04:00");
+        invalidWater[2] = "P02";
+        invalidWater[3] = "Water";
+        invalidWater[26] = "Queued";
+        const entries = workbook.sheets.get("App entries");
+        entries.__rows.push(measurement, invalidWater);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+
+        const measured = context.processAppSheetEntry("E5F6A7B8");
+        const rejected = context.processAppSheetEntry("C9D0E1F2");
+
+        expect(measured.ok).toBe(true);
+        expect(workbook.history.__rows[1][5]).toBe(12.7);
+        expect(workbook.history.__rows[1][6]).toBe(10.16);
+        expect(workbook.history.__rows[1][36]).toBe("in");
+        expect(workbook.history.__rows[1][37]).toBe('=IF(F2="","",F2/2.54)');
+        expect(workbook.history.__rows[1][38]).toBe('=IF(G2="","",G2/2.54)');
+        expect(rejected).toMatchObject({
+            ok: false,
+            retryable: false,
+            entryId: "C9D0E1F2",
+        });
+        expect(invalidWater[26]).toBe("Needs correction");
+        expect(invalidWater[27]).toMatch(/nutrients/i);
+        expect(invalidWater[28]).toBe("appsheet-C9D0E1F2");
+        expect(workbook.history.__rows).toHaveLength(2);
+    });
+
+    it("marks an AppSheet intake row Retry when infrastructure is busy", () => {
+        const workbook = createLoggerWorkbook(["P01"]);
+        const entry = Array(appSheetEntryHeaders.length).fill("");
+        entry[0] = "A9B8C7D6";
+        entry[2] = "P01";
+        entry[3] = "Check";
+        entry[9] = "Firm";
+        entry[26] = "Queued";
+        workbook.sheets.get("App entries").__rows.push(entry);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+        context.LockService = {
+            getScriptLock: () => ({
+                releaseLock: () => {},
+                tryLock: () => false,
+            }),
+        };
+
+        expect(() => context.processAppSheetEntry("A9B8C7D6")).toThrow(
+            /another reading/i
+        );
+        expect(entry[26]).toBe("Retry");
+        expect(entry[27]).toMatch(/another reading/i);
+        expect(entry[28]).toBe("appsheet-A9B8C7D6");
+        expect(workbook.history.__rows).toHaveLength(1);
+    });
+
+    it("rejects missing and duplicated AppSheet entry identities", () => {
+        const workbook = createLoggerWorkbook(["P01"]);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+        const entries = workbook.sheets.get("App entries");
+
+        expect(() => context.processAppSheetEntry("")).toThrow(
+            /Entry ID is required/i
+        );
+        expect(() => context.processAppSheetEntry("NOTTHERE")).toThrow(
+            /was not found/i
+        );
+
+        const other = Array(appSheetEntryHeaders.length).fill("");
+        other[0] = "OTHER123";
+        entries.__rows.push(other);
+        expect(() => context.processAppSheetEntry("NOTTHERE")).toThrow(
+            /was not found/i
+        );
+
+        const duplicate = Array(appSheetEntryHeaders.length).fill("");
+        duplicate[0] = "DUPLICATE1";
+        entries.__rows.push(duplicate, [...duplicate]);
+        expect(() => context.processAppSheetEntry("DUPLICATE1")).toThrow(
+            /duplicated/i
+        );
+        expect(
+            Array.from(
+                context.appSheetEventList_([
+                    " Water ",
+                    "Water",
+                    "Weigh",
+                ])
+            )
+        ).toEqual(["Water", "Weigh"]);
+    });
+
+    it("returns a stable receipt for an already-saved AppSheet row", () => {
+        const workbook = createLoggerWorkbook(["P01"]);
+        const saved = Array(appSheetEntryHeaders.length).fill("");
+        saved[0] = "SAVED123";
+        saved[26] = "Saved";
+        workbook.sheets.get("App entries").__rows.push(saved);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+
+        expect(context.processAppSheetEntry("SAVED123")).toMatchObject({
+            ok: true,
+            duplicate: true,
+            requestId: "",
+            historyRows: 0,
+            message: "This AppSheet entry is saved.",
+        });
+    });
+
+    it("preserves retryable and malformed AppSheet automation failures", () => {
+        const workbook = createLoggerWorkbook(["P01"]);
+        const retryable = Array(appSheetEntryHeaders.length).fill("");
+        retryable[0] = "RETRY123";
+        retryable[2] = "P01";
+        retryable[3] = "Check";
+        const malformed = Array(appSheetEntryHeaders.length).fill("");
+        malformed[0] = "MALFORM1";
+        malformed[2] = "P01";
+        malformed[3] = "Check";
+        const thrown = Array(appSheetEntryHeaders.length).fill("");
+        thrown[0] = "THROWN12";
+        thrown[2] = "P01";
+        thrown[3] = "Check";
+        const entries = workbook.sheets.get("App entries");
+        entries.__rows.push(retryable, malformed, thrown);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+
+        context.saveWebObservationBatch = () => ({
+            results: [
+                {
+                    ok: false,
+                    retryable: true,
+                    message: "Temporary service failure.",
+                },
+            ],
+        });
+        expect(context.processAppSheetEntry("RETRY123")).toMatchObject({
+            ok: false,
+            retryable: true,
+        });
+        expect(retryable[26]).toBe("Retry");
+
+        context.saveWebObservationBatch = () => ({ results: [] });
+        expect(context.processAppSheetEntry("MALFORM1")).toMatchObject({
+            ok: false,
+            retryable: false,
+        });
+        expect(malformed[26]).toBe("Needs correction");
+        expect(malformed[27]).toMatch(/needs correction/i);
+
+        context.saveWebObservationBatch = () => {
+            throw "String service failure";
+        };
+        expect(() => context.processAppSheetEntry("THROWN12")).toThrow(
+            "String service failure"
+        );
+        expect(thrown[26]).toBe("Retry");
+        expect(thrown[27]).toBe("String service failure");
+    });
+
+    it("processes queued AppSheet rows in one bound-project batch", () => {
+        const workbook = createLoggerWorkbook(["P01", "P02"]);
+        const queued = Array(appSheetEntryHeaders.length).fill("");
+        queued[0] = "QUEUE001";
+        queued[1] = new Date("2026-08-25T04:00:00-04:00");
+        queued[2] = "P01";
+        queued[3] = "Check";
+        queued[9] = "Firm";
+        queued[26] = "Queued";
+        const retry = Array(appSheetEntryHeaders.length).fill("");
+        retry[0] = "RETRY001";
+        retry[1] = new Date("2026-08-25T04:01:00-04:00");
+        retry[2] = "P02";
+        retry[3] = "Water";
+        retry[12] = "No";
+        retry[26] = "Retry";
+        const correction = Array(appSheetEntryHeaders.length).fill("");
+        correction[0] = "FIXME001";
+        correction[26] = "Needs correction";
+        const saved = Array(appSheetEntryHeaders.length).fill("");
+        saved[0] = "SAVED001";
+        saved[26] = "Saved";
+        const entries = workbook.sheets.get("App entries");
+        entries.__rows.push(queued, retry, correction, saved);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+        const batches = [];
+        context.saveWebObservationBatch = (payloads) => {
+            batches.push(payloads);
+            return {
+                results: [
+                    {
+                        ok: true,
+                        retryable: false,
+                        historyRows: 1,
+                        message: "Check saved.",
+                    },
+                    {
+                        ok: false,
+                        retryable: false,
+                        message: "Choose a valid nutrient response.",
+                    },
+                ],
+            };
+        };
+
+        const result = context.processQueuedAppSheetEntries();
+
+        expect(batches).toHaveLength(1);
+        expect(batches[0].map(({ requestId }) => requestId)).toEqual([
+            "appsheet-QUEUE001",
+            "appsheet-RETRY001",
+        ]);
+        expect(queued[26]).toBe("Saved");
+        expect(queued[28]).toBe("appsheet-QUEUE001");
+        expect(queued[29]).toBe(1);
+        expect(queued[30]).toBeInstanceOf(Date);
+        expect(retry[26]).toBe("Needs correction");
+        expect(retry[27]).toMatch(/nutrient/i);
+        expect(correction[26]).toBe("Needs correction");
+        expect(saved[26]).toBe("Saved");
+        expect(result).toMatchObject({
+            ok: false,
+            queuedCount: 2,
+            processedCount: 2,
+            savedCount: 1,
+            needsCorrectionCount: 1,
+            retryCount: 0,
+            deferredCount: 0,
+        });
+    });
+
+    it("isolates missing and duplicated AppSheet queue identities", () => {
+        const workbook = createLoggerWorkbook(["P01"]);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+
+        expect(context.processQueuedAppSheetEntries()).toMatchObject({
+            ok: true,
+            queuedCount: 0,
+            processedCount: 0,
+        });
+
+        const missing = Array(appSheetEntryHeaders.length).fill("");
+        missing[26] = "Queued";
+        const duplicate = Array(appSheetEntryHeaders.length).fill("");
+        duplicate[0] = "DUPQUEUE";
+        duplicate[26] = "Queued";
+        const duplicateAgain = [...duplicate];
+        const entries = workbook.sheets.get("App entries");
+        entries.__rows.push(missing, duplicate, duplicateAgain);
+        context.saveWebObservationBatch = () => {
+            throw new Error("Invalid queue rows must not reach History.");
+        };
+
+        const result = context.processQueuedAppSheetEntries();
+
+        expect(result).toMatchObject({
+            ok: false,
+            queuedCount: 3,
+            processedCount: 3,
+            savedCount: 0,
+            needsCorrectionCount: 3,
+            retryCount: 0,
+        });
+        expect(missing[27]).toMatch(/Entry ID is required/i);
+        expect(duplicate[27]).toMatch(/duplicated/i);
+        expect(duplicateAgain[27]).toMatch(/duplicated/i);
+
+        const invalidRequest = Array(appSheetEntryHeaders.length).fill("");
+        invalidRequest[0] = "STRINGERR";
+        invalidRequest[26] = "Queued";
+        entries.__rows.push(invalidRequest);
+        context.normalizeRequestId_ = () => {
+            throw "String request failure";
+        };
+        expect(context.processQueuedAppSheetEntries()).toMatchObject({
+            needsCorrectionCount: 1,
+        });
+        expect(invalidRequest[27]).toBe("String request failure");
+    });
+
+    it("maps retryable and missing AppSheet batch results to receipts", () => {
+        const workbook = createLoggerWorkbook(["P01"]);
+        const first = Array(appSheetEntryHeaders.length).fill("");
+        first[0] = "QUEUE003";
+        first[2] = "P01";
+        first[3] = "Check";
+        first[9] = "Firm";
+        first[26] = "Queued";
+        const second = [...first];
+        second[0] = "QUEUE004";
+        workbook.sheets.get("App entries").__rows.push(first, second);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+        context.saveWebObservationBatch = () => ({
+            results: [
+                {
+                    ok: false,
+                    retryable: true,
+                    message: "Temporary service failure.",
+                },
+                null,
+            ],
+        });
+
+        const result = context.processQueuedAppSheetEntries();
+
+        expect(first[26]).toBe("Retry");
+        expect(second[26]).toBe("Needs correction");
+        expect(second[27]).toMatch(/needs correction/i);
+        expect(result).toMatchObject({
+            retryCount: 1,
+            needsCorrectionCount: 1,
+        });
+    });
+
+    it("defers AppSheet queue rows beyond the 50-entry batch bound", () => {
+        const workbook = createLoggerWorkbook(["P01"]);
+        const entries = workbook.sheets.get("App entries");
+        for (let index = 0; index < 51; index += 1) {
+            const entry = Array(appSheetEntryHeaders.length).fill("");
+            entry[0] = `QUEUE${String(index).padStart(4, "0")}`;
+            entry[2] = "P01";
+            entry[3] = "Check";
+            entry[9] = "Firm";
+            entry[26] = "Queued";
+            entries.__rows.push(entry);
+        }
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+        let submittedCount = 0;
+        context.saveWebObservationBatch = (payloads) => {
+            submittedCount = payloads.length;
+            return {
+                results: payloads.map(() => ({
+                    ok: true,
+                    retryable: false,
+                    historyRows: 1,
+                    message: "Saved.",
+                })),
+            };
+        };
+
+        const result = context.processQueuedAppSheetEntries();
+
+        expect(submittedCount).toBe(50);
+        expect(result).toMatchObject({
+            ok: true,
+            queuedCount: 51,
+            processedCount: 50,
+            savedCount: 50,
+            deferredCount: 1,
+        });
+        expect(entries.__rows.at(-1)[26]).toBe("Queued");
+    });
+
+    it("keeps queued AppSheet rows retryable after an infrastructure failure", () => {
+        const workbook = createLoggerWorkbook(["P01"]);
+        const entry = Array(appSheetEntryHeaders.length).fill("");
+        entry[0] = "QUEUE002";
+        entry[2] = "P01";
+        entry[3] = "Check";
+        entry[9] = "Firm";
+        entry[26] = "Queued";
+        workbook.sheets.get("App entries").__rows.push(entry);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+        vm.runInContext(
+            'saveWebObservationBatch = () => { throw new Error("Another reading is finishing."); };',
+            context
+        );
+
+        const result = context.processQueuedAppSheetEntries();
+
+        expect(entry[26]).toBe("Retry");
+        expect(entry[27]).toMatch(/another reading/i);
+        expect(entry[28]).toBe("appsheet-QUEUE002");
+        expect(result).toMatchObject({
+            ok: false,
+            processedCount: 1,
+            savedCount: 0,
+            needsCorrectionCount: 0,
+            retryCount: 1,
+        });
+
+        entry[26] = "Queued";
+        context.saveWebObservationBatch = () => {
+            throw "String service failure";
+        };
+        expect(context.processQueuedAppSheetEntries()).toMatchObject({
+            retryCount: 1,
+        });
+        expect(entry[27]).toBe("String service failure");
+    });
+
+    it("keeps exactly one AppSheet queue trigger", () => {
+        const workbook = createLoggerWorkbook(["P01"]);
+        const deleted = [];
+        const created = [];
+        let triggers = [
+            {
+                getHandlerFunction: () => "processQueuedAppSheetEntries",
+                name: "first",
+            },
+            {
+                getHandlerFunction: () => "processQueuedAppSheetEntries",
+                name: "duplicate",
+            },
+            { getHandlerFunction: () => "otherHandler", name: "other" },
+        ];
+        const ScriptApp = {
+            deleteTrigger: (trigger) => deleted.push(trigger.name),
+            getProjectTriggers: () => triggers,
+            newTrigger: (handler) => ({
+                timeBased: () => ({
+                    everyMinutes: (minutes) => ({
+                        create: () => created.push({ handler, minutes }),
+                    }),
+                }),
+            }),
+        };
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: { ...workbook.globals, ScriptApp },
+        });
+
+        expect(context.installAppSheetQueueTrigger()).toEqual({
+            handler: "processQueuedAppSheetEntries",
+            created: false,
+            removedDuplicateCount: 1,
+        });
+        expect(deleted).toEqual(["duplicate"]);
+        expect(created).toEqual([]);
+
+        triggers = [{ getHandlerFunction: () => "otherHandler" }];
+        expect(context.installAppSheetQueueTrigger()).toEqual({
+            handler: "processQueuedAppSheetEntries",
+            created: true,
+            removedDuplicateCount: 0,
+        });
+        expect(created).toEqual([
+            { handler: "processQueuedAppSheetEntries", minutes: 1 },
+        ]);
     });
 
     it("keeps a bad queued item isolated while saving valid neighbors", () => {
@@ -1659,7 +2240,7 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.8.2");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.9.0");
         expect(calls.toast[1]).toBe("Garden logger verified");
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
@@ -1941,6 +2522,122 @@ describe("Garden logger server logic", () => {
         expect(() =>
             errorContext.ensureHistoryMeasurementColumns_(badMeasurementHeader)
         ).toThrow(/must be "Height \(in\)"/i);
+    });
+
+    it("repairs narrow History grids and enforces defensive source/header guards", () => {
+        const context = loadAppsScript(createHistorySheet());
+
+        expect(context.normalizeWebEntrySource_("")).toBe("Mobile logger");
+        expect(context.normalizeWebEntrySource_("AppSheet")).toBe("AppSheet");
+        expect(() =>
+            context.normalizeWebEntrySource_("Unknown client")
+        ).toThrow(/Entry source must be Mobile logger or AppSheet/i);
+
+        const validHeaders = createHistorySheet();
+        context.ensureHistoryProvenanceColumns_(validHeaders);
+        context.ensureHistoryMeasurementColumns_(validHeaders);
+
+        const badProvenanceHeader = createHistorySheet();
+        badProvenanceHeader.__rows[0][26] = "Wrong observation key";
+        expect(() =>
+            context.ensureHistoryProvenanceColumns_(badProvenanceHeader)
+        ).toThrow(/must be "Observation ID"/i);
+
+        const narrowHistory = createHistorySheet();
+        narrowHistory.__rows.forEach((row) => row.splice(30));
+        context.ensureHistoryGrid_(narrowHistory);
+        expect(narrowHistory.getMaxColumns()).toBe(39);
+
+        const unvalidatedHistory = createHistorySheet();
+        const storedRow = Array(39).fill("");
+        context.writeStoredObservationRows_(unvalidatedHistory, 2, [storedRow]);
+        context.writeStoredObservationRows_(unvalidatedHistory, 101, [
+            storedRow,
+        ]);
+        expect(unvalidatedHistory.getMaxRows()).toBe(101);
+
+        const inheritedValidationHistory = createHistorySheet([], {
+            measurementValidations: true,
+        });
+        const writeResult = context.writeStoredObservationRows_(
+            inheritedValidationHistory,
+            2,
+            [storedRow]
+        );
+        expect(writeResult.validationRowsCleared).toBe(1);
+        expect(
+            inheritedValidationHistory.__clearDataValidationCalls
+        ).toHaveLength(1);
+
+        expect(
+            Array.from(
+                context.historyProvenanceRow_(
+                    {
+                        correctionReason: "Corrected after ruler check",
+                        correctedObservationId: "prior-observation",
+                        entrySource: "AppSheet",
+                    },
+                    "appsheet-entry-12345",
+                    "Check",
+                    0
+                )
+            )
+        ).toMatchObject({
+            0: "appsheet-entry-12345:1:check",
+            2: "Corrected",
+            4: "prior-observation",
+            5: "Corrected after ruler check",
+        });
+        expect(
+            Array.from(
+                context.historyProvenanceRow_(
+                    { entrySource: "AppSheet" },
+                    "appsheet-entry-12345",
+                    "Weigh",
+                    1
+                )
+            ).slice(2, 3)
+        ).toEqual(["Measured"]);
+        expect(
+            Array.from(
+                context.historyProvenanceRow_(
+                    {
+                        entrySource: "AppSheet",
+                        measurementMethod: "Tape measure",
+                        measurementQuality: "Measured",
+                    },
+                    "appsheet-entry-12345",
+                    "Measure",
+                    2
+                )
+            ).slice(2, 3)
+        ).toEqual(["Measured"]);
+
+        const sameObservedAt = new Date("2026-08-25T12:00:00Z");
+        const recordedFirst = Array(39).fill("");
+        recordedFirst[0] = sameObservedAt;
+        recordedFirst[1] = "P01";
+        recordedFirst[2] = "Weigh";
+        recordedFirst[4] = null;
+        recordedFirst[9] = new Date("2026-08-25T12:01:00Z");
+        const recordedSecond = Array(39).fill("");
+        recordedSecond[0] = sameObservedAt;
+        recordedSecond[1] = "P02";
+        recordedSecond[2] = "Check";
+        recordedSecond[9] = new Date("2026-08-25T12:02:00Z");
+        const sortedHistory = Array.from(
+            context.recentObservationsFromRows_(
+                [recordedFirst, recordedSecond],
+                "America/New_York",
+                10,
+                new Map([
+                    ["P01", "First plant"],
+                    ["P02", "Second plant"],
+                ])
+            )
+        );
+        expect(sortedHistory.map((row) => row.plantId)).toEqual(["P02", "P01"]);
+        expect(sortedHistory[1].weight).toBe("");
     });
 
     it("reports queue request status and rejects unsafe status queries", () => {

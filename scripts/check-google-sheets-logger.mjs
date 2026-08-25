@@ -41,8 +41,8 @@ assert.deepEqual(
         )
     ),
     [
-        "Water",
         "Weigh",
+        "Water",
         "Measure",
         "Check",
     ]
@@ -53,6 +53,51 @@ assert.deepEqual(
 );
 assert.equal(context.safeSheetText_('=IMPORTXML("x")'), '\'=IMPORTXML("x")');
 assert.equal(context.safeSheetText_("healthy"), "healthy");
+const appSheetEntryHeaders = Array.from(
+    vm.runInContext("APP_SHEET_ENTRY_HEADERS", context)
+);
+assert.deepEqual(appSheetEntryHeaders, [
+    "Entry ID",
+    "Started at",
+    "Plant ID",
+    "Events",
+    "Weight state",
+    "Weight (g)",
+    "Height",
+    "Width",
+    "Measurement unit",
+    "Plant condition",
+    "Soil moisture",
+    "Notes",
+    "Nutrients used",
+    "Nutrient product",
+    "Nutrient amount",
+    "Pot size",
+    "Medium / substrate",
+    "Measurement quality",
+    "Measurement method",
+    "Flower count",
+    "Flower details",
+    "Photo URL",
+    "Pest / issue",
+    "Treatment / action",
+    "Created by",
+    "Created at",
+    "Status",
+    "Status message",
+    "Request ID",
+    "History rows",
+    "Saved at",
+]);
+assert.deepEqual(
+    Array.from(context.appSheetEventList_("Water; Weigh, Water")),
+    ["Water", "Weigh"]
+);
+assert.equal(context.normalizeWebEntrySource_("AppSheet"), "AppSheet");
+assert.throws(
+    () => context.normalizeWebEntrySource_("untrusted client"),
+    /Entry source/
+);
 assert.equal(
     context.fieldGuideUrlForRow_([
         "",
@@ -179,6 +224,14 @@ assert.match(
     /\.clearDataValidations\(\)\s*\.setNumberFormat\("0\.##"\)/
 );
 assert.match(source, /function getWebBatchSaveStatus\(requests\)/);
+assert.match(source, /function processAppSheetEntry\(entryId\)/);
+assert.match(source, /function processQueuedAppSheetEntries\(\)/);
+assert.match(source, /function installAppSheetQueueTrigger\(\)/);
+assert.match(source, /\.timeBased\(\)\.everyMinutes\(1\)\.create\(\)/);
+assert.match(source, /function appSheetPayloadFromRow_\(row, requestId\)/);
+assert.match(source, /entrySource:\s*"AppSheet"/);
+assert.match(source, /storedStatus === "Saved"/);
+assert.match(source, /`appsheet-\$\{normalizedEntryId\}`/);
 assert.match(source, /function removeSelectedHistoryObservations\(\)/);
 
 const publishedHistoryDate = parseDate("8/12/2026 2:47 AM");
