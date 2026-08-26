@@ -150,6 +150,8 @@ plant or planter IDs, not provisional table-position coordinates.
 Six plants ordered on 2026-08-25 are documented but not yet physically in the
 collection. Permanent labels `G1`–`G3` and `H1`–`H3` are reserved, but do not
 assign tracker IDs, risers, or table positions from retail descriptions alone.
+All six exact seller pages inspected on 2026-08-26 list 2.0-inch pots. Record
+that as a listing snapshot, not the received setup.
 On arrival:
 
 1. Photograph the closed package, each plant from all sides, any seller label,
@@ -167,6 +169,10 @@ On arrival:
    brightest and coolest practical position with good airflow. Do not treat its
    hardiness as evidence that it will thrive in a warm, lower-light houseplant
    slot.
+7. Do not use “2 inches larger” as an automatic up-pot rule. A 4-inch pot has
+   roughly four times the surface area of a 2-inch pot and much more unused mix.
+   Keep a sound nursery pot or choose the smallest draining shape that fits the
+   inspected roots. For 'Royal Flush', depth matters more than extra diameter.
 
 No order-date watering event belongs in the tracker. The first event should
 describe the plant actually received, and a pot-setup baseline starts only
@@ -275,10 +281,10 @@ The Kiwi aeonium is a succulent, but it is not a full-center desert cactus.
 Keep its variegated rosettes at the lower-light edge and rotate the pot 90°
 weekly unless a future one-sided growth reason is documented.
 
-The money tree is _Pachira glabra_, a tropical tree reported under a retail
-name that is often confused with _Pachira aquatica_. Keep its original tag or a
-clear photograph if available. The current 6 in pot is enough; reserve the 8 in
-pot until roots have genuinely filled the smaller container. Rotate it 90°
+The money tree is recorded under the working identification _Pachira glabra_,
+but its archived retail tag says only _Pachira_ and cannot rule out
+_P. aquatica_. The current 6 in pot is enough; reserve the 8 in pot until roots
+have genuinely filled the smaller container. Rotate it 90°
 weekly for even window growth.
 
 ### Ordered specialty succulents

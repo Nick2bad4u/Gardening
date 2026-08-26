@@ -7,7 +7,7 @@
 - Identification: **seller-labeled; physical plant not yet received**
 - Ordered from: Mountain Crest Gardens on 2026-08-25
 - Order status: **Order Received by seller; shipment and collection receipt pending**
-- Current pot: **pending arrival inspection**
+- Seller-listed size: **2.0-inch pot; actual received container pending inspection**
 - Photo archive: [licensed species-reference images](../../../assets/plants/austrocylindropuntia-subulata/)
 
 ## Names and identity
@@ -26,8 +26,32 @@ they are not a sign that the plant is becoming a leafy houseplant.
 
 Mountain Crest Gardens listed one plant in the 2026-08-25 order. “Order
 Received” records the seller's order status, not delivery to the collection.
-The `G1` pot label is reserved. Tracker ID, pot setup, dimensions, and
-collection photographs remain unassigned until the shipped plant is inspected.
+The product page inspected on 2026-08-26 lists a 2.0-inch pot. The `G1` pot
+label is reserved. Tracker ID, pot setup, received dimensions, and collection
+photographs remain unassigned until the shipped plant is inspected.
+
+## Seller listing snapshot
+
+These fields preserve Mountain Crest Gardens' product-page claims as inspected
+on 2026-08-26. They describe the listing, not measurements of the plant that
+will arrive.
+
+| Seller field            | Listing value                               |
+| ----------------------- | ------------------------------------------- |
+| SKU                     | `C2KY2600`                                  |
+| Product size            | 2.0-inch pot                                |
+| Current / bloom color   | Green / red                                 |
+| Hardiness               | Zone 10; seller threshold 30 °F             |
+| Recommended light       | Bright indoor light; full sun               |
+| Maximum-height category | Over 12 inches                              |
+| Growth habit            | Vertical grower / tall stem                 |
+| Special characteristics | “Hard to kill”; slow grower — seller fields |
+
+The seller describes a tree-like cactus that can reach about 13 feet in the
+wild, with tubercled stems, spined areoles, awl-shaped leaves up to about 5
+inches on mature growth, red-to-orange flowers, and reddish fruit. It also
+reports historical cultivation in ancient Peru for fencing and needles. Treat
+those as seller-supplied background until supported by the botanical sources.
 
 ## Origin, form, and growth
 
@@ -43,13 +67,13 @@ _Cylindropuntia_.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                      |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Isolate, photograph, and inspect the stem joints, areoles, roots, and shipping medium before changing anything.  |
-| Grow-light position | Begin on the outer bright-cactus zone; move inward only after fresh growth shows no bleaching or hard tan scars. |
-| Water               | Do not water from the order date. After arrival, use root condition, medium dryness, and pot weight as evidence. |
-| Pot and mix         | Record the shipped setup first; repot only when drainage, roots, or the nursery medium make a change useful.     |
-| Long-term size      | Keep it where future height and branching will not crowd the fixture or snag nearby plants.                      |
+| Topic               | Practical starting approach                                                                                                                                   |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival             | Isolate, photograph, and inspect the stem joints, areoles, roots, and shipping medium before changing anything.                                               |
+| Grow-light position | Begin on the outer bright-cactus zone; move inward only after fresh growth shows no bleaching or hard tan scars.                                              |
+| Water               | Do not water from the order date. After arrival, use root condition, medium dryness, and pot weight as evidence.                                              |
+| Pot and mix         | Record the 2-inch shipped setup first. A 4-inch pot is not automatic; use it only if the rooted plant and stability needs justify the much larger mix volume. |
+| Long-term size      | Keep it where future height and branching will not crowd the fixture or snag nearby plants.                                                                   |
 
 ## Rotation, propagation, and watch points
 

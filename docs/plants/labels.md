@@ -144,7 +144,7 @@ dates are explicit prompts to check the physical logbook rather than guesses.
 | `#2` | Elephant bush                   | Branching reddish stems carrying many small round glossy leaves.                       | It can shift between C3 photosynthesis and water-saving CAM behavior as conditions change.                    | Gerych's Greenhouse — 2026-07-27                              |
 | `#2` | Silver teaspoons                | Thick spoon-shaped leaves covered in reflective silver felt.                           | Its reflective hairs reduce the intensity of sunlight reaching the leaf surface.                              | Gerych's Greenhouse — 2026-07-27                              |
 | `#2` | Copper spoons                   | Fuzzy spoon-shaped leaves that age from silver to copper-brown.                        | New leaves can emerge pale and silvery before developing their copper color.                                  | Gerych's Greenhouse — 2026-07-27                              |
-| `#3` | Money tree                      | Young tropical tree with a green trunk and hand-shaped glossy leaf clusters.           | Retail money trees are often called _Pachira aquatica_, but this collection record is _Pachira glabra_.       | Lowe's — exact store and date not recorded                    |
+| `#3` | Money tree                      | Young tropical tree with a green trunk and hand-shaped glossy leaf clusters.           | Its retail tag says only _Pachira_, so the working _P. glabra_ record remains species-level uncertainty.      | Lowe's — exact store and date not recorded                    |
 | `#4` | Kiwi aeonium                    | Branching green-and-yellow rosettes with vivid pink-red edges.                         | Aeoniums grow most actively in cooler seasons and can slow or partially rest during summer heat.              | Carlsons' Greenhouse, Torrey Road — date not recorded         |
 
 Rehab-04, the probable silken pincushion cactus, has no current label because
@@ -217,14 +217,18 @@ The three cacti use `G1`–`G3`; the three succulents use `H1`–`H3`. These are
 permanent label reservations even though tracker IDs, received pot/root state,
 dimensions, condition, and exact placement still wait for physical inspection.
 
-| Inventory ID | ID   | Common name                     | Botanical label                                                                                              | Origin wording                                    | Publication wording                       | Warning                                                                         |
-| ------------ | ---- | ------------------------------- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------- |
-| Cactus-07    | `G1` | Eve's needle cactus             | [_Austrocylindropuntia subulata_](./cacti/austrocylindropuntia-subulata.md)                                  | Andean South America; species record              | Current combination: 1942                 | Sharp spines and fine glochids; eventual tall branching growth.                 |
-| Cactus-08    | `G2` | Paper spine cactus              | [_Tephrocactus articulatus_ var. _papyracanthus_](./cacti/tephrocactus-articulatus-papyracanthus.md)         | Species: Argentina                                | Variety combination: 1953                 | Segments detach easily; paper-like structures are still spines.                 |
-| Cactus-09    | `G3` | Black Widow chin cactus         | [_Gymnocalycium mihanovichii_ f. variegata 'Black Widow'](./cacti/gymnocalycium-mihanovichii-black-widow.md) | Cultivar none; species: Paraguay and NE Argentina | Species: 1905; cultivar date not verified | Variegated tissue can scorch; verify orientation after arrival.                 |
-| Succulent-06 | `H1` | Royal Flush split rock          | [_Pleiospilos nelii_ 'Royal Flush'](./succulents/pleiospilos-nelii-royal-flush.md)                           | Cultivar none; species: South Africa              | Species: 1930; cultivar date not verified | Leaf-cycle watering; retained old pairs are not a calendar signal.              |
-| Succulent-07 | `H2` | Raindrops echeveria             | [_Echeveria_ 'Raindrops'](./succulents/echeveria-raindrops.md)                                               | Horticultural cultivar; no wild range             | Cultivar date not verified                | Firm leaf bumps are normal; do not rub off the powdery farina.                  |
-| Succulent-08 | `H3` | Coconut Crystal hens and chicks | [_Sempervivum_ Colorockz® 'Coconut Crystal'](./succulents/sempervivum-coconut-crystal.md)                    | Horticultural cultivar; no wild range             | Cultivar date not verified                | Indoor-only here; needs strong light, cooler conditions, and no standing water. |
+The exact product pages were inspected on 2026-08-26. All six list a 2.0-inch
+pot; that seller size and SKU belong in the collection record, not necessarily
+on the small visible label.
+
+| Inventory ID | ID   | Common name                     | Botanical label                                                                                              | Origin wording                                    | Publication wording                       | SKU / listed pot    | Warning                                                                         |
+| ------------ | ---- | ------------------------------- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------- | ----------------------------------------- | ------------------- | ------------------------------------------------------------------------------- |
+| Cactus-07    | `G1` | Eve's needle cactus             | [_Austrocylindropuntia subulata_](./cacti/austrocylindropuntia-subulata.md)                                  | Andean South America; species record              | Current combination: 1942                 | `C2KY2600` / 2.0 in | Sharp spines and fine glochids; eventual tall branching growth.                 |
+| Cactus-08    | `G2` | Paper spine cactus              | [_Tephrocactus articulatus_ var. _papyracanthus_](./cacti/tephrocactus-articulatus-papyracanthus.md)         | Species: Argentina                                | Variety combination: 1953                 | `C2KY3308` / 2.0 in | Segments detach easily; paper-like structures are still spines.                 |
+| Cactus-09    | `G3` | Black Widow chin cactus         | [_Gymnocalycium mihanovichii_ f. variegata 'Black Widow'](./cacti/gymnocalycium-mihanovichii-black-widow.md) | Cultivar none; species: Paraguay and NE Argentina | Species: 1905; cultivar date not verified | `C2ZY7804` / 2.0 in | Variegated tissue can scorch; verify orientation after arrival.                 |
+| Succulent-06 | `H1` | Royal Flush split rock          | [_Pleiospilos nelii_ 'Royal Flush'](./succulents/pleiospilos-nelii-royal-flush.md)                           | Cultivar none; species: South Africa              | Species: 1930; cultivar date not verified | `S2JY2848` / 2.0 in | Leaf-cycle watering; retained old pairs are not a calendar signal.              |
+| Succulent-07 | `H2` | Raindrops echeveria             | [_Echeveria_ 'Raindrops'](./succulents/echeveria-raindrops.md)                                               | Horticultural cultivar; no wild range             | Cultivar date not verified                | `S2JN3225` / 2.0 in | Firm leaf bumps are normal; do not rub off the powdery farina.                  |
+| Succulent-08 | `H3` | Coconut Crystal hens and chicks | [_Sempervivum_ Colorockz® 'Coconut Crystal'](./succulents/sempervivum-coconut-crystal.md)                    | Horticultural cultivar; no wild range             | Cultivar date not verified                | `S2JN7271` / 2.0 in | Indoor-only here; needs strong light, cooler conditions, and no standing water. |
 
 Suggested first strips:
 
@@ -234,8 +238,28 @@ Austrocylindropuntia subulata
 ```
 
 ```text
+G2 | PAPER SPINE CACTUS
+Tephrocactus articulatus var. papyracanthus
+```
+
+```text
+G3 | BLACK WIDOW CHIN CACTUS
+Gymnocalycium mihanovichii f. variegata
+```
+
+```text
 H1 | ROYAL FLUSH SPLIT ROCK
 Pleiospilos nelii 'Royal Flush'
+```
+
+```text
+H2 | RAINDROPS ECHEVERIA
+Echeveria 'Raindrops'
+```
+
+```text
+H3 | COCONUT CRYSTAL
+Sempervivum Colorockz 'Coconut Crystal'
 ```
 
 ## Kiwi aeonium and money tree labels
@@ -243,16 +267,16 @@ Pleiospilos nelii 'Royal Flush'
 These two individually potted plants use numbered IDs rather than the E/F
 cactus series. The money tree is `#3` and the Kiwi aeonium is `#4`.
 
-| ID   | Common name  | Botanical label                                                                    | Native origin                                              |                      First described | Warning                                                                 |
-| ---- | ------------ | ---------------------------------------------------------------------------------- | ---------------------------------------------------------- | -----------------------------------: | ----------------------------------------------------------------------- |
-| `#3` | Money tree   | [_Pachira glabra_](./houseplants/pachira-glabra.md)                                | Southeastern and southern Brazil                           |                                 1868 | Tropical tree: do not use the cactus dry-down or high-light baseline.   |
-| `#4` | Kiwi aeonium | [_Aeonium haworthii_ 'Dream Color'](./succulents/aeonium-haworthii-dream-color.md) | Cultivar range none; underlying species native to Tenerife | Species: 1841; cultivar date unknown | Variegated rosettes can scorch; this is not a full-center cactus plant. |
+| ID   | Common name  | Botanical label                                                                    | Native origin                                                 |                      First described | Warning                                                                 |
+| ---- | ------------ | ---------------------------------------------------------------------------------- | ------------------------------------------------------------- | -----------------------------------: | ----------------------------------------------------------------------- |
+| `#3` | Money tree   | [_Pachira glabra_](./houseplants/pachira-glabra.md) — working species record       | Southeastern and southern Brazil if the working ID is correct |                                 1868 | Tag says only _Pachira_; do not use the cactus dry-down baseline.       |
+| `#4` | Kiwi aeonium | [_Aeonium haworthii_ 'Dream Color'](./succulents/aeonium-haworthii-dream-color.md) | Cultivar range none; underlying species native to Tenerife    | Species: 1841; cultivar date unknown | Variegated rosettes can scorch; this is not a full-center cactus plant. |
 
 Suggested two-strip text:
 
 ```text
 #3 | MONEY TREE
-Pachira glabra
+Pachira sp. | WORKING: P. glabra
 ```
 
 ```text
@@ -289,6 +313,9 @@ DESC: 1841 | WARN: VARIEGATED / SCORCH
   assign that name.
 - The echeveria, silver teaspoons, blue torch, and golden torch still need
   flowers or stronger diagnostic photos for a species-level confirmation.
+- The archived money-tree tag confirms _Pachira_ and LiveTrends provenance but
+  prints no species epithet. Keep _P. glabra_ as a working record rather than
+  treating the tag as species proof.
 
 ## Other information worth recording
 

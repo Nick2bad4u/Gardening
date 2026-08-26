@@ -7,7 +7,7 @@
 - Identification: **seller-labeled cultivar; physical plant not yet received**
 - Ordered from: Mountain Crest Gardens on 2026-08-25
 - Order status: **Order Received by seller; shipment and collection receipt pending**
-- Current pot: **pending arrival inspection**
+- Seller-listed size: **2.0-inch pot; actual received container pending inspection**
 - Photo archive: [licensed species-reference images](../../../assets/plants/pleiospilos-nelii-royal-flush/)
 
 ## Names and identity
@@ -26,9 +26,34 @@ central split and uses water stored in the older pair.
 ## Order evidence and status
 
 The 2026-08-25 order lists one _P. nelii_ 'Royal Flush'. The seller's “Order
-Received” state does not mean it has arrived at the collection. Its `H1` label
-is reserved; actual leaf-pair count, firmness, root condition, pot, tracker ID,
-and collection photographs remain pending.
+Received” state does not mean it has arrived at the collection. The product
+page inspected on 2026-08-26 lists a 2.0-inch pot. Its `H1` label is reserved;
+actual leaf-pair count, firmness, root condition, received pot, tracker ID, and
+collection photographs remain pending.
+
+## Seller listing snapshot
+
+These values preserve Mountain Crest Gardens' product page as inspected on
+2026-08-26. They are seller claims, not measurements of the ordered plant.
+
+| Seller field                 | Listing value                                  |
+| ---------------------------- | ---------------------------------------------- |
+| SKU                          | `S2JY2848`                                     |
+| Product size                 | 2.0-inch pot                                   |
+| Current / seasonal color     | Purple or black / blue or blue-green           |
+| Bloom                        | Highlights say golden; product field says pink |
+| Hardiness                    | Zone 10; seller threshold 30 °F                |
+| Recommended light            | Bright indoor light; full sun                  |
+| Maximum height / body spread | 3–5 inches / 3–4 inches                        |
+| Growth habit / seasonality   | Clumping or mounding / year-round color        |
+| Special characteristics      | Pet safe; showy blooms — seller fields         |
+
+The seller recommends an 80% mineral / 20% organic medium, a deep narrow pot,
+and cautious spring-and-fall watering only when the medium is dry and the inner
+leaf pair begins to soften. It says to leave the plant dry in summer and winter
+and to let the outer pair be consumed by new inner growth. Those seasonal rules
+are a useful warning against overwatering, but the collection will still record
+actual indoor growth state rather than watering by a retail calendar.
 
 ## Origin, form, and publication
 
@@ -39,13 +64,13 @@ horticultural color selection rather than a separate wild population.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Photograph the leaf pairs and roots, then isolate it; do not water simply because the leaves look unusual after shipping.  |
-| Grow-light position | Bright succulent zone after gradual acclimation; keep it out of the highest cactus hotspot during the first week.          |
-| Water               | Use the active leaf cycle, firmness, dry mineral medium, and pot weight—not the general cactus calendar—as evidence.       |
-| Leaf replacement    | Let the old pair be consumed while a new inner pair develops; wrinkling old leaves alone is not an automatic water signal. |
-| Pot and mix         | Use a deep, narrow draining pot and a highly mineral mix only after documenting the received root and pot condition.       |
+| Topic               | Practical starting approach                                                                                                                                                              |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival             | Photograph the leaf pairs and roots, then isolate it; do not water simply because the leaves look unusual after shipping.                                                                |
+| Grow-light position | Bright succulent zone after gradual acclimation; keep it out of the highest cactus hotspot during the first week.                                                                        |
+| Water               | Use the active leaf cycle, firmness, dry mineral medium, and pot weight—not the general cactus calendar—as evidence.                                                                     |
+| Leaf replacement    | Let the old pair be consumed while a new inner pair develops; wrinkling old leaves alone is not an automatic water signal.                                                               |
+| Pot and mix         | Preserve the seller-listed 2-inch setup initially if sound. A deep narrow form matters more than a 4-inch diameter; avoid surrounding a small root system with a broad unused reservoir. |
 
 ## Rotation, propagation, and watch points
 

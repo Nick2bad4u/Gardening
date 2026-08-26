@@ -155,10 +155,10 @@ hybrid group rather than claiming a cultivar.
 
 ## August 2026 succulent and houseplant additions
 
-| Inventory ID  | Label ID | Working identification                                                                    | Common name  | Confidence         | Source and pot                                                                                                          |
-| ------------- | -------- | ----------------------------------------------------------------------------------------- | ------------ | ------------------ | ----------------------------------------------------------------------------------------------------------------------- |
-| Succulent-05  | `#4`     | [_Aeonium haworthii_ 'Dream Color'](./plants/succulents/aeonium-haworthii-dream-color.md) | Kiwi aeonium | Very high          | Carlsons' Greenhouse; approximately 5-inch pot                                                                          |
-| Houseplant-01 | `#3`     | [_Pachira glabra_](./plants/houseplants/pachira-glabra.md)                                | Money tree   | Retail ID reported | Lowe's; moved from a 4-inch nursery pot into a 6-inch Amazon Basics pot; purchased 8-inch pot reserved for later growth |
+| Inventory ID  | Label ID | Working identification                                                                    | Common name  | Confidence                    | Source and pot                                                                                                          |
+| ------------- | -------- | ----------------------------------------------------------------------------------------- | ------------ | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Succulent-05  | `#4`     | [_Aeonium haworthii_ 'Dream Color'](./plants/succulents/aeonium-haworthii-dream-color.md) | Kiwi aeonium | Very high                     | Carlsons' Greenhouse; approximately 5-inch pot                                                                          |
+| Houseplant-01 | `#3`     | [_Pachira glabra_](./plants/houseplants/pachira-glabra.md)                                | Money tree   | Genus tag; working species ID | Lowe's; moved from a 4-inch nursery pot into a 6-inch Amazon Basics pot; purchased 8-inch pot reserved for later growth |
 
 The numbered mapping was copied from the physical labels on 2026-08-10: the
 shared rehab cactus planter is `#1`, the shared succulent planter is `#2`, the
@@ -172,15 +172,26 @@ These six records come from a Mountain Crest Gardens order placed on
 acceptance rather than physical delivery. Stable inventory IDs and permanent
 `G1`–`G3` / `H1`–`H3` pot-label reservations are assigned, but `P` tracker IDs,
 pot setup, dimensions, received condition, and final placement remain pending.
+Each exact product page was inspected on 2026-08-26. All six pages list a
+2.0-inch pot, but that is seller metadata rather than a received measurement.
 
-| Inventory ID | Label ID | Seller identification                                                                                               | Common name                     | Order evidence | Arrival-dependent fields                                         |
-| ------------ | -------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------- | -------------- | ---------------------------------------------------------------- |
-| Cactus-07    | `G1`     | [_Austrocylindropuntia subulata_](./plants/cacti/austrocylindropuntia-subulata.md)                                  | Eve's needle cactus             | Seller-labeled | Pot/root state, dimensions, tracker ID, photo, placement         |
-| Cactus-08    | `G2`     | [_Tephrocactus articulatus_ var. _papyracanthus_](./plants/cacti/tephrocactus-articulatus-papyracanthus.md)         | Paper spine cactus              | Seller-labeled | Pot/root state, segment condition, tracker ID, photo, placement  |
-| Cactus-09    | `G3`     | [_Gymnocalycium mihanovichii_ f. variegata 'Black Widow'](./plants/cacti/gymnocalycium-mihanovichii-black-widow.md) | Black Widow chin cactus         | Seller-labeled | Shipping form, dimensions, tracker ID, photo, orientation        |
-| Succulent-06 | `H1`     | [_Pleiospilos nelii_ 'Royal Flush'](./plants/succulents/pleiospilos-nelii-royal-flush.md)                           | Royal Flush split rock          | Seller-labeled | Leaf-pair/root state, pot, tracker ID, photo, placement          |
-| Succulent-07 | `H2`     | [_Echeveria_ 'Raindrops'](./plants/succulents/echeveria-raindrops.md)                                               | Raindrops echeveria             | Seller-labeled | Rosette/root state, pot, tracker ID, photo, placement            |
-| Succulent-08 | `H3`     | [_Sempervivum_ Colorockz® 'Coconut Crystal'](./plants/succulents/sempervivum-coconut-crystal.md)                    | Coconut Crystal hens and chicks | Seller-labeled | Offset/root state, pot, tracker ID, photo, indoor placement plan |
+| Inventory ID | Label ID | Seller identification                                                                                               | Common name                     | Seller SKU | Listed size | Arrival-dependent fields                                         |
+| ------------ | -------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------- | ---------- | ----------- | ---------------------------------------------------------------- |
+| Cactus-07    | `G1`     | [_Austrocylindropuntia subulata_](./plants/cacti/austrocylindropuntia-subulata.md)                                  | Eve's needle cactus             | `C2KY2600` | 2.0 in pot  | Pot/root state, dimensions, tracker ID, photo, placement         |
+| Cactus-08    | `G2`     | [_Tephrocactus articulatus_ var. _papyracanthus_](./plants/cacti/tephrocactus-articulatus-papyracanthus.md)         | Paper spine cactus              | `C2KY3308` | 2.0 in pot  | Pot/root state, segment condition, tracker ID, photo, placement  |
+| Cactus-09    | `G3`     | [_Gymnocalycium mihanovichii_ f. variegata 'Black Widow'](./plants/cacti/gymnocalycium-mihanovichii-black-widow.md) | Black Widow chin cactus         | `C2ZY7804` | 2.0 in pot  | Pot/root state, dimensions, tracker ID, photo, orientation       |
+| Succulent-06 | `H1`     | [_Pleiospilos nelii_ 'Royal Flush'](./plants/succulents/pleiospilos-nelii-royal-flush.md)                           | Royal Flush split rock          | `S2JY2848` | 2.0 in pot  | Leaf-pair/root state, pot, tracker ID, photo, placement          |
+| Succulent-07 | `H2`     | [_Echeveria_ 'Raindrops'](./plants/succulents/echeveria-raindrops.md)                                               | Raindrops echeveria             | `S2JN3225` | 2.0 in pot  | Rosette/root state, pot, tracker ID, photo, placement            |
+| Succulent-08 | `H3`     | [_Sempervivum_ Colorockz® 'Coconut Crystal'](./plants/succulents/sempervivum-coconut-crystal.md)                    | Coconut Crystal hens and chicks | `S2JN7271` | 2.0 in pot  | Offset/root state, pot, tracker ID, photo, indoor placement plan |
+
+A 2-inch-to-4-inch change doubles the diameter and creates about four times the
+surface area, plus substantially more mix volume. It is therefore not an
+automatic one-size step. Preserve a sound nursery setup through arrival
+inspection, or choose the smallest draining pot that accommodates the actual
+root ball. Shape matters too: 'Royal Flush' favors a deep narrow container;
+'Raindrops' and an offsetting 'Coconut Crystal' may eventually justify more
+width; and tall segmented plants may need stability without a broad reservoir
+of unused medium.
 
 The Split Rock and hardy _Sempervivum_ are not additions to the established
 18-pot cactus watering routine. Split Rock watering follows its active leaf
@@ -198,5 +209,6 @@ The most useful future evidence would be:
 - an open flower beside a ruler for Cactus-03;
 - flowers, mature fruit, and mature-areole close-ups for Cactus-06;
 - flowers or a nursery cultivar label for Cactus-02;
-- the original Lowe's tag and diagnostic photographs for Houseplant-01; and
+- diagnostic leaf, trunk, flower, or fruit photographs that can test the
+  working species identification for Houseplant-01; and
 - original nursery tags or receipts for the probable IDs.

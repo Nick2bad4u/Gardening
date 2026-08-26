@@ -12,9 +12,14 @@ photographs. Copyright Nick; all rights reserved. The generated booklet keeps
 them visually and textually separate from the licensed species-reference archive
 under [`assets/plants`](../plants/).
 
-Fifteen profiles currently have an explicit photo-pending record because no
+Fourteen profiles currently have an explicit photo-pending record because no
 corresponding image file is stored in the repository. Do not substitute a
 similar plant or a reference photograph as collection evidence.
+
+The two money-tree label images are explicitly marked as AI-assisted
+presentation crops from chat-supplied photographs. They are useful for the
+visible tag wording and supplier branding, but they are not represented as
+untouched camera exports.
 
 To add a Google Photos picture, download the original, create a web-sized local
 derivative here, and record it in `photo-manifest.json`. A Google Photos share

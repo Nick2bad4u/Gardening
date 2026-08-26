@@ -135,10 +135,12 @@ async function renderInline(markdown) {
 }
 
 function externalizeLinks(html) {
-    return html.replace(
-        /<a href="(https?:\/\/[^\"]+)">/g,
-        '<a href="$1" target="_blank" rel="noreferrer">'
-    );
+    return html
+        .replaceAll('href="../../../assets/', 'href="../../assets/')
+        .replace(
+            /<a href="(https?:\/\/[^\"]+)">/g,
+            '<a href="$1" target="_blank" rel="noreferrer">'
+        );
 }
 
 function parseProfile(markdown, group, fileName) {
@@ -283,6 +285,14 @@ function collectionPhotoKind(kind) {
 function renderCollectionPhoto(photo) {
     const imagePath = `../../${photo.file.replaceAll("\\", "/")}`;
     const sourcePath = `../../${photo.source_file.replaceAll("\\", "/")}`;
+    const evidenceDate = photo.captured_on ?? photo.provided_on;
+    const evidenceVerb = photo.captured_on ? "Photographed" : "Provided";
+    const sourceLinkText = photo.derived_note
+        ? "Open the archived presentation crop"
+        : "Open the original evidence file";
+    const derivedNote = photo.derived_note
+        ? `<span>${escapeHtml(photo.derived_note)}</span>`
+        : "";
 
     return `<figure class="collection-photo" data-photo-kind="${escapeHtml(photo.kind)}">
     <a href="${escapeHtml(imagePath)}">
@@ -291,8 +301,9 @@ function renderCollectionPhoto(photo) {
     <figcaption>
       <span class="photo-kind">${escapeHtml(collectionPhotoKind(photo.kind))}</span>
       <strong>${escapeHtml(photo.caption)}</strong>
-      <span>Photographed <time datetime="${escapeHtml(photo.captured_on)}">${escapeHtml(photo.captured_on)}</time> · © Nick, all rights reserved</span>
-      <a href="${escapeHtml(sourcePath)}">Open the original evidence file</a>
+      <span>${evidenceVerb} <time datetime="${escapeHtml(evidenceDate)}">${escapeHtml(evidenceDate)}</time> · © Nick, all rights reserved</span>
+      ${derivedNote}
+      <a href="${escapeHtml(sourcePath)}">${sourceLinkText}</a>
     </figcaption>
   </figure>`;
 }

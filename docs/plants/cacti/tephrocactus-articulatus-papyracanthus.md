@@ -7,7 +7,7 @@
 - Identification: **seller-labeled; physical plant not yet received**
 - Ordered from: Mountain Crest Gardens on 2026-08-25
 - Order status: **Order Received by seller; shipment and collection receipt pending**
-- Current pot: **pending arrival inspection**
+- Seller-listed size: **2.0-inch pot; actual received container pending inspection**
 - Photo archive: [licensed species-reference images](../../../assets/plants/tephrocactus-articulatus-papyracanthus/)
 
 ## Names and identity
@@ -26,9 +26,30 @@ the profile also keeps the accepted species-level treatment visible.
 ## Order evidence and status
 
 Mountain Crest Gardens listed one paper spine cactus in the 2026-08-25 order.
-The `G2` label is reserved. No pot size, shipped-root condition, tracker ID,
-dimensions, or collection photographs are recorded yet. Those fields must be
-filled from the actual plant rather than inferred from a changing retail page.
+The product page inspected on 2026-08-26 lists a 2.0-inch pot. The `G2` label
+is reserved. Shipped-root condition, tracker ID, received dimensions, and
+collection photographs remain pending and must come from the actual plant.
+
+## Seller listing snapshot
+
+These are Mountain Crest Gardens' product-page fields as inspected on
+2026-08-26, not measurements of the shipped plant.
+
+| Seller field             | Listing value                   |
+| ------------------------ | ------------------------------- |
+| SKU                      | `C2KY3308`                      |
+| Product size             | 2.0-inch pot                    |
+| Current / seasonal color | Blue or blue-green / silver     |
+| Bloom color              | White                           |
+| Hardiness                | Zone 10; seller threshold 30 °F |
+| Recommended light        | Bright indoor light; full sun   |
+| Maximum-height category  | Over 12 inches                  |
+| Growth habit             | Vertical grower / tall stem     |
+
+The seller describes raffia-like flattened pseudo-spines, knobby segments that
+branch and stack, reluctant flowering, and segments that detach and reroot
+readily. “Pseudo-spine” is the seller's descriptive wording; the broad papery
+structures should still be handled as cactus armature.
 
 ## Origin, form, and taxonomy
 
@@ -43,13 +64,13 @@ seller record.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                         |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Unpack over a tray because loose segments may already have detached; inspect the base and roots before watering.    |
-| Grow-light position | Use a bright cactus zone after acclimation, but begin outside the hottest center until the shipped surface adjusts. |
-| Water               | Water only after arrival condition, roots, medium dryness, and pot weight support it; then soak, drain, and re-dry. |
-| Pot and mix         | Favor a stable, freely draining setup; a top-heavy chain of segments can lever itself out of a light pot.           |
-| Handling            | Support the lowest segment instead of grabbing the paper spines or upper joints.                                    |
+| Topic               | Practical starting approach                                                                                                                                                                   |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival             | Unpack over a tray because loose segments may already have detached; inspect the base and roots before watering.                                                                              |
+| Grow-light position | Use a bright cactus zone after acclimation, but begin outside the hottest center until the shipped surface adjusts.                                                                           |
+| Water               | Water only after arrival condition, roots, medium dryness, and pot weight support it; then soak, drain, and re-dry.                                                                           |
+| Pot and mix         | Favor a stable, freely draining setup. Do not jump from the listed 2-inch pot to 4 inches solely by rule; a compact deep pot or external support may stabilize segments with less unused mix. |
+| Handling            | Support the lowest segment instead of grabbing the paper spines or upper joints.                                                                                                              |
 
 ## Rotation, propagation, and watch points
 

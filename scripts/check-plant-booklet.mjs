@@ -212,10 +212,25 @@ async function main() {
                 ),
                 `${record.plant_slug} has an invalid original-photo path.`
             );
-            assert(
-                /^\d{4}-\d{2}-\d{2}$/.test(photo.captured_on),
-                `${record.plant_slug} has an invalid capture date.`
+            const evidenceDates = [photo.captured_on, photo.provided_on].filter(
+                (value) => typeof value === "string" && value.length > 0
             );
+            assert(
+                evidenceDates.length === 1 &&
+                    /^\d{4}-\d{2}-\d{2}$/.test(evidenceDates[0]),
+                `${record.plant_slug} needs exactly one valid capture or provided date.`
+            );
+            if (photo.derived_note !== undefined) {
+                assert(
+                    typeof photo.derived_note === "string" &&
+                        photo.derived_note.trim().length > 0,
+                    `${record.plant_slug} has an empty derivative note.`
+                );
+                assert(
+                    typeof photo.provided_on === "string",
+                    `${record.plant_slug} has a derived crop without a provided date.`
+                );
+            }
             assert(
                 typeof photo.alt === "string" && photo.alt.trim().length > 0,
                 `${record.plant_slug} has a collection photo without alt text.`

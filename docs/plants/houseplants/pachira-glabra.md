@@ -3,29 +3,46 @@
 - Inventory: Houseplant-01 — _Pachira glabra_
 - Label ID: `#3`
 - Visual description: Young tropical tree with a smooth green trunk and hand-shaped clusters of glossy leaflets.
-- Interesting fact: Retail “money trees” are often called _Pachira aquatica_, but this collection record is _Pachira glabra_.
-- Identification: **reported retail identification; collection photos and original tag not yet archived**
+- Interesting fact: The retail tag names only _Pachira_; the “money tree” trade name is used for more than one cultivated _Pachira_ species.
+- Identification: **retail tag confirms genus _Pachira_; _P. glabra_ remains the supplied working species identification**
 - Acquired from: Lowe's; exact store and date not recorded
 - Current pot: transplanted from 4 inches into a 6-inch Amazon Basics pot
 - Photo archive: [licensed species-reference images](../../../assets/plants/pachira-glabra/)
 
 ## Names and identity
 
-| Kind                    | Name                                                              |
-| ----------------------- | ----------------------------------------------------------------- |
-| Accepted botanical name | _Pachira glabra_                                                  |
-| Common name             | Money tree                                                        |
-| Common confusion        | _Pachira aquatica_ is also widely sold under the same common name |
+| Kind                   | Name                                                              |
+| ---------------------- | ----------------------------------------------------------------- |
+| Working species record | _Pachira glabra_; retail tag reads only _Pachira_                 |
+| Common name            | Money tree                                                        |
+| Common confusion       | _Pachira aquatica_ is also widely sold under the same common name |
 
-The record follows the supplied _Pachira glabra_ identification. Save a clear
-photograph of the original Lowe's tag, leaves, trunk, and any future flowers
-because retail money trees are commonly confused with _P. aquatica_.
+The record retains the supplied _Pachira glabra_ identification as a working
+species name. The archived retail tag supports the genus but does not print a
+species epithet, so it cannot distinguish _P. glabra_ from _P. aquatica_. Clear
+leaf, trunk, flower, and fruit photographs remain useful future evidence.
+
+## Retail label evidence
+
+The white [front of the tag](../../../assets/nursery-labels/pachira-livetrends-front-clean-crop.png)
+reads “Pachira” and gives general packaging guidance: water when the upper two
+inches are dry, use medium-to-bright indirect light, keep it between 65-85 °F,
+and apply balanced fertilizer once every two months. The black
+[reverse](../../../assets/nursery-labels/pachira-livetrends-back-clean-crop.png)
+identifies LiveTrends as the supplier brand.
+
+Those directions are seller guidance, not measurements from this pot. The
+collection's actual pot-weight trend, room conditions, root-ball moisture, and
+low-dose MSU schedule remain the operating evidence. The saved files are
+clean, AI-assisted presentation crops made from the photographs supplied in
+chat on 2026-08-26; the untouched camera exports are not stored in this repo.
 
 ## Origin, form, and publication
 
-Kew accepts _Pachira glabra_, first published in 1868, and places its native
-range in southeastern and southern Brazil. It is a wet-tropical tree, not a
-succulent, so it should not follow the cactus dry-down schedule.
+For the working species record, Kew accepts _Pachira glabra_, first published
+in 1868, and places its native range in southeastern and southern Brazil. It is
+a wet-tropical tree, not a succulent, so it should not follow the cactus
+dry-down schedule.
 
 ## Care in this collection
 
@@ -60,4 +77,5 @@ repot rather than using calendar age alone.
 - [GBIF Backbone Taxonomy record](https://www.gbif.org/species/4073899)
 - [Amazon Basics 6-inch pot](https://www.amazon.com/dp/B0F4QBMJMN?th=1)
 - [Amazon Basics 8-inch pot](https://www.amazon.com/dp/B0F4QB8C8M?th=1)
-- [Carlsons' Greenhouse](https://carlsonsgreenhouse.com/)
+- [Archived LiveTrends retail-tag front](../../../assets/nursery-labels/pachira-livetrends-front-clean-crop.png)
+- [Archived LiveTrends retail-tag reverse](../../../assets/nursery-labels/pachira-livetrends-back-clean-crop.png)

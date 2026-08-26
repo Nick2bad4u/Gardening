@@ -7,7 +7,7 @@
 - Identification: **seller-labeled cultivar; physical plant not yet received**
 - Ordered from: Mountain Crest Gardens on 2026-08-25
 - Order status: **Order Received by seller; shipment and collection receipt pending**
-- Current pot: **pending arrival inspection**
+- Seller-listed size: **2.0-inch pot; actual received container pending inspection**
 - Photo archive: [licensed genus and cultivar references](../../../assets/plants/sempervivum-coconut-crystal/)
 
 ## Names and identity
@@ -26,9 +26,34 @@ leaves are not part of the cultivar pattern.
 
 ## Order evidence and status
 
-The 2026-08-25 order lists one Colorockz® 'Coconut Crystal'. Its `H3` label is
-reserved, but it is not yet in the collection, so offsets, root condition, pot,
-tracker ID, measurements, and photographs remain pending.
+The 2026-08-25 order lists one Colorockz® 'Coconut Crystal'. The product page
+inspected on 2026-08-26 lists a 2.0-inch pot. Its `H3` label is reserved, but it
+is not yet in the collection, so offsets, root condition, received pot, tracker
+ID, measurements, and photographs remain pending.
+
+## Seller listing snapshot
+
+These Mountain Crest Gardens fields were inspected on 2026-08-26. They are
+seller metadata rather than measurements of the ordered plant.
+
+| Seller field                  | Listing value                                 |
+| ----------------------------- | --------------------------------------------- |
+| SKU                           | `S2JN7271`                                    |
+| Product size                  | 2.0-inch pot                                  |
+| Current / seasonal color      | Green / red                                   |
+| Bloom color                   | Pink                                          |
+| Hardiness                     | Zones 5–10; seller thresholds -20 °F to 30 °F |
+| Recommended light             | Filtered or partial sun; full sun             |
+| Maximum height / rosette size | Under 3 inches / 5–6 inches                   |
+| Growth habit                  | Rosette                                       |
+| Special characteristics       | Easy to propagate; pet safe — seller fields   |
+
+The seller credits Gielis and describes lime-green rosettes whose maroon
+shading begins near the center and spreads seasonally. It emphasizes outdoor
+sun for compact color, stolon-borne offsets, spring-and-summer growth, afternoon
+shade above 80 °F, frost hardiness, and protection from heavy rain or standing
+water. Because this collection will keep `H3` indoors, the outdoor wording is a
+comparison point rather than its placement plan.
 
 ## Origin, form, and life cycle
 
@@ -44,13 +69,14 @@ coolest available succulent position with steady airflow.
 
 ## Care in this collection
 
-| Topic             | Practical starting approach                                                                                                     |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival           | Isolate, photograph the crown and offsets, and inspect for trapped wet leaves or pests.                                         |
-| Primary placement | Indoor-only: use the brightest and coolest practical succulent position with good airflow.                                      |
-| Water             | Use drainage, rosette firmness, and pot weight; soak only when warranted and never leave water standing in the crown or saucer. |
-| Heat              | Move toward a cooler edge or add distance if leaves bleach, the rosette opens, or sustained canopy heat becomes excessive.      |
-| Winter            | Keep indoors; favor cooler nights and seasonal temperature variation without exposing it to freezing drafts.                    |
+| Topic             | Practical starting approach                                                                                                                                                    |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Arrival           | Isolate, photograph the crown and offsets, and inspect for trapped wet leaves or pests.                                                                                        |
+| Primary placement | Indoor-only: use the brightest and coolest practical succulent position with good airflow.                                                                                     |
+| Water             | Use drainage, rosette firmness, and pot weight; do not copy the seller's weekly outdoor example into this indoor setup, and never leave water standing in the crown or saucer. |
+| Heat              | Move toward a cooler edge or add distance if leaves bleach, the rosette opens, or sustained canopy heat becomes excessive.                                                     |
+| Winter            | Keep indoors; favor cooler nights and seasonal temperature variation without exposing it to freezing drafts.                                                                   |
+| Pot               | A shallow 4-inch pot may suit a rooted rosette plus offsets later, but the listed 2-inch arrival should be inspected before adding substantially more mix.                     |
 
 ## Rotation, propagation, and watch points
 

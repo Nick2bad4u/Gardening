@@ -68,6 +68,9 @@ The physical `E1`–`E3` and `F1`–`F3` mappings were copied from the pots on
 | Cactus-08    | `G2`     | [Paper spine cactus (_Tephrocactus articulatus_ var. _papyracanthus_)](./cacti/tephrocactus-articulatus-papyracanthus.md) | Seller-labeled form; arrival inspection pending |
 | Cactus-09    | `G3`     | [Black Widow chin cactus (_Gymnocalycium mihanovichii_ f. variegata)](./cacti/gymnocalycium-mihanovichii-black-widow.md)  | Seller-labeled cultivar; arrival pending        |
 
+All three exact product pages list 2.0-inch pots as inspected on 2026-08-26;
+the received containers, roots, and dimensions still require inspection.
+
 ## Succulents
 
 | Inventory ID | Label ID               | Profile                                                                                                                     | Identification status           |
@@ -81,6 +84,9 @@ The physical `E1`–`E3` and `F1`–`F3` mappings were copied from the pots on
 | Succulent-07 | `H2`                   | [Raindrops echeveria (_Echeveria_ 'Raindrops')](./succulents/echeveria-raindrops.md)                                        | Seller-labeled; arrival pending |
 | Succulent-08 | `H3`                   | [Coconut Crystal hens and chicks (_Sempervivum_ Colorockz® 'Coconut Crystal')](./succulents/sempervivum-coconut-crystal.md) | Seller-labeled; arrival pending |
 
+All three exact product pages list 2.0-inch pots as inspected on 2026-08-26;
+the received containers, roots, and dimensions still require inspection.
+
 ## Older mixed cactus planter
 
 | Inventory ID | Label ID               | Profile                                                                                              | Identification status                      |
@@ -92,9 +98,9 @@ The physical `E1`–`E3` and `F1`–`F3` mappings were copied from the pots on
 
 ## Houseplants
 
-| Inventory ID  | Label ID | Profile                                                          | Identification status |
-| ------------- | -------- | ---------------------------------------------------------------- | --------------------- |
-| Houseplant-01 | `#3`     | [Money tree (_Pachira glabra_)](./houseplants/pachira-glabra.md) | Reported retail ID    |
+| Inventory ID  | Label ID | Profile                                                          | Identification status         |
+| ------------- | -------- | ---------------------------------------------------------------- | ----------------------------- |
+| Houseplant-01 | `#3`     | [Money tree (_Pachira glabra_)](./houseplants/pachira-glabra.md) | Genus tag; working species ID |
 
 The reusable-license [photo archive](../../assets/plants/) provides source
 links, licenses, creator attribution, and machine-readable metadata for every

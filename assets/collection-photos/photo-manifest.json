@@ -386,8 +386,26 @@
         },
         {
             "plant_slug": "pachira-glabra",
-            "photos": [],
-            "pending_note": "A repository photo of the money tree labeled #3 has not been added yet."
+            "photos": [
+                {
+                    "file": "assets/collection-photos/nursery-pachira-livetrends-front.webp",
+                    "source_file": "assets/nursery-labels/pachira-livetrends-front-clean-crop.png",
+                    "kind": "nursery-label",
+                    "provided_on": "2026-08-26",
+                    "alt": "Clean presentation crop of the white front of the money tree nursery tag reading Pachira with general care icons",
+                    "caption": "The retail tag names the plant only as Pachira and prints general care directions; it does not establish the species.",
+                    "derived_note": "AI-assisted presentation crop from a user-supplied chat photo; the original camera export is not stored in this repository."
+                },
+                {
+                    "file": "assets/collection-photos/nursery-pachira-livetrends-back.webp",
+                    "source_file": "assets/nursery-labels/pachira-livetrends-back-clean-crop.png",
+                    "kind": "nursery-label",
+                    "provided_on": "2026-08-26",
+                    "alt": "Clean presentation crop of the black back of the money tree nursery tag with the LiveTrends name and website",
+                    "caption": "The reverse identifies LiveTrends as the supplier brand for the genus-level Pachira tag.",
+                    "derived_note": "AI-assisted presentation crop from a user-supplied chat photo; the original camera export is not stored in this repository."
+                }
+            ]
         },
         {
             "plant_slug": "austrocylindropuntia-subulata",

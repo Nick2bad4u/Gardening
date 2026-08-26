@@ -168,6 +168,7 @@ rather than automatic.
 | Kiwi aeonium pot               | Carlson's Greenhouse 5 in pot                                                                                                    | Current pot for Succulent-05.                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | Money-tree pot                 | [Amazon Basics 6 in pot with drainage holes and ridges](https://www.amazon.com/dp/B0F4QBMJMN?th=1)                               | Current 6 in matte-white pot for Houseplant-01 after transplanting from its Lowe's 4 in nursery pot.                                                                                                                                                                                                                                                                                                                                                              |
 | Future money-tree pot          | [Amazon Basics 8 in pot with saucer](https://www.amazon.com/dp/B0F4QB8C8M?th=1)                                                  | Stored for later; do not move up until the 6 in root ball is genuinely crowded. The polypropylene pot has drainage holes and a ridged saucer.                                                                                                                                                                                                                                                                                                                     |
+| Mountain Crest nursery pots    | Six seller-listed 2.0 in pots                                                                                                    | Product-page metadata inspected 2026-08-26; verify the actual containers and root balls on arrival. Do not automatically move a 2 in plant to a 4 in pot.                                                                                                                                                                                                                                                                                                         |
 | Current medium for `P01`–`P18` | [Molly's Succulent Mix](https://veryplants.com/products/mollys-succulent-mix-premium-gritty-soil-mix) plus horticultural perlite | Pot setup 2: 60% Molly's and 40% perlite by volume, measured as three cups to two cups. Molly's is a soilless gritty blend of akadama, pine bark, lava rock, Hyuga, pumice, and mycorrhizae, with no commercial fertilizer. Only old medium clinging to roots was retained during the August 14 repot.                                                                                                                                                            |
 | Historical medium              | [Back to the Roots Succulent & Cacti Mix, 12 qt](https://www.amazon.com/dp/B0CLZ2YL9R)                                           | Previous peat-free packaged mix containing aged bark, perlite, horticultural sand, limestone, and a small amount of organic plant food. Retained as history because it was associated with the day-14 10–20 g/day loss observation. See the [manufacturer product page](https://backtotheroots.com/products/organic-succulents-cacti-mix-specialty-blend-6-qt) and [soil FAQ](https://backtotheroots.com/pages/soilFAQ-specialty-blend-succulents-and-cacti-mix). |
 | Top dressing                   | [YISZM gritty mix, 2 lb](https://www.amazon.com/dp/B0DFBTR9J9)                                                                   | Approximately 5–8 mm mineral grit including lava rock and zeolite. It is being used as a thin decorative top layer.                                                                                                                                                                                                                                                                                                                                               |
@@ -192,8 +193,8 @@ waterings, but keep it outside the strongest cactus center.
 
 The six August cacti and Kiwi aeonium came from
 [Carlsons' Greenhouse](https://carlsonsgreenhouse.com/) on Torrey Road. The
-money tree came from Lowe's. Exact purchase dates and nursery-card images can
-be added when recorded.
+money tree came from Lowe's. Its genus-level LiveTrends tag is now archived;
+the exact purchase date and Lowe's store remain unrecorded.
 
 ### Mountain Crest Gardens order — pending physical setup
 
@@ -203,14 +204,23 @@ split rock, 'Raindrops' echeveria, and 'Coconut Crystal' hens and chicks. The
 seller status is “Order Received”; none is counted in the measured table layout
 or `P01`–`P22` workbook yet.
 
-Do not assume the public listing's pot size or shipping form is the received
-setup. On arrival, record the container or bare-root state, inspect roots and
-medium, measure tabletop-to-tip height and width, attach the reserved
-`G1`–`G3` or `H1`–`H3` label, assign the next tracker ID, and decide whether
-the nursery setup should remain as pot
-setup 1. 'Coconut Crystal' will remain indoors in the brightest and coolest
-practical succulent position, while 'Royal Flush' needs its own leaf-cycle
-watering notes.
+The exact product pages inspected on 2026-08-26 list all six plants in 2.0-inch
+pots. Treat that as seller evidence, not proof of the container or root state
+that arrives. On arrival, record the container, inspect roots and medium,
+measure tabletop-to-tip height and width, attach the reserved `G1`–`G3` or
+`H1`–`H3` label, assign the next tracker ID, and decide whether the nursery
+setup should remain as pot setup 1.
+
+Do not automatically transfer a 2-inch root ball to a 4-inch pot. Doubling the
+diameter creates about four times the surface area and substantially more mix
+volume. Keep a healthy, draining nursery setup at first or use the smallest pot
+that accommodates the roots. Prefer a deep narrow form for 'Royal Flush'. A
+well-rooted 'Raindrops' rosette, an offsetting 'Coconut Crystal', or a tall Eve's
+needle may justify a wider or heavier pot later; Black Widow and paper spine
+should not receive extra width merely because a 4-inch pot is available.
+'Coconut Crystal' will remain indoors in the brightest and coolest practical
+succulent position, while 'Royal Flush' needs its own leaf-cycle watering
+notes.
 
 ## Shared planters
 
