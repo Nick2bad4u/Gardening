@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-08-15
+Last updated: 2026-08-26
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
@@ -145,6 +145,33 @@ tower. The numbered mapping is `#1` shared rehab cactus planter, `#2`
 shared succulent planter, `#3` money tree, and `#4` Kiwi aeonium. These are
 plant or planter IDs, not provisional table-position coordinates.
 
+### Mountain Crest order — arrival overlay
+
+Six plants ordered on 2026-08-25 are documented but not yet physically in the
+collection. Permanent labels `G1`–`G3` and `H1`–`H3` are reserved, but do not
+assign tracker IDs, risers, or table positions from retail descriptions alone.
+On arrival:
+
+1. Photograph the closed package, each plant from all sides, any seller label,
+   and the roots or nursery pot before watering or repotting.
+2. Keep the shipment isolated from the established collection while checking
+   for mealybugs, scale, webbing, soft bases, transit breaks, and wet packing.
+3. Record actual pot/root state, dimensions, received weight, and whether each
+   plant is rooted. Then attach the reserved labels and assign tracker IDs.
+4. Acclimate the three cacti and 'Raindrops' from the outer light zone. Keep
+   'Black Widow' in the gentler variegated zone.
+5. Treat _Pleiospilos nelii_ 'Royal Flush' by its active leaf cycle rather than
+   the general cactus calendar. Do not water only because an old leaf pair is
+   wrinkling while a new pair develops.
+6. Keep _Sempervivum_ 'Coconut Crystal' indoors as planned, but give it the
+   brightest and coolest practical position with good airflow. Do not treat its
+   hardiness as evidence that it will thrive in a warm, lower-light houseplant
+   slot.
+
+No order-date watering event belongs in the tracker. The first event should
+describe the plant actually received, and a pot-setup baseline starts only
+after the received container or a deliberate repot is documented.
+
 ## Water and rain
 
 ### August 14 dry-down reset
@@ -184,14 +211,14 @@ For the first two or three comparable watering cycles:
    check readiness sooner. Do not give small daily sips to slow the curve.
 
 Because the repot disturbed the roots, the 15 days since the July 31 watering
-do not by themselves make the plants due immediately. If roots were intact or
-only lightly disturbed, the first full watering is planned for the morning of
-**August 21**, seven days after repotting. If roots were cut, torn substantially,
-or trimmed for rot, use **August 21–24** instead. Use plain RO water without
-fertilizer for this first post-repot soak, water slowly and evenly to runoff,
-empty every tray, and record wet weights after a consistent 30–60-minute drain.
-This dated delay is a cautious recovery step for this collection, not a claim
-that every dry cactus must always wait seven days after repotting.
+did not by themselves make the plants due immediately. The original cautious
+window was August 21-24; completion was not recorded. The current plan is the
+morning of **August 27**. If this remains the first post-repot soak and each pot
+is dry, firm, and otherwise ready, use plain RO water without fertilizer, water
+slowly and evenly to runoff, empty every tray, and record wet weights after a
+consistent 30-60-minute drain. This first plain cycle protects the setup-2
+dry-down baseline. Begin the [MSU 13-3-15 fertilizer schedule](./equipment/msu-fertilizer-schedule.md)
+at the next ready watering, not tomorrow.
 
 - Judge dryness below the rocky top layer, not from the appearance of the rocks.
 - A normal watering should soak the mix rather than only wetting the surface.
@@ -253,6 +280,19 @@ name that is often confused with _Pachira aquatica_. Keep its original tag or a
 clear photograph if available. The current 6 in pot is enough; reserve the 8 in
 pot until roots have genuinely filled the smaller container. Rotate it 90°
 weekly for even window growth.
+
+### Ordered specialty succulents
+
+- _Pleiospilos nelii_ 'Royal Flush' is a mimicry plant with a leaf-replacement
+  cycle. Its old pair can wrinkle as the new pair consumes stored water; that
+  observation alone is not permission to water.
+- _Echeveria_ 'Raindrops' develops organized, firm leaf bumps. Do not diagnose
+  the cultivar's normal bumps as edema, but do investigate new translucent,
+  blistered, or collapsing tissue.
+- _Sempervivum_ Colorockz® 'Coconut Crystal' will remain indoors. Preserve as
+  much of its high-light, cool-season character as the room allows: use the
+  brightest and coolest practical position, maintain airflow, and protect the
+  crown from standing water rather than matching the warm cactus-center routine.
 
 ## Removed cactus: historical record
 

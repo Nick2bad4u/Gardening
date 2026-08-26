@@ -12,16 +12,20 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
   of the Google Sheets log with current status, search and filters, stable
   per-plant history URLs, dry/wet baselines, calculations, charts, and direct
   links back to the editable workbook
+- [AppSheet garden companion](docs/appsheet-companion.md) — signed-in phone and
+  desktop entry, save receipts, image-first plant cards, watering-age badges,
+  all eight collection Insights charts, and interactive per-plant measurement
+  and weight charts
 - [Browser plant field guide](docs/plant-booklet/) — magazine-style cover,
   searchable contents, one deep page per plant, licensed reference galleries
-  for all 28 records, collection and nursery-label photos where archived,
+  for all 34 records, collection and nursery-label photos where archived,
   source and live-history links, a random-profile jump, dark mode, keyboard
   navigation, mobile layout, and print styling
 - [Plant photo album entry](docs/layouts/photo-album.html) — a mobile-friendly
   collection cover with the current shared Google Photos album link
 - [Plant profiles](docs/plants/) — names, origins, history, flowers, care,
-  propagation, risks, sources, and photo-archive status for all 28 collection
-  records (27 current and one historical)
+  propagation, risks, sources, and photo-archive status for all 34 collection
+  records (27 physically present, six ordered, and one historical)
 - [AW200SE and E25 deep guide](docs/equipment/vivosun-aw200se.md) — PPFD maps,
   DLI/lux conversions, distances, dimming, placement, and a simple starting
   program
@@ -40,20 +44,23 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
 - [Grow-room air treatment](docs/equipment/air-treatment.md) — sensor-driven
   placement and use of the TABYIK DH-CS01 dehumidifier and Levoit Core Mini-P
   air purifier
+- [MSU 13-3-15 fertilizer schedule](docs/equipment/msu-fertilizer-schedule.md) —
+  gram-based RO-water mixing, the post-repot plain-water baseline, alternating
+  cactus feeds, and separate starting rules for the other plants
 - [Browser grow-spot diagrams](docs/layouts/grow-spot-layout.html) — tabbed room,
   two wooden-table, round-table, height, paired-fan, camera, and riser views with
   one consistent room-facing orientation
 - [Plant collection](docs/collection.md) — compact inventory, working IDs,
   confidence, label-mapping status, and current status
 - [Pot labels](docs/plants/labels.md) — SUPVAN E11-ready names, short plant IDs,
-  verified origins and description years, warnings, and the three
-  special orientation labels
+  verified origins and description years, visual descriptions, curious facts,
+  acquisition records, warnings, and the three special orientation labels
 - [Setup and equipment](docs/setup.md) — light, controllers, paired fans,
   GrowCam, reflector, room-air devices, meters, pots, current and historical
   media, three plant surfaces, and current arrangement
 - [Care notes](docs/care-notes.md) — the practical light, water, airflow, and
   recovery plan, including separate Kiwi aeonium and money-tree rules
-- [Licensed lifecycle photo archive](assets/plants/) — 246 reference photos
+- [Licensed lifecycle photo archive](assets/plants/) — 282 reference photos
   covering available young plants, mature forms, flowers, fruit or seed,
   details, and habitat, with creator, source, license, and SHA-256 metadata
 

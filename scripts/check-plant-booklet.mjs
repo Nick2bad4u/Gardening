@@ -38,6 +38,10 @@ const allowedLicense =
     /^(?:CC0|CC BY(?: SA|-SA)?|CC BY-SA \d|Public domain|No restrictions)/i;
 const allowedCollectionKinds = new Set(["collection", "nursery-label"]);
 const expectedTrackedProfiles = 27;
+const expectedProfileCount = 34;
+const expectedPresentProfiles = 27;
+const expectedPendingProfiles = 6;
+const expectedHistoricalProfiles = 1;
 
 function assert(condition, message) {
     if (!condition) throw new Error(message);
@@ -96,6 +100,58 @@ async function main() {
         discoverProfiles(),
     ]);
     const profileSlugs = profiles.map((profile) => profile.slug);
+
+    assert(
+        profiles.length === expectedProfileCount,
+        `Expected ${expectedProfileCount} Markdown profiles; found ${profiles.length}.`
+    );
+
+    const profileStates = profiles.map((profile) => {
+        const inventoryId =
+            profile.markdown.match(/^\- Inventory:\s*([^\s]+)\s/m)?.[1] ?? "";
+        const orderStatus =
+            profile.markdown.match(/^\- Order status:\s*(.+)$/m)?.[1] ?? "";
+        const status =
+            profile.markdown.match(/^\- Status:\s*(.+)$/m)?.[1] ?? "";
+        const pendingArrival = /pending/i.test(orderStatus);
+        const historical =
+            inventoryId === "Rehab-04" || /historical/i.test(status);
+        const hasAcquisitionSource =
+            /^\- (?:Acquired from|Ordered from):\s*\S/m.test(profile.markdown);
+
+        assert(
+            hasAcquisitionSource,
+            `${profile.slug} has no Acquired from or Ordered from metadata.`
+        );
+        assert(
+            !pendingArrival || /^\- Ordered from:\s*\S/m.test(profile.markdown),
+            `${profile.slug} is pending arrival without Ordered from metadata.`
+        );
+
+        return { historical, pendingArrival };
+    });
+    const presentProfileCount = profileStates.filter(
+        (profile) => !profile.historical && !profile.pendingArrival
+    ).length;
+    const pendingProfileCount = profileStates.filter(
+        (profile) => profile.pendingArrival
+    ).length;
+    const historicalProfileCount = profileStates.filter(
+        (profile) => profile.historical
+    ).length;
+
+    assert(
+        presentProfileCount === expectedPresentProfiles,
+        `Expected ${expectedPresentProfiles} physically present profiles; found ${presentProfileCount}.`
+    );
+    assert(
+        pendingProfileCount === expectedPendingProfiles,
+        `Expected ${expectedPendingProfiles} pending-arrival profiles; found ${pendingProfileCount}.`
+    );
+    assert(
+        historicalProfileCount === expectedHistoricalProfiles,
+        `Expected ${expectedHistoricalProfiles} historical profile; found ${historicalProfileCount}.`
+    );
 
     assert(
         collectionManifest.schema_version === 1,
@@ -342,6 +398,22 @@ async function main() {
     assert(
         pendingPhotoCount === expectedPendingPhotos,
         `Expected ${expectedPendingPhotos} pending-photo panels; found ${pendingPhotoCount}.`
+    );
+    const atAGlanceCount = (html.match(/class="profile-at-a-glance"/g) ?? [])
+        .length;
+    assert(
+        atAGlanceCount === profiles.length,
+        `Expected ${profiles.length} at-a-glance sections; found ${atAGlanceCount}.`
+    );
+    assert(
+        (html.match(/<h2>What it looks like<\/h2>/g) ?? []).length ===
+            profiles.length,
+        "Every profile needs a visual-description heading."
+    );
+    assert(
+        (html.match(/<h2>Did you know\?<\/h2>/g) ?? []).length ===
+            profiles.length,
+        "Every profile needs an interesting-fact heading."
     );
     assert(
         (html.match(/Open the live care history/g) ?? []).length ===

@@ -18,6 +18,9 @@
 - [Grow-room dehumidifier and air purifier](./air-treatment.md) — practical
   placement, sensor-driven use, and maintenance for the TABYIK DH-CS01 and
   Levoit Core Mini-P
+- [MSU 13-3-15 fertilizer schedule](./msu-fertilizer-schedule.md) — the
+  collection-specific RO-water dose, August 27 plain-water baseline, mixing
+  steps, alternating cactus schedule, and separate rules for the other plants
 
 The short description of the whole physical setup remains in
 [setup.md](../setup.md). This directory holds the deeper equipment research.

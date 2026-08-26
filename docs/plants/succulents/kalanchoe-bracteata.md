@@ -2,6 +2,8 @@
 
 - Inventory: Succulent-03 — probable _Kalanchoe bracteata_
 - Label ID: `#2` — shared succulent planter; formerly `C4-D4`
+- Visual description: Branching succulent with thick spoon-shaped leaves covered in silver felt.
+- Interesting fact: Its reflective leaf hairs reduce the intensity of sunlight reaching the leaf surface.
 - Acquired from: Gerych's Greenhouse, as part of the mixed succulent planter
 - Acquired on: 2026-07-27
 - Identification: **probable; _K. hildebrandtii_ remains a lookalike**

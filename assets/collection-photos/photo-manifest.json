@@ -388,6 +388,36 @@
             "plant_slug": "pachira-glabra",
             "photos": [],
             "pending_note": "A repository photo of the money tree labeled #3 has not been added yet."
+        },
+        {
+            "plant_slug": "austrocylindropuntia-subulata",
+            "photos": [],
+            "pending_note": "G1 reserved; ordered from Mountain Crest Gardens on 2026-08-25; collection photography begins after arrival."
+        },
+        {
+            "plant_slug": "tephrocactus-articulatus-papyracanthus",
+            "photos": [],
+            "pending_note": "G2 reserved; ordered from Mountain Crest Gardens on 2026-08-25; collection photography begins after arrival."
+        },
+        {
+            "plant_slug": "gymnocalycium-mihanovichii-black-widow",
+            "photos": [],
+            "pending_note": "G3 reserved; ordered from Mountain Crest Gardens on 2026-08-25; collection photography begins after arrival."
+        },
+        {
+            "plant_slug": "pleiospilos-nelii-royal-flush",
+            "photos": [],
+            "pending_note": "H1 reserved; ordered from Mountain Crest Gardens on 2026-08-25; collection photography begins after arrival."
+        },
+        {
+            "plant_slug": "echeveria-raindrops",
+            "photos": [],
+            "pending_note": "H2 reserved; ordered from Mountain Crest Gardens on 2026-08-25; collection photography begins after arrival."
+        },
+        {
+            "plant_slug": "sempervivum-coconut-crystal",
+            "photos": [],
+            "pending_note": "H3 reserved; ordered from Mountain Crest Gardens on 2026-08-25; collection photography begins after arrival."
         }
     ],
     "schema_version": 1

@@ -2,6 +2,8 @@
 
 - Inventory: Starter-03 — _Echinocereus rigidissimus_ subsp. _rubispinus_
 - Label ID: `C2`
+- Visual description: Compact cylinder covered in tight bands of pink, red, and white comb-like spines.
+- Interesting fact: Its vivid body color comes mostly from the spines; mature plants can add large magenta flowers near the crown.
 - Identification: **labeled**
 - Acquired from: Costa Farms
 - Acquired on: 2026-07-15

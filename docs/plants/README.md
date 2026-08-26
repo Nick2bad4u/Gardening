@@ -1,11 +1,12 @@
 # Plant profiles
 
-Last updated: 2026-08-15
+Last updated: 2026-08-26
 
-These 28 pages cover 27 living plants and one historical record. They combine
-botanical background with practical notes for the current pots, fast-draining
-mix, rain avoidance, and AW200SE indoor setup. They are reference guides, not
-fixed watering schedules.
+These 34 pages cover 27 plants or planters physically in the collection, six
+plants ordered on 2026-08-25 but not yet received, and one historical record.
+They combine botanical background with practical notes for the current pots,
+fast-draining mix, rain avoidance, and AW200SE indoor setup. They are reference
+guides, not fixed watering schedules.
 
 The collection-level [setup record](../setup.md#august-14-substrate-airflow-and-light-reset)
 documents the August 14 move of all 18 individually potted cactus-display
@@ -19,9 +20,9 @@ DLI, lux, distance, and placement ranges behind the lighting advice. The same
 research is published as the
 [Fenton Collection browser field guide](../plant-booklet/), with searchable
 contents, one reading page per record, keyboard navigation, dark mode, and
-print styling. All 28 profiles have licensed reference galleries. Cultivar and
-hybrid pages state when some images show the underlying species or ancestry
-rather than the exact collection form.
+print styling. Profiles have licensed reference galleries where reusable
+photography is available. Cultivar and hybrid pages state when images show the
+underlying species, genus, or ancestry rather than the exact ordered form.
 
 An identification marked **probable** is a working hypothesis. Its page names
 the best current match and the evidence that could confirm or change it. The
@@ -59,15 +60,26 @@ The physical `E1`–`E3` and `F1`–`F3` mappings were copied from the pots on
 | Cactus-05    | `F2`     | [Boobie cactus (_Myrtillocactus geometrizans_ 'Fukurokuryuzinboku')](./cacti/myrtillocactus-geometrizans-fukurokuryuzinboku.md) | Very high                                                 |
 | Cactus-06    | `F1`     | [Hook-spined pincushion (_Mammillaria_ cf. _rekoi_)](./cacti/mammillaria-rekoi.md)                                              | Probable; _M. crinita_ complex or hybrid remains possible |
 
+## Mountain Crest cacti — ordered, not yet received
+
+| Inventory ID | Label ID | Profile                                                                                                                   | Identification status                           |
+| ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| Cactus-07    | `G1`     | [Eve's needle cactus (_Austrocylindropuntia subulata_)](./cacti/austrocylindropuntia-subulata.md)                         | Seller-labeled; arrival inspection pending      |
+| Cactus-08    | `G2`     | [Paper spine cactus (_Tephrocactus articulatus_ var. _papyracanthus_)](./cacti/tephrocactus-articulatus-papyracanthus.md) | Seller-labeled form; arrival inspection pending |
+| Cactus-09    | `G3`     | [Black Widow chin cactus (_Gymnocalycium mihanovichii_ f. variegata)](./cacti/gymnocalycium-mihanovichii-black-widow.md)  | Seller-labeled cultivar; arrival pending        |
+
 ## Succulents
 
-| Inventory ID | Label ID               | Profile                                                                                           | Identification status |
-| ------------ | ---------------------- | ------------------------------------------------------------------------------------------------- | --------------------- |
-| Succulent-01 | `#2`; formerly `C4-D4` | [Pulido's echeveria (_Echeveria pulidonis_)](./succulents/echeveria-pulidonis.md)                 | Probable              |
-| Succulent-02 | `#2`; formerly `C4-D4` | [Elephant bush (_Portulacaria afra_)](./succulents/portulacaria-afra.md)                          | High                  |
-| Succulent-03 | `#2`; formerly `C4-D4` | [Silver teaspoons (_Kalanchoe bracteata_)](./succulents/kalanchoe-bracteata.md)                   | Probable              |
-| Succulent-04 | `#2`; formerly `C4-D4` | [Copper spoons (_Kalanchoe orgyalis_)](./succulents/kalanchoe-orgyalis.md)                        | High                  |
-| Succulent-05 | `#4`                   | [Kiwi aeonium (_Aeonium haworthii_ 'Dream Color')](./succulents/aeonium-haworthii-dream-color.md) | Very high             |
+| Inventory ID | Label ID               | Profile                                                                                                                     | Identification status           |
+| ------------ | ---------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| Succulent-01 | `#2`; formerly `C4-D4` | [Pulido's echeveria (_Echeveria pulidonis_)](./succulents/echeveria-pulidonis.md)                                           | Probable                        |
+| Succulent-02 | `#2`; formerly `C4-D4` | [Elephant bush (_Portulacaria afra_)](./succulents/portulacaria-afra.md)                                                    | High                            |
+| Succulent-03 | `#2`; formerly `C4-D4` | [Silver teaspoons (_Kalanchoe bracteata_)](./succulents/kalanchoe-bracteata.md)                                             | Probable                        |
+| Succulent-04 | `#2`; formerly `C4-D4` | [Copper spoons (_Kalanchoe orgyalis_)](./succulents/kalanchoe-orgyalis.md)                                                  | High                            |
+| Succulent-05 | `#4`                   | [Kiwi aeonium (_Aeonium haworthii_ 'Dream Color')](./succulents/aeonium-haworthii-dream-color.md)                           | Very high                       |
+| Succulent-06 | `H1`                   | [Royal Flush split rock (_Pleiospilos nelii_ 'Royal Flush')](./succulents/pleiospilos-nelii-royal-flush.md)                 | Seller-labeled; arrival pending |
+| Succulent-07 | `H2`                   | [Raindrops echeveria (_Echeveria_ 'Raindrops')](./succulents/echeveria-raindrops.md)                                        | Seller-labeled; arrival pending |
+| Succulent-08 | `H3`                   | [Coconut Crystal hens and chicks (_Sempervivum_ Colorockz® 'Coconut Crystal')](./succulents/sempervivum-coconut-crystal.md) | Seller-labeled; arrival pending |
 
 ## Older mixed cactus planter
 
@@ -86,5 +98,5 @@ The physical `E1`–`E3` and `F1`–`F3` mappings were copied from the pots on
 
 The reusable-license [photo archive](../../assets/plants/) provides source
 links, licenses, creator attribution, and machine-readable metadata for every
-locally saved image. The eight August profiles remain text-first until their
-reference galleries are added.
+locally saved image. A sparse cultivar gallery is kept honest rather than
+filled with unlicensed retail images or mislabeled lookalikes.

@@ -2,6 +2,8 @@
 
 - Inventory: Starter-06 — _Echinopsis subdenudata_
 - Label ID: `D2`
+- Visual description: Nearly spineless green globe with broad ribs and bright white felted areoles.
+- Interesting fact: A mature plant can produce a fragrant night-opening flower that looks enormous beside the cactus itself.
 - Identification: **labeled horticultural name**
 - Acquired from: Costa Farms
 - Acquired on: 2026-07-23

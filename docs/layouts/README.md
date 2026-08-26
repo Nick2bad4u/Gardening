@@ -1,6 +1,6 @@
 # Grow-spot diagrams
 
-Last updated: 2026-08-15
+Last updated: 2026-08-26
 
 Open [plant-tracker.html](./plant-tracker.html) for the live collection
 dashboard backed by Google Sheets. The finished workbook includes Dashboard,
@@ -65,6 +65,13 @@ The page reflects the current working arrangement:
 - the GrowCam stays on the right wall and frames all three surfaces; and
 - the purifier and dehumidifier start beyond the nominal bay on the open-room
   side, outside the fixture footprint and watering area.
+
+The six Mountain Crest plants ordered on 2026-08-25 do not appear as table
+markers yet. Their `G1`–`G3` and `H1`–`H3` labels are reserved, while shipping
+form, physical dimensions, tracker IDs, and quarantine outcome remain unknown.
+Adding them to the measured diagram before
+arrival would create false placement precision; a revised layout should follow
+the arrival measurements.
 
 The new cactus mapping is `E1` dwarf old man, `E2` Chamaelobivia, `E3` woolly
 nipple cactus, `F1` hook-spined pincushion, `F2` boobie cactus, and `F3` yellow

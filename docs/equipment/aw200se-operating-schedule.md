@@ -1,6 +1,6 @@
 # Fenton AW200SE, paired-fan, GrowCam, and air-treatment operating schedule
 
-Last updated: 2026-08-15
+Last updated: 2026-08-26
 
 This is the canonical dated schedule for the VIVOSUN AW200SE, two AeroWave E6
 Gen2 pole fans, GrowCam C4, reflector placement, the three confirmed GrowHub
@@ -21,25 +21,27 @@ or peripheral money-tree canopy.
 
 ## Calendar at a glance
 
-| Date                                | Event                                                                                                                                                                                                                                            |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Thursday, July 30, 2026             | The 256 GB microSD card passed test recording. Install the full-height divider Mylar, floor liner, original tables, wall camera, and rotated AW200SE.                                                                                            |
-| Friday, July 31, about 4:00 a.m.    | Water only the dry pots and shared planters with RO water, drain fully, empty every tray, and move the collection indoors.                                                                                                                       |
-| July 31–August 2                    | Run the three-day shakedown at 40%, 20 in, and 8:00 a.m.–8:00 p.m.; run the AeroWave at Level 2 from 8:15 a.m.–7:45 p.m.                                                                                                                         |
-| Saturday, August 1, after 8:00 p.m. | Dry-fit the group risers, restore the 20-inch LED-to-highest-tip clearance, secure the wall cables, add drip loops, and finish the lower-window block.                                                                                           |
-| Sunday, August 2, 7:30–8:15 p.m.    | Inspect and photograph the final layout, tissue-test the fan, log the sensor baseline, verify the camera framing, and lock the risers after lights-off.                                                                                          |
-| Monday, August 3, 7:45 a.m.         | Verify both E25 programs and start or verify the production time-lapse; Week 1 begins at 8:00 a.m.                                                                                                                                               |
-| Tuesday, August 4                   | Add the Core Mini-P on low at the room-side end; record an appliances-off RH baseline and leave the DH-CS01 off unless sustained humidity triggers it.                                                                                           |
-| August 8–9                          | Add the second identical wooden table, six cacti, Kiwi aeonium, and money tree. Start a fresh camera clip; use perimeter placement and no new risers until heights are measured.                                                                 |
-| August 10                           | Planned transition: lower the fixture from 20 to 18 in and keep 40% power. Completion was not separately recorded.                                                                                                                               |
-| August 14                           | Actual confirmed state: set 18 in and 45%, add a second E6 Gen2 with its own E25, and move `P01`–`P18` to pot setup 2 in a 3:2-by-volume Molly's/perlite blend after day-14 weight loss remained 10–20 g/day.                                    |
-| August 17                           | Hold 45% at 18 in; inspect new tissue and the paired-fan sweep instead of making another change.                                                                                                                                                 |
-| August 21, morning                  | If roots were intact or only lightly disturbed, record dry setup-2 weights, water `P01`–`P18` slowly with plain RO to runoff, drain 30–60 minutes, empty trays, and record wet weights. If roots were cut or rot-trimmed, defer to August 21–24. |
-| August 24                           | Hold 45% for another week while evaluating repot recovery and the first comparable new-medium dry-down.                                                                                                                                          |
-| August 31                           | Increase to 50% only if every lit surface remains healthy and the new mix is behaving predictably; otherwise hold 45%.                                                                                                                           |
-| September 7                         | Hold the lowest successful 45–50% setting for a second week.                                                                                                                                                                                     |
-| September 14                        | Try 55% only if every lit surface remains healthy; otherwise keep 50% or the lower successful setting.                                                                                                                                           |
-| September 21                        | Replace the fixed 8:00 a.m.–8:00 p.m. timer with the Fenton seasonal timer.                                                                                                                                                                      |
+| Date                                | Event                                                                                                                                                                                                                                                                |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Thursday, July 30, 2026             | The 256 GB microSD card passed test recording. Install the full-height divider Mylar, floor liner, original tables, wall camera, and rotated AW200SE.                                                                                                                |
+| Friday, July 31, about 4:00 a.m.    | Water only the dry pots and shared planters with RO water, drain fully, empty every tray, and move the collection indoors.                                                                                                                                           |
+| July 31–August 2                    | Run the three-day shakedown at 40%, 20 in, and 8:00 a.m.–8:00 p.m.; run the AeroWave at Level 2 from 8:15 a.m.–7:45 p.m.                                                                                                                                             |
+| Saturday, August 1, after 8:00 p.m. | Dry-fit the group risers, restore the 20-inch LED-to-highest-tip clearance, secure the wall cables, add drip loops, and finish the lower-window block.                                                                                                               |
+| Sunday, August 2, 7:30–8:15 p.m.    | Inspect and photograph the final layout, tissue-test the fan, log the sensor baseline, verify the camera framing, and lock the risers after lights-off.                                                                                                              |
+| Monday, August 3, 7:45 a.m.         | Verify both E25 programs and start or verify the production time-lapse; Week 1 begins at 8:00 a.m.                                                                                                                                                                   |
+| Tuesday, August 4                   | Add the Core Mini-P on low at the room-side end; record an appliances-off RH baseline and leave the DH-CS01 off unless sustained humidity triggers it.                                                                                                               |
+| August 8–9                          | Add the second identical wooden table, six cacti, Kiwi aeonium, and money tree. Start a fresh camera clip; use perimeter placement and no new risers until heights are measured.                                                                                     |
+| August 10                           | Planned transition: lower the fixture from 20 to 18 in and keep 40% power. Completion was not separately recorded.                                                                                                                                                   |
+| August 14                           | Actual confirmed state: set 18 in and 45%, add a second E6 Gen2 with its own E25, and move `P01`–`P18` to pot setup 2 in a 3:2-by-volume Molly's/perlite blend after day-14 weight loss remained 10–20 g/day.                                                        |
+| August 17                           | Hold 45% at 18 in; inspect new tissue and the paired-fan sweep instead of making another change.                                                                                                                                                                     |
+| August 21-24                        | Original cautious first post-repot watering window; completion was not recorded.                                                                                                                                                                                     |
+| August 24                           | Hold 45% for another week while evaluating repot recovery and the first comparable new-medium dry-down.                                                                                                                                                              |
+| August 25                           | Mountain Crest order recorded: six plants are pending arrival. Reserve cactus labels `G1`-`G3` and succulent labels `H1`-`H3`; do not assign table positions, tracker IDs, or watering events until each physical plant is inspected.                                |
+| August 27, morning                  | Current first-soak plan: if `P01`-`P18` remain dry, firm, and ready, record dry setup-2 weights, water slowly with plain RO and no fertilizer to runoff, drain 30-60 minutes, empty trays, and record wet weights. Begin dilute MSU only at the next ready watering. |
+| August 31                           | Increase to 50% only if every lit surface remains healthy and the new mix is behaving predictably; otherwise hold 45%.                                                                                                                                               |
+| September 7                         | Hold the lowest successful 45–50% setting for a second week.                                                                                                                                                                                                         |
+| September 14                        | Try 55% only if every lit surface remains healthy; otherwise keep 50% or the lower successful setting.                                                                                                                                                               |
+| September 21                        | Replace the fixed 8:00 a.m.–8:00 p.m. timer with the Fenton seasonal timer.                                                                                                                                                                                          |
 
 ## Fenton outdoor cutoff
 
@@ -327,13 +329,14 @@ Use the following as a trial, not a watering calendar:
 2. Hold the light at **18 in and 45%** and both fans at their lowest successful
    paired settings during the first comparable cycle. Changing another variable
    would make the dry-down result harder to interpret.
-3. Record a dry setup-2 weight before watering. If roots were intact or only
-   lightly disturbed, make the first post-repot watering on the morning of
-   **August 21**. If roots were cut, torn substantially, or trimmed for rot,
-   wait until **August 21–24**. Use plain RO without fertilizer, water slowly and
-   evenly to runoff, drain 30–60 minutes, empty every tray, and then record the
-   wet weight with a consistent saucer convention. Reweigh at roughly the same
-   time daily.
+3. Record a dry setup-2 weight before watering. The original August 21-24
+   recovery window was not recorded as completed; the current first-soak plan
+   is **August 27**. If the pots remain dry, firm, and ready, use plain RO
+   without fertilizer, water slowly and evenly to runoff, drain 30-60 minutes,
+   empty every tray, and then record the wet weight with a consistent saucer
+   convention. Reweigh at roughly the same time daily. Use the separate
+   [MSU schedule](./msu-fertilizer-schedule.md) beginning with the next ready
+   watering.
 4. The working target is a repeatable stable dry baseline in **four to seven
    days**. Seven days is a review threshold, not an instruction to water.
 5. If a pot still has a clear downward trend after day 7 on two cycles, check
@@ -477,13 +480,21 @@ Looking from the room toward the window:
 | 2: center      | `F3` yellow tower; `F2` boobie cactus; `F1` hook-spined pincushion | Outer-to-middle cactus zone; all direct on wood until measured.                        |
 | 3: room side   | `#4` Succulent-05 Kiwi aeonium; `#3` Houseplant-01 money tree      | Lower-light edge; money tree nearest window/periphery and outside the fixture hotspot. |
 
-The six new cacti are mostly in 4 in pots; the boobie cactus is in a small 3 in
+The six August cacti are mostly in 4 in pots; the boobie cactus is in a small 3 in
 pot and the Chamaelobivia is in a small 4 in pot. The Kiwi aeonium is in a 5 in
 pot and the money tree is in a 6 in pot. This is a tight 16 in-long dry fit, so
 leave a pot off the table temporarily if rims overlap, a saucer overhangs, or
 air cannot pass between plants. Add no riser until each tabletop-to-tip height
 and the final clearance are recorded. The money tree's height is not the
 reference for cactus fixture clearance.
+
+The six Mountain Crest plants ordered on August 25 are not extra occupants in
+this provisional grid. Keep them in an arrival quarantine area first. Add them
+to a future layout only after their shipping form, pot diameter, tabletop-to-tip
+height, reserved labels, and tracker IDs are recorded. 'Black Widow' starts at
+the gentler variegated edge, 'Royal Flush' keeps separate leaf-cycle watering,
+and indoor-only 'Coconut Crystal' gets the brightest and coolest practical
+succulent position rather than the warm center of the cactus canopy.
 
 Orient the shared planters as follows:
 
@@ -745,7 +756,7 @@ Recorded on 2026-07-31:
 After installing the risers, record:
 
 - the occupied table width and depth;
-- individual tabletop-to-tip heights for the six new cacti, Kiwi aeonium, and
+- individual tabletop-to-tip heights for the six August cacti, Kiwi aeonium, and
   money tree;
 - light-to-tip distance for the tallest and shortest plants;
 - wing position;

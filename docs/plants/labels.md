@@ -1,9 +1,11 @@
 # Pot labels
 
-Last updated: 2026-08-10
+Last updated: 2026-08-26
 
-This is the print reference for the 27 living plants in the collection. Pot
-labels use only the short permanent ID, such as `A1` or `B2`. These IDs identify
+This is the print reference for the 27 plants or planters physically in the
+collection plus six ordered plants with reserved `G1`–`G3` and `H1`–`H3`
+labels. Pot labels use only the short permanent ID, such as `A1` or `B2`.
+These IDs identify
 plants; they are not physical row/column coordinates. The longer
 inventory IDs remain in the collection records so the historical documentation
 and photo archive do not need to be renamed.
@@ -15,6 +17,11 @@ succulent planter, `#3` is the money tree, and `#4` is the Kiwi aeonium.
 
 The ID-to-plant mapping comes from the
 [AW200SE and paired-fan operating schedule](../equipment/aw200se-operating-schedule.md#final-pot-layout).
+
+The compact adhesive strips still use the short two-strip format below. The
+visual description, interesting fact, and acquisition details are the expanded
+fields for the collection book; trying to fit all of them on a 15 mm pot label
+would make the label unreadable.
 
 ## SUPVAN E11 print setup
 
@@ -97,6 +104,53 @@ filled in without a reliable record.
 
 `PROB.` means the identification is still photo-based and may change.
 
+## Expanded collection-book fields
+
+This companion table expands every current label record. “Ordered” is not the
+same as “acquired”: the Mountain Crest order date is recorded now, while its
+arrival date stays blank until the shipment is physically received. Missing
+dates are explicit prompts to check the physical logbook rather than guesses.
+
+| ID   | Plant                           | Short visual description                                                               | Interesting or unusual fact                                                                                   | Obtained for this collection                                  |
+| ---- | ------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| `A1` | Variegated moon cactus          | Flattened ribbed globe marbled green, bronze, yellow, and pink.                        | Unlike neon grafted moon cacti, this chlorophyll-bearing plant grows on its own roots.                        | Costa Farms — 2026-07-23                                      |
+| `B1` | Grass-blade cactus              | Small green globe with thin wavy ribs and long flattened spines.                       | Its accordion-like ribs can expand after watering without the whole stem stretching.                          | Costa Farms — 2026-07-15                                      |
+| `C1` | Giant chin cactus               | Broad blue-green globe with heavy ribs and stout curved brown spines.                  | Its flowers stay surprisingly small beside the massive body an old plant can develop.                         | Costa Farms — 2026-07-15                                      |
+| `D1` | Dragon's Egg                    | Rounded ribbed green-and-brown body with few visible spines.                           | It is a _Euphorbia_, not a cactus; its tiny flowers are cyathia and damaged tissue can release caustic latex. | Altman Reserve — 2026-07-23                                   |
+| `A2` | Feather cactus                  | Low mound hidden beneath soft-looking white featherlike spines.                        | Each “feather” is a comb of many tiny spines, so the fluffy surface is still defensive.                       | Altman Reserve — 2026-07-15                                   |
+| `B2` | Old Man of the Andes            | Short upright column wrapped in white wool with reddish spines beneath.                | Its wool helps protect an Andean cactus from intense high-altitude sun and cold nights.                       | Altman Reserve — 2026-07-15                                   |
+| `C2` | Rainbow hedgehog cactus         | Compact cylinder banded in pink, red, and white comb-like spines.                      | Most of its vivid body color comes from the spines; mature plants can add large magenta flowers.              | Costa Farms — 2026-07-15                                      |
+| `D2` | Domino cactus                   | Nearly spineless green globe with broad ribs and white felted areoles.                 | A mature plant can make a fragrant night-opening flower that looks enormous beside the cactus.                | Costa Farms — 2026-07-23                                      |
+| `A3` | Serpent cactus                  | Slender branching green stem lined with white areoles and sharp spines.                | Its long flowers open at night, matching the former genus name _Nyctocereus_, or “night cereus.”              | Costa Farms — 2026-07-23                                      |
+| `B3` | Indigo Wave                     | Blue-green crested mass with rippled, fanlike, irregular growth.                       | The normal species produces sweet edible Mexican berries called garambullos.                                  | Altman Reserve — 2026-07-15                                   |
+| `C3` | Monk's hood cactus              | Star-ribbed green column with white flecks and long yellow-brown spines.               | It is the largest and eventually tallest _Astrophytum_, but flowering can still take 10–20 years.             | Costa Farms — 2026-07-23                                      |
+| `D3` | Ming Thing                      | Dense blue-green cluster of knobby, brainlike monstrose stems.                         | A monstrose stem can occasionally revert and produce a normal-looking shoot.                                  | Altman Reserve — 2026-07-15                                   |
+| `E1` | Dwarf old man cactus            | Compact upright column wrapped in dense cream-white wool.                              | The soft-looking wool conceals numerous sharp spines.                                                         | Carlsons' Greenhouse, Torrey Road — date not recorded         |
+| `E2` | Chamaelobivia / peanut hybrid   | Dense clump of short green peanut-shaped ribbed stems.                                 | Chamaelobivia hybrids have been bred in vivid yellow, orange, red, and pink flower colors.                    | Carlsons' Greenhouse, Torrey Road — date not recorded         |
+| `E3` | Woolly nipple cactus            | Woolly green globe with large tubercles and pale and dark spines.                      | The red club-shaped projection seen on this plant is a fruit, not a flower.                                   | Carlsons' Greenhouse, Torrey Road — date not recorded         |
+| `F1` | Hook-spined pincushion cactus   | Green globe with pale radial spines and scattered hooked central spines.               | The hooks can catch animal fur in the wild—and clothing or skin in the grow room.                             | Carlsons' Greenhouse, Torrey Road — date not recorded         |
+| `F2` | Boobie cactus                   | Blue-green upright column divided into rounded breastlike knobs.                       | The normal species makes very sweet garambullo berries sold in Mexican markets.                               | Carlsons' Greenhouse, Torrey Road — date not recorded         |
+| `F3` | Yellow tower cactus             | Golden-spined globe developing into a ribbed upright column.                           | Mature plants can produce repeated bursts of pale-yellow flowers around the crown.                            | Carlsons' Greenhouse, Torrey Road — date not recorded         |
+| `G1` | Eve's needle cactus             | Upright branching green cylinders with awl-shaped leaves and sharp spines.             | Unlike most adult cacti, it retains conspicuous succulent leaves along young stems.                           | Mountain Crest Gardens — ordered 2026-08-25; receipt pending  |
+| `G2` | Paper spine cactus              | Rounded gray-green segments carrying broad curling paperlike spines.                   | Loose segments detach readily and can root as new plants; the “paper” structures are true spines.             | Mountain Crest Gardens — ordered 2026-08-25; receipt pending  |
+| `G3` | Black Widow chin cactus         | Dark ribbed globe variegated in near-black purple, red, and green.                     | It belongs to the same species commonly sold as colorful grafted moon cacti.                                  | Mountain Crest Gardens — ordered 2026-08-25; receipt pending  |
+| `H1` | Royal Flush split rock          | Pair of thick purple speckled leaves divided by a deep central fissure.                | A daisy-like flower can emerge while a new leaf pair replaces the old one from inside.                        | Mountain Crest Gardens — ordered 2026-08-25; receipt pending  |
+| `H2` | Raindrops echeveria             | Blue-green rosette with rounded raindroplike bumps on mature leaves.                   | The firm bumps are cultivar features called caruncles, not edema or pest damage.                              | Mountain Crest Gardens — ordered 2026-08-25; receipt pending  |
+| `H3` | Coconut Crystal hens and chicks | Compact lime-green rosette with maroon center shading that spreads outward seasonally. | Each rosette flowers once, but offsets can keep the colony alive afterward.                                   | Mountain Crest Gardens — ordered 2026-08-25; receipt pending  |
+| `#1` | Variegated blue torch cactus    | Tall blue-green ribbed column streaked with pale cream variegation.                    | Blue wax makes the normal tissue look glaucous; pale sectors contain less chlorophyll and scorch more easily. | Existing shared cactus planter — source and date not recorded |
+| `#1` | Monkey tail cactus              | Long trailing fingerlike stems hidden beneath soft white hairs.                        | In habitat its stems hang from steep Bolivian rock faces instead of standing upright.                         | Existing shared cactus planter — source and date not recorded |
+| `#1` | Golden torch cactus             | Upright green ribbed column lined with dense golden-brown spines.                      | It can open large white flowers at night and is also used as cactus grafting stock.                           | Existing shared cactus planter — source and date not recorded |
+| `#2` | Pulido's echeveria              | Powdery blue-green rosette with pointed leaves outlined in red.                        | Its farina is a natural sunscreen and does not grow back where a fingerprint rubs it off.                     | Gerych's Greenhouse — 2026-07-27                              |
+| `#2` | Elephant bush                   | Branching reddish stems carrying many small round glossy leaves.                       | It can shift between C3 photosynthesis and water-saving CAM behavior as conditions change.                    | Gerych's Greenhouse — 2026-07-27                              |
+| `#2` | Silver teaspoons                | Thick spoon-shaped leaves covered in reflective silver felt.                           | Its reflective hairs reduce the intensity of sunlight reaching the leaf surface.                              | Gerych's Greenhouse — 2026-07-27                              |
+| `#2` | Copper spoons                   | Fuzzy spoon-shaped leaves that age from silver to copper-brown.                        | New leaves can emerge pale and silvery before developing their copper color.                                  | Gerych's Greenhouse — 2026-07-27                              |
+| `#3` | Money tree                      | Young tropical tree with a green trunk and hand-shaped glossy leaf clusters.           | Retail money trees are often called _Pachira aquatica_, but this collection record is _Pachira glabra_.       | Lowe's — exact store and date not recorded                    |
+| `#4` | Kiwi aeonium                    | Branching green-and-yellow rosettes with vivid pink-red edges.                         | Aeoniums grow most actively in cooler seasons and can slow or partially rest during summer heat.              | Carlsons' Greenhouse, Torrey Road — date not recorded         |
+
+Rehab-04, the probable silken pincushion cactus, has no current label because
+it was removed on 2026-07-24. Its visual history and acquisition uncertainty
+remain in the [historical profile](./rehab/mammillaria-bombycina.md).
+
 ## Starter cactus labels
 
 | ID   | Common name             | Botanical label                                                                                      | Native origin                                                               |                              First described | Warning                                                                        |
@@ -157,6 +211,33 @@ retain `PROB.`.
 The Chamaelobivia label is secure at hybrid-group level and does not claim an
 unknown cultivar.
 
+## Mountain Crest order — labels reserved before arrival
+
+The three cacti use `G1`–`G3`; the three succulents use `H1`–`H3`. These are
+permanent label reservations even though tracker IDs, received pot/root state,
+dimensions, condition, and exact placement still wait for physical inspection.
+
+| Inventory ID | ID   | Common name                     | Botanical label                                                                                              | Origin wording                                    | Publication wording                       | Warning                                                                         |
+| ------------ | ---- | ------------------------------- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------- |
+| Cactus-07    | `G1` | Eve's needle cactus             | [_Austrocylindropuntia subulata_](./cacti/austrocylindropuntia-subulata.md)                                  | Andean South America; species record              | Current combination: 1942                 | Sharp spines and fine glochids; eventual tall branching growth.                 |
+| Cactus-08    | `G2` | Paper spine cactus              | [_Tephrocactus articulatus_ var. _papyracanthus_](./cacti/tephrocactus-articulatus-papyracanthus.md)         | Species: Argentina                                | Variety combination: 1953                 | Segments detach easily; paper-like structures are still spines.                 |
+| Cactus-09    | `G3` | Black Widow chin cactus         | [_Gymnocalycium mihanovichii_ f. variegata 'Black Widow'](./cacti/gymnocalycium-mihanovichii-black-widow.md) | Cultivar none; species: Paraguay and NE Argentina | Species: 1905; cultivar date not verified | Variegated tissue can scorch; verify orientation after arrival.                 |
+| Succulent-06 | `H1` | Royal Flush split rock          | [_Pleiospilos nelii_ 'Royal Flush'](./succulents/pleiospilos-nelii-royal-flush.md)                           | Cultivar none; species: South Africa              | Species: 1930; cultivar date not verified | Leaf-cycle watering; retained old pairs are not a calendar signal.              |
+| Succulent-07 | `H2` | Raindrops echeveria             | [_Echeveria_ 'Raindrops'](./succulents/echeveria-raindrops.md)                                               | Horticultural cultivar; no wild range             | Cultivar date not verified                | Firm leaf bumps are normal; do not rub off the powdery farina.                  |
+| Succulent-08 | `H3` | Coconut Crystal hens and chicks | [_Sempervivum_ Colorockz® 'Coconut Crystal'](./succulents/sempervivum-coconut-crystal.md)                    | Horticultural cultivar; no wild range             | Cultivar date not verified                | Indoor-only here; needs strong light, cooler conditions, and no standing water. |
+
+Suggested first strips:
+
+```text
+G1 | EVE'S NEEDLE CACTUS
+Austrocylindropuntia subulata
+```
+
+```text
+H1 | ROYAL FLUSH SPLIT ROCK
+Pleiospilos nelii 'Royal Flush'
+```
+
 ## Kiwi aeonium and money tree labels
 
 These two individually potted plants use numbered IDs rather than the E/F
@@ -210,6 +291,19 @@ DESC: 1841 | WARN: VARIEGATED / SCORCH
   flowers or stronger diagnostic photos for a species-level confirmation.
 
 ## Other information worth recording
+
+### Acquisition details still missing
+
+The repo already contains exact source-and-date records for `A1`–`D3` and the
+four plants in `#2`. The physical logbook can still improve these records:
+
+- purchase dates for `E1`–`E3`, `F1`–`F3`, and `#4` from Carlsons' Greenhouse;
+- purchase date and exact Lowe's store for `#3`;
+- original source and acquisition date for the three plants in `#1`; and
+- the actual received-on date for `G1`–`G3` and `H1`–`H3` after delivery.
+
+Keep an order date and a received date as separate facts. They answer different
+questions and should not be silently substituted for one another.
 
 The requested display fields plus the warning are enough for the visible
 labels. Other useful information belongs in the repo or on a replaceable label

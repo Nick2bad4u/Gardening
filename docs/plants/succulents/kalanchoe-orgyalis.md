@@ -2,6 +2,8 @@
 
 - Inventory: Succulent-04 — _Kalanchoe orgyalis_
 - Label ID: `#2` — shared succulent planter; formerly `C4-D4`
+- Visual description: Upright fuzzy succulent with broad spoon-shaped leaves that age from silver to copper-brown.
+- Interesting fact: New leaves can emerge pale and silvery before developing the copper color behind its common name.
 - Acquired from: Gerych's Greenhouse, as part of the mixed succulent planter
 - Acquired on: 2026-07-27
 - Identification: **high**

@@ -2,6 +2,8 @@
 
 - Inventory: Houseplant-01 — _Pachira glabra_
 - Label ID: `#3`
+- Visual description: Young tropical tree with a smooth green trunk and hand-shaped clusters of glossy leaflets.
+- Interesting fact: Retail “money trees” are often called _Pachira aquatica_, but this collection record is _Pachira glabra_.
 - Identification: **reported retail identification; collection photos and original tag not yet archived**
 - Acquired from: Lowe's; exact store and date not recorded
 - Current pot: transplanted from 4 inches into a 6-inch Amazon Basics pot

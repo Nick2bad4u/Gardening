@@ -1,6 +1,6 @@
 # VIVOSUN AeroLight Wing AW200SE and GrowHub E25
 
-Last updated: 2026-08-15
+Last updated: 2026-08-26
 
 This guide converts the manufacturer's cannabis-oriented data into a practical
 starting point for this cactus and succulent collection. The numerical targets
@@ -207,6 +207,12 @@ tested in controlled DLI trials.
 | Rehab-03      | `#1`     | Probable _Echinopsis spachiana_                    |       12–22 |           280–510 | High light                                                                   |
 | Rehab-04      | —        | Probable _Mammillaria bombycina_                   |           — |                 — | Removed 2026-07-24; historical record only, with no viable salvage retained  |
 | Houseplant-01 | `#3`     | _Pachira glabra_                                   |        5–12 |           115–280 | Bright window/periphery; not in cactus hotspot                               |
+| Cactus-07     | `G1`     | _Austrocylindropuntia subulata_                    |       12–22 |           280–510 | Bright middle/high after edge acclimation; plan for height                   |
+| Cactus-08     | `G2`     | _Tephrocactus articulatus_ var. _papyracanthus_    |       10–18 |           230–420 | Bright middle after arrival inspection; stabilize detachable segments        |
+| Cactus-09     | `G3`     | _Gymnocalycium mihanovichii_ 'Black Widow'         |        6–12 |           140–280 | Gentler variegated edge; verify the darkest face before rotation             |
+| Succulent-06  | `H1`     | _Pleiospilos nelii_ 'Royal Flush'                  |       10–18 |           230–420 | Bright succulent zone; separate leaf-cycle watering logic                    |
+| Succulent-07  | `H2`     | _Echeveria_ 'Raindrops'                            |       10–18 |           230–420 | Bright succulent zone; compact center without bleaching                      |
+| Succulent-08  | `H3`     | _Sempervivum_ 'Coconut Crystal'                    |       10–20 |           230–460 | Indoor-only; use the brightest, coolest practical succulent position         |
 
 Research support is strongest for the general direction, not every row. A
 recent _Echeveria_ cultivar experiment found 12.8 DLI produced more compact
@@ -252,6 +258,13 @@ The money tree is not a cactus: keep it at the window/periphery, move or shade
 it if leaves bleach, and use its separate watering rule. The Kiwi aeonium also
 starts below the strongest cactus center. The August additions do not reset the
 established light ramp; they acclimate at the edge before moving inward.
+
+The six Mountain Crest plants ordered on 2026-08-25 are not yet part of the
+measured footprint. Their rows are provisional starting ranges, not assigned
+positions. Do not move the fixture or raise the whole collection's power for
+them on arrival: quarantine first, record actual dimensions, and use the outer
+zone. The Split Rock and indoor-grown _Sempervivum_ keep separate seasonal and
+watering logic even when they share the room with the cacti.
 
 If plants spend meaningful hours outside, outdoor and indoor DLI add together.
 Do not automatically give a full 12-hour lamp day after a sunny outdoor day.

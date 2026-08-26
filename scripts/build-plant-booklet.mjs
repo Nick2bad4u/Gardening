@@ -38,17 +38,17 @@ const groups = [
     },
     {
         key: "cacti",
-        eyebrow: "August cactus additions",
+        eyebrow: "Individual cactus additions",
         title: "New individual cacti",
         description:
-            "Six individually potted cacti with permanent E1-F3 labels.",
+            "Six August cacti with E1-F3 labels plus three Mountain Crest plants with reserved G1-G3 labels, ordered August 25 and pending arrival.",
     },
     {
         key: "succulents",
-        eyebrow: "Shared planter and Kiwi aeonium",
+        eyebrow: "Shared planter and individual succulents",
         title: "Succulents",
         description:
-            "Four species in the shared planter plus the individually potted Kiwi aeonium.",
+            "Four species in the shared planter, the Kiwi aeonium, and three Mountain Crest succulents with reserved H1-H3 labels, ordered August 25 and pending arrival.",
     },
     {
         key: "rehab",
@@ -166,6 +166,11 @@ function parseProfile(markdown, group, fileName) {
         throw new Error(`Profile ${fileName} is missing its inventory ID.`);
     }
 
+    const orderStatusMarkdown = metadata["order status"] ?? "";
+    const pendingArrival = stripMarkdown(orderStatusMarkdown)
+        .toLowerCase()
+        .includes("pending");
+
     return {
         fileName,
         slug: path.basename(fileName, ".md"),
@@ -178,15 +183,22 @@ function parseProfile(markdown, group, fileName) {
         labelMarkdown: metadata["label id"] ?? "Not assigned",
         identificationMarkdown:
             metadata.identification ?? "Working identification",
-        statusMarkdown: metadata.status ?? "Current collection record",
+        statusMarkdown:
+            metadata.status ||
+            orderStatusMarkdown ||
+            "Current collection record",
         acquiredFromMarkdown: metadata["acquired from"] ?? "",
         acquiredOnMarkdown: metadata["acquired on"] ?? "",
+        orderedFromMarkdown: metadata["ordered from"] ?? "",
+        visualDescriptionMarkdown: metadata["visual description"] ?? "",
+        interestingFactMarkdown: metadata["interesting fact"] ?? "",
         bodyMarkdown: lines.slice(firstSectionIndex).join("\n").trim(),
         historical:
             inventoryId === "Rehab-04" ||
             stripMarkdown(metadata.status ?? "")
                 .toLowerCase()
                 .includes("historical"),
+        pendingArrival,
     };
 }
 
@@ -450,6 +462,21 @@ async function loadProfiles() {
             const acquiredOnHtml = profile.acquiredOnMarkdown
                 ? await renderInline(profile.acquiredOnMarkdown)
                 : "";
+            const orderedFromHtml = profile.orderedFromMarkdown
+                ? await renderInline(profile.orderedFromMarkdown)
+                : "";
+            const visualDescriptionHtml = await renderInline(
+                profile.visualDescriptionMarkdown
+            );
+            const interestingFactHtml = await renderInline(
+                profile.interestingFactMarkdown
+            );
+
+            if (!visualDescriptionHtml || !interestingFactHtml) {
+                throw new Error(
+                    `Profile ${fileName} needs Visual description and Interesting fact metadata.`
+                );
+            }
 
             profiles.push({
                 ...profile,
@@ -460,6 +487,9 @@ async function loadProfiles() {
                 statusHtml,
                 acquiredFromHtml,
                 acquiredOnHtml,
+                orderedFromHtml,
+                visualDescriptionHtml,
+                interestingFactHtml,
                 scopeNote:
                     photos[0]?.scope_note ??
                     "Reference photography is not archived yet; this page currently uses the collection record and linked research sources.",
@@ -547,7 +577,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         ? `<a href="../layouts/plant-history.html?id=${encodeURIComponent(trackerId)}">Open the live care history <span aria-hidden="true">→</span></a>`
         : "";
     const searchText = stripMarkdown(
-        `${profile.inventoryId} ${profile.labelMarkdown} ${profile.title} ${profile.scientificMarkdown} ${profile.identificationMarkdown} ${profile.acquiredFromMarkdown} ${profile.acquiredOnMarkdown} ${profile.bodyMarkdown}`
+        `${profile.inventoryId} ${profile.labelMarkdown} ${profile.title} ${profile.scientificMarkdown} ${profile.identificationMarkdown} ${profile.acquiredFromMarkdown} ${profile.acquiredOnMarkdown} ${profile.orderedFromMarkdown} ${profile.visualDescriptionMarkdown} ${profile.interestingFactMarkdown} ${profile.bodyMarkdown}`
     ).toLowerCase();
 
     const acquisitionDetails = [
@@ -556,6 +586,9 @@ function renderProfile(profile, pageNumber, totalProfiles) {
             : "",
         profile.acquiredOnHtml
             ? `<div><dt>Acquired on</dt><dd><time datetime="${escapeHtml(stripMarkdown(profile.acquiredOnMarkdown))}">${profile.acquiredOnHtml}</time></dd></div>`
+            : "",
+        profile.orderedFromHtml
+            ? `<div><dt>Ordered from</dt><dd>${profile.orderedFromHtml}</dd></div>`
             : "",
     ].join("");
 
@@ -584,6 +617,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
           <span class="id-badge">${escapeHtml(profile.inventoryId)}</span>
           <span class="label-badge">Label ${profile.labelHtml}</span>
           ${profile.historical ? '<span class="history-badge">Historical record</span>' : ""}
+          ${profile.pendingArrival ? '<span class="order-badge">Ordered · pending arrival</span>' : ""}
         </div>
         <p>${profile.scientificHtml}</p>
         <h1>${escapeHtml(profile.title)}</h1>
@@ -601,6 +635,19 @@ function renderProfile(profile, pageNumber, totalProfiles) {
       </dl>
       <p><strong>Photo scope:</strong> ${escapeHtml(profile.scopeNote)}</p>
     </div>
+
+    <section class="profile-at-a-glance" aria-label="Visual description and interesting fact">
+      <div>
+        <p class="kicker">Spot it</p>
+        <h2>What it looks like</h2>
+        <p>${profile.visualDescriptionHtml}</p>
+      </div>
+      <div>
+        <p class="kicker">One curious thing</p>
+        <h2>Did you know?</h2>
+        <p>${profile.interestingFactHtml}</p>
+      </div>
+    </section>
 
     ${renderCollectionGallery(profile)}
 
@@ -632,6 +679,9 @@ function renderProfile(profile, pageNumber, totalProfiles) {
 }
 
 function renderCover(profiles) {
+    const presentCount = profiles.filter(
+        (profile) => !profile.historical && !profile.pendingArrival
+    ).length;
     const coverProfiles = [
         "oreocereus-trollii",
         "cereus-forbesii-ming-thing",
@@ -659,7 +709,7 @@ function renderCover(profiles) {
       <span>A browser field guide to cactus, succulent, and houseplant personalities</span>
     </div>
     <div class="cover-footer">
-      <div><strong>${profiles.filter((profile) => !profile.historical).length}</strong><span>living plants</span></div>
+      <div><strong>${presentCount}</strong><span>plants present</span></div>
       <div><strong>${profiles.length}</strong><span>deep profiles</span></div>
       <div><strong>${profiles.reduce((sum, profile) => sum + profile.photoCount, 0)}</strong><span>licensed reference photos</span></div>
       <a class="cover-start" href="#${escapeHtml(profiles[0].slug)}" data-page-link="${escapeHtml(profiles[0].slug)}">Start reading <span aria-hidden="true">→</span></a>
@@ -669,6 +719,12 @@ function renderCover(profiles) {
 }
 
 async function renderBooklet(profiles) {
+    const presentCount = profiles.filter(
+        (profile) => !profile.historical && !profile.pendingArrival
+    ).length;
+    const pendingCount = profiles.filter(
+        (profile) => profile.pendingArrival
+    ).length;
     const pageNumberBySlug = new Map(
         profiles.map((profile, index) => [profile.slug, index + 1])
     );
@@ -751,13 +807,13 @@ async function renderBooklet(profiles) {
     <section class="book-page contents-page" id="contents" data-page="contents" data-title="Contents" hidden>
       <header class="contents-heading">
         <p>The Fenton Collection · Summer 2026</p>
-        <h1>${profiles.filter((profile) => !profile.historical).length} living plants,<br>${profiles.length} stories.</h1>
+        <h1>${presentCount} plants present,<br>${pendingCount} ordered, ${profiles.length} stories.</h1>
         <span>Each profile combines collection history, botanical identity, native habitat, mature form, flowers, indoor care, propagation, risks, and source links. Licensed species-reference galleries are included where archived.</span>
       </header>
       <div class="contents-columns">${contents}</div>
       <aside class="contents-note">
         <strong>A note on names</strong>
-        <p>Labeled plants retain that evidence. Photo-only matches remain marked probable, cultivars stay provisional when records are missing, and Rehab-04 remains as a historical page instead of disappearing from the story.</p>
+        <p>Labeled plants retain that evidence. Photo-only matches remain marked probable, ordered plants remain pending until inspected, cultivars stay provisional when records are missing, and Rehab-04 remains as a historical page instead of disappearing from the story.</p>
       </aside>
     </section>
 
@@ -780,8 +836,8 @@ async function renderBooklet(profiles) {
 async function main() {
     const profiles = await loadProfiles();
 
-    if (profiles.length !== 28) {
-        throw new Error(`Expected 28 profiles but found ${profiles.length}.`);
+    if (profiles.length !== 34) {
+        throw new Error(`Expected 34 profiles but found ${profiles.length}.`);
     }
 
     const renderedOutput = await renderBooklet(profiles);

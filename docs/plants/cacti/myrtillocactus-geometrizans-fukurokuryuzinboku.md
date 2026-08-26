@@ -2,6 +2,8 @@
 
 - Inventory: Cactus-05 — _Myrtillocactus geometrizans_ 'Fukurokuryuzinboku'
 - Label ID: `F2`
+- Visual description: Blue-green upright column divided into rounded breastlike knobs.
+- Interesting fact: The normal species produces very sweet edible berries called garambullos, which are sold in Mexican markets.
 - Identification: **very high confidence**
 - Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
 - Current pot: small 3-inch individual pot

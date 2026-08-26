@@ -2,8 +2,11 @@
 
 - Inventory: Rehab-04 — probable _Mammillaria bombycina_
 - Label ID: none — removed; historical record only
+- Visual description: Former small brown-green globe densely covered with pale and reddish spines.
+- Interesting fact: The tiny green tissue left near the top at removal was not enough to make salvage practical.
 - Identification: **probable from an older green photo**
 - Status: **removed 2026-07-24; historical record**
+- Acquired from: Existing shared cactus planter; exact source and date not recorded
 - Photo archive: [licensed living-species reference images](../../../assets/plants/mammillaria-bombycina/)
 
 ## Names and identification

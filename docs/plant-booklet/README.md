@@ -3,10 +3,13 @@
 [`index.html`](./index.html) is the magazine-style browser guide for the full
 collection. It has a cover, searchable contents, keyboard and button
 navigation, a random-profile jump, light and dark themes, print styling, and
-one deep-linkable reading page for each of the 28 plant records. Each current
+one deep-linkable reading page for each of the 34 plant records. Each page has
+an at-a-glance visual description, one interesting fact, acquisition or order
+provenance where recorded, and the longer research profile. Each tracked
 profile links to the stable history page for its physical container.
-Twenty-seven profiles are current; Rehab-04 is retained as a clearly marked
-historical record.
+Twenty-seven profiles are physically present, six are marked ordered and
+pending arrival, and Rehab-04 is retained as a clearly marked historical
+record.
 
 The GitHub Pages build publishes the booklet at the repository's Pages URL,
 along with the plant tracker, individual history view, grow-spot layout, indoor
@@ -24,10 +27,11 @@ Google Photos cannot be reliably embedded in this GitHub Pages site.
 The publication works when `index.html` is opened directly from disk. Its plant
 text and source list come from the Markdown profiles under
 [`docs/plants`](../plants/). Its local species-reference photographs and
-credits come from [`assets/plants`](../../assets/plants/). All 28 records have
-archived reusable-license reference galleries. Cultivar, hybrid, and probable
-profiles retain their scope notes so reference photography is not mistaken for
-proof of the collection identification.
+credits come from [`assets/plants`](../../assets/plants/). Reusable-license
+reference galleries are included where suitable images are available; rare
+cultivar galleries may be sparse. Cultivar, hybrid, and probable profiles
+retain their scope notes so reference photography is not mistaken for proof of
+the collection identification.
 
 User collection and nursery-label photographs come from
 [`assets/collection-photos`](../../assets/collection-photos/). They remain

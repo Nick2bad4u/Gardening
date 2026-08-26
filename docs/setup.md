@@ -1,6 +1,6 @@
 # Setup and equipment
 
-Last updated: 2026-08-15
+Last updated: 2026-08-26
 
 ## Current routine
 
@@ -42,6 +42,7 @@ starting schedule. The concrete timer and acclimation steps are in the
 | Dehumidifier             | [TABYIK DH-CS01](https://www.amazon.com/dp/B0CMTP3GH8?th=1), a 1,000 mL single-speed Peltier unit used only when the manual sensor shows sustained excess humidity                                                                                                                                                                                                                       |
 | Air purifier             | [Levoit Core Mini-P](https://levoit.com/products/core-mini-p-air-purifier), model LAP-C161-WUS, 7 W and 34 CFM CADR, run on low for background dust/pollen removal                                                                                                                                                                                                                       |
 | Water container          | 5-gallon HDPE #2 drinking-water jug for RO water, stored covered in the unused shower                                                                                                                                                                                                                                                                                                    |
+| Fertilizer               | [Tezula/Greencare MSU 13-3-15 Tap/Rain/RO formula](https://tezulaplants.com/products/msu-fertilizer-13-3-15-for-tap-water-ro-rain-water), measured by mass with the [collection-specific schedule](./equipment/msu-fertilizer-schedule.md); it already contains calcium, magnesium, and micronutrients                                                                                   |
 | Label printer            | [SUPVAN E11](https://www.amazon.com/dp/B0DKS89T75?th=1), 203 dpi monochrome thermal printer with 15 mm maximum media width; see the [pot-label print reference](./plants/labels.md)                                                                                                                                                                                                      |
 
 The three confirmed E25s are independent control paths. The AW200SE's RJ45
@@ -108,6 +109,8 @@ The liquid meters can help compare tap water and mixed fertilizer solutions.
 Treat the analog soil probe as a rough observation only: gritty cactus medium,
 small pots, and incomplete probe contact can produce misleading readings. Pot
 weight, root-zone dryness, and plant condition remain the watering decisions.
+Use the 0.01 g pocket scale—not the pot scale or an estimated scoop fraction—to
+measure the default 0.75 g/US gal cactus fertilizer dose.
 
 Put the manual temperature/RH sensor at canopy height in shade, between plant
 surfaces if practical, and outside the direct fan stream. For the first two
@@ -187,10 +190,27 @@ not a completed sun-acclimation test; use the shade cloth only if leaves bleach
 or develop crisp tan patches. Let much of the Kiwi aeonium pot dry between
 waterings, but keep it outside the strongest cactus center.
 
-The six new cacti and Kiwi aeonium came from
+The six August cacti and Kiwi aeonium came from
 [Carlsons' Greenhouse](https://carlsonsgreenhouse.com/) on Torrey Road. The
 money tree came from Lowe's. Exact purchase dates and nursery-card images can
 be added when recorded.
+
+### Mountain Crest Gardens order — pending physical setup
+
+Three cacti and three succulents were ordered from Mountain Crest Gardens on
+2026-08-25: Eve's needle, paper spine cactus, 'Black Widow', 'Royal Flush'
+split rock, 'Raindrops' echeveria, and 'Coconut Crystal' hens and chicks. The
+seller status is “Order Received”; none is counted in the measured table layout
+or `P01`–`P22` workbook yet.
+
+Do not assume the public listing's pot size or shipping form is the received
+setup. On arrival, record the container or bare-root state, inspect roots and
+medium, measure tabletop-to-tip height and width, attach the reserved
+`G1`–`G3` or `H1`–`H3` label, assign the next tracker ID, and decide whether
+the nursery setup should remain as pot
+setup 1. 'Coconut Crystal' will remain indoors in the brightest and coolest
+practical succulent position, while 'Royal Flush' needs its own leaf-cycle
+watering notes.
 
 ## Shared planters
 
@@ -218,7 +238,9 @@ more precise are:
 
 - the plant ID used as the 18-inch tallest-tip light reference;
 - each individual pot's tabletop-to-tip height after final riser placement;
-- tabletop-to-tip heights for the six new cacti, Kiwi aeonium, and money tree;
+- tabletop-to-tip heights for the six August cacti, Kiwi aeonium, and money tree;
+- received pot/root state, tracker IDs, and tabletop-to-tip
+  dimensions for the six Mountain Crest plants;
 - final original-AeroWave hub height and distance to the nearest plant;
 - exact hub height, plant clearance, vertical angle, and app program for each
   E6 Gen2 fan;

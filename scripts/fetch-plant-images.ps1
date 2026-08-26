@@ -84,7 +84,7 @@ $plantCatalog = @(
         CommonName = 'Variegated moon cactus'
         # Deliberately avoid the broad species category here: its first results
         # are dominated by chlorophyll-free grafted scions, unlike this plant.
-        CommonsCategory = 'Gymnocalycium mihanovichii variegata'
+        CommonsCategory = 'Gymnocalycium mihanovichii'
         CommonsSearch = 'Gymnocalycium mihanovichii variegata'
         INaturalistName = 'Gymnocalycium mihanovichii'
         ScopeNote = 'Own-root variegated examples are prioritized; normal wild forms remain as species context. Grafted chlorophyll-free scions are excluded.'
@@ -212,6 +212,41 @@ $plantCatalog = @(
         ScopeNote = 'Species-reference photographs; the collection ID remains probable, with the M. crinita complex or a horticultural hybrid as alternatives.'
     },
     [pscustomobject]@{
+        Id = 'Cactus-07'
+        LabelId = 'G1'
+        Slug = 'austrocylindropuntia-subulata'
+        ScientificName = 'Austrocylindropuntia subulata'
+        CommonName = 'Eve''s needle cactus'
+        CommonsCategory = 'Austrocylindropuntia subulata'
+        CommonsSearch = 'Austrocylindropuntia subulata Eve needle'
+        INaturalistName = 'Austrocylindropuntia subulata'
+        ScopeNote = 'Species-reference photographs. The ordered plant has not yet arrived, so these images do not document its condition or form.'
+    },
+    [pscustomobject]@{
+        Id = 'Cactus-08'
+        LabelId = 'G2'
+        Slug = 'tephrocactus-articulatus-papyracanthus'
+        ScientificName = 'Tephrocactus articulatus var. papyracanthus'
+        CommonName = 'Paper spine cactus'
+        CommonsCategory = 'Tephrocactus articulatus'
+        CommonsSearch = 'Tephrocactus articulatus papyracanthus paper spine'
+        INaturalistName = 'Tephrocactus articulatus'
+        ScopeNote = 'Species-reference photographs may show other T. articulatus forms; the ordered plant is the papery-spined horticultural variety.'
+    },
+    [pscustomobject]@{
+        Id = 'Cactus-09'
+        LabelId = 'G3'
+        Slug = 'gymnocalycium-mihanovichii-black-widow'
+        ScientificName = 'Gymnocalycium mihanovichii'
+        CommonName = 'Black Widow chin cactus'
+        CommonsCategory = 'Gymnocalycium mihanovichii'
+        CommonsSearch = 'Gymnocalycium mihanovichii variegata black purple'
+        INaturalistName = 'Gymnocalycium mihanovichii'
+        INaturalistResearchOnly = $false
+        INaturalistWildOnly = $false
+        ScopeNote = 'Variegated and normal species references, including cultivated observations; no reusable image is assumed to show the exact Black Widow cultivar.'
+    },
+    [pscustomobject]@{
         Id = 'Succulent-01'
         LabelId = '#2; formerly C4-D4'
         Slug = 'echeveria-pulidonis'
@@ -265,6 +300,41 @@ $plantCatalog = @(
         CommonsSearch = 'Aeonium haworthii Kiwi Dream Color'
         INaturalistName = 'Aeonium haworthii'
         ScopeNote = 'Species-reference photographs may show the underlying species; the collection plant is the variegated cultivar Dream Color.'
+    },
+    [pscustomobject]@{
+        Id = 'Succulent-06'
+        LabelId = 'H1'
+        Slug = 'pleiospilos-nelii-royal-flush'
+        ScientificName = 'Pleiospilos nelii'
+        CommonName = 'Royal Flush split rock'
+        CommonsCategory = 'Pleiospilos nelii'
+        CommonsSearch = 'Pleiospilos nelii Royal Flush purple'
+        INaturalistName = 'Pleiospilos nelii'
+        INaturalistResearchOnly = $false
+        INaturalistWildOnly = $false
+        ScopeNote = 'Species references, including cultivated observations, may show the normal green-gray form; the ordered plant is the purple Royal Flush cultivar.'
+    },
+    [pscustomobject]@{
+        Id = 'Succulent-07'
+        LabelId = 'H2'
+        Slug = 'echeveria-raindrops'
+        ScientificName = 'Echeveria Raindrops'
+        CommonName = 'Raindrops echeveria'
+        CommonsCategory = 'Echeveria'
+        CommonsSearch = 'Echeveria Raindrops cultivar'
+        INaturalistName = 'Echeveria'
+        ScopeNote = 'Cultivar search results are prioritized; broad Echeveria images are genus context and may not show the Raindrops leaf bumps.'
+    },
+    [pscustomobject]@{
+        Id = 'Succulent-08'
+        LabelId = 'H3'
+        Slug = 'sempervivum-coconut-crystal'
+        ScientificName = 'Sempervivum Coconut Crystal'
+        CommonName = 'Coconut Crystal hens and chicks'
+        CommonsCategory = 'Sempervivum'
+        CommonsSearch = 'Sempervivum Coconut Crystal Colorockz'
+        INaturalistName = 'Sempervivum'
+        ScopeNote = 'Genus-reference photographs; no reusable image is assumed to show the exact Colorockz Coconut Crystal cultivar.'
     },
     [pscustomobject]@{
         Id = 'Rehab-01'
@@ -700,13 +770,23 @@ function Get-INaturalistCandidateList {
 
     $query = @{
         taxon_name = $Plant.INaturalistName
-        quality_grade = 'research'
         photos = 'true'
-        captive = 'false'
         photo_license = 'cc0,cc-by,cc-by-sa'
         per_page = '30'
         order_by = 'votes'
         order = 'desc'
+    }
+
+    $researchOnly = -not ($Plant.PSObject.Properties.Name -contains 'INaturalistResearchOnly') -or
+        [bool] $Plant.INaturalistResearchOnly
+    if ($researchOnly) {
+        $query.quality_grade = 'research'
+    }
+
+    $wildOnly = -not ($Plant.PSObject.Properties.Name -contains 'INaturalistWildOnly') -or
+        [bool] $Plant.INaturalistWildOnly
+    if ($wildOnly) {
+        $query.captive = 'false'
     }
 
     $response = Invoke-JsonRequest -Uri 'https://api.inaturalist.org/v1/observations' -Query $query
@@ -726,18 +806,30 @@ function Get-INaturalistCandidateList {
 
         $downloadUrl = ([string] $photo.url) -replace '/square\.', '/large.'
         $licenseDisplay = $licenseName -replace '-', ' '
+        $isCaptive = $observation.PSObject.Properties.Name -contains 'captive' -and
+            [bool] $observation.captive
+        $qualityGrade = [string] $observation.quality_grade
+        $observationContext = if ($isCaptive) {
+            'Cultivated iNaturalist observation'
+        }
+        elseif ($qualityGrade -eq 'research') {
+            'Research-grade iNaturalist observation'
+        }
+        else {
+            'iNaturalist observation'
+        }
         $candidates.Add([pscustomobject]@{
             ObservationId = [string] $observation.id
             PhotoId = [string] $photo.id
-            Title = "$($Plant.ScientificName) in habitat"
-            Description = "Research-grade iNaturalist observation from $($observation.place_guess), observed $($observation.observed_on)."
+            Title = "$($Plant.INaturalistName) reference observation"
+            Description = "$observationContext from $($observation.place_guess), observed $($observation.observed_on)."
             Author = [string] $photo.attribution
             License = $licenseDisplay
             LicenseUrl = Get-LicenseUrl -LicenseName $licenseDisplay -ProvidedUrl ''
             SourceUrl = 'https://www.inaturalist.org/observations/' + [string] $observation.id
             DownloadUrl = $downloadUrl
             Mime = if ($downloadUrl -match '\.png(?:\?|$)') { 'image/png' } else { 'image/jpeg' }
-            Subject = 'habitat'
+            Subject = if ($isCaptive) { 'habit' } else { 'habitat' }
             ObservedOn = [string] $observation.observed_on
             Location = [string] $observation.place_guess
         })
@@ -1111,10 +1203,12 @@ foreach ($plant in $plantCatalog) {
     $profileLines.Add('')
     $profileLines.Add("*$($plant.ScientificName)* - $($plant.Id)")
     $profileLines.Add('')
-    $labelId = if ([string]::IsNullOrWhiteSpace($plant.LabelId)) {
-        'none (historical record only)'
-    } else {
+    $labelId = if (-not [string]::IsNullOrWhiteSpace($plant.LabelId)) {
         '`{0}`' -f $plant.LabelId
+    } elseif ($plant.PSObject.Properties.Name -contains 'LabelStatus') {
+        [string] $plant.LabelStatus
+    } else {
+        'none (historical record only)'
     }
     $profileLines.Add("Collection label ID: $labelId.")
     $profileLines.Add('')

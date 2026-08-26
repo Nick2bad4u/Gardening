@@ -2,6 +2,8 @@
 
 - Inventory: Succulent-05 — _Aeonium haworthii_ 'Dream Color'
 - Label ID: `#4`
+- Visual description: Branching rosettes striped green and yellow with vivid pink-red edges.
+- Interesting fact: Aeoniums grow most actively in cooler seasons and may slow or partially rest during summer heat.
 - Identification: **very high confidence**
 - Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
 - Current pot: approximately 5-inch pot from Carlsons' Greenhouse

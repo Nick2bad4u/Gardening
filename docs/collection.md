@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-08-15
+Last updated: 2026-08-26
 
 This is the current working inventory plus historical records for plants
 removed from the collection. A label is useful evidence, but not a guarantee;
@@ -9,10 +9,12 @@ photo-only identifications are deliberately marked as probable.
 The renamed [original nursery-label archive](../assets/nursery-labels/) keeps
 the supplier evidence separate from the corrected working identifications.
 
-Every record has a [deep plant profile](./plants/) and a 6–10-image
-[licensed lifecycle reference gallery](../assets/plants/). Reference photos
-document the working taxon or stated ancestry/species scope; they do not
-increase the confidence of a photo-only collection ID.
+Every record has a [deep plant profile](./plants/) and a
+[licensed reference gallery](../assets/plants/) when reusable photography is
+available. Sparse cultivar galleries stay sparse rather than copying retail
+photographs without reuse permission. Reference photos document the working
+taxon or stated ancestry/species scope; they do not increase the confidence of
+a photo-only collection ID.
 
 The short label IDs are permanent plant or shared-planter identifiers, not
 table coordinates. They are shown beside the longer historical inventory IDs.
@@ -162,6 +164,29 @@ The numbered mapping was copied from the physical labels on 2026-08-10: the
 shared rehab cactus planter is `#1`, the shared succulent planter is `#2`, the
 money tree is `#3`, and the Kiwi aeonium is `#4`. The former `A4-B4` and
 `C4-D4` planter IDs remain only as historical cross-references.
+
+## Mountain Crest Gardens order — pending arrival
+
+These six records come from a Mountain Crest Gardens order placed on
+2026-08-25. The seller status was **Order Received**, which records order
+acceptance rather than physical delivery. Stable inventory IDs and permanent
+`G1`–`G3` / `H1`–`H3` pot-label reservations are assigned, but `P` tracker IDs,
+pot setup, dimensions, received condition, and final placement remain pending.
+
+| Inventory ID | Label ID | Seller identification                                                                                               | Common name                     | Order evidence | Arrival-dependent fields                                         |
+| ------------ | -------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------- | -------------- | ---------------------------------------------------------------- |
+| Cactus-07    | `G1`     | [_Austrocylindropuntia subulata_](./plants/cacti/austrocylindropuntia-subulata.md)                                  | Eve's needle cactus             | Seller-labeled | Pot/root state, dimensions, tracker ID, photo, placement         |
+| Cactus-08    | `G2`     | [_Tephrocactus articulatus_ var. _papyracanthus_](./plants/cacti/tephrocactus-articulatus-papyracanthus.md)         | Paper spine cactus              | Seller-labeled | Pot/root state, segment condition, tracker ID, photo, placement  |
+| Cactus-09    | `G3`     | [_Gymnocalycium mihanovichii_ f. variegata 'Black Widow'](./plants/cacti/gymnocalycium-mihanovichii-black-widow.md) | Black Widow chin cactus         | Seller-labeled | Shipping form, dimensions, tracker ID, photo, orientation        |
+| Succulent-06 | `H1`     | [_Pleiospilos nelii_ 'Royal Flush'](./plants/succulents/pleiospilos-nelii-royal-flush.md)                           | Royal Flush split rock          | Seller-labeled | Leaf-pair/root state, pot, tracker ID, photo, placement          |
+| Succulent-07 | `H2`     | [_Echeveria_ 'Raindrops'](./plants/succulents/echeveria-raindrops.md)                                               | Raindrops echeveria             | Seller-labeled | Rosette/root state, pot, tracker ID, photo, placement            |
+| Succulent-08 | `H3`     | [_Sempervivum_ Colorockz® 'Coconut Crystal'](./plants/succulents/sempervivum-coconut-crystal.md)                    | Coconut Crystal hens and chicks | Seller-labeled | Offset/root state, pot, tracker ID, photo, indoor placement plan |
+
+The Split Rock and hardy _Sempervivum_ are not additions to the established
+18-pot cactus watering routine. Split Rock watering follows its active leaf
+cycle. 'Coconut Crystal' will remain indoors by choice, in the brightest and
+coolest practical indoor position rather than being treated like a warm,
+lower-light houseplant.
 
 ## Identification follow-ups
 

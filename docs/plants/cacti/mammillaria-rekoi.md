@@ -2,6 +2,8 @@
 
 - Inventory: Cactus-06 — _Mammillaria_ cf. _rekoi_
 - Label ID: `F1`
+- Visual description: Green globe covered with fine pale radial spines and scattered hooked central spines.
+- Interesting fact: The hook-spined areoles can catch animal fur in the wild—and clothing or skin in the grow room.
 - Identification: **probable; _M. zeilmanniana_ / _M. crinita_ and a horticultural hybrid remain alternatives**
 - Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
 - Current pot: 4-inch individual pot

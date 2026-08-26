@@ -35,9 +35,17 @@ Current names, confidence levels, and corrections remain in the
 
 ## August additions
 
-The six new cacti and Kiwi aeonium came from Carlsons' Greenhouse on Torrey
+The six August cacti and Kiwi aeonium came from Carlsons' Greenhouse on Torrey
 Road; the money tree came from Lowe's. No August nursery-card photographs have
 been archived here yet. The `E1`–`F3` and `#1`–`#4` mappings were copied from
 the physical labels on 2026-08-10. Add photographs and
 original tag text before treating any new retail identification as archived
 provenance.
+
+## Mountain Crest Gardens order
+
+Six seller-labeled plants were ordered on 2026-08-25 but have not yet arrived.
+The private receipt PDF is not copied into this public evidence folder because
+it contains personal order information. Photograph the reusable plant tags and
+packing labels that identify the plants after arrival, then archive only the
+plant-specific evidence needed for the collection records.

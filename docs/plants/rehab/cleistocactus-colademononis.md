@@ -2,7 +2,10 @@
 
 - Inventory: Rehab-02 — _Cleistocactus colademononis_
 - Label ID: `#1` — shared rehab cactus planter; formerly `A4-B4`
+- Visual description: Long trailing fingerlike stems hidden beneath soft white hairs.
+- Interesting fact: In habitat the stems hang from steep Bolivian rock faces instead of standing upright.
 - Identification: **high; the red-orange flower strongly supports it**
+- Acquired from: Existing shared cactus planter; exact source and date not recorded
 - Photo archive: [licensed reference images](../../../assets/plants/cleistocactus-colademononis/)
 
 ## Names and identity

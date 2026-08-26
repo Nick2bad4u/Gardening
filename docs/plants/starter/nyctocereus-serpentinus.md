@@ -2,6 +2,8 @@
 
 - Inventory: Starter-04 — _Nyctocereus serpentinus_
 - Label ID: `A3`
+- Visual description: Slender branching green stem lined with close white areoles and sharp spines.
+- Interesting fact: Its long flowers open at night, matching the former genus name _Nyctocereus_, or “night cereus.”
 - Identification: **labeled**
 - Acquired from: Costa Farms
 - Acquired on: 2026-07-23

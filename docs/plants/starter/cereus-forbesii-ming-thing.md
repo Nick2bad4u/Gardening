@@ -2,6 +2,8 @@
 
 - Inventory: Starter-10 — _Cereus forbesii_ 'Ming Thing'
 - Label ID: `D3`
+- Visual description: Dense blue-green cluster of knobby, brainlike monstrose stems.
+- Interesting fact: A “Ming Thing” can occasionally produce a normal-looking shoot when part of the monstrose growth reverts.
 - Identification: **high confidence; original label rejected**
 - Acquired from: Altman Reserve
 - Acquired on: 2026-07-15
