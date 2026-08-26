@@ -32,7 +32,7 @@
         "update-deps": "ncu --configFileName .ncurc.json --configFilePath node_modules/ncu-config-nick2bad4u && npm update --force && npm install --force"
     },
     "devDependencies": {
-        "@google/clasp": "^3.3.0",
+        "@google/clasp": "^3.4.0",
         "@types/google-apps-script": "^2.0.12",
         "@vitest/coverage-v8": "4.1.10",
         "git-cliff": "^2.13.1",
