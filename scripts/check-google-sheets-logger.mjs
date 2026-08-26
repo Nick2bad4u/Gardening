@@ -27,6 +27,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.11.1");
 
 assert.deepEqual(
     Array.from(
@@ -123,6 +124,10 @@ assert.deepEqual(
     ["Water", "Weigh"]
 );
 assert.equal(context.normalizeWebEntrySource_("AppSheet"), "AppSheet");
+assert.equal(
+    context.normalizeWebEntrySource_("Mobile bulk water"),
+    "Mobile bulk water"
+);
 assert.throws(
     () => context.normalizeWebEntrySource_("untrusted client"),
     /Entry source/
@@ -181,6 +186,9 @@ assert.match(source, /function savedRequestStatus_\(history, requestId\)/);
 assert.match(source, /setFaviconUrl\(GARDEN_LOGGER\.faviconUrl\)/);
 assert.match(source, /0fdb0739ffe391ade24deb6df2973a21\.png/);
 assert.match(html, /id="themeToggle"/);
+assert.match(html, /function safeStorageGet\(storage, key, fallback = null\)/);
+assert.match(html, /function safeStorageSet\(storage, key, value\)/);
+assert.match(html, /function safeStorageRemove\(storage, key\)/);
 assert.match(html, /const ROUND_STATE_KEY = "gardenLoggerRoundStateV1"/);
 assert.match(html, /function reconcileSingleSave\(requestId, options = \{\}\)/);
 assert.match(html, /function reconcileBulkSave\(requestId, options = \{\}\)/);
@@ -265,7 +273,12 @@ assert.match(source, /function normalizeAppSheetBulkAction_\(value\)/);
 assert.match(source, /function appSheetBulkWateredPlants_\(value\)/);
 assert.match(source, /`appsheet-bulk-\$\{roundId\}-\$\{plantId\}`/);
 assert.match(source, /function installAppSheetQueueTrigger\(\)/);
-assert.match(source, /\.timeBased\(\)\.everyMinutes\(1\)\.create\(\)/);
+assert.match(source, /\.timeBased\(\)\.everyMinutes\(5\)\.create\(\)/);
+assert.doesNotMatch(source, /Logger 5\.8 is ready/);
+assert.match(
+    source,
+    /function saveBulkWaterObservation\(payload\)[\s\S]*?saveWebObservationBatch\(/
+);
 assert.match(source, /function appSheetPayloadFromRow_\(row, requestId\)/);
 assert.match(source, /entrySource:\s*"AppSheet"/);
 assert.match(source, /storedStatus === "Saved"/);

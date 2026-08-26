@@ -174,15 +174,18 @@ charts require different labels.
 
 ## Per-plant charts
 
-Open **Plant charts**, then select a plant in the left/top Plants pane. The
-dashboard's interactive mode filters all three charts through the `Plant ID`
-reference:
+Each Plant detail has three chart buttons: **Weight**, **Size**, and
+**Dry-down**. Each button opens the corresponding chart already filtered to
+that plant through the permanent `Plant ID` reference:
 
 - **Plant measurement history** plots nonzero height and width measurements in
   inches.
 - **Plant weight history** plots every positive recorded weight in grams.
 - **Current-cycle dry-down** plots positive weights that have a valid latest
   Water or Repot anchor.
+
+Use **Plant charts** as the collection-wide exploratory dashboard. Select a
+plant in its left/top Plants pane to filter all three charts together.
 
 The corresponding read-only slices filter blank values before charting so
 missing measurements or weights do not appear as zero. The charts are the
@@ -194,7 +197,7 @@ tables.
 
 - Use AppSheet's sync button after a workbook-side correction or when a new
   image, receipt, baseline, or chart point has not appeared yet.
-- Detailed and bulk entries may remain queued until the one-minute bridge
+- Detailed and bulk entries may remain queued until the five-minute bridge
   trigger processes them. The receipt, not disappearance from the staging
   table, confirms the result.
 - A `Needs correction` row stays editable. Correct it, then use **Retry save**;

@@ -831,7 +831,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.11.0");
+        expect(bootstrap.version).toBe("5.11.1");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -1461,6 +1461,88 @@ describe("Garden logger server logic", () => {
             duplicate: true,
             historyRows: 2,
         });
+    });
+
+    it("rejects changed payloads that reuse a completed request ID", () => {
+        const workbook = createLoggerWorkbook(["P01"]);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+        const payload = {
+            plantId: "P01",
+            requestId: "garden-strict-retry-12345",
+            observedAt: "2026-08-16T10:00:00-04:00",
+            events: [
+                "Weigh",
+                "Measure",
+                "Check",
+            ],
+            weightState: "Routine",
+            weight: 450,
+            height: 5,
+            width: 4,
+            measurementUnit: "in",
+            measurementQuality: "Measured",
+            measurementMethod: "Ruler",
+            condition: "Firm",
+            notes: "Baseline observation",
+            entrySource: "Mobile logger",
+        };
+
+        const saved = context.saveWebObservationBatch([payload]);
+        const exactRetry = context.saveWebObservationBatch([payload]);
+        expect(saved).toMatchObject({ ok: true, savedCount: 1 });
+        expect(exactRetry.results[0]).toMatchObject({
+            ok: true,
+            duplicate: true,
+            historyRows: 3,
+        });
+
+        const changedPayloads = [
+            { ...payload, weight: 451 },
+            { ...payload, weightState: "Dry" },
+            { ...payload, notes: "Changed note" },
+            { ...payload, height: 6 },
+            { ...payload, measurementUnit: "cm" },
+            { ...payload, measurementMethod: "Other" },
+            { ...payload, entrySource: "AppSheet" },
+            {
+                ...payload,
+                events: ["Weigh", "Measure"],
+                condition: "",
+            },
+        ];
+        changedPayloads.forEach((changed) => {
+            const result = context.saveWebObservationBatch([changed]);
+            expect(result.results[0]).toMatchObject({
+                ok: false,
+                requestId: payload.requestId,
+                retryable: false,
+                errorCode: "HISTORY_CONFLICT",
+            });
+            expect(result.results[0].message).toMatch(
+                /no longer matches|unexpected History shape/i
+            );
+        });
+        const prepared = context.prepareWebObservation_(
+            workbook.spreadsheet,
+            payload
+        ).observation;
+        expect(() =>
+            context.existingObservationResult_(
+                prepared,
+                payload.requestId,
+                [
+                    2,
+                    3,
+                    5,
+                ],
+                workbook.history.__rows.slice(1)
+            )
+        ).toThrow(/unexpected History shape/i);
+        expect(workbook.history.__setValuesCalls).toHaveLength(1);
+        expect(workbook.history.__rows).toHaveLength(4);
     });
 
     it("archives an AppSheet intake row through the canonical batch writer", () => {
@@ -2493,6 +2575,37 @@ describe("Garden logger server logic", () => {
         expect(invalidRequest[27]).toBe("String request failure");
     });
 
+    it("does not flush or scan History when both AppSheet queues are empty", () => {
+        const workbook = createLoggerWorkbook(["P01"]);
+        let flushCount = 0;
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+            SpreadsheetApp: {
+                flush: () => {
+                    flushCount += 1;
+                },
+                newDataValidation: createDataValidationBuilder,
+                openById: () => workbook.spreadsheet,
+                ProtectionType: { RANGE: "RANGE" },
+            },
+        });
+
+        const result = context.processQueuedAppSheetEntries();
+
+        expect(result).toMatchObject({
+            ok: true,
+            queuedCount: 0,
+            processedCount: 0,
+            bulk: {
+                queuedCount: 0,
+                processedCount: 0,
+            },
+        });
+        expect(flushCount).toBe(0);
+        expect(workbook.history.__rangeReads).toHaveLength(0);
+    });
+
     it("maps retryable and missing AppSheet batch results to receipts", () => {
         const workbook = createLoggerWorkbook(["P01"]);
         const first = Array(appSheetEntryHeaders.length).fill("");
@@ -2646,20 +2759,25 @@ describe("Garden logger server logic", () => {
 
         expect(context.installAppSheetQueueTrigger()).toEqual({
             handler: "processQueuedAppSheetEntries",
-            created: false,
+            created: true,
+            removedTriggerCount: 2,
             removedDuplicateCount: 1,
         });
-        expect(deleted).toEqual(["duplicate"]);
-        expect(created).toEqual([]);
+        expect(deleted).toEqual(["first", "duplicate"]);
+        expect(created).toEqual([
+            { handler: "processQueuedAppSheetEntries", minutes: 5 },
+        ]);
 
         triggers = [{ getHandlerFunction: () => "otherHandler" }];
         expect(context.installAppSheetQueueTrigger()).toEqual({
             handler: "processQueuedAppSheetEntries",
             created: true,
+            removedTriggerCount: 0,
             removedDuplicateCount: 0,
         });
         expect(created).toEqual([
-            { handler: "processQueuedAppSheetEntries", minutes: 1 },
+            { handler: "processQueuedAppSheetEntries", minutes: 5 },
+            { handler: "processQueuedAppSheetEntries", minutes: 5 },
         ]);
     });
 
@@ -2852,6 +2970,57 @@ describe("Garden logger server logic", () => {
         ]);
     });
 
+    it("archives a 22-plant bulk watering round with one History write and flush", () => {
+        const plantIds = Array.from(
+            { length: 22 },
+            (_, index) => `P${String(index + 1).padStart(2, "0")}`
+        );
+        const workbook = createLoggerWorkbook(plantIds);
+        let flushCount = 0;
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+            SpreadsheetApp: {
+                flush: () => {
+                    flushCount += 1;
+                },
+                newDataValidation: createDataValidationBuilder,
+                openById: () => workbook.spreadsheet,
+                ProtectionType: { RANGE: "RANGE" },
+            },
+        });
+
+        const result = context.saveBulkWaterObservation({
+            plantIds,
+            requestId: "garden-bulk-water-22-12345",
+            observedAt: "2026-08-16T10:00:00-04:00",
+            nutrientsUsed: "No",
+            notes: "Full collection watering",
+        });
+
+        expect(result).toMatchObject({
+            ok: true,
+            plantCount: 22,
+            duplicateCount: 0,
+        });
+        expect(workbook.history.__setValuesCalls).toEqual([
+            { row: 2, column: 1, rowCount: 22, columnCount: 39 },
+        ]);
+        expect(flushCount).toBe(1);
+        expect(workbook.history.__rows.slice(1)).toHaveLength(22);
+        expect(
+            workbook.history.__rows
+                .slice(1)
+                .every(
+                    (row) =>
+                        row[2] === "Water" && row[27] === "Mobile bulk water"
+                )
+        ).toBe(true);
+        expect(
+            new Set(workbook.history.__rows.slice(1).map((row) => row[15])).size
+        ).toBe(22);
+    });
+
     it("builds the Apps Script web response and menu entry points", () => {
         const calls = [];
         const menu = {
@@ -2979,8 +3148,9 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.11.0");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.11.1");
         expect(calls.toast[1]).toBe("Garden logger verified");
+        expect(calls.toast[0]).toMatch(/Logger 5\.11\.1 is ready/);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(
@@ -3103,6 +3273,13 @@ describe("Garden logger server logic", () => {
         expect(context.columnName_(1)).toBe("A");
         expect(context.columnName_(26)).toBe("Z");
         expect(context.columnName_(27)).toBe("AA");
+        const comparisonDate = new Date("2026-08-16T12:00:00Z");
+        expect(context.comparableHistoryValue_(comparisonDate)).toBe(
+            comparisonDate.getTime()
+        );
+        expect(context.comparableHistoryValue_(null)).toBe("");
+        expect(context.comparableHistoryValue_(undefined)).toBe("");
+        expect(context.comparableHistoryValue_("  value  ")).toBe("value");
         expect(() =>
             context.buildEventNames_("", "", "", "", "", "", "")
         ).toThrow(/Enter an event/i);
@@ -4197,12 +4374,15 @@ describe("Garden logger server logic", () => {
         });
     });
 
-    it("rejects invalid and locked bulk watering rounds", () => {
+    it("rejects invalid, locked, and failed bulk watering rounds", () => {
         const workbook = createLoggerWorkbook();
         const context = loadAppsScript(workbook.history, {
             spreadsheet: workbook.spreadsheet,
             globals: workbook.globals,
         });
+        expect(() => context.saveBulkWaterObservation()).toThrow(
+            /at least one plant/i
+        );
         expect(() => context.saveBulkWaterObservation({})).toThrow(
             /at least one plant/i
         );
@@ -4233,6 +4413,66 @@ describe("Garden logger server logic", () => {
                 observedAt: "2026-08-16T12:00:00Z",
             })
         ).toThrow(/watering round remains/i);
+
+        const failed = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+            globals: workbook.globals,
+        });
+        vm.runInContext(
+            'saveWebObservationBatch = () => ({ results: [{ ok: false, message: "Correct this round." }] });',
+            failed
+        );
+        expect(() =>
+            failed.saveBulkWaterObservation({
+                plantIds: ["P01"],
+                nutrientsUsed: "No",
+                requestId: "garden-water-failed-12345",
+                observedAt: "2026-08-16T12:00:00Z",
+            })
+        ).toThrow("Correct this round.");
+
+        vm.runInContext(
+            "saveWebObservationBatch = () => ({ results: [{ ok: false }] });",
+            failed
+        );
+        expect(() =>
+            failed.saveBulkWaterObservation({
+                plantIds: ["P01"],
+                nutrientsUsed: "No",
+                requestId: "garden-water-default-failure-12345",
+                observedAt: "2026-08-16T12:00:00Z",
+            })
+        ).toThrow(/could not be saved/i);
+
+        vm.runInContext(
+            "saveWebObservationBatch = () => ({ results: [null] });",
+            failed
+        );
+        expect(() =>
+            failed.saveBulkWaterObservation({
+                plantIds: ["P01"],
+                nutrientsUsed: "No",
+                requestId: "garden-water-null-result-12345",
+                observedAt: "2026-08-16T12:00:00Z",
+            })
+        ).toThrow(/could not be saved/i);
+
+        vm.runInContext(
+            'saveWebObservationBatch = () => { throw "bulk string failure"; };',
+            failed
+        );
+        let thrown;
+        try {
+            failed.saveBulkWaterObservation({
+                plantIds: ["P01"],
+                nutrientsUsed: "No",
+                requestId: "garden-water-string-failure-12345",
+                observedAt: "2026-08-16T12:00:00Z",
+            });
+        } catch (error) {
+            thrown = error;
+        }
+        expect(thrown).toBe("bulk string failure");
     });
 
     it("covers valid structured details and validation helper edges", () => {
@@ -4831,21 +5071,30 @@ describe("Garden logger server logic", () => {
         expect(inserted).toBe(4999);
 
         const duplicateRequestId = "garden-valid-duplicate-12345";
+        const duplicateInput = {
+            requestId: duplicateRequestId,
+            eventNames: ["Weigh"],
+            observationDate: new Date("2026-08-16T12:00:00Z"),
+            plantId: "P01",
+            weightState: "Routine",
+            weight: 400,
+            height: "",
+            width: "",
+            condition: "",
+            notes: "",
+            potSetup: 3,
+            currentLabel: "A1",
+            details: {},
+        };
+        const seededDuplicateRow = context.storedObservationRows_(
+            { ...duplicateInput, potSetup: 2 },
+            duplicateRequestId,
+            2,
+            "not-a-recorded-date"
+        )[0];
         const duplicateHistory = createHistorySheet([
             {
-                values: [
-                    new Date("2026-08-16T12:00:00Z"),
-                    "P01",
-                    "Weigh",
-                    "Routine",
-                    400,
-                    "",
-                    "",
-                    "",
-                    "",
-                    "not-a-recorded-date",
-                    2,
-                ],
+                values: seededDuplicateRow,
                 requestId: duplicateRequestId,
             },
         ]);
@@ -4856,12 +5105,7 @@ describe("Garden logger server logic", () => {
         const duplicateContext = loadAppsScript(duplicateHistory);
         const duplicate = duplicateContext.appendObservation_(
             duplicateSpreadsheet,
-            {
-                requestId: duplicateRequestId,
-                eventNames: ["Weigh"],
-                plantId: "P01",
-                potSetup: 3,
-            }
+            duplicateInput
         );
         expect(duplicate.duplicate).toBe(true);
         expect(duplicate.potSetup).toBe(2);

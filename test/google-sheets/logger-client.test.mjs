@@ -143,6 +143,8 @@ function createLoggerWindow({
     saveStatus = "missing",
     batchSaveStatus = "missing",
     storage = {},
+    storageUnavailable = false,
+    matchMediaUnavailable = false,
 } = {}) {
     const window = new Window({
         url: "https://script.google.com/macros/s/test/exec",
@@ -162,6 +164,30 @@ function createLoggerWindow({
             "gardenLoggerPendingSaveV1",
             JSON.stringify(pendingSave)
         );
+    }
+    if (storageUnavailable) {
+        const unavailable = () => {
+            throw new window.DOMException(
+                "Storage is unavailable",
+                "SecurityError"
+            );
+        };
+        [window.localStorage, window.sessionStorage].forEach((target) => {
+            vi.spyOn(target, "getItem").mockImplementation(unavailable);
+            vi.spyOn(target, "setItem").mockImplementation(unavailable);
+            vi.spyOn(target, "removeItem").mockImplementation(unavailable);
+        });
+    }
+    if (matchMediaUnavailable) {
+        Object.defineProperty(window, "matchMedia", {
+            configurable: true,
+            value: () => {
+                throw new window.DOMException(
+                    "Media queries are unavailable",
+                    "NotSupportedError"
+                );
+            },
+        });
     }
 
     const calls = [];
@@ -204,6 +230,7 @@ function createLoggerWindow({
 
 afterEach(() => {
     vi.useRealTimers();
+    vi.restoreAllMocks();
 });
 
 describe("Garden logger browser recovery", () => {
@@ -576,6 +603,29 @@ describe("Garden logger browser recovery", () => {
         expect(window.localStorage.getItem("gardenLoggerRecentLimitV1")).toBe(
             "25"
         );
+    });
+
+    it("starts safely when browser storage and theme detection are unavailable", () => {
+        const { calls, window } = createLoggerWindow({
+            storageUnavailable: true,
+            matchMediaUnavailable: true,
+        });
+
+        expect(window.document.documentElement.dataset.theme).toBe("light");
+        expect(window.document.querySelector("#loading").hidden).toBe(true);
+        expect(
+            window.document.querySelector("#connectionStatus").textContent
+        ).toBe("Connected · logger test");
+        expect(calls.some((call) => call.method === "getWebAppBootstrap")).toBe(
+            true
+        );
+
+        expect(() =>
+            window.document
+                .querySelector("#themeToggle")
+                .dispatchEvent(new window.Event("click", { bubbles: true }))
+        ).not.toThrow();
+        expect(window.document.documentElement.dataset.theme).toBe("dark");
     });
 
     it("offers an honest Google Photos handoff for photo links", () => {

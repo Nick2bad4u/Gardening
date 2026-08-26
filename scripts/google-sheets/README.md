@@ -136,6 +136,12 @@ keeps its original retry ID, so later deliberate sends remain idempotent. Keep
 the browser's site data until the queue is empty; clearing browser data also
 clears unsent observations and their backup.
 
+A completed request ID is treated as a duplicate only when its canonical
+plant, event order, date, entered values, notes, dimensions, measurement unit,
+and provenance still match. Reusing a completed ID with changed data returns a
+non-retryable History conflict instead of silently accepting the changed entry
+or adding a duplicate.
+
 The logger also listens for browser offline/online changes. It will not start a
 single, bulk-watering, or queued server save while the device reports that it is
 offline. Focus, visibility, and orientation changes no longer cancel an active
@@ -221,10 +227,11 @@ the AppSheet and mobile writers to race.
 
 Instead, deploy the bridge with the existing bound logger and run
 `installAppSheetQueueTrigger()` once from its Apps Script editor. The
-idempotent installer keeps one time-driven trigger for
-`processQueuedAppSheetEntries()`. Every minute, that function processes up to
-50 ordinary `Queued` or `Retry` observations and one or more complete bulk
-rounds totaling no more than 50 observations per canonical batch through
+installer removes any older copies of the bridge trigger, including legacy
+one-minute schedules, then creates exactly one five-minute trigger for
+`processQueuedAppSheetEntries()`. Every five minutes, that function processes
+up to 50 ordinary `Queued` or `Retry` observations and one or more complete
+bulk rounds totaling no more than 50 observations per canonical batch through
 `saveWebObservationBatch()`. This keeps AppSheet and the mobile logger inside
 the same project lock. AppSheet requires no access to an Apps Script project,
 and the companion app should not contain a second save bot. The status written
@@ -252,7 +259,7 @@ user, and should be restricted to the workbook owner or an explicit allowlist.
 The workbook uses spreadsheet formulas and queued form rows must reach the
 workbook promptly, so leave server caching, delta sync, and quick sync disabled;
 enable sync on start and automatic updates; and disable delayed sync. The bound
-trigger normally archives a queued entry within one minute, and the next app
+trigger normally archives a queued entry within five minutes, and the next app
 sync retrieves its receipt. The app may start offline so a field note can remain
 queued until connectivity returns, but do not cache every image and file for
 offline use.

@@ -1958,18 +1958,50 @@
 
             const $ = (id) => document.getElementById(id);
 
+            function safeStorageGet(storage, key, fallback = null) {
+                try {
+                    const value = storage.getItem(key);
+                    return value === null ? fallback : value;
+                } catch (error) {
+                    return fallback;
+                }
+            }
+
+            function safeStorageSet(storage, key, value) {
+                try {
+                    storage.setItem(key, value);
+                    return true;
+                } catch (error) {
+                    return false;
+                }
+            }
+
+            function safeStorageRemove(storage, key) {
+                try {
+                    storage.removeItem(key);
+                    return true;
+                } catch (error) {
+                    return false;
+                }
+            }
+
             function preferredTheme() {
-                const saved = localStorage.getItem(THEME_KEY);
+                const saved = safeStorageGet(localStorage, THEME_KEY);
                 if (saved === "light" || saved === "dark") return saved;
-                return window.matchMedia("(prefers-color-scheme: dark)").matches
-                    ? "dark"
-                    : "light";
+                try {
+                    return window.matchMedia("(prefers-color-scheme: dark)")
+                        .matches
+                        ? "dark"
+                        : "light";
+                } catch (error) {
+                    return "light";
+                }
             }
 
             function applyTheme(theme) {
                 state.theme = theme === "dark" ? "dark" : "light";
                 document.documentElement.dataset.theme = state.theme;
-                localStorage.setItem(THEME_KEY, state.theme);
+                safeStorageSet(localStorage, THEME_KEY, state.theme);
                 const button = $("themeToggle");
                 button.textContent = state.theme === "dark" ? "☀" : "☾";
                 button.setAttribute(
@@ -1983,7 +2015,8 @@
             }
 
             function persistRoundState() {
-                localStorage.setItem(
+                safeStorageSet(
+                    localStorage,
                     ROUND_STATE_KEY,
                     JSON.stringify({
                         keepEvents: $("keepEvents").checked,
@@ -1994,13 +2027,17 @@
                         measurementMethod: state.measurementMethod,
                     })
                 );
-                sessionStorage.setItem(WEIGHT_STATE_KEY, state.weightState);
+                safeStorageSet(
+                    sessionStorage,
+                    WEIGHT_STATE_KEY,
+                    state.weightState
+                );
             }
 
             function restoreRoundState() {
                 try {
                     const saved = JSON.parse(
-                        localStorage.getItem(ROUND_STATE_KEY) || "null"
+                        safeStorageGet(localStorage, ROUND_STATE_KEY, "null")
                     );
                     if (saved) {
                         $("keepEvents").checked = saved.keepEvents !== false;
@@ -2035,15 +2072,17 @@
                     $("measurementQuality").value = state.measurementQuality;
                     $("measurementMethod").value = state.measurementMethod;
                     renderMeasurementControls();
-                    const savedWeightState =
-                        sessionStorage.getItem(WEIGHT_STATE_KEY);
+                    const savedWeightState = safeStorageGet(
+                        sessionStorage,
+                        WEIGHT_STATE_KEY
+                    );
                     state.weightState = ["Dry", "Wet", "Routine"].includes(
                         savedWeightState
                     )
                         ? savedWeightState
                         : "Routine";
                 } catch (error) {
-                    localStorage.removeItem(ROUND_STATE_KEY);
+                    safeStorageRemove(localStorage, ROUND_STATE_KEY);
                 }
             }
 
@@ -2270,7 +2309,7 @@
                         return null;
                     return value;
                 } catch (error) {
-                    localStorage.removeItem(PENDING_SAVE_KEY);
+                    safeStorageRemove(localStorage, PENDING_SAVE_KEY);
                     return null;
                 }
             }
@@ -2890,7 +2929,7 @@
                 const currentId =
                     preferredId ||
                     select.value ||
-                    localStorage.getItem("gardenPlantId") ||
+                    safeStorageGet(localStorage, "gardenPlantId", "") ||
                     "";
                 select.replaceChildren();
                 plants.forEach((plant) => {
@@ -2947,7 +2986,8 @@
                 );
                 if (labelsMode) renderLabelPicker();
                 if (persist)
-                    localStorage.setItem(
+                    safeStorageSet(
+                        localStorage,
                         PLANT_PICKER_MODE_KEY,
                         state.plantPickerMode
                     );
@@ -2982,7 +3022,7 @@
                     summary.append(empty);
                     return;
                 }
-                localStorage.setItem("gardenPlantId", plant.id);
+                safeStorageSet(localStorage, "gardenPlantId", plant.id);
                 if (state.plantPickerMode === "labels") renderLabelPicker();
                 $("potSetup").value = plant.potSetup || 1;
                 $("currentPotSize").textContent =
@@ -3276,7 +3316,7 @@
                         return null;
                     return value;
                 } catch (error) {
-                    localStorage.removeItem(BULK_PENDING_KEY);
+                    safeStorageRemove(localStorage, BULK_PENDING_KEY);
                     return null;
                 }
             }
@@ -4360,16 +4400,19 @@
                     step = "building the plant selector";
                     renderPlantOptions();
                     setPlantPickerMode(
-                        localStorage.getItem(PLANT_PICKER_MODE_KEY),
+                        safeStorageGet(localStorage, PLANT_PICKER_MODE_KEY),
                         false
                     );
                     step = "building event controls";
                     renderEventChips();
                     step = "building recent history";
+                    const storedRecentLimit = Number(
+                        safeStorageGet(localStorage, RECENT_LIMIT_KEY)
+                    );
                     state.recentLimit = [10, 25, 50, 100].includes(
-                        Number(localStorage.getItem(RECENT_LIMIT_KEY))
+                        storedRecentLimit
                     )
-                        ? Number(localStorage.getItem(RECENT_LIMIT_KEY))
+                        ? storedRecentLimit
                         : 10;
                     $("recentLimit").value = String(state.recentLimit);
                     renderRecent(bootstrap.recent);
@@ -4415,7 +4458,8 @@
             });
             $("recentLimit").addEventListener("change", (event) => {
                 state.recentLimit = Number(event.target.value);
-                localStorage.setItem(
+                safeStorageSet(
+                    localStorage,
                     RECENT_LIMIT_KEY,
                     String(state.recentLimit)
                 );

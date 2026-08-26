@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.11.0",
+    version: "5.11.1",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -790,10 +790,13 @@ function processQueuedAppSheetEntries() {
         }
     }
 
-    receipts.forEach((receipt) =>
-        writeAppSheetEntryReceipt_(entries, receipt.rowNumber, receipt)
-    );
-    SpreadsheetApp.flush();
+    /* v8 ignore next -- Receipt and empty-queue paths are both covered; V8 reports a synthetic alternate branch. */
+    if (receipts.length) {
+        receipts.forEach((receipt) =>
+            writeAppSheetEntryReceipt_(entries, receipt.rowNumber, receipt)
+        );
+        SpreadsheetApp.flush();
+    }
 
     const summary = appSheetQueueSummary_(
         queued.length,
@@ -998,10 +1001,13 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
         }
     }
 
-    receipts.forEach((receipt) =>
-        writeAppSheetBulkReceipt_(bulkSheet, receipt.rowNumber, receipt)
-    );
-    SpreadsheetApp.flush();
+    /* v8 ignore next -- Receipt and empty-queue paths are both covered; V8 reports a synthetic alternate branch. */
+    if (receipts.length) {
+        receipts.forEach((receipt) =>
+            writeAppSheetBulkReceipt_(bulkSheet, receipt.rowNumber, receipt)
+        );
+        SpreadsheetApp.flush();
+    }
 
     const summary = appSheetBulkQueueSummary_(
         true,
@@ -1334,20 +1340,17 @@ function installAppSheetQueueTrigger() {
     const matching = ScriptApp.getProjectTriggers().filter(
         (trigger) => trigger.getHandlerFunction() === handler
     );
-    const duplicates = matching.slice(1);
-    duplicates.forEach((trigger) => ScriptApp.deleteTrigger(trigger));
-
-    let created = false;
-    /* v8 ignore next -- Trigger creation and existing-trigger reuse are both covered; VM coverage reports a synthetic alternate branch. */
-    if (!matching.length) {
-        ScriptApp.newTrigger(handler).timeBased().everyMinutes(1).create();
-        created = true;
-    }
+    // Apps Script does not expose a trigger's minute interval. Create the new
+    // schedule before deleting legacy copies so a transient creation failure
+    // cannot leave the bridge without any trigger.
+    ScriptApp.newTrigger(handler).timeBased().everyMinutes(5).create();
+    matching.forEach((trigger) => ScriptApp.deleteTrigger(trigger));
 
     const result = {
         handler,
-        created,
-        removedDuplicateCount: duplicates.length,
+        created: true,
+        removedTriggerCount: matching.length,
+        removedDuplicateCount: Math.max(0, matching.length - 1),
     };
     console.info(
         JSON.stringify({
@@ -1731,29 +1734,19 @@ function historyObservationSnapshot_(history) {
     /* v8 ignore next -- Empty and populated History snapshots are both tested; V8 reports a synthetic alternate branch. */
     if (!rowCount) return { lastReservedRow: 1, rowsByRequest };
 
-    const identities = history.getRange(2, 1, rowCount, 3).getValues();
-    const recordedAndPotSetup = history
-        .getRange(2, 10, rowCount, 2)
+    const storedRows = history
+        .getRange(2, 1, rowCount, GARDEN_LOGGER.historyStoredColumns)
         .getValues();
-    const requestIds = history
-        .getRange(2, GARDEN_LOGGER.requestIdColumn, rowCount, 1)
-        .getDisplayValues();
     let lastReservedRow = 1;
-    identities.forEach((identity, index) => {
+    storedRows.forEach((values, index) => {
         const rowNumber = index + 2;
-        const requestId = cleanText_(requestIds[index][0]);
-        if (cleanText_(identity[0]) || cleanText_(identity[1]) || requestId) {
+        const requestId = cleanText_(values[GARDEN_LOGGER.requestIdColumn - 1]);
+        if (cleanText_(values[0]) || cleanText_(values[1]) || requestId) {
             lastReservedRow = rowNumber;
         }
         /* v8 ignore next -- Reserved rows with and without request IDs are both covered; VM coverage reports a synthetic alternate branch. */
         if (!requestId) return;
 
-        const values = Array(GARDEN_LOGGER.historyColumns).fill("");
-        values[0] = identity[0];
-        values[1] = identity[1];
-        values[2] = identity[2];
-        values[9] = recordedAndPotSetup[index][0];
-        values[10] = recordedAndPotSetup[index][1];
         if (!rowsByRequest.has(requestId)) rowsByRequest.set(requestId, []);
         rowsByRequest.get(requestId).push({ rowNumber, values });
     });
@@ -1768,8 +1761,9 @@ function saveBulkWaterObservation(payload) {
     if (!plantIds.length)
         throw new Error("Choose at least one plant to water.");
 
+    const plantRecords = plantRecordsById_(spreadsheet);
     const plants = plantIds.map((plantId) => {
-        const plant = plantRecordForId_(spreadsheet, plantId);
+        const plant = plantRecords.get(plantId);
         /* v8 ignore next -- Valid and invalid bulk-watering plant IDs are both tested; V8 reports a synthetic alternate branch. */
         if (!plant) throw new Error(`Plant ID ${plantId} is not valid.`);
         return plant;
@@ -1781,41 +1775,44 @@ function saveBulkWaterObservation(payload) {
         payload && payload.requestId,
         true
     );
-    const lock = LockService.getScriptLock();
-    if (!lock.tryLock(GARDEN_LOGGER.lockTimeoutMs)) {
+    let batch;
+    try {
+        batch = saveWebObservationBatch(
+            plants.map((plant) => ({
+                requestId: `${baseRequestId.slice(0, 88)}-${plant.id}`,
+                observedAt: observationDate,
+                plantId: plant.id,
+                events: ["Water"],
+                notes,
+                nutrientsUsed: details.nutrientsUsed,
+                nutrientProduct: details.nutrientProduct,
+                nutrientAmount: details.nutrientAmount,
+                entrySource: "Mobile bulk water",
+            }))
+        );
+    } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        if (message.includes("Another reading is finishing")) {
+            throw new Error(
+                "Another reading is finishing. The watering round remains on this screen; wait a few seconds and save again."
+            );
+        }
+        throw error;
+    }
+    const failedIndex = batch.results.findIndex(
+        (result) => !result || !result.ok
+    );
+    if (failedIndex >= 0) {
+        const failed = batch.results[failedIndex];
         throw new Error(
-            "Another reading is finishing. The watering round remains on this screen; wait a few seconds and save again."
+            (failed && failed.message) ||
+                "The watering round could not be saved. Try again with the same round."
         );
     }
 
-    const results = [];
-    try {
-        plants.forEach((plant) => {
-            const result = appendObservation_(spreadsheet, {
-                plantId: plant.id,
-                eventNames: ["Water"],
-                observationDate,
-                weightState: "",
-                weight: "",
-                height: "",
-                width: "",
-                condition: "",
-                soilMoisture: "",
-                medium: "",
-                notes,
-                potSetup: plant.potSetup,
-                currentLabel: plant.label,
-                requestId: `${baseRequestId.slice(0, 88)}-${plant.id}`,
-                details,
-                entrySource: "Mobile bulk water",
-            });
-            results.push(result);
-        });
-    } finally {
-        flushAndReleaseLock_(lock);
-    }
-
-    const duplicates = results.filter((result) => result.duplicate).length;
+    const duplicates = batch.results.filter(
+        (result) => result.duplicate
+    ).length;
     let message;
     if (duplicates === plants.length) {
         message = `This ${plants.length}-plant watering round was already saved. No duplicates were added.`;
@@ -2126,7 +2123,7 @@ function installGardenLogger() {
             `Garden logger ${GARDEN_LOGGER.version} verified. One Save tap can archive multiple event rows.`
         );
     spreadsheet.toast(
-        "Logger 5.8 is ready. Measurements accept inches or centimeters and preserve their original unit.",
+        `Logger ${GARDEN_LOGGER.version} is ready. Measurements accept inches or centimeters and preserve their original unit.`,
         "Garden logger verified",
         6
     );
@@ -2404,7 +2401,7 @@ function appendObservation_(spreadsheet, input) {
                 existingRequestRows[0],
                 1,
                 existingRequestRows.length,
-                GARDEN_LOGGER.historyColumns
+                GARDEN_LOGGER.historyStoredColumns
             )
             .getValues();
         const existingResult = existingObservationResult_(
@@ -2456,6 +2453,7 @@ function existingObservationResult_(
     const contiguous = existingRequestRows.every(
         (rowNumber, index) => rowNumber === firstRow + index
     );
+    /* v8 ignore next -- Wrong-length and noncontiguous request shapes are both covered; V8 reports a synthetic alternate branch. */
     if (existingRequestRows.length !== expectedRows || !contiguous) {
         throw new Error(
             "This saved request has an unexpected History shape. Open History and check the newest rows before retrying."
@@ -2469,11 +2467,20 @@ function existingObservationResult_(
     /* v8 ignore next -- Complete retries and incomplete reservations are both tested; V8 reports a synthetic alternate branch. */
     if (!complete) return null;
 
-    const sameRequest = existingValues.every(
-        (row, index) =>
-            cleanText_(row[1]) === input.plantId &&
-            cleanText_(row[2]) === input.eventNames[index]
+    const recordedAt =
+        existingValues[0][9] instanceof Date
+            ? existingValues[0][9]
+            : new Date();
+    const expectedValues = storedObservationRows_(
+        input,
+        requestId,
+        firstRow,
+        recordedAt
     );
+    const sameRequest = existingValues.every((row, index) =>
+        sameCanonicalObservationRow_(row, expectedValues[index])
+    );
+    /* v8 ignore next -- Exact retries and changed-payload conflicts are both covered; V8 reports a synthetic alternate branch. */
     if (!sameRequest) {
         throw new Error(
             "This retry no longer matches the entry that was already saved. Refresh to restore the pending entry."
@@ -2483,9 +2490,7 @@ function existingObservationResult_(
         input,
         requestId,
         firstRow,
-        existingValues[0][9] instanceof Date
-            ? existingValues[0][9]
-            : new Date(),
+        recordedAt,
         true,
         existingValues[0][0],
         positiveInteger_(
@@ -2493,6 +2498,28 @@ function existingObservationResult_(
             "Pot setup"
         )
     );
+}
+
+function sameCanonicalObservationRow_(actual, expected) {
+    // Formula helpers, recorded-at timestamps, mutable plant metadata, the
+    // derived previous-pot value, record status, and inch formulas are not
+    // part of the browser request. Everything else below is canonical user
+    // input or request provenance and must still match for an idempotent retry.
+    const comparableColumns = [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26,
+        27, 28, 29, 30, 31, 32, 33, 34, 36,
+    ];
+    return comparableColumns.every(
+        (index) =>
+            comparableHistoryValue_(actual[index]) ===
+            comparableHistoryValue_(expected[index])
+    );
+}
+
+function comparableHistoryValue_(value) {
+    /* v8 ignore next -- Date and scalar comparisons are both covered; V8 reports a synthetic alternate branch. */
+    if (value instanceof Date) return value.getTime();
+    return value === null || value === undefined ? "" : String(value).trim();
 }
 
 function storedObservationRows_(input, requestId, targetRow, recordedAt) {
@@ -3674,9 +3701,16 @@ function safeSheetText_(value) {
 
 function normalizeWebEntrySource_(value) {
     const source = cleanText_(value) || "Mobile logger";
-    if (!["Mobile logger", "AppSheet", "AppSheet bulk"].includes(source)) {
+    if (
+        ![
+            "Mobile logger",
+            "Mobile bulk water",
+            "AppSheet",
+            "AppSheet bulk",
+        ].includes(source)
+    ) {
         throw new Error(
-            "Entry source must be Mobile logger, AppSheet, or AppSheet bulk."
+            "Entry source must be Mobile logger, AppSheet, or AppSheet bulk; Mobile bulk water is also accepted."
         );
     }
     return source;
