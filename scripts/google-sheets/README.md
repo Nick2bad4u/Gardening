@@ -155,6 +155,11 @@ through `processAppSheetEntry(entryId)`, `processQueuedAppSheetEntries()`, and
 [`plant-tracker.gs`](./plant-tracker.gs). Never configure an AppSheet form,
 action, or automation to add or edit `History` directly.
 
+The user-facing view map, visual assets, image-provenance rules, watering badge,
+eight-chart Insights dashboard, per-plant chart dashboard, helper-table
+contract, and sync troubleshooting are documented in
+[`docs/appsheet-companion.md`](../../docs/appsheet-companion.md).
+
 Each intake row has a stable `Entry ID` key and a deterministic
 `appsheet-{Entry ID}` request ID. That makes automation retries idempotent: a
 lost callback can safely call the bridge again without duplicating History
@@ -252,10 +257,13 @@ sync retrieves its receipt. The app may start offline so a field note can remain
 queued until connectivity returns, but do not cache every image and file for
 offline use.
 The app's primary views should expose the plant collection, current baselines,
-active History, new-care form, and any intake rows needing correction. Remove
-AppSheet table definitions for generated dashboards, individual `P01`–`P22`
-pages, and other presentation-only sheets; removing those definitions does not
-delete the underlying Google Sheets tabs.
+active History, new-care form, and any intake rows needing correction. Do not
+connect the generated Dashboard, Integrity, Insights layout, or individual
+`P01`–`P22` pages as editable AppSheet tables. The intentionally connected
+presentation helpers are the hidden, formula-only, read-only `App insight
+activity`, `App insight calibration`, `App insight followups`, and `App plant
+charts` sheets described in the companion guide. Removing an AppSheet table
+definition does not delete its underlying Google Sheets tab.
 
 The visual identity assets are
 [`garden-plant-tracker-icon-v2.png`](../../assets/appsheet/garden-plant-tracker-icon-v2.png)
