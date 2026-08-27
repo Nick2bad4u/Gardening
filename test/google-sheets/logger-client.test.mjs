@@ -19,6 +19,9 @@ const bootstrap = {
         "Weigh",
         "Measure",
         "Check",
+        "Rotation",
+        "Clean",
+        "Prune",
         "Repot",
         "Flower",
         "Photo",
@@ -95,6 +98,7 @@ function queuedWeight({
             photoUrl: "",
             pestIssue: "",
             pestTreatment: "",
+            rotationDegrees: "",
         },
     };
 }
@@ -471,11 +475,12 @@ describe("Garden logger browser recovery", () => {
     it("also releases and reconciles a hanging watering-round save", () => {
         vi.useFakeTimers();
         const { behaviors, calls, window } = createLoggerWindow();
-        behaviors.saveBulkWaterObservation = () => {};
+        behaviors.saveBulkCareObservation = () => {};
 
         window.document
             .querySelector("#bulkModeTab")
             .dispatchEvent(new window.Event("click", { bubbles: true }));
+        window.document.querySelector("#bulkNutrientsUsed").value = "No";
         const checkbox = window.document.querySelector(
             "#bulkPlantList input[type='checkbox']"
         );
@@ -511,18 +516,19 @@ describe("Garden logger browser recovery", () => {
             })
         );
         expect(
-            calls.filter((call) => call.method === "saveBulkWaterObservation")
+            calls.filter((call) => call.method === "saveBulkCareObservation")
         ).toHaveLength(1);
     });
 
     it("lets a confirmed failed watering round be corrected", () => {
         const { behaviors, calls, window } = createLoggerWindow();
-        behaviors.saveBulkWaterObservation = ({ failure }) =>
+        behaviors.saveBulkCareObservation = ({ failure }) =>
             failure({ message: "Server rejected the round" });
 
         window.document
             .querySelector("#bulkModeTab")
             .dispatchEvent(new window.Event("click", { bubbles: true }));
+        window.document.querySelector("#bulkNutrientsUsed").value = "No";
         const checkbox = window.document.querySelector(
             "#bulkPlantList input[type='checkbox']"
         );
@@ -550,12 +556,131 @@ describe("Garden logger browser recovery", () => {
         );
 
         const saveCalls = calls.filter(
-            (call) => call.method === "saveBulkWaterObservation"
+            (call) => call.method === "saveBulkCareObservation"
         );
         expect(saveCalls).toHaveLength(2);
         expect(saveCalls[1].args[0].requestId).not.toBe(
             saveCalls[0].args[0].requestId
         );
+    });
+
+    it("queues a Wet weight without adding Water or requiring nutrients", () => {
+        const { window } = createLoggerWindow();
+        const weight = window.document.querySelector("#weight");
+        weight.value = "889";
+        weight.dispatchEvent(new window.Event("input", { bubbles: true }));
+        window.document
+            .querySelector('[data-state="Wet"]')
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        window.document
+            .querySelector("#queueButton")
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        const queue = JSON.parse(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+        expect(queue).toHaveLength(1);
+        expect(queue[0].payload).toMatchObject({
+            weight: "889",
+            weightState: "Wet",
+            events: ["Weigh"],
+            nutrientsUsed: "",
+        });
+    });
+
+    it("remembers nutrient choices across single and bulk care in one session", () => {
+        const { window } = createLoggerWindow();
+        const water = window.document.querySelector(
+            '#eventChips [data-event="Water"]'
+        );
+        water.dispatchEvent(new window.Event("click", { bubbles: true }));
+        const nutrients = window.document.querySelector("#nutrientsUsed");
+        const product = window.document.querySelector("#nutrientProduct");
+        const amount = window.document.querySelector("#nutrientAmount");
+        nutrients.value = "Yes";
+        nutrients.dispatchEvent(new window.Event("change", { bubbles: true }));
+        product.value = "MSU mix";
+        product.dispatchEvent(new window.Event("input", { bubbles: true }));
+        amount.value = "0.5 g/gal";
+        amount.dispatchEvent(new window.Event("input", { bubbles: true }));
+
+        window.document
+            .querySelector("#queueButton")
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        window.document
+            .querySelector("#bulkModeTab")
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        expect(window.document.querySelector("#bulkNutrientsUsed").value).toBe(
+            "Yes"
+        );
+        expect(
+            window.document.querySelector("#bulkNutrientProduct").value
+        ).toBe("MSU mix");
+        expect(window.document.querySelector("#bulkNutrientAmount").value).toBe(
+            "0.5 g/gal"
+        );
+        expect(
+            JSON.parse(
+                window.sessionStorage.getItem("gardenLoggerNutrientStateV1")
+            )
+        ).toEqual({
+            nutrientsUsed: "Yes",
+            nutrientProduct: "MSU mix",
+            nutrientAmount: "0.5 g/gal",
+        });
+    });
+
+    it("queues a 90 degree rotation and submits bulk rotation generically", () => {
+        const { behaviors, calls, window } = createLoggerWindow();
+        window.document
+            .querySelector('#eventChips [data-event="Rotation"]')
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        expect(window.document.querySelector("#rotationDegrees").value).toBe(
+            "90"
+        );
+        window.document
+            .querySelector("#queueButton")
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        const queue = JSON.parse(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+        expect(queue[0].payload).toMatchObject({
+            events: ["Rotation"],
+            rotationDegrees: "90",
+        });
+
+        behaviors.saveBulkCareObservation = ({ success }) =>
+            success({ message: "Rotation saved." });
+        window.document
+            .querySelector("#bulkModeTab")
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        window.document
+            .querySelector('#bulkEventChips [data-event="Water"]')
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        window.document
+            .querySelector('#bulkEventChips [data-event="Rotation"]')
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        const checkbox = window.document.querySelector(
+            "#bulkPlantList input[type='checkbox']"
+        );
+        checkbox.checked = true;
+        checkbox.dispatchEvent(new window.Event("change", { bubbles: true }));
+        window.document.querySelector("#bulkWaterForm").dispatchEvent(
+            new window.Event("submit", {
+                bubbles: true,
+                cancelable: true,
+            })
+        );
+
+        const call = calls.find(
+            (candidate) => candidate.method === "saveBulkCareObservation"
+        );
+        expect(call.args[0]).toMatchObject({
+            events: ["Rotation"],
+            rotationDegrees: "90",
+            entrySource: "Mobile bulk care",
+        });
     });
 
     it("restores the label-button picker and remembers a selected plant", () => {

@@ -100,6 +100,14 @@ function eventDetails(event) {
         if (event["Treatment / action"])
             parts.push(`Action: ${event["Treatment / action"]}`);
     }
+    if (eventName === "rotation") {
+        const degrees = numericValue(event["Rotation (°)"]);
+        parts.push(
+            degrees === null
+                ? "Rotation logged · amount not recorded"
+                : `${degrees}° clockwise-equivalent turn`
+        );
+    }
     if (eventName === "check" && event["Condition / soil"])
         parts.push(event["Condition / soil"]);
     if (event["Photo URL"])
@@ -464,6 +472,10 @@ function exportHistory() {
         "Photo URL",
         "Pest / issue",
         "Treatment / action",
+        "Measurement unit",
+        "Height (in)",
+        "Width (in)",
+        "Rotation (°)",
     ];
     const rows = sortedEvents(currentPlant.events, false).map((event) =>
         headers.map((header) => csvCell(event[header])).join(",")
@@ -548,6 +560,7 @@ function renderPlant(plant, plants, index) {
     setText("#photo-count", String(summary.eventCounts.photos));
     setText("#pest-count", String(summary.eventCounts.pests));
     setText("#check-count", String(summary.eventCounts.checks));
+    setText("#rotation-count", String(summary.eventCounts.rotations));
     setText(
         "#latest-repot-detail",
         summary.latestRepot
@@ -587,6 +600,12 @@ function renderPlant(plant, plants, index) {
         summary.latestCheck
             ? `${summary.latestCheck["Condition / soil"] || "Check logged"} · ${formatDate(summary.latestCheck.Date)}`
             : "No checks logged"
+    );
+    setText(
+        "#latest-rotation-detail",
+        summary.latestRotation
+            ? `${summary.latestRotation["Rotation (°)"] || 90}° · ${formatDate(summary.latestRotation.Date)}`
+            : "No rotation logged"
     );
     const badge = document.querySelector("#baseline-status");
     badge.textContent = summary.baselineStatus;

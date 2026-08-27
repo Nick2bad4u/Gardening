@@ -143,7 +143,7 @@ non-retryable History conflict instead of silently accepting the changed entry
 or adding a duplicate.
 
 The logger also listens for browser offline/online changes. It will not start a
-single, bulk-watering, or queued server save while the device reports that it is
+single, bulk-care, or queued server save while the device reports that it is
 offline. Focus, visibility, and orientation changes no longer cancel an active
 request. They schedule one debounced recovery check, while an active queue send
 remains exclusively controlled by its callback and six-minute-thirty-second
@@ -178,12 +178,13 @@ order makes it clear that the weight is the post-watering reading.
 The AppSheet form contract is:
 
 - `Plant ID` is a required Ref to `Plant tracker`; `Events` is a required
-  EnumList containing Water, Weigh, Measure, Check, Repot, Flower, Photo, Pest,
-  and Other.
+  EnumList containing Water, Weigh, Measure, Check, Rotation, Clean, Prune,
+  Repot, Flower, Photo, Pest, and Other.
 - Event-specific fields use `Show_If` and `Required_If` rules. Weigh requires a
   positive weight. Measure requires at least height or width and accepts inches
   or centimeters. Water records whether nutrients were used. Repot requires a
-  pot size. Photo requires a URL, and Pest requires both the issue and action.
+  pot size. Photo requires a URL, Pest requires both the issue and action, and
+  Rotation accepts 1–360 degrees with a default of 90.
 - New measurements default to inches, `Measured`, and `Ruler`; the server still
   normalizes chart values to centimeters while preserving the entered unit and
   derived inch values.
@@ -191,16 +192,19 @@ The AppSheet form contract is:
   are system fields. Users may inspect the status but must not edit the receipt.
 
 The `App bulk` contract is deliberately narrower and faster: one row is one
-collection-wide Water, Weigh, or Water + weigh round. It stores `Round ID`,
-observation time, one action selector, a compact EnumList of watered plant IDs,
-one shared weight state, optional shared notes, and P01-P22 gram fields. Empty
-weight fields are skipped. `processQueuedAppSheetEntries()` combines the
-selected watering IDs and nonblank weights into no more than one deterministic
+collection-wide Water, Weigh, Water + weigh, Rotation, Check, Clean, Prune,
+Pest, or Other round. It stores `Round ID`, observation time, one action
+selector, a compact EnumList of selected plant IDs, one shared weight state,
+optional shared care details, and P01-P22 gram fields. Empty weight fields are
+skipped. `processQueuedAppSheetEntries()` combines the selected IDs and
+nonblank weights into no more than one deterministic
 `appsheet-bulk-{Round ID}-{Plant ID}` request per plant and sends the complete
 round through one `saveWebObservationBatch()` call. A selected plant with a
 weight becomes one Water + Weigh request; a selected plant without a weight is
 Water-only; a non-selected plant with a weight is Weigh-only. Combined rounds
 default to `Wet`, while Weigh-only rounds default to `Routine`.
+Other bulk actions use the selected IDs and their shared rotation, check, pest,
+nutrient, or note fields without fabricating per-plant values.
 
 A normal 22-plant round therefore reaches History as one canonical batch,
 while partial validation failures keep the round editable and retries recognize
@@ -382,9 +386,13 @@ recent-History length on that device. The searchable selector can be switched
 to a compact grid containing every current pot label. Selected round events can
 be retained between plants, while the weight state defaults to `Routine` and
 remembers the last Dry/Wet/Routine choice only for the current browser session.
+The nutrient yes/no choice, product, and amount are remembered and mirrored
+between single and bulk care for that browser session. The 12 single-entry
+event buttons form a three-by-four grid; bulk care offers Water, Check,
+Rotation, Clean, Prune, Pest, and Other.
 It deliberately clears measurements after each confirmed save. The desktop
 view keeps links and recent History in a sidebar; phone layouts stack those
-surfaces above the single-entry and watering-round tabs.
+surfaces above the single-entry and bulk-care tabs.
 
 Apps Script serves HTML inside Google's own sandboxed wrapper. The Google
 authorship banner belongs to that wrapper and cannot be hidden by this project's
@@ -403,8 +411,9 @@ installable trigger is not required.
 - One Save can append several event-specific rows. For example, `Water` plus a
   weight and height produces Water, Weigh, and Measure rows without duplicating
   the input values.
-- A `Wet` weight also records Water unless Water is already the selected event.
-  A weight with no state is stored as `Routine`.
+- `Wet` describes a weight state only. It never creates a Water event and does
+  not require nutrient details; select Water explicitly when watering was part
+  of the same observation. A weight with no state is stored as `Routine`.
 - Height and width can be entered together or independently; both belong to one
   Measure row. The mobile logger accepts inches or centimeters and defaults to
   inches. `History` keeps normalized centimeter values for comparable charts,
@@ -417,6 +426,9 @@ installable trigger is not required.
   masquerade as dated plant-condition observations. Notes are attached to the
   first event created by a Save so text is not repeated across several history
   rows.
+- Rotation records a clockwise-equivalent turn from 1–360 degrees and defaults
+  to 90. Clean and Prune are lightweight dated events whose specifics belong in
+  Notes.
 - The current pot label and plant name are copied from `Plant tracker` at save
   time. Earlier History rows retain the label that was physically on the pot
   when the observation was made.
@@ -440,15 +452,17 @@ installable trigger is not required.
   values; P stores a hidden retry ID; Q:Z stores structured nutrient, repot,
   flower, photo, pest, and treatment details; AA:AJ stores durable
   observation identity, source, quality, correction, soil-moisture, medium,
-  method, and status fields; and AK:AM stores the entry unit plus automatic
-  height/width inch conversions. A save writes the entire A:AM record block in one
-  call so a failed service call cannot strand a request ID apart from its
+  method, and status fields; AK:AM stores the entry unit plus automatic
+  height/width inch conversions; and AN stores rotation degrees. A save writes
+  the entire A:AN record block in one call so a failed service call cannot
+  strand a request ID apart from its
   observation. The installer keeps 5,000 History rows available, and workbook
   formulas use that same bound so new observations cannot outgrow the derived
   dashboards silently.
-- The Watering round tab can append one Water row for every selected plant with
-  shared nutrient and note details. Use single-plant mode when each pot also
-  needs its own wet weight.
+- The Bulk care tab can append Water, Check, Rotation, Clean, Prune, Pest, or
+  Other rows for every selected plant with shared details. Use single-plant
+  mode for weights, measurements, repots, flowers, and photos because those
+  values differ by plant.
 - Photo events accept Google Photos share links. **Open Google Photos** hands
   off to the app when the phone/browser supports Google Photos links, otherwise
   it opens the website. Select the image there, create a share link, return to

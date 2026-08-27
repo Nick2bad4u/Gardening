@@ -22,8 +22,10 @@
   values into automatic care commands.
 - History is append-only. Columns A:L are core observations, M:O are workbook
   derived values, P is the hidden request ID, and Q:Z are structured event
-  details. Update the parser, tracker, history page, CSV export, and logger
-  checks together when that contract changes.
+  details. AA:AJ stores provenance and record state, AK:AM stores measurement
+  units and derived inch values, and AN stores rotation degrees. Update the
+  parser, tracker, history page, CSV export, and logger checks together when
+  that contract changes.
 
 ## Validation
 

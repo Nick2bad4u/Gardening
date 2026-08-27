@@ -10,9 +10,11 @@
 - Keep every retry idempotent through the hidden Request ID in History column P.
 - Preserve the live workbook contract: A:L core observations, M:O workbook
   formulas, P retry IDs, and Q:Z structured Water/Repot/Flower/Photo/Pest
-  details. `installGardenLogger()` may add or verify headers. Do not clear
-  existing values or formulas unless the repository owner explicitly requests
-  a workbook migration with that effect.
+  details. AA:AJ stores provenance and record state, AK:AM stores measurement
+  units and derived inch values, and AN stores rotation degrees.
+  `installGardenLogger()` may add or verify headers. Do not clear existing
+  values or formulas unless the repository owner explicitly requests a workbook
+  migration with that effect.
 - Pot setup is a whole-pot weighing configuration, not pot diameter. A Repot
   starts the next setup and updates Baselines; old setup readings remain
   historical and should not affect the new dry/wet average.
@@ -20,7 +22,8 @@
 ## Entry behavior and safety
 
 - Default weights to Routine in the browser session. Dry and Wet are explicit
-  overrides; Wet can infer Water, but Water does not imply that a weight exists.
+  overrides. Wet describes a weight state only: it never infers Water, and Water
+  never implies that a weight exists.
 - Keep mobile entries recoverable until Google confirms the callback, lock
   writes, escape formula-like text, validate URLs, and make bulk operations
   retry-safe per plant.

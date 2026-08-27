@@ -152,6 +152,23 @@ function renderRow(plant) {
     );
     row.append(widthCell);
 
+    const rotationCell = element("td");
+    if (summary.latestRotation) {
+        rotationCell.append(
+            element(
+                "strong",
+                `${summary.latestRotation["Rotation (°)"] || 90}°`
+            ),
+            element(
+                "small",
+                `Rotated ${formatDate(summary.latestRotation.Date)}`
+            )
+        );
+    } else {
+        rotationCell.append(element("span", "Not logged", "trend-muted"));
+    }
+    row.append(rotationCell);
+
     row.append(
         element(
             "td",

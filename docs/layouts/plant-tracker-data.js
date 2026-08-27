@@ -379,6 +379,9 @@ export function calculateSummary(events, plantId = "") {
     );
     const pestEvents = eventNamed("Pest");
     const checkEvents = eventNamed("Check");
+    const rotationEvents = eventNamed("Rotation");
+    const cleanEvents = eventNamed("Clean");
+    const pruneEvents = eventNamed("Prune");
     const heightSeries = measurementSeries(events, "Height (cm)");
     const widthSeries = measurementSeries(events, "Width (cm)");
     const weightSeries = measurementSeries(activeEvents, "Weight (g)").map(
@@ -455,6 +458,9 @@ export function calculateSummary(events, plantId = "") {
             pests: pestEvents.length,
             photos: photoEvents.length,
             repots: repotEvents.length,
+            rotations: rotationEvents.length,
+            cleans: cleanEvents.length,
+            prunes: pruneEvents.length,
         },
         latestCheck: newest(checkEvents, () => true),
         latestFlower: newest(flowerEvents, () => true),
@@ -462,6 +468,7 @@ export function calculateSummary(events, plantId = "") {
         latestPest: newest(pestEvents, () => true),
         latestPhoto: newest(photoEvents, () => true),
         latestRepot: newest(repotEvents, () => true),
+        latestRotation: newest(rotationEvents, () => true),
         observationSpanDays:
             datedEvents.length > 1
                 ? daysBetween(datedEvents[0].Date, datedEvents.at(-1).Date)

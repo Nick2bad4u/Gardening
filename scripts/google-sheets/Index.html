@@ -488,6 +488,22 @@
                 cursor: pointer;
             }
 
+            .chip {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 7px;
+                padding: 7px 9px;
+                line-height: 1.15;
+            }
+
+            .chip-icon {
+                width: 1.25em;
+                font-size: 16px;
+                line-height: 1;
+                text-align: center;
+            }
+
             .chip[aria-pressed="true"] {
                 border-color: var(--forest-2);
                 background: var(--forest-2);
@@ -506,6 +522,42 @@
             .chip[data-event="Measure"][aria-pressed="true"] {
                 background: #a86732;
                 border-color: #a86732;
+            }
+            .chip[data-event="Check"][aria-pressed="true"] {
+                background: #39746f;
+                border-color: #39746f;
+            }
+            .chip[data-event="Rotation"][aria-pressed="true"] {
+                background: #4169a1;
+                border-color: #4169a1;
+            }
+            .chip[data-event="Clean"][aria-pressed="true"] {
+                background: #477c87;
+                border-color: #477c87;
+            }
+            .chip[data-event="Prune"][aria-pressed="true"] {
+                background: #767b35;
+                border-color: #767b35;
+            }
+            .chip[data-event="Repot"][aria-pressed="true"] {
+                background: #735c3a;
+                border-color: #735c3a;
+            }
+            .chip[data-event="Flower"][aria-pressed="true"] {
+                background: #9a4c7d;
+                border-color: #9a4c7d;
+            }
+            .chip[data-event="Photo"][aria-pressed="true"] {
+                background: #4e6577;
+                border-color: #4e6577;
+            }
+            .chip[data-event="Pest"][aria-pressed="true"] {
+                background: #a0473e;
+                border-color: #a0473e;
+            }
+            .chip[data-event="Other"][aria-pressed="true"] {
+                background: #636b73;
+                border-color: #636b73;
             }
 
             .segment[aria-pressed="true"] {
@@ -927,17 +979,11 @@
             }
 
             :root[data-theme="dark"] .primary,
-            :root[data-theme="dark"] .mode-tab[aria-selected="true"],
-            :root[data-theme="dark"] .chip[aria-pressed="true"] {
+            :root[data-theme="dark"] .mode-tab[aria-selected="true"] {
                 color: #102419;
             }
 
-            :root[data-theme="dark"]
-                .chip[data-event="Water"][aria-pressed="true"],
-            :root[data-theme="dark"]
-                .chip[data-event="Weigh"][aria-pressed="true"],
-            :root[data-theme="dark"]
-                .chip[data-event="Measure"][aria-pressed="true"] {
+            :root[data-theme="dark"] .chip[aria-pressed="true"] {
                 color: #fff;
             }
 
@@ -1170,7 +1216,7 @@
                             role="tab"
                             aria-selected="false"
                             aria-controls="bulkWaterForm"
-                            >💧 Watering round</button
+                            >▦ Bulk care</button
                         >
                     </div>
 
@@ -1560,6 +1606,30 @@
                                     </select>
                                 </div>
                                 <div
+                                    id="rotationSection"
+                                    class="conditional event-panel"
+                                >
+                                    <h3>↻ Rotation</h3>
+                                    <p class="hint"
+                                        >Record the clockwise-equivalent turn. A
+                                        quarter turn is 90°.</p
+                                    >
+                                    <label
+                                        class="field-label"
+                                        for="rotationDegrees"
+                                        >Rotation (degrees)</label
+                                    >
+                                    <input
+                                        id="rotationDegrees"
+                                        type="number"
+                                        inputmode="decimal"
+                                        min="1"
+                                        max="360"
+                                        step="1"
+                                        value="90"
+                                    />
+                                </div>
+                                <div
                                     id="repotSection"
                                     class="conditional event-panel"
                                 >
@@ -1734,7 +1804,7 @@
                                 />
                                 <label for="keepEvents"
                                     >Keep selected event buttons after saving
-                                    (useful during watering rounds)</label
+                                    (useful during repeated care rounds)</label
                                 >
                             </div>
                             <div class="control-row">
@@ -1772,7 +1842,7 @@
                     >
                         <section class="card">
                             <div class="card-title"
-                                ><h2>Water several plants</h2
+                                ><h2>Bulk care</h2
                                 ><span
                                     id="bulkCount"
                                     class="hint"
@@ -1780,10 +1850,17 @@
                                 ></div
                             >
                             <p class="hint"
-                                >One save creates one Water row per selected
-                                plant. Use single-plant mode for weights because
-                                each pot has a different reading.</p
+                                >Choose one or more shared actions, then select
+                                every plant that received them. Weights,
+                                measurements, repots, flowers, and photos stay
+                                in single-plant mode because their values differ
+                                by plant.</p
                             >
+                            <div
+                                id="bulkEventChips"
+                                class="chips"
+                                aria-label="Bulk care actions"
+                            ></div>
                             <input
                                 id="bulkSearch"
                                 type="search"
@@ -1811,7 +1888,7 @@
                         </section>
                         <section class="card">
                             <div class="card-title"
-                                ><h2>Watering details</h2
+                                ><h2>Shared details</h2
                                 ><span class="hint"
                                     >Shared by selected plants</span
                                 ></div
@@ -1826,48 +1903,6 @@
                                         id="bulkObservedAt"
                                         type="datetime-local"
                                 /></div>
-                                <div class="field"
-                                    ><label
-                                        class="field-label"
-                                        for="bulkNutrientsUsed"
-                                        >Nutrients?</label
-                                    ><select id="bulkNutrientsUsed"
-                                        ><option value=""
-                                            >Choose yes or no</option
-                                        ><option value="No"
-                                            >No — plain water</option
-                                        ><option value="Yes"
-                                            >Yes — fertilizer /
-                                            supplement</option
-                                        ></select
-                                    ></div
-                                >
-                                <div
-                                    id="bulkNutrientProductField"
-                                    class="field"
-                                    hidden
-                                    ><label
-                                        class="field-label"
-                                        for="bulkNutrientProduct"
-                                        >Product / mix</label
-                                    ><input
-                                        id="bulkNutrientProduct"
-                                        maxlength="160"
-                                        placeholder="e.g. MSU 13-3-15"
-                                /></div>
-                                <div
-                                    id="bulkNutrientAmountField"
-                                    class="field full"
-                                    hidden
-                                    ><label
-                                        class="field-label"
-                                        for="bulkNutrientAmount"
-                                        >Amount / concentration</label
-                                    ><input
-                                        id="bulkNutrientAmount"
-                                        maxlength="120"
-                                        placeholder="e.g. 0.5 g per gallon"
-                                /></div>
                                 <div class="field full"
                                     ><label
                                         class="field-label"
@@ -1876,8 +1911,144 @@
                                     ><textarea
                                         id="bulkNotes"
                                         maxlength="1500"
-                                        placeholder="Shared notes for this watering round…"
+                                        placeholder="Shared notes for this care round…"
                                     ></textarea>
+                                </div>
+                            </div>
+                            <div class="event-stack">
+                                <div
+                                    id="bulkWaterSection"
+                                    class="conditional event-panel"
+                                >
+                                    <h3>💧 Water details</h3>
+                                    <div class="fields">
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkNutrientsUsed"
+                                                >Nutrients?</label
+                                            ><select id="bulkNutrientsUsed"
+                                                ><option value=""
+                                                    >Choose yes or no</option
+                                                ><option value="No"
+                                                    >No — plain water</option
+                                                ><option value="Yes"
+                                                    >Yes — fertilizer /
+                                                    supplement</option
+                                                ></select
+                                            ></div
+                                        >
+                                        <div
+                                            id="bulkNutrientProductField"
+                                            class="field"
+                                            hidden
+                                            ><label
+                                                class="field-label"
+                                                for="bulkNutrientProduct"
+                                                >Product / mix</label
+                                            ><input
+                                                id="bulkNutrientProduct"
+                                                maxlength="160"
+                                                placeholder="e.g. MSU 13-3-15"
+                                        /></div>
+                                        <div
+                                            id="bulkNutrientAmountField"
+                                            class="field full"
+                                            hidden
+                                            ><label
+                                                class="field-label"
+                                                for="bulkNutrientAmount"
+                                                >Amount / concentration</label
+                                            ><input
+                                                id="bulkNutrientAmount"
+                                                maxlength="120"
+                                                placeholder="e.g. 0.5 g per gallon"
+                                        /></div>
+                                    </div>
+                                </div>
+                                <div
+                                    id="bulkCheckSection"
+                                    class="conditional event-panel"
+                                >
+                                    <h3>✓ Shared plant check</h3>
+                                    <div class="fields">
+                                        <div class="field full"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkCondition"
+                                                >Plant condition</label
+                                            ><input
+                                                id="bulkCondition"
+                                                maxlength="240"
+                                                placeholder="Firm leaves; no discoloration"
+                                        /></div>
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkSoilMoisture"
+                                                >Soil moisture</label
+                                            ><select id="bulkSoilMoisture"
+                                                ><option value=""
+                                                    >Not checked</option
+                                                ><option value="Dry">Dry</option
+                                                ><option value="Slightly moist"
+                                                    >Slightly moist</option
+                                                ><option value="Moist"
+                                                    >Moist</option
+                                                ><option value="Wet">Wet</option
+                                                ><option value="Unknown"
+                                                    >Unknown</option
+                                                ></select
+                                            ></div
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    id="bulkRotationSection"
+                                    class="conditional event-panel"
+                                >
+                                    <h3>↻ Shared rotation</h3>
+                                    <label
+                                        class="field-label"
+                                        for="bulkRotationDegrees"
+                                        >Rotation (degrees)</label
+                                    ><input
+                                        id="bulkRotationDegrees"
+                                        type="number"
+                                        inputmode="decimal"
+                                        min="1"
+                                        max="360"
+                                        step="1"
+                                        value="90"
+                                    />
+                                </div>
+                                <div
+                                    id="bulkPestSection"
+                                    class="conditional event-panel"
+                                >
+                                    <h3>⚠ Shared pest / issue</h3>
+                                    <div class="fields">
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkPestIssue"
+                                                >What did you find?</label
+                                            ><input
+                                                id="bulkPestIssue"
+                                                maxlength="240"
+                                                placeholder="Mealybugs; soft spots…"
+                                        /></div>
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkPestTreatment"
+                                                >Treatment / action</label
+                                            ><input
+                                                id="bulkPestTreatment"
+                                                maxlength="240"
+                                                placeholder="Isolated; treated; monitoring…"
+                                        /></div>
+                                    </div>
                                 </div>
                             </div>
                         </section>
@@ -1886,7 +2057,7 @@
                                 id="bulkSaveButton"
                                 class="primary"
                                 type="submit"
-                                >Save watering round</button
+                                >Save bulk care</button
                             >
                             <button
                                 id="bulkResetButton"
@@ -1916,6 +2087,8 @@
                 measurementUnit: "in",
                 measurementQuality: "Measured",
                 measurementMethod: "Ruler",
+                bulkEvents: new Set(["Water"]),
+                bulkEntrySource: "Mobile bulk care",
                 bulkSelected: new Set(),
                 bulkFilteredPlants: [],
                 entryMode: "single",
@@ -1941,6 +2114,7 @@
             const PENDING_SAVE_KEY = "gardenLoggerPendingSaveV1";
             const ROUND_STATE_KEY = "gardenLoggerRoundStateV1";
             const WEIGHT_STATE_KEY = "gardenLoggerWeightStateV1";
+            const NUTRIENT_STATE_KEY = "gardenLoggerNutrientStateV1";
             const BULK_PENDING_KEY = "gardenLoggerBulkPendingV1";
             const THEME_KEY = "gardenLoggerThemeV1";
             const PLANT_PICKER_MODE_KEY = "gardenLoggerPlantPickerModeV1";
@@ -1955,6 +2129,30 @@
             const QUEUE_EXECUTION_LIMIT_MS = 390000;
             const QUEUE_STATUS_TIMEOUT_MS = 45000;
             const QUEUE_RETRY_DELAYS_MS = [2000, 5000, 10000];
+            const BULK_EVENT_OPTIONS = Object.freeze([
+                "Water",
+                "Check",
+                "Rotation",
+                "Clean",
+                "Prune",
+                "Pest",
+                "Other",
+            ]);
+            const EVENT_ICONS = Object.freeze({
+                Water: "💧",
+                Weigh: "⚖",
+                Measure: "↔",
+                Check: "✓",
+                Rotation: "↻",
+                Clean: "✦",
+                Prune: "✂",
+                Repot: "🪴",
+                Flower: "✿",
+                Photo: "📷",
+                Pest: "⚠",
+                Other: "⋯",
+                Note: "✎",
+            });
 
             const $ = (id) => document.getElementById(id);
 
@@ -2025,6 +2223,7 @@
                         measurementUnit: state.measurementUnit,
                         measurementQuality: state.measurementQuality,
                         measurementMethod: state.measurementMethod,
+                        bulkEvents: [...state.bulkEvents],
                     })
                 );
                 safeStorageSet(
@@ -2049,6 +2248,16 @@
                             Array.isArray(saved.events) ? saved.events : []
                         );
                     }
+                    state.bulkEvents = new Set(
+                        Array.isArray(saved && saved.bulkEvents) &&
+                            saved.bulkEvents.some((eventName) =>
+                                BULK_EVENT_OPTIONS.includes(eventName)
+                            )
+                            ? saved.bulkEvents.filter((eventName) =>
+                                  BULK_EVENT_OPTIONS.includes(eventName)
+                              )
+                            : ["Water"]
+                    );
                     state.measurementUnit = ["in", "cm"].includes(
                         saved && saved.measurementUnit
                     )
@@ -2083,6 +2292,80 @@
                         : "Routine";
                 } catch (error) {
                     safeStorageRemove(localStorage, ROUND_STATE_KEY);
+                }
+            }
+
+            function eventIcon(eventName) {
+                return EVENT_ICONS[eventName] || "•";
+            }
+
+            function eventSummary(eventNames) {
+                return eventNames
+                    .map((eventName) => `${eventIcon(eventName)} ${eventName}`)
+                    .join(" + ");
+            }
+
+            function nutrientStateFrom(prefix = "") {
+                const id = (name) =>
+                    prefix
+                        ? `${prefix}${name[0].toUpperCase()}${name.slice(1)}`
+                        : name;
+                return {
+                    nutrientsUsed: $(id("nutrientsUsed")).value,
+                    nutrientProduct: $(id("nutrientProduct")).value,
+                    nutrientAmount: $(id("nutrientAmount")).value,
+                };
+            }
+
+            function applyNutrientState(values) {
+                const normalized = {
+                    nutrientsUsed: ["Yes", "No"].includes(
+                        values && values.nutrientsUsed
+                    )
+                        ? values.nutrientsUsed
+                        : "",
+                    nutrientProduct: String(
+                        (values && values.nutrientProduct) || ""
+                    ),
+                    nutrientAmount: String(
+                        (values && values.nutrientAmount) || ""
+                    ),
+                };
+                ["", "bulk"].forEach((prefix) => {
+                    const id = (name) =>
+                        prefix
+                            ? `${prefix}${name[0].toUpperCase()}${name.slice(1)}`
+                            : name;
+                    $(id("nutrientsUsed")).value = normalized.nutrientsUsed;
+                    $(id("nutrientProduct")).value = normalized.nutrientProduct;
+                    $(id("nutrientAmount")).value = normalized.nutrientAmount;
+                    updateNutrientFields(prefix, normalized.nutrientsUsed);
+                });
+                safeStorageSet(
+                    sessionStorage,
+                    NUTRIENT_STATE_KEY,
+                    JSON.stringify(normalized)
+                );
+            }
+
+            function rememberNutrientState(prefix = "") {
+                applyNutrientState(nutrientStateFrom(prefix));
+            }
+
+            function restoreNutrientState() {
+                try {
+                    applyNutrientState(
+                        JSON.parse(
+                            safeStorageGet(
+                                sessionStorage,
+                                NUTRIENT_STATE_KEY,
+                                "null"
+                            )
+                        ) || {}
+                    );
+                } catch (error) {
+                    safeStorageRemove(sessionStorage, NUTRIENT_STATE_KEY);
+                    applyNutrientState({});
                 }
             }
 
@@ -2253,6 +2536,7 @@
                     photoUrl: payload.photoUrl,
                     pestIssue: payload.pestIssue,
                     pestTreatment: payload.pestTreatment,
+                    rotationDegrees: String(payload.rotationDegrees || ""),
                 };
             }
 
@@ -2528,7 +2812,6 @@
                 const events = new Set(
                     Array.isArray(payload.events) ? payload.events : []
                 );
-                if (payload.weightState === "Wet") events.add("Water");
                 if (payload.weight) events.add("Weigh");
                 if (payload.height || payload.width) events.add("Measure");
                 if (payload.condition || payload.soilMoisture)
@@ -2608,6 +2891,19 @@
                     throw new Error(
                         "Describe both the issue and the treatment or action."
                     );
+                if (events.includes("Rotation")) {
+                    const rotationDegrees = Number(
+                        payload.rotationDegrees || 90
+                    );
+                    if (
+                        !Number.isFinite(rotationDegrees) ||
+                        rotationDegrees <= 0 ||
+                        rotationDegrees > 360
+                    )
+                        throw new Error(
+                            "Rotation must be more than 0 and at most 360 degrees."
+                        );
+                }
                 return events;
             }
 
@@ -2672,12 +2968,15 @@
                             : payload.plantId;
                         const meta = document.createElement("div");
                         meta.className = "queue-meta";
-                        const eventText =
-                            inferredPayloadEvents(payload).join(" + ");
+                        const payloadEvents = inferredPayloadEvents(payload);
+                        const eventText = eventSummary(payloadEvents);
                         meta.textContent = [
                             eventText,
                             payload.weight ? `${payload.weight} g` : "",
                             queuedMeasurementText(payload),
+                            payloadEvents.includes("Rotation")
+                                ? `${payload.rotationDegrees || 90}°`
+                                : "",
                         ]
                             .filter(Boolean)
                             .join(" · ");
@@ -3095,15 +3394,10 @@
                 const container = $("eventChips");
                 container.replaceChildren();
                 state.bootstrap.events.forEach((eventName) => {
-                    const button = document.createElement("button");
-                    button.type = "button";
-                    button.className = "chip";
-                    button.dataset.event = eventName;
-                    button.setAttribute(
-                        "aria-pressed",
-                        state.events.has(eventName) ? "true" : "false"
+                    const button = createEventChip(
+                        eventName,
+                        state.events.has(eventName)
                     );
-                    button.textContent = eventName;
                     button.addEventListener("click", () =>
                         toggleEvent(eventName)
                     );
@@ -3111,6 +3405,22 @@
                 });
                 renderWeightState();
                 updateConditionalFields();
+            }
+
+            function createEventChip(eventName, pressed) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "chip";
+                button.dataset.event = eventName;
+                button.setAttribute("aria-pressed", String(pressed));
+                const icon = document.createElement("span");
+                icon.className = "chip-icon";
+                icon.setAttribute("aria-hidden", "true");
+                icon.textContent = eventIcon(eventName);
+                const label = document.createElement("span");
+                label.textContent = eventName;
+                button.append(icon, label);
+                return button;
             }
 
             function renderWeightState() {
@@ -3128,21 +3438,22 @@
                 if (forceOn || !state.events.has(eventName))
                     state.events.add(eventName);
                 else state.events.delete(eventName);
-                document.querySelectorAll(".chip").forEach((button) => {
-                    button.setAttribute(
-                        "aria-pressed",
-                        state.events.has(button.dataset.event)
-                            ? "true"
-                            : "false"
-                    );
-                });
+                document
+                    .querySelectorAll("#eventChips .chip")
+                    .forEach((button) => {
+                        button.setAttribute(
+                            "aria-pressed",
+                            state.events.has(button.dataset.event)
+                                ? "true"
+                                : "false"
+                        );
+                    });
                 updateConditionalFields();
                 persistRoundState();
             }
 
             function setWeightState(nextState) {
                 state.weightState = nextState;
-                if (state.weightState === "Wet") toggleEvent("Water", true);
                 renderWeightState();
                 updateConditionalFields();
                 persistRoundState();
@@ -3166,6 +3477,7 @@
                 [
                     ["waterSection", "Water"],
                     ["checkSection", "Check"],
+                    ["rotationSection", "Rotation"],
                     ["repotSection", "Repot"],
                     ["flowerSection", "Flower"],
                     ["photoSection", "Photo"],
@@ -3210,7 +3522,7 @@
                     sub.textContent = `${entry.observedAt}${entry.weightState ? ` · ${entry.weightState}` : ""}`;
                     const badge = document.createElement("div");
                     badge.className = "event-badge";
-                    badge.textContent = entry.event;
+                    badge.textContent = `${eventIcon(entry.event)} ${entry.event}`;
                     left.append(main, sub);
                     item.append(left, badge);
                     list.append(item);
@@ -3225,8 +3537,53 @@
                 $("bulkWaterForm").hidden = !bulk;
                 $("singleModeTab").setAttribute("aria-selected", String(!bulk));
                 $("bulkModeTab").setAttribute("aria-selected", String(bulk));
-                if (bulk) renderBulkPlants();
+                if (bulk) {
+                    renderBulkEventChips();
+                    renderBulkPlants();
+                }
                 renderObservationQueue();
+            }
+
+            function renderBulkEventChips() {
+                const container = $("bulkEventChips");
+                container.replaceChildren();
+                BULK_EVENT_OPTIONS.forEach((eventName) => {
+                    const button = createEventChip(
+                        eventName,
+                        state.bulkEvents.has(eventName)
+                    );
+                    button.addEventListener("click", () =>
+                        toggleBulkEvent(eventName)
+                    );
+                    container.append(button);
+                });
+                updateBulkConditionalFields();
+            }
+
+            function toggleBulkEvent(eventName) {
+                if (state.bulkEvents.has(eventName)) {
+                    state.bulkEvents.delete(eventName);
+                } else {
+                    state.bulkEvents.add(eventName);
+                }
+                renderBulkEventChips();
+                renderBulkCount();
+                persistRoundState();
+            }
+
+            function updateBulkConditionalFields() {
+                [
+                    ["bulkWaterSection", "Water"],
+                    ["bulkCheckSection", "Check"],
+                    ["bulkRotationSection", "Rotation"],
+                    ["bulkPestSection", "Pest"],
+                ].forEach(([sectionId, eventName]) => {
+                    $(sectionId).classList.toggle(
+                        "visible",
+                        state.bulkEvents.has(eventName)
+                    );
+                });
+                updateNutrientFields("bulk", $("bulkNutrientsUsed").value);
             }
 
             function renderBulkPlants(query = "") {
@@ -3269,42 +3626,95 @@
             function renderBulkCount() {
                 const count = state.bulkSelected.size;
                 $("bulkCount").textContent = `${count} selected`;
+                const actionCount = state.bulkEvents.size;
                 $("bulkSaveButton").textContent = count
-                    ? `Save water for ${count}`
-                    : "Save watering round";
+                    ? `Save ${actionCount || "no"} action${actionCount === 1 ? "" : "s"} for ${count}`
+                    : "Save bulk care";
             }
 
             function bulkPayload() {
                 const observedValue = $("bulkObservedAt").value;
                 const observedDate = new Date(observedValue);
                 if (!observedValue || Number.isNaN(observedDate.getTime())) {
-                    throw new Error("Choose a valid watering date and time.");
+                    throw new Error("Choose a valid care date and time.");
                 }
                 if (!state.bulkSelected.size) {
-                    throw new Error("Choose at least one plant to water.");
+                    throw new Error("Choose at least one plant.");
                 }
-                return {
+                if (!state.bulkEvents.size) {
+                    throw new Error("Choose at least one bulk-care action.");
+                }
+                const payload = {
                     plantIds: [...state.bulkSelected],
+                    events: [...state.bulkEvents],
                     observedAt: observedDate.toISOString(),
                     nutrientsUsed: $("bulkNutrientsUsed").value,
                     nutrientProduct: $("bulkNutrientProduct").value.trim(),
                     nutrientAmount: $("bulkNutrientAmount").value.trim(),
+                    condition: $("bulkCondition").value.trim(),
+                    soilMoisture: $("bulkSoilMoisture").value,
+                    rotationDegrees: $("bulkRotationDegrees").value || "90",
+                    pestIssue: $("bulkPestIssue").value.trim(),
+                    pestTreatment: $("bulkPestTreatment").value.trim(),
                     notes: $("bulkNotes").value.trim(),
+                    entrySource: state.bulkEntrySource,
                 };
+                if (
+                    state.bulkEvents.has("Water") &&
+                    !["Yes", "No"].includes(payload.nutrientsUsed)
+                ) {
+                    throw new Error(
+                        "For Water, choose whether nutrients were used."
+                    );
+                }
+                if (
+                    state.bulkEvents.has("Water") &&
+                    payload.nutrientsUsed === "Yes" &&
+                    (!payload.nutrientProduct || !payload.nutrientAmount)
+                ) {
+                    throw new Error(
+                        "Enter both the nutrient product and amount used."
+                    );
+                }
+                if (state.bulkEvents.has("Rotation")) {
+                    const rotationDegrees = Number(payload.rotationDegrees);
+                    if (
+                        !Number.isFinite(rotationDegrees) ||
+                        rotationDegrees <= 0 ||
+                        rotationDegrees > 360
+                    ) {
+                        throw new Error(
+                            "Rotation must be more than 0 and at most 360 degrees."
+                        );
+                    }
+                }
+                if (
+                    state.bulkEvents.has("Pest") &&
+                    (!payload.pestIssue || !payload.pestTreatment)
+                ) {
+                    throw new Error(
+                        "Describe both the shared issue and the treatment or action."
+                    );
+                }
+                return payload;
             }
 
             function clearBulkRound() {
                 state.bulkSelected.clear();
+                state.bulkEntrySource = "Mobile bulk care";
                 [
-                    "bulkNutrientProduct",
-                    "bulkNutrientAmount",
+                    "bulkCondition",
+                    "bulkSoilMoisture",
+                    "bulkPestIssue",
+                    "bulkPestTreatment",
                     "bulkNotes",
                 ].forEach((id) => ($(id).value = ""));
-                $("bulkNutrientsUsed").value = "";
+                $("bulkRotationDegrees").value = "90";
                 $("bulkObservedAt").value = localDateTimeValue();
                 localStorage.removeItem(BULK_PENDING_KEY);
                 renderBulkPlants($("bulkSearch").value);
-                updateNutrientFields("bulk", "");
+                renderBulkEventChips();
+                updateNutrientFields("bulk", $("bulkNutrientsUsed").value);
             }
 
             function readBulkPendingSave() {
@@ -3314,6 +3724,15 @@
                     );
                     if (!value || !value.requestId || !value.payload)
                         return null;
+                    if (!Array.isArray(value.payload.events)) {
+                        value.payload.events = ["Water"];
+                        value.payload.entrySource = "Mobile bulk water";
+                        safeStorageSet(
+                            localStorage,
+                            BULK_PENDING_KEY,
+                            JSON.stringify(value)
+                        );
+                    }
                     return value;
                 } catch (error) {
                     safeStorageRemove(localStorage, BULK_PENDING_KEY);
@@ -3328,28 +3747,42 @@
                 state.bulkSelected = new Set(
                     Array.isArray(payload.plantIds) ? payload.plantIds : []
                 );
+                state.bulkEvents = new Set(
+                    Array.isArray(payload.events) && payload.events.length
+                        ? payload.events.filter((eventName) =>
+                              BULK_EVENT_OPTIONS.includes(eventName)
+                          )
+                        : ["Water"]
+                );
+                state.bulkEntrySource =
+                    payload.entrySource === "Mobile bulk water"
+                        ? "Mobile bulk water"
+                        : "Mobile bulk care";
                 $("bulkObservedAt").value = localDateTimeValue(
                     payload.observedAt
                 );
-                $("bulkNutrientsUsed").value = payload.nutrientsUsed || "";
-                $("bulkNutrientProduct").value = payload.nutrientProduct || "";
-                $("bulkNutrientAmount").value = payload.nutrientAmount || "";
+                applyNutrientState(payload);
+                $("bulkCondition").value = payload.condition || "";
+                $("bulkSoilMoisture").value = payload.soilMoisture || "";
+                $("bulkRotationDegrees").value =
+                    payload.rotationDegrees || "90";
+                $("bulkPestIssue").value = payload.pestIssue || "";
+                $("bulkPestTreatment").value = payload.pestTreatment || "";
                 $("bulkNotes").value = payload.notes || "";
-                updateNutrientFields("bulk", payload.nutrientsUsed || "");
                 setEntryMode("bulk");
                 showToast(
-                    "Recovered the watering round that was waiting for Google. Tap Save again to confirm it; retries will not create duplicates.",
+                    "Recovered the bulk-care round that was waiting for Google. Tap Save again to confirm it; retries will not create duplicates.",
                     false,
                     10000
                 );
                 return true;
             }
 
-            function submitBulkWater() {
+            function submitBulkCare() {
                 if (state.saving) return;
                 if (!browserIsOnline()) {
                     showToast(
-                        "This phone is offline. The watering round is still on screen; send it after the connection returns.",
+                        "This phone is offline. The bulk-care round is still on screen; send it after the connection returns.",
                         true,
                         9000
                     );
@@ -3370,7 +3803,7 @@
                 ) {
                     if (!pending.replaceable) {
                         showToast(
-                            "A previous watering round may still be saving. Restore its values or wait for Google to confirm the result before changing the round.",
+                            "A previous bulk-care round may still be saving. Restore its values or wait for Google to confirm the result before changing the round.",
                             true,
                             10000
                         );
@@ -3388,7 +3821,7 @@
                     );
                 } catch (error) {
                     showToast(
-                        "The phone could not preserve this watering round, so it was not sent. Free browser storage and try again.",
+                        "The phone could not preserve this bulk-care round, so it was not sent. Free browser storage and try again.",
                         true,
                         10000
                     );
@@ -3406,9 +3839,9 @@
                         return;
                     setSaving(false);
                     $("connectionStatus").textContent =
-                        "Watering save still processing · checking History";
+                        "Bulk-care save still processing · checking History";
                     showToast(
-                        "Google is taking longer than expected. The watering round is preserved while the logger checks whether it reached History.",
+                        "Google is taking longer than expected. The bulk-care round is preserved while the logger checks whether it reached History.",
                         true,
                         12000
                     );
@@ -3430,7 +3863,7 @@
                         showToast(
                             error && error.message
                                 ? error.message
-                                : "Google did not confirm the watering round. It is preserved; tap Save again.",
+                                : "Google did not confirm the bulk-care round. It is preserved; tap Save again.",
                             true,
                             10000
                         );
@@ -3438,7 +3871,7 @@
                             allowReplacementIfMissing: true,
                         });
                     })
-                    .saveBulkWaterObservation({
+                    .saveBulkCareObservation({
                         ...pending.payload,
                         requestId,
                     });
@@ -3463,13 +3896,13 @@
                         completeBulkSave(
                             {
                                 message:
-                                    "The watering round was already in History, so the recovered draft was cleared automatically.",
+                                    "The bulk-care round was already in History, so the recovered draft was cleared automatically.",
                             },
                             requestId
                         ),
                     unconfirmed: (result) => {
                         $("connectionStatus").textContent =
-                            "Watering round kept · retry is safe";
+                            "Bulk-care round kept · retry is safe";
                         if (
                             result.state === "missing" &&
                             options.allowReplacementIfMissing
@@ -3480,9 +3913,9 @@
                                 JSON.stringify(pending)
                             );
                             $("connectionStatus").textContent =
-                                "Watering save failed · edit and retry";
+                                "Bulk-care save failed · edit and retry";
                             showToast(
-                                "The failed watering request is not in History. Correct the round and save again; Clear entry is not needed.",
+                                "The failed bulk-care request is not in History. Correct the round and save again; Clear entry is not needed.",
                                 true,
                                 12000
                             );
@@ -3512,8 +3945,6 @@
                     "condition",
                     "soilMoisture",
                     "notes",
-                    "nutrientProduct",
-                    "nutrientAmount",
                     "potSize",
                     "medium",
                     "flowerCount",
@@ -3524,7 +3955,7 @@
                 ].forEach((id) => {
                     $(id).value = "";
                 });
-                $("nutrientsUsed").value = "";
+                $("rotationDegrees").value = "90";
                 $("measurementUnit").value = state.measurementUnit;
                 $("measurementQuality").value = state.measurementQuality;
                 $("measurementMethod").value = state.measurementMethod;
@@ -3579,6 +4010,7 @@
                     photoUrl: $("photoUrl").value.trim(),
                     pestIssue: $("pestIssue").value.trim(),
                     pestTreatment: $("pestTreatment").value.trim(),
+                    rotationDegrees: $("rotationDegrees").value || "90",
                 };
             }
 
@@ -4138,9 +4570,6 @@
                 $("notes").value = payload.notes || "";
                 $("potSetup").value = payload.potSetup || 1;
                 [
-                    "nutrientsUsed",
-                    "nutrientProduct",
-                    "nutrientAmount",
                     "potSize",
                     "medium",
                     "flowerCount",
@@ -4151,6 +4580,8 @@
                 ].forEach((id) => {
                     $(id).value = payload[id] || "";
                 });
+                applyNutrientState(payload);
+                $("rotationDegrees").value = payload.rotationDegrees || "90";
                 $("measurementQuality").value =
                     payload.measurementQuality || "Estimated";
                 $("measurementMethod").value =
@@ -4394,6 +4825,7 @@
                     );
                     step = "restoring saved round settings";
                     restoreRoundState();
+                    restoreNutrientState();
                     state.queue = readObservationQueue();
                     step = "building navigation";
                     renderGlobalLinks();
@@ -4508,12 +4940,28 @@
                     updateConditionalFields();
                 });
             });
-            $("nutrientsUsed").addEventListener("change", (event) =>
-                updateNutrientFields("", event.target.value)
+            ["nutrientsUsed", "nutrientProduct", "nutrientAmount"].forEach(
+                (id) => {
+                    $(id).addEventListener("change", () =>
+                        rememberNutrientState("")
+                    );
+                    $(id).addEventListener("input", () =>
+                        rememberNutrientState("")
+                    );
+                }
             );
-            $("bulkNutrientsUsed").addEventListener("change", (event) =>
-                updateNutrientFields("bulk", event.target.value)
-            );
+            [
+                "bulkNutrientsUsed",
+                "bulkNutrientProduct",
+                "bulkNutrientAmount",
+            ].forEach((id) => {
+                $(id).addEventListener("change", () =>
+                    rememberNutrientState("bulk")
+                );
+                $(id).addEventListener("input", () =>
+                    rememberNutrientState("bulk")
+                );
+            });
             $("bulkSearch").addEventListener("input", (event) =>
                 renderBulkPlants(event.target.value)
             );
@@ -4531,7 +4979,7 @@
             document.addEventListener("click", guardMobileButtonHit, true);
             $("bulkWaterForm").addEventListener("submit", (event) => {
                 event.preventDefault();
-                submitBulkWater();
+                submitBulkCare();
             });
             $("clearButton").addEventListener("click", () =>
                 clearEntry({ keepEvents: false })

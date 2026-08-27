@@ -3,7 +3,7 @@
 The [Garden Plant Tracker AppSheet app](https://www.appsheet.com/start/de6fc182-d01e-427b-b46e-a031d7bc4588)
 is the signed-in, phone-friendly companion to the canonical Google Sheets
 workbook. It supports daily browsing, individual observations, collection-wide
-water/weight rounds, save receipts, dashboards, and per-plant charts without
+care/weight rounds, save receipts, dashboards, and per-plant charts without
 creating a second gardening database.
 
 The owner-only
@@ -19,7 +19,7 @@ updates, or deletes `History` rows directly.
 
 - `App entries` is the writable staging table for a detailed observation.
 - `App bulk` is the writable staging table for a collection-wide Water, Weigh,
-  or Water + weigh round.
+  Water + weigh, Rotation, Check, Clean, Prune, Pest, or Other round.
 - The bound Apps Script queue trigger validates staged rows and sends them
   through the same idempotent batch writer used by the mobile logger.
 - `Plant tracker`, `Baselines`, `History`, the chart helpers, and their slices
@@ -35,7 +35,7 @@ The bridge contract and trigger details live in
 | View            | Purpose                                                                                                     |
 | --------------- | ----------------------------------------------------------------------------------------------------------- |
 | Garden          | Home dashboard combining the plant list with recent care history.                                           |
-| Water & weigh   | Fast collection-wide Water, Weigh, or combined round entry.                                                 |
+| Bulk care       | Fast collection-wide Water, Weigh, combined, Rotation, Check, Clean, Prune, Pest, or Other entry.           |
 | Detailed log    | Full event-aware form with plant-name, pot-label, and Plant-ID lookup for every supported care event.       |
 | Plants          | Image-first list with watering age, pot label, current weight, height, width, field guide, and care action. |
 | Insights        | Eight collection-wide charts described below.                                                               |
@@ -72,6 +72,20 @@ Blank values display as an em dash rather than a fabricated zero. The existing
 `Watering age` badge remains the top-right summary, so urgency and the latest
 physical measurements can be scanned together without opening the detail
 view.
+
+## Wet weights, nutrients, and rotation
+
+`Wet` is a weight-state label, not a Water event. Detailed log accepts a Wet
+weight without Water and without nutrient fields. Choose Water explicitly only
+when the same observation should also create a Water row; event ordering keeps
+the post-watering Weigh row before its Water row in History.
+
+Rotation is available in Detailed log and Bulk care. It accepts 1–360 degrees
+and defaults to 90. The degree value is archived in `History!AN:AN`, displayed
+in read-only care history, and remains available to the public plant history.
+Clean and Prune are lightweight dated actions whose specifics belong in Notes.
+Bulk care uses one `Selected plants` field for every supported shared action;
+per-plant weights remain in the dedicated P01-P22 fields.
 
 ## Images and visual identity
 

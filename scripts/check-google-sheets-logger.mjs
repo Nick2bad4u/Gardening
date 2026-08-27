@@ -27,7 +27,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.11.1");
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.12.0");
 
 assert.deepEqual(
     Array.from(
@@ -50,7 +50,7 @@ assert.deepEqual(
 );
 assert.deepEqual(
     Array.from(context.buildEventNames_("Weigh", "Wet", 420, "", "", "", "")),
-    ["Weigh", "Water"]
+    ["Weigh"]
 );
 assert.equal(context.safeSheetText_('=IMPORTXML("x")'), '\'=IMPORTXML("x")');
 assert.equal(context.safeSheetText_("healthy"), "healthy");
@@ -89,17 +89,18 @@ assert.deepEqual(appSheetEntryHeaders, [
     "Request ID",
     "History rows",
     "Saved at",
+    "Rotation (°)",
 ]);
 const appSheetBulkHeaders = Array.from(
     vm.runInContext("APP_SHEET_BULK_HEADERS", context)
 );
-assert.equal(appSheetBulkHeaders.length, 36);
+assert.equal(appSheetBulkHeaders.length, 44);
 assert.deepEqual(appSheetBulkHeaders.slice(0, 6), [
     "Round ID",
     "Started at",
     "Observed at",
     "Round action",
-    "Watered plants",
+    "Selected plants",
     "Weight state",
 ]);
 assert.deepEqual(
@@ -109,7 +110,7 @@ assert.deepEqual(
         (_, index) => `P${String(index + 1).padStart(2, "0")} weight (g)`
     )
 );
-assert.deepEqual(appSheetBulkHeaders.slice(-8), [
+assert.deepEqual(appSheetBulkHeaders.slice(-16), [
     "Notes",
     "Created by",
     "Created at",
@@ -118,6 +119,14 @@ assert.deepEqual(appSheetBulkHeaders.slice(-8), [
     "Request count",
     "Saved count",
     "Saved at",
+    "Rotation (°)",
+    "Plant condition",
+    "Soil moisture",
+    "Pest / issue",
+    "Treatment / action",
+    "Nutrients used",
+    "Nutrient product",
+    "Nutrient amount",
 ]);
 assert.deepEqual(
     Array.from(context.appSheetEventList_("Water; Weigh, Water")),
@@ -127,6 +136,10 @@ assert.equal(context.normalizeWebEntrySource_("AppSheet"), "AppSheet");
 assert.equal(
     context.normalizeWebEntrySource_("Mobile bulk water"),
     "Mobile bulk water"
+);
+assert.equal(
+    context.normalizeWebEntrySource_("Mobile bulk care"),
+    "Mobile bulk care"
 );
 assert.throws(
     () => context.normalizeWebEntrySource_("untrusted client"),
@@ -190,6 +203,7 @@ assert.match(html, /function safeStorageGet\(storage, key, fallback = null\)/);
 assert.match(html, /function safeStorageSet\(storage, key, value\)/);
 assert.match(html, /function safeStorageRemove\(storage, key\)/);
 assert.match(html, /const ROUND_STATE_KEY = "gardenLoggerRoundStateV1"/);
+assert.match(html, /const NUTRIENT_STATE_KEY = "gardenLoggerNutrientStateV1"/);
 assert.match(html, /function reconcileSingleSave\(requestId, options = \{\}\)/);
 assert.match(html, /function reconcileBulkSave\(requestId, options = \{\}\)/);
 assert.match(html, /function beginSaveAttempt\(timeoutMs = SAVE_WATCHDOG_MS\)/);
@@ -206,7 +220,10 @@ assert.doesNotMatch(
 );
 assert.match(html, /weightState:\s*"Routine"/);
 assert.match(html, /id="bulkWaterForm"/);
-assert.match(html, /saveBulkWaterObservation/);
+assert.match(html, /saveBulkCareObservation/);
+assert.match(html, /id="bulkEventChips"/);
+assert.match(html, /id="rotationDegrees"/);
+assert.match(html, /id="bulkRotationDegrees"/);
 assert.match(html, /id="nutrientsUsed"/);
 assert.match(html, /id="potSetup"\s+type="hidden"/);
 assert.match(html, /createLink\("▤ Spreadsheet", links\.spreadsheet\)/);
@@ -247,6 +264,7 @@ assert.match(
 assert.match(html, /id="openGooglePhotos"/);
 assert.match(html, /createLink\("History & charts", plant\.historyUrl\)/);
 assert.match(source, /const HISTORY_DETAIL_HEADERS/);
+assert.match(source, /const HISTORY_ROTATION_HEADERS/);
 assert.match(source, /ensureHistoryDetailColumns_\(history\)/);
 assert.match(
     source,
@@ -271,14 +289,16 @@ assert.match(source, /function installAppSheetBulkSheet\(\)/);
 assert.match(source, /function migrateLegacyAppSheetBulkSheet_\(sheet\)/);
 assert.match(source, /function normalizeAppSheetBulkAction_\(value\)/);
 assert.match(source, /function appSheetBulkWateredPlants_\(value\)/);
+assert.match(source, /function appSheetBulkSelectedPlants_\(value\)/);
 assert.match(source, /`appsheet-bulk-\$\{roundId\}-\$\{plantId\}`/);
 assert.match(source, /function installAppSheetQueueTrigger\(\)/);
 assert.match(source, /\.timeBased\(\)\.everyMinutes\(5\)\.create\(\)/);
 assert.doesNotMatch(source, /Logger 5\.8 is ready/);
 assert.match(
     source,
-    /function saveBulkWaterObservation\(payload\)[\s\S]*?saveWebObservationBatch\(/
+    /function saveBulkCareObservation\(payload\)[\s\S]*?saveWebObservationBatch\(/
 );
+assert.match(source, /function saveBulkWaterObservation\(payload\)/);
 assert.match(source, /function appSheetPayloadFromRow_\(row, requestId\)/);
 assert.match(source, /entrySource:\s*"AppSheet"/);
 assert.match(source, /storedStatus === "Saved"/);

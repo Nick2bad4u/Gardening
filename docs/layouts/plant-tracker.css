@@ -1098,6 +1098,18 @@ body.table-maximized {
     fill: var(--warning) !important;
 }
 
+.activity-rotation {
+    fill: #4169a1 !important;
+}
+
+.activity-clean {
+    fill: #477c87 !important;
+}
+
+.activity-prune {
+    fill: #767b35 !important;
+}
+
 .activity-check,
 .activity-measure,
 .activity-weigh {
