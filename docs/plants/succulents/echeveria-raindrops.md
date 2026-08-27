@@ -12,12 +12,13 @@
 
 ## Names and identity
 
-| Kind                | Name                                  |
-| ------------------- | ------------------------------------- |
-| Cultivar            | _Echeveria_ 'Raindrops'               |
-| Seller attribution  | Dick Wright hybrid                    |
-| Working common name | Raindrops echeveria                   |
-| Wild range          | None; it is a horticultural cultivar. |
+| Kind                | Name                                    |
+| ------------------- | --------------------------------------- |
+| Cultivar            | _Echeveria_ 'Raindrops'                 |
+| Seller attribution  | Dick Wright                             |
+| Parentage           | Not published or independently verified |
+| Working common name | Raindrops echeveria                     |
+| Wild range          | None; it is a horticultural cultivar.   |
 
 Mature leaves develop a rounded, droplet-like bump near the tip. Those stable
 bumps are a cultivar trait, not edema or pest damage. Young plants may arrive
@@ -59,11 +60,12 @@ healthy arrival immediately.
 
 ## Origin, form, and cultivar history
 
-'Raindrops' is a cultivated _Echeveria_ associated by the seller with breeder
-Dick Wright. It has no native range of its own. NC State Extension places the
-genus from the southwestern United States through Mexico and into South
-America, but that broad genus range must not be printed as this cultivar's
-origin.
+'Raindrops' is a cultivated _Echeveria_ attributed by the seller to hybridizer
+Dick Wright. No primary registration or published parent formula was located,
+so this record does not add a species epithet or speculative hybrid cross. It
+has no native range of its own. NC State Extension places the genus from the
+southwestern United States through Mexico and into South America, but that
+broad genus range must not be printed as this cultivar's origin.
 
 ## Care in this collection
 

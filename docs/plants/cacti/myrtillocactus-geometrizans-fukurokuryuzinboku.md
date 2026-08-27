@@ -54,5 +54,6 @@ history.
 ## Sources
 
 - [Kew Plants of the World Online: _Myrtillocactus geometrizans_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:135710-1)
+- [LLIFLE cactus encyclopedia: _Myrtillocactus geometrizans_ 'Fukurokuryuzinboku'](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/14991/Myrtillocactus_geometrizans_cv._Fukurokuryuzinboku)
 - [International Plant Names Index record](https://www.ipni.org/n/135710-1)
 - [GBIF Backbone Taxonomy record](https://www.gbif.org/species/7279778)

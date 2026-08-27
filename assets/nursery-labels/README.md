@@ -4,7 +4,14 @@ This folder preserves supplier labels from the collection. `nursery-labels` is
 more accurate than the original `Nursery-Cards` name: some evidence is a
 printed sleeve, a sticker, or only one side of a label. The starter-label
 photos were captured on 2026-07-23 and renamed by the plant name and visible
-label face.
+label face. That capture date is not the acquisition date: the paper logbook
+records the feather cactus (`A2`), Old Man of the Andes (`B2`), Indigo Wave
+(`B3`), and Ming Thing (`D3`) as acquired on 2026-07-15. The remaining eight
+plants in the `A1`–`D3` starter grid were acquired on 2026-07-23.
+
+The labels identify seven starter plants as Costa Farms material and five as
+Altman Reserve material. “Altman Reserve” is preserved as printed on the
+labels; it is the Altman Plants material referenced in the collection notes.
 
 A nursery label is useful provenance, but it is not automatically a correct
 botanical identification. The original “Opuntia Cylindrica Cristata” sleeve is

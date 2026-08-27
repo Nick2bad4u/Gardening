@@ -6,7 +6,7 @@
 - Interesting fact: Its flowers stay surprisingly small relative to the massive body an old plant can develop.
 - Identification: **labeled**
 - Acquired from: Costa Farms
-- Acquired on: 2026-07-15
+- Acquired on: 2026-07-23
 - Photo archive: [licensed reference images](../../../assets/plants/gymnocalycium-saglionis/)
 
 ## Names and identity
@@ -68,4 +68,4 @@ new growth should preserve its broad diameter and produce stout spine clusters.
 
 - [Kew Plants of the World Online: _Gymnocalycium saglionis_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A1155453-2)
 - [International Plant Names Index record](https://www.ipni.org/n/1155453-2)
-- [Llifle cactus encyclopedia: _Gymnocalycium saglionis_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/1338/Gymnocalycium_saglionis)
+- [LLIFLE cactus encyclopedia: _Gymnocalycium saglionis_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/12116/Gymnocalycium_saglionis)

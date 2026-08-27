@@ -86,5 +86,6 @@ seller record.
 ## Sources
 
 - [Mountain Crest Gardens: paper spine cactus seller listing](https://mountaincrestgardens.com/tephrocactus-articulatus-var-papyracanthus-paper-spine-cactus/)
+- [LLIFLE cactus encyclopedia: _Tephrocactus articulatus_ var. _papyracanthus_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/7346/Tephrocactus_articulatus_var._papyracanthus)
 - [GBIF Backbone Taxonomy: accepted _Tephrocactus articulatus_](https://www.gbif.org/species/7283993)
 - [GBIF Backbone Taxonomy: var. _papyracanthus_ synonym record](https://www.gbif.org/species/3957748)

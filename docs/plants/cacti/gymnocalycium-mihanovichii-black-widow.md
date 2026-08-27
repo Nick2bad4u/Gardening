@@ -85,5 +85,6 @@ variegated form as a separate botanical taxon.
 
 - [Mountain Crest Gardens: 'Black Widow' seller listing](https://mountaincrestgardens.com/gymnocalycium-mihanovichii-f-variegata-black-widow-wfzy/)
 - [Kew Plants of the World Online: _Gymnocalycium mihanovichii_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A115434-2)
+- [LLIFLE cactus encyclopedia: _Gymnocalycium mihanovichii_ species reference](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/11929/Gymnocalycium_mihanovichii)
 - [NC State Extension: moon cactus](https://plants.ces.ncsu.edu/plants/gymnocalycium-mihanovichii/common-name/moon-cactus/)
 - [GBIF Backbone Taxonomy: _Gymnocalycium mihanovichii_](https://www.gbif.org/species/7282762)

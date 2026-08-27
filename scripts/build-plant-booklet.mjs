@@ -108,6 +108,223 @@ const trackerIdByInventoryId = new Map([
     ["Succulent-05", "P22"],
 ]);
 
+const inaturalistBySlug = new Map([
+    [
+        "austrocylindropuntia-subulata",
+        {
+            taxon: "Austrocylindropuntia subulata",
+            scope: "Species observations",
+        },
+    ],
+    [
+        "chamaelobivia-hybrid",
+        {
+            taxon: "Echinopsis chamaecereus",
+            scope: "Peanut-cactus ancestry; hybrid flowers can differ",
+        },
+    ],
+    [
+        "espostoa-melanostele-nana",
+        {
+            taxon: "Espostoa melanostele",
+            scope: "Working species; this collection ID remains probable",
+        },
+    ],
+    [
+        "gymnocalycium-mihanovichii-black-widow",
+        {
+            taxon: "Gymnocalycium mihanovichii",
+            scope: "Underlying species; cultivar colors are not separated",
+        },
+    ],
+    [
+        "mammillaria-mammillaris",
+        {
+            taxon: "Mammillaria mammillaris",
+            scope: "Working species; this collection ID remains probable",
+        },
+    ],
+    [
+        "mammillaria-rekoi",
+        {
+            taxon: "Mammillaria rekoi",
+            scope: "Working species; compare cautiously with this cf. ID",
+        },
+    ],
+    [
+        "myrtillocactus-geometrizans-fukurokuryuzinboku",
+        {
+            taxon: "Myrtillocactus geometrizans",
+            scope: "Underlying species; monstrose cultivars are not separated",
+        },
+    ],
+    [
+        "parodia-leninghausii",
+        { taxon: "Parodia leninghausii", scope: "Species observations" },
+    ],
+    [
+        "tephrocactus-articulatus-papyracanthus",
+        {
+            taxon: "Tephrocactus articulatus",
+            scope: "Species observations; compare the paper-spined variety",
+        },
+    ],
+    [
+        "pachira-glabra",
+        {
+            taxon: "Pachira glabra",
+            scope: "Working species; the nursery tag names only Pachira",
+        },
+    ],
+    [
+        "cleistocactus-colademononis",
+        {
+            taxon: "Cleistocactus colademononis",
+            scope: "Species observations",
+        },
+    ],
+    [
+        "echinopsis-spachiana",
+        {
+            taxon: "Echinopsis spachiana",
+            scope: "Working species; compare cautiously",
+        },
+    ],
+    [
+        "mammillaria-bombycina",
+        {
+            taxon: "Mammillaria bombycina",
+            scope: "Species reference for the historical plant",
+        },
+    ],
+    [
+        "pilosocereus-pachycladus-variegated",
+        {
+            taxon: "Pilosocereus pachycladus",
+            scope: "Working species; variegated forms are not separated",
+        },
+    ],
+    [
+        "astrophytum-ornatum",
+        { taxon: "Astrophytum ornatum", scope: "Species observations" },
+    ],
+    [
+        "cereus-forbesii-ming-thing",
+        {
+            taxon: "Cereus forbesii",
+            scope: "Underlying species; Ming Thing is horticultural",
+        },
+    ],
+    [
+        "echinocereus-rigidissimus-rubispinus",
+        {
+            taxon: "Echinocereus rigidissimus",
+            scope: "Species observations; compare the red-spined subspecies",
+        },
+    ],
+    [
+        "echinopsis-subdenudata",
+        {
+            taxon: "Echinopsis ancistrophora",
+            scope: "Accepted species concept that includes subdenudata",
+        },
+    ],
+    [
+        "euphorbia-obesa-hybrid",
+        {
+            taxon: "Euphorbia obesa",
+            scope: "Reference species only; the collection plant may be a hybrid",
+        },
+    ],
+    [
+        "gymnocalycium-mihanovichii-variegated",
+        {
+            taxon: "Gymnocalycium mihanovichii",
+            scope: "Underlying species; variegated selections are not separated",
+        },
+    ],
+    [
+        "gymnocalycium-saglionis",
+        { taxon: "Gymnocalycium saglionis", scope: "Species observations" },
+    ],
+    [
+        "mammillaria-plumosa",
+        { taxon: "Mammillaria plumosa", scope: "Species observations" },
+    ],
+    [
+        "myrtillocactus-geometrizans-indigo-wave",
+        {
+            taxon: "Myrtillocactus geometrizans",
+            scope: "Underlying species; crested trade forms are not separated",
+        },
+    ],
+    [
+        "nyctocereus-serpentinus",
+        {
+            taxon: "Peniocereus serpentinus",
+            scope: "Species observations under the currently used genus name",
+        },
+    ],
+    [
+        "oreocereus-trollii",
+        { taxon: "Oreocereus trollii", scope: "Species observations" },
+    ],
+    [
+        "stenocactus-phyllacanthus",
+        { taxon: "Stenocactus phyllacanthus", scope: "Species observations" },
+    ],
+    [
+        "aeonium-haworthii-dream-color",
+        {
+            taxon: "Aeonium haworthii",
+            scope: "Underlying species; Dream Color is horticultural",
+        },
+    ],
+    [
+        "echeveria-pulidonis",
+        {
+            taxon: "Echeveria pulidonis",
+            scope: "Working species; the shared-planter ID remains probable",
+        },
+    ],
+    [
+        "echeveria-raindrops",
+        {
+            taxon: "Echeveria",
+            scope: "Genus observations; Raindrops has no wild population",
+        },
+    ],
+    [
+        "kalanchoe-bracteata",
+        {
+            taxon: "Kalanchoe bracteata",
+            scope: "Working species; the shared-planter ID remains probable",
+        },
+    ],
+    [
+        "kalanchoe-orgyalis",
+        { taxon: "Kalanchoe orgyalis", scope: "Species observations" },
+    ],
+    [
+        "pleiospilos-nelii-royal-flush",
+        {
+            taxon: "Pleiospilos nelii",
+            scope: "Underlying species; Royal Flush is horticultural",
+        },
+    ],
+    [
+        "portulacaria-afra",
+        { taxon: "Portulacaria afra", scope: "Species observations" },
+    ],
+    [
+        "sempervivum-coconut-crystal",
+        {
+            taxon: "Sempervivum",
+            scope: "Genus observations; Coconut Crystal has no wild population",
+        },
+    ],
+]);
+
 const markdownProcessor = remark().use(remarkGfm).use(remarkHtml, {
     sanitize: false,
 });
@@ -584,6 +801,13 @@ function renderProfile(profile, pageNumber, totalProfiles) {
     const archivePath = `../../assets/plants/${profile.slug}/README.md`;
     const sourceProfilePath = `../plants/${profile.group}/${profile.fileName}`;
     const trackerId = trackerIdByInventoryId.get(profile.inventoryId);
+    const inaturalist = inaturalistBySlug.get(profile.slug);
+    if (!inaturalist) {
+        throw new Error(
+            `Missing iNaturalist discovery link for ${profile.slug}.`
+        );
+    }
+    const inaturalistUrl = `https://www.inaturalist.org/observations?taxon_name=${encodeURIComponent(inaturalist.taxon)}`;
     const historyLink = trackerId
         ? `<a href="../layouts/plant-history.html?id=${encodeURIComponent(trackerId)}">Open the live care history <span aria-hidden="true">→</span></a>`
         : "";
@@ -673,6 +897,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
           <p class="kicker">Keep digging</p>
           <h2>Research trail</h2>
           ${historyLink}
+          <a class="inaturalist-link" href="${escapeHtml(inaturalistUrl)}" data-inaturalist-taxon="${escapeHtml(inaturalist.taxon)}" target="_blank" rel="noreferrer"><span>Browse iNaturalist observations<small>${escapeHtml(inaturalist.scope)}</small></span><span aria-hidden="true">↗</span></a>
           <a href="${escapeHtml(sourceProfilePath)}">Open the source profile <span aria-hidden="true">→</span></a>
           ${archiveLink}
           <p>Identification confidence belongs to the collection plant. Any photographs illustrate the working species and may show mature or wild plants.</p>
@@ -786,6 +1011,7 @@ async function renderBooklet(profiles) {
     </div>
     <div class="reader-actions">
       <a class="icon-button" href="../layouts/photo-album.html"><span aria-hidden="true">▧</span><span>Photos</span></a>
+      <button class="icon-button" type="button" data-surprise-plant aria-label="Open a random plant profile"><span aria-hidden="true">🌵</span><span>Random</span></button>
       <button class="icon-button" id="theme-toggle" type="button" aria-pressed="false"><span aria-hidden="true">◐</span><span>Theme</span></button>
       <button class="icon-button" id="print-booklet" type="button"><span aria-hidden="true">▣</span><span>Print</span></button>
     </div>
@@ -807,7 +1033,7 @@ async function renderBooklet(profiles) {
       <a class="drawer-special" href="../layouts/grow-spot-layout.html"><span>Grow-spot layout</span><small>Tables, risers, light, fan, and camera</small></a>
       <a class="drawer-special" href="../layouts/indoor-acclimation-calendar.html"><span>Acclimation calendar</span><small>Dated light and airflow schedule</small></a>
       <a class="drawer-special" href="../layouts/photo-album.html"><span>Plant photo album</span><small>Collection photos and Google Photos link</small></a>
-      <a class="drawer-special" id="surprise-plant" href="#${escapeHtml(profiles[0].slug)}"><span>Surprise me</span><small>Jump to a random plant story</small></a>
+      <a class="drawer-special" id="surprise-plant" href="#${escapeHtml(profiles[0].slug)}" data-surprise-plant><span>Surprise me</span><small>Jump to a random plant story</small></a>
       ${navigation}
     </nav>
   </dialog>
@@ -819,7 +1045,7 @@ async function renderBooklet(profiles) {
       <header class="contents-heading">
         <p>The Fenton Collection · Summer 2026</p>
         <h1>${presentCount} plants present,<br>${pendingCount} ordered, ${profiles.length} stories.</h1>
-        <span>Each profile combines collection history, botanical identity, native habitat, mature form, flowers, indoor care, propagation, risks, and source links. Licensed species-reference galleries are included where archived.</span>
+        <span>Each profile combines collection history, botanical identity, native habitat, mature form, flowers, indoor care, propagation, risks, source links, and scoped iNaturalist observation galleries. Licensed species-reference galleries are included where archived.</span>
       </header>
       <div class="contents-columns">${contents}</div>
       <aside class="contents-note">
@@ -835,6 +1061,8 @@ async function renderBooklet(profiles) {
     <button id="previous-page" type="button"><span aria-hidden="true">←</span><span><small>Previous</small><strong id="previous-label">Cover</strong></span></button>
     <button id="next-page" type="button"><span><small>Next</small><strong id="next-label">Contents</strong></span><span aria-hidden="true">→</span></button>
   </nav>
+
+  <p class="sr-only" id="page-announcer" aria-live="polite" aria-atomic="true"></p>
 
   <noscript>
     <p class="noscript-note">JavaScript is needed for page-by-page reading. Printing still includes the complete guide.</p>

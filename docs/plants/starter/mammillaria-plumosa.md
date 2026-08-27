@@ -68,6 +68,8 @@ at the hidden body can become structural.
 
 ## Sources
 
+- [Altman Plants: feather cactus seller listing](https://shopaltmanplants.com/products/mammillaria-plumosa-feather-cactus-1)
 - [Kew Plants of the World Online: _Mammillaria plumosa_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A151448-2)
+- [LLIFLE cactus encyclopedia: _Mammillaria plumosa_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/9350/Mammillaria_plumosa)
 - [Royal Horticultural Society: _Mammillaria plumosa_](https://www.rhs.org.uk/plants/10832/mammillaria-plumosa/details)
 - [International Plant Names Index record](https://www.ipni.org/n/151448-2)

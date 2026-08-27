@@ -69,5 +69,6 @@ growth, not old proportions.
 ## Sources
 
 - [Kew Plants of the World Online: _Astrophytum ornatum_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A1063691-2)
+- [LLIFLE cactus encyclopedia: _Astrophytum ornatum_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/3660/Astrophytum_ornatum)
 - [Royal Horticultural Society: _Astrophytum ornatum_](https://www.rhs.org.uk/plants/1880/astrophytum-ornatum/details)
 - [International Plant Names Index record](https://www.ipni.org/n/1063691-2)

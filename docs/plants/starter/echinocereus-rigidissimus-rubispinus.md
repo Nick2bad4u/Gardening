@@ -6,7 +6,7 @@
 - Interesting fact: Its vivid body color comes mostly from the spines; mature plants can add large magenta flowers near the crown.
 - Identification: **labeled**
 - Acquired from: Costa Farms
-- Acquired on: 2026-07-15
+- Acquired on: 2026-07-23
 - Photo archive: [licensed reference images](../../../assets/plants/echinocereus-rigidissimus-rubispinus/)
 
 ## Names and identity
@@ -68,5 +68,6 @@ back off.
 ## Sources
 
 - [Kew Plants of the World Online: _Echinocereus rigidissimus_ subsp. _rubispinus_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A923228-1)
+- [LLIFLE cactus encyclopedia: older _Echinocereus pectinatus_ var. _rigidissimus_ treatment](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/8511/Echinocereus_pectinatus_var._rigidissimus)
 - [Royal Horticultural Society: _Echinocereus rigidissimus_](https://www.rhs.org.uk/plants/115504/echinocereus-rigidissimus/details)
 - [International Plant Names Index record](https://www.ipni.org/n/923228-1)

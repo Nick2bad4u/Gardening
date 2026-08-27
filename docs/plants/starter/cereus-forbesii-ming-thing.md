@@ -82,5 +82,6 @@ ramp sensible.
 ## Sources
 
 - [Kew Plants of the World Online: _Cereus forbesii_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A130203-1)
+- [LLIFLE cactus encyclopedia: _Cereus forbesii_ species reference](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/7058/Cereus_forbesii)
 - [NC State Extension: _Cereus forbesii_ 'Ming Thing'](https://plants.ces.ncsu.edu/plants/cereus-forbesii-ming-thing/common-name/ming-thing/)
 - [International Plant Names Index record](https://www.ipni.org/n/130203-1)

@@ -19,6 +19,11 @@ const collectionManifestPath = path.join(
     "collection-photos",
     "photo-manifest.json"
 );
+const nurseryLabelsDirectory = path.join(
+    repositoryRoot,
+    "assets",
+    "nursery-labels"
+);
 const profileGroups = [
     "starter",
     "cacti",
@@ -248,6 +253,25 @@ async function main() {
         }
     }
 
+    const archivedNurseryLabels = (await readdir(nurseryLabelsDirectory))
+        .filter((fileName) => /\.(?:jpg|png)$/i.test(fileName))
+        .sort();
+    const manifestedNurseryLabels = collectionManifest.plants
+        .flatMap((record) => record.photos)
+        .filter((photo) => photo.kind === "nursery-label")
+        .map((photo) => path.basename(photo.source_file))
+        .sort();
+    assert(
+        new Set(manifestedNurseryLabels).size ===
+            manifestedNurseryLabels.length,
+        "A nursery-label source file is used more than once in the collection-photo manifest."
+    );
+    assert(
+        JSON.stringify(manifestedNurseryLabels) ===
+            JSON.stringify(archivedNurseryLabels),
+        "Every archived nursery-label image must have exactly one booklet photo-manifest entry."
+    );
+
     const pageSlugs = [...html.matchAll(/<article\b[^>]*>/g)]
         .map((match) => match[0])
         .filter((tag) => {
@@ -435,6 +459,19 @@ async function main() {
             expectedTrackedProfiles,
         `Expected ${expectedTrackedProfiles} live history links.`
     );
+    const inaturalistLinks = [
+        ...html.matchAll(
+            /class="inaturalist-link"[^>]+href="https:\/\/www\.inaturalist\.org\/observations\?taxon_name=[^"]+"[^>]+data-inaturalist-taxon="([^"]+)"/g
+        ),
+    ];
+    assert(
+        inaturalistLinks.length === profiles.length,
+        `Expected ${profiles.length} iNaturalist observation links; found ${inaturalistLinks.length}.`
+    );
+    assert(
+        inaturalistLinks.every((match) => match[1].trim()),
+        "Every iNaturalist observation link needs a non-empty discovery taxon."
+    );
     assert(
         html.includes('id="surprise-plant"'),
         "The booklet is missing the random-profile link."
@@ -457,7 +494,7 @@ async function main() {
     new Function(clientScript);
 
     console.log(
-        `Plant booklet verified: ${pageSlugs.length} profiles, ${photoRecords.length} licensed reference photos, ${expectedCollectionPhotos} collection-photo placements, ${ids.length} unique IDs.`
+        `Plant booklet verified: ${pageSlugs.length} profiles, ${photoRecords.length} licensed reference photos, ${expectedCollectionPhotos} collection-photo placements, ${archivedNurseryLabels.length} archived nursery labels, ${ids.length} unique IDs.`
     );
     console.log(coverageLines.join("\n"));
 }

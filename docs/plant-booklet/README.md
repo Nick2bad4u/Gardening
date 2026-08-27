@@ -6,7 +6,11 @@ navigation, a random-profile jump, light and dark themes, print styling, and
 one deep-linkable reading page for each of the 34 plant records. Each page has
 an at-a-glance visual description, one interesting fact, acquisition or order
 provenance where recorded, and the longer research profile. Each tracked
-profile links to the stable history page for its physical container.
+profile links to the stable history page for its physical container. Every
+profile also has a deliberately scoped iNaturalist observation search: exact
+species where the record supports it, the underlying species for horticultural
+cultivars, and a genus or clearly qualified working ID where greater precision
+would overstate the evidence.
 Twenty-seven profiles are physically present, six are marked ordered and
 pending arrival, and Rehab-04 is retained as a clearly marked historical
 record.
@@ -36,8 +40,14 @@ the collection identification.
 User collection and nursery-label photographs come from
 [`assets/collection-photos`](../../assets/collection-photos/). They remain
 separate from the licensed reference archive and are marked © Nick, all rights
-reserved. Profiles without a repository photo display an explicit pending
-panel rather than a substituted image.
+reserved. All 19 archived nursery-label faces have corresponding web-sized
+booklet images. Profiles without a repository photo display an explicit
+pending panel rather than a substituted image.
+
+The small cactus cursor is limited to devices with a fine pointing device;
+touch screens retain their normal behavior. Page, photograph, and detail-card
+motion is decorative, short, and disabled by the operating system's reduced
+motion preference.
 
 ## Add one of your own Google Photos pictures
 

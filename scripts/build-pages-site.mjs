@@ -150,6 +150,10 @@ async function main() {
             path.join(bookletDirectory, "favicon.svg"),
             path.join(outputDirectory, "favicon.svg")
         ),
+        copyFile(
+            path.join(bookletDirectory, "cactus-cursor.svg"),
+            path.join(outputDirectory, "cactus-cursor.svg")
+        ),
         writeFile(
             path.join(outputDirectory, "index.html"),
             publishedHtml,

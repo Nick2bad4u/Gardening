@@ -6,7 +6,7 @@
 - Interesting fact: The accordion-like ribs can expand after watering without the whole stem needing to stretch.
 - Identification: **labeled**
 - Acquired from: Costa Farms
-- Acquired on: 2026-07-15
+- Acquired on: 2026-07-23
 - Photo archive: [licensed reference images](../../../assets/plants/stenocactus-phyllacanthus/)
 
 ## Names and identity
@@ -71,5 +71,5 @@ trying to “fill out” every fold with water.
 ## Sources
 
 - [Kew Plants of the World Online: _Stenocactus phyllacanthus_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A244573-2/general-information)
-- [Llifle cactus encyclopedia: _Stenocactus phyllacanthus_](https://llifle.net/Encyclopedia/CACTI/Family/Cactaceae/906/Stenocactus_phyllacanthus)
+- [LLIFLE cactus encyclopedia: _Stenocactus phyllacanthus_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/906/Stenocactus_phyllacanthus)
 - [Taxon: nomenclature of _Stenocactus_ and _Echinofossulocactus_](https://www.iapt-taxon.org/historic/Congress/IBC_1993/Echino.pdf)

@@ -20,7 +20,10 @@
     const searchStatus = document.querySelector("#search-status");
     const themeToggle = document.querySelector("#theme-toggle");
     const printButton = document.querySelector("#print-booklet");
-    const surprisePlant = document.querySelector("#surprise-plant");
+    const surprisePlants = [
+        ...document.querySelectorAll("[data-surprise-plant]"),
+    ];
+    const pageAnnouncer = document.querySelector("#page-announcer");
     let currentIndex = 0;
 
     function pageName(page) {
@@ -28,7 +31,12 @@
     }
 
     function currentHashId() {
-        const rawHash = decodeURIComponent(location.hash.slice(1));
+        let rawHash = "";
+        try {
+            rawHash = decodeURIComponent(location.hash.slice(1));
+        } catch {
+            return "cover";
+        }
         return pageIds.includes(rawHash) ? rawHash : "cover";
     }
 
@@ -50,6 +58,16 @@
         nextButton.disabled = !next;
         previousLabel.textContent = previous ? pageName(previous) : "Beginning";
         nextLabel.textContent = next ? pageName(next) : "End of guide";
+        previousButton.setAttribute(
+            "aria-label",
+            previous
+                ? `Previous page: ${pageName(previous)}`
+                : "At the beginning"
+        );
+        nextButton.setAttribute(
+            "aria-label",
+            next ? `Next page: ${pageName(next)}` : "At the end"
+        );
         readerTitle.textContent = pageName(page);
 
         if (profileIndex >= 0) {
@@ -102,7 +120,10 @@
                 ? `${baseTitle} · Plant field guide`
                 : `${pageName(current)} · ${baseTitle}`;
 
-        if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+        if (scroll) {
+            window.scrollTo({ top: 0, behavior: "auto" });
+            pageAnnouncer.textContent = `${pageName(current)}. ${readerCount.textContent}.`;
+        }
     }
 
     function goToIndex(index) {
@@ -158,7 +179,7 @@
     nextButton.addEventListener("click", () => goToIndex(currentIndex + 1));
     printButton.addEventListener("click", () => window.print());
 
-    surprisePlant.addEventListener("click", (event) => {
+    function openSurprisePlant(event) {
         event.preventDefault();
         const choices = profilePages.filter(
             (page) => page.dataset.page !== pages[currentIndex]?.dataset.page
@@ -166,7 +187,11 @@
         const randomPage = choices[Math.floor(Math.random() * choices.length)];
         if (contentsDialog.open) contentsDialog.close();
         if (randomPage) location.hash = randomPage.dataset.page;
-    });
+    }
+
+    for (const trigger of surprisePlants) {
+        trigger.addEventListener("click", openSurprisePlant);
+    }
 
     themeToggle.addEventListener("click", () => {
         const dark = document.documentElement.dataset.theme === "dark";
@@ -198,10 +223,17 @@
         } else if (event.key === "/") {
             event.preventDefault();
             openContents.click();
+        } else if (event.key === "Home") {
+            event.preventDefault();
+            goToIndex(0);
+        } else if (event.key === "End") {
+            event.preventDefault();
+            goToIndex(pages.length - 1);
         }
     });
 
     updateThemeButton();
     filterNavigation();
     showPage(currentHashId(), { scroll: false });
+    document.body.dataset.readerReady = "true";
 })();

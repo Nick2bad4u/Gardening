@@ -78,6 +78,7 @@ colored even though it is not symmetrical.
 ## Sources
 
 - [Kew Plants of the World Online: _Myrtillocactus geometrizans_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A135710-1)
+- [LLIFLE cactus encyclopedia: crested _Myrtillocactus geometrizans_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/14990/Myrtillocactus_geometrizans_f._cristatus)
 - [Lowe's: Altman Reserve Myrtillocactus Indigo Wave](https://www.lowes.com/pd/Altman-Plants-WEB-ALT-RSV-2-5in-MYRTILLOCACTUS-GEOMETRIZANS-INDIGO-WAVE/5019184203)
 - [University of Arizona Arboretum: _Myrtillocactus geometrizans_](https://apps.cals.arizona.edu/arboretum/taxon.aspx?id=991)
 - [Royal Botanic Garden Edinburgh: garambullo fruit](https://stories.rbge.org.uk/archives/9827)

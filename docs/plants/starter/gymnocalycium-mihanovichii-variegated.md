@@ -73,7 +73,9 @@ is sun stress; a spreading translucent or soft patch is a water/rot concern.
 
 ## Sources
 
+- [Costa Farms: small variegated moon cactus seller listing](https://costafarms.com/products/small-variegated-moon-cactus-parent?variant=52467696992624)
 - [Kew Plants of the World Online: _Gymnocalycium mihanovichii_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A115434-2)
+- [LLIFLE cactus encyclopedia: _Gymnocalycium mihanovichii_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/11929/Gymnocalycium_mihanovichii)
 - [NC State Extension: moon cactus](https://plants.ces.ncsu.edu/plants/gymnocalycium-mihanovichii/common-name/moon-cactus/)
 - [University of Arkansas Extension: history of grafted moon cacti](https://www.uaex.uada.edu/yard-garden/resource-library/plant-week/Grafted-Cactus-Neon-Cacti-Moon-Cactus-Hibotan-Cactus-11-27-2015.aspx)
 - [CITES proposal with taxonomic and trade background](https://cites.org/sites/default/files/eng/cop/10/prop/E-CoP10-P-68.pdf)

@@ -71,4 +71,5 @@ too little light.
 ## Sources
 
 - [Kew Plants of the World Online: _Oreocereus trollii_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A175986-2)
+- [LLIFLE cactus encyclopedia: _Oreocereus trollii_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/3392/Oreocereus_trollii)
 - [NParks Flora & Fauna Web: _Oreocereus trollii_](https://www.nparks.gov.sg/florafaunaweb/flora/6/1/6142)

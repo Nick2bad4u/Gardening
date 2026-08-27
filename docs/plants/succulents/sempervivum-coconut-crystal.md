@@ -12,17 +12,24 @@
 
 ## Names and identity
 
-| Kind         | Name                                 |
-| ------------ | ------------------------------------ |
-| Genus        | _Sempervivum_                        |
-| Trade series | Colorockz®                           |
-| Cultivar     | 'Coconut Crystal'                    |
-| Common name  | Hens and chicks                      |
-| Wild range   | None; the cultivar is horticultural. |
+| Kind                | Name                                    |
+| ------------------- | --------------------------------------- |
+| Genus               | _Sempervivum_                           |
+| Trade series        | Colorockz®                              |
+| Cultivar            | 'Coconut Crystal'                       |
+| Seller attribution  | Gielis                                  |
+| Species / parentage | Not published or independently verified |
+| Common name         | Hens and chicks                         |
+| Wild range          | None; the cultivar is horticultural.    |
 
 The seller describes a lime-green rosette whose maroon center shading changes
 seasonally. Color change is expected; a mushy crown or translucent lower
 leaves are not part of the cultivar pattern.
+
+The listing supplies no species epithet or parentage. A general
+_Sempervivum heuffelii_ page is therefore not evidence that this cultivar
+belongs to that species, so the collection label stays at genus, trade series,
+and cultivar.
 
 ## Order evidence and status
 

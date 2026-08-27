@@ -88,5 +88,6 @@ _Cylindropuntia_.
 ## Sources
 
 - [Mountain Crest Gardens: seller listing for Eve's Needle](https://mountaincrestgardens.com/austrocylindropuntia-subulata-eves-needle/)
+- [LLIFLE cactus encyclopedia: _Austrocylindropuntia subulata_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/4092/Austrocylindropuntia_subulata)
 - [NC State Extension: _Austrocylindropuntia subulata_](https://plants.ces.ncsu.edu/plants/austrocylindropuntia-subulata/)
 - [GBIF Backbone Taxonomy: _Austrocylindropuntia subulata_](https://www.gbif.org/species/7282135)

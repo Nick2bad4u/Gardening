@@ -73,20 +73,22 @@ following row left-to-right.
 
 ### Starter-group acquisition log
 
-These source and date records come from the owner's paper logbook. “Altman
-Reserve” is retained as written rather than being expanded into a different
-seller or product-line name.
+The source names are transcribed from the preserved original nursery labels in
+[`assets/nursery-labels`](../assets/nursery-labels/). The acquisition dates come
+from the owner's paper logbook. “Altman Reserve” is retained because that is the
+branding printed on the labels; it refers to the Altman Plants material in this
+collection.
 
 | Label ID | Plant                   | Source         | Acquired   |
 | -------- | ----------------------- | -------------- | ---------- |
 | `A1`     | Variegated moon cactus  | Costa Farms    | 2026-07-23 |
 | `A2`     | Feather cactus          | Altman Reserve | 2026-07-15 |
 | `A3`     | Serpent cactus          | Costa Farms    | 2026-07-23 |
-| `B1`     | Grass-blade cactus      | Costa Farms    | 2026-07-15 |
+| `B1`     | Grass-blade cactus      | Costa Farms    | 2026-07-23 |
 | `B2`     | Old Man of the Andes    | Altman Reserve | 2026-07-15 |
 | `B3`     | Indigo Wave             | Altman Reserve | 2026-07-15 |
-| `C1`     | Giant chin cactus       | Costa Farms    | 2026-07-15 |
-| `C2`     | Rainbow hedgehog cactus | Costa Farms    | 2026-07-15 |
+| `C1`     | Giant chin cactus       | Costa Farms    | 2026-07-23 |
+| `C2`     | Rainbow hedgehog cactus | Costa Farms    | 2026-07-23 |
 | `C3`     | Monk's hood cactus      | Costa Farms    | 2026-07-23 |
 | `D1`     | Dragon's Egg            | Altman Reserve | 2026-07-23 |
 | `D2`     | Domino cactus           | Costa Farms    | 2026-07-23 |

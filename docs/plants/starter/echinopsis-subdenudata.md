@@ -69,4 +69,5 @@ stress. The flower tube may lean toward open space before the bloom opens.
 
 - [Kew Plants of the World Online: _Echinopsis subdenudata_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A88512-2)
 - [Kew Plants of the World Online: accepted _Echinopsis ancistrophora_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A132593-1)
+- [LLIFLE cactus encyclopedia: _Echinopsis subdenudata_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/17377/Echinopsis_subdenudata)
 - [NParks Flora & Fauna Web: _Echinopsis subdenudata_](https://www.nparks.gov.sg/florafaunaweb/flora/5/9/5908)

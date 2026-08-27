@@ -85,5 +85,6 @@ horticultural color selection rather than a separate wild population.
 ## Sources
 
 - [Mountain Crest Gardens: 'Royal Flush' split rock seller listing](https://mountaincrestgardens.com/pleiospilos-nelii-royal-flush-split-rock/)
+- [LLIFLE succulent encyclopedia: _Pleiospilos nelii_ 'Royal Flush'](https://www.llifle.com/Encyclopedia/SUCCULENTS/Family/Aizoaceae/14727/Pleiospilos_nelii_cv._Royal_Flush)
 - [GBIF Backbone Taxonomy: _Pleiospilos nelii_](https://www.gbif.org/species/3706668)
 - [Mountain Crest Gardens: general mesemb and rapidly draining mineral-soil guidance](https://mountaincrestgardens.com/mesembs-mimicry-plants/)
