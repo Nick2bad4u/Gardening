@@ -81,21 +81,41 @@ async function publishLayout(fileName) {
 }
 
 async function main() {
-    const [sourceHtml, ...layoutSources] = await Promise.all([
+    const [
+        sourceHtml,
+        loggerSource,
+        ...layoutSources
+    ] = await Promise.all([
         readFile(path.join(bookletDirectory, "index.html"), "utf8"),
+        readFile(
+            path.join(
+                repositoryRoot,
+                "scripts",
+                "google-sheets",
+                "plant-tracker.gs"
+            ),
+            "utf8"
+        ),
         ...layoutFileNames.map((fileName) =>
             readFile(path.join(layoutsDirectory, fileName), "utf8")
         ),
     ]);
-    const assetReferences = new Set(
-        [sourceHtml, ...layoutSources]
-            .flatMap((html) => [
-                ...html.matchAll(
-                    /\bsrc="\.\.\/\.\.\/(assets\/(?:plants|collection-photos)\/[^"?#]+)"/g
-                ),
-            ])
-            .map((match) => match[1])
-    );
+    const pageAssetReferences = [sourceHtml, ...layoutSources]
+        .flatMap((html) => [
+            ...html.matchAll(
+                /\bsrc="\.\.\/\.\.\/(assets\/(?:plants|collection-photos)\/[^"?#]+)"/g
+            ),
+        ])
+        .map((match) => match[1]);
+    const loggerAssetReferences = [
+        ...loggerSource.matchAll(
+            /https:\/\/nick2bad4u\.github\.io\/Gardening\/(assets\/(?:collection-photos|nursery-labels)\/[^"?#]+\.(?:jpe?g|png|webp))/gi
+        ),
+    ].map((match) => match[1]);
+    const assetReferences = new Set([
+        ...pageAssetReferences,
+        ...loggerAssetReferences,
+    ]);
 
     let publishedHtml = addCanonical(sourceHtml, pagesUrl)
         .replaceAll(/href="\.\.\/layouts\//g, 'href="./layouts/')
