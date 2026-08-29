@@ -213,14 +213,14 @@ $plantCatalog = @(
     },
     [pscustomobject]@{
         Id = 'Cactus-07'
-        LabelId = 'G1'
+        LabelId = 'H3'
         Slug = 'austrocylindropuntia-subulata'
         ScientificName = 'Austrocylindropuntia subulata'
         CommonName = 'Eve''s needle cactus'
         CommonsCategory = 'Austrocylindropuntia subulata'
         CommonsSearch = 'Austrocylindropuntia subulata Eve needle'
         INaturalistName = 'Austrocylindropuntia subulata'
-        ScopeNote = 'Species-reference photographs. The ordered plant has not yet arrived, so these images do not document its condition or form.'
+        ScopeNote = 'Species-reference photographs. The collection plant was received and owner-inspected on 2026-08-28; these licensed images do not document its arrival condition, individual form, or exact identity.'
     },
     [pscustomobject]@{
         Id = 'Cactus-08'

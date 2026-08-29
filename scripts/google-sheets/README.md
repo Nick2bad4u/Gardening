@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-The **Garden Plant Tracker** workbook uses permanent `P01`–`P22` plant IDs
+The **Garden Plant Tracker** workbook uses permanent `P01`–`P28` plant IDs
 internally and keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
@@ -20,6 +20,35 @@ overwritten. The bound Apps Script in
 [`plant-tracker.gs`](./plant-tracker.gs) supplies that write-time archive step.
 [`Index.html`](./Index.html) is the mobile entry UI, and
 [`appsscript.json`](./appsscript.json) records the project runtime settings.
+
+## Current production baseline
+
+As of August 29, 2026, the checked-in source identifies the logger as **5.14.0**
+and the production deployment points to immutable Apps Script version **38**.
+The production URL above is intentionally stable. Treat these values as
+a handoff baseline, not a substitute for checking `GARDEN_LOGGER.version`,
+`clasp versions`, `clasp deployments`, and the authenticated live page before a
+future release.
+
+- `History` and `History view` contain 40 physical columns, A:AN; AN stores
+  `Rotation (°)`.
+- `App entries` contains 32 physical columns, A:AF; AF stores `Rotation (°)`.
+- `App bulk` contains 50 physical columns, A:AX, including selected plants,
+  P01-P28 weight fields, and shared rotation, condition, soil, pest, treatment,
+  and nutrient fields.
+- Detailed entry supports 12 events: Water, Weigh, Measure, Check, Rotation,
+  Clean, Prune, Repot, Flower, Photo, Pest, and Other. Rotation defaults to 90°.
+- A Wet weight is independent from Water. Nutrient choice, product, and amount
+  are remembered across single and bulk logger entry for the current browser
+  session.
+- The compact label picker presents `A1`–`F3`, then `#1`–`#4`, `G1`–`G3`, and
+  `H1`–`H3` in natural label order without changing canonical `P01`–`P28`
+  request order. P23–P28 summaries show separate current-plant and seller-label
+  evidence cards when those publication images are available.
+- The AppSheet bridge uses exactly one five-minute
+  `processQueuedAppSheetEntries` trigger. Reinstalling it creates the replacement
+  first, then removes every previously matching trigger so a transient creation
+  failure cannot leave the bridge without a schedule.
 
 ## Local development and tests
 
@@ -41,7 +70,7 @@ npm run test:logger:coverage
 The tests cover combined event inference, formula-safe text, request-ID
 validation, single and bulk History reconciliation, lost callbacks, late stale
 callbacks, the direct-save watchdog, picker persistence, adjustable recent
-History, queue-storage failures and rollback, backup recovery, 22-entry
+History, queue-storage failures and rollback, backup recovery, 28-entry
 one-call queue sessions, success-path confirmation, bounded retry timing,
 deterministic failures, and the Google Photos handoff. The coverage report
 measures the Apps Script server file directly and is uploaded to Codecov in CI.
@@ -195,7 +224,7 @@ The `App bulk` contract is deliberately narrower and faster: one row is one
 collection-wide Water, Weigh, Water + weigh, Rotation, Check, Clean, Prune,
 Pest, or Other round. It stores `Round ID`, observation time, one action
 selector, a compact EnumList of selected plant IDs, one shared weight state,
-optional shared care details, and P01-P22 gram fields. Empty weight fields are
+optional shared care details, and P01-P28 gram fields. Empty weight fields are
 skipped. `processQueuedAppSheetEntries()` combines the selected IDs and
 nonblank weights into no more than one deterministic
 `appsheet-bulk-{Round ID}-{Plant ID}` request per plant and sends the complete
@@ -206,7 +235,11 @@ default to `Wet`, while Weigh-only rounds default to `Routine`.
 Other bulk actions use the selected IDs and their shared rotation, check, pest,
 nutrient, or note fields without fabricating per-plant values.
 
-A normal 22-plant round therefore reaches History as one canonical batch,
+In AppSheet, `Selected plants` is an EnumList of refs whose `Valid_If` is
+`SORT(Plant tracker[Plant ID])`. Keep that expression in place so shared-action
+rounds can select all current P01-P28 records after the source schema changes.
+
+A normal 28-plant round therefore reaches History as one canonical batch,
 while partial validation failures keep the round editable and retries recognize
 plant updates that were already saved. Run `installAppSheetBulkSheet()` once
 before adding or regenerating the table in AppSheet. Rerunning it migrates the
@@ -231,9 +264,11 @@ the AppSheet and mobile writers to race.
 
 Instead, deploy the bridge with the existing bound logger and run
 `installAppSheetQueueTrigger()` once from its Apps Script editor. The
-installer removes any older copies of the bridge trigger, including legacy
-one-minute schedules, then creates exactly one five-minute trigger for
-`processQueuedAppSheetEntries()`. Every five minutes, that function processes
+installer creates a new five-minute trigger first, then removes every older
+matching bridge trigger, including legacy one-minute schedules. The final state
+is exactly one trigger for `processQueuedAppSheetEntries()`; creating first
+prevents a transient trigger-creation failure from removing the working
+schedule. Every five minutes, that function processes
 up to 50 ordinary `Queued` or `Retry` observations and one or more complete
 bulk rounds totaling no more than 50 observations per canonical batch through
 `saveWebObservationBatch()`. This keeps AppSheet and the mobile logger inside
@@ -270,7 +305,7 @@ offline use.
 The app's primary views should expose the plant collection, current baselines,
 active History, new-care form, and any intake rows needing correction. Do not
 connect the generated Dashboard, Integrity, Insights layout, or individual
-`P01`–`P22` pages as editable AppSheet tables. The intentionally connected
+`P01`–`P28` pages as editable AppSheet tables. The intentionally connected
 presentation helpers are the hidden, formula-only, read-only `App insight
 activity`, `App insight calibration`, `App insight followups`, and `App plant
 charts` sheets described in the companion guide. Removing an AppSheet table
@@ -375,8 +410,11 @@ or update it in the workbook once:
    Approve access to this spreadsheet when Google asks.
 5. Return to the workbook and refresh it. A **Garden logger** menu should
    appear.
-6. Enter a short test note on one `Quick log` plant row and tick **Save**.
-   Confirm that a new row appears at the bottom of `History`.
+6. Do not create a synthetic production observation. When a real observation is
+   due, save it through `Quick log` and confirm that the expected event row or
+   rows appear at the bottom of `History`. If an end-to-end integration test is
+   needed before then, create a native Drive copy of the workbook, bind a
+   disposable script copy to it, and submit the test observation there.
 7. For the phone interface, create a versioned web-app deployment or update the
    existing deployment to the new version. Keep **Execute as** set to the
    deploying user and access limited to the account that owns the workbook.

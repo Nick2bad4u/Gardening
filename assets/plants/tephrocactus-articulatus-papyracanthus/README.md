@@ -2,7 +2,7 @@
 
 _Tephrocactus articulatus var. papyracanthus_ - Cactus-08
 
-Collection label ID: `G2`.
+Collection label ID: `G2`; permanent tracker ID: `P23`.
 
 Species-reference photographs may show other T. articulatus forms; the ordered plant is the papery-spined horticultural variety.
 

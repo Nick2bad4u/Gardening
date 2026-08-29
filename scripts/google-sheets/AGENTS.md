@@ -32,5 +32,29 @@
 
 ## Validation and deployment
 
-- Run `npm run check:logger` after changes. Updating checked-in code does
-  not update the deployed web app; deployment is a separate, explicit step.
+- Run `npm run test:logger`, `npm run test:logger:coverage`, and
+  `npm run check:logger` after behavior or schema changes. Keep the server,
+  inline client, source-contract check, AppSheet mapping, and regression tests
+  synchronized.
+- Before a live workbook write, create a native Drive backup and re-read the
+  current headers, formulas, validations, last populated rows, request IDs,
+  AppSheet staging schemas, deployment assignment, and trigger list. Do not
+  infer live state from an older chat or repository snapshot.
+- A History contract change must update the constants and row builders in
+  `plant-tracker.gs`, the logger tests/checker, the public tracker/history
+  parser and CSV export when applicable, this runbook, and the AppSheet column
+  configuration. Run `installGardenLogger()` and `installAppSheetIntake()` only
+  after the checked-in contract and tests agree.
+- `npm run apps-script:status` must show only `plant-tracker.gs`, `Index.html`,
+  and `appsscript.json` in the clasp push set. Updating checked-in code or
+  running `clasp push` does not update the versioned web app by itself.
+- For an authorized production release, create a new immutable Apps Script
+  version and update the existing production deployment ID in place; do not
+  create a replacement phone URL. Then run the installers, reinstall the queue
+  trigger, and verify `Connected · logger <version>`, successful web-app and
+  trigger executions, and exactly one `processQueuedAppSheetEntries` trigger
+  scheduled every five minutes.
+- Do not submit fake observations to production. Use a disposable workbook and
+  bound script for integration writes. Finish with pre/post canonical History
+  row counts, request-ID uniqueness, formula/error checks, and an exact-range
+  comparison for any authorized historical correction.

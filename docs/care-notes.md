@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-08-26
+Last updated: 2026-08-29
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
@@ -145,21 +145,30 @@ tower. The numbered mapping is `#1` shared rehab cactus planter, `#2`
 shared succulent planter, `#3` money tree, and `#4` Kiwi aeonium. These are
 plant or planter IDs, not provisional table-position coordinates.
 
-### Mountain Crest order — arrival overlay
+### Mountain Crest arrivals — 2026-08-28 overlay
 
-Six plants ordered on 2026-08-25 are documented but not yet physically in the
-collection. Permanent labels `G1`–`G3` and `H1`–`H3` are reserved, but do not
-assign tracker IDs, risers, or table positions from retail descriptions alone.
-All six exact seller pages inspected on 2026-08-26 list 2.0-inch pots. Record
-that as a listing snapshot, not the received setup.
-On arrival:
+The six plants ordered on 2026-08-25 were received rooted on 2026-08-28 and
+repotted from 2-inch nursery pots into 4-inch pots. Received-pot shapes are not
+reliably documented. The owner reports removing about 95% of the nursery soil
+during repotting. The owner-entered live tracker lists all six at 4 inches; current photos
+show `P23`–`P27` in square pots and `P28` in a round terracotta pot.
 
-1. Photograph the closed package, each plant from all sides, any seller label,
-   and the roots or nursery pot before watering or repotting.
-2. Keep the shipment isolated from the established collection while checking
-   for mealybugs, scale, webbing, soft bases, transit breaks, and wet packing.
-3. Record actual pot/root state, dimensions, received weight, and whether each
-   plant is rooted. Then attach the reserved labels and assign tracker IDs.
+The owner did not quarantine after hand inspection, near-complete soil removal,
+and seeing a California agriculture sticker on the box reported to say the
+shipment was inspected and certified pest free. Outdoor California production
+was also reported. Keep those reasons in the record without treating them as a
+guarantee: inspect bases, joints, leaf axils, and the new medium closely during
+the next several weeks.
+
+1. The corrected mapping is `P23`/`G2` paper spine, `P24`/`H1` Coconut Crystal,
+   `P25`/`H2` Raindrops, `P26`/`H3` Eve's needle, `P27`/`G1` Black Widow, and
+   `P28`/`G3` Royal Flush.
+2. Individual condition views are now archived for all six plants: top and
+   side views for P23, P24, and P27; an arrival crop for P25; side and overview
+   views for P26; and top, overview, and detail views for P28. Add base and
+   complete all-side diagnostic views when available.
+3. Preserve the 2026-08-29 Scale weights and Ruler dimensions as measured
+   baselines; they are not watering, pot-clearance, or placement records.
 4. Acclimate the three cacti and 'Raindrops' from the outer light zone. Keep
    'Black Widow' in the gentler variegated zone.
 5. Treat _Pleiospilos nelii_ 'Royal Flush' by its active leaf cycle rather than
@@ -169,14 +178,24 @@ On arrival:
    brightest and coolest practical position with good airflow. Do not treat its
    hardiness as evidence that it will thrive in a warm, lower-light houseplant
    slot.
-7. Do not use “2 inches larger” as an automatic up-pot rule. A 4-inch pot has
-   roughly four times the surface area of a 2-inch pot and much more unused mix.
-   Keep a sound nursery pot or choose the smallest draining shape that fits the
-   inspected roots. For 'Royal Flush', depth matters more than extra diameter.
+7. The 4-inch repot is now an observed fact, not a general up-pot rule. It has
+   roughly four times the surface area of a 2-inch pot and much more mix, so
+   verify drainage and dry-down closely. For Royal Flush, active leaf state and
+   depth still matter more than the group routine.
 
-No order-date watering event belongs in the tracker. The first event should
-describe the plant actually received, and a pot-setup baseline starts only
-after the received container or a deliberate repot is documented.
+The 2026-08-28 Check/Clean bulk round records slightly moist substrate for all
+six. This does not establish a watering or fertilizer event. Their deliberate
+2026-08-28 repots and 4-inch current pots establish pot setup 1. Exact
+maintained placement and replacement-medium composition remain unrecorded.
+
+| Tracker ID | Scale weight | Ruler height | Ruler width |
+| ---------- | ------------ | ------------ | ----------- |
+| `P23`      | 375.5 g      | 1.25 in      | 1.15 in     |
+| `P24`      | 361.5 g      | 1.0 in       | 2.55 in     |
+| `P25`      | 344 g        | 1.35 in      | 2.75 in     |
+| `P26`      | 357.5 g      | 1.8 in       | 1.6 in      |
+| `P27`      | 388 g        | 0.5 in       | 1.2 in      |
+| `P28`      | 353.5 g      | 1.3 in       | 1.7 in      |
 
 ## Water and rain
 
@@ -216,15 +235,16 @@ For the first two or three comparable watering cycles:
    automatically harmful, but watch for premature wrinkling and be prepared to
    check readiness sooner. Do not give small daily sips to slow the curve.
 
-Because the repot disturbed the roots, the 15 days since the July 31 watering
-did not by themselves make the plants due immediately. The original cautious
-window was August 21-24; completion was not recorded. The current plan is the
-morning of **August 27**. If this remains the first post-repot soak and each pot
-is dry, firm, and otherwise ready, use plain RO water without fertilizer, water
-slowly and evenly to runoff, empty every tray, and record wet weights after a
-consistent 30-60-minute drain. This first plain cycle protects the setup-2
-dry-down baseline. Begin the [MSU 13-3-15 fertilizer schedule](./equipment/msu-fertilizer-schedule.md)
-at the next ready watering, not tomorrow.
+The first post-repot soak is now recorded in canonical `History`. All 18
+setup-2 pots (`P01`–`P18`) received plain Beauchamp's RO water with
+`Nutrients used = No` at 4:22 p.m. on **August 26**. Their Wet setup-2 weights were recorded between
+12:14 and 12:20 a.m. on **August 27**, about eight hours later. Those are useful
+first-cycle observations, but they are not 30–60-minute drainage weights; keep
+the actual interval visible when comparing this cycle with later wet baselines.
+Continue daily same-time Routine weights until each curve approaches its floor.
+The [MSU 13-3-15 fertilizer schedule](./equipment/msu-fertilizer-schedule.md)
+makes the next otherwise-ready watering the first possible dilute feed, subject
+to healthy active growth and a normal setup-2 dry-down.
 
 - Judge dryness below the rocky top layer, not from the appearance of the rocks.
 - A normal watering should soak the mix rather than only wetting the surface.

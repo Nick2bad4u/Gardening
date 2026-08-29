@@ -1,13 +1,15 @@
 # Black Widow chin cactus
 
 - Inventory: Cactus-09 — _Gymnocalycium mihanovichii_ f. variegata 'Black Widow'
-- Label ID: `G3` — reserved before arrival
+- Label ID: `G1` — owner-corrected after arrival
+- Tracker ID: `P27`
 - Visual description: Dark ribbed globe variegated in near-black purple, red, and green.
 - Interesting fact: It belongs to the same species commonly sold as colorful grafted moon cacti.
-- Identification: **seller-labeled cultivar; physical plant not yet received**
+- Identification: **seller-labeled cultivar; individual top and side condition views archived, but identity is not independently proven**
 - Ordered from: Mountain Crest Gardens on 2026-08-25
-- Order status: **Order Received by seller; shipment and collection receipt pending**
-- Seller-listed size: **2.0-inch pot; actual received container pending inspection**
+- Order status: **Received 2026-08-28; owner inspected roots and plant by hand**
+- Received container: **2-inch nursery pot; shape not reliably documented**
+- Current pot: **4-inch square pot; repotted 2026-08-28**
 - Photo archive: [licensed cultivar and species references](../../../assets/plants/gymnocalycium-mihanovichii-black-widow/)
 
 ## Names and identity
@@ -21,15 +23,29 @@
 
 The dark purple-to-nearly-black color and irregular green sectors are the
 cultivar's defining visual traits. Final notes must distinguish normal
-variegation from shipping damage after the actual plant arrives.
+variegation from shipping or acclimation damage.
 
 ## Order evidence and status
 
-The 2026-08-25 order lists one 'Black Widow'. The exact product page supplied
-for the order and inspected on 2026-08-26 lists a 2.0-inch pot; an older
-bare-root URL should not be treated as this order's current packaging evidence.
-The `G3` label is reserved; received root state, actual diameter, tracker ID,
-and collection photographs remain pending inspection.
+The 2026-08-25 order lists one 'Black Widow', and the owner documented receipt
+on 2026-08-28. It arrived rooted in a 2-inch nursery pot; the received
+container's shape is not reliably documented. The owner reports removing about
+95% of the nursery soil during repotting. The owner-entered live tracker pot
+size is 4 inches, and current photographs show a square pot. The corrected pot
+label is `G1`, and the permanent tracker ID is `P27`.
+
+Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
+slightly moist substrate. The live 2026-08-29 Measurement record is **388 g**
+by Scale and **0.5 in high × 1.2 in wide** by Ruler. These are measured records,
+not watering or fertilizer events. Exact maintained placement and the
+replacement-medium composition remain unrecorded.
+
+The owner chose not to quarantine this shipment after hand inspection, owner-
+reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
+the box that said it was inspected and certified pest free. The plants were
+also described as outdoor-grown in California sun. Those are useful arrival
+observations, but the sticker is shipment evidence rather than a guarantee that
+the plant remains pest-free; continue close inspections during acclimation.
 
 ## Seller listing snapshot
 
@@ -63,13 +79,13 @@ variegated form as a separate botanical taxon.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                  |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Photograph every side and inspect the base and roots; verify whether the plant arrived bare-root or potted.                                                                  |
-| Grow-light position | Start at the same gentler edge used for the existing variegated moon cactus, not in the center hotspot.                                                                      |
-| Water               | If bare-root, pot dry and wait for roots and any handling damage to settle before the first evidence-based soak.                                                             |
-| Pot and mix         | Start with the listed 2-inch setup if healthy. A 4-inch pot is likely excessive for a small root ball unless arrival inspection shows roots already filling the nursery pot. |
-| Color               | Judge new scars, bleaching, or translucence separately from stable dark purple and green variegation.                                                                        |
+| Topic               | Practical starting approach                                                                                                                                                                                                       |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual top and side views are archived; add base and complete all-side diagnostic views when available. |
+| Grow-light position | Start at the same gentler edge used for the existing variegated moon cactus, not in the center hotspot. Exact maintained placement remains unrecorded.                                                                            |
+| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use medium dryness, plant response, and pot-weight trend as evidence.                                                                              |
+| Pot and mix         | The tracker records a 4-inch current pot, and photographs show a square shape. Received-pot shape and replacement-medium composition are unrecorded; monitor the larger mix volume closely.                                       |
+| Color               | Judge new scars, bleaching, or translucence separately from stable dark purple and green variegation.                                                                                                                             |
 
 ## Rotation, propagation, and watch points
 

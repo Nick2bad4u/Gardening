@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.12.0",
+    version: "5.14.0",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -63,6 +63,45 @@ const GARDEN_LOGGER = Object.freeze({
     photosUrl:
         "https://nick2bad4u.github.io/Gardening/layouts/photo-album.html",
     faviconUrl: "https://i.gyazo.com/0fdb0739ffe391ade24deb6df2973a21.png",
+});
+
+const WEB_PLANT_IMAGE_URLS = Object.freeze({
+    P23: Object.freeze({
+        currentImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p23-paper-spine-top.webp",
+        nurseryLabelImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p23-paper-spine-label.webp",
+    }),
+    P24: Object.freeze({
+        currentImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p24-coconut-crystal-top.webp",
+        nurseryLabelImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p24-coconut-crystal-label.webp",
+    }),
+    P25: Object.freeze({
+        currentImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-28-p25-raindrops-arrival-crop.webp",
+        nurseryLabelImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p25-raindrops-label.webp",
+    }),
+    P26: Object.freeze({
+        currentImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p26-eves-needle-side.webp",
+        nurseryLabelImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p26-eves-needle-label.webp",
+    }),
+    P27: Object.freeze({
+        currentImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p27-black-widow-top.webp",
+        nurseryLabelImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p27-black-widow-label.webp",
+    }),
+    P28: Object.freeze({
+        currentImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p28-royal-flush-overview.webp",
+        nurseryLabelImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p28-royal-flush-label.webp",
+    }),
 });
 
 const WEB_EVENT_OPTIONS = Object.freeze([
@@ -198,7 +237,7 @@ const APP_SHEET_ENTRY_HEADERS = Object.freeze([
 const APP_SHEET_QUEUE_STATUSES = Object.freeze(["Queued", "Retry"]);
 const APP_SHEET_QUEUE_LIMIT = 50;
 
-const APP_SHEET_BULK_PLANTS = Object.freeze([
+const APP_SHEET_BULK_V512_PLANTS = Object.freeze([
     "P01",
     "P02",
     "P03",
@@ -223,12 +262,22 @@ const APP_SHEET_BULK_PLANTS = Object.freeze([
     "P22",
 ]);
 
+const APP_SHEET_BULK_PLANTS = Object.freeze([
+    ...APP_SHEET_BULK_V512_PLANTS,
+    "P23",
+    "P24",
+    "P25",
+    "P26",
+    "P27",
+    "P28",
+]);
+
 const APP_SHEET_BULK_LEGACY_HEADERS = Object.freeze([
     "Round ID",
     "Started at",
     "Observed at",
     "Weight state",
-    ...APP_SHEET_BULK_PLANTS.map((plantId) => `${plantId} weight (g)`),
+    ...APP_SHEET_BULK_V512_PLANTS.map((plantId) => `${plantId} weight (g)`),
     "Notes",
     "Created by",
     "Created at",
@@ -258,7 +307,7 @@ const APP_SHEET_BULK_V511_HEADERS = Object.freeze([
     "Round action",
     "Watered plants",
     "Weight state",
-    ...APP_SHEET_BULK_PLANTS.map((plantId) => `${plantId} weight (g)`),
+    ...APP_SHEET_BULK_V512_PLANTS.map((plantId) => `${plantId} weight (g)`),
     "Notes",
     "Created by",
     "Created at",
@@ -269,7 +318,7 @@ const APP_SHEET_BULK_V511_HEADERS = Object.freeze([
     "Saved at",
 ]);
 
-const APP_SHEET_BULK_HEADERS = Object.freeze([
+const APP_SHEET_BULK_V512_HEADERS = Object.freeze([
     ...APP_SHEET_BULK_V511_HEADERS.slice(0, 4),
     "Selected plants",
     ...APP_SHEET_BULK_V511_HEADERS.slice(5),
@@ -281,6 +330,12 @@ const APP_SHEET_BULK_HEADERS = Object.freeze([
     "Nutrients used",
     "Nutrient product",
     "Nutrient amount",
+]);
+
+const APP_SHEET_BULK_HEADERS = Object.freeze([
+    ...APP_SHEET_BULK_V512_HEADERS.slice(0, 6),
+    ...APP_SHEET_BULK_PLANTS.map((plantId) => `${plantId} weight (g)`),
+    ...APP_SHEET_BULK_V512_HEADERS.slice(6 + APP_SHEET_BULK_V512_PLANTS.length),
 ]);
 
 const APP_SHEET_BULK_ACTION_INDEX = 3;
@@ -341,6 +396,12 @@ const INITIAL_POT_SIZE_BY_PLANT = Object.freeze({
     P20: "7 in diagonal",
     P21: "6 in",
     P22: "5 in",
+    P23: "4 in",
+    P24: "4 in",
+    P25: "4 in",
+    P26: "4 in",
+    P27: "4 in",
+    P28: "4 in",
 });
 
 function onOpen() {
@@ -422,11 +483,14 @@ function getWebAppBootstrap() {
             ] = row;
             const label = row[GARDEN_LOGGER.currentLabelColumn - 1];
             const fieldGuideUrl = fieldGuideUrlForRow_(trackerFormulas[index]);
+            const imageUrls = WEB_PLANT_IMAGE_URLS[cleanText_(plantId)] || {};
             return {
                 id: cleanText_(plantId),
                 name: cleanText_(commonName),
                 scientificName: cleanText_(scientificName),
                 label: cleanText_(label),
+                currentImageUrl: imageUrls.currentImageUrl || "",
+                nurseryLabelImageUrl: imageUrls.nurseryLabelImageUrl || "",
                 potSetup: positiveInteger_(
                     potSetupByPlant.get(cleanText_(plantId)) || 1,
                     "Pot setup"
@@ -926,7 +990,7 @@ function finishAppSheetQueueRun_(spreadsheet, entrySummary) {
 /**
  * Expands each queued AppSheet bulk-care row into stable per-plant requests.
  * A whole Water, Weigh, or Water + weigh round is kept together, so a normal
- * 22-plant round reaches the canonical writer in one saveWebObservationBatch()
+ * 28-plant round reaches the canonical writer in one saveWebObservationBatch()
  * call.
  */
 function processQueuedAppSheetBulkEntries_(spreadsheet) {
@@ -1422,17 +1486,20 @@ function installAppSheetBulkSheet() {
 }
 
 function migrateLegacyAppSheetBulkSheet_(sheet) {
-    let migrated = false;
-    if (sheet.getLastColumn() >= APP_SHEET_BULK_HEADERS.length) {
+    const hasHeaders = (expectedHeaders) => {
+        if (sheet.getLastColumn() < expectedHeaders.length) return false;
         const currentHeaders = sheet
-            .getRange(1, 1, 1, APP_SHEET_BULK_HEADERS.length)
+            .getRange(1, 1, 1, expectedHeaders.length)
             .getDisplayValues()[0]
             .map((value) => value.trim());
-        const isCurrent = APP_SHEET_BULK_HEADERS.every(
+        return expectedHeaders.every(
             (header, index) => currentHeaders[index] === header
         );
-        if (isCurrent) return false;
-    }
+    };
+
+    if (hasHeaders(APP_SHEET_BULK_HEADERS)) return false;
+
+    let migrated = false;
     if (sheet.getLastColumn() >= APP_SHEET_BULK_LEGACY_HEADERS.length) {
         const legacyHeaders = sheet
             .getRange(1, 1, 1, APP_SHEET_BULK_LEGACY_HEADERS.length)
@@ -1455,26 +1522,37 @@ function migrateLegacyAppSheetBulkSheet_(sheet) {
         }
     }
 
-    const currentWidth = Math.min(
-        sheet.getLastColumn(),
-        APP_SHEET_BULK_V511_HEADERS.length
-    );
-    if (currentWidth < APP_SHEET_BULK_V511_HEADERS.length) return migrated;
-    const currentHeaders = sheet
-        .getRange(1, 1, 1, APP_SHEET_BULK_V511_HEADERS.length)
-        .getDisplayValues()[0]
-        .map((value) => value.trim());
-    const compatible = APP_SHEET_BULK_V511_HEADERS.every((header, index) => {
-        if (index === APP_SHEET_BULK_SELECTED_PLANTS_INDEX) {
-            return ["Watered plants", "Selected plants"].includes(
-                currentHeaders[index]
-            );
+    const hasV511Headers = () => {
+        if (sheet.getLastColumn() < APP_SHEET_BULK_V511_HEADERS.length) {
+            return false;
         }
-        return currentHeaders[index] === header;
-    });
-    if (!compatible) return migrated;
+        const currentHeaders = sheet
+            .getRange(1, 1, 1, APP_SHEET_BULK_V511_HEADERS.length)
+            .getDisplayValues()[0]
+            .map((value) => value.trim());
+        return APP_SHEET_BULK_V511_HEADERS.every(
+            (header, index) =>
+                currentHeaders[index] === header ||
+                (index === APP_SHEET_BULK_SELECTED_PLANTS_INDEX &&
+                    currentHeaders[index] === "Selected plants")
+        );
+    };
 
-    ensureSheetColumnCapacity_(sheet, APP_SHEET_BULK_HEADERS.length);
+    if (hasV511Headers()) {
+        ensureSheetColumnCapacity_(sheet, APP_SHEET_BULK_V512_HEADERS.length);
+        sheet
+            .getRange(1, 1, 1, APP_SHEET_BULK_V512_HEADERS.length)
+            .setValues([[...APP_SHEET_BULK_V512_HEADERS]]);
+        migrated = true;
+    }
+
+    if (!hasHeaders(APP_SHEET_BULK_V512_HEADERS)) return migrated;
+
+    const insertedWeightColumns =
+        APP_SHEET_BULK_PLANTS.length - APP_SHEET_BULK_V512_PLANTS.length;
+    const oldLastWeightColumn =
+        APP_SHEET_BULK_WEIGHT_START_INDEX + APP_SHEET_BULK_V512_PLANTS.length;
+    sheet.insertColumnsAfter(oldLastWeightColumn, insertedWeightColumns);
     sheet
         .getRange(1, 1, 1, APP_SHEET_BULK_HEADERS.length)
         .setValues([[...APP_SHEET_BULK_HEADERS]]);

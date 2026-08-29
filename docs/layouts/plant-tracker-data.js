@@ -39,6 +39,12 @@ const plantSheetGids = Object.freeze({
     P20: 1902575014,
     P21: 763232184,
     P22: 294692157,
+    P23: 202608230,
+    P24: 202608240,
+    P25: 202608250,
+    P26: 202608260,
+    P27: 202608270,
+    P28: 202608280,
 });
 
 // Documented collection pot sizes. The latest Repot observation supersedes
@@ -64,6 +70,12 @@ const initialPotSizeByPlant = Object.freeze({
     P18: "4 in",
     P21: "6 in",
     P22: "5 in",
+    P23: "4 in",
+    P24: "4 in",
+    P25: "4 in",
+    P26: "4 in",
+    P27: "4 in",
+    P28: "4 in",
 });
 
 sheetUrls.plantPage = (plantId) => {

@@ -114,6 +114,10 @@ async function main() {
             (_match, relativePath) => `href="${githubBlob(relativePath)}"`
         )
         .replaceAll(
+            /href="\.\.\/\.\.\/(assets\/collection-photos\/[^"?#]+\.(?:jpe?g|png))"/gi,
+            (_match, relativePath) => `href="${githubBlob(relativePath)}"`
+        )
+        .replaceAll(
             /\b(src|href)="\.\.\/\.\.\/(assets\/collection-photos\/[^"?#]+)"/g,
             '$1="./$2"'
         )

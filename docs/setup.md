@@ -1,6 +1,6 @@
 # Setup and equipment
 
-Last updated: 2026-08-26
+Last updated: 2026-08-29
 
 ## Current routine
 
@@ -159,19 +159,25 @@ measurement. Hold those light and airflow settings steady while the first
 new-medium dry-down is measured; the next power increase is now conditional
 rather than automatic.
 
+Canonical `History` records the first setup-2 plain Beauchamp's RO cycle for
+`P01`–`P18` at 4:22 p.m. on 2026-08-26 with no nutrients. Wet setup-2 weights were recorded
+between 12:14 and 12:20 a.m. on 2026-08-27, about eight hours later. Preserve
+that actual interval instead of treating those readings as the originally
+planned 30–60-minute drainage baseline.
+
 ## Individual pots and medium
 
-| Part                           | Current product                                                                                                                  | Relevant details                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Original cactus pots           | [SQKH 4-inch pots, six-pack](https://www.amazon.com/dp/B0DNSJG1FL)                                                               | Polypropylene pots with bottom drainage holes and individual trays; still used by the A1–D3 starter group.                                                                                                                                                                                                                                                                                                                                                        |
-| August cactus pots             | Existing nursery and repotted containers                                                                                         | Most new cacti are in 4 in pots. The boobie cactus is in a small 3 in pot and the Chamaelobivia is in a small 4 in pot.                                                                                                                                                                                                                                                                                                                                           |
-| Kiwi aeonium pot               | Carlson's Greenhouse 5 in pot                                                                                                    | Current pot for Succulent-05.                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| Money-tree pot                 | [Amazon Basics 6 in pot with drainage holes and ridges](https://www.amazon.com/dp/B0F4QBMJMN?th=1)                               | Current 6 in matte-white pot for Houseplant-01 after transplanting from its Lowe's 4 in nursery pot.                                                                                                                                                                                                                                                                                                                                                              |
-| Future money-tree pot          | [Amazon Basics 8 in pot with saucer](https://www.amazon.com/dp/B0F4QB8C8M?th=1)                                                  | Stored for later; do not move up until the 6 in root ball is genuinely crowded. The polypropylene pot has drainage holes and a ridged saucer.                                                                                                                                                                                                                                                                                                                     |
-| Mountain Crest nursery pots    | Six seller-listed 2.0 in pots                                                                                                    | Product-page metadata inspected 2026-08-26; verify the actual containers and root balls on arrival. Do not automatically move a 2 in plant to a 4 in pot.                                                                                                                                                                                                                                                                                                         |
-| Current medium for `P01`–`P18` | [Molly's Succulent Mix](https://veryplants.com/products/mollys-succulent-mix-premium-gritty-soil-mix) plus horticultural perlite | Pot setup 2: 60% Molly's and 40% perlite by volume, measured as three cups to two cups. Molly's is a soilless gritty blend of akadama, pine bark, lava rock, Hyuga, pumice, and mycorrhizae, with no commercial fertilizer. Only old medium clinging to roots was retained during the August 14 repot.                                                                                                                                                            |
-| Historical medium              | [Back to the Roots Succulent & Cacti Mix, 12 qt](https://www.amazon.com/dp/B0CLZ2YL9R)                                           | Previous peat-free packaged mix containing aged bark, perlite, horticultural sand, limestone, and a small amount of organic plant food. Retained as history because it was associated with the day-14 10–20 g/day loss observation. See the [manufacturer product page](https://backtotheroots.com/products/organic-succulents-cacti-mix-specialty-blend-6-qt) and [soil FAQ](https://backtotheroots.com/pages/soilFAQ-specialty-blend-succulents-and-cacti-mix). |
-| Top dressing                   | [YISZM gritty mix, 2 lb](https://www.amazon.com/dp/B0DFBTR9J9)                                                                   | Approximately 5–8 mm mineral grit including lava rock and zeolite. It is being used as a thin decorative top layer.                                                                                                                                                                                                                                                                                                                                               |
+| Part                                 | Current product                                                                                                                  | Relevant details                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Original cactus pots                 | [SQKH 4-inch pots, six-pack](https://www.amazon.com/dp/B0DNSJG1FL)                                                               | Polypropylene pots with bottom drainage holes and individual trays; still used by the A1–D3 starter group.                                                                                                                                                                                                                                                                                                                                                        |
+| August cactus pots                   | Existing nursery and repotted containers                                                                                         | Most new cacti are in 4 in pots. The boobie cactus is in a small 3 in pot and the Chamaelobivia is in a small 4 in pot.                                                                                                                                                                                                                                                                                                                                           |
+| Kiwi aeonium pot                     | Carlson's Greenhouse 5 in pot                                                                                                    | Current pot for Succulent-05.                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Money-tree pot                       | [Amazon Basics 6 in pot with drainage holes and ridges](https://www.amazon.com/dp/B0F4QBMJMN?th=1)                               | Current 6 in matte-white pot for Houseplant-01 after transplanting from its Lowe's 4 in nursery pot.                                                                                                                                                                                                                                                                                                                                                              |
+| Future money-tree pot                | [Amazon Basics 8 in pot with saucer](https://www.amazon.com/dp/B0F4QB8C8M?th=1)                                                  | Stored for later; do not move up until the 6 in root ball is genuinely crowded. The polypropylene pot has drainage holes and a ridged saucer.                                                                                                                                                                                                                                                                                                                     |
+| Mountain Crest received/current pots | Received: six 2 in nursery pots; current: five 4 in square pots and one 4 in round terracotta pot                                | Received-pot shapes are not reliably documented. The owner reports removing about 95% of the nursery soil during the 2026-08-28 repot. Owner-entered live tracker pot size is 4 in for all six; current photos establish the square shapes for `P23`–`P27` and round terracotta for `P28`. Replacement-medium composition remains unrecorded.                                                                                                                     |
+| Current medium for `P01`–`P18`       | [Molly's Succulent Mix](https://veryplants.com/products/mollys-succulent-mix-premium-gritty-soil-mix) plus horticultural perlite | Pot setup 2: 60% Molly's and 40% perlite by volume, measured as three cups to two cups. Molly's is a soilless gritty blend of akadama, pine bark, lava rock, Hyuga, pumice, and mycorrhizae, with no commercial fertilizer. Only old medium clinging to roots was retained during the August 14 repot.                                                                                                                                                            |
+| Historical medium                    | [Back to the Roots Succulent & Cacti Mix, 12 qt](https://www.amazon.com/dp/B0CLZ2YL9R)                                           | Previous peat-free packaged mix containing aged bark, perlite, horticultural sand, limestone, and a small amount of organic plant food. Retained as history because it was associated with the day-14 10–20 g/day loss observation. See the [manufacturer product page](https://backtotheroots.com/products/organic-succulents-cacti-mix-specialty-blend-6-qt) and [soil FAQ](https://backtotheroots.com/pages/soilFAQ-specialty-blend-succulents-and-cacti-mix). |
+| Top dressing                         | [YISZM gritty mix, 2 lb](https://www.amazon.com/dp/B0DFBTR9J9)                                                                   | Approximately 5–8 mm mineral grit including lava rock and zeolite. It is being used as a thin decorative top layer.                                                                                                                                                                                                                                                                                                                                               |
 
 The starter group and six August cacti are individually potted, which makes
 watering and rearranging for light much easier. All 18 are now pot setup 2 in
@@ -196,31 +202,43 @@ The six August cacti and Kiwi aeonium came from
 money tree came from Lowe's. Its genus-level LiveTrends tag is now archived;
 the exact purchase date and Lowe's store remain unrecorded.
 
-### Mountain Crest Gardens order — pending physical setup
+### Mountain Crest Gardens arrivals — repotted 2026-08-28
 
-Three cacti and three succulents were ordered from Mountain Crest Gardens on
-2026-08-25: Eve's needle, paper spine cactus, 'Black Widow', 'Royal Flush'
-split rock, 'Raindrops' echeveria, and 'Coconut Crystal' hens and chicks. The
-seller status is “Order Received”; none is counted in the measured table layout
-or `P01`–`P22` workbook yet.
+Three cacti and three succulents ordered from Mountain Crest Gardens on
+2026-08-25 were received rooted on 2026-08-28 in 2-inch nursery pots; the
+received containers' shapes are not reliably documented. The owner reports
+removing about 95% of the nursery soil during repotting. The owner-entered live
+tracker pot size is 4 inches for all six. Current photographs show `P23`–`P27` in
+square pots and `P28` in a round terracotta pot.
 
-The exact product pages inspected on 2026-08-26 list all six plants in 2.0-inch
-pots. Treat that as seller evidence, not proof of the container or root state
-that arrives. On arrival, record the container, inspect roots and medium,
-measure tabletop-to-tip height and width, attach the reserved `G1`–`G3` or
-`H1`–`H3` label, assign the next tracker ID, and decide whether the nursery
-setup should remain as pot setup 1.
+The corrected permanent mapping is `P23`/`G2` paper spine, `P24`/`H1` Coconut
+Crystal, `P25`/`H2` Raindrops, `P26`/`H3` Eve's needle, `P27`/`G1` Black Widow,
+and `P28`/`G3` Royal Flush. The live 2026-08-29 `History` records are:
 
-Do not automatically transfer a 2-inch root ball to a 4-inch pot. Doubling the
-diameter creates about four times the surface area and substantially more mix
-volume. Keep a healthy, draining nursery setup at first or use the smallest pot
-that accommodates the roots. Prefer a deep narrow form for 'Royal Flush'. A
-well-rooted 'Raindrops' rosette, an offsetting 'Coconut Crystal', or a tall Eve's
-needle may justify a wider or heavier pot later; Black Widow and paper spine
-should not receive extra width merely because a 4-inch pot is available.
-'Coconut Crystal' will remain indoors in the brightest and coolest practical
-succulent position, while 'Royal Flush' needs its own leaf-cycle watering
-notes.
+| Tracker ID | Scale weight | Ruler height | Ruler width |
+| ---------- | ------------ | ------------ | ----------- |
+| `P23`      | 375.5 g      | 1.25 in      | 1.15 in     |
+| `P24`      | 361.5 g      | 1.0 in       | 2.55 in     |
+| `P25`      | 344 g        | 1.35 in      | 2.75 in     |
+| `P26`      | 357.5 g      | 1.8 in       | 1.6 in      |
+| `P27`      | 388 g        | 0.5 in       | 1.2 in      |
+| `P28`      | 353.5 g      | 1.3 in       | 1.7 in      |
+
+The 2026-08-28 Check/Clean bulk round records slightly moist substrate for all
+six. It does not document watering or fertilizer use. Exact maintained
+placement, plant-to-light clearance, and replacement-medium composition remain
+unrecorded.
+
+The owner chose not to quarantine after hand inspection and soil removal. The
+box carried a California agriculture inspection/certification sticker reported
+to say pest free, and the plants were described as outdoor-grown in California
+sun. Continue targeted pest checks and gradual indoor-light acclimation anyway;
+neither the sticker nor outdoor sun prevents a later issue or guarantees an
+instant transition to the AW200SE footprint. The 4-inch pots contain much more
+mix than the nursery containers, so verify drainage and use dry-down evidence
+instead of a fixed schedule. 'Coconut Crystal' remains indoors in the brightest
+and coolest practical succulent position, while Royal Flush keeps separate
+leaf-cycle watering logic.
 
 ## Shared planters
 
@@ -249,8 +267,9 @@ more precise are:
 - the plant ID used as the 18-inch tallest-tip light reference;
 - each individual pot's tabletop-to-tip height after final riser placement;
 - tabletop-to-tip heights for the six August cacti, Kiwi aeonium, and money tree;
-- received pot/root state, tracker IDs, and tabletop-to-tip
-  dimensions for the six Mountain Crest plants;
+- exact maintained placement and plant-to-light clearance for the six Mountain
+  Crest plants; their Ruler dimensions and Scale weights are recorded;
+- replacement-medium composition for the six Mountain Crest plants;
 - final original-AeroWave hub height and distance to the nearest plant;
 - exact hub height, plant clearance, vertical angle, and app program for each
   E6 Gen2 fan;

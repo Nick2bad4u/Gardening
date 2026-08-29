@@ -1,6 +1,6 @@
 # Grow-spot diagrams
 
-Last updated: 2026-08-26
+Last updated: 2026-08-28
 
 Open [plant-tracker.html](./plant-tracker.html) for the live collection
 dashboard backed by Google Sheets. The finished workbook includes Dashboard,
@@ -14,8 +14,8 @@ prior weight. The
 provides the phone-first input surface. Google Sheets remains the single
 editable source of truth.
 
-Each of the 22 physical pots or shared planters has a permanent internal ID from
-`P01` through `P22` and links to a stable
+Each of the 28 physical pots or shared planters has a permanent internal ID from
+`P01` through `P28` and links to a stable
 [history URL](./plant-history.html?id=P01) with independent last-checked dates,
 searchable and exportable history, dry/wet statistics, weight and growth
 changes, watering-interval calculations, responsive SVG trend charts, and
@@ -66,12 +66,12 @@ The page reflects the current working arrangement:
 - the purifier and dehumidifier start beyond the nominal bay on the open-room
   side, outside the fixture footprint and watering area.
 
-The six Mountain Crest plants ordered on 2026-08-25 do not appear as table
-markers yet. Their `G1`–`G3` and `H1`–`H3` labels are reserved, while shipping
-form, physical dimensions, tracker IDs, and quarantine outcome remain unknown.
-Adding them to the measured diagram before
-arrival would create false placement precision; a revised layout should follow
-the arrival measurements.
+The six Mountain Crest plants were received rooted and moved into 4-inch pots
+on 2026-08-28. They are present in the public tracker as `P23`–`P28`, but exact
+table markers remain withheld until direct height, width, and placement
+measurements are recorded. The corrected mappings are `G2`/`P23` paper spine,
+`H1`/`P24` Coconut Crystal, `H2`/`P25` Raindrops, `H3`/`P26` Eve's needle,
+`G1`/`P27` Black Widow, and `G3`/`P28` Royal Flush.
 
 The new cactus mapping is `E1` dwarf old man, `E2` Chamaelobivia, `E3` woolly
 nipple cactus, `F1` hook-spined pincushion, `F2` boobie cactus, and `F3` yellow

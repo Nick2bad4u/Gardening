@@ -41,14 +41,14 @@ const groups = [
         eyebrow: "Individual cactus additions",
         title: "New individual cacti",
         description:
-            "Six August cacti with E1-F3 labels plus three Mountain Crest plants with reserved G1-G3 labels, ordered August 25 and pending arrival.",
+            "Six August cacti with E1-F3 labels plus three rooted Mountain Crest cacti received and repotted August 28.",
     },
     {
         key: "succulents",
         eyebrow: "Shared planter and individual succulents",
         title: "Succulents",
         description:
-            "Four species in the shared planter, the Kiwi aeonium, and three Mountain Crest succulents with reserved H1-H3 labels, ordered August 25 and pending arrival.",
+            "Four species in the shared planter, the Kiwi aeonium, and three rooted Mountain Crest succulents received and repotted August 28.",
     },
     {
         key: "rehab",
@@ -106,6 +106,12 @@ const trackerIdByInventoryId = new Map([
     ["Succulent-04", "P20"],
     ["Houseplant-01", "P21"],
     ["Succulent-05", "P22"],
+    ["Cactus-08", "P23"],
+    ["Succulent-08", "P24"],
+    ["Succulent-07", "P25"],
+    ["Cactus-07", "P26"],
+    ["Cactus-09", "P27"],
+    ["Succulent-06", "P28"],
 ]);
 
 const inaturalistBySlug = new Map([
@@ -386,9 +392,9 @@ function parseProfile(markdown, group, fileName) {
     }
 
     const orderStatusMarkdown = metadata["order status"] ?? "";
-    const pendingArrival = stripMarkdown(orderStatusMarkdown)
-        .toLowerCase()
-        .includes("pending");
+    const receiptUnverified = /\b(?:pending|unverified)\b/i.test(
+        stripMarkdown(orderStatusMarkdown)
+    );
 
     return {
         fileName,
@@ -417,7 +423,7 @@ function parseProfile(markdown, group, fileName) {
             stripMarkdown(metadata.status ?? "")
                 .toLowerCase()
                 .includes("historical"),
-        pendingArrival,
+        receiptUnverified,
     };
 }
 
@@ -501,12 +507,18 @@ function collectionPhotoKind(kind) {
 
 function renderCollectionPhoto(photo) {
     const imagePath = `../../${photo.file.replaceAll("\\", "/")}`;
-    const sourcePath = `../../${photo.source_file.replaceAll("\\", "/")}`;
+    const normalizedSourcePath = photo.source_file.replaceAll("\\", "/");
+    const sourcePath = `../../${normalizedSourcePath}`;
     const evidenceDate = photo.captured_on ?? photo.provided_on;
     const evidenceVerb = photo.captured_on ? "Photographed" : "Provided";
-    const sourceLinkText = photo.derived_note
-        ? "Open the archived presentation crop"
-        : "Open the original evidence file";
+    const sourceLinkText =
+        normalizedSourcePath === photo.file.replaceAll("\\", "/")
+            ? "Open the metadata-sanitized publication file"
+            : normalizedSourcePath.endsWith(".webp")
+              ? "Open the archived evidence crop"
+              : photo.derived_note
+                ? "Open the archived presentation crop"
+                : "Open the original evidence file";
     const derivedNote = photo.derived_note
         ? `<span>${escapeHtml(photo.derived_note)}</span>`
         : "";
@@ -812,7 +824,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         ? `<a href="../layouts/plant-history.html?id=${encodeURIComponent(trackerId)}">Open the live care history <span aria-hidden="true">→</span></a>`
         : "";
     const searchText = stripMarkdown(
-        `${profile.inventoryId} ${profile.labelMarkdown} ${profile.title} ${profile.scientificMarkdown} ${profile.identificationMarkdown} ${profile.acquiredFromMarkdown} ${profile.acquiredOnMarkdown} ${profile.orderedFromMarkdown} ${profile.visualDescriptionMarkdown} ${profile.interestingFactMarkdown} ${profile.bodyMarkdown}`
+        `${profile.inventoryId} ${trackerId ?? ""} ${profile.labelMarkdown} ${profile.title} ${profile.scientificMarkdown} ${profile.identificationMarkdown} ${profile.acquiredFromMarkdown} ${profile.acquiredOnMarkdown} ${profile.orderedFromMarkdown} ${profile.visualDescriptionMarkdown} ${profile.interestingFactMarkdown} ${profile.bodyMarkdown}`
     ).toLowerCase();
 
     const acquisitionDetails = [
@@ -852,7 +864,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
           <span class="id-badge">${escapeHtml(profile.inventoryId)}</span>
           <span class="label-badge">Label ${profile.labelHtml}</span>
           ${profile.historical ? '<span class="history-badge">Historical record</span>' : ""}
-          ${profile.pendingArrival ? '<span class="order-badge">Ordered · pending arrival</span>' : ""}
+          ${profile.receiptUnverified ? '<span class="order-badge">Ordered · receipt unverified</span>' : ""}
         </div>
         <p>${profile.scientificHtml}</p>
         <h1>${escapeHtml(profile.title)}</h1>
@@ -916,7 +928,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
 
 function renderCover(profiles) {
     const presentCount = profiles.filter(
-        (profile) => !profile.historical && !profile.pendingArrival
+        (profile) => !profile.historical && !profile.receiptUnverified
     ).length;
     const coverProfiles = [
         "oreocereus-trollii",
@@ -956,11 +968,13 @@ function renderCover(profiles) {
 
 async function renderBooklet(profiles) {
     const presentCount = profiles.filter(
-        (profile) => !profile.historical && !profile.pendingArrival
+        (profile) => !profile.historical && !profile.receiptUnverified
     ).length;
-    const pendingCount = profiles.filter(
-        (profile) => profile.pendingArrival
+    const unverifiedReceiptCount = profiles.filter(
+        (profile) => profile.receiptUnverified
     ).length;
+    const orderSummary =
+        unverifiedReceiptCount > 0 ? `${unverifiedReceiptCount} ordered, ` : "";
     const pageNumberBySlug = new Map(
         profiles.map((profile, index) => [profile.slug, index + 1])
     );
@@ -1044,13 +1058,13 @@ async function renderBooklet(profiles) {
     <section class="book-page contents-page" id="contents" data-page="contents" data-title="Contents" hidden>
       <header class="contents-heading">
         <p>The Fenton Collection · Summer 2026</p>
-        <h1>${presentCount} plants present,<br>${pendingCount} ordered, ${profiles.length} stories.</h1>
+        <h1>${presentCount} plants present,<br>${orderSummary}${profiles.length} stories.</h1>
         <span>Each profile combines collection history, botanical identity, native habitat, mature form, flowers, indoor care, propagation, risks, source links, and scoped iNaturalist observation galleries. Licensed species-reference galleries are included where archived.</span>
       </header>
       <div class="contents-columns">${contents}</div>
       <aside class="contents-note">
         <strong>A note on names</strong>
-        <p>Labeled plants retain that evidence. Photo-only matches remain marked probable, ordered plants remain pending until inspected, cultivars stay provisional when records are missing, and Rehab-04 remains as a historical page instead of disappearing from the story.</p>
+        <p>Labeled plants retain that evidence. Photo-only matches remain marked probable, any future unreceived order remains pending until inspected, cultivars stay provisional when records are missing, and Rehab-04 remains as a historical page instead of disappearing from the story.</p>
       </aside>
     </section>
 

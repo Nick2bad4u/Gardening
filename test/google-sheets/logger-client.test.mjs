@@ -68,6 +68,70 @@ const bootstrap = {
     recent: [],
 };
 
+const canonicalPlantLabels = [
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "B3",
+    "C1",
+    "C2",
+    "C3",
+    "D1",
+    "D2",
+    "D3",
+    "E1",
+    "E2",
+    "E3",
+    "F1",
+    "F2",
+    "F3",
+    "#1",
+    "#2",
+    "#3",
+    "#4",
+    "G2",
+    "H1",
+    "H2",
+    "H3",
+    "G1",
+    "G3",
+];
+
+const p23ImageUrls = {
+    currentImageUrl:
+        "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p23-paper-spine-top.webp",
+    nurseryLabelImageUrl:
+        "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p23-paper-spine-label.webp",
+};
+
+function canonicalBootstrap() {
+    return {
+        ...bootstrap,
+        plants: canonicalPlantLabels.map((label, index) => {
+            const id = `P${String(index + 1).padStart(2, "0")}`;
+            return {
+                id,
+                name: `Plant ${id}`,
+                scientificName: `Scientific ${id}`,
+                label,
+                potSetup: 1,
+                currentPotSize: "4 in",
+                lastWatered: "",
+                daysSinceWater: "",
+                latestWeight: "",
+                fieldGuideUrl: `https://example.test/guide#${id}`,
+                historyUrl: `https://example.test/history?id=${id}`,
+                currentImageUrl:
+                    id === "P23" ? p23ImageUrls.currentImageUrl : "",
+                nurseryLabelImageUrl:
+                    id === "P23" ? p23ImageUrls.nurseryLabelImageUrl : "",
+            };
+        }),
+    };
+}
+
 function queuedWeight({
     requestId = "garden-queued-weight-12345",
     plantId = "P01",
@@ -142,6 +206,7 @@ function createScriptRunner(behaviors, calls) {
 }
 
 function createLoggerWindow({
+    bootstrapData = bootstrap,
     online = true,
     pendingSave,
     saveStatus = "missing",
@@ -196,7 +261,7 @@ function createLoggerWindow({
 
     const calls = [];
     const behaviors = {
-        getWebAppBootstrap: ({ success }) => success(bootstrap),
+        getWebAppBootstrap: ({ success }) => success(bootstrapData),
         getWebSaveStatus: ({ success }) =>
             success({
                 state: saveStatus,
@@ -708,6 +773,108 @@ describe("Garden logger browser recovery", () => {
         expect(window.localStorage.getItem("gardenPlantId")).toBe("P01");
     });
 
+    it("sorts only the label picker naturally and keeps selects and bulk requests in P order", () => {
+        const bootstrapData = canonicalBootstrap();
+        const canonicalIds = bootstrapData.plants.map(({ id }) => id);
+        const { behaviors, calls, window } = createLoggerWindow({
+            bootstrapData,
+        });
+
+        expect(
+            [...window.document.querySelectorAll("#plantSelect option")].map(
+                ({ value }) => value
+            )
+        ).toEqual(canonicalIds);
+
+        window.document
+            .querySelector("#labelPickerMode")
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        expect(
+            [...window.document.querySelectorAll("#labelPicker button")].map(
+                ({ dataset }) => dataset.plantId
+            )
+        ).toEqual([
+            ...canonicalIds.slice(0, 22),
+            "P27",
+            "P23",
+            "P28",
+            "P24",
+            "P25",
+            "P26",
+        ]);
+
+        window.document
+            .querySelector("#bulkModeTab")
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        expect(
+            [
+                ...window.document.querySelectorAll(
+                    "#bulkPlantList input[type='checkbox']"
+                ),
+            ].map(({ value }) => value)
+        ).toEqual(canonicalIds);
+
+        [
+            "P28",
+            "P01",
+            "P27",
+        ].forEach((plantId) => {
+            const checkbox = window.document.querySelector(
+                `#bulkPlantList input[value="${plantId}"]`
+            );
+            checkbox.checked = true;
+            checkbox.dispatchEvent(
+                new window.Event("change", { bubbles: true })
+            );
+        });
+        window.document.querySelector("#bulkNutrientsUsed").value = "No";
+        behaviors.saveBulkCareObservation = ({ success }) =>
+            success({ message: "Bulk care saved." });
+        window.document.querySelector("#bulkWaterForm").dispatchEvent(
+            new window.Event("submit", {
+                bubbles: true,
+                cancelable: true,
+            })
+        );
+
+        expect(
+            calls.find(({ method }) => method === "saveBulkCareObservation")
+                .args[0].plantIds
+        ).toEqual([
+            "P01",
+            "P27",
+            "P28",
+        ]);
+    });
+
+    it("shows honest accessible plant photos and hides absent image slots", () => {
+        const { window } = createLoggerWindow({
+            bootstrapData: canonicalBootstrap(),
+            storage: { gardenPlantId: "P23" },
+        });
+        const summary = window.document.querySelector("#plantSummary");
+        const images = [...summary.querySelectorAll(".plant-photo-card img")];
+
+        expect(images.map(({ src }) => src)).toEqual([
+            p23ImageUrls.currentImageUrl,
+            p23ImageUrls.nurseryLabelImageUrl,
+        ]);
+        expect(images.map(({ alt }) => alt)).toEqual([
+            "Current collection photograph of Plant P23 (P23).",
+            "Nursery label evidence for Plant P23 (P23).",
+        ]);
+        expect(
+            [...summary.querySelectorAll(".plant-photo-card figcaption")].map(
+                ({ textContent }) => textContent
+            )
+        ).toEqual(["Current collection photograph", "Nursery label evidence"]);
+
+        const select = window.document.querySelector("#plantSelect");
+        select.value = "P22";
+        select.dispatchEvent(new window.Event("change", { bubbles: true }));
+        expect(summary.querySelectorAll(".plant-photo-card")).toHaveLength(0);
+    });
+
     it("restores and updates the recent-history length", () => {
         const { calls, window } = createLoggerWindow({
             storage: { gardenLoggerRecentLimitV1: "50" },
@@ -1084,8 +1251,8 @@ describe("Garden logger browser recovery", () => {
         expect(window.document.querySelector("#queueCard").hidden).toBe(true);
     });
 
-    it("sends all 22 queued observations in one durable server call", () => {
-        const queued = Array.from({ length: 22 }, (_, index) =>
+    it("sends all 28 queued observations in one durable server call", () => {
+        const queued = Array.from({ length: 28 }, (_, index) =>
             queuedWeight({
                 requestId: `garden-round-${String(index + 1).padStart(2, "0")}-12345`,
                 plantId: index % 2 ? "P02" : "P01",
@@ -1107,24 +1274,24 @@ describe("Garden logger browser recovery", () => {
             .dispatchEvent(new window.Event("click", { bubbles: true }));
 
         expect(pending).toHaveLength(1);
-        expect(pending[0].args[0]).toHaveLength(22);
+        expect(pending[0].args[0]).toHaveLength(28);
         expect(
             window.document.querySelector("#queueSendButton").textContent
-        ).toBe("Sending all 22…");
+        ).toBe("Sending all 28…");
         const attemptedPrimary = JSON.parse(
             window.localStorage.getItem("gardenLoggerObservationQueueV1")
         );
         const attemptedBackup = JSON.parse(
             window.localStorage.getItem("gardenLoggerObservationQueueBackupV1")
         );
-        expect(attemptedPrimary).toHaveLength(22);
+        expect(attemptedPrimary).toHaveLength(28);
         expect(attemptedPrimary.every((entry) => entry.attemptedAt)).toBe(true);
         expect(attemptedBackup).toEqual(attemptedPrimary);
 
         const current = pending.shift();
         current.success({
             ok: true,
-            savedCount: 22,
+            savedCount: 28,
             failedCount: 0,
             results: current.args[0].map((payload) => ({
                 ok: true,
@@ -1135,7 +1302,7 @@ describe("Garden logger browser recovery", () => {
         const batchCalls = calls.filter(
             (call) => call.method === "saveWebObservationBatch"
         );
-        expect(batchCalls.map((call) => call.args[0].length)).toEqual([22]);
+        expect(batchCalls.map((call) => call.args[0].length)).toEqual([28]);
         expect(
             calls.filter((call) => call.method === "getWebBatchSaveStatus")
         ).toHaveLength(0);

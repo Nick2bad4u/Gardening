@@ -49,6 +49,14 @@
   whenever a change affects those surfaces.
 - `docs/equipment/` holds exact-model research and operating guidance.
   `docs/layouts/` holds maintained standalone HTML tools and diagrams.
+- `scripts/google-sheets/` contains the bound Apps Script logger, its
+  self-contained HTML client, tests, and the operator runbook. Follow its
+  nested `AGENTS.md` before changing the workbook schema, logger, AppSheet
+  bridge, or production deployment.
+- `docs/appsheet-companion.md` documents the live AppSheet app. `History` is
+  the canonical observation ledger; `History view` is its read-only sorted
+  projection, while `App entries` and `App bulk` are writable staging tables.
+  Do not create a second editable copy of canonical observations.
 - `assets/measurements/` and `assets/nursery-labels/` are original collection
   evidence. Do not delete, rename, re-encode, or crop those files without an
   explicit reason, and update their indexes and all references when a change is
@@ -62,11 +70,12 @@
 - Plant-profile text in `docs/plant-booklet/index.html` is generated. Edit the
   Markdown profile or photo manifest and run `npm run build:booklet`; maintain
   presentation behavior in `booklet.css` and `booklet.js` directly.
-- The booklet generator and checker currently enumerate only `starter`,
-  `succulents`, and `rehab` and contain profile-count assumptions. When adding a
-  group to the booklet, update both `scripts/build-plant-booklet.mjs` and
+- The booklet generator and checker enumerate `starter`, `cacti`, `succulents`,
+  `rehab`, and `houseplants` and currently enforce 34 profiles: 33 present and
+  one historical. When adding or
+  removing a profile or group, update both `scripts/build-plant-booklet.mjs` and
   `scripts/check-plant-booklet.mjs`, the expected counts, the collection indexes,
-  and the licensed photo archive together. If a new group is intentionally not
+  and the licensed photo archive together. If a group is intentionally not
   publication-ready, keep that limitation explicit instead of partially adding
   it to the generated booklet.
 - `scripts/fetch-plant-images.ps1` performs network downloads and regenerates the
@@ -77,6 +86,19 @@
   line endings as defined by `.gitattributes`. Do not use Prettier on
   `scripts/fetch-plant-images.ps1`; it is intentionally excluded because the
   PowerShell plugin corrupts valid multiline pipelines.
+
+## New-session startup
+
+- Read this file and the nearest nested `AGENTS.md` before acting. Inspect
+  `git status --short --branch`, the current `HEAD`, and relevant diffs so
+  pre-existing user work is distinguished from the new task.
+- For workbook, logger, or AppSheet work, read
+  `scripts/google-sheets/README.md` and the checked-in version/schema constants,
+  then verify any live state the task depends on. Treat documented production
+  details as a handoff baseline, not as a substitute for a fresh check.
+- Treat prior-chat summaries as orientation only. Establish the current commit,
+  pushed SHA, Apps Script version/deployment, workbook schema, and AppSheet
+  configuration from their authoritative surfaces before resuming a rollout.
 
 ## Working tree and change discipline
 
@@ -91,6 +113,26 @@
 - Review the final diff for internal consistency, broken relative links, stale
   generated output, unsupported claims, accidental asset changes, and unrelated
   formatting churn.
+
+## Live workbook and app discipline
+
+- Treat checked-in Apps Script, tests, and documentation as the source to
+  change first, then deliberately migrate the live workbook and AppSheet
+  configuration. Re-read the current source, live headers, formulas,
+  validations, deployment, and trigger state immediately before a write.
+- Create a native Drive backup before a structural workbook change. For a
+  historical correction, change only the explicitly authorized cells and
+  compare the affected live range with the backup afterward.
+- An AppSheet editor save changes the production app. Keep canonical and chart
+  helper tables read-only, staging tables writable, and the Apps Script bridge
+  as the only writer to `History`.
+- Do not send synthetic observations to production. Use a disposable workbook
+  and script copy for integration data, then verify production row counts,
+  request-ID uniqueness, formulas, and record values after deployment.
+- Preserve the existing production Apps Script deployment URL by creating an
+  immutable version and updating that deployment in place. Verify the live
+  logger version, successful executions, and exactly one five-minute AppSheet
+  queue trigger before calling the release complete.
 
 ## Setup and validation
 

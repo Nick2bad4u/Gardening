@@ -2,7 +2,7 @@
 
 - [VIVOSUN AeroLight Wing AW200SE and GrowHub E25](./vivosun-aw200se.md) —
   specifications, manufacturer PPFD maps, DLI/lux conversions, placement, a
-  simple starting program, and working targets for the 27 current plants plus
+  simple starting program, and working targets for the 33 current plants plus
   one historical collection record
 - [Fenton AW200SE and paired-fan operating schedule](./aw200se-operating-schedule.md) —
   the dated move indoors, three confirmed independent E25 controller paths, revised
@@ -19,8 +19,9 @@
   placement, sensor-driven use, and maintenance for the TABYIK DH-CS01 and
   Levoit Core Mini-P
 - [MSU 13-3-15 fertilizer schedule](./msu-fertilizer-schedule.md) — the
-  collection-specific RO-water dose, August 27 plain-water baseline, mixing
-  steps, alternating cactus schedule, and separate rules for the other plants
+  collection-specific RO-water dose, completed August 26 plain Beauchamp's RO
+  cycle and August 27 Wet-weight baseline, mixing steps, alternating cactus
+  schedule, and separate rules for the other plants
 
 The short description of the whole physical setup remains in
 [setup.md](../setup.md). This directory holds the deeper equipment research.

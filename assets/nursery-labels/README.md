@@ -53,8 +53,24 @@ visible genus-level tag and LiveTrends branding but do not prove a species.
 
 ## Mountain Crest Gardens order
 
-Six seller-labeled plants were ordered on 2026-08-25 but have not yet arrived.
-The private receipt PDF is not copied into this public evidence folder because
-it contains personal order information. Photograph the reusable plant tags and
-packing labels that identify the plants after arrival, then archive only the
-plant-specific evidence needed for the collection records.
+Six seller-labeled plants ordered on 2026-08-25 were received and
+owner-inspected on 2026-08-28. The private receipt PDF is not copied into this
+public evidence folder because it contains personal order information. Two
+metadata-stripped group views and six non-destructive label crops were added on
+2026-08-29. The crops preserve exactly what is visible on the physical tags,
+including truncation; they record seller labeling rather than proving a taxon
+or cultivar independently.
+
+| File                                        | Evidence role                          | Visible seller evidence                                     |
+| ------------------------------------------- | -------------------------------------- | ----------------------------------------------------------- |
+| `2026-08-29-mountain-crest-labels-01.webp`  | Metadata-stripped full view            | First full view of all six physical tags                    |
+| `2026-08-29-mountain-crest-labels-02.webp`  | Metadata-stripped full view and source | Second full view used for the individual presentation crops |
+| `2026-08-29-p23-paper-spine-label.webp`     | Crop from full label view 02           | `226 TEP articulatus var. papyracanthus P…`                 |
+| `2026-08-29-p24-coconut-crystal-label.webp` | Crop from full label view 02           | `522 SEM Colorockz Coconut …`                               |
+| `2026-08-29-p25-raindrops-label.webp`       | Crop from full label view 02           | `344B ECH Raindrops`                                        |
+| `2026-08-29-p26-eves-needle-label.webp`     | Crop from full label view 02           | `209B AUS subulata Eves Ne…`                                |
+| `2026-08-29-p27-black-widow-label.webp`     | Crop from full label view 02           | `204 GYM mihanovichii f. variegata Black …`                 |
+| `2026-08-29-p28-royal-flush-label.webp`     | Crop from full label view 02           | `448 PLE nelii Royal Flush Split Rock`                      |
+
+The private camera originals were renamed descriptively and retained locally;
+only the metadata-stripped WebP evidence files above are published.

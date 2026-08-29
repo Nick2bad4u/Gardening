@@ -2,9 +2,11 @@
 
 _Austrocylindropuntia subulata_ - Cactus-07
 
-Collection label ID: `G1`.
+Collection label ID: `H3`. Tracker ID: `P26`.
 
-Species-reference photographs. The ordered plant has not yet arrived, so these images do not document its condition or form.
+Species-reference photographs. The collection plant was received and
+owner-inspected on 2026-08-28; these licensed images do not document its arrival
+condition, individual form, or exact identity.
 
 Collection research: [open the plant profile](../../../docs/plants/cacti/austrocylindropuntia-subulata.md).
 

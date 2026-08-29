@@ -1,13 +1,15 @@
 # Royal Flush split rock
 
 - Inventory: Succulent-06 — _Pleiospilos nelii_ 'Royal Flush'
-- Label ID: `H1` — reserved before arrival
+- Label ID: `G3` — owner-corrected after arrival
+- Tracker ID: `P28`
 - Visual description: Pair of thick purple speckled leaves divided by a deep central fissure.
 - Interesting fact: A daisy-like flower can emerge from the fissure while a new leaf pair replaces the old one from inside.
-- Identification: **seller-labeled cultivar; physical plant not yet received**
+- Identification: **seller-labeled cultivar; individual top, overview, and detail condition views archived, but identity is not independently proven**
 - Ordered from: Mountain Crest Gardens on 2026-08-25
-- Order status: **Order Received by seller; shipment and collection receipt pending**
-- Seller-listed size: **2.0-inch pot; actual received container pending inspection**
+- Order status: **Received 2026-08-28; owner inspected roots and plant by hand**
+- Received container: **2-inch nursery pot; shape not reliably documented**
+- Current pot: **4-inch round terracotta pot; repotted 2026-08-28**
 - Photo archive: [licensed species-reference images](../../../assets/plants/pleiospilos-nelii-royal-flush/)
 
 ## Names and identity
@@ -25,11 +27,25 @@ central split and uses water stored in the older pair.
 
 ## Order evidence and status
 
-The 2026-08-25 order lists one _P. nelii_ 'Royal Flush'. The seller's “Order
-Received” state does not mean it has arrived at the collection. The product
-page inspected on 2026-08-26 lists a 2.0-inch pot. Its `H1` label is reserved;
-actual leaf-pair count, firmness, root condition, received pot, tracker ID, and
-collection photographs remain pending.
+The 2026-08-25 order lists one _P. nelii_ 'Royal Flush', and the owner
+documented receipt on 2026-08-28. It arrived rooted in a 2-inch nursery pot;
+the received container's shape is not reliably documented. The owner reports
+removing about 95% of the nursery soil during repotting. The owner-entered live
+tracker pot size is 4 inches, and current photographs show a round terracotta
+pot. The corrected pot label is `G3`, and the permanent tracker ID is `P28`.
+
+Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
+slightly moist substrate. The live 2026-08-29 Measurement record is **353.5 g**
+by Scale and **1.3 in high × 1.7 in wide** by Ruler. These are measured records,
+not watering or fertilizer events. Exact maintained placement and the
+replacement-medium composition remain unrecorded.
+
+The owner chose not to quarantine this shipment after hand inspection, owner-
+reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
+the box that said it was inspected and certified pest free. The plants were
+also described as outdoor-grown in California sun. Those are useful arrival
+observations, but the sticker is shipment evidence rather than a guarantee that
+the plant remains pest-free; continue close inspections during acclimation.
 
 ## Seller listing snapshot
 
@@ -64,13 +80,13 @@ horticultural color selection rather than a separate wild population.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                              |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Photograph the leaf pairs and roots, then isolate it; do not water simply because the leaves look unusual after shipping.                                                                |
-| Grow-light position | Bright succulent zone after gradual acclimation; keep it out of the highest cactus hotspot during the first week.                                                                        |
-| Water               | Use the active leaf cycle, firmness, dry mineral medium, and pot weight—not the general cactus calendar—as evidence.                                                                     |
-| Leaf replacement    | Let the old pair be consumed while a new inner pair develops; wrinkling old leaves alone is not an automatic water signal.                                                               |
-| Pot and mix         | Preserve the seller-listed 2-inch setup initially if sound. A deep narrow form matters more than a 4-inch diameter; avoid surrounding a small root system with a broad unused reservoir. |
+| Topic               | Practical starting approach                                                                                                                                                                                                                    |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual top, overview, and detail views are archived; add base and complete all-side diagnostic views when available. |
+| Grow-light position | Bright succulent zone after gradual acclimation; keep it out of the highest cactus hotspot during the first week. Exact maintained placement remains unrecorded.                                                                               |
+| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use the active leaf cycle, firmness, medium dryness, and pot-weight trend as evidence.                                                                          |
+| Leaf replacement    | Let the old pair be consumed while a new inner pair develops; wrinkling old leaves alone is not an automatic water signal.                                                                                                                     |
+| Pot and mix         | The tracker records a 4-inch current pot, and photographs show a round terracotta pot. Received-pot shape and replacement-medium composition are unrecorded; depth still matters.                                                              |
 
 ## Rotation, propagation, and watch points
 

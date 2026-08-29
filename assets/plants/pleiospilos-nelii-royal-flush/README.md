@@ -2,7 +2,7 @@
 
 _Pleiospilos nelii_ - Succulent-06
 
-Collection label ID: `H1`.
+Collection label ID: `G3`; permanent tracker ID: `P28`.
 
 Species references, including cultivated observations, may show the normal green-gray form; the ordered plant is the purple Royal Flush cultivar.
 

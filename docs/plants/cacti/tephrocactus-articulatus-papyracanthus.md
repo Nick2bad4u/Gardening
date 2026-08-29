@@ -1,13 +1,15 @@
 # Paper spine cactus
 
 - Inventory: Cactus-08 — _Tephrocactus articulatus_ var. _papyracanthus_
-- Label ID: `G2` — reserved before arrival
+- Label ID: `G2` — confirmed after arrival
+- Tracker ID: `P23`
 - Visual description: Stack of rounded gray-green segments carrying broad curling paperlike spines.
 - Interesting fact: Its loose segments detach readily and can root as new plants—the “paper” structures are still true spines.
-- Identification: **seller-labeled; physical plant not yet received**
+- Identification: **seller-labeled form; individual top and side condition views archived, but identity is not independently proven**
 - Ordered from: Mountain Crest Gardens on 2026-08-25
-- Order status: **Order Received by seller; shipment and collection receipt pending**
-- Seller-listed size: **2.0-inch pot; actual received container pending inspection**
+- Order status: **Received 2026-08-28; owner inspected roots and plant by hand**
+- Received container: **2-inch nursery pot; shape not reliably documented**
+- Current pot: **4-inch square pot; repotted 2026-08-28**
 - Photo archive: [licensed species-reference images](../../../assets/plants/tephrocactus-articulatus-papyracanthus/)
 
 ## Names and identity
@@ -25,10 +27,26 @@ the profile also keeps the accepted species-level treatment visible.
 
 ## Order evidence and status
 
-Mountain Crest Gardens listed one paper spine cactus in the 2026-08-25 order.
-The product page inspected on 2026-08-26 lists a 2.0-inch pot. The `G2` label
-is reserved. Shipped-root condition, tracker ID, received dimensions, and
-collection photographs remain pending and must come from the actual plant.
+Mountain Crest Gardens listed one paper spine cactus in the 2026-08-25 order,
+and the owner documented receipt on 2026-08-28. It arrived rooted in a 2-inch
+nursery pot; the received container's shape is not reliably documented. The
+owner reports removing about 95% of the nursery soil during repotting. The
+owner-entered live tracker pot size is 4 inches, and current photographs show a
+square pot. The confirmed pot label is `G2`, and the permanent tracker ID is
+`P23`.
+
+Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
+slightly moist substrate. The live 2026-08-29 Measurement record is **375.5 g**
+by Scale and **1.25 in high × 1.15 in wide** by Ruler. These are measured
+records, not watering or fertilizer events. Exact maintained placement and the
+replacement-medium composition remain unrecorded.
+
+The owner chose not to quarantine this shipment after hand inspection, owner-
+reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
+the box that said it was inspected and certified pest free. The plants were
+also described as outdoor-grown in California sun. Those are useful arrival
+observations, but the sticker is shipment evidence rather than a guarantee that
+the plant remains pest-free; continue close inspections during acclimation.
 
 ## Seller listing snapshot
 
@@ -64,13 +82,13 @@ seller record.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                                   |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Unpack over a tray because loose segments may already have detached; inspect the base and roots before watering.                                                                              |
-| Grow-light position | Use a bright cactus zone after acclimation, but begin outside the hottest center until the shipped surface adjusts.                                                                           |
-| Water               | Water only after arrival condition, roots, medium dryness, and pot weight support it; then soak, drain, and re-dry.                                                                           |
-| Pot and mix         | Favor a stable, freely draining setup. Do not jump from the listed 2-inch pot to 4 inches solely by rule; a compact deep pot or external support may stabilize segments with less unused mix. |
-| Handling            | Support the lowest segment instead of grabbing the paper spines or upper joints.                                                                                                              |
+| Topic               | Practical starting approach                                                                                                                                                                                                       |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual top and side views are archived; add base and complete all-side diagnostic views when available. |
+| Grow-light position | Use a bright cactus zone after acclimation, but begin outside the hottest center until the shipped surface adjusts. Exact maintained placement remains unrecorded.                                                                |
+| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use medium dryness, plant response, and pot-weight trend as evidence.                                                                              |
+| Pot and mix         | The tracker records a 4-inch current pot, and photographs show a square shape. Received-pot shape and replacement-medium composition are unrecorded; keep the setup stable.                                                       |
+| Handling            | Support the lowest segment instead of grabbing the paper spines or upper joints.                                                                                                                                                  |
 
 ## Rotation, propagation, and watch points
 

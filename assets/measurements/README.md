@@ -31,14 +31,28 @@ half an inch. Recheck a specific pot after placing it on a riser.
 An identical second 16 × 13 × 18 in wooden table was added in August. It is
 not shown in this July 31 photo set. Together, the 24 in round-table diameter
 and two 16 in wooden-table depths nominally occupy about 56 in of the measured
-60 in bay before gaps and leg interference. The six August cacti, Kiwi aeonium,
-and money tree still need direct tabletop-to-tip measurements; no riser is
-assigned to them yet.
+60 in bay before gaps and leg interference. Kiwi aeonium and the money tree
+still need direct tabletop-to-tip measurements. The six Mountain Crest plants
+now have plant-height and width baselines, but those are not tabletop-to-tip or
+riser-clearance measurements; no riser is assigned to them yet.
 
 The three cacti and three succulents ordered from Mountain Crest Gardens on
-2026-08-25 are not represented in this measurement archive. Their received pot
-diameters, plant heights, widths, and quarantine position must be measured from
-the physical shipment before any layout or riser assignment is added.
+2026-08-25 were received and repotted on 2026-08-28. Scale-and-ruler baselines
+were recorded in the canonical live `History` ledger on 2026-08-29; no separate
+measurement photograph was supplied for this folder.
+
+| Tracker / label | Plant           |  Weight |  Height |   Width |
+| --------------- | --------------- | ------: | ------: | ------: |
+| P23 / G2        | Paper spine     | 375.5 g | 1.25 in | 1.15 in |
+| P24 / H1        | Coconut Crystal | 361.5 g | 1.00 in | 2.55 in |
+| P25 / H2        | Raindrops       | 344.0 g | 1.35 in | 2.75 in |
+| P26 / H3        | Eve's needle    | 357.5 g | 1.80 in | 1.60 in |
+| P27 / G1        | Black Widow     | 388.0 g | 0.50 in | 1.20 in |
+| P28 / G3        | Royal Flush     | 353.5 g | 1.30 in | 1.70 in |
+
+All six are currently in 4-inch pots. P23–P27 are in square pots and P28 is in
+a round terracotta pot. Exact tabletop placement and riser clearance remain to
+be measured separately.
 
 The photographs establish height tiers rather than 12 exact individual
 readings. The revised starting plan aims for a main starter canopy around 8–9

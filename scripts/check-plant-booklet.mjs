@@ -42,11 +42,37 @@ const allowedSubjects = new Set([
 const allowedLicense =
     /^(?:CC0|CC BY(?: SA|-SA)?|CC BY-SA \d|Public domain|No restrictions)/i;
 const allowedCollectionKinds = new Set(["collection", "nursery-label"]);
-const expectedTrackedProfiles = 27;
+const expectedTrackedProfiles = 33;
 const expectedProfileCount = 34;
-const expectedPresentProfiles = 27;
-const expectedPendingProfiles = 6;
+const expectedPresentProfiles = 33;
+const expectedUnverifiedReceiptProfiles = 0;
 const expectedHistoricalProfiles = 1;
+const expectedMountainCrestProfiles = new Map([
+    [
+        "tephrocactus-articulatus-papyracanthus",
+        { inventoryId: "Cactus-08", labelId: "G2", trackerId: "P23" },
+    ],
+    [
+        "sempervivum-coconut-crystal",
+        { inventoryId: "Succulent-08", labelId: "H1", trackerId: "P24" },
+    ],
+    [
+        "echeveria-raindrops",
+        { inventoryId: "Succulent-07", labelId: "H2", trackerId: "P25" },
+    ],
+    [
+        "austrocylindropuntia-subulata",
+        { inventoryId: "Cactus-07", labelId: "H3", trackerId: "P26" },
+    ],
+    [
+        "gymnocalycium-mihanovichii-black-widow",
+        { inventoryId: "Cactus-09", labelId: "G1", trackerId: "P27" },
+    ],
+    [
+        "pleiospilos-nelii-royal-flush",
+        { inventoryId: "Succulent-06", labelId: "G3", trackerId: "P28" },
+    ],
+]);
 
 function assert(condition, message) {
     if (!condition) throw new Error(message);
@@ -110,15 +136,27 @@ async function main() {
         profiles.length === expectedProfileCount,
         `Expected ${expectedProfileCount} Markdown profiles; found ${profiles.length}.`
     );
+    assert(
+        [...expectedMountainCrestProfiles.keys()].every((slug) =>
+            profileSlugs.includes(slug)
+        ),
+        "One or more Mountain Crest onboarding profiles are missing."
+    );
 
     const profileStates = profiles.map((profile) => {
         const inventoryId =
             profile.markdown.match(/^\- Inventory:\s*([^\s]+)\s/m)?.[1] ?? "";
+        const labelId =
+            profile.markdown.match(/^\- Label ID:\s*`([^`]+)`/m)?.[1] ?? "";
+        const trackerId =
+            profile.markdown.match(/^\- Tracker ID:\s*`([^`]+)`/m)?.[1] ?? "";
         const orderStatus =
             profile.markdown.match(/^\- Order status:\s*(.+)$/m)?.[1] ?? "";
         const status =
             profile.markdown.match(/^\- Status:\s*(.+)$/m)?.[1] ?? "";
-        const pendingArrival = /pending/i.test(orderStatus);
+        const receiptUnverified = /\b(?:pending|unverified)\b/i.test(
+            orderStatus
+        );
         const historical =
             inventoryId === "Rehab-04" || /historical/i.test(status);
         const hasAcquisitionSource =
@@ -129,17 +167,30 @@ async function main() {
             `${profile.slug} has no Acquired from or Ordered from metadata.`
         );
         assert(
-            !pendingArrival || /^\- Ordered from:\s*\S/m.test(profile.markdown),
-            `${profile.slug} is pending arrival without Ordered from metadata.`
+            !receiptUnverified ||
+                /^\- Ordered from:\s*\S/m.test(profile.markdown),
+            `${profile.slug} has unverified collection receipt without Ordered from metadata.`
         );
 
-        return { historical, pendingArrival };
+        const expectedMountainCrest = expectedMountainCrestProfiles.get(
+            profile.slug
+        );
+        if (expectedMountainCrest) {
+            assert(
+                inventoryId === expectedMountainCrest.inventoryId &&
+                    labelId === expectedMountainCrest.labelId &&
+                    trackerId === expectedMountainCrest.trackerId,
+                `${profile.slug} must map to ${expectedMountainCrest.inventoryId}/${expectedMountainCrest.labelId}/${expectedMountainCrest.trackerId}; found ${inventoryId}/${labelId}/${trackerId}.`
+            );
+        }
+
+        return { historical, receiptUnverified };
     });
     const presentProfileCount = profileStates.filter(
-        (profile) => !profile.historical && !profile.pendingArrival
+        (profile) => !profile.historical && !profile.receiptUnverified
     ).length;
-    const pendingProfileCount = profileStates.filter(
-        (profile) => profile.pendingArrival
+    const unverifiedReceiptProfileCount = profileStates.filter(
+        (profile) => profile.receiptUnverified
     ).length;
     const historicalProfileCount = profileStates.filter(
         (profile) => profile.historical
@@ -150,8 +201,8 @@ async function main() {
         `Expected ${expectedPresentProfiles} physically present profiles; found ${presentProfileCount}.`
     );
     assert(
-        pendingProfileCount === expectedPendingProfiles,
-        `Expected ${expectedPendingProfiles} pending-arrival profiles; found ${pendingProfileCount}.`
+        unverifiedReceiptProfileCount === expectedUnverifiedReceiptProfiles,
+        `Expected ${expectedUnverifiedReceiptProfiles} profiles with unverified collection receipt; found ${unverifiedReceiptProfileCount}.`
     );
     assert(
         historicalProfileCount === expectedHistoricalProfiles,
@@ -198,6 +249,11 @@ async function main() {
                     record.pending_note.trim().length > 0,
                 `${record.plant_slug} needs a photo-pending note.`
             );
+        } else {
+            assert(
+                record.pending_note === undefined,
+                `${record.plant_slug} has photos but still has a photo-pending note.`
+            );
         }
 
         for (const photo of record.photos) {
@@ -212,10 +268,10 @@ async function main() {
                 `${record.plant_slug} has an invalid web-photo path.`
             );
             assert(
-                /^assets\/(?:measurements|nursery-labels)\/[a-z0-9.-]+\.(?:jpg|png)$/.test(
+                /^assets\/(?:measurements|nursery-labels|collection-photos)\/[a-z0-9._-]+\.(?:jpg|png|webp)$/i.test(
                     photo.source_file
                 ),
-                `${record.plant_slug} has an invalid original-photo path.`
+                `${record.plant_slug} has an invalid source-photo path.`
             );
             const evidenceDates = [photo.captured_on, photo.provided_on].filter(
                 (value) => typeof value === "string" && value.length > 0
@@ -254,18 +310,53 @@ async function main() {
     }
 
     const archivedNurseryLabels = (await readdir(nurseryLabelsDirectory))
-        .filter((fileName) => /\.(?:jpg|png)$/i.test(fileName))
+        .filter((fileName) => /\.(?:jpe?g|png|webp)$/i.test(fileName))
         .sort();
-    const manifestedNurseryLabels = collectionManifest.plants
+    const nurseryLabelArchiveEvidence =
+        collectionManifest.nursery_label_archive_evidence ?? [];
+    assert(
+        Array.isArray(nurseryLabelArchiveEvidence),
+        "Collection-photo nursery-label archive evidence must be an array."
+    );
+    for (const evidence of nurseryLabelArchiveEvidence) {
+        assert(
+            typeof evidence.file === "string" &&
+                /^assets\/nursery-labels\/[^/]+\.(?:jpe?g|png|webp)$/i.test(
+                    evidence.file
+                ),
+            "Unplaced nursery-label archive evidence must name an image in assets/nursery-labels/."
+        );
+        assert(
+            /^\d{4}-\d{2}-\d{2}$/.test(evidence.captured_on ?? ""),
+            `${evidence.file} must have a captured date.`
+        );
+        assert(
+            typeof evidence.description === "string" &&
+                evidence.description.trim().length > 0,
+            `${evidence.file} must explain why it is not a booklet placement.`
+        );
+        const evidenceStats = await stat(
+            path.join(repositoryRoot, evidence.file)
+        );
+        assert(
+            evidenceStats.size > 1024,
+            `${evidence.file} is unexpectedly small.`
+        );
+    }
+    const manifestedNurseryLabelSources = collectionManifest.plants
         .flatMap((record) => record.photos)
         .filter((photo) => photo.kind === "nursery-label")
-        .map((photo) => path.basename(photo.source_file))
-        .sort();
+        .map((photo) => photo.source_file)
+        .concat(nurseryLabelArchiveEvidence.map((evidence) => evidence.file));
     assert(
-        new Set(manifestedNurseryLabels).size ===
-            manifestedNurseryLabels.length,
+        new Set(manifestedNurseryLabelSources).size ===
+            manifestedNurseryLabelSources.length,
         "A nursery-label source file is used more than once in the collection-photo manifest."
     );
+    const manifestedNurseryLabels = manifestedNurseryLabelSources
+        .filter((file) => /\.(?:jpe?g|png|webp)$/i.test(file))
+        .map((file) => path.basename(file))
+        .sort();
     assert(
         JSON.stringify(manifestedNurseryLabels) ===
             JSON.stringify(archivedNurseryLabels),

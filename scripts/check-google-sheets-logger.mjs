@@ -27,7 +27,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.12.0");
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.14.0");
 
 assert.deepEqual(
     Array.from(
@@ -94,7 +94,7 @@ assert.deepEqual(appSheetEntryHeaders, [
 const appSheetBulkHeaders = Array.from(
     vm.runInContext("APP_SHEET_BULK_HEADERS", context)
 );
-assert.equal(appSheetBulkHeaders.length, 44);
+assert.equal(appSheetBulkHeaders.length, 50);
 assert.deepEqual(appSheetBulkHeaders.slice(0, 6), [
     "Round ID",
     "Started at",
@@ -104,7 +104,22 @@ assert.deepEqual(appSheetBulkHeaders.slice(0, 6), [
     "Weight state",
 ]);
 assert.deepEqual(
-    appSheetBulkHeaders.slice(6, 28),
+    appSheetBulkHeaders.slice(6, 34),
+    Array.from(
+        { length: 28 },
+        (_, index) => `P${String(index + 1).padStart(2, "0")} weight (g)`
+    )
+);
+assert.equal(appSheetBulkHeaders[34], "Notes");
+assert.equal(appSheetBulkHeaders[37], "Status");
+assert.equal(appSheetBulkHeaders[42], "Rotation (°)");
+assert.equal(appSheetBulkHeaders[49], "Nutrient amount");
+const appSheetBulkV512Headers = Array.from(
+    vm.runInContext("APP_SHEET_BULK_V512_HEADERS", context)
+);
+assert.equal(appSheetBulkV512Headers.length, 44);
+assert.deepEqual(
+    appSheetBulkV512Headers.slice(6, 28),
     Array.from(
         { length: 22 },
         (_, index) => `P${String(index + 1).padStart(2, "0")} weight (g)`

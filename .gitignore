@@ -952,3 +952,7 @@ docs/docusaurus/static/img/coverage.svg
 # Local Google Apps Script project mapping and OAuth credentials.
 .clasp.json
 .clasprc.json
+
+# Private camera originals may retain precise EXIF/GPS metadata. Only
+# metadata-stripped publication derivatives belong in the repository.
+.private-photo-sources/

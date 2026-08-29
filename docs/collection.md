@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-08-26
+Last updated: 2026-08-29
 
 This is the current working inventory plus historical records for plants
 removed from the collection. A label is useful evidence, but not a guarantee;
@@ -22,10 +22,20 @@ table coordinates. They are shown beside the longer historical inventory IDs.
 ## Confidence guide
 
 - **Labeled** — came with a name and the plant is consistent with it.
+- **Very high** — distinctive morphology and available provenance make the
+  identification especially strong, while still leaving room for better
+  evidence.
 - **High** — the photos, growth form, and any flower evidence make the ID a
   strong match.
+- **Secure group level** — the hybrid or cultivar group is supported, but the
+  exact named cultivar is not established.
 - **Probable** — the best current photo match, but a flower or closer diagnostic
   photo could change it.
+- **Genus tag; working species ID** — the physical tag confirms the genus, while
+  the species remains a working identification that needs stronger evidence.
+- **Seller-labeled** — the seller's name is retained as provenance. Receipt and
+  owner inspection confirm the physical plant, but cultivar-level identity can
+  still benefit from individual diagnostic photographs.
 
 ## Collection setup history
 
@@ -50,6 +60,13 @@ and its weight trend remain in
 [setup history](./setup.md#august-14-substrate-airflow-and-light-reset) rather
 than being erased. Pre-repot weights stay attached to pot setup 1 and are not
 averaged into the new blend's baseline.
+
+The canonical `History` ledger now records the first setup-2 water cycle for
+all 18 pots. `P01`–`P18` received plain Beauchamp's RO water with no nutrients
+at 4:22 p.m. on 2026-08-26. Their Wet setup-2 weights were recorded between 12:14 and 12:20 a.m.
+on 2026-08-27, about eight hours after the Water rows rather than after the
+originally planned 30–60-minute drain. Keep that timing attached to this first
+cycle so it is not compared as if it used the shorter future convention.
 
 ## Starter cactus group
 
@@ -167,33 +184,47 @@ shared rehab cactus planter is `#1`, the shared succulent planter is `#2`, the
 money tree is `#3`, and the Kiwi aeonium is `#4`. The former `A4-B4` and
 `C4-D4` planter IDs remain only as historical cross-references.
 
-## Mountain Crest Gardens order — pending arrival
+## Mountain Crest Gardens arrivals — received 2026-08-28
 
 These six records come from a Mountain Crest Gardens order placed on
-2026-08-25. The seller status was **Order Received**, which records order
-acceptance rather than physical delivery. Stable inventory IDs and permanent
-`G1`–`G3` / `H1`–`H3` pot-label reservations are assigned, but `P` tracker IDs,
-pot setup, dimensions, received condition, and final placement remain pending.
-Each exact product page was inspected on 2026-08-26. All six pages list a
-2.0-inch pot, but that is seller metadata rather than a received measurement.
+2026-08-25 and received on 2026-08-28. Every plant arrived rooted in a 2-inch
+nursery pot, but the received containers' shapes are not reliably documented.
+The owner reports removing about 95% of the nursery soil during repotting. The
+owner-entered live tracker pot size is 4 inches for all six. Current
+photographs show `P23`–`P27` in square pots and `P28` in a round terracotta pot.
 
-| Inventory ID | Label ID | Seller identification                                                                                               | Common name                     | Seller SKU | Listed size | Arrival-dependent fields                                         |
-| ------------ | -------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------- | ---------- | ----------- | ---------------------------------------------------------------- |
-| Cactus-07    | `G1`     | [_Austrocylindropuntia subulata_](./plants/cacti/austrocylindropuntia-subulata.md)                                  | Eve's needle cactus             | `C2KY2600` | 2.0 in pot  | Pot/root state, dimensions, tracker ID, photo, placement         |
-| Cactus-08    | `G2`     | [_Tephrocactus articulatus_ var. _papyracanthus_](./plants/cacti/tephrocactus-articulatus-papyracanthus.md)         | Paper spine cactus              | `C2KY3308` | 2.0 in pot  | Pot/root state, segment condition, tracker ID, photo, placement  |
-| Cactus-09    | `G3`     | [_Gymnocalycium mihanovichii_ f. variegata 'Black Widow'](./plants/cacti/gymnocalycium-mihanovichii-black-widow.md) | Black Widow chin cactus         | `C2ZY7804` | 2.0 in pot  | Pot/root state, dimensions, tracker ID, photo, orientation       |
-| Succulent-06 | `H1`     | [_Pleiospilos nelii_ 'Royal Flush'](./plants/succulents/pleiospilos-nelii-royal-flush.md)                           | Royal Flush split rock          | `S2JY2848` | 2.0 in pot  | Leaf-pair/root state, pot, tracker ID, photo, placement          |
-| Succulent-07 | `H2`     | [_Echeveria_ 'Raindrops'](./plants/succulents/echeveria-raindrops.md)                                               | Raindrops echeveria             | `S2JN3225` | 2.0 in pot  | Rosette/root state, pot, tracker ID, photo, placement            |
-| Succulent-08 | `H3`     | [_Sempervivum_ Colorockz® 'Coconut Crystal'](./plants/succulents/sempervivum-coconut-crystal.md)                    | Coconut Crystal hens and chicks | `S2JN7271` | 2.0 in pot  | Offset/root state, pot, tracker ID, photo, indoor placement plan |
+The owner hand-inspected every plant and chose not to quarantine the shipment.
+The box carried a California agriculture sticker reported to say the shipment
+was inspected and certified pest free, and the plants were described as grown
+outdoors in California sun. Preserve those as arrival evidence, not as a
+guarantee against later pest signs or indoor light-acclimation stress. Continue
+close inspections while the plants settle.
 
-A 2-inch-to-4-inch change doubles the diameter and creates about four times the
-surface area, plus substantially more mix volume. It is therefore not an
-automatic one-size step. Preserve a sound nursery setup through arrival
-inspection, or choose the smallest draining pot that accommodates the actual
-root ball. Shape matters too: 'Royal Flush' favors a deep narrow container;
-'Raindrops' and an offsetting 'Coconut Crystal' may eventually justify more
-width; and tall segmented plants may need stability without a broad reservoir
-of unused medium.
+| Inventory ID | Label ID | Tracker ID | Seller identification                                                                                               | Common name                     | Seller SKU | Received container     | Current pot           |
+| ------------ | -------- | ---------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------- | ---------- | ---------------------- | --------------------- |
+| Cactus-09    | `G1`     | `P27`      | [_Gymnocalycium mihanovichii_ f. variegata 'Black Widow'](./plants/cacti/gymnocalycium-mihanovichii-black-widow.md) | Black Widow chin cactus         | `C2ZY7804` | 2 in; shape unrecorded | 4 in square           |
+| Cactus-08    | `G2`     | `P23`      | [_Tephrocactus articulatus_ var. _papyracanthus_](./plants/cacti/tephrocactus-articulatus-papyracanthus.md)         | Paper spine cactus              | `C2KY3308` | 2 in; shape unrecorded | 4 in square           |
+| Succulent-06 | `G3`     | `P28`      | [_Pleiospilos nelii_ 'Royal Flush'](./plants/succulents/pleiospilos-nelii-royal-flush.md)                           | Royal Flush split rock          | `S2JY2848` | 2 in; shape unrecorded | 4 in round terracotta |
+| Succulent-08 | `H1`     | `P24`      | [_Sempervivum_ Colorockz® 'Coconut Crystal'](./plants/succulents/sempervivum-coconut-crystal.md)                    | Coconut Crystal hens and chicks | `S2JN7271` | 2 in; shape unrecorded | 4 in square           |
+| Succulent-07 | `H2`     | `P25`      | [_Echeveria_ 'Raindrops'](./plants/succulents/echeveria-raindrops.md)                                               | Raindrops echeveria             | `S2JN3225` | 2 in; shape unrecorded | 4 in square           |
+| Cactus-07    | `H3`     | `P26`      | [_Austrocylindropuntia subulata_](./plants/cacti/austrocylindropuntia-subulata.md)                                  | Eve's needle cactus             | `C2KY2600` | 2 in; shape unrecorded | 4 in square           |
+
+The 2026-08-28 live Check/Clean bulk round records the substrate as slightly
+moist for all six. This is a condition observation, not evidence of watering or
+fertilizer use. The live 2026-08-29 `History` measurements are:
+
+| Tracker ID | Weight by Scale | Height by Ruler | Width by Ruler |
+| ---------- | --------------- | --------------- | -------------- |
+| `P23`      | 375.5 g         | 1.25 in         | 1.15 in        |
+| `P24`      | 361.5 g         | 1.0 in          | 2.55 in        |
+| `P25`      | 344 g           | 1.35 in         | 2.75 in        |
+| `P26`      | 357.5 g         | 1.8 in          | 1.6 in         |
+| `P27`      | 388 g           | 0.5 in          | 1.2 in         |
+| `P28`      | 353.5 g         | 1.3 in          | 1.7 in         |
+
+Exact maintained placement and the replacement-medium composition remain
+unrecorded. The observed 2-inch-to-4-inch change is not a general up-pot rule;
+the current pots need their own drainage and dry-down observations.
 
 The Split Rock and hardy _Sempervivum_ are not additions to the established
 18-pot cactus watering routine. Split Rock watering follows its active leaf

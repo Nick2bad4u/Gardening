@@ -2,7 +2,7 @@
 
 _Gymnocalycium mihanovichii_ - Cactus-09
 
-Collection label ID: `G3`.
+Collection label ID: `G1`; permanent tracker ID: `P27`.
 
 Variegated and normal species references, including cultivated observations; no reusable image is assumed to show the exact Black Widow cultivar.
 

@@ -2,7 +2,7 @@
 
 _Sempervivum Coconut Crystal_ - Succulent-08
 
-Collection label ID: `H3`.
+Collection label ID: `H1`; permanent tracker ID: `P24`.
 
 Genus-reference photographs; no reusable image is assumed to show the exact Colorockz Coconut Crystal cultivar.
 

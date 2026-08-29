@@ -1,13 +1,15 @@
 # Eve's needle cactus
 
 - Inventory: Cactus-07 — _Austrocylindropuntia subulata_
-- Label ID: `G1` — reserved before arrival
+- Label ID: `H3` — owner-corrected after arrival
+- Tracker ID: `P26`
 - Visual description: Upright branching green cylinders bearing awl-shaped leaves and sharp spines.
 - Interesting fact: Unlike most adult cacti, Eve's needle retains conspicuous succulent leaves along its young stems.
-- Identification: **seller-labeled; physical plant not yet received**
+- Identification: **seller-labeled; individual side and overview condition views archived, but identity is not independently proven**
 - Ordered from: Mountain Crest Gardens on 2026-08-25
-- Order status: **Order Received by seller; shipment and collection receipt pending**
-- Seller-listed size: **2.0-inch pot; actual received container pending inspection**
+- Order status: **Received 2026-08-28; owner inspected roots and plant by hand**
+- Received container: **2-inch nursery pot; shape not reliably documented**
+- Current pot: **4-inch square pot; repotted 2026-08-28**
 - Photo archive: [licensed species-reference images](../../../assets/plants/austrocylindropuntia-subulata/)
 
 ## Names and identity
@@ -18,17 +20,31 @@
 | Seller name             | _Austrocylindropuntia subulata_ — Eve's Needle |
 | Other common name       | Eve's pin cactus                               |
 
-This record preserves the seller's identification before the plant arrives.
+This record preserves the seller's identification after documented receipt.
 The long, awl-shaped leaves on young green growth are normal for the species;
 they are not a sign that the plant is becoming a leafy houseplant.
 
 ## Order evidence and status
 
-Mountain Crest Gardens listed one plant in the 2026-08-25 order. “Order
-Received” records the seller's order status, not delivery to the collection.
-The product page inspected on 2026-08-26 lists a 2.0-inch pot. The `G1` pot
-label is reserved. Tracker ID, pot setup, received dimensions, and collection
-photographs remain unassigned until the shipped plant is inspected.
+Mountain Crest Gardens listed one plant in the 2026-08-25 order, and the owner
+documented receipt on 2026-08-28. It arrived rooted in a 2-inch nursery pot;
+the received container's shape is not reliably documented. The owner reports
+removing about 95% of the nursery soil during repotting. The owner-entered live
+tracker pot size is 4 inches, and current photographs show a square pot. The
+corrected pot label is `H3`, and the permanent tracker ID is `P26`.
+
+Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
+slightly moist substrate. The live 2026-08-29 Measurement record is **357.5 g**
+by Scale and **1.8 in high × 1.6 in wide** by Ruler. These are measured records,
+not watering or fertilizer events. Exact maintained placement and the
+replacement-medium composition remain unrecorded.
+
+The owner chose not to quarantine this shipment after hand inspection, owner-
+reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
+the box that said it was inspected and certified pest free. The plants were
+also described as outdoor-grown in California sun. Those are useful arrival
+observations, but the sticker is shipment evidence rather than a guarantee that
+the plant remains pest-free; continue close inspections during acclimation.
 
 ## Seller listing snapshot
 
@@ -67,17 +83,17 @@ _Cylindropuntia_.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                   |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Isolate, photograph, and inspect the stem joints, areoles, roots, and shipping medium before changing anything.                                               |
-| Grow-light position | Begin on the outer bright-cactus zone; move inward only after fresh growth shows no bleaching or hard tan scars.                                              |
-| Water               | Do not water from the order date. After arrival, use root condition, medium dryness, and pot weight as evidence.                                              |
-| Pot and mix         | Record the 2-inch shipped setup first. A 4-inch pot is not automatic; use it only if the rooted plant and stability needs justify the much larger mix volume. |
-| Long-term size      | Keep it where future height and branching will not crowd the fixture or snag nearby plants.                                                                   |
+| Topic               | Practical starting approach                                                                                                                                                                                                            |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual side and overview views are archived; add base and complete all-side diagnostic views when available. |
+| Grow-light position | Begin on the outer bright-cactus zone; move inward only after fresh growth shows no bleaching or hard tan scars. Exact maintained placement remains unrecorded.                                                                        |
+| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use medium dryness, plant response, and pot-weight trend as evidence.                                                                                   |
+| Pot and mix         | The tracker records a 4-inch current pot, and photographs show a square shape. Received-pot shape and replacement-medium composition are unrecorded; monitor the larger mix volume closely.                                            |
+| Long-term size      | Keep it where future height and branching will not crowd the fixture or snag nearby plants.                                                                                                                                            |
 
 ## Rotation, propagation, and watch points
 
-- Start ordinary 90° weekly rotation only after the `G1` label is attached and
+- Start ordinary 90° weekly rotation only after the `H3` label is attached and
   its light orientation is recorded.
 - Detached healthy stem segments can root, but do not cut the arrival plant
   merely to make it fit the current layout.

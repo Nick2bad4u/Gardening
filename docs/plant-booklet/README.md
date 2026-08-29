@@ -11,9 +11,9 @@ profile also has a deliberately scoped iNaturalist observation search: exact
 species where the record supports it, the underlying species for horticultural
 cultivars, and a genus or clearly qualified working ID where greater precision
 would overstate the evidence.
-Twenty-seven profiles are physically present, six are marked ordered and
-pending arrival, and Rehab-04 is retained as a clearly marked historical
-record.
+Thirty-three profiles are physically documented as present, including the six
+Mountain Crest plants received on 2026-08-28. Rehab-04 is retained as a clearly
+marked historical record.
 
 The GitHub Pages build publishes the booklet at the repository's Pages URL,
 along with the plant tracker, individual history view, grow-spot layout, indoor
@@ -55,15 +55,17 @@ Google Photos share pages do not expose a durable image URL that a static site
 can safely depend on. Use the share URL in a dated Photo event or the album page,
 but export a copy when the picture should appear inside the booklet:
 
-1. In Google Photos, open the picture and choose **Download**. Keep the original
-   in your photo library.
-2. Make a web-sized JPEG or WebP derivative with a descriptive name such as
+1. In Google Photos, open the picture and choose **Download**. Keep the
+   byte-for-byte original privately in your photo library or archive.
+2. If a repository source copy is needed, remove GPS and other unnecessary
+   personal metadata before adding it. Make a web-sized JPEG or WebP derivative
+   with a descriptive name such as
    `p05-old-man-of-the-andes-2026-08-13.webp` and place it in
    [`assets/collection-photos`](../../assets/collection-photos/).
 3. Add or update the plant's record in
    [`photo-manifest.json`](../../assets/collection-photos/photo-manifest.json),
-   including the permanent plant ID, local path, caption, original evidence
-   path when one exists, and `© Nick; all rights reserved`.
+   including the permanent plant ID, local path, caption, sanitized repository
+   source path when one exists, and `© Nick; all rights reserved`.
 4. Run `npm run build:booklet` and `npm run check:booklet`, then inspect the
    plant page on desktop and at phone width.
 

@@ -14,8 +14,9 @@ npm run check:booklet
 
 `build-pages-site.mjs` creates the ignored `.pages-site/` deployment artifact.
 It publishes the reader files and images used by the booklet plus the plant
-tracker, grow-spot layout, and acclimation calendar. Source-profile,
-original-evidence, and equipment-note links point back to the GitHub repository.
+tracker, individual plant history, grow-spot layout, acclimation calendar, and
+photo-album entry page. Source-profile, source-evidence, and equipment-note
+links point back to the GitHub repository.
 
 ```powershell
 npm run build:pages

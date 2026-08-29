@@ -85,7 +85,10 @@ and defaults to 90. The degree value is archived in `History!AN:AN`, displayed
 in read-only care history, and remains available to the public plant history.
 Clean and Prune are lightweight dated actions whose specifics belong in Notes.
 Bulk care uses one `Selected plants` field for every supported shared action;
-per-plant weights remain in the dedicated P01-P22 fields.
+per-plant weights remain in the dedicated P01-P28 fields. `Selected plants` is
+an EnumList of refs with `Valid_If` set to `SORT(Plant tracker[Plant ID])`; if
+that expression is removed, the deployed picker can appear empty even while
+the source table contains plants.
 
 ## Images and visual identity
 
@@ -96,13 +99,19 @@ and
 The live app loads their public raw GitHub URLs so AppSheet can render them
 without a Drive permission prompt.
 
-The `Plant tracker` virtual `Reference image` column maps P01-P22 to public
+The `Plant tracker` virtual `Reference image` column maps P01-P28 to public
 repository images. Most are licensed species-reference images from
 [`assets/plants/`](../assets/plants/); they illustrate the working
 identification but are not evidence that a collection plant is that exact
-taxon or cultivar. P19 and P20 use the corresponding collection photos from
+taxon or cultivar. P19, P20, and P23-P28 use corresponding collection photos from
 [`assets/collection-photos/`](../assets/collection-photos/). Preserve source,
 creator, license, and attribution metadata when changing a reference image.
+
+The Plants view sorts by the hidden virtual Number column
+`Natural label order`, not by `Plant ID`. Its explicit mapping keeps labels in
+the physical sequence A1-A3 through F1-F3, then #1-#4, G1-G3, and H1-H3.
+Canonical IDs and writable picker values remain P01-P28; do not replace them
+with the display-order helper.
 
 Care history derives its round left-side `Plant image` through the `Plant ID`
 reference (`[Plant ID].[Reference image]`). Round thumbnails intentionally
@@ -133,7 +142,8 @@ navigation and actions; Unicode symbols are used in computed row text and key
 Detailed log labels where AppSheet cannot render a custom icon component. The
 current semantic set includes `💧` for water, `⚖` for weight, `📏` for
 measurement, `↕` for height, `↔` for width, `📷` for photos, `🐛` for pests,
-and `🪴` for repotting or pot details.
+`🪴` for repotting or pot details, `↻` for rotation, `🧽` for cleaning, and
+`✂` for pruning.
 
 ## Watering-age badges
 
@@ -203,8 +213,8 @@ plant in its left/top Plants pane to filter all three charts together.
 
 The corresponding read-only slices filter blank values before charting so
 missing measurements or weights do not appear as zero. The charts are the
-AppSheet equivalent of the three charts on each P01-P22 workbook page; they
-reuse canonical History fields rather than connecting 22 editable plant-page
+AppSheet equivalent of the three charts on each P01-P28 workbook page; they
+reuse canonical History fields rather than connecting 28 editable plant-page
 tables.
 
 ## Sync and recovery

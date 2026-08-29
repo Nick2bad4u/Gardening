@@ -408,6 +408,37 @@
                 font-weight: 800;
             }
 
+            .plant-photos {
+                display: grid;
+                grid-column: 1 / -1;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .plant-photo-card {
+                overflow: hidden;
+                margin: 0;
+                border: 1px solid var(--line);
+                border-radius: 12px;
+                background: var(--control);
+            }
+
+            .plant-photo-card img {
+                display: block;
+                width: 100%;
+                height: clamp(150px, 22vw, 230px);
+                background: var(--card-soft);
+                object-fit: contain;
+            }
+
+            .plant-photo-card figcaption {
+                padding: 8px 10px;
+                color: var(--muted);
+                font-size: 12px;
+                font-weight: 700;
+                line-height: 1.35;
+            }
+
             .metrics {
                 display: grid;
                 grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1096,6 +1127,9 @@
                 }
                 .label-picker {
                     grid-template-columns: repeat(4, minmax(0, 1fr));
+                }
+                .plant-photos {
+                    grid-template-columns: 1fr;
                 }
                 .picker-toolbar {
                     align-items: flex-start;
@@ -3242,32 +3276,83 @@
                 renderPlantSummary();
             }
 
+            const LABEL_GROUP_ORDER = Object.freeze([
+                "A",
+                "B",
+                "C",
+                "D",
+                "E",
+                "F",
+                "#",
+                "G",
+                "H",
+            ]);
+
+            function plantLabelSortParts(plant) {
+                const label = String(plant.label || "")
+                    .trim()
+                    .toUpperCase();
+                const match =
+                    /^([A-H])([1-9]\d*)$/.exec(label) ||
+                    /^(#)([1-9]\d*)$/.exec(label);
+                const group = match ? match[1] : "";
+                const groupIndex = LABEL_GROUP_ORDER.indexOf(group);
+                return {
+                    groupIndex:
+                        groupIndex === -1
+                            ? LABEL_GROUP_ORDER.length
+                            : groupIndex,
+                    number: match ? Number(match[2]) : Number.MAX_SAFE_INTEGER,
+                    label,
+                    id: plant.id,
+                };
+            }
+
+            function comparePlantsByNaturalLabel(leftPlant, rightPlant) {
+                const left = plantLabelSortParts(leftPlant);
+                const right = plantLabelSortParts(rightPlant);
+                return (
+                    left.groupIndex - right.groupIndex ||
+                    left.number - right.number ||
+                    left.label.localeCompare(right.label, undefined, {
+                        numeric: true,
+                        sensitivity: "base",
+                    }) ||
+                    left.id.localeCompare(right.id, undefined, {
+                        numeric: true,
+                        sensitivity: "base",
+                    })
+                );
+            }
+
             function renderLabelPicker() {
                 const picker = $("labelPicker");
                 const currentId = $("plantSelect").value;
                 const weighedPlantIds = queuedWeighedPlantIds();
                 picker.replaceChildren();
-                state.bootstrap.plants.forEach((plant) => {
-                    const button = document.createElement("button");
-                    button.type = "button";
-                    button.className = "label-choice";
-                    button.dataset.plantId = plant.id;
-                    button.textContent = plant.label || plant.id;
-                    const weighed = weighedPlantIds.has(plant.id);
-                    button.classList.toggle("queued-weighed", weighed);
-                    button.dataset.queuedWeighed = String(weighed);
-                    const status = weighed ? ", weight safely queued" : "";
-                    button.title = `${plant.name} · ${plant.id}${status}`;
-                    button.setAttribute(
-                        "aria-label",
-                        `${plant.label ? `Label ${plant.label}, ` : ""}${plant.name}, ${plant.id}${status}`
-                    );
-                    button.setAttribute(
-                        "aria-pressed",
-                        String(plant.id === currentId)
-                    );
-                    picker.append(button);
-                });
+                [...state.bootstrap.plants]
+                    .sort(comparePlantsByNaturalLabel)
+                    .forEach((plant) => {
+                        const button = document.createElement("button");
+                        button.type = "button";
+                        button.className = "label-choice";
+                        button.dataset.plantId = plant.id;
+                        button.textContent = plant.label || plant.id;
+                        const weighed = weighedPlantIds.has(plant.id);
+                        button.classList.toggle("queued-weighed", weighed);
+                        button.dataset.queuedWeighed = String(weighed);
+                        const status = weighed ? ", weight safely queued" : "";
+                        button.title = `${plant.name} · ${plant.id}${status}`;
+                        button.setAttribute(
+                            "aria-label",
+                            `${plant.label ? `Label ${plant.label}, ` : ""}${plant.name}, ${plant.id}${status}`
+                        );
+                        button.setAttribute(
+                            "aria-pressed",
+                            String(plant.id === currentId)
+                        );
+                        picker.append(button);
+                    });
             }
 
             function setPlantPickerMode(mode, persist = true) {
@@ -3388,6 +3473,37 @@
                 left.append(metrics);
                 left.append(plantLinks);
                 summary.append(left, badge);
+
+                const photoData = [
+                    {
+                        url: plant.currentImageUrl,
+                        caption: "Current collection photograph",
+                        alt: `Current collection photograph of ${plant.name} (${plant.id}).`,
+                    },
+                    {
+                        url: plant.nurseryLabelImageUrl,
+                        caption: "Nursery label evidence",
+                        alt: `Nursery label evidence for ${plant.name} (${plant.id}).`,
+                    },
+                ].filter(({ url }) => url);
+                if (photoData.length) {
+                    const photos = document.createElement("div");
+                    photos.className = "plant-photos";
+                    photoData.forEach(({ url, caption, alt }) => {
+                        const figure = document.createElement("figure");
+                        figure.className = "plant-photo-card";
+                        const image = document.createElement("img");
+                        image.src = url;
+                        image.alt = alt;
+                        image.loading = "lazy";
+                        image.decoding = "async";
+                        const label = document.createElement("figcaption");
+                        label.textContent = caption;
+                        figure.append(image, label);
+                        photos.append(figure);
+                    });
+                    summary.append(photos);
+                }
             }
 
             function renderEventChips() {
@@ -3645,7 +3761,9 @@
                     throw new Error("Choose at least one bulk-care action.");
                 }
                 const payload = {
-                    plantIds: [...state.bulkSelected],
+                    plantIds: state.bootstrap.plants
+                        .filter((plant) => state.bulkSelected.has(plant.id))
+                        .map((plant) => plant.id),
                     events: [...state.bulkEvents],
                     observedAt: observedDate.toISOString(),
                     nutrientsUsed: $("bulkNutrientsUsed").value,

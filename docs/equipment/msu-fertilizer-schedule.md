@@ -1,6 +1,6 @@
 # MSU fertilizer schedule
 
-Last updated: 2026-08-26
+Last updated: 2026-08-29
 
 This is the working nutrient plan for the collection's Tezula/Greencare **MSU
 13-3-15 Tap/Rain/RO formula**. It is a low-dose starting plan for these actual
@@ -14,10 +14,10 @@ indoor dry-down trial. It is not a fixed command to water on a calendar date.
   visible. A warm room or a due watering does not, by itself, prove active
   growth.
 - Use **0.75 g of MSU powder per US gallon of RO water** on a cactus feed day.
-- Tomorrow, **August 27, use plain RO with no fertilizer** for the 18
-  August-14 repots (`P01`-`P18`). If no soak was completed after the repot,
-  this becomes their first recorded post-repot watering and establishes the
-  clean pot-setup-2 wet-weight baseline.
+- The first post-repot cycle is complete. All 18 August-14 repots
+  (`P01`-`P18`) received plain Beauchamp's RO water with no fertilizer at 4:22 p.m. on August 26. Their Wet setup-2 weights were recorded between 12:14 and 12:20 a.m. on
+  August 27, about eight hours later, so retain that interval when comparing
+  the first baseline with later 30–60-minute drainage readings.
 - Do not add separate Cal-Mag, sulfur, Foliage-Pro, or another fertilizer to
   the same gallon. This MSU formula already supplies calcium, magnesium, and
   micronutrients.
@@ -63,13 +63,13 @@ teaspoon, which is why the gram scale is the collection standard.
 Use the watering event, dryness, and new growth—not an assumed seven-day
 interval—to advance this sequence:
 
-| Watering event             | Solution                   | Decision rule                                                                                                                                       |
-| -------------------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Aug. 27 planned first soak | Plain RO                   | Proceed for a firm, dry, ready pot. Record dry setup-2 weight first, water to runoff, drain 30-60 minutes, empty the saucer, and record wet weight. |
-| Next ready watering        | **0.75 g MSU per gallon**  | Feed only if the plant completed the first dry-down normally, is making healthy compact growth, and has no root/base problem.                       |
-| Following ready watering   | Plain RO                   | Water thoroughly enough for runoff; this is the salt-flush watering.                                                                                |
-| Next ready watering        | **0.75 g MSU per gallon**  | Repeat only during visible active growth.                                                                                                           |
-| Thereafter                 | Alternate MSU and plain RO | Stay at 0.75 g/gal if growth is compact and healthy. More fertilizer is not a goal.                                                                 |
+| Watering event               | Solution                   | Decision rule                                                                                                                                                           |
+| ---------------------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Aug. 26 completed first soak | Plain RO                   | `P01`–`P18` were watered at 4:22 p.m. with no nutrients; Wet weights followed about eight hours later, from 12:14–12:20 a.m. on Aug. 27. Preserve that actual interval. |
+| Next ready watering          | **0.75 g MSU per gallon**  | Feed only if the plant completed the first dry-down normally, is making healthy compact growth, and has no root/base problem.                                           |
+| Following ready watering     | Plain RO                   | Water thoroughly enough for runoff; this is the salt-flush watering.                                                                                                    |
+| Next ready watering          | **0.75 g MSU per gallon**  | Repeat only during visible active growth.                                                                                                                               |
+| Thereafter                   | Alternate MSU and plain RO | Stay at 0.75 g/gal if growth is compact and healthy. More fertilizer is not a goal.                                                                                     |
 
 Keep **0.75 g per gallon** as the normal cactus rate through at least two
 successful feed cycles. **1.00 g per gallon** is an optional future ceiling,
@@ -121,14 +121,14 @@ replace the Water and Wet-weight events.
 
 Do not automatically pour the cactus batch into every pot:
 
-| Plant or group                            | MSU starting rule                                                                                                                                                                     |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `#1` shared rehab cactus planter          | Use plain RO for the next ready watering. If all three remaining plants are healthy and growing compactly, start at 0.50 g/gal no more often than every third ready watering.         |
-| Shared succulent planter and Kiwi aeonium | 0.75 g/gal every second or third ready watering during compact active growth; plain RO otherwise.                                                                                     |
-| Money tree                                | 1.00 g/gal every second ready watering during active leafy growth. Use either MSU or another complete fertilizer, never both in the same watering. Reduce or pause when growth slows. |
-| Newly delivered Mountain Crest plants     | No arrival-day fertilizer. Keep the nursery medium and any seller-applied nutrients unknown until inspection; wait for establishment and at least one normal watering/dry-down cycle. |
-| `Pleiospilos nelii` 'Royal Flush'         | Do not feed by the group calendar. Establish it first and follow the leaf-replacement and watering state; excess water is the larger immediate risk.                                  |
-| Indoor `Sempervivum` 'Coconut Crystal'    | Begin with no fertilizer on arrival. If it remains compact and actively growing after establishment, use 0.50 g/gal only occasionally rather than the cactus alternation.             |
+| Plant or group                            | MSU starting rule                                                                                                                                                                                                                                                                            |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `#1` shared rehab cactus planter          | Use plain RO for the next ready watering. If all three remaining plants are healthy and growing compactly, start at 0.50 g/gal no more often than every third ready watering.                                                                                                                |
+| Shared succulent planter and Kiwi aeonium | 0.75 g/gal every second or third ready watering during compact active growth; plain RO otherwise.                                                                                                                                                                                            |
+| Money tree                                | 1.00 g/gal every second ready watering during active leafy growth. Use either MSU or another complete fertilizer, never both in the same watering. Reduce or pause when growth slows.                                                                                                        |
+| `P23`–`P28` Mountain Crest arrivals       | The 2026-08-28 Check/Clean round records slightly moist substrate, not watering or fertilizer. Seller-applied nutrients, any post-arrival feeding, and replacement-medium composition remain unknown; wait for establishment and a normal watering/dry-down cycle before considering a feed. |
+| `Pleiospilos nelii` 'Royal Flush'         | Do not feed by the group calendar. Establish it first and follow the leaf-replacement and watering state; excess water is the larger immediate risk.                                                                                                                                         |
+| Indoor `Sempervivum` 'Coconut Crystal'    | Begin with no fertilizer on arrival. If it remains compact and actively growing after establishment, use 0.50 g/gal only occasionally rather than the cactus alternation.                                                                                                                    |
 
 ## Sources
 

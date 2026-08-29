@@ -1,13 +1,15 @@
 # Raindrops echeveria
 
 - Inventory: Succulent-07 — _Echeveria_ 'Raindrops'
-- Label ID: `H2` — reserved before arrival
+- Label ID: `H2` — confirmed after arrival
+- Tracker ID: `P25`
 - Visual description: Blue-green rosette whose mature leaves carry rounded raindroplike bumps.
 - Interesting fact: Those firm bumps are normal cultivar features called caruncles, not edema or pest damage.
-- Identification: **seller-labeled cultivar; physical plant not yet received**
+- Identification: **seller-labeled cultivar; an individual arrival condition crop is archived, but identity is not independently proven**
 - Ordered from: Mountain Crest Gardens on 2026-08-25
-- Order status: **Order Received by seller; shipment and collection receipt pending**
-- Seller-listed size: **2.0-inch pot; actual received container pending inspection**
+- Order status: **Received 2026-08-28; owner inspected roots and plant by hand**
+- Received container: **2-inch nursery pot; shape not reliably documented**
+- Current pot: **4-inch square pot; repotted 2026-08-28**
 - Photo archive: [licensed genus and cultivar references](../../../assets/plants/echeveria-raindrops/)
 
 ## Names and identity
@@ -27,11 +29,26 @@ seller label.
 
 ## Order evidence and status
 
-Mountain Crest Gardens listed one 'Raindrops' in the 2026-08-25 order. The
-product page inspected on 2026-08-26 lists a 2.0-inch pot. The plant has not
-yet been physically received. Its `H2` label is reserved; rosette diameter,
-bump development, root condition, received pot, tracker ID, and collection
-photographs remain pending.
+Mountain Crest Gardens listed one 'Raindrops' in the 2026-08-25 order, and the
+owner documented receipt on 2026-08-28. It arrived rooted in a 2-inch nursery
+pot; the received container's shape is not reliably documented. The owner
+reports removing about 95% of the nursery soil during repotting. The owner-
+entered live tracker pot size is 4 inches, and current photographs show a
+square pot. The confirmed pot label is `H2`, and the permanent tracker ID is
+`P25`.
+
+Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
+slightly moist substrate. The live 2026-08-29 Measurement record is **344 g**
+by Scale and **1.35 in high × 2.75 in wide** by Ruler. These are measured
+records, not watering or fertilizer events. Exact maintained placement and the
+replacement-medium composition remain unrecorded.
+
+The owner chose not to quarantine this shipment after hand inspection, owner-
+reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
+the box that said it was inspected and certified pest free. The plants were
+also described as outdoor-grown in California sun. Those are useful arrival
+observations, but the sticker is shipment evidence rather than a guarantee that
+the plant remains pest-free; continue close inspections during acclimation.
 
 ## Seller listing snapshot
 
@@ -69,17 +86,18 @@ broad genus range must not be printed as this cultivar's origin.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                       |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Isolate and photograph the whole rosette, leaf bumps, farina, base, and roots before cleaning or repotting.                                                                       |
-| Grow-light position | Bright succulent zone outside the harshest cactus center; increase exposure only if the rosette stays compact.                                                                    |
-| Water               | After arrival assessment, soak and drain when the mix is dry and the pot-weight trend supports watering.                                                                          |
-| Pot and mix         | Preserve drainage and keep the crown above the medium. A 4-inch pot may become reasonable for a well-rooted rosette, but not automatically on arrival from the listed 2-inch pot. |
-| Surface             | Avoid touching or wiping the powdery farina; fingerprints and rubbed patches do not grow back on the same leaf.                                                                   |
+| Topic               | Practical starting approach                                                                                                                                                                                                               |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. An individual arrival crop is archived; add top, side, base, and complete all-side diagnostic views when available. |
+| Grow-light position | Bright succulent zone outside the harshest cactus center; increase exposure only if the rosette stays compact. Exact maintained placement remains unrecorded.                                                                             |
+| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use medium dryness, plant response, and pot-weight trend as evidence.                                                                                      |
+| Pot and mix         | The tracker records a 4-inch current pot, and photographs show a square shape. Received-pot shape and replacement-medium composition are unrecorded; keep the crown above the medium.                                                     |
+| Surface             | Avoid touching or wiping the powdery farina; fingerprints and rubbed patches do not grow back on the same leaf.                                                                                                                           |
 
 ## Rotation, propagation, and watch points
 
-- Rotate 90° weekly after the `H2` common-name label is applied.
+- Rotate 90° weekly after the `H2` common-name label is applied and its starting
+  orientation is photographed.
 - Distinguish the cultivar's firm, organized bumps from new translucent,
   blistered, or collapsing tissue.
 - Remove only fully dry lower leaves that release without pulling live tissue.

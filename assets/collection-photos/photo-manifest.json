@@ -1,5 +1,17 @@
 {
     "copyright_notice": "Collection and nursery-label photographs are user-owned and are not licensed for reuse. Copyright Nick; all rights reserved.",
+    "nursery_label_archive_evidence": [
+        {
+            "file": "assets/nursery-labels/2026-08-29-mountain-crest-labels-01.webp",
+            "captured_on": "2026-08-29",
+            "description": "Full evidence view of all six Mountain Crest seller labels; retained for archive completeness rather than repeated on every plant profile."
+        },
+        {
+            "file": "assets/nursery-labels/2026-08-29-mountain-crest-labels-02.webp",
+            "captured_on": "2026-08-29",
+            "description": "Second full evidence view used to derive the six plant-specific label crops; retained for archive completeness rather than repeated on every plant profile."
+        }
+    ],
     "plants": [
         {
             "plant_slug": "oreocereus-trollii",
@@ -449,33 +461,385 @@
         },
         {
             "plant_slug": "austrocylindropuntia-subulata",
-            "photos": [],
-            "pending_note": "G1 reserved; ordered from Mountain Crest Gardens on 2026-08-25; collection photography begins after arrival."
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154712.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154712.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Six newly repotted Mountain Crest plants arranged in two rows, with Eve's needle in the white pot at lower right",
+                    "caption": "Arrival group view after repotting. Eve's needle is mapped by the owner to the lower-right white pot, H3 / P26; this group photograph is collection evidence, not individual diagnostic proof."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154723.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154723.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Second view of six newly repotted Mountain Crest plants, including Eve's needle at lower right",
+                    "caption": "Second arrival group view after repotting. Eve's needle is the lower-right white pot, H3 / P26, under the owner's corrected mapping."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154735.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154735.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Third view of six newly repotted Mountain Crest plants, including Eve's needle at lower right",
+                    "caption": "Third arrival group view after repotting. The H3 / P26 placement follows the owner's corrected label map and should not be treated as diagnostic identification evidence."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-collection-overview-162451.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-collection-overview-162451.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Room-scale view of the indoor collection after six Mountain Crest plants were added",
+                    "caption": "Collection context after P23–P28 were added on arrival day; this wide view records placement context rather than individual diagnostic detail."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p26-eves-needle-side.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-p26-eves-needle-side.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "alt": "Side view of the newly repotted Eve's needle cactus in its white square pot",
+                    "caption": "Current P26 / H3 side view after the August 28 repot; the seller-label identity remains evidence rather than independent taxonomic proof."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p26-eves-needle-overview.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-p26-eves-needle-overview.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "alt": "Overview of the newly repotted Eve's needle cactus in its white square pot",
+                    "caption": "Current P26 / H3 overview, retained as collection-condition evidence after repotting."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p26-eves-needle-label.webp",
+                    "source_file": "assets/nursery-labels/2026-08-29-p26-eves-needle-label.webp",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-08-29",
+                    "alt": "Cropped Mountain Crest seller label for P26 showing code 209B and the truncated Eve's needle name",
+                    "caption": "Seller-label crop linking P26 / H3 to the ordered Eve's needle record; the printed name is visibly truncated on the physical tag."
+                }
+            ]
         },
         {
             "plant_slug": "tephrocactus-articulatus-papyracanthus",
-            "photos": [],
-            "pending_note": "G2 reserved; ordered from Mountain Crest Gardens on 2026-08-25; collection photography begins after arrival."
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154712.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154712.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Six newly repotted Mountain Crest plants arranged in two rows, with paper spine cactus in the dark green pot at lower center",
+                    "caption": "Arrival group view after repotting. Paper spine is mapped by the owner to the lower-center dark green pot, G2 / P23; this group photograph is collection evidence, not individual diagnostic proof."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154723.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154723.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Second view of six newly repotted Mountain Crest plants, including paper spine at lower center",
+                    "caption": "Second arrival group view after repotting. Paper spine is the lower-center dark green pot, G2 / P23, under the owner's corrected mapping."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154735.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154735.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Third view of six newly repotted Mountain Crest plants, including paper spine at lower center",
+                    "caption": "Third arrival group view after repotting. The G2 / P23 placement follows the owner's corrected label map and should not be treated as diagnostic identification evidence."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-collection-overview-162451.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-collection-overview-162451.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Room-scale view of the indoor collection after six Mountain Crest plants were added",
+                    "caption": "Collection context after P23–P28 were added on arrival day; this wide view records placement context rather than individual diagnostic detail."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p23-paper-spine-side.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-p23-paper-spine-side.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "alt": "Side view of the newly repotted paper spine cactus in its dark green square pot",
+                    "caption": "Current P23 / G2 side view after the August 28 repot, recording segment and spine condition."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p23-paper-spine-top.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-p23-paper-spine-top.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "alt": "Top view of the newly repotted paper spine cactus in its dark green square pot",
+                    "caption": "Current P23 / G2 top view, retained as a baseline for future segment and spine changes."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p23-paper-spine-label.webp",
+                    "source_file": "assets/nursery-labels/2026-08-29-p23-paper-spine-label.webp",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-08-29",
+                    "alt": "Cropped Mountain Crest seller label for P23 showing code 226 and the truncated paper spine cactus name",
+                    "caption": "Seller-label crop linking P23 / G2 to the ordered paper spine record; the cultivar wording is visibly truncated on the physical tag."
+                }
+            ]
         },
         {
             "plant_slug": "gymnocalycium-mihanovichii-black-widow",
-            "photos": [],
-            "pending_note": "G3 reserved; ordered from Mountain Crest Gardens on 2026-08-25; collection photography begins after arrival."
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154712.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154712.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Six newly repotted Mountain Crest plants arranged in two rows, with Black Widow cactus in the blue pot at lower left",
+                    "caption": "Arrival group view after repotting. Black Widow is mapped by the owner to the lower-left blue pot, G1 / P27; this group photograph is collection evidence, not individual diagnostic proof."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154723.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154723.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Second view of six newly repotted Mountain Crest plants, including Black Widow at lower left",
+                    "caption": "Second arrival group view after repotting. Black Widow is the lower-left blue pot, G1 / P27, under the owner's corrected mapping."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154735.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154735.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Third view of six newly repotted Mountain Crest plants, including Black Widow at lower left",
+                    "caption": "Third arrival group view after repotting. The G1 / P27 placement follows the owner's corrected label map and should not be treated as diagnostic identification evidence."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-collection-overview-162451.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-collection-overview-162451.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Room-scale view of the indoor collection after six Mountain Crest plants were added",
+                    "caption": "Collection context after P23–P28 were added on arrival day; this wide view records placement context rather than individual diagnostic detail."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p27-black-widow-side.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-p27-black-widow-side.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "alt": "Side view of the newly repotted Black Widow cactus in its blue square pot",
+                    "caption": "Current P27 / G1 side view after the August 28 repot, recording body color and condition without treating the photograph as cultivar proof."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p27-black-widow-top.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-p27-black-widow-top.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "alt": "Top view of the newly repotted Black Widow cactus in its blue square pot",
+                    "caption": "Current P27 / G1 top view, retained as a baseline for color and growth observations."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p27-black-widow-label.webp",
+                    "source_file": "assets/nursery-labels/2026-08-29-p27-black-widow-label.webp",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-08-29",
+                    "alt": "Cropped Mountain Crest seller label for P27 showing code 204 and the truncated Black Widow name",
+                    "caption": "Seller-label crop linking P27 / G1 to the Black Widow order record; the physical tag is evidence of the seller's name, not independent cultivar verification."
+                }
+            ]
         },
         {
             "plant_slug": "pleiospilos-nelii-royal-flush",
-            "photos": [],
-            "pending_note": "H1 reserved; ordered from Mountain Crest Gardens on 2026-08-25; collection photography begins after arrival."
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154712.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154712.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Six newly repotted Mountain Crest plants arranged in two rows, with Royal Flush split rock in the terracotta pot at upper right",
+                    "caption": "Arrival group view after repotting. Royal Flush is mapped by the owner to the upper-right terracotta pot, G3 / P28; this group photograph is collection evidence, not individual diagnostic proof."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154723.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154723.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Second view of six newly repotted Mountain Crest plants, including Royal Flush at upper right",
+                    "caption": "Second arrival group view after repotting. Royal Flush is the upper-right terracotta pot, G3 / P28, under the owner's corrected mapping."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154735.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154735.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Third view of six newly repotted Mountain Crest plants, including Royal Flush at upper right",
+                    "caption": "Third arrival group view after repotting. The G3 / P28 placement follows the owner's corrected label map and should not be treated as diagnostic identification evidence."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-collection-overview-162451.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-collection-overview-162451.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Room-scale view of the indoor collection after six Mountain Crest plants were added",
+                    "caption": "Collection context after P23–P28 were added on arrival day; this wide view records placement context rather than individual diagnostic detail."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p28-royal-flush-overview.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-p28-royal-flush-overview.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "alt": "Overview of the newly repotted Royal Flush split rock in its round terracotta pot",
+                    "caption": "Current P28 / G3 overview after the August 28 repot, recording the round terracotta pot and plant condition."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p28-royal-flush-detail.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-p28-royal-flush-detail.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "alt": "Close detail of the newly repotted Royal Flush split rock leaves",
+                    "caption": "Current P28 / G3 leaf detail, retained as a condition baseline rather than proof of the seller-listed cultivar."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p28-royal-flush-top.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-p28-royal-flush-top.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "alt": "Top view of the newly repotted Royal Flush split rock in its round terracotta pot",
+                    "caption": "Current P28 / G3 top view, retained as a baseline for leaf-pair and seasonal changes."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p28-royal-flush-label.webp",
+                    "source_file": "assets/nursery-labels/2026-08-29-p28-royal-flush-label.webp",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-08-29",
+                    "alt": "Cropped Mountain Crest seller label for P28 reading Royal Flush Split Rock",
+                    "caption": "Seller-label crop linking P28 / G3 to the Royal Flush split rock order record."
+                }
+            ]
         },
         {
             "plant_slug": "echeveria-raindrops",
-            "photos": [],
-            "pending_note": "H2 reserved; ordered from Mountain Crest Gardens on 2026-08-25; collection photography begins after arrival."
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154712.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154712.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Six newly repotted Mountain Crest plants arranged in two rows, with Raindrops echeveria in the pale green pot at upper center",
+                    "caption": "Arrival group view after repotting. Raindrops is mapped by the owner to the upper-center pale green pot, H2 / P25; this group photograph is collection evidence, not individual diagnostic proof."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154723.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154723.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Second view of six newly repotted Mountain Crest plants, including Raindrops at upper center",
+                    "caption": "Second arrival group view after repotting. Raindrops is the upper-center pale green pot, H2 / P25, under the owner's corrected mapping."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154735.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154735.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Third view of six newly repotted Mountain Crest plants, including Raindrops at upper center",
+                    "caption": "Third arrival group view after repotting. The H2 / P25 placement follows the owner's corrected label map and should not be treated as diagnostic identification evidence."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-collection-overview-162451.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-collection-overview-162451.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Room-scale view of the indoor collection after six Mountain Crest plants were added",
+                    "caption": "Collection context after P23–P28 were added on arrival day; this wide view records placement context rather than individual diagnostic detail."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-p25-raindrops-arrival-crop.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-p25-raindrops-arrival-crop.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Cropped arrival view of the Raindrops echeveria in its pale green square pot",
+                    "caption": "Non-destructive crop from the August 28 arrival group photograph, isolating P25 / H2 for a useful current-plant baseline."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p25-raindrops-label.webp",
+                    "source_file": "assets/nursery-labels/2026-08-29-p25-raindrops-label.webp",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-08-29",
+                    "alt": "Cropped Mountain Crest seller label for P25 reading Raindrops",
+                    "caption": "Seller-label crop linking P25 / H2 to the Raindrops order record; the label remains seller evidence rather than independent cultivar proof."
+                }
+            ]
         },
         {
             "plant_slug": "sempervivum-coconut-crystal",
-            "photos": [],
-            "pending_note": "H3 reserved; ordered from Mountain Crest Gardens on 2026-08-25; collection photography begins after arrival."
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154712.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154712.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Six newly repotted Mountain Crest plants arranged in two rows, with Coconut Crystal sempervivum in the yellow pot at upper left",
+                    "caption": "Arrival group view after repotting. Coconut Crystal is mapped by the owner to the upper-left yellow pot, H1 / P24; this group photograph is collection evidence, not individual diagnostic proof."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154723.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154723.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Second view of six newly repotted Mountain Crest plants, including Coconut Crystal at upper left",
+                    "caption": "Second arrival group view after repotting. Coconut Crystal is the upper-left yellow pot, H1 / P24, under the owner's corrected mapping."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-mountain-crest-group-154735.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-mountain-crest-group-154735.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Third view of six newly repotted Mountain Crest plants, including Coconut Crystal at upper left",
+                    "caption": "Third arrival group view after repotting. The H1 / P24 placement follows the owner's corrected label map and should not be treated as diagnostic identification evidence."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-28-collection-overview-162451.webp",
+                    "source_file": "assets/collection-photos/2026-08-28-collection-overview-162451.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-28",
+                    "alt": "Room-scale view of the indoor collection after six Mountain Crest plants were added",
+                    "caption": "Collection context after P23–P28 were added on arrival day; this wide view records placement context rather than individual diagnostic detail."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p24-coconut-crystal-top-01.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-p24-coconut-crystal-top-01.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "alt": "First close top view of the newly repotted Coconut Crystal sempervivum",
+                    "caption": "Current P24 / H1 close view, retained as a baseline for rosette and offset changes after repotting."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p24-coconut-crystal-top-02.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-p24-coconut-crystal-top-02.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "alt": "Second close top view of the newly repotted Coconut Crystal sempervivum",
+                    "caption": "Second current P24 / H1 close view, preserving additional rosette detail without treating color alone as cultivar proof."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p24-coconut-crystal-side.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-p24-coconut-crystal-side.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "alt": "Side view of the newly repotted Coconut Crystal sempervivum in its yellow square pot",
+                    "caption": "Current P24 / H1 side view after the August 28 repot, recording the yellow square pot and plant condition."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p24-coconut-crystal-top.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-p24-coconut-crystal-top.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "alt": "Top view of the newly repotted Coconut Crystal sempervivum in its yellow square pot",
+                    "caption": "Current P24 / H1 top view, retained as the primary logger and booklet condition image."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-p24-coconut-crystal-label.webp",
+                    "source_file": "assets/nursery-labels/2026-08-29-p24-coconut-crystal-label.webp",
+                    "kind": "nursery-label",
+                    "captured_on": "2026-08-29",
+                    "alt": "Cropped Mountain Crest seller label for P24 showing the truncated Colorockz Coconut Crystal name",
+                    "caption": "Seller-label crop linking P24 / H1 to the Coconut Crystal order record; the physical tag's name is visibly truncated."
+                }
+            ]
         }
     ],
     "schema_version": 1

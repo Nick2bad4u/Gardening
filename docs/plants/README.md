@@ -1,12 +1,13 @@
 # Plant profiles
 
-Last updated: 2026-08-26
+Last updated: 2026-08-29
 
-These 34 pages cover 27 plants or planters physically in the collection, six
-plants ordered on 2026-08-25 but not yet received, and one historical record.
+These 34 pages cover 33 plants or planters physically documented in the
+collection and one historical record. The six Mountain Crest plants ordered on
+2026-08-25 were received, inspected, and repotted on 2026-08-28.
 They combine botanical background with practical notes for the current pots,
-fast-draining mix, rain avoidance, and AW200SE indoor setup. They are reference
-guides, not fixed watering schedules.
+observed substrate condition, rain avoidance, and AW200SE indoor setup. They
+are reference guides, not fixed watering schedules.
 
 The collection-level [setup record](../setup.md#august-14-substrate-airflow-and-light-reset)
 documents the August 14 move of all 18 individually potted cactus-display
@@ -60,32 +61,40 @@ The physical `E1`–`E3` and `F1`–`F3` mappings were copied from the pots on
 | Cactus-05    | `F2`     | [Boobie cactus (_Myrtillocactus geometrizans_ 'Fukurokuryuzinboku')](./cacti/myrtillocactus-geometrizans-fukurokuryuzinboku.md) | Very high                                                 |
 | Cactus-06    | `F1`     | [Hook-spined pincushion (_Mammillaria_ cf. _rekoi_)](./cacti/mammillaria-rekoi.md)                                              | Probable; _M. crinita_ complex or hybrid remains possible |
 
-## Mountain Crest cacti — ordered, not yet received
+## Mountain Crest cacti — received 2026-08-28
 
-| Inventory ID | Label ID | Profile                                                                                                                   | Identification status                           |
-| ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| Cactus-07    | `G1`     | [Eve's needle cactus (_Austrocylindropuntia subulata_)](./cacti/austrocylindropuntia-subulata.md)                         | Seller-labeled; arrival inspection pending      |
-| Cactus-08    | `G2`     | [Paper spine cactus (_Tephrocactus articulatus_ var. _papyracanthus_)](./cacti/tephrocactus-articulatus-papyracanthus.md) | Seller-labeled form; arrival inspection pending |
-| Cactus-09    | `G3`     | [Black Widow chin cactus (_Gymnocalycium mihanovichii_ f. variegata)](./cacti/gymnocalycium-mihanovichii-black-widow.md)  | Seller-labeled cultivar; arrival pending        |
+| Inventory ID | Label ID | Profile                                                                                                                   | Identification status                         |
+| ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| Cactus-07    | `H3`     | [Eve's needle cactus (_Austrocylindropuntia subulata_)](./cacti/austrocylindropuntia-subulata.md)                         | Seller-labeled; owner-inspected; P26          |
+| Cactus-08    | `G2`     | [Paper spine cactus (_Tephrocactus articulatus_ var. _papyracanthus_)](./cacti/tephrocactus-articulatus-papyracanthus.md) | Seller-labeled form; owner-inspected; P23     |
+| Cactus-09    | `G1`     | [Black Widow chin cactus (_Gymnocalycium mihanovichii_ f. variegata)](./cacti/gymnocalycium-mihanovichii-black-widow.md)  | Seller-labeled cultivar; owner-inspected; P27 |
 
-All three exact product pages list 2.0-inch pots as inspected on 2026-08-26;
-the received containers, roots, and dimensions still require inspection.
+All three arrived rooted in 2-inch nursery pots of unrecorded shape and moved
+to 4-inch pots on 2026-08-28. Current photos show square pots. Their 2026-08-29
+Scale weights and Ruler dimensions are recorded in the individual profiles.
 
 ## Succulents
 
-| Inventory ID | Label ID               | Profile                                                                                                                     | Identification status           |
-| ------------ | ---------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
-| Succulent-01 | `#2`; formerly `C4-D4` | [Pulido's echeveria (_Echeveria pulidonis_)](./succulents/echeveria-pulidonis.md)                                           | Probable                        |
-| Succulent-02 | `#2`; formerly `C4-D4` | [Elephant bush (_Portulacaria afra_)](./succulents/portulacaria-afra.md)                                                    | High                            |
-| Succulent-03 | `#2`; formerly `C4-D4` | [Silver teaspoons (_Kalanchoe bracteata_)](./succulents/kalanchoe-bracteata.md)                                             | Probable                        |
-| Succulent-04 | `#2`; formerly `C4-D4` | [Copper spoons (_Kalanchoe orgyalis_)](./succulents/kalanchoe-orgyalis.md)                                                  | High                            |
-| Succulent-05 | `#4`                   | [Kiwi aeonium (_Aeonium haworthii_ 'Dream Color')](./succulents/aeonium-haworthii-dream-color.md)                           | Very high                       |
-| Succulent-06 | `H1`                   | [Royal Flush split rock (_Pleiospilos nelii_ 'Royal Flush')](./succulents/pleiospilos-nelii-royal-flush.md)                 | Seller-labeled; arrival pending |
-| Succulent-07 | `H2`                   | [Raindrops echeveria (_Echeveria_ 'Raindrops')](./succulents/echeveria-raindrops.md)                                        | Seller-labeled; arrival pending |
-| Succulent-08 | `H3`                   | [Coconut Crystal hens and chicks (_Sempervivum_ Colorockz® 'Coconut Crystal')](./succulents/sempervivum-coconut-crystal.md) | Seller-labeled; arrival pending |
+| Inventory ID | Label ID               | Profile                                                                                                                     | Identification status                |
+| ------------ | ---------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| Succulent-01 | `#2`; formerly `C4-D4` | [Pulido's echeveria (_Echeveria pulidonis_)](./succulents/echeveria-pulidonis.md)                                           | Probable                             |
+| Succulent-02 | `#2`; formerly `C4-D4` | [Elephant bush (_Portulacaria afra_)](./succulents/portulacaria-afra.md)                                                    | High                                 |
+| Succulent-03 | `#2`; formerly `C4-D4` | [Silver teaspoons (_Kalanchoe bracteata_)](./succulents/kalanchoe-bracteata.md)                                             | Probable                             |
+| Succulent-04 | `#2`; formerly `C4-D4` | [Copper spoons (_Kalanchoe orgyalis_)](./succulents/kalanchoe-orgyalis.md)                                                  | High                                 |
+| Succulent-05 | `#4`                   | [Kiwi aeonium (_Aeonium haworthii_ 'Dream Color')](./succulents/aeonium-haworthii-dream-color.md)                           | Very high                            |
+| Succulent-06 | `G3`                   | [Royal Flush split rock (_Pleiospilos nelii_ 'Royal Flush')](./succulents/pleiospilos-nelii-royal-flush.md)                 | Seller-labeled; owner-inspected; P28 |
+| Succulent-07 | `H2`                   | [Raindrops echeveria (_Echeveria_ 'Raindrops')](./succulents/echeveria-raindrops.md)                                        | Seller-labeled; owner-inspected; P25 |
+| Succulent-08 | `H1`                   | [Coconut Crystal hens and chicks (_Sempervivum_ Colorockz® 'Coconut Crystal')](./succulents/sempervivum-coconut-crystal.md) | Seller-labeled; owner-inspected; P24 |
 
-All three exact product pages list 2.0-inch pots as inspected on 2026-08-26;
-the received containers, roots, and dimensions still require inspection.
+All three arrived rooted in 2-inch nursery pots of unrecorded shape and moved
+to 4-inch pots on 2026-08-28. Current photos show Raindrops and Coconut Crystal
+in square pots and Royal Flush in round terracotta. Their 2026-08-29 Scale
+weights and Ruler dimensions are recorded in the individual profiles.
+
+The live 2026-08-28 Check/Clean bulk round records slightly moist substrate for
+all six Mountain Crest plants; it is not a watering or fertilizer record.
+Exact maintained placement and replacement-medium composition remain
+unrecorded.
 
 ## Older mixed cactus planter
 

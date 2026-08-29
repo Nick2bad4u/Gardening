@@ -12,6 +12,10 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
   of the Google Sheets log with current status, search and filters, stable
   per-plant history URLs, dry/wet baselines, calculations, charts, and direct
   links back to the editable workbook
+- [Garden Entry Logger](https://script.google.com/macros/s/AKfycbytpdMto4ZAqOf49igDNoGYr-J6fmSRDNJOKP4-dKDFRmM2YkTCKJp3kmhrD4gOJShF/exec) —
+  the signed-in 5.14.0 mobile logger with a durable one-call queue, independent
+  Wet weights, remembered nutrient details, a 12-event grid, and generic bulk
+  care including 90° rotations
 - [AppSheet garden companion](docs/appsheet-companion.md) — signed-in phone and
   desktop entry, save receipts, image-first plant cards, watering-age badges,
   all eight collection Insights charts, and interactive per-plant measurement
@@ -25,7 +29,7 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
   collection cover with the current shared Google Photos album link
 - [Plant profiles](docs/plants/) — names, origins, history, flowers, care,
   propagation, risks, sources, and photo-archive status for all 34 collection
-  records (27 physically present, six ordered, and one historical)
+  records (33 physically present and one historical)
 - [AW200SE and E25 deep guide](docs/equipment/vivosun-aw200se.md) — PPFD maps,
   DLI/lux conversions, distances, dimming, placement, and a simple starting
   program
