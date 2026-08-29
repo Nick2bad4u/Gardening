@@ -42,6 +42,13 @@ const allowedSubjects = new Set([
 const allowedLicense =
     /^(?:CC0|CC BY(?: SA|-SA)?|CC BY-SA \d|Public domain|No restrictions)/i;
 const allowedCollectionKinds = new Set(["collection", "nursery-label"]);
+const allowedCollectionViews = new Set([
+    "side",
+    "top",
+    "detail",
+    "context",
+    "overview",
+]);
 const expectedTrackedProfiles = 33;
 const expectedProfileCount = 34;
 const expectedPresentProfiles = 33;
@@ -210,7 +217,7 @@ async function main() {
     );
 
     assert(
-        collectionManifest.schema_version === 1,
+        collectionManifest.schema_version === 2,
         "Collection-photo manifest has an unsupported schema version."
     );
     assert(
@@ -236,12 +243,19 @@ async function main() {
 
     let expectedCollectionPhotos = 0;
     let expectedPendingPhotos = 0;
+    let expectedCollectionDateGroups = 0;
+    let expectedViewBadges = 0;
     for (const record of collectionManifest.plants) {
         assert(
             Array.isArray(record.photos),
             `${record.plant_slug} has no collection photos array.`
         );
         expectedCollectionPhotos += record.photos.length;
+        expectedCollectionDateGroups += new Set(
+            record.photos
+                .filter((photo) => photo.kind === "collection")
+                .map((photo) => photo.captured_on ?? photo.provided_on)
+        ).size;
         if (record.photos.length === 0) {
             expectedPendingPhotos += 1;
             assert(
@@ -261,6 +275,13 @@ async function main() {
                 allowedCollectionKinds.has(photo.kind),
                 `${record.plant_slug} has unsupported collection photo kind ${photo.kind}.`
             );
+            if (photo.view !== undefined) {
+                assert(
+                    allowedCollectionViews.has(photo.view),
+                    `${record.plant_slug} has unsupported collection photo view ${photo.view}.`
+                );
+                expectedViewBadges += 1;
+            }
             assert(
                 /^assets\/collection-photos\/[a-z0-9.-]+\.webp$/.test(
                     photo.file
@@ -306,6 +327,59 @@ async function main() {
                 const fileStats = await stat(path.join(repositoryRoot, file));
                 assert(fileStats.size > 1024, `${file} is unexpectedly small.`);
             }
+        }
+    }
+
+    const collectionOverviews = collectionManifest.collection_overviews;
+    assert(
+        Array.isArray(collectionOverviews) && collectionOverviews.length > 0,
+        "Collection-photo manifest needs at least one collection overview."
+    );
+    expectedCollectionDateGroups += new Set(
+        collectionOverviews.map(
+            (photo) => photo.captured_on ?? photo.provided_on
+        )
+    ).size;
+    expectedViewBadges += collectionOverviews.length;
+    for (const photo of collectionOverviews) {
+        assert(
+            photo.kind === "collection",
+            "A collection overview has an unsupported photo kind."
+        );
+        assert(
+            allowedCollectionViews.has(photo.view),
+            "A collection overview needs a supported view."
+        );
+        assert(
+            /^assets\/collection-photos\/[a-z0-9.-]+\.webp$/.test(photo.file),
+            "A collection overview has an invalid web-photo path."
+        );
+        assert(
+            /^assets\/(?:measurements|nursery-labels|collection-photos)\/[a-z0-9._-]+\.(?:jpg|png|webp)$/i.test(
+                photo.source_file
+            ),
+            "A collection overview has an invalid source-photo path."
+        );
+        const evidenceDates = [photo.captured_on, photo.provided_on].filter(
+            (value) => typeof value === "string" && value.length > 0
+        );
+        assert(
+            evidenceDates.length === 1 &&
+                /^\d{4}-\d{2}-\d{2}$/.test(evidenceDates[0]),
+            "A collection overview needs exactly one valid capture or provided date."
+        );
+        assert(
+            typeof photo.alt === "string" && photo.alt.trim().length > 0,
+            "A collection overview is missing alt text."
+        );
+        assert(
+            typeof photo.caption === "string" &&
+                photo.caption.trim().length > 0,
+            "A collection overview is missing a caption."
+        );
+        for (const file of [photo.file, photo.source_file]) {
+            const fileStats = await stat(path.join(repositoryRoot, file));
+            assert(fileStats.size > 1024, `${file} is unexpectedly small.`);
         }
     }
 
@@ -529,6 +603,29 @@ async function main() {
         pendingPhotoCount === expectedPendingPhotos,
         `Expected ${expectedPendingPhotos} pending-photo panels; found ${pendingPhotoCount}.`
     );
+    const collectionOverviewPhotoCount = (
+        html.match(/class="collection-photo collection-overview-photo"/g) ?? []
+    ).length;
+    assert(
+        collectionOverviewPhotoCount === collectionOverviews.length,
+        `Expected ${collectionOverviews.length} collection overview photos; found ${collectionOverviewPhotoCount}.`
+    );
+    const collectionDateGroupCount = (
+        html.match(/class="collection-date-group"/g) ?? []
+    ).length;
+    assert(
+        collectionDateGroupCount === expectedCollectionDateGroups,
+        `Expected ${expectedCollectionDateGroups} dated collection-photo groups; found ${collectionDateGroupCount}.`
+    );
+    const viewBadgeCount = (html.match(/class="photo-view"/g) ?? []).length;
+    assert(
+        viewBadgeCount === expectedViewBadges,
+        `Expected ${expectedViewBadges} collection-photo view badges; found ${viewBadgeCount}.`
+    );
+    assert(
+        html.includes('id="collection-history"'),
+        "The booklet is missing its collection photo-history page."
+    );
     const atAGlanceCount = (html.match(/class="profile-at-a-glance"/g) ?? [])
         .length;
     assert(
@@ -585,7 +682,7 @@ async function main() {
     new Function(clientScript);
 
     console.log(
-        `Plant booklet verified: ${pageSlugs.length} profiles, ${photoRecords.length} licensed reference photos, ${expectedCollectionPhotos} collection-photo placements, ${archivedNurseryLabels.length} archived nursery labels, ${ids.length} unique IDs.`
+        `Plant booklet verified: ${pageSlugs.length} profiles, ${photoRecords.length} licensed reference photos, ${expectedCollectionPhotos} per-profile collection-photo placements, ${collectionOverviews.length} collection overviews, ${archivedNurseryLabels.length} archived nursery labels, ${ids.length} unique IDs.`
     );
     console.log(coverageLines.join("\n"));
 }

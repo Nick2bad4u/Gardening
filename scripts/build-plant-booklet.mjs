@@ -505,11 +505,32 @@ function collectionPhotoKind(kind) {
         : "Your collection";
 }
 
-function renderCollectionPhoto(photo) {
+function collectionPhotoDate(photo) {
+    return photo.captured_on ?? photo.provided_on;
+}
+
+function collectionViewLabel(view) {
+    return {
+        side: "Side view",
+        top: "Top view",
+        detail: "Detail view",
+        context: "Context view",
+        overview: "Collection overview",
+    }[view];
+}
+
+function formatCollectionDate(date) {
+    return new Intl.DateTimeFormat("en-US", {
+        dateStyle: "long",
+        timeZone: "UTC",
+    }).format(new Date(`${date}T00:00:00Z`));
+}
+
+function renderCollectionPhoto(photo, extraClass = "") {
     const imagePath = `../../${photo.file.replaceAll("\\", "/")}`;
     const normalizedSourcePath = photo.source_file.replaceAll("\\", "/");
     const sourcePath = `../../${normalizedSourcePath}`;
-    const evidenceDate = photo.captured_on ?? photo.provided_on;
+    const evidenceDate = collectionPhotoDate(photo);
     const evidenceVerb = photo.captured_on ? "Photographed" : "Provided";
     const sourceLinkText =
         normalizedSourcePath === photo.file.replaceAll("\\", "/")
@@ -522,13 +543,17 @@ function renderCollectionPhoto(photo) {
     const derivedNote = photo.derived_note
         ? `<span>${escapeHtml(photo.derived_note)}</span>`
         : "";
+    const viewLabel = collectionViewLabel(photo.view);
+    const viewBadge = viewLabel
+        ? `<span class="photo-view">${escapeHtml(viewLabel)}</span>`
+        : "";
 
-    return `<figure class="collection-photo" data-photo-kind="${escapeHtml(photo.kind)}">
+    return `<figure class="collection-photo${extraClass ? ` ${escapeHtml(extraClass)}` : ""}" data-photo-kind="${escapeHtml(photo.kind)}"${photo.view ? ` data-photo-view="${escapeHtml(photo.view)}"` : ""}>
     <a href="${escapeHtml(imagePath)}">
       <img src="${escapeHtml(imagePath)}" alt="${escapeHtml(photo.alt)}" loading="lazy" decoding="async">
     </a>
     <figcaption>
-      <span class="photo-kind">${escapeHtml(collectionPhotoKind(photo.kind))}</span>
+      <span class="photo-labels"><span class="photo-kind">${escapeHtml(collectionPhotoKind(photo.kind))}</span>${viewBadge}</span>
       <strong>${escapeHtml(photo.caption)}</strong>
       <span>${evidenceVerb} <time datetime="${escapeHtml(evidenceDate)}">${escapeHtml(evidenceDate)}</time> · © Nick, all rights reserved</span>
       ${derivedNote}
@@ -537,12 +562,56 @@ function renderCollectionPhoto(photo) {
   </figure>`;
 }
 
+function renderCollectionDateGroups(
+    photos,
+    extraPhotoClass = "",
+    headingLevel = 3
+) {
+    const sortedPhotos = [...photos].sort((left, right) =>
+        collectionPhotoDate(left).localeCompare(collectionPhotoDate(right))
+    );
+    const photosByDate = Map.groupBy(sortedPhotos, collectionPhotoDate);
+
+    return [...photosByDate]
+        .map(
+            ([date, datedPhotos]) => `<section class="collection-date-group">
+      <header class="collection-date-heading">
+        <h${headingLevel}><time datetime="${escapeHtml(date)}">${escapeHtml(formatCollectionDate(date))}</time></h${headingLevel}>
+        <span>${datedPhotos.length} ${datedPhotos.length === 1 ? "view" : "views"}</span>
+      </header>
+      <div class="collection-photo-grid">
+        ${datedPhotos.map((photo) => renderCollectionPhoto(photo, extraPhotoClass)).join("\n")}
+      </div>
+    </section>`
+        )
+        .join("\n");
+}
+
 function renderCollectionGallery(profile) {
     const photos = profile.collectionRecord.photos;
-    const content = photos.length
-        ? `<div class="collection-photo-grid">
-        ${photos.map((photo) => renderCollectionPhoto(photo)).join("\n")}
+    const growthPhotos = photos.filter((photo) => photo.kind === "collection");
+    const nurseryLabelPhotos = photos.filter(
+        (photo) => photo.kind === "nursery-label"
+    );
+    const growthHistory = growthPhotos.length
+        ? `<div class="collection-history">
+        <p class="collection-history-note">Sessions are ordered from oldest to newest so future photographs extend this visual growth record.</p>
+        ${renderCollectionDateGroups(growthPhotos)}
       </div>`
+        : "";
+    const nurseryEvidence = nurseryLabelPhotos.length
+        ? `<section class="collection-evidence-block" aria-label="Nursery-label evidence">
+        <header class="collection-date-heading">
+          <h3>Nursery-label evidence</h3>
+          <span>${nurseryLabelPhotos.length} ${nurseryLabelPhotos.length === 1 ? "view" : "views"}</span>
+        </header>
+        <div class="collection-photo-grid">
+          ${nurseryLabelPhotos.map((photo) => renderCollectionPhoto(photo)).join("\n")}
+        </div>
+      </section>`
+        : "";
+    const content = photos.length
+        ? `${growthHistory}${nurseryEvidence}`
         : `<div class="collection-photo-pending">
         <span aria-hidden="true">+</span>
         <p><strong>Collection photo pending.</strong> ${escapeHtml(profile.collectionRecord.pending_note)}</p>
@@ -552,11 +621,28 @@ function renderCollectionGallery(profile) {
     <header>
       <div>
         <p class="kicker">Collection evidence</p>
-        <h2 id="${escapeHtml(profile.slug)}-collection-heading">Your plant</h2>
+        <h2 id="${escapeHtml(profile.slug)}-collection-heading">Growth history</h2>
       </div>
-      <p>These user-owned photographs document this collection record. They are separate from the reusable-license species references below.</p>
+      <p>These dated, user-owned photographs document this collection record. They are separate from the reusable-license species references below.</p>
     </header>
     ${content}
+  </section>`;
+}
+
+function renderCollectionHistoryPage(overviewPhotos) {
+    return `<section class="book-page collection-history-page" id="collection-history" data-page="collection-history" data-title="Collection photo history" hidden>
+    <header class="collection-history-hero">
+      <p class="kicker">Room, tables, and shared planters</p>
+      <h1>Collection photo history</h1>
+      <p>Wide views preserve how the plants were arranged at each dated session. Individual plant pages carry the matching side, top, detail, and shared-planter views.</p>
+    </header>
+    <div class="collection-overview-timeline">
+      ${renderCollectionDateGroups(overviewPhotos, "collection-overview-photo", 2)}
+    </div>
+    <footer class="folio">
+      <span>The Fenton Collection · visual record</span>
+      <span>History</span>
+    </footer>
   </section>`;
 }
 
@@ -752,7 +838,7 @@ async function loadProfiles() {
         return groupDifference || compareInventory(left, right);
     });
 
-    return profiles;
+    return { collectionManifest, profiles };
 }
 
 function renderNavGroup(group, profiles) {
@@ -966,7 +1052,7 @@ function renderCover(profiles) {
   </section>`;
 }
 
-async function renderBooklet(profiles) {
+async function renderBooklet(profiles, collectionManifest) {
     const presentCount = profiles.filter(
         (profile) => !profile.historical && !profile.receiptUnverified
     ).length;
@@ -1043,6 +1129,7 @@ async function renderBooklet(profiles) {
     <nav class="drawer-nav" aria-label="Plant profiles">
       <a class="drawer-special" href="#cover" data-page-link="cover"><span>Cover</span><small>Start of the guide</small></a>
       <a class="drawer-special" href="#contents" data-page-link="contents"><span>Printed contents</span><small>All profiles at a glance</small></a>
+      <a class="drawer-special" href="#collection-history" data-page-link="collection-history"><span>Photo history</span><small>Dated room and collection overviews</small></a>
       <a class="drawer-special" href="../layouts/plant-tracker.html"><span>Plant tracker</span><small>Live weights, watering, and measurements</small></a>
       <a class="drawer-special" href="../layouts/grow-spot-layout.html"><span>Grow-spot layout</span><small>Tables, risers, light, fan, and camera</small></a>
       <a class="drawer-special" href="../layouts/indoor-acclimation-calendar.html"><span>Acclimation calendar</span><small>Dated light and airflow schedule</small></a>
@@ -1068,6 +1155,8 @@ async function renderBooklet(profiles) {
       </aside>
     </section>
 
+    ${renderCollectionHistoryPage(collectionManifest.collection_overviews)}
+
     ${profilePages}
   </main>
 
@@ -1087,13 +1176,13 @@ async function renderBooklet(profiles) {
 }
 
 async function main() {
-    const profiles = await loadProfiles();
+    const { collectionManifest, profiles } = await loadProfiles();
 
     if (profiles.length !== 34) {
         throw new Error(`Expected 34 profiles but found ${profiles.length}.`);
     }
 
-    const renderedOutput = await renderBooklet(profiles);
+    const renderedOutput = await renderBooklet(profiles, collectionManifest);
     const prettierConfig = (await resolveConfig(outputPath)) ?? {};
     const output = await format(renderedOutput, {
         ...prettierConfig,

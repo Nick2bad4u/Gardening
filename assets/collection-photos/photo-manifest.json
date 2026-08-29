@@ -1,4 +1,33 @@
 {
+    "collection_overviews": [
+        {
+            "file": "assets/collection-photos/2026-08-29-rear-grow-zone-overview-161034.webp",
+            "source_file": "assets/collection-photos/2026-08-29-rear-grow-zone-overview-161034.webp",
+            "kind": "collection",
+            "captured_on": "2026-08-29",
+            "view": "context",
+            "alt": "Wide view of the rear grow zone with the money tree, rehab planter, aeonium, and shared succulent planter",
+            "caption": "Rear grow-zone arrangement during the August 29, 2026 photo session."
+        },
+        {
+            "file": "assets/collection-photos/2026-08-29-full-collection-overview-161039.webp",
+            "source_file": "assets/collection-photos/2026-08-29-full-collection-overview-161039.webp",
+            "kind": "collection",
+            "captured_on": "2026-08-29",
+            "view": "overview",
+            "alt": "Wide room view of the full indoor plant collection across the front table and rear grow zone",
+            "caption": "Full indoor collection and room arrangement on August 29, 2026."
+        },
+        {
+            "file": "assets/collection-photos/2026-08-29-main-table-top-161041.webp",
+            "source_file": "assets/collection-photos/2026-08-29-main-table-top-161041.webp",
+            "kind": "collection",
+            "captured_on": "2026-08-29",
+            "view": "top",
+            "alt": "Top-down view of the individually potted cacti and succulents on the main table",
+            "caption": "Top-down main-table arrangement on August 29, 2026."
+        }
+    ],
     "copyright_notice": "Collection and nursery-label photographs are user-owned and are not licensed for reuse. Copyright Nick; all rights reserved.",
     "nursery_label_archive_evidence": [
         {
@@ -31,6 +60,24 @@
                     "captured_on": "2026-07-23",
                     "alt": "Front of the nursery card supplied with the Oreocereus trollii cactus",
                     "caption": "Nursery-card evidence retained with the collection record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-oreocereus-trollii-side-160402.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-oreocereus-trollii-side-160402.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Old Man of the Andes in its current pot",
+                    "caption": "Side-ish growth view of Old Man of the Andes on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-oreocereus-trollii-top-160743.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-oreocereus-trollii-top-160743.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Old Man of the Andes in its current pot",
+                    "caption": "Top-down growth view of Old Man of the Andes on August 29, 2026."
                 }
             ]
         },
@@ -60,6 +107,24 @@
                     "captured_on": "2026-07-23",
                     "alt": "Back of the nursery card supplied with the Stenocactus phyllacanthus cactus",
                     "caption": "Reverse-side nursery care and supplier evidence retained with the collection record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-stenocactus-phyllacanthus-side-160457.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-stenocactus-phyllacanthus-side-160457.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Grass-blade cactus in its current pot",
+                    "caption": "Side-ish growth view of Grass-blade cactus on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-stenocactus-phyllacanthus-top-160932.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-stenocactus-phyllacanthus-top-160932.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Grass-blade cactus in its current pot",
+                    "caption": "Top-down growth view of Grass-blade cactus on August 29, 2026."
                 }
             ]
         },
@@ -89,6 +154,24 @@
                     "captured_on": "2026-07-23",
                     "alt": "Back of the nursery card supplied with the rainbow hedgehog cactus",
                     "caption": "Reverse-side nursery care and supplier evidence retained with the collection record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-echinocereus-rigidissimus-rubispinus-side-160410.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-echinocereus-rigidissimus-rubispinus-side-160410.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Rainbow hedgehog cactus in its current pot",
+                    "caption": "Side-ish growth view of Rainbow hedgehog cactus on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-echinocereus-rigidissimus-rubispinus-top-160755.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-echinocereus-rigidissimus-rubispinus-top-160755.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Rainbow hedgehog cactus in its current pot",
+                    "caption": "Top-down growth view of Rainbow hedgehog cactus on August 29, 2026."
                 }
             ]
         },
@@ -110,6 +193,24 @@
                     "captured_on": "2026-07-23",
                     "alt": "Back of the nursery card supplied with the Nyctocereus serpentinus cactus",
                     "caption": "Nursery-card evidence retained with the collection record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-nyctocereus-serpentinus-side-160423.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-nyctocereus-serpentinus-side-160423.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Serpent cactus in its current pot",
+                    "caption": "Side-ish growth view of Serpent cactus on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-nyctocereus-serpentinus-top-160807.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-nyctocereus-serpentinus-top-160807.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Serpent cactus in its current pot",
+                    "caption": "Top-down growth view of Serpent cactus on August 29, 2026."
                 }
             ]
         },
@@ -131,6 +232,24 @@
                     "captured_on": "2026-07-23",
                     "alt": "Front of the nursery card supplied with the Mammillaria plumosa cactus",
                     "caption": "Nursery-card evidence retained with the collection record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-mammillaria-plumosa-side-160353.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-mammillaria-plumosa-side-160353.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Feather cactus in its current pot",
+                    "caption": "Side-ish growth view of Feather cactus on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-mammillaria-plumosa-top-160525.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-mammillaria-plumosa-top-160525.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Feather cactus in its current pot",
+                    "caption": "Top-down growth view of Feather cactus on August 29, 2026."
                 }
             ]
         },
@@ -152,6 +271,24 @@
                     "captured_on": "2026-07-23",
                     "alt": "Back of the nursery card supplied with the Echinopsis subdenudata cactus",
                     "caption": "Nursery-card evidence retained with the collection record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-echinopsis-subdenudata-side-160356.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-echinopsis-subdenudata-side-160356.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Domino cactus in its current pot",
+                    "caption": "Side-ish growth view of Domino cactus on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-echinopsis-subdenudata-top-160528.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-echinopsis-subdenudata-top-160528.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Domino cactus in its current pot",
+                    "caption": "Top-down growth view of Domino cactus on August 29, 2026."
                 }
             ]
         },
@@ -181,6 +318,24 @@
                     "captured_on": "2026-07-23",
                     "alt": "Back of the nursery card supplied with the own-root variegated moon cactus",
                     "caption": "Reverse-side nursery care and supplier evidence retained with the own-root collection record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-gymnocalycium-mihanovichii-variegated-side-160405.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-gymnocalycium-mihanovichii-variegated-side-160405.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Variegated moon cactus in its current pot",
+                    "caption": "Side-ish growth view of Variegated moon cactus on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-gymnocalycium-mihanovichii-variegated-top-160745.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-gymnocalycium-mihanovichii-variegated-top-160745.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Variegated moon cactus in its current pot",
+                    "caption": "Top-down growth view of Variegated moon cactus on August 29, 2026."
                 }
             ]
         },
@@ -210,6 +365,24 @@
                     "captured_on": "2026-07-23",
                     "alt": "Back of the nursery card supplied with the Gymnocalycium saglionis cactus",
                     "caption": "Reverse-side nursery care and supplier evidence retained with the collection record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-gymnocalycium-saglionis-side-160432.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-gymnocalycium-saglionis-side-160432.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Giant chin cactus in its current pot",
+                    "caption": "Side-ish growth view of Giant chin cactus on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-gymnocalycium-saglionis-top-160915.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-gymnocalycium-saglionis-top-160915.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Giant chin cactus in its current pot",
+                    "caption": "Top-down growth view of Giant chin cactus on August 29, 2026."
                 }
             ]
         },
@@ -231,6 +404,33 @@
                     "captured_on": "2026-07-23",
                     "alt": "Front of the nursery card supplied with the Indigo Wave cactus",
                     "caption": "Nursery-card evidence retained with the collection record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-myrtillocactus-geometrizans-indigo-wave-side-160450.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-myrtillocactus-geometrizans-indigo-wave-side-160450.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Indigo Wave in its current pot",
+                    "caption": "Side-ish growth view of Indigo Wave on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-myrtillocactus-geometrizans-indigo-wave-top-160930.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-myrtillocactus-geometrizans-indigo-wave-top-160930.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Indigo Wave in its current pot",
+                    "caption": "Top-down growth view of Indigo Wave on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-myrtillocactus-geometrizans-indigo-wave-detail-160454.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-myrtillocactus-geometrizans-indigo-wave-detail-160454.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "detail",
+                    "alt": "Additional oblique detail of Indigo Wave in its current pot",
+                    "caption": "Additional growth detail of Indigo Wave on August 29, 2026."
                 }
             ]
         },
@@ -252,6 +452,24 @@
                     "captured_on": "2026-07-23",
                     "alt": "Front of the nursery card that mislabeled the Ming Thing cactus as an Opuntia",
                     "caption": "Historical nursery card retained as evidence of the original mislabel."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-cereus-forbesii-ming-thing-side-160441.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-cereus-forbesii-ming-thing-side-160441.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Ming Thing in its current pot",
+                    "caption": "Side-ish growth view of Ming Thing on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-cereus-forbesii-ming-thing-top-160923.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-cereus-forbesii-ming-thing-top-160923.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Ming Thing in its current pot",
+                    "caption": "Top-down growth view of Ming Thing on August 29, 2026."
                 }
             ]
         },
@@ -273,6 +491,24 @@
                     "captured_on": "2026-07-23",
                     "alt": "Front of the nursery card using the Dragon's Egg trade name",
                     "caption": "Nursery-card evidence for the Dragon's Egg trade name; the botanical identification remains probable."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-euphorbia-obesa-hybrid-side-160413.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-euphorbia-obesa-hybrid-side-160413.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Dragon's Egg in its current pot",
+                    "caption": "Side-ish growth view of Dragon's Egg on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-euphorbia-obesa-hybrid-top-160759.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-euphorbia-obesa-hybrid-top-160759.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Dragon's Egg in its current pot",
+                    "caption": "Top-down growth view of Dragon's Egg on August 29, 2026."
                 }
             ]
         },
@@ -302,38 +538,182 @@
                     "captured_on": "2026-07-23",
                     "alt": "Back of the nursery card supplied with the Astrophytum ornatum cactus",
                     "caption": "Reverse-side nursery care and supplier evidence retained with the collection record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-astrophytum-ornatum-side-160438.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-astrophytum-ornatum-side-160438.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Monk's hood cactus in its current pot",
+                    "caption": "Side-ish growth view of Monk's hood cactus on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-astrophytum-ornatum-top-160921.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-astrophytum-ornatum-top-160921.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Monk's hood cactus in its current pot",
+                    "caption": "Top-down growth view of Monk's hood cactus on August 29, 2026."
                 }
             ]
         },
         {
             "plant_slug": "chamaelobivia-hybrid",
-            "photos": [],
-            "pending_note": "A repository photo of E2 has not been added yet. The hybrid-group identification remains documented from the supplied description."
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-08-29-chamaelobivia-hybrid-side-160359.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-chamaelobivia-hybrid-side-160359.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Chamaelobivia / peanut cactus hybrid in its current pot",
+                    "caption": "Side-ish growth view of Chamaelobivia / peanut cactus hybrid on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-chamaelobivia-hybrid-top-160531.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-chamaelobivia-hybrid-top-160531.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Chamaelobivia / peanut cactus hybrid in its current pot",
+                    "caption": "Top-down growth view of Chamaelobivia / peanut cactus hybrid on August 29, 2026."
+                }
+            ]
         },
         {
             "plant_slug": "espostoa-melanostele-nana",
-            "photos": [],
-            "pending_note": "A repository photo of E1 has not been added yet. Keep the probable identification wording when a photo is added."
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-08-29-espostoa-melanostele-nana-side-160430.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-espostoa-melanostele-nana-side-160430.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Dwarf old man cactus in its current pot",
+                    "caption": "Side-ish growth view of Dwarf old man cactus on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-espostoa-melanostele-nana-top-160913.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-espostoa-melanostele-nana-top-160913.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Dwarf old man cactus in its current pot",
+                    "caption": "Top-down growth view of Dwarf old man cactus on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-espostoa-melanostele-nana-detail-160434.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-espostoa-melanostele-nana-detail-160434.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "detail",
+                    "alt": "Additional oblique detail of Dwarf old man cactus in its current pot",
+                    "caption": "Additional growth detail of Dwarf old man cactus on August 29, 2026."
+                }
+            ]
         },
         {
             "plant_slug": "mammillaria-mammillaris",
-            "photos": [],
-            "pending_note": "A repository photo of E3 has not been added yet. Keep the probable identification wording when a photo is added."
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-08-29-mammillaria-mammillaris-side-160420.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-mammillaria-mammillaris-side-160420.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Woolly nipple cactus in its current pot",
+                    "caption": "Side-ish growth view of Woolly nipple cactus on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-mammillaria-mammillaris-top-160805.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-mammillaria-mammillaris-top-160805.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Woolly nipple cactus in its current pot",
+                    "caption": "Top-down growth view of Woolly nipple cactus on August 29, 2026."
+                }
+            ]
         },
         {
             "plant_slug": "mammillaria-rekoi",
-            "photos": [],
-            "pending_note": "A repository photo of F1 has not been added yet. Keep the cf. identification wording when a photo is added."
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-08-29-mammillaria-rekoi-side-160500.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-mammillaria-rekoi-side-160500.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Hook-spined pincushion cactus in its current pot",
+                    "caption": "Side-ish growth view of Hook-spined pincushion cactus on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-mammillaria-rekoi-top-160934.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-mammillaria-rekoi-top-160934.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Hook-spined pincushion cactus in its current pot",
+                    "caption": "Top-down growth view of Hook-spined pincushion cactus on August 29, 2026."
+                }
+            ]
         },
         {
             "plant_slug": "myrtillocactus-geometrizans-fukurokuryuzinboku",
-            "photos": [],
-            "pending_note": "A repository photo of F2 has not been added yet."
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-08-29-myrtillocactus-geometrizans-fukurokuryuzinboku-side-160436.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-myrtillocactus-geometrizans-fukurokuryuzinboku-side-160436.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Boobie cactus in its current pot",
+                    "caption": "Side-ish growth view of Boobie cactus on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-myrtillocactus-geometrizans-fukurokuryuzinboku-top-160918.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-myrtillocactus-geometrizans-fukurokuryuzinboku-top-160918.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Boobie cactus in its current pot",
+                    "caption": "Top-down growth view of Boobie cactus on August 29, 2026."
+                }
+            ]
         },
         {
             "plant_slug": "parodia-leninghausii",
-            "photos": [],
-            "pending_note": "A repository photo of F3 has not been added yet."
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-08-29-parodia-leninghausii-side-160415.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-parodia-leninghausii-side-160415.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Yellow tower cactus in its current pot",
+                    "caption": "Side-ish growth view of Yellow tower cactus on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-parodia-leninghausii-top-160802.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-parodia-leninghausii-top-160802.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Yellow tower cactus in its current pot",
+                    "caption": "Top-down growth view of Yellow tower cactus on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-parodia-leninghausii-detail-160417.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-parodia-leninghausii-detail-160417.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "detail",
+                    "alt": "Additional oblique detail of Yellow tower cactus in its current pot",
+                    "caption": "Additional growth detail of Yellow tower cactus on August 29, 2026."
+                }
+            ]
         },
         {
             "plant_slug": "echeveria-pulidonis",
@@ -345,6 +725,33 @@
                     "captured_on": "2026-07-31",
                     "alt": "Side view of the shared succulent planter with a tape measure beside it",
                     "caption": "The probable Echeveria is part of shared planter #2 in this height record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-shared-succulent-planter-side-161015.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-shared-succulent-planter-side-161015.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "context",
+                    "alt": "Side-ish view of the shared succulent planter containing Pulido's echeveria",
+                    "caption": "Pulido's echeveria in the shared succulent-planter arrangement on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-shared-succulent-planter-top-161030.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-shared-succulent-planter-top-161030.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down context view of the shared succulent planter containing Pulido's echeveria",
+                    "caption": "Top-down shared-planter context for Pulido's echeveria on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-echeveria-pulidonis-detail-161020.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-echeveria-pulidonis-detail-161020.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "detail",
+                    "alt": "Additional oblique detail of Pulido's echeveria in its current pot",
+                    "caption": "Additional growth detail of Pulido's echeveria on August 29, 2026."
                 }
             ]
         },
@@ -358,6 +765,33 @@
                     "captured_on": "2026-07-31",
                     "alt": "Side view of the shared succulent planter with a tape measure beside it",
                     "caption": "The probable Kalanchoe bracteata is part of shared planter #2 in this height record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-shared-succulent-planter-side-161015.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-shared-succulent-planter-side-161015.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "context",
+                    "alt": "Side-ish view of the shared succulent planter containing Silver teaspoons",
+                    "caption": "Silver teaspoons in the shared succulent-planter arrangement on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-shared-succulent-planter-top-161030.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-shared-succulent-planter-top-161030.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down context view of the shared succulent planter containing Silver teaspoons",
+                    "caption": "Top-down shared-planter context for Silver teaspoons on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-kalanchoe-bracteata-detail-161028.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-kalanchoe-bracteata-detail-161028.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "detail",
+                    "alt": "Additional oblique detail of Silver teaspoons in its current pot",
+                    "caption": "Additional growth detail of Silver teaspoons on August 29, 2026."
                 }
             ]
         },
@@ -371,6 +805,33 @@
                     "captured_on": "2026-07-31",
                     "alt": "Side view of the shared succulent planter with a tape measure beside it",
                     "caption": "The Copper Spoons plant is part of shared planter #2 in this height record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-shared-succulent-planter-side-161015.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-shared-succulent-planter-side-161015.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "context",
+                    "alt": "Side-ish view of the shared succulent planter containing Copper spoons",
+                    "caption": "Copper spoons in the shared succulent-planter arrangement on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-shared-succulent-planter-top-161030.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-shared-succulent-planter-top-161030.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down context view of the shared succulent planter containing Copper spoons",
+                    "caption": "Top-down shared-planter context for Copper spoons on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-kalanchoe-orgyalis-detail-161023.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-kalanchoe-orgyalis-detail-161023.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "detail",
+                    "alt": "Additional oblique detail of Copper spoons in its current pot",
+                    "caption": "Additional growth detail of Copper spoons on August 29, 2026."
                 }
             ]
         },
@@ -384,13 +845,58 @@
                     "captured_on": "2026-07-31",
                     "alt": "Side view of the shared succulent planter with a tape measure beside it",
                     "caption": "The elephant bush is part of shared planter #2 in this height record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-shared-succulent-planter-side-161015.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-shared-succulent-planter-side-161015.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "context",
+                    "alt": "Side-ish view of the shared succulent planter containing Elephant bush",
+                    "caption": "Elephant bush in the shared succulent-planter arrangement on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-shared-succulent-planter-top-161030.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-shared-succulent-planter-top-161030.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down context view of the shared succulent planter containing Elephant bush",
+                    "caption": "Top-down shared-planter context for Elephant bush on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-portulacaria-afra-detail-161026.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-portulacaria-afra-detail-161026.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "detail",
+                    "alt": "Additional oblique detail of Elephant bush in its current pot",
+                    "caption": "Additional growth detail of Elephant bush on August 29, 2026."
                 }
             ]
         },
         {
             "plant_slug": "aeonium-haworthii-dream-color",
-            "photos": [],
-            "pending_note": "A repository photo of individually potted #4 has not been added yet."
+            "photos": [
+                {
+                    "file": "assets/collection-photos/2026-08-29-aeonium-haworthii-dream-color-side-160948.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-aeonium-haworthii-dream-color-side-160948.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Kiwi aeonium in its current pot",
+                    "caption": "Side-ish growth view of Kiwi aeonium on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-aeonium-haworthii-dream-color-top-160951.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-aeonium-haworthii-dream-color-top-160951.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Kiwi aeonium in its current pot",
+                    "caption": "Top-down growth view of Kiwi aeonium on August 29, 2026."
+                }
+            ]
         },
         {
             "plant_slug": "pilosocereus-pachycladus-variegated",
@@ -402,6 +908,24 @@
                     "captured_on": "2026-07-31",
                     "alt": "Shared rehabilitation cactus planter with a tape measure beside the plants",
                     "caption": "The probable variegated Pilosocereus is part of shared planter #1 in this height record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-rehab-planter-context-160955.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-rehab-planter-context-160955.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "context",
+                    "alt": "Shared rehab planter with the variegated blue torch behind the monkey tail and golden torch",
+                    "caption": "The variegated blue torch behind its two rehab-planter companions on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-pilosocereus-pachycladus-variegated-detail-161001.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-pilosocereus-pachycladus-variegated-detail-161001.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "detail",
+                    "alt": "Additional oblique detail of Variegated blue torch cactus in its current pot",
+                    "caption": "Additional growth detail of Variegated blue torch cactus on August 29, 2026."
                 }
             ]
         },
@@ -415,6 +939,24 @@
                     "captured_on": "2026-07-31",
                     "alt": "Shared rehabilitation cactus planter with a tape measure beside the plants",
                     "caption": "The monkey tail cactus is part of shared planter #1 in this height record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-rehab-planter-context-160955.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-rehab-planter-context-160955.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "context",
+                    "alt": "Shared rehab planter with the monkey tail at left, golden torch at center, and variegated blue torch behind",
+                    "caption": "The monkey tail at left in its shared rehab-planter context on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-cleistocactus-colademononis-detail-160956.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-cleistocactus-colademononis-detail-160956.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "detail",
+                    "alt": "Additional oblique detail of Monkey tail cactus in its current pot",
+                    "caption": "Additional growth detail of Monkey tail cactus on August 29, 2026."
                 }
             ]
         },
@@ -428,6 +970,24 @@
                     "captured_on": "2026-07-31",
                     "alt": "Shared rehabilitation cactus planter with a tape measure beside the plants",
                     "caption": "The probable Echinopsis spachiana is part of shared planter #1 in this height record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-rehab-planter-context-160955.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-rehab-planter-context-160955.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "context",
+                    "alt": "Shared rehab planter with the golden torch centered between the monkey tail and variegated blue torch",
+                    "caption": "The golden torch centered in its shared rehab-planter context on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-echinopsis-spachiana-detail-161005.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-echinopsis-spachiana-detail-161005.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "detail",
+                    "alt": "Additional oblique detail of Golden torch cactus in its current pot",
+                    "caption": "Additional growth detail of Golden torch cactus on August 29, 2026."
                 }
             ]
         },
@@ -456,6 +1016,24 @@
                     "alt": "Clean presentation crop of the black back of the money tree nursery tag with the LiveTrends name and website",
                     "caption": "The reverse identifies LiveTrends as the supplier brand for the genus-level Pachira tag.",
                     "derived_note": "AI-assisted presentation crop from a user-supplied chat photo; the original camera export is not stored in this repository."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-pachira-glabra-side-161010.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-pachira-glabra-side-161010.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Money tree in its current pot",
+                    "caption": "Side-ish growth view of Money tree on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-pachira-glabra-top-161013.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-pachira-glabra-top-161013.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Money tree in its current pot",
+                    "caption": "Top-down growth view of Money tree on August 29, 2026."
                 }
             ]
         },
@@ -517,6 +1095,24 @@
                     "captured_on": "2026-08-29",
                     "alt": "Cropped Mountain Crest seller label for P26 showing code 209B and the truncated Eve's needle name",
                     "caption": "Seller-label crop linking P26 / H3 to the ordered Eve's needle record; the printed name is visibly truncated on the physical tag."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-austrocylindropuntia-subulata-side-160425.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-austrocylindropuntia-subulata-side-160425.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Eve's needle in its current pot",
+                    "caption": "Side-ish growth view of Eve's needle on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-austrocylindropuntia-subulata-top-160809.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-austrocylindropuntia-subulata-top-160809.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Eve's needle in its current pot",
+                    "caption": "Top-down growth view of Eve's needle on August 29, 2026."
                 }
             ]
         },
@@ -578,6 +1174,24 @@
                     "captured_on": "2026-08-29",
                     "alt": "Cropped Mountain Crest seller label for P23 showing code 226 and the truncated paper spine cactus name",
                     "caption": "Seller-label crop linking P23 / G2 to the ordered paper spine record; the cultivar wording is visibly truncated on the physical tag."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-tephrocactus-articulatus-papyracanthus-side-160511.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-tephrocactus-articulatus-papyracanthus-side-160511.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Paper spine cactus in its current pot",
+                    "caption": "Side-ish growth view of Paper spine cactus on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-tephrocactus-articulatus-papyracanthus-top-160940.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-tephrocactus-articulatus-papyracanthus-top-160940.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Paper spine cactus in its current pot",
+                    "caption": "Top-down growth view of Paper spine cactus on August 29, 2026."
                 }
             ]
         },
@@ -639,6 +1253,24 @@
                     "captured_on": "2026-08-29",
                     "alt": "Cropped Mountain Crest seller label for P27 showing code 204 and the truncated Black Widow name",
                     "caption": "Seller-label crop linking P27 / G1 to the Black Widow order record; the physical tag is evidence of the seller's name, not independent cultivar verification."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-gymnocalycium-mihanovichii-black-widow-side-160445.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-gymnocalycium-mihanovichii-black-widow-side-160445.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Black Widow in its current pot",
+                    "caption": "Side-ish growth view of Black Widow on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-gymnocalycium-mihanovichii-black-widow-top-160927.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-gymnocalycium-mihanovichii-black-widow-top-160927.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Black Widow in its current pot",
+                    "caption": "Top-down growth view of Black Widow on August 29, 2026."
                 }
             ]
         },
@@ -708,6 +1340,24 @@
                     "captured_on": "2026-08-29",
                     "alt": "Cropped Mountain Crest seller label for P28 reading Royal Flush Split Rock",
                     "caption": "Seller-label crop linking P28 / G3 to the Royal Flush split rock order record."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-pleiospilos-nelii-royal-flush-side-160513.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-pleiospilos-nelii-royal-flush-side-160513.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Royal Flush split rock in its current pot",
+                    "caption": "Side-ish growth view of Royal Flush split rock on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-pleiospilos-nelii-royal-flush-top-160943.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-pleiospilos-nelii-royal-flush-top-160943.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Royal Flush split rock in its current pot",
+                    "caption": "Top-down growth view of Royal Flush split rock on August 29, 2026."
                 }
             ]
         },
@@ -761,6 +1411,24 @@
                     "captured_on": "2026-08-29",
                     "alt": "Cropped Mountain Crest seller label for P25 reading Raindrops",
                     "caption": "Seller-label crop linking P25 / H2 to the Raindrops order record; the label remains seller evidence rather than independent cultivar proof."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-echeveria-raindrops-side-160503.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-echeveria-raindrops-side-160503.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Raindrops echeveria in its current pot",
+                    "caption": "Side-ish growth view of Raindrops echeveria on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-echeveria-raindrops-top-160937.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-echeveria-raindrops-top-160937.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Raindrops echeveria in its current pot",
+                    "caption": "Top-down growth view of Raindrops echeveria on August 29, 2026."
                 }
             ]
         },
@@ -838,9 +1506,27 @@
                     "captured_on": "2026-08-29",
                     "alt": "Cropped Mountain Crest seller label for P24 showing the truncated Colorockz Coconut Crystal name",
                     "caption": "Seller-label crop linking P24 / H1 to the Coconut Crystal order record; the physical tag's name is visibly truncated."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-sempervivum-coconut-crystal-side-160408.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-sempervivum-coconut-crystal-side-160408.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "side",
+                    "alt": "Side-ish view of Coconut Crystal in its current pot",
+                    "caption": "Side-ish growth view of Coconut Crystal on August 29, 2026."
+                },
+                {
+                    "file": "assets/collection-photos/2026-08-29-sempervivum-coconut-crystal-top-160749.webp",
+                    "source_file": "assets/collection-photos/2026-08-29-sempervivum-coconut-crystal-top-160749.webp",
+                    "kind": "collection",
+                    "captured_on": "2026-08-29",
+                    "view": "top",
+                    "alt": "Top-down view of Coconut Crystal in its current pot",
+                    "caption": "Top-down growth view of Coconut Crystal on August 29, 2026."
                 }
             ]
         }
     ],
-    "schema_version": 1
+    "schema_version": 2
 }

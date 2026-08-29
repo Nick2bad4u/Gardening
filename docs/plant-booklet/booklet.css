@@ -802,6 +802,45 @@ main {
     gap: 1.2rem;
 }
 
+.collection-history-note {
+    max-width: 50rem;
+    margin: 0 0 1.4rem;
+    color: var(--muted-ink);
+    font-family: var(--serif);
+    font-size: 1rem;
+    line-height: 1.55;
+}
+
+.collection-date-group + .collection-date-group,
+.collection-evidence-block {
+    margin-top: 2.4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+}
+
+.collection-date-heading {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.9rem;
+}
+
+.collection-date-heading :is(h2, h3) {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    font-weight: 600;
+}
+
+.collection-date-heading > span {
+    color: var(--muted-ink);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
 .collection-photo {
     min-width: 0;
     margin: 0;
@@ -843,6 +882,25 @@ main {
     line-height: 1.4;
 }
 
+.photo-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+.photo-view {
+    width: fit-content;
+    padding: 0.16rem 0.42rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--muted-ink);
+    font-size: 0.61rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
 .collection-photo figcaption strong {
     color: var(--ink);
     font-size: 0.88rem;
@@ -880,6 +938,56 @@ main {
 
 .collection-photo-pending p {
     margin: 0;
+}
+
+.collection-history-page {
+    min-height: min(800px, calc(100svh - 9rem));
+}
+
+.collection-history-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.8fr);
+    gap: 1.5rem 3rem;
+    align-items: end;
+    padding: clamp(2.5rem, 7vw, 5.5rem);
+    border-bottom: 1px solid var(--line-strong);
+    background:
+        radial-gradient(
+            circle at 85% 10%,
+            color-mix(in srgb, var(--sage) 18%, transparent),
+            transparent 34%
+        ),
+        var(--page-soft);
+}
+
+.collection-history-hero .kicker {
+    grid-column: 1 / -1;
+    color: var(--clay);
+}
+
+.collection-history-hero h1 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(3rem, 8vw, 6.2rem);
+    font-weight: 500;
+    letter-spacing: -0.055em;
+    line-height: 0.9;
+}
+
+.collection-history-hero > p:last-child {
+    margin: 0;
+    color: var(--muted-ink);
+    font-family: var(--serif);
+    font-size: 1.08rem;
+    line-height: 1.55;
+}
+
+.collection-overview-timeline {
+    padding: clamp(2rem, 5vw, 4.5rem);
+}
+
+.collection-overview-photo img {
+    aspect-ratio: 16 / 9;
 }
 
 .profile-layout {
@@ -1471,6 +1579,10 @@ main {
         grid-template-columns: 1fr;
         gap: 0.8rem;
     }
+
+    .collection-history-hero {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 680px) {
@@ -1617,6 +1729,11 @@ main {
 
     .collection-gallery {
         padding: 2rem 1.2rem;
+    }
+
+    .collection-history-hero,
+    .collection-overview-timeline {
+        padding: 2.2rem 1.2rem;
     }
 
     .lifecycle-gallery {
@@ -1907,6 +2024,11 @@ main {
     .collection-gallery {
         padding: 0.25in;
         break-inside: avoid;
+    }
+
+    .collection-history-hero,
+    .collection-overview-timeline {
+        padding: 0.3in;
     }
 
     .collection-gallery > header {
