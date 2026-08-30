@@ -1,10 +1,11 @@
 # Money tree
 
-- Inventory: Houseplant-01 — _Pachira glabra_
+- Inventory: Houseplant-01 — _Pachira_ cf. _glabra_
 - Label ID: `#3`
+- Tracker ID: `P21`
 - Visual description: Young tropical tree with a smooth green trunk and hand-shaped clusters of glossy leaflets.
 - Interesting fact: The retail tag names only _Pachira_; the “money tree” trade name is used for more than one cultivated _Pachira_ species.
-- Identification: **retail tag confirms genus _Pachira_; _P. glabra_ remains the supplied working species identification**
+- Identification: **retail tag confirms genus _Pachira_; _P. glabra_ is a supplied working candidate, not a proven species identification**
 - Acquired from: Lowe's; exact store and date not recorded
 - Current pot: transplanted from 4 inches into a 6-inch Amazon Basics pot
 - Photo archive: [licensed species-reference images](../../../assets/plants/pachira-glabra/)
@@ -13,12 +14,13 @@
 
 | Kind                   | Name                                                              |
 | ---------------------- | ----------------------------------------------------------------- |
-| Working species record | _Pachira glabra_; retail tag reads only _Pachira_                 |
+| Working species record | _Pachira_ cf. _glabra_; retail tag reads only _Pachira_           |
 | Common name            | Money tree                                                        |
 | Common confusion       | _Pachira aquatica_ is also widely sold under the same common name |
 
 The record retains the supplied _Pachira glabra_ identification as a working
-species name. The archived retail tag supports the genus but does not print a
+candidate, written _Pachira_ cf. _glabra_ rather than as a confirmed species.
+The archived retail tag supports the genus but does not print a
 species epithet, so it cannot distinguish _P. glabra_ from _P. aquatica_. Clear
 leaf, trunk, flower, and fruit photographs remain useful future evidence.
 
@@ -39,7 +41,7 @@ chat on 2026-08-26; the untouched camera exports are not stored in this repo.
 
 ## Origin, form, and publication
 
-For the working species record, Kew accepts _Pachira glabra_, first published
+For the working species candidate, Kew accepts _Pachira glabra_, first published
 in 1868, and places its native range in southeastern and southern Brazil. It is
 a wet-tropical tree, not a succulent, so it should not follow the cactus
 dry-down schedule.

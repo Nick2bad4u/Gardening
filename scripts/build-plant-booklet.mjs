@@ -27,24 +27,31 @@ const collectionPhotoManifestPath = path.join(
     "collection-photos",
     "photo-manifest.json"
 );
+const plantTrackerDataPath = path.join(
+    repositoryRoot,
+    "docs",
+    "layouts",
+    "plant-tracker-data.js"
+);
+const plantProfileDataPath = path.join(
+    repositoryRoot,
+    "docs",
+    "layouts",
+    "plant-profile-data.json"
+);
 
 const groups = [
     {
-        key: "starter",
-        eyebrow: "Starter cactus group",
-        title: "Starter cacti",
-        description:
-            "Twelve individually potted plants with permanent A1-D3 label IDs.",
-    },
-    {
         key: "cacti",
-        eyebrow: "Individual cactus additions",
-        title: "New individual cacti",
+        directories: ["starter", "cacti"],
+        eyebrow: "Cactus collection",
+        title: "Cacti",
         description:
-            "Six August cacti with E1-F3 labels plus three rooted Mountain Crest cacti received and repotted August 28.",
+            "Twenty cactus profiles plus one cactus-form Euphorbia, in Google Sheets P-ID order with permanent pot labels and collection IDs visible.",
     },
     {
         key: "succulents",
+        directories: ["succulents"],
         eyebrow: "Shared planter and individual succulents",
         title: "Succulents",
         description:
@@ -52,6 +59,7 @@ const groups = [
     },
     {
         key: "rehab",
+        directories: ["rehab"],
         eyebrow: "Older planter and archive",
         title: "Older and rehabilitation plants",
         description:
@@ -59,6 +67,7 @@ const groups = [
     },
     {
         key: "houseplants",
+        directories: ["houseplants"],
         eyebrow: "Tropical houseplant",
         title: "Houseplants",
         description:
@@ -77,42 +86,6 @@ const lifecycleStages = [
 const lifecycleOrder = new Map(
     lifecycleStages.map(([subject], index) => [subject, index])
 );
-
-const trackerIdByInventoryId = new Map([
-    ["Starter-07", "P01"],
-    ["Starter-05", "P02"],
-    ["Starter-04", "P03"],
-    ["Starter-02", "P04"],
-    ["Starter-01", "P05"],
-    ["Starter-09", "P06"],
-    ["Starter-08", "P07"],
-    ["Starter-03", "P08"],
-    ["Starter-12", "P09"],
-    ["Starter-11", "P10"],
-    ["Starter-06", "P11"],
-    ["Starter-10", "P12"],
-    ["Cactus-01", "P13"],
-    ["Cactus-02", "P14"],
-    ["Cactus-03", "P15"],
-    ["Cactus-06", "P16"],
-    ["Cactus-05", "P17"],
-    ["Cactus-04", "P18"],
-    ["Rehab-01", "P19"],
-    ["Rehab-02", "P19"],
-    ["Rehab-03", "P19"],
-    ["Succulent-01", "P20"],
-    ["Succulent-02", "P20"],
-    ["Succulent-03", "P20"],
-    ["Succulent-04", "P20"],
-    ["Houseplant-01", "P21"],
-    ["Succulent-05", "P22"],
-    ["Cactus-08", "P23"],
-    ["Succulent-08", "P24"],
-    ["Succulent-07", "P25"],
-    ["Cactus-07", "P26"],
-    ["Cactus-09", "P27"],
-    ["Succulent-06", "P28"],
-]);
 
 const inaturalistBySlug = new Map([
     [
@@ -352,6 +325,106 @@ function stripMarkdown(value) {
         .trim();
 }
 
+function stripHtml(value) {
+    return value
+        .replaceAll(/<[^>]+>/g, " ")
+        .replaceAll(/\s+/g, " ")
+        .trim();
+}
+
+function parsePlantSheetGids(source) {
+    const block = source.match(
+        /const plantSheetGids = Object\.freeze\(\{([\s\S]*?)\}\);/
+    )?.[1];
+    if (!block) {
+        throw new Error(
+            "Could not read plantSheetGids from docs/layouts/plant-tracker-data.js."
+        );
+    }
+
+    return new Map(
+        [...block.matchAll(/\b(P\d{2}):\s*(\d+)/g)].map((match) => [
+            match[1],
+            Number(match[2]),
+        ])
+    );
+}
+
+function plantSheetUrl(trackerId, plantSheetGids) {
+    if (!trackerId) return undefined;
+    const gid = plantSheetGids.get(trackerId);
+    if (!gid) {
+        throw new Error(`No Google Sheets tab is configured for ${trackerId}.`);
+    }
+    return `https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=${gid}#gid=${gid}`;
+}
+
+function findSellerProductLink(markdown) {
+    const allowedHosts = new Set([
+        "costafarms.com",
+        "mountaincrestgardens.com",
+        "shopaltmanplants.com",
+        "www.lowes.com",
+    ]);
+
+    for (const match of markdown.matchAll(
+        /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g
+    )) {
+        const [
+            ,
+            label,
+            href,
+        ] = match;
+        const url = new URL(href);
+        const exactProductCue =
+            /seller listing|altman reserve|feather cactus/i.test(label);
+        if (allowedHosts.has(url.hostname) && exactProductCue) {
+            return { href, label: stripMarkdown(label) };
+        }
+    }
+
+    return undefined;
+}
+
+function decorateProfileBody(html) {
+    const wrapped = html.replace(
+        /(<h2>Seller listing snapshot<\/h2>[\s\S]*?)(?=<h2>|$)/,
+        '<section class="seller-snapshot" aria-label="Seller listing snapshot">$1</section>\n'
+    );
+
+    return wrapped.replaceAll(/<h2>([\s\S]*?)<\/h2>/g, (_, headingHtml) => {
+        const heading = stripHtml(headingHtml).toLowerCase();
+        let tone = "story";
+        let icon = "✦";
+        if (/source/.test(heading)) {
+            tone = "sources";
+            icon = "↗";
+        } else if (/seller/.test(heading)) {
+            tone = "seller";
+            icon = "◇";
+        } else if (/care|water|light|rehabilitation/.test(heading)) {
+            tone = "care";
+            icon = "◒";
+        } else if (/propagat|prun|rotation/.test(heading)) {
+            tone = "growth";
+            icon = "↟";
+        } else if (/risk|safety|pest|toxicity|watch/.test(heading)) {
+            tone = "warning";
+            icon = "!";
+        } else if (
+            /ident|name|identity|evidence|status|removal/.test(heading)
+        ) {
+            tone = "identity";
+            icon = "▤";
+        } else if (/origin|habitat|wild|ecology/.test(heading)) {
+            tone = "habitat";
+            icon = "⌖";
+        }
+
+        return `<h2 class="profile-section-heading profile-section-heading--${tone}"><span class="profile-section-icon" aria-hidden="true">${icon}</span><span>${headingHtml}</span></h2>`;
+    });
+}
+
 async function renderInline(markdown) {
     const rendered = String(await markdownProcessor.process(markdown.trim()));
     return rendered.replace(/^<p>/, "").replace(/<\/p>\s*$/, "");
@@ -366,7 +439,7 @@ function externalizeLinks(html) {
         );
 }
 
-function parseProfile(markdown, group, fileName) {
+function parseProfile(markdown, group, sourceDirectory, fileName) {
     const lines = markdown.replaceAll("\r\n", "\n").split("\n");
     const titleLine = lines.find((line) => line.startsWith("# "));
     const firstSectionIndex = lines.findIndex((line) => line.startsWith("## "));
@@ -395,11 +468,28 @@ function parseProfile(markdown, group, fileName) {
     const receiptUnverified = /\b(?:pending|unverified)\b/i.test(
         stripMarkdown(orderStatusMarkdown)
     );
+    const historical =
+        inventoryId === "Rehab-04" ||
+        stripMarkdown(metadata.status ?? "")
+            .toLowerCase()
+            .includes("historical");
+    const trackerId = stripMarkdown(metadata["tracker id"] ?? "");
+    if (!historical && !/^P\d{2}$/.test(trackerId)) {
+        throw new Error(
+            `Current profile ${fileName} needs a permanent Tracker ID.`
+        );
+    }
+    if (historical && trackerId) {
+        throw new Error(
+            `Historical profile ${fileName} must not claim a current Tracker ID.`
+        );
+    }
 
     return {
         fileName,
         slug: path.basename(fileName, ".md"),
         group: group.key,
+        sourceDirectory,
         groupTitle: group.title,
         eyebrow: group.eyebrow,
         title: titleLine.slice(2).trim(),
@@ -418,12 +508,10 @@ function parseProfile(markdown, group, fileName) {
         visualDescriptionMarkdown: metadata["visual description"] ?? "",
         interestingFactMarkdown: metadata["interesting fact"] ?? "",
         bodyMarkdown: lines.slice(firstSectionIndex).join("\n").trim(),
-        historical:
-            inventoryId === "Rehab-04" ||
-            stripMarkdown(metadata.status ?? "")
-                .toLowerCase()
-                .includes("historical"),
+        historical,
         receiptUnverified,
+        trackerId: trackerId || undefined,
+        sellerProductLink: findSellerProductLink(markdown),
     };
 }
 
@@ -442,6 +530,12 @@ function compareInventory(left, right) {
         String(leftPrefix).localeCompare(String(rightPrefix)) ||
         Number(leftNumber) - Number(rightNumber)
     );
+}
+
+function compareProfiles(left, right) {
+    const leftTracker = Number(left.trackerId?.slice(1)) || 999;
+    const rightTracker = Number(right.trackerId?.slice(1)) || 999;
+    return leftTracker - rightTracker || compareInventory(left, right);
 }
 
 function photoScore(photo, desiredSubject, isHero = false) {
@@ -509,6 +603,23 @@ function collectionPhotoDate(photo) {
     return photo.captured_on ?? photo.provided_on;
 }
 
+function compareCollectionPhotosNewestFirst(left, right) {
+    const dateDifference = collectionPhotoDate(right).localeCompare(
+        collectionPhotoDate(left)
+    );
+    const viewPriority = new Map([
+        ["detail", 0],
+        ["side", 1],
+        ["top", 2],
+        ["context", 3],
+        ["overview", 4],
+    ]);
+    return (
+        dateDifference ||
+        (viewPriority.get(left.view) ?? 9) - (viewPriority.get(right.view) ?? 9)
+    );
+}
+
 function collectionViewLabel(view) {
     return {
         side: "Side view",
@@ -548,7 +659,16 @@ function renderCollectionPhoto(photo, extraClass = "") {
         ? `<span class="photo-view">${escapeHtml(viewLabel)}</span>`
         : "";
 
-    return `<figure class="collection-photo${extraClass ? ` ${escapeHtml(extraClass)}` : ""}" data-photo-kind="${escapeHtml(photo.kind)}"${photo.view ? ` data-photo-view="${escapeHtml(photo.view)}"` : ""}>
+    const classes = [
+        "collection-photo",
+        extraClass,
+        ["context", "overview"].includes(photo.view)
+            ? "collection-photo--context"
+            : "",
+        photo.kind === "nursery-label" ? "nursery-label-photo" : "",
+    ].filter(Boolean);
+
+    return `<figure class="${classes.map(escapeHtml).join(" ")}" data-photo-kind="${escapeHtml(photo.kind)}"${photo.view ? ` data-photo-view="${escapeHtml(photo.view)}"` : ""}>
     <a href="${escapeHtml(imagePath)}">
       <img src="${escapeHtml(imagePath)}" alt="${escapeHtml(photo.alt)}" loading="lazy" decoding="async">
     </a>
@@ -567,9 +687,7 @@ function renderCollectionDateGroups(
     extraPhotoClass = "",
     headingLevel = 3
 ) {
-    const sortedPhotos = [...photos].sort((left, right) =>
-        collectionPhotoDate(left).localeCompare(collectionPhotoDate(right))
-    );
+    const sortedPhotos = [...photos].sort(compareCollectionPhotosNewestFirst);
     const photosByDate = Map.groupBy(sortedPhotos, collectionPhotoDate);
 
     return [...photosByDate]
@@ -589,61 +707,95 @@ function renderCollectionDateGroups(
 
 function renderCollectionGallery(profile) {
     const photos = profile.collectionRecord.photos;
-    const growthPhotos = photos.filter((photo) => photo.kind === "collection");
-    const nurseryLabelPhotos = photos.filter(
-        (photo) => photo.kind === "nursery-label"
-    );
+    const growthPhotos = photos
+        .filter((photo) => photo.kind === "collection")
+        .sort(compareCollectionPhotosNewestFirst);
+    const newestPhotos = growthPhotos.slice(0, 2);
+    const olderPhotos = growthPhotos.slice(2);
     const growthHistory = growthPhotos.length
         ? `<div class="collection-history">
-        <p class="collection-history-note">Sessions are ordered from oldest to newest so future photographs extend this visual growth record.</p>
-        ${renderCollectionDateGroups(growthPhotos)}
+        <p class="collection-history-note">Newest first. The latest two views stay visible; expand the archive for every earlier dated photograph.</p>
+        <div class="collection-history-preview" aria-label="Latest collection photographs">
+          ${newestPhotos.map((photo) => renderCollectionPhoto(photo, "collection-photo--latest")).join("\n")}
+        </div>
+        ${
+            olderPhotos.length
+                ? `<details class="collection-history-details">
+          <summary class="collection-history-summary" aria-expanded="false">
+            <span><strong>View complete photo history</strong><small>${olderPhotos.length} earlier ${olderPhotos.length === 1 ? "photograph" : "photographs"}, newest to oldest</small></span>
+            <span class="history-summary-icon" aria-hidden="true">+</span>
+          </summary>
+          <div class="collection-history-older">
+            ${renderCollectionDateGroups(olderPhotos)}
+          </div>
+        </details>`
+                : ""
+        }
       </div>`
         : "";
-    const nurseryEvidence = nurseryLabelPhotos.length
-        ? `<section class="collection-evidence-block" aria-label="Nursery-label evidence">
-        <header class="collection-date-heading">
-          <h3>Nursery-label evidence</h3>
-          <span>${nurseryLabelPhotos.length} ${nurseryLabelPhotos.length === 1 ? "view" : "views"}</span>
-        </header>
-        <div class="collection-photo-grid">
-          ${nurseryLabelPhotos.map((photo) => renderCollectionPhoto(photo)).join("\n")}
-        </div>
-      </section>`
-        : "";
-    const content = photos.length
-        ? `${growthHistory}${nurseryEvidence}`
+    const content = growthPhotos.length
+        ? growthHistory
         : `<div class="collection-photo-pending">
         <span aria-hidden="true">+</span>
         <p><strong>Collection photo pending.</strong> ${escapeHtml(profile.collectionRecord.pending_note)}</p>
       </div>`;
 
-    return `<section class="collection-gallery" aria-labelledby="${escapeHtml(profile.slug)}-collection-heading">
+    return `<section class="collection-gallery" id="${escapeHtml(profile.slug)}-photo-history" aria-labelledby="${escapeHtml(profile.slug)}-collection-heading">
     <header>
       <div>
-        <p class="kicker">Collection evidence</p>
-        <h2 id="${escapeHtml(profile.slug)}-collection-heading">Growth history</h2>
+        <p class="kicker">Dated collection evidence</p>
+        <h2 id="${escapeHtml(profile.slug)}-collection-heading">Plant photo history</h2>
       </div>
-      <p>These dated, user-owned photographs document this collection record. They are separate from the reusable-license species references below.</p>
+      <p>These user-owned photographs document this exact plant. Context views use a compact crop here; open any image for the complete evidence file.</p>
     </header>
     ${content}
   </section>`;
 }
 
-function renderCollectionHistoryPage(overviewPhotos) {
-    return `<section class="book-page collection-history-page" id="collection-history" data-page="collection-history" data-title="Collection photo history" hidden>
-    <header class="collection-history-hero">
-      <p class="kicker">Room, tables, and shared planters</p>
-      <h1>Collection photo history</h1>
-      <p>Wide views preserve how the plants were arranged at each dated session. Individual plant pages carry the matching side, top, detail, and shared-planter views.</p>
+function renderNurseryEvidence(profile) {
+    const nurseryLabelPhotos = profile.collectionRecord.photos.filter(
+        (photo) => photo.kind === "nursery-label"
+    );
+    if (!nurseryLabelPhotos.length) return "";
+
+    return `<section class="nursery-evidence" id="${escapeHtml(profile.slug)}-nursery-evidence" aria-labelledby="${escapeHtml(profile.slug)}-nursery-heading">
+    <header>
+      <div>
+        <p class="kicker">Original identification evidence</p>
+        <h2 id="${escapeHtml(profile.slug)}-nursery-heading">Nursery labels</h2>
+      </div>
+      <p>Label wording is preserved as evidence, not treated as botanical proof. The compact previews keep the page readable; open one for the archived source.</p>
     </header>
-    <div class="collection-overview-timeline">
-      ${renderCollectionDateGroups(overviewPhotos, "collection-overview-photo", 2)}
+    <div class="collection-photo-grid collection-photo-grid--labels">
+      ${nurseryLabelPhotos.map((photo) => renderCollectionPhoto(photo)).join("\n")}
     </div>
-    <footer class="folio">
-      <span>The Fenton Collection · visual record</span>
-      <span>History</span>
-    </footer>
   </section>`;
+}
+
+function choosePlantAvatar(collectionRecord, heroPhoto) {
+    const collectionPhoto = collectionRecord.photos
+        .filter(
+            (photo) =>
+                photo.kind === "collection" &&
+                !["context", "overview"].includes(photo.view)
+        )
+        .sort(compareCollectionPhotosNewestFirst)[0];
+    if (collectionPhoto) {
+        return {
+            alt: collectionPhoto.alt,
+            src: `../../${collectionPhoto.file.replaceAll("\\", "/")}`,
+        };
+    }
+    if (heroPhoto) {
+        return { alt: heroPhoto.title, src: photoPath(heroPhoto) };
+    }
+    return undefined;
+}
+
+function renderPlantAvatar(profile, variant) {
+    return profile.avatar
+        ? `<img class="plant-avatar plant-avatar--${escapeHtml(variant)}" src="${escapeHtml(profile.avatar.src)}" alt="${escapeHtml(profile.avatar.alt)}" loading="lazy" decoding="async">`
+        : `<span class="plant-avatar plant-avatar--${escapeHtml(variant)}" aria-hidden="true">🌵</span>`;
 }
 
 function renderCredit(photo, short = false) {
@@ -732,10 +884,16 @@ function renderLifecycleGallery(profile) {
 }
 
 async function loadProfiles() {
-    const [manifest, collectionManifest] = await Promise.all([
+    const [
+        manifest,
+        collectionManifest,
+        trackerDataSource,
+    ] = await Promise.all([
         readFile(photoManifestPath, "utf8").then(JSON.parse),
         readFile(collectionPhotoManifestPath, "utf8").then(JSON.parse),
+        readFile(plantTrackerDataPath, "utf8"),
     ]);
+    const plantSheetGids = parsePlantSheetGids(trackerDataSource);
     const photosBySlug = Map.groupBy(
         manifest.photos,
         (photo) => photo.plant_slug
@@ -746,88 +904,109 @@ async function loadProfiles() {
     const profiles = [];
 
     for (const group of groups) {
-        const directory = path.join(
-            repositoryRoot,
-            "docs",
-            "plants",
-            group.key
-        );
-        const fileNames = (await readdir(directory))
-            .filter((fileName) => fileName.endsWith(".md"))
-            .sort();
-
-        for (const fileName of fileNames) {
-            const markdown = await readFile(
-                path.join(directory, fileName),
-                "utf8"
+        for (const sourceDirectory of group.directories) {
+            const directory = path.join(
+                repositoryRoot,
+                "docs",
+                "plants",
+                sourceDirectory
             );
-            const profile = parseProfile(markdown, group, fileName);
-            const photos = photosBySlug.get(profile.slug) ?? [];
-            const collectionRecord = collectionPhotosBySlug.get(profile.slug);
+            const fileNames = (await readdir(directory))
+                .filter((fileName) => fileName.endsWith(".md"))
+                .sort();
 
-            if (!collectionRecord) {
-                throw new Error(
-                    `Collection-photo manifest has no record for ${profile.slug}.`
+            for (const fileName of fileNames) {
+                const markdown = await readFile(
+                    path.join(directory, fileName),
+                    "utf8"
                 );
-            }
-
-            const bodyHtml = externalizeLinks(
-                String(await markdownProcessor.process(profile.bodyMarkdown))
-            );
-            const scientificHtml = await renderInline(
-                profile.scientificMarkdown
-            );
-            const labelHtml = await renderInline(profile.labelMarkdown);
-            const identificationHtml = await renderInline(
-                profile.identificationMarkdown
-            );
-            const statusHtml = await renderInline(profile.statusMarkdown);
-            const acquiredFromHtml = profile.acquiredFromMarkdown
-                ? await renderInline(profile.acquiredFromMarkdown)
-                : "";
-            const acquiredOnHtml = profile.acquiredOnMarkdown
-                ? await renderInline(profile.acquiredOnMarkdown)
-                : "";
-            const orderedFromHtml = profile.orderedFromMarkdown
-                ? await renderInline(profile.orderedFromMarkdown)
-                : "";
-            const visualDescriptionHtml = await renderInline(
-                profile.visualDescriptionMarkdown
-            );
-            const interestingFactHtml = await renderInline(
-                profile.interestingFactMarkdown
-            );
-
-            if (!visualDescriptionHtml || !interestingFactHtml) {
-                throw new Error(
-                    `Profile ${fileName} needs Visual description and Interesting fact metadata.`
+                const profile = parseProfile(
+                    markdown,
+                    group,
+                    sourceDirectory,
+                    fileName
                 );
-            }
+                const photos = photosBySlug.get(profile.slug) ?? [];
+                const collectionRecord = collectionPhotosBySlug.get(
+                    profile.slug
+                );
 
-            profiles.push({
-                ...profile,
-                bodyHtml,
-                scientificHtml,
-                labelHtml,
-                identificationHtml,
-                statusHtml,
-                acquiredFromHtml,
-                acquiredOnHtml,
-                orderedFromHtml,
-                visualDescriptionHtml,
-                interestingFactHtml,
-                scopeNote:
-                    photos[0]?.scope_note ??
-                    "Reference photography is not archived yet; this page currently uses the collection record and linked research sources.",
-                selectedPhotos: choosePhotos(photos, profile.slug),
-                allPhotos: [...photos].sort(
-                    (left, right) =>
-                        (lifecycleOrder.get(left.subject) ?? 99) -
-                        (lifecycleOrder.get(right.subject) ?? 99)
-                ),
-                photoCount: photos.length,
-                collectionRecord,
-            });
+                if (!collectionRecord) {
+                    throw new Error(
+                        `Collection-photo manifest has no record for ${profile.slug}.`
+                    );
+                }
+
+                const bodyHtml = decorateProfileBody(
+                    externalizeLinks(
+                        String(
+                            await markdownProcessor.process(
+                                profile.bodyMarkdown
+                            )
+                        )
+                    )
+                );
+                const scientificHtml = await renderInline(
+                    profile.scientificMarkdown
+                );
+                const labelHtml = await renderInline(profile.labelMarkdown);
+                const identificationHtml = await renderInline(
+                    profile.identificationMarkdown
+                );
+                const statusHtml = await renderInline(profile.statusMarkdown);
+                const acquiredFromHtml = profile.acquiredFromMarkdown
+                    ? await renderInline(profile.acquiredFromMarkdown)
+                    : "";
+                const acquiredOnHtml = profile.acquiredOnMarkdown
+                    ? await renderInline(profile.acquiredOnMarkdown)
+                    : "";
+                const orderedFromHtml = profile.orderedFromMarkdown
+                    ? await renderInline(profile.orderedFromMarkdown)
+                    : "";
+                const visualDescriptionHtml = await renderInline(
+                    profile.visualDescriptionMarkdown
+                );
+                const interestingFactHtml = await renderInline(
+                    profile.interestingFactMarkdown
+                );
+
+                if (!visualDescriptionHtml || !interestingFactHtml) {
+                    throw new Error(
+                        `Profile ${fileName} needs Visual description and Interesting fact metadata.`
+                    );
+                }
+
+                const selectedPhotos = choosePhotos(photos, profile.slug);
+                profiles.push({
+                    ...profile,
+                    bodyHtml,
+                    scientificHtml,
+                    labelHtml,
+                    identificationHtml,
+                    statusHtml,
+                    acquiredFromHtml,
+                    acquiredOnHtml,
+                    orderedFromHtml,
+                    visualDescriptionHtml,
+                    interestingFactHtml,
+                    scopeNote:
+                        photos[0]?.scope_note ??
+                        "Reference photography is not archived yet; this page currently uses the collection record and linked research sources.",
+                    selectedPhotos,
+                    allPhotos: [...photos].sort(
+                        (left, right) =>
+                            (lifecycleOrder.get(left.subject) ?? 99) -
+                            (lifecycleOrder.get(right.subject) ?? 99)
+                    ),
+                    photoCount: photos.length,
+                    collectionRecord,
+                    avatar: choosePlantAvatar(
+                        collectionRecord,
+                        selectedPhotos[0]
+                    ),
+                    sheetUrl: plantSheetUrl(profile.trackerId, plantSheetGids),
+                });
+            }
         }
     }
 
@@ -835,10 +1014,10 @@ async function loadProfiles() {
         const groupDifference =
             groups.findIndex((group) => group.key === left.group) -
             groups.findIndex((group) => group.key === right.group);
-        return groupDifference || compareInventory(left, right);
+        return groupDifference || compareProfiles(left, right);
     });
 
-    return { collectionManifest, profiles };
+    return profiles;
 }
 
 function renderNavGroup(group, profiles) {
@@ -851,12 +1030,14 @@ function renderNavGroup(group, profiles) {
       ${groupProfiles
           .map(
               (profile) => `<li data-search="${escapeHtml(
-                  `${profile.inventoryId} ${stripMarkdown(profile.labelMarkdown)} ${profile.title} ${stripMarkdown(profile.scientificMarkdown)}`.toLowerCase()
+                  `${profile.trackerId ?? ""} ${profile.inventoryId} ${stripMarkdown(profile.labelMarkdown)} ${profile.title} ${stripMarkdown(profile.scientificMarkdown)}`.toLowerCase()
               )}">
         <a class="drawer-link" href="#${escapeHtml(profile.slug)}" data-page-link="${escapeHtml(profile.slug)}">
-          <span class="drawer-id">${escapeHtml(profile.inventoryId)}</span>
+          ${renderPlantAvatar(profile, "drawer")}
+          <span class="drawer-id"><strong>${escapeHtml(profile.trackerId ?? "Archive")}</strong><small>${profile.labelHtml}</small></span>
           <span><strong>${escapeHtml(profile.title)}</strong><small>${escapeHtml(stripMarkdown(profile.scientificMarkdown))}</small></span>
         </a>
+        ${profile.sheetUrl ? `<a class="drawer-sheet-link" href="${escapeHtml(profile.sheetUrl)}" target="_blank" rel="noreferrer"><span aria-hidden="true">▦</span> Open ${escapeHtml(profile.trackerId)} in Google Sheets</a>` : ""}
       </li>`
           )
           .join("\n")}
@@ -868,7 +1049,7 @@ function renderContentsGroup(group, profiles, pageNumberBySlug) {
     const groupProfiles = profiles.filter(
         (profile) => profile.group === group.key
     );
-    return `<section class="contents-group">
+    return `<section class="contents-group${group.key === "cacti" ? " contents-group--wide" : ""}" data-group="${escapeHtml(group.key)}">
     <header>
       <p>${escapeHtml(group.eyebrow)}</p>
       <h2>${escapeHtml(group.title)}</h2>
@@ -879,7 +1060,8 @@ function renderContentsGroup(group, profiles, pageNumberBySlug) {
           .map(
               (profile) => `<li>
         <a href="#${escapeHtml(profile.slug)}" data-page-link="${escapeHtml(profile.slug)}">
-          <span class="contents-id">${escapeHtml(profile.inventoryId)}</span>
+          ${renderPlantAvatar(profile, "contents")}
+          <span class="contents-id"><strong>${escapeHtml(profile.trackerId ?? "Archive")}</strong><small>${profile.labelHtml}</small></span>
           <span class="contents-name"><strong>${escapeHtml(profile.title)}</strong><em>${escapeHtml(stripMarkdown(profile.scientificMarkdown))}</em></span>
           <span class="contents-page">${String(pageNumberBySlug.get(profile.slug)).padStart(2, "0")}</span>
         </a>
@@ -897,8 +1079,8 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         habitatPhoto,
     ] = profile.selectedPhotos;
     const archivePath = `../../assets/plants/${profile.slug}/README.md`;
-    const sourceProfilePath = `../plants/${profile.group}/${profile.fileName}`;
-    const trackerId = trackerIdByInventoryId.get(profile.inventoryId);
+    const sourceProfilePath = `../plants/${profile.sourceDirectory}/${profile.fileName}`;
+    const trackerId = profile.trackerId;
     const inaturalist = inaturalistBySlug.get(profile.slug);
     if (!inaturalist) {
         throw new Error(
@@ -907,7 +1089,13 @@ function renderProfile(profile, pageNumber, totalProfiles) {
     }
     const inaturalistUrl = `https://www.inaturalist.org/observations?taxon_name=${encodeURIComponent(inaturalist.taxon)}`;
     const historyLink = trackerId
-        ? `<a href="../layouts/plant-history.html?id=${encodeURIComponent(trackerId)}">Open the live care history <span aria-hidden="true">→</span></a>`
+        ? `<a class="profile-history-link" href="../layouts/plant-history.html?id=${encodeURIComponent(trackerId)}"><span><span aria-hidden="true">◫</span> Open the live care history<small>Measurements, watering, events, and charts</small></span><span aria-hidden="true">→</span></a>`
+        : "";
+    const sheetLink = profile.sheetUrl
+        ? `<a class="profile-sheet-link" href="${escapeHtml(profile.sheetUrl)}" target="_blank" rel="noreferrer"><span><span aria-hidden="true">▦</span> Open ${escapeHtml(trackerId)} in Google Sheets<small>Direct plant worksheet tab</small></span><span aria-hidden="true">↗</span></a>`
+        : "";
+    const productLink = profile.sellerProductLink
+        ? `<a class="seller-product-link" href="${escapeHtml(profile.sellerProductLink.href)}" target="_blank" rel="noreferrer"><span><span aria-hidden="true">◇</span> Open the exact seller product page<small>${escapeHtml(profile.sellerProductLink.label)}</small></span><span aria-hidden="true">↗</span></a>`
         : "";
     const searchText = stripMarkdown(
         `${profile.inventoryId} ${trackerId ?? ""} ${profile.labelMarkdown} ${profile.title} ${profile.scientificMarkdown} ${profile.identificationMarkdown} ${profile.acquiredFromMarkdown} ${profile.acquiredOnMarkdown} ${profile.orderedFromMarkdown} ${profile.visualDescriptionMarkdown} ${profile.interestingFactMarkdown} ${profile.bodyMarkdown}`
@@ -946,8 +1134,10 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         <span>Plant ${String(pageNumber).padStart(2, "0")} / ${totalProfiles}</span>
       </div>
       <div class="hero-title">
+        ${renderPlantAvatar(profile, "hero")}
         <div class="hero-badges">
-          <span class="id-badge">${escapeHtml(profile.inventoryId)}</span>
+          <span class="inventory-badge">Inventory ${escapeHtml(profile.inventoryId)}</span>
+          ${trackerId ? `<span class="tracker-badge">Sheets ${escapeHtml(trackerId)}</span>` : ""}
           <span class="label-badge">Label ${profile.labelHtml}</span>
           ${profile.historical ? '<span class="history-badge">Historical record</span>' : ""}
           ${profile.receiptUnverified ? '<span class="order-badge">Ordered · receipt unverified</span>' : ""}
@@ -961,6 +1151,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
     <div class="profile-intro">
       <dl>
         <div><dt>Collection record</dt><dd>${escapeHtml(profile.inventoryId)}</dd></div>
+        ${trackerId ? `<div><dt>Google Sheets ID</dt><dd><a href="${escapeHtml(profile.sheetUrl)}" target="_blank" rel="noreferrer">${escapeHtml(trackerId)} <span aria-hidden="true">↗</span></a></dd></div>` : ""}
         <div><dt>Permanent label</dt><dd>${profile.labelHtml}</dd></div>
         <div><dt>Identification</dt><dd>${profile.identificationHtml}</dd></div>
         <div><dt>Status</dt><dd>${profile.statusHtml}</dd></div>
@@ -972,17 +1163,15 @@ function renderProfile(profile, pageNumber, totalProfiles) {
     <section class="profile-at-a-glance" aria-label="Visual description and interesting fact">
       <div>
         <p class="kicker">Spot it</p>
-        <h2>What it looks like</h2>
+        <h2><span aria-hidden="true">◎</span> What it looks like</h2>
         <p>${profile.visualDescriptionHtml}</p>
       </div>
       <div>
         <p class="kicker">One curious thing</p>
-        <h2>Did you know?</h2>
+        <h2><span aria-hidden="true">✦</span> Did you know?</h2>
         <p>${profile.interestingFactHtml}</p>
       </div>
     </section>
-
-    ${renderCollectionGallery(profile)}
 
     <div class="profile-layout">
       <div class="profile-copy prose">
@@ -995,6 +1184,9 @@ function renderProfile(profile, pageNumber, totalProfiles) {
           <p class="kicker">Keep digging</p>
           <h2>Research trail</h2>
           ${historyLink}
+          ${sheetLink}
+          <a class="profile-photo-history-link" href="#${escapeHtml(profile.slug)}-photo-history"><span><span aria-hidden="true">▧</span> Jump to this plant's photo history<small>Latest two views plus the expandable archive</small></span><span aria-hidden="true">↓</span></a>
+          ${productLink}
           <a class="inaturalist-link" href="${escapeHtml(inaturalistUrl)}" data-inaturalist-taxon="${escapeHtml(inaturalist.taxon)}" target="_blank" rel="noreferrer"><span>Browse iNaturalist observations<small>${escapeHtml(inaturalist.scope)}</small></span><span aria-hidden="true">↗</span></a>
           <a href="${escapeHtml(sourceProfilePath)}">Open the source profile <span aria-hidden="true">→</span></a>
           ${archiveLink}
@@ -1004,6 +1196,10 @@ function renderProfile(profile, pageNumber, totalProfiles) {
     </div>
 
     ${renderLifecycleGallery(profile)}
+
+    ${renderCollectionGallery(profile)}
+
+    ${renderNurseryEvidence(profile)}
 
     <footer class="folio">
       <span>The Fenton Collection · 2026 field guide</span>
@@ -1052,7 +1248,7 @@ function renderCover(profiles) {
   </section>`;
 }
 
-async function renderBooklet(profiles, collectionManifest) {
+async function renderBooklet(profiles) {
     const presentCount = profiles.filter(
         (profile) => !profile.historical && !profile.receiptUnverified
     ).length;
@@ -1129,7 +1325,6 @@ async function renderBooklet(profiles, collectionManifest) {
     <nav class="drawer-nav" aria-label="Plant profiles">
       <a class="drawer-special" href="#cover" data-page-link="cover"><span>Cover</span><small>Start of the guide</small></a>
       <a class="drawer-special" href="#contents" data-page-link="contents"><span>Printed contents</span><small>All profiles at a glance</small></a>
-      <a class="drawer-special" href="#collection-history" data-page-link="collection-history"><span>Photo history</span><small>Dated room and collection overviews</small></a>
       <a class="drawer-special" href="../layouts/plant-tracker.html"><span>Plant tracker</span><small>Live weights, watering, and measurements</small></a>
       <a class="drawer-special" href="../layouts/grow-spot-layout.html"><span>Grow-spot layout</span><small>Tables, risers, light, fan, and camera</small></a>
       <a class="drawer-special" href="../layouts/indoor-acclimation-calendar.html"><span>Acclimation calendar</span><small>Dated light and airflow schedule</small></a>
@@ -1146,16 +1341,14 @@ async function renderBooklet(profiles, collectionManifest) {
       <header class="contents-heading">
         <p>The Fenton Collection · Summer 2026</p>
         <h1>${presentCount} plants present,<br>${orderSummary}${profiles.length} stories.</h1>
-        <span>Each profile combines collection history, botanical identity, native habitat, mature form, flowers, indoor care, propagation, risks, source links, and scoped iNaturalist observation galleries. Licensed species-reference galleries are included where archived.</span>
+        <span>Each profile combines identity, care, seller and nursery evidence, licensed references, live records, and a newest-first photo history. The latest two collection views stay visible; earlier views expand in place.</span>
       </header>
       <div class="contents-columns">${contents}</div>
       <aside class="contents-note">
-        <strong>A note on names</strong>
-        <p>Labeled plants retain that evidence. Photo-only matches remain marked probable, any future unreceived order remains pending until inspected, cultivars stay provisional when records are missing, and Rehab-04 remains as a historical page instead of disappearing from the story.</p>
+        <strong>Three IDs, three jobs</strong>
+        <p><strong>P01–P28</strong> opens the live Google Sheets plant record, the short pot label identifies the physical plant or shared planter, and the Inventory ID preserves the repository record. Repeated P19 and P20 values are intentional shared-planter records; Rehab-04 remains as an untracked historical page.</p>
       </aside>
     </section>
-
-    ${renderCollectionHistoryPage(collectionManifest.collection_overviews)}
 
     ${profilePages}
   </main>
@@ -1176,13 +1369,49 @@ async function renderBooklet(profiles, collectionManifest) {
 }
 
 async function main() {
-    const { collectionManifest, profiles } = await loadProfiles();
+    const [profiles, fieldGuideProfiles] = await Promise.all([
+        loadProfiles(),
+        readFile(plantProfileDataPath, "utf8").then(JSON.parse),
+    ]);
+    const fieldGuideProfileEntries = Object.entries(fieldGuideProfiles).flatMap(
+        ([trackerId, entries]) =>
+            entries.map(([slug, title]) => ({ slug, title, trackerId }))
+    );
+    const fieldGuideProfileBySlug = new Map(
+        fieldGuideProfileEntries.map((entry) => [entry.slug, entry])
+    );
 
     if (profiles.length !== 34) {
         throw new Error(`Expected 34 profiles but found ${profiles.length}.`);
     }
 
-    const renderedOutput = await renderBooklet(profiles, collectionManifest);
+    if (fieldGuideProfileBySlug.size !== fieldGuideProfileEntries.length) {
+        throw new Error(
+            "The canonical field-guide profile map has duplicate slugs."
+        );
+    }
+
+    const trackedProfiles = profiles.filter((profile) => profile.trackerId);
+    if (trackedProfiles.length !== fieldGuideProfileEntries.length) {
+        throw new Error(
+            `Expected ${fieldGuideProfileEntries.length} mapped current profiles but found ${trackedProfiles.length}.`
+        );
+    }
+
+    for (const profile of trackedProfiles) {
+        const expected = fieldGuideProfileBySlug.get(profile.slug);
+        if (
+            !expected ||
+            expected.trackerId !== profile.trackerId ||
+            expected.title !== profile.title
+        ) {
+            throw new Error(
+                `${profile.slug} must match its canonical field-guide title and Tracker ID; found ${profile.title}/${profile.trackerId}.`
+            );
+        }
+    }
+
+    const renderedOutput = await renderBooklet(profiles);
     const prettierConfig = (await resolveConfig(outputPath)) ?? {};
     const output = await format(renderedOutput, {
         ...prettierConfig,

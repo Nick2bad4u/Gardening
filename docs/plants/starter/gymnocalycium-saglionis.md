@@ -2,6 +2,7 @@
 
 - Inventory: Starter-08 — _Gymnocalycium saglionis_
 - Label ID: `C1`
+- Tracker ID: `P07`
 - Visual description: Broad blue-green globe with heavy ribs and stout curved brown spines.
 - Interesting fact: Its flowers stay surprisingly small relative to the massive body an old plant can develop.
 - Identification: **labeled**

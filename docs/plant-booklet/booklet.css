@@ -10,8 +10,13 @@
     --moss: #35533f;
     --moss-dark: #21392b;
     --moss-soft: #dfe9dd;
+    --sage: #78906f;
+    --sage-soft: #e7eee2;
     --clay: #a34e36;
+    --clay-soft: #f4e2da;
     --gold: #c69342;
+    --control: #fffaf0;
+    --card-shadow: 0 12px 34px rgb(41 35 25 / 9%);
     --shadow: 0 22px 70px rgb(41 35 25 / 14%);
     --sans:
         Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
@@ -33,8 +38,13 @@
     --moss: #9fc4a6;
     --moss-dark: #d0e5d3;
     --moss-soft: #25362a;
+    --sage: #9bb18f;
+    --sage-soft: #263327;
     --clay: #df8a6d;
+    --clay-soft: #3a2924;
     --gold: #dfb86f;
+    --control: #222b23;
+    --card-shadow: 0 14px 38px rgb(0 0 0 / 24%);
     --shadow: 0 22px 70px rgb(0 0 0 / 35%);
 }
 
@@ -227,7 +237,7 @@ main {
 @media (hover: hover) and (pointer: fine) {
     body {
         cursor:
-            url("./cactus-cursor.svg") 16 2,
+            url("./cactus-cursor.svg") 1 1,
             default;
     }
 
@@ -371,8 +381,15 @@ main {
     letter-spacing: 0.04em;
 }
 
-.contents-page {
+.book-page.contents-page {
     padding: clamp(2rem, 6vw, 5rem);
+}
+
+.book-page.contents-page {
+    color: var(--ink);
+    font-size: inherit;
+    letter-spacing: normal;
+    text-align: start;
 }
 
 .contents-heading {
@@ -1800,6 +1817,633 @@ main {
     }
 }
 
+/* Coordinated redesign hooks for generated booklet markup. */
+
+:where(summary, select):focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--gold) 82%, white);
+    outline-offset: 3px;
+}
+
+.icon-button,
+.close-button,
+.cover-start,
+.page-controls button,
+.record-links > a,
+.drawer-special,
+.drawer-link,
+.drawer-sheet-link,
+.collection-history-summary {
+    min-height: 2.75rem;
+}
+
+.icon-button,
+.close-button {
+    min-width: 2.75rem;
+    background: color-mix(in srgb, var(--control) 78%, transparent);
+}
+
+.close-button {
+    width: 2.75rem;
+}
+
+.book-page.contents-page {
+    background:
+        radial-gradient(
+            circle at 100% 0,
+            color-mix(in srgb, var(--sage) 13%, transparent),
+            transparent 28rem
+        ),
+        var(--page);
+}
+
+.contents-heading {
+    grid-template-columns: minmax(0, 0.92fr) minmax(18rem, 1.08fr);
+    gap: 0.65rem clamp(2rem, 6vw, 5rem);
+    align-items: end;
+}
+
+.contents-heading h1,
+.contents-group h2 {
+    text-wrap: balance;
+}
+
+.contents-heading > span {
+    line-height: 1.55;
+    text-wrap: pretty;
+}
+
+.contents-columns {
+    gap: 1.25rem;
+    align-items: start;
+}
+
+.contents-group:last-child {
+    grid-column: auto;
+}
+
+.contents-group:is([data-group="cacti"], .contents-group--wide) {
+    grid-column: 1 / -1;
+}
+
+.contents-group {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--page-soft) 62%, var(--page));
+    box-shadow: var(--card-shadow);
+}
+
+.contents-group header {
+    position: relative;
+    min-height: 8.2rem;
+    padding: 1.25rem 1.25rem 1rem 4.75rem;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--moss-soft) 82%, var(--page)),
+        var(--page)
+    );
+}
+
+.contents-group header::before {
+    position: absolute;
+    top: 1.3rem;
+    left: 1.25rem;
+    display: grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid color-mix(in srgb, var(--moss) 35%, var(--line));
+    border-radius: 0.85rem;
+    color: var(--moss);
+    background: var(--moss-soft);
+    content: "✦";
+    place-items: center;
+}
+
+.contents-group[data-group="cacti"] header::before {
+    color: #5f7d47;
+    background: var(--sage-soft);
+    content: "♧";
+}
+
+.contents-group[data-group="succulents"] header::before {
+    color: var(--clay);
+    background: var(--clay-soft);
+    content: "✺";
+}
+
+.contents-group[data-group="rehab"] header::before {
+    color: var(--gold);
+    content: "↟";
+}
+
+.contents-group[data-group="houseplants"] header::before {
+    content: "⌁";
+}
+
+.contents-group header h2 {
+    margin: 0.15rem 0 0.35rem;
+    font-size: clamp(1.55rem, 2.5vw, 2rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+}
+
+.contents-group header span {
+    display: block;
+    line-height: 1.45;
+    text-wrap: pretty;
+}
+
+.contents-group:is([data-group="cacti"], .contents-group--wide) ol {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.contents-group:is([data-group="cacti"], .contents-group--wide)
+    li:nth-child(even) {
+    border-left: 1px solid var(--line);
+}
+
+.contents-group a {
+    min-height: 4.55rem;
+    padding: 0.65rem 1rem;
+    border-top: 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.contents-group li:last-child a {
+    border-bottom: 0;
+}
+
+.contents-group a:has(.plant-avatar--contents) {
+    grid-template-columns: 3.25rem 4.6rem minmax(0, 1fr) 2rem;
+}
+
+.contents-id strong,
+.contents-id small {
+    display: block;
+}
+
+.contents-id strong {
+    color: var(--moss);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+.contents-id small {
+    margin-top: 0.18rem;
+    color: var(--muted-ink);
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
+}
+
+.contents-group a:hover {
+    background: color-mix(in srgb, var(--moss-soft) 58%, transparent);
+}
+
+.plant-avatar {
+    display: block;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--moss) 28%, var(--line));
+    border-radius: 50%;
+    background: var(--moss-soft);
+    box-shadow: 0 6px 18px rgb(41 55 43 / 15%);
+    object-fit: cover;
+    transition: transform 160ms ease;
+}
+
+span.plant-avatar {
+    display: grid;
+    place-items: center;
+}
+
+:is(a, button):hover .plant-avatar {
+    transform: scale(1.035);
+}
+
+.plant-avatar--contents {
+    width: 3.25rem;
+    height: 3.25rem;
+}
+
+.plant-avatar--drawer {
+    width: 2.65rem;
+    height: 2.65rem;
+}
+
+.plant-avatar--hero {
+    width: clamp(4rem, 8vw, 5.5rem);
+    height: clamp(4rem, 8vw, 5.5rem);
+    margin-bottom: 1rem;
+    border-color: rgb(255 255 255 / 68%);
+    box-shadow: 0 12px 32px rgb(0 0 0 / 28%);
+}
+
+:is(.tracker-badge, .label-badge, .inventory-badge) {
+    display: inline-flex;
+    gap: 0.35rem;
+    align-items: center;
+    width: fit-content;
+    max-width: 100%;
+    border-radius: 999px;
+    font-weight: 800;
+}
+
+.tracker-badge {
+    border-color: #a9d9b1 !important;
+    color: #daf4df;
+}
+
+.label-badge {
+    border-color: #f0c47b !important;
+    color: #ffe3aa;
+}
+
+.inventory-badge {
+    border-color: #b9c9ee !important;
+    color: #e0e8ff;
+}
+
+.drawer-link:has(.plant-avatar--drawer) {
+    grid-template-columns: 2.65rem 4.2rem minmax(0, 1fr);
+}
+
+.drawer-sheet-link {
+    display: inline-flex;
+    gap: 0.4rem;
+    align-items: center;
+    padding: 0.45rem 0.75rem;
+    margin-top: 0.4rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--moss);
+    background: var(--page-soft);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.drawer-sheet-link:hover {
+    border-color: var(--moss);
+    background: var(--moss-soft);
+}
+
+.drawer-group li {
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
+}
+
+.drawer-group li:last-child {
+    border-bottom: 0;
+}
+
+.drawer-group .drawer-link {
+    border-top: 0;
+}
+
+.profile-intro a,
+.profile-sheet-link,
+.seller-product-link {
+    color: var(--moss);
+    text-underline-offset: 0.16em;
+}
+
+.profile-at-a-glance h2 > span[aria-hidden="true"] {
+    display: inline-grid;
+    width: 1.65rem;
+    height: 1.65rem;
+    margin-inline-end: 0.3rem;
+    border-radius: 50%;
+    color: var(--page);
+    background: var(--profile-accent);
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    vertical-align: 0.18rem;
+    place-items: center;
+}
+
+.profile-section-heading {
+    --heading-accent: var(--profile-accent);
+
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    color: color-mix(in srgb, var(--ink) 86%, var(--heading-accent));
+}
+
+.profile-section-icon {
+    display: inline-grid;
+    flex: 0 0 auto;
+    width: 2.15rem;
+    height: 2.15rem;
+    border: 1px solid color-mix(in srgb, var(--heading-accent) 48%, var(--line));
+    border-radius: 0.7rem;
+    color: var(--heading-accent);
+    background: color-mix(in srgb, var(--heading-accent) 12%, var(--page));
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 900;
+    place-items: center;
+}
+
+.profile-section-heading--care {
+    --heading-accent: #337c95;
+}
+
+.profile-section-heading--growth {
+    --heading-accent: #4f7e43;
+}
+
+.profile-section-heading--warning {
+    --heading-accent: #b5553b;
+}
+
+.profile-section-heading--identity {
+    --heading-accent: #8065a8;
+}
+
+.profile-section-heading--habitat {
+    --heading-accent: #9a742f;
+}
+
+.profile-section-heading--seller {
+    --heading-accent: #a85f32;
+}
+
+.profile-section-heading--sources {
+    --heading-accent: #486b7b;
+}
+
+.seller-snapshot {
+    padding: clamp(1rem, 3vw, 1.6rem);
+    margin: 3rem 0 1.75rem;
+    border: 1px solid color-mix(in srgb, #a85f32 42%, var(--line));
+    border-left: 0.32rem solid #a85f32;
+    border-radius: 0.9rem;
+    background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--clay-soft) 76%, var(--page)),
+        var(--page) 72%
+    );
+    box-shadow: var(--card-shadow);
+}
+
+.seller-snapshot .profile-section-heading {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+}
+
+.seller-snapshot > :last-child {
+    margin-bottom: 0;
+}
+
+.record-links > a > span:first-child {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.record-links > a small {
+    display: block;
+    margin-top: 0.18rem;
+    color: var(--muted-ink);
+    font-size: 0.68rem;
+    font-weight: 500;
+    line-height: 1.35;
+}
+
+.record-links > a:is(.profile-sheet-link, .seller-product-link) {
+    color: var(--moss);
+}
+
+.collection-gallery,
+.nursery-evidence {
+    scroll-margin-top: 5.5rem;
+    padding: clamp(1.75rem, 4vw, 3.5rem) clamp(1.3rem, 5vw, 4.5rem);
+    border-top: 1px solid var(--line);
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--sage-soft) 52%, var(--page)),
+        var(--page) 16rem
+    );
+}
+
+.collection-gallery > header,
+.nursery-evidence > header {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(18rem, 1.2fr);
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.collection-gallery h2,
+.nursery-evidence h2 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    text-wrap: balance;
+}
+
+.collection-gallery > header > p,
+.nursery-evidence > header > p {
+    margin: 0;
+    color: var(--muted-ink);
+}
+
+.collection-history-preview {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+    padding: 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--page-soft) 76%, var(--page));
+    box-shadow: var(--card-shadow);
+}
+
+.collection-history-details {
+    margin-top: 1rem;
+    overflow: clip;
+    border: 1px solid var(--line);
+    border-radius: 0.9rem;
+    background: color-mix(in srgb, var(--page-soft) 64%, var(--page));
+}
+
+.collection-history-summary {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 0.85rem;
+    color: var(--moss);
+    font-size: 0.78rem;
+    font-weight: 800;
+    list-style: none;
+    user-select: none;
+}
+
+.collection-history-summary::-webkit-details-marker {
+    display: none;
+}
+
+.collection-history-summary :is(strong, small) {
+    display: block;
+}
+
+.collection-history-summary small {
+    margin-top: 0.15rem;
+    color: var(--muted-ink);
+    font-weight: 500;
+}
+
+.history-summary-icon {
+    display: grid;
+    flex: 0 0 auto;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    color: var(--page);
+    background: var(--moss);
+    font-size: 1rem;
+    place-items: center;
+}
+
+.collection-history-older {
+    padding: 1rem;
+    border-top: 1px solid var(--line);
+}
+
+.collection-photo-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: 0.9rem;
+}
+
+.collection-photo {
+    box-shadow: 0 8px 22px rgb(39 48 40 / 7%);
+}
+
+.collection-photo img {
+    aspect-ratio: 4 / 3;
+}
+
+.collection-photo--context img {
+    object-position: center 58%;
+}
+
+.collection-photo figcaption {
+    padding: 0.8rem;
+}
+
+.nursery-evidence {
+    background: var(--page);
+}
+
+.collection-photo-grid--labels {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 16rem));
+    justify-content: end;
+}
+
+.nursery-label-photo {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    border-bottom: 0.22rem solid var(--profile-accent, var(--clay));
+}
+
+.nursery-label-photo img {
+    height: clamp(8rem, 16vw, 11rem);
+    aspect-ratio: auto;
+    object-fit: contain;
+}
+
+.nursery-label-photo figcaption {
+    align-content: end;
+    gap: 0.25rem;
+    padding: 0.65rem 0.7rem 0.7rem;
+    font-size: 0.68rem;
+}
+
+@media (max-width: 850px) {
+    .collection-gallery > header,
+    .nursery-evidence > header {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        align-items: start;
+    }
+}
+
+@media (max-width: 680px) {
+    .contents-heading,
+    .contents-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .contents-group:is([data-group="cacti"], .contents-group--wide) ol {
+        grid-template-columns: 1fr;
+    }
+
+    .contents-group:is([data-group="cacti"], .contents-group--wide)
+        li:nth-child(even) {
+        border-left: 0;
+    }
+
+    .contents-group header {
+        min-height: 0;
+    }
+
+    .collection-history-preview {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 430px) {
+    .book-page.contents-page {
+        padding-inline: 0.85rem;
+    }
+
+    .contents-group header {
+        padding: 1rem 0.9rem 0.9rem 4rem;
+    }
+
+    .contents-group header::before {
+        top: 1rem;
+        left: 0.85rem;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .contents-group a:has(.plant-avatar--contents) {
+        grid-template-columns: 2.7rem 3.7rem minmax(0, 1fr);
+        gap: 0.4rem;
+        padding-inline: 0.6rem;
+    }
+
+    .contents-group .contents-page {
+        display: none;
+    }
+
+    .plant-avatar--contents {
+        width: 2.7rem;
+        height: 2.7rem;
+    }
+
+    .contents-name em {
+        white-space: normal;
+    }
+
+    .collection-photo-grid,
+    .collection-photo-grid--labels {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (prefers-reduced-motion: no-preference) {
     body[data-reader-ready="true"] .book-page:not([hidden]) {
         animation: page-reveal 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -1937,8 +2581,14 @@ main {
         --line-strong: #b7ad9b;
         --moss: #35533f;
         --moss-dark: #21392b;
+        --moss-soft: #dfe9dd;
+        --sage: #78906f;
+        --sage-soft: #e7eee2;
         --clay: #a34e36;
+        --clay-soft: #f4e2da;
         --gold: #9a6b23;
+        --control: #fff;
+        --card-shadow: none;
         --shadow: none;
     }
 
@@ -1983,6 +2633,36 @@ main {
         padding: 0.3in;
     }
 
+    .contents-group {
+        border-radius: 0;
+        box-shadow: none;
+        break-inside: avoid;
+    }
+
+    .contents-group header {
+        min-height: 0;
+        padding: 0.12in 0.12in 0.1in 0.55in;
+    }
+
+    .contents-group header::before {
+        top: 0.12in;
+        left: 0.12in;
+        width: 0.32in;
+        height: 0.32in;
+    }
+
+    .contents-group a,
+    .contents-group a:has(.plant-avatar--contents) {
+        min-height: 0;
+        padding: 0.05in 0.08in;
+    }
+
+    .plant-avatar--contents {
+        width: 0.34in;
+        height: 0.34in;
+        box-shadow: none;
+    }
+
     .profile-hero {
         min-height: 4.1in;
         break-inside: avoid;
@@ -2023,7 +2703,28 @@ main {
 
     .collection-gallery {
         padding: 0.25in;
-        break-inside: avoid;
+        background: #fff;
+    }
+
+    .nursery-evidence {
+        padding: 0.25in;
+        background: #fff;
+        break-before: page;
+    }
+
+    .collection-history-summary {
+        display: none;
+    }
+
+    .collection-history-older {
+        padding: 0;
+        border-top: 0;
+    }
+
+    .collection-history-preview,
+    .collection-history-details {
+        box-shadow: none;
+        break-inside: auto;
     }
 
     .collection-history-hero,
@@ -2040,6 +2741,15 @@ main {
     .collection-photo-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 0.12in;
+    }
+
+    .collection-photo-grid--labels {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.08in;
+    }
+
+    .nursery-label-photo img {
+        height: 1.05in;
     }
 
     .collection-photo figcaption {

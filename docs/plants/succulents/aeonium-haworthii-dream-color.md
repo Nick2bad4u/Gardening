@@ -2,9 +2,10 @@
 
 - Inventory: Succulent-05 — _Aeonium haworthii_ 'Dream Color'
 - Label ID: `#4`
+- Tracker ID: `P22`
 - Visual description: Branching rosettes striped green and yellow with vivid pink-red edges.
 - Interesting fact: Aeoniums grow most actively in cooler seasons and may slow or partially rest during summer heat.
-- Identification: **very high confidence**
+- Identification: **probable cultivar; appearance is consistent, but no nursery label or seller provenance is archived**
 - Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
 - Current pot: approximately 5-inch pot from Carlsons' Greenhouse
 - Photo archive: [licensed cultivar and species references](../../../assets/plants/aeonium-haworthii-dream-color/)
@@ -18,9 +19,10 @@
 | Trade names     | 'Kiwi', 'Tricolor', 'Variegatum', 'Keweonium', 'Kiwionium' |
 | Cultivar origin | Unknown                                                    |
 
-The branching green-and-yellow rosettes with bright pink edges make the
-cultivar identification strong. Trade names vary, but 'Dream Color' is the
-name retained in this collection record.
+The branching green-and-yellow rosettes with bright pink edges support the
+working cultivar match. Appearance alone does not prove an exact cultivar,
+so 'Dream Color' remains probable unless nursery or seller provenance is
+recovered. Trade names vary; this is the name retained in the collection record.
 
 ## Origin, form, and publication
 

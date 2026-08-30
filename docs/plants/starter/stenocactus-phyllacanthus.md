@@ -2,6 +2,7 @@
 
 - Inventory: Starter-02 — _Stenocactus phyllacanthus_
 - Label ID: `B1`
+- Tracker ID: `P04`
 - Visual description: Small green globe packed with thin wavy ribs and long flattened spines.
 - Interesting fact: The accordion-like ribs can expand after watering without the whole stem needing to stretch.
 - Identification: **labeled**

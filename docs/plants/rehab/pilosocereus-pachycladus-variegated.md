@@ -2,6 +2,7 @@
 
 - Inventory: Rehab-01 — probable variegated _Pilosocereus pachycladus_
 - Label ID: `#1` — shared rehab cactus planter; formerly `A4-B4`
+- Tracker ID: `P19`
 - Visual description: Tall blue-green ribbed column streaked with pale cream variegation.
 - Interesting fact: Its blue color is a waxy surface bloom, while the palest sectors contain less chlorophyll and scorch more easily.
 - Identification: **probable; better areole/base photos or flowers could revise it**

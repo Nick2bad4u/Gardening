@@ -23,21 +23,34 @@
     const surprisePlants = [
         ...document.querySelectorAll("[data-surprise-plant]"),
     ];
+    const historyDetails = [
+        ...document.querySelectorAll("details.collection-history-details"),
+    ];
     const pageAnnouncer = document.querySelector("#page-announcer");
+    const printExpandedHistory = new Set();
     let currentIndex = 0;
 
     function pageName(page) {
         return page?.dataset.title || "Untitled page";
     }
 
-    function currentHashId() {
+    function currentHashState() {
         let rawHash = "";
         try {
             rawHash = decodeURIComponent(location.hash.slice(1));
         } catch {
-            return "cover";
+            return { pageId: "cover", targetId: "cover" };
         }
-        return pageIds.includes(rawHash) ? rawHash : "cover";
+        if (pageIds.includes(rawHash)) {
+            return { pageId: rawHash, targetId: rawHash };
+        }
+
+        const target = document.getElementById(rawHash);
+        const parentPage = target?.closest("[data-page]");
+        const pageId = parentPage?.dataset.page;
+        return pageIds.includes(pageId)
+            ? { pageId, targetId: rawHash }
+            : { pageId: "cover", targetId: "cover" };
     }
 
     function updateThemeButton() {
@@ -102,6 +115,25 @@
             .find((candidate) => candidate.classList.contains("profile-page"));
         const nextHero = nextProfile?.querySelector(".profile-hero > img");
         if (nextHero) nextHero.loading = "eager";
+
+        for (const image of [
+            ...(page?.querySelectorAll(".collection-history-preview img") ??
+                []),
+        ].slice(0, 2)) {
+            image.loading = "eager";
+        }
+    }
+
+    function updateHistoryDetails(details) {
+        const summary = details.querySelector(
+            ":scope > .collection-history-summary"
+        );
+        if (!summary) return;
+
+        summary.setAttribute("aria-expanded", String(details.open));
+        details.dataset.expanded = String(details.open);
+        const icon = summary.querySelector(".history-summary-icon");
+        if (icon) icon.textContent = details.open ? "−" : "+";
     }
 
     function showPage(pageId, { scroll = true } = {}) {
@@ -123,6 +155,21 @@
         if (scroll) {
             window.scrollTo({ top: 0, behavior: "auto" });
             pageAnnouncer.textContent = `${pageName(current)}. ${readerCount.textContent}.`;
+        }
+    }
+
+    function showCurrentHash({ scroll = true } = {}) {
+        const { pageId, targetId } = currentHashState();
+        const nestedTarget = targetId !== pageId;
+        showPage(pageId, { scroll: scroll && !nestedTarget });
+
+        if (nestedTarget) {
+            requestAnimationFrame(() => {
+                document.getElementById(targetId)?.scrollIntoView({
+                    behavior: "auto",
+                    block: "start",
+                });
+            });
         }
     }
 
@@ -179,6 +226,25 @@
     nextButton.addEventListener("click", () => goToIndex(currentIndex + 1));
     printButton.addEventListener("click", () => window.print());
 
+    for (const details of historyDetails) {
+        updateHistoryDetails(details);
+        details.addEventListener("toggle", () => updateHistoryDetails(details));
+    }
+
+    window.addEventListener("beforeprint", () => {
+        printExpandedHistory.clear();
+        for (const details of historyDetails) {
+            if (details.open) continue;
+            printExpandedHistory.add(details);
+            details.open = true;
+        }
+    });
+
+    window.addEventListener("afterprint", () => {
+        for (const details of printExpandedHistory) details.open = false;
+        printExpandedHistory.clear();
+    });
+
     function openSurprisePlant(event) {
         event.preventDefault();
         const choices = profilePages.filter(
@@ -201,7 +267,7 @@
         updateThemeButton();
     });
 
-    window.addEventListener("hashchange", () => showPage(currentHashId()));
+    window.addEventListener("hashchange", () => showCurrentHash());
 
     window.addEventListener("keydown", (event) => {
         if (
@@ -234,6 +300,6 @@
 
     updateThemeButton();
     filterNavigation();
-    showPage(currentHashId(), { scroll: false });
+    showCurrentHash({ scroll: false });
     document.body.dataset.readerReady = "true";
 })();

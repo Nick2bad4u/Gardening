@@ -2,7 +2,8 @@
 
 - Inventory: Starter-09 — _Myrtillocactus geometrizans_ 'Indigo Wave'
 - Label ID: `B3`
-- Visual description: Blue-green crested mass with rippled, fanlike, irregular growth.
+- Tracker ID: `P06`
+- Visual description: Blue-green monstrose mass with rippled, fanlike, irregular growth; sellers may describe the same form as crested.
 - Interesting fact: The normal form of the species produces sweet edible berries called garambullos in Mexico.
 - Identification: **labeled trade selection**
 - Acquired from: Altman Reserve

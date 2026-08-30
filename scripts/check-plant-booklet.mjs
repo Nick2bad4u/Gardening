@@ -19,6 +19,12 @@ const collectionManifestPath = path.join(
     "collection-photos",
     "photo-manifest.json"
 );
+const plantProfileDataPath = path.join(
+    repositoryRoot,
+    "docs",
+    "layouts",
+    "plant-profile-data.json"
+);
 const nurseryLabelsDirectory = path.join(
     repositoryRoot,
     "assets",
@@ -80,7 +86,6 @@ const expectedMountainCrestProfiles = new Map([
         { inventoryId: "Succulent-06", labelId: "G3", trackerId: "P28" },
     ],
 ]);
-
 function assert(condition, message) {
     if (!condition) throw new Error(message);
 }
@@ -97,6 +102,7 @@ async function discoverProfiles() {
         for (const fileName of await readdir(directory)) {
             if (!fileName.endsWith(".md")) continue;
             profiles.push({
+                group,
                 slug: path.basename(fileName, ".md"),
                 markdown: await readFile(
                     path.join(directory, fileName),
@@ -123,6 +129,37 @@ function htmlAttribute(tag, attributeName) {
     return match?.[2];
 }
 
+function sellerProductLinks(markdown) {
+    const allowedHosts = new Set([
+        "costafarms.com",
+        "mountaincrestgardens.com",
+        "shopaltmanplants.com",
+        "www.lowes.com",
+    ]);
+
+    return [...markdown.matchAll(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g)]
+        .filter(
+            ([
+                ,
+                label,
+                href,
+            ]) => {
+                const url = new URL(href);
+                return (
+                    allowedHosts.has(url.hostname) &&
+                    /seller listing|altman reserve|feather cactus/i.test(label)
+                );
+            }
+        )
+        .map(
+            ([
+                ,
+                ,
+                href,
+            ]) => href
+        );
+}
+
 async function main() {
     const [
         html,
@@ -130,13 +167,22 @@ async function main() {
         manifest,
         collectionManifest,
         profiles,
+        fieldGuideProfiles,
     ] = await Promise.all([
         readFile(bookletPath, "utf8"),
         readFile(path.join(bookletDirectory, "booklet.js"), "utf8"),
         readFile(manifestPath, "utf8").then(JSON.parse),
         readFile(collectionManifestPath, "utf8").then(JSON.parse),
         discoverProfiles(),
+        readFile(plantProfileDataPath, "utf8").then(JSON.parse),
     ]);
+    const fieldGuideProfileEntries = Object.entries(fieldGuideProfiles).flatMap(
+        ([trackerId, entries]) =>
+            entries.map(([slug, title]) => ({ slug, title, trackerId }))
+    );
+    const fieldGuideProfileBySlug = new Map(
+        fieldGuideProfileEntries.map((entry) => [entry.slug, entry])
+    );
     const profileSlugs = profiles.map((profile) => profile.slug);
 
     assert(
@@ -151,6 +197,7 @@ async function main() {
     );
 
     const profileStates = profiles.map((profile) => {
+        const title = profile.markdown.match(/^#\s+(.+)$/m)?.[1]?.trim() ?? "";
         const inventoryId =
             profile.markdown.match(/^\- Inventory:\s*([^\s]+)\s/m)?.[1] ?? "";
         const labelId =
@@ -168,6 +215,9 @@ async function main() {
             inventoryId === "Rehab-04" || /historical/i.test(status);
         const hasAcquisitionSource =
             /^\- (?:Acquired from|Ordered from):\s*\S/m.test(profile.markdown);
+        const expectedFieldGuideProfile = fieldGuideProfileBySlug.get(
+            profile.slug
+        );
 
         assert(
             hasAcquisitionSource,
@@ -191,7 +241,28 @@ async function main() {
             );
         }
 
-        return { historical, receiptUnverified };
+        assert(
+            historical ? trackerId === "" : /^P\d{2}$/.test(trackerId),
+            historical
+                ? `${profile.slug} is historical and must not have a Tracker ID.`
+                : `${profile.slug} needs a P01-P28 Tracker ID.`
+        );
+        assert(
+            historical
+                ? !expectedFieldGuideProfile
+                : expectedFieldGuideProfile?.trackerId === trackerId &&
+                      expectedFieldGuideProfile.title === title,
+            historical
+                ? `${profile.slug} is historical and must not appear in the current field-guide map.`
+                : `${profile.slug} must match its canonical field-guide title and Tracker ID; found ${title}/${trackerId}.`
+        );
+
+        return {
+            historical,
+            inventoryId,
+            receiptUnverified,
+            trackerId,
+        };
     });
     const presentProfileCount = profileStates.filter(
         (profile) => !profile.historical && !profile.receiptUnverified
@@ -214,6 +285,30 @@ async function main() {
     assert(
         historicalProfileCount === expectedHistoricalProfiles,
         `Expected ${expectedHistoricalProfiles} historical profile; found ${historicalProfileCount}.`
+    );
+    const trackerIds = profileStates
+        .map((profile) => profile.trackerId)
+        .filter(Boolean);
+    assert(
+        fieldGuideProfileBySlug.size === fieldGuideProfileEntries.length &&
+            fieldGuideProfileEntries.length === expectedTrackedProfiles,
+        "The canonical field-guide profile map must contain 33 unique current-profile slugs."
+    );
+    const expectedTrackerIds = Array.from(
+        { length: 28 },
+        (_, index) => `P${String(index + 1).padStart(2, "0")}`
+    );
+    assert(
+        JSON.stringify([...new Set(trackerIds)].sort()) ===
+            JSON.stringify(expectedTrackerIds),
+        "Current profiles must cover every permanent Tracker ID from P01 through P28."
+    );
+    assert(
+        trackerIds.filter((id) => id === "P19").length === 3 &&
+            trackerIds.filter((id) => id === "P20").length === 4 &&
+            trackerIds.filter((id) => !["P19", "P20"].includes(id)).length ===
+                26,
+        "Tracker IDs must preserve the intentional three-profile P19 and four-profile P20 shared-planter mappings."
     );
 
     assert(
@@ -244,6 +339,9 @@ async function main() {
     let expectedCollectionPhotos = 0;
     let expectedPendingPhotos = 0;
     let expectedCollectionDateGroups = 0;
+    let expectedHistoryDetails = 0;
+    let expectedHistoryPreviewPhotos = 0;
+    let expectedNurseryEvidenceSections = 0;
     let expectedViewBadges = 0;
     for (const record of collectionManifest.plants) {
         assert(
@@ -251,9 +349,23 @@ async function main() {
             `${record.plant_slug} has no collection photos array.`
         );
         expectedCollectionPhotos += record.photos.length;
+        const growthPhotos = record.photos
+            .filter((photo) => photo.kind === "collection")
+            .sort((left, right) =>
+                (right.captured_on ?? right.provided_on).localeCompare(
+                    left.captured_on ?? left.provided_on
+                )
+            );
+        const nurseryLabelPhotos = record.photos.filter(
+            (photo) => photo.kind === "nursery-label"
+        );
+        expectedHistoryPreviewPhotos += Math.min(2, growthPhotos.length);
+        expectedHistoryDetails += growthPhotos.length > 2 ? 1 : 0;
+        expectedNurseryEvidenceSections +=
+            nurseryLabelPhotos.length > 0 ? 1 : 0;
         expectedCollectionDateGroups += new Set(
-            record.photos
-                .filter((photo) => photo.kind === "collection")
+            growthPhotos
+                .slice(2)
                 .map((photo) => photo.captured_on ?? photo.provided_on)
         ).size;
         if (record.photos.length === 0) {
@@ -335,12 +447,6 @@ async function main() {
         Array.isArray(collectionOverviews) && collectionOverviews.length > 0,
         "Collection-photo manifest needs at least one collection overview."
     );
-    expectedCollectionDateGroups += new Set(
-        collectionOverviews.map(
-            (photo) => photo.captured_on ?? photo.provided_on
-        )
-    ).size;
-    expectedViewBadges += collectionOverviews.length;
     for (const photo of collectionOverviews) {
         assert(
             photo.kind === "collection",
@@ -586,8 +692,13 @@ async function main() {
     const collectionPanelCount = (
         html.match(/class="collection-gallery"/g) ?? []
     ).length;
-    const collectionPhotoCount = (html.match(/class="collection-photo"/g) ?? [])
-        .length;
+    const collectionPhotoTags = [...html.matchAll(/<figure\b[^>]*>/g)].filter(
+        (match) =>
+            (htmlAttribute(match[0], "class")?.split(/\s+/) ?? []).includes(
+                "collection-photo"
+            )
+    );
+    const collectionPhotoCount = collectionPhotoTags.length;
     const pendingPhotoCount = (
         html.match(/class="collection-photo-pending"/g) ?? []
     ).length;
@@ -604,11 +715,11 @@ async function main() {
         `Expected ${expectedPendingPhotos} pending-photo panels; found ${pendingPhotoCount}.`
     );
     const collectionOverviewPhotoCount = (
-        html.match(/class="collection-photo collection-overview-photo"/g) ?? []
+        html.match(/\bcollection-overview-photo\b/g) ?? []
     ).length;
     assert(
-        collectionOverviewPhotoCount === collectionOverviews.length,
-        `Expected ${collectionOverviews.length} collection overview photos; found ${collectionOverviewPhotoCount}.`
+        collectionOverviewPhotoCount === 0,
+        "Collection overview photographs must remain archived without a standalone booklet page."
     );
     const collectionDateGroupCount = (
         html.match(/class="collection-date-group"/g) ?? []
@@ -623,9 +734,75 @@ async function main() {
         `Expected ${expectedViewBadges} collection-photo view badges; found ${viewBadgeCount}.`
     );
     assert(
-        html.includes('id="collection-history"'),
-        "The booklet is missing its collection photo-history page."
+        !html.includes('id="collection-history"'),
+        "The obsolete standalone collection photo-history page is still present."
     );
+    const historyDetailsCount = (
+        html.match(/class="collection-history-details"/g) ?? []
+    ).length;
+    assert(
+        historyDetailsCount === expectedHistoryDetails,
+        `Expected ${expectedHistoryDetails} expandable plant-history archives; found ${historyDetailsCount}.`
+    );
+    const historyPreviewPhotoCount = collectionPhotoTags.filter((match) =>
+        (htmlAttribute(match[0], "class")?.split(/\s+/) ?? []).includes(
+            "collection-photo--latest"
+        )
+    ).length;
+    assert(
+        historyPreviewPhotoCount === expectedHistoryPreviewPhotos,
+        `Expected ${expectedHistoryPreviewPhotos} latest-history preview photos; found ${historyPreviewPhotoCount}.`
+    );
+    const nurseryEvidenceCount = (html.match(/class="nursery-evidence"/g) ?? [])
+        .length;
+    assert(
+        nurseryEvidenceCount === expectedNurseryEvidenceSections,
+        `Expected ${expectedNurseryEvidenceSections} nursery-evidence sections; found ${nurseryEvidenceCount}.`
+    );
+    assert(
+        (html.match(/class="contents-group(?: contents-group--wide)?"/g) ?? [])
+            .length === 4 &&
+            (html.match(/data-group="cacti"/g) ?? []).length >= 1 &&
+            !html.includes("Starter cacti") &&
+            !html.includes("New individual cacti"),
+        "The booklet must present one unified Cacti contents group plus Succulents, Rehab, and Houseplants."
+    );
+    const cactiContents = html.match(
+        /<section\b[^>]*class="contents-group contents-group--wide"[^>]*data-group="cacti"[^>]*>([\s\S]*?)<\/section>/
+    )?.[1];
+    const expectedCactiTrackerIds = profiles
+        .filter((profile) => ["starter", "cacti"].includes(profile.group))
+        .map(
+            (profile) =>
+                profile.markdown.match(/^\- Tracker ID:\s*`(P\d{2})`/m)?.[1]
+        )
+        .filter(Boolean)
+        .sort((left, right) => Number(left.slice(1)) - Number(right.slice(1)));
+    const renderedCactiTrackerIds = cactiContents
+        ? [
+              ...cactiContents.matchAll(
+                  /<span class="contents-id"[^>]*>\s*<strong[^>]*>(P\d{2})<\/strong/g
+              ),
+          ].map((match) => match[1])
+        : [];
+    assert(
+        JSON.stringify(renderedCactiTrackerIds) ===
+            JSON.stringify(expectedCactiTrackerIds),
+        "The unified Cacti contents group is not in permanent P-ID order."
+    );
+    for (const variant of [
+        "contents",
+        "drawer",
+        "hero",
+    ]) {
+        const avatarCount = (
+            html.match(new RegExp(`plant-avatar--${variant}`, "g")) ?? []
+        ).length;
+        assert(
+            avatarCount === profiles.length,
+            `Expected ${profiles.length} ${variant} plant avatars; found ${avatarCount}.`
+        );
+    }
     const atAGlanceCount = (html.match(/class="profile-at-a-glance"/g) ?? [])
         .length;
     assert(
@@ -633,19 +810,46 @@ async function main() {
         `Expected ${profiles.length} at-a-glance sections; found ${atAGlanceCount}.`
     );
     assert(
-        (html.match(/<h2>What it looks like<\/h2>/g) ?? []).length ===
+        (html.match(/What it looks\s+like<\/h2/g) ?? []).length ===
             profiles.length,
         "Every profile needs a visual-description heading."
     );
     assert(
-        (html.match(/<h2>Did you know\?<\/h2>/g) ?? []).length ===
-            profiles.length,
+        (html.match(/Did you know\?<\/h2/g) ?? []).length === profiles.length,
         "Every profile needs an interesting-fact heading."
     );
     assert(
-        (html.match(/Open the live care history/g) ?? []).length ===
+        (html.match(/class="profile-history-link"/g) ?? []).length ===
             expectedTrackedProfiles,
         `Expected ${expectedTrackedProfiles} live history links.`
+    );
+    assert(
+        (html.match(/class="profile-sheet-link"/g) ?? []).length ===
+            expectedTrackedProfiles &&
+            (html.match(/class="drawer-sheet-link"/g) ?? []).length ===
+                expectedTrackedProfiles,
+        "Every tracked profile needs direct Google Sheets links in both the profile rail and contents drawer."
+    );
+    assert(
+        (html.match(/class="profile-photo-history-link"/g) ?? []).length ===
+            profiles.length,
+        "Every profile needs an in-page link to its photo history."
+    );
+    const expectedSellerProductLinks = profiles.flatMap((profile) =>
+        sellerProductLinks(profile.markdown)
+    ).length;
+    assert(
+        (html.match(/class="seller-product-link"/g) ?? []).length ===
+            expectedSellerProductLinks,
+        `Expected ${expectedSellerProductLinks} exact seller-product links.`
+    );
+    const expectedSellerSnapshots = profiles.filter((profile) =>
+        /^## Seller listing snapshot\s*$/m.test(profile.markdown)
+    ).length;
+    assert(
+        (html.match(/class="seller-snapshot"/g) ?? []).length ===
+            expectedSellerSnapshots,
+        `Expected ${expectedSellerSnapshots} styled seller snapshots.`
     );
     const inaturalistLinks = [
         ...html.matchAll(

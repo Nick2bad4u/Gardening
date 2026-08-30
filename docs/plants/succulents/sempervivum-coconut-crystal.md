@@ -3,7 +3,7 @@
 - Inventory: Succulent-08 — _Sempervivum_ Colorockz® 'Coconut Crystal'
 - Label ID: `H1` — owner-corrected after arrival
 - Tracker ID: `P24`
-- Visual description: Compact lime-green rosette with maroon center shading that spreads outward seasonally.
+- Visual description: Compact rosette; the seller describes a mature lime-green form with maroon center shading that spreads outward seasonally.
 - Interesting fact: Each rosette flowers only once, but offsets can keep the colony alive after the flowering rosette dies.
 - Identification: **seller-labeled cultivar; individual top and side condition views archived, but identity is not independently proven**
 - Ordered from: Mountain Crest Gardens on 2026-08-25

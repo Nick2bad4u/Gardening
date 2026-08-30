@@ -2,8 +2,9 @@
 
 - Inventory: Cactus-06 — _Mammillaria_ cf. _rekoi_
 - Label ID: `F1`
+- Tracker ID: `P16`
 - Visual description: Green globe covered with fine pale radial spines and scattered hooked central spines.
-- Interesting fact: The hook-spined areoles can catch animal fur in the wild—and clothing or skin in the grow room.
+- Interesting fact: Its hooked central spines readily snag clothing or skin, even though the pale radial spines look fine and soft.
 - Identification: **probable; _M. zeilmanniana_ / _M. crinita_ and a horticultural hybrid remain alternatives**
 - Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
 - Current pot: 4-inch individual pot
@@ -18,7 +19,8 @@
 | Permanent-label form   | PROB. _M. rekoi_                                  |
 | Main alternatives      | _M. zeilmanniana_ / _M. crinita_; possible hybrid |
 
-The 2026-08-11 close photographs show a green globose body, fine white radial
+Owner-supplied 2026-08-11 close photographs reviewed during identification—but
+not retained in this repository—showed a green globose body, fine white radial
 spines, tan-to-reddish central spines, and clearly hooked spines low on the
 body. That evidence supports _Mammillaria_ cf. _rekoi_ as the most useful
 working name, but it does not securely distinguish the species from the
@@ -29,7 +31,7 @@ variable _M. crinita_ complex or a horticultural hybrid.
 - The plant was first recorded as high-confidence _Mammillaria zeilmanniana_.
 - Community suggestions later included _M. rekoi_, _M. moelleriana_, and a
   possible hybrid. Those suggestions are leads rather than proof.
-- The relatively open spination in the current photographs is less consistent
+- The relatively open spination in those reviewed photographs is less consistent
   with the much denser-looking _M. moelleriana_ alternative.
 - Revisit the identification after an open flower, mature fruit, and clean
   close-ups of several mature areoles are available.

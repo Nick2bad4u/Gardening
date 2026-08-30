@@ -2,8 +2,9 @@
 
 - Inventory: Succulent-01 — probable _Echeveria pulidonis_ or close hybrid
 - Label ID: `#2` — shared succulent planter; formerly `C4-D4`
+- Tracker ID: `P20`
 - Visual description: Powdery blue-green rosette with pointed leaves outlined in red.
-- Interesting fact: Its chalky farina is a natural sunscreen and does not grow back where a fingerprint rubs it off.
+- Interesting fact: Its chalky farina does not regenerate on an already-rubbed leaf surface, although new leaves emerge with their own wax.
 - Identification: **probable; flowers would improve confidence**
 - Acquired from: Gerych's Greenhouse, as part of the mixed succulent planter
 - Acquired on: 2026-07-27

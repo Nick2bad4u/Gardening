@@ -2,9 +2,10 @@
 
 - Inventory: Cactus-02 — _Echinopsis_ hybrid, Chamaelobivia Group
 - Label ID: `E2`
+- Tracker ID: `P14`
 - Visual description: Dense clump of short green peanut-shaped ribbed stems.
 - Interesting fact: Chamaelobivia hybrids have been bred in vivid yellow, orange, red, and pink flower colors.
-- Identification: **secure at the hybrid-group level; cultivar unknown**
+- Identification: **probable at the Chamaelobivia hybrid-group level; cultivar unknown**
 - Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
 - Current pot: small 4-inch individual pot
 - Photo archive: [licensed peanut-cactus ancestry references](../../../assets/plants/chamaelobivia-hybrid/)
@@ -18,8 +19,8 @@
 | Wild ancestor   | _Echinopsis chamaecereus_                          |
 | Cultivar        | Unknown until flowers or a nursery label narrow it |
 
-The dense clump of short ribbed stems is consistent with the horticultural
-group. Chamaelobivia hybrids combine peanut-cactus ancestry with other
+The dense clump of short ribbed stems is consistent with, but not diagnostic
+of, the horticultural group. Chamaelobivia hybrids combine peanut-cactus ancestry with other
 _Echinopsis_ or _Lobivia_ lines and have been selected for vivid yellow,
 orange, red, and pink flowers.
 
@@ -44,8 +45,8 @@ group has no single defensible discovery or publication year.
 - Rotate 90° clockwise on the ordinary Sunday schedule.
 - Offsets separate and root easily once large enough to handle.
 - Watch crowded stem bases for trapped moisture, scale, or mealybugs.
-- A flower is the most useful evidence for narrowing the cultivar, but the
-  group-level label does not need `PROB.`.
+- A flower and nursery provenance are the most useful next evidence. Keep the
+  group-level identification marked probable until one of those is recovered.
 
 ## Sources
 

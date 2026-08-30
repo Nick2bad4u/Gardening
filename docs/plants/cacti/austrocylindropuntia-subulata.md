@@ -49,8 +49,8 @@ the plant remains pest-free; continue close inspections during acclimation.
 ## Seller listing snapshot
 
 These fields preserve Mountain Crest Gardens' product-page claims as inspected
-on 2026-08-26. They describe the listing, not measurements of the plant that
-will arrive.
+on 2026-08-26. They describe the purchase-time listing, not measurements or
+current observations of the specimen received on 2026-08-28.
 
 | Seller field            | Listing value                               |
 | ----------------------- | ------------------------------------------- |

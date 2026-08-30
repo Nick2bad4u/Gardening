@@ -2,6 +2,7 @@
 
 - Inventory: Starter-05 — _Mammillaria plumosa_
 - Label ID: `A2`
+- Tracker ID: `P02`
 - Visual description: Low clustering mound hidden beneath soft-looking white featherlike spines.
 - Interesting fact: Each “feather” is actually a comb of many tiny spines, so the fluffy surface is still defensive.
 - Identification: **labeled**

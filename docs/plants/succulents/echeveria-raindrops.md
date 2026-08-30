@@ -3,7 +3,7 @@
 - Inventory: Succulent-07 — _Echeveria_ 'Raindrops'
 - Label ID: `H2` — confirmed after arrival
 - Tracker ID: `P25`
-- Visual description: Blue-green rosette whose mature leaves carry rounded raindroplike bumps.
+- Visual description: Young blue-green rosette; the seller-described mature form develops rounded raindroplike bumps on its leaves.
 - Interesting fact: Those firm bumps are normal cultivar features called caruncles, not edema or pest damage.
 - Identification: **seller-labeled cultivar; an individual arrival condition crop is archived, but identity is not independently proven**
 - Ordered from: Mountain Crest Gardens on 2026-08-25

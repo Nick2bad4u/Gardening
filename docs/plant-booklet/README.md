@@ -3,11 +3,15 @@
 [`index.html`](./index.html) is the magazine-style browser guide for the full
 collection. It has a cover, searchable contents, keyboard and button
 navigation, a random-profile jump, light and dark themes, print styling, and
-one deep-linkable reading page for each of the 34 plant records. Each page has
-an at-a-glance visual description, one interesting fact, acquisition or order
+one deep-linkable reading page for each of the 34 plant records. The printed
+contents and drawer use a current-plant thumbnail and show the permanent
+Google Sheets P-ID separately from the physical pot label and repository
+Inventory ID. The starter and newer cactus directories remain separate source
+archives but publish as one P-ID-ordered Cacti section. Each page has an
+at-a-glance visual description, one interesting fact, acquisition or order
 provenance where recorded, and the longer research profile. Each tracked
-profile links to the stable history page for its physical container. Every
-profile also has a deliberately scoped iNaturalist observation search: exact
+profile links both to the stable history page and directly to its Google Sheets
+tab. Every profile also has a deliberately scoped iNaturalist observation search: exact
 species where the record supports it, the underlying species for horticultural
 cultivars, and a genus or clearly qualified working ID where greater precision
 would overstate the evidence.
@@ -15,12 +19,21 @@ Thirty-three profiles are physically documented as present, including the six
 Mountain Crest plants received on 2026-08-28. Rehab-04 is retained as a clearly
 marked historical record.
 
-The booklet also includes a collection-wide photo-history page for dated room,
-table, and setup views. Within each plant profile, user-owned collection photos
-are grouped into dated growth sessions ordered from oldest to newest. Badges
-distinguish side, top, detail, context, and overview frames. This makes later
-photo sessions an extension of the existing history rather than a replacement
-for older evidence.
+Each plant profile ends with its own newest-first photo history. The latest two
+collection photographs stay visible and the remaining dated sessions expand in
+place. Badges distinguish side, top, detail, and context frames; broad context
+views use a compact crop in the page while their links retain access to the
+complete evidence file. Collection-wide room/table overviews remain archived
+in the manifest but are not duplicated into a standalone booklet page.
+Nursery-label photographs appear afterward as compact identification evidence,
+separate from both current-plant photographs and reusable-license references.
+
+Where a profile already preserves an exact plant-specific seller listing, the
+research rail promotes that URL as a product-page link. Generic seller pages,
+care articles, pot listings, and guessed historical products are not promoted.
+Seller snapshots use a distinct card treatment and remain explicitly framed as
+purchase-time seller claims rather than current measurements or botanical
+proof.
 
 The GitHub Pages build publishes the booklet at the repository's Pages URL,
 along with the plant tracker, individual history view, grow-spot layout, indoor

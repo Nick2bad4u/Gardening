@@ -50,8 +50,8 @@ the plant remains pest-free; continue close inspections during acclimation.
 ## Seller listing snapshot
 
 These Mountain Crest Gardens fields were captured from the product page on
-2026-08-26. They are listing metadata, not measurements of the future
-collection plant.
+2026-08-26. They are purchase-time listing metadata, not measurements or
+current observations of the specimen received on 2026-08-28.
 
 | Seller field             | Listing value                                 |
 | ------------------------ | --------------------------------------------- |

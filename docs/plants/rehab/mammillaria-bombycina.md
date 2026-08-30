@@ -17,7 +17,8 @@
 | Common names                | Silken pincushion cactus, silky pincushion |
 | Name clue                   | _bombycina_ means silky or cottony         |
 
-The older image showed a clustered green _Mammillaria_ with white radial spines,
+An older owner-supplied image, which is not retained in this repository, showed
+a clustered green _Mammillaria_ with white radial spines,
 wool around the areoles, and longer reddish-brown central spines. That is a good
 match for _M. bombycina_, but the final almost-black shrunken plant no longer
 showed enough living diagnostic tissue for a confident identification.
@@ -40,8 +41,9 @@ The tiny patch found at final inspection was not a viable crown.
 
 ## Removal outcome
 
-Rehab-04 was removed from the shared planter on 2026-07-24. Final inspection
-found only a tiny patch of green flesh near the top. That was too little viable
+Rehab-04 was removed from the shared planter on 2026-07-24. The owner recorded
+that final inspection found only a tiny patch of green flesh near the top; no
+supporting collection photograph is retained. That was too little viable
 tissue to salvage, so no offset or cutting was retained. This closes the active
 recovery record; the probable identification, older observations, and
 living-species reference photographs remain archived.

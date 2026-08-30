@@ -2,6 +2,7 @@
 
 - Inventory: Starter-07 — _Gymnocalycium mihanovichii_
 - Label ID: `A1`
+- Tracker ID: `P01`
 - Visual description: Flattened ribbed globe marbled green, bronze, yellow, and pink.
 - Interesting fact: Unlike the neon grafted “moon cacti” commonly sold in stores, this plant has enough chlorophyll to grow on its own roots.
 - Identification: **labeled; own-root variegated plant**
