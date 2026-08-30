@@ -1,4 +1,5 @@
 import {
+    comparePlantsByNaturalLabel,
     dayColor,
     daysSince,
     formatDate,
@@ -219,9 +220,6 @@ function visiblePlants() {
         numeric: true,
         sensitivity: "base",
     });
-    const labelOrder = new Map(
-        collection.plants.map((plant, index) => [plant["Plant ID"], index])
-    );
     const sorted = plants.sort((left, right) => {
         if (sortSelect.value === "water") {
             return (
@@ -251,9 +249,7 @@ function visiblePlants() {
                 right["Plant / planter"]
             );
         }
-        return (
-            labelOrder.get(left["Plant ID"]) - labelOrder.get(right["Plant ID"])
-        );
+        return comparePlantsByNaturalLabel(left, right);
     });
     return sortDirection === "desc" ? sorted.reverse() : sorted;
 }

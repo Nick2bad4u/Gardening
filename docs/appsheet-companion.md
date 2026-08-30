@@ -109,7 +109,8 @@ creator, license, and attribution metadata when changing a reference image.
 
 The Plants view sorts by the hidden virtual Number column
 `Natural label order`, not by `Plant ID`. Its explicit mapping keeps labels in
-the physical sequence A1-A3 through F1-F3, then #1-#4, G1-G3, and H1-H3.
+the physical sequence A1-A3 through H1-H3, followed by the shared-planter
+labels #1-#4.
 Canonical IDs and writable picker values remain P01-P28; do not replace them
 with the display-order helper.
 

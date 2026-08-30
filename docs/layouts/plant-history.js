@@ -1,4 +1,5 @@
 import {
+    comparePlantsByNaturalLabel,
     daysSince,
     formatDate,
     formatMeasurement,
@@ -667,7 +668,7 @@ function renderProfileLinks(plantId) {
     container.hidden = profiles.length === 0;
 }
 
-function renderPlant(plant, plants, index) {
+function renderPlant(plant, plants, index, trackerIndex) {
     currentPlant = plant;
     const summary = plant.summary;
     const name = plant["Plant / planter"];
@@ -678,7 +679,7 @@ function renderPlant(plant, plants, index) {
     setText("#plant-name", name);
     setText("#plant-scientific", plant["Scientific name / contents"]);
     document.querySelector("#edit-history").href =
-        `${sheetUrls.editQuickLog}&range=A${index + 5}:L${index + 5}`;
+        `${sheetUrls.editQuickLog}&range=A${trackerIndex + 5}:L${trackerIndex + 5}`;
     document.querySelector("#sheet-plant-page").href = sheetUrls.plantPage(id);
     renderProfileLinks(id);
 
@@ -869,8 +870,11 @@ async function loadPlant() {
             loadFieldGuideProfiles(),
         ]);
         fieldGuideProfiles = loadedFieldGuideProfiles;
+        const naturallyOrderedPlants = [...collection.plants].sort(
+            comparePlantsByNaturalLabel
+        );
         const normalizedRequest = requestedId?.trim().toLowerCase();
-        const index = collection.plants.findIndex(
+        const index = naturallyOrderedPlants.findIndex(
             (plant) =>
                 plant["Plant ID"].toLowerCase() === normalizedRequest ||
                 plantLabel(plant).toLowerCase() === normalizedRequest
@@ -882,7 +886,16 @@ async function loadPlant() {
                     : "No plant label was provided in this URL."
             );
         }
-        renderPlant(collection.plants[index], collection.plants, index);
+        const trackerIndex = collection.plants.findIndex(
+            (plant) =>
+                plant["Plant ID"] === naturallyOrderedPlants[index]["Plant ID"]
+        );
+        renderPlant(
+            naturallyOrderedPlants[index],
+            naturallyOrderedPlants,
+            index,
+            trackerIndex
+        );
     } catch (error) {
         setText("#plant-label", "Plant not found");
         setText("#plant-name", "This history page could not load");

@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.14.0",
+    version: "5.14.1",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",

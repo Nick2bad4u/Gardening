@@ -23,8 +23,8 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-As of August 29, 2026, the checked-in source identifies the logger as **5.14.0**
-and the production deployment points to immutable Apps Script version **38**.
+As of August 29, 2026, the checked-in source identifies the logger as **5.14.1**
+and the production deployment points to immutable Apps Script version **39**.
 The production URL above is intentionally stable. Treat these values as
 a handoff baseline, not a substitute for checking `GARDEN_LOGGER.version`,
 `clasp versions`, `clasp deployments`, and the authenticated live page before a
@@ -41,8 +41,8 @@ future release.
 - A Wet weight is independent from Water. Nutrient choice, product, and amount
   are remembered across single and bulk logger entry for the current browser
   session.
-- The compact label picker presents `A1`–`F3`, then `#1`–`#4`, `G1`–`G3`, and
-  `H1`–`H3` in natural label order without changing canonical `P01`–`P28`
+- The compact label picker presents `A1`–`H3` in natural label order, followed
+  by the shared-planter labels `#1`–`#4`, without changing canonical `P01`–`P28`
   request order. P23–P28 summaries show separate current-plant and seller-label
   evidence cards when those publication images are available.
 - The AppSheet bridge uses exactly one five-minute

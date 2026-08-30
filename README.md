@@ -13,7 +13,7 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
   per-plant history URLs, dry/wet baselines, calculations, charts, and direct
   links back to the editable workbook
 - [Garden Entry Logger](https://script.google.com/macros/s/AKfycbytpdMto4ZAqOf49igDNoGYr-J6fmSRDNJOKP4-dKDFRmM2YkTCKJp3kmhrD4gOJShF/exec) —
-  the signed-in 5.14.0 mobile logger with a durable one-call queue, independent
+  the signed-in 5.14.1 mobile logger with a durable one-call queue, independent
   Wet weights, remembered nutrient details, a 12-event grid, and generic bulk
   care including 90° rotations
 - [AppSheet garden companion](docs/appsheet-companion.md) — signed-in phone and

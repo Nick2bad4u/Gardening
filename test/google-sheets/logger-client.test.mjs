@@ -10,6 +10,13 @@ const html = fs.readFileSync(
 const scriptSource = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].at(
     -1
 )[1];
+const trackerDataSource = fs.readFileSync(
+    new URL("../../docs/layouts/plant-tracker-data.js", import.meta.url),
+    "utf8"
+);
+const { comparePlantsByNaturalLabel } = await import(
+    `data:text/javascript;base64,${Buffer.from(trackerDataSource).toString("base64")}`
+);
 
 const bootstrap = {
     version: "test",
@@ -773,7 +780,7 @@ describe("Garden logger browser recovery", () => {
         expect(window.localStorage.getItem("gardenPlantId")).toBe("P01");
     });
 
-    it("sorts only the label picker naturally and keeps selects and bulk requests in P order", () => {
+    it("sorts A-H before numbered planters while keeping requests in P order", () => {
         const bootstrapData = canonicalBootstrap();
         const canonicalIds = bootstrapData.plants.map(({ id }) => id);
         const { behaviors, calls, window } = createLoggerWindow({
@@ -794,13 +801,14 @@ describe("Garden logger browser recovery", () => {
                 ({ dataset }) => dataset.plantId
             )
         ).toEqual([
-            ...canonicalIds.slice(0, 22),
+            ...canonicalIds.slice(0, 18),
             "P27",
             "P23",
             "P28",
             "P24",
             "P25",
             "P26",
+            ...canonicalIds.slice(18, 22),
         ]);
 
         window.document
@@ -844,6 +852,27 @@ describe("Garden logger browser recovery", () => {
             "P01",
             "P27",
             "P28",
+        ]);
+    });
+
+    it("uses the same natural order for the public tracker and history pager", () => {
+        const orderedLabels = canonicalPlantLabels
+            .map((label, index) => ({
+                "Current pot label": label,
+                "Plant ID": `P${String(index + 1).padStart(2, "0")}`,
+            }))
+            .sort(comparePlantsByNaturalLabel)
+            .map((plant) => plant["Current pot label"]);
+
+        expect(orderedLabels).toEqual([
+            ...canonicalPlantLabels.slice(0, 18),
+            "G1",
+            "G2",
+            "G3",
+            "H1",
+            "H2",
+            "H3",
+            ...canonicalPlantLabels.slice(18, 22),
         ]);
     });
 

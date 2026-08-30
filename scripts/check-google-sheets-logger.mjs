@@ -14,7 +14,7 @@ const trackerDataSource = fs.readFileSync(
     new URL("../docs/layouts/plant-tracker-data.js", import.meta.url),
     "utf8"
 );
-const { parseDate } = await import(
+const { comparePlantsByNaturalLabel, parseDate } = await import(
     `data:text/javascript;base64,${Buffer.from(trackerDataSource).toString("base64")}`
 );
 
@@ -27,7 +27,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.14.0");
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.14.1");
 
 assert.deepEqual(
     Array.from(
@@ -327,5 +327,56 @@ assert.equal(publishedHistoryDate?.getDate(), 12);
 assert.equal(publishedHistoryDate?.getHours(), 2);
 assert.equal(parseDate("8/12/2026 12:05 PM")?.getHours(), 12);
 assert.equal(parseDate("8/12/2026 12:05 AM")?.getHours(), 0);
+
+const canonicalPlantLabels = [
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "B3",
+    "C1",
+    "C2",
+    "C3",
+    "D1",
+    "D2",
+    "D3",
+    "E1",
+    "E2",
+    "E3",
+    "F1",
+    "F2",
+    "F3",
+    "#1",
+    "#2",
+    "#3",
+    "#4",
+    "G2",
+    "H1",
+    "H2",
+    "H3",
+    "G1",
+    "G3",
+];
+const naturallyOrderedPlantLabels = [
+    ...canonicalPlantLabels.slice(0, 18),
+    "G1",
+    "G2",
+    "G3",
+    "H1",
+    "H2",
+    "H3",
+    ...canonicalPlantLabels.slice(18, 22),
+];
+assert.deepEqual(
+    canonicalPlantLabels
+        .map((label, index) => ({
+            "Current pot label": label,
+            "Plant ID": `P${String(index + 1).padStart(2, "0")}`,
+        }))
+        .sort(comparePlantsByNaturalLabel)
+        .map((plant) => plant["Current pot label"]),
+    naturallyOrderedPlantLabels
+);
 
 console.log("Google Sheets logger pure-function checks passed.");

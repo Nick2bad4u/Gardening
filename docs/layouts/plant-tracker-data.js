@@ -558,6 +558,51 @@ export function plantLabel(plant) {
     return plant["Current pot label"] || plant["Plant ID"];
 }
 
+const LABEL_GROUP_ORDER = Object.freeze([
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "#",
+]);
+
+function plantLabelSortParts(plant) {
+    const label = String(plantLabel(plant) || "")
+        .trim()
+        .toUpperCase();
+    const match =
+        /^([A-H])([1-9]\d*)$/.exec(label) || /^(#)([1-9]\d*)$/.exec(label);
+    const group = match ? match[1] : "";
+    const groupIndex = LABEL_GROUP_ORDER.indexOf(group);
+    return {
+        groupIndex: groupIndex === -1 ? LABEL_GROUP_ORDER.length : groupIndex,
+        number: match ? Number(match[2]) : Number.MAX_SAFE_INTEGER,
+        label,
+        id: String(plant["Plant ID"] || ""),
+    };
+}
+
+export function comparePlantsByNaturalLabel(leftPlant, rightPlant) {
+    const left = plantLabelSortParts(leftPlant);
+    const right = plantLabelSortParts(rightPlant);
+    return (
+        left.groupIndex - right.groupIndex ||
+        left.number - right.number ||
+        left.label.localeCompare(right.label, undefined, {
+            numeric: true,
+            sensitivity: "base",
+        }) ||
+        left.id.localeCompare(right.id, undefined, {
+            numeric: true,
+            sensitivity: "base",
+        })
+    );
+}
+
 export function dayColor(days) {
     const green = [
         87,

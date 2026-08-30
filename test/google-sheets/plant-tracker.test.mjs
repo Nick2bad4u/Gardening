@@ -931,7 +931,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.14.0");
+        expect(bootstrap.version).toBe("5.14.1");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -3590,9 +3590,9 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.14.0");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.14.1");
         expect(calls.toast[1]).toBe("Garden logger verified");
-        expect(calls.toast[0]).toMatch(/Logger 5\.14\.0 is ready/);
+        expect(calls.toast[0]).toMatch(/Logger 5\.14\.1 is ready/);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(
