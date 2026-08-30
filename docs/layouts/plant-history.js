@@ -445,7 +445,7 @@ function renderTrendSnapshot(summary) {
             ? "—"
             : `${formatSigned(summary.heightMonthlyRate, "cm")}/mo`,
         summary.heightChange === null
-            ? "Needs 2 dated heights"
+            ? "Needs 2 measured readings."
             : `${formatSigned(summary.heightChange, "cm")} across ${summary.heightSeries.length} readings`
     );
     setTrendCard(
@@ -455,7 +455,7 @@ function renderTrendSnapshot(summary) {
             ? "—"
             : `${formatSigned(summary.widthMonthlyRate, "cm")}/mo`,
         summary.widthChange === null
-            ? "Needs 2 dated widths"
+            ? "Needs 2 measured readings."
             : `${formatSigned(summary.widthChange, "cm")} across ${summary.widthSeries.length} readings`
     );
     setTrendCard(
@@ -527,8 +527,9 @@ function renderCharts(summary) {
     const heightPoints = summary.heightSeries.filter(inChartRange);
     const widthPoints = summary.widthSeries.filter(inChartRange);
     renderLineChart(document.querySelector("#growth-chart"), {
-        ariaLabel: `Height and width history for ${plantLabel(currentPlant)}`,
-        emptyMessage: "No height or width readings in this chart range yet.",
+        ariaLabel: `Measured height and width history for ${plantLabel(currentPlant)}`,
+        emptyMessage:
+            "No measured height or width readings in this chart range yet.",
         series: [
             {
                 label: "Height",
@@ -546,8 +547,8 @@ function renderCharts(summary) {
     setText(
         "#growth-chart-summary",
         heightPoints.length || widthPoints.length
-            ? `${heightPoints.length} height and ${widthPoints.length} width readings shown.`
-            : "Height and width can be logged independently."
+            ? `${heightPoints.length} measured height and ${widthPoints.length} measured width readings shown.`
+            : "No measured height or width readings are available in this range. Estimates remain in observation history."
     );
 
     const intervals = summary.watering.intervals.filter(inChartRange);

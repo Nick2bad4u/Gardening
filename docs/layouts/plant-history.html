@@ -206,10 +206,11 @@
                         <p class="eyebrow">Calculated from the log</p>
                         <h2 id="trend-title">Trend snapshot</h2>
                         <p>
-                            A blank card means there are not enough independent
-                            readings yet. Estimated starting measurements remain
-                            visible but become more useful after real
-                            follow-ups.
+                            Height and width trends use only measured readings.
+                            Corrected readings count only when their measurement
+                            method is Ruler. Estimates, blank-quality readings,
+                            and Removed records stay in observation history but
+                            do not affect growth analytics.
                         </p>
                     </div>
                 </header>
@@ -243,12 +244,16 @@
                     <article>
                         <span>Height trend</span>
                         <strong id="height-trend">—</strong>
-                        <small id="height-trend-detail">Needs 2 heights</small>
+                        <small id="height-trend-detail"
+                            >Needs 2 measured readings.</small
+                        >
                     </article>
                     <article>
                         <span>Width trend</span>
                         <strong id="width-trend">—</strong>
-                        <small id="width-trend-detail">Needs 2 widths</small>
+                        <small id="width-trend-detail"
+                            >Needs 2 measured readings.</small
+                        >
                     </article>
                     <article>
                         <span>Watering interval</span>
@@ -410,7 +415,8 @@
                         <h2 id="charts-title">Trends over time</h2>
                         <p>
                             Hover or keyboard-focus a chart point for its exact
-                            value. Growth rates are descriptive slopes, not
+                            value. Growth charts and rates exclude estimates and
+                            removed records. Rates are descriptive slopes, not
                             forecasts.
                         </p>
                     </div>
@@ -455,8 +461,10 @@
                                     dimensions</h3
                                 >
                                 <p
-                                    >Height and width stay separate even when
-                                    measured on different days.</p
+                                    >Measured height and width stay separate
+                                    even when recorded on different days.
+                                    Estimates remain available in the table
+                                    below.</p
                                 >
                             </div>
                         </header>

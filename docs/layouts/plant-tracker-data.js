@@ -251,8 +251,33 @@ function newest(events, predicate) {
     return sortEvents(events.filter(predicate)).at(-1);
 }
 
-function measurementSeries(events, field) {
-    return sortEvents(events)
+const estimatedMeasurementMethods = new Set([
+    "estimated from photo",
+    "estimated visually",
+]);
+
+function isEligibleGrowthMeasurement(event) {
+    const quality = String(event["Observation quality"] ?? "")
+        .trim()
+        .toLowerCase();
+    const method = String(event["Measurement method"] ?? "")
+        .trim()
+        .toLowerCase();
+    const status = String(event["Record status"] ?? "")
+        .trim()
+        .toLowerCase();
+
+    if (status === "removed" || estimatedMeasurementMethods.has(method)) {
+        return false;
+    }
+    return (
+        quality === "measured" ||
+        (quality === "corrected" && method === "ruler")
+    );
+}
+
+function measurementSeries(events, field, predicate = () => true) {
+    return sortEvents(events.filter(predicate))
         .map((event) => ({
             date: parseDate(event.Date),
             event,
@@ -394,8 +419,16 @@ export function calculateSummary(events, plantId = "") {
     const rotationEvents = eventNamed("Rotation");
     const cleanEvents = eventNamed("Clean");
     const pruneEvents = eventNamed("Prune");
-    const heightSeries = measurementSeries(events, "Height (cm)");
-    const widthSeries = measurementSeries(events, "Width (cm)");
+    const heightSeries = measurementSeries(
+        events,
+        "Height (cm)",
+        isEligibleGrowthMeasurement
+    );
+    const widthSeries = measurementSeries(
+        events,
+        "Width (cm)",
+        isEligibleGrowthMeasurement
+    );
     const weightSeries = measurementSeries(activeEvents, "Weight (g)").map(
         (point) => ({
             ...point,
