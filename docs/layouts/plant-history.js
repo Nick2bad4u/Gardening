@@ -13,9 +13,67 @@ import {
 } from "./plant-tracker-data.js";
 import {
     renderActivityChart,
+    renderBarChart,
     renderIntervalChart,
     renderLineChart,
 } from "./plant-charts.js";
+
+let fieldGuideProfiles = Object.freeze({});
+
+async function loadFieldGuideProfiles() {
+    const response = await fetch(
+        new URL("./plant-profile-data.json", import.meta.url)
+    );
+    if (!response.ok) {
+        throw new Error(
+            `The field-guide profile map returned HTTP ${response.status}.`
+        );
+    }
+    return response.json();
+}
+
+const HISTORY_HEADERS = Object.freeze([
+    "Date",
+    "Plant ID",
+    "Event",
+    "Weight state",
+    "Weight (g)",
+    "Height (cm)",
+    "Width (cm)",
+    "Plant condition",
+    "Notes",
+    "Recorded",
+    "Pot setup",
+    "Pot label at entry",
+    "Plant / planter",
+    "Trend anchor",
+    "Days after anchor",
+    "Request ID",
+    "Nutrients used",
+    "Nutrient product",
+    "Nutrient amount",
+    "Previous pot size",
+    "Pot size",
+    "Flower count",
+    "Flower details",
+    "Photo URL",
+    "Pest / issue",
+    "Treatment / action",
+    "Observation ID",
+    "Entry source",
+    "Observation quality",
+    "Save group / batch ID",
+    "Corrects observation ID",
+    "Correction reason",
+    "Soil moisture",
+    "Medium / substrate",
+    "Measurement method",
+    "Record status",
+    "Measurement unit",
+    "Height (in)",
+    "Width (in)",
+    "Rotation (°)",
+]);
 
 const requestedId = new URLSearchParams(location.search).get("id");
 const tableBody = document.querySelector("#history-table tbody");
@@ -23,6 +81,7 @@ const searchInput = document.querySelector("#history-search");
 const eventFilter = document.querySelector("#history-event-filter");
 const chartRange = document.querySelector("#chart-range");
 let currentPlant = null;
+let historySort = { direction: "descending", key: "Date", type: "date" };
 
 function setText(selector, value) {
     document.querySelector(selector).textContent = value;
@@ -60,12 +119,23 @@ function setCheckedValue(valueSelector, dateSelector, event, field, unit) {
 
 function tableCell(value, className) {
     const cell = document.createElement("td");
-    cell.textContent =
-        value === "" || value === null || value === undefined
-            ? "—"
-            : String(value);
-    if (className) cell.className = className;
+    const blank = value === "" || value === null || value === undefined;
+    cell.textContent = blank ? "Not recorded" : String(value);
+    cell.className = [className, blank ? "not-recorded" : ""]
+        .filter(Boolean)
+        .join(" ");
     return cell;
+}
+
+function conditionValue(event) {
+    return [event["Plant condition"], event["Soil moisture"]]
+        .map((value) => String(value ?? "").trim())
+        .filter(Boolean)
+        .join(" · ");
+}
+
+function latestMatching(events, predicate) {
+    return sortedEvents(events, false).findLast(predicate) ?? null;
 }
 
 function eventDetails(event) {
@@ -85,6 +155,8 @@ function eventDetails(event) {
         parts.push(
             `${event["Previous pot size"] || "previous size not logged"} → ${event["Pot size"] || "new size not logged"}`
         );
+        if (event["Medium / substrate"])
+            parts.push(`Medium: ${event["Medium / substrate"]}`);
     }
     if (eventName === "flower") {
         if (event["Flower count"]) {
@@ -108,8 +180,30 @@ function eventDetails(event) {
                 : `${degrees}° clockwise-equivalent turn`
         );
     }
-    if (eventName === "check" && event["Condition / soil"])
-        parts.push(event["Condition / soil"]);
+    const measurementUnit = String(event["Measurement unit"] ?? "")
+        .trim()
+        .toLowerCase();
+    if (
+        measurementUnit === "in" &&
+        (event["Height (in)"] || event["Width (in)"])
+    ) {
+        const originals = [
+            event["Height (in)"] ? `H ${event["Height (in)"]} in` : "",
+            event["Width (in)"] ? `W ${event["Width (in)"]} in` : "",
+        ].filter(Boolean);
+        parts.push(`Original measurement: ${originals.join(" · ")}`);
+    }
+    if (event["Measurement method"])
+        parts.push(`Method: ${event["Measurement method"]}`);
+    if (event["Observation quality"])
+        parts.push(`Quality: ${event["Observation quality"]}`);
+    if (event["Correction reason"])
+        parts.push(`Correction: ${event["Correction reason"]}`);
+    if (
+        event["Record status"] &&
+        String(event["Record status"]).trim().toLowerCase() !== "active"
+    )
+        parts.push(`Record status: ${event["Record status"]}`);
     if (event["Photo URL"])
         parts.push({ href: event["Photo URL"], label: "Open Google Photos ↗" });
     return parts;
@@ -148,6 +242,50 @@ function sortedEvents(events, descending = true) {
     });
 }
 
+function sortValue(event, key, type) {
+    const raw = key === "condition" ? conditionValue(event) : event[key];
+    if (type === "date") return parseDate(raw)?.getTime() ?? null;
+    if (type === "number") return numericValue(raw);
+    const text = String(raw ?? "").trim();
+    return text ? text.toLocaleLowerCase() : null;
+}
+
+function sortedVisibleEvents(events) {
+    const multiplier = historySort.direction === "ascending" ? 1 : -1;
+    return [...events].sort((left, right) => {
+        const leftValue = sortValue(left, historySort.key, historySort.type);
+        const rightValue = sortValue(right, historySort.key, historySort.type);
+        if (leftValue === null && rightValue === null)
+            return multiplier * (left._index - right._index);
+        if (leftValue === null) return 1;
+        if (rightValue === null) return -1;
+        const comparison =
+            typeof leftValue === "number"
+                ? leftValue - rightValue
+                : leftValue.localeCompare(rightValue);
+        return multiplier * (comparison || left._index - right._index);
+    });
+}
+
+function updateSortHeaders() {
+    document
+        .querySelectorAll("#history-table th[data-sort-key]")
+        .forEach((header) => {
+            const active = header.dataset.sortKey === historySort.key;
+            header.setAttribute(
+                "aria-sort",
+                active ? historySort.direction : "none"
+            );
+            const indicator = header.querySelector("button span");
+            if (indicator)
+                indicator.textContent = active
+                    ? historySort.direction === "ascending"
+                        ? "↑"
+                        : "↓"
+                    : "↕";
+        });
+}
+
 function visibleEvents() {
     if (!currentPlant) return [];
     const query = searchInput.value.trim().toLowerCase();
@@ -168,7 +306,7 @@ function visibleEvents() {
 }
 
 function renderHistory() {
-    const events = sortedEvents(visibleEvents());
+    const events = sortedVisibleEvents(visibleEvents());
     if (events.length === 0) {
         const row = document.createElement("tr");
         const cell = tableCell(
@@ -177,7 +315,7 @@ function renderHistory() {
                 : "No observations have been logged for this plant yet.",
             "loading-cell"
         );
-        cell.colSpan = 11;
+        cell.colSpan = 12;
         row.append(cell);
         tableBody.replaceChildren(row);
     } else {
@@ -191,10 +329,11 @@ function renderHistory() {
                 tableCell(formatMeasurement(event["Height (cm)"], "cm"))
             );
             row.append(tableCell(formatMeasurement(event["Width (cm)"], "cm")));
+            row.append(tableCell(conditionValue(event), "condition-cell"));
             row.append(eventDetailsCell(event));
             row.append(tableCell(event.Notes, "notes-cell"));
-            row.append(tableCell(formatDate(event["Water cycle start"])));
-            row.append(tableCell(event["Days after water"]));
+            row.append(tableCell(formatDate(event["Trend anchor"], "")));
+            row.append(tableCell(event["Days after anchor"]));
             row.append(tableCell(event["Pot setup"] || "1"));
             return row;
         });
@@ -207,6 +346,7 @@ function renderHistory() {
             ? entryLabel(events.length)
             : `${events.length} of ${entryLabel(currentPlant.events.length)}`
     );
+    updateSortHeaders();
 }
 
 function configureEventFilter(events) {
@@ -253,6 +393,15 @@ function variabilityDetail(deviation, coefficient, count) {
         `±${deviation.toFixed(1)} g`,
         `CV ${(coefficient * 100).toFixed(1)}% · ${sampleLabel(count)}`,
     ];
+}
+
+function activityClassName(eventName) {
+    const slug = String(eventName ?? "")
+        .trim()
+        .toLowerCase()
+        .replaceAll(/[^a-z0-9]+/g, "-")
+        .replaceAll(/^-|-$/g, "");
+    return `activity-${slug || "other"}`;
 }
 
 function renderTrendSnapshot(summary) {
@@ -417,15 +566,46 @@ function renderCharts(summary) {
         .map((event) => {
             const eventName = String(event.Event ?? "").trim();
             return {
+                category: eventName || "Other",
                 date: parseDate(event.Date),
                 label:
                     eventName === "Water" && event["Nutrients used"] === "Yes"
                         ? `Water + ${event["Nutrient product"] || "nutrients"}`
                         : eventName || "Care event",
-                className: `activity-${eventName.toLowerCase() || "other"}`,
+                className: activityClassName(eventName),
             };
         })
         .filter((event) => event.date && inChartRange(event));
+    const eventCounts = new Map();
+    activityEvents.forEach((event) =>
+        eventCounts.set(
+            event.category,
+            (eventCounts.get(event.category) ?? 0) + 1
+        )
+    );
+    const eventMix = [...eventCounts]
+        .map(([label, value]) => ({
+            className: activityClassName(label),
+            label,
+            value,
+        }))
+        .sort(
+            (left, right) =>
+                right.value - left.value ||
+                left.label.localeCompare(right.label)
+        );
+    renderBarChart(document.querySelector("#event-mix-chart"), {
+        ariaLabel: `Recorded event types for ${plantLabel(currentPlant)}`,
+        emptyMessage: "No dated events in this chart range yet.",
+        items: eventMix,
+        unit: "events",
+    });
+    setText(
+        "#event-mix-chart-summary",
+        eventMix.length
+            ? `${activityEvents.length} dated ${activityEvents.length === 1 ? "event" : "events"} across ${eventMix.length} ${eventMix.length === 1 ? "type" : "types"}. Blank fields are not counted as events.`
+            : "The chart counts recorded event rows; blanks remain not recorded."
+    );
     renderActivityChart(document.querySelector("#activity-chart"), {
         ariaLabel: `Care activity timeline for ${plantLabel(currentPlant)}`,
         emptyMessage: "No care events in this chart range yet.",
@@ -446,42 +626,13 @@ function csvCell(value) {
 
 function exportHistory() {
     if (!currentPlant) return;
-    const headers = [
-        "Date",
-        "Plant ID",
-        "Event",
-        "Weight state",
-        "Weight (g)",
-        "Height (cm)",
-        "Width (cm)",
-        "Condition / soil",
-        "Notes",
-        "Recorded",
-        "Pot setup",
-        "Pot label at entry",
-        "Plant / planter",
-        "Water cycle start",
-        "Days after water",
-        "Nutrients used",
-        "Nutrient product",
-        "Nutrient amount",
-        "Previous pot size",
-        "Pot size",
-        "Flower count",
-        "Flower details",
-        "Photo URL",
-        "Pest / issue",
-        "Treatment / action",
-        "Measurement unit",
-        "Height (in)",
-        "Width (in)",
-        "Rotation (°)",
-    ];
     const rows = sortedEvents(currentPlant.events, false).map((event) =>
-        headers.map((header) => csvCell(event[header])).join(",")
+        HISTORY_HEADERS.map((header) => csvCell(event[header])).join(",")
     );
     const blob = new Blob(
-        [`\uFEFF${headers.map(csvCell).join(",")}\r\n${rows.join("\r\n")}\r\n`],
+        [
+            `\uFEFF${HISTORY_HEADERS.map(csvCell).join(",")}\r\n${rows.join("\r\n")}\r\n`,
+        ],
         { type: "text/csv;charset=utf-8" }
     );
     const url = URL.createObjectURL(blob);
@@ -490,6 +641,30 @@ function exportHistory() {
     link.download = `${currentPlant["Plant ID"]}-${plantLabel(currentPlant).replaceAll("#", "number-")}-history.csv`;
     link.click();
     URL.revokeObjectURL(url);
+}
+
+function renderProfileLinks(plantId) {
+    const container = document.querySelector("#profile-actions");
+    const profiles = fieldGuideProfiles[plantId] ?? [];
+    container.replaceChildren();
+    profiles.forEach(([fragment, title], index) => {
+        const link = document.createElement("a");
+        link.className = "button field-guide-button";
+        link.href = `../plant-booklet/#${encodeURIComponent(fragment)}`;
+        const icon = document.createElement("span");
+        icon.setAttribute("aria-hidden", "true");
+        icon.textContent = "✦";
+        link.append(
+            icon,
+            document.createTextNode(
+                profiles.length === 1
+                    ? " Open field-guide profile"
+                    : ` ${index + 1}. ${title}`
+            )
+        );
+        container.append(link);
+    });
+    container.hidden = profiles.length === 0;
 }
 
 function renderPlant(plant, plants, index) {
@@ -505,6 +680,7 @@ function renderPlant(plant, plants, index) {
     document.querySelector("#edit-history").href =
         `${sheetUrls.editQuickLog}&range=A${index + 5}:L${index + 5}`;
     document.querySelector("#sheet-plant-page").href = sheetUrls.plantPage(id);
+    renderProfileLinks(id);
 
     const waterDate = summary.lastWater?.Date ?? "";
     const elapsed = daysSince(waterDate);
@@ -537,6 +713,48 @@ function renderPlant(plant, plants, index) {
         "cm"
     );
 
+    const latestCondition = latestMatching(
+        plant.events,
+        (event) => conditionValue(event) !== ""
+    );
+    setText(
+        "#latest-activity",
+        summary.latestActivity?.Event ||
+            (summary.latestActivity ? "Observation" : "—")
+    );
+    setText(
+        "#latest-activity-detail",
+        summary.latestActivity
+            ? formatDate(summary.latestActivity.Date)
+            : "No dated history"
+    );
+    setText(
+        "#latest-condition",
+        latestCondition ? conditionValue(latestCondition) : "—"
+    );
+    setText(
+        "#latest-condition-detail",
+        latestCondition
+            ? `Recorded ${formatDate(latestCondition.Date)}`
+            : "Plant condition and soil moisture not recorded"
+    );
+    setText("#logged-entry-count", String(plant.events.length));
+    setText(
+        "#logged-entry-detail",
+        plant.events.length
+            ? `${summary.firstActivity ? formatDate(summary.firstActivity.Date) : "Undated"} to ${summary.latestActivity ? formatDate(summary.latestActivity.Date) : "undated"}`
+            : "No observations yet"
+    );
+    const activeSetupEntries = plant.events.filter(
+        (event) =>
+            (numericValue(event["Pot setup"]) ?? 1) === summary.activePotSetup
+    ).length;
+    setText("#setup-entry-count", String(activeSetupEntries));
+    setText(
+        "#setup-entry-detail",
+        `Pot setup ${summary.activePotSetup} · ${entryLabel(activeSetupEntries)}`
+    );
+
     setText("#pot-setup", String(summary.activePotSetup));
     setText("#dry-average", formatAverage(summary.dryAverage));
     setText("#dry-samples", sampleLabel(summary.drySamples));
@@ -561,6 +779,8 @@ function renderPlant(plant, plants, index) {
     setText("#pest-count", String(summary.eventCounts.pests));
     setText("#check-count", String(summary.eventCounts.checks));
     setText("#rotation-count", String(summary.eventCounts.rotations));
+    setText("#clean-count", String(summary.eventCounts.cleans));
+    setText("#prune-count", String(summary.eventCounts.prunes));
     setText(
         "#latest-repot-detail",
         summary.latestRepot
@@ -607,6 +827,26 @@ function renderPlant(plant, plants, index) {
             ? `${summary.latestRotation["Rotation (°)"] || 90}° · ${formatDate(summary.latestRotation.Date)}`
             : "No rotation logged"
     );
+    const latestClean = latestMatching(
+        plant.events,
+        (event) => String(event.Event).trim().toLowerCase() === "clean"
+    );
+    const latestPrune = latestMatching(
+        plant.events,
+        (event) => String(event.Event).trim().toLowerCase() === "prune"
+    );
+    setText(
+        "#latest-clean-detail",
+        latestClean
+            ? `Latest ${formatDate(latestClean.Date)}`
+            : "No cleaning logged"
+    );
+    setText(
+        "#latest-prune-detail",
+        latestPrune
+            ? `Latest ${formatDate(latestPrune.Date)}`
+            : "No pruning logged"
+    );
     const badge = document.querySelector("#baseline-status");
     badge.textContent = summary.baselineStatus;
     badge.dataset.status = summary.baselineStatus.toLowerCase().split(" ")[0];
@@ -624,7 +864,11 @@ function renderPlant(plant, plants, index) {
 
 async function loadPlant() {
     try {
-        const collection = await loadCollectionData();
+        const [collection, loadedFieldGuideProfiles] = await Promise.all([
+            loadCollectionData(),
+            loadFieldGuideProfiles(),
+        ]);
+        fieldGuideProfiles = loadedFieldGuideProfiles;
         const normalizedRequest = requestedId?.trim().toLowerCase();
         const index = collection.plants.findIndex(
             (plant) =>
@@ -645,7 +889,9 @@ async function loadPlant() {
         setText("#page-status", error.message);
         const row = document.createElement("tr");
         const cell = tableCell(error.message, "loading-cell error-cell");
-        cell.colSpan = 11;
+        cell.colSpan = document.querySelectorAll(
+            "#history-table thead th"
+        ).length;
         row.append(cell);
         tableBody.replaceChildren(row);
     }
@@ -658,6 +904,24 @@ chartRange.addEventListener(
     "change",
     () => currentPlant && renderCharts(currentPlant.summary)
 );
+document
+    .querySelectorAll("#history-table th[data-sort-key] button")
+    .forEach((button) =>
+        button.addEventListener("click", () => {
+            const header = button.closest("th");
+            const key = header.dataset.sortKey;
+            historySort = {
+                direction:
+                    historySort.key === key &&
+                    historySort.direction === "ascending"
+                        ? "descending"
+                        : "ascending",
+                key,
+                type: header.dataset.sortType || "text",
+            };
+            renderHistory();
+        })
+    );
 document
     .querySelector("#export-history")
     .addEventListener("click", exportHistory);

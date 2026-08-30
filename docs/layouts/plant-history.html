@@ -57,8 +57,8 @@
                 </span>
             </a>
             <div class="nav-links">
-                <a href="./plant-tracker.html">▦ All plants</a>
                 <a href="../plant-booklet/">✦ Field guide</a>
+                <a href="./plant-tracker.html">▦ Plant tracker</a>
                 <a href="./grow-spot-layout.html">◇ Grow-spot layout</a>
                 <a href="./indoor-acclimation-calendar.html">◫ Calendar</a>
                 <a href="./photo-album.html">▧ Photos</a>
@@ -93,6 +93,12 @@
                     </p>
                 </div>
                 <div class="hero-actions">
+                    <div
+                        class="profile-actions"
+                        id="profile-actions"
+                        aria-label="Field guide profiles"
+                        hidden
+                    ></div>
                     <a
                         class="button primary"
                         id="edit-history"
@@ -147,25 +153,47 @@
                 class="metric-grid"
                 aria-label="Latest observations"
             >
-                <article>
-                    <span>Last watered</span>
+                <article data-accent="water">
+                    <span><i aria-hidden="true">◒</i> Last watered</span>
                     <strong id="last-watered">—</strong>
                     <small id="water-days">No watering logged</small>
                 </article>
-                <article>
-                    <span>Latest weight</span>
+                <article data-accent="weight">
+                    <span><i aria-hidden="true">◆</i> Latest weight</span>
                     <strong id="latest-weight">—</strong>
                     <small id="weight-checked">Not checked yet</small>
                 </article>
-                <article>
-                    <span>Latest height</span>
+                <article data-accent="growth">
+                    <span><i aria-hidden="true">↕</i> Latest height</span>
                     <strong id="latest-height">—</strong>
                     <small id="height-checked">Not checked yet</small>
                 </article>
-                <article>
-                    <span>Latest width</span>
+                <article data-accent="growth">
+                    <span><i aria-hidden="true">↔</i> Latest width</span>
                     <strong id="latest-width">—</strong>
                     <small id="width-checked">Not checked yet</small>
+                </article>
+                <article data-accent="activity">
+                    <span><i aria-hidden="true">✦</i> Latest activity</span>
+                    <strong id="latest-activity">—</strong>
+                    <small id="latest-activity-detail">No dated history</small>
+                </article>
+                <article data-accent="condition">
+                    <span><i aria-hidden="true">◎</i> Latest condition</span>
+                    <strong id="latest-condition">—</strong>
+                    <small id="latest-condition-detail">Not recorded</small>
+                </article>
+                <article data-accent="records">
+                    <span><i aria-hidden="true">▤</i> Logged entries</span>
+                    <strong id="logged-entry-count">0</strong>
+                    <small id="logged-entry-detail">No observations yet</small>
+                </article>
+                <article data-accent="setup">
+                    <span
+                        ><i aria-hidden="true">◫</i> Active setup entries</span
+                    >
+                    <strong id="setup-entry-count">0</strong>
+                    <small id="setup-entry-detail">Pot setup 1</small>
                 </article>
             </section>
 
@@ -302,6 +330,20 @@
                             >No rotation logged</small
                         ></article
                     >
+                    <article
+                        ><span>Clean events</span
+                        ><strong id="clean-count">0</strong
+                        ><small id="latest-clean-detail"
+                            >No cleaning logged</small
+                        ></article
+                    >
+                    <article
+                        ><span>Prune events</span
+                        ><strong id="prune-count">0</strong
+                        ><small id="latest-prune-detail"
+                            >No pruning logged</small
+                        ></article
+                    >
                 </div>
             </section>
 
@@ -386,7 +428,10 @@
                     <article class="chart-card">
                         <header>
                             <div>
-                                <h3>Pot weight</h3>
+                                <h3
+                                    ><span aria-hidden="true">◆</span> Pot
+                                    weight</h3
+                                >
                                 <p
                                     >Current pot setup; dry and wet means appear
                                     when available.</p
@@ -405,7 +450,10 @@
                     <article class="chart-card">
                         <header>
                             <div>
-                                <h3>Plant dimensions</h3>
+                                <h3
+                                    ><span aria-hidden="true">↗</span> Plant
+                                    dimensions</h3
+                                >
                                 <p
                                     >Height and width stay separate even when
                                     measured on different days.</p
@@ -424,7 +472,10 @@
                     <article class="chart-card">
                         <header>
                             <div>
-                                <h3>Watering intervals</h3>
+                                <h3
+                                    ><span aria-hidden="true">◒</span> Watering
+                                    intervals</h3
+                                >
                                 <p
                                     >Elapsed days between recorded
                                     soak-to-runoff events.</p
@@ -441,12 +492,37 @@
                         ></p>
                     </article>
                     <article class="chart-card">
+                        <header>
+                            <div>
+                                <h3
+                                    ><span aria-hidden="true">▤</span> Event
+                                    mix</h3
+                                >
+                                <p>
+                                    Counts of each recorded event type in the
+                                    selected chart range.
+                                </p>
+                            </div>
+                        </header>
+                        <div
+                            class="chart-canvas"
+                            id="event-mix-chart"
+                        ></div>
+                        <p
+                            class="chart-summary"
+                            id="event-mix-chart-summary"
+                        ></p>
+                    </article>
+                    <article class="chart-card chart-card-wide">
                         <header
                             ><div
-                                ><h3>Care activity</h3
+                                ><h3
+                                    ><span aria-hidden="true">✦</span> Care
+                                    activity</h3
                                 ><p
-                                    >Water, nutrient, repot, flower, photo,
-                                    check, and pest milestones.</p
+                                    >Dated events are separated into labeled
+                                    lanes so overlapping care remains
+                                    visible.</p
                                 ></div
                             ></header
                         >
@@ -516,24 +592,142 @@
                         </caption>
                         <thead>
                             <tr>
-                                <th scope="col">Date</th>
-                                <th scope="col">Event</th>
-                                <th scope="col">Weight state</th>
-                                <th scope="col">Weight</th>
-                                <th scope="col">Height</th>
-                                <th scope="col">Width</th>
+                                <th
+                                    scope="col"
+                                    data-sort-key="Date"
+                                    data-sort-type="date"
+                                    aria-sort="descending"
+                                    ><button type="button"
+                                        >Date
+                                        <span aria-hidden="true"
+                                            >↓</span
+                                        ></button
+                                    ></th
+                                >
+                                <th
+                                    scope="col"
+                                    data-sort-key="Event"
+                                    aria-sort="none"
+                                    ><button type="button"
+                                        >Event
+                                        <span aria-hidden="true"
+                                            >↕</span
+                                        ></button
+                                    ></th
+                                >
+                                <th
+                                    scope="col"
+                                    data-sort-key="Weight state"
+                                    aria-sort="none"
+                                    ><button type="button"
+                                        >Weight state
+                                        <span aria-hidden="true"
+                                            >↕</span
+                                        ></button
+                                    ></th
+                                >
+                                <th
+                                    scope="col"
+                                    data-sort-key="Weight (g)"
+                                    data-sort-type="number"
+                                    aria-sort="none"
+                                    ><button type="button"
+                                        >Weight
+                                        <span aria-hidden="true"
+                                            >↕</span
+                                        ></button
+                                    ></th
+                                >
+                                <th
+                                    scope="col"
+                                    data-sort-key="Height (cm)"
+                                    data-sort-type="number"
+                                    aria-sort="none"
+                                    ><button type="button"
+                                        >Height
+                                        <span aria-hidden="true"
+                                            >↕</span
+                                        ></button
+                                    ></th
+                                >
+                                <th
+                                    scope="col"
+                                    data-sort-key="Width (cm)"
+                                    data-sort-type="number"
+                                    aria-sort="none"
+                                    ><button type="button"
+                                        >Width
+                                        <span aria-hidden="true"
+                                            >↕</span
+                                        ></button
+                                    ></th
+                                >
+                                <th
+                                    scope="col"
+                                    data-sort-key="condition"
+                                    aria-sort="none"
+                                    ><button type="button"
+                                        >Condition / soil
+                                        <span aria-hidden="true"
+                                            >↕</span
+                                        ></button
+                                    ></th
+                                >
                                 <th scope="col">Event details</th>
-                                <th scope="col">Notes</th>
-                                <th scope="col">Water cycle start</th>
-                                <th scope="col">Days after water</th>
-                                <th scope="col">Pot setup</th>
+                                <th
+                                    scope="col"
+                                    data-sort-key="Notes"
+                                    aria-sort="none"
+                                    ><button type="button"
+                                        >Notes
+                                        <span aria-hidden="true"
+                                            >↕</span
+                                        ></button
+                                    ></th
+                                >
+                                <th
+                                    scope="col"
+                                    data-sort-key="Trend anchor"
+                                    data-sort-type="date"
+                                    aria-sort="none"
+                                    ><button type="button"
+                                        >Trend anchor
+                                        <span aria-hidden="true"
+                                            >↕</span
+                                        ></button
+                                    ></th
+                                >
+                                <th
+                                    scope="col"
+                                    data-sort-key="Days after anchor"
+                                    data-sort-type="number"
+                                    aria-sort="none"
+                                    ><button type="button"
+                                        >Days after anchor
+                                        <span aria-hidden="true"
+                                            >↕</span
+                                        ></button
+                                    ></th
+                                >
+                                <th
+                                    scope="col"
+                                    data-sort-key="Pot setup"
+                                    data-sort-type="number"
+                                    aria-sort="none"
+                                    ><button type="button"
+                                        >Pot setup
+                                        <span aria-hidden="true"
+                                            >↕</span
+                                        ></button
+                                    ></th
+                                >
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td
                                     class="loading-cell"
-                                    colspan="11"
+                                    colspan="12"
                                 >
                                     Loading this plant’s history…
                                 </td>

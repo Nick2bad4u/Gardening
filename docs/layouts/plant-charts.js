@@ -36,6 +36,29 @@ function chartFrame(container, label) {
     return svg;
 }
 
+function chartDetail(container) {
+    const detail = document.createElement("p");
+    detail.className = "chart-detail";
+    detail.setAttribute("aria-live", "polite");
+    detail.textContent = "Focus or point to a chart mark for its exact value.";
+    container.append(detail);
+    return detail;
+}
+
+function describeMark(mark, label, detail) {
+    mark.setAttribute("role", "img");
+    mark.setAttribute("aria-label", label);
+    [
+        "focus",
+        "mouseenter",
+        "pointerdown",
+    ].forEach((eventName) =>
+        mark.addEventListener(eventName, () => {
+            detail.textContent = label;
+        })
+    );
+}
+
 function renderEmpty(container, message) {
     const empty = document.createElement("div");
     empty.className = "chart-empty";
@@ -179,6 +202,7 @@ export function renderLineChart(
     ]);
     const svg = chartFrame(container, ariaLabel);
     const scale = drawAxes(svg, domain, unit);
+    const detail = chartDetail(container);
 
     referenceLines
         .filter((line) => Number.isFinite(line.value))
@@ -229,13 +253,14 @@ export function renderLineChart(
             const circle = svgElement("circle", {
                 cx: scale.x(point.date.getTime()),
                 cy: scale.y(point.value),
-                r: 5,
+                r: 7,
                 tabindex: 0,
                 class: `chart-point ${entry.className ?? ""} state-${String(point.state ?? "routine").toLowerCase()}`.trim(),
             });
             circle.append(
                 svgElement("title", {}, pointTitle(point, entry.label, unit))
             );
+            describeMark(circle, pointTitle(point, entry.label, unit), detail);
             svg.append(circle);
         });
     });
@@ -268,6 +293,7 @@ export function renderIntervalChart(
     }
 
     const svg = chartFrame(container, ariaLabel);
+    const detail = chartDetail(container);
     const plotWidth = WIDTH - MARGIN.left - MARGIN.right;
     const plotHeight = HEIGHT - MARGIN.top - MARGIN.bottom;
     const maximum = Math.max(1, ...points.map((point) => point.days));
@@ -323,6 +349,11 @@ export function renderIntervalChart(
                 `${point.days} days · ${formatShortDate(point.from)} to ${formatShortDate(point.to)}`
             )
         );
+        describeMark(
+            bar,
+            `${point.days} days · ${formatShortDate(point.from)} to ${formatShortDate(point.to)}`,
+            detail
+        );
         svg.append(bar);
         if (points.length <= 12 || index === 0 || index === points.length - 1) {
             svg.append(
@@ -341,12 +372,80 @@ export function renderIntervalChart(
     });
 }
 
+export function renderBarChart(
+    container,
+    { ariaLabel, emptyMessage, items, unit = "events" }
+) {
+    const bars = items.filter(
+        (item) => item.label && Number.isFinite(item.value) && item.value >= 0
+    );
+    if (!bars.length) {
+        renderEmpty(container, emptyMessage);
+        return;
+    }
+    const svg = chartFrame(container, ariaLabel);
+    const detail = chartDetail(container);
+    const margin = { top: 18, right: 46, bottom: 18, left: 150 };
+    const plotWidth = WIDTH - margin.left - margin.right;
+    const plotHeight = HEIGHT - margin.top - margin.bottom;
+    const gap = Math.max(3, Math.min(10, plotHeight / bars.length / 3));
+    const barHeight = Math.max(
+        8,
+        (plotHeight - gap * (bars.length - 1)) / bars.length
+    );
+    const maximum = Math.max(1, ...bars.map((item) => item.value));
+    bars.forEach((item, index) => {
+        const y = margin.top + index * (barHeight + gap);
+        const width = Math.max(2, (item.value / maximum) * plotWidth);
+        svg.append(
+            svgElement(
+                "text",
+                {
+                    x: margin.left - 10,
+                    y: y + barHeight / 2 + 4,
+                    "text-anchor": "end",
+                    class: "chart-axis-label chart-category-label",
+                },
+                item.label
+            )
+        );
+        const label = `${item.label}: ${formatTick(item.value, 0)} ${unit}`;
+        const bar = svgElement("rect", {
+            x: margin.left,
+            y,
+            width,
+            height: barHeight,
+            rx: Math.min(5, barHeight / 2),
+            tabindex: 0,
+            class: `chart-category-bar ${item.className ?? "activity-other"}`,
+        });
+        bar.append(svgElement("title", {}, label));
+        describeMark(bar, label, detail);
+        svg.append(
+            bar,
+            svgElement(
+                "text",
+                {
+                    x: Math.min(
+                        WIDTH - margin.right + 8,
+                        margin.left + width + 8
+                    ),
+                    y: y + barHeight / 2 + 4,
+                    class: "chart-axis-label chart-value-label",
+                },
+                formatTick(item.value, 0)
+            )
+        );
+    });
+}
+
 export function renderActivityChart(
     container,
     { ariaLabel, emptyMessage, events }
 ) {
     const points = events
         .map((event) => ({
+            category: event.category || "Other",
             date: event.date,
             label: event.label,
             className: event.className || "activity-other",
@@ -368,44 +467,85 @@ export function renderActivityChart(
         minimumTime -= 43_200_000;
         maximumTime += 43_200_000;
     }
-    const svg = chartFrame(container, ariaLabel);
-    const plotWidth = WIDTH - MARGIN.left - MARGIN.right;
-    const x = (time) =>
-        MARGIN.left +
-        ((time - minimumTime) / (maximumTime - minimumTime)) * plotWidth;
-    const y = HEIGHT / 2;
-    svg.append(
-        svgElement("line", {
-            x1: MARGIN.left,
-            x2: WIDTH - MARGIN.right,
-            y1: y,
-            y2: y,
-            class: "chart-grid-line",
-        })
+    const groups = new Map();
+    points.forEach((point) => {
+        const dayKey = `${point.date.getFullYear()}-${point.date.getMonth()}-${point.date.getDate()}`;
+        const key = `${point.category}\u0000${dayKey}`;
+        const group = groups.get(key) ?? { ...point, count: 0, labels: [] };
+        group.count += 1;
+        group.labels.push(point.label);
+        groups.set(key, group);
+    });
+    const groupedPoints = [...groups.values()];
+    const categories = [...new Set(points.map((point) => point.category))].sort(
+        (left, right) => left.localeCompare(right)
     );
-    points.forEach((point, index) => {
+    const svg = chartFrame(container, ariaLabel);
+    const detail = chartDetail(container);
+    const margin = { top: 24, right: 24, bottom: 48, left: 128 };
+    const plotWidth = WIDTH - margin.left - margin.right;
+    const plotHeight = HEIGHT - margin.top - margin.bottom;
+    const x = (time) =>
+        margin.left +
+        ((time - minimumTime) / (maximumTime - minimumTime)) * plotWidth;
+    const laneY = (category) =>
+        margin.top +
+        ((categories.indexOf(category) + 0.5) / categories.length) * plotHeight;
+    categories.forEach((category) => {
+        const y = laneY(category);
+        svg.append(
+            svgElement("line", {
+                x1: margin.left,
+                x2: WIDTH - margin.right,
+                y1: y,
+                y2: y,
+                class: "chart-grid-line chart-lane-line",
+            }),
+            svgElement(
+                "text",
+                {
+                    x: margin.left - 12,
+                    y: y + 4,
+                    "text-anchor": "end",
+                    class: "chart-axis-label chart-category-label",
+                },
+                category
+            )
+        );
+    });
+    groupedPoints.forEach((point) => {
+        const y = laneY(point.category);
+        const label = `${point.labels.join("; ")} · ${formatShortDate(point.date)}${point.count > 1 ? ` · ${point.count} entries` : ""}`;
         const circle = svgElement("circle", {
             cx: x(point.date.getTime()),
-            cy: y + ((index % 3) - 1) * 28,
-            r: 8,
+            cy: y,
+            r: point.count > 1 ? 10 : 8,
             tabindex: 0,
             class: `chart-point ${point.className}`,
         });
-        circle.append(
-            svgElement(
-                "title",
-                {},
-                `${point.label} · ${formatShortDate(point.date)}`
-            )
-        );
+        circle.append(svgElement("title", {}, label));
+        describeMark(circle, label, detail);
         svg.append(circle);
+        if (point.count > 1)
+            svg.append(
+                svgElement(
+                    "text",
+                    {
+                        x: x(point.date.getTime()),
+                        y: y + 4,
+                        "text-anchor": "middle",
+                        class: "chart-count-label",
+                    },
+                    point.count
+                )
+            );
     });
     [minimumTime, maximumTime].forEach((time, index) => {
         svg.append(
             svgElement(
                 "text",
                 {
-                    x: index ? WIDTH - MARGIN.right : MARGIN.left,
+                    x: index ? WIDTH - margin.right : margin.left,
                     y: HEIGHT - 24,
                     "text-anchor": index ? "end" : "start",
                     class: "chart-axis-label",

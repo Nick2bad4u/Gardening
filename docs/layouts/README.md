@@ -1,6 +1,6 @@
 # Grow-spot diagrams
 
-Last updated: 2026-08-28
+Last updated: 2026-08-29
 
 Open [plant-tracker.html](./plant-tracker.html) for the live collection
 dashboard backed by Google Sheets. The finished workbook includes Dashboard,
@@ -25,6 +25,13 @@ care deadlines. Current pot labels such as `A1` and `#2` remain visible, and an
 old label-style history URL is accepted as an alias while that label is current.
 The `Baselines` tab and history page use only the active pot setup for dry and
 wet pot-weight averages; they do not invent starting weights.
+
+The exact permanent-ID-to-profile mapping lives in
+[`plant-profile-data.json`](./plant-profile-data.json). The history page reads
+that manifest for field-guide links, while the booklet generator and checker
+verify every current profile's title and `Tracker ID` against it. `P19` and
+`P20` intentionally map to several profiles because they identify shared
+planters; all other P-IDs map to one profile.
 
 The tracker does not record water volume. A `Water` event means the container
 was soaked until runoff. `#1` and `#2` are still weighed and watered as whole

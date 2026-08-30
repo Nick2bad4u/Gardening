@@ -80,6 +80,26 @@ async function publishLayout(fileName) {
     await writeFile(destination, publishedHtml, "utf8");
 }
 
+async function publishPlantHistoryClient() {
+    const sourcePath = path.join(layoutsDirectory, "plant-history.js");
+    const publishedScript = (await readFile(sourcePath, "utf8")).replaceAll(
+        "../plant-booklet/#",
+        "../#"
+    );
+
+    if (/\.\.\/plant-booklet\//.test(publishedScript)) {
+        throw new Error(
+            "plant-history.js still contains an unpublished booklet path."
+        );
+    }
+
+    await writeFile(
+        path.join(outputDirectory, "layouts", "plant-history.js"),
+        publishedScript,
+        "utf8"
+    );
+}
+
 async function main() {
     const [
         sourceHtml,
@@ -202,13 +222,14 @@ async function main() {
             path.join(layoutsDirectory, "plant-tracker.js"),
             path.join(outputDirectory, "layouts", "plant-tracker.js")
         ),
-        copyFile(
-            path.join(layoutsDirectory, "plant-history.js"),
-            path.join(outputDirectory, "layouts", "plant-history.js")
-        ),
+        publishPlantHistoryClient(),
         copyFile(
             path.join(layoutsDirectory, "plant-charts.js"),
             path.join(outputDirectory, "layouts", "plant-charts.js")
+        ),
+        copyFile(
+            path.join(layoutsDirectory, "plant-profile-data.json"),
+            path.join(outputDirectory, "layouts", "plant-profile-data.json")
         ),
     ]);
 
