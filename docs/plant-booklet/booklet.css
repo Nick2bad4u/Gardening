@@ -2121,7 +2121,7 @@ main {
     border-bottom: 0;
 }
 
-.contents-group a:has(.plant-avatar--contents) {
+.contents-group a:has(.plant-nav-icon--contents) {
     grid-template-columns: 3.25rem 4.6rem minmax(0, 1fr) 2rem;
 }
 
@@ -2166,16 +2166,6 @@ main {
     place-items: center;
 }
 
-.plant-avatar-slot:has(.plant-avatar--contents) {
-    width: 3.25rem;
-    height: 3.25rem;
-}
-
-.plant-avatar-slot:has(.plant-avatar--drawer) {
-    width: 2.65rem;
-    height: 2.65rem;
-}
-
 .plant-avatar-slot:has(.plant-avatar--hero) {
     width: clamp(4rem, 8vw, 5.5rem);
     height: clamp(4rem, 8vw, 5.5rem);
@@ -2192,21 +2182,80 @@ main {
     place-items: center;
 }
 
-span.plant-avatar {
-    display: grid;
-    place-items: center;
-}
-
-:is(a, button):hover .plant-avatar {
+:is(a, button):hover :is(.plant-avatar, .plant-nav-icon) {
     transform: scale(1.035);
 }
 
-.plant-avatar--contents {
+.plant-nav-icon {
+    --plant-nav-icon-color: var(--moss);
+    --plant-nav-icon-fill: color-mix(
+        in srgb,
+        var(--plant-nav-icon-color) 22%,
+        var(--page)
+    );
+
+    display: grid;
+    flex: 0 0 auto;
+    overflow: hidden;
+    border: 1px solid
+        color-mix(in srgb, var(--plant-nav-icon-color) 38%, var(--line));
+    border-radius: 0.85rem;
+    color: var(--plant-nav-icon-color);
+    background: color-mix(
+        in srgb,
+        var(--plant-nav-icon-color) 12%,
+        var(--page)
+    );
+    box-shadow: 0 6px 18px rgb(41 55 43 / 12%);
+    place-items: center;
+    transition: transform 160ms ease;
+}
+
+.plant-nav-icon-sprite {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.plant-nav-icon svg {
+    width: 76%;
+    height: 76%;
+    overflow: visible;
+    fill: none;
+    stroke: currentcolor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+}
+
+.plant-nav-icon .plant-nav-icon-fill {
+    fill: var(--plant-nav-icon-fill);
+}
+
+.plant-nav-icon--cacti {
+    --plant-nav-icon-color: #5f7d47;
+}
+
+.plant-nav-icon--succulents {
+    --plant-nav-icon-color: var(--clay);
+}
+
+.plant-nav-icon--rehab {
+    --plant-nav-icon-color: var(--gold);
+}
+
+.plant-nav-icon--houseplants {
+    --plant-nav-icon-color: var(--moss);
+}
+
+.plant-nav-icon--contents {
     width: 3.25rem;
     height: 3.25rem;
 }
 
-.plant-avatar--drawer {
+.plant-nav-icon--drawer {
     width: 2.65rem;
     height: 2.65rem;
 }
@@ -2244,7 +2293,7 @@ span.plant-avatar {
     color: #e0e8ff;
 }
 
-.drawer-link:has(.plant-avatar--drawer) {
+.drawer-link:has(.plant-nav-icon--drawer) {
     grid-template-columns: 2.65rem 6.8rem minmax(0, 1fr);
     gap: 0.7rem;
     min-width: 0;
@@ -2682,7 +2731,7 @@ span.plant-avatar {
         height: 2.5rem;
     }
 
-    .contents-group a:has(.plant-avatar--contents) {
+    .contents-group a:has(.plant-nav-icon--contents) {
         grid-template-columns: 2.7rem 3.7rem minmax(0, 1fr);
         gap: 0.4rem;
         padding-inline: 0.6rem;
@@ -2692,17 +2741,12 @@ span.plant-avatar {
         display: none;
     }
 
-    .plant-avatar--contents {
+    .plant-nav-icon--contents {
         width: 2.7rem;
         height: 2.7rem;
     }
 
-    .plant-avatar-slot:has(.plant-avatar--contents) {
-        width: 2.7rem;
-        height: 2.7rem;
-    }
-
-    .drawer-link:has(.plant-avatar--drawer) {
+    .drawer-link:has(.plant-nav-icon--drawer) {
         grid-template-columns: 2.65rem 5.8rem minmax(0, 1fr);
         gap: 0.45rem;
         padding-inline: 0.25rem;
@@ -2948,12 +2992,12 @@ span.plant-avatar {
     }
 
     .contents-group a,
-    .contents-group a:has(.plant-avatar--contents) {
+    .contents-group a:has(.plant-nav-icon--contents) {
         min-height: 0;
         padding: 0.05in 0.08in;
     }
 
-    .plant-avatar--contents {
+    .plant-nav-icon--contents {
         width: 0.34in;
         height: 0.34in;
         box-shadow: none;

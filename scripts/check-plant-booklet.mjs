@@ -1323,19 +1323,29 @@ async function main() {
             JSON.stringify(expectedCactiTrackerIds),
         "The unified Cacti contents group is not in permanent P-ID order."
     );
-    for (const variant of [
-        "contents",
-        "drawer",
-        "hero",
-    ]) {
-        const avatarCount = (
-            html.match(new RegExp(`plant-avatar--${variant}`, "g")) ?? []
+    for (const variant of ["contents", "drawer"]) {
+        const iconCount = (
+            html.match(new RegExp(`plant-nav-icon--${variant}`, "g")) ?? []
         ).length;
         assert(
-            avatarCount === profiles.length,
-            `Expected ${profiles.length} ${variant} plant avatars; found ${avatarCount}.`
+            iconCount === profiles.length,
+            `Expected ${profiles.length} ${variant} plant icons; found ${iconCount}.`
         );
     }
+    assert(
+        (html.match(/plant-avatar--hero/g) ?? []).length === profiles.length,
+        `Expected ${profiles.length} hero plant avatars.`
+    );
+    assert(
+        !/<img\b[^>]*class="[^"]*plant-avatar--(?:contents|drawer)/i.test(html),
+        "Contents and drawer navigation must use lightweight icons, not photograph avatars."
+    );
+    assert(
+        (html.match(/class="plant-nav-icon-sprite"/g) ?? []).length === 1 &&
+            (html.match(/<use\s+href="#plant-nav-icon-/g) ?? []).length ===
+                profiles.length * 2,
+        "Navigation icons must reuse the single inline SVG sprite."
+    );
     const atAGlanceCount = (html.match(/class="profile-at-a-glance"/g) ?? [])
         .length;
     assert(

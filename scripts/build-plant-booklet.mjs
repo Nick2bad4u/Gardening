@@ -891,6 +891,30 @@ function renderPlantAvatar(profile, variant) {
         : `<span class="plant-avatar plant-avatar--${escapeHtml(variant)}" aria-hidden="true">🌵</span>`;
 }
 
+const plantNavigationIconByGroup = {
+    cacti: `<path class="plant-nav-icon-fill" d="M17 38h22l-2 6H19z"></path><path d="M22 38V14c0-5 2-8 5-8s5 3 5 8v24"></path><path d="M22 24h-4c-3 0-5-2-5-5v-5"></path><path d="M32 27h4c3 0 5-2 5-5v-5"></path><path d="M17 38h22"></path>`,
+    houseplants: `<path class="plant-nav-icon-fill" d="M17 36h18l-2 8H19z"></path><path d="M24 36V17"></path><path class="plant-nav-icon-fill" d="M24 21C16 21 11 16 11 9c8-1 13 3 13 12z"></path><path class="plant-nav-icon-fill" d="M25 27c2-8 9-12 16-9-1 7-7 11-16 9z"></path>`,
+    rehab: `<path class="plant-nav-icon-fill" d="M14 37h20l-2 7H16z"></path><path d="M23 37V18"></path><path class="plant-nav-icon-fill" d="M23 25c-7 0-11-4-11-10 7-1 11 3 11 10z"></path><path class="plant-nav-icon-fill" d="M24 20c2-7 7-10 13-8 0 6-5 9-13 8z"></path><circle cx="37" cy="33" r="7"></circle><path d="M37 29v8M33 33h8"></path>`,
+    succulents: `<ellipse class="plant-nav-icon-fill" cx="24" cy="14" rx="5" ry="10"></ellipse><ellipse class="plant-nav-icon-fill" cx="24" cy="14" rx="5" ry="10" transform="rotate(60 24 24)"></ellipse><ellipse class="plant-nav-icon-fill" cx="24" cy="14" rx="5" ry="10" transform="rotate(120 24 24)"></ellipse><ellipse class="plant-nav-icon-fill" cx="24" cy="14" rx="5" ry="10" transform="rotate(180 24 24)"></ellipse><ellipse class="plant-nav-icon-fill" cx="24" cy="14" rx="5" ry="10" transform="rotate(240 24 24)"></ellipse><ellipse class="plant-nav-icon-fill" cx="24" cy="14" rx="5" ry="10" transform="rotate(300 24 24)"></ellipse><circle cx="24" cy="24" r="3.5"></circle>`,
+};
+
+function renderPlantNavigationIcon(profile, variant) {
+    const iconGroup = Object.hasOwn(plantNavigationIconByGroup, profile.group)
+        ? profile.group
+        : "houseplants";
+    return `<span class="plant-nav-icon plant-nav-icon--${escapeHtml(variant)} plant-nav-icon--${escapeHtml(iconGroup)}" aria-hidden="true"><svg viewBox="0 0 48 48" focusable="false"><use href="#plant-nav-icon-${escapeHtml(iconGroup)}"></use></svg></span>`;
+}
+
+function renderPlantNavigationIconSprite() {
+    const symbols = Object.entries(plantNavigationIconByGroup)
+        .map(
+            ([group, icon]) =>
+                `<symbol id="plant-nav-icon-${escapeHtml(group)}" viewBox="0 0 48 48">${icon}</symbol>`
+        )
+        .join("");
+    return `<svg class="plant-nav-icon-sprite" aria-hidden="true" focusable="false"><defs>${symbols}</defs></svg>`;
+}
+
 function renderCredit(photo, short = false) {
     const subject = photo.subject.replace("-", " and ");
     if (short) {
@@ -1126,7 +1150,7 @@ function renderNavGroup(group, profiles) {
                   `${profile.trackerId ?? ""} ${profile.inventoryId} ${stripMarkdown(profile.labelMarkdown)} ${profile.title} ${stripMarkdown(profile.scientificMarkdown)}`.toLowerCase()
               )}">
         <a class="drawer-link" href="#${escapeHtml(profile.slug)}" data-page-link="${escapeHtml(profile.slug)}">
-          ${renderPlantAvatar(profile, "drawer")}
+          ${renderPlantNavigationIcon(profile, "drawer")}
           <span class="drawer-identifiers">
             <span class="drawer-badge drawer-badge--tracker"><span aria-hidden="true">▦</span><strong>${escapeHtml(profile.trackerId ?? "Archive")}</strong></span>
             <span class="drawer-badge drawer-badge--label"><span aria-hidden="true">⌖</span><strong>${profile.labelHtml}</strong></span>
@@ -1160,7 +1184,7 @@ function renderContentsGroup(group, profiles, pageNumberBySlug) {
           .map(
               (profile) => `<li>
         <a href="#${escapeHtml(profile.slug)}" data-page-link="${escapeHtml(profile.slug)}">
-          ${renderPlantAvatar(profile, "contents")}
+          ${renderPlantNavigationIcon(profile, "contents")}
           <span class="contents-id"><strong>${escapeHtml(profile.trackerId ?? "Archive")}</strong><small>${profile.labelHtml}</small></span>
           <span class="contents-name"><strong>${escapeHtml(profile.title)}</strong><em>${escapeHtml(stripMarkdown(profile.scientificMarkdown))}</em></span>
           <span class="contents-page">${String(pageNumberBySlug.get(profile.slug)).padStart(2, "0")}</span>
@@ -1555,6 +1579,7 @@ async function renderBooklet(profiles) {
 </head>
 <body>
   <a class="skip-link" href="#book">Skip to the current page</a>
+  ${renderPlantNavigationIconSprite()}
 
   <header class="reader-bar" aria-label="Booklet controls">
     <button class="icon-button menu-button" id="open-contents" type="button" aria-haspopup="dialog" aria-controls="contents-dialog">
