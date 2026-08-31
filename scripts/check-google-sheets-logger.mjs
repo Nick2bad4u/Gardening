@@ -296,6 +296,11 @@ assert.match(
 assert.match(html, /id="retryBootstrapButton"/);
 assert.match(html, /id="embeddedBootstrap"/);
 assert.match(html, /function readEmbeddedBootstrap\(\)/);
+assert.equal(
+    [...html.matchAll(/<\?/g)].length,
+    1,
+    "Index.html must contain only its intentional Apps Script template tag"
+);
 assert.match(html, /target="_top"/);
 assert.match(html, /pending\.replaceable = true;/);
 assert.match(html, /function renderWeightState\(\)/);

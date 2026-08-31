@@ -5023,7 +5023,7 @@
 
             function readEmbeddedBootstrap() {
                 const payload = $("embeddedBootstrap")?.textContent.trim();
-                if (!payload || payload.startsWith("<?")) return null;
+                if (!payload || payload.startsWith("<" + "?")) return null;
                 try {
                     return JSON.parse(payload);
                 } catch (error) {
