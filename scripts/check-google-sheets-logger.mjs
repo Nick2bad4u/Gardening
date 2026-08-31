@@ -27,7 +27,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.14.1");
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.14.2");
 
 assert.deepEqual(
     Array.from(
@@ -54,6 +54,66 @@ assert.deepEqual(
 );
 assert.equal(context.safeSheetText_('=IMPORTXML("x")'), '\'=IMPORTXML("x")');
 assert.equal(context.safeSheetText_("healthy"), "healthy");
+const checkWeightRow = ({
+    plantId,
+    observedAt,
+    state,
+    weight,
+    status = "",
+}) => {
+    const row = Array(40).fill("");
+    row[0] = observedAt;
+    row[1] = plantId;
+    row[2] = "Weigh";
+    row[3] = state;
+    row[4] = weight;
+    row[5] = 99;
+    row[6] = 88;
+    row[35] = status;
+    return row;
+};
+const dryOrLowestWeights = context.dryOrLowestWeightsFromRows_([
+    checkWeightRow({
+        plantId: "P01",
+        observedAt: "2026-08-01T12:00:00Z",
+        state: "Routine",
+        weight: 280,
+    }),
+    checkWeightRow({
+        plantId: "P01",
+        observedAt: "2026-08-02T12:00:00Z",
+        state: "Dry",
+        weight: 300,
+    }),
+    checkWeightRow({
+        plantId: "P02",
+        observedAt: "2026-08-03T12:00:00Z",
+        state: "Routine",
+        weight: 410,
+    }),
+    checkWeightRow({
+        plantId: "P02",
+        observedAt: "2026-08-04T12:00:00Z",
+        state: "Routine",
+        weight: 390,
+    }),
+]);
+assert.deepEqual(
+    { ...dryOrLowestWeights.get("P01") },
+    {
+        weight: 300,
+        basis: "Dry",
+        observedAt: "2026-08-02T12:00:00Z",
+    }
+);
+assert.deepEqual(
+    { ...dryOrLowestWeights.get("P02") },
+    {
+        weight: 390,
+        basis: "Lowest",
+        observedAt: "2026-08-04T12:00:00Z",
+    }
+);
 const appSheetEntryHeaders = Array.from(
     vm.runInContext("APP_SHEET_ENTRY_HEADERS", context)
 );
@@ -234,6 +294,9 @@ assert.doesNotMatch(
     "Dry/Wet/Routine must survive confirmed round saves"
 );
 assert.match(html, /weightState:\s*"Routine"/);
+assert.match(html, /"Last dry \/ lowest"/);
+assert.match(html, /plant\.dryOrLowestWeightBasis/);
+assert.match(html, /plant\.dryOrLowestWeightDate/);
 assert.match(html, /id="bulkWaterForm"/);
 assert.match(html, /saveBulkCareObservation/);
 assert.match(html, /id="bulkEventChips"/);
@@ -359,14 +422,13 @@ const canonicalPlantLabels = [
     "G3",
 ];
 const naturallyOrderedPlantLabels = [
-    ...canonicalPlantLabels.slice(0, 18),
+    ...canonicalPlantLabels.slice(0, 22),
     "G1",
     "G2",
     "G3",
     "H1",
     "H2",
     "H3",
-    ...canonicalPlantLabels.slice(18, 22),
 ];
 assert.deepEqual(
     canonicalPlantLabels

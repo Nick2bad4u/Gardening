@@ -598,9 +598,9 @@ const LABEL_GROUP_ORDER = Object.freeze([
     "D",
     "E",
     "F",
+    "#",
     "G",
     "H",
-    "#",
 ]);
 
 function plantLabelSortParts(plant) {

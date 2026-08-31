@@ -41,10 +41,15 @@ future release.
 - A Wet weight is independent from Water. Nutrient choice, product, and amount
   are remembered across single and bulk logger entry for the current browser
   session.
-- The compact label picker presents `A1`–`H3` in natural label order, followed
-  by the shared-planter labels `#1`–`#4`, without changing canonical `P01`–`P28`
-  request order. P23–P28 summaries show separate current-plant and seller-label
-  evidence cards when those publication images are available.
+- The compact label picker preserves the established `A1`–`F3`, `#1`–`#4`
+  sequence, then presents the newer labels as `G1`–`G3`, `H1`–`H3`, without
+  changing canonical `P01`–`P28` request order. P23–P28 summaries show separate
+  current-plant and seller-label evidence cards when those publication images
+  are available.
+- The selected-plant summary shows the most recent active `Dry` Weigh reading
+  with its date. If a plant has no Dry-tagged reading, it shows the lowest
+  active historical Weigh value instead and labels that basis `lowest`.
+  Removed, non-Weigh, invalid, and nonpositive records are ignored.
 - The AppSheet bridge uses exactly one five-minute
   `processQueuedAppSheetEntries` trigger. Reinstalling it creates the replacement
   first, then removes every previously matching trigger so a transient creation
@@ -506,7 +511,9 @@ installable trigger is not required.
   it opens the website. Select the image there, create a share link, return to
   the logger, and paste it. A browser file picker cannot return a durable Google
   Photos share URL. The public plant history opens the saved link; booklet
-  display still requires a local collection-photo derivative.
+  display uses a separately published and verified Gyazo capture recorded by
+  `scripts/publish-collection-photo.ps1`. Camera originals stay private and no
+  new collection-photo binary is added to the repository.
 - `Baselines` uses completed wet-to-dry cycles to estimate drying time, which is
   shown in `Plant tracker`. Treat that estimate as context, not a watering
   deadline.

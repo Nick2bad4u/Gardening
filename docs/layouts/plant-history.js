@@ -547,7 +547,7 @@ function renderCharts(summary) {
     setText(
         "#growth-chart-summary",
         heightPoints.length || widthPoints.length
-            ? `${heightPoints.length} measured height and ${widthPoints.length} measured width readings shown.`
+            ? `${heightPoints.length} measured height ${heightPoints.length === 1 ? "reading" : "readings"} and ${widthPoints.length} measured width ${widthPoints.length === 1 ? "reading" : "readings"} shown.`
             : "No measured height or width readings are available in this range. Estimates remain in observation history."
     );
 

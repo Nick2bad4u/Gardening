@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.14.1",
+    version: "5.14.2",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -32,6 +32,8 @@ const GARDEN_LOGGER = Object.freeze({
     currentLabelColumn: 15,
     currentPotSizeHeader: "Current pot size",
     historyColumns: 12,
+    historyWeightStateColumn: 4,
+    historyWeightColumn: 5,
     historyHelperStartColumn: 13,
     historyHelperColumns: 3,
     requestIdColumn: 16,
@@ -68,37 +70,37 @@ const GARDEN_LOGGER = Object.freeze({
 const WEB_PLANT_IMAGE_URLS = Object.freeze({
     P23: Object.freeze({
         currentImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p23-paper-spine-top.webp",
+            "https://i.gyazo.com/a1f2ad382a7334993865979d7ac9c183.jpg",
         nurseryLabelImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p23-paper-spine-label.webp",
     }),
     P24: Object.freeze({
         currentImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p24-coconut-crystal-top.webp",
+            "https://i.gyazo.com/c1e642aa6d14b5b15e7dca294c51ba3d.jpg",
         nurseryLabelImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p24-coconut-crystal-label.webp",
     }),
     P25: Object.freeze({
         currentImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-28-p25-raindrops-arrival-crop.webp",
+            "https://i.gyazo.com/10141830dc3d95f0146c453d1897c5e8.png",
         nurseryLabelImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p25-raindrops-label.webp",
     }),
     P26: Object.freeze({
         currentImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p26-eves-needle-side.webp",
+            "https://i.gyazo.com/029ccf0a7dbfc4d0e6ad4fdeff179b39.jpg",
         nurseryLabelImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p26-eves-needle-label.webp",
     }),
     P27: Object.freeze({
         currentImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p27-black-widow-top.webp",
+            "https://i.gyazo.com/157b0f3e2ed7ee66bf01c2b0a2cd70ec.jpg",
         nurseryLabelImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p27-black-widow-label.webp",
     }),
     P28: Object.freeze({
         currentImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p28-royal-flush-overview.webp",
+            "https://i.gyazo.com/c190dd6a18e72b1c75b38dc434415323.jpg",
         nurseryLabelImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p28-royal-flush-label.webp",
     }),
@@ -467,6 +469,7 @@ function getWebAppBootstrap() {
         ])
     );
     const potSizeByPlant = latestPotSizesFromRows_(historyRows);
+    const dryOrLowestWeightByPlant = dryOrLowestWeightsFromRows_(historyRows);
     const timeZone = spreadsheet.getSpreadsheetTimeZone();
 
     const plants = trackerValues
@@ -484,6 +487,9 @@ function getWebAppBootstrap() {
             const label = row[GARDEN_LOGGER.currentLabelColumn - 1];
             const fieldGuideUrl = fieldGuideUrlForRow_(trackerFormulas[index]);
             const imageUrls = WEB_PLANT_IMAGE_URLS[cleanText_(plantId)] || {};
+            const dryOrLowestWeight = dryOrLowestWeightByPlant.get(
+                cleanText_(plantId)
+            );
             return {
                 id: cleanText_(plantId),
                 name: cleanText_(commonName),
@@ -512,6 +518,19 @@ function getWebAppBootstrap() {
                     latestWeight === "" || latestWeight === null
                         ? ""
                         : Number(latestWeight),
+                dryOrLowestWeight: dryOrLowestWeight
+                    ? dryOrLowestWeight.weight
+                    : "",
+                dryOrLowestWeightBasis: dryOrLowestWeight
+                    ? dryOrLowestWeight.basis
+                    : "",
+                dryOrLowestWeightDate: dryOrLowestWeight
+                    ? formatClientDate_(
+                          dryOrLowestWeight.observedAt,
+                          timeZone,
+                          "MMM d, yyyy"
+                      )
+                    : "",
                 fieldGuideUrl,
                 historyUrl: `${GARDEN_LOGGER.historyUrl}?id=${encodeURIComponent(cleanText_(plantId))}`,
             };
@@ -3333,6 +3352,82 @@ function latestPotSizesFromRows_(historyRows) {
             if (plantId && potSize) result.set(plantId, potSize);
         });
     return result;
+}
+
+function dryOrLowestWeightsFromRows_(historyRows) {
+    const candidates = new Map();
+    historyRows.forEach((row, rowIndex) => {
+        const plantId = cleanText_(row[1]);
+        const eventName = cleanText_(row[2]);
+        const status = cleanText_(
+            row[
+                GARDEN_LOGGER.historyProvenanceStartColumn +
+                    GARDEN_LOGGER.historyProvenanceColumns -
+                    2
+            ]
+        );
+        const weight = Number(row[GARDEN_LOGGER.historyWeightColumn - 1]);
+        if (
+            !plantId ||
+            eventName !== "Weigh" ||
+            status === "Removed" ||
+            !Number.isFinite(weight) ||
+            weight <= 0
+        ) {
+            return;
+        }
+
+        const observedAt = row[0];
+        const timestamp = new Date(observedAt).getTime();
+        const candidate = {
+            weight,
+            observedAt,
+            timestamp: Number.isFinite(timestamp) ? timestamp : 0,
+            rowIndex,
+        };
+        const record = candidates.get(plantId) || {
+            latestDry: null,
+            lowest: null,
+        };
+        if (
+            cleanText_(row[GARDEN_LOGGER.historyWeightStateColumn - 1]) ===
+            "Dry"
+        ) {
+            if (
+                !record.latestDry ||
+                candidate.timestamp > record.latestDry.timestamp ||
+                (candidate.timestamp === record.latestDry.timestamp &&
+                    candidate.rowIndex > record.latestDry.rowIndex)
+            ) {
+                record.latestDry = candidate;
+            }
+        }
+        if (
+            !record.lowest ||
+            candidate.weight < record.lowest.weight ||
+            (candidate.weight === record.lowest.weight &&
+                (candidate.timestamp > record.lowest.timestamp ||
+                    (candidate.timestamp === record.lowest.timestamp &&
+                        candidate.rowIndex > record.lowest.rowIndex)))
+        ) {
+            record.lowest = candidate;
+        }
+        candidates.set(plantId, record);
+    });
+
+    return new Map(
+        [...candidates.entries()].map(([plantId, record]) => {
+            const selected = record.latestDry || record.lowest;
+            return [
+                plantId,
+                {
+                    weight: selected.weight,
+                    observedAt: selected.observedAt,
+                    basis: record.latestDry ? "Dry" : "Lowest",
+                },
+            ];
+        })
+    );
 }
 
 function updateBaselinePotSetup_(spreadsheet, plantId, potSetup) {

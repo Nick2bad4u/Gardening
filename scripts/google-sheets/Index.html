@@ -3283,9 +3283,9 @@
                 "D",
                 "E",
                 "F",
+                "#",
                 "G",
                 "H",
-                "#",
             ]);
 
             function plantLabelSortParts(plant) {
@@ -3449,6 +3449,18 @@
                         plant.latestWeight === ""
                             ? "—"
                             : `${plant.latestWeight} g`,
+                    ],
+                    [
+                        "Last dry / lowest",
+                        plant.dryOrLowestWeight === ""
+                            ? "—"
+                            : `${plant.dryOrLowestWeight} g · ${String(
+                                  plant.dryOrLowestWeightBasis || "Lowest"
+                              ).toLowerCase()}${
+                                  plant.dryOrLowestWeightDate
+                                      ? ` · ${plant.dryOrLowestWeightDate}`
+                                      : ""
+                              }`,
                     ],
                     ["Pot", plant.currentPotSize || "—"],
                 ];

@@ -191,37 +191,37 @@ const appSheetBulkNutrientAmountIndex = 49;
 const expectedPlantImageUrls = {
     P23: {
         currentImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p23-paper-spine-top.webp",
+            "https://i.gyazo.com/a1f2ad382a7334993865979d7ac9c183.jpg",
         nurseryLabelImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p23-paper-spine-label.webp",
     },
     P24: {
         currentImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p24-coconut-crystal-top.webp",
+            "https://i.gyazo.com/c1e642aa6d14b5b15e7dca294c51ba3d.jpg",
         nurseryLabelImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p24-coconut-crystal-label.webp",
     },
     P25: {
         currentImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-28-p25-raindrops-arrival-crop.webp",
+            "https://i.gyazo.com/10141830dc3d95f0146c453d1897c5e8.png",
         nurseryLabelImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p25-raindrops-label.webp",
     },
     P26: {
         currentImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p26-eves-needle-side.webp",
+            "https://i.gyazo.com/029ccf0a7dbfc4d0e6ad4fdeff179b39.jpg",
         nurseryLabelImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p26-eves-needle-label.webp",
     },
     P27: {
         currentImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p27-black-widow-top.webp",
+            "https://i.gyazo.com/157b0f3e2ed7ee66bf01c2b0a2cd70ec.jpg",
         nurseryLabelImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p27-black-widow-label.webp",
     },
     P28: {
         currentImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p28-royal-flush-overview.webp",
+            "https://i.gyazo.com/c190dd6a18e72b1c75b38dc434415323.jpg",
         nurseryLabelImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p28-royal-flush-label.webp",
     },
@@ -868,6 +868,144 @@ describe("Garden logger server logic", () => {
         });
     });
 
+    it("prefers the latest active Dry weight and otherwise falls back to the active historical low", () => {
+        const history = createHistorySheet([]);
+        const context = loadAppsScript(history);
+        const weightRow = ({
+            plantId,
+            observedAt,
+            state,
+            weight,
+            status = "",
+        }) => {
+            const row = Array(40).fill("");
+            row[0] = observedAt;
+            row[1] = plantId;
+            row[2] = "Weigh";
+            row[3] = state;
+            row[4] = weight;
+            row[5] = 99;
+            row[6] = 88;
+            row[35] = status;
+            return row;
+        };
+
+        const result = context.dryOrLowestWeightsFromRows_([
+            weightRow({
+                plantId: "P01",
+                observedAt: "2026-08-01T12:00:00Z",
+                state: "Routine",
+                weight: 300,
+            }),
+            weightRow({
+                plantId: "P01",
+                observedAt: "2026-08-02T12:00:00Z",
+                state: "Dry",
+                weight: 320,
+            }),
+            weightRow({
+                plantId: "P01",
+                observedAt: "2026-08-03T12:00:00Z",
+                state: "Dry",
+                weight: 310,
+                status: "Removed",
+            }),
+            weightRow({
+                plantId: "P01",
+                observedAt: "2026-08-04T12:00:00Z",
+                state: "Dry",
+                weight: 330,
+            }),
+            weightRow({
+                plantId: "P02",
+                observedAt: "2026-08-01T12:00:00Z",
+                state: "Wet",
+                weight: 450,
+            }),
+            weightRow({
+                plantId: "P02",
+                observedAt: "2026-08-02T12:00:00Z",
+                state: "Routine",
+                weight: 420,
+            }),
+            weightRow({
+                plantId: "P02",
+                observedAt: "2026-08-03T12:00:00Z",
+                state: "Routine",
+                weight: 420,
+            }),
+            weightRow({
+                plantId: "P02",
+                observedAt: "2026-08-04T12:00:00Z",
+                state: "Routine",
+                weight: 400,
+                status: "Removed",
+            }),
+            weightRow({
+                plantId: "P03",
+                observedAt: "invalid-older-dry-date",
+                state: "Dry",
+                weight: 500,
+            }),
+            weightRow({
+                plantId: "P03",
+                observedAt: "invalid-newer-dry-date",
+                state: "Dry",
+                weight: 510,
+            }),
+            weightRow({
+                plantId: "P04",
+                observedAt: "invalid-older-low-date",
+                state: "Routine",
+                weight: 410,
+            }),
+            weightRow({
+                plantId: "P04",
+                observedAt: "invalid-newer-low-date",
+                state: "Routine",
+                weight: 410,
+            }),
+            weightRow({
+                plantId: "P05",
+                observedAt: "2026-08-05T12:00:00Z",
+                state: "Dry",
+                weight: 0,
+            }),
+        ]);
+
+        expect(
+            [...result.entries()].map(([plantId, value]) => ({
+                plantId,
+                ...value,
+            }))
+        ).toEqual([
+            {
+                plantId: "P01",
+                weight: 330,
+                observedAt: "2026-08-04T12:00:00Z",
+                basis: "Dry",
+            },
+            {
+                plantId: "P02",
+                weight: 420,
+                observedAt: "2026-08-03T12:00:00Z",
+                basis: "Lowest",
+            },
+            {
+                plantId: "P03",
+                weight: 510,
+                observedAt: "invalid-newer-dry-date",
+                basis: "Dry",
+            },
+            {
+                plantId: "P04",
+                weight: 410,
+                observedAt: "invalid-newer-low-date",
+                basis: "Lowest",
+            },
+        ]);
+    });
+
     it("builds the mobile bootstrap from tracker, baseline, and history data", () => {
         const repotValues = Array(21).fill("");
         repotValues[0] = new Date("2026-08-10T12:00:00Z");
@@ -931,7 +1069,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.14.1");
+        expect(bootstrap.version).toBe("5.14.2");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -939,6 +1077,9 @@ describe("Garden logger server logic", () => {
             potSetup: 2,
             currentPotSize: "4 in",
             latestWeight: 412,
+            dryOrLowestWeight: "",
+            dryOrLowestWeightBasis: "",
+            dryOrLowestWeightDate: "",
             fieldGuideUrl: "https://example.test/p01",
         });
         expect(Array.from(bootstrap.recent)).toHaveLength(1);
@@ -3590,9 +3731,9 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.14.1");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.14.2");
         expect(calls.toast[1]).toBe("Garden logger verified");
-        expect(calls.toast[0]).toMatch(/Logger 5\.14\.1 is ready/);
+        expect(calls.toast[0]).toMatch(/Logger 5\.14\.2 is ready/);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(

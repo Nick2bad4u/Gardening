@@ -55,6 +55,9 @@ const bootstrap = {
             lastWatered: "Jul 31, 2026",
             daysSinceWater: 15,
             latestWeight: 420,
+            dryOrLowestWeight: 398,
+            dryOrLowestWeightBasis: "Dry",
+            dryOrLowestWeightDate: "Aug 10, 2026",
             fieldGuideUrl: "https://example.test/guide#p01",
             historyUrl: "https://example.test/history?id=P01",
         },
@@ -68,6 +71,9 @@ const bootstrap = {
             lastWatered: "Aug 15, 2026",
             daysSinceWater: 1,
             latestWeight: 510,
+            dryOrLowestWeight: 475,
+            dryOrLowestWeightBasis: "Lowest",
+            dryOrLowestWeightDate: "Aug 2, 2026",
             fieldGuideUrl: "https://example.test/guide#p02",
             historyUrl: "https://example.test/history?id=P02",
         },
@@ -107,8 +113,7 @@ const canonicalPlantLabels = [
 ];
 
 const p23ImageUrls = {
-    currentImageUrl:
-        "https://nick2bad4u.github.io/Gardening/assets/collection-photos/2026-08-29-p23-paper-spine-top.webp",
+    currentImageUrl: "https://i.gyazo.com/a1f2ad382a7334993865979d7ac9c183.jpg",
     nurseryLabelImageUrl:
         "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p23-paper-spine-label.webp",
 };
@@ -128,6 +133,9 @@ function canonicalBootstrap() {
                 lastWatered: "",
                 daysSinceWater: "",
                 latestWeight: "",
+                dryOrLowestWeight: "",
+                dryOrLowestWeightBasis: "",
+                dryOrLowestWeightDate: "",
                 fieldGuideUrl: `https://example.test/guide#${id}`,
                 historyUrl: `https://example.test/history?id=${id}`,
                 currentImageUrl:
@@ -780,7 +788,7 @@ describe("Garden logger browser recovery", () => {
         expect(window.localStorage.getItem("gardenPlantId")).toBe("P01");
     });
 
-    it("sorts A-H before numbered planters while keeping requests in P order", () => {
+    it("sorts newer G-H labels after the established numbered planters while keeping requests in P order", () => {
         const bootstrapData = canonicalBootstrap();
         const canonicalIds = bootstrapData.plants.map(({ id }) => id);
         const { behaviors, calls, window } = createLoggerWindow({
@@ -801,14 +809,13 @@ describe("Garden logger browser recovery", () => {
                 ({ dataset }) => dataset.plantId
             )
         ).toEqual([
-            ...canonicalIds.slice(0, 18),
+            ...canonicalIds.slice(0, 22),
             "P27",
             "P23",
             "P28",
             "P24",
             "P25",
             "P26",
-            ...canonicalIds.slice(18, 22),
         ]);
 
         window.document
@@ -865,14 +872,13 @@ describe("Garden logger browser recovery", () => {
             .map((plant) => plant["Current pot label"]);
 
         expect(orderedLabels).toEqual([
-            ...canonicalPlantLabels.slice(0, 18),
+            ...canonicalPlantLabels.slice(0, 22),
             "G1",
             "G2",
             "G3",
             "H1",
             "H2",
             "H3",
-            ...canonicalPlantLabels.slice(18, 22),
         ]);
     });
 
@@ -902,6 +908,27 @@ describe("Garden logger browser recovery", () => {
         select.value = "P22";
         select.dispatchEvent(new window.Event("change", { bubbles: true }));
         expect(summary.querySelectorAll(".plant-photo-card")).toHaveLength(0);
+    });
+
+    it("shows the selected plant's last dry weight or lowest-weight fallback", () => {
+        const { window } = createLoggerWindow();
+        const summary = window.document.querySelector("#plantSummary");
+        const metricText = [...summary.querySelectorAll(".metric")].map(
+            ({ textContent }) => textContent
+        );
+
+        expect(metricText).toContain(
+            "Last dry / lowest398 g · dry · Aug 10, 2026"
+        );
+
+        const select = window.document.querySelector("#plantSelect");
+        select.value = "P02";
+        select.dispatchEvent(new window.Event("change", { bubbles: true }));
+        expect(
+            [...summary.querySelectorAll(".metric")].map(
+                ({ textContent }) => textContent
+            )
+        ).toContain("Last dry / lowest475 g · lowest · Aug 2, 2026");
     });
 
     it("restores and updates the recent-history length", () => {
