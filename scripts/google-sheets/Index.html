@@ -2182,13 +2182,6 @@
             aria-live="polite"
         ></div>
 
-        <script
-            id="embeddedBootstrap"
-            type="application/json"
-        >
-            <?!= bootstrapJson ?>
-        </script>
-
         <script>
             const state = {
                 bootstrap: null,
@@ -2224,6 +2217,8 @@
                 bootstrapAttempt: 0,
                 bootstrapRetries: 0,
                 bootstrapReady: false,
+                bootstrapRefreshTimer: null,
+                bootstrapRefreshAttempt: 0,
             };
 
             const PENDING_SAVE_KEY = "gardenLoggerPendingSaveV1";
@@ -2239,6 +2234,8 @@
                 "gardenLoggerObservationQueueBackupV1";
             const OBSERVATION_QUEUE_RECOVERY_KEY =
                 "gardenLoggerObservationQueueRecoveryV1";
+            const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV1";
+            const BOOTSTRAP_CACHE_MAX_AGE_MS = 6 * 60 * 60 * 1000;
             const BOOTSTRAP_TIMEOUT_MS = 20000;
             const BOOTSTRAP_AUTO_RETRIES = 1;
             const SAVE_WATCHDOG_MS = 20000;
@@ -5021,18 +5018,106 @@
                 state.bootstrapTimer = null;
             }
 
-            function readEmbeddedBootstrap() {
-                const payload = $("embeddedBootstrap")?.textContent.trim();
-                if (!payload || payload.startsWith("<" + "?")) return null;
+            function bootstrapIsUsable(bootstrap) {
+                return Boolean(
+                    bootstrap &&
+                    bootstrap.version &&
+                    bootstrap.links &&
+                    Array.isArray(bootstrap.events) &&
+                    Array.isArray(bootstrap.plants) &&
+                    bootstrap.plants.length > 0 &&
+                    Array.isArray(bootstrap.recent)
+                );
+            }
+
+            function cacheBootstrap(bootstrap) {
+                if (!bootstrapIsUsable(bootstrap)) return false;
+                return safeStorageSet(
+                    localStorage,
+                    BOOTSTRAP_CACHE_KEY,
+                    JSON.stringify({
+                        savedAt: Date.now(),
+                        bootstrap,
+                    })
+                );
+            }
+
+            function readCachedBootstrap() {
+                const payload = safeStorageGet(
+                    localStorage,
+                    BOOTSTRAP_CACHE_KEY
+                );
+                if (!payload) return null;
                 try {
-                    return JSON.parse(payload);
+                    const cached = JSON.parse(payload);
+                    const savedAt = Number(cached.savedAt);
+                    const age = Date.now() - savedAt;
+                    if (
+                        !Number.isFinite(savedAt) ||
+                        age < 0 ||
+                        age > BOOTSTRAP_CACHE_MAX_AGE_MS ||
+                        !bootstrapIsUsable(cached.bootstrap)
+                    ) {
+                        safeStorageRemove(localStorage, BOOTSTRAP_CACHE_KEY);
+                        return null;
+                    }
+                    return cached.bootstrap;
                 } catch (error) {
-                    console.warn(
-                        "The embedded garden data was invalid; requesting a fresh copy.",
-                        error
-                    );
+                    safeStorageRemove(localStorage, BOOTSTRAP_CACHE_KEY);
                     return null;
                 }
+            }
+
+            function clearBootstrapRefreshTimer() {
+                clearTimeout(state.bootstrapRefreshTimer);
+                state.bootstrapRefreshTimer = null;
+            }
+
+            function applyBootstrapRefresh(bootstrap) {
+                if (!bootstrapIsUsable(bootstrap)) return false;
+                const selectedPlantId = $("plantSelect").value;
+                state.bootstrap = bootstrap;
+                cacheBootstrap(bootstrap);
+                renderGlobalLinks();
+                renderPlantOptions($("plantSearch").value, selectedPlantId);
+                if (state.recentLimit === 10) renderRecent(bootstrap.recent);
+                else refreshRecent();
+                if (state.entryMode === "bulk")
+                    renderBulkPlants($("bulkSearch").value);
+                $("connectionStatus").textContent =
+                    `Connected · logger ${bootstrap.version}`;
+                return true;
+            }
+
+            function refreshCachedBootstrap() {
+                if (!browserIsOnline()) {
+                    $("connectionStatus").textContent =
+                        "Offline · using the saved plant list";
+                    return;
+                }
+                clearBootstrapRefreshTimer();
+                const attemptId = ++state.bootstrapRefreshAttempt;
+                state.bootstrapRefreshTimer = window.setTimeout(() => {
+                    if (attemptId !== state.bootstrapRefreshAttempt) return;
+                    state.bootstrapRefreshTimer = null;
+                    $("connectionStatus").textContent =
+                        "Using saved plant list · Google refresh delayed";
+                }, BOOTSTRAP_TIMEOUT_MS);
+                google.script.run
+                    .withSuccessHandler((bootstrap) => {
+                        if (attemptId !== state.bootstrapRefreshAttempt) return;
+                        clearBootstrapRefreshTimer();
+                        if (!applyBootstrapRefresh(bootstrap))
+                            $("connectionStatus").textContent =
+                                "Using saved plant list · Google returned invalid data";
+                    })
+                    .withFailureHandler(() => {
+                        if (attemptId !== state.bootstrapRefreshAttempt) return;
+                        clearBootstrapRefreshTimer();
+                        $("connectionStatus").textContent =
+                            "Using saved plant list · Google refresh unavailable";
+                    })
+                    .getWebAppBootstrap();
             }
 
             function showBootstrapLoading() {
@@ -5123,15 +5208,22 @@
                     .getWebAppBootstrap();
             }
 
-            function initialize(bootstrap) {
+            function initialize(bootstrap, { fromCache = false } = {}) {
                 let step = "reading the spreadsheet response";
                 try {
+                    if (!bootstrapIsUsable(bootstrap))
+                        throw new Error(
+                            "Google returned incomplete garden data."
+                        );
                     state.bootstrap = bootstrap;
-                    $("connectionStatus").textContent =
-                        `Connected · logger ${bootstrap.version}`;
-                    $("observedAt").value = localDateTimeValue(
-                        bootstrap.serverTime
-                    );
+                    $("connectionStatus").textContent = fromCache
+                        ? "Using saved plant list · refreshing Google…"
+                        : `Connected · logger ${bootstrap.version}`;
+                    const initialObservedAt = fromCache
+                        ? new Date().toISOString()
+                        : bootstrap.serverTime;
+                    $("observedAt").value =
+                        localDateTimeValue(initialObservedAt);
                     step = "restoring saved round settings";
                     restoreRoundState();
                     restoreNutrientState();
@@ -5157,11 +5249,10 @@
                         : 10;
                     $("recentLimit").value = String(state.recentLimit);
                     renderRecent(bootstrap.recent);
-                    if (state.recentLimit !== 10) refreshRecent();
+                    if (state.recentLimit !== 10 && !fromCache) refreshRecent();
                     step = "opening the entry workspace";
-                    $("bulkObservedAt").value = localDateTimeValue(
-                        bootstrap.serverTime
-                    );
+                    $("bulkObservedAt").value =
+                        localDateTimeValue(initialObservedAt);
                     setEntryMode("single");
                     step = "restoring an unfinished entry";
                     if (restorePendingSave()) {
@@ -5178,6 +5269,7 @@
                         });
                     state.bootstrapReady = true;
                     state.bootstrapRetries = 0;
+                    if (!fromCache) cacheBootstrap(bootstrap);
                     $("loading").setAttribute("aria-busy", "false");
                     $("loading").hidden = true;
                     $("modeTabs").hidden = false;
@@ -5363,9 +5455,14 @@
             });
 
             applyTheme(preferredTheme());
-            const embeddedBootstrap = readEmbeddedBootstrap();
-            if (embeddedBootstrap) initialize(embeddedBootstrap);
-            else requestBootstrap();
+            const cachedBootstrap = readCachedBootstrap();
+            if (cachedBootstrap) {
+                initialize(cachedBootstrap, { fromCache: true });
+                if (state.bootstrapReady) refreshCachedBootstrap();
+                else requestBootstrap({ resetRetries: true });
+            } else {
+                requestBootstrap();
+            }
         </script>
     </body>
 </html>

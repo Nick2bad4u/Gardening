@@ -23,8 +23,8 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-As of August 31, 2026, the checked-in source identifies the logger as **5.14.3**
-and the production deployment points to immutable Apps Script version **43**.
+As of August 31, 2026, the checked-in source identifies the logger as **5.14.4**
+and the production deployment points to immutable Apps Script version **44**.
 The production URL above is intentionally stable. Treat these values as
 a handoff baseline, not a substitute for checking `GARDEN_LOGGER.version`,
 `clasp versions`, `clasp deployments`, and the authenticated live page before a
@@ -118,11 +118,13 @@ The mobile logger stores an unconfirmed request ID and draft locally before it
 calls Google. If the callback is lost, logger 5.8.2 and later check History for that exact
 request on timeout and page load. A completed save clears itself automatically;
 an absent or partial save keeps the draft available for an idempotent retry.
-Logger 5.14.3 embeds the initial plant list in the signed-in HTML response, so
-startup no longer depends on the iframe callback that some browser sessions
-drop. If that embedded response is unavailable, the logger waits 20 seconds,
-retries the read-only bootstrap once, and then replaces the indefinite loading
-screen with **Retry connection** and **Reload logger** controls. If Google
+Logger 5.14.4 keeps the HTML shell independent from spreadsheet reads and saves
+the last successful plant list in that browser for up to six hours. A recent
+saved list opens immediately while Google refreshes it in the background, so a
+slow or dropped iframe callback cannot hide the usable logger. Without a recent
+saved list, the logger waits 20 seconds, retries the read-only bootstrap once,
+and then replaces the indefinite loading screen with **Retry connection** and
+**Reload logger** controls. If Google
 explicitly rejects a request and the follow-up History check confirms
 that nothing was written, the same form can be corrected and saved under a new
 request ID without using **Clear entry**. A timed-out request stays protected

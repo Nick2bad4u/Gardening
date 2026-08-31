@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.14.3",
+    version: "5.14.4",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -431,10 +431,7 @@ function openMobileEntry() {
 }
 
 function doGet() {
-    const template = HtmlService.createTemplateFromFile("Index");
-    template.bootstrapJson = embeddedWebBootstrapJson_();
-    return template
-        .evaluate()
+    return HtmlService.createHtmlOutputFromFile("Index")
         .setTitle("Garden care logger")
         .setFaviconUrl(GARDEN_LOGGER.faviconUrl)
         .addMetaTag(
@@ -443,29 +440,6 @@ function doGet() {
         )
         .addMetaTag("mobile-web-app-capable", "yes")
         .addMetaTag("apple-mobile-web-app-capable", "yes");
-}
-
-function embeddedWebBootstrapJson_() {
-    try {
-        return bootstrapJsonForHtml_(getWebAppBootstrap());
-    } catch (error) {
-        console.error("Could not embed the garden logger bootstrap.", error);
-        return "";
-    }
-}
-
-function bootstrapJsonForHtml_(value) {
-    const replacements = {
-        "&": "\\u0026",
-        "<": "\\u003c",
-        ">": "\\u003e",
-        "\u2028": "\\u2028",
-        "\u2029": "\\u2029",
-    };
-    return JSON.stringify(value).replace(
-        /[&<>\u2028\u2029]/g,
-        (character) => replacements[character]
-    );
 }
 
 function getWebAppBootstrap() {

@@ -223,7 +223,6 @@ function createScriptRunner(behaviors, calls) {
 function createLoggerWindow({
     bootstrapData = bootstrap,
     bootstrapBehavior,
-    embeddedBootstrapData,
     online = true,
     pendingSave,
     saveStatus = "missing",
@@ -241,17 +240,7 @@ function createLoggerWindow({
     });
     window.setTimeout = globalThis.setTimeout;
     window.clearTimeout = globalThis.clearTimeout;
-    const renderedHtml =
-        embeddedBootstrapData === undefined
-            ? html
-            : html.replace(
-                  "<?!= bootstrapJson ?>",
-                  JSON.stringify(embeddedBootstrapData).replaceAll(
-                      "<",
-                      "\\u003c"
-                  )
-              );
-    window.document.write(renderedHtml);
+    window.document.write(html);
     Object.entries(storage).forEach(([key, value]) =>
         window.localStorage.setItem(key, value)
     );
@@ -331,20 +320,82 @@ afterEach(() => {
 });
 
 describe("Garden logger browser recovery", () => {
-    it("uses the server-embedded bootstrap without relying on the iframe bridge", () => {
+    it("opens from a recent saved plant list while Google refreshes in the background", () => {
+        let refreshHandlers;
         const { calls, window } = createLoggerWindow({
-            embeddedBootstrapData: bootstrap,
-            bootstrapBehavior: () => {},
+            bootstrapBehavior: (handlers) => {
+                refreshHandlers = handlers;
+            },
+            storage: {
+                gardenLoggerBootstrapV1: JSON.stringify({
+                    savedAt: Date.now(),
+                    bootstrap,
+                }),
+            },
         });
 
         expect(
             calls.filter((call) => call.method === "getWebAppBootstrap")
-        ).toHaveLength(0);
+        ).toHaveLength(1);
         expect(window.document.querySelector("#loading").hidden).toBe(true);
         expect(window.document.querySelector("#modeTabs").hidden).toBe(false);
         expect(
             window.document.querySelector("#connectionStatus").textContent
+        ).toBe("Using saved plant list · refreshing Google…");
+        expect(
+            window.document.querySelector("#observedAt").value
+        ).not.toContain("2026-08-15");
+
+        refreshHandlers.success({ ...bootstrap, version: "fresh" });
+
+        expect(
+            window.document.querySelector("#connectionStatus").textContent
+        ).toBe("Connected · logger fresh");
+        expect(
+            JSON.parse(window.localStorage.getItem("gardenLoggerBootstrapV1"))
+                .bootstrap.version
+        ).toBe("fresh");
+    });
+
+    it("keeps the cached logger usable when its background refresh fails", () => {
+        const { window } = createLoggerWindow({
+            bootstrapBehavior: ({ failure }) =>
+                failure({ message: "Storage unavailable" }),
+            storage: {
+                gardenLoggerBootstrapV1: JSON.stringify({
+                    savedAt: Date.now(),
+                    bootstrap,
+                }),
+            },
+        });
+
+        expect(window.document.querySelector("#loading").hidden).toBe(true);
+        expect(window.document.querySelector("#modeTabs").hidden).toBe(false);
+        expect(
+            window.document.querySelector("#connectionStatus").textContent
+        ).toBe("Using saved plant list · Google refresh unavailable");
+    });
+
+    it("ignores an expired saved plant list and requests current data", () => {
+        const { calls, window } = createLoggerWindow({
+            storage: {
+                gardenLoggerBootstrapV1: JSON.stringify({
+                    savedAt: Date.now() - 6 * 60 * 60 * 1000 - 1,
+                    bootstrap,
+                }),
+            },
+        });
+
+        expect(
+            calls.filter((call) => call.method === "getWebAppBootstrap")
+        ).toHaveLength(1);
+        expect(
+            window.document.querySelector("#connectionStatus").textContent
         ).toBe("Connected · logger test");
+        expect(
+            JSON.parse(window.localStorage.getItem("gardenLoggerBootstrapV1"))
+                .bootstrap.version
+        ).toBe("test");
     });
 
     it("automatically retries a dropped bootstrap callback and clears its watchdog after recovery", () => {

@@ -27,7 +27,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.14.3");
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.14.4");
 
 assert.deepEqual(
     Array.from(
@@ -272,8 +272,6 @@ assert.doesNotMatch(source, /LockService\.getDocumentLock\(\)/);
 assert.match(source, /function getWebSaveStatus\(payload\)/);
 assert.match(source, /function savedRequestStatus_\(history, requestId\)/);
 assert.match(source, /setFaviconUrl\(GARDEN_LOGGER\.faviconUrl\)/);
-assert.match(source, /HtmlService\.createTemplateFromFile\("Index"\)/);
-assert.match(source, /function bootstrapJsonForHtml_\(value\)/);
 assert.match(source, /0fdb0739ffe391ade24deb6df2973a21\.png/);
 assert.match(html, /id="themeToggle"/);
 assert.match(html, /function safeStorageGet\(storage, key, fallback = null\)/);
@@ -289,18 +287,15 @@ assert.match(html, /state\.saveStartedAt = Date\.now\(\);/);
 assert.match(html, /function browserIsOnline\(\)/);
 assert.match(html, /const BOOTSTRAP_TIMEOUT_MS = 20000;/);
 assert.match(html, /const BOOTSTRAP_AUTO_RETRIES = 1;/);
+assert.match(html, /const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV1";/);
+assert.match(html, /const BOOTSTRAP_CACHE_MAX_AGE_MS = 6 \* 60 \* 60 \* 1000;/);
 assert.match(
     html,
     /function requestBootstrap\(\{ resetRetries = false \} = \{\}\)/
 );
 assert.match(html, /id="retryBootstrapButton"/);
-assert.match(html, /id="embeddedBootstrap"/);
-assert.match(html, /function readEmbeddedBootstrap\(\)/);
-assert.equal(
-    [...html.matchAll(/<\?/g)].length,
-    1,
-    "Index.html must contain only its intentional Apps Script template tag"
-);
+assert.match(html, /function readCachedBootstrap\(\)/);
+assert.match(html, /function refreshCachedBootstrap\(\)/);
 assert.match(html, /target="_top"/);
 assert.match(html, /pending\.replaceable = true;/);
 assert.match(html, /function renderWeightState\(\)/);
