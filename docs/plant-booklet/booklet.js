@@ -84,16 +84,6 @@
         nextButton.disabled = !next;
         previousLabel.textContent = previous ? pageName(previous) : "Beginning";
         nextLabel.textContent = next ? pageName(next) : "End of guide";
-        previousButton.setAttribute(
-            "aria-label",
-            previous
-                ? `Previous page: ${pageName(previous)}`
-                : "At the beginning"
-        );
-        nextButton.setAttribute(
-            "aria-label",
-            next ? `Next page: ${pageName(next)}` : "At the end"
-        );
         readerTitle.textContent = pageName(page);
 
         if (profileIndex >= 0) {

@@ -52,6 +52,14 @@
     --shadow: 0 22px 70px rgb(0 0 0 / 35%);
 }
 
+:root[data-theme="dark"] .prose .semantic-table {
+    --table-accent: #a085c4;
+}
+
+:root[data-theme="dark"] .prose .semantic-table--care {
+    --table-accent: #5a9eb5;
+}
+
 * {
     box-sizing: border-box;
 }

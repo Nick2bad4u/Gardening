@@ -86,6 +86,16 @@ describe("field-guide profile mounting", () => {
         expect(plantB.querySelector(".external-image-fallback").hidden).toBe(
             true
         );
+        expect(
+            window.document
+                .querySelector("#previous-page")
+                .hasAttribute("aria-label")
+        ).toBe(false);
+        expect(
+            window.document
+                .querySelector("#next-page")
+                .hasAttribute("aria-label")
+        ).toBe(false);
     });
 
     it("recycles inactive profile markup during hash navigation", () => {
