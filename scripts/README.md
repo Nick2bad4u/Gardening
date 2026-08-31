@@ -40,6 +40,10 @@ pwsh -File scripts/publish-collection-photo.ps1 `
 ```
 
 `build-pages-site.mjs` creates the ignored `.pages-site/` deployment artifact.
+It injects the production GTM container only into that artifact, converts
+displayed licensed-reference images into responsive WebP sets with Sharp, and
+keeps source-quality Gyazo URLs behind capture links while rendering cached
+Gyazo thumbnails inline.
 It publishes the reader files and licensed/local evidence images used by the
 booklet plus the plant tracker, individual plant history, grow-spot layout,
 acclimation calendar, and searchable photo Collections index. Collection-photo

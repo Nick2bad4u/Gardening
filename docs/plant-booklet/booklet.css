@@ -14,7 +14,9 @@
     --sage-soft: #e7eee2;
     --clay: #a34e36;
     --clay-soft: #f4e2da;
-    --gold: #c69342;
+    --gold: #8a5b18;
+    --cacti-accent: #506b38;
+    --houseplant-accent: #22634f;
     --control: #fffaf0;
     --card-shadow: 0 12px 34px rgb(41 35 25 / 9%);
     --shadow: 0 22px 70px rgb(41 35 25 / 14%);
@@ -43,6 +45,8 @@
     --clay: #df8a6d;
     --clay-soft: #3a2924;
     --gold: #dfb86f;
+    --cacti-accent: #b8d69a;
+    --houseplant-accent: #83cbb5;
     --control: #222b23;
     --card-shadow: 0 14px 38px rgb(0 0 0 / 24%);
     --shadow: 0 22px 70px rgb(0 0 0 / 35%);
@@ -534,7 +538,7 @@ main {
 }
 
 .profile-page[data-group="cacti"] {
-    --profile-accent: #6f8e52;
+    --profile-accent: var(--cacti-accent);
 }
 
 .profile-page[data-group="succulents"] {
@@ -546,7 +550,7 @@ main {
 }
 
 .profile-page[data-group="houseplants"] {
-    --profile-accent: #35816b;
+    --profile-accent: var(--houseplant-accent);
 }
 
 .profile-hero {
@@ -1415,6 +1419,14 @@ main {
     overflow-wrap: anywhere;
 }
 
+.reference-photo figcaption a,
+.gallery-photo figcaption a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-inline: 0.15rem;
+}
+
 .gallery-photo figcaption strong {
     color: var(--ink);
     font-family: var(--serif);
@@ -1447,6 +1459,8 @@ main {
     grid-template-columns: 1fr 1fr;
     width: min(calc(100% - 2rem), 720px);
     margin: 1rem auto 0;
+    gap: 0.4rem;
+    padding: 0.35rem;
     overflow: hidden;
     border: 1px solid var(--line);
     border-bottom: 0;
@@ -1472,8 +1486,13 @@ main {
 
 .page-controls button:last-child {
     justify-content: flex-end;
-    border-left: 1px solid var(--line);
+    border-left: 0;
+    border-radius: 0.7rem;
     text-align: end;
+}
+
+.page-controls button:first-child {
+    border-radius: 0.7rem;
 }
 
 .page-controls button:hover:not(:disabled) {
@@ -1942,7 +1961,7 @@ main {
 .drawer-special,
 .drawer-link,
 .drawer-sheet-link {
-    min-height: 2.75rem;
+    min-height: 3rem;
 }
 
 .icon-button,
@@ -1952,8 +1971,8 @@ main {
 }
 
 .close-button {
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 3rem;
+    height: 3rem;
 }
 
 .geometric-icon {
@@ -2105,6 +2124,12 @@ main {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.contents-group ol {
+    display: grid;
+    gap: 0.5rem;
+    padding: 0.5rem;
+}
+
 .contents-group:is([data-group="cacti"], .contents-group--wide)
     li:nth-child(even) {
     border-left: 1px solid var(--line);
@@ -2113,12 +2138,12 @@ main {
 .contents-group a {
     min-height: 4.55rem;
     padding: 0.65rem 1rem;
-    border-top: 0;
-    border-bottom: 1px solid var(--line);
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
 }
 
 .contents-group li:last-child a {
-    border-bottom: 0;
+    border-bottom: 1px solid var(--line);
 }
 
 .contents-group a:has(.plant-nav-icon--contents) {
@@ -2651,7 +2676,16 @@ main {
 }
 
 .collection-photo figcaption {
+    gap: 0.35rem;
     padding: 0.8rem;
+}
+
+.collection-photo figcaption > a {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    min-height: 3rem;
+    padding-inline: 0.2rem;
 }
 
 .nursery-evidence {
@@ -2758,7 +2792,7 @@ main {
     }
 
     .drawer-sheet-link {
-        width: 2.75rem;
+        width: 3rem;
         padding-inline: 0;
     }
 
@@ -2995,6 +3029,13 @@ main {
     .contents-group a:has(.plant-nav-icon--contents) {
         min-height: 0;
         padding: 0.05in 0.08in;
+    }
+
+    .reference-photo figcaption a,
+    .gallery-photo figcaption a,
+    .collection-photo figcaption > a {
+        min-height: 0;
+        padding: 0;
     }
 
     .plant-nav-icon--contents {

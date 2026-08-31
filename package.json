@@ -54,6 +54,7 @@
         "remark-lint-write-good": "^1.2.0",
         "secretlint": "^13.0.5",
         "secretlint-config-nick2bad4u": "^1.1.2",
+        "sharp": "^0.35.4",
         "vitest": "^4.1.11"
     },
     "allowScripts": {

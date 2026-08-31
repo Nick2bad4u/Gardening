@@ -42,6 +42,20 @@ and remote Gyazo image URLs. It does not republish the complete collection-photo
 binary archive or the rest of the repository. GitHub Pages must be enabled for
 the repository before the deployment workflow can complete.
 
+The production build installs Google Tag Manager container `GTM-T8J6HPLF` on
+every published HTML entry point. The source pages opened locally do not load
+analytics. GTM's existing History Change trigger handles the field guide's hash
+navigation, so moving between profiles does not require a second analytics
+script in `booklet.js`.
+
+For publication performance, the build creates ignored 480, 960, and 1440 px
+WebP variants of every displayed licensed reference photograph. The repository
+keeps its credited source files unchanged, while Pages serves an appropriate
+responsive derivative. User-owned Gyazo captures follow the same principle:
+the manifest retains the source-quality direct URL, displayed previews use
+Gyazo's responsive thumbnail service, and the capture or Collection link opens
+the full-resolution hosted record.
+
 The reader links to the local
 [photo album entry page](../layouts/photo-album.html), which provides a
 searchable index of all 33 plant-specific Gyazo Collections and the overview

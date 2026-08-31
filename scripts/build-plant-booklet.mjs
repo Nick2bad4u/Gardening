@@ -746,6 +746,43 @@ function collectionViewLabel(view) {
     }[view];
 }
 
+const gyazoThumbnailWidths = [
+    480,
+    960,
+    1600,
+];
+
+function gyazoImageExtension(photo) {
+    const extension = photo.image_url
+        ?.match(/\.([a-z0-9]+)(?:[?#].*)?$/i)?.[1]
+        ?.toLowerCase();
+    if (!extension) {
+        throw new Error(
+            `Gyazo capture ${photo.image_id} has no supported image extension.`
+        );
+    }
+    return extension;
+}
+
+function gyazoThumbnailUrl(photo, width) {
+    return `https://thumb.gyazo.com/thumb/${width}/${photo.image_id}.${gyazoImageExtension(photo)}`;
+}
+
+function renderGyazoImage(
+    photo,
+    { alt = photo.alt, className = "", loading = "lazy", sizes = "100vw" } = {}
+) {
+    const classAttribute = className ? ` class="${escapeHtml(className)}"` : "";
+    const srcset = gyazoThumbnailWidths
+        .map(
+            (width) =>
+                `${escapeHtml(gyazoThumbnailUrl(photo, width))} ${width}w`
+        )
+        .join(", ");
+
+    return `<img${classAttribute} src="${escapeHtml(gyazoThumbnailUrl(photo, 960))}" srcset="${srcset}" sizes="${escapeHtml(sizes)}" alt="${escapeHtml(alt)}" loading="${escapeHtml(loading)}" decoding="async" referrerpolicy="no-referrer" data-external-image data-image-id="${escapeHtml(photo.image_id)}">`;
+}
+
 function formatCollectionDate(date) {
     return new Intl.DateTimeFormat("en-US", {
         dateStyle: "long",
@@ -784,7 +821,12 @@ function renderCollectionPhoto(photo, extraClass = "") {
 
     return `<figure class="${classes.map(escapeHtml).join(" ")}" data-photo-kind="${escapeHtml(photo.kind)}"${photo.view ? ` data-photo-view="${escapeHtml(photo.view)}"` : ""}>
     <a class="external-image-link" href="${escapeHtml(photo.page_url)}" target="_blank" rel="noreferrer">
-      <img src="${escapeHtml(photo.image_url)}" alt="${escapeHtml(photo.alt)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-external-image data-image-id="${escapeHtml(photo.image_id)}">
+      ${renderGyazoImage(photo, {
+          sizes:
+              photo.kind === "nursery-label"
+                  ? "(max-width: 680px) calc(100vw - 3rem), 16rem"
+                  : "(max-width: 680px) calc(100vw - 3rem), (max-width: 1180px) 45vw, 31rem",
+      })}
       <span class="external-image-fallback" hidden><span aria-hidden="true">◇</span><strong>Photo temporarily unavailable</strong><small>Open the Gyazo capture or full Collection instead.</small></span>
     </a>
     <figcaption>
@@ -872,6 +914,8 @@ function choosePlantAvatar(collectionRecord, heroPhoto) {
         return {
             alt: collectionPhoto.alt,
             external: true,
+            image_id: collectionPhoto.image_id,
+            image_url: collectionPhoto.image_url,
             src: collectionPhoto.image_url,
         };
     }
@@ -886,9 +930,19 @@ function choosePlantAvatar(collectionRecord, heroPhoto) {
 }
 
 function renderPlantAvatar(profile, variant) {
-    return profile.avatar
-        ? `<span class="plant-avatar-slot"><img class="plant-avatar plant-avatar--${escapeHtml(variant)}" src="${escapeHtml(profile.avatar.src)}" alt="${escapeHtml(profile.avatar.alt)}" loading="lazy" decoding="async"${profile.avatar.external ? ' referrerpolicy="no-referrer" data-external-image' : ""}><span class="plant-avatar-fallback" aria-hidden="true" hidden>🌵</span></span>`
-        : `<span class="plant-avatar plant-avatar--${escapeHtml(variant)}" aria-hidden="true">🌵</span>`;
+    if (!profile.avatar) {
+        return `<span class="plant-avatar plant-avatar--${escapeHtml(variant)}" aria-hidden="true">🌵</span>`;
+    }
+
+    const image = profile.avatar.external
+        ? renderGyazoImage(profile.avatar, {
+              alt: profile.avatar.alt,
+              className: `plant-avatar plant-avatar--${variant}`,
+              sizes: variant === "hero" ? "5.5rem" : "3.25rem",
+          })
+        : `<img class="plant-avatar plant-avatar--${escapeHtml(variant)}" src="${escapeHtml(profile.avatar.src)}" alt="${escapeHtml(profile.avatar.alt)}" sizes="${variant === "hero" ? "5.5rem" : "3.25rem"}" loading="lazy" decoding="async">`;
+
+    return `<span class="plant-avatar-slot">${image}<span class="plant-avatar-fallback" aria-hidden="true" hidden>🌵</span></span>`;
 }
 
 const plantNavigationIconByGroup = {
@@ -919,18 +973,18 @@ function renderCredit(photo, short = false) {
     const subject = photo.subject.replace("-", " and ");
     if (short) {
         return `<span class="photo-kind">Species-reference ${escapeHtml(subject)}</span>
-      <span>${escapeHtml(photo.author)} · <a href="${escapeHtml(photo.source_url)}" target="_blank" rel="noreferrer">${escapeHtml(photo.license)}</a></span>`;
+      <span>${escapeHtml(photo.author)} · <a href="${escapeHtml(photo.source_url)}" target="_blank" rel="noreferrer">Photo source · ${escapeHtml(photo.license)}</a></span>`;
     }
 
     return `<span class="photo-kind">Species-reference ${escapeHtml(subject)}</span>
     <span>${escapeHtml(photo.title)}</span>
-    <span>${escapeHtml(photo.author)} · <a href="${escapeHtml(photo.source_url)}" target="_blank" rel="noreferrer">source</a> · <a href="${escapeHtml(photo.license_url)}" target="_blank" rel="noreferrer">${escapeHtml(photo.license)}</a></span>`;
+    <span>${escapeHtml(photo.author)} · <a href="${escapeHtml(photo.source_url)}" target="_blank" rel="noreferrer">Photo source</a> · <a href="${escapeHtml(photo.license_url)}" target="_blank" rel="noreferrer">License: ${escapeHtml(photo.license)}</a></span>`;
 }
 
 function renderPhoto(photo, className = "") {
     return `<figure class="reference-photo ${className}">
     <a href="${escapeHtml(photo.source_url)}" target="_blank" rel="noreferrer">
-      <img src="${escapeHtml(photoPath(photo))}" alt="${escapeHtml(photo.title)}" loading="lazy" decoding="async">
+      <img src="${escapeHtml(photoPath(photo))}" alt="${escapeHtml(photo.title)}" sizes="(max-width: 720px) 100vw, 320px" loading="lazy" decoding="async">
     </a>
     <figcaption>${renderCredit(photo)}</figcaption>
   </figure>`;
@@ -945,14 +999,14 @@ function renderGalleryPhoto(photo) {
         .join(" · ");
 
     return `<figure class="gallery-photo" data-stage="${escapeHtml(photo.subject)}">
-    <a href="${escapeHtml(photoPath(photo))}" target="_blank">
-      <img src="${escapeHtml(photoPath(photo))}" alt="${escapeHtml(photo.title)}" loading="lazy" decoding="async">
+    <a href="${escapeHtml(photo.source_url)}" target="_blank" rel="noreferrer">
+      <img src="${escapeHtml(photoPath(photo))}" alt="${escapeHtml(photo.title)}" sizes="(max-width: 720px) 100vw, (max-width: 1180px) 33vw, 360px" loading="lazy" decoding="async">
     </a>
     <figcaption>
       <span class="gallery-stage">${escapeHtml(stageName)}</span>
       <strong>${escapeHtml(photo.title)}</strong>
       ${context ? `<span>${escapeHtml(context)}</span>` : ""}
-      <span>${escapeHtml(photo.author)} · <a href="${escapeHtml(photo.source_url)}" target="_blank" rel="noreferrer">source</a> · <a href="${escapeHtml(photo.license_url)}" target="_blank" rel="noreferrer">${escapeHtml(photo.license)}</a></span>
+      <span>${escapeHtml(photo.author)} · <a href="${escapeHtml(photo.source_url)}" target="_blank" rel="noreferrer">Photo source</a> · <a href="${escapeHtml(photo.license_url)}" target="_blank" rel="noreferrer">License: ${escapeHtml(photo.license)}</a></span>
     </figcaption>
   </figure>`;
 }
@@ -1254,7 +1308,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
 
     const hasPhotos = profile.photoCount > 0;
     const heroMedia = heroPhoto
-        ? `<img src="${escapeHtml(photoPath(heroPhoto))}" alt="${escapeHtml(heroPhoto.title)}" loading="lazy" decoding="async">`
+        ? `<img src="${escapeHtml(photoPath(heroPhoto))}" alt="${escapeHtml(heroPhoto.title)}" sizes="(max-width: 720px) 100vw, 1180px" loading="lazy" decoding="async">`
         : `<div class="hero-photo-placeholder" aria-hidden="true"><span>Reference photographs pending</span></div>`;
     const railPhotos = [
         detailPhoto ? renderPhoto(detailPhoto, "portrait-photo") : "",
@@ -1264,7 +1318,8 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         ? `<a href="${escapeHtml(archivePath)}">Open all ${profile.photoCount} archived photos and credits <span aria-hidden="true">→</span></a>`
         : `<p class="archive-pending"><strong>Licensed reference gallery pending.</strong> The research profile is complete; no local photo archive is being implied.</p>`;
 
-    return `<article class="book-page profile-page" id="${escapeHtml(profile.slug)}" data-page="${escapeHtml(profile.slug)}" data-group="${escapeHtml(profile.group)}" data-title="${escapeHtml(profile.title)}" data-search="${escapeHtml(searchText)}" hidden>
+    return `<article class="book-page profile-page" id="${escapeHtml(profile.slug)}" data-page="${escapeHtml(profile.slug)}" data-group="${escapeHtml(profile.group)}" data-title="${escapeHtml(profile.title)}" data-search="${escapeHtml(searchText)}" hidden></article>
+  <template data-profile-template="${escapeHtml(profile.slug)}">
     <header class="profile-hero">
       ${heroMedia}
       <div class="hero-shade"></div>
@@ -1344,7 +1399,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
       <span>The Fenton Collection · 2026 field guide</span>
       <span>${String(pageNumber).padStart(2, "0")}</span>
     </footer>
-  </article>`;
+  </template>`;
 }
 
 function renderCover(profiles) {
@@ -1362,12 +1417,12 @@ function renderCover(profiles) {
         .map((slug) => profiles.find((profile) => profile.slug === slug))
         .filter(Boolean);
 
-    return `<section class="book-page cover-page" id="cover" data-page="cover" data-title="Cover">
+    return `<section class="book-page cover-page" id="cover" data-page="cover" data-title="Cover" hidden>
     <div class="cover-collage" aria-hidden="true">
       ${coverProfiles
           .map(
               (profile) =>
-                  `<img src="${escapeHtml(photoPath(profile.selectedPhotos[0]))}" alt="" loading="eager" decoding="async">`
+                  `<img src="${escapeHtml(photoPath(profile.selectedPhotos[0]))}" alt="" sizes="(max-width: 720px) 50vw, 590px" loading="lazy" decoding="async">`
           )
           .join("\n")}
     </div>
@@ -1400,7 +1455,9 @@ function renderPhotoCollectionCard(profile) {
 
     return `<article class="photo-collection-card" data-photo-collection data-search="${escapeHtml(searchText)}">
       <a class="photo-collection-cover external-image-link" href="${escapeHtml(collection.url)}" target="_blank" rel="noreferrer">
-        <img src="${escapeHtml(newestPhoto.image_url)}" alt="${escapeHtml(newestPhoto.alt)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-external-image data-image-id="${escapeHtml(newestPhoto.image_id)}">
+        ${renderGyazoImage(newestPhoto, {
+            sizes: "(max-width: 760px) calc(100vw - 3rem), 24rem",
+        })}
         <span class="external-image-fallback" hidden><span aria-hidden="true">◇</span><strong>Preview unavailable</strong><small>The Gyazo Collection link still works.</small></span>
       </a>
       <div class="photo-collection-copy">
@@ -1470,7 +1527,10 @@ function renderPhotoAlbum(profiles, collectionManifest) {
 
     <section class="overview-collection" aria-labelledby="overview-heading">
       <a class="overview-collection-cover external-image-link" href="${escapeHtml(overviewCollection.url)}" target="_blank" rel="noreferrer">
-        <img src="${escapeHtml(overviewPhoto.image_url)}" alt="${escapeHtml(overviewPhoto.alt)}" loading="eager" decoding="async" referrerpolicy="no-referrer" data-external-image data-image-id="${escapeHtml(overviewPhoto.image_id)}">
+        ${renderGyazoImage(overviewPhoto, {
+            loading: "eager",
+            sizes: "(max-width: 760px) calc(100vw - 3rem), 64rem",
+        })}
         <span class="external-image-fallback" hidden><span aria-hidden="true">◇</span><strong>Overview preview unavailable</strong><small>The Gyazo Collection link still works.</small></span>
       </a>
       <div><p class="eyebrow">Room and table views</p><h2 id="overview-heading">Fenton collection · Overviews</h2><p>Wide setup photographs live separately from individual plant histories.</p><a class="button primary" href="${escapeHtml(overviewCollection.url)}" target="_blank" rel="noreferrer">Open overview Collection <span aria-hidden="true">↗</span></a></div>
@@ -1645,7 +1705,7 @@ async function renderBooklet(profiles) {
   <p class="sr-only" id="page-announcer" aria-live="polite" aria-atomic="true"></p>
 
   <noscript>
-    <p class="noscript-note">JavaScript is needed for page-by-page reading. Printing still includes the complete guide.</p>
+    <p class="noscript-note">JavaScript is needed for page-by-page reading and complete-guide printing.</p>
   </noscript>
 </body>
 </html>

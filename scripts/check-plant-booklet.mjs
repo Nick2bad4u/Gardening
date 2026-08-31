@@ -69,6 +69,11 @@ const expectedCollectionOverviews = 3;
 const expectedCollectionPlacements = 158;
 const expectedUniqueGyazoImages = 114;
 const expectedGyazoApplicationName = "Fenton Garden Field Guide";
+const expectedGyazoThumbnailWidths = [
+    480,
+    960,
+    1600,
+];
 const expectedPrivateSourceNote =
     "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.";
 const publicFieldGuideUrl = "https://nick2bad4u.github.io/Gardening/";
@@ -928,6 +933,83 @@ async function main() {
         JSON.stringify([...pageSlugs].sort()) === JSON.stringify(profileSlugs),
         "The booklet profile pages do not match the Markdown profile files."
     );
+    const templateSlugs = [
+        ...html.matchAll(
+            /<template\b[^>]*data-profile-template="([^"]+)"[^>]*>/g
+        ),
+    ].map((match) => match[1]);
+    assert(
+        JSON.stringify(sortedStrings(templateSlugs)) ===
+            JSON.stringify(profileSlugs),
+        "Every profile must have exactly one lazy-mount template."
+    );
+    const emptyProfilePlaceholders = [
+        ...html.matchAll(
+            /<article\b[^>]*class="[^"]*\bprofile-page\b[^"]*"[^>]*>\s*<\/article>/g
+        ),
+    ];
+    assert(
+        emptyProfilePlaceholders.length === expectedProfileCount,
+        `Expected ${expectedProfileCount} empty profile placeholders; found ${emptyProfilePlaceholders.length}.`
+    );
+    const coverTag = html.match(/<section\b[^>]*id="cover"[^>]*>/)?.[0] ?? "";
+    assert(
+        /\shidden(?:\s|>)/.test(coverTag),
+        "The cover must start hidden so direct profile links do not fetch its collage."
+    );
+    const coverHtml = html.slice(
+        html.indexOf(coverTag),
+        html.indexOf('id="contents"')
+    );
+    assert(
+        !coverHtml.includes('loading="eager"') &&
+            (coverHtml.match(/loading="lazy"/g) ?? []).length === 6,
+        "The hidden cover must keep all six collage images lazy until selected."
+    );
+
+    for (const [documentName, documentHtml] of [
+        ["field guide", html],
+        ["photo Collections index", photoAlbumHtml],
+    ]) {
+        const escapedGyazoThumbnailOrigin = "https:" + "//thumb\\.gyazo\\.com";
+        const externalImageTags = [
+            ...documentHtml.matchAll(/<img\b[^>]*data-external-image[^>]*>/g),
+        ].map((match) => match[0]);
+        assert(
+            externalImageTags.length > 0,
+            `${documentName} has no external image previews.`
+        );
+        for (const tag of externalImageTags) {
+            const imageId = htmlAttribute(tag, "data-image-id");
+            const source = htmlAttribute(tag, "src") ?? "";
+            const srcset = htmlAttribute(tag, "srcset") ?? "";
+            const sizes = htmlAttribute(tag, "sizes") ?? "";
+            assert(
+                new RegExp(
+                    `^${escapedGyazoThumbnailOrigin}/thumb/960/${imageId}\\.[a-z0-9]+$`,
+                    "i"
+                ).test(source),
+                `${documentName} must display Gyazo capture ${imageId} through its 960px thumbnail.`
+            );
+            for (const width of expectedGyazoThumbnailWidths) {
+                assert(
+                    new RegExp(
+                        `${escapedGyazoThumbnailOrigin}/thumb/${width}/${imageId}\\.[a-z0-9]+\\s+${width}w`,
+                        "i"
+                    ).test(srcset),
+                    `${documentName} Gyazo capture ${imageId} is missing its ${width}px responsive source.`
+                );
+            }
+            assert(
+                sizes.trim(),
+                `${documentName} Gyazo capture ${imageId} needs a sizes rule.`
+            );
+        }
+        assert(
+            !/<img\b[^>]*src="https:\/\/i\.gyazo\.com\//i.test(documentHtml),
+            `${documentName} still displays a full-resolution Gyazo source.`
+        );
+    }
 
     for (const profile of profiles) {
         const headings = [...profile.markdown.matchAll(/^##\s+(.+)$/gm)].map(

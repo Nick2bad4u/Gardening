@@ -4,6 +4,11 @@
     const profilePages = pages.filter((page) =>
         page.classList.contains("profile-page")
     );
+    const profileTemplates = new Map(
+        [...document.querySelectorAll("template[data-profile-template]")].map(
+            (template) => [template.dataset.profileTemplate, template]
+        )
+    );
     const pageIds = pages.map((page) => page.dataset.page);
     const pageLinks = [...document.querySelectorAll("[data-page-link]")];
     const readerTitle = document.querySelector("#reader-title");
@@ -24,7 +29,9 @@
         ...document.querySelectorAll("[data-surprise-plant]"),
     ];
     const pageAnnouncer = document.querySelector("#page-announcer");
+    const boundExternalImages = new WeakSet();
     let currentIndex = 0;
+    let printPrepared = false;
 
     function pageName(page) {
         return page?.dataset.title || "Untitled page";
@@ -43,7 +50,17 @@
 
         const target = document.getElementById(rawHash);
         const parentPage = target?.closest("[data-page]");
-        const pageId = parentPage?.dataset.page;
+        let pageId = parentPage?.dataset.page;
+
+        if (!pageId && rawHash) {
+            for (const [profileId, template] of profileTemplates) {
+                if (template.content.querySelector(`#${CSS.escape(rawHash)}`)) {
+                    pageId = profileId;
+                    break;
+                }
+            }
+        }
+
         return pageIds.includes(pageId)
             ? { pageId, targetId: rawHash }
             : { pageId: "cover", targetId: "cover" };
@@ -99,30 +116,90 @@
         }
     }
 
-    function prioritizeProfileImages(page) {
+    function prioritizePageImages(page) {
         const hero = page?.querySelector(".profile-hero > img");
         if (hero) {
             hero.loading = "eager";
             hero.fetchPriority = "high";
         }
 
-        const nextProfile = pages
-            .slice(currentIndex + 1)
-            .find((candidate) => candidate.classList.contains("profile-page"));
-        const nextHero = nextProfile?.querySelector(".profile-hero > img");
-        if (nextHero) nextHero.loading = "eager";
+        const coverLead = page?.querySelector(".cover-collage > img");
+        if (coverLead) {
+            coverLead.loading = "eager";
+            coverLead.fetchPriority = "high";
+        }
+    }
+
+    function markExternalImageUnavailable(image) {
+        image.hidden = true;
+        image.closest(".external-image-link")?.classList.add("is-unavailable");
+        image
+            .closest(".external-image-link")
+            ?.querySelector(".external-image-fallback")
+            ?.removeAttribute("hidden");
+        image
+            .closest(".plant-avatar-slot")
+            ?.querySelector(".plant-avatar-fallback")
+            ?.removeAttribute("hidden");
+    }
+
+    function bindExternalImages(root) {
+        for (const image of root.querySelectorAll("img[data-external-image]")) {
+            if (boundExternalImages.has(image)) continue;
+            boundExternalImages.add(image);
+            image.addEventListener(
+                "error",
+                () => markExternalImageUnavailable(image),
+                { once: true }
+            );
+            if (
+                image.isConnected &&
+                image.complete &&
+                image.naturalWidth === 0
+            ) {
+                markExternalImageUnavailable(image);
+            }
+        }
+    }
+
+    function mountProfile(page, { prioritize = false } = {}) {
+        if (!page?.classList.contains("profile-page")) return;
+        if (page.dataset.profileMounted === "true") {
+            if (prioritize) prioritizePageImages(page);
+            return;
+        }
+
+        const template = profileTemplates.get(page.dataset.page);
+        if (!template) return;
+        const fragment = template.content.cloneNode(true);
+        if (prioritize) prioritizePageImages(fragment);
+        bindExternalImages(fragment);
+        page.replaceChildren(fragment);
+        page.dataset.profileMounted = "true";
+    }
+
+    function unmountInactiveProfiles(activePage) {
+        if (printPrepared) return;
+        for (const profile of profilePages) {
+            if (profile === activePage) continue;
+            profile.replaceChildren();
+            delete profile.dataset.profileMounted;
+        }
     }
 
     function showPage(pageId, { scroll = true } = {}) {
         const nextIndex = pageIds.indexOf(pageId);
         currentIndex = nextIndex >= 0 ? nextIndex : 0;
 
+        const current = pages[currentIndex];
+        mountProfile(current, { prioritize: true });
+        prioritizePageImages(current);
+
         for (const [index, page] of pages.entries()) {
             page.hidden = index !== currentIndex;
         }
 
-        const current = pages[currentIndex];
-        prioritizeProfileImages(current);
+        unmountInactiveProfiles(current);
         updateNavigation(current);
         document.title =
             current.dataset.page === "cover"
@@ -181,29 +258,7 @@
             : `Showing all ${profilePages.length} profiles`;
     }
 
-    function markExternalImageUnavailable(image) {
-        image.hidden = true;
-        image.closest(".external-image-link")?.classList.add("is-unavailable");
-        image
-            .closest(".external-image-link")
-            ?.querySelector(".external-image-fallback")
-            ?.removeAttribute("hidden");
-        image
-            .closest(".plant-avatar-slot")
-            ?.querySelector(".plant-avatar-fallback")
-            ?.removeAttribute("hidden");
-    }
-
-    for (const image of document.querySelectorAll("img[data-external-image]")) {
-        image.addEventListener(
-            "error",
-            () => markExternalImageUnavailable(image),
-            { once: true }
-        );
-        if (image.complete && image.naturalWidth === 0) {
-            markExternalImageUnavailable(image);
-        }
-    }
+    bindExternalImages(document);
 
     openContents.addEventListener("click", () => {
         if (!contentsDialog.open) contentsDialog.showModal();
@@ -225,7 +280,23 @@
     search.addEventListener("input", filterNavigation);
     previousButton.addEventListener("click", () => goToIndex(currentIndex - 1));
     nextButton.addEventListener("click", () => goToIndex(currentIndex + 1));
-    printButton.addEventListener("click", () => window.print());
+    function prepareForPrint() {
+        if (printPrepared) return;
+        printPrepared = true;
+        for (const profile of profilePages) mountProfile(profile);
+    }
+
+    function restoreAfterPrint() {
+        printPrepared = false;
+        showCurrentHash({ scroll: false });
+    }
+
+    printButton.addEventListener("click", () => {
+        prepareForPrint();
+        window.print();
+    });
+    window.addEventListener("beforeprint", prepareForPrint);
+    window.addEventListener("afterprint", restoreAfterPrint);
 
     function openSurprisePlant(event) {
         event.preventDefault();
