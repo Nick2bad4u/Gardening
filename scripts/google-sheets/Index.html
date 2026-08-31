@@ -1061,6 +1061,43 @@
                 text-align: center;
             }
 
+            .loading-content {
+                width: min(100%, 34rem);
+            }
+
+            .loading strong {
+                display: block;
+                color: var(--ink);
+                font-size: 18px;
+            }
+
+            .loading-detail {
+                margin: 8px 0 0;
+                line-height: 1.5;
+            }
+
+            .loading-actions {
+                display: flex;
+                align-items: stretch;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 18px;
+            }
+
+            .loading-actions[hidden] {
+                display: none;
+            }
+
+            .loading-actions .primary,
+            .loading-actions .secondary {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 46px;
+                padding: 9px 15px;
+                text-decoration: none;
+            }
+
             .spinner {
                 width: 34px;
                 height: 34px;
@@ -1220,11 +1257,44 @@
                     <section
                         id="loading"
                         class="card loading"
+                        aria-live="polite"
+                        aria-busy="true"
                     >
-                        <div
-                            ><div class="spinner"></div
-                            ><strong>Loading your plants…</strong></div
-                        >
+                        <div class="loading-content">
+                            <div
+                                id="loadingSpinner"
+                                class="spinner"
+                                aria-hidden="true"
+                            ></div>
+                            <strong id="loadingTitle"
+                                >Loading your plants…</strong
+                            >
+                            <p
+                                id="loadingDetail"
+                                class="loading-detail"
+                                >Connecting securely to your garden
+                                spreadsheet.</p
+                            >
+                            <div
+                                id="loadingActions"
+                                class="loading-actions"
+                                hidden
+                            >
+                                <button
+                                    id="retryBootstrapButton"
+                                    class="primary"
+                                    type="button"
+                                    >Retry connection</button
+                                >
+                                <a
+                                    id="reloadLoggerLink"
+                                    class="secondary"
+                                    href="https://script.google.com/macros/s/AKfycbytpdMto4ZAqOf49igDNoGYr-J6fmSRDNJOKP4-dKDFRmM2YkTCKJp3kmhrD4gOJShF/exec"
+                                    target="_top"
+                                    >Reload logger</a
+                                >
+                            </div>
+                        </div>
                     </section>
 
                     <div
@@ -2112,6 +2182,13 @@
             aria-live="polite"
         ></div>
 
+        <script
+            id="embeddedBootstrap"
+            type="application/json"
+        >
+            <?!= bootstrapJson ?>
+        </script>
+
         <script>
             const state = {
                 bootstrap: null,
@@ -2143,6 +2220,10 @@
                 queueStorageAvailable: true,
                 queueStorageWarning: "",
                 viewportRepairTimer: null,
+                bootstrapTimer: null,
+                bootstrapAttempt: 0,
+                bootstrapRetries: 0,
+                bootstrapReady: false,
             };
 
             const PENDING_SAVE_KEY = "gardenLoggerPendingSaveV1";
@@ -2158,6 +2239,8 @@
                 "gardenLoggerObservationQueueBackupV1";
             const OBSERVATION_QUEUE_RECOVERY_KEY =
                 "gardenLoggerObservationQueueRecoveryV1";
+            const BOOTSTRAP_TIMEOUT_MS = 20000;
+            const BOOTSTRAP_AUTO_RETRIES = 1;
             const SAVE_WATCHDOG_MS = 20000;
             const QUEUE_WATCHDOG_MS = 45000;
             const QUEUE_EXECUTION_LIMIT_MS = 390000;
@@ -4933,15 +5016,111 @@
                 }, delay);
             }
 
+            function clearBootstrapTimer() {
+                clearTimeout(state.bootstrapTimer);
+                state.bootstrapTimer = null;
+            }
+
+            function readEmbeddedBootstrap() {
+                const payload = $("embeddedBootstrap")?.textContent.trim();
+                if (!payload || payload.startsWith("<?")) return null;
+                try {
+                    return JSON.parse(payload);
+                } catch (error) {
+                    console.warn(
+                        "The embedded garden data was invalid; requesting a fresh copy.",
+                        error
+                    );
+                    return null;
+                }
+            }
+
+            function showBootstrapLoading() {
+                const retrying = state.bootstrapRetries > 0;
+                const loading = $("loading");
+                loading.hidden = false;
+                loading.classList.remove("error");
+                loading.setAttribute("aria-busy", "true");
+                $("loadingSpinner").hidden = false;
+                $("loadingTitle").textContent = retrying
+                    ? "Still loading your plants…"
+                    : "Loading your plants…";
+                $("loadingDetail").textContent = retrying
+                    ? "The first response did not arrive. Trying the Google connection once more…"
+                    : "Connecting securely to your garden spreadsheet.";
+                $("loadingActions").hidden = true;
+                $("connectionStatus").textContent = retrying
+                    ? "Retrying the spreadsheet connection…"
+                    : "Connecting to the garden log…";
+            }
+
             function showLoadFailure(error, step = "loading garden data") {
+                clearBootstrapTimer();
+                state.bootstrapReady = false;
                 const detail =
                     error && error.message
                         ? error.message
-                        : "Try refreshing this page.";
+                        : "Google did not return an error message.";
                 const loading = $("loading");
-                loading.textContent = `Could not finish ${step}: ${detail}`;
+                loading.hidden = false;
                 loading.classList.add("error");
+                loading.setAttribute("aria-busy", "false");
+                $("loadingSpinner").hidden = true;
+                $("loadingTitle").textContent = `Could not finish ${step}.`;
+                $("loadingDetail").textContent =
+                    `${detail} Retry the connection, or reload the logger in this browser tab.`;
+                $("loadingActions").hidden = false;
+                $("modeTabs").hidden = true;
+                $("entryForm").hidden = true;
+                $("bulkWaterForm").hidden = true;
                 $("connectionStatus").textContent = "Connection failed";
+            }
+
+            function requestBootstrap({ resetRetries = false } = {}) {
+                if (resetRetries) state.bootstrapRetries = 0;
+                state.bootstrapReady = false;
+                clearBootstrapTimer();
+                showBootstrapLoading();
+                const attemptId = ++state.bootstrapAttempt;
+                state.bootstrapTimer = window.setTimeout(() => {
+                    if (
+                        attemptId !== state.bootstrapAttempt ||
+                        state.bootstrapReady
+                    )
+                        return;
+                    clearBootstrapTimer();
+                    if (state.bootstrapRetries < BOOTSTRAP_AUTO_RETRIES) {
+                        state.bootstrapRetries += 1;
+                        requestBootstrap();
+                        return;
+                    }
+                    showLoadFailure(
+                        {
+                            message: `Google's Apps Script connection did not answer within ${BOOTSTRAP_TIMEOUT_MS / 1000} seconds.`,
+                        },
+                        "loading your plants"
+                    );
+                }, BOOTSTRAP_TIMEOUT_MS);
+
+                google.script.run
+                    .withSuccessHandler((bootstrap) => {
+                        if (
+                            attemptId !== state.bootstrapAttempt ||
+                            state.bootstrapReady
+                        )
+                            return;
+                        clearBootstrapTimer();
+                        initialize(bootstrap);
+                    })
+                    .withFailureHandler((error) => {
+                        if (
+                            attemptId !== state.bootstrapAttempt ||
+                            state.bootstrapReady
+                        )
+                            return;
+                        showLoadFailure(error);
+                    })
+                    .getWebAppBootstrap();
             }
 
             function initialize(bootstrap) {
@@ -4980,8 +5159,6 @@
                     renderRecent(bootstrap.recent);
                     if (state.recentLimit !== 10) refreshRecent();
                     step = "opening the entry workspace";
-                    $("loading").hidden = true;
-                    $("modeTabs").hidden = false;
                     $("bulkObservedAt").value = localDateTimeValue(
                         bootstrap.serverTime
                     );
@@ -4999,6 +5176,11 @@
                         reconcileObservationQueue(attemptedQueue, {
                             allowRetryIfMissing: true,
                         });
+                    state.bootstrapReady = true;
+                    state.bootstrapRetries = 0;
+                    $("loading").setAttribute("aria-busy", "false");
+                    $("loading").hidden = true;
+                    $("modeTabs").hidden = false;
                 } catch (error) {
                     showLoadFailure(error, step);
                 }
@@ -5027,6 +5209,9 @@
                 );
                 refreshRecent();
             });
+            $("retryBootstrapButton").addEventListener("click", () =>
+                requestBootstrap({ resetRetries: true })
+            );
             $("themeToggle").addEventListener("click", () =>
                 applyTheme(state.theme === "dark" ? "light" : "dark")
             );
@@ -5178,11 +5363,9 @@
             });
 
             applyTheme(preferredTheme());
-
-            google.script.run
-                .withSuccessHandler(initialize)
-                .withFailureHandler((error) => showLoadFailure(error))
-                .getWebAppBootstrap();
+            const embeddedBootstrap = readEmbeddedBootstrap();
+            if (embeddedBootstrap) initialize(embeddedBootstrap);
+            else requestBootstrap();
         </script>
     </body>
 </html>

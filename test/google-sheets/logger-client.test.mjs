@@ -222,6 +222,8 @@ function createScriptRunner(behaviors, calls) {
 
 function createLoggerWindow({
     bootstrapData = bootstrap,
+    bootstrapBehavior,
+    embeddedBootstrapData,
     online = true,
     pendingSave,
     saveStatus = "missing",
@@ -239,7 +241,17 @@ function createLoggerWindow({
     });
     window.setTimeout = globalThis.setTimeout;
     window.clearTimeout = globalThis.clearTimeout;
-    window.document.write(html);
+    const renderedHtml =
+        embeddedBootstrapData === undefined
+            ? html
+            : html.replace(
+                  "<?!= bootstrapJson ?>",
+                  JSON.stringify(embeddedBootstrapData).replaceAll(
+                      "<",
+                      "\\u003c"
+                  )
+              );
+    window.document.write(renderedHtml);
     Object.entries(storage).forEach(([key, value]) =>
         window.localStorage.setItem(key, value)
     );
@@ -276,7 +288,8 @@ function createLoggerWindow({
 
     const calls = [];
     const behaviors = {
-        getWebAppBootstrap: ({ success }) => success(bootstrapData),
+        getWebAppBootstrap:
+            bootstrapBehavior || (({ success }) => success(bootstrapData)),
         getWebSaveStatus: ({ success }) =>
             success({
                 state: saveStatus,
@@ -318,6 +331,137 @@ afterEach(() => {
 });
 
 describe("Garden logger browser recovery", () => {
+    it("uses the server-embedded bootstrap without relying on the iframe bridge", () => {
+        const { calls, window } = createLoggerWindow({
+            embeddedBootstrapData: bootstrap,
+            bootstrapBehavior: () => {},
+        });
+
+        expect(
+            calls.filter((call) => call.method === "getWebAppBootstrap")
+        ).toHaveLength(0);
+        expect(window.document.querySelector("#loading").hidden).toBe(true);
+        expect(window.document.querySelector("#modeTabs").hidden).toBe(false);
+        expect(
+            window.document.querySelector("#connectionStatus").textContent
+        ).toBe("Connected · logger test");
+    });
+
+    it("automatically retries a dropped bootstrap callback and clears its watchdog after recovery", () => {
+        vi.useFakeTimers();
+        let attempt = 0;
+        const { calls, window } = createLoggerWindow({
+            bootstrapBehavior: ({ success }) => {
+                attempt += 1;
+                if (attempt === 2) success(bootstrap);
+            },
+        });
+
+        expect(
+            calls.filter((call) => call.method === "getWebAppBootstrap")
+        ).toHaveLength(1);
+        vi.advanceTimersByTime(20_000);
+
+        expect(
+            calls.filter((call) => call.method === "getWebAppBootstrap")
+        ).toHaveLength(2);
+        expect(window.document.querySelector("#loading").hidden).toBe(true);
+        expect(window.document.querySelector("#modeTabs").hidden).toBe(false);
+        expect(
+            window.document.querySelector("#connectionStatus").textContent
+        ).toBe("Connected · logger test");
+
+        vi.advanceTimersByTime(20_000);
+        expect(
+            calls.filter((call) => call.method === "getWebAppBootstrap")
+        ).toHaveLength(2);
+    });
+
+    it("replaces an endless loading state with recovery controls and supports a manual retry", () => {
+        vi.useFakeTimers();
+        let shouldSucceed = false;
+        const { calls, window } = createLoggerWindow({
+            bootstrapBehavior: ({ success }) => {
+                if (shouldSucceed) success(bootstrap);
+            },
+        });
+
+        vi.advanceTimersByTime(40_000);
+
+        expect(
+            calls.filter((call) => call.method === "getWebAppBootstrap")
+        ).toHaveLength(2);
+        expect(window.document.querySelector("#loadingTitle").textContent).toBe(
+            "Could not finish loading your plants."
+        );
+        expect(
+            window.document.querySelector("#loadingDetail").textContent
+        ).toMatch(/did not answer within 20 seconds/);
+        expect(window.document.querySelector("#loadingActions").hidden).toBe(
+            false
+        );
+        expect(window.document.querySelector("#loadingSpinner").hidden).toBe(
+            true
+        );
+        expect(
+            window.document.querySelector("#connectionStatus").textContent
+        ).toBe("Connection failed");
+
+        shouldSucceed = true;
+        window.document
+            .querySelector("#retryBootstrapButton")
+            .dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        expect(
+            calls.filter((call) => call.method === "getWebAppBootstrap")
+        ).toHaveLength(3);
+        expect(window.document.querySelector("#loading").hidden).toBe(true);
+        expect(window.document.querySelector("#modeTabs").hidden).toBe(false);
+    });
+
+    it("ignores a late callback from an expired bootstrap attempt", () => {
+        vi.useFakeTimers();
+        const attempts = [];
+        const { window } = createLoggerWindow({
+            bootstrapBehavior: (handlers) => attempts.push(handlers),
+        });
+
+        vi.advanceTimersByTime(20_000);
+        expect(attempts).toHaveLength(2);
+
+        attempts[0].success({ ...bootstrap, version: "stale" });
+        expect(window.document.querySelector("#modeTabs").hidden).toBe(true);
+        expect(
+            window.document.querySelector("#connectionStatus").textContent
+        ).toBe("Retrying the spreadsheet connection…");
+
+        attempts[1].success(bootstrap);
+        expect(window.document.querySelector("#modeTabs").hidden).toBe(false);
+        expect(
+            window.document.querySelector("#connectionStatus").textContent
+        ).toBe("Connected · logger test");
+        attempts[1].failure({ message: "Late failure" });
+        expect(
+            window.document.querySelector("#connectionStatus").textContent
+        ).toBe("Connected · logger test");
+    });
+
+    it("shows a useful recovery state when Google reports a bootstrap failure", () => {
+        const { window } = createLoggerWindow({
+            bootstrapBehavior: ({ failure }) => failure({}),
+        });
+
+        expect(window.document.querySelector("#loadingTitle").textContent).toBe(
+            "Could not finish loading garden data."
+        );
+        expect(
+            window.document.querySelector("#loadingDetail").textContent
+        ).toMatch(/Google did not return an error message/);
+        expect(window.document.querySelector("#loadingActions").hidden).toBe(
+            false
+        );
+    });
+
     it("automatically clears a recovered draft that already reached History", () => {
         const pendingSave = {
             requestId: "garden-recovered-12345",

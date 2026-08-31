@@ -1069,7 +1069,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.14.2");
+        expect(bootstrap.version).toBe("5.14.3");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -3628,6 +3628,10 @@ describe("Garden logger server logic", () => {
             setTitle: () => html,
             setWidth: () => html,
         };
+        const template = {
+            bootstrapJson: "",
+            evaluate: () => html,
+        };
         const activeSheets = new Map(
             ["Quick log", "History"].map((name) => [
                 name,
@@ -3650,13 +3654,23 @@ describe("Garden logger server logic", () => {
                 openById: () => activeSpreadsheet,
             },
             globals: {
-                HtmlService: { createHtmlOutputFromFile: () => html },
+                HtmlService: {
+                    createHtmlOutputFromFile: () => html,
+                    createTemplateFromFile: () => template,
+                },
             },
+        });
+        context.getWebAppBootstrap = () => ({
+            version: "test",
+            plants: [{ name: "Plant </script> & safe" }],
         });
 
         context.onOpen();
         context.openMobileEntry();
         expect(context.doGet()).toBe(html);
+        expect(template.bootstrapJson).toBe(
+            '{"version":"test","plants":[{"name":"Plant \\u003c/script\\u003e \\u0026 safe"}]}'
+        );
         context.openQuickLog();
         context.openHistory();
 
@@ -3731,9 +3745,9 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.14.2");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.14.3");
         expect(calls.toast[1]).toBe("Garden logger verified");
-        expect(calls.toast[0]).toMatch(/Logger 5\.14\.2 is ready/);
+        expect(calls.toast[0]).toMatch(/Logger 5\.14\.3 is ready/);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(
