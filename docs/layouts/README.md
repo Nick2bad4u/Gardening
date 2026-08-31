@@ -26,6 +26,12 @@ old label-style history URL is accepted as an alias while that label is current.
 The `Baselines` tab and history page use only the active pot setup for dry and
 wet pot-weight averages; they do not invent starting weights.
 
+Height and width rates and growth lines use physical measured readings only.
+Visual estimates remain visible in the canonical History ledger and activity
+timeline for provenance, but do not influence dimension changes or regression
+rates. A plant needs two eligible measured readings before either trend appears.
+Weight analytics retain their existing rules.
+
 The exact permanent-ID-to-profile mapping lives in
 [`plant-profile-data.json`](./plant-profile-data.json). The history page reads
 that manifest for field-guide links, while the booklet generator and checker
@@ -95,10 +101,11 @@ room.
 The 2026-07-31 tape photos are indexed in
 [`assets/measurements`](../../assets/measurements/README.md). Their starter and
 shared-planter height bands inform the original-table riser calculator. The
-tracker contains plant-body height readings recorded on 2026-08-10 for E1-F3
-and #4, but those readings do not include the pots. The newer plants still need
-direct tabletop-to-tip measurements and exact current table positions before
-their riser or marker assignments are final.
+tracker contains visual plant-body height estimates recorded on 2026-08-10 for
+E1-F3 and #4, but those observations do not include the pots and are not
+eligible for measured-only growth trends. The newer plants still need direct
+tabletop-to-tip measurements and exact current table positions before their
+riser or marker assignments are final.
 
 The deployed URLs are:
 
@@ -106,4 +113,4 @@ The deployed URLs are:
 - [Example individual history page](https://nick2bad4u.github.io/Gardening/layouts/plant-history.html?id=P01)
 - [Grow-spot layout](https://nick2bad4u.github.io/Gardening/layouts/grow-spot-layout.html)
 - [Indoor acclimation calendar](https://nick2bad4u.github.io/Gardening/layouts/indoor-acclimation-calendar.html)
-- [Plant photo album entry](https://nick2bad4u.github.io/Gardening/layouts/photo-album.html)
+- [Plant photo Collections index](https://nick2bad4u.github.io/Gardening/layouts/photo-album.html)

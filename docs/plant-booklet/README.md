@@ -20,11 +20,10 @@ Mountain Crest plants received on 2026-08-28. Rehab-04 is retained as a clearly
 marked historical record.
 
 Each plant profile ends with its own newest-first photo history. The latest two
-collection photographs stay visible and the remaining dated sessions expand in
-place. Badges distinguish side, top, detail, and context frames; broad context
-views use a compact crop in the page while their links retain access to the
-complete evidence file. Collection-wide room/table overviews remain archived
-in the manifest but are not duplicated into a standalone booklet page.
+collection photographs stay visible, while a prominent action opens the
+plant's complete Gyazo Collection. Badges distinguish side, top, detail, and
+context frames. Collection-wide room/table views live in their own overview
+Collection and appear on the searchable photo Collections index.
 Nursery-label photographs appear afterward as compact identification evidence,
 separate from both current-plant photographs and reusable-license references.
 
@@ -37,16 +36,17 @@ proof.
 
 The GitHub Pages build publishes the booklet at the repository's Pages URL,
 along with the plant tracker, individual history view, grow-spot layout, indoor
-acclimation calendar, and photo-album entry page. It contains only those
-browser tools, the licensed reference photographs they use, and web-sized user
-collection photographs. It does not publish the rest of the repository. GitHub
-Pages must be enabled for the repository before the deployment workflow can
-complete.
+acclimation calendar, and photo Collections index. It contains only those
+browser tools, their licensed reference photographs, preserved local evidence,
+and remote Gyazo image URLs. It does not republish the complete collection-photo
+binary archive or the rest of the repository. GitHub Pages must be enabled for
+the repository before the deployment workflow can complete.
 
 The reader links to the local
 [photo album entry page](../layouts/photo-album.html), which provides a
-collection cover and opens the shared Google Photos album in its own tab.
-Google Photos cannot be reliably embedded in this GitHub Pages site.
+searchable index of all 33 plant-specific Gyazo Collections and the overview
+Collection. Google Photos remains the private original archive rather than a
+public site dependency.
 
 The publication works when `index.html` is opened directly from disk. Its plant
 text and source list come from the Markdown profiles under
@@ -58,42 +58,48 @@ retain their scope notes so reference photography is not mistaken for proof of
 the collection identification.
 
 User collection and nursery-label photographs come from
-[`assets/collection-photos`](../../assets/collection-photos/). They remain
-separate from the licensed reference archive and are marked © Nick, all rights
-reserved. All archived nursery-label faces have corresponding web-sized booklet
-images. Every physically present plant has repository collection photography;
-the removed historical plant without a surviving image displays an explicit
-pending panel rather than a substituted image.
+the schema-3 manifest under
+[`assets/collection-photos`](../../assets/collection-photos/). Publication
+captures are hosted by Gyazo; preserved measurement and nursery-label evidence
+continues to use its repository path. They remain separate from the licensed
+reference archive and are marked © Nick, all rights reserved. The removed
+historical plant without a surviving image displays an explicit pending panel
+rather than a substituted image or empty Collection.
 
 The small cactus cursor is limited to devices with a fine pointing device;
 touch screens retain their normal behavior. Page, photograph, and detail-card
 motion is decorative, short, and disabled by the operating system's reduced
 motion preference.
 
-## Add one of your own Google Photos pictures
+## Publish one of your own photographs
 
-Google Photos share pages do not expose a durable image URL that a static site
-can safely depend on. Use the share URL in a dated Photo event or the album page,
-but export a copy when the picture should appear inside the booklet:
+Keep the byte-for-byte camera original in Google Photos or the ignored private
+archive. Use the checked-in uploader when the picture should appear in the
+booklet:
 
-1. In Google Photos, open the picture and choose **Download**. Keep the
-   byte-for-byte original privately in your photo library or archive.
-2. Retain the original privately with a descriptive name. Remove GPS, camera,
-   and other unnecessary personal metadata from the publication copy. Make a
-   web-sized WebP derivative with a descriptive name such as
-   `2026-08-29-oreocereus-trollii-top-160743.webp` and place it in
-   [`assets/collection-photos`](../../assets/collection-photos/).
-3. Add or update the plant's record in
-   [`photo-manifest.json`](../../assets/collection-photos/photo-manifest.json),
-   including the local path, evidence date, `view`, alt text, caption, and
-   sanitized repository source path when one exists. Put wide room/table views
-   in `collection_overviews`; shared-planter frames may be referenced by every
-   clearly visible plant with captions specific to each placement.
+1. Export the chosen photograph into `.private-photo-sources/` with a
+   descriptive name; never commit that private original.
+2. Preview the operation with
+   [`scripts/publish-collection-photo.ps1`](../../scripts/publish-collection-photo.ps1)
+   and `-WhatIf`. Supply the plant slug, literal source path, capture date,
+   view, alt text, and caption.
+3. Run the same command without `-WhatIf`. For a JPEG, the script strips
+   private metadata, auxiliary images, and camera trailers while preserving the
+   primary encoded image scans byte-for-byte in the staged file and retaining a
+   minimal display-orientation record; it does not resize or recompress the
+   source. An explicit crop is emitted at source resolution as a lossless PNG.
+   Gyazo normalizes JPEGs after upload, so verification requires the same
+   oriented pixel dimensions and at least 0.96 structural similarity when the
+   direct response is not byte-identical. The uploader also verifies the public
+   app, title, field-guide link, description, and capture date before atomically
+   recording the capture. A shared-planter capture can be reused across
+   applicable profile placements without another upload.
 4. Run `npm run build:booklet` and `npm run check:booklet`, then inspect the
-   plant page on desktop and at phone width.
+   field guide and photo Collections index on desktop and at phone width.
 
 Do not paste a temporary `googleusercontent.com` image address into the
-manifest: those links expire and can expose unintended album details.
+manifest. Do not hand-edit Gyazo IDs and direct URLs; the checker requires them
+to agree with the verified upload response.
 
 Do not edit the generated plant text in `index.html` by hand. Update a source
 profile or the photo manifest, then rebuild:

@@ -7,6 +7,8 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, "..");
 const bookletDirectory = path.join(repositoryRoot, "docs", "plant-booklet");
 const bookletPath = path.join(bookletDirectory, "index.html");
+const photoAlbumDirectory = path.join(repositoryRoot, "docs", "layouts");
+const photoAlbumPath = path.join(photoAlbumDirectory, "photo-album.html");
 const manifestPath = path.join(
     repositoryRoot,
     "assets",
@@ -19,6 +21,7 @@ const collectionManifestPath = path.join(
     "collection-photos",
     "photo-manifest.json"
 );
+const collectionPhotosDirectory = path.dirname(collectionManifestPath);
 const plantProfileDataPath = path.join(
     repositoryRoot,
     "docs",
@@ -54,12 +57,23 @@ const allowedCollectionViews = new Set([
     "detail",
     "context",
     "overview",
+    "label-front",
+    "label-back",
 ]);
 const expectedTrackedProfiles = 33;
 const expectedProfileCount = 34;
 const expectedPresentProfiles = 33;
 const expectedUnverifiedReceiptProfiles = 0;
 const expectedHistoricalProfiles = 1;
+const expectedCollectionOverviews = 3;
+const expectedCollectionPlacements = 158;
+const expectedUniqueGyazoImages = 114;
+const expectedGyazoApplicationName = "Fenton Garden Field Guide";
+const expectedPrivateSourceNote =
+    "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.";
+const publicFieldGuideUrl = "https://nick2bad4u.github.io/Gardening/";
+const publicPhotoAlbumUrl = `${publicFieldGuideUrl}layouts/photo-album.html`;
+const historicalCollectionSlug = "mammillaria-bombycina";
 const expectedMountainCrestProfiles = new Map([
     [
         "tephrocactus-articulatus-papyracanthus",
@@ -129,6 +143,121 @@ function htmlAttribute(tag, attributeName) {
     return match?.[2];
 }
 
+function htmlClasses(tag) {
+    return new Set(
+        (htmlAttribute(tag, "class") ?? "").split(/\s+/).filter(Boolean)
+    );
+}
+
+function tagsWithClass(html, tagName, className) {
+    return [...html.matchAll(new RegExp(`<${tagName}\\b[^>]*>`, "g"))]
+        .map((match) => match[0])
+        .filter((tag) => htmlClasses(tag).has(className));
+}
+
+function collectionPhotoDate(photo) {
+    return photo.captured_on ?? photo.provided_on;
+}
+
+function isIsoDate(value) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value ?? "")) return false;
+    const date = new Date(`${value}T00:00:00Z`);
+    return (
+        !Number.isNaN(date.getTime()) && date.toISOString().startsWith(value)
+    );
+}
+
+function compareCollectionPhotosNewestFirst(left, right) {
+    const dateDifference = collectionPhotoDate(right).localeCompare(
+        collectionPhotoDate(left)
+    );
+    const viewPriority = new Map([
+        ["detail", 0],
+        ["side", 1],
+        ["top", 2],
+        ["context", 3],
+        ["overview", 4],
+        ["label-front", 5],
+        ["label-back", 6],
+    ]);
+    return (
+        dateDifference ||
+        (viewPriority.get(left.view) ?? 9) - (viewPriority.get(right.view) ?? 9)
+    );
+}
+
+function assertGyazoCollection(collection, context) {
+    assert(
+        collection &&
+            typeof collection === "object" &&
+            !Array.isArray(collection),
+        `${context} needs a Gyazo Collection object.`
+    );
+    assert(
+        JSON.stringify(Object.keys(collection).sort()) ===
+            JSON.stringify(["id", "url"]),
+        `${context} Gyazo Collection must contain only id and url.`
+    );
+    assert(
+        /^[a-f0-9]{32}$/.test(collection.id ?? ""),
+        `${context} has an invalid Gyazo Collection ID.`
+    );
+    assert(
+        collection.url === `https://gyazo.com/collections/${collection.id}`,
+        `${context} Gyazo Collection URL does not agree with its ID.`
+    );
+    return collection.id;
+}
+
+function captureMetadata(photo) {
+    return JSON.stringify({
+        kind: photo.kind,
+        provider: photo.provider,
+        image_id: photo.image_id,
+        image_url: photo.image_url,
+        page_url: photo.page_url,
+        captured_on: photo.captured_on ?? null,
+        provided_on: photo.provided_on ?? null,
+        view: photo.view,
+        source_file: photo.source_file ?? null,
+        source_note: photo.source_note ?? null,
+        crop_geometry: photo.crop_geometry ?? null,
+        derived_note: photo.derived_note ?? null,
+        derivation_note: photo.derivation_note ?? null,
+        upload_metadata: photo.upload_metadata ?? null,
+    });
+}
+
+function profilePageSections(html) {
+    const starts = [...html.matchAll(/<article\b[^>]*>/g)].filter((match) => {
+        const classes = htmlClasses(match[0]);
+        return classes.has("book-page") && classes.has("profile-page");
+    });
+    return new Map(
+        starts.map((match, index) => [
+            htmlAttribute(match[0], "id"),
+            html.slice(match.index, starts[index + 1]?.index ?? html.length),
+        ])
+    );
+}
+
+function renderedCollectionFigures(html) {
+    return [...html.matchAll(/<figure\b[^>]*>[\s\S]*?<\/figure>/g)]
+        .filter((match) => htmlClasses(match[0]).has("collection-photo"))
+        .map((match) => {
+            const imageTag = match[0].match(/<img\b[^>]*>/)?.[0] ?? "";
+            return {
+                imageId: htmlAttribute(imageTag, "data-image-id"),
+                kind: htmlAttribute(match[0], "data-photo-kind"),
+                latest: htmlClasses(match[0]).has("collection-photo--latest"),
+            };
+        });
+}
+
+function sortedStrings(values) {
+    return [...values].sort((left, right) => left.localeCompare(right));
+}
+
 function sellerProductLinks(markdown) {
     const allowedHosts = new Set([
         "costafarms.com",
@@ -163,6 +292,7 @@ function sellerProductLinks(markdown) {
 async function main() {
     const [
         html,
+        photoAlbumHtml,
         clientScript,
         manifest,
         collectionManifest,
@@ -170,12 +300,23 @@ async function main() {
         fieldGuideProfiles,
     ] = await Promise.all([
         readFile(bookletPath, "utf8"),
+        readFile(photoAlbumPath, "utf8"),
         readFile(path.join(bookletDirectory, "booklet.js"), "utf8"),
         readFile(manifestPath, "utf8").then(JSON.parse),
         readFile(collectionManifestPath, "utf8").then(JSON.parse),
         discoverProfiles(),
         readFile(plantProfileDataPath, "utf8").then(JSON.parse),
     ]);
+    const serializedCollectionManifest = JSON.stringify(collectionManifest);
+    assert(
+        !serializedCollectionManifest.includes(".private-photo-sources") &&
+            !/[A-Za-z]:\\\\/.test(serializedCollectionManifest),
+        "Collection-photo manifest must not expose private or absolute Windows source paths."
+    );
+    assert(
+        !serializedCollectionManifest.includes('"evidence_file"'),
+        "Collection-photo manifest must use source_file for preserved public evidence."
+    );
     const fieldGuideProfileEntries = Object.entries(fieldGuideProfiles).flatMap(
         ([trackerId, entries]) =>
             entries.map(([slug, title]) => ({ slug, title, trackerId }))
@@ -261,6 +402,7 @@ async function main() {
             historical,
             inventoryId,
             receiptUnverified,
+            slug: profile.slug,
             trackerId,
         };
     });
@@ -312,8 +454,8 @@ async function main() {
     );
 
     assert(
-        collectionManifest.schema_version === 2,
-        "Collection-photo manifest has an unsupported schema version."
+        collectionManifest.schema_version === 3,
+        "Collection-photo manifest must use schema version 3."
     );
     assert(
         /all rights reserved/i.test(collectionManifest.copyright_notice ?? ""),
@@ -323,6 +465,17 @@ async function main() {
         Array.isArray(collectionManifest.plants),
         "Collection-photo manifest has no plants array."
     );
+    assert(
+        Array.isArray(collectionManifest.collection_overviews) &&
+            collectionManifest.collection_overviews.length ===
+                expectedCollectionOverviews,
+        `Collection-photo manifest must contain exactly ${expectedCollectionOverviews} collection overviews.`
+    );
+
+    const overviewCollectionId = assertGyazoCollection(
+        collectionManifest.gyazo_collection,
+        "Collection overview"
+    );
     const collectionSlugs = collectionManifest.plants.map(
         (record) => record.plant_slug
     );
@@ -331,163 +484,367 @@ async function main() {
         "Collection-photo manifest contains duplicate plant records."
     );
     assert(
-        JSON.stringify([...collectionSlugs].sort()) ===
+        JSON.stringify(sortedStrings(collectionSlugs)) ===
             JSON.stringify(profileSlugs),
         "Collection-photo manifest does not match the Markdown profile files."
     );
 
-    let expectedCollectionPhotos = 0;
+    const profileStateBySlug = new Map(
+        profileStates.map((profile) => [profile.slug, profile])
+    );
+    const historicalProfiles = profileStates.filter(
+        (profile) => profile.historical
+    );
+    assert(
+        historicalProfiles.length === 1 &&
+            historicalProfiles[0].slug === historicalCollectionSlug,
+        `${historicalCollectionSlug} must remain the only historical profile.`
+    );
+
+    const collectionIds = new Set([overviewCollectionId]);
+    const publicationMetadataByName = new Map();
+    const publicationNameByImageId = new Map();
+    const imageIdByPublicationName = new Map();
+    const allPlacements = [];
     let expectedPendingPhotos = 0;
-    let expectedCollectionDateGroups = 0;
-    let expectedHistoryDetails = 0;
     let expectedHistoryPreviewPhotos = 0;
+    let expectedInlineCollectionPhotos = 0;
     let expectedNurseryEvidenceSections = 0;
     let expectedViewBadges = 0;
-    for (const record of collectionManifest.plants) {
-        assert(
-            Array.isArray(record.photos),
-            `${record.plant_slug} has no collection photos array.`
+    const photoReferenceCounts = new Map();
+    const photoAltTextsByImageId = new Map();
+    for (const photo of [
+        ...collectionManifest.collection_overviews,
+        ...collectionManifest.plants.flatMap((record) => record.photos),
+    ]) {
+        if (photo.provider !== "gyazo") continue;
+        photoReferenceCounts.set(
+            photo.image_id,
+            (photoReferenceCounts.get(photo.image_id) ?? 0) + 1
         );
-        expectedCollectionPhotos += record.photos.length;
-        const growthPhotos = record.photos
-            .filter((photo) => photo.kind === "collection")
-            .sort((left, right) =>
-                (right.captured_on ?? right.provided_on).localeCompare(
-                    left.captured_on ?? left.provided_on
-                )
-            );
-        const nurseryLabelPhotos = record.photos.filter(
-            (photo) => photo.kind === "nursery-label"
-        );
-        expectedHistoryPreviewPhotos += Math.min(2, growthPhotos.length);
-        expectedHistoryDetails += growthPhotos.length > 2 ? 1 : 0;
-        expectedNurseryEvidenceSections +=
-            nurseryLabelPhotos.length > 0 ? 1 : 0;
-        expectedCollectionDateGroups += new Set(
-            growthPhotos
-                .slice(2)
-                .map((photo) => photo.captured_on ?? photo.provided_on)
-        ).size;
-        if (record.photos.length === 0) {
-            expectedPendingPhotos += 1;
-            assert(
-                typeof record.pending_note === "string" &&
-                    record.pending_note.trim().length > 0,
-                `${record.plant_slug} needs a photo-pending note.`
-            );
-        } else {
-            assert(
-                record.pending_note === undefined,
-                `${record.plant_slug} has photos but still has a photo-pending note.`
-            );
+        if (!photoAltTextsByImageId.has(photo.image_id)) {
+            photoAltTextsByImageId.set(photo.image_id, new Set());
         }
-
-        for (const photo of record.photos) {
-            assert(
-                allowedCollectionKinds.has(photo.kind),
-                `${record.plant_slug} has unsupported collection photo kind ${photo.kind}.`
-            );
-            if (photo.view !== undefined) {
-                assert(
-                    allowedCollectionViews.has(photo.view),
-                    `${record.plant_slug} has unsupported collection photo view ${photo.view}.`
-                );
-                expectedViewBadges += 1;
-            }
-            assert(
-                /^assets\/collection-photos\/[a-z0-9.-]+\.webp$/.test(
-                    photo.file
-                ),
-                `${record.plant_slug} has an invalid web-photo path.`
-            );
-            assert(
-                /^assets\/(?:measurements|nursery-labels|collection-photos)\/[a-z0-9._-]+\.(?:jpg|png|webp)$/i.test(
-                    photo.source_file
-                ),
-                `${record.plant_slug} has an invalid source-photo path.`
-            );
-            const evidenceDates = [photo.captured_on, photo.provided_on].filter(
-                (value) => typeof value === "string" && value.length > 0
-            );
-            assert(
-                evidenceDates.length === 1 &&
-                    /^\d{4}-\d{2}-\d{2}$/.test(evidenceDates[0]),
-                `${record.plant_slug} needs exactly one valid capture or provided date.`
-            );
-            if (photo.derived_note !== undefined) {
-                assert(
-                    typeof photo.derived_note === "string" &&
-                        photo.derived_note.trim().length > 0,
-                    `${record.plant_slug} has an empty derivative note.`
-                );
-                assert(
-                    typeof photo.provided_on === "string",
-                    `${record.plant_slug} has a derived crop without a provided date.`
-                );
-            }
-            assert(
-                typeof photo.alt === "string" && photo.alt.trim().length > 0,
-                `${record.plant_slug} has a collection photo without alt text.`
-            );
-            assert(
-                typeof photo.caption === "string" &&
-                    photo.caption.trim().length > 0,
-                `${record.plant_slug} has a collection photo without a caption.`
-            );
-
-            for (const file of [photo.file, photo.source_file]) {
-                const fileStats = await stat(path.join(repositoryRoot, file));
-                assert(fileStats.size > 1024, `${file} is unexpectedly small.`);
-            }
-        }
+        photoAltTextsByImageId.get(photo.image_id).add(photo.alt.trim());
     }
 
-    const collectionOverviews = collectionManifest.collection_overviews;
-    assert(
-        Array.isArray(collectionOverviews) && collectionOverviews.length > 0,
-        "Collection-photo manifest needs at least one collection overview."
-    );
-    for (const photo of collectionOverviews) {
+    async function validatePublishedPhoto(photo, context) {
         assert(
-            photo.kind === "collection",
-            "A collection overview has an unsupported photo kind."
+            photo && typeof photo === "object" && !Array.isArray(photo),
+            `${context} must be a flat photo record.`
+        );
+        const nestedProperties = Object.entries(photo)
+            .filter(([, value]) => value !== null && typeof value === "object")
+            .map(([name]) => name);
+        assert(
+            JSON.stringify(nestedProperties) ===
+                JSON.stringify(["upload_metadata"]),
+            `${context} may nest only its verified upload_metadata object.`
+        );
+        assert(
+            !Object.hasOwn(photo, "file"),
+            `${context} still has the removed file field.`
+        );
+        assert(
+            typeof photo.publication_name === "string" &&
+                photo.publication_name.trim().length > 0,
+            `${context} needs a publication name.`
+        );
+        assert(
+            photo.provider === "gyazo",
+            `${context} must use the gyazo provider.`
+        );
+        assert(
+            /^[a-f0-9]{32}$/.test(photo.image_id ?? ""),
+            `${context} has an invalid Gyazo image ID.`
+        );
+        assert(
+            photo.page_url === `https://gyazo.com/${photo.image_id}`,
+            `${context} page URL does not agree with its Gyazo image ID.`
+        );
+
+        let imageUrl;
+        try {
+            imageUrl = new URL(photo.image_url);
+        } catch {
+            throw new Error(`${context} has an invalid Gyazo image URL.`);
+        }
+        assert(
+            imageUrl.protocol === "https:" &&
+                (imageUrl.hostname === "gyazo.com" ||
+                    imageUrl.hostname.endsWith(".gyazo.com")),
+            `${context} image URL must use an HTTPS Gyazo host.`
+        );
+        assert(
+            new RegExp(`^/${photo.image_id}(?:\\.[a-z0-9]+)?$`, "i").test(
+                imageUrl.pathname
+            ),
+            `${context} image URL path does not agree with its Gyazo image ID.`
+        );
+        const publicationExtension = path
+            .extname(photo.publication_name)
+            .toLowerCase();
+        const directUrlExtension = path
+            .extname(imageUrl.pathname)
+            .toLowerCase();
+        assert(
+            [
+                ".jpg",
+                ".png",
+                ".webp",
+            ].includes(publicationExtension) &&
+                publicationExtension === directUrlExtension,
+            `${context} publication and Gyazo direct URL need the same supported source-quality image type.`
+        );
+        assert(
+            allowedCollectionKinds.has(photo.kind),
+            `${context} has unsupported kind ${photo.kind}.`
         );
         assert(
             allowedCollectionViews.has(photo.view),
-            "A collection overview needs a supported view."
-        );
-        assert(
-            /^assets\/collection-photos\/[a-z0-9.-]+\.webp$/.test(photo.file),
-            "A collection overview has an invalid web-photo path."
-        );
-        assert(
-            /^assets\/(?:measurements|nursery-labels|collection-photos)\/[a-z0-9._-]+\.(?:jpg|png|webp)$/i.test(
-                photo.source_file
-            ),
-            "A collection overview has an invalid source-photo path."
+            `${context} needs a supported view.`
         );
         const evidenceDates = [photo.captured_on, photo.provided_on].filter(
             (value) => typeof value === "string" && value.length > 0
         );
         assert(
-            evidenceDates.length === 1 &&
-                /^\d{4}-\d{2}-\d{2}$/.test(evidenceDates[0]),
-            "A collection overview needs exactly one valid capture or provided date."
+            evidenceDates.length === 1 && isIsoDate(evidenceDates[0]),
+            `${context} needs exactly one valid captured or provided date.`
         );
         assert(
             typeof photo.alt === "string" && photo.alt.trim().length > 0,
-            "A collection overview is missing alt text."
+            `${context} is missing alt text.`
         );
         assert(
             typeof photo.caption === "string" &&
                 photo.caption.trim().length > 0,
-            "A collection overview is missing a caption."
+            `${context} is missing a caption.`
         );
-        for (const file of [photo.file, photo.source_file]) {
-            const fileStats = await stat(path.join(repositoryRoot, file));
-            assert(fileStats.size > 1024, `${file} is unexpectedly small.`);
+        assert(
+            photo.upload_metadata &&
+                typeof photo.upload_metadata === "object" &&
+                !Array.isArray(photo.upload_metadata),
+            `${context} needs verified public Gyazo upload metadata.`
+        );
+        assert(
+            JSON.stringify(Object.keys(photo.upload_metadata).sort()) ===
+                JSON.stringify([
+                    "app",
+                    "desc",
+                    "title",
+                    "url",
+                ]),
+            `${context} upload_metadata must contain only app, title, url, and desc.`
+        );
+        assert(
+            photo.upload_metadata.app === expectedGyazoApplicationName,
+            `${context} has the wrong Gyazo application name.`
+        );
+        assert(
+            photoAltTextsByImageId
+                .get(photo.image_id)
+                ?.has(photo.upload_metadata.title),
+            `${context} Gyazo title must match one accessible description for the shared capture.`
+        );
+        assert(
+            photo.upload_metadata.url === publicPhotoAlbumUrl ||
+                (photo.upload_metadata.url.startsWith(
+                    `${publicFieldGuideUrl}#`
+                ) &&
+                    photo.upload_metadata.url.length >
+                        `${publicFieldGuideUrl}#`.length),
+            `${context} Gyazo referer must point to the public field guide or photo index.`
+        );
+        const referenceCount = photoReferenceCounts.get(photo.image_id) ?? 0;
+        const expectedDescriptionContext =
+            referenceCount > 1
+                ? `shared by ${referenceCount} plant profiles`
+                : photo.caption.trim();
+        assert(
+            typeof photo.upload_metadata.desc === "string" &&
+                photo.upload_metadata.desc.includes(
+                    expectedDescriptionContext
+                ) &&
+                photo.upload_metadata.desc.includes(`view: ${photo.view}`) &&
+                /Copyright Nick; all rights reserved/.test(
+                    photo.upload_metadata.desc
+                ),
+            `${context} Gyazo description must retain its caption, view, and copyright context.`
+        );
+        if (photo.derived_note !== undefined) {
+            assert(
+                typeof photo.derived_note === "string" &&
+                    photo.derived_note.trim().length > 0,
+                `${context} has an empty derivative note.`
+            );
+            assert(
+                typeof photo.provided_on === "string",
+                `${context} has a derivative note without a provided date.`
+            );
+        }
+        if (Object.hasOwn(photo, "source_file")) {
+            assert(
+                typeof photo.source_file === "string" &&
+                    /^assets\/(?:measurements|nursery-labels)\/.+\.(?:jpe?g|png|webp)$/i.test(
+                        photo.source_file
+                    ) &&
+                    !photo.source_file.includes("..") &&
+                    !photo.source_file.includes("\\"),
+                `${context} source_file must point only to preserved repository evidence.`
+            );
+            const sourceStats = await stat(
+                path.join(repositoryRoot, photo.source_file)
+            );
+            assert(
+                sourceStats.size > 1024,
+                `${photo.source_file} is unexpectedly small.`
+            );
+        }
+        assert(
+            !Object.hasOwn(photo, "evidence_file"),
+            `${context} must use source_file for preserved repository evidence.`
+        );
+        if (Object.hasOwn(photo, "source_note")) {
+            assert(
+                photo.source_note === expectedPrivateSourceNote &&
+                    !photo.source_note.includes(".private-photo-sources") &&
+                    !/[A-Za-z]:[\\/]/.test(photo.source_note),
+                `${context} has an unsafe or unexpected private-source note.`
+            );
+        }
+        if (Object.hasOwn(photo, "crop_geometry")) {
+            assert(
+                /^\d+x\d+\+\d+\+\d+$/.test(photo.crop_geometry ?? "") &&
+                    publicationExtension === ".png" &&
+                    typeof photo.derivation_note === "string" &&
+                    photo.derivation_note.trim().length > 0 &&
+                    (typeof photo.source_file === "string" ||
+                        photo.source_note === expectedPrivateSourceNote),
+                `${context} source crop must have valid geometry, a source, a derivation note, and lossless PNG output.`
+            );
+        }
+        if (photo.kind === "nursery-label") {
+            assert(
+                /^assets\/nursery-labels\//.test(photo.source_file ?? ""),
+                `${context} must retain its nursery-label source evidence.`
+            );
+        }
+
+        const metadata = captureMetadata(photo);
+        const previousMetadata = publicationMetadataByName.get(
+            photo.publication_name
+        );
+        assert(
+            previousMetadata === undefined || previousMetadata === metadata,
+            `${photo.publication_name} is reused with different Gyazo capture metadata.`
+        );
+        publicationMetadataByName.set(photo.publication_name, metadata);
+
+        const previousImageId = imageIdByPublicationName.get(
+            photo.publication_name
+        );
+        assert(
+            previousImageId === undefined || previousImageId === photo.image_id,
+            `${photo.publication_name} maps to more than one Gyazo image ID.`
+        );
+        imageIdByPublicationName.set(photo.publication_name, photo.image_id);
+
+        const previousPublicationName = publicationNameByImageId.get(
+            photo.image_id
+        );
+        assert(
+            previousPublicationName === undefined ||
+                previousPublicationName === photo.publication_name,
+            `${photo.image_id} maps to more than one publication name.`
+        );
+        publicationNameByImageId.set(photo.image_id, photo.publication_name);
+        allPlacements.push(photo);
+    }
+
+    for (const record of collectionManifest.plants) {
+        const profileState = profileStateBySlug.get(record.plant_slug);
+        assert(
+            Array.isArray(record.photos),
+            `${record.plant_slug} has no collection photos array.`
+        );
+
+        if (profileState.historical) {
+            assert(
+                record.plant_slug === historicalCollectionSlug &&
+                    record.gyazo_collection === undefined &&
+                    record.photos.length === 0,
+                `${historicalCollectionSlug} must have no Gyazo Collection or photo placements.`
+            );
+            assert(
+                typeof record.pending_note === "string" &&
+                    record.pending_note.trim().length > 0,
+                `${historicalCollectionSlug} must retain its photo-pending note.`
+            );
+            expectedPendingPhotos += 1;
+            continue;
+        }
+
+        assert(
+            record.pending_note === undefined,
+            `${record.plant_slug} has photos but still has a photo-pending note.`
+        );
+        const collectionId = assertGyazoCollection(
+            record.gyazo_collection,
+            record.plant_slug
+        );
+        assert(
+            !collectionIds.has(collectionId),
+            `${record.plant_slug} reuses another Gyazo Collection ID.`
+        );
+        collectionIds.add(collectionId);
+
+        const growthPhotos = record.photos
+            .filter((photo) => photo.kind === "collection")
+            .sort(compareCollectionPhotosNewestFirst);
+        const nurseryLabelPhotos = record.photos.filter(
+            (photo) => photo.kind === "nursery-label"
+        );
+        assert(
+            growthPhotos.length >= 2,
+            `${record.plant_slug} needs at least two collection-kind photos.`
+        );
+        expectedHistoryPreviewPhotos += 2;
+        expectedInlineCollectionPhotos += 2 + nurseryLabelPhotos.length;
+        expectedNurseryEvidenceSections +=
+            nurseryLabelPhotos.length > 0 ? 1 : 0;
+        expectedViewBadges += 2 + nurseryLabelPhotos.length;
+
+        for (const [index, photo] of record.photos.entries()) {
+            await validatePublishedPhoto(
+                photo,
+                `${record.plant_slug} photo ${index + 1}`
+            );
         }
     }
+
+    const collectionOverviews = collectionManifest.collection_overviews;
+    for (const [index, photo] of collectionOverviews.entries()) {
+        assert(
+            photo.kind === "collection",
+            `Collection overview ${index + 1} must have collection kind.`
+        );
+        await validatePublishedPhoto(photo, `Collection overview ${index + 1}`);
+    }
+
+    assert(
+        collectionIds.size === expectedPresentProfiles + 1,
+        `Expected ${expectedPresentProfiles} unique plant Collections plus the overview Collection.`
+    );
+    assert(
+        allPlacements.length === expectedCollectionPlacements,
+        `Expected ${expectedCollectionPlacements} total Gyazo placements; found ${allPlacements.length}.`
+    );
+    assert(
+        publicationMetadataByName.size === expectedUniqueGyazoImages &&
+            imageIdByPublicationName.size === expectedUniqueGyazoImages &&
+            publicationNameByImageId.size === expectedUniqueGyazoImages,
+        `Expected ${expectedUniqueGyazoImages} one-to-one publication names and Gyazo image IDs.`
+    );
 
     const archivedNurseryLabels = (await readdir(nurseryLabelsDirectory))
         .filter((fileName) => /\.(?:jpe?g|png|webp)$/i.test(fileName))
@@ -507,7 +864,7 @@ async function main() {
             "Unplaced nursery-label archive evidence must name an image in assets/nursery-labels/."
         );
         assert(
-            /^\d{4}-\d{2}-\d{2}$/.test(evidence.captured_on ?? ""),
+            isIsoDate(evidence.captured_on),
             `${evidence.file} must have a captured date.`
         );
         assert(
@@ -526,7 +883,8 @@ async function main() {
     const manifestedNurseryLabelSources = collectionManifest.plants
         .flatMap((record) => record.photos)
         .filter((photo) => photo.kind === "nursery-label")
-        .map((photo) => photo.source_file)
+        .map((photo) => photo.source_file ?? null)
+        .filter(Boolean)
         .concat(nurseryLabelArchiveEvidence.map((evidence) => evidence.file));
     assert(
         new Set(manifestedNurseryLabelSources).size ===
@@ -534,13 +892,21 @@ async function main() {
         "A nursery-label source file is used more than once in the collection-photo manifest."
     );
     const manifestedNurseryLabels = manifestedNurseryLabelSources
-        .filter((file) => /\.(?:jpe?g|png|webp)$/i.test(file))
         .map((file) => path.basename(file))
         .sort();
     assert(
         JSON.stringify(manifestedNurseryLabels) ===
             JSON.stringify(archivedNurseryLabels),
         "Every archived nursery-label image must have exactly one booklet photo-manifest entry."
+    );
+
+    const collectionPhotoDirectoryEntries = sortedStrings(
+        await readdir(collectionPhotosDirectory)
+    );
+    assert(
+        JSON.stringify(collectionPhotoDirectoryEntries) ===
+            JSON.stringify(sortedStrings(["photo-manifest.json", "README.md"])),
+        "assets/collection-photos must contain only README.md and photo-manifest.json after Gyazo cleanup."
     );
 
     const pageSlugs = [...html.matchAll(/<article\b[^>]*>/g)]
@@ -689,16 +1055,13 @@ async function main() {
         `Expected ${photoRecords.length} gallery figures; found ${galleryPhotoCount}.`
     );
 
-    const collectionPanelCount = (
-        html.match(/class="collection-gallery"/g) ?? []
+    const collectionPanelCount = tagsWithClass(
+        html,
+        "section",
+        "collection-gallery"
     ).length;
-    const collectionPhotoTags = [...html.matchAll(/<figure\b[^>]*>/g)].filter(
-        (match) =>
-            (htmlAttribute(match[0], "class")?.split(/\s+/) ?? []).includes(
-                "collection-photo"
-            )
-    );
-    const collectionPhotoCount = collectionPhotoTags.length;
+    const collectionPhotoFigures = renderedCollectionFigures(html);
+    const collectionPhotoCount = collectionPhotoFigures.length;
     const pendingPhotoCount = (
         html.match(/class="collection-photo-pending"/g) ?? []
     ).length;
@@ -707,8 +1070,8 @@ async function main() {
         `Expected ${profiles.length} collection-photo panels; found ${collectionPanelCount}.`
     );
     assert(
-        collectionPhotoCount === expectedCollectionPhotos,
-        `Expected ${expectedCollectionPhotos} collection photos; found ${collectionPhotoCount}.`
+        collectionPhotoCount === expectedInlineCollectionPhotos,
+        `Expected ${expectedInlineCollectionPhotos} inline collection and nursery-label photos; found ${collectionPhotoCount}.`
     );
     assert(
         pendingPhotoCount === expectedPendingPhotos,
@@ -719,14 +1082,7 @@ async function main() {
     ).length;
     assert(
         collectionOverviewPhotoCount === 0,
-        "Collection overview photographs must remain archived without a standalone booklet page."
-    );
-    const collectionDateGroupCount = (
-        html.match(/class="collection-date-group"/g) ?? []
-    ).length;
-    assert(
-        collectionDateGroupCount === expectedCollectionDateGroups,
-        `Expected ${expectedCollectionDateGroups} dated collection-photo groups; found ${collectionDateGroupCount}.`
+        "Collection overview photographs must remain in the generated photo album, not the booklet."
     );
     const viewBadgeCount = (html.match(/class="photo-view"/g) ?? []).length;
     assert(
@@ -737,17 +1093,8 @@ async function main() {
         !html.includes('id="collection-history"'),
         "The obsolete standalone collection photo-history page is still present."
     );
-    const historyDetailsCount = (
-        html.match(/class="collection-history-details"/g) ?? []
-    ).length;
-    assert(
-        historyDetailsCount === expectedHistoryDetails,
-        `Expected ${expectedHistoryDetails} expandable plant-history archives; found ${historyDetailsCount}.`
-    );
-    const historyPreviewPhotoCount = collectionPhotoTags.filter((match) =>
-        (htmlAttribute(match[0], "class")?.split(/\s+/) ?? []).includes(
-            "collection-photo--latest"
-        )
+    const historyPreviewPhotoCount = collectionPhotoFigures.filter(
+        (figure) => figure.latest
     ).length;
     assert(
         historyPreviewPhotoCount === expectedHistoryPreviewPhotos,
@@ -759,6 +1106,192 @@ async function main() {
         nurseryEvidenceCount === expectedNurseryEvidenceSections,
         `Expected ${expectedNurseryEvidenceSections} nursery-evidence sections; found ${nurseryEvidenceCount}.`
     );
+
+    const collectionRecordBySlug = new Map(
+        collectionManifest.plants.map((record) => [record.plant_slug, record])
+    );
+    const pageHtmlBySlug = profilePageSections(html);
+    let profileCollectionLinkCount = 0;
+    for (const profile of profiles) {
+        const pageHtml = pageHtmlBySlug.get(profile.slug);
+        const record = collectionRecordBySlug.get(profile.slug);
+        assert(pageHtml, `No rendered profile page found for ${profile.slug}.`);
+
+        const figures = renderedCollectionFigures(pageHtml);
+        const latestFigures = figures.filter((figure) => figure.latest);
+        const collectionFigures = figures.filter(
+            (figure) => figure.kind === "collection"
+        );
+        const nurseryLabelFigures = figures.filter(
+            (figure) => figure.kind === "nursery-label"
+        );
+        const collectionLinks = tagsWithClass(
+            pageHtml,
+            "a",
+            "gyazo-collection-link"
+        );
+        profileCollectionLinkCount += collectionLinks.length;
+
+        if (profileStateBySlug.get(profile.slug).historical) {
+            assert(
+                figures.length === 0 && collectionLinks.length === 0,
+                `${profile.slug} must render only its pending note, with no inline Gyazo photos or Collection link.`
+            );
+            continue;
+        }
+
+        const growthPhotos = record.photos
+            .filter((photo) => photo.kind === "collection")
+            .sort(compareCollectionPhotosNewestFirst);
+        const nurseryLabelPhotos = record.photos.filter(
+            (photo) => photo.kind === "nursery-label"
+        );
+        const expectedLatestIds = growthPhotos
+            .slice(0, 2)
+            .map((photo) => photo.image_id);
+        const expectedNurseryLabelIds = nurseryLabelPhotos.map(
+            (photo) => photo.image_id
+        );
+
+        assert(
+            JSON.stringify(latestFigures.map((figure) => figure.imageId)) ===
+                JSON.stringify(expectedLatestIds),
+            `${profile.slug} must render its latest two collection-kind photos in newest-first order.`
+        );
+        assert(
+            JSON.stringify(
+                collectionFigures.map((figure) => figure.imageId)
+            ) === JSON.stringify(expectedLatestIds),
+            `${profile.slug} renders collection-kind photos outside its latest-two preview.`
+        );
+        assert(
+            nurseryLabelFigures.every((figure) => !figure.latest) &&
+                JSON.stringify(
+                    sortedStrings(
+                        nurseryLabelFigures.map((figure) => figure.imageId)
+                    )
+                ) === JSON.stringify(sortedStrings(expectedNurseryLabelIds)),
+            `${profile.slug} must render every nursery-label placement separately from its latest collection photos.`
+        );
+        assert(
+            collectionLinks.length === 1 &&
+                htmlAttribute(collectionLinks[0], "href") ===
+                    record.gyazo_collection.url,
+            `${profile.slug} needs exactly one link to its Gyazo Collection.`
+        );
+    }
+    assert(
+        profileCollectionLinkCount === expectedPresentProfiles,
+        `Expected ${expectedPresentProfiles} profile Gyazo Collection links; found ${profileCollectionLinkCount}.`
+    );
+
+    const albumCards = [
+        ...photoAlbumHtml.matchAll(/<article\b[^>]*>[\s\S]*?<\/article>/g),
+    ].filter((match) => htmlClasses(match[0]).has("photo-collection-card"));
+    assert(
+        albumCards.length === expectedPresentProfiles,
+        `Expected ${expectedPresentProfiles} plant Collection cards in the generated photo album; found ${albumCards.length}.`
+    );
+    const collectionRecordByUrl = new Map(
+        collectionManifest.plants
+            .filter((record) => record.gyazo_collection)
+            .map((record) => [record.gyazo_collection.url, record])
+    );
+    const albumProfileCollectionUrls = new Set();
+    for (const card of albumCards) {
+        const cardCollectionUrls = new Set(
+            [
+                ...card[0].matchAll(
+                    /<a\b[^>]*href="(https:\/\/gyazo\.com\/collections\/[a-f0-9]{32})"/g
+                ),
+            ].map((match) => match[1])
+        );
+        assert(
+            cardCollectionUrls.size === 1,
+            "Each generated photo-album card must link exactly one Gyazo Collection."
+        );
+        const cardCollectionUrl = [...cardCollectionUrls][0];
+        const collectionRecord = collectionRecordByUrl.get(cardCollectionUrl);
+        const cardImageTag = card[0].match(/<img\b[^>]*>/)?.[0] ?? "";
+        const expectedNewestImageId = collectionRecord?.photos
+            .filter((photo) => photo.kind === "collection")
+            .sort(compareCollectionPhotosNewestFirst)[0]?.image_id;
+        assert(
+            collectionRecord &&
+                htmlAttribute(cardImageTag, "data-image-id") ===
+                    expectedNewestImageId,
+            "Each photo-album card must preview its plant Collection's newest image."
+        );
+        albumProfileCollectionUrls.add(cardCollectionUrl);
+    }
+    const overviewSections = [
+        ...photoAlbumHtml.matchAll(/<section\b[^>]*>[\s\S]*?<\/section>/g),
+    ].filter((match) => htmlClasses(match[0]).has("overview-collection"));
+    assert(
+        overviewSections.length === 1,
+        "The generated photo album needs exactly one overview Collection section."
+    );
+    const albumOverviewCollectionUrls = new Set(
+        [
+            ...overviewSections[0][0].matchAll(
+                /<a\b[^>]*href="(https:\/\/gyazo\.com\/collections\/[a-f0-9]{32})"/g
+            ),
+        ].map((match) => match[1])
+    );
+    assert(
+        albumOverviewCollectionUrls.size === 1 &&
+            albumOverviewCollectionUrls.has(
+                collectionManifest.gyazo_collection.url
+            ),
+        "The generated photo album overview must link only the overview Gyazo Collection."
+    );
+    const overviewImageTag = overviewSections[0][0].match(/<img\b[^>]*>/)?.[0];
+    const expectedNewestOverviewId = [...collectionOverviews].sort(
+        compareCollectionPhotosNewestFirst
+    )[0].image_id;
+    assert(
+        htmlAttribute(overviewImageTag ?? "", "data-image-id") ===
+            expectedNewestOverviewId,
+        "The generated photo album overview must preview the newest overview image."
+    );
+    const expectedAlbumProfileCollectionUrls = new Set(
+        collectionManifest.plants
+            .filter((record) => record.plant_slug !== historicalCollectionSlug)
+            .map((record) => record.gyazo_collection.url)
+    );
+    assert(
+        JSON.stringify(sortedStrings(albumProfileCollectionUrls)) ===
+            JSON.stringify(sortedStrings(expectedAlbumProfileCollectionUrls)),
+        "The generated photo album must link all 33 plant Collections, with no missing or extra cards."
+    );
+    const allAlbumCollectionUrls = new Set(
+        [
+            ...photoAlbumHtml.matchAll(
+                /<a\b[^>]*href="(https:\/\/gyazo\.com\/collections\/[a-f0-9]{32})"/g
+            ),
+        ].map((match) => match[1])
+    );
+    const expectedAlbumCollectionUrls = new Set([
+        collectionManifest.gyazo_collection.url,
+        ...expectedAlbumProfileCollectionUrls,
+    ]);
+    assert(
+        JSON.stringify(sortedStrings(allAlbumCollectionUrls)) ===
+            JSON.stringify(sortedStrings(expectedAlbumCollectionUrls)),
+        "The generated photo album contains an unexpected Gyazo Collection link."
+    );
+
+    for (const generatedHtml of [html, photoAlbumHtml]) {
+        assert(
+            !generatedHtml.includes("collection-history-details") &&
+                !generatedHtml.includes("history-summary-icon"),
+            "Generated photo UI must not contain an expandable archive or history-summary icon."
+        );
+        assert(
+            !/assets[\\/]collection-photos[\\/]/i.test(generatedHtml),
+            "Generated HTML must not reference assets/collection-photos binaries."
+        );
+    }
     assert(
         (html.match(/class="contents-group(?: contents-group--wide)?"/g) ?? [])
             .length === 4 &&
@@ -873,20 +1406,56 @@ async function main() {
         "The booklet does not use the shared site theme key."
     );
 
+    const photoAlbumIds = [...photoAlbumHtml.matchAll(/\sid="([^"]+)"/g)].map(
+        (match) => match[1]
+    );
+    const duplicatePhotoAlbumIds = photoAlbumIds.filter(
+        (id, index) => photoAlbumIds.indexOf(id) !== index
+    );
+    assert(
+        duplicatePhotoAlbumIds.length === 0,
+        `Duplicate photo-album HTML IDs: ${[
+            ...new Set(duplicatePhotoAlbumIds),
+        ].join(", ")}`
+    );
+    const photoAlbumHashTargets = [
+        ...photoAlbumHtml.matchAll(/href="#([^"]+)"/g),
+    ].map((match) => match[1]);
+    const missingPhotoAlbumHashTargets = photoAlbumHashTargets.filter(
+        (target) => !photoAlbumIds.includes(target)
+    );
+    assert(
+        missingPhotoAlbumHashTargets.length === 0,
+        `Missing photo-album hash targets: ${[
+            ...new Set(missingPhotoAlbumHashTargets),
+        ].join(", ")}`
+    );
+
     for (const reference of new Set(localReferences(html))) {
         const absolutePath = path.resolve(bookletDirectory, reference);
         await stat(absolutePath).catch(() => {
             throw new Error(`Broken local booklet reference: ${reference}`);
         });
     }
+    for (const reference of new Set(localReferences(photoAlbumHtml))) {
+        const absolutePath = path.resolve(photoAlbumDirectory, reference);
+        await stat(absolutePath).catch(() => {
+            throw new Error(`Broken local photo-album reference: ${reference}`);
+        });
+    }
 
     for (const script of html.matchAll(/<script>([\s\S]*?)<\/script>/g)) {
+        new Function(script[1]);
+    }
+    for (const script of photoAlbumHtml.matchAll(
+        /<script>([\s\S]*?)<\/script>/g
+    )) {
         new Function(script[1]);
     }
     new Function(clientScript);
 
     console.log(
-        `Plant booklet verified: ${pageSlugs.length} profiles, ${photoRecords.length} licensed reference photos, ${expectedCollectionPhotos} per-profile collection-photo placements, ${collectionOverviews.length} collection overviews, ${archivedNurseryLabels.length} archived nursery labels, ${ids.length} unique IDs.`
+        `Plant booklet verified: ${pageSlugs.length} profiles, ${photoRecords.length} licensed reference photos, ${expectedCollectionPlacements} Gyazo placements using ${expectedUniqueGyazoImages} unique captures, ${collectionOverviews.length} collection overviews, ${archivedNurseryLabels.length} archived nursery labels, ${ids.length} unique booklet IDs, and ${photoAlbumIds.length} unique photo-album IDs.`
     );
     console.log(coverageLines.join("\n"));
 }

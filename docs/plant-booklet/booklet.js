@@ -23,11 +23,7 @@
     const surprisePlants = [
         ...document.querySelectorAll("[data-surprise-plant]"),
     ];
-    const historyDetails = [
-        ...document.querySelectorAll("details.collection-history-details"),
-    ];
     const pageAnnouncer = document.querySelector("#page-announcer");
-    const printExpandedHistory = new Set();
     let currentIndex = 0;
 
     function pageName(page) {
@@ -115,25 +111,6 @@
             .find((candidate) => candidate.classList.contains("profile-page"));
         const nextHero = nextProfile?.querySelector(".profile-hero > img");
         if (nextHero) nextHero.loading = "eager";
-
-        for (const image of [
-            ...(page?.querySelectorAll(".collection-history-preview img") ??
-                []),
-        ].slice(0, 2)) {
-            image.loading = "eager";
-        }
-    }
-
-    function updateHistoryDetails(details) {
-        const summary = details.querySelector(
-            ":scope > .collection-history-summary"
-        );
-        if (!summary) return;
-
-        summary.setAttribute("aria-expanded", String(details.open));
-        details.dataset.expanded = String(details.open);
-        const icon = summary.querySelector(".history-summary-icon");
-        if (icon) icon.textContent = details.open ? "−" : "+";
     }
 
     function showPage(pageId, { scroll = true } = {}) {
@@ -204,6 +181,30 @@
             : `Showing all ${profilePages.length} profiles`;
     }
 
+    function markExternalImageUnavailable(image) {
+        image.hidden = true;
+        image.closest(".external-image-link")?.classList.add("is-unavailable");
+        image
+            .closest(".external-image-link")
+            ?.querySelector(".external-image-fallback")
+            ?.removeAttribute("hidden");
+        image
+            .closest(".plant-avatar-slot")
+            ?.querySelector(".plant-avatar-fallback")
+            ?.removeAttribute("hidden");
+    }
+
+    for (const image of document.querySelectorAll("img[data-external-image]")) {
+        image.addEventListener(
+            "error",
+            () => markExternalImageUnavailable(image),
+            { once: true }
+        );
+        if (image.complete && image.naturalWidth === 0) {
+            markExternalImageUnavailable(image);
+        }
+    }
+
     openContents.addEventListener("click", () => {
         if (!contentsDialog.open) contentsDialog.showModal();
         window.setTimeout(() => search.focus(), 0);
@@ -225,25 +226,6 @@
     previousButton.addEventListener("click", () => goToIndex(currentIndex - 1));
     nextButton.addEventListener("click", () => goToIndex(currentIndex + 1));
     printButton.addEventListener("click", () => window.print());
-
-    for (const details of historyDetails) {
-        updateHistoryDetails(details);
-        details.addEventListener("toggle", () => updateHistoryDetails(details));
-    }
-
-    window.addEventListener("beforeprint", () => {
-        printExpandedHistory.clear();
-        for (const details of historyDetails) {
-            if (details.open) continue;
-            printExpandedHistory.add(details);
-            details.open = true;
-        }
-    });
-
-    window.addEventListener("afterprint", () => {
-        for (const details of printExpandedHistory) details.open = false;
-        printExpandedHistory.clear();
-    });
 
     function openSurprisePlant(event) {
         event.preventDefault();

@@ -18,7 +18,7 @@
         "check:logger": "node scripts/check-google-sheets-logger.mjs",
         "lint:gitleaks": "gitleaks dir --config .gitleaks.toml .",
         "lint:html": "htmlhint --config node_modules/htmlhint-config-nick2bad4u/recommended.json --ignore \"coverage/**,.pages-site/**,node_modules/**\" \"**/*.html\"",
-        "lint:lychee": "lychee --config node_modules/lychee-config-nick2bad4u/lychee.toml .",
+        "lint:lychee": "lychee --config node_modules/lychee-config-nick2bad4u/lychee.toml --host-concurrency 2 --host-request-interval 250ms --timeout 60 --exclude \"^https?://(?:www\\.)?inaturalist\\.org/observations(?:[/?#].*)?$\" --exclude-path \"publish-collection-photo\\.ps1$\" --exclude-path \"publish-collection-photo\\.Tests\\.ps1$\" .",
         "lint:lychee:smoke": "lychee --config node_modules/lychee-config-nick2bad4u/lychee.toml --dump-inputs README.md",
         "lint:remark": "npx remark . --frail --ignore-path .remarkignore",
         "lint:remark:fix": "npx remark . --ignore-path .remarkignore --output",

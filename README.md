@@ -25,8 +25,9 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
   for all 34 records, collection and nursery-label photos where archived,
   source and live-history links, a random-profile jump, dark mode, keyboard
   navigation, mobile layout, and print styling
-- [Plant photo album entry](docs/layouts/photo-album.html) — a mobile-friendly
-  collection cover with the current shared Google Photos album link
+- [Plant photo Collections index](docs/layouts/photo-album.html) — a searchable,
+  mobile-friendly index of one public Gyazo Collection per current plant plus
+  the collection-wide overview timeline
 - [Plant profiles](docs/plants/) — names, origins, history, flowers, care,
   propagation, risks, sources, and photo-archive status for all 34 collection
   records (33 physically present and one historical)

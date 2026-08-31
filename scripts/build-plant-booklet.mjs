@@ -15,6 +15,12 @@ const outputPath = path.join(
     "plant-booklet",
     "index.html"
 );
+const photoAlbumOutputPath = path.join(
+    repositoryRoot,
+    "docs",
+    "layouts",
+    "photo-album.html"
+);
 const photoManifestPath = path.join(
     repositoryRoot,
     "assets",
@@ -386,43 +392,149 @@ function findSellerProductLink(markdown) {
     return undefined;
 }
 
+function semanticTableCategory(label, tableType) {
+    const normalized = label.toLowerCase();
+
+    if (tableType === "identity") {
+        if (
+            /best historical|alternative|caution|provisional|uncertain|possible/.test(
+                normalized
+            )
+        ) {
+            return { key: "caution", icon: "!" };
+        }
+        if (/origin|range|distribution|native|habitat/.test(normalized)) {
+            return { key: "origin", icon: "⌖" };
+        }
+        if (/history|synonym|name clue|etymolog/.test(normalized)) {
+            return { key: "history", icon: "↺" };
+        }
+        if (/common|trade|cultivar|vernacular/.test(normalized)) {
+            return { key: "common", icon: "◇" };
+        }
+        if (/form|parentage|hybrid|collection|growth habit/.test(normalized)) {
+            return { key: "form", icon: "◫" };
+        }
+        if (
+            /botanical|taxon|species|accepted|scientific|genus/.test(normalized)
+        ) {
+            return { key: "botanical", icon: "✣" };
+        }
+        return { key: "record", icon: "▤" };
+    }
+
+    if (/light|sun|grow-light/.test(normalized)) {
+        return { key: "light", icon: "☀" };
+    }
+    if (/water|dry|moist/.test(normalized)) {
+        return { key: "water", icon: "≈" };
+    }
+    if (/pot|mix|soil|medium|root|repot|drain/.test(normalized)) {
+        return { key: "pot", icon: "◉" };
+    }
+    if (/temperature|winter|cold|heat|frost/.test(normalized)) {
+        return { key: "temperature", icon: "❄" };
+    }
+    if (/feed|fertili|nutrient/.test(normalized)) {
+        return { key: "feeding", icon: "+" };
+    }
+    if (/airflow|humidity|ventilat/.test(normalized)) {
+        return { key: "airflow", icon: "↝" };
+    }
+    if (/flower|bloom|fruit|seed/.test(normalized)) {
+        return { key: "flower", icon: "✿" };
+    }
+    if (/prun|handling|support|rotation|stake|clean/.test(normalized)) {
+        return { key: "handling", icon: "↟" };
+    }
+    if (
+        /arrival|observation|evidence|watch|leaf replacement|isolation|recovery/.test(
+            normalized
+        )
+    ) {
+        return { key: "observation", icon: "◎" };
+    }
+    return { key: "care", icon: "◒" };
+}
+
+function decorateSemanticTable(tableHtml) {
+    const headings = [...tableHtml.matchAll(/<th>([\s\S]*?)<\/th>/g)].map(
+        (match) => stripHtml(match[1]).toLowerCase()
+    );
+    const tableType =
+        headings[0] === "kind" && headings[1] === "name"
+            ? "identity"
+            : headings[0] === "topic" &&
+                ["practical approach", "practical starting approach"].includes(
+                    headings[1]
+                )
+              ? "care"
+              : undefined;
+
+    if (!tableType) return tableHtml;
+
+    const decoratedRows = tableHtml.replaceAll(
+        /<tr>\s*<td>([\s\S]*?)<\/td>/g,
+        (rowStart, labelHtml) => {
+            const category = semanticTableCategory(
+                stripHtml(labelHtml),
+                tableType
+            );
+            return `<tr class="semantic-row semantic-row--${category.key}"><td><span class="semantic-label"><span class="semantic-table-icon" aria-hidden="true">${category.icon}</span><span>${labelHtml}</span></span></td>`;
+        }
+    );
+
+    return decoratedRows.replace(
+        "<table>",
+        `<table class="semantic-table semantic-table--${tableType}">`
+    );
+}
+
 function decorateProfileBody(html) {
     const wrapped = html.replace(
         /(<h2>Seller listing snapshot<\/h2>[\s\S]*?)(?=<h2>|$)/,
         '<section class="seller-snapshot" aria-label="Seller listing snapshot">$1</section>\n'
     );
 
-    return wrapped.replaceAll(/<h2>([\s\S]*?)<\/h2>/g, (_, headingHtml) => {
-        const heading = stripHtml(headingHtml).toLowerCase();
-        let tone = "story";
-        let icon = "✦";
-        if (/source/.test(heading)) {
-            tone = "sources";
-            icon = "↗";
-        } else if (/seller/.test(heading)) {
-            tone = "seller";
-            icon = "◇";
-        } else if (/care|water|light|rehabilitation/.test(heading)) {
-            tone = "care";
-            icon = "◒";
-        } else if (/propagat|prun|rotation/.test(heading)) {
-            tone = "growth";
-            icon = "↟";
-        } else if (/risk|safety|pest|toxicity|watch/.test(heading)) {
-            tone = "warning";
-            icon = "!";
-        } else if (
-            /ident|name|identity|evidence|status|removal/.test(heading)
-        ) {
-            tone = "identity";
-            icon = "▤";
-        } else if (/origin|habitat|wild|ecology/.test(heading)) {
-            tone = "habitat";
-            icon = "⌖";
-        }
+    const decoratedTables = wrapped.replaceAll(
+        /<table>[\s\S]*?<\/table>/g,
+        decorateSemanticTable
+    );
 
-        return `<h2 class="profile-section-heading profile-section-heading--${tone}"><span class="profile-section-icon" aria-hidden="true">${icon}</span><span>${headingHtml}</span></h2>`;
-    });
+    return decoratedTables.replaceAll(
+        /<h2>([\s\S]*?)<\/h2>/g,
+        (_, headingHtml) => {
+            const heading = stripHtml(headingHtml).toLowerCase();
+            let tone = "story";
+            let icon = "✦";
+            if (/source/.test(heading)) {
+                tone = "sources";
+                icon = "↗";
+            } else if (/seller/.test(heading)) {
+                tone = "seller";
+                icon = "◇";
+            } else if (/care|water|light|rehabilitation/.test(heading)) {
+                tone = "care";
+                icon = "◒";
+            } else if (/propagat|prun|rotation/.test(heading)) {
+                tone = "growth";
+                icon = "↟";
+            } else if (/risk|safety|pest|toxicity|watch/.test(heading)) {
+                tone = "warning";
+                icon = "!";
+            } else if (
+                /ident|name|identity|evidence|status|removal/.test(heading)
+            ) {
+                tone = "identity";
+                icon = "▤";
+            } else if (/origin|habitat|wild|ecology/.test(heading)) {
+                tone = "habitat";
+                icon = "⌖";
+            }
+
+            return `<h2 class="profile-section-heading profile-section-heading--${tone}"><span class="profile-section-icon" aria-hidden="true">${icon}</span><span>${headingHtml}</span></h2>`;
+        }
+    );
 }
 
 async function renderInline(markdown) {
@@ -613,6 +725,8 @@ function compareCollectionPhotosNewestFirst(left, right) {
         ["top", 2],
         ["context", 3],
         ["overview", 4],
+        ["label-front", 5],
+        ["label-back", 6],
     ]);
     return (
         dateDifference ||
@@ -627,6 +741,8 @@ function collectionViewLabel(view) {
         detail: "Detail view",
         context: "Context view",
         overview: "Collection overview",
+        "label-front": "Label front",
+        "label-back": "Label back",
     }[view];
 }
 
@@ -638,19 +754,17 @@ function formatCollectionDate(date) {
 }
 
 function renderCollectionPhoto(photo, extraClass = "") {
-    const imagePath = `../../${photo.file.replaceAll("\\", "/")}`;
-    const normalizedSourcePath = photo.source_file.replaceAll("\\", "/");
-    const sourcePath = `../../${normalizedSourcePath}`;
+    const normalizedSourcePath = photo.source_file?.replaceAll("\\", "/");
+    const sourcePath = normalizedSourcePath
+        ? `../../${normalizedSourcePath}`
+        : undefined;
     const evidenceDate = collectionPhotoDate(photo);
     const evidenceVerb = photo.captured_on ? "Photographed" : "Provided";
-    const sourceLinkText =
-        normalizedSourcePath === photo.file.replaceAll("\\", "/")
-            ? "Open the metadata-sanitized publication file"
-            : normalizedSourcePath.endsWith(".webp")
-              ? "Open the archived evidence crop"
-              : photo.derived_note
-                ? "Open the archived presentation crop"
-                : "Open the original evidence file";
+    const sourceLinkText = normalizedSourcePath?.endsWith(".webp")
+        ? "Open the archived evidence crop"
+        : photo.derived_note
+          ? "Open the archived presentation crop"
+          : "Open the original evidence file";
     const derivedNote = photo.derived_note
         ? `<span>${escapeHtml(photo.derived_note)}</span>`
         : "";
@@ -669,40 +783,19 @@ function renderCollectionPhoto(photo, extraClass = "") {
     ].filter(Boolean);
 
     return `<figure class="${classes.map(escapeHtml).join(" ")}" data-photo-kind="${escapeHtml(photo.kind)}"${photo.view ? ` data-photo-view="${escapeHtml(photo.view)}"` : ""}>
-    <a href="${escapeHtml(imagePath)}">
-      <img src="${escapeHtml(imagePath)}" alt="${escapeHtml(photo.alt)}" loading="lazy" decoding="async">
+    <a class="external-image-link" href="${escapeHtml(photo.page_url)}" target="_blank" rel="noreferrer">
+      <img src="${escapeHtml(photo.image_url)}" alt="${escapeHtml(photo.alt)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-external-image data-image-id="${escapeHtml(photo.image_id)}">
+      <span class="external-image-fallback" hidden><span aria-hidden="true">◇</span><strong>Photo temporarily unavailable</strong><small>Open the Gyazo capture or full Collection instead.</small></span>
     </a>
     <figcaption>
       <span class="photo-labels"><span class="photo-kind">${escapeHtml(collectionPhotoKind(photo.kind))}</span>${viewBadge}</span>
       <strong>${escapeHtml(photo.caption)}</strong>
       <span>${evidenceVerb} <time datetime="${escapeHtml(evidenceDate)}">${escapeHtml(evidenceDate)}</time> · © Nick, all rights reserved</span>
       ${derivedNote}
-      <a href="${escapeHtml(sourcePath)}">${sourceLinkText}</a>
+      <a href="${escapeHtml(photo.page_url)}" target="_blank" rel="noreferrer">Open this capture in Gyazo</a>
+      ${sourcePath ? `<a href="${escapeHtml(sourcePath)}">${sourceLinkText}</a>` : ""}
     </figcaption>
   </figure>`;
-}
-
-function renderCollectionDateGroups(
-    photos,
-    extraPhotoClass = "",
-    headingLevel = 3
-) {
-    const sortedPhotos = [...photos].sort(compareCollectionPhotosNewestFirst);
-    const photosByDate = Map.groupBy(sortedPhotos, collectionPhotoDate);
-
-    return [...photosByDate]
-        .map(
-            ([date, datedPhotos]) => `<section class="collection-date-group">
-      <header class="collection-date-heading">
-        <h${headingLevel}><time datetime="${escapeHtml(date)}">${escapeHtml(formatCollectionDate(date))}</time></h${headingLevel}>
-        <span>${datedPhotos.length} ${datedPhotos.length === 1 ? "view" : "views"}</span>
-      </header>
-      <div class="collection-photo-grid">
-        ${datedPhotos.map((photo) => renderCollectionPhoto(photo, extraPhotoClass)).join("\n")}
-      </div>
-    </section>`
-        )
-        .join("\n");
 }
 
 function renderCollectionGallery(profile) {
@@ -711,32 +804,27 @@ function renderCollectionGallery(profile) {
         .filter((photo) => photo.kind === "collection")
         .sort(compareCollectionPhotosNewestFirst);
     const newestPhotos = growthPhotos.slice(0, 2);
-    const olderPhotos = growthPhotos.slice(2);
+    const newestDate = growthPhotos[0]
+        ? collectionPhotoDate(growthPhotos[0])
+        : undefined;
+    const collection = profile.collectionRecord.gyazo_collection;
     const growthHistory = growthPhotos.length
         ? `<div class="collection-history">
-        <p class="collection-history-note">Newest first. The latest two views stay visible; expand the archive for every earlier dated photograph.</p>
+        <p class="collection-history-note">Newest first. Two selected views stay visible here; the complete, continuously growing history lives in this plant's Gyazo Collection.</p>
         <div class="collection-history-preview" aria-label="Latest collection photographs">
           ${newestPhotos.map((photo) => renderCollectionPhoto(photo, "collection-photo--latest")).join("\n")}
         </div>
-        ${
-            olderPhotos.length
-                ? `<details class="collection-history-details">
-          <summary class="collection-history-summary" aria-expanded="false">
-            <span><strong>View complete photo history</strong><small>${olderPhotos.length} earlier ${olderPhotos.length === 1 ? "photograph" : "photographs"}, newest to oldest</small></span>
-            <span class="history-summary-icon" aria-hidden="true">+</span>
-          </summary>
-          <div class="collection-history-older">
-            ${renderCollectionDateGroups(olderPhotos)}
-          </div>
-        </details>`
-                : ""
-        }
+        <a class="gyazo-collection-link" href="${escapeHtml(collection.url)}" target="_blank" rel="noreferrer">
+          <span class="gyazo-collection-icon" aria-hidden="true">▧</span>
+          <span><strong>Open full Gyazo Collection</strong><small>${growthPhotos.length} ${growthPhotos.length === 1 ? "photograph" : "photographs"}${newestDate ? ` · newest ${escapeHtml(formatCollectionDate(newestDate))}` : ""}</small></span>
+          <span aria-hidden="true">↗</span>
+        </a>
       </div>`
         : "";
     const content = growthPhotos.length
         ? growthHistory
         : `<div class="collection-photo-pending">
-        <span aria-hidden="true">+</span>
+        <span class="geometric-icon geometric-icon--plus" aria-hidden="true"></span>
         <p><strong>Collection photo pending.</strong> ${escapeHtml(profile.collectionRecord.pending_note)}</p>
       </div>`;
 
@@ -746,7 +834,7 @@ function renderCollectionGallery(profile) {
         <p class="kicker">Dated collection evidence</p>
         <h2 id="${escapeHtml(profile.slug)}-collection-heading">Plant photo history</h2>
       </div>
-      <p>These user-owned photographs document this exact plant. Context views use a compact crop here; open any image for the complete evidence file.</p>
+      <p>These user-owned photographs document this exact plant. Open a preview for its Gyazo capture, or use the Collection button for every dated view.</p>
     </header>
     ${content}
   </section>`;
@@ -783,18 +871,23 @@ function choosePlantAvatar(collectionRecord, heroPhoto) {
     if (collectionPhoto) {
         return {
             alt: collectionPhoto.alt,
-            src: `../../${collectionPhoto.file.replaceAll("\\", "/")}`,
+            external: true,
+            src: collectionPhoto.image_url,
         };
     }
     if (heroPhoto) {
-        return { alt: heroPhoto.title, src: photoPath(heroPhoto) };
+        return {
+            alt: heroPhoto.title,
+            external: false,
+            src: photoPath(heroPhoto),
+        };
     }
     return undefined;
 }
 
 function renderPlantAvatar(profile, variant) {
     return profile.avatar
-        ? `<img class="plant-avatar plant-avatar--${escapeHtml(variant)}" src="${escapeHtml(profile.avatar.src)}" alt="${escapeHtml(profile.avatar.alt)}" loading="lazy" decoding="async">`
+        ? `<span class="plant-avatar-slot"><img class="plant-avatar plant-avatar--${escapeHtml(variant)}" src="${escapeHtml(profile.avatar.src)}" alt="${escapeHtml(profile.avatar.alt)}" loading="lazy" decoding="async"${profile.avatar.external ? ' referrerpolicy="no-referrer" data-external-image' : ""}><span class="plant-avatar-fallback" aria-hidden="true" hidden>🌵</span></span>`
         : `<span class="plant-avatar plant-avatar--${escapeHtml(variant)}" aria-hidden="true">🌵</span>`;
 }
 
@@ -1034,15 +1127,22 @@ function renderNavGroup(group, profiles) {
               )}">
         <a class="drawer-link" href="#${escapeHtml(profile.slug)}" data-page-link="${escapeHtml(profile.slug)}">
           ${renderPlantAvatar(profile, "drawer")}
-          <span class="drawer-id"><strong>${escapeHtml(profile.trackerId ?? "Archive")}</strong><small>${profile.labelHtml}</small></span>
-          <span><strong>${escapeHtml(profile.title)}</strong><small>${escapeHtml(stripMarkdown(profile.scientificMarkdown))}</small></span>
+          <span class="drawer-identifiers">
+            <span class="drawer-badge drawer-badge--tracker"><span aria-hidden="true">▦</span><strong>${escapeHtml(profile.trackerId ?? "Archive")}</strong></span>
+            <span class="drawer-badge drawer-badge--label"><span aria-hidden="true">⌖</span><strong>${profile.labelHtml}</strong></span>
+          </span>
+          <span class="drawer-name"><strong><span aria-hidden="true">✦</span>${escapeHtml(profile.title)}</strong><small><span aria-hidden="true">✣</span>${escapeHtml(stripMarkdown(profile.scientificMarkdown))}</small></span>
         </a>
-        ${profile.sheetUrl ? `<a class="drawer-sheet-link" href="${escapeHtml(profile.sheetUrl)}" target="_blank" rel="noreferrer"><span aria-hidden="true">▦</span> Open ${escapeHtml(profile.trackerId)} in Google Sheets</a>` : ""}
+        ${profile.sheetUrl ? `<a class="drawer-sheet-link" href="${escapeHtml(profile.sheetUrl)}" target="_blank" rel="noreferrer" aria-label="Open ${escapeHtml(profile.trackerId)} in Google Sheets"><span aria-hidden="true">▦</span><span class="drawer-sheet-text">Sheets</span><span aria-hidden="true">↗</span></a>` : ""}
       </li>`
           )
           .join("\n")}
     </ol>
   </section>`;
+}
+
+function renderProfileMeta(type, icon, label, value) {
+    return `<div class="profile-meta profile-meta--${escapeHtml(type)}"><span class="profile-meta-icon" aria-hidden="true">${icon}</span><dt>${escapeHtml(label)}</dt><dd>${value}</dd></div>`;
 }
 
 function renderContentsGroup(group, profiles, pageNumberBySlug) {
@@ -1103,13 +1203,28 @@ function renderProfile(profile, pageNumber, totalProfiles) {
 
     const acquisitionDetails = [
         profile.acquiredFromHtml
-            ? `<div><dt>Acquired from</dt><dd>${profile.acquiredFromHtml}</dd></div>`
+            ? renderProfileMeta(
+                  "source",
+                  "◇",
+                  "Acquired from",
+                  profile.acquiredFromHtml
+              )
             : "",
         profile.acquiredOnHtml
-            ? `<div><dt>Acquired on</dt><dd><time datetime="${escapeHtml(stripMarkdown(profile.acquiredOnMarkdown))}">${profile.acquiredOnHtml}</time></dd></div>`
+            ? renderProfileMeta(
+                  "date",
+                  "◫",
+                  "Acquired on",
+                  `<time datetime="${escapeHtml(stripMarkdown(profile.acquiredOnMarkdown))}">${profile.acquiredOnHtml}</time>`
+              )
             : "",
         profile.orderedFromHtml
-            ? `<div><dt>Ordered from</dt><dd>${profile.orderedFromHtml}</dd></div>`
+            ? renderProfileMeta(
+                  "source",
+                  "◇",
+                  "Ordered from",
+                  profile.orderedFromHtml
+              )
             : "",
     ].join("");
 
@@ -1150,11 +1265,11 @@ function renderProfile(profile, pageNumber, totalProfiles) {
 
     <div class="profile-intro">
       <dl>
-        <div><dt>Collection record</dt><dd>${escapeHtml(profile.inventoryId)}</dd></div>
-        ${trackerId ? `<div><dt>Google Sheets ID</dt><dd><a href="${escapeHtml(profile.sheetUrl)}" target="_blank" rel="noreferrer">${escapeHtml(trackerId)} <span aria-hidden="true">↗</span></a></dd></div>` : ""}
-        <div><dt>Permanent label</dt><dd>${profile.labelHtml}</dd></div>
-        <div><dt>Identification</dt><dd>${profile.identificationHtml}</dd></div>
-        <div><dt>Status</dt><dd>${profile.statusHtml}</dd></div>
+        ${renderProfileMeta("inventory", "▤", "Collection record", escapeHtml(profile.inventoryId))}
+        ${trackerId ? renderProfileMeta("sheet", "▦", "Google Sheets ID", `<a href="${escapeHtml(profile.sheetUrl)}" target="_blank" rel="noreferrer">${escapeHtml(trackerId)} <span aria-hidden="true">↗</span></a>`) : ""}
+        ${renderProfileMeta("label", "⌖", "Permanent label", profile.labelHtml)}
+        ${renderProfileMeta("identity", "◎", "Identification", profile.identificationHtml)}
+        ${renderProfileMeta("status", "●", "Status", profile.statusHtml)}
         ${acquisitionDetails}
       </dl>
       <p><strong>Photo scope:</strong> ${escapeHtml(profile.scopeNote)}</p>
@@ -1185,7 +1300,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
           <h2>Research trail</h2>
           ${historyLink}
           ${sheetLink}
-          <a class="profile-photo-history-link" href="#${escapeHtml(profile.slug)}-photo-history"><span><span aria-hidden="true">▧</span> Jump to this plant's photo history<small>Latest two views plus the expandable archive</small></span><span aria-hidden="true">↓</span></a>
+          <a class="profile-photo-history-link" href="#${escapeHtml(profile.slug)}-photo-history"><span><span aria-hidden="true">▧</span> Jump to this plant's photo history<small>Latest two views plus the full Gyazo Collection</small></span><span aria-hidden="true">↓</span></a>
           ${productLink}
           <a class="inaturalist-link" href="${escapeHtml(inaturalistUrl)}" data-inaturalist-taxon="${escapeHtml(inaturalist.taxon)}" target="_blank" rel="noreferrer"><span>Browse iNaturalist observations<small>${escapeHtml(inaturalist.scope)}</small></span><span aria-hidden="true">↗</span></a>
           <a href="${escapeHtml(sourceProfilePath)}">Open the source profile <span aria-hidden="true">→</span></a>
@@ -1246,6 +1361,150 @@ function renderCover(profiles) {
     </div>
     <p class="cover-credit">Summer 2026 edition · Working identifications stay honest about uncertainty</p>
   </section>`;
+}
+
+function renderPhotoCollectionCard(profile) {
+    const growthPhotos = profile.collectionRecord.photos
+        .filter((photo) => photo.kind === "collection")
+        .sort(compareCollectionPhotosNewestFirst);
+    const newestPhoto = growthPhotos[0];
+    const collection = profile.collectionRecord.gyazo_collection;
+    const label = stripMarkdown(profile.labelMarkdown);
+    const searchText = stripMarkdown(
+        `${profile.trackerId} ${label} ${profile.inventoryId} ${profile.title} ${profile.scientificMarkdown}`
+    ).toLowerCase();
+
+    return `<article class="photo-collection-card" data-photo-collection data-search="${escapeHtml(searchText)}">
+      <a class="photo-collection-cover external-image-link" href="${escapeHtml(collection.url)}" target="_blank" rel="noreferrer">
+        <img src="${escapeHtml(newestPhoto.image_url)}" alt="${escapeHtml(newestPhoto.alt)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-external-image data-image-id="${escapeHtml(newestPhoto.image_id)}">
+        <span class="external-image-fallback" hidden><span aria-hidden="true">◇</span><strong>Preview unavailable</strong><small>The Gyazo Collection link still works.</small></span>
+      </a>
+      <div class="photo-collection-copy">
+        <div class="photo-collection-badges"><span class="photo-id-badge">${escapeHtml(profile.trackerId)}</span><span class="photo-label-badge">${escapeHtml(label)}</span><span>${escapeHtml(profile.inventoryId)}</span></div>
+        <h2>${escapeHtml(profile.title)}</h2>
+        <p>${profile.scientificHtml}</p>
+        <span>${profile.collectionRecord.photos.length} ${profile.collectionRecord.photos.length === 1 ? "capture" : "captures"} · newest <time datetime="${escapeHtml(collectionPhotoDate(newestPhoto))}">${escapeHtml(formatCollectionDate(collectionPhotoDate(newestPhoto)))}</time></span>
+        <a class="button primary" href="${escapeHtml(collection.url)}" target="_blank" rel="noreferrer">Open Gyazo Collection <span aria-hidden="true">↗</span></a>
+      </div>
+    </article>`;
+}
+
+function renderPhotoAlbum(profiles, collectionManifest) {
+    const currentProfiles = profiles
+        .filter((profile) => profile.trackerId)
+        .sort(compareProfiles);
+    const overviewPhotos = [...collectionManifest.collection_overviews].sort(
+        compareCollectionPhotosNewestFirst
+    );
+    const overviewPhoto = overviewPhotos[0];
+    const overviewCollection = collectionManifest.gyazo_collection;
+    const collectionCards = currentProfiles
+        .map(renderPhotoCollectionCard)
+        .join("\n");
+
+    return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Searchable Gyazo photo Collections for every current plant in the Fenton collection.">
+  <title>Plant photo Collections · Fenton collection</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("gardening-site-theme");
+      const dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.dataset.theme = dark ? "dark" : "light";
+    })();
+  </script>
+  <link rel="icon" href="../plant-booklet/favicon.svg">
+  <link rel="stylesheet" href="./plant-tracker.css">
+</head>
+<body>
+  <a class="skip-link" href="#album">Skip to photo Collections</a>
+  <nav class="site-nav" aria-label="Collection tools">
+    <a class="brand" href="../plant-booklet/"><span class="brand-mark" aria-hidden="true">✦</span><span><strong>Fenton collection</strong><small>Photo Collections</small></span></a>
+    <div class="nav-links">
+      <a href="../plant-booklet/">✦ Field guide</a>
+      <a href="./plant-tracker.html">▦ Plant tracker</a>
+      <a href="./grow-spot-layout.html">◇ Grow-spot layout</a>
+      <a href="./indoor-acclimation-calendar.html">◫ Calendar</a>
+      <a href="#album" aria-current="page">▧ Photos</a>
+      <button id="theme-toggle" type="button" aria-pressed="false">Dark mode</button>
+    </div>
+  </nav>
+
+  <main id="album" class="photo-album-index">
+    <header class="photo-album-hero">
+      <p class="eyebrow">Living collection · Gyazo</p>
+      <h1>Every plant has its own visual timeline.</h1>
+      <p class="lede">Two recent views stay in the field guide. Open a plant's Gyazo Collection for its complete photo history without making this repository grow with every session.</p>
+      <div class="photo-album-summary"><span><strong>${currentProfiles.length}</strong> plant Collections</span><span><strong>${currentProfiles.reduce((sum, profile) => sum + profile.collectionRecord.photos.length, 0)}</strong> placed captures</span><span><strong>${overviewPhotos.length}</strong> collection overviews</span></div>
+      <label class="photo-album-search" for="collection-search"><span aria-hidden="true">⌕</span><span>Find a plant by name, P-ID, label, or Inventory ID</span><input id="collection-search" type="search" autocomplete="off" placeholder="Try P28, G3, Royal Flush, or Succulent-06"></label>
+      <p id="collection-search-status" class="photo-album-search-status" aria-live="polite">Showing all ${currentProfiles.length} plant Collections</p>
+    </header>
+
+    <section class="overview-collection" aria-labelledby="overview-heading">
+      <a class="overview-collection-cover external-image-link" href="${escapeHtml(overviewCollection.url)}" target="_blank" rel="noreferrer">
+        <img src="${escapeHtml(overviewPhoto.image_url)}" alt="${escapeHtml(overviewPhoto.alt)}" loading="eager" decoding="async" referrerpolicy="no-referrer" data-external-image data-image-id="${escapeHtml(overviewPhoto.image_id)}">
+        <span class="external-image-fallback" hidden><span aria-hidden="true">◇</span><strong>Overview preview unavailable</strong><small>The Gyazo Collection link still works.</small></span>
+      </a>
+      <div><p class="eyebrow">Room and table views</p><h2 id="overview-heading">Fenton collection · Overviews</h2><p>Wide setup photographs live separately from individual plant histories.</p><a class="button primary" href="${escapeHtml(overviewCollection.url)}" target="_blank" rel="noreferrer">Open overview Collection <span aria-hidden="true">↗</span></a></div>
+    </section>
+
+    <section class="photo-collection-grid" aria-label="Plant photo Collections">
+      ${collectionCards}
+    </section>
+    <p class="photo-album-empty" id="photo-album-empty" hidden>No plant Collections match that search.</p>
+  </main>
+
+  <footer><span>Fenton plant collection</span><span>Collection photographs © Nick · all rights reserved</span></footer>
+  <script>
+    const themeToggle = document.querySelector("#theme-toggle");
+    const search = document.querySelector("#collection-search");
+    const status = document.querySelector("#collection-search-status");
+    const empty = document.querySelector("#photo-album-empty");
+    const cards = [...document.querySelectorAll("[data-photo-collection]")];
+
+    function applyTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      localStorage.setItem("gardening-site-theme", theme);
+      const dark = theme === "dark";
+      themeToggle.textContent = dark ? "Light mode" : "Dark mode";
+      themeToggle.setAttribute("aria-pressed", String(dark));
+    }
+
+    function filterCollections() {
+      const query = search.value.trim().toLowerCase();
+      let visible = 0;
+      for (const card of cards) {
+        const matches = !query || (card.dataset.search ?? "").includes(query);
+        card.hidden = !matches;
+        if (matches) visible += 1;
+      }
+      status.textContent = query
+        ? visible + " matching " + (visible === 1 ? "Collection" : "Collections")
+        : "Showing all ${currentProfiles.length} plant Collections";
+      empty.hidden = visible !== 0;
+    }
+
+    for (const image of document.querySelectorAll("img[data-external-image]")) {
+      const markUnavailable = () => {
+        image.hidden = true;
+        image.nextElementSibling?.removeAttribute("hidden");
+        image.closest(".external-image-link")?.classList.add("is-unavailable");
+      };
+      image.addEventListener("error", markUnavailable, { once: true });
+      if (image.complete && image.naturalWidth === 0) markUnavailable();
+    }
+
+    search.addEventListener("input", filterCollections);
+    themeToggle.addEventListener("click", () => applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark"));
+    applyTheme(document.documentElement.dataset.theme || "light");
+    filterCollections();
+  </script>
+</body>
+</html>`;
 }
 
 async function renderBooklet(profiles) {
@@ -1317,7 +1576,7 @@ async function renderBooklet(profiles) {
   <dialog class="contents-dialog" id="contents-dialog">
     <header>
       <div><span class="dialog-kicker">Field guide</span><h1>Find a plant</h1></div>
-      <button class="close-button" id="close-contents" type="button" aria-label="Close contents">×</button>
+      <button class="close-button" id="close-contents" type="button" aria-label="Close contents"><span class="geometric-icon geometric-icon--close" aria-hidden="true"></span></button>
     </header>
     <label class="search-label" for="plant-search">Search names, IDs, care, origins, or warnings</label>
     <input id="plant-search" type="search" placeholder="Try A3, Mexico, flowers, or latex" autocomplete="off">
@@ -1328,7 +1587,7 @@ async function renderBooklet(profiles) {
       <a class="drawer-special" href="../layouts/plant-tracker.html"><span>Plant tracker</span><small>Live weights, watering, and measurements</small></a>
       <a class="drawer-special" href="../layouts/grow-spot-layout.html"><span>Grow-spot layout</span><small>Tables, risers, light, fan, and camera</small></a>
       <a class="drawer-special" href="../layouts/indoor-acclimation-calendar.html"><span>Acclimation calendar</span><small>Dated light and airflow schedule</small></a>
-      <a class="drawer-special" href="../layouts/photo-album.html"><span>Plant photo album</span><small>Collection photos and Google Photos link</small></a>
+      <a class="drawer-special" href="../layouts/photo-album.html"><span>Plant photo Collections</span><small>Search every plant's Gyazo history</small></a>
       <a class="drawer-special" id="surprise-plant" href="#${escapeHtml(profiles[0].slug)}" data-surprise-plant><span>Surprise me</span><small>Jump to a random plant story</small></a>
       ${navigation}
     </nav>
@@ -1341,7 +1600,7 @@ async function renderBooklet(profiles) {
       <header class="contents-heading">
         <p>The Fenton Collection · Summer 2026</p>
         <h1>${presentCount} plants present,<br>${orderSummary}${profiles.length} stories.</h1>
-        <span>Each profile combines identity, care, seller and nursery evidence, licensed references, live records, and a newest-first photo history. The latest two collection views stay visible; earlier views expand in place.</span>
+        <span>Each profile combines identity, care, seller and nursery evidence, licensed references, live records, and a newest-first photo history. Two current views stay visible; each complete history opens in its own Gyazo Collection.</span>
       </header>
       <div class="contents-columns">${contents}</div>
       <aside class="contents-note">
@@ -1369,9 +1628,14 @@ async function renderBooklet(profiles) {
 }
 
 async function main() {
-    const [profiles, fieldGuideProfiles] = await Promise.all([
+    const [
+        profiles,
+        fieldGuideProfiles,
+        collectionManifest,
+    ] = await Promise.all([
         loadProfiles(),
         readFile(plantProfileDataPath, "utf8").then(JSON.parse),
+        readFile(collectionPhotoManifestPath, "utf8").then(JSON.parse),
     ]);
     const fieldGuideProfileEntries = Object.entries(fieldGuideProfiles).flatMap(
         ([trackerId, entries]) =>
@@ -1411,28 +1675,50 @@ async function main() {
         }
     }
 
-    const renderedOutput = await renderBooklet(profiles);
+    const [renderedBooklet, renderedPhotoAlbum] = await Promise.all([
+        renderBooklet(profiles),
+        Promise.resolve(renderPhotoAlbum(profiles, collectionManifest)),
+    ]);
     const prettierConfig = (await resolveConfig(outputPath)) ?? {};
-    const output = await format(renderedOutput, {
-        ...prettierConfig,
-        filepath: outputPath,
-    });
+    const [bookletOutput, photoAlbumOutput] = await Promise.all([
+        format(renderedBooklet, {
+            ...prettierConfig,
+            filepath: outputPath,
+        }),
+        format(renderedPhotoAlbum, {
+            ...prettierConfig,
+            filepath: photoAlbumOutputPath,
+        }),
+    ]);
     const checkOnly = process.argv.includes("--check");
 
     if (checkOnly) {
-        const current = await readFile(outputPath, "utf8").catch(() => "");
-        if (current !== output) {
+        const [currentBooklet, currentPhotoAlbum] = await Promise.all([
+            readFile(outputPath, "utf8").catch(() => ""),
+            readFile(photoAlbumOutputPath, "utf8").catch(() => ""),
+        ]);
+        if (currentBooklet !== bookletOutput) {
             throw new Error(
                 "The plant booklet is stale. Run `npm run build:booklet` and commit the regenerated HTML."
             );
         }
-        console.log(`Plant booklet is current: ${profiles.length} profiles.`);
+        if (currentPhotoAlbum !== photoAlbumOutput) {
+            throw new Error(
+                "The photo Collections index is stale. Run `npm run build:booklet` and commit the regenerated HTML."
+            );
+        }
+        console.log(
+            `Plant booklet and photo Collections index are current: ${profiles.length} profiles.`
+        );
         return;
     }
 
-    await writeFile(outputPath, output, "utf8");
+    await Promise.all([
+        writeFile(outputPath, bookletOutput, "utf8"),
+        writeFile(photoAlbumOutputPath, photoAlbumOutput, "utf8"),
+    ]);
     console.log(
-        `Built ${path.relative(repositoryRoot, outputPath)} with ${profiles.length} profiles.`
+        `Built ${path.relative(repositoryRoot, outputPath)} and ${path.relative(repositoryRoot, photoAlbumOutputPath)} with ${profiles.length} profiles.`
     );
 }
 

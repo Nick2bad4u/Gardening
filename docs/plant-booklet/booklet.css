@@ -718,6 +718,59 @@ main {
     margin: 0;
 }
 
+.profile-meta {
+    --meta-accent: var(--moss);
+
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    gap: 0.08rem 0.65rem;
+    min-width: 0;
+    padding: 0.72rem;
+    border: 1px solid color-mix(in srgb, var(--meta-accent) 28%, var(--line));
+    border-radius: 0.8rem;
+    background: color-mix(in srgb, var(--meta-accent) 8%, var(--page));
+}
+
+.profile-meta-icon {
+    display: grid;
+    grid-row: 1 / 3;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.62rem;
+    color: color-mix(in srgb, var(--meta-accent) 84%, var(--ink));
+    background: color-mix(in srgb, var(--meta-accent) 16%, var(--page));
+    font-weight: 900;
+    place-items: center;
+}
+
+.profile-meta dt,
+.profile-meta dd {
+    min-width: 0;
+}
+
+.profile-meta--sheet,
+.profile-meta--status {
+    --meta-accent: #4f7e43;
+}
+
+.profile-meta--label,
+.profile-meta--date {
+    --meta-accent: #a66e1f;
+}
+
+.profile-meta--identity {
+    --meta-accent: #8065a8;
+}
+
+.profile-meta--source {
+    --meta-accent: #a85f32;
+}
+
+.profile-meta--inventory {
+    --meta-accent: #486b7b;
+}
+
 .profile-intro dt {
     color: var(--muted-ink);
     font-size: 0.64rem;
@@ -1084,6 +1137,63 @@ main {
     font-size: 0.66rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+}
+
+.prose .semantic-table {
+    --table-accent: #8065a8;
+
+    overflow: hidden auto;
+    border: 1px solid color-mix(in srgb, var(--table-accent) 38%, var(--line));
+    border-radius: 0.9rem;
+    background: color-mix(in srgb, var(--table-accent) 4%, var(--page));
+    box-shadow: 0 10px 26px rgb(38 35 48 / 7%);
+}
+
+.prose .semantic-table--care {
+    --table-accent: #337c95;
+}
+
+.semantic-table thead {
+    color: color-mix(in srgb, var(--table-accent) 82%, var(--ink));
+    background: color-mix(in srgb, var(--table-accent) 16%, var(--page));
+}
+
+.semantic-table th {
+    color: inherit;
+}
+
+.semantic-table tbody tr {
+    background: color-mix(in srgb, var(--table-accent) 3%, transparent);
+}
+
+.semantic-table tbody tr:nth-child(even) {
+    background: color-mix(in srgb, var(--table-accent) 7%, transparent);
+}
+
+.semantic-table td:first-child {
+    min-width: 12rem;
+    color: color-mix(in srgb, var(--table-accent) 82%, var(--ink));
+    font-weight: 800;
+}
+
+.semantic-label {
+    display: inline-flex;
+    gap: 0.58rem;
+    align-items: center;
+}
+
+.semantic-table-icon {
+    display: inline-grid;
+    flex: 0 0 auto;
+    width: 1.75rem;
+    height: 1.75rem;
+    border: 1px solid color-mix(in srgb, var(--table-accent) 34%, var(--line));
+    border-radius: 0.55rem;
+    color: color-mix(in srgb, var(--table-accent) 88%, var(--ink));
+    background: color-mix(in srgb, var(--table-accent) 14%, var(--page));
+    font-size: 0.74rem;
+    line-height: 1;
+    place-items: center;
 }
 
 .prose tr:first-child th {
@@ -1831,19 +1941,52 @@ main {
 .record-links > a,
 .drawer-special,
 .drawer-link,
-.drawer-sheet-link,
-.collection-history-summary {
+.drawer-sheet-link {
     min-height: 2.75rem;
 }
 
 .icon-button,
 .close-button {
-    min-width: 2.75rem;
+    min-width: auto;
     background: color-mix(in srgb, var(--control) 78%, transparent);
 }
 
 .close-button {
     width: 2.75rem;
+    height: 2.75rem;
+}
+
+.geometric-icon {
+    position: relative;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+}
+
+.geometric-icon::before,
+.geometric-icon::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.92rem;
+    height: 0.12rem;
+    border-radius: 999px;
+    background: currentcolor;
+    content: "";
+    transform: translate(-50%, -50%);
+    transform-origin: center;
+}
+
+.geometric-icon--plus::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.geometric-icon--close::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.geometric-icon--close::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 .book-page.contents-page {
@@ -2016,6 +2159,39 @@ main {
     transition: transform 160ms ease;
 }
 
+.plant-avatar-slot {
+    position: relative;
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+}
+
+.plant-avatar-slot:has(.plant-avatar--contents) {
+    width: 3.25rem;
+    height: 3.25rem;
+}
+
+.plant-avatar-slot:has(.plant-avatar--drawer) {
+    width: 2.65rem;
+    height: 2.65rem;
+}
+
+.plant-avatar-slot:has(.plant-avatar--hero) {
+    width: clamp(4rem, 8vw, 5.5rem);
+    height: clamp(4rem, 8vw, 5.5rem);
+    margin-bottom: 1rem;
+}
+
+.plant-avatar-fallback {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    border: 1px solid color-mix(in srgb, var(--moss) 28%, var(--line));
+    border-radius: 50%;
+    background: var(--moss-soft);
+    place-items: center;
+}
+
 span.plant-avatar {
     display: grid;
     place-items: center;
@@ -2069,17 +2245,79 @@ span.plant-avatar {
 }
 
 .drawer-link:has(.plant-avatar--drawer) {
-    grid-template-columns: 2.65rem 4.2rem minmax(0, 1fr);
+    grid-template-columns: 2.65rem 6.8rem minmax(0, 1fr);
+    gap: 0.7rem;
+    min-width: 0;
+    padding: 0.65rem 0.55rem;
+}
+
+.drawer-group li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.55rem;
+    align-items: stretch;
+}
+
+.drawer-identifiers {
+    display: grid;
+    gap: 0.32rem;
+    align-content: center;
+}
+
+.drawer-badge {
+    display: inline-flex;
+    gap: 0.36rem;
+    align-items: center;
+    width: fit-content;
+    max-width: 100%;
+    padding: 0.22rem 0.5rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+}
+
+.drawer-badge--tracker {
+    border-color: color-mix(in srgb, #4f7e43 44%, var(--line));
+    color: color-mix(in srgb, #4f7e43 80%, var(--ink));
+    background: color-mix(in srgb, #4f7e43 13%, var(--page));
+}
+
+.drawer-badge--label {
+    border-color: color-mix(in srgb, #a66e1f 44%, var(--line));
+    color: color-mix(in srgb, #a66e1f 78%, var(--ink));
+    background: color-mix(in srgb, #a66e1f 13%, var(--page));
+}
+
+.drawer-name {
+    min-width: 0;
+}
+
+.drawer-name :is(strong, small) {
+    display: flex;
+    gap: 0.4rem;
+    align-items: baseline;
+}
+
+.drawer-name > strong {
+    font-size: 1rem;
+}
+
+.drawer-name > small > span {
+    color: #8065a8;
 }
 
 .drawer-sheet-link {
     display: inline-flex;
     gap: 0.4rem;
     align-items: center;
-    padding: 0.45rem 0.75rem;
-    margin-top: 0.4rem;
+    align-self: center;
+    justify-content: center;
+    padding: 0.45rem 0.68rem;
     border: 1px solid var(--line);
-    border-radius: 999px;
+    border-radius: 0.72rem;
     color: var(--moss);
     background: var(--page-soft);
     font-size: 0.72rem;
@@ -2093,7 +2331,7 @@ span.plant-avatar {
 }
 
 .drawer-group li {
-    padding-bottom: 0.45rem;
+    padding-block: 0.28rem;
     border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
 }
 
@@ -2269,56 +2507,81 @@ span.plant-avatar {
     box-shadow: var(--card-shadow);
 }
 
-.collection-history-details {
-    margin-top: 1rem;
-    overflow: clip;
-    border: 1px solid var(--line);
-    border-radius: 0.9rem;
-    background: color-mix(in srgb, var(--page-soft) 64%, var(--page));
-}
-
-.collection-history-summary {
-    display: flex;
-    gap: 0.75rem;
+.gyazo-collection-link {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.8rem;
     align-items: center;
-    justify-content: space-between;
-    padding: 0.65rem 0.85rem;
-    color: var(--moss);
-    font-size: 0.78rem;
-    font-weight: 800;
-    list-style: none;
-    user-select: none;
+    min-height: 3.5rem;
+    padding: 0.72rem 0.85rem;
+    margin-top: 1rem;
+    border: 1px solid color-mix(in srgb, #337c95 42%, var(--line));
+    border-radius: 0.9rem;
+    color: color-mix(in srgb, #337c95 82%, var(--ink));
+    background: linear-gradient(
+        135deg,
+        color-mix(in srgb, #337c95 13%, var(--page)),
+        color-mix(in srgb, #8065a8 9%, var(--page))
+    );
+    text-decoration: none;
 }
 
-.collection-history-summary::-webkit-details-marker {
-    display: none;
+.gyazo-collection-link:hover {
+    border-color: #337c95;
+    box-shadow: 0 10px 24px rgb(34 87 105 / 12%);
 }
 
-.collection-history-summary :is(strong, small) {
+.gyazo-collection-link :is(strong, small) {
     display: block;
 }
 
-.collection-history-summary small {
-    margin-top: 0.15rem;
+.gyazo-collection-link small {
+    margin-top: 0.12rem;
     color: var(--muted-ink);
+    font-size: 0.7rem;
     font-weight: 500;
 }
 
-.history-summary-icon {
+.gyazo-collection-icon {
     display: grid;
-    flex: 0 0 auto;
-    width: 1.8rem;
-    height: 1.8rem;
-    border-radius: 50%;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 0.68rem;
     color: var(--page);
-    background: var(--moss);
-    font-size: 1rem;
+    background: #337c95;
     place-items: center;
 }
 
-.collection-history-older {
+.external-image-link {
+    position: relative;
+}
+
+.external-image-fallback {
+    display: grid;
+    min-height: 12rem;
     padding: 1rem;
-    border-top: 1px solid var(--line);
+    color: var(--muted-ink);
+    background: linear-gradient(
+        135deg,
+        color-mix(in srgb, #337c95 11%, var(--page)),
+        color-mix(in srgb, #8065a8 9%, var(--page))
+    );
+    text-align: center;
+    place-content: center;
+}
+
+.external-image-fallback > span {
+    color: #337c95;
+    font-size: 2rem;
+}
+
+.external-image-fallback strong,
+.external-image-fallback small {
+    display: block;
+}
+
+.external-image-link.is-unavailable:hover {
+    text-decoration: none;
 }
 
 .collection-photo-grid {
@@ -2432,6 +2695,39 @@ span.plant-avatar {
     .plant-avatar--contents {
         width: 2.7rem;
         height: 2.7rem;
+    }
+
+    .plant-avatar-slot:has(.plant-avatar--contents) {
+        width: 2.7rem;
+        height: 2.7rem;
+    }
+
+    .drawer-link:has(.plant-avatar--drawer) {
+        grid-template-columns: 2.65rem 5.8rem minmax(0, 1fr);
+        gap: 0.45rem;
+        padding-inline: 0.25rem;
+    }
+
+    .drawer-badge {
+        padding-inline: 0.38rem;
+        font-size: 0.7rem;
+    }
+
+    .drawer-sheet-link {
+        width: 2.75rem;
+        padding-inline: 0;
+    }
+
+    .drawer-sheet-link :is(.drawer-sheet-text, span:last-child) {
+        display: none;
+    }
+
+    .profile-meta {
+        padding: 0.62rem;
+    }
+
+    .profile-intro dl {
+        grid-template-columns: 1fr;
     }
 
     .contents-name em {
@@ -2674,6 +2970,16 @@ span.plant-avatar {
         break-inside: avoid;
     }
 
+    .profile-meta {
+        padding: 0.05in;
+        border-color: var(--line);
+        background: #fff;
+    }
+
+    .profile-meta-icon {
+        print-color-adjust: exact;
+    }
+
     .profile-at-a-glance {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.18in;
@@ -2712,19 +3018,15 @@ span.plant-avatar {
         break-before: page;
     }
 
-    .collection-history-summary {
-        display: none;
-    }
-
-    .collection-history-older {
-        padding: 0;
-        border-top: 0;
-    }
-
-    .collection-history-preview,
-    .collection-history-details {
+    .collection-history-preview {
         box-shadow: none;
         break-inside: auto;
+    }
+
+    .gyazo-collection-link {
+        min-height: 0;
+        box-shadow: none;
+        print-color-adjust: exact;
     }
 
     .collection-history-hero,
@@ -2771,6 +3073,12 @@ span.plant-avatar {
         display: table;
         overflow: visible;
         font-size: 7.5pt;
+    }
+
+    .prose .semantic-table {
+        border-color: var(--line);
+        box-shadow: none;
+        print-color-adjust: exact;
     }
 
     .prose th,

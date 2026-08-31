@@ -7,10 +7,14 @@
             content="width=device-width, initial-scale=1"
         />
         <meta
-            name="description"
-            content="Entry page for the Fenton plant collection's shared Google Photos album."
+            name="color-scheme"
+            content="light dark"
         />
-        <title>Plant photo album · Fenton collection</title>
+        <meta
+            name="description"
+            content="Searchable Gyazo photo Collections for every current plant in the Fenton collection."
+        />
+        <title>Plant photo Collections · Fenton collection</title>
         <script>
             (() => {
                 const saved = localStorage.getItem("gardening-site-theme");
@@ -35,9 +39,8 @@
         <a
             class="skip-link"
             href="#album"
-            >Skip to album</a
+            >Skip to photo Collections</a
         >
-
         <nav
             class="site-nav"
             aria-label="Collection tools"
@@ -45,82 +48,1953 @@
             <a
                 class="brand"
                 href="../plant-booklet/"
-            >
-                <span
+                ><span
                     class="brand-mark"
                     aria-hidden="true"
                     >✦</span
-                >
-                <span>
-                    <strong>Fenton collection</strong>
-                    <small>Photo album</small>
-                </span>
-            </a>
+                ><span
+                    ><strong>Fenton collection</strong
+                    ><small>Photo Collections</small></span
+                ></a
+            >
             <div class="nav-links">
                 <a href="../plant-booklet/">✦ Field guide</a>
                 <a href="./plant-tracker.html">▦ Plant tracker</a>
                 <a href="./grow-spot-layout.html">◇ Grow-spot layout</a>
                 <a href="./indoor-acclimation-calendar.html">◫ Calendar</a>
+                <a
+                    href="#album"
+                    aria-current="page"
+                    >▧ Photos</a
+                >
                 <button
                     id="theme-toggle"
                     type="button"
                     aria-pressed="false"
+                    >Dark mode</button
                 >
-                    Dark mode
-                </button>
             </div>
         </nav>
 
-        <main id="album">
-            <section class="album-entry">
-                <figure class="album-cover">
-                    <img
-                        src="../../assets/collection-photos/2026-07-31-starter-group.webp"
-                        alt="Overhead view of the cactus and succulent collection under the grow light"
-                    />
-                    <figcaption> Collection view · July 31, 2026 </figcaption>
-                </figure>
+        <main
+            id="album"
+            class="photo-album-index"
+        >
+            <header class="photo-album-hero">
+                <p class="eyebrow">Living collection · Gyazo</p>
+                <h1>Every plant has its own visual timeline.</h1>
+                <p class="lede"
+                    >Two recent views stay in the field guide. Open a plant's
+                    Gyazo Collection for its complete photo history without
+                    making this repository grow with every session.</p
+                >
+                <div class="photo-album-summary"
+                    ><span><strong>33</strong> plant Collections</span
+                    ><span><strong>155</strong> placed captures</span
+                    ><span><strong>3</strong> collection overviews</span></div
+                >
+                <label
+                    class="photo-album-search"
+                    for="collection-search"
+                    ><span aria-hidden="true">⌕</span
+                    ><span
+                        >Find a plant by name, P-ID, label, or Inventory
+                        ID</span
+                    ><input
+                        id="collection-search"
+                        type="search"
+                        autocomplete="off"
+                        placeholder="Try P28, G3, Royal Flush, or Succulent-06"
+                /></label>
+                <p
+                    id="collection-search-status"
+                    class="photo-album-search-status"
+                    aria-live="polite"
+                    >Showing all 33 plant Collections</p
+                >
+            </header>
 
-                <div class="album-copy">
-                    <p class="eyebrow">Living collection · Google Photos</p>
-                    <h1>The garden, between log entries.</h1>
-                    <p class="lede">
-                        Open the shared album for current plant photographs,
-                        close-ups, flowers, setup changes, and progress
-                        pictures. It stays in Google Photos so new images can be
-                        added without rebuilding this site.
-                    </p>
-                    <div class="album-actions">
+            <section
+                class="overview-collection"
+                aria-labelledby="overview-heading"
+            >
+                <a
+                    class="overview-collection-cover external-image-link"
+                    href="https://gyazo.com/collections/63f471bc9c46b03deb240a68bb6487d4"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    <img
+                        src="https://i.gyazo.com/09848e42eb69fb32d91017a321580ad4.jpg"
+                        alt="Top-down view of the individually potted cacti and succulents on the main table"
+                        loading="eager"
+                        decoding="async"
+                        referrerpolicy="no-referrer"
+                        data-external-image
+                        data-image-id="09848e42eb69fb32d91017a321580ad4"
+                    />
+                    <span
+                        class="external-image-fallback"
+                        hidden
+                        ><span aria-hidden="true">◇</span
+                        ><strong>Overview preview unavailable</strong
+                        ><small
+                            >The Gyazo Collection link still works.</small
+                        ></span
+                    >
+                </a>
+                <div
+                    ><p class="eyebrow">Room and table views</p
+                    ><h2 id="overview-heading">Fenton collection · Overviews</h2
+                    ><p
+                        >Wide setup photographs live separately from individual
+                        plant histories.</p
+                    ><a
+                        class="button primary"
+                        href="https://gyazo.com/collections/63f471bc9c46b03deb240a68bb6487d4"
+                        target="_blank"
+                        rel="noreferrer"
+                        >Open overview Collection
+                        <span aria-hidden="true">↗</span></a
+                    ></div
+                >
+            </section>
+
+            <section
+                class="photo-collection-grid"
+                aria-label="Plant photo Collections"
+            >
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p01 a1 starter-07 variegated moon cactus gymnocalycium mihanovichii"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/fb0d8e54d3418090254cb3866680a956"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/c663e130a548a2ac5a813b717590d944.jpg"
+                            alt="Side-ish view of Variegated moon cactus in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="c663e130a548a2ac5a813b717590d944"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P01</span
+                            ><span class="photo-label-badge">A1</span
+                            ><span>Starter-07</span></div
+                        >
+                        <h2>Variegated moon cactus</h2>
+                        <p>Gymnocalycium mihanovichii</p>
+                        <span
+                            >5 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
                         <a
-                            class="button primary album-button"
-                            href="https://photos.google.com/share/AF1QipPczXuH_suX83Sz-W-jJEfi7NUcc73y5TcSrZzn_-bKLhzVMTxiSj0udEYX6utbKQ?key=WEdxZ2FRb3UwOW4yYVRzb0tNc3UzYkxMQkhsWTBR"
+                            class="button primary"
+                            href="https://gyazo.com/collections/fb0d8e54d3418090254cb3866680a956"
                             target="_blank"
                             rel="noreferrer"
-                        >
-                            Open the Google Photos album
-                        </a>
-                        <a
-                            class="button"
-                            href="../plant-booklet/"
-                            >Return to the field guide</a
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
                         >
                     </div>
-                    <p class="album-note">
-                        Anyone with the shared Google Photos link may be able to
-                        view the album. Google Photos opens in a separate tab
-                        because it does not support reliable embedding here.
-                    </p>
-                </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p02 a2 starter-05 feather cactus mammillaria plumosa"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/8c9c5553181149caa3f496be0f2e842c"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/0bf83d9d85d11fdd2937f0c965ea9a0d.jpg"
+                            alt="Side-ish view of Feather cactus in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="0bf83d9d85d11fdd2937f0c965ea9a0d"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P02</span
+                            ><span class="photo-label-badge">A2</span
+                            ><span>Starter-05</span></div
+                        >
+                        <h2>Feather cactus</h2>
+                        <p>Mammillaria plumosa</p>
+                        <span
+                            >4 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/8c9c5553181149caa3f496be0f2e842c"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p03 a3 starter-04 serpent cactus nyctocereus serpentinus"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/8871cfcf8bd07f7722358da2e866a8a6"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/7c05b1f8f83f4898073f109a25eff886.jpg"
+                            alt="Side-ish view of Serpent cactus in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="7c05b1f8f83f4898073f109a25eff886"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P03</span
+                            ><span class="photo-label-badge">A3</span
+                            ><span>Starter-04</span></div
+                        >
+                        <h2>Serpent cactus</h2>
+                        <p>Nyctocereus serpentinus</p>
+                        <span
+                            >4 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/8871cfcf8bd07f7722358da2e866a8a6"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p04 b1 starter-02 grass-blade cactus stenocactus phyllacanthus"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/724af16ef20cb9da286e7252343cfd71"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/4f9dbdd3e0657369d8910ba7c7c8f268.jpg"
+                            alt="Side-ish view of Grass-blade cactus in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="4f9dbdd3e0657369d8910ba7c7c8f268"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P04</span
+                            ><span class="photo-label-badge">B1</span
+                            ><span>Starter-02</span></div
+                        >
+                        <h2>Grass-blade cactus</h2>
+                        <p>Stenocactus phyllacanthus</p>
+                        <span
+                            >5 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/724af16ef20cb9da286e7252343cfd71"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p05 b2 starter-01 old man of the andes oreocereus trollii"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/07fac1204da01f2f6b0fb11214dbfafb"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/2646432d83ea24ea55ae1d7549602543.jpg"
+                            alt="Side-ish view of Old Man of the Andes in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="2646432d83ea24ea55ae1d7549602543"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P05</span
+                            ><span class="photo-label-badge">B2</span
+                            ><span>Starter-01</span></div
+                        >
+                        <h2>Old Man of the Andes</h2>
+                        <p>Oreocereus trollii</p>
+                        <span
+                            >4 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/07fac1204da01f2f6b0fb11214dbfafb"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p06 b3 starter-09 indigo wave myrtillocactus geometrizans &#39;indigo wave&#39;"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/d256512fa045bda8fbaeb87e74c3035c"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/11a793a1a89e6f5b23803acbeb9b5826.jpg"
+                            alt="Additional oblique detail of Indigo Wave in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="11a793a1a89e6f5b23803acbeb9b5826"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P06</span
+                            ><span class="photo-label-badge">B3</span
+                            ><span>Starter-09</span></div
+                        >
+                        <h2>Indigo Wave</h2>
+                        <p>Myrtillocactus geometrizans 'Indigo Wave'</p>
+                        <span
+                            >5 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/d256512fa045bda8fbaeb87e74c3035c"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p07 c1 starter-08 giant chin cactus gymnocalycium saglionis"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/157378e97a58be269679682f7549bf32"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/9e831fc8e3034da4113729bc76e1639d.jpg"
+                            alt="Side-ish view of Giant chin cactus in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="9e831fc8e3034da4113729bc76e1639d"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P07</span
+                            ><span class="photo-label-badge">C1</span
+                            ><span>Starter-08</span></div
+                        >
+                        <h2>Giant chin cactus</h2>
+                        <p>Gymnocalycium saglionis</p>
+                        <span
+                            >5 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/157378e97a58be269679682f7549bf32"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p08 c2 starter-03 rainbow hedgehog cactus echinocereus rigidissimus subsp. rubispinus"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/54c2481e7e0369cb4f41bc88c1371b65"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/b18548f687a12e9bef55ef3c170c2afc.jpg"
+                            alt="Side-ish view of Rainbow hedgehog cactus in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="b18548f687a12e9bef55ef3c170c2afc"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P08</span
+                            ><span class="photo-label-badge">C2</span
+                            ><span>Starter-03</span></div
+                        >
+                        <h2>Rainbow hedgehog cactus</h2>
+                        <p>Echinocereus rigidissimus subsp. rubispinus</p>
+                        <span
+                            >5 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/54c2481e7e0369cb4f41bc88c1371b65"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p09 c3 starter-12 monk&#39;s hood cactus astrophytum ornatum"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/969cfdae8722f25381d2460309d93044"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/9ddd1ec61ee36251af9e82ddc7485d35.jpg"
+                            alt="Side-ish view of Monk&#39;s hood cactus in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="9ddd1ec61ee36251af9e82ddc7485d35"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P09</span
+                            ><span class="photo-label-badge">C3</span
+                            ><span>Starter-12</span></div
+                        >
+                        <h2>Monk&#39;s hood cactus</h2>
+                        <p>Astrophytum ornatum</p>
+                        <span
+                            >5 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/969cfdae8722f25381d2460309d93044"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p10 d1 starter-11 dragon&#39;s egg probable euphorbia obesa-type hybrid or selection"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/f177364bb3bc5e8b59e3e58917856d4d"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/5f355b0ed609226f47a7d425b584cf7e.jpg"
+                            alt="Side-ish view of Dragon&#39;s Egg in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="5f355b0ed609226f47a7d425b584cf7e"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P10</span
+                            ><span class="photo-label-badge">D1</span
+                            ><span>Starter-11</span></div
+                        >
+                        <h2>Dragon&#39;s Egg</h2>
+                        <p>probable Euphorbia obesa-type hybrid or selection</p>
+                        <span
+                            >4 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/f177364bb3bc5e8b59e3e58917856d4d"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p11 d2 starter-06 domino cactus echinopsis subdenudata"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/1bf13ee89054785cf67e612dc6d2ec7d"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/c52b9b003133bbbdbbfeca9ca8d29457.jpg"
+                            alt="Side-ish view of Domino cactus in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="c52b9b003133bbbdbbfeca9ca8d29457"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P11</span
+                            ><span class="photo-label-badge">D2</span
+                            ><span>Starter-06</span></div
+                        >
+                        <h2>Domino cactus</h2>
+                        <p>Echinopsis subdenudata</p>
+                        <span
+                            >4 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/1bf13ee89054785cf67e612dc6d2ec7d"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p12 d3 starter-10 ming thing cereus forbesii &#39;ming thing&#39;"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/ce55c788cfbd66a0029cd0a7430d2af6"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/38d88c2cb39169bc16263df4e1c8a6a3.jpg"
+                            alt="Side-ish view of Ming Thing in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="38d88c2cb39169bc16263df4e1c8a6a3"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P12</span
+                            ><span class="photo-label-badge">D3</span
+                            ><span>Starter-10</span></div
+                        >
+                        <h2>Ming Thing</h2>
+                        <p>Cereus forbesii 'Ming Thing'</p>
+                        <span
+                            >4 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/ce55c788cfbd66a0029cd0a7430d2af6"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p13 e1 cactus-01 dwarf old man cactus espostoa sp., likely espostoa melanostele subsp. nana"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/ed2a611523d13cdfe631d172ec6c456b"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/9dd6c2bf9cd49f5c30dba7703799b288.jpg"
+                            alt="Additional oblique detail of Dwarf old man cactus in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="9dd6c2bf9cd49f5c30dba7703799b288"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P13</span
+                            ><span class="photo-label-badge">E1</span
+                            ><span>Cactus-01</span></div
+                        >
+                        <h2>Dwarf old man cactus</h2>
+                        <p
+                            >Espostoa sp., likely Espostoa melanostele subsp.
+                            nana</p
+                        >
+                        <span
+                            >3 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/ed2a611523d13cdfe631d172ec6c456b"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p14 e2 cactus-02 chamaelobivia / peanut cactus hybrid echinopsis hybrid, chamaelobivia group"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/4fb5b5ce1c9e8e85d6e14b53e04f3860"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/c6861592dda76e7ae910324016481148.jpg"
+                            alt="Side-ish view of Chamaelobivia / peanut cactus hybrid in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="c6861592dda76e7ae910324016481148"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P14</span
+                            ><span class="photo-label-badge">E2</span
+                            ><span>Cactus-02</span></div
+                        >
+                        <h2>Chamaelobivia / peanut cactus hybrid</h2>
+                        <p>Echinopsis hybrid, Chamaelobivia Group</p>
+                        <span
+                            >2 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/4fb5b5ce1c9e8e85d6e14b53e04f3860"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p15 e3 cactus-03 woolly nipple cactus mammillaria mammillaris"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/14c0c62c392fa36c2edd5ac87d021a54"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/64cca15d9ba58510a5238d47921dad56.jpg"
+                            alt="Side-ish view of Woolly nipple cactus in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="64cca15d9ba58510a5238d47921dad56"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P15</span
+                            ><span class="photo-label-badge">E3</span
+                            ><span>Cactus-03</span></div
+                        >
+                        <h2>Woolly nipple cactus</h2>
+                        <p>Mammillaria mammillaris</p>
+                        <span
+                            >2 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/14c0c62c392fa36c2edd5ac87d021a54"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p16 f1 cactus-06 hook-spined pincushion cactus mammillaria cf. rekoi"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/11be386442d57e8cb6b979cbb1654079"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/677ef7688cc2a19beac07a413d3e2186.jpg"
+                            alt="Side-ish view of Hook-spined pincushion cactus in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="677ef7688cc2a19beac07a413d3e2186"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P16</span
+                            ><span class="photo-label-badge">F1</span
+                            ><span>Cactus-06</span></div
+                        >
+                        <h2>Hook-spined pincushion cactus</h2>
+                        <p>Mammillaria cf. rekoi</p>
+                        <span
+                            >2 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/11be386442d57e8cb6b979cbb1654079"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p17 f2 cactus-05 boobie cactus myrtillocactus geometrizans &#39;fukurokuryuzinboku&#39;"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/6578bd1f65224c8a52ea30f52cb88a9e"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/05d77d8368496e637b123df7ba6de17d.jpg"
+                            alt="Side-ish view of Boobie cactus in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="05d77d8368496e637b123df7ba6de17d"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P17</span
+                            ><span class="photo-label-badge">F2</span
+                            ><span>Cactus-05</span></div
+                        >
+                        <h2>Boobie cactus</h2>
+                        <p>Myrtillocactus geometrizans 'Fukurokuryuzinboku'</p>
+                        <span
+                            >2 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/6578bd1f65224c8a52ea30f52cb88a9e"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p18 f3 cactus-04 yellow tower cactus parodia leninghausii"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/f732f2edf709e7b16ade506402bd054b"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/1e0bc747536b190b3b164627c94bf6d7.jpg"
+                            alt="Additional oblique detail of Yellow tower cactus in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="1e0bc747536b190b3b164627c94bf6d7"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P18</span
+                            ><span class="photo-label-badge">F3</span
+                            ><span>Cactus-04</span></div
+                        >
+                        <h2>Yellow tower cactus</h2>
+                        <p>Parodia leninghausii</p>
+                        <span
+                            >3 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/f732f2edf709e7b16ade506402bd054b"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p19 #1 — shared rehab cactus planter; formerly a4-b4 rehab-01 variegated blue torch cactus probable variegated pilosocereus pachycladus"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/c568fb46b1219a483b05c91ee49c5fce"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/9b1a7d6b3ec0404183bc90b018e864b9.jpg"
+                            alt="Additional oblique detail of Variegated blue torch cactus in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="9b1a7d6b3ec0404183bc90b018e864b9"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P19</span
+                            ><span class="photo-label-badge"
+                                >#1 — shared rehab cactus planter; formerly
+                                A4-B4</span
+                            ><span>Rehab-01</span></div
+                        >
+                        <h2>Variegated blue torch cactus</h2>
+                        <p>probable variegated Pilosocereus pachycladus</p>
+                        <span
+                            >3 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/c568fb46b1219a483b05c91ee49c5fce"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p19 #1 — shared rehab cactus planter; formerly a4-b4 rehab-02 monkey tail cactus cleistocactus colademononis"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/6485eae1e2852134ea52c701ebafc440"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/7c5ed04e9c505200a1e394b82077e84c.jpg"
+                            alt="Additional oblique detail of Monkey tail cactus in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="7c5ed04e9c505200a1e394b82077e84c"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P19</span
+                            ><span class="photo-label-badge"
+                                >#1 — shared rehab cactus planter; formerly
+                                A4-B4</span
+                            ><span>Rehab-02</span></div
+                        >
+                        <h2>Monkey tail cactus</h2>
+                        <p>Cleistocactus colademononis</p>
+                        <span
+                            >3 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/6485eae1e2852134ea52c701ebafc440"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p19 #1 — shared rehab cactus planter; formerly a4-b4 rehab-03 golden torch cactus probable echinopsis spachiana"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/f6a9cfa4964173eaf22403a13b1fef9b"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/653bed9df4bed218110940b08f98baff.jpg"
+                            alt="Additional oblique detail of Golden torch cactus in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="653bed9df4bed218110940b08f98baff"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P19</span
+                            ><span class="photo-label-badge"
+                                >#1 — shared rehab cactus planter; formerly
+                                A4-B4</span
+                            ><span>Rehab-03</span></div
+                        >
+                        <h2>Golden torch cactus</h2>
+                        <p>probable Echinopsis spachiana</p>
+                        <span
+                            >3 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/f6a9cfa4964173eaf22403a13b1fef9b"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p20 #2 — shared succulent planter; formerly c4-d4 succulent-01 pulido&#39;s echeveria probable echeveria pulidonis or close hybrid"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/9ffb3e9b903e08b0eb171fec67163eee"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/219bd0a864cc351c3c93699979aef5b1.jpg"
+                            alt="Additional oblique detail of Pulido&#39;s echeveria in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="219bd0a864cc351c3c93699979aef5b1"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P20</span
+                            ><span class="photo-label-badge"
+                                >#2 — shared succulent planter; formerly
+                                C4-D4</span
+                            ><span>Succulent-01</span></div
+                        >
+                        <h2>Pulido&#39;s echeveria</h2>
+                        <p>probable Echeveria pulidonis or close hybrid</p>
+                        <span
+                            >4 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/9ffb3e9b903e08b0eb171fec67163eee"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p20 #2 — shared succulent planter; formerly c4-d4 succulent-02 elephant bush portulacaria afra"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/9eae95c288811923c6da3bbe57e96cd8"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/2f0f9af286d2f24bd82406446becfe67.jpg"
+                            alt="Additional oblique detail of Elephant bush in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="2f0f9af286d2f24bd82406446becfe67"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P20</span
+                            ><span class="photo-label-badge"
+                                >#2 — shared succulent planter; formerly
+                                C4-D4</span
+                            ><span>Succulent-02</span></div
+                        >
+                        <h2>Elephant bush</h2>
+                        <p>Portulacaria afra</p>
+                        <span
+                            >4 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/9eae95c288811923c6da3bbe57e96cd8"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p20 #2 — shared succulent planter; formerly c4-d4 succulent-03 silver teaspoons probable kalanchoe bracteata"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/6f6262b131489476e8aac8618a2fb8a4"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/f23f39e56f13166551fb36d0a9b3e70d.jpg"
+                            alt="Additional oblique detail of Silver teaspoons in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="f23f39e56f13166551fb36d0a9b3e70d"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P20</span
+                            ><span class="photo-label-badge"
+                                >#2 — shared succulent planter; formerly
+                                C4-D4</span
+                            ><span>Succulent-03</span></div
+                        >
+                        <h2>Silver teaspoons</h2>
+                        <p>probable Kalanchoe bracteata</p>
+                        <span
+                            >4 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/6f6262b131489476e8aac8618a2fb8a4"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p20 #2 — shared succulent planter; formerly c4-d4 succulent-04 copper spoons kalanchoe orgyalis"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/99a4c9f422fda38673892db2acb8138e"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/818b0bfbc08fd6e308784ac6a7bff80a.jpg"
+                            alt="Additional oblique detail of Copper spoons in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="818b0bfbc08fd6e308784ac6a7bff80a"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P20</span
+                            ><span class="photo-label-badge"
+                                >#2 — shared succulent planter; formerly
+                                C4-D4</span
+                            ><span>Succulent-04</span></div
+                        >
+                        <h2>Copper spoons</h2>
+                        <p>Kalanchoe orgyalis</p>
+                        <span
+                            >4 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/99a4c9f422fda38673892db2acb8138e"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p21 #3 houseplant-01 money tree pachira cf. glabra"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/40f5861883ca7dcb26520c8969151156"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/b2ceb5a42382fcd66b27e26cb9fad905.jpg"
+                            alt="Side-ish view of Money tree in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="b2ceb5a42382fcd66b27e26cb9fad905"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P21</span
+                            ><span class="photo-label-badge">#3</span
+                            ><span>Houseplant-01</span></div
+                        >
+                        <h2>Money tree</h2>
+                        <p>Pachira cf. glabra</p>
+                        <span
+                            >4 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/40f5861883ca7dcb26520c8969151156"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p22 #4 succulent-05 kiwi aeonium aeonium haworthii &#39;dream color&#39;"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/6b9388466fab2fac4f07f76a231898a2"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/357ce80ebdab451889b54d4d88cb341f.jpg"
+                            alt="Side-ish view of Kiwi aeonium in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="357ce80ebdab451889b54d4d88cb341f"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P22</span
+                            ><span class="photo-label-badge">#4</span
+                            ><span>Succulent-05</span></div
+                        >
+                        <h2>Kiwi aeonium</h2>
+                        <p>Aeonium haworthii 'Dream Color'</p>
+                        <span
+                            >2 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/6b9388466fab2fac4f07f76a231898a2"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p23 g2 — confirmed after arrival cactus-08 paper spine cactus tephrocactus articulatus var. papyracanthus"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/aeddcd56a4b3c36b2865349ef903747d"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/9c7fe6ed0df03fc15e68b58319174895.jpg"
+                            alt="Side view of the newly repotted paper spine cactus in its dark green square pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="9c7fe6ed0df03fc15e68b58319174895"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P23</span
+                            ><span class="photo-label-badge"
+                                >G2 — confirmed after arrival</span
+                            ><span>Cactus-08</span></div
+                        >
+                        <h2>Paper spine cactus</h2>
+                        <p>Tephrocactus articulatus var. papyracanthus</p>
+                        <span
+                            >9 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/aeddcd56a4b3c36b2865349ef903747d"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p24 h1 — owner-corrected after arrival succulent-08 coconut crystal hens and chicks sempervivum colorockz® &#39;coconut crystal&#39;"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/f782eafb7cf62e43160b7f4992b440b7"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/c629fbb699850414e12cfd3ebd40c32d.jpg"
+                            alt="Side view of the newly repotted Coconut Crystal sempervivum in its yellow square pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="c629fbb699850414e12cfd3ebd40c32d"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P24</span
+                            ><span class="photo-label-badge"
+                                >H1 — owner-corrected after arrival</span
+                            ><span>Succulent-08</span></div
+                        >
+                        <h2>Coconut Crystal hens and chicks</h2>
+                        <p>Sempervivum Colorockz® 'Coconut Crystal'</p>
+                        <span
+                            >11 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/f782eafb7cf62e43160b7f4992b440b7"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p25 h2 — confirmed after arrival succulent-07 raindrops echeveria echeveria &#39;raindrops&#39;"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/5756b8a03a61eca083229b9fce2c5bce"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/a32859d490a3c3b40ac699ce1d1f0bbc.jpg"
+                            alt="Side-ish view of Raindrops echeveria in its current pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="a32859d490a3c3b40ac699ce1d1f0bbc"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P25</span
+                            ><span class="photo-label-badge"
+                                >H2 — confirmed after arrival</span
+                            ><span>Succulent-07</span></div
+                        >
+                        <h2>Raindrops echeveria</h2>
+                        <p>Echeveria 'Raindrops'</p>
+                        <span
+                            >8 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/5756b8a03a61eca083229b9fce2c5bce"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p26 h3 — owner-corrected after arrival cactus-07 eve&#39;s needle cactus austrocylindropuntia subulata"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/d42aca3c72e897a0f004861eab5ed5f0"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/029ccf0a7dbfc4d0e6ad4fdeff179b39.jpg"
+                            alt="Side view of the newly repotted Eve&#39;s needle cactus in its white square pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="029ccf0a7dbfc4d0e6ad4fdeff179b39"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P26</span
+                            ><span class="photo-label-badge"
+                                >H3 — owner-corrected after arrival</span
+                            ><span>Cactus-07</span></div
+                        >
+                        <h2>Eve&#39;s needle cactus</h2>
+                        <p>Austrocylindropuntia subulata</p>
+                        <span
+                            >9 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/d42aca3c72e897a0f004861eab5ed5f0"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p27 g1 — owner-corrected after arrival cactus-09 black widow chin cactus gymnocalycium mihanovichii f. variegata &#39;black widow&#39;"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/361275efcbb138f9c4f6255f44bdac3d"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/5db9a1377b6c4618c04e7b4f7819a707.jpg"
+                            alt="Side view of the newly repotted Black Widow cactus in its blue square pot"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="5db9a1377b6c4618c04e7b4f7819a707"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P27</span
+                            ><span class="photo-label-badge"
+                                >G1 — owner-corrected after arrival</span
+                            ><span>Cactus-09</span></div
+                        >
+                        <h2>Black Widow chin cactus</h2>
+                        <p
+                            >Gymnocalycium mihanovichii f. variegata 'Black
+                            Widow'</p
+                        >
+                        <span
+                            >9 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/361275efcbb138f9c4f6255f44bdac3d"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
+                <article
+                    class="photo-collection-card"
+                    data-photo-collection
+                    data-search="p28 g3 — owner-corrected after arrival succulent-06 royal flush split rock pleiospilos nelii &#39;royal flush&#39;"
+                >
+                    <a
+                        class="photo-collection-cover external-image-link"
+                        href="https://gyazo.com/collections/e1dd2758d1cd06566068a7a329893b4b"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src="https://i.gyazo.com/1ae3c904fad23b9a4e4728b394e89cb4.jpg"
+                            alt="Close detail of the newly repotted Royal Flush split rock leaves"
+                            loading="lazy"
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            data-external-image
+                            data-image-id="1ae3c904fad23b9a4e4728b394e89cb4"
+                        />
+                        <span
+                            class="external-image-fallback"
+                            hidden
+                            ><span aria-hidden="true">◇</span
+                            ><strong>Preview unavailable</strong
+                            ><small
+                                >The Gyazo Collection link still works.</small
+                            ></span
+                        >
+                    </a>
+                    <div class="photo-collection-copy">
+                        <div class="photo-collection-badges"
+                            ><span class="photo-id-badge">P28</span
+                            ><span class="photo-label-badge"
+                                >G3 — owner-corrected after arrival</span
+                            ><span>Succulent-06</span></div
+                        >
+                        <h2>Royal Flush split rock</h2>
+                        <p>Pleiospilos nelii 'Royal Flush'</p>
+                        <span
+                            >10 captures · newest
+                            <time datetime="2026-08-29"
+                                >August 29, 2026</time
+                            ></span
+                        >
+                        <a
+                            class="button primary"
+                            href="https://gyazo.com/collections/e1dd2758d1cd06566068a7a329893b4b"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Open Gyazo Collection
+                            <span aria-hidden="true">↗</span></a
+                        >
+                    </div>
+                </article>
             </section>
+            <p
+                class="photo-album-empty"
+                id="photo-album-empty"
+                hidden
+                >No plant Collections match that search.</p
+            >
         </main>
 
-        <footer>
-            <span>Fenton plant collection</span>
-            <span>Collection photographs © Nick · all rights reserved</span>
-        </footer>
-
+        <footer
+            ><span>Fenton plant collection</span
+            ><span
+                >Collection photographs © Nick · all rights reserved</span
+            ></footer
+        >
         <script>
             const themeToggle = document.querySelector("#theme-toggle");
+            const search = document.querySelector("#collection-search");
+            const status = document.querySelector("#collection-search-status");
+            const empty = document.querySelector("#photo-album-empty");
+            const cards = [
+                ...document.querySelectorAll("[data-photo-collection]"),
+            ];
 
             function applyTheme(theme) {
                 document.documentElement.dataset.theme = theme;
@@ -130,15 +2004,50 @@
                 themeToggle.setAttribute("aria-pressed", String(dark));
             }
 
-            themeToggle.addEventListener("click", () => {
+            function filterCollections() {
+                const query = search.value.trim().toLowerCase();
+                let visible = 0;
+                for (const card of cards) {
+                    const matches =
+                        !query || (card.dataset.search ?? "").includes(query);
+                    card.hidden = !matches;
+                    if (matches) visible += 1;
+                }
+                status.textContent = query
+                    ? visible +
+                      " matching " +
+                      (visible === 1 ? "Collection" : "Collections")
+                    : "Showing all 33 plant Collections";
+                empty.hidden = visible !== 0;
+            }
+
+            for (const image of document.querySelectorAll(
+                "img[data-external-image]"
+            )) {
+                const markUnavailable = () => {
+                    image.hidden = true;
+                    image.nextElementSibling?.removeAttribute("hidden");
+                    image
+                        .closest(".external-image-link")
+                        ?.classList.add("is-unavailable");
+                };
+                image.addEventListener("error", markUnavailable, {
+                    once: true,
+                });
+                if (image.complete && image.naturalWidth === 0)
+                    markUnavailable();
+            }
+
+            search.addEventListener("input", filterCollections);
+            themeToggle.addEventListener("click", () =>
                 applyTheme(
                     document.documentElement.dataset.theme === "dark"
                         ? "light"
                         : "dark"
-                );
-            });
-
+                )
+            );
             applyTheme(document.documentElement.dataset.theme || "light");
+            filterCollections();
         </script>
     </body>
 </html>
