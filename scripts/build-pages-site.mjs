@@ -106,6 +106,36 @@ function injectGoogleTagManager(html) {
     return withBody;
 }
 
+function injectPageNotFoundEvent(html) {
+    if (html.includes('event: "page_not_found"')) {
+        throw new Error("The page-not-found event is already present.");
+    }
+
+    const eventSnippet = `<script>
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: "page_not_found",
+                http_status: 404,
+                page_location: window.location.href,
+                page_path:
+                    window.location.pathname +
+                    window.location.search +
+                    window.location.hash,
+                page_referrer: document.referrer,
+                page_title: document.title,
+            });
+        </script>`;
+    const withEvent = html.replace(
+        "</head>",
+        `        ${eventSnippet}\n    </head>`
+    );
+
+    if (withEvent === html) {
+        throw new Error("Could not inject the page-not-found event.");
+    }
+    return withEvent;
+}
+
 function optimizedPlantImagePath(relativePath, width) {
     const extension = path.posix.extname(relativePath);
     return `${relativePath.slice(0, -extension.length)}.w${width}.webp`;
@@ -383,6 +413,8 @@ async function main() {
     publishedHtml = rewritePublishedPlantImages(publishedHtml, optimizedImages);
     publishedHtml = injectGoogleTagManager(publishedHtml);
     assertPublishedAnalytics(publishedHtml, "field-guide index");
+    const notFoundHtml = injectPageNotFoundEvent(publishedHtml);
+    assertPublishedAnalytics(notFoundHtml, "field-guide 404");
 
     for (const reference of plantImageReferences) {
         if (publishedHtml.includes(`src="./${reference}"`)) {
@@ -421,11 +453,7 @@ async function main() {
             publishedHtml,
             "utf8"
         ),
-        writeFile(
-            path.join(outputDirectory, "404.html"),
-            publishedHtml,
-            "utf8"
-        ),
+        writeFile(path.join(outputDirectory, "404.html"), notFoundHtml, "utf8"),
         writeFile(path.join(outputDirectory, ".nojekyll"), "", "utf8"),
         ...layoutFileNames.map((fileName) =>
             publishLayout(fileName, optimizedImages)
@@ -464,4 +492,8 @@ const isDirectRun =
 
 if (isDirectRun) await main();
 
-export { injectGoogleTagManager, rewritePublishedPlantImages };
+export {
+    injectGoogleTagManager,
+    injectPageNotFoundEvent,
+    rewritePublishedPlantImages,
+};

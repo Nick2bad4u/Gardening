@@ -31,6 +31,7 @@
     const pageAnnouncer = document.querySelector("#page-announcer");
     const boundExternalImages = new WeakSet();
     let currentIndex = 0;
+    let lastTrackedProfilePageId = null;
     let printPrepared = false;
 
     function pageName(page) {
@@ -177,6 +178,31 @@
         }
     }
 
+    function trackPlantProfileView(page) {
+        if (!page?.classList.contains("profile-page")) {
+            lastTrackedProfilePageId = null;
+            return;
+        }
+
+        const pageId = page.dataset.page;
+        if (
+            pageId === lastTrackedProfilePageId ||
+            !Array.isArray(window.dataLayer)
+        ) {
+            return;
+        }
+
+        window.dataLayer.push({
+            event: "view_plant_profile",
+            page_location: window.location.href,
+            page_path: `${window.location.pathname}${window.location.search}${window.location.hash}`,
+            page_title: document.title,
+            plant_name: pageName(page),
+            plant_slug: pageId,
+        });
+        lastTrackedProfilePageId = pageId;
+    }
+
     function showPage(pageId, { scroll = true } = {}) {
         const nextIndex = pageIds.indexOf(pageId);
         currentIndex = nextIndex >= 0 ? nextIndex : 0;
@@ -195,6 +221,7 @@
             current.dataset.page === "cover"
                 ? `${baseTitle} · Plant field guide`
                 : `${pageName(current)} · ${baseTitle}`;
+        trackPlantProfileView(current);
 
         if (scroll) {
             window.scrollTo({ top: 0, behavior: "auto" });

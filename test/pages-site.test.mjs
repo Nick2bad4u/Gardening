@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
     injectGoogleTagManager,
+    injectPageNotFoundEvent,
     rewritePublishedPlantImages,
 } from "../scripts/build-pages-site.mjs";
 
@@ -30,6 +31,23 @@ describe("GitHub Pages publication transforms", () => {
             "<html><head></head><body></body></html>"
         );
         expect(() => injectGoogleTagManager(installed)).toThrow(
+            /already present/
+        );
+    });
+
+    it("marks only the generated 404 entry point with an explicit event", () => {
+        const indexHtml = injectGoogleTagManager(
+            "<!doctype html><html><head><title>Garden</title></head><body><main>Plants</main></body></html>"
+        );
+        const notFoundHtml = injectPageNotFoundEvent(indexHtml);
+
+        expect(indexHtml).not.toContain('event: "page_not_found"');
+        expect(notFoundHtml.match(/event: "page_not_found"/g)).toHaveLength(1);
+        expect(notFoundHtml).toContain("http_status: 404");
+        expect(notFoundHtml).toContain("page_location: window.location.href");
+        expect(notFoundHtml).toContain("page_referrer: document.referrer");
+        expect(notFoundHtml).toContain("page_title: document.title");
+        expect(() => injectPageNotFoundEvent(notFoundHtml)).toThrow(
             /already present/
         );
     });

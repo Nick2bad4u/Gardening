@@ -46,7 +46,12 @@ The production build installs Google Tag Manager container `GTM-T8J6HPLF` on
 every published HTML entry point. The source pages opened locally do not load
 analytics. GTM's existing History Change trigger handles the field guide's hash
 navigation, so moving between profiles does not require a second analytics
-script in `booklet.js`.
+script in `booklet.js`. The reader publishes a separate
+`view_plant_profile` data-layer event only after a plant profile has mounted and
+its title is current; this does not replace or duplicate the standard GA4 page
+view. The generated `404.html` similarly publishes an explicit
+`page_not_found` event instead of guessing from a requested URL containing the
+digits `404`.
 
 For publication performance, the build creates ignored 480, 960, and 1440 px
 WebP variants of every displayed licensed reference photograph. The repository

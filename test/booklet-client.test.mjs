@@ -8,7 +8,7 @@ const clientSource = fs.readFileSync(
     "utf8"
 );
 
-function createReader(hash = "#plant-b-photo-history") {
+function createReader(hash = "#plant-b-photo-history", { dataLayer } = {}) {
     const window = new Window({
         url: `https://example.test/garden/${hash}`,
     });
@@ -60,6 +60,7 @@ function createReader(hash = "#plant-b-photo-history") {
         </nav>
         <p id="page-announcer"></p>
     `;
+    if (dataLayer) window.dataLayer = dataLayer;
     window.eval(clientSource);
     return window;
 }
@@ -109,6 +110,49 @@ describe("field-guide profile mounting", () => {
         expect(plantA.hidden).toBe(false);
         expect(plantB.childElementCount).toBe(0);
         expect(plantB.dataset.profileMounted).toBeUndefined();
+    });
+
+    it("publishes one profile event after each distinct plant view", () => {
+        const dataLayer = [];
+        const window = createReader("#plant-b-photo-history", { dataLayer });
+
+        expect(dataLayer).toEqual([
+            {
+                event: "view_plant_profile",
+                page_location:
+                    "https://example.test/garden/#plant-b-photo-history",
+                page_path: "/garden/#plant-b-photo-history",
+                page_title: "Plant B · The Fenton Collection",
+                plant_name: "Plant B",
+                plant_slug: "plant-b",
+            },
+        ]);
+
+        window.location.hash = "#plant-b";
+        window.dispatchEvent(new window.HashChangeEvent("hashchange"));
+        expect(dataLayer).toHaveLength(1);
+
+        window.location.hash = "#plant-a";
+        window.dispatchEvent(new window.HashChangeEvent("hashchange"));
+        expect(dataLayer).toHaveLength(2);
+        expect(dataLayer[1]).toMatchObject({
+            event: "view_plant_profile",
+            page_title: "Plant A · The Fenton Collection",
+            plant_name: "Plant A",
+            plant_slug: "plant-a",
+        });
+
+        window.location.hash = "#contents";
+        window.dispatchEvent(new window.HashChangeEvent("hashchange"));
+        window.location.hash = "#plant-a";
+        window.dispatchEvent(new window.HashChangeEvent("hashchange"));
+        expect(dataLayer).toHaveLength(3);
+    });
+
+    it("does not create a local analytics queue when GTM is absent", () => {
+        const window = createReader("#plant-a");
+
+        expect(window.dataLayer).toBeUndefined();
     });
 
     it("mounts every profile for print and restores the lean reader afterward", () => {
