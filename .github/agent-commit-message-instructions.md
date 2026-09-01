@@ -24,7 +24,7 @@
 
 - Write like a technical changelog author.
 
-- Use relevant emojis where useful for readability, not emoji spam, but be through in parsing and describing all meaningful changes that match emojis above.
+- Use relevant emojis where useful for readability, not emoji spam, but be thorough in parsing and describing all meaningful changes that match emojis above.
 
 - Describe all meaningful changes comprehensively.
 
