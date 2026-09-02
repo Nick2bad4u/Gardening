@@ -1,3 +1,7 @@
+/** @typedef {Record<string, string>} SheetRow */
+/** @typedef {{ [key: string]: string | number; _index: number }} HistoryEvent */
+/** @typedef {{ date: Date; event: HistoryEvent; value: number }} MeasurementPoint */
+
 const publishedSheetBase =
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSlR11VjUWkf8xO7HGvYwpZmxZohxV-wpSTYQRfgLw0UIpXBXJ8O0Rik-ySoNWY-EyqWdQ2kzdXtgZR/pub";
 
@@ -14,8 +18,16 @@ export const sheetUrls = {
     trackerCsv: `${publishedSheetBase}?gid=0&single=true&output=csv`,
     historyCsv: `${publishedSheetBase}?gid=1465181080&single=true&output=csv`,
     baselinesCsv: `${publishedSheetBase}?gid=1087321540&single=true&output=csv`,
+    /** @param {string} plantId */
+    plantPage(plantId) {
+        const gid = plantSheetGids[plantId];
+        return gid
+            ? `https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=${gid}#gid=${gid}`
+            : sheetUrls.edit;
+    },
 };
 
+/** @type {Readonly<Record<string, number>>} */
 const plantSheetGids = Object.freeze({
     P01: 261928558,
     P02: 1627085799,
@@ -49,6 +61,7 @@ const plantSheetGids = Object.freeze({
 
 // Documented collection pot sizes. The latest Repot observation supersedes
 // these starting values on the public history page.
+/** @type {Readonly<Record<string, string>>} */
 const initialPotSizeByPlant = Object.freeze({
     P01: "4 in",
     P02: "4 in",
@@ -78,17 +91,17 @@ const initialPotSizeByPlant = Object.freeze({
     P28: "4 in",
 });
 
-sheetUrls.plantPage = (plantId) => {
-    const gid = plantSheetGids[plantId];
-    return gid
-        ? `https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=${gid}#gid=${gid}`
-        : sheetUrls.edit;
-};
-
 const DAY_MS = 86_400_000;
 
+/**
+ * @param {string} text
+ *
+ * @returns {string[][]}
+ */
 export function parseCsv(text) {
+    /** @type {string[][]} */
     const rows = [];
+    /** @type {string[]} */
     let row = [];
     let cell = "";
     let quoted = false;
@@ -124,6 +137,11 @@ export function parseCsv(text) {
     return rows;
 }
 
+/**
+ * @param {string[][]} rows
+ *
+ * @returns {SheetRow[]}
+ */
 function rowsToObjects(rows) {
     const [headers, ...data] = rows;
     if (!headers) return [];
@@ -136,6 +154,11 @@ function rowsToObjects(rows) {
         );
 }
 
+/**
+ * @param {string} url
+ *
+ * @returns {Promise<SheetRow[]>}
+ */
 async function fetchCsv(url) {
     const response = await fetch(`${url}&refresh=${Date.now()}`);
     if (!response.ok) {
@@ -144,6 +167,11 @@ async function fetchCsv(url) {
     return rowsToObjects(parseCsv(await response.text()));
 }
 
+/**
+ * @param {unknown} value
+ *
+ * @returns {Date | null}
+ */
 export function parseDate(value) {
     if (!value) return null;
     let match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
@@ -175,6 +203,10 @@ export function parseDate(value) {
     return null;
 }
 
+/**
+ * @param {unknown} value
+ * @param {string} [fallback]
+ */
 export function formatDate(value, fallback = "Not logged") {
     const date = parseDate(value);
     return date
@@ -186,13 +218,20 @@ export function formatDate(value, fallback = "Not logged") {
         : fallback;
 }
 
+/**
+ * @param {unknown} left
+ * @param {unknown} right
+ *
+ * @returns {number | null}
+ */
 export function daysBetween(left, right) {
     const leftDate = left instanceof Date ? left : parseDate(left);
     const rightDate = right instanceof Date ? right : parseDate(right);
     if (!leftDate || !rightDate) return null;
-    return Math.round((rightDate - leftDate) / DAY_MS);
+    return Math.round((rightDate.getTime() - leftDate.getTime()) / DAY_MS);
 }
 
+/** @param {unknown} value */
 export function daysSince(value) {
     const date = parseDate(value);
     if (!date) return null;
@@ -202,42 +241,81 @@ export function daysSince(value) {
         today.getMonth(),
         today.getDate()
     );
-    return Math.max(0, Math.round((todayStart - date) / DAY_MS));
+    return Math.max(
+        0,
+        Math.round((todayStart.getTime() - date.getTime()) / DAY_MS)
+    );
 }
 
+/**
+ * @param {unknown} value
+ *
+ * @returns {number | null}
+ */
 export function numericValue(value) {
     if (value === "" || value === null || value === undefined) return null;
     const number = Number(value);
     return Number.isFinite(number) ? number : null;
 }
 
+/**
+ * @param {number | null | undefined} value
+ *
+ * @returns {value is number}
+ */
+function isFiniteNumber(value) {
+    return typeof value === "number" && Number.isFinite(value);
+}
+
+/**
+ * @param {readonly (number | null | undefined)[]} values
+ *
+ * @returns {number | null}
+ */
 export function average(values) {
-    const numbers = values.filter((value) => Number.isFinite(value));
+    const numbers = values.filter(isFiniteNumber);
     if (numbers.length === 0) return null;
     return numbers.reduce((total, value) => total + value, 0) / numbers.length;
 }
 
+/**
+ * @param {readonly (number | null | undefined)[]} values
+ *
+ * @returns {number | null}
+ */
 export function median(values) {
     const numbers = values
-        .filter((value) => Number.isFinite(value))
+        .filter(isFiniteNumber)
         .sort((left, right) => left - right);
     if (numbers.length === 0) return null;
     const middle = Math.floor(numbers.length / 2);
-    return numbers.length % 2 === 0
-        ? (numbers[middle - 1] + numbers[middle]) / 2
-        : numbers[middle];
+    const upper = numbers[middle];
+    if (upper === undefined) return null;
+    if (numbers.length % 2 !== 0) return upper;
+    const lower = numbers[middle - 1];
+    return lower === undefined ? null : (lower + upper) / 2;
 }
 
+/**
+ * @param {readonly (number | null | undefined)[]} values
+ *
+ * @returns {number | null}
+ */
 export function standardDeviation(values) {
-    const numbers = values.filter((value) => Number.isFinite(value));
+    const numbers = values.filter(isFiniteNumber);
     if (numbers.length < 2) return null;
     const mean = average(numbers);
+    if (mean === null) return null;
     const variance =
         numbers.reduce((total, value) => total + (value - mean) ** 2, 0) /
         (numbers.length - 1);
     return Math.sqrt(variance);
 }
 
+/**
+ * @param {HistoryEvent[]} events
+ * @param {number} [direction]
+ */
 function sortEvents(events, direction = 1) {
     return [...events].sort((left, right) => {
         const dateDifference =
@@ -247,6 +325,12 @@ function sortEvents(events, direction = 1) {
     });
 }
 
+/**
+ * @param {HistoryEvent[]} events
+ * @param {(event: HistoryEvent) => boolean} predicate
+ *
+ * @returns {HistoryEvent | undefined}
+ */
 function newest(events, predicate) {
     return sortEvents(events.filter(predicate)).at(-1);
 }
@@ -256,6 +340,7 @@ const estimatedMeasurementMethods = new Set([
     "estimated visually",
 ]);
 
+/** @param {HistoryEvent} event */
 function isEligibleGrowthMeasurement(event) {
     const quality = String(event["Observation quality"] ?? "")
         .trim()
@@ -276,6 +361,13 @@ function isEligibleGrowthMeasurement(event) {
     );
 }
 
+/**
+ * @param {HistoryEvent[]} events
+ * @param {string} field
+ * @param {(event: HistoryEvent) => boolean} [predicate]
+ *
+ * @returns {MeasurementPoint[]}
+ */
 function measurementSeries(events, field, predicate = () => true) {
     return sortEvents(events.filter(predicate))
         .map((event) => ({
@@ -283,9 +375,13 @@ function measurementSeries(events, field, predicate = () => true) {
             event,
             value: numericValue(event[field]),
         }))
-        .filter((point) => point.date && point.value !== null);
+        .filter(
+            /** @returns {point is MeasurementPoint} */
+            (point) => point.date !== null && point.value !== null
+        );
 }
 
+/** @param {MeasurementPoint[]} series */
 function monthlyRate(series) {
     if (series.length < 2) return null;
     const start = series[0].date.getTime();
@@ -295,6 +391,7 @@ function monthlyRate(series) {
     }));
     const xMean = average(points.map((point) => point.x));
     const yMean = average(points.map((point) => point.y));
+    if (xMean === null || yMean === null) return null;
     const denominator = points.reduce(
         (total, point) => total + (point.x - xMean) ** 2,
         0
@@ -307,11 +404,15 @@ function monthlyRate(series) {
     return (numerator / denominator) * 30.4375;
 }
 
+/** @param {MeasurementPoint[]} series */
 function seriesChange(series) {
     if (series.length < 2) return null;
-    return series.at(-1).value - series[0].value;
+    const first = series[0];
+    const latest = series.at(-1);
+    return first && latest ? latest.value - first.value : null;
 }
 
+/** @param {readonly (number | null | undefined)[]} values */
 function coefficientOfVariation(values) {
     const deviation = standardDeviation(values);
     const mean = average(values);
@@ -320,10 +421,17 @@ function coefficientOfVariation(values) {
         : deviation / mean;
 }
 
+/** @param {HistoryEvent[]} events */
 function wateringDetails(events) {
     const waterEvents = sortEvents(
-        events.filter((event) => event.Event.trim().toLowerCase() === "water")
+        events.filter(
+            (event) =>
+                String(event.Event ?? "")
+                    .trim()
+                    .toLowerCase() === "water"
+        )
     );
+    /** @type {{ date: Date; event: HistoryEvent }[]} */
     const unique = [];
     const seen = new Set();
     waterEvents.forEach((event) => {
@@ -336,7 +444,7 @@ function wateringDetails(events) {
     });
     const intervals = unique.slice(1).map((entry, index) => ({
         date: entry.date,
-        days: Math.max(0, daysBetween(unique[index].date, entry.date)),
+        days: Math.max(0, daysBetween(unique[index].date, entry.date) ?? 0),
         from: unique[index].date,
         to: entry.date,
     }));
@@ -350,6 +458,10 @@ function wateringDetails(events) {
     };
 }
 
+/**
+ * @param {HistoryEvent[]} events
+ * @param {string} [plantId]
+ */
 export function calculateSummary(events, plantId = "") {
     const activePotSetup = Math.max(
         1,
@@ -368,7 +480,8 @@ export function calculateSummary(events, plantId = "") {
                     .trim()
                     .toLowerCase() === "dry"
         )
-        .map((event) => numericValue(event["Weight (g)"]));
+        .map((event) => numericValue(event["Weight (g)"]))
+        .filter((value) => value !== null);
     const wetWeights = activeWeights
         .filter(
             (event) =>
@@ -376,7 +489,8 @@ export function calculateSummary(events, plantId = "") {
                     .trim()
                     .toLowerCase() === "wet"
         )
-        .map((event) => numericValue(event["Weight (g)"]));
+        .map((event) => numericValue(event["Weight (g)"]))
+        .filter((value) => value !== null);
     const dryAverage = average(dryWeights);
     const wetAverage = average(wetWeights);
     const latestWeight = newest(
@@ -396,6 +510,7 @@ export function calculateSummary(events, plantId = "") {
         (event) => String(event["Condition / soil"] ?? "").trim() !== ""
     );
     const latestActivity = newest(events, () => true);
+    /** @param {string} name */
     const eventNamed = (name) =>
         events.filter(
             (event) =>
@@ -443,7 +558,10 @@ export function calculateSummary(events, plantId = "") {
         ? numericValue(latestWeight["Weight (g)"])
         : null;
     const remainingFraction =
-        capacity !== null && capacity > 0 && latestWeightValue !== null
+        capacity !== null &&
+        capacity > 0 &&
+        latestWeightValue !== null &&
+        dryAverage !== null
             ? Math.max(
                   0,
                   Math.min(1, (latestWeightValue - dryAverage) / capacity)
@@ -463,7 +581,9 @@ export function calculateSummary(events, plantId = "") {
             ? latestWeightValue - previousWeightValue
             : null;
     const weightChangePercent =
-        weightChange !== null && previousWeightValue !== 0
+        weightChange !== null &&
+        previousWeightValue !== null &&
+        previousWeightValue !== 0
             ? weightChange / previousWeightValue
             : null;
     const watering = wateringDetails(events);
@@ -492,7 +612,7 @@ export function calculateSummary(events, plantId = "") {
         latestWidth,
         currentPotSize:
             newest(repotEvents, (event) =>
-                String(event["Pot size"] ?? "").trim()
+                Boolean(String(event["Pot size"] ?? "").trim())
             )?.["Pot size"] ||
             initialPotSizeByPlant[plantId] ||
             "Not logged",
@@ -516,7 +636,10 @@ export function calculateSummary(events, plantId = "") {
         latestRotation: newest(rotationEvents, () => true),
         observationSpanDays:
             datedEvents.length > 1
-                ? daysBetween(datedEvents[0].Date, datedEvents.at(-1).Date)
+                ? daysBetween(
+                      datedEvents[0]?.Date ?? "",
+                      datedEvents.at(-1)?.Date ?? ""
+                  )
                 : 0,
         previousWeightValue,
         remainingFraction,
@@ -542,13 +665,15 @@ export async function loadCollectionData() {
         fetchCsv(sheetUrls.trackerCsv),
         fetchCsv(sheetUrls.historyCsv),
     ]);
+    /** @type {HistoryEvent[]} */
     const observations = history.map((event, index) => ({
         ...event,
         _index: index,
     }));
+    /** @type {Map<string, HistoryEvent[]>} */
     const eventsById = new Map();
     observations.forEach((event) => {
-        const plantId = event["Plant ID"];
+        const plantId = String(event["Plant ID"] ?? "");
         const plantEvents = eventsById.get(plantId) ?? [];
         plantEvents.push(event);
         eventsById.set(plantId, plantEvents);
@@ -567,6 +692,10 @@ export async function loadCollectionData() {
     };
 }
 
+/**
+ * @param {unknown} value
+ * @param {string} unit
+ */
 export function formatMeasurement(value, unit) {
     const number = numericValue(value);
     if (number === null) return "Not logged";
@@ -576,6 +705,11 @@ export function formatMeasurement(value, unit) {
     return `${formatted} ${unit}`;
 }
 
+/**
+ * @param {number} value
+ * @param {string} [unit]
+ * @param {number} [digits]
+ */
 export function formatSigned(value, unit = "", digits = 1) {
     if (!Number.isFinite(value)) return "Not enough data";
     const rounded = Math.abs(value).toFixed(digits);
@@ -583,10 +717,12 @@ export function formatSigned(value, unit = "", digits = 1) {
     return `${sign}${rounded}${unit ? ` ${unit}` : ""}`;
 }
 
+/** @param {string} labelId */
 export function historyPageUrl(labelId) {
     return `./plant-history.html?id=${encodeURIComponent(labelId)}`;
 }
 
+/** @param {SheetRow} plant */
 export function plantLabel(plant) {
     return plant["Current pot label"] || plant["Plant ID"];
 }
@@ -603,6 +739,7 @@ const LABEL_GROUP_ORDER = Object.freeze([
     "H",
 ]);
 
+/** @param {SheetRow} plant */
 function plantLabelSortParts(plant) {
     const label = String(plantLabel(plant) || "")
         .trim()
@@ -619,6 +756,10 @@ function plantLabelSortParts(plant) {
     };
 }
 
+/**
+ * @param {SheetRow} leftPlant
+ * @param {SheetRow} rightPlant
+ */
 export function comparePlantsByNaturalLabel(leftPlant, rightPlant) {
     const left = plantLabelSortParts(leftPlant);
     const right = plantLabelSortParts(rightPlant);
@@ -636,6 +777,7 @@ export function comparePlantsByNaturalLabel(leftPlant, rightPlant) {
     );
 }
 
+/** @param {number} days */
 export function dayColor(days) {
     const green = [
         87,
@@ -652,6 +794,11 @@ export function dayColor(days) {
         124,
         115,
     ];
+    /**
+     * @param {number[]} start
+     * @param {number[]} end
+     * @param {number} amount
+     */
     const mix = (start, end, amount) =>
         start.map((value, index) =>
             Math.round(value + (end[index] - value) * amount)
@@ -664,6 +811,7 @@ export function dayColor(days) {
     return `rgb(${color.join(", ")})`;
 }
 
+/** @param {HTMLButtonElement} button */
 export function installThemeToggle(button) {
     const root = document.documentElement;
     const label = button.querySelector("[data-theme-label]");
