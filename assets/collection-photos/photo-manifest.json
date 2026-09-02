@@ -1914,6 +1914,44 @@
                         "desc": "Top-down growth view of Kiwi aeonium on August 29, 2026. Captured 2026-08-29; view: top; Copyright Nick; all rights reserved."
                     },
                     "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest."
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-01",
+                    "view": "top",
+                    "alt": "Top-down view of Kiwi aeonium rosettes with green centers and vivid red margins",
+                    "caption": "Full-resolution top view documenting the Kiwi aeonium rosettes on September 1, 2026.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-01-aeonium-haworthii-dream-color-top.jpg",
+                    "provider": "gyazo",
+                    "image_id": "b193fbdcef1169d6175c324dec12c0f1",
+                    "image_url": "https://i.gyazo.com/b193fbdcef1169d6175c324dec12c0f1.jpg",
+                    "page_url": "https://gyazo.com/b193fbdcef1169d6175c324dec12c0f1",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Top-down view of Kiwi aeonium rosettes with green centers and vivid red margins",
+                        "url": "https://nick2bad4u.github.io/Gardening/#aeonium-haworthii-dream-color",
+                        "desc": "Full-resolution top view documenting the Kiwi aeonium rosettes on September 1, 2026. Captured 2026-09-01; view: top; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-01",
+                    "view": "side",
+                    "alt": "Side view of Kiwi aeonium showing its branching stems, lower leaves, and current pot",
+                    "caption": "Full-resolution side view documenting the Kiwi aeonium stems, lower foliage, and pot on September 1, 2026.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-01-aeonium-haworthii-dream-color-side.jpg",
+                    "provider": "gyazo",
+                    "image_id": "0fd75093ad6edbe6ba42b62a1b9ad0ad",
+                    "image_url": "https://i.gyazo.com/0fd75093ad6edbe6ba42b62a1b9ad0ad.jpg",
+                    "page_url": "https://gyazo.com/0fd75093ad6edbe6ba42b62a1b9ad0ad",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Side view of Kiwi aeonium showing its branching stems, lower leaves, and current pot",
+                        "url": "https://nick2bad4u.github.io/Gardening/#aeonium-haworthii-dream-color",
+                        "desc": "Full-resolution side view documenting the Kiwi aeonium stems, lower foliage, and pot on September 1, 2026. Captured 2026-09-01; view: side; Copyright Nick; all rights reserved."
+                    }
                 }
             ]
         },

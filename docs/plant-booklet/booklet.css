@@ -3009,7 +3009,44 @@ main {
 
 @media (max-width: 760px) {
     .profile-hero {
-        min-height: clamp(21rem, 82vw, 29rem);
+        min-height: clamp(25rem, 98vw, 30rem);
+    }
+
+    .hero-title {
+        display: grid;
+        grid-template-columns: 3.4rem minmax(0, 1fr);
+        column-gap: 0.65rem;
+        align-items: center;
+        bottom: 3rem;
+    }
+
+    .hero-title .plant-avatar-slot:has(.plant-avatar--hero) {
+        width: 3.4rem;
+        height: 3.4rem;
+        margin: 0;
+    }
+
+    .hero-title .plant-avatar--hero {
+        width: 3.4rem;
+        height: 3.4rem;
+        margin: 0;
+    }
+
+    .hero-title .hero-badges {
+        align-self: center;
+        margin: 0;
+    }
+
+    .hero-title > :is(p, h1) {
+        grid-column: 1 / -1;
+    }
+
+    .hero-title > p {
+        margin-top: 0.7rem;
+    }
+
+    .hero-title h1 {
+        font-size: clamp(2.75rem, 13vw, 4.2rem);
     }
 
     .profile-intro,

@@ -976,8 +976,9 @@ function choosePlantAvatar(collectionRecord, heroPhoto) {
 }
 
 function renderPlantAvatar(profile, variant) {
+    const portrait = renderSiteIcon(`plant-${profile.slug}`);
     if (!profile.avatar) {
-        return `<span class="plant-avatar plant-avatar--${escapeHtml(variant)} plant-avatar--illustrated" aria-hidden="true">${renderSiteIcon("cactus")}</span>`;
+        return `<span class="plant-avatar plant-avatar--${escapeHtml(variant)} plant-avatar--illustrated" aria-hidden="true">${portrait}</span>`;
     }
 
     const image = profile.avatar.external
@@ -988,7 +989,7 @@ function renderPlantAvatar(profile, variant) {
           })
         : `<img class="plant-avatar plant-avatar--${escapeHtml(variant)}" src="${escapeHtml(profile.avatar.src)}" alt="${escapeHtml(profile.avatar.alt)}" sizes="${variant === "hero" ? "5.5rem" : "3.25rem"}" loading="lazy" decoding="async">`;
 
-    return `<span class="plant-avatar-slot">${image}<span class="plant-avatar-fallback" aria-hidden="true" hidden>${renderSiteIcon("cactus")}</span></span>`;
+    return `<span class="plant-avatar-slot">${image}<span class="plant-avatar-fallback" aria-hidden="true" hidden>${portrait}</span></span>`;
 }
 
 const plantNavigationIconByGroup = {
@@ -1002,7 +1003,7 @@ function renderPlantNavigationIcon(profile, variant) {
     const iconGroup = Object.hasOwn(plantNavigationIconByGroup, profile.group)
         ? profile.group
         : "houseplants";
-    return `<span class="plant-nav-icon plant-nav-icon--${escapeHtml(variant)} plant-nav-icon--${escapeHtml(iconGroup)}" aria-hidden="true">${renderSiteIcon(plantNavigationIconByGroup[iconGroup])}</span>`;
+    return `<span class="plant-nav-icon plant-nav-icon--${escapeHtml(variant)} plant-nav-icon--${escapeHtml(iconGroup)}" aria-hidden="true">${renderSiteIcon(`plant-${profile.slug}`)}</span>`;
 }
 
 function renderCredit(photo, short = false) {

@@ -50,6 +50,247 @@
     <path d="M17.3 14.3v4.4m-2.2-2.2h4.4" fill="none" stroke="#b24f3b" stroke-linecap="round" stroke-width="1.2"/>
   </symbol>
 
+  <!-- Original plant portraits: simplified, morphology-led miniatures for each profile. -->
+  <symbol id="icon-plant-oreocereus-trollii" viewBox="0 0 24 24">
+    <path d="M8 18V7.2C8 4.4 9.5 2.7 11.7 2.7s3.7 1.7 3.7 4.5V18" fill="#77ad79" stroke="#173c2b" stroke-width="1"/>
+    <path d="M9.1 5.2c1.4 2.2-.8 3.6.3 5.8s-.8 3.6.3 6.2m2-13c1 2.3-.9 3.7.2 6s-.8 3.8.2 6.8m2-11.9c-1.1 2.3.8 3.7-.3 5.9s.8 3.8-.2 6.2" fill="none" stroke="#f7f1dc" stroke-linecap="round" stroke-width="1.15"/>
+    <path d="m7.6 7.4 2.3.8m4.9.3 2.1-1.1M7.5 12l2.2.5m5.1.8 2.2.7" stroke="#c95b50" stroke-linecap="round" stroke-width=".75"/>
+    <path d="M6.3 17.2h11.4l-1.3 4.2H7.6z" fill="#d9784a" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-stenocactus-phyllacanthus" viewBox="0 0 24 24">
+    <path d="M5.4 15.8C5.4 9.4 7.8 4.3 12 4.3s6.6 5.1 6.6 11.5Z" fill="#69b56b" stroke="#173c2b" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M8 15.4c3-2.1-1-3.2 1.6-5.3s-.3-3.1 1-5.3m3 10.6c-2.9-2.2 1.1-3.3-1.4-5.4s.3-3.2-.8-5.3m4.6 10.7c-1.9-2.1.6-3.3-1.1-5.2" fill="none" stroke="#d7efb4" stroke-width=".8"/>
+    <path d="m6.3 9.2 2.2.3M15.7 8l2-.4m-10 5.8 2.2-.1m4.2-.3 2.5.4" stroke="#f3c84b" stroke-linecap="round" stroke-width=".8"/>
+    <path d="M4.7 15.6h14.6l-1.7 5.8H6.4z" fill="#e58b4e" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-astrophytum-ornatum" viewBox="0 0 24 24">
+    <path d="m12 3.2 2.1 4.3 4.7.7-3.4 3.3.8 4.7-4.2-2.3-4.2 2.3.8-4.7-3.4-3.3 4.7-.7Z" fill="#589c64" stroke="#173c2b" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M12 3.8v10.1M7.8 7.6l4.2 6.3m4.2-6.3L12 13.9" fill="none" stroke="#dcebc9" stroke-width=".7"/>
+    <g fill="#fff7df"><circle cx="9" cy="7.4" r=".55"/><circle cx="14.7" cy="8.2" r=".55"/><circle cx="10" cy="11.1" r=".5"/><circle cx="14.2" cy="12" r=".5"/></g>
+    <path d="M5.5 15.1h13l-1.6 6.2H7.1z" fill="#d77a49" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-cereus-forbesii-ming-thing" viewBox="0 0 24 24">
+    <g fill="#4ba968" stroke="#173c2b" stroke-width=".8"><circle cx="8.2" cy="13.2" r="3.4"/><circle cx="11.4" cy="9.2" r="4.1"/><circle cx="15.8" cy="13" r="3.7"/><circle cx="13.3" cy="5.5" r="2.5"/></g>
+    <g fill="#91d47f"><circle cx="9.3" cy="8.8" r="1.1"/><circle cx="14.1" cy="10.7" r="1.25"/><circle cx="12.9" cy="5.1" r=".8"/></g>
+    <g fill="#f5c64c"><circle cx="7.6" cy="12.7" r=".45"/><circle cx="12" cy="8" r=".45"/><circle cx="16.4" cy="12" r=".45"/></g>
+    <path d="M5.2 15.4h13.6l-1.5 5.9H6.7z" fill="#7958a4" stroke="#493467" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-echinocereus-rigidissimus-rubispinus" viewBox="0 0 24 24">
+    <path d="M7.6 17V8.4c0-3.5 1.8-5.6 4.4-5.6s4.4 2.1 4.4 5.6V17Z" fill="#6cad68" stroke="#173c2b" stroke-width="1"/>
+    <path d="M9.2 4.4v12m2-13.2V17m2-13.5V17m2-11.6v11.4" stroke="#ec6f91" stroke-width="1"/>
+    <path d="M7.9 7.2h8.2m-8.5 3h8.8m-8.7 3h8.6" stroke="#f7b2c6" stroke-width=".65"/>
+    <path d="m12 3-1.3-1.4L12 1l1.3.6Z" fill="#f4c34d" stroke="#7a531d" stroke-width=".55"/>
+    <path d="M5.9 16.3h12.2l-1.4 5H7.3z" fill="#e2874d" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-echinopsis-subdenudata" viewBox="0 0 24 24">
+    <path d="M5.6 16.5C5.7 9.4 8.2 5.2 12 5.2s6.3 4.2 6.4 11.3Z" fill="#388c5b" stroke="#173c2b" stroke-width="1"/>
+    <path d="M12 5.6v10.6m-3.1-9c1.5 3.1 1.4 6.1.2 9m6-9c-1.5 3.1-1.4 6.1-.2 9" fill="none" stroke="#77c987" stroke-width=".75"/>
+    <g fill="#fff8e9" stroke="#816f52" stroke-width=".35"><circle cx="8.7" cy="9.1" r=".7"/><circle cx="15.3" cy="9.1" r=".7"/><circle cx="8.5" cy="13.2" r=".7"/><circle cx="15.5" cy="13.2" r=".7"/></g>
+    <path d="m12 5.5-2.6-1.8L12 1.6l2.6 2.1Z" fill="#fff7e9" stroke="#7a8a54" stroke-linejoin="round" stroke-width=".6"/>
+    <path d="M4.8 16h14.4l-1.7 5.4h-11z" fill="#e1844b" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-euphorbia-obesa-hybrid" viewBox="0 0 24 24">
+    <ellipse cx="12" cy="10.8" rx="6" ry="7.7" fill="#66a866" stroke="#173c2b" stroke-width="1"/>
+    <path d="M12 3.2v15.1M8.8 4.2c2 4.2 2 9.1 0 13.2m6.4-13.2c-2 4.2-2 9.1 0 13.2" fill="none" stroke="#b8d27c" stroke-width=".8"/>
+    <path d="M6.6 8.2h10.8m-11.2 5h11.6" stroke="#47794f" stroke-dasharray="1 1.2" stroke-width=".6"/>
+    <path d="m12 3.3-1.4-1.1L12 1l1.4 1.2Z" fill="#d95862"/>
+    <path d="M5.2 17.1h13.6l-1.5 4.3H6.7z" fill="#efc24f" stroke="#6e541e" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-gymnocalycium-mihanovichii-variegated" viewBox="0 0 24 24">
+    <path d="M5.4 16.2C5.6 9.7 7.8 5.5 12 5.5s6.4 4.2 6.6 10.7Z" fill="#57a75f" stroke="#173c2b" stroke-width="1"/>
+    <path d="M12 5.7v10.1m-3.6-8.6c2 2.5 2 5.8.6 8.7m6.6-8.7c-2 2.5-2 5.8-.6 8.7" fill="none" stroke="#2f774b" stroke-width=".8"/>
+    <path d="M12 5.7c2.2 2.1 3.2 4.3 2.2 6.6-1 2.2-1 3.1-.7 3.7h4.8c-.2-4.8-1.6-8.3-4.4-9.7Z" fill="#f1c44d" opacity=".95"/>
+    <path d="M7.2 9.7c2.1-.8 3.2.4 3.1 2.1-.2 1.8-1.2 2.4-1.5 4.2H5.7c0-2.6.5-4.7 1.5-6.3Z" fill="#e96c68"/>
+    <path d="M4.8 15.8h14.4l-1.7 5.5h-11z" fill="#5a8fc1" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-gymnocalycium-saglionis" viewBox="0 0 24 24">
+    <path d="M4.7 16.4C4.9 9.4 7.5 5.1 12 5.1s7.1 4.3 7.3 11.3Z" fill="#719579" stroke="#173c2b" stroke-width="1"/>
+    <path d="M12 5.4v10.7M8.6 6.8c1.8 3 1.8 6.1.5 9.3m6.3-9.3c-1.8 3-1.8 6.1-.5 9.3" fill="none" stroke="#a9c39a" stroke-width=".75"/>
+    <g fill="none" stroke="#e6bd72" stroke-linecap="round" stroke-width=".8"><path d="m8.2 9-2.4-1.1m2.6 1.4-2 1.8m7.7-2.2 2.5-1.2m-2.2 1.6 2 1.8M8 13.3l-2.7.5m8.9-.5 2.8.6"/></g>
+    <path d="M4.4 16h15.2l-1.8 5.4H6.2z" fill="#c96e45" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-mammillaria-plumosa" viewBox="0 0 24 24">
+    <g fill="#f2efe0" stroke="#46654e" stroke-width=".75"><circle cx="8.2" cy="12.6" r="4.2"/><circle cx="12.1" cy="9.2" r="5"/><circle cx="16.2" cy="12.7" r="4.1"/></g>
+    <g fill="none" stroke="#fff" stroke-linecap="round" stroke-width=".75"><path d="m9.3 6.7 2.8 2.5 2.7-2.1M6.2 11l2 1.7 2-1.8m3.9 1.7 2.1-1.8 2 1.9"/></g>
+    <g fill="#f1c64d" stroke="#8a631d" stroke-width=".35"><circle cx="12.1" cy="7.2" r=".85"/><circle cx="7.8" cy="12.2" r=".7"/><circle cx="16.4" cy="12.3" r=".7"/></g>
+    <path d="M4.5 15.7h15l-1.8 5.6H6.3z" fill="#67a9cf" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-myrtillocactus-geometrizans-indigo-wave" viewBox="0 0 24 24">
+    <path d="M5.8 16.5c.1-4.4 1.2-8.8 3.3-11.7 1.2 2.5 1.9 4.4 3 5.4 1.3-1.6 2.3-4.4 3.2-7.1 2 3.8 2.8 8.2 2.9 13.4Z" fill="#58a7b8" stroke="#244e54" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M8.6 6.2c.5 3.4.3 6.8-.7 10m7.2-11.1c-.2 4-.1 7.8.8 11.1M12 10.6v5.6" fill="none" stroke="#b5e0d8" stroke-width=".8"/>
+    <g fill="#f1c64d"><circle cx="8.7" cy="9.2" r=".45"/><circle cx="15.4" cy="8.5" r=".45"/><circle cx="12" cy="13" r=".45"/></g>
+    <path d="M4.8 16h14.4l-1.6 5.4H6.4z" fill="#7156a3" stroke="#493467" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-nyctocereus-serpentinus" viewBox="0 0 24 24">
+    <path d="M7 18c-1.4-3.2 1.9-4.8 1.4-7.5C8 8.1 6 7 7.3 4.3m4 13.7c-1.2-2.7 1.6-4.5.7-7.1-.8-2.2.8-3.8 2.2-5.6m2.2 12.7c1-2.4-1.1-4.1-.3-6.2.7-1.9 2.1-2.6 1.7-5" fill="none" stroke="#35aa64" stroke-linecap="round" stroke-width="2.8"/>
+    <path d="M6.7 10.8h2.7m1.5 3.1h2.5m2.3-2.6h2.6" stroke="#e9e9c8" stroke-linecap="round" stroke-width=".7"/>
+    <circle cx="7.3" cy="4" r="1.5" fill="#ef7087" stroke="#7a3649" stroke-width=".55"/>
+    <path d="M4.9 17.1h14.2l-1.7 4.3H6.6z" fill="#e58a4c" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-austrocylindropuntia-subulata" viewBox="0 0 24 24">
+    <path d="M10.1 17V4.5c0-1.2.8-2 1.9-2s1.9.8 1.9 2V17M10 9.2H7.8c-1.5 0-2.4-1-2.4-2.4V5.5m8.5 6.6h2.2c1.5 0 2.4-1 2.4-2.4V8.4" fill="none" stroke="#45aa65" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.2"/>
+    <path d="m6 4.7-1.3-1.5M18 7.6l1.3-1.5M11.1 6.2l-1.3-1.4m3.1 4 1.5-1.4" stroke="#d5edb5" stroke-linecap="round" stroke-width=".8"/>
+    <path d="M5.8 16.3h12.4l-1.5 5H7.3z" fill="#f0c34e" stroke="#6e541e" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-chamaelobivia-hybrid" viewBox="0 0 24 24">
+    <g fill="#59ad62" stroke="#173c2b" stroke-width=".7"><rect x="5.8" y="8.7" width="3.5" height="8.4" rx="1.75"/><rect x="9.6" y="5.5" width="4" height="11.6" rx="2"/><rect x="14.1" y="9" width="3.7" height="8.1" rx="1.85"/></g>
+    <path d="M7.5 10v6m4.1-9v9m4.3-5.5V16" stroke="#cce8a9" stroke-dasharray=".8 1.1" stroke-width=".65"/>
+    <path d="m12 5.8-2.6-2.2L12 1.4l2.6 2.2Z" fill="#ef744a" stroke="#7a3d29" stroke-linejoin="round" stroke-width=".55"/>
+    <circle cx="12" cy="3.6" r=".75" fill="#f5c84c"/>
+    <path d="M4.8 16.2h14.4l-1.7 5.1h-11z" fill="#6b9cc7" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-espostoa-melanostele-nana" viewBox="0 0 24 24">
+    <path d="M8.1 17V6.7c0-2.5 1.5-4.1 3.9-4.1s3.9 1.6 3.9 4.1V17Z" fill="#6aa671" stroke="#173c2b" stroke-width="1"/>
+    <path d="M9.4 4.7c1.6 2.3-.8 3.8.5 6s-.8 3.7.4 6m2-13.1c1 2.5-.9 4 .2 6.3s-.7 4.2.1 6.9m2-12.1c-1.2 2.4.7 3.9-.4 6.1s.8 3.8-.4 6" fill="none" stroke="#fff6e6" stroke-linecap="round" stroke-width="1.25"/>
+    <path d="M5.7 16.2h12.6l-1.5 5.2H7.2z" fill="#a66ec1" stroke="#604073" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-gymnocalycium-mihanovichii-black-widow" viewBox="0 0 24 24">
+    <path d="M5.3 16.3C5.5 9.7 7.8 5.5 12 5.5s6.5 4.2 6.7 10.8Z" fill="#4f385e" stroke="#20182a" stroke-width="1"/>
+    <path d="M12 5.8v10.1m-3.5-8.7c1.9 2.6 1.9 5.9.6 8.8m6.4-8.8c-1.9 2.6-1.9 5.9-.6 8.8" fill="none" stroke="#9a5f9f" stroke-width=".8"/>
+    <g fill="#f06091"><circle cx="8.2" cy="9.3" r=".65"/><circle cx="15.8" cy="9.3" r=".65"/><circle cx="8.4" cy="13.2" r=".65"/><circle cx="15.6" cy="13.2" r=".65"/></g>
+    <path d="M4.7 15.9h14.6l-1.7 5.5H6.4z" fill="#e0aa3e" stroke="#70521b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-mammillaria-mammillaris" viewBox="0 0 24 24">
+    <g fill="#58a361" stroke="#173c2b" stroke-width=".75"><circle cx="8" cy="13" r="4"/><circle cx="12" cy="9.7" r="5"/><circle cx="16.3" cy="13" r="3.8"/></g>
+    <g fill="#f7f0df"><circle cx="10" cy="7.8" r=".65"/><circle cx="13.5" cy="8.8" r=".65"/><circle cx="8" cy="12.3" r=".65"/><circle cx="15.7" cy="12" r=".65"/><circle cx="11.7" cy="13.7" r=".65"/></g>
+    <path d="m12 5.1-1.3-1.4L12 2.4l1.3 1.3Z" fill="#e76f8e"/>
+    <path d="M4.5 15.8h15l-1.8 5.5H6.3z" fill="#e2874d" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-mammillaria-rekoi" viewBox="0 0 24 24">
+    <path d="M6 16.5C6.1 9.5 8.3 5 12 5s5.9 4.5 6 11.5Z" fill="#4ca162" stroke="#173c2b" stroke-width="1"/>
+    <g fill="#f3ead4" stroke="#7f6b4f" stroke-width=".3"><circle cx="9" cy="8.6" r=".7"/><circle cx="13.6" cy="7.9" r=".7"/><circle cx="8.4" cy="12.4" r=".7"/><circle cx="12" cy="11.3" r=".7"/><circle cx="15.6" cy="12.5" r=".7"/></g>
+    <path d="M9 8.6 6.8 6.8m6.8 1.1 1.9-2.2m-7.1 6.7L6 13.7m6-2.4 2-1.9m1.6 3.1 2.3 1" fill="none" stroke="#cf9c65" stroke-linecap="round" stroke-width=".75"/>
+    <path d="M13.6 7.9c2.5-.1 3.1 1.3 2 2.4" fill="none" stroke="#b25d45" stroke-linecap="round" stroke-width=".8"/>
+    <path d="M4.9 16h14.2l-1.7 5.4H6.6z" fill="#668fc0" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-myrtillocactus-geometrizans-fukurokuryuzinboku" viewBox="0 0 24 24">
+    <path d="M8.5 17V4.7c0-1.5 1.4-2.5 3.5-2.5s3.5 1 3.5 2.5V17Z" fill="#56a8ad" stroke="#244e54" stroke-width="1"/>
+    <path d="M8.7 6.1c2.3 1.6 4.3 1.6 6.6 0M8.7 10c2.3 1.7 4.3 1.7 6.6 0m-6.6 3.9c2.3 1.7 4.3 1.7 6.6 0" fill="none" stroke="#b9e3d8" stroke-width="1.15"/>
+    <path d="M12 2.7v14" stroke="#347b83" stroke-width=".65"/>
+    <g fill="#f3c74d"><circle cx="9" cy="6.1" r=".4"/><circle cx="15" cy="9.9" r=".4"/><circle cx="9" cy="13.8" r=".4"/></g>
+    <path d="M5.8 16.2h12.4l-1.5 5.1H7.3z" fill="#e4824b" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-parodia-leninghausii" viewBox="0 0 24 24">
+    <path d="M8.2 17V7c0-2.8 1.4-4.6 3.8-4.6s3.8 1.8 3.8 4.6v10Z" fill="#69a45d" stroke="#173c2b" stroke-width="1"/>
+    <path d="M9.5 4.4v12.3m2-13.8v13.8m2-13.2v13.2m1.5-10.8v10.8" stroke="#e9bd43" stroke-width=".9"/>
+    <path d="M8.5 7.2h7m-7.2 3h7.4m-7.4 3h7.4" stroke="#ffe28a" stroke-dasharray=".7 1" stroke-width=".6"/>
+    <path d="m12 2.8-1.5-1.3L12 .5l1.5 1Z" fill="#f1c64d"/>
+    <path d="M5.7 16.2h12.6l-1.5 5.2H7.2z" fill="#7358a3" stroke="#493467" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-tephrocactus-articulatus-papyracanthus" viewBox="0 0 24 24">
+    <g fill="#739b70" stroke="#173c2b" stroke-width=".8"><ellipse cx="11.7" cy="13.7" rx="3.8" ry="3.6"/><ellipse cx="12.5" cy="8.5" rx="3.4" ry="3.8"/><ellipse cx="10.8" cy="4.4" rx="2.6" ry="2.7"/></g>
+    <path d="m9.4 4-4.2-1.3 3.2 3.1m4.7 2.1 5.1-2.1-3.8 4m-4.8 3.4-4.9-1.4 4 3.5m5.8-1.6 4.7 1.8-4.8.8" fill="#f6e8c8" stroke="#9c7947" stroke-linejoin="round" stroke-width=".65"/>
+    <path d="M5.2 16h13.6l-1.6 5.3H6.8z" fill="#d97c4a" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-aeonium-haworthii-dream-color" viewBox="0 0 24 24">
+    <path d="M12 18V9m0 4-5-3m5 1 5-3" fill="none" stroke="#80613d" stroke-linecap="round" stroke-width="1.3"/>
+    <g fill="#62b96b" stroke="#9f3f63" stroke-width=".65"><path d="M7 10c-3.2-1.9-3.7-4.2-1.7-4.7C7.4 4.8 8.5 6.8 7 10Z"/><path d="M7 10c2.9-2.4 5.2-2.2 5.2-.1S9.8 12.7 7 10Z"/><path d="M7 10c-1.1 3.5-3 4.7-4.2 3-1.2-1.8.4-3.6 4.2-3Z"/><path d="M17 8c-3.2-1.9-3.7-4.2-1.7-4.7 2.1-.5 3.2 1.5 1.7 4.7Z"/><path d="M17 8c2.9-2.4 5.2-2.2 5.2-.1S19.8 10.7 17 8Z"/><path d="M17 8c-1.1 3.5-3 4.7-4.2 3-1.2-1.8.4-3.6 4.2-3Z"/></g>
+    <g fill="#f4cd54"><circle cx="7" cy="9.7" r=".65"/><circle cx="17" cy="7.7" r=".65"/></g>
+    <path d="M5.5 17h13l-1.5 4.4H7z" fill="#f0ede2" stroke="#6c665b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-echeveria-pulidonis" viewBox="0 0 24 24">
+    <circle cx="12" cy="11.5" r="7.8" fill="#e7d8bf"/>
+    <g fill="#66bd83" stroke="#b24e5c" stroke-linejoin="round" stroke-width=".6"><path d="M12 11.7C8.5 8.2 8.6 5.3 11 4.8c2.4-.5 3.2 2.3 1 6.9Z"/><path d="M12 11.7c4.2-2.7 7-1.8 6.8.7-.2 2.4-3.1 2.5-6.8-.7Z"/><path d="M12 11.7c-.8 5-3 6.9-5 5.3-1.9-1.6-.5-4.2 5-5.3Z"/><path d="M12 11.7C7.1 13 4.5 11.7 5.4 9.4c.9-2.2 3.8-1.5 6.6 2.3Z"/><path d="M12 11.7c2.7-4.2 5.6-4.8 6.5-2.5.8 2.3-1.8 3.7-6.5 2.5Z"/></g>
+    <circle cx="12" cy="11.7" r="1.4" fill="#f2cf58" stroke="#7a631f" stroke-width=".45"/>
+    <path d="M5.3 17h13.4l-1.5 4.4H6.8z" fill="#6c9fc6" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-echeveria-raindrops" viewBox="0 0 24 24">
+    <g fill="#6aaeb2" stroke="#425d76" stroke-linejoin="round" stroke-width=".55"><path d="M12 11.7C8.4 8.3 8.5 5.4 10.9 5c2.3-.4 3.2 2.4 1.1 6.7Z"/><path d="M12 11.7c4.1-2.8 6.9-1.9 6.7.5s-3.1 2.6-6.7-.5Z"/><path d="M12 11.7c-.8 4.9-3 6.8-4.9 5.2-1.9-1.5-.5-4.2 4.9-5.2Z"/><path d="M12 11.7C7.1 13 4.6 11.7 5.5 9.5c.9-2.2 3.8-1.5 6.5 2.2Z"/><path d="M12 11.7c2.6-4.1 5.5-4.8 6.3-2.5.9 2.2-1.7 3.7-6.3 2.5Z"/></g>
+    <g fill="#a4d3c8" stroke="#476b72" stroke-width=".3"><circle cx="10.6" cy="7.8" r=".8"/><circle cx="15.1" cy="10" r=".85"/><circle cx="8.5" cy="12.8" r=".75"/></g>
+    <circle cx="12" cy="11.7" r="1.3" fill="#d780a1"/>
+    <path d="M5.3 17h13.4l-1.5 4.4H6.8z" fill="#f1c751" stroke="#70521b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-kalanchoe-bracteata" viewBox="0 0 24 24">
+    <path d="M12 18V5.2m0 4-4-2.4m4 6-4.6-1.4m4.6-.2 4-2.5m-4 6.2 4.7-1.7" fill="none" stroke="#547457" stroke-linecap="round" stroke-width="1.2"/>
+    <g fill="#b9c5b7" stroke="#526355" stroke-width=".65"><ellipse cx="7.2" cy="6.5" rx="2.8" ry="1.7" transform="rotate(28 7.2 6.5)"/><ellipse cx="7" cy="11.2" rx="3" ry="1.8" transform="rotate(12 7 11.2)"/><ellipse cx="16.6" cy="8.5" rx="2.9" ry="1.7" transform="rotate(-28 16.6 8.5)"/><ellipse cx="17" cy="13" rx="3" ry="1.8" transform="rotate(-15 17 13)"/><ellipse cx="12" cy="4.2" rx="2.1" ry="1.5"/></g>
+    <path d="M5.6 17h12.8L17 21.4H7z" fill="#e4814b" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-kalanchoe-orgyalis" viewBox="0 0 24 24">
+    <path d="M12 18V5.2m0 4-4-2.4m4 6-4.6-1.4m4.6-.2 4-2.5m-4 6.2 4.7-1.7" fill="none" stroke="#6e553c" stroke-linecap="round" stroke-width="1.2"/>
+    <g fill="#bd7350" stroke="#6e452f" stroke-width=".65"><ellipse cx="7.2" cy="6.5" rx="2.8" ry="1.7" transform="rotate(28 7.2 6.5)"/><ellipse cx="7" cy="11.2" rx="3" ry="1.8" transform="rotate(12 7 11.2)"/><ellipse cx="16.6" cy="8.5" rx="2.9" ry="1.7" transform="rotate(-28 16.6 8.5)"/><ellipse cx="17" cy="13" rx="3" ry="1.8" transform="rotate(-15 17 13)"/><ellipse cx="12" cy="4.2" rx="2.1" ry="1.5"/></g>
+    <path d="M5.6 17h12.8L17 21.4H7z" fill="#70a9c8" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-pleiospilos-nelii-royal-flush" viewBox="0 0 24 24">
+    <path d="M4.8 15.5C5.1 9.2 7.5 5.1 11.4 5l.2 10.5Z" fill="#9c668f" stroke="#4d3348" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M12.4 5c3.9.1 6.3 4.2 6.8 10.5h-6.6Z" fill="#7b527b" stroke="#4d3348" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M11.5 5.2 12 15.4l.5-10.2" stroke="#f2b6d0" stroke-width=".8"/>
+    <g fill="#dca3c4"><circle cx="8.2" cy="9.1" r=".5"/><circle cx="9.2" cy="12.5" r=".45"/><circle cx="15.6" cy="8.7" r=".5"/><circle cx="16" cy="12.2" r=".45"/></g>
+    <path d="M4 15h16l-1.8 6.4H5.8z" fill="#efe8dd" stroke="#6c665b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-portulacaria-afra" viewBox="0 0 24 24">
+    <path d="M12 18V4.5m0 4-4.7-2.4m4.7 6.1-5.5-1.6m5.5-4 4.3-2m-4.3 6.5 5.2-2.4m-5.2 6.4 4.2-1.8" fill="none" stroke="#86533b" stroke-linecap="round" stroke-width="1.4"/>
+    <g fill="#56b66a" stroke="#2f6841" stroke-width=".55"><circle cx="6.5" cy="5.8" r="2.1"/><circle cx="5.8" cy="10.4" r="2.2"/><circle cx="17.2" cy="4.4" r="2.1"/><circle cx="18" cy="8.5" r="2.2"/><circle cx="17" cy="13" r="2.1"/><circle cx="11.8" cy="3.6" r="1.9"/></g>
+    <path d="M5.5 17h13l-1.5 4.4H7z" fill="#d77a49" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-sempervivum-coconut-crystal" viewBox="0 0 24 24">
+    <g stroke="#4d6b55" stroke-linejoin="round" stroke-width=".5"><g fill="#83bd73"><path d="M12 11.7c-2.5-3.9-1.7-6.7.5-6.2 2.2.5 2 3.2-.5 6.2Z"/><path d="M12 11.7c4-2.4 6.6-1.3 5.9.8-.7 2.1-3.4 1.7-5.9-.8Z"/><path d="M12 11.7c-.4 4.6-2.6 6.4-4.3 4.9-1.6-1.5-.2-3.9 4.3-4.9Z"/></g><g fill="#679f68"><path d="M7 13.8c-2.1-2.6-1.8-4.6-.1-4.5 1.7.2 1.9 2.2.1 4.5Z"/><path d="M7 13.8c2.9-1.6 4.7-.8 4.2.8-.5 1.5-2.4 1.2-4.2-.8Z"/><path d="M17.2 14.1c-2-2.5-1.7-4.5-.1-4.3 1.7.1 1.9 2 .1 4.3Z"/><path d="M17.2 14.1c2.8-1.5 4.6-.7 4.1.8-.5 1.5-2.4 1.1-4.1-.8Z"/></g></g>
+    <g fill="#d9e8bb"><circle cx="12" cy="11.7" r=".8"/><circle cx="7" cy="13.8" r=".6"/><circle cx="17.2" cy="14.1" r=".6"/></g>
+    <path d="M3.8 16h16.4l-1.9 5.4H5.7z" fill="#f0c44e" stroke="#70521b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-cleistocactus-colademononis" viewBox="0 0 24 24">
+    <path d="M7 5.5c-.8 4.1-.8 8.6 1.1 12.2 1.2 2.2 3.6 2.5 4.5.3 1.1-2.8-1.8-5.1-.5-8.2M15 5c1.8 3 3 6.7 2.1 10.5-.5 2.2-2.7 3.3-4.1 1.6" fill="none" stroke="#6fa276" stroke-linecap="round" stroke-width="3.5"/>
+    <path d="M6.5 5.7c1.5 1 2.5 2.3 3 4m5.1-4.6c1.4 1.5 2.1 3.1 2.4 4.8M8.2 13c1.4.8 2.4 2 3 3.5" fill="none" stroke="#fff2dd" stroke-linecap="round" stroke-width="1.15"/>
+    <path d="M4.8 3.4h12.6v3.2H4.8z" fill="#e5814b" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-echinopsis-spachiana" viewBox="0 0 24 24">
+    <g fill="#5aa45e" stroke="#173c2b" stroke-width=".75"><rect x="5.4" y="8.2" width="4" height="9" rx="2"/><rect x="9.8" y="3.2" width="4.5" height="14" rx="2.25"/><rect x="14.8" y="6.5" width="3.9" height="10.7" rx="1.95"/></g>
+    <path d="M7.4 9v7m4.7-12v12m4.7-8.7V16" stroke="#edc04c" stroke-dasharray=".8 1.05" stroke-width=".75"/>
+    <path d="m12.1 3.5-1.8-1.6L12.1.5 14 1.9Z" fill="#fff4df" stroke="#7a8a54" stroke-linejoin="round" stroke-width=".45"/>
+    <path d="M4.2 16h15.6l-1.8 5.4H6z" fill="#6d97c4" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-mammillaria-bombycina" viewBox="0 0 24 24">
+    <g fill="#7eaa6c" stroke="#173c2b" stroke-width=".65"><circle cx="8" cy="13" r="4"/><circle cx="12" cy="9.3" r="5"/><circle cx="16.3" cy="13" r="3.9"/></g>
+    <g fill="none" stroke="#f7edd7" stroke-linecap="round" stroke-width=".85"><path d="m8.5 6.3 3.5 3 3.3-2.4M5.4 11l2.6 2 2.5-2m3.2 1.8 2.6-2 2.4 2.1"/></g>
+    <g fill="#ef7294"><circle cx="12" cy="6.6" r=".75"/><circle cx="8" cy="12" r=".6"/><circle cx="16.2" cy="12" r=".6"/></g>
+    <path d="M4.4 15.8h15.2l-1.8 5.5H6.2z" fill="#df804a" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-pilosocereus-pachycladus-variegated" viewBox="0 0 24 24">
+    <path d="M8.2 17V6c0-2.3 1.4-3.8 3.8-3.8s3.8 1.5 3.8 3.8v11Z" fill="#579eb4" stroke="#244e54" stroke-width="1"/>
+    <path d="M12 2.6v14M9.6 3.8v13m4.8-13v13" stroke="#b7d9ce" stroke-width=".65"/>
+    <path d="M8.6 6.2c1.7-.7 2.7.4 2.5 2.1-.2 1.6-1.1 2.4-.8 4 .2 1.2-.4 2.9-1.7 3.6Zm4-3.5c2.3.2 3.1 1.7 2.8 3.5-.3 1.9-1.8 2.7-1.5 4.4.3 1.7 1.4 2.8.8 5.9h-2.1Z" fill="#f1d05c"/>
+    <g fill="#ed805a"><circle cx="9" cy="8" r=".4"/><circle cx="15" cy="7" r=".4"/><circle cx="11" cy="13" r=".4"/></g>
+    <path d="M5.7 16.2h12.6l-1.5 5.2H7.2z" fill="#e5844c" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
+  <symbol id="icon-plant-pachira-glabra" viewBox="0 0 24 24">
+    <path d="M10.5 19c1.7-3.5 3.2-6.8 1.1-10m2 10c-1.6-3.5-3.1-6.8-1-10" fill="none" stroke="#9a6842" stroke-linecap="round" stroke-width="2.3"/>
+    <g fill="#4db66c" stroke="#2c6240" stroke-linejoin="round" stroke-width=".55"><path d="M12 8.8C8.3 7.1 7.1 4.8 8.7 3.7c1.7-1.1 3.5.8 3.3 5.1Z"/><path d="M12 8.8c.5-4.1 2.3-6.1 4-5.1 1.7 1 .6 3.5-4 5.1Z"/><path d="M12 8.8c4-.9 6.4.1 5.8 2-.6 1.9-3.2 1.7-5.8-2Z"/><path d="M12 8.8c-3 2.8-5.7 3.2-6.1 1.2-.4-1.9 2-2.8 6.1-1.2Z"/><path d="M12 8.8c-1.8-3.7-.9-6.2 1-5.7 1.9.5 1.7 3.1-1 5.7Z"/></g>
+    <circle cx="12" cy="8.8" r="1" fill="#f2c64d"/>
+    <path d="M5.8 18h12.4l-1.4 3.5H7.2z" fill="#6c9ec7" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
+  </symbol>
+
   <symbol id="icon-menu" viewBox="0 0 24 24">
     <rect x="2.5" y="3" width="19" height="18" rx="4" fill="#e8f0df" stroke="#244b36" stroke-width="1.1"/>
     <path d="M7 8h10" stroke="#39a96b" stroke-linecap="round" stroke-width="2"/>
@@ -364,21 +605,21 @@
   </symbol>
 
   <symbol id="icon-arrow-right" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="9" fill="#e7f0df" stroke="#46634a" stroke-width="1"/>
-    <path d="M6.5 12h9" stroke="#5a8fbd" stroke-linecap="round" stroke-width="1.7"/>
-    <path d="m13 8.5 3.5 3.5-3.5 3.5" fill="none" stroke="#e28a45" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/>
+    <path d="M3 8.2h9.8V4.4L21 12l-8.2 7.6v-3.8H3Z" fill="#5a9fca" stroke="#31566f" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M5.5 12h10.2" stroke="#fff8e8" stroke-linecap="round" stroke-width="1.5"/>
+    <circle cx="5.1" cy="6" r="1.45" fill="#f3c64d" stroke="#76551e" stroke-width=".55"/>
   </symbol>
 
   <symbol id="icon-arrow-left" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="9" fill="#e7f0df" stroke="#46634a" stroke-width="1"/>
-    <path d="M17.5 12h-9" stroke="#5a8fbd" stroke-linecap="round" stroke-width="1.7"/>
-    <path d="M11 8.5 7.5 12l3.5 3.5" fill="none" stroke="#e28a45" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/>
+    <path d="M21 8.2h-9.8V4.4L3 12l8.2 7.6v-3.8H21Z" fill="#5a9fca" stroke="#31566f" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M18.5 12H8.3" stroke="#fff8e8" stroke-linecap="round" stroke-width="1.5"/>
+    <circle cx="18.9" cy="6" r="1.45" fill="#f3c64d" stroke="#76551e" stroke-width=".55"/>
   </symbol>
 
   <symbol id="icon-arrow-down" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="9" fill="#e7f0df" stroke="#46634a" stroke-width="1"/>
-    <path d="M12 6.5v9" stroke="#5a8fbd" stroke-linecap="round" stroke-width="1.7"/>
-    <path d="m8.5 13 3.5 3.5 3.5-3.5" fill="none" stroke="#e28a45" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/>
+    <path d="M8.2 3v9.8H4.4L12 21l7.6-8.2h-3.8V3Z" fill="#5a9fca" stroke="#31566f" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M12 5.5v10.2" stroke="#fff8e8" stroke-linecap="round" stroke-width="1.5"/>
+    <circle cx="18" cy="5.1" r="1.45" fill="#f3c64d" stroke="#76551e" stroke-width=".55"/>
   </symbol>
 
   <symbol id="icon-check" viewBox="0 0 24 24">
@@ -393,9 +634,9 @@
   </symbol>
 
   <symbol id="icon-arrow-up" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="9" fill="#e7f0df" stroke="#46634a" stroke-width="1"/>
-    <path d="M12 17.5v-9" stroke="#5a8fbd" stroke-linecap="round" stroke-width="1.7"/>
-    <path d="m8.5 11 3.5-3.5 3.5 3.5" fill="none" stroke="#e28a45" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/>
+    <path d="M8.2 21v-9.8H4.4L12 3l7.6 8.2h-3.8V21Z" fill="#5a9fca" stroke="#31566f" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M12 18.5V8.3" stroke="#fff8e8" stroke-linecap="round" stroke-width="1.5"/>
+    <circle cx="18" cy="18.9" r="1.45" fill="#f3c64d" stroke="#76551e" stroke-width=".55"/>
   </symbol>
 
   <symbol id="icon-camera" viewBox="0 0 24 24">

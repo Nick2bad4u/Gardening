@@ -67,8 +67,8 @@ const expectedPresentProfiles = 33;
 const expectedUnverifiedReceiptProfiles = 0;
 const expectedHistoricalProfiles = 1;
 const expectedCollectionOverviews = 3;
-const expectedCollectionPlacements = 158;
-const expectedUniqueGyazoImages = 114;
+const expectedCollectionPlacements = 160;
+const expectedUniqueGyazoImages = 116;
 const expectedGyazoApplicationName = "Fenton Garden Field Guide";
 const expectedGyazoThumbnailWidths = [
     480,
@@ -399,6 +399,17 @@ async function main() {
         iconSymbols.length === iconSymbolSet.size &&
             requiredIconSymbols.every((name) => iconSymbolSet.has(name)),
         "The shared icon sprite is missing a required symbol or contains duplicate IDs."
+    );
+    const expectedPlantIconSymbols = profileSlugs.map(
+        (slug) => `plant-${slug}`
+    );
+    const renderedPlantIconSymbols = iconSymbols.filter((name) =>
+        name.startsWith("plant-")
+    );
+    assert(
+        renderedPlantIconSymbols.length === profiles.length &&
+            expectedPlantIconSymbols.every((name) => iconSymbolSet.has(name)),
+        "The shared icon sprite must contain exactly one plant-specific portrait for every profile."
     );
     assert(
         !/<script\b/i.test(iconSprite) && !/currentcolor/i.test(iconSprite),
@@ -1521,13 +1532,27 @@ async function main() {
     );
     const plantNavigationIconUses =
         html.match(
-            /class="plant-nav-icon[^\"]*"[\s\S]*?<use\b[^>]*href="\.\/plant-icons\.svg#icon-(?:cactus|houseplant|rehab|succulent)"[\s\S]*?<\/span>/g
+            /class="plant-nav-icon[^\"]*"[\s\S]*?<use\b[^>]*href="\.\/plant-icons\.svg#icon-plant-[a-z-]+"[\s\S]*?<\/span>/g
         ) ?? [];
     assert(
         !html.includes("plant-nav-icon-sprite") &&
             plantNavigationIconUses.length === profiles.length * 2,
-        "Navigation icons must reuse the local multicolor SVG sprite."
+        "Navigation icons must use the local plant-specific multicolor SVG portraits."
     );
+    for (const profile of profiles) {
+        const portraitUseCount = (
+            html.match(
+                new RegExp(
+                    `plant-icons\\.svg#icon-plant-${profile.slug}(?=[\"#])`,
+                    "g"
+                )
+            ) ?? []
+        ).length;
+        assert(
+            portraitUseCount === 3,
+            `${profile.slug} must use its portrait in the contents, drawer, and hero fallback; found ${portraitUseCount} uses.`
+        );
+    }
     const atAGlanceCount = (html.match(/class="profile-at-a-glance"/g) ?? [])
         .length;
     assert(
