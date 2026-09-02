@@ -27,7 +27,24 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.14.4");
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.14.5");
+const webPlantImageUrls = JSON.parse(
+    JSON.stringify(vm.runInContext("WEB_PLANT_IMAGE_URLS", context))
+);
+assert.equal(Object.keys(webPlantImageUrls).length, 28);
+assert.ok(
+    Object.values(webPlantImageUrls).every(({ currentImageUrl }) =>
+        /^https:\/\/thumb\.gyazo\.com\/thumb\/960\/[a-f\d]{32}\.(?:jpg|png)$/u.test(
+            currentImageUrl
+        )
+    ),
+    "Every current P01-P28 logger photo must use a cached 960 px Gyazo thumbnail."
+);
+assert.match(
+    webPlantImageUrls.P20.currentImageUrl,
+    /7954fb6f93fc71827ac45cd854eeb25a/,
+    "P20 must show the shared succulent planter."
+);
 
 assert.deepEqual(
     Array.from(
@@ -316,7 +333,16 @@ assert.match(html, /id="rotationDegrees"/);
 assert.match(html, /id="bulkRotationDegrees"/);
 assert.match(html, /id="nutrientsUsed"/);
 assert.match(html, /id="potSetup"\s+type="hidden"/);
-assert.match(html, /createLink\("▤ Spreadsheet", links\.spreadsheet\)/);
+assert.match(html, /createLink\("Spreadsheet", links\.spreadsheet, "sheets"\)/);
+assert.match(html, /id="app-icon-cactus"/);
+assert.match(html, /id="app-icon-water"/);
+assert.match(html, /id="app-icon-queue"/);
+assert.match(
+    html,
+    /function createIcon\(iconName, className\s*=\s*"app-icon"\)/
+);
+assert.match(html, /const EVENT_ICON_NAMES = Object\.freeze\(\{/);
+assert.doesNotMatch(html, /[☀☾✎▦💧⚖↔✓↻✂🪴✿📷⚠⋯]/u);
 assert.doesNotMatch(html, /Add this logger to your phone/);
 assert.doesNotMatch(html, /Permanent ID stays the same/);
 assert.doesNotMatch(html, /Pot setup is not pot size/);
@@ -342,7 +368,7 @@ assert.match(html, /const QUEUE_EXECUTION_LIMIT_MS = 390000;/);
 assert.match(html, /const QUEUE_RETRY_DELAYS_MS = \[2000, 5000, 10000\];/);
 assert.match(html, /function queueStatusDescriptor\(entry\)/);
 assert.match(html, /id="queueSendButton"/);
-assert.match(html, /id="queueButton"[\s\S]*?>\s*Add to queue\s*</);
+assert.match(html, /id="queueButton"[\s\S]*?Add to queue/);
 assert.match(html, /id="advanceAfterQueue"/);
 assert.match(html, /queue-complete/);
 assert.match(html, /@media \(hover: none\) and \(pointer: coarse\)/);
@@ -352,7 +378,10 @@ assert.match(
     /document\.addEventListener\("click", guardMobileButtonHit, true\)/
 );
 assert.match(html, /id="openGooglePhotos"/);
-assert.match(html, /createLink\("History & charts", plant\.historyUrl\)/);
+assert.match(
+    html,
+    /createLink\(\s*"History & charts",\s*plant\.historyUrl,\s*"history"\s*\)/
+);
 assert.match(source, /const HISTORY_DETAIL_HEADERS/);
 assert.match(source, /const HISTORY_ROTATION_HEADERS/);
 assert.match(source, /ensureHistoryDetailColumns_\(history\)/);

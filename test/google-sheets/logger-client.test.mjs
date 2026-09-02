@@ -113,7 +113,8 @@ const canonicalPlantLabels = [
 ];
 
 const p23ImageUrls = {
-    currentImageUrl: "https://i.gyazo.com/a1f2ad382a7334993865979d7ac9c183.jpg",
+    currentImageUrl:
+        "https://thumb.gyazo.com/thumb/960/387921a6f4930d7051201ed54fb9339d.jpg",
     nurseryLabelImageUrl:
         "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p23-paper-spine-label.webp",
 };
@@ -1365,14 +1366,14 @@ describe("Garden logger browser recovery", () => {
         );
         expect(
             window.document.querySelector("#queueProgress").textContent
-        ).toBe("✓ All 2 plants have a weight safely queued on this device.");
+        ).toBe("All 2 plants have a weight safely queued on this device.");
         expect(
             [...window.document.querySelectorAll("#plantSelect option")].map(
                 (option) => option.textContent
             )
         ).toEqual([
-            expect.stringMatching(/^✓ Moon cactus/),
-            expect.stringMatching(/^✓ Yellow tower cactus/),
+            expect.stringMatching(/^Queued · Moon cactus/),
+            expect.stringMatching(/^Queued · Yellow tower cactus/),
         ]);
     });
 

@@ -188,44 +188,58 @@ const appSheetBulkNutrientsUsedIndex = 47;
 const appSheetBulkNutrientProductIndex = 48;
 const appSheetBulkNutrientAmountIndex = 49;
 
-const expectedPlantImageUrls = {
-    P23: {
-        currentImageUrl:
-            "https://i.gyazo.com/a1f2ad382a7334993865979d7ac9c183.jpg",
-        nurseryLabelImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p23-paper-spine-label.webp",
-    },
-    P24: {
-        currentImageUrl:
-            "https://i.gyazo.com/c1e642aa6d14b5b15e7dca294c51ba3d.jpg",
-        nurseryLabelImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p24-coconut-crystal-label.webp",
-    },
-    P25: {
-        currentImageUrl:
-            "https://i.gyazo.com/10141830dc3d95f0146c453d1897c5e8.png",
-        nurseryLabelImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p25-raindrops-label.webp",
-    },
-    P26: {
-        currentImageUrl:
-            "https://i.gyazo.com/029ccf0a7dbfc4d0e6ad4fdeff179b39.jpg",
-        nurseryLabelImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p26-eves-needle-label.webp",
-    },
-    P27: {
-        currentImageUrl:
-            "https://i.gyazo.com/157b0f3e2ed7ee66bf01c2b0a2cd70ec.jpg",
-        nurseryLabelImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p27-black-widow-label.webp",
-    },
-    P28: {
-        currentImageUrl:
-            "https://i.gyazo.com/c190dd6a18e72b1c75b38dc434415323.jpg",
-        nurseryLabelImageUrl:
-            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p28-royal-flush-label.webp",
-    },
+const expectedCurrentImageUrls = {
+    P01: "https://thumb.gyazo.com/thumb/960/d74483025d55eaa5a8f242b1088e63dd.jpg",
+    P02: "https://thumb.gyazo.com/thumb/960/cf2f02119e769c5db8aef2eaaa1ecdcc.jpg",
+    P03: "https://thumb.gyazo.com/thumb/960/16784f3bec421b84f050e72c5c8a5dae.jpg",
+    P04: "https://thumb.gyazo.com/thumb/960/ac11466d734bfa7b406ccbd7a58057d2.jpg",
+    P05: "https://thumb.gyazo.com/thumb/960/8d647c4e8a0306c3ec77b18fda570c7c.jpg",
+    P06: "https://thumb.gyazo.com/thumb/960/69be73cfc39fb5819c5355e91e6402cc.jpg",
+    P07: "https://thumb.gyazo.com/thumb/960/ce880313d0ff83b3587003c536de218a.jpg",
+    P08: "https://thumb.gyazo.com/thumb/960/f7e1a9d53922fa92d6bf662904da0d0a.jpg",
+    P09: "https://thumb.gyazo.com/thumb/960/c35899fe81d1be02512a3d5bdea813a3.jpg",
+    P10: "https://thumb.gyazo.com/thumb/960/eb94b52eeafac12ce869a661fcdb3f1e.jpg",
+    P11: "https://thumb.gyazo.com/thumb/960/51f68e4e6d970ef775550c77754c9b5d.jpg",
+    P12: "https://thumb.gyazo.com/thumb/960/de10da31ae4d98c089486a6ef0aefbf9.jpg",
+    P13: "https://thumb.gyazo.com/thumb/960/244b18ddb7bf6beb7942ab94ef492227.jpg",
+    P14: "https://thumb.gyazo.com/thumb/960/018a854ff35307af4511f0333677472c.jpg",
+    P15: "https://thumb.gyazo.com/thumb/960/1a79f72e567fd569a019855e319dd841.jpg",
+    P16: "https://thumb.gyazo.com/thumb/960/d4a58b8c2c7fadabc2667f9d60e1906c.jpg",
+    P17: "https://thumb.gyazo.com/thumb/960/0382998ccef80e8e35e67cd146aed6a1.jpg",
+    P18: "https://thumb.gyazo.com/thumb/960/ebea036fd6fa53fe1ec4fe0bf45ce2e5.jpg",
+    P19: "https://thumb.gyazo.com/thumb/960/c5553b1972af905d097020742a883ce0.jpg",
+    P20: "https://thumb.gyazo.com/thumb/960/7954fb6f93fc71827ac45cd854eeb25a.jpg",
+    P21: "https://thumb.gyazo.com/thumb/960/6fdda39d86f77b957ef59ffae9e8503d.jpg",
+    P22: "https://thumb.gyazo.com/thumb/960/c282c0a9a6201868066c0efdce8af30a.jpg",
+    P23: "https://thumb.gyazo.com/thumb/960/387921a6f4930d7051201ed54fb9339d.jpg",
+    P24: "https://thumb.gyazo.com/thumb/960/8cb990678c4ca9fd73e5953240b88487.jpg",
+    P25: "https://thumb.gyazo.com/thumb/960/19eeb627281c6ea948a362374a27204d.jpg",
+    P26: "https://thumb.gyazo.com/thumb/960/a6a4ab586c57518f3fa5d785dcdb279b.jpg",
+    P27: "https://thumb.gyazo.com/thumb/960/d0e5da659c8ad07efa7f1410a4be62ec.jpg",
+    P28: "https://thumb.gyazo.com/thumb/960/2f26321ee8048f4b88f28545beff1fc2.jpg",
 };
+
+const expectedNurseryLabelImageUrls = {
+    P23: "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p23-paper-spine-label.webp",
+    P24: "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p24-coconut-crystal-label.webp",
+    P25: "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p25-raindrops-label.webp",
+    P26: "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p26-eves-needle-label.webp",
+    P27: "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p27-black-widow-label.webp",
+    P28: "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p28-royal-flush-label.webp",
+};
+
+const expectedPlantImageUrls = Object.fromEntries(
+    Object.entries(expectedCurrentImageUrls).map(
+        ([plantId, currentImageUrl]) => [
+            plantId,
+            {
+                currentImageUrl,
+                nurseryLabelImageUrl:
+                    expectedNurseryLabelImageUrls[plantId] || "",
+            },
+        ]
+    )
+);
 
 function createDataValidationBuilder() {
     const builder = {
@@ -1069,7 +1083,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.14.4");
+        expect(bootstrap.version).toBe("5.14.5");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -1137,16 +1151,8 @@ describe("Garden logger server logic", () => {
             Array.from(vm.runInContext("APP_SHEET_BULK_PLANTS", context))
         ).toEqual(appSheetBulkPlants);
         expect(
-            plants
-                .slice(0, 22)
-                .every(
-                    ({ currentImageUrl, nurseryLabelImageUrl }) =>
-                        currentImageUrl === "" && nurseryLabelImageUrl === ""
-                )
-        ).toBe(true);
-        expect(
             Object.fromEntries(
-                plants.slice(22).map((plant) => [
+                plants.map((plant) => [
                     plant.id,
                     {
                         currentImageUrl: plant.currentImageUrl,
@@ -3731,9 +3737,9 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.14.4");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.14.5");
         expect(calls.toast[1]).toBe("Garden logger verified");
-        expect(calls.toast[0]).toMatch(/Logger 5\.14\.4 is ready/);
+        expect(calls.toast[0]).toMatch(/Logger 5\.14\.5 is ready/);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(
