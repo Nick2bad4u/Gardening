@@ -27,7 +27,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.14.7");
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.14.8");
 const webPlantImageUrls = JSON.parse(
     JSON.stringify(vm.runInContext("WEB_PLANT_IMAGE_URLS", context))
 );
@@ -203,6 +203,17 @@ assert.deepEqual(
     appSheetBulkV512Headers.slice(6, 28),
     Array.from(
         { length: 22 },
+        (_, index) => `P${String(index + 1).padStart(2, "0")} weight (g)`
+    )
+);
+const appSheetBulkV513Headers = Array.from(
+    vm.runInContext("APP_SHEET_BULK_V513_HEADERS", context)
+);
+assert.equal(appSheetBulkV513Headers.length, 50);
+assert.deepEqual(
+    appSheetBulkV513Headers.slice(6, 34),
+    Array.from(
+        { length: 28 },
         (_, index) => `P${String(index + 1).padStart(2, "0")} weight (g)`
     )
 );

@@ -98,6 +98,10 @@ const appSheetBulkV512Plants = Array.from(
     { length: 22 },
     (_, index) => `P${String(index + 1).padStart(2, "0")}`
 );
+const appSheetBulkV513Plants = Array.from(
+    { length: 28 },
+    (_, index) => `P${String(index + 1).padStart(2, "0")}`
+);
 const appSheetBulkPlants = Array.from(
     { length: 30 },
     (_, index) => `P${String(index + 1).padStart(2, "0")}`
@@ -173,6 +177,11 @@ const appSheetBulkV512Headers = [
     "Nutrient product",
     "Nutrient amount",
 ];
+const appSheetBulkV513Headers = [
+    ...appSheetBulkV512Headers.slice(0, 6),
+    ...appSheetBulkV513Plants.map((plantId) => `${plantId} weight (g)`),
+    ...appSheetBulkV512Headers.slice(6 + appSheetBulkV512Plants.length),
+];
 const appSheetBulkActionIndex = 3;
 const appSheetBulkSelectedPlantsIndex = 4;
 const appSheetBulkWeightStateIndex = 5;
@@ -245,13 +254,36 @@ const expectedPlantImageUrls = Object.fromEntries(
 );
 
 function createDataValidationBuilder() {
+    let validation = {};
     const builder = {
-        requireValueInList: () => builder,
-        requireNumberGreaterThan: () => builder,
-        requireNumberBetween: () => builder,
-        requireCheckbox: () => builder,
-        setAllowInvalid: () => builder,
-        build: () => ({}),
+        requireValueInList(values, showDropdown) {
+            validation = {
+                type: "ONE_OF_LIST",
+                values: Array.from(values),
+                showDropdown,
+            };
+            return builder;
+        },
+        requireNumberGreaterThan(value) {
+            validation = { type: "NUMBER_GREATER", values: [value] };
+            return builder;
+        },
+        requireNumberBetween(minimum, maximum) {
+            validation = {
+                type: "NUMBER_BETWEEN",
+                values: [minimum, maximum],
+            };
+            return builder;
+        },
+        requireCheckbox() {
+            validation = { type: "BOOLEAN" };
+            return builder;
+        },
+        setAllowInvalid(allowInvalid) {
+            validation = { ...validation, allowInvalid };
+            return builder;
+        },
+        build: () => ({ ...validation }),
     };
     return builder;
 }
@@ -500,9 +532,11 @@ function loadAppsScript(history, options = {}) {
 function createDataSheet(name, rows, formulas = []) {
     let parent = null;
     const protections = [];
+    const dataValidationCalls = [];
     const sheet = {
         __rows: rows,
         __protections: protections,
+        __dataValidationCalls: dataValidationCalls,
         __setParent(value) {
             parent = value;
         },
@@ -584,7 +618,16 @@ function createDataSheet(name, rows, formulas = []) {
                 setFontWeight: () => range,
                 setNote: () => range,
                 setNumberFormat: () => range,
-                setDataValidation: () => range,
+                setDataValidation(validation) {
+                    dataValidationCalls.push({
+                        row,
+                        column,
+                        rowCount,
+                        columnCount,
+                        validation,
+                    });
+                    return range;
+                },
                 protect() {
                     const protection = createProtection(range);
                     protections.push(protection);
@@ -1086,7 +1129,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.14.7");
+        expect(bootstrap.version).toBe("5.14.8");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -3006,11 +3049,27 @@ describe("Garden logger server logic", () => {
             spreadsheet: existingWorkbook.spreadsheet,
             globals: existingWorkbook.globals,
         });
-        expect(existingContext.installAppSheetBulkSheet()).toMatchObject({
+        expect(existingContext.installAppSheetIntake().bulk).toMatchObject({
             created: false,
             migrated: false,
             columnCount: 52,
             plantCount: 30,
+        });
+        expect(
+            existingWorkbook.sheets
+                .get("App entries")
+                .__dataValidationCalls.find(({ column }) => column === 3)
+        ).toMatchObject({
+            row: 2,
+            column: 3,
+            rowCount: 99,
+            columnCount: 1,
+            validation: {
+                type: "ONE_OF_LIST",
+                values: appSheetBulkPlants,
+                showDropdown: true,
+                allowInvalid: false,
+            },
         });
 
         const emptyWorkbook = createLoggerWorkbook(["P01"]);
@@ -3118,6 +3177,47 @@ describe("Garden logger server logic", () => {
             false
         );
         expect(v512Sheet.__rows[1]).toEqual(migratedV512Row);
+
+        const v513Tail = appSheetBulkV513Headers
+            .slice(6 + appSheetBulkV513Plants.length)
+            .map((header) => `preserved ${header}`);
+        const v513Row = [
+            "V513-ROUND",
+            new Date("2026-09-02T08:00:00-04:00"),
+            new Date("2026-09-02T08:05:00-04:00"),
+            "Weigh",
+            "P01, P28",
+            "Routine",
+            ...appSheetBulkV513Plants.map((_plantId, index) => 400 + index),
+            ...v513Tail,
+        ];
+        const v513Formulas = Array(appSheetBulkV513Headers.length).fill("");
+        v513Formulas[appSheetBulkV513Headers.length - 1] = "=50+1";
+        const v513Sheet = createDataSheet(
+            "App bulk",
+            [[...appSheetBulkV513Headers], v513Row],
+            [Array(appSheetBulkV513Headers.length).fill(""), v513Formulas]
+        );
+
+        expect(legacyContext.migrateLegacyAppSheetBulkSheet_(v513Sheet)).toBe(
+            true
+        );
+        expect(v513Sheet.__rows[0]).toEqual(appSheetBulkHeaders);
+        expect(
+            v513Sheet.__rows[1].slice(
+                appSheetBulkWeightStartIndex + appSheetBulkV513Plants.length,
+                appSheetBulkNotesIndex
+            )
+        ).toEqual(Array(2).fill(""));
+        expect(v513Sheet.__rows[1].slice(appSheetBulkNotesIndex)).toEqual(
+            v513Tail
+        );
+        expect(v513Sheet.getRange(2, 52).getFormulas()[0][0]).toBe("=50+1");
+        const migratedV513Row = [...v513Sheet.__rows[1]];
+        expect(legacyContext.migrateLegacyAppSheetBulkSheet_(v513Sheet)).toBe(
+            false
+        );
+        expect(v513Sheet.__rows[1]).toEqual(migratedV513Row);
     });
 
     it("isolates missing and duplicated AppSheet queue identities", () => {
@@ -3745,9 +3845,9 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.14.7");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.14.8");
         expect(calls.toast[1]).toBe("Garden logger verified");
-        expect(calls.toast[0]).toMatch(/Logger 5\.14\.7 is ready/);
+        expect(calls.toast[0]).toMatch(/Logger 5\.14\.8 is ready/);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(

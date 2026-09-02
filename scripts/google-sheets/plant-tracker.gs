@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.14.7",
+    version: "5.14.8",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -360,7 +360,7 @@ const APP_SHEET_BULK_V512_PLANTS = Object.freeze([
     "P22",
 ]);
 
-const APP_SHEET_BULK_PLANTS = Object.freeze([
+const APP_SHEET_BULK_V513_PLANTS = Object.freeze([
     ...APP_SHEET_BULK_V512_PLANTS,
     "P23",
     "P24",
@@ -368,6 +368,10 @@ const APP_SHEET_BULK_PLANTS = Object.freeze([
     "P26",
     "P27",
     "P28",
+]);
+
+const APP_SHEET_BULK_PLANTS = Object.freeze([
+    ...APP_SHEET_BULK_V513_PLANTS,
     "P29",
     "P30",
 ]);
@@ -432,10 +436,16 @@ const APP_SHEET_BULK_V512_HEADERS = Object.freeze([
     "Nutrient amount",
 ]);
 
-const APP_SHEET_BULK_HEADERS = Object.freeze([
+const APP_SHEET_BULK_V513_HEADERS = Object.freeze([
     ...APP_SHEET_BULK_V512_HEADERS.slice(0, 6),
-    ...APP_SHEET_BULK_PLANTS.map((plantId) => `${plantId} weight (g)`),
+    ...APP_SHEET_BULK_V513_PLANTS.map((plantId) => `${plantId} weight (g)`),
     ...APP_SHEET_BULK_V512_HEADERS.slice(6 + APP_SHEET_BULK_V512_PLANTS.length),
+]);
+
+const APP_SHEET_BULK_HEADERS = Object.freeze([
+    ...APP_SHEET_BULK_V513_HEADERS.slice(0, 6),
+    ...APP_SHEET_BULK_PLANTS.map((plantId) => `${plantId} weight (g)`),
+    ...APP_SHEET_BULK_V513_HEADERS.slice(6 + APP_SHEET_BULK_V513_PLANTS.length),
 ]);
 
 const APP_SHEET_BULK_ACTION_INDEX = 3;
@@ -1674,12 +1684,22 @@ function migrateLegacyAppSheetBulkSheet_(sheet) {
         migrated = true;
     }
 
-    if (!hasHeaders(APP_SHEET_BULK_V512_HEADERS)) return migrated;
+    const priorPlantContract = [
+        {
+            headers: APP_SHEET_BULK_V513_HEADERS,
+            plants: APP_SHEET_BULK_V513_PLANTS,
+        },
+        {
+            headers: APP_SHEET_BULK_V512_HEADERS,
+            plants: APP_SHEET_BULK_V512_PLANTS,
+        },
+    ].find(({ headers }) => hasHeaders(headers));
+    if (!priorPlantContract) return migrated;
 
     const insertedWeightColumns =
-        APP_SHEET_BULK_PLANTS.length - APP_SHEET_BULK_V512_PLANTS.length;
+        APP_SHEET_BULK_PLANTS.length - priorPlantContract.plants.length;
     const oldLastWeightColumn =
-        APP_SHEET_BULK_WEIGHT_START_INDEX + APP_SHEET_BULK_V512_PLANTS.length;
+        APP_SHEET_BULK_WEIGHT_START_INDEX + priorPlantContract.plants.length;
     sheet.insertColumnsAfter(oldLastWeightColumn, insertedWeightColumns);
     sheet
         .getRange(1, 1, 1, APP_SHEET_BULK_HEADERS.length)
@@ -1708,6 +1728,14 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
     if (changed) rotationCell.setValue("Rotation (°)");
     if (configureColumn) {
         const dataRowCount = Math.max(1, sheet.getMaxRows() - 1);
+        const plantIdColumn = APP_SHEET_ENTRY_HEADERS.indexOf("Plant ID") + 1;
+        const plantIdValidation = SpreadsheetApp.newDataValidation()
+            .requireValueInList(APP_SHEET_BULK_PLANTS, true)
+            .setAllowInvalid(false)
+            .build();
+        sheet
+            .getRange(2, plantIdColumn, dataRowCount, 1)
+            .setDataValidation(plantIdValidation);
         const rotationValidation = SpreadsheetApp.newDataValidation()
             .requireNumberBetween(1, 360)
             .setAllowInvalid(false)
