@@ -1,8 +1,8 @@
 # Pot labels
 
-Last updated: 2026-08-29
+Last updated: 2026-09-02
 
-This is the print reference for the 33 plants or planters physically documented
+This is the print reference for the 35 plants or planters physically documented
 in the collection. Pot labels use only the short
 permanent ID, such as `A1` or `B2`.
 These IDs identify
@@ -14,6 +14,9 @@ The six August cactus labels are `E1`–`E3` and `F1`–`F3`; their exact mappin
 was recorded from the pots on 2026-08-10. The numbered mapping was also
 recorded that day: `#1` is the shared rehab cactus planter, `#2` is the shared
 succulent planter, `#3` is the money tree, and `#4` is the Kiwi aeonium.
+The September 2 Home Depot additions continue that sequence: `#5` is the
+probable tuberculate tiger jaws (`P29`), and `#6` is the tiny mixed succulent
+planter (`P30`).
 
 The six Mountain Crest mappings were owner-corrected after receipt on
 2026-08-28: `G1` Black Widow (`P27`), `G2` paper spine (`P23`), `G3` Royal
@@ -301,6 +304,40 @@ Aeonium haworthii 'Dream Color'
 ```text
 NATIVE SPECIES: TENERIFE
 DESC: 1841 | WARN: VARIEGATED / SCORCH
+```
+
+## September Home Depot succulent labels
+
+The owner assigned these permanent labels on 2026-09-02. `#5` is a probable
+species-level identification based on the photographed leaf tubercles. `#6`
+identifies one shared pot and deliberately avoids printing speculative names
+for its individual components.
+
+| ID   | Common name                  | Botanical label                                                                                    | Origin wording                                   | Publication wording | Warning                                             |
+| ---- | ---------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------ | ------------------- | --------------------------------------------------- |
+| `#5` | Tuberculate tiger jaws       | [PROB. _Faucaria tuberculosa_](./succulents/faucaria-tuberculosa.md)                               | If correct: South Africa's Cape Provinces        | Species: 1926       | Probable ID; avoid prolonged wet roots.             |
+| `#6` | Tiny mixed succulent planter | [Mixed succulent planter; component taxa unresolved](./succulents/tiny-mixed-succulent-planter.md) | Horticultural retail mix; component origins vary | Not applicable      | Track and water as one pot; inspect components too. |
+
+Suggested two-strip text:
+
+```text
+#5 | TUBERCULATE TIGER JAWS
+PROB. Faucaria tuberculosa
+```
+
+```text
+NATIVE: CAPE PROVINCES, SOUTH AFRICA
+DESC: 1926 | WARN: PROBABLE ID / DRY ROOTS
+```
+
+```text
+#6 | TINY MIXED SUCCULENT PLANTER
+MIXED TAXA / COMPONENT IDS PROVISIONAL
+```
+
+```text
+ORIGIN: HORTICULTURAL RETAIL MIX
+WARN: TRACK + WATER AS ONE POT
 ```
 
 ## Identification and origin research outcome

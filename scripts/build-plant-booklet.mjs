@@ -61,7 +61,7 @@ const groups = [
         eyebrow: "Shared planter and individual succulents",
         title: "Succulents",
         description:
-            "Four species in the shared planter, the Kiwi aeonium, and three rooted Mountain Crest succulents received and repotted August 28.",
+            "Four records in the established shared planter, the Kiwi aeonium, three rooted Mountain Crest succulents, and two Home Depot arrivals added September 2.",
     },
     {
         key: "rehab",
@@ -306,6 +306,20 @@ const inaturalistBySlug = new Map([
         {
             taxon: "Sempervivum",
             scope: "Genus observations; Coconut Crystal has no wild population",
+        },
+    ],
+    [
+        "faucaria-tuberculosa",
+        {
+            taxon: "Faucaria tuberculosa",
+            scope: "Working species; this collection ID remains probable",
+        },
+    ],
+    [
+        "tiny-mixed-succulent-planter",
+        {
+            taxon: "Echeveria",
+            scope: "Genus-level comparison for one component; this is not an ID for the whole planter",
         },
     ],
 ]);
@@ -785,7 +799,11 @@ function collectionViewLabel(view) {
         side: "Side view",
         top: "Top view",
         detail: "Detail view",
+        "three-quarter": "Three-quarter view",
+        "opposite-side": "Opposite-side view",
         context: "Context view",
+        "receipt-condition": "Receipt-condition view",
+        "receipt-context": "Receipt context",
         overview: "Collection overview",
         "label-front": "Label front",
         "label-back": "Label back",
@@ -1572,7 +1590,7 @@ function renderPhotoAlbum(profiles, collectionManifest) {
       <h1>Every plant has its own visual timeline.</h1>
       <p class="lede">Two recent views stay in the field guide. Open a plant's Gyazo Collection for its complete photo history without making this repository grow with every session.</p>
       <div class="photo-album-summary"><span><strong>${currentProfiles.length}</strong> plant Collections</span><span><strong>${currentProfiles.reduce((sum, profile) => sum + profile.collectionRecord.photos.length, 0)}</strong> placed captures</span><span><strong>${overviewPhotos.length}</strong> collection overviews</span></div>
-      <label class="photo-album-search" for="collection-search">${renderLayoutIcon("search")}<span>Find a plant by name, P-ID, label, or Inventory ID</span><input id="collection-search" type="search" autocomplete="off" placeholder="Try P28, G3, Royal Flush, or Succulent-06"></label>
+      <label class="photo-album-search" for="collection-search">${renderLayoutIcon("search")}<span>Find a plant by name, P-ID, label, or Inventory ID</span><input id="collection-search" type="search" autocomplete="off" placeholder="Try P29, #5, tiger jaws, or Succulent-09"></label>
       <p id="collection-search-status" class="photo-album-search-status" aria-live="polite">Showing all ${currentProfiles.length} plant Collections</p>
     </header>
 
@@ -1740,7 +1758,7 @@ async function renderBooklet(profiles) {
       <div class="contents-columns">${contents}</div>
       <aside class="contents-note">
         <strong>Three IDs, three jobs</strong>
-        <p><strong>P01–P28</strong> opens the live Google Sheets plant record, the short pot label identifies the physical plant or shared planter, and the Inventory ID preserves the repository record. Repeated P19 and P20 values are intentional shared-planter records; Rehab-04 remains as an untracked historical page.</p>
+        <p><strong>P01–P30</strong> opens the live Google Sheets plant record, the short pot label identifies the physical plant or shared planter, and the Inventory ID preserves the repository record. Repeated P19 and P20 values are intentional shared-planter records; Rehab-04 remains as an untracked historical page.</p>
       </aside>
     </section>
 
@@ -1784,8 +1802,8 @@ async function main() {
         fieldGuideProfileEntries.map((entry) => [entry.slug, entry])
     );
 
-    if (profiles.length !== 34) {
-        throw new Error(`Expected 34 profiles but found ${profiles.length}.`);
+    if (profiles.length !== 36) {
+        throw new Error(`Expected 36 profiles but found ${profiles.length}.`);
     }
 
     if (fieldGuideProfileBySlug.size !== fieldGuideProfileEntries.length) {

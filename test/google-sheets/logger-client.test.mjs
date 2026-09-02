@@ -110,6 +110,8 @@ const canonicalPlantLabels = [
     "H3",
     "G1",
     "G3",
+    "#5",
+    "#6",
 ];
 
 const p23ImageUrls = {
@@ -875,7 +877,7 @@ describe("Garden logger browser recovery", () => {
         const amount = window.document.querySelector("#nutrientAmount");
         nutrients.value = "Yes";
         nutrients.dispatchEvent(new window.Event("change", { bubbles: true }));
-        product.value = "MSU mix";
+        product.value = "MSU 13-3-15";
         product.dispatchEvent(new window.Event("input", { bubbles: true }));
         amount.value = "0.5 g/gal";
         amount.dispatchEvent(new window.Event("input", { bubbles: true }));
@@ -892,7 +894,7 @@ describe("Garden logger browser recovery", () => {
         );
         expect(
             window.document.querySelector("#bulkNutrientProduct").value
-        ).toBe("MSU mix");
+        ).toBe("MSU 13-3-15");
         expect(window.document.querySelector("#bulkNutrientAmount").value).toBe(
             "0.5 g/gal"
         );
@@ -902,7 +904,7 @@ describe("Garden logger browser recovery", () => {
             )
         ).toEqual({
             nutrientsUsed: "Yes",
-            nutrientProduct: "MSU mix",
+            nutrientProduct: "MSU 13-3-15",
             nutrientAmount: "0.5 g/gal",
         });
     });
@@ -984,7 +986,7 @@ describe("Garden logger browser recovery", () => {
         expect(window.localStorage.getItem("gardenPlantId")).toBe("P01");
     });
 
-    it("sorts newer G-H labels after the established numbered planters while keeping requests in P order", () => {
+    it("sorts lettered labels before numbered planters while keeping requests in P order", () => {
         const bootstrapData = canonicalBootstrap();
         const canonicalIds = bootstrapData.plants.map(({ id }) => id);
         const { behaviors, calls, window } = createLoggerWindow({
@@ -1005,13 +1007,19 @@ describe("Garden logger browser recovery", () => {
                 ({ dataset }) => dataset.plantId
             )
         ).toEqual([
-            ...canonicalIds.slice(0, 22),
+            ...canonicalIds.slice(0, 18),
             "P27",
             "P23",
             "P28",
             "P24",
             "P25",
             "P26",
+            "P19",
+            "P20",
+            "P21",
+            "P22",
+            "P29",
+            "P30",
         ]);
 
         window.document
@@ -1068,13 +1076,19 @@ describe("Garden logger browser recovery", () => {
             .map((plant) => plant["Current pot label"]);
 
         expect(orderedLabels).toEqual([
-            ...canonicalPlantLabels.slice(0, 22),
+            ...canonicalPlantLabels.slice(0, 18),
             "G1",
             "G2",
             "G3",
             "H1",
             "H2",
             "H3",
+            "#1",
+            "#2",
+            "#3",
+            "#4",
+            "#5",
+            "#6",
         ]);
     });
 
@@ -1503,8 +1517,8 @@ describe("Garden logger browser recovery", () => {
         expect(window.document.querySelector("#queueCard").hidden).toBe(true);
     });
 
-    it("sends all 28 queued observations in one durable server call", () => {
-        const queued = Array.from({ length: 28 }, (_, index) =>
+    it("sends all 30 queued observations in one durable server call", () => {
+        const queued = Array.from({ length: 30 }, (_, index) =>
             queuedWeight({
                 requestId: `garden-round-${String(index + 1).padStart(2, "0")}-12345`,
                 plantId: index % 2 ? "P02" : "P01",
@@ -1526,24 +1540,24 @@ describe("Garden logger browser recovery", () => {
             .dispatchEvent(new window.Event("click", { bubbles: true }));
 
         expect(pending).toHaveLength(1);
-        expect(pending[0].args[0]).toHaveLength(28);
+        expect(pending[0].args[0]).toHaveLength(30);
         expect(
             window.document.querySelector("#queueSendButton").textContent
-        ).toBe("Sending all 28…");
+        ).toBe("Sending all 30…");
         const attemptedPrimary = JSON.parse(
             window.localStorage.getItem("gardenLoggerObservationQueueV1")
         );
         const attemptedBackup = JSON.parse(
             window.localStorage.getItem("gardenLoggerObservationQueueBackupV1")
         );
-        expect(attemptedPrimary).toHaveLength(28);
+        expect(attemptedPrimary).toHaveLength(30);
         expect(attemptedPrimary.every((entry) => entry.attemptedAt)).toBe(true);
         expect(attemptedBackup).toEqual(attemptedPrimary);
 
         const current = pending.shift();
         current.success({
             ok: true,
-            savedCount: 28,
+            savedCount: 30,
             failedCount: 0,
             results: current.args[0].map((payload) => ({
                 ok: true,
@@ -1554,7 +1568,7 @@ describe("Garden logger browser recovery", () => {
         const batchCalls = calls.filter(
             (call) => call.method === "saveWebObservationBatch"
         );
-        expect(batchCalls.map((call) => call.args[0].length)).toEqual([28]);
+        expect(batchCalls.map((call) => call.args[0].length)).toEqual([30]);
         expect(
             calls.filter((call) => call.method === "getWebBatchSaveStatus")
         ).toHaveLength(0);

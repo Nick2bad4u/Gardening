@@ -4486,11 +4486,17 @@
                                                 for="nutrientProduct"
                                                 >Product / mix</label
                                             >
-                                            <input
-                                                id="nutrientProduct"
-                                                maxlength="160"
-                                                placeholder="e.g. MSU 13-3-15"
-                                            />
+                                            <select id="nutrientProduct"
+                                                ><option value=""
+                                                    >Choose a product</option
+                                                ><option value="MSU 13-3-15"
+                                                    >MSU 13-3-15</option
+                                                ><option
+                                                    value="SuperThrive Foliage Pro"
+                                                    >SuperThrive Foliage
+                                                    Pro</option
+                                                ></select
+                                            >
                                         </div>
                                         <div
                                             id="nutrientAmountField"
@@ -5006,11 +5012,18 @@
                                                 class="field-label"
                                                 for="bulkNutrientProduct"
                                                 >Product / mix</label
-                                            ><input
-                                                id="bulkNutrientProduct"
-                                                maxlength="160"
-                                                placeholder="e.g. MSU 13-3-15"
-                                        /></div>
+                                            ><select id="bulkNutrientProduct"
+                                                ><option value=""
+                                                    >Choose a product</option
+                                                ><option value="MSU 13-3-15"
+                                                    >MSU 13-3-15</option
+                                                ><option
+                                                    value="SuperThrive Foliage Pro"
+                                                    >SuperThrive Foliage
+                                                    Pro</option
+                                                ></select
+                                            ></div
+                                        >
                                         <div
                                             id="bulkNutrientAmountField"
                                             class="field full"
@@ -6398,9 +6411,9 @@
                 "D",
                 "E",
                 "F",
-                "#",
                 "G",
                 "H",
+                "#",
             ]);
 
             function plantLabelSortParts(plant) {

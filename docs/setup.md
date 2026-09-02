@@ -1,6 +1,6 @@
 # Setup and equipment
 
-Last updated: 2026-08-29
+Last updated: 2026-09-02
 
 ## Current routine
 
@@ -240,6 +240,22 @@ instead of a fixed schedule. 'Coconut Crystal' remains indoors in the brightest
 and coolest practical succulent position, while Royal Flush keeps separate
 leaf-cycle watering logic.
 
+### Home Depot succulents — repotted 2026-09-02
+
+`P29`/`#5` probable _Faucaria tuberculosa_ and `P30`/`#6` tiny mixed
+succulent planter were purchased from Home Depot, photographed, and repotted
+on 2026-09-02. The exact store, received containers, current pot sizes,
+replacement-medium composition, weights, dimensions, and maintained placement
+are not logged. Their source-quality publication photographs live in separate
+Gyazo Collections; shared receipt and post-repot context captures are reused
+across both records rather than uploaded twice.
+
+Do not infer either pot's physical configuration from its photograph. Before
+folding them into ordinary rounds, confirm drainage, record a whole-pot dry
+baseline, and enter measured dimensions if those analytics are wanted. `P30`
+is one tracked pot even though it contains several plants; any later separation
+should create an explicit history event before new permanent IDs are assigned.
+
 ## Shared planters
 
 The succulent arrangement and older cactus arrangement are mixed planters.
@@ -270,6 +286,8 @@ more precise are:
 - exact maintained placement and plant-to-light clearance for the six Mountain
   Crest plants; their Ruler dimensions and Scale weights are recorded;
 - replacement-medium composition for the six Mountain Crest plants;
+- exact pot sizes, placement, replacement-medium composition, first dry
+  weights, and measured dimensions for `P29` and `P30`;
 - final original-AeroWave hub height and distance to the nearest plant;
 - exact hub height, plant clearance, vertical angle, and app program for each
   E6 Gen2 fan;

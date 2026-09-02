@@ -256,6 +256,41 @@
     <path d="M3.8 16h16.4l-1.9 5.4H5.7z" fill="#f0c44e" stroke="#70521b" stroke-linejoin="round" stroke-width="1"/>
   </symbol>
 
+  <symbol id="icon-plant-faucaria-tuberculosa" viewBox="0 0 24 24">
+    <g stroke="#173c2b" stroke-linejoin="round" stroke-width=".8">
+      <path d="m12 13.9-7.2-4.2 1.7-4.3 5.5 5Z" fill="#5fac68"/>
+      <path d="m12 13.9 7.2-4.2-1.7-4.3-5.5 5Z" fill="#78bf70"/>
+      <path d="m12 13.2-5.8 1.6 1.4-6.1 4.4 2.1Z" fill="#4c9d62"/>
+      <path d="m12 13.2 5.8 1.6-1.4-6.1-4.4 2.1Z" fill="#65b66c"/>
+    </g>
+    <g fill="#f8edcf" stroke="#6c6a48" stroke-width=".28">
+      <circle cx="7.4" cy="7.4" r=".62"/><circle cx="9.3" cy="8.7" r=".55"/><circle cx="16.6" cy="7.4" r=".62"/><circle cx="14.7" cy="8.7" r=".55"/>
+      <circle cx="8.2" cy="11.3" r=".58"/><circle cx="15.8" cy="11.3" r=".58"/><circle cx="10.2" cy="11.6" r=".45"/><circle cx="13.8" cy="11.6" r=".45"/>
+    </g>
+    <path d="m5.5 6.2-1.4-1.1m2.2 3.1-1.8.1m14-2.1 1.4-1.1m-2.2 3.1 1.8.1M7.1 10l-1.5.8m11.3-.8 1.5.8" fill="none" stroke="#fff4d8" stroke-linecap="round" stroke-width=".75"/>
+    <path d="M5.1 14.4h13.8l-1.6 6.9H6.7Z" fill="#d6a46f" stroke="#694a31" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M6.1 16.3h11.8" fill="none" stroke="#f0d6a7" stroke-linecap="round" stroke-width=".8"/>
+  </symbol>
+
+  <symbol id="icon-plant-tiny-mixed-succulent-planter" viewBox="0 0 24 24">
+    <g stroke="#173c2b" stroke-linejoin="round" stroke-width=".55">
+      <path d="M16.2 12.8c-.5-3.2.5-6.3 2.2-7.3 1.4 2.2.6 5.4-2.2 7.3Z" fill="#7dbd66"/>
+      <path d="M16.6 11.7c1.5-2.8 3.6-4.3 5.2-3.7-.1 2.7-2 4.5-5.2 3.7Z" fill="#65aa58"/>
+      <path d="M16.4 12.6c2.8-1.2 5.1-.7 5.8.8-1.7 2-4.5 1.9-5.8-.8Z" fill="#85c66f"/>
+    </g>
+    <path d="M17.1 6.8c1.3.5 2.6.5 3.8 0m-3.7 2.6c1.4.5 2.7.4 3.8-.2" fill="none" stroke="#e96b62" stroke-linecap="round" stroke-width=".65"/>
+    <path d="M14.2 14.8c.1-3.8-1.3-6.8-3.4-8.8m4.6 8.7c-.2-2.3.4-4.2 1.6-5.8" fill="none" stroke="#a45c3d" stroke-linecap="round" stroke-width=".85"/>
+    <g fill="#e48a4d" stroke="#74432d" stroke-linejoin="round" stroke-width=".45">
+      <path d="M11.5 7.6c-2.1-.1-3.4-1.1-3.3-2.3 1.6-.8 3.2.2 3.3 2.3Z"/><path d="M12.6 9.4c2-.7 3.7-.2 4 .9-1.2 1.4-3.1 1-4-.9Z"/><path d="M14.7 12.1c-2.1.4-3.7-.3-3.8-1.5 1.4-1.2 3.2-.5 3.8 1.5Z"/>
+    </g>
+    <g fill="#9dd5c4" stroke="#356b61" stroke-linejoin="round" stroke-width=".45">
+      <path d="M7.6 13.6c-3.1-1.4-4.4-3.5-3.1-4.5 1.4-1 3.1.5 3.1 4.5Z"/><path d="M7.6 13.6c-.3-3.4.9-5.6 2.5-5.1 1.6.5 1.2 2.8-2.5 5.1Z"/><path d="M7.6 13.6c2.8-1.9 5.3-1.9 5.5-.3.2 1.7-2.2 2.2-5.5.3Z"/><path d="M7.6 13.6c2.4 2.4 2.7 4.8 1.1 5.2-1.6.4-2.5-1.8-1.1-5.2Z"/><path d="M7.6 13.6c-2.1 2.7-4.5 3.2-5.1 1.7-.6-1.5 1.4-2.7 5.1-1.7Z"/>
+    </g>
+    <circle cx="7.6" cy="13.6" r="1" fill="#f4c85a" stroke="#71551f" stroke-width=".4"/>
+    <path d="M3.7 15h16.6l-1.8 6.2h-13Z" fill="#e48955" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M5.2 17h13.6" fill="none" stroke="#ffd095" stroke-linecap="round" stroke-width=".8"/>
+  </symbol>
+
   <symbol id="icon-plant-cleistocactus-colademononis" viewBox="0 0 24 24">
     <path d="M7 5.5c-.8 4.1-.8 8.6 1.1 12.2 1.2 2.2 3.6 2.5 4.5.3 1.1-2.8-1.8-5.1-.5-8.2M15 5c1.8 3 3 6.7 2.1 10.5-.5 2.2-2.7 3.3-4.1 1.6" fill="none" stroke="#6fa276" stroke-linecap="round" stroke-width="3.5"/>
     <path d="M6.5 5.7c1.5 1 2.5 2.3 3 4m5.1-4.6c1.4 1.5 2.1 3.1 2.4 4.8M8.2 13c1.4.8 2.4 2 3 3.5" fill="none" stroke="#fff2dd" stroke-linecap="round" stroke-width="1.15"/>
@@ -605,21 +640,24 @@
   </symbol>
 
   <symbol id="icon-arrow-right" viewBox="0 0 24 24">
-    <path d="M3 8.2h9.8V4.4L21 12l-8.2 7.6v-3.8H3Z" fill="#5a9fca" stroke="#31566f" stroke-linejoin="round" stroke-width="1"/>
-    <path d="M5.5 12h10.2" stroke="#fff8e8" stroke-linecap="round" stroke-width="1.5"/>
-    <circle cx="5.1" cy="6" r="1.45" fill="#f3c64d" stroke="#76551e" stroke-width=".55"/>
+    <path d="M3.5 12h16" fill="none" stroke="#5a9fca" stroke-linecap="round" stroke-width="2"/>
+    <path d="m15.2 7.6 4.6 4.4-4.6 4.4" fill="none" stroke="#31566f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+    <path d="M7.7 11.8C6.2 9.1 6.6 7.2 9 6.3c1.4 2 .9 4-1.3 5.5Z" fill="#63bc70" stroke="#315d40" stroke-linejoin="round" stroke-width=".6"/>
+    <circle cx="4.1" cy="12" r="1.25" fill="#f3c64d" stroke="#76551e" stroke-width=".55"/>
   </symbol>
 
   <symbol id="icon-arrow-left" viewBox="0 0 24 24">
-    <path d="M21 8.2h-9.8V4.4L3 12l8.2 7.6v-3.8H21Z" fill="#5a9fca" stroke="#31566f" stroke-linejoin="round" stroke-width="1"/>
-    <path d="M18.5 12H8.3" stroke="#fff8e8" stroke-linecap="round" stroke-width="1.5"/>
-    <circle cx="18.9" cy="6" r="1.45" fill="#f3c64d" stroke="#76551e" stroke-width=".55"/>
+    <path d="M20.5 12h-16" fill="none" stroke="#5a9fca" stroke-linecap="round" stroke-width="2"/>
+    <path d="m8.8 7.6-4.6 4.4 4.6 4.4" fill="none" stroke="#31566f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+    <path d="M16.3 11.8c1.5-2.7 1.1-4.6-1.3-5.5-1.4 2-.9 4 1.3 5.5Z" fill="#63bc70" stroke="#315d40" stroke-linejoin="round" stroke-width=".6"/>
+    <circle cx="19.9" cy="12" r="1.25" fill="#f3c64d" stroke="#76551e" stroke-width=".55"/>
   </symbol>
 
   <symbol id="icon-arrow-down" viewBox="0 0 24 24">
-    <path d="M8.2 3v9.8H4.4L12 21l7.6-8.2h-3.8V3Z" fill="#5a9fca" stroke="#31566f" stroke-linejoin="round" stroke-width="1"/>
-    <path d="M12 5.5v10.2" stroke="#fff8e8" stroke-linecap="round" stroke-width="1.5"/>
-    <circle cx="18" cy="5.1" r="1.45" fill="#f3c64d" stroke="#76551e" stroke-width=".55"/>
+    <path d="M12 3.5v16" fill="none" stroke="#5a9fca" stroke-linecap="round" stroke-width="2"/>
+    <path d="m7.6 15.2 4.4 4.6 4.4-4.6" fill="none" stroke="#31566f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+    <path d="M12.2 7.7c2.7-1.5 4.6-1.1 5.5 1.3-2 1.4-4 .9-5.5-1.3Z" fill="#63bc70" stroke="#315d40" stroke-linejoin="round" stroke-width=".6"/>
+    <circle cx="12" cy="4.1" r="1.25" fill="#f3c64d" stroke="#76551e" stroke-width=".55"/>
   </symbol>
 
   <symbol id="icon-check" viewBox="0 0 24 24">
@@ -634,9 +672,10 @@
   </symbol>
 
   <symbol id="icon-arrow-up" viewBox="0 0 24 24">
-    <path d="M8.2 21v-9.8H4.4L12 3l7.6 8.2h-3.8V21Z" fill="#5a9fca" stroke="#31566f" stroke-linejoin="round" stroke-width="1"/>
-    <path d="M12 18.5V8.3" stroke="#fff8e8" stroke-linecap="round" stroke-width="1.5"/>
-    <circle cx="18" cy="18.9" r="1.45" fill="#f3c64d" stroke="#76551e" stroke-width=".55"/>
+    <path d="M12 20.5v-16" fill="none" stroke="#5a9fca" stroke-linecap="round" stroke-width="2"/>
+    <path d="m7.6 8.8 4.4-4.6 4.4 4.6" fill="none" stroke="#31566f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+    <path d="M12.2 16.3c2.7 1.5 4.6 1.1 5.5-1.3-2-1.4-4-.9-5.5 1.3Z" fill="#63bc70" stroke="#315d40" stroke-linejoin="round" stroke-width=".6"/>
+    <circle cx="12" cy="19.9" r="1.25" fill="#f3c64d" stroke="#76551e" stroke-width=".55"/>
   </symbol>
 
   <symbol id="icon-camera" viewBox="0 0 24 24">

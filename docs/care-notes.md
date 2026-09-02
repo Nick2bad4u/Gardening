@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-08-29
+Last updated: 2026-09-02
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
@@ -319,6 +319,20 @@ weekly for even window growth.
   much of its high-light, cool-season character as the room allows: use the
   brightest and coolest practical position, maintain airflow, and protect the
   crown from standing water rather than matching the warm cactus-center routine.
+
+### September Home Depot succulents
+
+- `P29`/`#5` is recorded as probable _Faucaria tuberculosa_, with the owner's
+  initial _F. tigrina_ suggestion retained as the main alternative. Begin in a
+  bright acclimation position, let the root zone dry through, and use leaf
+  firmness plus pot-weight history rather than a fixed calendar.
+- `P30`/`#6` is deliberately one mixed-planter record. Its pale
+  _Echeveria_-like rosettes, orange _Sedum_-like growth, and red-edged
+  _Kalanchoe_-like paddles may respond differently, so inspect the components
+  individually while watering and weighing the shared root volume as one pot.
+- Both were repotted on 2026-09-02, but exact pot size, mix, placement, weight,
+  and dimensions remain unrecorded. Establish those facts before deriving care
+  decisions from the new logger records.
 
 ## Removed cactus: historical record
 

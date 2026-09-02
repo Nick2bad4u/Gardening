@@ -11,12 +11,15 @@ Two plant illustrations are adapted from SVG Repo sources:
 | `icon-cactus`    | [Cactus, SVG Repo 206109](https://www.svgrepo.com/svg/206109/cactus)         | SVG Repo                 | [CC0](https://www.svgrepo.com/page/licensing/#CC0)          | Redrawn and simplified for clear rendering from 16–52 px; colors were harmonized with the field-guide palette.       |
 | `icon-succulent` | [Succulents, SVG Repo 474474](https://www.svgrepo.com/svg/474474/succulents) | xiyou0608                | [Public domain](https://www.svgrepo.com/page/licensing/#PD) | Redrawn as a compact rosette while retaining the source illustration's concentric soil and layered-leaf composition. |
 
-The 34 `icon-plant-*` portraits and the remaining interface symbols are
-original repository artwork. Each portrait uses a different simplified
-silhouette, color pattern, growth habit, spine or leaf treatment, and pot where
-appropriate to evoke the plant named by that profile. They are navigation
-illustrations, not botanical diagrams, collection-identification evidence, or
-licensed species-reference photographs.
+The 36 `icon-plant-*` portraits and the remaining interface symbols are original
+repository artwork. Each portrait uses a different simplified silhouette,
+color pattern, growth habit, spine or leaf treatment, and pot where appropriate
+to evoke the plant named by that profile. The P29 portrait emphasizes paired,
+toothed, white-tubercled _Faucaria_ leaves; the P30 portrait combines a pale
+rosette, copper-orange stems, and broad red-edged leaves in one pot. The four
+directional controls are likewise custom leaf-and-stem arrows rather than font
+glyphs. These are navigation illustrations, not botanical diagrams,
+collection-identification evidence, or licensed species-reference photographs.
 
 The Noun Project collections considered during the icon review were not used.
 Under its [published plan terms](https://thenounproject.com/pricing/), free

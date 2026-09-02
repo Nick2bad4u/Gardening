@@ -56,19 +56,23 @@ const allowedCollectionViews = new Set([
     "side",
     "top",
     "detail",
+    "three-quarter",
+    "opposite-side",
     "context",
+    "receipt-condition",
+    "receipt-context",
     "overview",
     "label-front",
     "label-back",
 ]);
-const expectedTrackedProfiles = 33;
-const expectedProfileCount = 34;
-const expectedPresentProfiles = 33;
+const expectedTrackedProfiles = 35;
+const expectedProfileCount = 36;
+const expectedPresentProfiles = 35;
 const expectedUnverifiedReceiptProfiles = 0;
 const expectedHistoricalProfiles = 1;
 const expectedCollectionOverviews = 3;
-const expectedCollectionPlacements = 160;
-const expectedUniqueGyazoImages = 116;
+const expectedCollectionPlacements = 170;
+const expectedUniqueGyazoImages = 124;
 const expectedGyazoApplicationName = "Fenton Garden Field Guide";
 const expectedGyazoThumbnailWidths = [
     480,
@@ -104,6 +108,16 @@ const expectedMountainCrestProfiles = new Map([
     [
         "pleiospilos-nelii-royal-flush",
         { inventoryId: "Succulent-06", labelId: "G3", trackerId: "P28" },
+    ],
+]);
+const expectedHomeDepotProfiles = new Map([
+    [
+        "faucaria-tuberculosa",
+        { inventoryId: "Succulent-09", labelId: "#5", trackerId: "P29" },
+    ],
+    [
+        "tiny-mixed-succulent-planter",
+        { inventoryId: "Succulent-10", labelId: "#6", trackerId: "P30" },
     ],
 ]);
 function assert(condition, message) {
@@ -342,6 +356,7 @@ async function main() {
         "arrow-down",
         "arrow-left",
         "arrow-right",
+        "arrow-up",
         "botanical",
         "cable",
         "cactus",
@@ -411,6 +426,22 @@ async function main() {
             expectedPlantIconSymbols.every((name) => iconSymbolSet.has(name)),
         "The shared icon sprite must contain exactly one plant-specific portrait for every profile."
     );
+    const plantPortraitBodies = expectedPlantIconSymbols.map((name) => {
+        const escapedName = name.replaceAll("-", "\\-");
+        return iconSprite
+            .match(
+                new RegExp(
+                    `<symbol id="icon-${escapedName}"[^>]*>([\\s\\S]*?)<\\/symbol>`
+                )
+            )?.[1]
+            ?.replaceAll(/\s+/g, " ")
+            .trim();
+    });
+    assert(
+        plantPortraitBodies.every(Boolean) &&
+            new Set(plantPortraitBodies).size === profiles.length,
+        "Every profile must use distinct morphology-led SVG portrait artwork."
+    );
     assert(
         !/<script\b/i.test(iconSprite) && !/currentcolor/i.test(iconSprite),
         "The shared icon sprite must remain script-free and use explicit multicolor artwork."
@@ -448,6 +479,12 @@ async function main() {
             profileSlugs.includes(slug)
         ),
         "One or more Mountain Crest onboarding profiles are missing."
+    );
+    assert(
+        [...expectedHomeDepotProfiles.keys()].every((slug) =>
+            profileSlugs.includes(slug)
+        ),
+        "One or more September 2 Home Depot profiles are missing."
     );
 
     const profileStates = profiles.map((profile) => {
@@ -495,11 +532,21 @@ async function main() {
             );
         }
 
+        const expectedHomeDepot = expectedHomeDepotProfiles.get(profile.slug);
+        if (expectedHomeDepot) {
+            assert(
+                inventoryId === expectedHomeDepot.inventoryId &&
+                    labelId === expectedHomeDepot.labelId &&
+                    trackerId === expectedHomeDepot.trackerId,
+                `${profile.slug} must map to ${expectedHomeDepot.inventoryId}/${expectedHomeDepot.labelId}/${expectedHomeDepot.trackerId}; found ${inventoryId}/${labelId}/${trackerId}.`
+            );
+        }
+
         assert(
             historical ? trackerId === "" : /^P\d{2}$/.test(trackerId),
             historical
                 ? `${profile.slug} is historical and must not have a Tracker ID.`
-                : `${profile.slug} needs a P01-P28 Tracker ID.`
+                : `${profile.slug} needs a P01-P30 Tracker ID.`
         );
         assert(
             historical
@@ -547,22 +594,22 @@ async function main() {
     assert(
         fieldGuideProfileBySlug.size === fieldGuideProfileEntries.length &&
             fieldGuideProfileEntries.length === expectedTrackedProfiles,
-        "The canonical field-guide profile map must contain 33 unique current-profile slugs."
+        "The canonical field-guide profile map must contain 35 unique current-profile slugs."
     );
     const expectedTrackerIds = Array.from(
-        { length: 28 },
+        { length: 30 },
         (_, index) => `P${String(index + 1).padStart(2, "0")}`
     );
     assert(
         JSON.stringify([...new Set(trackerIds)].sort()) ===
             JSON.stringify(expectedTrackerIds),
-        "Current profiles must cover every permanent Tracker ID from P01 through P28."
+        "Current profiles must cover every permanent Tracker ID from P01 through P30."
     );
     assert(
         trackerIds.filter((id) => id === "P19").length === 3 &&
             trackerIds.filter((id) => id === "P20").length === 4 &&
             trackerIds.filter((id) => !["P19", "P20"].includes(id)).length ===
-                26,
+                28,
         "Tracker IDs must preserve the intentional three-profile P19 and four-profile P20 shared-planter mappings."
     );
 
@@ -769,14 +816,16 @@ async function main() {
             `${context} Gyazo referer must point to the public field guide or photo index.`
         );
         const referenceCount = photoReferenceCounts.get(photo.image_id) ?? 0;
-        const expectedDescriptionContext =
-            referenceCount > 1
-                ? `shared by ${referenceCount} plant profiles`
-                : photo.caption.trim();
+        const expectedDescriptionContexts = [photo.caption.trim()];
+        if (referenceCount > 1) {
+            expectedDescriptionContexts.push(
+                `shared by ${referenceCount} plant profiles`
+            );
+        }
         assert(
             typeof photo.upload_metadata.desc === "string" &&
-                photo.upload_metadata.desc.includes(
-                    expectedDescriptionContext
+                expectedDescriptionContexts.some((context) =>
+                    photo.upload_metadata.desc.includes(context)
                 ) &&
                 photo.upload_metadata.desc.includes(`view: ${photo.view}`) &&
                 /Copyright Nick; all rights reserved/.test(
@@ -1452,7 +1501,7 @@ async function main() {
     assert(
         JSON.stringify(sortedStrings(albumProfileCollectionUrls)) ===
             JSON.stringify(sortedStrings(expectedAlbumProfileCollectionUrls)),
-        "The generated photo album must link all 33 plant Collections, with no missing or extra cards."
+        "The generated photo album must link all 35 plant Collections, with no missing or extra cards."
     );
     const allAlbumCollectionUrls = new Set(
         [

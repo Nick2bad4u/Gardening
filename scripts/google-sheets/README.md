@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-The **Garden Plant Tracker** workbook uses permanent `P01`–`P28` plant IDs
+The **Garden Plant Tracker** workbook uses permanent `P01`–`P30` plant IDs
 internally and keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
@@ -23,8 +23,10 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-As of September 2, 2026, the checked-in source identifies the logger as **5.14.6**
-and the production deployment points to immutable Apps Script version **46**.
+As of September 2, 2026, the checked-in source identifies the logger as **5.14.7**,
+while the last verified production deployment remains logger **5.14.6** on
+immutable Apps Script version **46**. Version 5.14.7 is not live until an
+authorized Apps Script rollout updates that deployment in place.
 The production URL above is intentionally stable. Treat these values as
 a handoff baseline, not a substitute for checking `GARDEN_LOGGER.version`,
 `clasp versions`, `clasp deployments`, and the authenticated live page before a
@@ -33,19 +35,25 @@ future release.
 - `History` and `History view` contain 40 physical columns, A:AN; AN stores
   `Rotation (°)`.
 - `App entries` contains 32 physical columns, A:AF; AF stores `Rotation (°)`.
-- `App bulk` contains 50 physical columns, A:AX, including selected plants,
-  P01-P28 weight fields, and shared rotation, condition, soil, pest, treatment,
-  and nutrient fields.
+- The live `App bulk` sheet still contains 50 physical columns, A:AX, with
+  P01-P28 weight fields. The checked-in 5.14.7 installer expands it to 52
+  columns, A:AZ, with P29-P30 weight fields during the authorized rollout; that
+  structural migration has not been run against production yet.
+- `Plant tracker`, `Baselines`, `Quick log`, and the individual workbook tabs
+  now include P29-P30. `QuickCareLog` spans `'Quick log'!A4:M34`, while
+  canonical `History` remains unchanged.
 - Detailed entry supports 12 events: Water, Weigh, Measure, Check, Rotation,
   Clean, Prune, Repot, Flower, Photo, Pest, and Other. Rotation defaults to 90°.
 - A Wet weight is independent from Water. Nutrient choice, product, and amount
   are remembered across single and bulk logger entry for the current browser
-  session.
-- The compact label picker preserves the established `A1`–`F3`, `#1`–`#4`
-  sequence, then presents the newer labels as `G1`–`G3`, `H1`–`H3`, without
-  changing canonical `P01`–`P28` request order. P23–P28 summaries show separate
-  current-plant and seller-label evidence cards when those publication images
-  are available.
+  session. The live staging columns now validate against `MSU 13-3-15` and
+  `SuperThrive Foliage Pro`; checked-in 5.14.7 presents the same exact choices
+  as mobile-logger dropdowns. Older product text remains untouched in History.
+- Checked-in 5.14.7 sorts the compact label picker from `A1`–`H3` in natural
+  alphanumeric order, then presents numbered labels `#1`–`#6` last, without
+  changing canonical `P01`–`P30` request order. It also adds P29-P30 cached
+  photo summaries. Those interface changes are not production behavior until
+  the stable deployment is updated from 5.14.6.
 - The selected-plant summary shows the most recent active `Dry` Weigh reading
   with its date. If a plant has no Dry-tagged reading, it shows the lowest
   active historical Weigh value instead and labels that basis `lowest`.
@@ -75,7 +83,7 @@ npm run test:logger:coverage
 The tests cover combined event inference, formula-safe text, request-ID
 validation, single and bulk History reconciliation, lost callbacks, late stale
 callbacks, the direct-save watchdog, picker persistence, adjustable recent
-History, queue-storage failures and rollback, backup recovery, 28-entry
+History, queue-storage failures and rollback, backup recovery, 30-entry
 one-call queue sessions, success-path confirmation, bounded retry timing,
 deterministic failures, and the Google Photos handoff. The coverage report
 measures the Apps Script server file directly and is uploaded to Codecov in CI.
@@ -118,7 +126,7 @@ The mobile logger stores an unconfirmed request ID and draft locally before it
 calls Google. If the callback is lost, logger 5.8.2 and later check History for that exact
 request on timeout and page load. A completed save clears itself automatically;
 an absent or partial save keeps the draft available for an idempotent retry.
-Logger 5.14.6 keeps the HTML shell independent from spreadsheet reads and saves
+Logger 5.14.6 and later keep the HTML shell independent from spreadsheet reads and save
 the last successful plant list in that browser for up to six hours. A recent
 saved list opens immediately while Google refreshes it in the background, so a
 slow or dropped iframe callback cannot hide the usable logger. Without a recent
@@ -130,12 +138,12 @@ that nothing was written, the same form can be corrected and saved under a new
 request ID without using **Clear entry**. A timed-out request stays protected
 until its result is known because it may still be running remotely.
 
-The 5.14.6 interface uses a self-contained multicolor SVG sprite for navigation,
+The 5.14.7 interface uses a self-contained multicolor SVG sprite for navigation,
 event, metric, queue, and action controls, so the icons do not depend on emoji
 fonts or external icon requests. Plant cards use Gyazo's cached 960 px
 thumbnails rather than source-resolution captures; the source-quality uploads
 remain available through the field guide and Gyazo Collections. Current-photo
-previews now cover P01-P28, including the P19 rehab planter and P20 shared
+previews now cover P01-P30, including the P19 rehab planter and P20 shared
 succulent planter, with a readable fallback if a remote preview is unavailable.
 
 For a weighing session, the primary **Add to queue** button stores each
@@ -244,7 +252,7 @@ The `App bulk` contract is deliberately narrower and faster: one row is one
 collection-wide Water, Weigh, Water + weigh, Rotation, Check, Clean, Prune,
 Pest, or Other round. It stores `Round ID`, observation time, one action
 selector, a compact EnumList of selected plant IDs, one shared weight state,
-optional shared care details, and P01-P28 gram fields. Empty weight fields are
+optional shared care details, and P01-P30 gram fields. Empty weight fields are
 skipped. `processQueuedAppSheetEntries()` combines the selected IDs and
 nonblank weights into no more than one deterministic
 `appsheet-bulk-{Round ID}-{Plant ID}` request per plant and sends the complete
@@ -257,9 +265,9 @@ nutrient, or note fields without fabricating per-plant values.
 
 In AppSheet, `Selected plants` is an EnumList of refs whose `Valid_If` is
 `SORT(Plant tracker[Plant ID])`. Keep that expression in place so shared-action
-rounds can select all current P01-P28 records after the source schema changes.
+rounds can select all current P01-P30 records after the source schema changes.
 
-A normal 28-plant round therefore reaches History as one canonical batch,
+A normal 30-plant round therefore reaches History as one canonical batch,
 while partial validation failures keep the round editable and retries recognize
 plant updates that were already saved. Run `installAppSheetBulkSheet()` once
 before adding or regenerating the table in AppSheet. Rerunning it migrates the
@@ -325,7 +333,7 @@ offline use.
 The app's primary views should expose the plant collection, current baselines,
 active History, new-care form, and any intake rows needing correction. Do not
 connect the generated Dashboard, Integrity, Insights layout, or individual
-`P01`–`P28` pages as editable AppSheet tables. The intentionally connected
+`P01`–`P30` pages as editable AppSheet tables. The intentionally connected
 presentation helpers are the hidden, formula-only, read-only `App insight
 activity`, `App insight calibration`, `App insight followups`, and `App plant
 charts` sheets described in the companion guide. Removing an AppSheet table

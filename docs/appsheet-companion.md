@@ -30,6 +30,14 @@ updates, or deletes `History` rows directly.
 The bridge contract and trigger details live in
 [`scripts/google-sheets/README.md`](../scripts/google-sheets/README.md#appsheet-companion-intake).
 
+Migration status as of 2026-09-02: the live workbook has P29 and P30 in
+`Plant tracker`, `Baselines`, `Quick log`, and individual plant tabs, and the
+two nutrient-product columns have the exact approved-value validation. The live
+`App bulk` sheet and AppSheet configuration remain on the P01-P28 / logger
+5.14.6 contract until an authorized 5.14.7 rollout expands the bulk sheet and
+refreshes AppSheet. P01-P30 behavior described below is the checked-in target,
+not a claim that the production AppSheet editor has already been migrated.
+
 ## View map
 
 | View            | Purpose                                                                                                     |
@@ -85,7 +93,7 @@ and defaults to 90. The degree value is archived in `History!AN:AN`, displayed
 in read-only care history, and remains available to the public plant history.
 Clean and Prune are lightweight dated actions whose specifics belong in Notes.
 Bulk care uses one `Selected plants` field for every supported shared action;
-per-plant weights remain in the dedicated P01-P28 fields. `Selected plants` is
+per-plant weights remain in the dedicated P01-P30 fields. `Selected plants` is
 an EnumList of refs with `Valid_If` set to `SORT(Plant tracker[Plant ID])`; if
 that expression is removed, the deployed picker can appear empty even while
 the source table contains plants.
@@ -99,19 +107,20 @@ and
 The live app loads their public raw GitHub URLs so AppSheet can render them
 without a Drive permission prompt.
 
-The `Plant tracker` virtual `Reference image` column maps P01-P28 to public
+The `Plant tracker` virtual `Reference image` column maps P01-P30 to public
 repository images. Most are licensed species-reference images from
 [`assets/plants/`](../assets/plants/); they illustrate the working
 identification but are not evidence that a collection plant is that exact
-taxon or cultivar. P19, P20, and P23-P28 use corresponding collection photos from
-[`assets/collection-photos/`](../assets/collection-photos/). Preserve source,
-creator, license, and attribution metadata when changing a reference image.
+taxon or cultivar. P19, P20, and P23-P30 use corresponding source-quality Gyazo
+collection photos through cached 960 px thumbnails. Preserve the direct capture,
+Collection, caption, and ownership metadata when changing one of those images.
 
 The Plants view sorts by the hidden virtual Number column
 `Natural label order`, not by `Plant ID`. Its explicit mapping keeps labels in
-the physical sequence A1-A3 through H1-H3, followed by the shared-planter
-labels #1-#4.
-Canonical IDs and writable picker values remain P01-P28; do not replace them
+the physical sequence A1-A3 through H1-H3, followed by the numbered plant and
+shared-planter labels #1-#6. The `#` group always sorts after every lettered
+label.
+Canonical IDs and writable picker values remain P01-P30; do not replace them
 with the display-order helper.
 
 Care history derives its round left-side `Plant image` through the `Plant ID`
@@ -214,8 +223,8 @@ plant in its left/top Plants pane to filter all three charts together.
 
 The corresponding read-only slices filter blank values before charting so
 missing measurements or weights do not appear as zero. The charts are the
-AppSheet equivalent of the three charts on each P01-P28 workbook page; they
-reuse canonical History fields rather than connecting 28 editable plant-page
+AppSheet equivalent of the three charts on each P01-P30 workbook page; they
+reuse canonical History fields rather than connecting 30 editable plant-page
 tables.
 
 ## Sync and recovery

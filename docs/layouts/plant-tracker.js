@@ -11,18 +11,40 @@ import {
     plantLabel,
 } from "./plant-tracker-data.js";
 
-const tableBody = document.querySelector("#tracker-table tbody");
-const status = document.querySelector("#sheet-status");
-const refreshButton = document.querySelector("#refresh-sheet");
-const searchInput = document.querySelector("#tracker-search");
-const baselineFilter = document.querySelector("#baseline-filter");
-const sortSelect = document.querySelector("#tracker-sort");
-const sheetPanel = document.querySelector(".sheet-panel");
-const maximizeButton = document.querySelector("#maximize-table");
-const maximizeLabel = document.querySelector("#maximize-label");
+/** @typedef {Awaited<ReturnType<typeof loadCollectionData>>} CollectionData */
+
+const tableBody = /** @type {HTMLTableSectionElement} */ (
+    document.querySelector("#tracker-table tbody")
+);
+const status = /** @type {HTMLElement} */ (
+    document.querySelector("#sheet-status")
+);
+const refreshButton = /** @type {HTMLButtonElement} */ (
+    document.querySelector("#refresh-sheet")
+);
+const searchInput = /** @type {HTMLInputElement} */ (
+    document.querySelector("#tracker-search")
+);
+const baselineFilter = /** @type {HTMLSelectElement} */ (
+    document.querySelector("#baseline-filter")
+);
+const sortSelect = /** @type {HTMLSelectElement} */ (
+    document.querySelector("#tracker-sort")
+);
+const sheetPanel = /** @type {HTMLElement} */ (
+    document.querySelector(".sheet-panel")
+);
+const maximizeButton = /** @type {HTMLButtonElement} */ (
+    document.querySelector("#maximize-table")
+);
+const maximizeLabel = /** @type {HTMLElement} */ (
+    document.querySelector("#maximize-label")
+);
+/** @type {HTMLElement[]} */
 const sortHeaders = [
     ...document.querySelectorAll("#tracker-table th[data-sort]"),
-];
+].map((header) => /** @type {HTMLElement} */ (header));
+/** @type {CollectionData | null} */
 let collection = null;
 let sortDirection = "asc";
 
@@ -285,7 +307,11 @@ function setMaximized(maximized) {
     document.body.classList.toggle("table-maximized", maximized);
     maximizeButton.setAttribute("aria-pressed", String(maximized));
     maximizeLabel.textContent = maximized ? "Restore page" : "Maximize table";
-    if (maximized) document.querySelector("#tracker-table-wrap").focus();
+    if (maximized) {
+        /** @type {HTMLElement} */ (
+            document.querySelector("#tracker-table-wrap")
+        ).focus();
+    }
 }
 
 function renderTable() {
@@ -316,15 +342,18 @@ function renderStats() {
                 (parseDate(right)?.getTime() ?? 0) -
                 (parseDate(left)?.getTime() ?? 0)
         )[0];
-    document.querySelector("#container-count").textContent = String(
-        collection.plants.length
-    );
-    document.querySelector("#observation-count").textContent = String(
-        collection.history.length
-    );
-    document.querySelector("#baseline-count").textContent =
-        `${ready} / ${collection.plants.length}`;
-    document.querySelector("#latest-activity").textContent = formatDate(latest);
+    /** @type {HTMLElement} */ (
+        document.querySelector("#container-count")
+    ).textContent = String(collection.plants.length);
+    /** @type {HTMLElement} */ (
+        document.querySelector("#observation-count")
+    ).textContent = String(collection.history.length);
+    /** @type {HTMLElement} */ (
+        document.querySelector("#baseline-count")
+    ).textContent = `${ready} / ${collection.plants.length}`;
+    /** @type {HTMLElement} */ (
+        document.querySelector("#latest-activity")
+    ).textContent = formatDate(latest);
 }
 
 async function loadData() {
@@ -336,10 +365,11 @@ async function loadData() {
         renderTable();
         status.textContent = `${collection.plants.length} containers and ${collection.history.length} observations loaded from Google Sheets.`;
     } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
         const row = document.createElement("tr");
         const cell = element(
             "td",
-            `Live data unavailable: ${error.message}`,
+            `Live data unavailable: ${message}`,
             "loading-cell error-cell"
         );
         cell.colSpan = 12;
@@ -352,15 +382,19 @@ async function loadData() {
     }
 }
 
-installThemeToggle(document.querySelector("#theme-toggle"));
+installThemeToggle(
+    /** @type {HTMLButtonElement} */ (document.querySelector("#theme-toggle"))
+);
 refreshButton.addEventListener("click", loadData);
 searchInput.addEventListener("input", () => collection && renderTable());
 baselineFilter.addEventListener("change", () => collection && renderTable());
 sortSelect.addEventListener("change", () => setSort(sortSelect.value));
 sortHeaders.forEach((header) => {
-    header
-        .querySelector("button")
-        .addEventListener("click", () => setSort(header.dataset.sort, true));
+    const button = header.querySelector("button");
+    if (!(button instanceof HTMLButtonElement)) return;
+    button.addEventListener("click", () => {
+        if (header.dataset.sort) setSort(header.dataset.sort, true);
+    });
 });
 maximizeButton.addEventListener("click", () =>
     setMaximized(!sheetPanel.classList.contains("is-maximized"))

@@ -1,6 +1,6 @@
 # Grow-spot diagrams
 
-Last updated: 2026-08-29
+Last updated: 2026-09-02
 
 Open [plant-tracker.html](./plant-tracker.html) for the live collection
 dashboard backed by Google Sheets. The finished workbook includes Dashboard,
@@ -14,8 +14,8 @@ prior weight. The
 provides the phone-first input surface. Google Sheets remains the single
 editable source of truth.
 
-Each of the 28 physical pots or shared planters has a permanent internal ID from
-`P01` through `P28` and links to a stable
+Each of the 30 physical pots or shared planters has a permanent internal ID from
+`P01` through `P30` and links to a stable
 [history URL](./plant-history.html?id=P01) with independent last-checked dates,
 searchable and exportable history, dry/wet statistics, weight and growth
 changes, watering-interval calculations, responsive SVG trend charts, and
@@ -86,10 +86,17 @@ measurements are recorded. The corrected mappings are `G2`/`P23` paper spine,
 `H1`/`P24` Coconut Crystal, `H2`/`P25` Raindrops, `H3`/`P26` Eve's needle,
 `G1`/`P27` Black Widow, and `G3`/`P28` Royal Flush.
 
+The two Home Depot succulents added on 2026-09-02 are `#5`/`P29` probable
+_Faucaria tuberculosa_ and `#6`/`P30` tiny mixed succulent planter. They have
+source-quality Gyazo histories, but exact pot size, replacement-medium
+composition, first dry weight, measured dimensions, and final table placement
+remain unrecorded.
+
 The new cactus mapping is `E1` dwarf old man, `E2` Chamaelobivia, `E3` woolly
 nipple cactus, `F1` hook-spined pincushion, `F2` boobie cactus, and `F3` yellow
 tower. The numbered mapping is `#1` shared rehab cactus planter, `#2`
-shared succulent planter, `#3` money tree, and `#4` Kiwi aeonium. The former
+shared succulent planter, `#3` money tree, `#4` Kiwi aeonium, `#5` probable
+tuberculate tiger jaws, and `#6` tiny mixed succulent planter. The former
 `A4-B4` and `C4-D4` planter IDs remain historical cross-references only.
 
 Every diagram labels its viewpoint. In the top-down view, the window is at the

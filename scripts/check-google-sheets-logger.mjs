@@ -27,18 +27,18 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.14.6");
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.14.7");
 const webPlantImageUrls = JSON.parse(
     JSON.stringify(vm.runInContext("WEB_PLANT_IMAGE_URLS", context))
 );
-assert.equal(Object.keys(webPlantImageUrls).length, 28);
+assert.equal(Object.keys(webPlantImageUrls).length, 30);
 assert.ok(
     Object.values(webPlantImageUrls).every(({ currentImageUrl }) =>
         /^https:\/\/thumb\.gyazo\.com\/thumb\/960\/[a-f\d]{32}\.(?:jpg|png)$/u.test(
             currentImageUrl
         )
     ),
-    "Every current P01-P28 logger photo must use a cached 960 px Gyazo thumbnail."
+    "Every current P01-P30 logger photo must use a cached 960 px Gyazo thumbnail."
 );
 assert.match(
     webPlantImageUrls.P20.currentImageUrl,
@@ -171,7 +171,7 @@ assert.deepEqual(appSheetEntryHeaders, [
 const appSheetBulkHeaders = Array.from(
     vm.runInContext("APP_SHEET_BULK_HEADERS", context)
 );
-assert.equal(appSheetBulkHeaders.length, 50);
+assert.equal(appSheetBulkHeaders.length, 52);
 assert.deepEqual(appSheetBulkHeaders.slice(0, 6), [
     "Round ID",
     "Started at",
@@ -181,16 +181,20 @@ assert.deepEqual(appSheetBulkHeaders.slice(0, 6), [
     "Weight state",
 ]);
 assert.deepEqual(
-    appSheetBulkHeaders.slice(6, 34),
+    appSheetBulkHeaders.slice(6, 36),
     Array.from(
-        { length: 28 },
+        { length: 30 },
         (_, index) => `P${String(index + 1).padStart(2, "0")} weight (g)`
     )
 );
-assert.equal(appSheetBulkHeaders[34], "Notes");
-assert.equal(appSheetBulkHeaders[37], "Status");
-assert.equal(appSheetBulkHeaders[42], "Rotation (°)");
-assert.equal(appSheetBulkHeaders[49], "Nutrient amount");
+assert.equal(appSheetBulkHeaders[36], "Notes");
+assert.equal(appSheetBulkHeaders[39], "Status");
+assert.equal(appSheetBulkHeaders[44], "Rotation (°)");
+assert.equal(appSheetBulkHeaders[51], "Nutrient amount");
+assert.deepEqual(
+    Array.from(vm.runInContext("NUTRIENT_PRODUCT_OPTIONS", context)),
+    ["MSU 13-3-15", "SuperThrive Foliage Pro"]
+);
 const appSheetBulkV512Headers = Array.from(
     vm.runInContext("APP_SHEET_BULK_V512_HEADERS", context)
 );
@@ -332,6 +336,25 @@ assert.match(html, /id="bulkEventChips"/);
 assert.match(html, /id="rotationDegrees"/);
 assert.match(html, /id="bulkRotationDegrees"/);
 assert.match(html, /id="nutrientsUsed"/);
+for (const selectId of ["nutrientProduct", "bulkNutrientProduct"]) {
+    const selectMarkup = new RegExp(
+        `<select\\s+id="${selectId}"[\\s\\S]*?<\\/select\\s*>`,
+        "u"
+    ).exec(html)?.[0];
+    assert.ok(selectMarkup, `${selectId} must be a select element.`);
+    assert.deepEqual(
+        Array.from(
+            selectMarkup.matchAll(/<option\s+value="([^"]*)"/gu),
+            ([, value]) => value
+        ),
+        [
+            "",
+            "MSU 13-3-15",
+            "SuperThrive Foliage Pro",
+        ],
+        `${selectId} must expose only the two current nutrient products.`
+    );
+}
 assert.match(html, /id="potSetup"\s+type="hidden"/);
 assert.match(html, /createLink\("Spreadsheet", links\.spreadsheet, "sheets"\)/);
 assert.match(html, /id="app-icon-cactus"/);
@@ -461,15 +484,23 @@ const canonicalPlantLabels = [
     "H3",
     "G1",
     "G3",
+    "#5",
+    "#6",
 ];
 const naturallyOrderedPlantLabels = [
-    ...canonicalPlantLabels.slice(0, 22),
+    ...canonicalPlantLabels.slice(0, 18),
     "G1",
     "G2",
     "G3",
     "H1",
     "H2",
     "H3",
+    "#1",
+    "#2",
+    "#3",
+    "#4",
+    "#5",
+    "#6",
 ];
 assert.deepEqual(
     canonicalPlantLabels

@@ -1,6 +1,19 @@
 /** @typedef {Record<string, string>} SheetRow */
 /** @typedef {{ [key: string]: string | number; _index: number }} HistoryEvent */
 /** @typedef {{ date: Date; event: HistoryEvent; value: number }} MeasurementPoint */
+/** @typedef {{ "Current pot label"?: string; "Plant ID"?: string }} PlantLabelRecord */
+/**
+ * @typedef {{
+ *     [key: string]: any;
+ *     "Plant ID": string;
+ *     "Current pot label": string;
+ *     "Plant / planter": string;
+ *     "Scientific name / contents": string;
+ *     events: HistoryEvent[];
+ *     summary: ReturnType<typeof calculateSummary>;
+ * }} CollectionPlant
+ */
+/** @typedef {{ history: HistoryEvent[]; plants: CollectionPlant[] }} CollectionData */
 
 const publishedSheetBase =
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSlR11VjUWkf8xO7HGvYwpZmxZohxV-wpSTYQRfgLw0UIpXBXJ8O0Rik-ySoNWY-EyqWdQ2kzdXtgZR/pub";
@@ -57,6 +70,8 @@ const plantSheetGids = Object.freeze({
     P26: 202608260,
     P27: 202608270,
     P28: 202608280,
+    P29: 202609290,
+    P30: 202609300,
 });
 
 // Documented collection pot sizes. The latest Repot observation supersedes
@@ -660,6 +675,7 @@ export function calculateSummary(events, plantId = "") {
     };
 }
 
+/** @returns {Promise<CollectionData>} */
 export async function loadCollectionData() {
     const [plants, history] = await Promise.all([
         fetchCsv(sheetUrls.trackerCsv),
@@ -685,6 +701,11 @@ export async function loadCollectionData() {
             const events = eventsById.get(plant["Plant ID"]) ?? [];
             return {
                 ...plant,
+                "Plant ID": plant["Plant ID"],
+                "Current pot label": plant["Current pot label"],
+                "Plant / planter": plant["Plant / planter"],
+                "Scientific name / contents":
+                    plant["Scientific name / contents"],
                 events,
                 summary: calculateSummary(events, plant["Plant ID"]),
             };
@@ -722,7 +743,7 @@ export function historyPageUrl(labelId) {
     return `./plant-history.html?id=${encodeURIComponent(labelId)}`;
 }
 
-/** @param {SheetRow} plant */
+/** @param {PlantLabelRecord} plant */
 export function plantLabel(plant) {
     return plant["Current pot label"] || plant["Plant ID"];
 }
@@ -734,12 +755,12 @@ const LABEL_GROUP_ORDER = Object.freeze([
     "D",
     "E",
     "F",
-    "#",
     "G",
     "H",
+    "#",
 ]);
 
-/** @param {SheetRow} plant */
+/** @param {PlantLabelRecord} plant */
 function plantLabelSortParts(plant) {
     const label = String(plantLabel(plant) || "")
         .trim()
@@ -757,8 +778,8 @@ function plantLabelSortParts(plant) {
 }
 
 /**
- * @param {SheetRow} leftPlant
- * @param {SheetRow} rightPlant
+ * @param {PlantLabelRecord} leftPlant
+ * @param {PlantLabelRecord} rightPlant
  */
 export function comparePlantsByNaturalLabel(leftPlant, rightPlant) {
     const left = plantLabelSortParts(leftPlant);

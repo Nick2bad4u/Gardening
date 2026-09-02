@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.14.6",
+    version: "5.14.7",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -192,6 +192,14 @@ const WEB_PLANT_IMAGE_URLS = Object.freeze({
         nurseryLabelImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p28-royal-flush-label.webp",
     }),
+    P29: Object.freeze({
+        currentImageUrl:
+            "https://thumb.gyazo.com/thumb/960/fe4a88cf3a9ab04d4f1ed7635f0bf2c5.jpg",
+    }),
+    P30: Object.freeze({
+        currentImageUrl:
+            "https://thumb.gyazo.com/thumb/960/52ca4a6bae0a377ae39bac78665e32f9.jpg",
+    }),
 });
 
 const WEB_EVENT_OPTIONS = Object.freeze([
@@ -360,6 +368,8 @@ const APP_SHEET_BULK_PLANTS = Object.freeze([
     "P26",
     "P27",
     "P28",
+    "P29",
+    "P30",
 ]);
 
 const APP_SHEET_BULK_LEGACY_HEADERS = Object.freeze([
@@ -445,6 +455,10 @@ const APP_SHEET_BULK_NUTRIENT_PRODUCT_INDEX = APP_SHEET_BULK_ROTATION_INDEX + 6;
 const APP_SHEET_BULK_NUTRIENT_AMOUNT_INDEX = APP_SHEET_BULK_ROTATION_INDEX + 7;
 
 const NUTRIENT_OPTIONS = Object.freeze(["Yes", "No"]);
+const NUTRIENT_PRODUCT_OPTIONS = Object.freeze([
+    "MSU 13-3-15",
+    "SuperThrive Foliage Pro",
+]);
 const SOIL_MOISTURE_OPTIONS = Object.freeze([
     "Dry",
     "Slightly moist",
@@ -1097,7 +1111,7 @@ function finishAppSheetQueueRun_(spreadsheet, entrySummary) {
 /**
  * Expands each queued AppSheet bulk-care row into stable per-plant requests.
  * A whole Water, Weigh, or Water + weigh round is kept together, so a normal
- * 28-plant round reaches the canonical writer in one saveWebObservationBatch()
+ * 30-plant round reaches the canonical writer in one saveWebObservationBatch()
  * call.
  */
 function processQueuedAppSheetBulkEntries_(spreadsheet) {
@@ -1532,6 +1546,10 @@ function installAppSheetBulkSheet() {
         .requireValueInList(NUTRIENT_OPTIONS, true)
         .setAllowInvalid(false)
         .build();
+    const nutrientProductValidation = SpreadsheetApp.newDataValidation()
+        .requireValueInList(NUTRIENT_PRODUCT_OPTIONS, true)
+        .setAllowInvalid(false)
+        .build();
     sheet
         .getRange(2, APP_SHEET_BULK_ROTATION_INDEX + 1, dataRowCount, 1)
         .setDataValidation(rotationValidation)
@@ -1542,6 +1560,9 @@ function installAppSheetBulkSheet() {
     sheet
         .getRange(2, APP_SHEET_BULK_NUTRIENTS_USED_INDEX + 1, dataRowCount, 1)
         .setDataValidation(nutrientValidation);
+    sheet
+        .getRange(2, APP_SHEET_BULK_NUTRIENT_PRODUCT_INDEX + 1, dataRowCount, 1)
+        .setDataValidation(nutrientProductValidation);
 
     sheet
         .getRange(1, 1, 1, APP_SHEET_BULK_HEADERS.length)
@@ -1700,6 +1721,15 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
             .setFontColor("#ffffff")
             .setFontWeight("bold");
         sheet.setColumnWidth(APP_SHEET_ENTRY_HEADERS.length, 110);
+        const nutrientProductColumn =
+            APP_SHEET_ENTRY_HEADERS.indexOf("Nutrient product") + 1;
+        const nutrientProductValidation = SpreadsheetApp.newDataValidation()
+            .requireValueInList(NUTRIENT_PRODUCT_OPTIONS, true)
+            .setAllowInvalid(false)
+            .build();
+        sheet
+            .getRange(2, nutrientProductColumn, dataRowCount, 1)
+            .setDataValidation(nutrientProductValidation);
     }
     return changed;
 }

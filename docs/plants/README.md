@@ -1,10 +1,12 @@
 # Plant profiles
 
-Last updated: 2026-08-29
+Last updated: 2026-09-02
 
-These 34 pages cover 33 plants or planters physically documented in the
+These 36 pages cover 35 plants or planters physically documented in the
 collection and one historical record. The six Mountain Crest plants ordered on
-2026-08-25 were received, inspected, and repotted on 2026-08-28.
+2026-08-25 were received, inspected, and repotted on 2026-08-28. Tuberculate
+tiger jaws and a tiny mixed succulent planter were acquired from Home Depot,
+photographed, repotted, and assigned `P29`/`#5` and `P30`/`#6` on 2026-09-02.
 They combine botanical background with practical notes for the current pots,
 observed substrate condition, rain avoidance, and AW200SE indoor setup. They
 are reference guides, not fixed watering schedules.
@@ -75,16 +77,18 @@ Scale weights and Ruler dimensions are recorded in the individual profiles.
 
 ## Succulents
 
-| Inventory ID | Label ID               | Profile                                                                                                                     | Identification status                |
-| ------------ | ---------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
-| Succulent-01 | `#2`; formerly `C4-D4` | [Pulido's echeveria (_Echeveria pulidonis_)](./succulents/echeveria-pulidonis.md)                                           | Probable                             |
-| Succulent-02 | `#2`; formerly `C4-D4` | [Elephant bush (_Portulacaria afra_)](./succulents/portulacaria-afra.md)                                                    | High                                 |
-| Succulent-03 | `#2`; formerly `C4-D4` | [Silver teaspoons (_Kalanchoe bracteata_)](./succulents/kalanchoe-bracteata.md)                                             | Probable                             |
-| Succulent-04 | `#2`; formerly `C4-D4` | [Copper spoons (_Kalanchoe orgyalis_)](./succulents/kalanchoe-orgyalis.md)                                                  | High                                 |
-| Succulent-05 | `#4`                   | [Kiwi aeonium (_Aeonium haworthii_ 'Dream Color')](./succulents/aeonium-haworthii-dream-color.md)                           | Very high                            |
-| Succulent-06 | `G3`                   | [Royal Flush split rock (_Pleiospilos nelii_ 'Royal Flush')](./succulents/pleiospilos-nelii-royal-flush.md)                 | Seller-labeled; owner-inspected; P28 |
-| Succulent-07 | `H2`                   | [Raindrops echeveria (_Echeveria_ 'Raindrops')](./succulents/echeveria-raindrops.md)                                        | Seller-labeled; owner-inspected; P25 |
-| Succulent-08 | `H1`                   | [Coconut Crystal hens and chicks (_Sempervivum_ Colorockz® 'Coconut Crystal')](./succulents/sempervivum-coconut-crystal.md) | Seller-labeled; owner-inspected; P24 |
+| Inventory ID | Label ID               | Profile                                                                                                                     | Identification status                            |
+| ------------ | ---------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| Succulent-01 | `#2`; formerly `C4-D4` | [Pulido's echeveria (_Echeveria pulidonis_)](./succulents/echeveria-pulidonis.md)                                           | Probable                                         |
+| Succulent-02 | `#2`; formerly `C4-D4` | [Elephant bush (_Portulacaria afra_)](./succulents/portulacaria-afra.md)                                                    | High                                             |
+| Succulent-03 | `#2`; formerly `C4-D4` | [Silver teaspoons (_Kalanchoe bracteata_)](./succulents/kalanchoe-bracteata.md)                                             | Probable                                         |
+| Succulent-04 | `#2`; formerly `C4-D4` | [Copper spoons (_Kalanchoe orgyalis_)](./succulents/kalanchoe-orgyalis.md)                                                  | High                                             |
+| Succulent-05 | `#4`                   | [Kiwi aeonium (_Aeonium haworthii_ 'Dream Color')](./succulents/aeonium-haworthii-dream-color.md)                           | Very high                                        |
+| Succulent-06 | `G3`                   | [Royal Flush split rock (_Pleiospilos nelii_ 'Royal Flush')](./succulents/pleiospilos-nelii-royal-flush.md)                 | Seller-labeled; owner-inspected; P28             |
+| Succulent-07 | `H2`                   | [Raindrops echeveria (_Echeveria_ 'Raindrops')](./succulents/echeveria-raindrops.md)                                        | Seller-labeled; owner-inspected; P25             |
+| Succulent-08 | `H1`                   | [Coconut Crystal hens and chicks (_Sempervivum_ Colorockz® 'Coconut Crystal')](./succulents/sempervivum-coconut-crystal.md) | Seller-labeled; owner-inspected; P24             |
+| Succulent-09 | `#5`                   | [Tuberculate tiger jaws (probable _Faucaria tuberculosa_)](./succulents/faucaria-tuberculosa.md)                            | Probable from owner photographs; P29             |
+| Succulent-10 | `#6`                   | [Tiny mixed succulent planter](./succulents/tiny-mixed-succulent-planter.md)                                                | Aggregate record; component IDs provisional; P30 |
 
 All three arrived rooted in 2-inch nursery pots of unrecorded shape and moved
 to 4-inch pots on 2026-08-28. Current photos show Raindrops and Coconut Crystal
@@ -95,6 +99,13 @@ The live 2026-08-28 Check/Clean bulk round records slightly moist substrate for
 all six Mountain Crest plants; it is not a watering or fertilizer record.
 Exact maintained placement and replacement-medium composition remain
 unrecorded.
+
+The two September 2 Home Depot records intentionally retain their evidence
+limits. `P29` is probably _Faucaria tuberculosa_ because the current close view
+shows conspicuous raised white leaf tubercles; the owner's initial
+_F. tigrina_ suggestion remains the main alternative. `P30` stays one tracked
+planter, with only broad component-level working IDs. Exact pot sizes,
+replacement-medium composition, weights, and dimensions are not yet logged.
 
 ## Older mixed cactus planter
 

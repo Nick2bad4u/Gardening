@@ -19,6 +19,9 @@ import {
     renderLineChart,
 } from "./plant-charts.js";
 
+/** @typedef {Awaited<ReturnType<typeof loadCollectionData>>["plants"][number]} CollectionPlant */
+
+/** @type {Readonly<Record<string, readonly (readonly [string, string])[]>>} */
 let fieldGuideProfiles = Object.freeze({});
 
 async function loadFieldGuideProfiles() {
@@ -77,15 +80,34 @@ const HISTORY_HEADERS = Object.freeze([
 ]);
 
 const requestedId = new URLSearchParams(location.search).get("id");
-const tableBody = document.querySelector("#history-table tbody");
-const searchInput = document.querySelector("#history-search");
-const eventFilter = document.querySelector("#history-event-filter");
-const chartRange = document.querySelector("#chart-range");
+const tableBody = /** @type {HTMLTableSectionElement} */ (
+    document.querySelector("#history-table tbody")
+);
+const searchInput = /** @type {HTMLInputElement} */ (
+    document.querySelector("#history-search")
+);
+const eventFilter = /** @type {HTMLSelectElement} */ (
+    document.querySelector("#history-event-filter")
+);
+const chartRange = /** @type {HTMLSelectElement} */ (
+    document.querySelector("#chart-range")
+);
+/** @type {CollectionPlant | null} */
 let currentPlant = null;
+/**
+ * @type {{
+ *     direction: "ascending" | "descending";
+ *     key: string;
+ *     type: string;
+ * }}
+ */
 let historySort = { direction: "descending", key: "Date", type: "date" };
 
 function setText(selector, value) {
-    document.querySelector(selector).textContent = value;
+    const target = /** @type {HTMLElement} */ (
+        document.querySelector(selector)
+    );
+    target.textContent = value;
 }
 
 function sampleLabel(count) {
@@ -261,9 +283,9 @@ function sortedVisibleEvents(events) {
         if (leftValue === null) return 1;
         if (rightValue === null) return -1;
         const comparison =
-            typeof leftValue === "number"
+            typeof leftValue === "number" && typeof rightValue === "number"
                 ? leftValue - rightValue
-                : leftValue.localeCompare(rightValue);
+                : String(leftValue).localeCompare(String(rightValue));
         return multiplier * (comparison || left._index - right._index);
     });
 }
@@ -272,7 +294,8 @@ function updateSortHeaders() {
     document
         .querySelectorAll("#history-table th[data-sort-key]")
         .forEach((header) => {
-            const active = header.dataset.sortKey === historySort.key;
+            const typedHeader = /** @type {HTMLElement} */ (header);
+            const active = typedHeader.dataset.sortKey === historySort.key;
             header.setAttribute(
                 "aria-sort",
                 active ? historySort.direction : "none"
@@ -294,7 +317,7 @@ function visibleEvents() {
     return currentPlant.events.filter((event) => {
         const matchesEvent =
             selectedEvent === "all" ||
-            event.Event.trim().toLowerCase() === selectedEvent;
+            String(event.Event).trim().toLowerCase() === selectedEvent;
         const matchesQuery =
             !query ||
             Object.entries(event)
@@ -367,8 +390,12 @@ function configureEventFilter(events) {
 }
 
 function configurePager(plants, index) {
-    const previous = document.querySelector("#previous-plant");
-    const next = document.querySelector("#next-plant");
+    const previous = /** @type {HTMLAnchorElement} */ (
+        document.querySelector("#previous-plant")
+    );
+    const next = /** @type {HTMLAnchorElement} */ (
+        document.querySelector("#next-plant")
+    );
     if (index > 0) {
         previous.href = historyPageUrl(plants[index - 1]["Plant ID"]);
         previous.textContent = `← ${plantLabel(plants[index - 1])} · ${plants[index - 1]["Plant / planter"]}`;
@@ -646,19 +673,27 @@ function exportHistory() {
 }
 
 function siteIcon(name) {
-    const icon = document
-        .querySelector(".brand-mark .site-icon")
-        .cloneNode(true);
+    const iconTemplate = /** @type {SVGElement} */ (
+        document.querySelector(".brand-mark .site-icon")
+    );
+    const icon = /** @type {SVGElement} */ (iconTemplate.cloneNode(true));
     const use = icon.querySelector("use");
+    if (!use)
+        throw new Error("The site icon template is missing its use node.");
     use.setAttribute(
         "href",
-        use.getAttribute("href").replace(/#icon-[a-z-]+$/, `#icon-${name}`)
+        String(use.getAttribute("href")).replace(
+            /#icon-[a-z-]+$/,
+            `#icon-${name}`
+        )
     );
     return icon;
 }
 
 function renderProfileLinks(plantId) {
-    const container = document.querySelector("#profile-actions");
+    const container = /** @type {HTMLElement} */ (
+        document.querySelector("#profile-actions")
+    );
     const profiles = fieldGuideProfiles[plantId] ?? [];
     container.replaceChildren();
     profiles.forEach(([fragment, title], index) => {
@@ -688,9 +723,13 @@ function renderPlant(plant, plants, index, trackerIndex) {
     setText("#plant-label", `${label} · permanent ID ${id}`);
     setText("#plant-name", name);
     setText("#plant-scientific", plant["Scientific name / contents"]);
-    document.querySelector("#edit-history").href =
+    /** @type {HTMLAnchorElement} */ (
+        document.querySelector("#edit-history")
+    ).href =
         `${sheetUrls.editQuickLog}&range=A${trackerIndex + 5}:L${trackerIndex + 5}`;
-    document.querySelector("#sheet-plant-page").href = sheetUrls.plantPage(id);
+    /** @type {HTMLAnchorElement} */ (
+        document.querySelector("#sheet-plant-page")
+    ).href = sheetUrls.plantPage(id);
     renderProfileLinks(id);
 
     const waterDate = summary.lastWater?.Date ?? "";
@@ -810,7 +849,9 @@ function renderPlant(plant, plants, index, trackerIndex) {
             ? `${summary.latestFlower["Flower details"] || "Flower logged"} · ${formatDate(summary.latestFlower.Date)}`
             : "No flowers logged"
     );
-    const photoDetail = document.querySelector("#latest-photo-detail");
+    const photoDetail = /** @type {HTMLElement} */ (
+        document.querySelector("#latest-photo-detail")
+    );
     photoDetail.replaceChildren();
     if (summary.latestPhoto) {
         const link = document.createElement("a");
@@ -858,7 +899,9 @@ function renderPlant(plant, plants, index, trackerIndex) {
             ? `Latest ${formatDate(latestPrune.Date)}`
             : "No pruning logged"
     );
-    const badge = document.querySelector("#baseline-status");
+    const badge = /** @type {HTMLElement} */ (
+        document.querySelector("#baseline-status")
+    );
     badge.textContent = summary.baselineStatus;
     badge.dataset.status = summary.baselineStatus.toLowerCase().split(" ")[0];
 
@@ -907,11 +950,12 @@ async function loadPlant() {
             trackerIndex
         );
     } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
         setText("#plant-label", "Plant not found");
         setText("#plant-name", "This history page could not load");
-        setText("#page-status", error.message);
+        setText("#page-status", message);
         const row = document.createElement("tr");
-        const cell = tableCell(error.message, "loading-cell error-cell");
+        const cell = tableCell(message, "loading-cell error-cell");
         cell.colSpan = document.querySelectorAll(
             "#history-table thead th"
         ).length;
@@ -920,7 +964,9 @@ async function loadPlant() {
     }
 }
 
-installThemeToggle(document.querySelector("#theme-toggle"));
+installThemeToggle(
+    /** @type {HTMLButtonElement} */ (document.querySelector("#theme-toggle"))
+);
 searchInput.addEventListener("input", renderHistory);
 eventFilter.addEventListener("change", renderHistory);
 chartRange.addEventListener(
@@ -932,7 +978,9 @@ document
     .forEach((button) =>
         button.addEventListener("click", () => {
             const header = button.closest("th");
+            if (!(header instanceof HTMLTableCellElement)) return;
             const key = header.dataset.sortKey;
+            if (!key) return;
             historySort = {
                 direction:
                     historySort.key === key &&
