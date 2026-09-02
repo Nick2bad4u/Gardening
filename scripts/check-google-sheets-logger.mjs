@@ -27,7 +27,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.14.5");
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.14.6");
 const webPlantImageUrls = JSON.parse(
     JSON.stringify(vm.runInContext("WEB_PLANT_IMAGE_URLS", context))
 );

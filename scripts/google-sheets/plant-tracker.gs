@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.14.5",
+    version: "5.14.6",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -154,7 +154,7 @@ const WEB_PLANT_IMAGE_URLS = Object.freeze({
     }),
     P22: Object.freeze({
         currentImageUrl:
-            "https://thumb.gyazo.com/thumb/960/c282c0a9a6201868066c0efdce8af30a.jpg",
+            "https://thumb.gyazo.com/thumb/960/b193fbdcef1169d6175c324dec12c0f1.jpg",
     }),
     P23: Object.freeze({
         currentImageUrl:

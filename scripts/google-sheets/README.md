@@ -23,8 +23,8 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-As of September 1, 2026, the checked-in source identifies the logger as **5.14.5**
-and the production deployment points to immutable Apps Script version **45**.
+As of September 2, 2026, the checked-in source identifies the logger as **5.14.6**
+and the production deployment points to immutable Apps Script version **46**.
 The production URL above is intentionally stable. Treat these values as
 a handoff baseline, not a substitute for checking `GARDEN_LOGGER.version`,
 `clasp versions`, `clasp deployments`, and the authenticated live page before a
@@ -118,7 +118,7 @@ The mobile logger stores an unconfirmed request ID and draft locally before it
 calls Google. If the callback is lost, logger 5.8.2 and later check History for that exact
 request on timeout and page load. A completed save clears itself automatically;
 an absent or partial save keeps the draft available for an idempotent retry.
-Logger 5.14.5 keeps the HTML shell independent from spreadsheet reads and saves
+Logger 5.14.6 keeps the HTML shell independent from spreadsheet reads and saves
 the last successful plant list in that browser for up to six hours. A recent
 saved list opens immediately while Google refreshes it in the background, so a
 slow or dropped iframe callback cannot hide the usable logger. Without a recent
@@ -130,7 +130,7 @@ that nothing was written, the same form can be corrected and saved under a new
 request ID without using **Clear entry**. A timed-out request stays protected
 until its result is known because it may still be running remotely.
 
-The 5.14.5 interface uses a self-contained multicolor SVG sprite for navigation,
+The 5.14.6 interface uses a self-contained multicolor SVG sprite for navigation,
 event, metric, queue, and action controls, so the icons do not depend on emoji
 fonts or external icon requests. Plant cards use Gyazo's cached 960 px
 thumbnails rather than source-resolution captures; the source-quality uploads

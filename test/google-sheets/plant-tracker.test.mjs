@@ -210,7 +210,7 @@ const expectedCurrentImageUrls = {
     P19: "https://thumb.gyazo.com/thumb/960/c5553b1972af905d097020742a883ce0.jpg",
     P20: "https://thumb.gyazo.com/thumb/960/7954fb6f93fc71827ac45cd854eeb25a.jpg",
     P21: "https://thumb.gyazo.com/thumb/960/6fdda39d86f77b957ef59ffae9e8503d.jpg",
-    P22: "https://thumb.gyazo.com/thumb/960/c282c0a9a6201868066c0efdce8af30a.jpg",
+    P22: "https://thumb.gyazo.com/thumb/960/b193fbdcef1169d6175c324dec12c0f1.jpg",
     P23: "https://thumb.gyazo.com/thumb/960/387921a6f4930d7051201ed54fb9339d.jpg",
     P24: "https://thumb.gyazo.com/thumb/960/8cb990678c4ca9fd73e5953240b88487.jpg",
     P25: "https://thumb.gyazo.com/thumb/960/19eeb627281c6ea948a362374a27204d.jpg",
@@ -1083,7 +1083,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.14.5");
+        expect(bootstrap.version).toBe("5.14.6");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -3737,9 +3737,9 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.14.5");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.14.6");
         expect(calls.toast[1]).toBe("Garden logger verified");
-        expect(calls.toast[0]).toMatch(/Logger 5\.14\.5 is ready/);
+        expect(calls.toast[0]).toMatch(/Logger 5\.14\.6 is ready/);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(
