@@ -7,6 +7,7 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, "..");
 const bookletDirectory = path.join(repositoryRoot, "docs", "plant-booklet");
 const bookletPath = path.join(bookletDirectory, "index.html");
+const iconSpritePath = path.join(bookletDirectory, "plant-icons.svg");
 const photoAlbumDirectory = path.join(repositoryRoot, "docs", "layouts");
 const photoAlbumPath = path.join(photoAlbumDirectory, "photo-album.html");
 const manifestPath = path.join(
@@ -298,6 +299,7 @@ async function main() {
     const [
         html,
         photoAlbumHtml,
+        iconSprite,
         clientScript,
         manifest,
         collectionManifest,
@@ -306,6 +308,7 @@ async function main() {
     ] = await Promise.all([
         readFile(bookletPath, "utf8"),
         readFile(photoAlbumPath, "utf8"),
+        readFile(iconSpritePath, "utf8"),
         readFile(path.join(bookletDirectory, "booklet.js"), "utf8"),
         readFile(manifestPath, "utf8").then(JSON.parse),
         readFile(collectionManifestPath, "utf8").then(JSON.parse),
@@ -330,6 +333,100 @@ async function main() {
         fieldGuideProfileEntries.map((entry) => [entry.slug, entry])
     );
     const profileSlugs = profiles.map((profile) => profile.slug);
+    const iconSymbols = [
+        ...iconSprite.matchAll(/<symbol id="icon-([a-z-]+)"/g),
+    ].map((match) => match[1]);
+    const iconSymbolSet = new Set(iconSymbols);
+    const requiredIconSymbols = [
+        "airflow",
+        "arrow-down",
+        "arrow-left",
+        "arrow-right",
+        "botanical",
+        "cable",
+        "cactus",
+        "calendar",
+        "care",
+        "caution",
+        "check",
+        "clock",
+        "dimensions",
+        "download",
+        "edit",
+        "expand",
+        "external",
+        "feeding",
+        "field-guide",
+        "flower",
+        "growth",
+        "habitat",
+        "handling",
+        "history",
+        "houseplant",
+        "identity",
+        "inventory",
+        "label",
+        "layout",
+        "light",
+        "menu",
+        "minus",
+        "mobile",
+        "observation",
+        "photos",
+        "plant",
+        "pot",
+        "print",
+        "rehab",
+        "refresh",
+        "reset",
+        "search",
+        "seller",
+        "sheets",
+        "source",
+        "status",
+        "story",
+        "succulent",
+        "temperature",
+        "theme",
+        "tracker",
+        "water",
+        "weight",
+        "eye",
+        "eye-off",
+    ];
+
+    assert(
+        iconSymbols.length === iconSymbolSet.size &&
+            requiredIconSymbols.every((name) => iconSymbolSet.has(name)),
+        "The shared icon sprite is missing a required symbol or contains duplicate IDs."
+    );
+    assert(
+        !/<script\b/i.test(iconSprite) && !/currentcolor/i.test(iconSprite),
+        "The shared icon sprite must remain script-free and use explicit multicolor artwork."
+    );
+    for (const match of iconSprite.matchAll(
+        /<symbol id="icon-([a-z-]+)"[\s\S]*?<\/symbol>/g
+    )) {
+        const colors = new Set(
+            [...match[0].matchAll(/#[0-9a-f]{6}/gi)].map((color) =>
+                color[0].toLowerCase()
+            )
+        );
+        assert(
+            colors.size >= 2,
+            `Icon ${match[1]} must contain at least two explicit colors.`
+        );
+    }
+    for (const generatedHtml of [html, photoAlbumHtml]) {
+        for (const match of generatedHtml.matchAll(
+            /plant-icons\.svg#icon-([a-z-]+)/g
+        )) {
+            assert(
+                iconSymbolSet.has(match[1]),
+                `Generated HTML references missing icon ${match[1]}.`
+            );
+        }
+    }
 
     assert(
         profiles.length === expectedProfileCount,
@@ -1422,11 +1519,14 @@ async function main() {
         !/<img\b[^>]*class="[^"]*plant-avatar--(?:contents|drawer)/i.test(html),
         "Contents and drawer navigation must use lightweight icons, not photograph avatars."
     );
+    const plantNavigationIconUses =
+        html.match(
+            /class="plant-nav-icon[^\"]*"[\s\S]*?<use\b[^>]*href="\.\/plant-icons\.svg#icon-(?:cactus|houseplant|rehab|succulent)"[\s\S]*?<\/span>/g
+        ) ?? [];
     assert(
-        (html.match(/class="plant-nav-icon-sprite"/g) ?? []).length === 1 &&
-            (html.match(/<use\s+href="#plant-nav-icon-/g) ?? []).length ===
-                profiles.length * 2,
-        "Navigation icons must reuse the single inline SVG sprite."
+        !html.includes("plant-nav-icon-sprite") &&
+            plantNavigationIconUses.length === profiles.length * 2,
+        "Navigation icons must reuse the local multicolor SVG sprite."
     );
     const atAGlanceCount = (html.match(/class="profile-at-a-glance"/g) ?? [])
         .length;

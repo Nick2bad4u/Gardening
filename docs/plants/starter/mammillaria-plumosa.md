@@ -3,8 +3,8 @@
 - Inventory: Starter-05 — _Mammillaria plumosa_
 - Label ID: `A2`
 - Tracker ID: `P02`
-- Visual description: Low clustering mound hidden beneath soft-looking white featherlike spines.
-- Interesting fact: Each “feather” is actually a comb of many tiny spines, so the fluffy surface is still defensive.
+- Visual description: A low clustering mound almost completely hidden beneath overlapping white featherlike spines, with rounded heads merging into a soft, cloudlike surface.
+- Interesting fact: Each apparent feather is really a precisely arranged comb of many tiny spines, so the fluffy white coat is still a defensive cactus structure rather than fur.
 - Identification: **labeled**
 - Acquired from: Altman Reserve
 - Acquired on: 2026-07-15

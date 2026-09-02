@@ -3,8 +3,8 @@
 - Inventory: Starter-02 — _Stenocactus phyllacanthus_
 - Label ID: `B1`
 - Tracker ID: `P04`
-- Visual description: Small green globe packed with thin wavy ribs and long flattened spines.
-- Interesting fact: The accordion-like ribs can expand after watering without the whole stem needing to stretch.
+- Visual description: A small green globe packed with dozens of thin, wavy ribs, topped by long flattened spines that cross over the rippled surface like pale grass blades.
+- Interesting fact: Those crowded ribs work like an accordion: their folds can expand as the cactus takes up water without requiring the entire outer surface to stretch evenly.
 - Identification: **labeled**
 - Acquired from: Costa Farms
 - Acquired on: 2026-07-23

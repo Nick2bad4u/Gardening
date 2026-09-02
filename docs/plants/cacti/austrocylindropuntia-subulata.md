@@ -3,8 +3,8 @@
 - Inventory: Cactus-07 — _Austrocylindropuntia subulata_
 - Label ID: `H3` — owner-corrected after arrival
 - Tracker ID: `P26`
-- Visual description: Upright branching green cylinders bearing awl-shaped leaves and sharp spines.
-- Interesting fact: Unlike most adult cacti, Eve's needle retains conspicuous succulent leaves along its young stems.
+- Visual description: Upright, branching green cylinders carry narrow awl-shaped leaves between pale areoles and sharp spines, giving the plant a leafy silhouette that is unusual for a cactus.
+- Interesting fact: Unlike most adult cacti, Eve's needle keeps conspicuous succulent leaves on its young growth—the feature behind both the common name and the species epithet _subulata_.
 - Identification: **seller-labeled; individual side and overview condition views archived, but identity is not independently proven**
 - Ordered from: Mountain Crest Gardens on 2026-08-25
 - Order status: **Received 2026-08-28; owner inspected roots and plant by hand**

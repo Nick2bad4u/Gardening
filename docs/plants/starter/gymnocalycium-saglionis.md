@@ -3,8 +3,8 @@
 - Inventory: Starter-08 — _Gymnocalycium saglionis_
 - Label ID: `C1`
 - Tracker ID: `P07`
-- Visual description: Broad blue-green globe with heavy ribs and stout curved brown spines.
-- Interesting fact: Its flowers stay surprisingly small relative to the massive body an old plant can develop.
+- Visual description: A broad blue-green globe with deep heavy ribs and stout brown spines that curve back toward the body, giving the young plant the architecture of a much larger barrel cactus.
+- Interesting fact: The proportions become increasingly surprising with age: the body can grow massive, but its flowers remain relatively small instead of scaling up with the cactus.
 - Identification: **labeled**
 - Acquired from: Costa Farms
 - Acquired on: 2026-07-23

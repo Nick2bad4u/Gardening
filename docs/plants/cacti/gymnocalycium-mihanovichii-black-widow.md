@@ -3,8 +3,8 @@
 - Inventory: Cactus-09 — _Gymnocalycium mihanovichii_ f. variegata 'Black Widow'
 - Label ID: `G1` — owner-corrected after arrival
 - Tracker ID: `P27`
-- Visual description: Dark ribbed globe variegated in near-black purple, red, and green.
-- Interesting fact: It belongs to the same species commonly sold as colorful grafted moon cacti.
+- Visual description: A low, dark ribbed globe mottled in near-black purple, wine red, and patches of green, with pale areoles punctuating the sharp color changes.
+- Interesting fact: This dramatic dark plant belongs to the same species as the neon grafted “moon cacti” sold in stores; the difference is a horticultural color form, not a different cactus species.
 - Identification: **seller-labeled cultivar; individual top and side condition views archived, but identity is not independently proven**
 - Ordered from: Mountain Crest Gardens on 2026-08-25
 - Order status: **Received 2026-08-28; owner inspected roots and plant by hand**

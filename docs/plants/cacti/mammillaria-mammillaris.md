@@ -3,8 +3,8 @@
 - Inventory: Cactus-03 — _Mammillaria mammillaris_
 - Label ID: `E3`
 - Tracker ID: `P15`
-- Visual description: Woolly green globe with large tubercles, pale radial spines, and darker central spines.
-- Interesting fact: The red club-shaped projection seen on this plant is a fruit, not a flower.
+- Visual description: A woolly green globe built from large rounded tubercles, each carrying a star of pale radial spines and a few stronger dark central spines; a red club-shaped fruit stands out near the crown.
+- Interesting fact: The conspicuous red projection on this plant is a fruit rather than a flower—evidence of an earlier bloom that can remain visible long after the petals are gone.
 - Identification: **probable from close photographs; formerly recorded as _Mammillaria_ cf. _melanocentra_**
 - Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
 - Current pot: 4-inch individual pot

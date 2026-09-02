@@ -54,7 +54,10 @@ function createReader(hash = "#plant-b-photo-history", { dataLayer } = {}) {
                 <section id="plant-b-photo-history">B history</section>
             </template>
         </main>
-        <nav>
+        <nav id="page-controls-navigation" class="is-collapsed">
+            <button id="page-controls-toggle" type="button" aria-expanded="false">
+                <span class="sr-only">Expand page navigation</span>
+            </button>
             <button id="previous-page" type="button"><strong id="previous-label"></strong></button>
             <button id="next-page" type="button"><strong id="next-label"></strong></button>
         </nav>
@@ -153,6 +156,28 @@ describe("field-guide profile mounting", () => {
         const window = createReader("#plant-a");
 
         expect(window.dataLayer).toBeUndefined();
+    });
+
+    it("expands and collapses the compact page navigation", () => {
+        const window = createReader("#plant-a");
+        const navigation = window.document.querySelector(
+            "#page-controls-navigation"
+        );
+        const toggle = window.document.querySelector("#page-controls-toggle");
+
+        toggle.click();
+        expect(navigation.classList.contains("is-collapsed")).toBe(false);
+        expect(toggle.getAttribute("aria-expanded")).toBe("true");
+        expect(toggle.querySelector(".sr-only").textContent).toBe(
+            "Collapse page navigation"
+        );
+
+        toggle.click();
+        expect(navigation.classList.contains("is-collapsed")).toBe(true);
+        expect(toggle.getAttribute("aria-expanded")).toBe("false");
+        expect(toggle.querySelector(".sr-only").textContent).toBe(
+            "Expand page navigation"
+        );
     });
 
     it("mounts every profile for print and restores the lean reader afterward", () => {

@@ -3,8 +3,8 @@
 - Inventory: Succulent-01 — probable _Echeveria pulidonis_ or close hybrid
 - Label ID: `#2` — shared succulent planter; formerly `C4-D4`
 - Tracker ID: `P20`
-- Visual description: Powdery blue-green rosette with pointed leaves outlined in red.
-- Interesting fact: Its chalky farina does not regenerate on an already-rubbed leaf surface, although new leaves emerge with their own wax.
+- Visual description: A symmetrical rosette of thick, pointed blue-green leaves, each carrying a fine powdery bloom and a narrow red outline that is strongest near the tip.
+- Interesting fact: The chalky farina is a one-time finish on each leaf: fingerprints or rub marks do not refill, although every new leaf emerges with a fresh waxy coating of its own.
 - Identification: **probable; flowers would improve confidence**
 - Acquired from: Gerych's Greenhouse, as part of the mixed succulent planter
 - Acquired on: 2026-07-27

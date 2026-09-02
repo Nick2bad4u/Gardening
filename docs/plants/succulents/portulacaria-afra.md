@@ -3,8 +3,8 @@
 - Inventory: Succulent-02 — _Portulacaria afra_
 - Label ID: `#2` — shared succulent planter; formerly `C4-D4`
 - Tracker ID: `P20`
-- Visual description: Branching reddish stems carrying many small round glossy leaves.
-- Interesting fact: Elephant bush can shift between ordinary C3 photosynthesis and water-saving CAM behavior as conditions change.
+- Visual description: Fine branching reddish stems carry many small, round, glossy green leaves in opposite pairs, creating a miniature-tree texture within the shared planter.
+- Interesting fact: Elephant bush is physiologically flexible: it can use ordinary C3 photosynthesis when conditions allow and shift toward water-saving CAM behavior when conserving moisture matters more.
 - Acquired from: Gerych's Greenhouse, as part of the mixed succulent planter
 - Acquired on: 2026-07-27
 - Identification: **high; golden cultivar possible but unconfirmed**

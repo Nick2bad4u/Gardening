@@ -645,6 +645,18 @@ function exportHistory() {
     URL.revokeObjectURL(url);
 }
 
+function siteIcon(name) {
+    const icon = document
+        .querySelector(".brand-mark .site-icon")
+        .cloneNode(true);
+    const use = icon.querySelector("use");
+    use.setAttribute(
+        "href",
+        use.getAttribute("href").replace(/#icon-[a-z-]+$/, `#icon-${name}`)
+    );
+    return icon;
+}
+
 function renderProfileLinks(plantId) {
     const container = document.querySelector("#profile-actions");
     const profiles = fieldGuideProfiles[plantId] ?? [];
@@ -653,11 +665,8 @@ function renderProfileLinks(plantId) {
         const link = document.createElement("a");
         link.className = "button field-guide-button";
         link.href = `../plant-booklet/#${encodeURIComponent(fragment)}`;
-        const icon = document.createElement("span");
-        icon.setAttribute("aria-hidden", "true");
-        icon.textContent = "✦";
         link.append(
-            icon,
+            siteIcon("field-guide"),
             document.createTextNode(
                 profiles.length === 1
                     ? " Open field-guide profile"

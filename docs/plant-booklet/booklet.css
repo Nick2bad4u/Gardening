@@ -121,6 +121,31 @@ button {
     border: 0;
 }
 
+.site-icon {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 1.25rem;
+    height: 1.25rem;
+    overflow: visible;
+    vertical-align: -0.22rem;
+}
+
+.icon-button > .site-icon {
+    width: 1.4rem;
+    height: 1.4rem;
+}
+
+.link-end-icon {
+    width: 1.35rem;
+    height: 1.35rem;
+}
+
+.inline-link-icon {
+    width: 1.05rem;
+    height: 1.05rem;
+    margin-inline-start: 0.12rem;
+}
+
 .skip-link {
     position: fixed;
     z-index: 100;
@@ -381,6 +406,11 @@ main {
 
 .cover-start:hover {
     background: rgb(255 255 255 / 14%);
+}
+
+.cover-start .site-icon {
+    width: 1.65rem;
+    height: 1.65rem;
 }
 
 .cover-credit {
@@ -752,8 +782,12 @@ main {
     border-radius: 0.62rem;
     color: color-mix(in srgb, var(--meta-accent) 84%, var(--ink));
     background: color-mix(in srgb, var(--meta-accent) 16%, var(--page));
-    font-weight: 900;
     place-items: center;
+}
+
+.profile-meta-icon .site-icon {
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .profile-meta dt,
@@ -1203,9 +1237,12 @@ main {
     border-radius: 0.55rem;
     color: color-mix(in srgb, var(--table-accent) 88%, var(--ink));
     background: color-mix(in srgb, var(--table-accent) 14%, var(--page));
-    font-size: 0.74rem;
-    line-height: 1;
     place-items: center;
+}
+
+.semantic-table-icon .site-icon {
+    width: 1.35rem;
+    height: 1.35rem;
 }
 
 .prose tr:first-child th {
@@ -1376,11 +1413,9 @@ main {
     border-bottom: 1px solid var(--line);
 }
 
-.stage-coverage li span {
-    width: 1rem;
-    color: var(--profile-accent);
-    font-weight: 800;
-    text-align: center;
+.stage-coverage .lifecycle-status-icon {
+    width: 1.1rem;
+    height: 1.1rem;
 }
 
 .stage-coverage .is-missing {
@@ -1512,9 +1547,13 @@ main {
     cursor: default;
 }
 
-.page-controls button span:nth-child(2),
-.page-controls button:first-child span:last-child {
+.page-controls button > span {
     min-width: 0;
+}
+
+.page-control-icon {
+    width: 1.75rem;
+    height: 1.75rem;
 }
 
 .page-controls small,
@@ -1624,6 +1663,17 @@ main {
 .drawer-special span {
     font-family: var(--serif);
     font-weight: 700;
+}
+
+.drawer-special > span {
+    display: inline-flex;
+    gap: 0.55rem;
+    align-items: center;
+}
+
+.drawer-special .site-icon {
+    width: 1.45rem;
+    height: 1.45rem;
 }
 
 .drawer-special small {
@@ -2077,7 +2127,7 @@ main {
     );
 }
 
-.contents-group header::before {
+.contents-group-icon {
     position: absolute;
     top: 1.3rem;
     left: 1.25rem;
@@ -2086,31 +2136,25 @@ main {
     height: 2.75rem;
     border: 1px solid color-mix(in srgb, var(--moss) 35%, var(--line));
     border-radius: 0.85rem;
-    color: var(--moss);
     background: var(--moss-soft);
-    content: "✦";
     place-items: center;
 }
 
-.contents-group[data-group="cacti"] header::before {
-    color: #5f7d47;
+.contents-group-icon .site-icon {
+    width: 2.15rem;
+    height: 2.15rem;
+}
+
+.contents-group[data-group="cacti"] .contents-group-icon {
     background: var(--sage-soft);
-    content: "♧";
 }
 
-.contents-group[data-group="succulents"] header::before {
-    color: var(--clay);
+.contents-group[data-group="succulents"] .contents-group-icon {
     background: var(--clay-soft);
-    content: "✺";
 }
 
-.contents-group[data-group="rehab"] header::before {
-    color: var(--gold);
-    content: "↟";
-}
-
-.contents-group[data-group="houseplants"] header::before {
-    content: "⌁";
+.contents-group[data-group="rehab"] .contents-group-icon {
+    background: color-mix(in srgb, var(--gold) 13%, var(--page));
 }
 
 .contents-group header h2 {
@@ -2221,11 +2265,6 @@ main {
 
 .plant-nav-icon {
     --plant-nav-icon-color: var(--moss);
-    --plant-nav-icon-fill: color-mix(
-        in srgb,
-        var(--plant-nav-icon-color) 22%,
-        var(--page)
-    );
 
     display: grid;
     flex: 0 0 auto;
@@ -2244,27 +2283,21 @@ main {
     transition: transform 160ms ease;
 }
 
-.plant-nav-icon-sprite {
-    position: absolute;
-    width: 0;
-    height: 0;
-    overflow: hidden;
-    pointer-events: none;
-}
-
 .plant-nav-icon svg {
-    width: 76%;
-    height: 76%;
+    width: 82%;
+    height: 82%;
     overflow: visible;
-    fill: none;
-    stroke: currentcolor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 2;
 }
 
-.plant-nav-icon .plant-nav-icon-fill {
-    fill: var(--plant-nav-icon-fill);
+.plant-avatar--illustrated,
+.plant-avatar-fallback {
+    place-items: center;
+}
+
+.plant-avatar--illustrated .site-icon,
+.plant-avatar-fallback .site-icon {
+    width: 78%;
+    height: 78%;
 }
 
 .plant-nav-icon--cacti {
@@ -2361,6 +2394,11 @@ main {
     line-height: 1.2;
 }
 
+.drawer-badge-icon {
+    width: 1.15rem;
+    height: 1.15rem;
+}
+
 .drawer-badge--tracker {
     border-color: color-mix(in srgb, #4f7e43 44%, var(--line));
     color: color-mix(in srgb, #4f7e43 80%, var(--ink));
@@ -2380,15 +2418,22 @@ main {
 .drawer-name :is(strong, small) {
     display: flex;
     gap: 0.4rem;
-    align-items: baseline;
+    align-items: center;
 }
 
 .drawer-name > strong {
     font-size: 1rem;
 }
 
-.drawer-name > small > span {
-    color: #8065a8;
+.drawer-name .drawer-label-note {
+    color: color-mix(in srgb, var(--gold) 78%, var(--ink));
+    font-size: 0.68rem;
+    line-height: 1.25;
+}
+
+.drawer-name-icon {
+    width: 1.15rem;
+    height: 1.15rem;
 }
 
 .drawer-sheet-link {
@@ -2412,6 +2457,11 @@ main {
     background: var(--moss-soft);
 }
 
+.drawer-sheet-link > .site-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
 .drawer-group li {
     padding-block: 0.28rem;
     border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
@@ -2432,18 +2482,11 @@ main {
     text-underline-offset: 0.16em;
 }
 
-.profile-at-a-glance h2 > span[aria-hidden="true"] {
-    display: inline-grid;
-    width: 1.65rem;
-    height: 1.65rem;
+.profile-at-a-glance h2 > .site-icon {
+    width: 1.7rem;
+    height: 1.7rem;
     margin-inline-end: 0.3rem;
-    border-radius: 50%;
-    color: var(--page);
-    background: var(--profile-accent);
-    font-family: var(--sans);
-    font-size: 0.82rem;
     vertical-align: 0.18rem;
-    place-items: center;
 }
 
 .profile-section-heading {
@@ -2462,12 +2505,13 @@ main {
     height: 2.15rem;
     border: 1px solid color-mix(in srgb, var(--heading-accent) 48%, var(--line));
     border-radius: 0.7rem;
-    color: var(--heading-accent);
     background: color-mix(in srgb, var(--heading-accent) 12%, var(--page));
-    font-family: var(--sans);
-    font-size: 0.9rem;
-    font-weight: 900;
     place-items: center;
+}
+
+.profile-section-icon .site-icon {
+    width: 1.65rem;
+    height: 1.65rem;
 }
 
 .profile-section-heading--care {
@@ -2525,6 +2569,12 @@ main {
 .record-links > a > span:first-child {
     flex: 1 1 auto;
     min-width: 0;
+}
+
+.record-link-icon {
+    width: 1.35rem;
+    height: 1.35rem;
+    margin-inline-end: 0.35rem;
 }
 
 .record-links > a small {
@@ -2634,6 +2684,11 @@ main {
     place-items: center;
 }
 
+.gyazo-collection-icon .site-icon {
+    width: 1.65rem;
+    height: 1.65rem;
+}
+
 .external-image-link {
     position: relative;
 }
@@ -2652,9 +2707,10 @@ main {
     place-content: center;
 }
 
-.external-image-fallback > span {
-    color: #337c95;
-    font-size: 2rem;
+.external-image-fallback > .external-image-fallback-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-inline: auto;
 }
 
 .external-image-fallback strong,
@@ -2766,7 +2822,7 @@ main {
         padding: 1rem 0.9rem 0.9rem 4rem;
     }
 
-    .contents-group header::before {
+    .contents-group-icon {
         top: 1rem;
         left: 0.85rem;
         width: 2.5rem;
@@ -2823,6 +2879,172 @@ main {
     .collection-photo-grid,
     .collection-photo-grid--labels {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Compact profile rhythm and the expandable reader navigation. */
+
+.hero-badges span {
+    display: inline-flex;
+    gap: 0.35rem;
+    align-items: center;
+}
+
+.hero-badge-icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+.profile-meta--photos {
+    --meta-accent: #5a79aa;
+}
+
+.profile-meta dd > :is(a, span) {
+    display: inline-flex;
+    gap: 0.2rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+:is(
+        .profile-at-a-glance,
+        .record-links,
+        .lifecycle-gallery,
+        .collection-gallery,
+        .nursery-evidence
+    )
+    h2
+    > .site-icon {
+    width: 1.45rem;
+    height: 1.45rem;
+    margin-inline-end: 0.28rem;
+    vertical-align: -0.2rem;
+}
+
+.profile-hero {
+    min-height: clamp(22rem, 46vw, 33rem);
+}
+
+.hero-title {
+    bottom: 3.2rem;
+}
+
+.profile-intro {
+    gap: 1.25rem;
+    padding-block: 1.25rem;
+}
+
+.profile-intro dl {
+    gap: 0.72rem;
+}
+
+.profile-at-a-glance {
+    gap: clamp(0.8rem, 2.4vw, 1.7rem);
+    padding-block: clamp(1.15rem, 3vw, 2rem);
+}
+
+.profile-layout {
+    gap: clamp(1.5rem, 4vw, 3.25rem);
+    padding-block: clamp(1.6rem, 4vw, 3.25rem);
+}
+
+.prose h2 {
+    margin-top: 2.6rem;
+}
+
+.reference-photo {
+    margin-bottom: 1.45rem;
+}
+
+.record-links {
+    padding: 1.15rem;
+}
+
+.lifecycle-gallery,
+.collection-gallery,
+.nursery-evidence {
+    padding-block: clamp(1.5rem, 4vw, 3.25rem);
+}
+
+.page-controls {
+    padding-top: 1rem;
+    overflow: visible;
+    transform: translateY(0);
+    transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+}
+
+.page-controls.is-collapsed {
+    transform: translateY(calc(100% - 0.35rem));
+}
+
+.page-controls .page-controls-toggle {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 50%;
+    display: grid;
+    width: 3.6rem;
+    min-width: 3.6rem;
+    height: 1.8rem;
+    min-height: 1.8rem;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--page) 96%, transparent);
+    box-shadow: 0 -7px 18px rgb(25 30 25 / 12%);
+    transform: translate(-50%, -58%);
+    place-items: center;
+}
+
+.page-controls-toggle-icon {
+    width: 1.35rem;
+    height: 1.35rem;
+    transition: transform 180ms ease;
+}
+
+.page-controls:not(.is-collapsed) .page-controls-toggle-icon {
+    transform: rotate(180deg);
+}
+
+@media (max-width: 760px) {
+    .profile-hero {
+        min-height: clamp(21rem, 82vw, 29rem);
+    }
+
+    .profile-intro,
+    .profile-layout,
+    .lifecycle-gallery,
+    .collection-gallery,
+    .nursery-evidence {
+        padding-block: 1.25rem;
+    }
+}
+
+@media (min-width: 350px) and (max-width: 430px) {
+    .profile-intro dl {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.6rem;
+    }
+
+    .profile-meta {
+        grid-template-columns: 1.7rem minmax(0, 1fr);
+        gap: 0.06rem 0.45rem;
+        padding: 0.58rem;
+    }
+
+    .profile-meta-icon {
+        width: 1.7rem;
+        height: 1.7rem;
+    }
+
+    .profile-meta-icon .site-icon {
+        width: 1.3rem;
+        height: 1.3rem;
+    }
+
+    .profile-intro dd {
+        font-size: 0.8rem;
     }
 }
 
@@ -3026,7 +3248,7 @@ main {
         padding: 0.12in 0.12in 0.1in 0.55in;
     }
 
-    .contents-group header::before {
+    .contents-group-icon {
         top: 0.12in;
         left: 0.12in;
         width: 0.32in;

@@ -19,6 +19,7 @@ const baselineFilter = document.querySelector("#baseline-filter");
 const sortSelect = document.querySelector("#tracker-sort");
 const sheetPanel = document.querySelector(".sheet-panel");
 const maximizeButton = document.querySelector("#maximize-table");
+const maximizeLabel = document.querySelector("#maximize-label");
 const sortHeaders = [
     ...document.querySelectorAll("#tracker-table th[data-sort]"),
 ];
@@ -283,9 +284,7 @@ function setMaximized(maximized) {
     sheetPanel.classList.toggle("is-maximized", maximized);
     document.body.classList.toggle("table-maximized", maximized);
     maximizeButton.setAttribute("aria-pressed", String(maximized));
-    maximizeButton.textContent = maximized
-        ? "× Restore page"
-        : "⛶ Maximize table";
+    maximizeLabel.textContent = maximized ? "Restore page" : "Maximize table";
     if (maximized) document.querySelector("#tracker-table-wrap").focus();
 }
 

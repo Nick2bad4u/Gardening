@@ -3,8 +3,8 @@
 - Inventory: Starter-03 — _Echinocereus rigidissimus_ subsp. _rubispinus_
 - Label ID: `C2`
 - Tracker ID: `P08`
-- Visual description: Compact cylinder covered in tight bands of pink, red, and white comb-like spines.
-- Interesting fact: Its vivid body color comes mostly from the spines; mature plants can add large magenta flowers near the crown.
+- Visual description: A compact cylinder hidden beneath tight combs of pink, ruby-red, and white spines, arranged in horizontal color bands so regular that the green stem barely shows.
+- Interesting fact: Most of the visible color belongs to the spines rather than the cactus body; a mature plant can make the contrast even louder with a large magenta flower near the crown.
 - Identification: **labeled**
 - Acquired from: Costa Farms
 - Acquired on: 2026-07-23

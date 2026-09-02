@@ -3,8 +3,8 @@
 - Inventory: Cactus-08 — _Tephrocactus articulatus_ var. _papyracanthus_
 - Label ID: `G2` — confirmed after arrival
 - Tracker ID: `P23`
-- Visual description: Stack of rounded gray-green segments carrying broad curling paperlike spines.
-- Interesting fact: Its loose segments detach readily and can root as new plants—the “paper” structures are still true spines.
+- Visual description: A loose stack of rounded gray-green segments decorated with broad, curling ivory spines that look more like strips of paper than cactus armor.
+- Interesting fact: Both oddities are functional: the “paper” structures are true spines, while the easily detached stem segments can root and start new plants.
 - Identification: **seller-labeled form; individual top and side condition views archived, but identity is not independently proven**
 - Ordered from: Mountain Crest Gardens on 2026-08-25
 - Order status: **Received 2026-08-28; owner inspected roots and plant by hand**

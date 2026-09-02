@@ -3,8 +3,8 @@
 - Inventory: Cactus-02 — _Echinopsis_ hybrid, Chamaelobivia Group
 - Label ID: `E2`
 - Tracker ID: `P14`
-- Visual description: Dense clump of short green peanut-shaped ribbed stems.
-- Interesting fact: Chamaelobivia hybrids have been bred in vivid yellow, orange, red, and pink flower colors.
+- Visual description: A crowded cushion of short, peanut-shaped green stems, each divided into shallow ribs and dotted with small pale areoles; offsets make the mound look fuller than any single stem.
+- Interesting fact: Chamaelobivia hybrids were selected for an unusually broad flower palette, so genetically related plants can open vivid yellow, orange, red, or pink blooms above nearly identical green clumps.
 - Identification: **probable at the Chamaelobivia hybrid-group level; cultivar unknown**
 - Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
 - Current pot: small 4-inch individual pot

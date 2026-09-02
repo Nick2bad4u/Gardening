@@ -3,8 +3,8 @@
 - Inventory: Rehab-02 — _Cleistocactus colademononis_
 - Label ID: `#1` — shared rehab cactus planter; formerly `A4-B4`
 - Tracker ID: `P19`
-- Visual description: Long trailing fingerlike stems hidden beneath soft white hairs.
-- Interesting fact: In habitat the stems hang from steep Bolivian rock faces instead of standing upright.
+- Visual description: Long fingerlike stems trail over the planter edge beneath a dense coat of soft white hairs, turning each green cylinder into a shaggy silver tail.
+- Interesting fact: The hanging habit is not a sign that the stems need support: in its Bolivian habitat this cactus naturally spills from steep rock faces rather than growing as an upright column.
 - Identification: **high; an owner-observed red-orange flower strongly supports it, although the bloom photo is not retained here**
 - Acquired from: Existing shared cactus planter; exact source and date not recorded
 - Photo archive: [licensed reference images](../../../assets/plants/cleistocactus-colademononis/)

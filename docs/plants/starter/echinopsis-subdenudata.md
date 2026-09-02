@@ -3,8 +3,8 @@
 - Inventory: Starter-06 — _Echinopsis subdenudata_
 - Label ID: `D2`
 - Tracker ID: `P11`
-- Visual description: Nearly spineless green globe with broad ribs and bright white felted areoles.
-- Interesting fact: A mature plant can produce a fragrant night-opening flower that looks enormous beside the cactus itself.
+- Visual description: A smooth green globe divided into broad rounded ribs, with bright white felted areoles and only tiny, nearly invisible spines creating the familiar domino-dot pattern.
+- Interesting fact: The compact body can produce a fragrant, night-opening white flower on a long tube—a bloom that can look enormous beside the nearly spineless cactus that made it.
 - Identification: **labeled horticultural name**
 - Acquired from: Costa Farms
 - Acquired on: 2026-07-23

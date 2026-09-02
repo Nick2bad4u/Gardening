@@ -445,6 +445,10 @@ async function main() {
             path.join(outputDirectory, "favicon.svg")
         ),
         copyFile(
+            path.join(bookletDirectory, "plant-icons.svg"),
+            path.join(outputDirectory, "plant-icons.svg")
+        ),
+        copyFile(
             path.join(bookletDirectory, "cactus-cursor.svg"),
             path.join(outputDirectory, "cactus-cursor.svg")
         ),

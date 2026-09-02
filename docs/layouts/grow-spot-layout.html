@@ -182,6 +182,15 @@
                 justify-content: flex-end;
             }
 
+            .site-icon {
+                display: inline-block;
+                flex: 0 0 auto;
+                width: 1.35rem;
+                height: 1.35rem;
+                overflow: visible;
+                vertical-align: -0.24rem;
+            }
+
             .button {
                 align-items: center;
                 background: var(--surface);
@@ -252,14 +261,17 @@
             }
 
             .tab {
+                align-items: center;
                 background: transparent;
                 border: 0;
                 border-radius: 9px;
                 color: var(--ink);
                 cursor: pointer;
+                display: inline-flex;
                 font-size: 0.9rem;
                 font-weight: 700;
                 min-height: 40px;
+                gap: 7px;
                 padding: 8px 13px;
                 white-space: nowrap;
             }
@@ -406,16 +418,9 @@
                 padding: 10px 12px;
             }
 
-            .plant-interaction-note::before {
-                background: var(--green);
-                border-radius: 999px;
-                content: "i";
+            .plant-interaction-note > .site-icon {
                 flex: 0 0 auto;
-                font-size: 0.75rem;
-                font-weight: 850;
                 height: 22px;
-                line-height: 22px;
-                text-align: center;
                 width: 22px;
             }
 
@@ -1212,25 +1217,73 @@
                         class="button"
                         href="../plant-booklet/"
                     >
-                        ✦ Field guide
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-field-guide"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
+                        Field guide
                     </a>
                     <a
                         class="button"
                         href="./plant-tracker.html"
                     >
-                        ▦ Plant tracker
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-tracker"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
+                        Plant tracker
                     </a>
                     <a
                         class="button"
                         href="./indoor-acclimation-calendar.html"
                     >
-                        ◫ Calendar
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-calendar"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
+                        Calendar
                     </a>
                     <a
                         class="button"
                         href="./photo-album.html"
                     >
-                        ▧ Photos
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-photos"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
+                        Photos
                     </a>
                     <button
                         class="button"
@@ -1238,14 +1291,38 @@
                         type="button"
                         aria-pressed="false"
                     >
-                        ◐ <span id="theme-label">Dark mode</span>
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-theme"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
+                        <span id="theme-label">Dark mode</span>
                     </button>
                     <button
                         class="button primary"
                         id="print-layout"
                         type="button"
                     >
-                        ⎙ Print diagrams
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-print"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
+                        Print diagrams
                     </button>
                 </div>
             </header>
@@ -1278,6 +1355,18 @@
                         aria-selected="true"
                         data-tab="room"
                     >
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-layout"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
                         Room layout
                     </button>
                     <button
@@ -1289,6 +1378,18 @@
                         aria-selected="false"
                         data-tab="tables"
                     >
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-plant"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
                         Plant map
                     </button>
                     <button
@@ -1300,6 +1401,18 @@
                         aria-selected="false"
                         data-tab="height"
                     >
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-dimensions"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
                         Height + risers
                     </button>
                     <button
@@ -1311,6 +1424,18 @@
                         aria-selected="false"
                         data-tab="wiring"
                     >
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-cable"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
                         Wiring
                     </button>
                 </nav>
@@ -2148,6 +2273,18 @@
                 </div>
 
                 <div class="plant-interaction-note">
+                    <svg
+                        class="site-icon"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        focusable="false"
+                    >
+                        <use
+                            href="../plant-booklet/plant-icons.svg#icon-observation"
+                            width="24"
+                            height="24"
+                        ></use>
+                    </svg>
                     <p>
                         <strong>Interactive plant map:</strong> hover a pot or
                         planter to see its name, botanical ID, origin, and

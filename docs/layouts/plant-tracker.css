@@ -143,6 +143,15 @@ footer {
     padding-block: 1rem;
 }
 
+.site-icon {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 1.25rem;
+    height: 1.25rem;
+    overflow: visible;
+    vertical-align: -0.22rem;
+}
+
 .brand {
     display: flex;
     align-items: center;
@@ -158,6 +167,11 @@ footer {
     border-radius: 50%;
     color: #fff;
     background: var(--accent-strong);
+}
+
+.brand-mark .site-icon {
+    width: 2rem;
+    height: 2rem;
 }
 
 .brand strong,
@@ -180,6 +194,7 @@ footer {
 .nav-links a,
 .nav-links button {
     display: inline-flex;
+    gap: 0.42rem;
     min-height: 2.75rem;
     align-items: center;
     padding: 0.6rem 0.75rem;
@@ -297,6 +312,7 @@ h2 {
 
 .button {
     display: inline-flex;
+    gap: 0.48rem;
     align-items: center;
     justify-content: center;
     min-height: 2.75rem;
@@ -400,10 +416,10 @@ h2 {
     font-weight: 800;
 }
 
-.photo-album-search > span:first-child {
+.photo-album-search > .site-icon {
     grid-row: 1 / 3;
-    color: var(--accent);
-    font-size: 1.5rem;
+    width: 1.65rem;
+    height: 1.65rem;
 }
 
 .photo-album-search input {
@@ -498,9 +514,10 @@ h2 {
     place-content: center;
 }
 
-.external-image-fallback > span {
-    color: var(--accent);
-    font-size: 2rem;
+.external-image-fallback > .external-image-fallback-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-inline: auto;
 }
 
 .external-image-fallback :is(strong, small) {
@@ -616,16 +633,10 @@ h2 {
     text-transform: uppercase;
 }
 
-.metric-grid span i {
-    display: inline-grid;
-    min-width: 1.35rem;
-    min-height: 1.35rem;
+.metric-grid span > .site-icon {
+    width: 1.35rem;
+    height: 1.35rem;
     margin-right: 0.2rem;
-    place-items: center;
-    border-radius: 50%;
-    color: var(--text);
-    background: var(--accent-soft);
-    font-style: normal;
     letter-spacing: normal;
 }
 
@@ -1239,6 +1250,17 @@ body.table-maximized {
     font-size: 1.05rem;
 }
 
+.chart-card h3 .site-icon {
+    width: 1.45rem;
+    height: 1.45rem;
+    margin-inline-end: 0.3rem;
+}
+
+.link-end-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
 .chart-card header p,
 .chart-summary {
     margin-bottom: 0;
@@ -1594,7 +1616,7 @@ footer a:focus-visible {
         grid-template-columns: 1fr;
     }
 
-    .photo-album-search > span:first-child {
+    .photo-album-search > .site-icon {
         display: none;
     }
 

@@ -3,8 +3,8 @@
 - Inventory: Cactus-04 — _Parodia leninghausii_
 - Label ID: `F3`
 - Tracker ID: `P18`
-- Visual description: Golden-spined globe developing into a ribbed upright column.
-- Interesting fact: Mature plants can produce repeated bursts of pale-yellow flowers around the crown.
+- Visual description: A densely ribbed green body wrapped in fine golden spines, rounded while young but gradually stretching into an upright column as it matures.
+- Interesting fact: An older plant can crown that golden column with repeated flushes of pale-yellow flowers, concentrating the blooms around the growing tip rather than down the sides.
 - Identification: **high confidence**
 - Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
 - Current pot: 4-inch individual pot

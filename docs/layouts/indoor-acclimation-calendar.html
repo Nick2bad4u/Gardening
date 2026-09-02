@@ -194,18 +194,13 @@
                 font: inherit;
             }
 
-            .nf {
+            .site-icon {
                 display: inline-block;
-                font-family:
-                    "Hack Nerd Font", "Hack Nerd Font Mono",
-                    "Symbols Nerd Font Mono", "Symbols Nerd Font", monospace;
-                font-style: normal;
-                font-weight: 400;
-                line-height: 1;
-            }
-
-            html.no-nerd-font .nf {
-                display: none;
+                flex: 0 0 auto;
+                width: 1.35rem;
+                height: 1.35rem;
+                overflow: visible;
+                vertical-align: -0.24rem;
             }
 
             .shell {
@@ -285,6 +280,7 @@
             .button {
                 align-items: center;
                 display: inline-flex;
+                gap: 7px;
                 min-height: 42px;
                 padding: 10px 16px;
                 color: #204f3a;
@@ -294,10 +290,6 @@
                 cursor: pointer;
                 font-weight: 800;
                 text-decoration: none;
-            }
-
-            .button .nf {
-                margin-right: 7px;
             }
 
             .button.secondary {
@@ -314,6 +306,7 @@
             .hero-stat {
                 display: inline-flex;
                 align-items: center;
+                gap: 7px;
                 min-height: 42px;
                 padding: 8px 14px;
                 color: #dcebe0;
@@ -324,12 +317,8 @@
                 font-weight: 700;
             }
 
-            .hero-stat .nf {
-                margin-right: 7px;
-            }
-
-            .section-heading h2 .nf,
-            .panel h3 .nf {
+            .section-heading h2 .site-icon,
+            .panel h3 .site-icon {
                 margin-right: 12px;
             }
 
@@ -363,7 +352,9 @@
                 text-transform: uppercase;
             }
 
-            .live-label .nf {
+            .live-label .site-icon {
+                width: 1rem;
+                height: 1rem;
                 margin-right: 6px;
             }
 
@@ -453,11 +444,11 @@
                 letter-spacing: -0.025em;
             }
 
-            .section-heading h2 .nf,
-            .panel h3 .nf {
+            .section-heading h2 .site-icon,
+            .panel h3 .site-icon {
+                width: 1.3rem;
+                height: 1.3rem;
                 margin-right: 8px;
-                color: var(--forest);
-                font-size: 0.82em;
             }
 
             .section-heading p {
@@ -586,8 +577,8 @@
             }
 
             .legend-icon {
-                color: var(--swatch);
-                font-size: 0.92rem;
+                width: 1.05rem;
+                height: 1.05rem;
             }
 
             .months {
@@ -706,13 +697,10 @@
                 overflow-wrap: anywhere;
             }
 
-            .event::before {
-                content: "○ ";
-            }
-
-            .event .nf {
-                margin-right: 15px;
-                color: var(--event-color);
+            .event .site-icon {
+                width: 1.15rem;
+                height: 1.15rem;
+                margin-right: 3px;
             }
 
             .event.done {
@@ -720,8 +708,10 @@
                 text-decoration: line-through;
             }
 
-            .event.done::before {
-                content: "✓ ";
+            .event .event-status-icon {
+                width: 0.9rem;
+                height: 0.9rem;
+                margin-right: 0;
             }
 
             .event.light {
@@ -1287,25 +1277,73 @@
                         class="button secondary"
                         href="../plant-booklet/"
                     >
-                        ✦ Field guide
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-field-guide"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
+                        Field guide
                     </a>
                     <a
                         class="button secondary"
                         href="./plant-tracker.html"
                     >
-                        ▦ Plant tracker
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-tracker"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
+                        Plant tracker
                     </a>
                     <a
                         class="button secondary"
                         href="./grow-spot-layout.html#room"
                     >
-                        ◇ Grow-spot layout
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-layout"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
+                        Grow-spot layout
                     </a>
                     <a
                         class="button secondary"
                         href="./photo-album.html"
                     >
-                        ▧ Photos
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-photos"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
+                        Photos
                     </a>
                     <button
                         class="button secondary"
@@ -1313,12 +1351,19 @@
                         type="button"
                         aria-pressed="false"
                     >
-                        <span
-                            class="nf"
+                        <svg
                             id="theme-icon"
+                            class="site-icon"
+                            viewBox="0 0 24 24"
                             aria-hidden="true"
-                            >&#xf186;</span
+                            focusable="false"
                         >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-theme"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
                         <span id="theme-label">Dark mode</span>
                     </button>
                     <button
@@ -1326,11 +1371,18 @@
                         id="print"
                         type="button"
                     >
-                        <span
-                            class="nf"
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
                             aria-hidden="true"
-                            >&#xf02f;</span
+                            focusable="false"
                         >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-print"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
                         Print calendar
                     </button>
                     <button
@@ -1340,12 +1392,19 @@
                         aria-controls="months"
                         aria-pressed="false"
                     >
-                        <span
-                            class="nf"
+                        <svg
                             id="empty-days-icon"
+                            class="site-icon"
+                            viewBox="0 0 24 24"
                             aria-hidden="true"
-                            >&#xf070;</span
+                            focusable="false"
                         >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-eye-off"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
                         <span id="empty-days-label">Hide empty days</span>
                     </button>
                     <button
@@ -1353,27 +1412,48 @@
                         id="reset"
                         type="button"
                     >
-                        <span
-                            class="nf"
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
                             aria-hidden="true"
-                            >&#xf0e2;</span
+                            focusable="false"
                         >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-reset"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
                         Clear checkmarks
                     </button>
                     <span class="hero-stat">
-                        <span
-                            class="nf"
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
                             aria-hidden="true"
-                            >&#xf0eb;</span
+                            focusable="false"
                         >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-light"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
                         Light 8 a.m.–8 p.m. during the ramp
                     </span>
                     <span class="hero-stat">
-                        <span
-                            class="nf"
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
                             aria-hidden="true"
-                            >&#xf110;</span
+                            focusable="false"
                         >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-airflow"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
                         Fan 8:15 a.m.–7:45 p.m.
                     </span>
                 </div>
@@ -1383,11 +1463,18 @@
                 >
                     <div class="live-block">
                         <span class="live-label">
-                            <span
-                                class="nf"
+                            <svg
+                                class="site-icon"
+                                viewBox="0 0 24 24"
                                 aria-hidden="true"
-                                >&#xf017;</span
+                                focusable="false"
                             >
+                                <use
+                                    href="../plant-booklet/plant-icons.svg#icon-clock"
+                                    width="24"
+                                    height="24"
+                                ></use>
+                            </svg>
                             Fenton time
                         </span>
                         <time
@@ -1403,11 +1490,18 @@
                     </div>
                     <div class="live-block">
                         <span class="live-label">
-                            <span
-                                class="nf"
+                            <svg
+                                class="site-icon"
+                                viewBox="0 0 24 24"
                                 aria-hidden="true"
-                                >&#xf251;</span
+                                focusable="false"
                             >
+                                <use
+                                    href="../plant-booklet/plant-icons.svg#icon-calendar"
+                                    width="24"
+                                    height="24"
+                                ></use>
+                            </svg>
                             Next scheduled
                         </span>
                         <strong
@@ -1427,11 +1521,18 @@
                     </div>
                     <div class="live-block">
                         <span class="live-label">
-                            <span
-                                class="nf"
+                            <svg
+                                class="site-icon"
+                                viewBox="0 0 24 24"
                                 aria-hidden="true"
-                                >&#xf201;</span
+                                focusable="false"
                             >
+                                <use
+                                    href="../plant-booklet/plant-icons.svg#icon-growth"
+                                    width="24"
+                                    height="24"
+                                ></use>
+                            </svg>
                             Acclimation progress
                         </span>
                         <div class="progress-heading">
@@ -1469,11 +1570,18 @@
                 <div class="section-heading">
                     <div>
                         <h2 id="landing-title">
-                            <span
-                                class="nf"
+                            <svg
+                                class="site-icon"
+                                viewBox="0 0 24 24"
                                 aria-hidden="true"
-                                >&#xf06c;</span
+                                focusable="false"
                             >
+                                <use
+                                    href="../plant-booklet/plant-icons.svg#icon-observation"
+                                    width="24"
+                                    height="24"
+                                ></use>
+                            </svg>
                             Installed landing sequence
                         </h2>
                         <p
@@ -1555,11 +1663,18 @@
                 </div>
                 <div class="priority-note">
                     <strong>
-                        <span
-                            class="nf"
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
                             aria-hidden="true"
-                            >&#xf071;</span
+                            focusable="false"
                         >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-caution"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
                         Important
                     </strong>
                     <p>
@@ -1590,11 +1705,18 @@
                 <div class="section-heading">
                     <div>
                         <h2 id="calendar-title">
-                            <span
-                                class="nf"
+                            <svg
+                                class="site-icon"
+                                viewBox="0 0 24 24"
                                 aria-hidden="true"
-                                >&#xf073;</span
+                                focusable="false"
                             >
+                                <use
+                                    href="../plant-booklet/plant-icons.svg#icon-calendar"
+                                    width="24"
+                                    height="24"
+                                ></use>
+                            </svg>
                             August–September calendar
                         </h2>
                         <p>
@@ -1608,51 +1730,87 @@
                     aria-label="Calendar legend"
                 >
                     <span class="legend-item">
-                        <i
-                            class="nf legend-icon"
-                            style="--swatch: var(--move)"
+                        <svg
+                            class="site-icon legend-icon"
+                            viewBox="0 0 24 24"
                             aria-hidden="true"
-                            >&#xf0d1;</i
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-layout"
+                                width="24"
+                                height="24"
+                            ></use></svg
                         >Move/setup
                     </span>
                     <span class="legend-item">
-                        <i
-                            class="nf legend-icon"
-                            style="--swatch: var(--light)"
+                        <svg
+                            class="site-icon legend-icon"
+                            viewBox="0 0 24 24"
                             aria-hidden="true"
-                            >&#xf0eb;</i
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-light"
+                                width="24"
+                                height="24"
+                            ></use></svg
                         >Light change
                     </span>
                     <span class="legend-item">
-                        <i
-                            class="nf legend-icon"
-                            style="--swatch: var(--check)"
+                        <svg
+                            class="site-icon legend-icon"
+                            viewBox="0 0 24 24"
                             aria-hidden="true"
-                            >&#xf00c;</i
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-check"
+                                width="24"
+                                height="24"
+                            ></use></svg
                         >Sunday check
                     </span>
                     <span class="legend-item">
-                        <i
-                            class="nf legend-icon"
-                            style="--swatch: var(--sensor)"
+                        <svg
+                            class="site-icon legend-icon"
+                            viewBox="0 0 24 24"
                             aria-hidden="true"
-                            >&#xf030;</i
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-observation"
+                                width="24"
+                                height="24"
+                            ></use></svg
                         >Sensor/camera
                     </span>
                     <span class="legend-item">
-                        <i
-                            class="nf legend-icon"
-                            style="--swatch: var(--water)"
+                        <svg
+                            class="site-icon legend-icon"
+                            viewBox="0 0 24 24"
                             aria-hidden="true"
-                            >&#xf043;</i
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-water"
+                                width="24"
+                                height="24"
+                            ></use></svg
                         >Water/weight
                     </span>
                     <span class="legend-item">
-                        <i
-                            class="nf legend-icon"
-                            style="--swatch: var(--season)"
+                        <svg
+                            class="site-icon legend-icon"
+                            viewBox="0 0 24 24"
                             aria-hidden="true"
-                            >&#xf185;</i
+                            focusable="false"
+                        >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-calendar"
+                                width="24"
+                                height="24"
+                            ></use></svg
                         >Seasonal timer
                     </span>
                 </div>
@@ -1669,11 +1827,18 @@
                 <div class="section-heading">
                     <div>
                         <h2 id="ramp-title">
-                            <span
-                                class="nf"
+                            <svg
+                                class="site-icon"
+                                viewBox="0 0 24 24"
                                 aria-hidden="true"
-                                >&#xf201;</span
+                                focusable="false"
                             >
+                                <use
+                                    href="../plant-booklet/plant-icons.svg#icon-growth"
+                                    width="24"
+                                    height="24"
+                                ></use>
+                            </svg>
                             The seven-week light ramp
                         </h2>
                         <p>
@@ -1779,11 +1944,18 @@
             >
                 <article class="panel">
                     <h3>
-                        <span
-                            class="nf"
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
                             aria-hidden="true"
-                            >&#xf017;</span
+                            focusable="false"
                         >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-clock"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
                         Daily clock during the ramp
                     </h3>
                     <p class="panel-intro">
@@ -1839,11 +2011,18 @@
 
                 <article class="panel">
                     <h3>
-                        <span
-                            class="nf"
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 24 24"
                             aria-hidden="true"
-                            >&#xf2c9;</span
+                            focusable="false"
                         >
+                            <use
+                                href="../plant-booklet/plant-icons.svg#icon-temperature"
+                                width="24"
+                                height="24"
+                            ></use>
+                        </svg>
                         Manual sensor plan
                     </h3>
                     <p class="panel-intro">
@@ -1916,11 +2095,18 @@
                 <div class="section-heading">
                     <div>
                         <h2 id="next-title">
-                            <span
-                                class="nf"
+                            <svg
+                                class="site-icon"
+                                viewBox="0 0 24 24"
                                 aria-hidden="true"
-                                >&#xf135;</span
+                                focusable="false"
                             >
+                                <use
+                                    href="../plant-booklet/plant-icons.svg#icon-growth"
+                                    width="24"
+                                    height="24"
+                                ></use>
+                            </svg>
                             After the fixed ramp
                         </h2>
                         <p
@@ -2313,30 +2499,60 @@
                 );
             }
 
+            function makeSiteIcon(name, className = "") {
+                const svg = document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "svg"
+                );
+                svg.setAttribute(
+                    "class",
+                    ["site-icon", className].filter(Boolean).join(" ")
+                );
+                svg.setAttribute("viewBox", "0 0 24 24");
+                svg.setAttribute("aria-hidden", "true");
+                svg.setAttribute("focusable", "false");
+                const use = document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "use"
+                );
+                use.setAttribute(
+                    "href",
+                    `../plant-booklet/plant-icons.svg#icon-${name}`
+                );
+                use.setAttribute("width", "24");
+                use.setAttribute("height", "24");
+                svg.append(use);
+                return svg;
+            }
+
             function makeEvent(item) {
                 const button = document.createElement("button");
                 button.type = "button";
                 button.className = `event ${item.type}`;
                 button.dataset.eventId = item.id;
                 const eventIcons = {
-                    move: "\uf0d1",
-                    light: "\uf0eb",
-                    check: "\uf00c",
-                    sensor: "\uf030",
-                    water: "\uf043",
-                    season: "\uf185",
+                    move: "layout",
+                    light: "light",
+                    check: "check",
+                    sensor: "observation",
+                    water: "water",
+                    season: "calendar",
                 };
-                const icon = document.createElement("span");
-                icon.className = "nf";
-                icon.setAttribute("aria-hidden", "true");
-                icon.textContent = eventIcons[item.type] || "\uf073";
-                button.append(icon, document.createTextNode(item.text));
-                button.setAttribute(
-                    "aria-pressed",
-                    completed.has(item.id) ? "true" : "false"
+                const isDone = completed.has(item.id);
+                button.append(
+                    makeSiteIcon(
+                        isDone ? "check" : "observation",
+                        "event-status-icon"
+                    ),
+                    makeSiteIcon(
+                        eventIcons[item.type] || "calendar",
+                        "event-type-icon"
+                    ),
+                    document.createTextNode(item.text)
                 );
+                button.setAttribute("aria-pressed", isDone ? "true" : "false");
                 button.title = "Mark this task complete";
-                if (completed.has(item.id)) button.classList.add("done");
+                if (isDone) button.classList.add("done");
                 button.addEventListener("click", () => {
                     if (completed.has(item.id)) {
                         completed.delete(item.id);
@@ -2359,6 +2575,12 @@
                             "aria-pressed",
                             isDone ? "true" : "false"
                         );
+                        button
+                            .querySelector(".event-status-icon use")
+                            .setAttribute(
+                                "href",
+                                `../plant-booklet/plant-icons.svg#icon-${isDone ? "check" : "observation"}`
+                            );
                     });
             }
 
@@ -2449,7 +2671,6 @@
             const themeToggle = document.querySelector("#theme-toggle");
             const emptyDaysToggle =
                 document.querySelector("#empty-days-toggle");
-            const themeIcon = document.querySelector("#theme-icon");
             const themeLabel = document.querySelector("#theme-label");
             const emptyDaysIcon = document.querySelector("#empty-days-icon");
             const emptyDaysLabel = document.querySelector("#empty-days-label");
@@ -2809,24 +3030,6 @@
                 updateTodayHighlight(now);
             }
 
-            async function detectNerdFont() {
-                if (!document.fonts) return;
-                await document.fonts.ready;
-                const nerdFonts = [
-                    "Hack Nerd Font",
-                    "Hack Nerd Font Mono",
-                    "Symbols Nerd Font Mono",
-                    "Symbols Nerd Font",
-                ];
-                const available = nerdFonts.some((font) =>
-                    document.fonts.check(`12px "${font}"`)
-                );
-                document.documentElement.classList.toggle(
-                    "no-nerd-font",
-                    !available
-                );
-            }
-
             function syncViewControls() {
                 const darkMode =
                     document.documentElement.dataset.theme === "dark";
@@ -2834,15 +3037,17 @@
                     document.documentElement.classList.contains(
                         "hide-empty-days"
                     );
-                themeIcon.textContent = darkMode ? "\uf185" : "\uf186";
                 themeLabel.textContent = darkMode ? "Light mode" : "Dark mode";
                 themeToggle.setAttribute(
                     "aria-pressed",
                     darkMode ? "true" : "false"
                 );
-                emptyDaysIcon.textContent = emptyDaysHidden
-                    ? "\uf06e"
-                    : "\uf070";
+                emptyDaysIcon
+                    .querySelector("use")
+                    .setAttribute(
+                        "href",
+                        `../plant-booklet/plant-icons.svg#icon-${emptyDaysHidden ? "eye" : "eye-off"}`
+                    );
                 emptyDaysLabel.textContent = emptyDaysHidden
                     ? "Show empty days"
                     : "Hide empty days";
@@ -2879,7 +3084,6 @@
                 syncViewControls();
             });
 
-            detectNerdFont();
             updateLiveStatus();
             window.setInterval(updateLiveStatus, 1000);
             syncViewControls();

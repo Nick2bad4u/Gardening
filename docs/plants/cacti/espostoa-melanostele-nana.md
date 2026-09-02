@@ -3,8 +3,8 @@
 - Inventory: Cactus-01 — _Espostoa_ sp., likely _Espostoa melanostele_ subsp. _nana_
 - Label ID: `E1`
 - Tracker ID: `P13`
-- Visual description: Compact upright column wrapped in dense cream-white wool.
-- Interesting fact: The soft-looking wool conceals numerous sharp spines.
+- Visual description: A compact upright column almost completely wrapped in cream-white wool, with the darker stem and fine spines only peeking through where the fibers separate.
+- Interesting fact: The invitingly soft coat is camouflage: it conceals numerous sharp spines, so this is a look-don't-stroke cactus despite its plush appearance.
 - Identification: **probable; _Espostoa lanata_ remains the main alternative**
 - Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
 - Current pot: 4-inch individual pot

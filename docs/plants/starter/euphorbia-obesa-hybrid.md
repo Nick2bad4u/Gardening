@@ -3,8 +3,8 @@
 - Inventory: Starter-11 — probable _Euphorbia obesa_-type hybrid or selection
 - Label ID: `D1`
 - Tracker ID: `P10`
-- Visual description: Rounded ribbed green-and-brown body with little or no visible spine growth.
-- Interesting fact: It is a _Euphorbia_, not a cactus; its tiny flowers are specialized structures called cyathia, and damaged tissue can release caustic latex.
+- Visual description: A rounded, almost ball-like body marked by vertical ribs and muted green-to-brown striping, with little or no visible spine growth and a small cluster of structures at the crown.
+- Interesting fact: Despite its cactuslike shape, this is a _Euphorbia_: its tiny “flowers” are specialized cyathia, and damaged tissue can release the caustic latex typical of the genus.
 - Identification: **probable; exact parentage unknown**
 - Acquired from: Altman Reserve
 - Acquired on: 2026-07-23

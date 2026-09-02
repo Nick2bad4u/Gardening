@@ -18,6 +18,8 @@
     const nextButton = document.querySelector("#next-page");
     const previousLabel = document.querySelector("#previous-label");
     const nextLabel = document.querySelector("#next-label");
+    const pageControls = document.querySelector("#page-controls-navigation");
+    const pageControlsToggle = document.querySelector("#page-controls-toggle");
     const contentsDialog = document.querySelector("#contents-dialog");
     const openContents = document.querySelector("#open-contents");
     const closeContents = document.querySelector("#close-contents");
@@ -33,9 +35,39 @@
     let currentIndex = 0;
     let lastTrackedProfilePageId = null;
     let printPrepared = false;
+    let pageControlsPinned = false;
+    let pageControlsTimer;
 
     function pageName(page) {
         return page?.dataset.title || "Untitled page";
+    }
+
+    function setPageControlsExpanded(expanded) {
+        window.clearTimeout(pageControlsTimer);
+        pageControls.classList.toggle("is-collapsed", !expanded);
+        pageControlsToggle.setAttribute("aria-expanded", String(expanded));
+        pageControlsToggle.querySelector(".sr-only").textContent = expanded
+            ? "Collapse page navigation"
+            : "Expand page navigation";
+    }
+
+    function schedulePageControlsCollapse(delay = 2200) {
+        window.clearTimeout(pageControlsTimer);
+        if (pageControlsPinned) return;
+        pageControlsTimer = window.setTimeout(() => {
+            if (
+                !pageControls.matches(":hover") &&
+                !pageControls.contains(document.activeElement)
+            ) {
+                setPageControlsExpanded(false);
+            }
+        }, delay);
+    }
+
+    function revealPageControlsTemporarily() {
+        if (pageControlsPinned) return;
+        setPageControlsExpanded(true);
+        schedulePageControlsCollapse();
     }
 
     function currentHashState() {
@@ -217,6 +249,7 @@
 
         unmountInactiveProfiles(current);
         updateNavigation(current);
+        revealPageControlsTemporarily();
         document.title =
             current.dataset.page === "cover"
                 ? `${baseTitle} · Plant field guide`
@@ -297,6 +330,25 @@
     search.addEventListener("input", filterNavigation);
     previousButton.addEventListener("click", () => goToIndex(currentIndex - 1));
     nextButton.addEventListener("click", () => goToIndex(currentIndex + 1));
+    pageControlsToggle.addEventListener("click", () => {
+        pageControlsPinned = !pageControlsPinned;
+        setPageControlsExpanded(pageControlsPinned);
+        if (!pageControlsPinned) schedulePageControlsCollapse(350);
+    });
+    pageControls.addEventListener("pointerenter", () => {
+        if (!pageControlsPinned) setPageControlsExpanded(true);
+    });
+    pageControls.addEventListener("pointerleave", () => {
+        schedulePageControlsCollapse(500);
+    });
+    pageControls.addEventListener("focusin", () => {
+        if (!pageControlsPinned) setPageControlsExpanded(true);
+    });
+    pageControls.addEventListener("focusout", (event) => {
+        if (!pageControls.contains(event.relatedTarget)) {
+            schedulePageControlsCollapse(350);
+        }
+    });
     function prepareForPrint() {
         if (printPrepared) return;
         printPrepared = true;

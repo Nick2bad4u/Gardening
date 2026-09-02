@@ -2,8 +2,8 @@
 
 - Inventory: Rehab-04 — probable _Mammillaria bombycina_
 - Label ID: none — removed; historical record only
-- Visual description: Former small brown-green globe densely covered with pale and reddish spines.
-- Interesting fact: The tiny green tissue left near the top at removal was not enough to make salvage practical.
+- Visual description: The historical plant was a small brown-green globe so densely covered with pale radial and reddish central spines that little stem tissue remained visible by the time it was removed.
+- Interesting fact: A tiny patch of green near the crown survived, but not enough sound tissue remained to make salvage practical; the page preserves that decision instead of implying a successful recovery.
 - Identification: **probable from an older green photo**
 - Status: **removed 2026-07-24; historical record**
 - Acquired from: Existing shared cactus planter; exact source and date not recorded

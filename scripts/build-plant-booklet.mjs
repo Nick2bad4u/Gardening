@@ -323,12 +323,34 @@ function escapeHtml(value) {
         .replaceAll("'", "&#39;");
 }
 
+function renderSiteIcon(
+    name,
+    className = "",
+    spritePath = "./plant-icons.svg"
+) {
+    const classes = ["site-icon", className].filter(Boolean).join(" ");
+    return `<svg class="${escapeHtml(classes)}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="${escapeHtml(spritePath)}#icon-${escapeHtml(name)}" width="24" height="24"></use></svg>`;
+}
+
+function renderLayoutIcon(name, className = "") {
+    return renderSiteIcon(name, className, "../plant-booklet/plant-icons.svg");
+}
+
 function stripMarkdown(value) {
     return value
         .replaceAll(/\[([^\]]+)\]\([^)]+\)/g, "$1")
         .replaceAll(/[*_`]/g, "")
         .replaceAll(/\s+/g, " ")
         .trim();
+}
+
+function splitPhysicalLabel(value) {
+    const full = stripMarkdown(value).trim();
+    const [primary, ...detailParts] = full.split(/\s+—\s+/u);
+    return {
+        primary: primary || full,
+        detail: detailParts.join(" — "),
+    };
 }
 
 function stripHtml(value) {
@@ -401,60 +423,75 @@ function semanticTableCategory(label, tableType) {
                 normalized
             )
         ) {
-            return { key: "caution", icon: "!" };
+            return { key: "caution", icon: "caution" };
         }
         if (/origin|range|distribution|native|habitat/.test(normalized)) {
-            return { key: "origin", icon: "⌖" };
+            return { key: "origin", icon: "habitat" };
         }
         if (/history|synonym|name clue|etymolog/.test(normalized)) {
-            return { key: "history", icon: "↺" };
+            return { key: "history", icon: "history" };
         }
         if (/common|trade|cultivar|vernacular/.test(normalized)) {
-            return { key: "common", icon: "◇" };
+            return { key: "common", icon: "label" };
         }
         if (/form|parentage|hybrid|collection|growth habit/.test(normalized)) {
-            return { key: "form", icon: "◫" };
+            return { key: "form", icon: "succulent" };
         }
         if (
             /botanical|taxon|species|accepted|scientific|genus/.test(normalized)
         ) {
-            return { key: "botanical", icon: "✣" };
+            return { key: "botanical", icon: "botanical" };
         }
-        return { key: "record", icon: "▤" };
+        return { key: "record", icon: "inventory" };
     }
 
     if (/light|sun|grow-light/.test(normalized)) {
-        return { key: "light", icon: "☀" };
+        return { key: "light", icon: "light" };
     }
-    if (/water|dry|moist/.test(normalized)) {
-        return { key: "water", icon: "≈" };
+    if (/dry|dry-down|lowest/.test(normalized)) {
+        return { key: "water", icon: "dry" };
     }
-    if (/pot|mix|soil|medium|root|repot|drain/.test(normalized)) {
-        return { key: "pot", icon: "◉" };
+    if (/water|moist/.test(normalized)) {
+        return { key: "water", icon: "moisture" };
+    }
+    if (/repot|root work/.test(normalized)) {
+        return { key: "pot", icon: "repot" };
+    }
+    if (/pot|mix|soil|medium|root|drain/.test(normalized)) {
+        return { key: "pot", icon: "pot" };
     }
     if (/temperature|winter|cold|heat|frost/.test(normalized)) {
-        return { key: "temperature", icon: "❄" };
+        return { key: "temperature", icon: "temperature" };
     }
     if (/feed|fertili|nutrient/.test(normalized)) {
-        return { key: "feeding", icon: "+" };
+        return { key: "feeding", icon: "feeding" };
     }
     if (/airflow|humidity|ventilat/.test(normalized)) {
-        return { key: "airflow", icon: "↝" };
+        return { key: "airflow", icon: "airflow" };
     }
     if (/flower|bloom|fruit|seed/.test(normalized)) {
-        return { key: "flower", icon: "✿" };
+        return { key: "flower", icon: "flower" };
     }
-    if (/prun|handling|support|rotation|stake|clean/.test(normalized)) {
-        return { key: "handling", icon: "↟" };
+    if (/prun|trim|cut/.test(normalized)) {
+        return { key: "handling", icon: "prune" };
+    }
+    if (/rotation|turn/.test(normalized)) {
+        return { key: "handling", icon: "rotate" };
+    }
+    if (/clean|dust/.test(normalized)) {
+        return { key: "handling", icon: "clean" };
+    }
+    if (/handling|support|stake/.test(normalized)) {
+        return { key: "handling", icon: "handling" };
     }
     if (
         /arrival|observation|evidence|watch|leaf replacement|isolation|recovery/.test(
             normalized
         )
     ) {
-        return { key: "observation", icon: "◎" };
+        return { key: "observation", icon: "observation" };
     }
-    return { key: "care", icon: "◒" };
+    return { key: "care", icon: "care" };
 }
 
 function decorateSemanticTable(tableHtml) {
@@ -480,7 +517,7 @@ function decorateSemanticTable(tableHtml) {
                 stripHtml(labelHtml),
                 tableType
             );
-            return `<tr class="semantic-row semantic-row--${category.key}"><td><span class="semantic-label"><span class="semantic-table-icon" aria-hidden="true">${category.icon}</span><span>${labelHtml}</span></span></td>`;
+            return `<tr class="semantic-row semantic-row--${category.key}"><td><span class="semantic-label"><span class="semantic-table-icon" aria-hidden="true">${renderSiteIcon(category.icon)}</span><span>${labelHtml}</span></span></td>`;
         }
     );
 
@@ -506,33 +543,42 @@ function decorateProfileBody(html) {
         (_, headingHtml) => {
             const heading = stripHtml(headingHtml).toLowerCase();
             let tone = "story";
-            let icon = "✦";
+            let icon = "story";
             if (/source/.test(heading)) {
                 tone = "sources";
-                icon = "↗";
+                icon = "external";
             } else if (/seller/.test(heading)) {
                 tone = "seller";
-                icon = "◇";
+                icon = "seller";
+            } else if (/repot|potting|root work/.test(heading)) {
+                tone = "growth";
+                icon = "repot";
+            } else if (/prun|trim|cutting/.test(heading)) {
+                tone = "growth";
+                icon = "prune";
+            } else if (/pest|mite|mealy|scale/.test(heading)) {
+                tone = "warning";
+                icon = "pest";
             } else if (/care|water|light|rehabilitation/.test(heading)) {
                 tone = "care";
-                icon = "◒";
-            } else if (/propagat|prun|rotation/.test(heading)) {
+                icon = "care";
+            } else if (/propagat|rotation/.test(heading)) {
                 tone = "growth";
-                icon = "↟";
-            } else if (/risk|safety|pest|toxicity|watch/.test(heading)) {
+                icon = "growth";
+            } else if (/risk|safety|toxicity|watch/.test(heading)) {
                 tone = "warning";
-                icon = "!";
+                icon = "caution";
             } else if (
                 /ident|name|identity|evidence|status|removal/.test(heading)
             ) {
                 tone = "identity";
-                icon = "▤";
+                icon = "identity";
             } else if (/origin|habitat|wild|ecology/.test(heading)) {
                 tone = "habitat";
-                icon = "⌖";
+                icon = "habitat";
             }
 
-            return `<h2 class="profile-section-heading profile-section-heading--${tone}"><span class="profile-section-icon" aria-hidden="true">${icon}</span><span>${headingHtml}</span></h2>`;
+            return `<h2 class="profile-section-heading profile-section-heading--${tone}"><span class="profile-section-icon" aria-hidden="true">${renderSiteIcon(icon)}</span><span>${headingHtml}</span></h2>`;
         }
     );
 }
@@ -827,7 +873,7 @@ function renderCollectionPhoto(photo, extraClass = "") {
                   ? "(max-width: 680px) calc(100vw - 3rem), 16rem"
                   : "(max-width: 680px) calc(100vw - 3rem), (max-width: 1180px) 45vw, 31rem",
       })}
-      <span class="external-image-fallback" hidden><span aria-hidden="true">◇</span><strong>Photo temporarily unavailable</strong><small>Open the Gyazo capture or full Collection instead.</small></span>
+      <span class="external-image-fallback" hidden>${renderSiteIcon("photos", "external-image-fallback-icon")}<strong>Photo temporarily unavailable</strong><small>Open the Gyazo capture or full Collection instead.</small></span>
     </a>
     <figcaption>
       <span class="photo-labels"><span class="photo-kind">${escapeHtml(collectionPhotoKind(photo.kind))}</span>${viewBadge}</span>
@@ -857,9 +903,9 @@ function renderCollectionGallery(profile) {
           ${newestPhotos.map((photo) => renderCollectionPhoto(photo, "collection-photo--latest")).join("\n")}
         </div>
         <a class="gyazo-collection-link" href="${escapeHtml(collection.url)}" target="_blank" rel="noreferrer">
-          <span class="gyazo-collection-icon" aria-hidden="true">▧</span>
+          <span class="gyazo-collection-icon" aria-hidden="true">${renderSiteIcon("photos")}</span>
           <span><strong>Open full Gyazo Collection</strong><small>${growthPhotos.length} ${growthPhotos.length === 1 ? "photograph" : "photographs"}${newestDate ? ` · newest ${escapeHtml(formatCollectionDate(newestDate))}` : ""}</small></span>
-          <span aria-hidden="true">↗</span>
+          ${renderSiteIcon("external", "link-end-icon")}
         </a>
       </div>`
         : "";
@@ -874,7 +920,7 @@ function renderCollectionGallery(profile) {
     <header>
       <div>
         <p class="kicker">Dated collection evidence</p>
-        <h2 id="${escapeHtml(profile.slug)}-collection-heading">Plant photo history</h2>
+        <h2 id="${escapeHtml(profile.slug)}-collection-heading">${renderSiteIcon("camera")} Plant photo history</h2>
       </div>
       <p>These user-owned photographs document this exact plant. Open a preview for its Gyazo capture, or use the Collection button for every dated view.</p>
     </header>
@@ -892,7 +938,7 @@ function renderNurseryEvidence(profile) {
     <header>
       <div>
         <p class="kicker">Original identification evidence</p>
-        <h2 id="${escapeHtml(profile.slug)}-nursery-heading">Nursery labels</h2>
+        <h2 id="${escapeHtml(profile.slug)}-nursery-heading">${renderSiteIcon("label")} Nursery labels</h2>
       </div>
       <p>Label wording is preserved as evidence, not treated as botanical proof. The compact previews keep the page readable; open one for the archived source.</p>
     </header>
@@ -931,7 +977,7 @@ function choosePlantAvatar(collectionRecord, heroPhoto) {
 
 function renderPlantAvatar(profile, variant) {
     if (!profile.avatar) {
-        return `<span class="plant-avatar plant-avatar--${escapeHtml(variant)}" aria-hidden="true">🌵</span>`;
+        return `<span class="plant-avatar plant-avatar--${escapeHtml(variant)} plant-avatar--illustrated" aria-hidden="true">${renderSiteIcon("cactus")}</span>`;
     }
 
     const image = profile.avatar.external
@@ -942,31 +988,21 @@ function renderPlantAvatar(profile, variant) {
           })
         : `<img class="plant-avatar plant-avatar--${escapeHtml(variant)}" src="${escapeHtml(profile.avatar.src)}" alt="${escapeHtml(profile.avatar.alt)}" sizes="${variant === "hero" ? "5.5rem" : "3.25rem"}" loading="lazy" decoding="async">`;
 
-    return `<span class="plant-avatar-slot">${image}<span class="plant-avatar-fallback" aria-hidden="true" hidden>🌵</span></span>`;
+    return `<span class="plant-avatar-slot">${image}<span class="plant-avatar-fallback" aria-hidden="true" hidden>${renderSiteIcon("cactus")}</span></span>`;
 }
 
 const plantNavigationIconByGroup = {
-    cacti: `<path class="plant-nav-icon-fill" d="M17 38h22l-2 6H19z"></path><path d="M22 38V14c0-5 2-8 5-8s5 3 5 8v24"></path><path d="M22 24h-4c-3 0-5-2-5-5v-5"></path><path d="M32 27h4c3 0 5-2 5-5v-5"></path><path d="M17 38h22"></path>`,
-    houseplants: `<path class="plant-nav-icon-fill" d="M17 36h18l-2 8H19z"></path><path d="M24 36V17"></path><path class="plant-nav-icon-fill" d="M24 21C16 21 11 16 11 9c8-1 13 3 13 12z"></path><path class="plant-nav-icon-fill" d="M25 27c2-8 9-12 16-9-1 7-7 11-16 9z"></path>`,
-    rehab: `<path class="plant-nav-icon-fill" d="M14 37h20l-2 7H16z"></path><path d="M23 37V18"></path><path class="plant-nav-icon-fill" d="M23 25c-7 0-11-4-11-10 7-1 11 3 11 10z"></path><path class="plant-nav-icon-fill" d="M24 20c2-7 7-10 13-8 0 6-5 9-13 8z"></path><circle cx="37" cy="33" r="7"></circle><path d="M37 29v8M33 33h8"></path>`,
-    succulents: `<ellipse class="plant-nav-icon-fill" cx="24" cy="14" rx="5" ry="10"></ellipse><ellipse class="plant-nav-icon-fill" cx="24" cy="14" rx="5" ry="10" transform="rotate(60 24 24)"></ellipse><ellipse class="plant-nav-icon-fill" cx="24" cy="14" rx="5" ry="10" transform="rotate(120 24 24)"></ellipse><ellipse class="plant-nav-icon-fill" cx="24" cy="14" rx="5" ry="10" transform="rotate(180 24 24)"></ellipse><ellipse class="plant-nav-icon-fill" cx="24" cy="14" rx="5" ry="10" transform="rotate(240 24 24)"></ellipse><ellipse class="plant-nav-icon-fill" cx="24" cy="14" rx="5" ry="10" transform="rotate(300 24 24)"></ellipse><circle cx="24" cy="24" r="3.5"></circle>`,
+    cacti: "cactus",
+    houseplants: "houseplant",
+    rehab: "rehab",
+    succulents: "succulent",
 };
 
 function renderPlantNavigationIcon(profile, variant) {
     const iconGroup = Object.hasOwn(plantNavigationIconByGroup, profile.group)
         ? profile.group
         : "houseplants";
-    return `<span class="plant-nav-icon plant-nav-icon--${escapeHtml(variant)} plant-nav-icon--${escapeHtml(iconGroup)}" aria-hidden="true"><svg viewBox="0 0 48 48" focusable="false"><use href="#plant-nav-icon-${escapeHtml(iconGroup)}"></use></svg></span>`;
-}
-
-function renderPlantNavigationIconSprite() {
-    const symbols = Object.entries(plantNavigationIconByGroup)
-        .map(
-            ([group, icon]) =>
-                `<symbol id="plant-nav-icon-${escapeHtml(group)}" viewBox="0 0 48 48">${icon}</symbol>`
-        )
-        .join("");
-    return `<svg class="plant-nav-icon-sprite" aria-hidden="true" focusable="false"><defs>${symbols}</defs></svg>`;
+    return `<span class="plant-nav-icon plant-nav-icon--${escapeHtml(variant)} plant-nav-icon--${escapeHtml(iconGroup)}" aria-hidden="true">${renderSiteIcon(plantNavigationIconByGroup[iconGroup])}</span>`;
 }
 
 function renderCredit(photo, short = false) {
@@ -1018,7 +1054,7 @@ function renderLifecycleGallery(profile) {
     const coverage = lifecycleStages
         .map(
             ([subject, label]) =>
-                `<li class="${availableSubjects.has(subject) ? "is-covered" : "is-missing"}"><span aria-hidden="true">${availableSubjects.has(subject) ? "✓" : "–"}</span>${escapeHtml(label)}</li>`
+                `<li class="${availableSubjects.has(subject) ? "is-covered" : "is-missing"}">${renderSiteIcon(availableSubjects.has(subject) ? "check" : "minus", "lifecycle-status-icon")}${escapeHtml(label)}</li>`
         )
         .join("\n");
     const missingStages = lifecycleStages
@@ -1041,7 +1077,7 @@ function renderLifecycleGallery(profile) {
     <header>
       <div>
         <p class="kicker">Growth, reproduction, and habitat</p>
-        <h2 id="${escapeHtml(profile.slug)}-gallery-heading">Life in ${profile.photoCount} credited views</h2>
+        <h2 id="${escapeHtml(profile.slug)}-gallery-heading">${renderSiteIcon("growth")} Life in ${profile.photoCount} credited views</h2>
         <p>${escapeHtml(gapText)} Stage labels describe the photograph, not the age of the collection plant.</p>
       </div>
       <ul class="stage-coverage" aria-label="Archived lifecycle coverage">
@@ -1150,6 +1186,7 @@ async function loadProfiles() {
                 const selectedPhotos = choosePhotos(photos, profile.slug);
                 profiles.push({
                     ...profile,
+                    drawerLabel: splitPhysicalLabel(profile.labelMarkdown),
                     bodyHtml,
                     scientificHtml,
                     labelHtml,
@@ -1206,12 +1243,12 @@ function renderNavGroup(group, profiles) {
         <a class="drawer-link" href="#${escapeHtml(profile.slug)}" data-page-link="${escapeHtml(profile.slug)}">
           ${renderPlantNavigationIcon(profile, "drawer")}
           <span class="drawer-identifiers">
-            <span class="drawer-badge drawer-badge--tracker"><span aria-hidden="true">▦</span><strong>${escapeHtml(profile.trackerId ?? "Archive")}</strong></span>
-            <span class="drawer-badge drawer-badge--label"><span aria-hidden="true">⌖</span><strong>${profile.labelHtml}</strong></span>
+            <span class="drawer-badge drawer-badge--tracker">${renderSiteIcon("sheets", "drawer-badge-icon")}<strong>${escapeHtml(profile.trackerId ?? "Archive")}</strong></span>
+            <span class="drawer-badge drawer-badge--label" title="${escapeHtml(stripMarkdown(profile.labelMarkdown))}">${renderSiteIcon("label", "drawer-badge-icon")}<strong>${escapeHtml(profile.drawerLabel.primary)}</strong></span>
           </span>
-          <span class="drawer-name"><strong><span aria-hidden="true">✦</span>${escapeHtml(profile.title)}</strong><small><span aria-hidden="true">✣</span>${escapeHtml(stripMarkdown(profile.scientificMarkdown))}</small></span>
+          <span class="drawer-name"><strong>${renderSiteIcon("plant", "drawer-name-icon")}${escapeHtml(profile.title)}</strong>${profile.drawerLabel.detail ? `<small class="drawer-label-note">${renderSiteIcon("label", "drawer-name-icon")}${escapeHtml(profile.drawerLabel.detail)}</small>` : ""}<small>${renderSiteIcon("botanical", "drawer-name-icon")}${escapeHtml(stripMarkdown(profile.scientificMarkdown))}</small></span>
         </a>
-        ${profile.sheetUrl ? `<a class="drawer-sheet-link" href="${escapeHtml(profile.sheetUrl)}" target="_blank" rel="noreferrer" aria-label="Open ${escapeHtml(profile.trackerId)} in Google Sheets"><span aria-hidden="true">▦</span><span class="drawer-sheet-text">Sheets</span><span aria-hidden="true">↗</span></a>` : ""}
+        ${profile.sheetUrl ? `<a class="drawer-sheet-link" href="${escapeHtml(profile.sheetUrl)}" target="_blank" rel="noreferrer" aria-label="Open ${escapeHtml(profile.trackerId)} in Google Sheets">${renderSiteIcon("sheets")}<span class="drawer-sheet-text">Sheets</span>${renderSiteIcon("external", "link-end-icon")}</a>` : ""}
       </li>`
           )
           .join("\n")}
@@ -1220,7 +1257,7 @@ function renderNavGroup(group, profiles) {
 }
 
 function renderProfileMeta(type, icon, label, value) {
-    return `<div class="profile-meta profile-meta--${escapeHtml(type)}"><span class="profile-meta-icon" aria-hidden="true">${icon}</span><dt>${escapeHtml(label)}</dt><dd>${value}</dd></div>`;
+    return `<div class="profile-meta profile-meta--${escapeHtml(type)}"><span class="profile-meta-icon" aria-hidden="true">${renderSiteIcon(icon)}</span><dt>${escapeHtml(label)}</dt><dd>${value}</dd></div>`;
 }
 
 function renderContentsGroup(group, profiles, pageNumberBySlug) {
@@ -1229,6 +1266,7 @@ function renderContentsGroup(group, profiles, pageNumberBySlug) {
     );
     return `<section class="contents-group${group.key === "cacti" ? " contents-group--wide" : ""}" data-group="${escapeHtml(group.key)}">
     <header>
+      <span class="contents-group-icon" aria-hidden="true">${renderSiteIcon(plantNavigationIconByGroup[group.key] ?? "houseplant")}</span>
       <p>${escapeHtml(group.eyebrow)}</p>
       <h2>${escapeHtml(group.title)}</h2>
       <span>${escapeHtml(group.description)}</span>
@@ -1239,7 +1277,7 @@ function renderContentsGroup(group, profiles, pageNumberBySlug) {
               (profile) => `<li>
         <a href="#${escapeHtml(profile.slug)}" data-page-link="${escapeHtml(profile.slug)}">
           ${renderPlantNavigationIcon(profile, "contents")}
-          <span class="contents-id"><strong>${escapeHtml(profile.trackerId ?? "Archive")}</strong><small>${profile.labelHtml}</small></span>
+          <span class="contents-id"><strong>${escapeHtml(profile.trackerId ?? "Archive")}</strong><small title="${escapeHtml(stripMarkdown(profile.labelMarkdown))}">${escapeHtml(profile.drawerLabel.primary)}</small></span>
           <span class="contents-name"><strong>${escapeHtml(profile.title)}</strong><em>${escapeHtml(stripMarkdown(profile.scientificMarkdown))}</em></span>
           <span class="contents-page">${String(pageNumberBySlug.get(profile.slug)).padStart(2, "0")}</span>
         </a>
@@ -1259,6 +1297,17 @@ function renderProfile(profile, pageNumber, totalProfiles) {
     const archivePath = `../../assets/plants/${profile.slug}/README.md`;
     const sourceProfilePath = `../plants/${profile.sourceDirectory}/${profile.fileName}`;
     const trackerId = profile.trackerId;
+    const growthPhotos = profile.collectionRecord.photos
+        .filter((photo) => photo.kind === "collection")
+        .sort(compareCollectionPhotosNewestFirst);
+    const newestGrowthPhoto = growthPhotos[0];
+    const photoHistorySummary = growthPhotos.length
+        ? `<a href="#${escapeHtml(profile.slug)}-photo-history">${growthPhotos.length} ${growthPhotos.length === 1 ? "capture" : "captures"}${
+              newestGrowthPhoto
+                  ? ` · newest <time datetime="${escapeHtml(collectionPhotoDate(newestGrowthPhoto))}">${escapeHtml(formatCollectionDate(collectionPhotoDate(newestGrowthPhoto)))}</time>`
+                  : ""
+          } ${renderSiteIcon("arrow-down", "inline-link-icon")}</a>`
+        : `<span>Collection photograph pending</span>`;
     const inaturalist = inaturalistBySlug.get(profile.slug);
     if (!inaturalist) {
         throw new Error(
@@ -1267,13 +1316,13 @@ function renderProfile(profile, pageNumber, totalProfiles) {
     }
     const inaturalistUrl = `https://www.inaturalist.org/observations?taxon_name=${encodeURIComponent(inaturalist.taxon)}`;
     const historyLink = trackerId
-        ? `<a class="profile-history-link" href="../layouts/plant-history.html?id=${encodeURIComponent(trackerId)}"><span><span aria-hidden="true">◫</span> Open the live care history<small>Measurements, watering, events, and charts</small></span><span aria-hidden="true">→</span></a>`
+        ? `<a class="profile-history-link" href="../layouts/plant-history.html?id=${encodeURIComponent(trackerId)}"><span>${renderSiteIcon("history", "record-link-icon")} Open the live care history<small>Measurements, watering, events, and charts</small></span>${renderSiteIcon("arrow-right", "link-end-icon")}</a>`
         : "";
     const sheetLink = profile.sheetUrl
-        ? `<a class="profile-sheet-link" href="${escapeHtml(profile.sheetUrl)}" target="_blank" rel="noreferrer"><span><span aria-hidden="true">▦</span> Open ${escapeHtml(trackerId)} in Google Sheets<small>Direct plant worksheet tab</small></span><span aria-hidden="true">↗</span></a>`
+        ? `<a class="profile-sheet-link" href="${escapeHtml(profile.sheetUrl)}" target="_blank" rel="noreferrer"><span>${renderSiteIcon("sheets", "record-link-icon")} Open ${escapeHtml(trackerId)} in Google Sheets<small>Direct plant worksheet tab</small></span>${renderSiteIcon("external", "link-end-icon")}</a>`
         : "";
     const productLink = profile.sellerProductLink
-        ? `<a class="seller-product-link" href="${escapeHtml(profile.sellerProductLink.href)}" target="_blank" rel="noreferrer"><span><span aria-hidden="true">◇</span> Open the exact seller product page<small>${escapeHtml(profile.sellerProductLink.label)}</small></span><span aria-hidden="true">↗</span></a>`
+        ? `<a class="seller-product-link" href="${escapeHtml(profile.sellerProductLink.href)}" target="_blank" rel="noreferrer"><span>${renderSiteIcon("seller", "record-link-icon")} Open the exact seller product page<small>${escapeHtml(profile.sellerProductLink.label)}</small></span>${renderSiteIcon("external", "link-end-icon")}</a>`
         : "";
     const searchText = stripMarkdown(
         `${profile.inventoryId} ${trackerId ?? ""} ${profile.labelMarkdown} ${profile.title} ${profile.scientificMarkdown} ${profile.identificationMarkdown} ${profile.acquiredFromMarkdown} ${profile.acquiredOnMarkdown} ${profile.orderedFromMarkdown} ${profile.visualDescriptionMarkdown} ${profile.interestingFactMarkdown} ${profile.bodyMarkdown}`
@@ -1283,7 +1332,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         profile.acquiredFromHtml
             ? renderProfileMeta(
                   "source",
-                  "◇",
+                  "source",
                   "Acquired from",
                   profile.acquiredFromHtml
               )
@@ -1291,7 +1340,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         profile.acquiredOnHtml
             ? renderProfileMeta(
                   "date",
-                  "◫",
+                  "calendar",
                   "Acquired on",
                   `<time datetime="${escapeHtml(stripMarkdown(profile.acquiredOnMarkdown))}">${profile.acquiredOnHtml}</time>`
               )
@@ -1299,7 +1348,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         profile.orderedFromHtml
             ? renderProfileMeta(
                   "source",
-                  "◇",
+                  "source",
                   "Ordered from",
                   profile.orderedFromHtml
               )
@@ -1315,7 +1364,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         habitatPhoto ? renderPhoto(habitatPhoto, "landscape-photo") : "",
     ].join("\n");
     const archiveLink = hasPhotos
-        ? `<a href="${escapeHtml(archivePath)}">Open all ${profile.photoCount} archived photos and credits <span aria-hidden="true">→</span></a>`
+        ? `<a href="${escapeHtml(archivePath)}"><span>${renderSiteIcon("photos", "record-link-icon")} Open all ${profile.photoCount} archived photos and credits</span>${renderSiteIcon("arrow-right", "link-end-icon")}</a>`
         : `<p class="archive-pending"><strong>Licensed reference gallery pending.</strong> The research profile is complete; no local photo archive is being implied.</p>`;
 
     return `<article class="book-page profile-page" id="${escapeHtml(profile.slug)}" data-page="${escapeHtml(profile.slug)}" data-group="${escapeHtml(profile.group)}" data-title="${escapeHtml(profile.title)}" data-search="${escapeHtml(searchText)}" hidden></article>
@@ -1330,11 +1379,11 @@ function renderProfile(profile, pageNumber, totalProfiles) {
       <div class="hero-title">
         ${renderPlantAvatar(profile, "hero")}
         <div class="hero-badges">
-          <span class="inventory-badge">Inventory ${escapeHtml(profile.inventoryId)}</span>
-          ${trackerId ? `<span class="tracker-badge">Sheets ${escapeHtml(trackerId)}</span>` : ""}
-          <span class="label-badge">Label ${profile.labelHtml}</span>
-          ${profile.historical ? '<span class="history-badge">Historical record</span>' : ""}
-          ${profile.receiptUnverified ? '<span class="order-badge">Ordered · receipt unverified</span>' : ""}
+          <span class="inventory-badge">${renderSiteIcon("inventory", "hero-badge-icon")} Inventory ${escapeHtml(profile.inventoryId)}</span>
+          ${trackerId ? `<span class="tracker-badge">${renderSiteIcon("sheets", "hero-badge-icon")} Sheets ${escapeHtml(trackerId)}</span>` : ""}
+          <span class="label-badge">${renderSiteIcon("label", "hero-badge-icon")} Label ${profile.labelHtml}</span>
+          ${profile.historical ? `<span class="history-badge">${renderSiteIcon("history", "hero-badge-icon")} Historical record</span>` : ""}
+          ${profile.receiptUnverified ? `<span class="order-badge">${renderSiteIcon("seller", "hero-badge-icon")} Ordered · receipt unverified</span>` : ""}
         </div>
         <p>${profile.scientificHtml}</p>
         <h1>${escapeHtml(profile.title)}</h1>
@@ -1344,12 +1393,13 @@ function renderProfile(profile, pageNumber, totalProfiles) {
 
     <div class="profile-intro">
       <dl>
-        ${renderProfileMeta("inventory", "▤", "Collection record", escapeHtml(profile.inventoryId))}
-        ${trackerId ? renderProfileMeta("sheet", "▦", "Google Sheets ID", `<a href="${escapeHtml(profile.sheetUrl)}" target="_blank" rel="noreferrer">${escapeHtml(trackerId)} <span aria-hidden="true">↗</span></a>`) : ""}
-        ${renderProfileMeta("label", "⌖", "Permanent label", profile.labelHtml)}
-        ${renderProfileMeta("identity", "◎", "Identification", profile.identificationHtml)}
-        ${renderProfileMeta("status", "●", "Status", profile.statusHtml)}
+        ${renderProfileMeta("inventory", "inventory", "Collection record", escapeHtml(profile.inventoryId))}
+        ${trackerId ? renderProfileMeta("sheet", "sheets", "Google Sheets ID", `<a href="${escapeHtml(profile.sheetUrl)}" target="_blank" rel="noreferrer">${escapeHtml(trackerId)} ${renderSiteIcon("external", "inline-link-icon")}</a>`) : ""}
+        ${renderProfileMeta("label", "label", "Permanent label", profile.labelHtml)}
+        ${renderProfileMeta("identity", "identity", "Identification", profile.identificationHtml)}
+        ${renderProfileMeta("status", "status", "Status", profile.statusHtml)}
         ${acquisitionDetails}
+        ${renderProfileMeta("photos", "camera", "Photo history", photoHistorySummary)}
       </dl>
       <p><strong>Photo scope:</strong> ${escapeHtml(profile.scopeNote)}</p>
     </div>
@@ -1357,12 +1407,12 @@ function renderProfile(profile, pageNumber, totalProfiles) {
     <section class="profile-at-a-glance" aria-label="Visual description and interesting fact">
       <div>
         <p class="kicker">Spot it</p>
-        <h2><span aria-hidden="true">◎</span> What it looks like</h2>
+        <h2>${renderSiteIcon("observation")} What it looks like</h2>
         <p>${profile.visualDescriptionHtml}</p>
       </div>
       <div>
         <p class="kicker">One curious thing</p>
-        <h2><span aria-hidden="true">✦</span> Did you know?</h2>
+        <h2>${renderSiteIcon("story")} Did you know?</h2>
         <p>${profile.interestingFactHtml}</p>
       </div>
     </section>
@@ -1376,13 +1426,13 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         ${railPhotos}
         <section class="record-links">
           <p class="kicker">Keep digging</p>
-          <h2>Research trail</h2>
+          <h2>${renderSiteIcon("research")} Research trail</h2>
           ${historyLink}
           ${sheetLink}
-          <a class="profile-photo-history-link" href="#${escapeHtml(profile.slug)}-photo-history"><span><span aria-hidden="true">▧</span> Jump to this plant's photo history<small>Latest two views plus the full Gyazo Collection</small></span><span aria-hidden="true">↓</span></a>
+          <a class="profile-photo-history-link" href="#${escapeHtml(profile.slug)}-photo-history"><span>${renderSiteIcon("photos", "record-link-icon")} Jump to this plant's photo history<small>Latest two views plus the full Gyazo Collection</small></span>${renderSiteIcon("arrow-down", "link-end-icon")}</a>
           ${productLink}
-          <a class="inaturalist-link" href="${escapeHtml(inaturalistUrl)}" data-inaturalist-taxon="${escapeHtml(inaturalist.taxon)}" target="_blank" rel="noreferrer"><span>Browse iNaturalist observations<small>${escapeHtml(inaturalist.scope)}</small></span><span aria-hidden="true">↗</span></a>
-          <a href="${escapeHtml(sourceProfilePath)}">Open the source profile <span aria-hidden="true">→</span></a>
+          <a class="inaturalist-link" href="${escapeHtml(inaturalistUrl)}" data-inaturalist-taxon="${escapeHtml(inaturalist.taxon)}" target="_blank" rel="noreferrer"><span>${renderSiteIcon("botanical", "record-link-icon")} Browse iNaturalist observations<small>${escapeHtml(inaturalist.scope)}</small></span>${renderSiteIcon("external", "link-end-icon")}</a>
+          <a href="${escapeHtml(sourceProfilePath)}"><span>${renderSiteIcon("field-guide", "record-link-icon")} Open the source profile</span>${renderSiteIcon("arrow-right", "link-end-icon")}</a>
           ${archiveLink}
           <p>Identification confidence belongs to the collection plant. Any photographs illustrate the working species and may show mature or wild plants.</p>
         </section>
@@ -1436,7 +1486,7 @@ function renderCover(profiles) {
       <div><strong>${presentCount}</strong><span>plants present</span></div>
       <div><strong>${profiles.length}</strong><span>deep profiles</span></div>
       <div><strong>${profiles.reduce((sum, profile) => sum + profile.photoCount, 0)}</strong><span>licensed reference photos</span></div>
-      <a class="cover-start" href="#${escapeHtml(profiles[0].slug)}" data-page-link="${escapeHtml(profiles[0].slug)}">Start reading <span aria-hidden="true">→</span></a>
+      <a class="cover-start" href="#${escapeHtml(profiles[0].slug)}" data-page-link="${escapeHtml(profiles[0].slug)}">Start reading ${renderSiteIcon("arrow-right", "link-end-icon")}</a>
     </div>
     <p class="cover-credit">Summer 2026 edition · Working identifications stay honest about uncertainty</p>
   </section>`;
@@ -1458,14 +1508,14 @@ function renderPhotoCollectionCard(profile) {
         ${renderGyazoImage(newestPhoto, {
             sizes: "(max-width: 760px) calc(100vw - 3rem), 24rem",
         })}
-        <span class="external-image-fallback" hidden><span aria-hidden="true">◇</span><strong>Preview unavailable</strong><small>The Gyazo Collection link still works.</small></span>
+        <span class="external-image-fallback" hidden>${renderLayoutIcon("photos", "external-image-fallback-icon")}<strong>Preview unavailable</strong><small>The Gyazo Collection link still works.</small></span>
       </a>
       <div class="photo-collection-copy">
         <div class="photo-collection-badges"><span class="photo-id-badge">${escapeHtml(profile.trackerId)}</span><span class="photo-label-badge">${escapeHtml(label)}</span><span>${escapeHtml(profile.inventoryId)}</span></div>
         <h2>${escapeHtml(profile.title)}</h2>
         <p>${profile.scientificHtml}</p>
         <span>${profile.collectionRecord.photos.length} ${profile.collectionRecord.photos.length === 1 ? "capture" : "captures"} · newest <time datetime="${escapeHtml(collectionPhotoDate(newestPhoto))}">${escapeHtml(formatCollectionDate(collectionPhotoDate(newestPhoto)))}</time></span>
-        <a class="button primary" href="${escapeHtml(collection.url)}" target="_blank" rel="noreferrer">Open Gyazo Collection <span aria-hidden="true">↗</span></a>
+        <a class="button primary" href="${escapeHtml(collection.url)}" target="_blank" rel="noreferrer">${renderLayoutIcon("photos")} Open Gyazo Collection ${renderLayoutIcon("external", "link-end-icon")}</a>
       </div>
     </article>`;
 }
@@ -1504,14 +1554,14 @@ function renderPhotoAlbum(profiles, collectionManifest) {
 <body>
   <a class="skip-link" href="#album">Skip to photo Collections</a>
   <nav class="site-nav" aria-label="Collection tools">
-    <a class="brand" href="../plant-booklet/"><span class="brand-mark" aria-hidden="true">✦</span><span><strong>Fenton collection</strong><small>Photo Collections</small></span></a>
+    <a class="brand" href="../plant-booklet/"><span class="brand-mark" aria-hidden="true">${renderLayoutIcon("cactus")}</span><span><strong>Fenton collection</strong><small>Photo Collections</small></span></a>
     <div class="nav-links">
-      <a href="../plant-booklet/">✦ Field guide</a>
-      <a href="./plant-tracker.html">▦ Plant tracker</a>
-      <a href="./grow-spot-layout.html">◇ Grow-spot layout</a>
-      <a href="./indoor-acclimation-calendar.html">◫ Calendar</a>
-      <a href="#album" aria-current="page">▧ Photos</a>
-      <button id="theme-toggle" type="button" aria-pressed="false">Dark mode</button>
+      <a href="../plant-booklet/">${renderLayoutIcon("field-guide")} Field guide</a>
+      <a href="./plant-tracker.html">${renderLayoutIcon("tracker")} Plant tracker</a>
+      <a href="./grow-spot-layout.html">${renderLayoutIcon("layout")} Grow-spot layout</a>
+      <a href="./indoor-acclimation-calendar.html">${renderLayoutIcon("calendar")} Calendar</a>
+      <a href="#album" aria-current="page">${renderLayoutIcon("photos")} Photos</a>
+      <button id="theme-toggle" type="button" aria-pressed="false">${renderLayoutIcon("theme")} <span id="theme-label">Dark mode</span></button>
     </div>
   </nav>
 
@@ -1521,7 +1571,7 @@ function renderPhotoAlbum(profiles, collectionManifest) {
       <h1>Every plant has its own visual timeline.</h1>
       <p class="lede">Two recent views stay in the field guide. Open a plant's Gyazo Collection for its complete photo history without making this repository grow with every session.</p>
       <div class="photo-album-summary"><span><strong>${currentProfiles.length}</strong> plant Collections</span><span><strong>${currentProfiles.reduce((sum, profile) => sum + profile.collectionRecord.photos.length, 0)}</strong> placed captures</span><span><strong>${overviewPhotos.length}</strong> collection overviews</span></div>
-      <label class="photo-album-search" for="collection-search"><span aria-hidden="true">⌕</span><span>Find a plant by name, P-ID, label, or Inventory ID</span><input id="collection-search" type="search" autocomplete="off" placeholder="Try P28, G3, Royal Flush, or Succulent-06"></label>
+      <label class="photo-album-search" for="collection-search">${renderLayoutIcon("search")}<span>Find a plant by name, P-ID, label, or Inventory ID</span><input id="collection-search" type="search" autocomplete="off" placeholder="Try P28, G3, Royal Flush, or Succulent-06"></label>
       <p id="collection-search-status" class="photo-album-search-status" aria-live="polite">Showing all ${currentProfiles.length} plant Collections</p>
     </header>
 
@@ -1531,9 +1581,9 @@ function renderPhotoAlbum(profiles, collectionManifest) {
             loading: "eager",
             sizes: "(max-width: 760px) calc(100vw - 3rem), 64rem",
         })}
-        <span class="external-image-fallback" hidden><span aria-hidden="true">◇</span><strong>Overview preview unavailable</strong><small>The Gyazo Collection link still works.</small></span>
+        <span class="external-image-fallback" hidden>${renderLayoutIcon("photos", "external-image-fallback-icon")}<strong>Overview preview unavailable</strong><small>The Gyazo Collection link still works.</small></span>
       </a>
-      <div><p class="eyebrow">Room and table views</p><h2 id="overview-heading">Fenton collection · Overviews</h2><p>Wide setup photographs live separately from individual plant histories.</p><a class="button primary" href="${escapeHtml(overviewCollection.url)}" target="_blank" rel="noreferrer">Open overview Collection <span aria-hidden="true">↗</span></a></div>
+      <div><p class="eyebrow">Room and table views</p><h2 id="overview-heading">Fenton collection · Overviews</h2><p>Wide setup photographs live separately from individual plant histories.</p><a class="button primary" href="${escapeHtml(overviewCollection.url)}" target="_blank" rel="noreferrer">${renderLayoutIcon("photos")} Open overview Collection ${renderLayoutIcon("external", "link-end-icon")}</a></div>
     </section>
 
     <section class="photo-collection-grid" aria-label="Plant photo Collections">
@@ -1545,6 +1595,7 @@ function renderPhotoAlbum(profiles, collectionManifest) {
   <footer><span>Fenton plant collection</span><span>Collection photographs © Nick · all rights reserved</span></footer>
   <script>
     const themeToggle = document.querySelector("#theme-toggle");
+    const themeLabel = document.querySelector("#theme-label");
     const search = document.querySelector("#collection-search");
     const status = document.querySelector("#collection-search-status");
     const empty = document.querySelector("#photo-album-empty");
@@ -1554,7 +1605,7 @@ function renderPhotoAlbum(profiles, collectionManifest) {
       document.documentElement.dataset.theme = theme;
       localStorage.setItem("gardening-site-theme", theme);
       const dark = theme === "dark";
-      themeToggle.textContent = dark ? "Light mode" : "Dark mode";
+      themeLabel.textContent = dark ? "Light mode" : "Dark mode";
       themeToggle.setAttribute("aria-pressed", String(dark));
     }
 
@@ -1639,21 +1690,19 @@ async function renderBooklet(profiles) {
 </head>
 <body>
   <a class="skip-link" href="#book">Skip to the current page</a>
-  ${renderPlantNavigationIconSprite()}
-
   <header class="reader-bar" aria-label="Booklet controls">
     <button class="icon-button menu-button" id="open-contents" type="button" aria-haspopup="dialog" aria-controls="contents-dialog">
-      <span aria-hidden="true">☰</span><span>Contents</span>
+      ${renderSiteIcon("menu")}<span>Contents</span>
     </button>
     <div class="reader-position" aria-live="polite">
       <strong id="reader-title">Cover</strong>
       <span id="reader-count">The Fenton Collection</span>
     </div>
     <div class="reader-actions">
-      <a class="icon-button" href="../layouts/photo-album.html"><span aria-hidden="true">▧</span><span>Photos</span></a>
-      <button class="icon-button" type="button" data-surprise-plant aria-label="Open a random plant profile"><span aria-hidden="true">🌵</span><span>Random</span></button>
-      <button class="icon-button" id="theme-toggle" type="button" aria-pressed="false"><span aria-hidden="true">◐</span><span>Theme</span></button>
-      <button class="icon-button" id="print-booklet" type="button"><span aria-hidden="true">▣</span><span>Print</span></button>
+      <a class="icon-button" href="../layouts/photo-album.html">${renderSiteIcon("photos")}<span>Photos</span></a>
+      <button class="icon-button" type="button" data-surprise-plant aria-label="Open a random plant profile">${renderSiteIcon("cactus")}<span>Random</span></button>
+      <button class="icon-button" id="theme-toggle" type="button" aria-pressed="false">${renderSiteIcon("theme")}<span>Theme</span></button>
+      <button class="icon-button" id="print-booklet" type="button">${renderSiteIcon("print")}<span>Print</span></button>
     </div>
     <div class="reader-progress" aria-hidden="true"><span id="reader-progress"></span></div>
   </header>
@@ -1667,13 +1716,13 @@ async function renderBooklet(profiles) {
     <input id="plant-search" type="search" placeholder="Try A3, Mexico, flowers, or latex" autocomplete="off">
     <p class="search-status" id="search-status" aria-live="polite">Showing all ${profiles.length} profiles</p>
     <nav class="drawer-nav" aria-label="Plant profiles">
-      <a class="drawer-special" href="#cover" data-page-link="cover"><span>Cover</span><small>Start of the guide</small></a>
-      <a class="drawer-special" href="#contents" data-page-link="contents"><span>Printed contents</span><small>All profiles at a glance</small></a>
-      <a class="drawer-special" href="../layouts/plant-tracker.html"><span>Plant tracker</span><small>Live weights, watering, and measurements</small></a>
-      <a class="drawer-special" href="../layouts/grow-spot-layout.html"><span>Grow-spot layout</span><small>Tables, risers, light, fan, and camera</small></a>
-      <a class="drawer-special" href="../layouts/indoor-acclimation-calendar.html"><span>Acclimation calendar</span><small>Dated light and airflow schedule</small></a>
-      <a class="drawer-special" href="../layouts/photo-album.html"><span>Plant photo Collections</span><small>Search every plant's Gyazo history</small></a>
-      <a class="drawer-special" id="surprise-plant" href="#${escapeHtml(profiles[0].slug)}" data-surprise-plant><span>Surprise me</span><small>Jump to a random plant story</small></a>
+      <a class="drawer-special" href="#cover" data-page-link="cover"><span>${renderSiteIcon("cactus")} Cover</span><small>Start of the guide</small></a>
+      <a class="drawer-special" href="#contents" data-page-link="contents"><span>${renderSiteIcon("field-guide")} Printed contents</span><small>All profiles at a glance</small></a>
+      <a class="drawer-special" href="../layouts/plant-tracker.html"><span>${renderSiteIcon("tracker")} Plant tracker</span><small>Live weights, watering, and measurements</small></a>
+      <a class="drawer-special" href="../layouts/grow-spot-layout.html"><span>${renderSiteIcon("layout")} Grow-spot layout</span><small>Tables, risers, light, fan, and camera</small></a>
+      <a class="drawer-special" href="../layouts/indoor-acclimation-calendar.html"><span>${renderSiteIcon("calendar")} Acclimation calendar</span><small>Dated light and airflow schedule</small></a>
+      <a class="drawer-special" href="../layouts/photo-album.html"><span>${renderSiteIcon("photos")} Plant photo Collections</span><small>Search every plant's Gyazo history</small></a>
+      <a class="drawer-special" id="surprise-plant" href="#${escapeHtml(profiles[0].slug)}" data-surprise-plant><span>${renderSiteIcon("cactus")} Surprise me</span><small>Jump to a random plant story</small></a>
       ${navigation}
     </nav>
   </dialog>
@@ -1697,9 +1746,13 @@ async function renderBooklet(profiles) {
     ${profilePages}
   </main>
 
-  <nav class="page-controls" aria-label="Page navigation">
-    <button id="previous-page" type="button"><span aria-hidden="true">←</span><span><small>Previous</small><strong id="previous-label">Cover</strong></span></button>
-    <button id="next-page" type="button"><span><small>Next</small><strong id="next-label">Contents</strong></span><span aria-hidden="true">→</span></button>
+  <nav class="page-controls is-collapsed" id="page-controls-navigation" aria-label="Page navigation">
+    <button class="page-controls-toggle" id="page-controls-toggle" type="button" aria-expanded="false" aria-controls="page-controls-navigation">
+      ${renderSiteIcon("arrow-up", "page-controls-toggle-icon")}
+      <span class="sr-only">Expand page navigation</span>
+    </button>
+    <button id="previous-page" type="button">${renderSiteIcon("arrow-left", "page-control-icon")}<span><small>Previous</small><strong id="previous-label">Cover</strong></span></button>
+    <button id="next-page" type="button"><span><small>Next</small><strong id="next-label">Contents</strong></span>${renderSiteIcon("arrow-right", "page-control-icon")}</button>
   </nav>
 
   <p class="sr-only" id="page-announcer" aria-live="polite" aria-atomic="true"></p>

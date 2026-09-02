@@ -3,8 +3,8 @@
 - Inventory: Starter-01 — _Oreocereus trollii_
 - Label ID: `B2`
 - Tracker ID: `P05`
-- Visual description: Short upright column wrapped in white wool with reddish-brown spines showing through.
-- Interesting fact: The dense wool helps protect an Andean cactus from intense high-altitude sun and cold nights.
+- Visual description: A short upright column wrapped in long white wool, with reddish-brown spines showing through the fibers and a greener crown visible where the newest coat is thinner.
+- Interesting fact: The wool is more than decoration: on an Andean cactus it helps buffer intense high-altitude sunlight and cold nights, while the harder spines underneath retain the plant's physical defense.
 - Identification: **labeled**
 - Acquired from: Altman Reserve
 - Acquired on: 2026-07-15

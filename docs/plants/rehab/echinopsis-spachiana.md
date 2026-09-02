@@ -3,8 +3,8 @@
 - Inventory: Rehab-03 — probable _Echinopsis spachiana_
 - Label ID: `#1` — shared rehab cactus planter; formerly `A4-B4`
 - Tracker ID: `P19`
-- Visual description: Upright green ribbed column lined with dense golden-brown spines.
-- Interesting fact: Golden torch cacti can open large white flowers at night and are also used as cactus grafting stock.
+- Visual description: An upright green column divided by strong vertical ribs, with close golden-brown spine clusters tracing each rib from base to tip like parallel dotted lines.
+- Interesting fact: Golden torch combines two very different horticultural roles: a mature column can open a large white flower at night, while vigorous stems are also used as grafting stock for other cacti.
 - Identification: **probable**
 - Acquired from: Existing shared cactus planter; exact source and date not recorded
 - Photo archive: [licensed species-reference images](../../../assets/plants/echinopsis-spachiana/)

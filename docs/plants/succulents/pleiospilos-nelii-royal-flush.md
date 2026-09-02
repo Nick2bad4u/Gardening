@@ -3,8 +3,8 @@
 - Inventory: Succulent-06 — _Pleiospilos nelii_ 'Royal Flush'
 - Label ID: `G3` — owner-corrected after arrival
 - Tracker ID: `P28`
-- Visual description: Pair of thick purple speckled leaves divided by a deep central fissure.
-- Interesting fact: A daisy-like flower can emerge from the fissure while a new leaf pair replaces the old one from inside.
+- Visual description: A compact pair of thick purple, dark-speckled leaves separated by a deep central fissure, making the plant resemble a smooth split stone set almost flush with the potting mix.
+- Interesting fact: The central fissure is both a flower opening and a renewal point: a new leaf pair forms inside while the older pair slowly dries and transfers its stored resources, so attached papery remains can be part of normal replacement.
 - Identification: **seller-labeled cultivar; individual top, overview, and detail condition views archived, but identity is not independently proven**
 - Ordered from: Mountain Crest Gardens on 2026-08-25
 - Order status: **Received 2026-08-28; owner inspected roots and plant by hand**

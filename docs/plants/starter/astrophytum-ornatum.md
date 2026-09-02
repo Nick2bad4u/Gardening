@@ -3,8 +3,8 @@
 - Inventory: Starter-12 — _Astrophytum ornatum_
 - Label ID: `C3`
 - Tracker ID: `P09`
-- Visual description: Star-ribbed green column patterned with white flecks and long yellow-brown spines.
-- Interesting fact: It is the largest and eventually tallest _Astrophytum_, but flowering can still take 10–20 years in cultivation.
+- Visual description: A sharply star-ribbed green body patterned with bands of white flecks, with long yellow-brown spines projecting from the rib crests; the geometric markings remain visible between the spines.
+- Interesting fact: This is the largest and eventually tallest _Astrophytum_, yet it is in no hurry to perform—seed-grown plants may take roughly 10–20 years to reach flowering size in cultivation.
 - Identification: **labeled**
 - Acquired from: Costa Farms
 - Acquired on: 2026-07-23

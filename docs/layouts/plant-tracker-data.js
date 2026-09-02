@@ -666,9 +666,12 @@ export function dayColor(days) {
 
 export function installThemeToggle(button) {
     const root = document.documentElement;
+    const label = button.querySelector("[data-theme-label]");
     const update = () => {
         const dark = root.dataset.theme === "dark";
-        button.textContent = dark ? "Light mode" : "Dark mode";
+        const text = dark ? "Light mode" : "Dark mode";
+        if (label) label.textContent = text;
+        else button.textContent = text;
         button.setAttribute("aria-pressed", String(dark));
     };
     button.addEventListener("click", () => {
