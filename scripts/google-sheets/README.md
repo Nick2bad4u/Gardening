@@ -23,22 +23,21 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-As of September 2, 2026, the checked-in source identifies the logger as **5.14.7**,
-while the last verified production deployment remains logger **5.14.6** on
-immutable Apps Script version **46**. Version 5.14.7 is not live until an
-authorized Apps Script rollout updates that deployment in place.
-The production URL above is intentionally stable. Treat these values as
-a handoff baseline, not a substitute for checking `GARDEN_LOGGER.version`,
-`clasp versions`, `clasp deployments`, and the authenticated live page before a
-future release.
+As of September 2, 2026, the checked-in source and stable production deployment
+both identify the logger as **5.14.8** on immutable Apps Script version **48**.
+The existing production deployment was updated in place, so the production URL
+above remains unchanged. Treat these values as a handoff baseline, not a
+substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
+`clasp deployments`, and the authenticated live page before a future release.
 
 - `History` and `History view` contain 40 physical columns, A:AN; AN stores
   `Rotation (°)`.
-- `App entries` contains 32 physical columns, A:AF; AF stores `Rotation (°)`.
-- The live `App bulk` sheet still contains 50 physical columns, A:AX, with
-  P01-P28 weight fields. The checked-in 5.14.7 installer expands it to 52
-  columns, A:AZ, with P29-P30 weight fields during the authorized rollout; that
-  structural migration has not been run against production yet.
+- `App entries` contains 32 physical columns, A:AF; AF stores `Rotation (°)`,
+  and Plant ID validation covers P01-P30.
+- `App bulk` contains 52 physical columns, A:AZ, with P01-P30 weight fields.
+  The 5.14.8 installer recognizes both the older P01-P22 contract and the
+  intermediate P01-P28 contract, inserts only the missing weight columns, and
+  preserves the existing staging rows and trailing care fields.
 - `Plant tracker`, `Baselines`, `Quick log`, and the individual workbook tabs
   now include P29-P30. `QuickCareLog` spans `'Quick log'!A4:M34`, while
   canonical `History` remains unchanged.
@@ -47,13 +46,12 @@ future release.
 - A Wet weight is independent from Water. Nutrient choice, product, and amount
   are remembered across single and bulk logger entry for the current browser
   session. The live staging columns now validate against `MSU 13-3-15` and
-  `SuperThrive Foliage Pro`; checked-in 5.14.7 presents the same exact choices
-  as mobile-logger dropdowns. Older product text remains untouched in History.
-- Checked-in 5.14.7 sorts the compact label picker from `A1`–`H3` in natural
+  `SuperThrive Foliage Pro`; logger 5.14.8 presents the same exact choices as
+  mobile-logger dropdowns. Older product text remains untouched in History.
+- Logger 5.14.8 sorts the compact label picker from `A1`–`H3` in natural
   alphanumeric order, then presents numbered labels `#1`–`#6` last, without
-  changing canonical `P01`–`P30` request order. It also adds P29-P30 cached
-  photo summaries. Those interface changes are not production behavior until
-  the stable deployment is updated from 5.14.6.
+  changing canonical `P01`–`P30` request order. P29-P30 cached photo summaries
+  are live and use verified 960 px Gyazo thumbnails.
 - The selected-plant summary shows the most recent active `Dry` Weigh reading
   with its date. If a plant has no Dry-tagged reading, it shows the lowest
   active historical Weigh value instead and labels that basis `lowest`.
@@ -138,7 +136,7 @@ that nothing was written, the same form can be corrected and saved under a new
 request ID without using **Clear entry**. A timed-out request stays protected
 until its result is known because it may still be running remotely.
 
-The 5.14.7 interface uses a self-contained multicolor SVG sprite for navigation,
+The 5.14.7-and-later interface uses a self-contained multicolor SVG sprite for navigation,
 event, metric, queue, and action controls, so the icons do not depend on emoji
 fonts or external icon requests. Plant cards use Gyazo's cached 960 px
 thumbnails rather than source-resolution captures; the source-quality uploads

@@ -30,13 +30,18 @@ updates, or deletes `History` rows directly.
 The bridge contract and trigger details live in
 [`scripts/google-sheets/README.md`](../scripts/google-sheets/README.md#appsheet-companion-intake).
 
-Migration status as of 2026-09-02: the live workbook has P29 and P30 in
-`Plant tracker`, `Baselines`, `Quick log`, and individual plant tabs, and the
-two nutrient-product columns have the exact approved-value validation. The live
-`App bulk` sheet and AppSheet configuration remain on the P01-P28 / logger
-5.14.6 contract until an authorized 5.14.7 rollout expands the bulk sheet and
-refreshes AppSheet. P01-P30 behavior described below is the checked-in target,
-not a claim that the production AppSheet editor has already been migrated.
+Migration status as of 2026-09-02: logger 5.14.8 and immutable Apps Script
+version 48 are live at the existing stable deployment URL. The live workbook
+has P29 and P30 in `Plant tracker`, `Baselines`, `Quick log`, the individual
+plant tabs, and `App bulk`; the bulk sheet now contains 52 physical columns,
+A:AZ. The production AppSheet schema was regenerated to 53 columns including
+`_RowNumber`. Its P29 and P30 Decimal weight fields use the same positive-number
+validation and Weigh / Water + weigh visibility rule as P01-P28, while
+`Selected plants` remains an EnumList of `Plant tracker` refs. The live image
+mapping uses cached Gyazo thumbnails for P19, P20, and P23-P30, and natural
+label order now runs through #6. The rollout preserved all 597 canonical
+`History` data rows and left zero duplicate observation IDs, duplicate
+request/plant/event keys, or formula errors.
 
 ## View map
 
