@@ -12,7 +12,7 @@ import {
     parseDate,
     plantLabel,
     sheetUrls,
-} from "./plant-tracker-data.js";
+} from "./plant-tracker-data.js?v=20260903-removed-records";
 import {
     renderActivityChart,
     renderBarChart,
