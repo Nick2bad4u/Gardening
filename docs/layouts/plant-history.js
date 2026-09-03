@@ -6,6 +6,7 @@ import {
     formatSigned,
     historyPageUrl,
     installThemeToggle,
+    isActiveHistoryEvent,
     loadCollectionData,
     numericValue,
     parseDate,
@@ -596,19 +597,25 @@ function renderCharts(summary) {
     const activityEvents = currentPlant.events
         .map((event) => {
             const eventName = String(event.Event ?? "").trim();
+            const active = isActiveHistoryEvent(event);
+            const eventLabel =
+                eventName === "Water" && event["Nutrients used"] === "Yes"
+                    ? `Water + ${event["Nutrient product"] || "nutrients"}`
+                    : eventName || "Care event";
             return {
+                active,
                 category: eventName || "Other",
                 date: parseDate(event.Date),
-                label:
-                    eventName === "Water" && event["Nutrients used"] === "Yes"
-                        ? `Water + ${event["Nutrient product"] || "nutrients"}`
-                        : eventName || "Care event",
-                className: activityClassName(eventName),
+                label: active ? eventLabel : `Removed · ${eventLabel}`,
+                className: active
+                    ? activityClassName(eventName)
+                    : "activity-removed",
             };
         })
         .filter((event) => event.date && inChartRange(event));
+    const activeActivityEvents = activityEvents.filter((event) => event.active);
     const eventCounts = new Map();
-    activityEvents.forEach((event) =>
+    activeActivityEvents.forEach((event) =>
         eventCounts.set(
             event.category,
             (eventCounts.get(event.category) ?? 0) + 1
@@ -626,7 +633,7 @@ function renderCharts(summary) {
                 left.label.localeCompare(right.label)
         );
     renderBarChart(document.querySelector("#event-mix-chart"), {
-        ariaLabel: `Recorded event types for ${plantLabel(currentPlant)}`,
+        ariaLabel: `Active recorded event types for ${plantLabel(currentPlant)}`,
         emptyMessage: "No dated events in this chart range yet.",
         items: eventMix,
         unit: "events",
@@ -634,8 +641,8 @@ function renderCharts(summary) {
     setText(
         "#event-mix-chart-summary",
         eventMix.length
-            ? `${activityEvents.length} dated ${activityEvents.length === 1 ? "event" : "events"} across ${eventMix.length} ${eventMix.length === 1 ? "type" : "types"}. Blank fields are not counted as events.`
-            : "The chart counts recorded event rows; blanks remain not recorded."
+            ? `${activeActivityEvents.length} active dated ${activeActivityEvents.length === 1 ? "event" : "events"} across ${eventMix.length} ${eventMix.length === 1 ? "type" : "types"}. Removed records and blank fields are not counted.`
+            : "The chart counts active recorded event rows; Removed records and blanks are not counted."
     );
     renderActivityChart(document.querySelector("#activity-chart"), {
         ariaLabel: `Care activity timeline for ${plantLabel(currentPlant)}`,
@@ -645,7 +652,7 @@ function renderCharts(summary) {
     setText(
         "#activity-chart-summary",
         activityEvents.length
-            ? `${activityEvents.length} care ${activityEvents.length === 1 ? "event" : "events"} shown in this range.`
+            ? `${activityEvents.length} care ${activityEvents.length === 1 ? "event" : "events"} shown in this range${activityEvents.length === activeActivityEvents.length ? "." : `, including ${activityEvents.length - activeActivityEvents.length} Removed audit ${activityEvents.length - activeActivityEvents.length === 1 ? "record" : "records"}.`}`
             : "Add a dated event to begin this timeline."
     );
 }

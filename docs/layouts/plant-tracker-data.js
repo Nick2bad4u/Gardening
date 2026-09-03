@@ -356,6 +356,15 @@ const estimatedMeasurementMethods = new Set([
 ]);
 
 /** @param {HistoryEvent} event */
+export function isActiveHistoryEvent(event) {
+    return (
+        String(event["Record status"] ?? "")
+            .trim()
+            .toLowerCase() !== "removed"
+    );
+}
+
+/** @param {HistoryEvent} event */
 function isEligibleGrowthMeasurement(event) {
     const quality = String(event["Observation quality"] ?? "")
         .trim()
@@ -478,12 +487,7 @@ function wateringDetails(events) {
  * @param {string} [plantId]
  */
 export function calculateSummary(events, plantId = "") {
-    const currentEvents = events.filter(
-        (event) =>
-            String(event["Record status"] ?? "")
-                .trim()
-                .toLowerCase() !== "removed"
-    );
+    const currentEvents = events.filter(isActiveHistoryEvent);
     const activePotSetup = Math.max(
         1,
         ...events.map((event) => numericValue(event["Pot setup"]) ?? 1)

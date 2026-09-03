@@ -1406,6 +1406,12 @@ body.table-maximized {
     fill: var(--chart-other) !important;
 }
 
+.activity-removed {
+    fill: var(--muted) !important;
+    opacity: 0.58;
+    stroke-dasharray: 2 2;
+}
+
 .chart-count-label {
     fill: var(--accent-contrast);
     font-weight: 800;

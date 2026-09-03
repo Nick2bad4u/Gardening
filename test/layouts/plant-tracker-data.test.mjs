@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 
-import { calculateSummary } from "../../docs/layouts/plant-tracker-data.js";
+import {
+    calculateSummary,
+    isActiveHistoryEvent,
+} from "../../docs/layouts/plant-tracker-data.js";
 
 function observation({
     date,
@@ -244,6 +247,8 @@ describe("measured-only growth analytics", () => {
         const summary = calculateSummary(events);
 
         expect(events).toContain(removedDuplicate);
+        expect(isActiveHistoryEvent(originalWater)).toBe(true);
+        expect(isActiveHistoryEvent(removedDuplicate)).toBe(false);
         expect(summary.watering.events.map(({ event }) => event)).toEqual([
             originalWater,
         ]);
