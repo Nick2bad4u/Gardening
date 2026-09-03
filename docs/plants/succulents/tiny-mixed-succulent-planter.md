@@ -5,16 +5,17 @@
 - Tracker ID: `P30`
 - Visual description: A small shared planter combining pale powdery rosettes, copper-orange narrow-leaved rosettes on short stems, and broad green paddle leaves with red margins.
 - Interesting fact: This is deliberately tracked as one pot rather than several overconfident species records; each component can be promoted to its own profile later if flowers, growth, or separation supplies better evidence.
-- Identification: **mixed retail planting; component-level foliage matches are provisional and no cultivar is treated as proven**
-- Acquired from: Home Depot; exact store, component count, and seller labels not recorded
+- Identification: **Smart Planet Home five-plant retail succulent garden; component-level foliage matches are provisional and no cultivar is treated as proven**
+- Acquired from: Home Depot; grown by Altman Plants under Smart Planet Home branding; exact store not recorded
 - Acquired on: 2026-09-02
-- Current pot: repotted together 2026-09-02; exact pot size and replacement-medium composition not logged
+- Current pot: repotted together 2026-09-02 in the purchased five-inch-class terra-cotta planter; exact measured dimensions and replacement-medium composition not logged
 
 ## Names and identification
 
 | Kind                          | Name                                                                                           |
 | ----------------------------- | ---------------------------------------------------------------------------------------------- |
-| Collection record             | Mixed succulent planter; one tracked pot                                                       |
+| Collection record             | Smart Planet Home five-plant succulent garden; one tracked pot                                 |
+| Visible seller label          | `5" CLAY TERRACOTTA C&S GDN`; Home Depot product `1002971690`; Altman Plants                   |
 | Pale powdery rosettes         | _Echeveria_ sp.; species and cultivar unresolved                                               |
 | Copper-orange narrow rosettes | Probable _Sedum adolphi_ / _Sedum nussbaumerianum_ horticultural complex                       |
 | Broad red-edged paddle leaves | _Kalanchoe luciae_ / _Kalanchoe thyrsiflora_ complex                                           |
@@ -36,15 +37,23 @@ owner later separates them or wants independent histories.
 
 The owner bought the discounted planter at Home Depot on 2026-09-02 because the
 container itself was useful, then chose to keep a lightweight record anyway.
+The photographed reverse label records Smart Planet Home branding, Altman
+Plants as grower, a `$7.98` price, `5" CLAY TERRACOTTA C&S GDN`, Home Depot
+product `1002971690`, and 11 oz / 325 mL as the printed container-capacity
+marking. Home Depot's matching product page describes a five-inch deep-dish
+terra-cotta garden containing five plants. The generic QR destination is care
+marketing, not a component-identification source.
+
 Source-quality photographs preserve receipt context, three current angles, a
 top view, and the shared post-repot context. They also make it possible to
 compare the separate components later without loading full-resolution files on
 the booklet page.
 
-The components were kept together during the September 2 repot. Exact pot
-diameter, root condition, original mix, replacement-medium composition, weight,
-and dimensions are unrecorded. Because several plants share one root volume,
-all weights and watering events belong to `P30` as a whole.
+The components were kept together during the September 2 repot in the purchased
+five-inch-class terra-cotta planter. Its exact measured dimensions, root
+condition, original mix, replacement-medium composition, weight, and plant
+dimensions are unrecorded. Because several plants share one root volume, all
+weights and watering events belong to `P30` as a whole.
 
 ## Why the component names stay broad
 
@@ -91,3 +100,4 @@ for a low-priority mixed planter.
 - [GBIF Backbone Taxonomy: _Sedum adolphi_](https://www.gbif.org/species/5688173)
 - [GBIF Backbone Taxonomy: _Kalanchoe luciae_](https://www.gbif.org/species/7334254)
 - [GBIF Backbone Taxonomy: _Kalanchoe thyrsiflora_](https://www.gbif.org/species/4198362)
+- [Home Depot: Smart Planet five-inch succulent garden in deep-dish terra-cotta planter](https://www.homedepot.com/p/SMART-PLANET-5-in-Succulent-Garden-in-Deep-Dish-Terra-Cotta-Clay-Planter-0872523/320207970)

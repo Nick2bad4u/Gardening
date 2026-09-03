@@ -36,38 +36,73 @@
     let lastTrackedProfilePageId = null;
     let printPrepared = false;
     let pageControlsPinned = false;
-    let pageControlsTimer;
+    let lastScrollY = Math.max(0, window.scrollY);
+    let scrollTicking = false;
 
     function pageName(page) {
         return page?.dataset.title || "Untitled page";
     }
 
-    function setPageControlsExpanded(expanded) {
-        window.clearTimeout(pageControlsTimer);
-        pageControls.classList.toggle("is-collapsed", !expanded);
-        pageControlsToggle.setAttribute("aria-expanded", String(expanded));
-        pageControlsToggle.querySelector(".sr-only").textContent = expanded
-            ? "Collapse page navigation"
-            : "Expand page navigation";
+    function updateScrollProgress() {
+        const scrollableHeight = Math.max(
+            0,
+            document.documentElement.scrollHeight - window.innerHeight
+        );
+        const progress = scrollableHeight
+            ? Math.min(
+                  100,
+                  Math.max(
+                      0,
+                      (Math.max(0, window.scrollY) / scrollableHeight) * 100
+                  )
+              )
+            : 100;
+        readerProgress.style.width = `${progress}%`;
     }
 
-    function schedulePageControlsCollapse(delay = 2200) {
-        window.clearTimeout(pageControlsTimer);
-        if (pageControlsPinned) return;
-        pageControlsTimer = window.setTimeout(() => {
-            if (
-                !pageControls.matches(":hover") &&
-                !pageControls.contains(document.activeElement)
-            ) {
-                setPageControlsExpanded(false);
+    function setPageControlsVisible(visible) {
+        pageControls.classList.toggle(
+            "is-scroll-hidden",
+            !visible && !pageControlsPinned
+        );
+    }
+
+    function updatePageControlsPin() {
+        pageControls.classList.toggle("is-pinned", pageControlsPinned);
+        pageControlsToggle.setAttribute(
+            "aria-pressed",
+            String(pageControlsPinned)
+        );
+        pageControlsToggle.setAttribute(
+            "aria-label",
+            pageControlsPinned ? "Unpin page navigation" : "Pin page navigation"
+        );
+        pageControlsToggle.querySelector(
+            ".page-controls-pin-label"
+        ).textContent = pageControlsPinned ? "Pinned" : "Pin";
+    }
+
+    function handleScroll() {
+        if (scrollTicking) return;
+        scrollTicking = true;
+        requestAnimationFrame(() => {
+            const scrollY = Math.max(0, window.scrollY);
+            const documentHeight = document.documentElement.scrollHeight;
+            const nearTop = scrollY < 24;
+            const nearEnd = scrollY + window.innerHeight >= documentHeight - 24;
+
+            updateScrollProgress();
+            if (!pageControlsPinned) {
+                if (nearTop || nearEnd || scrollY < lastScrollY - 8) {
+                    setPageControlsVisible(true);
+                } else if (scrollY > lastScrollY + 8) {
+                    setPageControlsVisible(false);
+                }
             }
-        }, delay);
-    }
 
-    function revealPageControlsTemporarily() {
-        if (pageControlsPinned) return;
-        setPageControlsExpanded(true);
-        schedulePageControlsCollapse();
+            lastScrollY = scrollY;
+            scrollTicking = false;
+        });
     }
 
     function currentHashState() {
@@ -121,14 +156,14 @@
 
         if (profileIndex >= 0) {
             readerCount.textContent = `Plant ${profileIndex + 1} of ${profilePages.length}`;
-            readerProgress.style.width = `${((profileIndex + 1) / profilePages.length) * 100}%`;
         } else {
             readerCount.textContent =
                 page.dataset.page === "cover"
                     ? baseTitle
                     : `${profilePages.length} plant profiles`;
-            readerProgress.style.width = "0";
         }
+
+        updateScrollProgress();
 
         for (const link of pageLinks) {
             if (link.dataset.pageLink === page.dataset.page) {
@@ -249,7 +284,7 @@
 
         unmountInactiveProfiles(current);
         updateNavigation(current);
-        revealPageControlsTemporarily();
+        setPageControlsVisible(true);
         document.title =
             current.dataset.page === "cover"
                 ? `${baseTitle} · Plant field guide`
@@ -258,6 +293,8 @@
 
         if (scroll) {
             window.scrollTo({ top: 0, behavior: "auto" });
+            lastScrollY = 0;
+            updateScrollProgress();
             pageAnnouncer.textContent = `${pageName(current)}. ${readerCount.textContent}.`;
         }
     }
@@ -332,22 +369,11 @@
     nextButton.addEventListener("click", () => goToIndex(currentIndex + 1));
     pageControlsToggle.addEventListener("click", () => {
         pageControlsPinned = !pageControlsPinned;
-        setPageControlsExpanded(pageControlsPinned);
-        if (!pageControlsPinned) schedulePageControlsCollapse(350);
-    });
-    pageControls.addEventListener("pointerenter", () => {
-        if (!pageControlsPinned) setPageControlsExpanded(true);
-    });
-    pageControls.addEventListener("pointerleave", () => {
-        schedulePageControlsCollapse(500);
+        setPageControlsVisible(true);
+        updatePageControlsPin();
     });
     pageControls.addEventListener("focusin", () => {
-        if (!pageControlsPinned) setPageControlsExpanded(true);
-    });
-    pageControls.addEventListener("focusout", (event) => {
-        if (!pageControls.contains(event.relatedTarget)) {
-            schedulePageControlsCollapse(350);
-        }
+        setPageControlsVisible(true);
     });
     function prepareForPrint() {
         if (printPrepared) return;
@@ -390,6 +416,8 @@
     });
 
     window.addEventListener("hashchange", () => showCurrentHash());
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", updateScrollProgress);
 
     window.addEventListener("keydown", (event) => {
         if (
@@ -421,7 +449,9 @@
     });
 
     updateThemeButton();
+    updatePageControlsPin();
     filterNavigation();
     showCurrentHash({ scroll: false });
+    updateScrollProgress();
     document.body.dataset.readerReady = "true";
 })();

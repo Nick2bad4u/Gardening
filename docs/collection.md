@@ -187,18 +187,19 @@ money tree is `#3`, and the Kiwi aeonium is `#4`. The former `A4-B4` and
 ## September 2026 Home Depot succulent additions
 
 The owner acquired both pots from Home Depot on 2026-09-02, repotted them the
-same day, and assigned the next permanent numbered labels. Exact store, seller
-tags, received-pot details, current pot sizes, replacement-medium composition,
-weights, dimensions, and maintained placement are not yet recorded.
+same day, and assigned the next permanent numbered labels. Photographed labels
+identify Altman Plants as grower and Smart Planet Home as the retail brand.
+Exact store, current measured pot dimensions, replacement-medium composition,
+weights, plant dimensions, and maintained placement are not yet recorded.
 
-| Inventory ID | Label ID | Tracker ID | Working identification                                                                                      | Common name                  | Confidence                                  | Current record                       |
-| ------------ | -------- | ---------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------- | ------------------------------------------- | ------------------------------------ |
-| Succulent-09 | `#5`     | `P29`      | [Probable _Faucaria tuberculosa_](./plants/succulents/faucaria-tuberculosa.md); _F. tigrina_ is alternative | Tuberculate tiger jaws       | Probable from owner photographs             | Repotted and photographed 2026-09-02 |
-| Succulent-10 | `#6`     | `P30`      | [Mixed succulent planter](./plants/succulents/tiny-mixed-succulent-planter.md); component taxa unresolved   | Tiny mixed succulent planter | Aggregate record; component IDs provisional | Kept together and tracked as one pot |
+| Inventory ID | Label ID | Tracker ID | Working identification                                                                                         | Common name                  | Confidence                                  | Current record                                     |
+| ------------ | -------- | ---------- | -------------------------------------------------------------------------------------------------------------- | ---------------------------- | ------------------------------------------- | -------------------------------------------------- |
+| Succulent-09 | `#5`     | `P29`      | [Probable _Faucaria tuberculosa_](./plants/succulents/faucaria-tuberculosa.md); seller label says _F. tigrina_ | Tuberculate tiger jaws       | Qualified correction from seller label      | Altman 2.5-inch assortment; repotted 2026-09-02    |
+| Succulent-10 | `#6`     | `P30`      | [Mixed succulent planter](./plants/succulents/tiny-mixed-succulent-planter.md); component taxa unresolved      | Tiny mixed succulent planter | Aggregate record; component IDs provisional | Smart Planet five-plant garden; tracked as one pot |
 
 For `P29`, the paired toothed leaves establish _Faucaria_, and the conspicuous
-raised white tubercles favor _F. tuberculosa_ over the owner's initial
-_F. tigrina_ suggestion. `P30` remains one low-maintenance aggregate record:
+raised white tubercles favor _F. tuberculosa_ over the photographed
+_F. tigrina_ seller label. `P30` remains one low-maintenance aggregate record:
 the pale rosettes are provisionally _Echeveria_ sp., the copper-orange narrow
 rosettes resemble the _Sedum adolphi_ / _S. nussbaumerianum_ horticultural
 complex, and the broad red-edged paddles resemble the _Kalanchoe luciae_ /
@@ -264,6 +265,7 @@ The most useful future evidence would be:
 - flowers or a nursery cultivar label for Cactus-02;
 - diagnostic leaf, trunk, flower, or fruit photographs that can test the
   working species identification for Houseplant-01; and
-- a flower, fruit capsule, or seller provenance for `P29`, plus mature growth
-  or flowers before narrowing any `P30` component identification; and
+- a flower, fruit capsule, and mature growth for testing the seller-labeled
+  `P29` identification, plus mature growth or flowers before narrowing any
+  `P30` component identification; and
 - original nursery tags or receipts for the probable IDs.

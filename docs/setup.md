@@ -244,11 +244,14 @@ leaf-cycle watering logic.
 
 `P29`/`#5` probable _Faucaria tuberculosa_ and `P30`/`#6` tiny mixed
 succulent planter were purchased from Home Depot, photographed, and repotted
-on 2026-09-02. The exact store, received containers, current pot sizes,
-replacement-medium composition, weights, dimensions, and maintained placement
-are not logged. Their source-quality publication photographs live in separate
-Gyazo Collections; shared receipt and post-repot context captures are reused
-across both records rather than uploaded twice.
+on 2026-09-02. Their Smart Planet Home / Altman Plants labels identify `P29` as
+a 2.5-inch _F. tigrina_ retail assortment and `P30` as a five-inch terra-cotta
+succulent garden; the latter's matching Home Depot listing says it contains five
+plants. The exact store, current measured pot dimensions,
+replacement-medium composition, weights, plant dimensions, and maintained
+placement are not logged. Their source-quality publication photographs live in
+separate Gyazo Collections; shared receipt and post-repot context captures are
+reused across both records rather than uploaded twice.
 
 Do not infer either pot's physical configuration from its photograph. Before
 folding them into ordinary rounds, confirm drainage, record a whole-pot dry
@@ -286,8 +289,8 @@ more precise are:
 - exact maintained placement and plant-to-light clearance for the six Mountain
   Crest plants; their Ruler dimensions and Scale weights are recorded;
 - replacement-medium composition for the six Mountain Crest plants;
-- exact pot sizes, placement, replacement-medium composition, first dry
-  weights, and measured dimensions for `P29` and `P30`;
+- exact current measured pot sizes, placement, replacement-medium composition,
+  first dry weights, and measured plant dimensions for `P29` and `P30`;
 - final original-AeroWave hub height and distance to the nearest plant;
 - exact hub height, plant clearance, vertical angle, and app program for each
   E6 Gen2 fan;

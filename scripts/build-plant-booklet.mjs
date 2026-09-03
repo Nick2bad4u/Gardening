@@ -337,6 +337,10 @@ function escapeHtml(value) {
         .replaceAll("'", "&#39;");
 }
 
+function escapeSearchAttribute(value) {
+    return escapeHtml(String(value).replaceAll('"', ""));
+}
+
 function renderSiteIcon(
     name,
     className = "",
@@ -844,7 +848,8 @@ function renderGyazoImage(
         )
         .join(", ");
 
-    return `<img${classAttribute} src="${escapeHtml(gyazoThumbnailUrl(photo, 960))}" srcset="${srcset}" sizes="${escapeHtml(sizes)}" alt="${escapeHtml(alt)}" loading="${escapeHtml(loading)}" decoding="async" referrerpolicy="no-referrer" data-external-image data-image-id="${escapeHtml(photo.image_id)}">`;
+    const fetchPriority = loading === "eager" ? "high" : "low";
+    return `<img${classAttribute} src="${escapeHtml(gyazoThumbnailUrl(photo, 960))}" srcset="${srcset}" sizes="${escapeHtml(sizes)}" alt="${escapeHtml(alt)}" loading="${escapeHtml(loading)}" fetchpriority="${fetchPriority}" decoding="async" referrerpolicy="no-referrer" data-external-image data-image-id="${escapeHtml(photo.image_id)}">`;
 }
 
 function formatCollectionDate(date) {
@@ -898,8 +903,8 @@ function renderCollectionPhoto(photo, extraClass = "") {
       <strong>${escapeHtml(photo.caption)}</strong>
       <span>${evidenceVerb} <time datetime="${escapeHtml(evidenceDate)}">${escapeHtml(evidenceDate)}</time> · © Nick, all rights reserved</span>
       ${derivedNote}
-      <a href="${escapeHtml(photo.page_url)}" target="_blank" rel="noreferrer">Open this capture in Gyazo</a>
-      ${sourcePath ? `<a href="${escapeHtml(sourcePath)}">${sourceLinkText}</a>` : ""}
+      <a class="photo-evidence-link" href="${escapeHtml(photo.page_url)}" target="_blank" rel="noreferrer">${renderSiteIcon("photos", "caption-link-icon")}<span>Open this capture in Gyazo</span>${renderSiteIcon("external", "caption-link-end-icon")}</a>
+      ${sourcePath ? `<a class="photo-evidence-link" href="${escapeHtml(sourcePath)}">${renderSiteIcon("history", "caption-link-icon")}<span>${sourceLinkText}</span>${renderSiteIcon("arrow-right", "caption-link-end-icon")}</a>` : ""}
     </figcaption>
   </figure>`;
 }
@@ -940,7 +945,7 @@ function renderCollectionGallery(profile) {
         <p class="kicker">Dated collection evidence</p>
         <h2 id="${escapeHtml(profile.slug)}-collection-heading">${renderSiteIcon("camera")} Plant photo history</h2>
       </div>
-      <p>These user-owned photographs document this exact plant. Open a preview for its Gyazo capture, or use the Collection button for every dated view.</p>
+      <p>Two lightweight previews stay on this page. Open one for its Gyazo capture, or use the Collection button for the complete source-quality history.</p>
     </header>
     ${content}
   </section>`;
@@ -958,7 +963,7 @@ function renderNurseryEvidence(profile) {
         <p class="kicker">Original identification evidence</p>
         <h2 id="${escapeHtml(profile.slug)}-nursery-heading">${renderSiteIcon("label")} Nursery labels</h2>
       </div>
-      <p>Label wording is preserved as evidence, not treated as botanical proof. The compact previews keep the page readable; open one for the archived source.</p>
+      <p>Seller wording is evidence, not botanical proof. Each compact preview links to Gyazo and the retained repository crop.</p>
     </header>
     <div class="collection-photo-grid collection-photo-grid--labels">
       ${nurseryLabelPhotos.map((photo) => renderCollectionPhoto(photo)).join("\n")}
@@ -1256,7 +1261,7 @@ function renderNavGroup(group, profiles) {
     <ol>
       ${groupProfiles
           .map(
-              (profile) => `<li data-search="${escapeHtml(
+              (profile) => `<li data-search="${escapeSearchAttribute(
                   `${profile.trackerId ?? ""} ${profile.inventoryId} ${stripMarkdown(profile.labelMarkdown)} ${profile.title} ${stripMarkdown(profile.scientificMarkdown)}`.toLowerCase()
               )}">
         <a class="drawer-link" href="#${escapeHtml(profile.slug)}" data-page-link="${escapeHtml(profile.slug)}">
@@ -1386,7 +1391,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         ? `<a href="${escapeHtml(archivePath)}"><span>${renderSiteIcon("photos", "record-link-icon")} Open all ${profile.photoCount} archived photos and credits</span>${renderSiteIcon("arrow-right", "link-end-icon")}</a>`
         : `<p class="archive-pending"><strong>Licensed reference gallery pending.</strong> The research profile is complete; no local photo archive is being implied.</p>`;
 
-    return `<article class="book-page profile-page" id="${escapeHtml(profile.slug)}" data-page="${escapeHtml(profile.slug)}" data-group="${escapeHtml(profile.group)}" data-title="${escapeHtml(profile.title)}" data-search="${escapeHtml(searchText)}" hidden></article>
+    return `<article class="book-page profile-page" id="${escapeHtml(profile.slug)}" data-page="${escapeHtml(profile.slug)}" data-group="${escapeHtml(profile.group)}" data-title="${escapeHtml(profile.title)}" data-search="${escapeSearchAttribute(searchText)}" hidden></article>
   <template data-profile-template="${escapeHtml(profile.slug)}">
     <header class="profile-hero">
       ${heroMedia}
@@ -1419,8 +1424,8 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         ${renderProfileMeta("status", "status", "Status", profile.statusHtml)}
         ${acquisitionDetails}
         ${renderProfileMeta("photos", "camera", "Photo history", photoHistorySummary)}
+        ${renderProfileMeta("scope", "photos", "Photo scope", escapeHtml(profile.scopeNote))}
       </dl>
-      <p><strong>Photo scope:</strong> ${escapeHtml(profile.scopeNote)}</p>
     </div>
 
     <section class="profile-at-a-glance" aria-label="Visual description and interesting fact">
@@ -1522,7 +1527,7 @@ function renderPhotoCollectionCard(profile) {
         `${profile.trackerId} ${label} ${profile.inventoryId} ${profile.title} ${profile.scientificMarkdown}`
     ).toLowerCase();
 
-    return `<article class="photo-collection-card" data-photo-collection data-search="${escapeHtml(searchText)}">
+    return `<article class="photo-collection-card" data-photo-collection data-search="${escapeSearchAttribute(searchText)}">
       <a class="photo-collection-cover external-image-link" href="${escapeHtml(collection.url)}" target="_blank" rel="noreferrer">
         ${renderGyazoImage(newestPhoto, {
             sizes: "(max-width: 760px) calc(100vw - 3rem), 24rem",
@@ -1765,12 +1770,26 @@ async function renderBooklet(profiles) {
     ${profilePages}
   </main>
 
-  <nav class="page-controls is-collapsed" id="page-controls-navigation" aria-label="Page navigation">
-    <button class="page-controls-toggle" id="page-controls-toggle" type="button" aria-expanded="false" aria-controls="page-controls-navigation">
-      ${renderSiteIcon("arrow-up", "page-controls-toggle-icon")}
-      <span class="sr-only">Expand page navigation</span>
-    </button>
+  <footer class="site-footer">
+    <div class="site-footer-brand">
+      ${renderSiteIcon("cactus", "site-footer-icon")}
+      <span><strong>The Fenton Collection</strong><small>A personal gardening notebook and browser field guide</small></span>
+    </div>
+    <nav aria-label="Field guide footer links">
+      <a href="#contents" data-page-link="contents">${renderSiteIcon("field-guide")} Contents</a>
+      <a href="../layouts/plant-tracker.html">${renderSiteIcon("tracker")} Live tracker</a>
+      <a href="../layouts/photo-album.html">${renderSiteIcon("photos")} Photo Collections</a>
+      <a href="https://github.com/Nick2bad4u/Gardening" target="_blank" rel="noreferrer">${renderSiteIcon("external")} Source repository</a>
+    </nav>
+    <p>Collection notes and user photographs © 2026 Nick, all rights reserved. Credited reference photographs retain their stated licenses.</p>
+  </footer>
+
+  <nav class="page-controls" id="page-controls-navigation" aria-label="Page navigation">
     <button id="previous-page" type="button">${renderSiteIcon("arrow-left", "page-control-icon")}<span><small>Previous</small><strong id="previous-label">Cover</strong></span></button>
+    <button class="page-controls-toggle" id="page-controls-toggle" type="button" aria-pressed="false" aria-label="Pin page navigation">
+      ${renderSiteIcon("pin", "page-controls-toggle-icon")}
+      <span class="page-controls-pin-label">Pin</span>
+    </button>
     <button id="next-page" type="button"><span><small>Next</small><strong id="next-label">Contents</strong></span>${renderSiteIcon("arrow-right", "page-control-icon")}</button>
   </nav>
 

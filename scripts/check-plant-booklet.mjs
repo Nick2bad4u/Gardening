@@ -71,8 +71,8 @@ const expectedPresentProfiles = 35;
 const expectedUnverifiedReceiptProfiles = 0;
 const expectedHistoricalProfiles = 1;
 const expectedCollectionOverviews = 3;
-const expectedCollectionPlacements = 170;
-const expectedUniqueGyazoImages = 124;
+const expectedCollectionPlacements = 174;
+const expectedUniqueGyazoImages = 128;
 const expectedGyazoApplicationName = "Fenton Garden Field Guide";
 const expectedGyazoThumbnailWidths = [
     480,

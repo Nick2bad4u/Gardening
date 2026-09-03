@@ -1,6 +1,6 @@
 # Pot labels
 
-Last updated: 2026-09-02
+Last updated: 2026-09-03
 
 This is the print reference for the 35 plants or planters physically documented
 in the collection. Pot labels use only the short
@@ -16,7 +16,9 @@ recorded that day: `#1` is the shared rehab cactus planter, `#2` is the shared
 succulent planter, `#3` is the money tree, and `#4` is the Kiwi aeonium.
 The September 2 Home Depot additions continue that sequence: `#5` is the
 probable tuberculate tiger jaws (`P29`), and `#6` is the tiny mixed succulent
-planter (`P30`).
+planter (`P30`). Their separate Smart Planet Home / Altman Plants retail-label
+photographs are preserved as provenance. The retail _Faucaria tigrina_ wording
+does not replace the qualified _F. tuberculosa_ working ID printed on `#5`.
 
 The six Mountain Crest mappings were owner-corrected after receipt on
 2026-08-28: `G1` Black Widow (`P27`), `G2` paper spine (`P23`), `G3` Royal

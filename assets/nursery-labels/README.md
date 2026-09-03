@@ -74,3 +74,23 @@ or cultivar independently.
 
 The private camera originals were renamed descriptively and retained locally;
 only the metadata-stripped WebP evidence files above are published.
+
+## September Home Depot additions
+
+Four metadata-stripped crops preserve the readable front and back retail labels
+photographed on 2026-09-02 for `P29` and `P30`. The private camera originals
+remain outside the public tree. The label statements are provenance and seller
+claims, not automatic botanical proof or fixed care instructions.
+
+| File                                           | Evidence role     | Visible seller evidence                                                                                |
+| ---------------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------ |
+| `2026-09-02-p29-tiger-jaws-label-front.webp`   | `P29` label front | Tiger Jaws; _Faucaria tigrina_; 2.5-inch mimicry assortment; Altman Plants; code `487712`              |
+| `2026-09-02-p29-tiger-jaws-label-back.webp`    | `P29` label back  | Smart Planet Home; full-to-part sun; hardy to 35 °F; care QR; printed 4 oz / 118 mL container capacity |
+| `2026-09-02-p30-smart-planet-label-front.webp` | `P30` label front | Smart Planet Home branding and “Plant smart. Decorate smart.”                                          |
+| `2026-09-02-p30-smart-planet-label-back.webp`  | `P30` label back  | Five-inch clay terra-cotta succulent garden; Altman Plants; Home Depot `1002971690`; `$7.98`; care QR  |
+
+The `P29` label establishes the retail identification as _F. tigrina_, while
+the collection's qualified _F. tuberculosa_ working identification remains
+based on the photographed raised leaf tubercles. The matching Home Depot
+listing describes the `P30` product as a five-plant garden; it does not identify
+the individual components.

@@ -13,6 +13,7 @@ function createReader(hash = "#plant-b-photo-history", { dataLayer } = {}) {
         url: `https://example.test/garden/${hash}`,
     });
     window.print = vi.fn();
+    window.requestAnimationFrame = (callback) => callback(0);
     window.document.body.innerHTML = `
         <header>
             <button id="open-contents" type="button">Contents</button>
@@ -54,11 +55,11 @@ function createReader(hash = "#plant-b-photo-history", { dataLayer } = {}) {
                 <section id="plant-b-photo-history">B history</section>
             </template>
         </main>
-        <nav id="page-controls-navigation" class="is-collapsed">
-            <button id="page-controls-toggle" type="button" aria-expanded="false">
-                <span class="sr-only">Expand page navigation</span>
-            </button>
+        <nav id="page-controls-navigation">
             <button id="previous-page" type="button"><strong id="previous-label"></strong></button>
+            <button id="page-controls-toggle" type="button" aria-pressed="false" aria-label="Pin page navigation">
+                <span class="page-controls-pin-label">Pin</span>
+            </button>
             <button id="next-page" type="button"><strong id="next-label"></strong></button>
         </nav>
         <p id="page-announcer"></p>
@@ -158,7 +159,7 @@ describe("field-guide profile mounting", () => {
         expect(window.dataLayer).toBeUndefined();
     });
 
-    it("expands and collapses the compact page navigation", () => {
+    it("pins and unpins the scroll-aware page navigation", () => {
         const window = createReader("#plant-a");
         const navigation = window.document.querySelector(
             "#page-controls-navigation"
@@ -166,18 +167,51 @@ describe("field-guide profile mounting", () => {
         const toggle = window.document.querySelector("#page-controls-toggle");
 
         toggle.click();
-        expect(navigation.classList.contains("is-collapsed")).toBe(false);
-        expect(toggle.getAttribute("aria-expanded")).toBe("true");
-        expect(toggle.querySelector(".sr-only").textContent).toBe(
-            "Collapse page navigation"
-        );
+        expect(navigation.classList.contains("is-pinned")).toBe(true);
+        expect(toggle.getAttribute("aria-pressed")).toBe("true");
+        expect(toggle.getAttribute("aria-label")).toBe("Unpin page navigation");
+        expect(
+            toggle.querySelector(".page-controls-pin-label").textContent
+        ).toBe("Pinned");
 
         toggle.click();
-        expect(navigation.classList.contains("is-collapsed")).toBe(true);
-        expect(toggle.getAttribute("aria-expanded")).toBe("false");
-        expect(toggle.querySelector(".sr-only").textContent).toBe(
-            "Expand page navigation"
+        expect(navigation.classList.contains("is-pinned")).toBe(false);
+        expect(toggle.getAttribute("aria-pressed")).toBe("false");
+        expect(toggle.getAttribute("aria-label")).toBe("Pin page navigation");
+        expect(
+            toggle.querySelector(".page-controls-pin-label").textContent
+        ).toBe("Pin");
+    });
+
+    it("tracks reading progress and reveals navigation when scrolling up", () => {
+        const window = createReader("#plant-a");
+        const navigation = window.document.querySelector(
+            "#page-controls-navigation"
         );
+        const progress = window.document.querySelector("#reader-progress");
+
+        Object.defineProperty(window.document.documentElement, "scrollHeight", {
+            configurable: true,
+            value: 2000,
+        });
+        Object.defineProperty(window, "innerHeight", {
+            configurable: true,
+            value: 500,
+        });
+        Object.defineProperty(window, "scrollY", {
+            configurable: true,
+            value: 300,
+            writable: true,
+        });
+
+        window.dispatchEvent(new window.Event("scroll"));
+        expect(progress.style.width).toBe("20%");
+        expect(navigation.classList.contains("is-scroll-hidden")).toBe(true);
+
+        window.scrollY = 150;
+        window.dispatchEvent(new window.Event("scroll"));
+        expect(progress.style.width).toBe("10%");
+        expect(navigation.classList.contains("is-scroll-hidden")).toBe(false);
     });
 
     it("mounts every profile for print and restores the lean reader afterward", () => {

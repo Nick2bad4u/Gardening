@@ -5,8 +5,8 @@
 - Tracker ID: `P29`
 - Visual description: A compact mesemb with paired triangular green leaves, soft white marginal teeth, rough pale spots, and conspicuous raised white tubercles across the upper leaf surfaces.
 - Interesting fact: The jaw-like leaves grow in opposing pairs; mature _Faucaria_ can open daisy-like yellow flowers from the center without the flexible-looking marginal teeth being true defensive spines.
-- Identification: **probable from current owner photographs; the raised white leaf tubercles favor _Faucaria tuberculosa_, while the owner's initial _F. tigrina_ suggestion remains the main alternative**
-- Acquired from: Home Depot; exact store and seller label not recorded
+- Identification: **seller-labeled _Faucaria tigrina_, but probable _F. tuberculosa_ from current owner photographs; the conspicuous raised white leaf tubercles are the reason for the qualified correction**
+- Acquired from: Home Depot; grown by Altman Plants under Smart Planet Home branding; exact store not recorded
 - Acquired on: 2026-09-02
 - Current pot: repotted 2026-09-02; exact pot size and replacement-medium composition not logged
 
@@ -16,7 +16,7 @@
 | ----------------------- | -------------------------------------------------------------------------- |
 | Best working ID         | _Faucaria tuberculosa_ (Rolfe) Schwantes                                   |
 | Common name             | Tuberculate tiger jaws                                                     |
-| Initial owner ID        | _Faucaria tigrina_ (Haw.) Schwantes                                        |
+| Visible seller label    | Tiger Jaws — _Faucaria tigrina_; Altman Plants assortment code `487712`    |
 | Main identification cue | Raised white tubercles scattered across the leaf faces                     |
 | Confidence              | Probable from foliage photographs; a flower and provenance could revise it |
 
@@ -25,26 +25,33 @@ _Faucaria_ match. The current close photograph also shows many prominent,
 wart-like white tubercles over the leaf faces. That feature is more consistent
 with _F. tuberculosa_ than with the smoother, finely spotted appearance usually
 associated with _F. tigrina_, so the collection record uses _F. tuberculosa_
-as a probable working identification rather than silently preserving the first
-guess.
+as a probable working identification rather than silently accepting the retail
+label.
 
 Both names are accepted species in current Kew taxonomy. Photographs alone do
-not prove the horticultural source or exclude every variable _Faucaria_ form,
-so the permanent record keeps the qualifier visible. A clear flower, fruit
-capsule, seller tag, or documented nursery source would be useful additional
-evidence.
+not prove the taxon or exclude every variable _Faucaria_ form, so the permanent
+record keeps the qualifier visible. The photographed Altman Plants tag is now
+preserved as provenance, but a clear flower, fruit capsule, and mature growth
+would still be useful identification evidence.
 
 ## Acquisition and photo evidence
 
 The owner purchased this plant from Home Depot and assigned `#5` / `P29` on
-2026-09-02. Source-quality photographs preserve its receipt condition, the
-repotted whole plant, a close diagnostic view of the tubercles, and shared
-context with the second Home Depot planter. The Gyazo photo history contains
-the complete publication set; only selected current views are inlined in the
-field guide.
+2026-09-02. The readable front label says “Tiger Jaws,”
+_Faucaria tigrina_, `S 2.5" ASST MIMICRY`, Altman Plants, and code `487712`.
+The reverse carries Smart Planet Home branding, a generic care QR, full-to-part
+sun and 35 °F seller guidance, and a printed 4 oz / 118 mL container-capacity
+marking. Those statements are retained as retail evidence, not adopted as
+fixed care rules or taxonomic proof.
 
-The plant was repotted on acquisition day. Exact pot diameter, received pot,
-root condition, replacement-medium ingredients, first weight, and dimensions
+Source-quality photographs preserve its receipt condition, the repotted whole
+plant, a close diagnostic view of the tubercles, and shared context with the
+second Home Depot planter. The Gyazo photo history contains the complete
+publication set; only selected current views are inlined in the field guide.
+
+The plant was repotted on acquisition day. The photographed label establishes
+a 2.5-inch retail assortment, but exact store, price, root condition, current
+measured pot size, replacement-medium ingredients, first weight, and dimensions
 have not been logged. Those blanks should remain blanks rather than being
 estimated from photographs.
 
@@ -56,11 +63,13 @@ range. The name was first published as _Mesembryanthemum tuberculosum_ before
 being combined in _Faucaria_. The opposing leaves form short clustered shoots
 rather than the persistent woody stems of many ordinary houseplants.
 
-The owner's original _F. tigrina_ suggestion is botanically plausible at genus
+The seller's _F. tigrina_ identification is botanically plausible at genus
 level: SANBI describes that species as a small paired-leaf succulent with white
 spots, rough surfaces, and long soft marginal teeth. The stronger raised
 tubercles in this individual are why the record currently favors
-_F. tuberculosa_.
+_F. tuberculosa_. Altman Plants' current Tiger Jaws listing also uses
+_F. tigrina_; that corroborates the retail name, not the photographed plant's
+species identity.
 
 ## Care in this collection
 
@@ -92,4 +101,5 @@ _F. tuberculosa_.
 - [Kew Plants of the World Online: _Faucaria tuberculosa_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:361856-1)
 - [Kew Plants of the World Online: _Faucaria tigrina_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:361855-1)
 - [South African National Biodiversity Institute: _Faucaria tigrina_](https://pza.sanbi.org/faucaria-tigrina)
+- [Altman Plants: Tiger Jaws — _Faucaria tigrina_](https://shopaltmanplants.com/products/faucaria-tigrina-tiger-jaws)
 - [Gardenia: _Faucaria tigrina_ grow and care guide supplied by the owner](https://www.gardenia.net/plant/faucaria-igrina-tiger-jaws-grow-care-guide)

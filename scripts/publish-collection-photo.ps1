@@ -32,13 +32,19 @@ storage for the upload.
 The exact plant_slug entry that receives a new photo record.
 
 .PARAMETER LiteralPath
-An existing file beneath assets/collection-photos or .private-photo-sources.
+An existing file beneath assets/collection-photos, assets/measurements,
+assets/nursery-labels, or .private-photo-sources. Evidence paths are accepted
+only when Kind is nursery-label.
 
 .PARAMETER CapturedOn
 The capture date in yyyy-MM-dd format.
 
 .PARAMETER View
 A lowercase, hyphen-delimited view name such as side, top, detail, or context.
+
+.PARAMETER Kind
+Classifies the manifest record as a dated collection photograph or nursery-label
+evidence. The default is collection.
 
 .PARAMETER AltText
 Alternative text stored in the collection-photo manifest.
@@ -96,6 +102,9 @@ param(
     [Parameter(Mandatory, ParameterSetName = 'Single')]
     [ValidatePattern('^[a-z0-9]+(?:-[a-z0-9]+)*$')]
     [string] $View,
+    [Parameter(ParameterSetName = 'Single')]
+    [ValidateSet('collection', 'nursery-label')]
+    [string] $Kind = 'collection',
     [Parameter(Mandatory, ParameterSetName = 'Single')]
     [ValidateNotNullOrEmpty()]
     [string] $AltText,
@@ -2659,7 +2668,9 @@ try {
 
     if ($PSCmdlet.ParameterSetName -eq 'Single') {
         $createdAt = ConvertTo-UnixTimestamp -CapturedOn $CapturedOn
-        $source = Resolve-RepositoryPhotoPath -LiteralPath $LiteralPath -RepositoryRoot $repositoryRoot
+        $source = Resolve-RepositoryPhotoPath -LiteralPath $LiteralPath -RepositoryRoot $repositoryRoot -AllowEvidence:(
+            $Kind -eq 'nursery-label'
+        )
         $plant = @($manifest.plants | Where-Object plant_slug -EQ $PlantSlug)
         if ($plant.Count -ne 1) {
             throw (
@@ -2712,7 +2723,7 @@ try {
 
             $photo = [pscustomobject] [ordered] @{
                 publication_name = $publication.PublicationName
-                kind = 'collection'
+                kind = $Kind
                 captured_on = $CapturedOn
                 view = $View
                 alt = $AltText

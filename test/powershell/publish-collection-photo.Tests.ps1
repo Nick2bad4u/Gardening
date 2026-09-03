@@ -249,8 +249,9 @@ BeforeAll {
         )
         $scriptDirectory = Join-Path -Path $repositoryRoot -ChildPath 'scripts'
         $photoDirectory = Join-Path -Path $repositoryRoot -ChildPath 'assets/collection-photos'
+        $nurseryLabelDirectory = Join-Path -Path $repositoryRoot -ChildPath 'assets/nursery-labels'
         $privateDirectory = Join-Path -Path $repositoryRoot -ChildPath '.private-photo-sources'
-        $null = New-Item -ItemType Directory -Path $scriptDirectory, $photoDirectory, $privateDirectory -Force
+        $null = New-Item -ItemType Directory -Path $scriptDirectory, $photoDirectory, $nurseryLabelDirectory, $privateDirectory -Force
         $scriptPath = Join-Path -Path $scriptDirectory -ChildPath 'publish-collection-photo.ps1'
         Copy-Item -LiteralPath $script:SourceScriptPath -Destination $scriptPath
 
@@ -275,6 +276,7 @@ BeforeAll {
             Root = $repositoryRoot
             ScriptPath = $scriptPath
             PhotoDirectory = $photoDirectory
+            NurseryLabelDirectory = $nurseryLabelDirectory
             PrivateDirectory = $privateDirectory
             SourceMapPath =
                 Join-Path -Path $privateDirectory -ChildPath 'photo-source-map.json'
@@ -826,6 +828,31 @@ Describe 'publish-collection-photo.ps1' {
                 [string] $Method -eq 'Get' -and
                 ([uri] $Uri).Host -eq 'api.gyazo.com'
             }
+        }
+
+        It 'publishes retained nursery-label evidence with its explicit kind and source path' {
+            $repository = New-TestRepository -Plants @(
+                (New-TestPlant -PlantSlug 'test-plant')
+            )
+            $labelPath = Join-Path -Path $repository.NurseryLabelDirectory -ChildPath '2026-08-30-test-plant-label-front.webp'
+            Write-TestWebP -LiteralPath $labelPath
+            $parameters = Get-SingleParameters -LiteralPath $labelPath
+            $parameters.Kind = 'nursery-label'
+            $parameters.View = 'label-front'
+            $parameters.AltText = 'Front of the nursery label for the test plant'
+            $parameters.Caption = 'Nursery-label evidence retained in the repository.'
+
+            $null = & $repository.ScriptPath @parameters
+            $manifest = Get-Content -LiteralPath $repository.ManifestPath -Raw
+                | ConvertFrom-Json -Depth 20
+            $photo = $manifest.plants[0].photos[0]
+
+            $photo.kind | Should -Be 'nursery-label'
+            $photo.source_file
+                | Should -Be 'assets/nursery-labels/2026-08-30-test-plant-label-front.webp'
+            $photo.publication_name
+                | Should -Be '2026-08-30-test-plant-label-front.webp'
+            $labelPath | Should -Exist
         }
 
         It 'accepts Gyazo container normalization only when dimensions and structural similarity are preserved' {
