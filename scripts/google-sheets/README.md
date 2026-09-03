@@ -24,7 +24,7 @@ overwritten. The bound Apps Script in
 ## Current production baseline
 
 As of September 3, 2026, the checked-in source and stable production deployment
-both identify the logger as **5.15.0** on immutable Apps Script version **49**.
+both identify the logger as **5.15.0** on immutable Apps Script version **50**.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,

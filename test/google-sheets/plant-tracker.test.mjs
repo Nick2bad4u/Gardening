@@ -3974,6 +3974,23 @@ describe("Garden logger server logic", () => {
             false
         );
 
+        const tableBackedQuickLog = createDataSheet("Quick log", [
+            [],
+            [],
+            [],
+            [
+                ...partialQuickLog.__rows[3].slice(0, 13),
+                "Column 14",
+                "Column 15",
+            ],
+        ]);
+        expect(context.ensureQuickLogWaterColumns_(tableBackedQuickLog)).toBe(
+            true
+        );
+        expect(tableBackedQuickLog.__rows[3].slice(13, 15)).toEqual(
+            historyWaterHeaders
+        );
+
         partialQuickLog.__rows[3][14] = "Water amount";
         expect(() =>
             context.ensureQuickLogWaterColumns_(partialQuickLog)
@@ -4002,6 +4019,16 @@ describe("Garden logger server logic", () => {
             "SEQUENCE(1,41,2,1)"
         );
         expect(context.ensureHistoryView_(spreadsheet)).toBe(false);
+
+        const tableBackedHistory = createHistorySheet();
+        tableBackedHistory.__rows[0][40] = "Column 41";
+        tableBackedHistory.__rows[0][41] = "Column 42";
+        expect(
+            context.ensureHistoryWaterColumns_(tableBackedHistory)
+        ).toBeUndefined();
+        expect(tableBackedHistory.__rows[0].slice(40, 42)).toEqual(
+            historyWaterHeaders
+        );
     });
 
     it("extends the previous AppSheet entry schema without shifting data", () => {
@@ -4028,6 +4055,19 @@ describe("Garden logger server logic", () => {
             "",
             "",
         ]);
+
+        const tableBackedEntries = createDataSheet("App entries", [
+            [
+                ...appSheetEntryHeaders.slice(0, -2),
+                "Column 33",
+                "Column 34",
+            ],
+        ]);
+        tableBackedEntries.__setParent(workbook.spreadsheet);
+        expect(
+            context.ensureAppSheetEntryColumns_(tableBackedEntries, true)
+        ).toBe(true);
+        expect(tableBackedEntries.__rows[0]).toEqual(appSheetEntryHeaders);
 
         entries.__rows[0][33] = "Water amount";
         expect(() => context.ensureAppSheetEntryColumns_(entries)).toThrow(

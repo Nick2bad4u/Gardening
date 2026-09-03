@@ -1805,7 +1805,10 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
         APP_SHEET_ENTRY_LEGACY_HEADERS.length
     );
     extensionHeaders.forEach((header, index) => {
-        if (header && header !== expectedExtension[index]) {
+        if (
+            header !== expectedExtension[index] &&
+            !isReplaceableGeneratedHeader_(header, extensionStartColumn + index)
+        ) {
             throw new Error(
                 `App entries!${columnName_(extensionStartColumn + index)}1 must be "${expectedExtension[index]}".`
             );
@@ -1886,6 +1889,11 @@ function ensureSheetColumnCapacity_(sheet, requiredColumns) {
     if (missingColumns > 0) {
         sheet.insertColumnsAfter(currentColumns, missingColumns);
     }
+}
+
+function isReplaceableGeneratedHeader_(header, columnNumber) {
+    const normalized = cleanText_(header);
+    return !normalized || normalized === `Column ${columnNumber}`;
 }
 
 function installAppSheetQueueTrigger() {
@@ -4140,8 +4148,23 @@ function ensureHistoryWaterColumns_(history, configureColumn = false) {
         GARDEN_LOGGER.historyWaterColumns
     );
     const current = range.getDisplayValues()[0].map(cleanText_);
-    const empty = current.every((value) => !value);
-    if (empty) {
+    current.forEach((header, index) => {
+        if (
+            header !== HISTORY_WATER_HEADERS[index] &&
+            !isReplaceableGeneratedHeader_(
+                header,
+                GARDEN_LOGGER.historyWaterStartColumn + index
+            )
+        ) {
+            throw new Error(
+                `History!${columnName_(GARDEN_LOGGER.historyWaterStartColumn + index)}1 must be "${HISTORY_WATER_HEADERS[index]}".`
+            );
+        }
+    });
+    const changed = current.some(
+        (header, index) => header !== HISTORY_WATER_HEADERS[index]
+    );
+    if (changed) {
         range.setValues([HISTORY_WATER_HEADERS]);
         range.setNotes([
             [
@@ -4149,14 +4172,6 @@ function ensureHistoryWaterColumns_(history, configureColumn = false) {
                 "Optional measured water volume in milliliters. Leave blank when volume was not measured.",
             ],
         ]);
-    } else {
-        current.forEach((header, index) => {
-            if (header !== HISTORY_WATER_HEADERS[index]) {
-                throw new Error(
-                    `History!${columnName_(GARDEN_LOGGER.historyWaterStartColumn + index)}1 must be "${HISTORY_WATER_HEADERS[index]}".`
-                );
-            }
-        });
     }
 
     /* v8 ignore next -- Installer configuration and lightweight append verification are both tested. */
@@ -4231,7 +4246,10 @@ function ensureQuickLogWaterColumns_(quickLog, configureColumns = false) {
     );
     const current = range.getDisplayValues()[0].map(cleanText_);
     current.forEach((header, index) => {
-        if (header && header !== expected[index]) {
+        if (
+            header !== expected[index] &&
+            !isReplaceableGeneratedHeader_(header, startColumn + index)
+        ) {
             throw new Error(
                 `Quick log!${columnName_(startColumn + index)}${GARDEN_LOGGER.headerRow} must be "${expected[index]}".`
             );
