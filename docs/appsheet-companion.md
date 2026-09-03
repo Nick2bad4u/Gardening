@@ -30,18 +30,21 @@ updates, or deletes `History` rows directly.
 The bridge contract and trigger details live in
 [`scripts/google-sheets/README.md`](../scripts/google-sheets/README.md#appsheet-companion-intake).
 
-Migration status as of 2026-09-02: logger 5.14.8 and immutable Apps Script
-version 48 are live at the existing stable deployment URL. The live workbook
+Migration status as of 2026-09-03: logger 5.15.0 and immutable Apps Script
+version 49 are live at the existing stable deployment URL. The live workbook
 has P29 and P30 in `Plant tracker`, `Baselines`, `Quick log`, the individual
-plant tabs, and `App bulk`; the bulk sheet now contains 52 physical columns,
-A:AZ. The production AppSheet schema was regenerated to 53 columns including
-`_RowNumber`. Its P29 and P30 Decimal weight fields use the same positive-number
-validation and Weigh / Water + weigh visibility rule as P01-P28, while
-`Selected plants` remains an EnumList of `Plant tracker` refs. The live image
-mapping uses cached Gyazo thumbnails for P19, P20, and P23-P30, and natural
-label order now runs through #6. The rollout preserved all 597 canonical
-`History` data rows and left zero duplicate observation IDs, duplicate
-request/plant/event keys, or formula errors.
+plant tabs, and `App bulk`. `History` and `History view` now contain 42 physical
+columns, A:AP; `App entries` contains 34, A:AH; and `App bulk` contains 54,
+A:BB. The production AppSheet schemas were regenerated to 35 and 55 columns,
+respectively, including `_RowNumber`. Water forms expose `Flood / soak-through`,
+`Thorough`, `Partial`, and `Spot`, with optional measured milliliters. P29 and
+P30 Decimal weight fields use the same positive-number validation and Weigh /
+Water + weigh visibility rule as P01-P28, while `Selected plants` remains an
+EnumList of `Plant tracker` refs. The live image mapping uses cached Gyazo
+thumbnails for P19, P20, and P23-P30, and natural label order now runs through
+#6. The rollout preserved all 625 canonical `History` data rows, retained the
+duplicate P20 watering as an auditable `Removed` record, and left zero duplicate
+observation IDs, duplicate request/plant/event keys, or formula errors.
 
 ## View map
 
@@ -119,6 +122,9 @@ identification but are not evidence that a collection plant is that exact
 taxon or cultivar. P19, P20, and P23-P30 use corresponding source-quality Gyazo
 collection photos through cached 960 px thumbnails. Preserve the direct capture,
 Collection, caption, and ownership metadata when changing one of those images.
+Nursery-label previews cover P23-P30 from the retained, metadata-stripped
+repository evidence; the labels document seller claims rather than proving an
+identification.
 
 The Plants view sorts by the hidden virtual Number column
 `Natural label order`, not by `Plant ID`. Its explicit mapping keeps labels in

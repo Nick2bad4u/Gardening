@@ -23,9 +23,10 @@
 - History is append-only. Columns A:L are core observations, M:O are workbook
   derived values, P is the hidden request ID, and Q:Z are structured event
   details. AA:AJ stores provenance and record state, AK:AM stores measurement
-  units and derived inch values, and AN stores rotation degrees. Update the
-  parser, tracker, history page, CSV export, and logger checks together when
-  that contract changes.
+  units and derived inch values, AN stores rotation degrees, AO stores the
+  watering-application class, and AP stores an optional measured water amount
+  in milliliters. Update the parser, tracker, history page, CSV export, and
+  logger checks together when that contract changes.
 
 ## Validation
 

@@ -77,6 +77,8 @@ const HISTORY_HEADERS = Object.freeze([
     "Height (in)",
     "Width (in)",
     "Rotation (°)",
+    "Watering application",
+    "Water amount (mL)",
 ]);
 
 const requestedId = new URLSearchParams(location.search).get("id");

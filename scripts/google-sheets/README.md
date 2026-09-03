@@ -23,32 +23,36 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-As of September 2, 2026, the checked-in source and stable production deployment
-both identify the logger as **5.14.8** on immutable Apps Script version **48**.
+As of September 3, 2026, the checked-in source and stable production deployment
+both identify the logger as **5.15.0** on immutable Apps Script version **49**.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
 `clasp deployments`, and the authenticated live page before a future release.
 
-- `History` and `History view` contain 40 physical columns, A:AN; AN stores
-  `Rotation (°)`.
-- `App entries` contains 32 physical columns, A:AF; AF stores `Rotation (°)`,
-  and Plant ID validation covers P01-P30.
-- `App bulk` contains 52 physical columns, A:AZ, with P01-P30 weight fields.
-  The 5.14.8 installer recognizes both the older P01-P22 contract and the
-  intermediate P01-P28 contract, inserts only the missing weight columns, and
-  preserves the existing staging rows and trailing care fields.
+- `History` and `History view` contain 42 physical columns, A:AP. AN stores
+  `Rotation (°)`; AO stores `Watering application`; and AP stores the optional
+  measured `Water amount (mL)`.
+- `App entries` contains 34 physical columns, A:AH. AF stores `Rotation (°)`;
+  AG and AH store the watering application and optional amount; and Plant ID
+  validation covers P01-P30.
+- `App bulk` contains 54 physical columns, A:BB, with P01-P30 weight fields and
+  the two watering fields at BA:BB. The 5.15.0 installer recognizes the older
+  P01-P22, intermediate P01-P28, P01-P30, and pre-watering contracts, inserts
+  only missing columns, and preserves staging rows and trailing care fields.
 - `Plant tracker`, `Baselines`, `Quick log`, and the individual workbook tabs
-  now include P29-P30. `QuickCareLog` spans `'Quick log'!A4:M34`, while
-  canonical `History` remains unchanged.
+  include P29-P30. The native `QuickCareLog` table remains
+  `'Quick log'!A4:M34`; the two logger-managed watering fields sit immediately
+  beside it at N:O. Existing canonical History rows remain unchanged while its
+  append-only schema gains AO:AP.
 - Detailed entry supports 12 events: Water, Weigh, Measure, Check, Rotation,
   Clean, Prune, Repot, Flower, Photo, Pest, and Other. Rotation defaults to 90°.
 - A Wet weight is independent from Water. Nutrient choice, product, and amount
   are remembered across single and bulk logger entry for the current browser
   session. The live staging columns now validate against `MSU 13-3-15` and
-  `SuperThrive Foliage Pro`; logger 5.14.8 presents the same exact choices as
+  `SuperThrive Foliage Pro`; logger 5.15.0 presents the same exact choices as
   mobile-logger dropdowns. Older product text remains untouched in History.
-- Logger 5.14.8 sorts the compact label picker from `A1`–`H3` in natural
+- Logger 5.15.0 sorts the compact label picker from `A1`–`H3` in natural
   alphanumeric order, then presents numbered labels `#1`–`#6` last, without
   changing canonical `P01`–`P30` request order. P29-P30 cached photo summaries
   are live and use verified 960 px Gyazo thumbnails.
@@ -510,15 +514,17 @@ installable trigger is not required.
   reason. Derived views ignore removed records, while the audit trail remains
   available. Do not delete whole sheet rows or erase calculated cells on a
   plant page.
-- A Water event means the container was soaked until runoff; water volume is
-  intentionally not recorded.
+- A Water event records one of four application styles: `Flood / soak-through`
+  (the default), `Thorough`, `Partial`, or `Spot`. `Water amount (mL)` is
+  optional and stays blank when volume was not measured.
 - `History` A:L stores core observation data; M:O holds row-local derived
   values; P stores a hidden retry ID; Q:Z stores structured nutrient, repot,
   flower, photo, pest, and treatment details; AA:AJ stores durable
   observation identity, source, quality, correction, soil-moisture, medium,
   method, and status fields; AK:AM stores the entry unit plus automatic
-  height/width inch conversions; and AN stores rotation degrees. A save writes
-  the entire A:AN record block in one call so a failed service call cannot
+  height/width inch conversions; AN stores rotation degrees; and AO:AP store
+  watering application plus optional measured milliliters. A save writes the
+  entire A:AP record block in one call so a failed service call cannot
   strand a request ID apart from its
   observation. The installer keeps 5,000 History rows available, and workbook
   formulas use that same bound so new observations cannot outgrow the derived

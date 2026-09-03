@@ -27,7 +27,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.14.8");
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.15.0");
 const webPlantImageUrls = JSON.parse(
     JSON.stringify(vm.runInContext("WEB_PLANT_IMAGE_URLS", context))
 );
@@ -78,7 +78,7 @@ const checkWeightRow = ({
     weight,
     status = "",
 }) => {
-    const row = Array(40).fill("");
+    const row = Array(42).fill("");
     row[0] = observedAt;
     row[1] = plantId;
     row[2] = "Weigh";
@@ -167,11 +167,13 @@ assert.deepEqual(appSheetEntryHeaders, [
     "History rows",
     "Saved at",
     "Rotation (°)",
+    "Watering application",
+    "Water amount (mL)",
 ]);
 const appSheetBulkHeaders = Array.from(
     vm.runInContext("APP_SHEET_BULK_HEADERS", context)
 );
-assert.equal(appSheetBulkHeaders.length, 52);
+assert.equal(appSheetBulkHeaders.length, 54);
 assert.deepEqual(appSheetBulkHeaders.slice(0, 6), [
     "Round ID",
     "Started at",
@@ -191,6 +193,8 @@ assert.equal(appSheetBulkHeaders[36], "Notes");
 assert.equal(appSheetBulkHeaders[39], "Status");
 assert.equal(appSheetBulkHeaders[44], "Rotation (°)");
 assert.equal(appSheetBulkHeaders[51], "Nutrient amount");
+assert.equal(appSheetBulkHeaders[52], "Watering application");
+assert.equal(appSheetBulkHeaders[53], "Water amount (mL)");
 assert.deepEqual(
     Array.from(vm.runInContext("NUTRIENT_PRODUCT_OPTIONS", context)),
     ["MSU 13-3-15", "SuperThrive Foliage Pro"]
@@ -217,7 +221,7 @@ assert.deepEqual(
         (_, index) => `P${String(index + 1).padStart(2, "0")} weight (g)`
     )
 );
-assert.deepEqual(appSheetBulkHeaders.slice(-16), [
+assert.deepEqual(appSheetBulkHeaders.slice(-18), [
     "Notes",
     "Created by",
     "Created at",
@@ -234,7 +238,18 @@ assert.deepEqual(appSheetBulkHeaders.slice(-16), [
     "Nutrients used",
     "Nutrient product",
     "Nutrient amount",
+    "Watering application",
+    "Water amount (mL)",
 ]);
+assert.deepEqual(
+    Array.from(vm.runInContext("WATERING_APPLICATION_OPTIONS", context)),
+    [
+        "Flood / soak-through",
+        "Thorough",
+        "Partial",
+        "Spot",
+    ]
+);
 assert.deepEqual(
     Array.from(context.appSheetEventList_("Water; Weigh, Water")),
     ["Water", "Weigh"]
@@ -347,6 +362,10 @@ assert.match(html, /id="bulkEventChips"/);
 assert.match(html, /id="rotationDegrees"/);
 assert.match(html, /id="bulkRotationDegrees"/);
 assert.match(html, /id="nutrientsUsed"/);
+assert.match(html, /id="wateringApplication"/);
+assert.match(html, /id="waterAmount"/);
+assert.match(html, /id="bulkWateringApplication"/);
+assert.match(html, /id="bulkWaterAmount"/);
 for (const selectId of ["nutrientProduct", "bulkNutrientProduct"]) {
     const selectMarkup = new RegExp(
         `<select\\s+id="${selectId}"[\\s\\S]*?<\\/select\\s*>`,
@@ -418,7 +437,11 @@ assert.match(
 );
 assert.match(source, /const HISTORY_DETAIL_HEADERS/);
 assert.match(source, /const HISTORY_ROTATION_HEADERS/);
+assert.match(source, /const HISTORY_WATER_HEADERS/);
 assert.match(source, /ensureHistoryDetailColumns_\(history\)/);
+assert.match(source, /ensureHistoryWaterColumns_\(history\)/);
+assert.match(source, /function ensureHistoryView_\(spreadsheet\)/);
+assert.match(source, /SEQUENCE\(1,\$\{remainingColumns\},2,1\)/);
 assert.match(
     source,
     /updateBaselinePotSetup_\(\s*spreadsheet,\s*prepared\.observation\.plantId,\s*result\.potSetup\s*\)/,

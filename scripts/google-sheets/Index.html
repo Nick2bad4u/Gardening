@@ -4455,10 +4455,50 @@
                                         >Water details</h3
                                     >
                                     <p class="hint"
-                                        >Record whether this watering included
-                                        nutrients.</p
+                                        >Describe how water reached the root
+                                        zone. Volume is optional; leave it blank
+                                        unless it was measured.</p
                                     >
                                     <div class="fields">
+                                        <div class="field">
+                                            <label
+                                                class="field-label"
+                                                for="wateringApplication"
+                                                >Application</label
+                                            >
+                                            <select id="wateringApplication">
+                                                <option
+                                                    value="Flood / soak-through"
+                                                    selected
+                                                    >Flood /
+                                                    soak-through</option
+                                                >
+                                                <option value="Thorough"
+                                                    >Thorough</option
+                                                >
+                                                <option value="Partial"
+                                                    >Partial</option
+                                                >
+                                                <option value="Spot"
+                                                    >Spot</option
+                                                >
+                                            </select>
+                                        </div>
+                                        <div class="field">
+                                            <label
+                                                class="field-label"
+                                                for="waterAmount"
+                                                >Water amount (mL)</label
+                                            >
+                                            <input
+                                                id="waterAmount"
+                                                type="number"
+                                                inputmode="decimal"
+                                                min="0.01"
+                                                step="0.01"
+                                                placeholder="Optional"
+                                            />
+                                        </div>
                                         <div class="field">
                                             <label
                                                 class="field-label"
@@ -4987,7 +5027,45 @@
                                             ></use></svg
                                         >Water details</h3
                                     >
+                                    <p class="hint"
+                                        >The application and optional measured
+                                        volume apply to every selected plant.</p
+                                    >
                                     <div class="fields">
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkWateringApplication"
+                                                >Application</label
+                                            ><select
+                                                id="bulkWateringApplication"
+                                                ><option
+                                                    value="Flood / soak-through"
+                                                    selected
+                                                    >Flood /
+                                                    soak-through</option
+                                                ><option value="Thorough"
+                                                    >Thorough</option
+                                                ><option value="Partial"
+                                                    >Partial</option
+                                                ><option value="Spot"
+                                                    >Spot</option
+                                                ></select
+                                            ></div
+                                        >
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkWaterAmount"
+                                                >Water amount (mL)</label
+                                            ><input
+                                                id="bulkWaterAmount"
+                                                type="number"
+                                                inputmode="decimal"
+                                                min="0.01"
+                                                step="0.01"
+                                                placeholder="Optional"
+                                        /></div>
                                         <div class="field"
                                             ><label
                                                 class="field-label"
@@ -5257,6 +5335,12 @@
                 "Prune",
                 "Pest",
                 "Other",
+            ]);
+            const WATERING_APPLICATION_OPTIONS = Object.freeze([
+                "Flood / soak-through",
+                "Thorough",
+                "Partial",
+                "Spot",
             ]);
             const EVENT_ICON_NAMES = Object.freeze({
                 Water: "water",
@@ -5675,6 +5759,8 @@
                     nutrientsUsed: payload.nutrientsUsed,
                     nutrientProduct: payload.nutrientProduct,
                     nutrientAmount: payload.nutrientAmount,
+                    wateringApplication: payload.wateringApplication,
+                    waterAmount: String(payload.waterAmount || ""),
                     potSize: payload.potSize,
                     medium: payload.medium,
                     measurementQuality: payload.measurementQuality,
@@ -6014,6 +6100,23 @@
                 )
                     throw new Error(
                         "Enter both the nutrient product and amount used."
+                    );
+                if (
+                    events.includes("Water") &&
+                    !WATERING_APPLICATION_OPTIONS.includes(
+                        payload.wateringApplication ||
+                            WATERING_APPLICATION_OPTIONS[0]
+                    )
+                )
+                    throw new Error("Choose a valid watering application.");
+                if (
+                    events.includes("Water") &&
+                    payload.waterAmount &&
+                    (!Number.isFinite(Number(payload.waterAmount)) ||
+                        Number(payload.waterAmount) <= 0)
+                )
+                    throw new Error(
+                        "Water amount must be a positive number of milliliters."
                     );
                 if (events.includes("Repot") && !payload.potSize)
                     throw new Error("Enter the new pot size for Repot.");
@@ -6948,6 +7051,8 @@
                     nutrientsUsed: $("bulkNutrientsUsed").value,
                     nutrientProduct: $("bulkNutrientProduct").value.trim(),
                     nutrientAmount: $("bulkNutrientAmount").value.trim(),
+                    wateringApplication: $("bulkWateringApplication").value,
+                    waterAmount: $("bulkWaterAmount").value,
                     condition: $("bulkCondition").value.trim(),
                     soilMoisture: $("bulkSoilMoisture").value,
                     rotationDegrees: $("bulkRotationDegrees").value || "90",
@@ -6971,6 +7076,24 @@
                 ) {
                     throw new Error(
                         "Enter both the nutrient product and amount used."
+                    );
+                }
+                if (
+                    state.bulkEvents.has("Water") &&
+                    !WATERING_APPLICATION_OPTIONS.includes(
+                        payload.wateringApplication
+                    )
+                ) {
+                    throw new Error("Choose a valid watering application.");
+                }
+                if (
+                    state.bulkEvents.has("Water") &&
+                    payload.waterAmount &&
+                    (!Number.isFinite(Number(payload.waterAmount)) ||
+                        Number(payload.waterAmount) <= 0)
+                ) {
+                    throw new Error(
+                        "Water amount must be a positive number of milliliters."
                     );
                 }
                 if (state.bulkEvents.has("Rotation")) {
@@ -7007,6 +7130,9 @@
                     "bulkNotes",
                 ].forEach((id) => ($(id).value = ""));
                 $("bulkRotationDegrees").value = "90";
+                $("bulkWateringApplication").value =
+                    WATERING_APPLICATION_OPTIONS[0];
+                $("bulkWaterAmount").value = "";
                 $("bulkObservedAt").value = localDateTimeValue();
                 localStorage.removeItem(BULK_PENDING_KEY);
                 renderBulkPlants($("bulkSearch").value);
@@ -7063,6 +7189,10 @@
                 $("bulkSoilMoisture").value = payload.soilMoisture || "";
                 $("bulkRotationDegrees").value =
                     payload.rotationDegrees || "90";
+                $("bulkWateringApplication").value =
+                    payload.wateringApplication ||
+                    WATERING_APPLICATION_OPTIONS[0];
+                $("bulkWaterAmount").value = payload.waterAmount || "";
                 $("bulkPestIssue").value = payload.pestIssue || "";
                 $("bulkPestTreatment").value = payload.pestTreatment || "";
                 $("bulkNotes").value = payload.notes || "";
@@ -7253,6 +7383,9 @@
                     $(id).value = "";
                 });
                 $("rotationDegrees").value = "90";
+                $("wateringApplication").value =
+                    WATERING_APPLICATION_OPTIONS[0];
+                $("waterAmount").value = "";
                 $("measurementUnit").value = state.measurementUnit;
                 $("measurementQuality").value = state.measurementQuality;
                 $("measurementMethod").value = state.measurementMethod;
@@ -7308,6 +7441,8 @@
                     pestIssue: $("pestIssue").value.trim(),
                     pestTreatment: $("pestTreatment").value.trim(),
                     rotationDegrees: $("rotationDegrees").value || "90",
+                    wateringApplication: $("wateringApplication").value,
+                    waterAmount: $("waterAmount").value,
                 };
             }
 
@@ -7879,6 +8014,10 @@
                 });
                 applyNutrientState(payload);
                 $("rotationDegrees").value = payload.rotationDegrees || "90";
+                $("wateringApplication").value =
+                    payload.wateringApplication ||
+                    WATERING_APPLICATION_OPTIONS[0];
+                $("waterAmount").value = payload.waterAmount || "";
                 $("measurementQuality").value =
                     payload.measurementQuality || "Estimated";
                 $("measurementMethod").value =

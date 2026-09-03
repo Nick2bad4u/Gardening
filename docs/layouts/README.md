@@ -39,10 +39,13 @@ verify every current profile's title and `Tracker ID` against it. `P19` and
 `P20` intentionally map to several profiles because they identify shared
 planters; all other P-IDs map to one profile.
 
-The tracker does not record water volume. A `Water` event means the container
-was soaked until runoff. `#1` and `#2` are still weighed and watered as whole
-containers. “Days since water” and the estimated remaining-water percentage
-are observations, not watering deadlines.
+Water events can distinguish `Flood / soak-through`, `Thorough`, `Partial`, or
+`Spot` application. `Flood / soak-through` is the default and means the root
+zone was evenly saturated until water drained freely. An actual measured water
+amount can be recorded in milliliters, but it is optional because most routine
+watering is soak-through rather than a metered dose. `#1` and `#2` are still
+weighed and watered as whole containers. “Days since water” and the estimated
+remaining-water percentage are observations, not watering deadlines.
 
 Open [indoor-acclimation-calendar.html](./indoor-acclimation-calendar.html) for
 the browser/print calendar covering the July move-in, August light ramp,
@@ -88,9 +91,11 @@ measurements are recorded. The corrected mappings are `G2`/`P23` paper spine,
 
 The two Home Depot succulents added on 2026-09-02 are `#5`/`P29` probable
 _Faucaria tuberculosa_ and `#6`/`P30` tiny mixed succulent planter. They have
-source-quality Gyazo histories, but exact pot size, replacement-medium
-composition, first dry weight, measured dimensions, and final table placement
-remain unrecorded.
+source-quality Gyazo histories and retained Smart Planet Home / Altman Plants
+label evidence. `P29` is seller-labeled _F. tigrina_; `P30` is sold as a
+five-plant, five-inch terra-cotta garden. Exact current measured pot size,
+replacement-medium composition, first dry weight, measured plant dimensions,
+and final table placement remain unrecorded.
 
 The new cactus mapping is `E1` dwarf old man, `E2` Chamaelobivia, `E3` woolly
 nipple cactus, `F1` hook-spined pincushion, `F2` boobie cactus, and `F3` yellow

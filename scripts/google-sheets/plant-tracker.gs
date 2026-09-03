@@ -6,10 +6,11 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.14.8",
+    version: "5.15.0",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
+    historyViewSheet: "History view",
     plantTrackerSheet: "Plant tracker",
     baselinesSheet: "Baselines",
     appSheetEntriesSheet: "App entries",
@@ -20,7 +21,7 @@ const GARDEN_LOGGER = Object.freeze({
     saveColumn: 3,
     dateColumn: 4,
     firstEntryColumn: 5,
-    lastEntryColumn: 13,
+    lastEntryColumn: 15,
     bulkEventColumn: 2,
     eventColumn: 5,
     weightStateColumn: 6,
@@ -46,7 +47,9 @@ const GARDEN_LOGGER = Object.freeze({
     historyMeasurementColumns: 3,
     historyRotationStartColumn: 40,
     historyRotationColumns: 1,
-    historyStoredColumns: 40,
+    historyWaterStartColumn: 41,
+    historyWaterColumns: 2,
+    historyStoredColumns: 42,
     historyCapacityRows: 5000,
     lockTimeoutMs: 5000,
     spreadsheetUrl:
@@ -195,10 +198,14 @@ const WEB_PLANT_IMAGE_URLS = Object.freeze({
     P29: Object.freeze({
         currentImageUrl:
             "https://thumb.gyazo.com/thumb/960/fe4a88cf3a9ab04d4f1ed7635f0bf2c5.jpg",
+        nurseryLabelImageUrl:
+            "https://i.gyazo.com/0c5b48d210d0984454f90f5d791b980f.webp",
     }),
     P30: Object.freeze({
         currentImageUrl:
             "https://thumb.gyazo.com/thumb/960/52ca4a6bae0a377ae39bac78665e32f9.jpg",
+        nurseryLabelImageUrl:
+            "https://i.gyazo.com/a9b8fd1b6ab2e49c263806566ad79087.webp",
     }),
 });
 
@@ -244,6 +251,8 @@ const QUICK_LOG_HEADERS = Object.freeze([
     "Notes",
     "Pot setup",
     "Measurement unit",
+    "Watering application",
+    "Water amount (mL)",
 ]);
 
 const HISTORY_HEADERS = Object.freeze([
@@ -295,6 +304,11 @@ const HISTORY_MEASUREMENT_HEADERS = Object.freeze([
 
 const HISTORY_ROTATION_HEADERS = Object.freeze(["Rotation (°)"]);
 
+const HISTORY_WATER_HEADERS = Object.freeze([
+    "Watering application",
+    "Water amount (mL)",
+]);
+
 const APP_SHEET_ENTRY_LEGACY_HEADERS = Object.freeze([
     "Entry ID",
     "Started at",
@@ -328,9 +342,13 @@ const APP_SHEET_ENTRY_LEGACY_HEADERS = Object.freeze([
     "History rows",
     "Saved at",
 ]);
-const APP_SHEET_ENTRY_HEADERS = Object.freeze([
+const APP_SHEET_ENTRY_V514_HEADERS = Object.freeze([
     ...APP_SHEET_ENTRY_LEGACY_HEADERS,
     "Rotation (°)",
+]);
+const APP_SHEET_ENTRY_HEADERS = Object.freeze([
+    ...APP_SHEET_ENTRY_V514_HEADERS,
+    ...HISTORY_WATER_HEADERS,
 ]);
 const APP_SHEET_QUEUE_STATUSES = Object.freeze(["Queued", "Retry"]);
 const APP_SHEET_QUEUE_LIMIT = 50;
@@ -442,10 +460,14 @@ const APP_SHEET_BULK_V513_HEADERS = Object.freeze([
     ...APP_SHEET_BULK_V512_HEADERS.slice(6 + APP_SHEET_BULK_V512_PLANTS.length),
 ]);
 
-const APP_SHEET_BULK_HEADERS = Object.freeze([
+const APP_SHEET_BULK_V514_HEADERS = Object.freeze([
     ...APP_SHEET_BULK_V513_HEADERS.slice(0, 6),
     ...APP_SHEET_BULK_PLANTS.map((plantId) => `${plantId} weight (g)`),
     ...APP_SHEET_BULK_V513_HEADERS.slice(6 + APP_SHEET_BULK_V513_PLANTS.length),
+]);
+const APP_SHEET_BULK_HEADERS = Object.freeze([
+    ...APP_SHEET_BULK_V514_HEADERS,
+    ...HISTORY_WATER_HEADERS,
 ]);
 
 const APP_SHEET_BULK_ACTION_INDEX = 3;
@@ -463,8 +485,17 @@ const APP_SHEET_BULK_PEST_TREATMENT_INDEX = APP_SHEET_BULK_ROTATION_INDEX + 4;
 const APP_SHEET_BULK_NUTRIENTS_USED_INDEX = APP_SHEET_BULK_ROTATION_INDEX + 5;
 const APP_SHEET_BULK_NUTRIENT_PRODUCT_INDEX = APP_SHEET_BULK_ROTATION_INDEX + 6;
 const APP_SHEET_BULK_NUTRIENT_AMOUNT_INDEX = APP_SHEET_BULK_ROTATION_INDEX + 7;
+const APP_SHEET_BULK_WATERING_APPLICATION_INDEX =
+    APP_SHEET_BULK_ROTATION_INDEX + 8;
+const APP_SHEET_BULK_WATER_AMOUNT_INDEX = APP_SHEET_BULK_ROTATION_INDEX + 9;
 
 const NUTRIENT_OPTIONS = Object.freeze(["Yes", "No"]);
+const WATERING_APPLICATION_OPTIONS = Object.freeze([
+    "Flood / soak-through",
+    "Thorough",
+    "Partial",
+    "Spot",
+]);
 const NUTRIENT_PRODUCT_OPTIONS = Object.freeze([
     "MSU 13-3-15",
     "SuperThrive Foliage Pro",
@@ -516,6 +547,7 @@ const INITIAL_POT_SIZE_BY_PLANT = Object.freeze({
     P26: "4 in",
     P27: "4 in",
     P28: "4 in",
+    P30: "5 in",
 });
 
 function onOpen() {
@@ -1313,6 +1345,10 @@ function appSheetBulkPayloadsFromRow_(row, roundId) {
         nutrientsUsed: cleanText_(row[APP_SHEET_BULK_NUTRIENTS_USED_INDEX]),
         nutrientProduct: cleanText_(row[APP_SHEET_BULK_NUTRIENT_PRODUCT_INDEX]),
         nutrientAmount: cleanText_(row[APP_SHEET_BULK_NUTRIENT_AMOUNT_INDEX]),
+        wateringApplication: cleanText_(
+            row[APP_SHEET_BULK_WATERING_APPLICATION_INDEX]
+        ),
+        waterAmount: row[APP_SHEET_BULK_WATER_AMOUNT_INDEX],
     };
 
     const weights = new Map();
@@ -1560,6 +1596,14 @@ function installAppSheetBulkSheet() {
         .requireValueInList(NUTRIENT_PRODUCT_OPTIONS, true)
         .setAllowInvalid(false)
         .build();
+    const wateringApplicationValidation = SpreadsheetApp.newDataValidation()
+        .requireValueInList(WATERING_APPLICATION_OPTIONS, true)
+        .setAllowInvalid(false)
+        .build();
+    const waterAmountValidation = SpreadsheetApp.newDataValidation()
+        .requireNumberGreaterThan(0)
+        .setAllowInvalid(false)
+        .build();
     sheet
         .getRange(2, APP_SHEET_BULK_ROTATION_INDEX + 1, dataRowCount, 1)
         .setDataValidation(rotationValidation)
@@ -1573,6 +1617,18 @@ function installAppSheetBulkSheet() {
     sheet
         .getRange(2, APP_SHEET_BULK_NUTRIENT_PRODUCT_INDEX + 1, dataRowCount, 1)
         .setDataValidation(nutrientProductValidation);
+    sheet
+        .getRange(
+            2,
+            APP_SHEET_BULK_WATERING_APPLICATION_INDEX + 1,
+            dataRowCount,
+            1
+        )
+        .setDataValidation(wateringApplicationValidation);
+    sheet
+        .getRange(2, APP_SHEET_BULK_WATER_AMOUNT_INDEX + 1, dataRowCount, 1)
+        .setDataValidation(waterAmountValidation)
+        .setNumberFormat("0.##");
 
     sheet
         .getRange(1, 1, 1, APP_SHEET_BULK_HEADERS.length)
@@ -1604,6 +1660,8 @@ function installAppSheetBulkSheet() {
     sheet.setColumnWidth(APP_SHEET_BULK_ROTATION_INDEX + 1, 110);
     sheet.setColumnWidths(APP_SHEET_BULK_CONDITION_INDEX + 1, 4, 190);
     sheet.setColumnWidths(APP_SHEET_BULK_NUTRIENTS_USED_INDEX + 1, 3, 160);
+    sheet.setColumnWidth(APP_SHEET_BULK_WATERING_APPLICATION_INDEX + 1, 180);
+    sheet.setColumnWidth(APP_SHEET_BULK_WATER_AMOUNT_INDEX + 1, 130);
     sheet.hideColumns(APP_SHEET_BULK_NOTES_INDEX + 2, 7);
 
     const result = {
@@ -1636,6 +1694,14 @@ function migrateLegacyAppSheetBulkSheet_(sheet) {
     };
 
     if (hasHeaders(APP_SHEET_BULK_HEADERS)) return false;
+
+    if (hasHeaders(APP_SHEET_BULK_V514_HEADERS)) {
+        ensureSheetColumnCapacity_(sheet, APP_SHEET_BULK_HEADERS.length);
+        sheet
+            .getRange(1, 1, 1, APP_SHEET_BULK_HEADERS.length)
+            .setValues([[...APP_SHEET_BULK_HEADERS]]);
+        return true;
+    }
 
     let migrated = false;
     if (sheet.getLastColumn() >= APP_SHEET_BULK_LEGACY_HEADERS.length) {
@@ -1701,6 +1767,7 @@ function migrateLegacyAppSheetBulkSheet_(sheet) {
     const oldLastWeightColumn =
         APP_SHEET_BULK_WEIGHT_START_INDEX + priorPlantContract.plants.length;
     sheet.insertColumnsAfter(oldLastWeightColumn, insertedWeightColumns);
+    ensureSheetColumnCapacity_(sheet, APP_SHEET_BULK_HEADERS.length);
     sheet
         .getRange(1, 1, 1, APP_SHEET_BULK_HEADERS.length)
         .setValues([[...APP_SHEET_BULK_HEADERS]]);
@@ -1723,12 +1790,45 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
     if (!compatible) return false;
 
     ensureSheetColumnCapacity_(sheet, APP_SHEET_ENTRY_HEADERS.length);
-    const rotationCell = sheet.getRange(1, APP_SHEET_ENTRY_HEADERS.length);
-    const changed = rotationCell.getDisplayValue().trim() !== "Rotation (°)";
-    if (changed) rotationCell.setValue("Rotation (°)");
+    const extensionStartColumn = APP_SHEET_ENTRY_LEGACY_HEADERS.length + 1;
+    const extensionHeaders = sheet
+        .getRange(
+            1,
+            extensionStartColumn,
+            1,
+            APP_SHEET_ENTRY_HEADERS.length -
+                APP_SHEET_ENTRY_LEGACY_HEADERS.length
+        )
+        .getDisplayValues()[0]
+        .map((value) => value.trim());
+    const expectedExtension = APP_SHEET_ENTRY_HEADERS.slice(
+        APP_SHEET_ENTRY_LEGACY_HEADERS.length
+    );
+    extensionHeaders.forEach((header, index) => {
+        if (header && header !== expectedExtension[index]) {
+            throw new Error(
+                `App entries!${columnName_(extensionStartColumn + index)}1 must be "${expectedExtension[index]}".`
+            );
+        }
+    });
+    const changed = expectedExtension.some(
+        (header, index) => extensionHeaders[index] !== header
+    );
+    /* v8 ignore next -- Both migrated and already-current History-view formulas are tested; V8 reports a synthetic alternate branch. */
+    if (changed) {
+        sheet
+            .getRange(1, extensionStartColumn, 1, expectedExtension.length)
+            .setValues([[...expectedExtension]]);
+    }
     if (configureColumn) {
         const dataRowCount = Math.max(1, sheet.getMaxRows() - 1);
         const plantIdColumn = APP_SHEET_ENTRY_HEADERS.indexOf("Plant ID") + 1;
+        const rotationColumn =
+            APP_SHEET_ENTRY_HEADERS.indexOf("Rotation (°)") + 1;
+        const wateringApplicationColumn =
+            APP_SHEET_ENTRY_HEADERS.indexOf("Watering application") + 1;
+        const waterAmountColumn =
+            APP_SHEET_ENTRY_HEADERS.indexOf("Water amount (mL)") + 1;
         const plantIdValidation = SpreadsheetApp.newDataValidation()
             .requireValueInList(APP_SHEET_BULK_PLANTS, true)
             .setAllowInvalid(false)
@@ -1741,14 +1841,32 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
             .setAllowInvalid(false)
             .build();
         sheet
-            .getRange(2, APP_SHEET_ENTRY_HEADERS.length, dataRowCount, 1)
+            .getRange(2, rotationColumn, dataRowCount, 1)
             .setDataValidation(rotationValidation)
             .setNumberFormat("0.##");
-        rotationCell
+        const wateringApplicationValidation = SpreadsheetApp.newDataValidation()
+            .requireValueInList(WATERING_APPLICATION_OPTIONS, true)
+            .setAllowInvalid(false)
+            .build();
+        const waterAmountValidation = SpreadsheetApp.newDataValidation()
+            .requireNumberGreaterThan(0)
+            .setAllowInvalid(false)
+            .build();
+        sheet
+            .getRange(2, wateringApplicationColumn, dataRowCount, 1)
+            .setDataValidation(wateringApplicationValidation);
+        sheet
+            .getRange(2, waterAmountColumn, dataRowCount, 1)
+            .setDataValidation(waterAmountValidation)
+            .setNumberFormat("0.##");
+        sheet
+            .getRange(1, extensionStartColumn, 1, expectedExtension.length)
             .setBackground("#24533f")
             .setFontColor("#ffffff")
             .setFontWeight("bold");
-        sheet.setColumnWidth(APP_SHEET_ENTRY_HEADERS.length, 110);
+        sheet.setColumnWidth(rotationColumn, 110);
+        sheet.setColumnWidth(wateringApplicationColumn, 180);
+        sheet.setColumnWidth(waterAmountColumn, 130);
         const nutrientProductColumn =
             APP_SHEET_ENTRY_HEADERS.indexOf("Nutrient product") + 1;
         const nutrientProductValidation = SpreadsheetApp.newDataValidation()
@@ -1824,6 +1942,8 @@ function appSheetPayloadFromRow_(row, requestId) {
         pestIssue: cleanText_(row[22]),
         pestTreatment: cleanText_(row[23]),
         rotationDegrees: row[31],
+        wateringApplication: cleanText_(row[32]),
+        waterAmount: row[33],
         entrySource: "AppSheet",
     };
 }
@@ -2508,6 +2628,7 @@ function installGardenLogger() {
     const quickLog = requireSheet_(spreadsheet, GARDEN_LOGGER.quickLogSheet);
     const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
 
+    ensureQuickLogWaterColumns_(quickLog);
     assertHeaders_(quickLog, QUICK_LOG_HEADERS, GARDEN_LOGGER.headerRow);
     assertHeaders_(history, HISTORY_HEADERS, 1);
     const scriptTimeZone = Session.getScriptTimeZone();
@@ -2524,11 +2645,14 @@ function installGardenLogger() {
     ensureHistoryProvenanceColumns_(history);
     ensureHistoryMeasurementColumns_(history, true);
     ensureHistoryRotationColumns_(history, true);
+    ensureHistoryWaterColumns_(history, true);
+    ensureHistoryView_(spreadsheet);
     const appEntries = requireSheet_(
         spreadsheet,
         GARDEN_LOGGER.appSheetEntriesSheet
     );
     ensureAppSheetEntryColumns_(appEntries, true);
+    ensureQuickLogWaterColumns_(quickLog, true);
     ensureQuickLogValidations_(quickLog);
     ensureWarningOnlyProtection_(
         quickLog,
@@ -2777,6 +2901,8 @@ function archiveQuickLogRow_(quickLog, rowNumber) {
         notesInput,
         potSetupInput,
         measurementUnitInput,
+        wateringApplicationInput,
+        waterAmountInput,
     ] = values;
 
     const id = cleanText_(labelId);
@@ -2828,6 +2954,23 @@ function archiveQuickLogRow_(quickLog, rowNumber) {
         condition,
         notes
     );
+    const includesWater = eventNames.includes("Water");
+    if (
+        !includesWater &&
+        (cleanText_(wateringApplicationInput) || cleanText_(waterAmountInput))
+    ) {
+        throw new Error(
+            "Watering application and amount can be entered only for a Water event."
+        );
+    }
+    const details = {
+        wateringApplication: includesWater
+            ? normalizeWateringApplication_(wateringApplicationInput)
+            : "",
+        waterAmount: includesWater
+            ? optionalPositiveNumber_(waterAmountInput, "Water amount")
+            : "",
+    };
     const measurementUnit = normalizeMeasurementUnit_(
         measurementUnitInput,
         eventNames,
@@ -2857,9 +3000,11 @@ function archiveQuickLogRow_(quickLog, rowNumber) {
         measurementQuality: eventNames.includes("Measure") ? "Estimated" : "",
         measurementMethod: eventNames.includes("Measure") ? "Unspecified" : "",
         measurementUnit,
+        details,
     });
 
     quickLog.getRange(rowNumber, 4, 1, 8).clearContent();
+    quickLog.getRange(rowNumber, 14, 1, 2).clearContent();
     const saveCell = quickLog.getRange(rowNumber, GARDEN_LOGGER.saveColumn);
     saveCell.setValue(false);
     saveCell.setBackground("#dcebdd");
@@ -2934,6 +3079,7 @@ function prepareHistoryForObservationWrites_(history) {
     ensureHistoryProvenanceColumns_(history);
     ensureHistoryMeasurementColumns_(history);
     ensureHistoryRotationColumns_(history);
+    ensureHistoryWaterColumns_(history);
 }
 
 function existingObservationResult_(
@@ -3001,7 +3147,7 @@ function sameCanonicalObservationRow_(actual, expected) {
     // input or request provenance and must still match for an idempotent retry.
     const comparableColumns = [
         0, 1, 2, 3, 4, 5, 6, 7, 8, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26,
-        27, 28, 29, 30, 31, 32, 33, 34, 36, 39,
+        27, 28, 29, 30, 31, 32, 33, 34, 36, 39, 40, 41,
     ];
     return comparableColumns.every(
         (index) =>
@@ -3062,6 +3208,10 @@ function storedObservationRows_(input, requestId, targetRow, recordedAt) {
             ...historyProvenanceRow_(input, requestId, eventName, index),
             ...historyMeasurementRow_(input, eventName, rowNumber),
             ...historyRotationRow_(input, eventName),
+            eventName === "Water"
+                ? safeSheetText_(details.wateringApplication)
+                : "",
+            eventName === "Water" ? details.waterAmount : "",
         ];
     });
 }
@@ -3097,6 +3247,14 @@ function writeStoredObservationRows_(history, targetRow, storedRows) {
     history
         .getRange(targetRow, 10, storedRows.length, 1)
         .setNumberFormat("M/d/yyyy h:mm:ss am/pm");
+    history
+        .getRange(
+            targetRow,
+            GARDEN_LOGGER.historyWaterStartColumn + 1,
+            storedRows.length,
+            1
+        )
+        .setNumberFormat("0.##");
     return {
         validationCleanupMs: validationCompletedAt - validationStartedAt,
         validationRowsCleared,
@@ -3258,6 +3416,8 @@ function eventDetailsFromPayload_(payload, eventNames, plant) {
         pestIssue: "",
         pestTreatment: "",
         rotationDegrees: "",
+        wateringApplication: "",
+        waterAmount: "",
     };
 
     addWaterDetails_(details, payload, eventNames);
@@ -3289,6 +3449,13 @@ function addRotationDetails_(details, payload, eventNames) {
 function addWaterDetails_(details, payload, eventNames) {
     if (!eventNames.includes("Water")) return;
 
+    details.wateringApplication = normalizeWateringApplication_(
+        payload && payload.wateringApplication
+    );
+    details.waterAmount = optionalPositiveNumber_(
+        payload && payload.waterAmount,
+        "Water amount"
+    );
     const nutrientsUsed = cleanText_(payload && payload.nutrientsUsed);
     const nutrientProduct = cleanText_(payload && payload.nutrientProduct);
     const nutrientAmount = cleanText_(payload && payload.nutrientAmount);
@@ -3308,6 +3475,16 @@ function addWaterDetails_(details, payload, eventNames) {
         details.nutrientProduct = nutrientProduct;
         details.nutrientAmount = nutrientAmount;
     }
+}
+
+function normalizeWateringApplication_(value) {
+    const application = cleanText_(value) || WATERING_APPLICATION_OPTIONS[0];
+    if (!WATERING_APPLICATION_OPTIONS.includes(application)) {
+        throw new Error(
+            `Watering application must be one of: ${WATERING_APPLICATION_OPTIONS.join(", ")}.`
+        );
+    }
+    return application;
 }
 
 function addRepotDetails_(details, payload, eventNames, plant) {
@@ -3954,6 +4131,76 @@ function ensureHistoryRotationColumns_(history, configureColumn = false) {
         .setNumberFormat("0.##");
 }
 
+function ensureHistoryWaterColumns_(history, configureColumn = false) {
+    ensureHistoryGrid_(history);
+    const range = history.getRange(
+        1,
+        GARDEN_LOGGER.historyWaterStartColumn,
+        1,
+        GARDEN_LOGGER.historyWaterColumns
+    );
+    const current = range.getDisplayValues()[0].map(cleanText_);
+    const empty = current.every((value) => !value);
+    if (empty) {
+        range.setValues([HISTORY_WATER_HEADERS]);
+        range.setNotes([
+            [
+                "How water was applied. Flood / soak-through means evenly saturating the root zone until water drains freely.",
+                "Optional measured water volume in milliliters. Leave blank when volume was not measured.",
+            ],
+        ]);
+    } else {
+        current.forEach((header, index) => {
+            if (header !== HISTORY_WATER_HEADERS[index]) {
+                throw new Error(
+                    `History!${columnName_(GARDEN_LOGGER.historyWaterStartColumn + index)}1 must be "${HISTORY_WATER_HEADERS[index]}".`
+                );
+            }
+        });
+    }
+
+    /* v8 ignore next -- Installer configuration and lightweight append verification are both tested. */
+    if (!configureColumn) return;
+    const dataRows = Math.max(1, history.getMaxRows() - 1);
+    const applicationRule = SpreadsheetApp.newDataValidation()
+        .requireValueInList(WATERING_APPLICATION_OPTIONS, true)
+        .setAllowInvalid(false)
+        .build();
+    const amountRule = SpreadsheetApp.newDataValidation()
+        .requireNumberGreaterThan(0)
+        .setAllowInvalid(false)
+        .build();
+    history
+        .getRange(2, GARDEN_LOGGER.historyWaterStartColumn, dataRows, 1)
+        .setDataValidation(applicationRule);
+    history
+        .getRange(2, GARDEN_LOGGER.historyWaterStartColumn + 1, dataRows, 1)
+        .setDataValidation(amountRule)
+        .setNumberFormat("0.##");
+}
+
+function ensureHistoryView_(spreadsheet) {
+    const historyView = requireSheet_(
+        spreadsheet,
+        GARDEN_LOGGER.historyViewSheet
+    );
+    ensureSheetColumnCapacity_(historyView, GARDEN_LOGGER.historyStoredColumns);
+    const lastColumn = columnName_(GARDEN_LOGGER.historyStoredColumns);
+    const remainingColumns = GARDEN_LOGGER.historyStoredColumns - 1;
+    const lastRow = GARDEN_LOGGER.historyCapacityRows;
+    const expectedFormula = `=LET(rows,SORT(FILTER(${GARDEN_LOGGER.historySheet}!A2:${lastColumn}${lastRow},${GARDEN_LOGGER.historySheet}!A2:A${lastRow}<>""),1,FALSE,10,FALSE),fmt,LAMBDA(d,IF(d="","",IF(MOD(d,1)=0,TEXT(d,"M/d/yyyy"),TEXT(d,"M/d/yyyy h:mm AM/PM")))),VSTACK(${GARDEN_LOGGER.historySheet}!A1:${lastColumn}1,HSTACK(MAP(CHOOSECOLS(rows,1),fmt),CHOOSECOLS(rows,SEQUENCE(1,${remainingColumns},2,1)))))`;
+    const formulaCell = historyView.getRange(1, 1);
+    const changed = formulaCell.getFormula() !== expectedFormula;
+    if (changed) {
+        formulaCell
+            .setFormula(expectedFormula)
+            .setNote(
+                "Read-only newest-first view of canonical History. Add or correct observations through the normal entry surfaces or canonical History; do not type into this formula-driven view."
+            );
+    }
+    return changed;
+}
+
 function ensureHistoryGrid_(history) {
     const currentColumns = history.getMaxColumns();
     if (currentColumns < GARDEN_LOGGER.historyStoredColumns) {
@@ -3970,6 +4217,65 @@ function ensureHistoryGrid_(history) {
             GARDEN_LOGGER.historyCapacityRows - currentRows
         );
     }
+}
+
+function ensureQuickLogWaterColumns_(quickLog, configureColumns = false) {
+    ensureSheetColumnCapacity_(quickLog, QUICK_LOG_HEADERS.length);
+    const startColumn = 14;
+    const expected = QUICK_LOG_HEADERS.slice(startColumn - 1);
+    const range = quickLog.getRange(
+        GARDEN_LOGGER.headerRow,
+        startColumn,
+        1,
+        expected.length
+    );
+    const current = range.getDisplayValues()[0].map(cleanText_);
+    current.forEach((header, index) => {
+        if (header && header !== expected[index]) {
+            throw new Error(
+                `Quick log!${columnName_(startColumn + index)}${GARDEN_LOGGER.headerRow} must be "${expected[index]}".`
+            );
+        }
+    });
+    const changed = expected.some((header, index) => current[index] !== header);
+    if (changed) range.setValues([[...expected]]);
+
+    /* v8 ignore next -- Installer configuration and lightweight append verification are both tested. */
+    if (!configureColumns) return changed;
+    const dataRows = Math.max(
+        1,
+        quickLog.getMaxRows() - GARDEN_LOGGER.firstInputRow + 1
+    );
+    const applicationRule = SpreadsheetApp.newDataValidation()
+        .requireValueInList(WATERING_APPLICATION_OPTIONS, true)
+        .setAllowInvalid(false)
+        .build();
+    const amountRule = SpreadsheetApp.newDataValidation()
+        .requireNumberGreaterThan(0)
+        .setAllowInvalid(false)
+        .build();
+    quickLog
+        .getRange(GARDEN_LOGGER.firstInputRow, startColumn, dataRows, 1)
+        .setDataValidation(applicationRule);
+    quickLog
+        .getRange(GARDEN_LOGGER.firstInputRow, startColumn + 1, dataRows, 1)
+        .setDataValidation(amountRule)
+        .setNumberFormat("0.##");
+    range
+        .setBackground("#24533f")
+        .setFontColor("#ffffff")
+        .setFontWeight("bold");
+    quickLog.setColumnWidth(startColumn, 180);
+    quickLog.setColumnWidth(startColumn + 1, 130);
+    quickLog
+        .getRange(GARDEN_LOGGER.headerRow, startColumn)
+        .setNote(
+            "Optional for Water. Blank defaults to Flood / soak-through when saved."
+        );
+    quickLog
+        .getRange(GARDEN_LOGGER.headerRow, startColumn + 1)
+        .setNote("Optional measured water volume in milliliters.");
+    return changed;
 }
 
 function ensureQuickLogValidations_(quickLog) {

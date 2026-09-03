@@ -11,7 +11,9 @@
 - Preserve the live workbook contract: A:L core observations, M:O workbook
   formulas, P retry IDs, and Q:Z structured Water/Repot/Flower/Photo/Pest
   details. AA:AJ stores provenance and record state, AK:AM stores measurement
-  units and derived inch values, and AN stores rotation degrees.
+  units and derived inch values, AN stores rotation degrees, AO stores the
+  watering-application class, and AP stores an optional measured water amount
+  in milliliters.
   `installGardenLogger()` may add or verify headers. Do not clear existing
   values or formulas unless the repository owner explicitly requests a workbook
   migration with that effect.

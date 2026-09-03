@@ -478,6 +478,12 @@ function wateringDetails(events) {
  * @param {string} [plantId]
  */
 export function calculateSummary(events, plantId = "") {
+    const currentEvents = events.filter(
+        (event) =>
+            String(event["Record status"] ?? "")
+                .trim()
+                .toLowerCase() !== "removed"
+    );
     const activePotSetup = Math.max(
         1,
         ...events.map((event) => numericValue(event["Pot setup"]) ?? 1)
@@ -527,7 +533,7 @@ export function calculateSummary(events, plantId = "") {
     const latestActivity = newest(events, () => true);
     /** @param {string} name */
     const eventNamed = (name) =>
-        events.filter(
+        currentEvents.filter(
             (event) =>
                 String(event.Event ?? "")
                     .trim()
@@ -601,7 +607,7 @@ export function calculateSummary(events, plantId = "") {
         previousWeightValue !== 0
             ? weightChange / previousWeightValue
             : null;
-    const watering = wateringDetails(events);
+    const watering = wateringDetails(currentEvents);
     const datedEvents = sortEvents(events).filter((event) =>
         parseDate(event.Date)
     );

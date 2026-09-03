@@ -223,4 +223,31 @@ describe("measured-only growth analytics", () => {
         expect(summary.weightChange).toBe(20);
         expect(summary.weightMovingAverage).toBe(320);
     });
+
+    it("keeps removed observations in history input but excludes their care analytics", () => {
+        const originalWater = {
+            Date: "8/13/2026 10:00 AM",
+            Event: "Water",
+            "Nutrients used": "Yes",
+            "Pot setup": 1,
+            "Record status": "",
+        };
+        const removedDuplicate = {
+            Date: "8/20/2026 10:00 AM",
+            Event: "Water",
+            "Nutrients used": "Yes",
+            "Pot setup": 1,
+            "Record status": "Removed",
+        };
+        const events = [originalWater, removedDuplicate];
+
+        const summary = calculateSummary(events);
+
+        expect(events).toContain(removedDuplicate);
+        expect(summary.watering.events.map(({ event }) => event)).toEqual([
+            originalWater,
+        ]);
+        expect(summary.lastWater).toBe(originalWater);
+        expect(summary.eventCounts.nutrients).toBe(1);
+    });
 });
