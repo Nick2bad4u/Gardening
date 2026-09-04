@@ -1225,6 +1225,41 @@ describe("Garden logger browser recovery", () => {
         ).toContain("Last completed dry475 g · completed cycle · Aug 2, 2026");
     });
 
+    it("shows the learned reweigh window and forecast basis, including old-cache fallbacks", () => {
+        const { window } = createLoggerWindow({
+            bootstrapData: {
+                ...bootstrap,
+                plants: bootstrap.plants.map((plant, index) =>
+                    index === 0
+                        ? {
+                              ...plant,
+                              dryForecastWindow: "Sep 10–Sep 25",
+                              dryForecastBasis:
+                                  "Historical estimate · 1 learned cycle(s)",
+                          }
+                        : plant
+                ),
+            },
+        });
+        const summary = window.document.querySelector("#plantSummary");
+        expect(summary.textContent).toContain("Reweigh windowSep 10–Sep 25");
+        expect(summary.textContent).toContain(
+            "Forecast basisHistorical estimate · 1 learned cycle(s)"
+        );
+        const select = window.document.querySelector("#plantSelect");
+        select.value = "P02";
+        select.dispatchEvent(new window.Event("change", { bubbles: true }));
+        expect(summary.textContent).toContain(
+            "Reweigh windowNot enough evidence yet"
+        );
+        expect(summary.textContent).toContain(
+            "Forecast basisNeeds watering-cycle data"
+        );
+        expect(
+            summary.querySelectorAll(".metric svg[aria-hidden='true']").length
+        ).toBe(7);
+    });
+
     it("restores and updates the recent-history length", () => {
         const { calls, window } = createLoggerWindow({
             storage: { gardenLoggerRecentLimitV1: "50" },

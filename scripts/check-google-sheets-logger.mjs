@@ -27,7 +27,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.16.3");
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.17.0");
 const webPlantImageUrls = JSON.parse(
     JSON.stringify(vm.runInContext("WEB_PLANT_IMAGE_URLS", context))
 );
@@ -611,14 +611,14 @@ assert.match(source, /"Dry weight \(g\)"/);
 assert.match(source, /"Latest weight \(lb\)"/);
 assert.match(source, /"Predicted dry date"/);
 assert.match(source, /WET_WEIGHT_WINDOW_DAYS = 5/u);
-assert.match(source, /SLOPE\(logResiduals,elapsed\)/u);
-assert.match(source, /RSQ\(logResiduals,elapsed\)/u);
-assert.match(source, /MAX\(2,Z\$\{row\}\*0\.05\)/u);
+assert.match(source, /function GARDEN_DRY_DOWN\(history, plantIds\)/u);
+assert.match(source, /function installDryDownLearning\(\)/u);
+assert.match(source, /curve\.count >= 4 &&\s+curve\.span >= 3/u);
 const forecastFormulaRow = Array.from(
     context.baselineViewRow_(2, { id: "P01", name: "Test plant" })
 );
-assert.match(forecastFormulaRow[20], /currentWetKey/u);
-assert.match(forecastFormulaRow[30], /weightKeys>=currentWetKey/u);
+assert.match(forecastFormulaRow[20], /'Dry-down models'!\$E\$2:\$E\$31/u);
+assert.match(forecastFormulaRow[30], /'Dry-down models'!\$G\$2:\$G\$31/u);
 assert.doesNotMatch(forecastFormulaRow[30], /History!\$N\$2:\$N\$5000/u);
 assert.match(source, /sheet\.setFrozenRows\(0\)/);
 assert.match(source, /sheet\.setFrozenColumns\(0\)/);

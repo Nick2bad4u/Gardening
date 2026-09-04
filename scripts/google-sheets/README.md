@@ -574,18 +574,71 @@ installable trigger is not required.
   new collection-photo binary is added to the repository.
 - `Baselines` derives the latest completed Dry endpoint and the latest Wet
   anchor for the current setup. Wet is either a same-save weight or the first
-  positive reading within five days after Water. The forecast fits an
-  exponential approach to the completed Dry anchor using up to 12 weights from
-  the current cycle. It requires at least four eligible readings across three
-  days and a log-linear fit with R² of at least 0.60. The displayed drying rate
-  is the model's current rate, so it slows with the curve instead of extending
-  day-one loss through the whole cycle. The predicted date is when the model
-  reaches a near-dry band (within 5% of learned capacity or 2 g, whichever is
-  larger). Treat it as a reweigh prompt, not a watering deadline. Its 34th
+  positive reading within five days after Water. Its dry-down model learns
+  from reliable completed cycles, then updates the estimate with new readings;
+  see **Dry-down learning** below. Its 34th
   physical field, hidden `Forecast sort date`, uses the predicted date when
   available and a far-future fallback otherwise. This keeps actionable
   forecasts ahead of plants that do not yet have enough evidence without
   exposing a helper value in AppSheet.
+
+## Dry-down learning
+
+Logger **5.17.0** can estimate a reweigh window after the next Wet reading
+without requiring four new weights every watering cycle. The first useful
+curve still needs evidence; the model does not invent a history for a new pot.
+
+- Training uses up to five recent, completed cycles for the **same Plant ID and
+  pot setup**, ending within 180 days of the current watering. A Repot advances
+  the setup, so old-pot curves and anchors cannot carry over. Changes to the
+  saucer, top dressing, medium, or other weighed components also need a new
+  setup before the weights are compared.
+- A completed cycle needs a Wet anchor, a later non-Wet endpoint before the
+  following watering, at least four distinct dated readings spanning three
+  days, a descending log-linear fit with R² at least 0.60, and a meaningful
+  weight drop. Removed, estimated, non-Weigh, invalid, and nonpositive readings
+  do not train the model. Partial/spot watering does not train or receive a
+  full-cycle forecast. Blank watering applications remain legacy/unspecified
+  evidence; no historical application or Weight state is rewritten.
+- Recent, better-fitting cycles have more influence (60-day recency
+  half-life). A new Wet reading starts a **Historical estimate**. Two or three
+  usable current readings gradually adjust it; four across three days can
+  support **Current curve + history**. At six usable current readings, the
+  **Current-cycle curve** takes over. A conflicting gain or poor current fit
+  prompts a reweigh instead of silently falling back to history.
+- The exponential model approaches an asymptote one noise-band below the
+  observed completed Dry endpoint. The band is the larger of 2 g or 5% of
+  wet-minus-dry capacity. This allows the measured endpoint in a logarithmic
+  fit without taking log(0). The predicted check is entry into the near-dry
+  band, not a claim that all water has left the pot. Fits use up to 12 recent
+  points per cycle.
+- **Next dry check** shows a planning window. It widens for sparse training,
+  differing cycles, or uncertain fits; it is not a statistical confidence
+  interval. **Forecast confidence** names the basis and learned-cycle count.
+  The logger shows the same window/basis beside the selected plant. Dates stay
+  anchored to the latest actual reading; a missed window says to reweigh.
+  Forecasts more than 90 days beyond that reading are withheld as too uncertain.
+- Rapid-loss alerts require a supported current curve, not a historical
+  prediction or day-one extrapolation. With learned history, a decay rate over
+  1.75 times the learned rate prompts **Faster than learned — reweigh**. Without
+  learned history, the existing 3%-of-whole-pot-weight daily-loss threshold is
+  retained only after the current curve is supported. These are inspection
+  prompts, not diagnoses or watering instructions.
+
+One hidden **Dry-down models** sheet runs `GARDEN_DRY_DOWN` over the bounded
+History inputs and spills the results for all 30 plants. The function reads
+only its arguments, does not change cells or contact external services, and
+recalculates when the referenced History data changes. This follows Google's
+[range-based custom-function guidance](https://developers.google.com/apps-script/guides/sheets/functions).
+Ordinary formulas in the existing Baselines fields feed Dashboard, plant
+pages, and AppSheet. Keep this helper disconnected from AppSheet; all existing
+History, staging, and 34-column Baselines contracts are unchanged.
+
+After backing up and deploying the checked-in script, run
+`installDryDownLearning()` to install the helper and replace only the
+forecast-related Baselines formulas. It preserves the owner's sheet layout,
+charts, and all canonical observations. `refreshGardenWorkbook()` also
+includes the helper when deliberately rebuilding the full presentation.
 
 The workbook and public pages are personal but publicly viewable. Do not put
 private addresses, credentials, or precise home-location information in Notes.

@@ -261,16 +261,22 @@ weights and drying are orange, and anomalies are red. Calibration keeps the
 native multi-slice palette so its categories remain distinguishable.
 
 Dry-date prediction is deterministic rather than an AppSheet predictive model.
-The workbook fits an exponential approach to the most recent completed Dry
-anchor using up to 12 current-cycle weights. It publishes a forecast only after
-at least four eligible readings across three days produce a log-linear fit with
-R² of at least 0.60. The current loss rate therefore slows with the fitted curve
-instead of projecting the first day or two across the whole cycle. The forecast
-is the date the curve enters a near-dry band (within 5% of learned capacity or
-2 g, whichever is larger), so it remains a reweigh prompt rather than a watering
-deadline. The two obsolete AppSheet predictive models were removed so the app
-has one reproducible forecast source and does not imply machine-learning
-precision.
+Logger 5.17.0 learns from up to five reliable completed cycles of the same plant
+and pot setup. A fresh Wet anchor can produce a **Historical estimate**, which
+new readings gradually update. Four eligible current readings across three
+days and a log-linear R² of at least 0.60 support the current curve; six allow
+it to take over. Repots reset learning, and partial/spot watering does not receive
+a full-cycle forecast. **Next dry check** shows a planning window, while
+**Forecast confidence** names its basis and learned-cycle count. These remain
+reweigh prompts, not watering deadlines or statistical confidence intervals.
+See the [dry-down learning rules](../scripts/google-sheets/README.md#dry-down-learning)
+for exclusions, recency weighting, uncertainty, and alert thresholds.
+
+The hidden `Dry-down models` sheet is a read-only calculation helper, not an
+AppSheet table. It feeds the existing 34-column Baselines contract, so no table
+regeneration or predictive model is needed for this upgrade. The two obsolete
+AppSheet predictive models remain removed; there is one reproducible forecast
+source.
 
 The following hidden workbook sheets are presentation helpers, not canonical
 datasets:

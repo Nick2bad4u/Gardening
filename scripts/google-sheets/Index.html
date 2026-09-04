@@ -658,6 +658,14 @@
                 background: color-mix(in srgb, var(--leaf-soft) 75%, white);
             }
 
+            .metric--forecast-window {
+                grid-column: span 2;
+            }
+
+            .metric--forecast-basis {
+                grid-column: span 3;
+            }
+
             :root[data-theme="dark"] .metric-icon {
                 background: #26382b;
             }
@@ -1467,6 +1475,10 @@
                 }
                 .metrics {
                     grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+                .metric--forecast-window,
+                .metric--forecast-basis {
+                    grid-column: 1 / -1;
                 }
                 .bulk-list {
                     grid-template-columns: 1fr;
@@ -7005,10 +7017,23 @@
                               }`,
                     ],
                     ["planter", "Pot", plant.currentPotSize || "—"],
+                    [
+                        "calendar",
+                        "Reweigh window",
+                        plant.dryForecastWindow || "Not enough evidence yet",
+                        "metric--forecast-window",
+                    ],
+                    [
+                        "history",
+                        "Forecast basis",
+                        plant.dryForecastBasis || "Needs watering-cycle data",
+                        "metric--forecast-basis",
+                    ],
                 ];
-                metricData.forEach(([iconName, label, value]) => {
+                metricData.forEach(([iconName, label, value, modifier]) => {
                     const metric = document.createElement("div");
                     metric.className = "metric";
+                    if (modifier) metric.classList.add(modifier);
                     const iconNode = document.createElement("span");
                     iconNode.className = "metric-icon";
                     iconNode.append(

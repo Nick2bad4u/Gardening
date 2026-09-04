@@ -6,13 +6,14 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.16.3",
+    version: "5.17.0",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
     historyViewSheet: "History view",
     plantTrackerSheet: "Plant tracker",
     baselinesSheet: "Baselines",
+    dryDownModelsSheet: "Dry-down models",
     appSheetEntriesSheet: "App entries",
     appSheetBulkSheet: "App bulk",
     headerRow: 4,
@@ -627,6 +628,7 @@ const WORKBOOK_HELPER_SHEETS = Object.freeze([
     "App insight calibration",
     "App insight followups",
     "App plant charts",
+    "Dry-down models",
 ]);
 
 const WORKBOOK_EVENT_COLORS = Object.freeze({
@@ -710,6 +712,11 @@ function getWebAppBootstrap() {
     const potSizeByPlant = latestPotSizesFromRows_(historyRows);
     const dryOrLowestWeightByPlant = dryOrLowestWeightsFromRows_(historyRows);
     const timeZone = spreadsheet.getSpreadsheetTimeZone();
+    const forecasts = dryDownModelsFromHistory_(
+        historyRows,
+        trackerValues.map(([id]) => [id]),
+        timeZone
+    );
 
     const plants = trackerValues
         .filter(([plantId]) => cleanText_(plantId))
@@ -770,6 +777,10 @@ function getWebAppBootstrap() {
                           "MMM d, yyyy"
                       )
                     : "",
+                dryForecastWindow:
+                    forecasts.get(cleanText_(plantId))?.window || "",
+                dryForecastBasis:
+                    forecasts.get(cleanText_(plantId))?.basis || "",
                 fieldGuideUrl,
                 historyUrl: `${GARDEN_LOGGER.historyUrl}?id=${encodeURIComponent(cleanText_(plantId))}`,
             };
@@ -1636,7 +1647,7 @@ function installAppSheetBulkSheet() {
 
     const dataRowCount = Math.max(1, sheet.getMaxRows() - 1);
     const actionValidation = SpreadsheetApp.newDataValidation()
-        .requireValueInList(APP_SHEET_BULK_ACTION_OPTIONS, true)
+        .requireValueInList([...APP_SHEET_BULK_ACTION_OPTIONS], true)
         .setAllowInvalid(false)
         .build();
     const weightValidation = SpreadsheetApp.newDataValidation()
@@ -1674,19 +1685,19 @@ function installAppSheetBulkSheet() {
         .setAllowInvalid(false)
         .build();
     const soilMoistureValidation = SpreadsheetApp.newDataValidation()
-        .requireValueInList(SOIL_MOISTURE_OPTIONS, true)
+        .requireValueInList([...SOIL_MOISTURE_OPTIONS], true)
         .setAllowInvalid(false)
         .build();
     const nutrientValidation = SpreadsheetApp.newDataValidation()
-        .requireValueInList(NUTRIENT_OPTIONS, true)
+        .requireValueInList([...NUTRIENT_OPTIONS], true)
         .setAllowInvalid(false)
         .build();
     const nutrientProductValidation = SpreadsheetApp.newDataValidation()
-        .requireValueInList(NUTRIENT_PRODUCT_OPTIONS, true)
+        .requireValueInList([...NUTRIENT_PRODUCT_OPTIONS], true)
         .setAllowInvalid(false)
         .build();
     const wateringApplicationValidation = SpreadsheetApp.newDataValidation()
-        .requireValueInList(WATERING_APPLICATION_OPTIONS, true)
+        .requireValueInList([...WATERING_APPLICATION_OPTIONS], true)
         .setAllowInvalid(false)
         .build();
     const waterAmountValidation = SpreadsheetApp.newDataValidation()
@@ -1922,7 +1933,7 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
         const waterAmountColumn =
             APP_SHEET_ENTRY_HEADERS.indexOf("Water amount (mL)") + 1;
         const plantIdValidation = SpreadsheetApp.newDataValidation()
-            .requireValueInList(APP_SHEET_BULK_PLANTS, true)
+            .requireValueInList([...APP_SHEET_BULK_PLANTS], true)
             .setAllowInvalid(false)
             .build();
         sheet
@@ -1937,7 +1948,7 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
             .setDataValidation(rotationValidation)
             .setNumberFormat("0.##");
         const wateringApplicationValidation = SpreadsheetApp.newDataValidation()
-            .requireValueInList(WATERING_APPLICATION_OPTIONS, true)
+            .requireValueInList([...WATERING_APPLICATION_OPTIONS], true)
             .setAllowInvalid(false)
             .build();
         const waterAmountValidation = SpreadsheetApp.newDataValidation()
@@ -1962,7 +1973,7 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
         const nutrientProductColumn =
             APP_SHEET_ENTRY_HEADERS.indexOf("Nutrient product") + 1;
         const nutrientProductValidation = SpreadsheetApp.newDataValidation()
-            .requireValueInList(NUTRIENT_PRODUCT_OPTIONS, true)
+            .requireValueInList([...NUTRIENT_PRODUCT_OPTIONS], true)
             .setAllowInvalid(false)
             .build();
         sheet
@@ -2956,34 +2967,582 @@ function workbookPlantRecords_(spreadsheet) {
     return plants;
 }
 
-function weightCycleFormulaPreamble_(row) {
-    return `plant,$A${row},setup,$T${row},records,SORT(FILTER({History!$A$2:$A$5000,History!$C$2:$C$5000,History!$D$2:$D$5000,History!$E$2:$E$5000,History!$AD$2:$AD$5000,ROW(History!$A$2:$A$5000)},History!$B$2:$B$5000=plant,History!$K$2:$K$5000=setup,History!$AJ$2:$AJ$5000<>"Removed",REGEXMATCH(History!$C$2:$C$5000,"^(Weigh|Water)$")),1,TRUE,6,TRUE),dates,CHOOSECOLS(records,1),events,CHOOSECOLS(records,2),recordedStates,CHOOSECOLS(records,3),weights,CHOOSECOLS(records,4),batches,CHOOSECOLS(records,5),sourceRows,CHOOSECOLS(records,6),keys,MAP(dates,sourceRows,LAMBDA(d,sr,N(d)+sr/1000000000)),waterMask,MAP(events,LAMBDA(event,event="Water")),waterCount,COUNTIF(events,"Water"),waterKeys,IF(waterCount,FILTER(keys,waterMask),""),lastWaterKey,IF(waterCount,MAX(waterKeys),""),previousWaterKey,IF(waterCount>1,LARGE(waterKeys,2),0),lastWaterDate,IF(waterCount,XLOOKUP(lastWaterKey,keys,dates),""),lastWaterBatch,IF(waterCount,XLOOKUP(lastWaterKey,keys,batches),""),weightMask,MAP(events,weights,LAMBDA(event,weight,AND(event="Weigh",weight>0))),weightKeys,FILTER(keys,weightMask),weightDates,FILTER(dates,weightMask),weightStates,FILTER(recordedStates,weightMask),weightValues,FILTER(weights,weightMask),weightBatches,FILTER(batches,weightMask),sameSaveMask,MAP(weightKeys,weightDates,weightBatches,LAMBDA(weightKey,weightDate,weightBatch,AND(weightKey>lastWaterKey,IF(AND(lastWaterBatch<>"",weightBatch<>""),weightBatch=lastWaterBatch,weightDate=lastWaterDate)))),sameSaveKey,IFERROR(MAX(FILTER(weightKeys,sameSaveMask)),""),promptMask,MAP(weightKeys,weightDates,LAMBDA(weightKey,weightDate,AND(weightKey>lastWaterKey,weightDate>=lastWaterDate,weightDate<=lastWaterDate+${WET_WEIGHT_WINDOW_DAYS}))),promptKey,IFERROR(MIN(FILTER(weightKeys,promptMask)),""),currentWetKey,IF(sameSaveKey<>"",sameSaveKey,promptKey),dryMask,MAP(weightKeys,weightStates,LAMBDA(weightKey,weightState,AND(weightKey>previousWaterKey,weightKey<lastWaterKey,weightState="Dry"))),currentDryKey,IFERROR(MAX(FILTER(weightKeys,dryMask)),"")`;
+const DRY_DOWN_MODEL_HEADERS = Object.freeze([
+    "Plant ID",
+    "Pot setup",
+    "Completed dry (g)",
+    "Current wet (g)",
+    "Current-cycle points",
+    "Learned cycles",
+    "Modeled loss (g/day)",
+    "Forecast date",
+    "Window start",
+    "Window end",
+    "Forecast basis",
+    "Trend readiness",
+    "Trend review",
+    "Current fit",
+]);
+
+/**
+ * One range calculation for the entire collection, not one server call per cell.
+ * Input columns: serial date, plant, event, recorded state, grams, setup,
+ * request ID, batch ID, record status, watering application, quality, method.
+ * Dates are numeric Sheets serials so the workbook timezone survives round trips.
+ * No services, volatile inputs, stored state, or writes to History are involved.
+ * @customfunction
+ */
+function GARDEN_DRY_DOWN(history, plantIds) {
+    // Sheets supplies a scalar for a one-cell range, even when written A1:A1.
+    const ids = Array.isArray(plantIds) ? plantIds : [[plantIds]];
+    const grouped = new Map();
+    history.forEach((row, index) => {
+        const id = cleanText_(row[1]);
+        if (!id || row[8] === "Removed") return;
+        const records = grouped.get(id) || [];
+        const date = Number(row[0]);
+        const setup = positiveIntegerOrDefault_(row[5], 1);
+        // Retain setup markers even when the event has no usable weight/date.
+        records.push({
+            index,
+            date,
+            setup,
+            event: cleanText_(row[2]),
+            weight: Number(row[4]),
+            save: cleanText_(row[7] || row[6]),
+            application: cleanText_(row[9]),
+            estimated: /estimat/i.test(String(row[10]) + " " + String(row[11])),
+        });
+        grouped.set(id, records);
+    });
+    return ids
+        .filter(([id]) => cleanText_(id))
+        .map(([id]) => {
+            const model = dryDownModelForPlant_(
+                grouped.get(cleanText_(id)) || []
+            );
+            return [
+                cleanText_(id),
+                model.setup,
+                model.dry,
+                model.wet,
+                model.count,
+                model.learned,
+                model.loss,
+                model.date,
+                model.early,
+                model.late,
+                model.basis,
+                model.readiness,
+                model.review,
+                model.fit,
+            ];
+        });
+}
+
+function dryDownRecordsShareSave_(left, right) {
+    return left.save && right.save
+        ? left.save === right.save
+        : left.date === right.date;
+}
+
+/**
+ * @typedef {object} DryDownRecord
+ * @property {number} index
+ * @property {number} date
+ * @property {number} setup
+ * @property {string} event
+ * @property {number} weight
+ * @property {string} save
+ * @property {string} application
+ * @property {boolean} estimated
+ */
+
+/** @param {DryDownRecord[]} records */
+function dryDownCycles_(records) {
+    const ordered = records
+        .filter((r) => Number.isFinite(r.date) && r.date > 0)
+        .sort((a, b) => a.date - b.date || a.index - b.index);
+    const weights = ordered.filter(
+        (r) =>
+            r.event === "Weigh" &&
+            Number.isFinite(r.weight) &&
+            r.weight > 0 &&
+            !r.estimated
+    );
+    const waterings = ordered.filter((r) => r.event === "Water");
+    /** @type {{water: DryDownRecord, next: DryDownRecord | undefined,
+     * wet: DryDownRecord | undefined, points: DryDownRecord[],
+     * dry: DryDownRecord | null, beforeDry: DryDownRecord | undefined}[]} */
+    const cycles = waterings.map((water, index) => {
+        const next = waterings[index + 1];
+        // Save identity wins over row ordering (Weigh can precede Water).
+        const within = (r) =>
+            (!next ||
+                r.date < next.date ||
+                (r.date === next.date && r.index < next.index)) &&
+            (!next || !dryDownRecordsShareSave_(r, next));
+        const sameSave = weights
+            .filter(
+                (r) =>
+                    r.date >= water.date &&
+                    r.date <= water.date + WET_WEIGHT_WINDOW_DAYS &&
+                    dryDownRecordsShareSave_(r, water) &&
+                    within(r)
+            )
+            .at(-1);
+        const wet =
+            sameSave ||
+            weights.find(
+                (r) =>
+                    (r.date > water.date ||
+                        (r.date === water.date && r.index > water.index)) &&
+                    r.date <= water.date + WET_WEIGHT_WINDOW_DAYS &&
+                    within(r)
+            );
+        const points = wet
+            ? weights.filter(
+                  (r) =>
+                      (r.date > wet.date ||
+                          (r.date === wet.date && r.index >= wet.index)) &&
+                      within(r)
+              )
+            : [];
+        return { water, next, wet, points, dry: null, beforeDry: undefined };
+    });
+    const wetIndices = new Set(
+        cycles.flatMap((c) => (c.wet ? [c.wet.index] : []))
+    );
+    /** @type {DryDownRecord | null} */
+    let previous = null;
+    cycles.forEach((cycle) => {
+        cycle.beforeDry = weights
+            .filter(
+                (r) =>
+                    (!previous ||
+                        r.date > previous.date ||
+                        (r.date === previous.date &&
+                            r.index > previous.index)) &&
+                    (r.date < cycle.water.date ||
+                        (r.date === cycle.water.date &&
+                            r.index < cycle.water.index)) &&
+                    !wetIndices.has(r.index) &&
+                    !dryDownRecordsShareSave_(r, cycle.water)
+            )
+            .at(-1);
+        previous = cycle.water;
+    });
+    cycles.forEach((cycle, index) => {
+        cycle.dry = cycles[index + 1]?.beforeDry || null;
+    });
+    return cycles;
+}
+
+/**
+ * Log-linear exponential fit with an observed endpoint and a small positive
+ * noise band. The asymptote is dry - tolerance, not zero whole-pot weight.
+ * This permits a measured completed endpoint in a log fit without log(0).
+ */
+function fitDryDownCurve_(points, dry, tolerance) {
+    const unique = new Map(points.map((p) => [p.date, p]));
+    const recent = [...unique.values()]
+        .sort((a, b) => a.date - b.date)
+        .slice(-12);
+    const empty = {
+        count: recent.length,
+        span: 0,
+        fit: 0,
+        decay: 0,
+        error: 0,
+        gain: false,
+    };
+    if (recent.length < 2) return empty;
+    const span = recent.at(-1).date - recent[0].date;
+    const gain = recent.some(
+        (p, i) =>
+            i > 0 &&
+            p.weight - recent[i - 1].weight > Math.max(2, tolerance * 2)
+    );
+    const floor = dry - tolerance;
+    if (span < 1 || recent.some((p) => p.weight <= floor)) {
+        return { ...empty, span, gain };
+    }
+    const xs = recent.map((p) => p.date - recent[0].date);
+    const ys = recent.map((p) => Math.log(p.weight - floor));
+    const xMean = xs.reduce((a, b) => a + b, 0) / xs.length;
+    const yMean = ys.reduce((a, b) => a + b, 0) / ys.length;
+    const xx = xs.reduce((sum, x) => sum + (x - xMean) ** 2, 0);
+    const yy = ys.reduce((sum, y) => sum + (y - yMean) ** 2, 0);
+    const xy = xs.reduce((sum, x, i) => sum + (x - xMean) * (ys[i] - yMean), 0);
+    const slope = xy / xx;
+    const fit = yy > 0 ? Math.min(1, xy ** 2 / (xx * yy)) : 0;
+    const residualError = ys.reduce(
+        (sum, y, i) => sum + (y - yMean - slope * (xs[i] - xMean)) ** 2,
+        0
+    );
+    const error =
+        recent.length > 2 && slope !== 0
+            ? Math.sqrt(residualError / (recent.length - 2) / xx) /
+              Math.abs(slope)
+            : 1;
+    return { count: recent.length, span, fit, decay: -slope, error, gain };
+}
+
+function usableDryDownCurve_(curve) {
+    return (
+        curve.count >= 4 &&
+        curve.span >= 3 &&
+        curve.fit >= 0.6 &&
+        curve.decay > 0 &&
+        !curve.gain
+    );
+}
+
+function fullWateringForForecast_(water) {
+    // Blank is the legacy contract; do not invent an application in History.
+    return ["", "Flood / soak-through", "Thorough"].includes(water.application);
+}
+
+function learnedDryDownCurves_(cycles, current) {
+    return cycles
+        .slice(0, -1)
+        .flatMap((cycle) => {
+            const endpoint = cycle.dry;
+            if (
+                !cycle.wet ||
+                !endpoint ||
+                !fullWateringForForecast_(cycle.water) ||
+                !fullWateringForForecast_(cycle.next) ||
+                current.water.date - endpoint.date > 180
+            )
+                return [];
+            const capacity = cycle.wet.weight - endpoint.weight;
+            if (capacity <= Math.max(5, cycle.wet.weight * 0.01)) return [];
+            const curve = fitDryDownCurve_(
+                cycle.points,
+                endpoint.weight,
+                Math.max(2, capacity * 0.05)
+            );
+            if (!usableDryDownCurve_(curve)) return [];
+            return [{ ...curve, ended: endpoint.date }];
+        })
+        .slice(-5);
+}
+
+/** @param {DryDownRecord[]} records */
+function dryDownModelForPlant_(records) {
+    const setup = Math.max(1, ...records.map((r) => r.setup));
+    const cycles = dryDownCycles_(records.filter((r) => r.setup === setup));
+    const current = cycles.at(-1);
+    /** @type {{setup: number, dry: number | "", wet: number | "", count: number,
+     * learned: number, loss: number | "", date: number | "", early: number | "",
+     * late: number | "", basis: string, readiness: string, review: string, fit: number | ""}} */
+    const model = {
+        setup,
+        dry: "",
+        wet: "",
+        count: 0,
+        learned: 0,
+        loss: "",
+        date: "",
+        early: "",
+        late: "",
+        basis: "Need a watering",
+        readiness: "Need 4 post-water weights",
+        review: "No trend",
+        fit: "",
+    };
+    if (!current) return model;
+    const completedDry = cycles
+        .map((c) => c.beforeDry)
+        .filter(Boolean)
+        .at(-1);
+    model.dry = completedDry ? completedDry.weight : "";
+    model.wet = current.wet ? current.wet.weight : "";
+    model.count = new Set(current.points.map((p) => p.date)).size;
+    if (!current.wet)
+        return { ...model, basis: "Need a wet weight within 5 days" };
+    if (!fullWateringForForecast_(current.water)) {
+        return {
+            ...model,
+            basis: "Partial / spot watering — reweigh",
+            readiness: "Full-cycle forecast not applicable",
+        };
+    }
+    if (!completedDry) return { ...model, basis: "Need a completed dry cycle" };
+    const capacity = current.wet.weight - completedDry.weight;
+    if (capacity <= Math.max(5, current.wet.weight * 0.01)) {
+        return { ...model, basis: "Recheck wet / dry anchors" };
+    }
+    const tolerance = Math.max(2, capacity * 0.05);
+    const curve = fitDryDownCurve_(
+        current.points,
+        completedDry.weight,
+        tolerance
+    );
+    model.fit = curve.count >= 2 ? curve.fit : "";
+    const learned = learnedDryDownCurves_(cycles, current);
+    model.learned = learned.length;
+    const supported = usableDryDownCurve_(curve);
+    model.readiness = supported
+        ? "Current cycle supported"
+        : curve.count < 4
+          ? "Need 4 post-water weights"
+          : "Need a stable 3-day curve";
+    const latest = current.points.at(-1) || current.wet;
+    if (
+        curve.gain ||
+        (curve.count >= 4 &&
+            curve.span >= 3 &&
+            (curve.decay <= 0 || curve.fit < 0.6))
+    ) {
+        return {
+            ...model,
+            basis: "Current cycle differs — reweigh",
+            review: curve.gain
+                ? "Unexpected gain — check setup"
+                : "Recheck curve",
+        };
+    }
+    if (!supported && learned.length === 0) {
+        return { ...model, basis: model.readiness };
+    }
+    const weights = learned.map(
+        (c) =>
+            c.fit * Math.exp((-Math.LN2 * (current.water.date - c.ended)) / 60)
+    );
+    const sum = weights.reduce((a, b) => a + b, 0);
+    const priorLog =
+        sum > 0
+            ? learned.reduce(
+                  (total, c, i) => total + weights[i] * Math.log(c.decay),
+                  0
+              ) / sum
+            : 0;
+    const priorSpread =
+        sum > 0
+            ? Math.sqrt(
+                  learned.reduce(
+                      (total, c, i) =>
+                          total +
+                          weights[i] * (Math.log(c.decay) - priorLog) ** 2,
+                      0
+                  ) / sum
+              )
+            : 0;
+    // Early points can update a learned estimate, but never fully replace it.
+    const currentUsable =
+        curve.span >= 1 && curve.decay > 0 && curve.fit >= 0.6;
+    const alpha =
+        learned.length === 0
+            ? 1
+            : !currentUsable
+              ? 0
+              : supported
+                ? Math.min(1, 0.7 + (curve.count - 4) * 0.15)
+                : Math.min(0.4, (curve.count - 1) * 0.2, curve.span / 10);
+    const currentLog = currentUsable ? Math.log(curve.decay) : priorLog;
+    const decay = Math.exp((1 - alpha) * priorLog + alpha * currentLog);
+    const residual = latest.weight - (completedDry.weight - tolerance);
+    const days = Math.max(
+        0,
+        Math.log(Math.max(1, residual / (tolerance * 2))) / decay
+    );
+    if (!Number.isFinite(days) || days > 90) {
+        return { ...model, basis: "Forecast too uncertain — reweigh" };
+    }
+    // A planning envelope, NOT a statistical confidence interval.
+    const minimumSpread =
+        supported && curve.count >= 6
+            ? Math.log(1.25)
+            : learned.length > 1
+              ? Math.log(1.4)
+              : Math.log(1.6);
+    const spread = Math.min(
+        Math.log(3),
+        Math.max(
+            minimumSpread,
+            priorSpread * 1.64,
+            supported ? curve.error * 1.64 : 0,
+            Math.abs(currentLog - priorLog) * Math.sqrt(alpha * (1 - alpha))
+        )
+    );
+    model.loss = decay * Math.max(0, residual);
+    model.date = latest.date + days;
+    model.early = latest.date + Math.max(0, days / Math.exp(spread) - 1);
+    model.late = latest.date + days * Math.exp(spread) + 1;
+    model.basis =
+        alpha === 0
+            ? "Historical estimate"
+            : supported
+              ? alpha < 1
+                  ? "Current curve + history"
+                  : "Current-cycle curve"
+              : "Blended historical estimate";
+    model.readiness = supported
+        ? "Current cycle supported"
+        : "Historical estimate · " + curve.count + "/4 current readings";
+    model.review = !supported
+        ? "No current-cycle alert"
+        : learned.length > 0 && curve.decay > Math.exp(priorLog) * 1.75
+          ? "Faster than learned — reweigh"
+          : learned.length === 0 && model.loss / latest.weight > 0.03
+            ? "Rapid loss — reweigh"
+            : "OK";
+    return model;
+}
+
+function dryDownSerialDate_(value, timeZone) {
+    const date = new Date(value);
+    if (!value || !Number.isFinite(date.getTime())) return 0;
+    const offset = Utilities.formatDate(date, timeZone, "Z").match(
+        /^([+-])(\d{2})(\d{2})$/
+    );
+    const minutes = offset
+        ? (Number(offset[2]) * 60 + Number(offset[3])) *
+          (offset[1] === "-" ? -1 : 1)
+        : 0;
+    return date.getTime() / 86400000 + 25569 + minutes / 1440;
+}
+
+function dryDownModelsFromHistory_(historyRows, plantIds, timeZone) {
+    const rows = historyRows.map((row) => [
+        dryDownSerialDate_(row[0], timeZone),
+        row[1],
+        row[2],
+        row[3],
+        row[4],
+        row[10],
+        row[15],
+        row[29],
+        row[35],
+        row[40],
+        row[28],
+        row[34],
+    ]);
+    const today = dryDownSerialDate_(new Date(), timeZone);
+    const day = (value) =>
+        Utilities.formatDate(
+            new Date((value - 25569) * 86400000),
+            "UTC",
+            "MMM d"
+        );
+    return new Map(
+        GARDEN_DRY_DOWN(rows, plantIds).map((model) => [
+            model[0],
+            {
+                window:
+                    model[7] === ""
+                        ? ""
+                        : (Number(model[9]) < Math.floor(today)
+                              ? "Overdue — reweigh · "
+                              : "") +
+                          day(model[8]) +
+                          "–" +
+                          day(model[9]),
+                basis:
+                    model[10] +
+                    (model[5]
+                        ? " · " +
+                          model[5] +
+                          " learned cycle" +
+                          (model[5] === 1 ? "" : "s")
+                        : ""),
+            },
+        ])
+    );
+}
+
+function dryDownModelFormula_() {
+    return "=GARDEN_DRY_DOWN({ARRAYFORMULA(N(History!A2:A5000)),History!B2:E5000,History!K2:K5000,History!P2:P5000,History!AD2:AD5000,History!AJ2:AJ5000,History!AO2:AO5000,History!AC2:AC5000,History!AI2:AI5000},'Plant tracker'!A2:A31)";
+}
+
+function dryDownLookupFormula_(row, column) {
+    return `XLOOKUP($A${row},'Dry-down models'!$A$2:$A$31,'Dry-down models'!$${column}$2:$${column}$31,"")`;
+}
+
+function refreshDryDownModels_(spreadsheet) {
+    const sheet =
+        spreadsheet.getSheetByName(GARDEN_LOGGER.dryDownModelsSheet) ||
+        spreadsheet.insertSheet(GARDEN_LOGGER.dryDownModelsSheet);
+    ensureSheetColumnCapacity_(sheet, DRY_DOWN_MODEL_HEADERS.length);
+    ensureSheetRowCapacity_(sheet, APP_SHEET_BULK_PLANTS.length + 1);
+    sheet
+        .getRange(1, 1, 1, DRY_DOWN_MODEL_HEADERS.length)
+        .setValues([[...DRY_DOWN_MODEL_HEADERS]]);
+    sheet
+        .getRange(
+            2,
+            1,
+            APP_SHEET_BULK_PLANTS.length,
+            DRY_DOWN_MODEL_HEADERS.length
+        )
+        .clearContent();
+    sheet.getRange("A2").setFormula(dryDownModelFormula_());
+    sheet.getRange("H2:J31").setNumberFormat("mmm d, yyyy");
+    sheet
+        .getRange("A1")
+        .setNote(
+            "Read-only derived models. Recalculates from active History; no editable observations. Keep this helper disconnected from AppSheet."
+        );
+    sheet.hideSheet();
+}
+
+/** Update only forecast formulas; preserve owner layout, charts, and all History. */
+function installDryDownLearning() {
+    const spreadsheet = getGardenSpreadsheet_();
+    const plants = workbookPlantRecords_(spreadsheet);
+    refreshDryDownModels_(spreadsheet);
+    const sheet = requireSheet_(spreadsheet, GARDEN_LOGGER.baselinesSheet);
+    [9, 10, 12, 19, 21, 23, 25, 31, 32, 33, 34].forEach((column) => {
+        sheet
+            .getRange(2, column, plants.length, 1)
+            .setValues(
+                plants.map((plant, index) => [
+                    baselineViewRow_(index + 2, plant)[column - 1],
+                ])
+            );
+    });
+    sheet.getRange("I2:J31").setWrap(true);
+    sheet.getRange("L2:L31").setWrap(true);
+    sheet.getRange("AG2:AG31").setWrap(true);
+    sheet.autoResizeRows(2, plants.length);
+    sheet
+        .getRange("AE1:AG1")
+        .setNotes([
+            [
+                "Exponential modeled loss at the latest reading, learned from up to five recent completed cycles of this plant/setup and updated by current-cycle weights.",
+                "Near-dry reweigh estimate. See Next dry check for a planning window, not a watering deadline or statistical confidence interval.",
+                "Historical, blended, or current-cycle basis; number of reliable completed cycles. Four readings across three days support the current curve, not every forecast.",
+            ],
+        ]);
+    SpreadsheetApp.flush();
+    return {
+        loggerVersion: GARDEN_LOGGER.version,
+        plants: plants.length,
+        historyChanged: false,
+        baselineColumns: BASELINE_VIEW_HEADERS.length,
+    };
 }
 
 function completedDryWeightFormula_(row) {
-    return `=IFERROR(LET(${weightCycleFormulaPreamble_(row)},IF(currentDryKey="","",XLOOKUP(currentDryKey,weightKeys,weightValues))),"")`;
+    return "=" + dryDownLookupFormula_(row, "C");
 }
 
 function latestWetWeightFormula_(row) {
-    return `=IFERROR(LET(${weightCycleFormulaPreamble_(row)},IF(currentWetKey="","",XLOOKUP(currentWetKey,weightKeys,weightValues))),"")`;
+    return "=" + dryDownLookupFormula_(row, "D");
 }
 
 function currentCyclePointCountFormula_(row) {
-    return `=IFERROR(LET(${weightCycleFormulaPreamble_(row)},dry,$W${row},IF(OR(currentWetKey="",dry=""),0,COUNT(FILTER(weightValues,weightKeys>=currentWetKey,weightValues>dry)))),0)`;
-}
-
-function dryDownCurveFormula_(row, output) {
-    const model = `${weightCycleFormulaPreamble_(row)},dry,$W${row},latest,$C${row},points,SORT(FILTER({weightDates,weightValues,weightKeys},weightKeys>=currentWetKey,weightValues>dry),1,FALSE,3,FALSE),recent,ARRAY_CONSTRAIN(points,MIN(12,ROWS(points)),3),curveDates,CHOOSECOLS(recent,1),residuals,MAP(CHOOSECOLS(recent,2),LAMBDA(weight,weight-dry)),span,MAX(curveDates)-MIN(curveDates),elapsed,MAP(curveDates,LAMBDA(curveDate,curveDate-MIN(curveDates))),logResiduals,MAP(residuals,LAMBDA(residual,LN(residual))),decay,-SLOPE(logResiduals,elapsed),fit,RSQ(logResiduals,elapsed),currentResidual,latest-dry`;
-    const result = output === "fit" ? "fit" : "decay*MAX(0,currentResidual)";
-    return `IFERROR(LET(${model},IF(OR(currentWetKey="",dry="",latest="",ROWS(recent)<4,span<3,fit<0.6,currentResidual<=0),"",${result})),"")`;
+    return "=" + dryDownLookupFormula_(row, "E");
 }
 
 function currentCurveLossFormula_(row) {
-    return `=${dryDownCurveFormula_(row, "loss")}`;
+    return "=" + dryDownLookupFormula_(row, "G");
 }
 
 function predictedDryDateFormula_(row) {
-    return `=IFERROR(IF(OR(AE${row}<=0,W${row}="",Y${row}="",Z${row}="",C${row}="",E${row}=""),"",LET(residual,C${row}-W${row},tolerance,MAX(2,Z${row}*0.05),IF(residual<=tolerance,E${row},E${row}+residual/AE${row}*LN(residual/tolerance)))),"")`;
+    return "=" + dryDownLookupFormula_(row, "H");
 }
 
 function baselineViewRow_(rowNumber, plant) {
@@ -2997,17 +3556,17 @@ function baselineViewRow_(rowNumber, plant) {
         `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AB:$AB,"Not recorded")`,
         `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$O:$O,"")`,
         `=IFS(V${row}<1,"Collecting weights",Y${row}="","Need a wet weight",W${row}="","Need a completed dry cycle",Z${row}="","Recheck weights",TRUE,"Calibrated")`,
-        `=IF(U${row}<4,"Need 4 post-water weights",IF(AE${row}="","Need a stable 3-day curve",IF(AE${row}<=0,"Need a descending curve","Ready")))`,
-        `=LET(review,XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AD:$AD,""),IF(review<>"",review,IF(M${row}="","No trend",IFS(M${row}<0,"Unexpected gain",M${row}>0.03,"Rapid loss",TRUE,"OK"))))`,
+        `=${dryDownLookupFormula_(row, "L")}`,
+        `=LET(review,XLOOKUP($A${row},\'Plant tracker\'!$A:$A,\'Plant tracker\'!$AD:$AD,""),IF(review<>"",review,${dryDownLookupFormula_(row, "M")}))`,
         `=IFERROR(LET(lastEstimate,MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",History!$AC$2:$AC$5000="Estimated",History!$AJ$2:$AJ$5000<>"Removed")),lastMeasured,IFERROR(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",History!$AC$2:$AC$5000="Measured",History!$AJ$2:$AJ$5000<>"Removed")),0),IF(lastEstimate>lastMeasured,"Due now","Current")),"No measurement")`,
-        `=IF(AF${row}<>"",IF(AF${row}<=TODAY(),"Inspect / reweigh now","Check "&TEXT(AF${row},"mmm d")),IFS(O${row}="","Log a Water event",Y${row}="","Weigh within 5 days after watering",W${row}="","Keep weighing until the next watering",U${row}<4,"Collect 4 post-water weights",TRUE,"Reweigh to stabilize the curve"))`,
+        `=IF(AF${row}<>"",LET(early,${dryDownLookupFormula_(row, "I")},late,${dryDownLookupFormula_(row, "J")},IF(late<TODAY(),"Inspect / reweigh now","Reweigh "&TEXT(early,"mmm d")&"–"&TEXT(late,"mmm d"))),${dryDownLookupFormula_(row, "K")})`,
         `=IF(OR(AE${row}="",C${row}<=0),"",AE${row}/C${row})`,
         `=IF(MAX(N(O${row}),N(AA${row}))=0,"No anchor",IF(N(O${row})>=N(AA${row}),"Water","Repot"))`,
         `=IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Water",History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed")),"")`,
         `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$5000,History!$H$2:$H$5000},History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Check",History!$H$2:$H$5000<>"",History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),1,2),"Not recorded")`,
         `=IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Check",History!$AJ$2:$AJ$5000<>"Removed")),"")`,
         `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$5000,History!$AH$2:$AH$5000},History!$B$2:$B$5000=$A${row},History!$K$2:$K$5000=$T${row},History!$AH$2:$AH$5000<>"",History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),1,2),"Not recorded")`,
-        `=LET(flags,TEXTJOIN(" · ",TRUE,IF(H${row}<>"Calibrated",H${row},""),IF(AND(J${row}<>"OK",J${row}<>"No trend",J${row}<>"Owner-confirmed normal"),J${row},""),IF(K${row}="Due now","Remeasure due",""),IF(AG${row}="Overdue — reweigh","Dry forecast overdue","")),IF(flags="","No current flags",flags))`,
+        `=LET(flags,TEXTJOIN(" · ",TRUE,IF(H${row}<>"Calibrated",H${row},""),IF(AND(J${row}<>"OK",J${row}<>"No trend",J${row}<>"No current-cycle alert",J${row}<>"Owner-confirmed normal"),J${row},""),IF(K${row}="Due now","Remeasure due",""),IF(REGEXMATCH(AG${row},"Overdue"),"Dry forecast overdue","")),IF(flags="","No current flags",flags))`,
         `=IFNA(MAX(FILTER(History!$K$2:$K$5000,History!$B$2:$B$5000=$A${row},History!$AJ$2:$AJ$5000<>"Removed")),1)`,
         currentCyclePointCountFormula_(row),
         `=COUNTIFS(History!$B$2:$B$5000,$A${row},History!$E$2:$E$5000,">0",History!$K$2:$K$5000,$T${row},History!$AJ$2:$AJ$5000,"<>Removed")`,
@@ -3021,12 +3580,13 @@ function baselineViewRow_(rowNumber, plant) {
         `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AI:$AI,"cm")`,
         currentCurveLossFormula_(row),
         predictedDryDateFormula_(row),
-        `=IFS(O${row}="","Need a watering",Y${row}="","Need a wet weight",W${row}="","Need a completed dry cycle",U${row}<4,"Need 4 post-water weights",AE${row}="","Need a stable 3-day curve",AE${row}<=0,"Need a descending curve",AF${row}="","Curve unavailable",AF${row}<TODAY(),"Overdue — reweigh",OR(U${row}<6,${dryDownCurveFormula_(row, "fit")}<0.85),"Provisional curve",TRUE,"Good curve")`,
+        `=LET(basis,${dryDownLookupFormula_(row, "K")},learned,${dryDownLookupFormula_(row, "F")},late,${dryDownLookupFormula_(row, "J")},basis&IF(learned>0," · "&learned&" learned cycle"&IF(learned=1,"","s"),"")&IF(AND(late<>"",late<TODAY())," · Overdue — reweigh",""))`,
         `=IF(AF${row}="",DATE(9999,12,31),AF${row})`,
     ];
 }
 
 function refreshBaselineView_(spreadsheet, plants) {
+    refreshDryDownModels_(spreadsheet);
     const sheet = requireSheet_(spreadsheet, GARDEN_LOGGER.baselinesSheet);
     ensureSheetColumnCapacity_(sheet, BASELINE_VIEW_HEADERS.length);
     ensureSheetRowCapacity_(sheet, plants.length + 1);
@@ -3059,9 +3619,9 @@ function refreshBaselineView_(spreadsheet, plants) {
         .getRange("AE1:AG1")
         .setNotes([
             [
-                "Current modeled loss in grams per day from an exponential fit of up to 12 current-cycle weights above the completed dry anchor.",
-                "Conservative curve forecast for reaching the near-dry band: within 5% of learned water capacity or 2 g, whichever is larger. This is a reweigh prompt, not a watering deadline.",
-                "Curve readiness and fit quality. A usable model needs at least four weights across three days and a reasonable log-linear fit toward the completed dry anchor.",
+                "Exponential modeled loss at the latest reading, learned from up to five recent completed cycles of this plant/setup and updated by current-cycle weights.",
+                "Near-dry reweigh estimate. See Next dry check for a planning window, not a watering deadline or statistical confidence interval.",
+                "Historical, blended, or current-cycle basis; number of reliable completed cycles. Four readings across three days support the current curve, not every forecast.",
             ],
         ]);
     sheet
@@ -3095,6 +3655,10 @@ function refreshBaselineView_(spreadsheet, plants) {
     sheet.setColumnWidth(18, 220);
     sheet.setColumnWidth(19, 240);
     sheet.setColumnWidth(33, 220);
+    sheet.getRange("I2:J31").setWrap(true);
+    sheet.getRange("L2:L31").setWrap(true);
+    sheet.getRange("AG2:AG31").setWrap(true);
+    sheet.autoResizeRows(2, plants.length);
 }
 
 function dashboardViewRow_(spreadsheet, plant, index) {
@@ -4400,6 +4964,7 @@ function readHistorySnapshot_(spreadsheet) {
 }
 
 function latestPotSizesFromRows_(historyRows) {
+    /** @type {Map<string, string>} */
     const result = new Map(Object.entries(INITIAL_POT_SIZE_BY_PLANT));
     historyRows
         .filter(
@@ -4945,7 +5510,7 @@ function ensureHistoryMeasurementColumns_(history, configureColumn = false) {
     if (!configureColumn) return;
     const dataRows = Math.max(1, history.getMaxRows() - 1);
     const unitRule = SpreadsheetApp.newDataValidation()
-        .requireValueInList(MEASUREMENT_UNIT_OPTIONS, true)
+        .requireValueInList([...MEASUREMENT_UNIT_OPTIONS], true)
         .setAllowInvalid(false)
         .build();
     history
@@ -5037,7 +5602,7 @@ function ensureHistoryWaterColumns_(history, configureColumn = false) {
     if (!configureColumn) return;
     const dataRows = Math.max(1, history.getMaxRows() - 1);
     const applicationRule = SpreadsheetApp.newDataValidation()
-        .requireValueInList(WATERING_APPLICATION_OPTIONS, true)
+        .requireValueInList([...WATERING_APPLICATION_OPTIONS], true)
         .setAllowInvalid(false)
         .build();
     const amountRule = SpreadsheetApp.newDataValidation()
@@ -5124,7 +5689,7 @@ function ensureQuickLogWaterColumns_(quickLog, configureColumns = false) {
         quickLog.getMaxRows() - GARDEN_LOGGER.firstInputRow + 1
     );
     const applicationRule = SpreadsheetApp.newDataValidation()
-        .requireValueInList(WATERING_APPLICATION_OPTIONS, true)
+        .requireValueInList([...WATERING_APPLICATION_OPTIONS], true)
         .setAllowInvalid(false)
         .build();
     const amountRule = SpreadsheetApp.newDataValidation()

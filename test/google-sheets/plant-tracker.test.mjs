@@ -1229,43 +1229,28 @@ describe("Garden logger server logic", () => {
         });
 
         expect(baselineRow).toHaveLength(34);
-        expect(baselineRow[22]).toContain("currentDryKey");
-        expect(baselineRow[22]).toContain("dryMask,MAP(weightKeys");
-        expect(baselineRow[22]).toContain('weightState="Dry"');
-        expect(baselineRow[22]).not.toContain("MAP(waterKeys");
-        expect(baselineRow[24]).toContain("currentWetKey");
-        expect(baselineRow[24]).toContain("weightDate<=lastWaterDate+5");
-        expect(baselineRow[24]).toContain("sameSaveMask");
-        expect(baselineRow[24]).toContain("promptMask");
-        expect(baselineRow[24]).not.toContain("MAP(waterKeys");
+        for (const [index, column] of [
+            [22, "C"],
+            [24, "D"],
+            [20, "E"],
+            [30, "G"],
+            [31, "H"],
+        ]) {
+            expect(baselineRow[index]).toBe(
+                `=XLOOKUP($A2,'Dry-down models'!$A$2:$A$31,'Dry-down models'!$${column}$2:$${column}$31,"")`
+            );
+        }
         expect(baselineRow[25]).toContain('Y2<=W2),"",Y2-W2');
-        expect(baselineRow[20]).toContain("currentWetKey");
-        expect(baselineRow[20]).toContain("weightKeys>=currentWetKey");
-        expect(baselineRow[20]).not.toContain("History!$N$2:$N$5000");
-        expect(baselineRow[30]).toContain("SLOPE(logResiduals,elapsed)");
-        expect(baselineRow[30]).toContain("RSQ(logResiduals,elapsed)");
-        expect(baselineRow[30]).toContain("curveDates,CHOOSECOLS(recent,1)");
-        expect(baselineRow[30]).toContain("residuals,MAP(CHOOSECOLS(recent,2)");
-        expect(baselineRow[30]).toContain(
-            "elapsed,MAP(curveDates,LAMBDA(curveDate"
-        );
-        expect(baselineRow[30]).toContain(
-            "logResiduals,MAP(residuals,LAMBDA(residual"
-        );
-        expect(baselineRow[30]).not.toContain(
-            "recent,ARRAY_CONSTRAIN(points,MIN(12,ROWS(points)),3),dates,"
-        );
-        expect(baselineRow[30]).toContain("ROWS(recent)<4");
-        expect(baselineRow[30]).toContain("span<3");
-        expect(baselineRow[30]).toContain("decay*MAX(0,currentResidual)");
-        expect(baselineRow[30]).not.toContain("History!$N$2:$N$5000");
-        expect(baselineRow[31]).toContain("MAX(2,Z2*0.05)");
-        expect(baselineRow[31]).toContain("LN(residual/tolerance)");
         expect(baselineRow[12]).toBe('=IF(OR(AE2="",C2<=0),"",AE2/C2)');
-        expect(baselineRow[32]).toMatch(/Need a completed dry cycle/);
-        expect(baselineRow[32]).toContain("Provisional curve");
-        expect(baselineRow[32]).toContain("<0.85");
+        expect(baselineRow[8]).toContain("'Dry-down models'!$L$2:$L$31");
+        expect(baselineRow[9]).toContain("'Plant tracker'!$AD:$AD");
+        expect(baselineRow[11]).toContain('TEXT(early,"mmm d")');
+        expect(baselineRow[11]).toContain('TEXT(late,"mmm d")');
+        expect(baselineRow[32]).toContain("learned cycle");
         expect(baselineRow[33]).toMatch(/DATE\(9999,12,31\)/);
+        expect(context.dryDownModelFormula_()).toContain("=GARDEN_DRY_DOWN(");
+        expect(context.dryDownModelFormula_()).toContain("History!AJ2:AJ5000");
+        expect(context.dryDownModelFormula_()).not.toMatch(/NOW\(|TODAY\(/);
         expect(context.plantPageHistoryFormula_("P01")).toContain(
             "History!$D$2:$D$5000"
         );
@@ -1305,7 +1290,7 @@ describe("Garden logger server logic", () => {
             calls.push(["organize", ...args]);
 
         expect(context.refreshGardenWorkbook()).toEqual({
-            loggerVersion: "5.16.3",
+            loggerVersion: "5.17.0",
             plantPages: 2,
             baselineColumns: 34,
             dashboardColumns: 21,
@@ -1349,19 +1334,19 @@ describe("Garden logger server logic", () => {
             calls.push(["organize", ...args]);
 
         expect(context.refreshGardenWorkbookPages01To10()).toEqual({
-            loggerVersion: "5.16.3",
+            loggerVersion: "5.17.0",
             firstPlant: "P01",
             lastPlant: "P10",
             plantPages: 10,
         });
         expect(context.refreshGardenWorkbookPages11To20()).toEqual({
-            loggerVersion: "5.16.3",
+            loggerVersion: "5.17.0",
             firstPlant: "P11",
             lastPlant: "P20",
             plantPages: 10,
         });
         expect(context.refreshGardenWorkbookPages21To30()).toEqual({
-            loggerVersion: "5.16.3",
+            loggerVersion: "5.17.0",
             firstPlant: "P21",
             lastPlant: "P30",
             plantPages: 10,
@@ -1639,6 +1624,8 @@ describe("Garden logger server logic", () => {
                 getMaxColumns: () => 5,
                 getMaxRows: () => 20,
                 getName: () => name,
+                hideSheet: () => {},
+                autoResizeRows: () => {},
                 getRange: () => range,
                 getSheetId: () => id,
                 insertColumnsAfter: () => {},
@@ -1655,6 +1642,7 @@ describe("Garden logger server logic", () => {
         };
         const sheets = new Map([
             ["Baselines", makeSheet("Baselines")],
+            ["Dry-down models", makeSheet("Dry-down models")],
             ["Dashboard", makeSheet("Dashboard", { id: 99 })],
             ["P01", makeSheet("P01", { hasFilter: true, id: 101 })],
             ["P02", makeSheet("P02", { id: 102 })],
@@ -1886,7 +1874,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.16.3");
+        expect(bootstrap.version).toBe("5.17.0");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -4641,9 +4629,9 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.16.3");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.17.0");
         expect(calls.toast[1]).toBe("Garden logger verified");
-        expect(calls.toast[0]).toMatch(/Logger 5\.16\.3 is ready/);
+        expect(calls.toast[0]).toMatch(/Logger 5\.17\.0 is ready/);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(
