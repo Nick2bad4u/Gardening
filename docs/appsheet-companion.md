@@ -30,8 +30,8 @@ updates, or deletes `History` rows directly.
 The bridge contract and trigger details live in
 [`scripts/google-sheets/README.md`](../scripts/google-sheets/README.md#appsheet-companion-intake).
 
-Migration status as of 2026-09-04: logger 5.16.3 and immutable Apps Script
-version 60 are live at the existing stable deployment URL. The live workbook
+Migration status as of 2026-09-04: logger 5.17.0 and immutable Apps Script
+version 61 are live at the existing stable deployment URL. The live workbook
 has P29 and P30 in `Plant tracker`, `Baselines`, `Quick log`, the individual
 plant tabs, and `App bulk`. `History` and `History view` now contain 42 physical
 columns, A:AP; `App entries` contains 34, A:AH; and `App bulk` contains 54,
@@ -49,6 +49,14 @@ curve forecast without changing its observations. The rollout preserved all
 661 canonical `History` data rows, retained the duplicate P20 watering as an
 auditable `Removed` record, and left zero duplicate active request/plant/event
 keys, blank request IDs, or formula errors.
+
+The 5.17.0 forecast update learns completed cycles within each plant's current
+pot setup and blends new readings into that history. At rollout, P20, P21, and
+P22 qualified for historical estimates before collecting four new weights.
+The existing `Baselines` fields now expose the forecast basis and reweigh
+window. Sync AppSheet to refresh those values; no editor save or table
+regeneration is required. The new hidden `Dry-down models` helper remains
+disconnected from AppSheet.
 
 ## View map
 

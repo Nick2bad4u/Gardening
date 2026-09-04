@@ -24,7 +24,7 @@ overwritten. The bound Apps Script in
 ## Current production baseline
 
 As of September 4, 2026, the checked-in source and stable production deployment
-both identify the logger as **5.16.3** on immutable Apps Script version **60**.
+both identify the logger as **5.17.0** on immutable Apps Script version **61**.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
@@ -78,6 +78,16 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
   `processQueuedAppSheetEntries` trigger. Reinstalling it creates the replacement
   first, then removes every previously matching trigger so a transient creation
   failure cannot leave the bridge without a schedule.
+- Logger 5.17.0 learns reliable completed dry-down cycles for the same plant
+  and pot setup, then blends fresh readings into a historical forecast. The
+  logger shows a reweigh window and its basis; existing Dashboard and AppSheet
+  fields receive the same model. See [Dry-down learning](#dry-down-learning).
+- The 5.17.0 rollout used a native Drive backup named
+  `Garden Plant Tracker — before dry-down learning 5.17.0 — 2026-09-04 19-49 EDT`.
+  The scoped installer preserved all 661 canonical History records, including
+  the one Removed record, with 661 unique observation IDs and no duplicate
+  active request/plant/event keys. All 5,725 checked workbook formulas were
+  error-free. No AppSheet table regeneration was needed.
 
 ## Local development and tests
 
