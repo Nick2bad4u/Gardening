@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
-  <title id="title">Yellow tower cactus plant portrait</title>
-  <g fill="#f1c64d" stroke="#8a631d" stroke-width=".28"><ellipse cx="12" cy="2.5" rx=".72" ry="1.55"/><ellipse cx="12" cy="2.5" rx=".72" ry="1.55" transform="rotate(60 12 2.5)"/><ellipse cx="12" cy="2.5" rx=".72" ry="1.55" transform="rotate(120 12 2.5)"/></g>
-  <circle cx="12" cy="2.5" r=".48" fill="#e79542"/>
-  <path d="M8.2 17V7.1c0-2.8 1.4-4.6 3.8-4.6s3.8 1.8 3.8 4.6V17Z" fill="#69a45d" stroke="#173c2b" stroke-linejoin="round" stroke-width="1"/>
-  <path d="M9.5 4.5v12.2m2-13.7v13.7m2-13.1v13.1M15 5.9v10.8" fill="none" stroke="#e9bd43" stroke-linecap="round" stroke-width=".9"/>
-  <path d="M8.5 7.2h7m-7.2 2.8h7.4m-7.4 2.8h7.4m-7.2 2.7h7" fill="none" stroke="#ffe28a" stroke-dasharray=".7 1" stroke-linecap="round" stroke-width=".6"/>
-  <path d="m8.1 8.1-1.2-.5m1.1 3.4-1.3.1m9.3-3.2 1.2-.5m-1.2 3.4 1.3.1" fill="none" stroke="#e9bd43" stroke-linecap="round" stroke-width=".55"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="parodia-leninghausii-title parodia-leninghausii-description" data-plant-slug="parodia-leninghausii" focusable="false">
+  <title id="parodia-leninghausii-title">Yellow tower cactus plant portrait</title>
+  <desc id="parodia-leninghausii-description">An upright green cactus densely covered with golden ribs and radial spines in a purple planter.</desc>
+  <path d="M7 17V8.6c0-4.1 1.9-6.4 5-6.4s5 2.3 5 6.4V17Z" fill="#7d895c" stroke="#173c2b" stroke-linejoin="round" stroke-width="1"/>
+  <path d="M9 4.3c-0.7 4.1-0.7 8.2 0 12.3m2-13.9c-0.4 4.7-0.4 9.3 0 13.9m2-13.9c0.4 4.7 0.4 9.3 0 13.9m2-12.3c0.7 4.1 0.7 8.2 0 12.3" fill="none" stroke="#a28d49" stroke-linecap="round" stroke-width="0.45"/>
+  <path d="M9.3 4.5c1.8-0.8 3.6-0.8 5.4 0M8 6.4c2.7-0.9 5.3-0.9 8 0M7.6 8.5c2.9-0.8 5.9-0.8 8.8 0m-8.9 2.2c3-0.7 6-0.7 9 0m-8.8 2.3c2.9-0.7 5.7-0.7 8.6 0m-8.1 2.2c2.5-0.5 5-0.5 7.6 0" fill="none" stroke="#f0c969" stroke-dasharray="0.08 0.72" stroke-linecap="round" stroke-width="0.78"/>
+  <path d="M7.4 6.2 6 5.3m1.1 3.5-1.6-0.2m1.6 3.2-1.6 0.3m1.8 2.7-1.5 0.8m10.8-9.4 1.4-0.9m-1.1 3.5 1.6-0.2m-1.6 3.2 1.6 0.3m-1.8 2.7 1.5 0.8" fill="none" stroke="#f4d98a" stroke-linecap="round" stroke-width="0.52"/>
+  <path d="M9.6 3.2c1.6-1.1 3.2-1.1 4.8 0" fill="none" stroke="#f4d98a" stroke-linecap="round" stroke-width="0.9"/>
   <path d="M5.7 16.2h12.6l-1.5 5.2H7.2z" fill="#7358a3" stroke="#493467" stroke-linejoin="round" stroke-width="1"/>
 </svg>

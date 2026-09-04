@@ -1,8 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
-  <title id="title">Grass-blade cactus plant portrait</title>
-  <path d="M5.2 15.9c.1-6.7 2.5-11.6 6.8-11.6s6.7 4.9 6.8 11.6Z" fill="#69b56b" stroke="#173c2b" stroke-linejoin="round" stroke-width="1"/>
-  <path d="M7.4 15.5c2.9-2.1-1-3.2 1.6-5.3s-.2-3 1.1-5.4m2.1 10.7c-2.5-2.1.9-3.3-1.2-5.4s.6-3.3.9-5.3m2.4 10.7c-2.6-2.2.9-3.2-1.4-5.3s.2-3.1.9-4.8m2.4 10.1c-1.8-2 .7-3.1-.9-5.1" fill="none" stroke="#d7efb4" stroke-linecap="round" stroke-width=".72"/>
-  <g fill="#f3c84b" stroke="#80631f" stroke-width=".2"><circle cx="8.2" cy="9" r=".38"/><circle cx="15.7" cy="8.4" r=".38"/><circle cx="8.5" cy="13" r=".38"/><circle cx="15.2" cy="13.1" r=".38"/></g>
-  <path d="M8.2 9 5.2 7.1m3 1.9-2.8.8m10.3-1.4 3-1.8m-3 1.8 2.7 1.1M8.5 13l-3.1-.5m9.8.6 3.2.7" fill="none" stroke="#e6bd72" stroke-linecap="round" stroke-width=".65"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="stenocactus-phyllacanthus-title stenocactus-phyllacanthus-description" data-plant-slug="stenocactus-phyllacanthus" focusable="false">
+  <title id="stenocactus-phyllacanthus-title">Grass-blade cactus plant portrait</title>
+  <desc id="stenocactus-phyllacanthus-description">A squat green cactus with many narrow wavy ribs and long tan spines.</desc>
+  <path d="M4.7 16c0.3-5.9 2.9-9.4 7.3-9.4s7 3.5 7.3 9.4Z" fill="#58a862" stroke="#173c2b" stroke-linejoin="round" stroke-width="1"/>
+  <path d="M6.4 15.7c1.8-1.7-0.7-2.6 1-4.2s-0.1-2.4 1-3.5m1.1 7.7c-1.5-1.8 0.6-2.7-0.6-4.3s0.4-2.7 0.8-4.1m2.3 8.4c1.2-1.8-0.4-2.8 0.5-4.4s-0.3-2.8-0.5-4.3m2.5 8.7c-1.5-1.8 0.6-2.7-0.7-4.3s0.3-2.6 0.8-3.8m2.9 8.1c-1.7-1.7 0.7-2.6-1-4.2s0.1-2.4-0.9-3.5" fill="none" stroke="#d7efb4" stroke-linecap="round" stroke-width="0.62"/>
+  <g fill="#f1d49a" stroke="#80631f" stroke-width="0.16">
+    <circle cx="8.1" cy="10" r="0.34"/>
+    <circle cx="12" cy="8.6" r="0.34"/>
+    <circle cx="15.9" cy="10" r="0.34"/>
+    <circle cx="7.7" cy="13.1" r="0.34"/>
+    <circle cx="12" cy="12.2" r="0.34"/>
+    <circle cx="16.3" cy="13.1" r="0.34"/>
+  </g>
+  <path d="M8.1 10 5.1 8.2m3 1.8-3.1 0.7m7-2.1-2.4-2.4m2.4 2.4 2.4-2.4m1.5 3.8 3-1.8m-3 1.8 3.1 0.7M7.7 13.1l-3.4-0.6m7.7-0.3-2.7-1m2.7 1 2.7-1m1.6 1.9 3.4-0.6" fill="none" stroke="#e6bd72" stroke-linecap="round" stroke-width="0.68"/>
   <path d="M4.7 15.6h14.6l-1.7 5.8H6.4z" fill="#e58b4e" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
 </svg>

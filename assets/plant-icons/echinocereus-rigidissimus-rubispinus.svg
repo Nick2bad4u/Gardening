@@ -1,8 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
-  <title id="title">Rainbow hedgehog cactus plant portrait</title>
-  <path d="M7.6 17V8.2c0-3.4 1.8-5.6 4.4-5.6s4.4 2.2 4.4 5.6V17Z" fill="#6f9869" stroke="#173c2b" stroke-linejoin="round" stroke-width="1"/>
-  <path d="M9.1 4.4v12.2m2-13.5v13.5m2-13.3v13.3m2-11.9v11.9" fill="none" stroke="#ec6f91" stroke-linecap="round" stroke-width="1"/>
-  <path d="M7.9 6.8h8.2m-8.5 2.8h8.8m-8.7 2.8h8.6m-8.2 2.8H16" fill="none" stroke="#f7b2c6" stroke-linecap="round" stroke-width=".65"/>
-  <circle cx="12" cy="2.5" r=".7" fill="#f4c34d" stroke="#7a531d" stroke-width=".4"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="echinocereus-rigidissimus-rubispinus-title echinocereus-rigidissimus-rubispinus-description" data-plant-slug="echinocereus-rigidissimus-rubispinus" focusable="false">
+  <title id="echinocereus-rigidissimus-rubispinus-title">Rainbow hedgehog cactus plant portrait</title>
+  <desc id="echinocereus-rigidissimus-rubispinus-description">An upright cactus wrapped in dense muted-pink radial spines in a terracotta planter.</desc>
+  <path d="M6.6 17V9.4c0-4.5 2.1-7 5.4-7s5.4 2.5 5.4 7V17Z" fill="#77816f" stroke="#173c2b" stroke-linejoin="round" stroke-width="1"/>
+  <path d="M9.1 4.1c-0.8 4.2-0.8 8.4-0.1 12.5m3-13.9v13.9m2.9-12.5c0.8 4.2 0.8 8.4 0.1 12.5" fill="none" stroke="#667261" stroke-linecap="round" stroke-width="0.42"/>
+  <path d="M9 4.7c2-0.9 4-0.9 6 0M7.8 6.7c2.8-0.9 5.6-0.9 8.4 0M7.2 9c3.2-0.8 6.4-0.8 9.6 0m-9.6 2.5c3.2-0.7 6.4-0.7 9.6 0m-9.4 2.6c3.1-0.6 6.1-0.6 9.2 0m-8.5 2.3c2.6-0.5 5.2-0.5 7.8 0" fill="none" stroke="#d99ca4" stroke-dasharray="0.08 0.7" stroke-linecap="round" stroke-width="0.72"/>
+  <path d="M7.4 6.3 6 5.5m1.1 3.4-1.5-0.2m1.5 3.1-1.5 0.3m1.7 2.7-1.4 0.7m10.7-9.2 1.4-0.8m-1.1 3.4 1.5-0.2m-1.5 3.1 1.5 0.3m-1.7 2.7 1.4 0.7" fill="none" stroke="#f0d3c8" stroke-linecap="round" stroke-width="0.48"/>
+  <path d="M9.7 3.2c1.5-0.9 3.1-0.9 4.6 0" fill="none" stroke="#ead0c4" stroke-linecap="round" stroke-width="0.72"/>
   <path d="M5.9 16.3h12.2l-1.4 5H7.3z" fill="#e2874d" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
 </svg>

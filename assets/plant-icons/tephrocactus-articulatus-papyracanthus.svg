@@ -1,8 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
-  <title id="title">Paper spine cactus plant portrait</title>
-  <g fill="#f6e8c8" stroke="#9c7947" stroke-linejoin="round" stroke-width=".5"><path d="M9.2 4.4C7.5 3.4 5.6 2.8 4.3 3c1.1 1.4 2.6 2.6 4.4 3.5Z"/><path d="M14.4 8.1c2-1.1 3.8-1.6 5.2-1.3-1 1.3-2.5 2.6-4.5 3.4Z"/><path d="M9.1 13.1c-2.1-.9-4.1-1.2-5.4-.7 1.2 1.3 2.8 2.4 4.8 3.1Z"/><path d="M14.6 13.4c2.1.4 4 1.3 5 2.4-1.6.4-3.5.2-5.3-.5Z"/></g>
-  <g fill="#739b70" stroke="#173c2b" stroke-width=".8"><ellipse cx="11.7" cy="13.7" rx="3.8" ry="3.6"/><ellipse cx="12.5" cy="8.5" rx="3.4" ry="3.8"/><ellipse cx="10.8" cy="4.4" rx="2.6" ry="2.7"/></g>
-  <path d="M11 2.2c.7 1.3.6 2.7-.2 4m2-1.2c.7 1.8.5 3.5-.3 5.1m-.8 0c.8 1.7.7 3.4 0 5.2" fill="none" stroke="#a9c39a" stroke-linecap="round" stroke-width=".55"/>
-  <g fill="#e6bd72"><circle cx="9.6" cy="4.4" r=".38"/><circle cx="13.5" cy="8.2" r=".38"/><circle cx="10.7" cy="13.3" r=".38"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="tephrocactus-articulatus-papyracanthus-title tephrocactus-articulatus-papyracanthus-description" data-plant-slug="tephrocactus-articulatus-papyracanthus" focusable="false">
+  <title id="tephrocactus-articulatus-papyracanthus-title">Paper spine cactus plant portrait</title>
+  <desc id="tephrocactus-articulatus-papyracanthus-description">Stacked gray-green cactus segments surrounded by long flat papery spines.</desc>
+  <g fill="#f3e7cf" stroke="#9c7947" stroke-linejoin="round" stroke-width="0.48">
+    <path d="M9.6 4.1C7.3 2.9 5.1 2.4 3.6 2.8c1.3 1.5 3.2 2.8 5.5 3.4Z"/>
+    <path d="M12.2 4.3c1.7-2 3.5-3.2 5.1-3.2-0.5 1.9-2 3.7-4.2 5.2Z"/>
+    <path d="M14.2 8.2c2.4-1.3 4.6-1.8 6.1-1.3-1.1 1.5-3.1 2.8-5.7 3.5Z"/>
+    <path d="M10.1 9c-2.5-0.8-4.8-0.8-6.2 0 1.4 1.2 3.6 2 6.1 2.2Z"/>
+    <path d="M9.1 13.1c-2.7-1-5.1-1.2-6.7-0.4 1.4 1.4 3.7 2.5 6.4 3Z"/>
+    <path d="M14.6 13.4c2.7 0.4 5.1 1.5 6.3 2.9-2 0.4-4.4 0.1-6.8-0.8Z"/>
+  </g>
+  <g fill="#858f82" stroke="#31483a" stroke-width="0.78">
+    <ellipse cx="11.7" cy="13.7" rx="3.8" ry="3.6"/>
+    <ellipse cx="12.5" cy="8.5" rx="3.4" ry="3.8"/>
+    <ellipse cx="10.8" cy="4.4" rx="2.6" ry="2.7"/>
+  </g>
+  <path d="M11 2.2c0.7 1.3 0.6 2.7-0.2 4m2-1.2c0.7 1.8 0.5 3.5-0.3 5.1m-0.8 0c0.8 1.7 0.7 3.4 0 5.2" fill="none" stroke="#bdc6ae" stroke-linecap="round" stroke-width="0.55"/>
+  <g fill="#ddc78e">
+    <circle cx="9.6" cy="4.4" r="0.38"/>
+    <circle cx="13.5" cy="8.2" r="0.38"/>
+    <circle cx="10.7" cy="13.3" r="0.38"/>
+  </g>
   <path d="M5.2 16h13.6l-1.6 5.3H6.8z" fill="#d97c4a" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
 </svg>

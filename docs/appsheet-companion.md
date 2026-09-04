@@ -30,8 +30,8 @@ updates, or deletes `History` rows directly.
 The bridge contract and trigger details live in
 [`scripts/google-sheets/README.md`](../scripts/google-sheets/README.md#appsheet-companion-intake).
 
-Migration status as of 2026-09-04: logger 5.16.2 and immutable Apps Script
-version 54 are live at the existing stable deployment URL. The live workbook
+Migration status as of 2026-09-04: logger 5.16.3 and immutable Apps Script
+version 60 are live at the existing stable deployment URL. The live workbook
 has P29 and P30 in `Plant tracker`, `Baselines`, `Quick log`, the individual
 plant tabs, and `App bulk`. `History` and `History view` now contain 42 physical
 columns, A:AP; `App entries` contains 34, A:AH; and `App bulk` contains 54,
@@ -44,9 +44,11 @@ P30 Decimal weight fields use the same positive-number validation and Weigh /
 Water + weigh visibility rule as P01-P28, while `Selected plants` remains an
 EnumList of `Plant tracker` refs. The live image mapping uses cached Gyazo
 thumbnails for P19, P20, and P23-P30, and natural label order now runs through
-#6. The rollout preserved all 661 canonical `History` data rows, retained the
-duplicate P20 watering as an auditable `Removed` record, and left zero duplicate
-active request/plant/event keys, blank request IDs, or formula errors.
+#6. The current-cycle refresh restored P06's completed Dry and Wet anchors and
+curve forecast without changing its observations. The rollout preserved all
+661 canonical `History` data rows, retained the duplicate P20 watering as an
+auditable `Removed` record, and left zero duplicate active request/plant/event
+keys, blank request IDs, or formula errors.
 
 ## View map
 
@@ -131,11 +133,12 @@ view.
 
 AppSheet no longer asks the user to choose Dry, Wet, or Routine. Choose Water
 explicitly only when the observation should also create a Water row; event
-ordering keeps the post-watering Weigh row before its Water row in History. New
-weights are stored as `Routine` for compatibility, while the current pot
-setup's lowest, highest, and intermediate readings are displayed dynamically as
-Dry, Wet, and Routine. This avoids rewriting canonical History when a later
-weight becomes a new low or high.
+ordering keeps the same-save Weigh row before its Water row in History. New
+weights remain `Routine` in the append-only ledger. Current-cycle analytics use
+the latest Water, treat its same-save weight—or otherwise the first positive
+weight within five days—as Wet, and use the completed Dry reading immediately
+before that Water as the dry anchor. Per-plant history displays the canonical
+stored state, so refreshing formulas never relabels old observations.
 
 Rotation is available in Log and Bulk Log. It accepts 1–360 degrees
 and defaults to 90. The degree value is archived in `History!AN:AN`, displayed

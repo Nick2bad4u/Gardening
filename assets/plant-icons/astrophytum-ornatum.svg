@@ -1,8 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
-  <title id="title">Monk's hood cactus plant portrait</title>
-  <path d="M5.7 16.1C5.9 8.7 8.3 4 12 4s6.1 4.7 6.3 12.1Z" fill="#589c64" stroke="#173c2b" stroke-linejoin="round" stroke-width="1"/>
-  <path d="M12 4.4v11.3M8.5 5.9c1.9 3.1 2 6.6.9 9.8m6.1-9.8c-1.9 3.1-2 6.6-.9 9.8" fill="none" stroke="#dcebc9" stroke-linecap="round" stroke-width=".7"/>
-  <g fill="#fff7df"><circle cx="8.3" cy="7.6" r=".48"/><circle cx="12.1" cy="6.7" r=".45"/><circle cx="15.7" cy="8.2" r=".5"/><circle cx="9.1" cy="11" r=".45"/><circle cx="13.8" cy="11.3" r=".5"/><circle cx="11.1" cy="14" r=".42"/></g>
-  <path d="m7.5 9.2-1.8-1m10.8 1 1.8-1M9 13.1l-2 .5m8-1 2 .6" fill="none" stroke="#d6a35b" stroke-linecap="round" stroke-width=".6"/>
-  <path d="M5.5 15.1h13l-1.6 6.2H7.1z" fill="#d77a49" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="astrophytum-ornatum-title astrophytum-ornatum-description" data-plant-slug="astrophytum-ornatum" focusable="false">
+  <title id="astrophytum-ornatum-title">Monk's hood cactus plant portrait</title>
+  <desc id="astrophytum-ornatum-description">A squat gray-green ribbed cactus with white flecks and long tan spines in a terracotta planter.</desc>
+  <path d="M5.2 16.2c0.2-5.9 2.5-9.5 6.8-9.5s6.6 3.6 6.8 9.5Z" fill="#657f69" stroke="#173c2b" stroke-linejoin="round" stroke-width="1"/>
+  <path d="M12 7.1v8.7M8.8 7.9c1.8 2.3 2 5.2 0.7 7.9m5.7-7.9c-1.8 2.3-2 5.2-0.7 7.9M6.7 10c1.5 1.4 1.8 3.5 1.3 5.7m9.3-5.7c-1.5 1.4-1.8 3.5-1.3 5.7" fill="none" stroke="#dcebc9" stroke-linecap="round" stroke-width="0.62"/>
+  <g fill="#fff7df">
+    <circle cx="8.1" cy="9.2" r="0.4"/>
+    <circle cx="10.5" cy="8.2" r="0.38"/>
+    <circle cx="13.6" cy="8.4" r="0.42"/>
+    <circle cx="16.2" cy="10" r="0.38"/>
+    <circle cx="7.4" cy="12.4" r="0.42"/>
+    <circle cx="10.1" cy="12" r="0.34"/>
+    <circle cx="13.8" cy="11.8" r="0.38"/>
+    <circle cx="16.4" cy="13.1" r="0.42"/>
+    <circle cx="11.8" cy="14.4" r="0.38"/>
+  </g>
+  <path d="M8.1 9.2 5.6 7.6m2.5 1.6-2.7 0.4m10.8 0.4 2.4-1.6m-2.4 1.6 2.5 0.7M7.4 12.4l-2.6-0.7m11.6 1.4 2.6 0.6" fill="none" stroke="#d6a35b" stroke-linecap="round" stroke-width="0.65"/>
+  <path d="M5 15.6h14l-1.7 5.7H6.7z" fill="#d77a49" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
 </svg>

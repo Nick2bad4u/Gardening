@@ -1,7 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
-  <title id="title">Dwarf old man cactus plant portrait</title>
-  <path d="M8 17V6.7c0-2.7 1.5-4.3 4-4.3s4 1.6 4 4.3V17Z" fill="#6aa671" stroke="#173c2b" stroke-linejoin="round" stroke-width="1"/>
-  <path d="M9.1 4.5c1.6 2.3-.8 3.8.5 6s-.8 3.7.4 6m2-13.2c1 2.5-.9 4 .2 6.3s-.7 4.2.1 6.9m2-12.1c-1.2 2.4.7 3.9-.4 6.1s.8 3.8-.4 6" fill="none" stroke="#fff6e6" stroke-linecap="round" stroke-width="1.2"/>
-  <path d="m8.5 6-1.2-.8m1.1 3.7-1.5.3m1.5 2.7-1.3.8m8.4-6.3 1.3-.7m-1.2 3.8 1.5.4m-1.5 2.8 1.4.8m-8.2 1.3-1.4.5m8-.3 1.4.6" fill="none" stroke="#f4ead4" stroke-linecap="round" stroke-width=".7"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="espostoa-melanostele-nana-title espostoa-melanostele-nana-description" data-plant-slug="espostoa-melanostele-nana" focusable="false">
+  <title id="espostoa-melanostele-nana-title">Dwarf old man cactus plant portrait</title>
+  <desc id="espostoa-melanostele-nana-description">An upright gray-green cactus wrapped in dense cream-colored wool in a purple planter.</desc>
+  <path d="M6.9 17V9.2c0-4.4 1.9-6.9 5.1-6.9s5.1 2.5 5.1 6.9V17Z" fill="#d2cfbb" stroke="#747a69" stroke-linejoin="round" stroke-width="0.68"/>
+  <path d="M7.7 5.8c1.6 1.8-0.8 3.3 0.6 5.3-1 1.8 0.9 3.5 0.1 5.6m1-13.1c1.5 2.4-0.9 4 0.4 6.3s-0.7 4.3 0.4 6.8m1-14.1c1.3 2.6-0.8 4.2 0.3 6.5s-0.7 4.3 0.2 7.7m1-14.2c-1.1 2.7 0.8 4.4-0.3 6.8s0.7 4.2-0.2 7.4m2-13.4c-1.4 2.4 0.8 4-0.5 6.3s0.8 4.1-0.3 7m2-11.4c-1.4 2 0.7 3.5-0.6 5.5 1 1.8-0.8 3.6-0.1 5.8" fill="none" stroke="#f8f2df" stroke-linecap="round" stroke-width="1.05"/>
+  <path d="m7.6 5.9-1.4-0.8m1.2 3.3-1.7-0.1m1.8 3-1.6 0.6m1.8 2.6-1.5 0.9m10.2-9.5 1.4-0.8m-1.2 3.3 1.7-0.1m-1.8 3 1.6 0.6m-1.8 2.6 1.5 0.9M8.8 3.9 7.7 2.8m7.5 1.1 1.1-1.1" fill="none" stroke="#fffaf0" stroke-linecap="round" stroke-width="0.78"/>
+  <path d="M8.8 3.6c2-1.5 4.2-1.6 6.4-0.1" fill="none" stroke="#fffaf0" stroke-linecap="round" stroke-width="1.35"/>
   <path d="M5.7 16.2h12.6l-1.5 5.2H7.2z" fill="#a66ec1" stroke="#604073" stroke-linejoin="round" stroke-width="1"/>
 </svg>

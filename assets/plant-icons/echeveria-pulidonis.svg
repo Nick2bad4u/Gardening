@@ -1,7 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
-  <title id="title">Pulido's echeveria plant portrait</title>
-  <g fill="#66bd83" stroke="#b24e5c" stroke-linejoin="round" stroke-width=".55"><path d="M12 11.6c-1.7-2.4-1.4-5.4.2-6.4 1.7 1 1.4 4-.2 6.4Z"/><path d="M12 11.6c-1.7-2.4-1.4-5.4.2-6.4 1.7 1 1.4 4-.2 6.4Z" transform="rotate(45 12 11.6)"/><path d="M12 11.6c-1.7-2.4-1.4-5.4.2-6.4 1.7 1 1.4 4-.2 6.4Z" transform="rotate(90 12 11.6)"/><path d="M12 11.6c-1.7-2.4-1.4-5.4.2-6.4 1.7 1 1.4 4-.2 6.4Z" transform="rotate(135 12 11.6)"/><path d="M12 11.6c-1.7-2.4-1.4-5.4.2-6.4 1.7 1 1.4 4-.2 6.4Z" transform="rotate(180 12 11.6)"/><path d="M12 11.6c-1.7-2.4-1.4-5.4.2-6.4 1.7 1 1.4 4-.2 6.4Z" transform="rotate(225 12 11.6)"/><path d="M12 11.6c-1.7-2.4-1.4-5.4.2-6.4 1.7 1 1.4 4-.2 6.4Z" transform="rotate(270 12 11.6)"/><path d="M12 11.6c-1.7-2.4-1.4-5.4.2-6.4 1.7 1 1.4 4-.2 6.4Z" transform="rotate(315 12 11.6)"/></g>
-  <g fill="#9ad29f" stroke="#8b4b63" stroke-linejoin="round" stroke-width=".4"><path d="M12 11.6c-1.25-1.7-1-3.7.2-4.4 1.2.8 1.1 2.8-.2 4.4Z"/><path d="M12 11.6c-1.25-1.7-1-3.7.2-4.4 1.2.8 1.1 2.8-.2 4.4Z" transform="rotate(90 12 11.6)"/><path d="M12 11.6c-1.25-1.7-1-3.7.2-4.4 1.2.8 1.1 2.8-.2 4.4Z" transform="rotate(180 12 11.6)"/><path d="M12 11.6c-1.25-1.7-1-3.7.2-4.4 1.2.8 1.1 2.8-.2 4.4Z" transform="rotate(270 12 11.6)"/></g>
-  <circle cx="12" cy="11.6" r=".8" fill="#47794f" stroke="#173c2b" stroke-width=".3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="echeveria-pulidonis-title echeveria-pulidonis-description" data-plant-slug="echeveria-pulidonis" focusable="false">
+  <title id="echeveria-pulidonis-title">Pulido's echeveria plant portrait</title>
+  <desc id="echeveria-pulidonis-description">A gray-green succulent rosette with thin red leaf margins in a blue planter.</desc>
+  <g fill="#8ea891" stroke="#b24e5c" stroke-linejoin="round" stroke-width="0.5">
+    <path d="M12 11.6c-1.7-2.4-1.4-5.4 0.2-6.4 1.7 1 1.4 4-0.2 6.4Z"/>
+    <path d="M12 11.6c-1.7-2.4-1.4-5.4 0.2-6.4 1.7 1 1.4 4-0.2 6.4Z" transform="rotate(45 12 11.6)"/>
+    <path d="M12 11.6c-1.7-2.4-1.4-5.4 0.2-6.4 1.7 1 1.4 4-0.2 6.4Z" transform="rotate(90 12 11.6)"/>
+    <path d="M12 11.6c-1.7-2.4-1.4-5.4 0.2-6.4 1.7 1 1.4 4-0.2 6.4Z" transform="rotate(135 12 11.6)"/>
+    <path d="M12 11.6c-1.7-2.4-1.4-5.4 0.2-6.4 1.7 1 1.4 4-0.2 6.4Z" transform="rotate(180 12 11.6)"/>
+    <path d="M12 11.6c-1.7-2.4-1.4-5.4 0.2-6.4 1.7 1 1.4 4-0.2 6.4Z" transform="rotate(225 12 11.6)"/>
+    <path d="M12 11.6c-1.7-2.4-1.4-5.4 0.2-6.4 1.7 1 1.4 4-0.2 6.4Z" transform="rotate(270 12 11.6)"/>
+    <path d="M12 11.6c-1.7-2.4-1.4-5.4 0.2-6.4 1.7 1 1.4 4-0.2 6.4Z" transform="rotate(315 12 11.6)"/>
+  </g>
+  <g fill="#aebda6" stroke="#9a5362" stroke-linejoin="round" stroke-width="0.36">
+    <path d="M12 11.6c-1.25-1.7-1-3.7 0.2-4.4 1.2 0.8 1.1 2.8-0.2 4.4Z"/>
+    <path d="M12 11.6c-1.25-1.7-1-3.7 0.2-4.4 1.2 0.8 1.1 2.8-0.2 4.4Z" transform="rotate(90 12 11.6)"/>
+    <path d="M12 11.6c-1.25-1.7-1-3.7 0.2-4.4 1.2 0.8 1.1 2.8-0.2 4.4Z" transform="rotate(180 12 11.6)"/>
+    <path d="M12 11.6c-1.25-1.7-1-3.7 0.2-4.4 1.2 0.8 1.1 2.8-0.2 4.4Z" transform="rotate(270 12 11.6)"/>
+  </g>
+  <circle cx="12" cy="11.6" r="0.8" fill="#47794f" stroke="#173c2b" stroke-width="0.3"/>
   <path d="M5.3 17h13.4l-1.5 4.4H6.8z" fill="#6c9fc6" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
 </svg>

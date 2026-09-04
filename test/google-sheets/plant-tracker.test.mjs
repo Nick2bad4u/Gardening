@@ -1229,21 +1229,32 @@ describe("Garden logger server logic", () => {
         });
 
         expect(baselineRow).toHaveLength(34);
-        expect(baselineRow[22]).toMatch(
-            /dryKeys,IF\(waterCount,MAP\(waterKeys/
-        );
-        expect(baselineRow[22]).toMatch(/lastDryKey/);
-        expect(baselineRow[24]).toMatch(
-            /wetKeys,IF\(waterCount,MAP\(waterKeys/
-        );
-        expect(baselineRow[24]).toContain("weightDates<=wd+5");
-        expect(baselineRow[24]).toMatch(/lastWetKey/);
+        expect(baselineRow[22]).toContain("currentDryKey");
+        expect(baselineRow[22]).toContain("dryMask,MAP(weightKeys");
+        expect(baselineRow[22]).toContain('weightState="Dry"');
+        expect(baselineRow[22]).not.toContain("MAP(waterKeys");
+        expect(baselineRow[24]).toContain("currentWetKey");
+        expect(baselineRow[24]).toContain("weightDate<=lastWaterDate+5");
+        expect(baselineRow[24]).toContain("sameSaveMask");
+        expect(baselineRow[24]).toContain("promptMask");
+        expect(baselineRow[24]).not.toContain("MAP(waterKeys");
         expect(baselineRow[25]).toContain('Y2<=W2),"",Y2-W2');
         expect(baselineRow[20]).toContain("currentWetKey");
         expect(baselineRow[20]).toContain("weightKeys>=currentWetKey");
         expect(baselineRow[20]).not.toContain("History!$N$2:$N$5000");
         expect(baselineRow[30]).toContain("SLOPE(logResiduals,elapsed)");
         expect(baselineRow[30]).toContain("RSQ(logResiduals,elapsed)");
+        expect(baselineRow[30]).toContain("curveDates,CHOOSECOLS(recent,1)");
+        expect(baselineRow[30]).toContain("residuals,MAP(CHOOSECOLS(recent,2)");
+        expect(baselineRow[30]).toContain(
+            "elapsed,MAP(curveDates,LAMBDA(curveDate"
+        );
+        expect(baselineRow[30]).toContain(
+            "logResiduals,MAP(residuals,LAMBDA(residual"
+        );
+        expect(baselineRow[30]).not.toContain(
+            "recent,ARRAY_CONSTRAIN(points,MIN(12,ROWS(points)),3),dates,"
+        );
         expect(baselineRow[30]).toContain("ROWS(recent)<4");
         expect(baselineRow[30]).toContain("span<3");
         expect(baselineRow[30]).toContain("decay*MAX(0,currentResidual)");
@@ -1256,10 +1267,13 @@ describe("Garden logger server logic", () => {
         expect(baselineRow[32]).toContain("<0.85");
         expect(baselineRow[33]).toMatch(/DATE\(9999,12,31\)/);
         expect(context.plantPageHistoryFormula_("P01")).toContain(
-            "weightDates<=wd+5"
+            "History!$D$2:$D$5000"
         );
         expect(context.plantPageHistoryFormula_("P01")).toContain(
-            'IF(COUNTIF(wetKeys,currentKey),"Wet"'
+            "recordedStates"
+        );
+        expect(context.plantPageHistoryFormula_("P01")).not.toContain(
+            "weightDate<=lastWaterDate+5"
         );
         expect(context.plantPageHistoryFormula_("P01")).toContain(
             'pounds,MAP(weights,LAMBDA(w,IF(w="","",w/453.59237)))'

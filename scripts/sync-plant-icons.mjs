@@ -27,6 +27,7 @@ const loggerPath = path.join(
 const assetDirectory = path.join(repositoryRoot, "assets", "plant-icons");
 const startMarker = "<!-- GENERATED PLANT ICONS START -->";
 const endMarker = "<!-- GENERATED PLANT ICONS END -->";
+const leadingZeroOmissionPattern = /(?:^|[^\d])\.(?=\d)|\d+\.\d+\.(?=\d)/m;
 
 function escapeXml(value) {
     return String(value)
@@ -34,6 +35,19 @@ function escapeXml(value) {
         .replaceAll('"', "&quot;")
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;");
+}
+
+function normalizeSymbolBody(value) {
+    const lines = value
+        .replace(/^\r?\n/, "")
+        .replace(/\r?\n\s*$/, "")
+        .split(/\r?\n/);
+    const indentation = Math.min(
+        ...lines
+            .filter((line) => line.trim())
+            .map((line) => line.match(/^\s*/)[0].length)
+    );
+    return lines.map((line) => line.slice(indentation)).join("\n");
 }
 
 function parsePlantSymbols(sprite) {
@@ -44,11 +58,11 @@ function parsePlantSymbols(sprite) {
     ].map((match) => ({
         slug: match[1],
         viewBox: match[2],
-        body: match[3].trim(),
+        body: normalizeSymbolBody(match[3]),
     }));
 }
 
-function replaceGeneratedLoggerSymbols(logger, symbols) {
+function replaceGeneratedLoggerSymbols(logger) {
     const start = logger.indexOf(startMarker);
     const end = logger.indexOf(endMarker);
     if (start < 0 || end < start) {
@@ -56,12 +70,8 @@ function replaceGeneratedLoggerSymbols(logger, symbols) {
             "The logger is missing its generated plant-icon boundary markers."
         );
     }
-    const generated = symbols
-        .map(
-            ({ slug, viewBox, body }) =>
-                `<symbol id="app-icon-plant-${slug}" viewBox="${viewBox}">\n${body}\n</symbol>`
-        )
-        .join("\n\n");
+    const generated =
+        "<!-- Plant portraits load from their cached standalone SVG assets. -->";
     return `${logger.slice(0, start + startMarker.length)}\n${generated}\n${logger.slice(end)}`;
 }
 
@@ -82,6 +92,191 @@ function profileTitles(profileData) {
     return titles;
 }
 
+function portraitDescriptions() {
+    return new Map([
+        [
+            "aeonium-haworthii-dream-color",
+            "Three branching green rosettes with magenta-edged leaves above a white planter.",
+        ],
+        [
+            "astrophytum-ornatum",
+            "A squat gray-green ribbed cactus with white flecks and long tan spines in a terracotta planter.",
+        ],
+        [
+            "austrocylindropuntia-subulata",
+            "A slim branching green cylindrical stem with pale awl-shaped leaves in a yellow planter.",
+        ],
+        [
+            "cereus-forbesii-ming-thing",
+            "A low knobbly green monstrose cactus clump in a purple planter.",
+        ],
+        [
+            "chamaelobivia-hybrid",
+            "A crowded mound of short ribbed peanut-shaped green stems in a blue planter.",
+        ],
+        [
+            "cleistocactus-colademononis",
+            "Three pale-haired cactus stems trailing from a hanging terracotta basket.",
+        ],
+        [
+            "echeveria-pulidonis",
+            "A gray-green succulent rosette with thin red leaf margins in a blue planter.",
+        ],
+        [
+            "echeveria-raindrops",
+            "A blue-green succulent rosette with rounded raised leaf bumps in a yellow planter.",
+        ],
+        [
+            "echinocereus-rigidissimus-rubispinus",
+            "An upright cactus wrapped in dense muted-pink radial spines in a terracotta planter.",
+        ],
+        [
+            "echinopsis-spachiana",
+            "A cluster of upright green torch cacti with golden ribs in a blue planter.",
+        ],
+        [
+            "echinopsis-subdenudata",
+            "A rounded dark-green ribbed cactus with white woolly areoles and a pale flower.",
+        ],
+        [
+            "espostoa-melanostele-nana",
+            "An upright gray-green cactus wrapped in dense cream-colored wool in a purple planter.",
+        ],
+        [
+            "euphorbia-obesa-hybrid",
+            "A round ribbed green body with rusty variegation and tiny red crown flowers in a yellow planter.",
+        ],
+        [
+            "faucaria-tuberculosa",
+            "A compact green rosette of triangular toothed leaves with pale raised tubercles.",
+        ],
+        [
+            "gymnocalycium-mihanovichii-black-widow",
+            "A low dark-purple ribbed cactus with pale radial spines in a mustard planter.",
+        ],
+        [
+            "gymnocalycium-mihanovichii-variegated",
+            "A round green cactus divided into coral and yellow variegated sectors in a blue planter.",
+        ],
+        [
+            "gymnocalycium-saglionis",
+            "A broad gray-green ribbed cactus with long golden spines in a terracotta planter.",
+        ],
+        [
+            "kalanchoe-bracteata",
+            "A branching succulent with silver spoon-shaped leaves in a terracotta planter.",
+        ],
+        [
+            "kalanchoe-orgyalis",
+            "A branching succulent with copper-brown spoon-shaped leaves in a blue planter.",
+        ],
+        [
+            "mammillaria-bombycina",
+            "A clustered green pincushion cactus with pale radial spines and pink crown flowers.",
+        ],
+        [
+            "mammillaria-mammillaris",
+            "A clustered green pincushion cactus with white starry areoles and pink crown flowers.",
+        ],
+        [
+            "mammillaria-plumosa",
+            "Three rounded cactus offsets covered in soft white feather-like spines in a blue planter.",
+        ],
+        [
+            "mammillaria-rekoi",
+            "A rounded green cactus covered in dense golden radial spines in a blue planter.",
+        ],
+        [
+            "myrtillocactus-geometrizans-fukurokuryuzinboku",
+            "A knobbly green column with stacked rounded bulges in a terracotta planter.",
+        ],
+        [
+            "myrtillocactus-geometrizans-indigo-wave",
+            "A blue-green crested cactus forming a low ruffled fan in a purple planter.",
+        ],
+        [
+            "nyctocereus-serpentinus",
+            "Three slender curving green cactus stems with pale areoles in a terracotta planter.",
+        ],
+        [
+            "oreocereus-trollii",
+            "An upright gray-green cactus covered in long cream wool and reddish spines.",
+        ],
+        [
+            "pachira-glabra",
+            "A braided brown trunk supporting three fans of green palmate leaves in a blue planter.",
+        ],
+        [
+            "parodia-leninghausii",
+            "An upright green cactus densely covered with golden ribs and radial spines in a purple planter.",
+        ],
+        [
+            "pilosocereus-pachycladus-variegated",
+            "A blue-green columnar cactus with a broad yellow variegated stripe in a terracotta planter.",
+        ],
+        [
+            "pleiospilos-nelii-royal-flush",
+            "A pair of fleshy purple split-rock leaves divided by a narrow pink cleft.",
+        ],
+        [
+            "portulacaria-afra",
+            "A branching reddish-brown succulent shrub with many small round green leaves.",
+        ],
+        [
+            "sempervivum-coconut-crystal",
+            "A layered green hens-and-chicks rosette with a burgundy center in a yellow planter.",
+        ],
+        [
+            "stenocactus-phyllacanthus",
+            "A squat green cactus with many narrow wavy ribs and long tan spines.",
+        ],
+        [
+            "tephrocactus-articulatus-papyracanthus",
+            "Stacked gray-green cactus segments surrounded by long flat papery spines.",
+        ],
+        [
+            "tiny-mixed-succulent-planter",
+            "Five overlapping blue-green, copper, and red-edged succulents in a striped terracotta planter.",
+        ],
+    ]);
+}
+
+function validateSymbols(symbols, titles, descriptions) {
+    if (
+        symbols.length !== titles.size ||
+        symbols.length !== descriptions.size
+    ) {
+        throw new Error(
+            `Expected ${titles.size} titled and described plant portraits but found ${symbols.length}.`
+        );
+    }
+    for (const { body, slug } of symbols) {
+        if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+            throw new Error(
+                `Plant portrait slug ${slug} is not identifier-safe.`
+            );
+        }
+        if (!titles.has(slug)) {
+            throw new Error(`Plant portrait ${slug} has no profile title.`);
+        }
+        if (!descriptions.has(slug)) {
+            throw new Error(
+                `Plant portrait ${slug} has no visual description.`
+            );
+        }
+        if (body.includes("><")) {
+            throw new Error(
+                `Plant portrait ${slug} has compressed adjacent SVG elements.`
+            );
+        }
+        if (leadingZeroOmissionPattern.test(body)) {
+            throw new Error(
+                `Plant portrait ${slug} has a fractional value without a leading zero.`
+            );
+        }
+    }
+}
+
 export async function syncPlantIcons({ checkOnly = false } = {}) {
     const [
         sprite,
@@ -94,32 +289,25 @@ export async function syncPlantIcons({ checkOnly = false } = {}) {
     ]);
     const symbols = parsePlantSymbols(sprite);
     const titles = profileTitles(profileData);
-    if (symbols.length !== titles.size) {
-        throw new Error(
-            `Expected ${titles.size} plant portraits but found ${symbols.length} in the sprite.`
-        );
-    }
-    for (const { slug } of symbols) {
-        if (!titles.has(slug)) {
-            throw new Error(`Plant portrait ${slug} has no profile title.`);
-        }
-    }
+    const descriptions = portraitDescriptions();
+    validateSymbols(symbols, titles, descriptions);
 
     const nextLogger = await formatted(
-        replaceGeneratedLoggerSymbols(logger, symbols),
+        replaceGeneratedLoggerSymbols(logger),
         loggerPath
     );
     const standalone = await Promise.all(
         symbols.map(async ({ slug, viewBox, body }) => {
             const filepath = path.join(assetDirectory, `${slug}.svg`);
             const title = titles.get(slug);
+            const description = descriptions.get(slug);
             const indentedBody = body
                 .split(/\r?\n/)
-                .map((line) => `  ${line.trim()}`)
+                .map((line) => `  ${line}`)
                 .join("\n");
             return {
                 filepath,
-                output: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" role="img" aria-labelledby="title">\n  <title id="title">${escapeXml(title)} plant portrait</title>\n${indentedBody}\n</svg>\n`,
+                output: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" role="img" aria-labelledby="${slug}-title ${slug}-description" data-plant-slug="${slug}" focusable="false">\n  <title id="${slug}-title">${escapeXml(title)} plant portrait</title>\n  <desc id="${slug}-description">${escapeXml(description)}</desc>\n${indentedBody}\n</svg>\n`,
                 slug,
             };
         })

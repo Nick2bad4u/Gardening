@@ -1,8 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
-  <title id="title">Royal Flush split rock plant portrait</title>
-  <path d="M4.7 15.7C5 9.4 7.4 5.1 11.3 5l.4 10.7Z" fill="#9c668f" stroke="#4d3348" stroke-linejoin="round" stroke-width="1"/>
-  <path d="M12.5 5c3.9.1 6.4 4.3 6.8 10.7h-6.7Z" fill="#7b527b" stroke="#4d3348" stroke-linejoin="round" stroke-width="1"/>
-  <path d="M11.4 5.3c.3 3.5.5 7 .6 10.4.2-3.5.3-7 .5-10.4" fill="none" stroke="#f2b6d0" stroke-linecap="round" stroke-width=".8"/>
-  <g fill="#dca3c4"><circle cx="8.2" cy="9.1" r=".5"/><circle cx="9.2" cy="12.5" r=".45"/><circle cx="15.7" cy="8.7" r=".5"/><circle cx="16.1" cy="12.2" r=".45"/><circle cx="7.3" cy="11" r=".35"/><circle cx="14.7" cy="10.6" r=".35"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="pleiospilos-nelii-royal-flush-title pleiospilos-nelii-royal-flush-description" data-plant-slug="pleiospilos-nelii-royal-flush" focusable="false">
+  <title id="pleiospilos-nelii-royal-flush-title">Royal Flush split rock plant portrait</title>
+  <desc id="pleiospilos-nelii-royal-flush-description">A pair of fleshy purple split-rock leaves divided by a narrow pink cleft.</desc>
+  <path d="M4.7 15.7C5 9.4 7.4 5.1 11.3 5l0.4 10.7Z" fill="#9c668f" stroke="#4d3348" stroke-linejoin="round" stroke-width="1"/>
+  <path d="M12.5 5c3.9 0.1 6.4 4.3 6.8 10.7h-6.7Z" fill="#7b527b" stroke="#4d3348" stroke-linejoin="round" stroke-width="1"/>
+  <path d="M11.4 5.3c0.3 3.5 0.5 7 0.6 10.4 0.2-3.5 0.3-7 0.5-10.4" fill="none" stroke="#f2b6d0" stroke-linecap="round" stroke-width="0.8"/>
+  <g fill="#dca3c4">
+    <circle cx="8.2" cy="9.1" r="0.5"/>
+    <circle cx="9.2" cy="12.5" r="0.45"/>
+    <circle cx="15.7" cy="8.7" r="0.5"/>
+    <circle cx="16.1" cy="12.2" r="0.45"/>
+    <circle cx="7.3" cy="11" r="0.35"/>
+    <circle cx="14.7" cy="10.6" r="0.35"/>
+  </g>
   <path d="M4 15h16l-1.8 6.4H5.8z" fill="#efe8dd" stroke="#6c665b" stroke-linejoin="round" stroke-width="1"/>
 </svg>

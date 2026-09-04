@@ -378,10 +378,17 @@ assert.match(html, /id="photoVisibilityToggle"/);
 assert.match(html, /state\.photosVisible && photoData\.length/);
 assert.match(html, /id="plantChoiceList"/);
 assert.match(html, /function plantIconName\(plant\)/);
+assert.match(html, /function createPlantPortrait\(plant, className\)/);
+assert.match(html, /"nick2bad4u\.github\.io"/);
+assert.match(html, /\.join\("\/"\)/);
+assert.match(
+    html,
+    /const PLANT_ICON_PATH = "\/Gardening\/assets\/plant-icons\/"/
+);
 assert.equal(
     (html.match(/id="app-icon-plant-[a-z0-9-]+"/gu) || []).length,
-    36,
-    "The logger must inline every custom plant portrait exactly once."
+    0,
+    "The logger must load the small standalone plant portraits instead of inlining the complete sprite."
 );
 for (const [
     eventName,

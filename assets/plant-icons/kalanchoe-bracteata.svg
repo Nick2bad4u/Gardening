@@ -1,7 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
-  <title id="title">Silver teaspoons plant portrait</title>
-  <path d="M12 18V4.8m0 4.1L7.9 6.5m4.1 5.9-4.8-1.5m4.8.1 4.3-2.7m-4.3 6.1 4.9-1.7m-4.9-6 3.5-2.6" fill="none" stroke="#547457" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.15"/>
-  <g fill="#b9c5b7" stroke="#526355" stroke-width=".65"><ellipse cx="7.1" cy="6.2" rx="2.8" ry="1.65" transform="rotate(28 7.1 6.2)"/><ellipse cx="6.8" cy="10.9" rx="3" ry="1.75" transform="rotate(12 6.8 10.9)"/><ellipse cx="16.6" cy="8.2" rx="2.9" ry="1.65" transform="rotate(-28 16.6 8.2)"/><ellipse cx="17" cy="12.8" rx="3" ry="1.75" transform="rotate(-15 17 12.8)"/><ellipse cx="12" cy="3.9" rx="2.15" ry="1.45"/><ellipse cx="16.2" cy="3.7" rx="2.3" ry="1.45" transform="rotate(-24 16.2 3.7)"/><ellipse cx="8.1" cy="14.2" rx="2.4" ry="1.5" transform="rotate(18 8.1 14.2)"/></g>
-  <path d="m5.5 5.5 3 .9m5.2 2.5 3.3-1m-3.2 5.7 3.5-1" fill="none" stroke="#e3e8dc" stroke-linecap="round" stroke-width=".55"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="kalanchoe-bracteata-title kalanchoe-bracteata-description" data-plant-slug="kalanchoe-bracteata" focusable="false">
+  <title id="kalanchoe-bracteata-title">Silver teaspoons plant portrait</title>
+  <desc id="kalanchoe-bracteata-description">A branching succulent with silver spoon-shaped leaves in a terracotta planter.</desc>
+  <path d="M12 18V4.8m0 4.1L7.9 6.5m4.1 5.9-4.8-1.5m4.8 0.1 4.3-2.7m-4.3 6.1 4.9-1.7m-4.9-6 3.5-2.6" fill="none" stroke="#547457" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.15"/>
+  <g fill="#b9c5b7" stroke="#526355" stroke-width="0.65">
+    <ellipse cx="7.1" cy="6.2" rx="2.8" ry="1.65" transform="rotate(28 7.1 6.2)"/>
+    <ellipse cx="6.8" cy="10.9" rx="3" ry="1.75" transform="rotate(12 6.8 10.9)"/>
+    <ellipse cx="16.6" cy="8.2" rx="2.9" ry="1.65" transform="rotate(-28 16.6 8.2)"/>
+    <ellipse cx="17" cy="12.8" rx="3" ry="1.75" transform="rotate(-15 17 12.8)"/>
+    <ellipse cx="12" cy="3.9" rx="2.15" ry="1.45"/>
+    <ellipse cx="16.2" cy="3.7" rx="2.3" ry="1.45" transform="rotate(-24 16.2 3.7)"/>
+    <ellipse cx="8.1" cy="14.2" rx="2.4" ry="1.5" transform="rotate(18 8.1 14.2)"/>
+  </g>
+  <path d="m5.5 5.5 3 0.9m5.2 2.5 3.3-1m-3.2 5.7 3.5-1" fill="none" stroke="#e3e8dc" stroke-linecap="round" stroke-width="0.55"/>
   <path d="M5.6 17h12.8L17 21.4H7z" fill="#e4814b" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
 </svg>

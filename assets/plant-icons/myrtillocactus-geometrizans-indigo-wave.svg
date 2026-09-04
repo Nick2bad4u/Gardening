@@ -1,8 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
-  <title id="title">Indigo Wave plant portrait</title>
-  <path d="M5.4 16.5c.2-3.7 1-7.4 2.6-10.3 1.7.8 2.6 2.3 2.9 4.4.4-3.9 1.6-7 3.4-8.4 1.5 2.5 1.4 5.3.7 7.9 1.4-1.9 2.8-2.8 3.8-2.5.7 2.7 1 5.6.8 8.9Z" fill="#58a7b8" stroke="#244e54" stroke-linejoin="round" stroke-width="1"/>
-  <path d="M8.2 6.9c.4 3.3.3 6.5-.6 9.2m6.5-12.5c-.1 4.1-.3 8.2-1 12.5m5-7c-.4 2.5-.5 4.8-.2 7" fill="none" stroke="#b5e0d8" stroke-linecap="round" stroke-width=".8"/>
-  <path d="M10.8 10.8c.6 1.3 1.3 1.9 2.2 1.8m1.8-2.2c.6 1.1 1.4 1.5 2.3 1.3" fill="none" stroke="#347b83" stroke-linecap="round" stroke-width=".55"/>
-  <g fill="#f1c64d"><circle cx="8.4" cy="9.5" r=".42"/><circle cx="14.1" cy="7.7" r=".42"/><circle cx="17.9" cy="11.8" r=".42"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="myrtillocactus-geometrizans-indigo-wave-title myrtillocactus-geometrizans-indigo-wave-description" data-plant-slug="myrtillocactus-geometrizans-indigo-wave" focusable="false">
+  <title id="myrtillocactus-geometrizans-indigo-wave-title">Indigo Wave plant portrait</title>
+  <desc id="myrtillocactus-geometrizans-indigo-wave-description">A blue-green crested cactus forming a low ruffled fan in a purple planter.</desc>
+  <path d="M4.6 16.5c0-2.7 0.4-5.3 1.3-7.6 1.2-3 3.4-3.8 5.2-1.9 0.9-3.3 3.8-4.4 5.7-2.1 1.2 1.4 1.5 3.4 1 5.4 1.2-1.4 2.4-1.8 3.2-1.4 0.7 2.5 0.9 5.1 0.5 7.6Z" fill="#629b96" stroke="#244e54" stroke-linejoin="round" stroke-width="1"/>
+  <path d="M6.2 9.3c1.5 1.4 2 3.7 1.5 6.8m2.8-8.5c1.4 2.2 1.5 5 0.5 8.5m3.4-10.8c1.2 2.9 1.2 6.5-0.1 10.8m3.1-7.5c1 2.1 1 4.6 0.2 7.5m2.6-5.6c0.5 1.7 0.5 3.5 0 5.4" fill="none" stroke="#b5d8c9" stroke-linecap="round" stroke-width="0.75"/>
+  <path d="M7.7 7.6c0.9 1.6 1.9 2.2 3 1.8m1.9-4.6c0.9 1.8 2.1 2.5 3.6 2.1m0.2 3.7c0.7 1.2 1.5 1.7 2.5 1.4" fill="none" stroke="#34756f" stroke-linecap="round" stroke-width="0.55"/>
+  <g fill="#e4c36a">
+    <circle cx="7.7" cy="11.2" r="0.36"/>
+    <circle cx="11.2" cy="8.3" r="0.36"/>
+    <circle cx="15.1" cy="9.2" r="0.36"/>
+    <circle cx="18.9" cy="12.3" r="0.36"/>
+  </g>
   <path d="M4.8 16h14.4l-1.6 5.4H6.4z" fill="#7156a3" stroke="#493467" stroke-linejoin="round" stroke-width="1"/>
 </svg>

@@ -1,9 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
-  <title id="title">Variegated moon cactus plant portrait</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="gymnocalycium-mihanovichii-variegated-title gymnocalycium-mihanovichii-variegated-description" data-plant-slug="gymnocalycium-mihanovichii-variegated" focusable="false">
+  <title id="gymnocalycium-mihanovichii-variegated-title">Variegated moon cactus plant portrait</title>
+  <desc id="gymnocalycium-mihanovichii-variegated-description">A round green cactus divided into coral and yellow variegated sectors in a blue planter.</desc>
   <path d="M5.2 16.2C5.4 9.5 7.8 5.3 12 5.3s6.6 4.2 6.8 10.9Z" fill="#57a75f" stroke="#173c2b" stroke-linejoin="round" stroke-width="1"/>
-  <path d="M6.1 15.8c.2-3.8 1.2-7 3.3-9 2 2.2 2.2 5 .8 8.9Z" fill="#e96c68"/>
-  <path d="M13 5.7c2.9.8 4.8 4.6 5 10.1h-4.5c.8-3.3.5-6.9-.5-10.1Z" fill="#f1c44d"/>
-  <path d="M12 5.7v10.1M8.5 7.1c1.8 2.6 1.8 5.7.6 8.7m6.4-8.7c-1.8 2.6-1.8 5.7-.6 8.7" fill="none" stroke="#2f774b" stroke-linecap="round" stroke-width=".75"/>
-  <g fill="#fff1d7" stroke="#8a704d" stroke-width=".25"><circle cx="8.2" cy="9.1" r=".5"/><circle cx="15.6" cy="8.8" r=".5"/><circle cx="12" cy="12.2" r=".5"/><circle cx="8.3" cy="13.6" r=".45"/><circle cx="15.5" cy="13.5" r=".45"/></g>
+  <path d="M6.1 15.8c0.2-3.8 1.2-7 3.3-9 2 2.2 2.2 5 0.8 8.9Z" fill="#e96c68"/>
+  <path d="M13 5.7c2.9 0.8 4.8 4.6 5 10.1h-4.5c0.8-3.3 0.5-6.9-0.5-10.1Z" fill="#f1c44d"/>
+  <path d="M12 5.7v10.1M8.5 7.1c1.8 2.6 1.8 5.7 0.6 8.7m6.4-8.7c-1.8 2.6-1.8 5.7-0.6 8.7" fill="none" stroke="#2f774b" stroke-linecap="round" stroke-width="0.75"/>
+  <g fill="#fff1d7" stroke="#8a704d" stroke-width="0.25">
+    <circle cx="8.2" cy="9.1" r="0.5"/>
+    <circle cx="15.6" cy="8.8" r="0.5"/>
+    <circle cx="12" cy="12.2" r="0.5"/>
+    <circle cx="8.3" cy="13.6" r="0.45"/>
+    <circle cx="15.5" cy="13.5" r="0.45"/>
+  </g>
   <path d="M4.8 15.8h14.4l-1.7 5.5h-11z" fill="#5a8fc1" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
 </svg>

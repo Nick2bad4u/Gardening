@@ -1,8 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
-  <title id="title">Ming Thing plant portrait</title>
-  <path d="M5.7 15.9c-1.1-2.2.1-4.3 2.2-4.8-.7-2.1.5-4.1 2.5-4.3-.1-2.7 1.4-4.4 3.5-3.8 1.8.5 2.3 2.6 1.3 4 2.5-.4 4.1 1.6 3.3 3.8 2 .6 2.7 3 1.2 5.1Z" fill="#4ba968" stroke="#173c2b" stroke-linejoin="round" stroke-width=".9"/>
-  <path d="M7.5 13.6c.1-1.2.8-2 2-2.2-.6-1.3.2-2.7 1.5-2.9.2-1.7 1.1-2.6 2.2-2.2 1.1.4 1.2 1.8.5 2.6 1.6-.4 2.8.7 2.4 2.1 1.5.2 2.2 1.3 1.7 2.6Z" fill="#91d47f"/>
-  <path d="M9.2 9.6c1 .6 1.7.4 2.2-.6m1.7 3.1c1 .6 1.8.3 2.2-.7m-4-5.6c.8.4 1.5.2 1.9-.5" fill="none" stroke="#2f774b" stroke-linecap="round" stroke-width=".55"/>
-  <g fill="#f5c64c"><circle cx="7.7" cy="13" r=".42"/><circle cx="11" cy="9.3" r=".42"/><circle cx="14" cy="5.4" r=".42"/><circle cx="16.6" cy="12" r=".42"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="cereus-forbesii-ming-thing-title cereus-forbesii-ming-thing-description" data-plant-slug="cereus-forbesii-ming-thing" focusable="false">
+  <title id="cereus-forbesii-ming-thing-title">Ming Thing plant portrait</title>
+  <desc id="cereus-forbesii-ming-thing-description">A low knobbly green monstrose cactus clump in a purple planter.</desc>
+  <path d="M4.9 15.9c-0.5-2.1 0.7-4.1 2.7-4.6-0.7-2.1 0.7-4.1 2.8-4.2 0.1-2.6 1.7-4.3 3.8-3.6 1.8 0.6 2.3 2.7 1.3 4.1 2.2-0.4 3.9 1.4 3.2 3.5 1.9 0.5 2.7 2.7 1.4 4.8Z" fill="#4b9d64" stroke="#173c2b" stroke-linejoin="round" stroke-width="0.9"/>
+  <g fill="#80c777" stroke="#2f774b" stroke-width="0.38">
+    <ellipse cx="7.7" cy="13.3" rx="1.7" ry="1.45"/>
+    <ellipse cx="9.7" cy="9.8" rx="1.65" ry="1.8"/>
+    <ellipse cx="13.5" cy="6.1" rx="1.55" ry="1.8"/>
+    <ellipse cx="15.5" cy="9.9" rx="1.9" ry="1.7"/>
+    <ellipse cx="17.3" cy="13.1" rx="1.45" ry="1.35"/>
+    <ellipse cx="11.9" cy="13.1" rx="2.15" ry="1.8"/>
+  </g>
+  <path d="M8.6 11.5c1 0.6 1.8 0.3 2.2-0.6m2.5 2c1 0.7 1.9 0.4 2.4-0.6m-3.6-6.3c0.8 0.5 1.5 0.3 1.9-0.4m0.4 3.2c0.8 0.5 1.5 0.3 1.9-0.4" fill="none" stroke="#2f774b" stroke-linecap="round" stroke-width="0.5"/>
+  <g fill="#e7d79a" stroke="#6e704a" stroke-width="0.15">
+    <circle cx="7.3" cy="13" r="0.34"/>
+    <circle cx="9.8" cy="9.2" r="0.34"/>
+    <circle cx="12.9" cy="5.8" r="0.34"/>
+    <circle cx="15.5" cy="9.4" r="0.34"/>
+    <circle cx="17.2" cy="13" r="0.34"/>
+    <circle cx="11.6" cy="13.6" r="0.34"/>
+    <circle cx="14.1" cy="12.8" r="0.3"/>
+  </g>
   <path d="M5.2 15.4h13.6l-1.5 5.9H6.7z" fill="#7958a4" stroke="#493467" stroke-linejoin="round" stroke-width="1"/>
 </svg>

@@ -24,7 +24,7 @@ overwritten. The bound Apps Script in
 ## Current production baseline
 
 As of September 4, 2026, the checked-in source and stable production deployment
-both identify the logger as **5.16.2** on immutable Apps Script version **54**.
+both identify the logger as **5.16.3** on immutable Apps Script version **60**.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
@@ -58,7 +58,7 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
   session. The live staging columns validate against `MSU 13-3-15` and
   `SuperThrive Foliage Pro`; the logger presents the same exact choices as
   mobile-logger dropdowns. Older product text remains untouched in History.
-- Logger 5.16.2 sorts the compact label picker from `A1`–`H3` in natural
+- Logger 5.16.3 sorts the compact label picker from `A1`–`H3` in natural
   alphanumeric order, then presents numbered labels `#1`–`#6` last, without
   changing canonical `P01`–`P30` request order. P29-P30 cached photo summaries
   are live and use verified 960 px Gyazo thumbnails.
@@ -69,7 +69,11 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
   Plant photos can be hidden without creating image requests, and that
   preference persists locally between sessions.
 - The list and label pickers reuse the field guide's plant-specific multicolor
-  portraits. Recent History rows use the same per-event colors as the workbook.
+  portraits as small cached SVG image assets, with a built-in generic plant
+  fallback. Keeping the detailed portraits out of the Apps Script HTML makes
+  each logger load substantially smaller. Recent History keeps a neutral card
+  surface with a slim event-color edge and restrained badge/gradient accents
+  instead of full tinted cards.
 - The AppSheet bridge uses exactly one five-minute
   `processQueuedAppSheetEntries` trigger. Reinstalling it creates the replacement
   first, then removes every previously matching trigger so a transient creation
@@ -150,13 +154,16 @@ that nothing was written, the same form can be corrected and saved under a new
 request ID without using **Clear entry**. A timed-out request stays protected
 until its result is known because it may still be running remotely.
 
-The 5.14.7-and-later interface uses a self-contained multicolor SVG sprite for navigation,
-event, metric, queue, and action controls, so the icons do not depend on emoji
-fonts or external icon requests. Plant cards use Gyazo's cached 960 px
-thumbnails rather than source-resolution captures; the source-quality uploads
-remain available through the field guide and Gyazo Collections. Current-photo
-previews now cover P01-P30, including the P19 rehab planter and P20 shared
-succulent planter, with a readable fallback if a remote preview is unavailable.
+The 5.14.7-and-later interface uses a self-contained multicolor SVG sprite for
+navigation, event, metric, queue, and action controls, so those controls do not
+depend on emoji fonts or external icon requests. Detailed plant portraits use
+the repository's small standalone SVG exports from GitHub Pages and fall back
+to the embedded generic plant icon if an asset is unavailable. Plant cards use
+Gyazo's cached 960 px thumbnails rather than source-resolution captures; the
+source-quality uploads remain available through the field guide and Gyazo
+Collections. Current-photo previews now cover P01-P30, including the P19 rehab
+planter and P20 shared succulent planter, with a readable fallback if a remote
+preview is unavailable.
 
 For a weighing session, the primary **Add to queue** button stores each
 completed reading in this phone's local storage while keeping the current plant

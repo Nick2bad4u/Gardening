@@ -1,9 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
-  <title id="title">Hook-spined pincushion cactus plant portrait</title>
-  <path d="M5.8 16.5C5.9 9.4 8.2 5 12 5s6.1 4.4 6.2 11.5Z" fill="#4ca162" stroke="#173c2b" stroke-linejoin="round" stroke-width="1"/>
-  <g fill="#f3ead4" stroke="#7f6b4f" stroke-width=".25"><circle cx="9" cy="8.6" r=".52"/><circle cx="13.6" cy="8" r=".52"/><circle cx="8.4" cy="12.4" r=".52"/><circle cx="12" cy="11.4" r=".52"/><circle cx="15.6" cy="12.5" r=".52"/></g>
-  <path d="M9 7.85v1.5m-.65-1.12 1.3.74m-1.3 0 1.3-.74m3.95-.98v1.5m-.65-1.12 1.3.74m-1.3 0 1.3-.74m-5.9 4.02v1.5m-.65-1.12 1.3.74m-1.3 0 1.3-.74M12 10.65v1.5m-.65-1.12 1.3.74m-1.3 0 1.3-.74m2.95.72v1.5m-.65-1.12 1.3.74m-1.3 0 1.3-.74" fill="none" stroke="#cf9c65" stroke-linecap="round" stroke-width=".5"/>
-  <g fill="#e96f92" stroke="#933c5d" stroke-width=".24"><ellipse cx="15.5" cy="6.1" rx=".72" ry="1.45"/><ellipse cx="15.5" cy="6.1" rx=".72" ry="1.45" transform="rotate(60 15.5 6.1)"/><ellipse cx="15.5" cy="6.1" rx=".72" ry="1.45" transform="rotate(120 15.5 6.1)"/></g>
-  <circle cx="15.5" cy="6.1" r=".45" fill="#f3c74d"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="mammillaria-rekoi-title mammillaria-rekoi-description" data-plant-slug="mammillaria-rekoi" focusable="false">
+  <title id="mammillaria-rekoi-title">Hook-spined pincushion cactus plant portrait</title>
+  <desc id="mammillaria-rekoi-description">A rounded green cactus covered in dense golden radial spines in a blue planter.</desc>
+  <path d="M5.5 16.5c0.1-6.6 2.6-10.6 6.5-10.6s6.4 4 6.5 10.6Z" fill="#71865d" stroke="#173c2b" stroke-linejoin="round" stroke-width="1"/>
+  <g fill="#e5c66f" stroke="#8f7540" stroke-width="0.18">
+    <circle cx="10.2" cy="7.4" r="0.3"/>
+    <circle cx="12" cy="6.8" r="0.3"/>
+    <circle cx="13.8" cy="7.4" r="0.3"/>
+    <circle cx="8.3" cy="9" r="0.3"/>
+    <circle cx="10.8" cy="9.1" r="0.3"/>
+    <circle cx="13.3" cy="9.1" r="0.3"/>
+    <circle cx="15.7" cy="9.1" r="0.3"/>
+    <circle cx="7.2" cy="11.5" r="0.3"/>
+    <circle cx="9.6" cy="11.5" r="0.3"/>
+    <circle cx="12" cy="11.2" r="0.3"/>
+    <circle cx="14.5" cy="11.5" r="0.3"/>
+    <circle cx="16.8" cy="11.5" r="0.3"/>
+    <circle cx="7.4" cy="14" r="0.3"/>
+    <circle cx="9.7" cy="14" r="0.3"/>
+    <circle cx="12" cy="13.7" r="0.3"/>
+    <circle cx="14.4" cy="14" r="0.3"/>
+    <circle cx="16.6" cy="14" r="0.3"/>
+  </g>
+  <path d="M9.6 7.4h1.2m-0.6-0.6V8m1.2-1.2h1.2M12 6.2v1.2m1.2 0h1.2m-0.6-0.6V8M7.7 9h1.2m-0.6-0.6v1.2m1.9-0.5h1.2m-0.6-0.6v1.2m1.9-0.6h1.2m-0.6-0.6v1.2m1.8-0.6h1.2m-0.6-0.6v1.2M6.6 11.5h1.2m-0.6-0.6v1.2m1.8-0.6h1.2m-0.6-0.6v1.2m1.8-0.9h1.2m-0.6-0.6v1.2m1.9-0.3h1.2m-0.6-0.6v1.2m1.7-0.6h1.2m-0.6-0.6v1.2M6.8 14h1.2m-0.6-0.6v1.2m1.7-0.6h1.2m-0.6-0.6v1.2m1.7-0.9h1.2m-0.6-0.6v1.2m1.8-0.3h1.2m-0.6-0.6v1.2m1.6-0.6h1.2m-0.6-0.6v1.2" fill="none" stroke="#ecd89a" stroke-linecap="round" stroke-width="0.38"/>
+  <path d="M9.7 6.8c1.5-1.1 3.1-1.2 4.6 0" fill="none" stroke="#e8c867" stroke-linecap="round" stroke-width="0.72"/>
   <path d="M4.9 16h14.2l-1.7 5.4H6.6z" fill="#668fc0" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
 </svg>

@@ -1,7 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
-  <title id="title">Copper spoons plant portrait</title>
-  <path d="M12 18V4.9m0 4.1L8 6.5m4 5.9-4.7-1.5m4.7.2 4.2-2.8m-4.2 6.1 4.9-1.7m-4.9-6 3.5-2.6" fill="none" stroke="#6e553c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.15"/>
-  <g fill="#bd7350" stroke="#6e452f" stroke-width=".65"><ellipse cx="7.2" cy="6.2" rx="2.8" ry="1.55" transform="rotate(28 7.2 6.2)"/><ellipse cx="6.9" cy="10.9" rx="3" ry="1.65" transform="rotate(12 6.9 10.9)"/><ellipse cx="16.5" cy="8.1" rx="2.9" ry="1.55" transform="rotate(-28 16.5 8.1)"/><ellipse cx="17" cy="12.7" rx="3" ry="1.65" transform="rotate(-15 17 12.7)"/><ellipse cx="12" cy="3.9" rx="2.15" ry="1.35"/><ellipse cx="16.2" cy="3.7" rx="2.3" ry="1.35" transform="rotate(-24 16.2 3.7)"/><ellipse cx="8.1" cy="14.2" rx="2.4" ry="1.4" transform="rotate(18 8.1 14.2)"/></g>
-  <path d="m5.6 5.6 3 .8m5.2 2.4 3.2-1m-3.1 5.6 3.4-1" fill="none" stroke="#e2a077" stroke-linecap="round" stroke-width=".55"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="kalanchoe-orgyalis-title kalanchoe-orgyalis-description" data-plant-slug="kalanchoe-orgyalis" focusable="false">
+  <title id="kalanchoe-orgyalis-title">Copper spoons plant portrait</title>
+  <desc id="kalanchoe-orgyalis-description">A branching succulent with copper-brown spoon-shaped leaves in a blue planter.</desc>
+  <path d="M12 18V4.9m0 4.1L8 6.5m4 5.9-4.7-1.5m4.7 0.2 4.2-2.8m-4.2 6.1 4.9-1.7m-4.9-6 3.5-2.6" fill="none" stroke="#6e553c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.15"/>
+  <g fill="#bd7350" stroke="#6e452f" stroke-width="0.65">
+    <ellipse cx="7.2" cy="6.2" rx="2.8" ry="1.55" transform="rotate(28 7.2 6.2)"/>
+    <ellipse cx="6.9" cy="10.9" rx="3" ry="1.65" transform="rotate(12 6.9 10.9)"/>
+    <ellipse cx="16.5" cy="8.1" rx="2.9" ry="1.55" transform="rotate(-28 16.5 8.1)"/>
+    <ellipse cx="17" cy="12.7" rx="3" ry="1.65" transform="rotate(-15 17 12.7)"/>
+    <ellipse cx="12" cy="3.9" rx="2.15" ry="1.35"/>
+    <ellipse cx="16.2" cy="3.7" rx="2.3" ry="1.35" transform="rotate(-24 16.2 3.7)"/>
+    <ellipse cx="8.1" cy="14.2" rx="2.4" ry="1.4" transform="rotate(18 8.1 14.2)"/>
+  </g>
+  <path d="m5.6 5.6 3 0.8m5.2 2.4 3.2-1m-3.1 5.6 3.4-1" fill="none" stroke="#e2a077" stroke-linecap="round" stroke-width="0.55"/>
   <path d="M5.6 17h12.8L17 21.4H7z" fill="#70a9c8" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
 </svg>

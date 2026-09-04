@@ -1,8 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
-  <title id="title">Eve's needle cactus plant portrait</title>
-  <path d="M10.1 17V4.6c0-1.3.8-2.1 1.9-2.1s1.9.8 1.9 2.1V17M10 9.3H7.8c-1.6 0-2.5-1-2.5-2.5V5.2m8.6 6.9h2.2c1.6 0 2.5-1 2.5-2.5V8.1" fill="none" stroke="#173c2b" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.1"/>
-  <path d="M10.1 17V4.6c0-1.3.8-2.1 1.9-2.1s1.9.8 1.9 2.1V17M10 9.3H7.8c-1.6 0-2.5-1-2.5-2.5V5.2m8.6 6.9h2.2c1.6 0 2.5-1 2.5-2.5V8.1" fill="none" stroke="#45aa65" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.1"/>
-  <g fill="#f4edcf"><circle cx="12" cy="5.5" r=".42"/><circle cx="12" cy="9.4" r=".42"/><circle cx="7.1" cy="6.2" r=".4"/><circle cx="17.7" cy="9" r=".4"/></g>
-  <path d="m6.1 4.8-1.4-1.7m1.9 4.2-1.7 1.1m6.2-2.1-1.5-1.5m3.2 4.2 1.6-1.5m3.7.2 1.3-1.6m-1.9 4 1.7 1" fill="none" stroke="#d5edb5" stroke-linecap="round" stroke-width=".75"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="austrocylindropuntia-subulata-title austrocylindropuntia-subulata-description" data-plant-slug="austrocylindropuntia-subulata" focusable="false">
+  <title id="austrocylindropuntia-subulata-title">Eve's needle cactus plant portrait</title>
+  <desc id="austrocylindropuntia-subulata-description">A slim branching green cylindrical stem with pale awl-shaped leaves in a yellow planter.</desc>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M11.6 17c-0.2-4 0.5-8.3 0.4-12.5m-0.4 8.3c-1.9-0.6-3.2-2.2-4.2-4.6m4.5 2.7c1.8-0.4 3.3-1.6 4.4-3.4" stroke="#173c2b" stroke-width="3.8"/>
+    <path d="M11.6 17c-0.2-4 0.5-8.3 0.4-12.5m-0.4 8.3c-1.9-0.6-3.2-2.2-4.2-4.6m4.5 2.7c1.8-0.4 3.3-1.6 4.4-3.4" stroke="#55ad62" stroke-width="2.65"/>
+  </g>
+  <path d="m12 5.2-1.8-1.9m1.7 4.6 2.1-1.7m-2.2 4.2-2-1.5m1.9 4.6 2.2-1.8M7.8 8.9 5.7 7.2m3.6 4.1-2.3 0.6m8.7-3.7 2.1-1.9m-3.2 4.2 2.4 0.7" fill="none" stroke="#d5edb5" stroke-linecap="round" stroke-width="0.82"/>
   <path d="M5.8 16.3h12.4l-1.5 5H7.3z" fill="#f0c34e" stroke="#6e541e" stroke-linejoin="round" stroke-width="1"/>
 </svg>

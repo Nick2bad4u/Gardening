@@ -1168,28 +1168,40 @@ describe("Garden logger browser recovery", () => {
         ).toContain("Show photos");
     });
 
-    it("uses the selected plant's custom SVG portrait in list and label pickers", () => {
+    it("uses the selected plant's lightweight SVG portrait in list and label pickers", () => {
         const { window } = createLoggerWindow();
-        const expectedHref =
-            "#app-icon-plant-gymnocalycium-mihanovichii-variegated";
+        const expectedSrc = new URL(
+            "/Gardening/assets/plant-icons/gymnocalycium-mihanovichii-variegated.svg",
+            [
+                "https:",
+                "",
+                "nick2bad4u.github.io",
+            ].join("/")
+        ).href;
 
         expect(
             window.document
-                .querySelector("#plantChoiceSummary use")
-                .getAttribute("href")
-        ).toBe(expectedHref);
+                .querySelector("#plantChoiceSummary img")
+                .getAttribute("src")
+        ).toBe(expectedSrc);
         expect(
             window.document
-                .querySelector('#plantChoiceList [data-plant-id="P01"] use')
-                .getAttribute("href")
-        ).toBe(expectedHref);
+                .querySelector('#plantChoiceList [data-plant-id="P01"] img')
+                .getAttribute("src")
+        ).toBe(expectedSrc);
 
         window.document.querySelector("#labelPickerMode").click();
-        expect(
-            window.document
-                .querySelector('#labelPicker [data-plant-id="P01"] use')
-                .getAttribute("href")
-        ).toBe(expectedHref);
+        const labelPortrait = window.document.querySelector(
+            '#labelPicker [data-plant-id="P01"] img'
+        );
+        expect(labelPortrait.getAttribute("src")).toBe(expectedSrc);
+        expect(labelPortrait.getAttribute("alt")).toBe("");
+        expect(labelPortrait.getAttribute("aria-hidden")).toBe("true");
+        expect(labelPortrait.getAttribute("loading")).toBe("lazy");
+        expect(labelPortrait.getAttribute("decoding")).toBe("async");
+        expect(labelPortrait.getAttribute("referrerpolicy")).toBe(
+            "no-referrer"
+        );
     });
 
     it("shows the selected plant's last completed dry-cycle weight", () => {
