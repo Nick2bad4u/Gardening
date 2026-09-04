@@ -48,27 +48,60 @@ observation IDs, duplicate request/plant/event keys, or formula errors.
 
 ## View map
 
-| View            | Purpose                                                                                                     |
-| --------------- | ----------------------------------------------------------------------------------------------------------- |
-| Garden          | Home dashboard combining the plant list with recent care history.                                           |
-| Bulk care       | Fast collection-wide Water, Weigh, combined, Rotation, Check, Clean, Prune, Pest, or Other entry.           |
-| Detailed log    | Full event-aware form with plant-name, pot-label, and Plant-ID lookup for every supported care event.       |
-| Plants          | Image-first list with watering age, pot label, current weight, height, width, field guide, and care action. |
-| Insights        | Eight collection-wide charts described below.                                                               |
-| Baselines       | Current dry/wet calibration and drying-rate reference values.                                               |
-| Bulk rounds     | Submitted bulk-round rows and their save receipts.                                                          |
-| Care history    | Read-only active history with plant thumbnails, event badges, and observation times.                        |
-| Needs attention | Staged entries that need correction or an explicit retry.                                                   |
-| Plant charts    | Interactive plant picker with measurement history, full weight history, and the current dry-down cycle.     |
+| View            | Position | Purpose                                                                                                     |
+| --------------- | -------- | ----------------------------------------------------------------------------------------------------------- |
+| Plants          | Primary  | Image-first list with watering age, pot label, current weight, height, width, field guide, and care action. |
+| History         | Primary  | Four-panel care overview with recent activity, watering age, activity counts, and data-quality flags.       |
+| Log             | Primary  | Full event-aware form with plant-name, pot-label, and Plant-ID lookup for every supported care event.       |
+| Bulk Log        | Primary  | Fast collection-wide Water, Weigh, combined, Rotation, Check, Clean, Prune, Pest, or Other entry.           |
+| Insights        | Primary  | Eight collection-wide charts described below.                                                               |
+| Baselines       | Menu     | Current dry/wet calibration, current weight, next-check, and drying-rate reference values.                  |
+| Bulk rounds     | Menu     | Submitted bulk-round rows and their save receipts.                                                          |
+| Care history    | Menu     | Read-only active history with plant thumbnails, event badges, and observation times.                        |
+| Needs attention | Menu     | Staged entries that need correction or an explicit retry, including the exact status message.               |
+| Plant charts    | Menu     | Interactive plant picker with measurement history, full weight history, and the current dry-down cycle.     |
 
-Baselines, Bulk rounds, Care history, Needs attention, and Plant charts use
-distinct navigation icons. On a desktop they appear in the left rail; on a
-phone they are available from the menu while the five primary views stay in
-the bottom bar.
+All ten user-facing views use distinct navigation icons. On a desktop they
+appear in the left rail; on a phone the five primary views stay immediately
+available while the five supporting views remain in the navigation menu.
+
+### Production UX layout
+
+The production view configuration was refreshed on 2026-09-03 after creating
+the native Drive backup `Garden Plant Tracker — AppSheet UX backup —
+2026-09-03`. The view choices are deliberate:
+
+- **Plants** sorts by `Natural label order`, uses `Plant metrics` as its
+  secondary line, and keeps `Watering age` visible at the right edge. This puts
+  A1-A3 before B1-B3 and leaves numbered labels #1-#6 at the end.
+- **History** is a balanced two-by-two desktop dashboard containing Care
+  history, Watering recency, Care activity timeline, and Data-quality
+  follow-ups. Mobile tabs remain enabled. Interactive mode is disabled so a
+  care-history row still opens its detail instead of being intercepted as a
+  dashboard filter.
+- **Insights** contains exactly eight charts, which avoids the empty ninth-tile
+  row that a redundant Plants panel previously created. Mobile tabs remain
+  enabled.
+- **Plant charts** contains Plants first, then measurement history, weight
+  history, and current-cycle dry-down. Interactive mode is enabled: selecting
+  one plant filters all three chart panels without leaving the dashboard.
+- **Baselines** uses a 14-column manual layout limited to identity, weight,
+  capacity, calibration, trend, next-check, dry/wet averages, and data-quality
+  fields. It does not expose the complete helper schema as a horizontally
+  unbounded table.
+- **Bulk rounds** sorts newest first and uses a manual round-level layout. The
+  thirty P01-P30 weight-entry columns remain available in Bulk Log but are
+  intentionally absent from the submitted-round table.
+- **Care history** uses the emoji-backed `Event badge` summary. **Needs
+  attention** puts the actionable `Status message` directly on each row.
+- **Log** and **Bulk Log** use simple, manually ordered forms with Save and
+  Cancel at the top. Bulk Log omits receipt-only Status message, Request count,
+  Saved count, and Saved at fields from data entry; those fields remain visible
+  in Bulk rounds.
 
 ## Plant lookup and compact metrics
 
-The Detailed log form's plant reference uses the `Plant tracker` virtual
+The Log form's plant reference uses the `Plant tracker` virtual
 `Plant lookup` label. It combines the plant name, current physical pot label,
 and stable Plant ID, for example `Variegated moon cactus · A1 · P01`. AppSheet
 reference pickers search the referenced row label, so this composite label is
@@ -96,11 +129,11 @@ weight without Water and without nutrient fields. Choose Water explicitly only
 when the same observation should also create a Water row; event ordering keeps
 the post-watering Weigh row before its Water row in History.
 
-Rotation is available in Detailed log and Bulk care. It accepts 1–360 degrees
+Rotation is available in Log and Bulk Log. It accepts 1–360 degrees
 and defaults to 90. The degree value is archived in `History!AN:AN`, displayed
 in read-only care history, and remains available to the public plant history.
 Clean and Prune are lightweight dated actions whose specifics belong in Notes.
-Bulk care uses one `Selected plants` field for every supported shared action;
+Bulk Log uses one `Selected plants` field for every supported shared action;
 per-plant weights remain in the dedicated P01-P30 fields. `Selected plants` is
 an EnumList of refs with `Valid_If` set to `SORT(Plant tracker[Plant ID])`; if
 that expression is removed, the deployed picker can appear empty even while
@@ -154,13 +187,15 @@ The app uses AppSheet's native dark theme, the garden-green `#43a047` primary
 color, colored header/footer treatment, Source Sans Pro at 16 px, the
 repository-owned logo and launch artwork, and distinct Font Awesome icons for
 every primary and menu view. Plant charts uses an area-chart icon so it does
-not duplicate the Insights icon.
+not duplicate the Insights icon. The eleven reference charts also use unique
+icons: traffic light, calendar, water drop, clipboard check, combined ruler,
+ruler, shapes, hanging weight, speedometer, tasks, and stopwatch.
 
 AppSheet does not expose a supported arbitrary CSS or custom Nerd Font
 stylesheet injection surface. Keep future polish inside the native theme,
 view, format-rule, and icon controls. Font Awesome icons are appropriate for
 navigation and actions; Unicode symbols are used in computed row text and key
-Detailed log labels where AppSheet cannot render a custom icon component. The
+Log labels where AppSheet cannot render a custom icon component. The
 current semantic set includes `💧` for water, `⚖` for weight, `📏` for
 measurement, `↕` for height, `↔` for width, `📷` for photos, `🐛` for pests,
 `🪴` for repotting or pot details, `↻` for rotation, `🧽` for cleaning, and
@@ -184,21 +219,30 @@ watering is appropriate.
 ## Collection Insights
 
 The Insights dashboard carries all eight charts from the workbook's Insights
-surface:
+surface in this production order:
 
 1. **Watering recency** — days since water by plant.
-2. **Latest dimensions** — latest measured height and width in inches.
-3. **Recent drying rate** — the recent moisture-loss rate from Baselines.
-4. **Plant shape map** — latest width versus height in inches.
-5. **Care activity timeline** — Measure, Water, and Weigh activity by date.
-6. **Calibration status** — the collection's calibration-status distribution.
-7. **Tracking coverage** — Water, Measure, and active-history coverage by
+2. **Recent drying rate** — the recent moisture-loss rate from Baselines.
+3. **Tracking coverage** — Water, Measure, and active-history coverage by
    plant.
+4. **Latest dimensions** — latest measured height and width in inches.
+5. **Plant shape map** — latest width versus height in inches.
+6. **Care activity timeline** — Measure, Water, and Weigh activity by date.
+7. **Calibration status** — the collection's calibration-status distribution.
 8. **Data-quality follow-ups** — calibration, remeasurement, and anomaly flags
    by plant.
 
 Desktop layout shows the charts in a compact grid. Mobile layout uses tabs so
 one chart remains readable at a time.
+
+Chart ordering and colors encode meaning rather than relying on AppSheet's
+defaults. Watering recency and recent loss are sorted from highest to lowest;
+collection-by-plant charts follow `Natural label order`; the activity and
+per-plant time series run oldest to newest; and follow-ups sort calibration,
+remeasurement, and anomaly flags ahead of Plant ID. Water is blue,
+measurements are green/cyan or purple where a third series is required,
+weights and drying are orange, and anomalies are red. Calibration keeps the
+native multi-slice palette so its categories remain distinguishable.
 
 The following hidden workbook sheets are presentation helpers, not canonical
 datasets:
