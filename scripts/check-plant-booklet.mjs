@@ -925,6 +925,11 @@ async function main() {
 
     for (const record of collectionManifest.plants) {
         const profileState = profileStateBySlug.get(record.plant_slug);
+        if (!profileState) {
+            throw new Error(
+                `${record.plant_slug} has no matching generated profile state.`
+            );
+        }
         assert(
             Array.isArray(record.photos),
             `${record.plant_slug} has no collection photos array.`
@@ -1371,7 +1376,13 @@ async function main() {
         );
         profileCollectionLinkCount += collectionLinks.length;
 
-        if (profileStateBySlug.get(profile.slug).historical) {
+        const profileState = profileStateBySlug.get(profile.slug);
+        if (!profileState) {
+            throw new Error(
+                `${profile.slug} has no matching generated profile state.`
+            );
+        }
+        if (profileState.historical) {
             assert(
                 figures.length === 0 && collectionLinks.length === 0,
                 `${profile.slug} must render only its pending note, with no inline Gyazo photos or Collection link.`
@@ -1598,8 +1609,8 @@ async function main() {
             ) ?? []
         ).length;
         assert(
-            portraitUseCount === 3,
-            `${profile.slug} must use its portrait in the contents, drawer, and hero fallback; found ${portraitUseCount} uses.`
+            portraitUseCount === 4,
+            `${profile.slug} must use its portrait in the contents, drawer, hero fallback, and Photo scope metadata; found ${portraitUseCount} uses.`
         );
     }
     const atAGlanceCount = (html.match(/class="profile-at-a-glance"/g) ?? [])

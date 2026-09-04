@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
+  <title id="title">Ming Thing plant portrait</title>
+  <g fill="#4ba968" stroke="#173c2b" stroke-width=".8"><circle cx="8.2" cy="13.2" r="3.4"/><circle cx="11.4" cy="9.2" r="4.1"/><circle cx="15.8" cy="13" r="3.7"/><circle cx="13.3" cy="5.5" r="2.5"/></g>
+  <g fill="#91d47f"><circle cx="9.3" cy="8.8" r="1.1"/><circle cx="14.1" cy="10.7" r="1.25"/><circle cx="12.9" cy="5.1" r=".8"/></g>
+  <g fill="#f5c64c"><circle cx="7.6" cy="12.7" r=".45"/><circle cx="12" cy="8" r=".45"/><circle cx="16.4" cy="12" r=".45"/></g>
+  <path d="M5.2 15.4h13.6l-1.5 5.9H6.7z" fill="#7958a4" stroke="#493467" stroke-linejoin="round" stroke-width="1"/>
+</svg>

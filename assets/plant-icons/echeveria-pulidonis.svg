@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
+  <title id="title">Pulido's echeveria plant portrait</title>
+  <circle cx="12" cy="11.5" r="7.8" fill="#e7d8bf"/>
+  <g fill="#66bd83" stroke="#b24e5c" stroke-linejoin="round" stroke-width=".6"><path d="M12 11.7C8.5 8.2 8.6 5.3 11 4.8c2.4-.5 3.2 2.3 1 6.9Z"/><path d="M12 11.7c4.2-2.7 7-1.8 6.8.7-.2 2.4-3.1 2.5-6.8-.7Z"/><path d="M12 11.7c-.8 5-3 6.9-5 5.3-1.9-1.6-.5-4.2 5-5.3Z"/><path d="M12 11.7C7.1 13 4.5 11.7 5.4 9.4c.9-2.2 3.8-1.5 6.6 2.3Z"/><path d="M12 11.7c2.7-4.2 5.6-4.8 6.5-2.5.8 2.3-1.8 3.7-6.5 2.5Z"/></g>
+  <circle cx="12" cy="11.7" r="1.4" fill="#f2cf58" stroke="#7a631f" stroke-width=".45"/>
+  <path d="M5.3 17h13.4l-1.5 4.4H6.8z" fill="#6c9fc6" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
+</svg>

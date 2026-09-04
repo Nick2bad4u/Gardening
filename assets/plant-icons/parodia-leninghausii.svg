@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
+  <title id="title">Yellow tower cactus plant portrait</title>
+  <path d="M8.2 17V7c0-2.8 1.4-4.6 3.8-4.6s3.8 1.8 3.8 4.6v10Z" fill="#69a45d" stroke="#173c2b" stroke-width="1"/>
+  <path d="M9.5 4.4v12.3m2-13.8v13.8m2-13.2v13.2m1.5-10.8v10.8" stroke="#e9bd43" stroke-width=".9"/>
+  <path d="M8.5 7.2h7m-7.2 3h7.4m-7.4 3h7.4" stroke="#ffe28a" stroke-dasharray=".7 1" stroke-width=".6"/>
+  <path d="m12 2.8-1.5-1.3L12 .5l1.5 1Z" fill="#f1c64d"/>
+  <path d="M5.7 16.2h12.6l-1.5 5.2H7.2z" fill="#7358a3" stroke="#493467" stroke-linejoin="round" stroke-width="1"/>
+</svg>

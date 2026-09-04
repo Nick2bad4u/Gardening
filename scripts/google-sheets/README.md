@@ -24,7 +24,7 @@ overwritten. The bound Apps Script in
 ## Current production baseline
 
 As of September 4, 2026, the checked-in source and stable production deployment
-both identify the logger as **5.16.0** on immutable Apps Script version **51**.
+both identify the logger as **5.16.2** on immutable Apps Script version **54**.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
@@ -37,7 +37,7 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
   AG and AH store the watering application and optional amount; and Plant ID
   validation covers P01-P30.
 - `App bulk` contains 54 physical columns, A:BB, with P01-P30 weight fields and
-  the two watering fields at BA:BB. The 5.16.0 installer recognizes the older
+  the two watering fields at BA:BB. The current installer recognizes the older
   P01-P22, intermediate P01-P28, P01-P30, and pre-watering contracts, inserts
   only missing columns, and preserves staging rows and trailing care fields.
 - `Plant tracker`, `Baselines`, `Quick log`, and the individual workbook tabs
@@ -49,21 +49,25 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
   Clean, Prune, Repot, Flower, Photo, Pest, and Other. Rotation defaults to 90°.
 - A weight and a Water event remain independent inputs. The logger no longer
   asks for Dry/Wet/Routine: it stores new weights as `Routine` for append-only
-  compatibility and derives the current setup's low/high/intermediate readings
-  as Dry/Wet/Routine in summaries. Nutrient choice, product, and amount are
+  compatibility and derives states from completed watering cycles in summaries.
+  A same-save watering weight is Wet, only the final eligible reading before
+  the next Water is Dry, and an open cycle remains Routine. Nutrient choice,
+  product, and amount are
   remembered across single and bulk logger entry for the current browser
   session. The live staging columns validate against `MSU 13-3-15` and
-  `SuperThrive Foliage Pro`; logger 5.16.0 presents the same exact choices as
+  `SuperThrive Foliage Pro`; the logger presents the same exact choices as
   mobile-logger dropdowns. Older product text remains untouched in History.
-- Logger 5.16.0 sorts the compact label picker from `A1`–`H3` in natural
+- Logger 5.16.2 sorts the compact label picker from `A1`–`H3` in natural
   alphanumeric order, then presents numbered labels `#1`–`#6` last, without
   changing canonical `P01`–`P30` request order. P29-P30 cached photo summaries
   are live and use verified 960 px Gyazo thumbnails.
-- The selected-plant summary shows the lowest positive Weigh reading from the
-  current pot setup and labels it `Inferred dry`. With only one reading it says
-  `Only reading`, or `Only wet reading` when that reading shares a save with a
-  Water event. Removed, non-Weigh, invalid, old-setup, and nonpositive records
-  are ignored.
+- The selected-plant summary shows the last completed-cycle Dry reading. A
+  lower reading after the latest Water remains Routine until the next Water
+  closes the cycle. Removed, non-Weigh, invalid, old-setup, and nonpositive
+  records are ignored. Plant photos can be hidden without creating image
+  requests, and that preference persists locally between sessions.
+- The list and label pickers reuse the field guide's plant-specific multicolor
+  portraits. Recent History rows use the same per-event colors as the workbook.
 - The AppSheet bridge uses exactly one five-minute
   `processQueuedAppSheetEntries` trigger. Reinstalling it creates the replacement
   first, then removes every previously matching trigger so a transient creation
@@ -454,6 +458,16 @@ or update it in the workbook once:
    existing deployment to the new version. Keep **Execute as** set to the
    deploying user and access limited to the account that owns the workbook.
 
+`refreshGardenWorkbook()` rebuilds the generated Dashboard, Baselines, and all
+30 plant pages in one pass. If Google Sheets reports a service timeout during
+that long presentation-only refresh, run
+`refreshGardenWorkbookPages01To10()`,
+`refreshGardenWorkbookPages11To20()`, or
+`refreshGardenWorkbookPages21To30()` from the Apps Script editor for whichever
+page batch remains unfinished. These resumable commands rebuild only the named
+plant pages; they do not write to canonical `History` or the AppSheet staging
+tables.
+
 The mobile app remembers the selected plant, theme, plant-picker style, and
 recent-History length on that device. The searchable selector can be switched
 to a compact grid containing every current pot label. Selected round events can
@@ -485,9 +499,10 @@ installable trigger is not required.
   the input values.
 - Select Water explicitly when watering was part of the observation; entering a
   weight alone never creates a Water event. New weight rows are stored as
-  `Routine`, while current-setup extrema are displayed dynamically as Dry and
-  Wet. This preserves History while allowing a later lower weight to become the
-  Dry anchor automatically.
+  `Routine`. Derived views mark a weight saved with Water as Wet and mark only
+  the last eligible reading before the following Water as Dry. This preserves
+  History and prevents an unfinished drying cycle's newest low from being
+  mislabeled Dry.
 - Height and width can be entered together or independently; both belong to one
   Measure row. The mobile logger accepts inches or centimeters and defaults to
   inches. `History` keeps normalized centimeter values for comparable charts,
@@ -547,8 +562,8 @@ installable trigger is not required.
   display uses a separately published and verified Gyazo capture recorded by
   `scripts/publish-collection-photo.ps1`. Camera originals stay private and no
   new collection-photo binary is added to the repository.
-- `Baselines` derives current-setup dry and wet anchors from the lowest and
-  highest positive readings. Its dry-date forecast fits a linear slope to up to
+- `Baselines` derives the latest completed Dry endpoint and latest same-save Wet
+  anchor for the current setup. Its dry-date forecast fits a linear slope to up to
   seven recent post-anchor weights and requires at least three readings across
   two days with a descending trend. Treat the result as a reweigh prompt, not a
   watering deadline. Its 34th physical field, hidden `Forecast sort date`, uses

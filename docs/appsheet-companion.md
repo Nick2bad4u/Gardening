@@ -30,8 +30,8 @@ updates, or deletes `History` rows directly.
 The bridge contract and trigger details live in
 [`scripts/google-sheets/README.md`](../scripts/google-sheets/README.md#appsheet-companion-intake).
 
-Migration status as of 2026-09-04: logger 5.16.0 and immutable Apps Script
-version 51 are live at the existing stable deployment URL. The live workbook
+Migration status as of 2026-09-04: logger 5.16.2 and immutable Apps Script
+version 54 are live at the existing stable deployment URL. The live workbook
 has P29 and P30 in `Plant tracker`, `Baselines`, `Quick log`, the individual
 plant tabs, and `App bulk`. `History` and `History view` now contain 42 physical
 columns, A:AP; `App entries` contains 34, A:AH; and `App bulk` contains 54,

@@ -56,9 +56,10 @@ const bootstrap = {
             daysSinceWater: 15,
             latestWeight: 420,
             dryOrLowestWeight: 398,
-            dryOrLowestWeightBasis: "Dry",
+            dryOrLowestWeightBasis: "Completed cycle",
             dryOrLowestWeightDate: "Aug 10, 2026",
-            fieldGuideUrl: "https://example.test/guide#p01",
+            fieldGuideUrl:
+                "https://example.test/guide#gymnocalycium-mihanovichii-variegated",
             historyUrl: "https://example.test/history?id=P01",
         },
         {
@@ -72,9 +73,9 @@ const bootstrap = {
             daysSinceWater: 1,
             latestWeight: 510,
             dryOrLowestWeight: 475,
-            dryOrLowestWeightBasis: "Lowest",
+            dryOrLowestWeightBasis: "Completed cycle",
             dryOrLowestWeightDate: "Aug 2, 2026",
-            fieldGuideUrl: "https://example.test/guide#p02",
+            fieldGuideUrl: "https://example.test/guide#parodia-leninghausii",
             historyUrl: "https://example.test/history?id=P02",
         },
     ],
@@ -330,7 +331,7 @@ describe("Garden logger browser recovery", () => {
                 refreshHandlers = handlers;
             },
             storage: {
-                gardenLoggerBootstrapV1: JSON.stringify({
+                gardenLoggerBootstrapV2: JSON.stringify({
                     savedAt: Date.now(),
                     bootstrap,
                 }),
@@ -355,7 +356,7 @@ describe("Garden logger browser recovery", () => {
             window.document.querySelector("#connectionStatus").textContent
         ).toBe("Connected · logger fresh");
         expect(
-            JSON.parse(window.localStorage.getItem("gardenLoggerBootstrapV1"))
+            JSON.parse(window.localStorage.getItem("gardenLoggerBootstrapV2"))
                 .bootstrap.version
         ).toBe("fresh");
     });
@@ -365,7 +366,7 @@ describe("Garden logger browser recovery", () => {
             bootstrapBehavior: ({ failure }) =>
                 failure({ message: "Storage unavailable" }),
             storage: {
-                gardenLoggerBootstrapV1: JSON.stringify({
+                gardenLoggerBootstrapV2: JSON.stringify({
                     savedAt: Date.now(),
                     bootstrap,
                 }),
@@ -382,7 +383,7 @@ describe("Garden logger browser recovery", () => {
     it("ignores an expired saved plant list and requests current data", () => {
         const { calls, window } = createLoggerWindow({
             storage: {
-                gardenLoggerBootstrapV1: JSON.stringify({
+                gardenLoggerBootstrapV2: JSON.stringify({
                     savedAt: Date.now() - 6 * 60 * 60 * 1000 - 1,
                     bootstrap,
                 }),
@@ -396,7 +397,7 @@ describe("Garden logger browser recovery", () => {
             window.document.querySelector("#connectionStatus").textContent
         ).toBe("Connected · logger test");
         expect(
-            JSON.parse(window.localStorage.getItem("gardenLoggerBootstrapV1"))
+            JSON.parse(window.localStorage.getItem("gardenLoggerBootstrapV2"))
                 .bootstrap.version
         ).toBe("test");
     });
@@ -1118,7 +1119,80 @@ describe("Garden logger browser recovery", () => {
         expect(summary.querySelectorAll(".plant-photo-card")).toHaveLength(0);
     });
 
-    it("shows the selected plant's last dry weight or lowest-weight fallback", () => {
+    it("persists the photo preference and does not create hidden image requests", () => {
+        const bootstrapData = canonicalBootstrap();
+        const hidden = createLoggerWindow({
+            bootstrapData,
+            storage: {
+                gardenLoggerPhotosVisibleV1: "hidden",
+                gardenPlantId: "P23",
+            },
+        }).window;
+        const toggle = hidden.document.querySelector("#photoVisibilityToggle");
+
+        expect(
+            hidden.document.querySelectorAll("#plantSummary img")
+        ).toHaveLength(0);
+        expect(toggle.textContent).toContain("Show photos");
+        expect(toggle.getAttribute("aria-pressed")).toBe("false");
+
+        toggle.click();
+        expect(
+            hidden.document.querySelectorAll("#plantSummary img")
+        ).toHaveLength(2);
+        expect(hidden.localStorage.getItem("gardenLoggerPhotosVisibleV1")).toBe(
+            "shown"
+        );
+
+        toggle.click();
+        expect(
+            hidden.document.querySelectorAll("#plantSummary img")
+        ).toHaveLength(0);
+        expect(hidden.localStorage.getItem("gardenLoggerPhotosVisibleV1")).toBe(
+            "hidden"
+        );
+
+        const restored = createLoggerWindow({
+            bootstrapData,
+            storage: {
+                gardenLoggerPhotosVisibleV1: "hidden",
+                gardenPlantId: "P23",
+            },
+        }).window;
+        expect(
+            restored.document.querySelectorAll("#plantSummary img")
+        ).toHaveLength(0);
+        expect(
+            restored.document.querySelector("#photoVisibilityToggle")
+                .textContent
+        ).toContain("Show photos");
+    });
+
+    it("uses the selected plant's custom SVG portrait in list and label pickers", () => {
+        const { window } = createLoggerWindow();
+        const expectedHref =
+            "#app-icon-plant-gymnocalycium-mihanovichii-variegated";
+
+        expect(
+            window.document
+                .querySelector("#plantChoiceSummary use")
+                .getAttribute("href")
+        ).toBe(expectedHref);
+        expect(
+            window.document
+                .querySelector('#plantChoiceList [data-plant-id="P01"] use')
+                .getAttribute("href")
+        ).toBe(expectedHref);
+
+        window.document.querySelector("#labelPickerMode").click();
+        expect(
+            window.document
+                .querySelector('#labelPicker [data-plant-id="P01"] use')
+                .getAttribute("href")
+        ).toBe(expectedHref);
+    });
+
+    it("shows the selected plant's last completed dry-cycle weight", () => {
         const { window } = createLoggerWindow();
         const summary = window.document.querySelector("#plantSummary");
         const metricText = [...summary.querySelectorAll(".metric")].map(
@@ -1126,7 +1200,7 @@ describe("Garden logger browser recovery", () => {
         );
 
         expect(metricText).toContain(
-            "Last dry / lowest398 g · dry · Aug 10, 2026"
+            "Last completed dry398 g · completed cycle · Aug 10, 2026"
         );
 
         const select = window.document.querySelector("#plantSelect");
@@ -1136,7 +1210,7 @@ describe("Garden logger browser recovery", () => {
             [...summary.querySelectorAll(".metric")].map(
                 ({ textContent }) => textContent
             )
-        ).toContain("Last dry / lowest475 g · lowest · Aug 2, 2026");
+        ).toContain("Last completed dry475 g · completed cycle · Aug 2, 2026");
     });
 
     it("restores and updates the recent-history length", () => {
@@ -1159,6 +1233,45 @@ describe("Garden logger browser recovery", () => {
         expect(window.localStorage.getItem("gardenLoggerRecentLimitV1")).toBe(
             "25"
         );
+    });
+
+    it("marks recent History rows with the spreadsheet event palette key", () => {
+        const { window } = createLoggerWindow({
+            bootstrapData: {
+                ...bootstrap,
+                recent: [
+                    {
+                        event: "Water",
+                        name: "Moon cactus",
+                        observedAt: "Sep 4, 2026",
+                        plantId: "P01",
+                        weight: "",
+                        weightState: "",
+                    },
+                    {
+                        event: "Pest",
+                        name: "Yellow tower cactus",
+                        observedAt: "Sep 3, 2026",
+                        plantId: "P02",
+                        weight: "",
+                        weightState: "",
+                    },
+                ],
+            },
+        });
+        const rows = [
+            ...window.document.querySelectorAll("#recentList .recent-item"),
+        ];
+
+        expect(rows.map(({ dataset }) => dataset.event)).toEqual([
+            "Water",
+            "Pest",
+        ]);
+        expect(
+            rows.map((row) => row.querySelector(".event-badge").textContent)
+        ).toEqual(["Water", "Pest"]);
+        expect(html).toContain("--event-bg: #d9eefc;");
+        expect(html).toContain("--event-ink: #7a1d1d;");
     });
 
     it("starts safely when browser storage and theme detection are unavailable", () => {
@@ -1220,7 +1333,7 @@ describe("Garden logger browser recovery", () => {
             .querySelector("#labelPickerMode")
             .dispatchEvent(new window.Event("click", { bubbles: true }));
         const queuedButton = window.document.querySelector(
-            '[data-plant-id="P01"]'
+            '#labelPicker [data-plant-id="P01"]'
         );
         expect(queuedButton.classList.contains("queued-weighed")).toBe(true);
         expect(queuedButton.getAttribute("aria-label")).toMatch(
@@ -1451,7 +1564,7 @@ describe("Garden logger browser recovery", () => {
             .dispatchEvent(new window.Event("click", { bubbles: true }));
         expect(
             window.document
-                .querySelector('[data-plant-id="P01"]')
+                .querySelector('#labelPicker [data-plant-id="P01"]')
                 .classList.contains("queued-weighed")
         ).toBe(true);
     });
@@ -2251,7 +2364,7 @@ describe("Garden logger browser recovery", () => {
             storage: { gardenLoggerPlantPickerModeV1: "labels" },
         });
         const staleTarget = window.document.querySelector(
-            '[data-plant-id="P02"]'
+            '#labelPicker [data-plant-id="P02"]'
         );
         staleTarget.getBoundingClientRect = () => ({
             bottom: 160,
@@ -2281,9 +2394,9 @@ describe("Garden logger browser recovery", () => {
         expect(window.document.querySelector("#toast").textContent).toMatch(
             /misplaced tap/i
         );
-        expect(window.document.querySelector('[data-plant-id="P02"]')).not.toBe(
-            staleTarget
-        );
+        expect(
+            window.document.querySelector('#labelPicker [data-plant-id="P02"]')
+        ).not.toBe(staleTarget);
     });
 
     it("rebuilds label hit targets after orientation changes", () => {
@@ -2291,14 +2404,16 @@ describe("Garden logger browser recovery", () => {
         const { window } = createLoggerWindow({
             storage: { gardenLoggerPlantPickerModeV1: "labels" },
         });
-        const original = window.document.querySelector('[data-plant-id="P01"]');
+        const original = window.document.querySelector(
+            '#labelPicker [data-plant-id="P01"]'
+        );
 
         window.dispatchEvent(new window.Event("orientationchange"));
         vi.advanceTimersByTime(250);
 
-        expect(window.document.querySelector('[data-plant-id="P01"]')).not.toBe(
-            original
-        );
+        expect(
+            window.document.querySelector('#labelPicker [data-plant-id="P01"]')
+        ).not.toBe(original);
         expect(window.document.documentElement.className).toContain(
             "mobile-hit-recovery"
         );

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
+  <title id="title">Hook-spined pincushion cactus plant portrait</title>
+  <path d="M6 16.5C6.1 9.5 8.3 5 12 5s5.9 4.5 6 11.5Z" fill="#4ca162" stroke="#173c2b" stroke-width="1"/>
+  <g fill="#f3ead4" stroke="#7f6b4f" stroke-width=".3"><circle cx="9" cy="8.6" r=".7"/><circle cx="13.6" cy="7.9" r=".7"/><circle cx="8.4" cy="12.4" r=".7"/><circle cx="12" cy="11.3" r=".7"/><circle cx="15.6" cy="12.5" r=".7"/></g>
+  <path d="M9 8.6 6.8 6.8m6.8 1.1 1.9-2.2m-7.1 6.7L6 13.7m6-2.4 2-1.9m1.6 3.1 2.3 1" fill="none" stroke="#cf9c65" stroke-linecap="round" stroke-width=".75"/>
+  <path d="M13.6 7.9c2.5-.1 3.1 1.3 2 2.4" fill="none" stroke="#b25d45" stroke-linecap="round" stroke-width=".8"/>
+  <path d="M4.9 16h14.2l-1.7 5.4H6.6z" fill="#668fc0" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
+</svg>

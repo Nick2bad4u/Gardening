@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
+  <title id="title">Monk's hood cactus plant portrait</title>
+  <path d="m12 3.2 2.1 4.3 4.7.7-3.4 3.3.8 4.7-4.2-2.3-4.2 2.3.8-4.7-3.4-3.3 4.7-.7Z" fill="#589c64" stroke="#173c2b" stroke-linejoin="round" stroke-width="1"/>
+  <path d="M12 3.8v10.1M7.8 7.6l4.2 6.3m4.2-6.3L12 13.9" fill="none" stroke="#dcebc9" stroke-width=".7"/>
+  <g fill="#fff7df"><circle cx="9" cy="7.4" r=".55"/><circle cx="14.7" cy="8.2" r=".55"/><circle cx="10" cy="11.1" r=".5"/><circle cx="14.2" cy="12" r=".5"/></g>
+  <path d="M5.5 15.1h13l-1.6 6.2H7.1z" fill="#d77a49" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+</svg>

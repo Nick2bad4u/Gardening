@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
+  <title id="title">Variegated blue torch cactus plant portrait</title>
+  <path d="M8.2 17V6c0-2.3 1.4-3.8 3.8-3.8s3.8 1.5 3.8 3.8v11Z" fill="#579eb4" stroke="#244e54" stroke-width="1"/>
+  <path d="M12 2.6v14M9.6 3.8v13m4.8-13v13" stroke="#b7d9ce" stroke-width=".65"/>
+  <path d="M8.6 6.2c1.7-.7 2.7.4 2.5 2.1-.2 1.6-1.1 2.4-.8 4 .2 1.2-.4 2.9-1.7 3.6Zm4-3.5c2.3.2 3.1 1.7 2.8 3.5-.3 1.9-1.8 2.7-1.5 4.4.3 1.7 1.4 2.8.8 5.9h-2.1Z" fill="#f1d05c"/>
+  <g fill="#ed805a"><circle cx="9" cy="8" r=".4"/><circle cx="15" cy="7" r=".4"/><circle cx="11" cy="13" r=".4"/></g>
+  <path d="M5.7 16.2h12.6l-1.5 5.2H7.2z" fill="#e5844c" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+</svg>

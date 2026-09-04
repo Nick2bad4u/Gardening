@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
+  <title id="title">Paper spine cactus plant portrait</title>
+  <g fill="#739b70" stroke="#173c2b" stroke-width=".8"><ellipse cx="11.7" cy="13.7" rx="3.8" ry="3.6"/><ellipse cx="12.5" cy="8.5" rx="3.4" ry="3.8"/><ellipse cx="10.8" cy="4.4" rx="2.6" ry="2.7"/></g>
+  <path d="m9.4 4-4.2-1.3 3.2 3.1m4.7 2.1 5.1-2.1-3.8 4m-4.8 3.4-4.9-1.4 4 3.5m5.8-1.6 4.7 1.8-4.8.8" fill="#f6e8c8" stroke="#9c7947" stroke-linejoin="round" stroke-width=".65"/>
+  <path d="M5.2 16h13.6l-1.6 5.3H6.8z" fill="#d97c4a" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+</svg>

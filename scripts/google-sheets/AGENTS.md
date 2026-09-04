@@ -25,9 +25,10 @@
 
 - Do not ask the user to classify a weight. Keep the canonical `Weight state`
   field only for backward compatibility, store new weights as `Routine`, and
-  derive the current setup's lowest value as Dry, highest value as Wet, and
-  intermediate values as Routine. A lone weight saved with a matching Water
-  event may display as Wet; Water still never implies that a weight exists.
+  derive state from completed watering cycles. A weight saved with Water is
+  Wet; the last eligible weight before the next Water is Dry; all other and
+  open-cycle weights remain Routine. Water still never implies that a weight
+  exists, and inferred state must not rewrite canonical History.
 - Keep mobile entries recoverable until Google confirms the callback, lock
   writes, escape formula-like text, validate URLs, and make bulk operations
   retry-safe per plant.

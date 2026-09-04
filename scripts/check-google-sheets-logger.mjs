@@ -27,7 +27,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.16.0");
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.16.2");
 const webPlantImageUrls = JSON.parse(
     JSON.stringify(vm.runInContext("WEB_PLANT_IMAGE_URLS", context))
 );
@@ -71,21 +71,32 @@ assert.deepEqual(
 );
 assert.equal(context.safeSheetText_('=IMPORTXML("x")'), '\'=IMPORTXML("x")');
 assert.equal(context.safeSheetText_("healthy"), "healthy");
+/**
+ * @param {{
+ *     plantId: string;
+ *     observedAt: string;
+ *     event?: string;
+ *     weight?: number | string;
+ *     batch?: string;
+ *     status?: string;
+ * }} record
+ */
 const checkWeightRow = ({
     plantId,
     observedAt,
-    state,
-    weight,
+    event = "Weigh",
+    weight = "",
+    batch = "",
     status = "",
 }) => {
     const row = Array(42).fill("");
     row[0] = observedAt;
     row[1] = plantId;
-    row[2] = "Weigh";
-    row[3] = state;
+    row[2] = event;
+    row[3] = "Routine";
     row[4] = weight;
-    row[5] = 99;
-    row[6] = 88;
+    row[10] = 1;
+    row[29] = batch;
     row[35] = status;
     return row;
 };
@@ -93,25 +104,40 @@ const dryOrLowestWeights = context.dryOrLowestWeightsFromRows_([
     checkWeightRow({
         plantId: "P01",
         observedAt: "2026-08-01T12:00:00Z",
-        state: "Routine",
-        weight: 280,
+        weight: 320,
+        batch: "wet-1",
+    }),
+    checkWeightRow({
+        plantId: "P01",
+        observedAt: "2026-08-01T12:00:00Z",
+        event: "Water",
+        batch: "wet-1",
     }),
     checkWeightRow({
         plantId: "P01",
         observedAt: "2026-08-02T12:00:00Z",
-        state: "Dry",
-        weight: 300,
+        weight: 280,
+    }),
+    checkWeightRow({
+        plantId: "P01",
+        observedAt: "2026-08-03T12:00:00Z",
+        weight: 330,
+        batch: "wet-2",
+    }),
+    checkWeightRow({
+        plantId: "P01",
+        observedAt: "2026-08-03T12:00:00Z",
+        event: "Water",
+        batch: "wet-2",
     }),
     checkWeightRow({
         plantId: "P02",
         observedAt: "2026-08-03T12:00:00Z",
-        state: "Routine",
         weight: 410,
     }),
     checkWeightRow({
         plantId: "P02",
         observedAt: "2026-08-04T12:00:00Z",
-        state: "Routine",
         weight: 390,
     }),
 ]);
@@ -119,18 +145,11 @@ assert.deepEqual(
     { ...dryOrLowestWeights.get("P01") },
     {
         weight: 280,
-        basis: "Inferred dry",
-        observedAt: "2026-08-01T12:00:00Z",
+        basis: "Completed cycle",
+        observedAt: "2026-08-02T12:00:00Z",
     }
 );
-assert.deepEqual(
-    { ...dryOrLowestWeights.get("P02") },
-    {
-        weight: 390,
-        basis: "Inferred dry",
-        observedAt: "2026-08-04T12:00:00Z",
-    }
-);
+assert.equal(dryOrLowestWeights.has("P02"), false);
 const appSheetEntryHeaders = Array.from(
     vm.runInContext("APP_SHEET_ENTRY_HEADERS", context)
 );
@@ -334,7 +353,7 @@ assert.match(html, /state\.saveStartedAt = Date\.now\(\);/);
 assert.match(html, /function browserIsOnline\(\)/);
 assert.match(html, /const BOOTSTRAP_TIMEOUT_MS = 20000;/);
 assert.match(html, /const BOOTSTRAP_AUTO_RETRIES = 1;/);
-assert.match(html, /const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV1";/);
+assert.match(html, /const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV2";/);
 assert.match(html, /const BOOTSTRAP_CACHE_MAX_AGE_MS = 6 \* 60 \* 60 \* 1000;/);
 assert.match(
     html,
@@ -348,9 +367,91 @@ assert.match(html, /pending\.replaceable = true;/);
 assert.doesNotMatch(html, /id="weightStates"/);
 assert.doesNotMatch(html, /function renderWeightState\(\)/);
 assert.doesNotMatch(html, /weightState:\s*state\.weightState/);
-assert.match(html, /"Last dry \/ lowest"/);
+assert.match(html, /"Last completed dry"/);
 assert.match(html, /plant\.dryOrLowestWeightBasis/);
 assert.match(html, /plant\.dryOrLowestWeightDate/);
+assert.match(
+    html,
+    /const PHOTO_VISIBILITY_KEY = "gardenLoggerPhotosVisibleV1"/
+);
+assert.match(html, /id="photoVisibilityToggle"/);
+assert.match(html, /state\.photosVisible && photoData\.length/);
+assert.match(html, /id="plantChoiceList"/);
+assert.match(html, /function plantIconName\(plant\)/);
+assert.equal(
+    (html.match(/id="app-icon-plant-[a-z0-9-]+"/gu) || []).length,
+    36,
+    "The logger must inline every custom plant portrait exactly once."
+);
+for (const [
+    eventName,
+    background,
+    foreground,
+] of [
+    [
+        "Water",
+        "#d9eefc",
+        "#174a68",
+    ],
+    [
+        "Weigh",
+        "#e9e1f8",
+        "#47306b",
+    ],
+    [
+        "Measure",
+        "#dff2e4",
+        "#24543a",
+    ],
+    [
+        "Check",
+        "#fff0c7",
+        "#684b00",
+    ],
+    [
+        "Rotation",
+        "#e3f1f1",
+        "#285b5b",
+    ],
+    [
+        "Clean",
+        "#f2f2f2",
+        "#424242",
+    ],
+    [
+        "Prune",
+        "#e8f0d9",
+        "#3c5724",
+    ],
+    [
+        "Repot",
+        "#f7e3cf",
+        "#6e3d18",
+    ],
+    [
+        "Flower",
+        "#f9dcea",
+        "#722a4d",
+    ],
+    [
+        "Photo",
+        "#e1e8f7",
+        "#2d4775",
+    ],
+    [
+        "Pest",
+        "#f8d4d4",
+        "#7a1d1d",
+    ],
+]) {
+    assert.match(
+        html,
+        new RegExp(
+            `\\.recent-item\\[data-event="${eventName}"\\]\\s*\\{[\\s\\S]*?--event-bg: ${background};[\\s\\S]*?--event-ink: ${foreground};`,
+            "u"
+        )
+    );
+}
 assert.match(html, /id="bulkWaterForm"/);
 assert.match(html, /saveBulkCareObservation/);
 assert.match(html, /id="bulkEventChips"/);
@@ -476,6 +577,9 @@ assert.match(source, /storedStatus === "Saved"/);
 assert.match(source, /`appsheet-\$\{normalizedEntryId\}`/);
 assert.match(source, /function removeSelectedHistoryObservations\(\)/);
 assert.match(source, /function refreshGardenWorkbook\(\)/);
+assert.match(source, /function refreshGardenWorkbookPages01To10\(\)/);
+assert.match(source, /function refreshGardenWorkbookPages11To20\(\)/);
+assert.match(source, /function refreshGardenWorkbookPages21To30\(\)/);
 assert.match(source, /function inferredWeightStatesByRow_\(historyRows\)/);
 assert.match(
     source,

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
+  <title id="title">Copper spoons plant portrait</title>
+  <path d="M12 18V5.2m0 4-4-2.4m4 6-4.6-1.4m4.6-.2 4-2.5m-4 6.2 4.7-1.7" fill="none" stroke="#6e553c" stroke-linecap="round" stroke-width="1.2"/>
+  <g fill="#bd7350" stroke="#6e452f" stroke-width=".65"><ellipse cx="7.2" cy="6.5" rx="2.8" ry="1.7" transform="rotate(28 7.2 6.5)"/><ellipse cx="7" cy="11.2" rx="3" ry="1.8" transform="rotate(12 7 11.2)"/><ellipse cx="16.6" cy="8.5" rx="2.9" ry="1.7" transform="rotate(-28 16.6 8.5)"/><ellipse cx="17" cy="13" rx="3" ry="1.8" transform="rotate(-15 17 13)"/><ellipse cx="12" cy="4.2" rx="2.1" ry="1.5"/></g>
+  <path d="M5.6 17h12.8L17 21.4H7z" fill="#70a9c8" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
+</svg>

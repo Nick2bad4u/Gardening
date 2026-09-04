@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.16.0",
+    version: "5.16.2",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -235,9 +235,9 @@ const BULK_WEB_EVENT_OPTIONS = Object.freeze([
 ]);
 
 // Retained only to validate stale/offline payloads created before logger 5.16.
-// New observations are stored as Routine; current-setup extrema are classified
-// dynamically so an older row can become the new Dry or Wet anchor without
-// rewriting canonical History.
+// New observations are stored as Routine. Derived views mark same-save
+// watering weights Wet and close only the final eligible pre-watering reading
+// as Dry, without rewriting canonical History.
 const WEIGHT_STATE_OPTIONS = Object.freeze(["Dry", "Wet", "Routine"]);
 const RECENT_LIMIT_OPTIONS = Object.freeze([10, 25, 50, 100]);
 
@@ -1424,7 +1424,7 @@ function appSheetBulkPayloadsFromRow_(row, roundId) {
             : appSheetBulkSelectedPlants_(
                   row[APP_SHEET_BULK_SELECTED_PLANTS_INDEX]
               );
-    // Weight state is inferred from current-setup extrema after the row is
+    // Weight state is inferred from completed watering cycles after the row is
     // archived. Ignore the legacy staging value so AppSheet and offline drafts
     // cannot stamp a classification that will become stale.
     const weightState = includesWeigh ? "Routine" : "";
@@ -2817,7 +2817,7 @@ function installGardenLogger() {
     quickLog
         .getRange("E4")
         .setNote(
-            "Optional main event. Weight infers Weigh; height or width infers Measure. Dry and Wet are derived automatically from the current pot setup's low and high weights."
+            "Optional main event. Weight infers Weigh; height or width infers Measure. A weight saved with Water is Wet; the last eligible weight before a later Water is Dry; other weights remain Routine."
         );
     quickLog
         .getRange("D4")
@@ -2874,6 +2874,49 @@ function refreshGardenWorkbook() {
     };
 }
 
+/**
+ * Refreshes P01-P10 without rebuilding the shared workbook views.
+ * Use the page batches when a complete workbook refresh exceeds the Apps
+ * Script execution or Google Sheets service limit.
+ */
+function refreshGardenWorkbookPages01To10() {
+    return refreshGardenWorkbookPageRange_(0, 10);
+}
+
+/** Refreshes P11-P20 without rebuilding the shared workbook views. */
+function refreshGardenWorkbookPages11To20() {
+    return refreshGardenWorkbookPageRange_(10, 20);
+}
+
+/** Refreshes P21-P30 without rebuilding the shared workbook views. */
+function refreshGardenWorkbookPages21To30() {
+    return refreshGardenWorkbookPageRange_(20, 30);
+}
+
+function refreshGardenWorkbookPageRange_(startIndex, endIndex) {
+    const spreadsheet = getGardenSpreadsheet_();
+    const plants = workbookPlantRecords_(spreadsheet);
+    const pageBatch = plants.slice(startIndex, endIndex);
+    pageBatch.forEach((plant, batchIndex) =>
+        refreshPlantPage_(spreadsheet, plants, startIndex + batchIndex, plant)
+    );
+    organizeWorkbookSheets_(spreadsheet);
+    SpreadsheetApp.flush();
+    const firstPlant = pageBatch[0].id;
+    const lastPlant = pageBatch[pageBatch.length - 1].id;
+    spreadsheet.toast(
+        `${firstPlant}-${lastPlant} pages were refreshed for logger ${GARDEN_LOGGER.version}.`,
+        "Garden plant pages refreshed",
+        8
+    );
+    return {
+        loggerVersion: GARDEN_LOGGER.version,
+        firstPlant,
+        lastPlant,
+        plantPages: pageBatch.length,
+    };
+}
+
 function workbookPlantRecords_(spreadsheet) {
     const tracker = requireSheet_(spreadsheet, GARDEN_LOGGER.plantTrackerSheet);
     const rowCount = Math.max(0, tracker.getLastRow() - 1);
@@ -2910,6 +2953,14 @@ function workbookPlantRecords_(spreadsheet) {
     return plants;
 }
 
+function completedDryWeightFormula_(row) {
+    return `=IFERROR(LET(plant,$A${row},setup,$T${row},records,FILTER({History!$A$2:$A$5000,History!$C$2:$C$5000,History!$E$2:$E$5000,History!$AD$2:$AD$5000,ROW(History!$A$2:$A$5000)},History!$B$2:$B$5000=plant,History!$K$2:$K$5000=setup,History!$AJ$2:$AJ$5000<>"Removed",REGEXMATCH(History!$C$2:$C$5000,"^(Weigh|Water)$")),dates,CHOOSECOLS(records,1),events,CHOOSECOLS(records,2),weights,CHOOSECOLS(records,3),batches,CHOOSECOLS(records,4),sourceRows,CHOOSECOLS(records,5),keys,MAP(dates,sourceRows,LAMBDA(d,sr,N(d)+sr/1000000000)),waterKeys,FILTER(keys,events="Water"),weightKeys,FILTER(keys,events="Weigh",weights>0),weightDates,FILTER(dates,events="Weigh",weights>0),weightValues,FILTER(weights,events="Weigh",weights>0),weightBatches,FILTER(batches,events="Weigh",weights>0),weightWet,MAP(weightDates,weightBatches,LAMBDA(wd,wb,IF(wb<>"",COUNTIFS(History!$B$2:$B$5000,plant,History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,setup,History!$AD$2:$AD$5000,wb,History!$AJ$2:$AJ$5000,"<>Removed")+COUNTIFS(History!$B$2:$B$5000,plant,History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,setup,History!$AD$2:$AD$5000,"",History!$A$2:$A$5000,wd,History!$AJ$2:$AJ$5000,"<>Removed"),COUNTIFS(History!$B$2:$B$5000,plant,History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,setup,History!$A$2:$A$5000,wd,History!$AJ$2:$AJ$5000,"<>Removed"))>0)),dryKeys,MAP(waterKeys,LAMBDA(wk,LET(previousWater,IFERROR(MAX(FILTER(waterKeys,waterKeys<wk)),0),IFERROR(MAX(FILTER(weightKeys,weightKeys>previousWater,weightKeys<wk,weightWet=FALSE)),"")))),lastDryKey,MAX(FILTER(dryKeys,dryKeys<>"")),XLOOKUP(lastDryKey,weightKeys,weightValues)),"")`;
+}
+
+function latestWetWeightFormula_(row) {
+    return `=IFERROR(LET(plant,$A${row},setup,$T${row},records,FILTER({History!$A$2:$A$5000,History!$C$2:$C$5000,History!$E$2:$E$5000,History!$AD$2:$AD$5000,ROW(History!$A$2:$A$5000)},History!$B$2:$B$5000=plant,History!$K$2:$K$5000=setup,History!$AJ$2:$AJ$5000<>"Removed",REGEXMATCH(History!$C$2:$C$5000,"^(Weigh|Water)$")),dates,CHOOSECOLS(records,1),events,CHOOSECOLS(records,2),weights,CHOOSECOLS(records,3),batches,CHOOSECOLS(records,4),sourceRows,CHOOSECOLS(records,5),keys,MAP(dates,sourceRows,LAMBDA(d,sr,N(d)+sr/1000000000)),weightKeys,FILTER(keys,events="Weigh",weights>0),weightDates,FILTER(dates,events="Weigh",weights>0),weightValues,FILTER(weights,events="Weigh",weights>0),weightBatches,FILTER(batches,events="Weigh",weights>0),wetKeys,FILTER(weightKeys,MAP(weightDates,weightBatches,LAMBDA(wd,wb,IF(wb<>"",COUNTIFS(History!$B$2:$B$5000,plant,History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,setup,History!$AD$2:$AD$5000,wb,History!$AJ$2:$AJ$5000,"<>Removed")+COUNTIFS(History!$B$2:$B$5000,plant,History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,setup,History!$AD$2:$AD$5000,"",History!$A$2:$A$5000,wd,History!$AJ$2:$AJ$5000,"<>Removed"),COUNTIFS(History!$B$2:$B$5000,plant,History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,setup,History!$A$2:$A$5000,wd,History!$AJ$2:$AJ$5000,"<>Removed"))>0))),lastWetKey,MAX(wetKeys),XLOOKUP(lastWetKey,weightKeys,weightValues)),"")`;
+}
+
 function baselineViewRow_(rowNumber, plant) {
     const row = rowNumber;
     return [
@@ -2920,11 +2971,11 @@ function baselineViewRow_(rowNumber, plant) {
         `=IFNA(INDEX(SORT(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$E$2:$E$5000<>"",History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),1),"")`,
         `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AB:$AB,"Not recorded")`,
         `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$O:$O,"")`,
-        `=IFS(V${row}<2,"Collecting weights",Z${row}<=0,"Recheck weights",TRUE,"Calibrated")`,
+        `=IFS(V${row}<1,"Collecting weights",Y${row}="","Need a wet weight",W${row}="","Need a completed dry cycle",Z${row}<=0,"Recheck weights",TRUE,"Calibrated")`,
         `=IF(U${row}<3,"Need 3 post-anchor weights",IF(AE${row}="","Need a 2-day descending span","Ready"))`,
         `=LET(review,XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AD:$AD,""),IF(review<>"",review,IF(M${row}="","No trend",IFS(M${row}<0,"Unexpected gain",M${row}>0.03,"Rapid loss",TRUE,"OK"))))`,
         `=IFERROR(LET(lastEstimate,MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",History!$AC$2:$AC$5000="Estimated",History!$AJ$2:$AJ$5000<>"Removed")),lastMeasured,IFERROR(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",History!$AC$2:$AC$5000="Measured",History!$AJ$2:$AJ$5000<>"Removed")),0),IF(lastEstimate>lastMeasured,"Due now","Current")),"No measurement")`,
-        `=IF(AF${row}<>"",IF(AF${row}<=TODAY(),"Inspect / reweigh now","Check "&TEXT(AF${row},"mmm d")),IFS(O${row}="","Log a wet weight after watering",U${row}<3,"Collect 3 post-water weights",TRUE,"Reweigh to confirm"))`,
+        `=IF(AF${row}<>"",IF(AF${row}<=TODAY(),"Inspect / reweigh now","Check "&TEXT(AF${row},"mmm d")),IFS(O${row}="","Log a wet weight after watering",Y${row}="","Save a weight with watering",W${row}="","Keep weighing until the next watering",U${row}<3,"Collect 3 post-water weights",TRUE,"Reweigh to confirm"))`,
         `=IFERROR(LET(cycle,MAX(FILTER(History!$N$2:$N$5000,History!$B$2:$B$5000=$A${row},History!$K$2:$K$5000=$T${row},History!$E$2:$E$5000<>"",History!$N$2:$N$5000<>"",History!$AJ$2:$AJ$5000<>"Removed")),points,SORT(FILTER({History!$A$2:$A$5000,History!$E$2:$E$5000},History!$B$2:$B$5000=$A${row},History!$K$2:$K$5000=$T${row},History!$E$2:$E$5000<>"",History!$N$2:$N$5000=cycle,History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),recent,ARRAY_CONSTRAIN(points,MIN(7,ROWS(points)),2),span,MAX(INDEX(recent,0,1))-MIN(INDEX(recent,0,1)),IF(OR(ROWS(recent)<3,span<2),"",-SLOPE(INDEX(recent,0,2),INDEX(recent,0,1))/INDEX(recent,1,2))),"")`,
         `=IF(MAX(N(O${row}),N(AA${row}))=0,"No anchor",IF(N(O${row})>=N(AA${row}),"Water","Repot"))`,
         `=IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Water",History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed")),"")`,
@@ -2935,9 +2986,9 @@ function baselineViewRow_(rowNumber, plant) {
         `=IFNA(MAX(FILTER(History!$K$2:$K$5000,History!$B$2:$B$5000=$A${row},History!$AJ$2:$AJ$5000<>"Removed")),1)`,
         `=IFERROR(LET(cycle,MAX(FILTER(History!$N$2:$N$5000,History!$B$2:$B$5000=$A${row},History!$K$2:$K$5000=$T${row},History!$E$2:$E$5000<>"",History!$N$2:$N$5000<>"",History!$AJ$2:$AJ$5000<>"Removed")),COUNT(FILTER(History!$E$2:$E$5000,History!$B$2:$B$5000=$A${row},History!$K$2:$K$5000=$T${row},History!$E$2:$E$5000<>"",History!$N$2:$N$5000=cycle,History!$AJ$2:$AJ$5000<>"Removed"))),0)`,
         `=COUNTIFS(History!$B$2:$B$5000,$A${row},History!$E$2:$E$5000,">0",History!$K$2:$K$5000,$T${row},History!$AJ$2:$AJ$5000,"<>Removed")`,
-        `=IF(V${row}=0,"",MIN(FILTER(History!$E$2:$E$5000,History!$B$2:$B$5000=$A${row},History!$E$2:$E$5000>0,History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed")))`,
+        completedDryWeightFormula_(row),
         `=COUNTIFS(History!$B$2:$B$5000,$A${row},History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,$T${row},History!$AJ$2:$AJ$5000,"<>Removed")`,
-        `=IF(V${row}=0,"",MAX(FILTER(History!$E$2:$E$5000,History!$B$2:$B$5000=$A${row},History!$E$2:$E$5000>0,History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed")))`,
+        latestWetWeightFormula_(row),
         `=IF(V${row}<2,"",Y${row}-W${row})`,
         `=IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Repot",History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed")),"")`,
         `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$5000,History!$AC$2:$AC$5000},History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),1,2),"No measurement")`,
@@ -2945,7 +2996,7 @@ function baselineViewRow_(rowNumber, plant) {
         `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AI:$AI,"cm")`,
         `=IFERROR(LET(cycle,MAX(FILTER(History!$N$2:$N$5000,History!$B$2:$B$5000=$A${row},History!$K$2:$K$5000=$T${row},History!$E$2:$E$5000<>"",History!$N$2:$N$5000<>"",History!$AJ$2:$AJ$5000<>"Removed")),points,SORT(FILTER({History!$A$2:$A$5000,History!$E$2:$E$5000},History!$B$2:$B$5000=$A${row},History!$K$2:$K$5000=$T${row},History!$E$2:$E$5000<>"",History!$N$2:$N$5000=cycle,History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),recent,ARRAY_CONSTRAIN(points,MIN(7,ROWS(points)),2),span,MAX(INDEX(recent,0,1))-MIN(INDEX(recent,0,1)),loss,-SLOPE(INDEX(recent,0,2),INDEX(recent,0,1)),IF(OR(ROWS(recent)<3,span<2,loss<=0),"",loss)),"")`,
         `=IF(OR(AE${row}="",W${row}="",C${row}="",E${row}=""),"",E${row}+MAX(0,(C${row}-W${row})/AE${row}))`,
-        `=IFS(O${row}="","Need a watering",U${row}<3,"Need 3 post-water weights",AE${row}="","Need a 2-day descending span",AF${row}<TODAY(),"Overdue — reweigh",U${row}<5,"Provisional",TRUE,"Good")`,
+        `=IFS(O${row}="","Need a watering",Y${row}="","Need a wet weight",W${row}="","Need a completed dry cycle",U${row}<3,"Need 3 post-water weights",AE${row}="","Need a 2-day descending span",AF${row}<TODAY(),"Overdue — reweigh",U${row}<5,"Provisional",TRUE,"Good")`,
         `=IF(AF${row}="",DATE(9999,12,31),AF${row})`,
     ];
 }
@@ -2964,6 +3015,16 @@ function refreshBaselineView_(spreadsheet, plants) {
         .setFontColor("#ffffff")
         .setFontWeight("bold")
         .setWrap(true);
+    sheet
+        .getRange("V1:Y1")
+        .setNotes([
+            [
+                "Count of all active weight readings in the current pot setup.",
+                "Most recent eligible dry anchor: the final non-Wet weight before a later watering in the same pot setup.",
+                "Count of active watering events in the current pot setup.",
+                "Most recent Wet anchor: a weight saved in the same batch as a watering event in the current pot setup.",
+            ],
+        ]);
     sheet
         .getRange(2, 1, plants.length, BASELINE_VIEW_HEADERS.length)
         .setValues(
@@ -3031,10 +3092,17 @@ function refreshDashboardView_(spreadsheet, plants) {
     const sheet = requireSheet_(spreadsheet, "Dashboard");
     ensureSheetColumnCapacity_(sheet, DASHBOARD_VIEW_HEADERS.length);
     ensureSheetRowCapacity_(sheet, plants.length + 6);
-    sheet.getRange(1, 1, 6, DASHBOARD_VIEW_HEADERS.length).breakApart();
-    sheet
-        .getRange(1, 1, sheet.getMaxRows(), DASHBOARD_VIEW_HEADERS.length)
-        .clearContent();
+    const rebuildRange = sheet.getRange(
+        1,
+        1,
+        sheet.getMaxRows(),
+        DASHBOARD_VIEW_HEADERS.length
+    );
+    // Older Dashboard layouts ended with a merged A:R footer. P30 now lands on
+    // that former footer row, so clearing values without removing every legacy
+    // merge causes Sheets to retain only the row's top-left cell. Make the
+    // rebuild independent of whichever historical layout preceded it.
+    rebuildRange.breakApart().clearContent();
     sheet.getRange(1, 1, 1, DASHBOARD_VIEW_HEADERS.length).merge();
     sheet
         .getRange(1, 1)
@@ -3129,7 +3197,7 @@ function refreshDashboardView_(spreadsheet, plants) {
 
 function plantPageHistoryFormula_(plantId) {
     const id = formulaString_(plantId);
-    return `=LET(plant,"${id}",rows,SORT(FILTER({History!$A$2:$A$5000,History!$C$2:$C$5000,History!$E$2:$E$5000,History!$F$2:$F$5000,History!$G$2:$G$5000,History!$H$2:$H$5000,History!$I$2:$I$5000,History!$AC$2:$AC$5000,History!$AI$2:$AI$5000,History!$K$2:$K$5000,History!$J$2:$J$5000,History!$AD$2:$AD$5000,History!$AJ$2:$AJ$5000},History!$B$2:$B$5000=plant,History!$A$2:$A$5000<>""),1,FALSE,11,FALSE),dates,CHOOSECOLS(rows,1),events,CHOOSECOLS(rows,2),weights,CHOOSECOLS(rows,3),heights,CHOOSECOLS(rows,4),widths,CHOOSECOLS(rows,5),conditions,CHOOSECOLS(rows,6),notes,CHOOSECOLS(rows,7),qualities,CHOOSECOLS(rows,8),methods,CHOOSECOLS(rows,9),setups,CHOOSECOLS(rows,10),batches,CHOOSECOLS(rows,12),statuses,CHOOSECOLS(rows,13),states,MAP(dates,weights,setups,batches,statuses,LAMBDA(d,w,s,b,status,IF(status="Removed","Removed",IF(w="","",LET(n,COUNTIFS(History!$B$2:$B$5000,plant,History!$E$2:$E$5000,">0",History!$K$2:$K$5000,s,History!$AJ$2:$AJ$5000,"<>Removed"),low,MINIFS(History!$E$2:$E$5000,History!$B$2:$B$5000,plant,History!$E$2:$E$5000,">0",History!$K$2:$K$5000,s,History!$AJ$2:$AJ$5000,"<>Removed"),high,MAXIFS(History!$E$2:$E$5000,History!$B$2:$B$5000,plant,History!$E$2:$E$5000,">0",History!$K$2:$K$5000,s,History!$AJ$2:$AJ$5000,"<>Removed"),watered,AND(b<>"",COUNTIFS(History!$B$2:$B$5000,plant,History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,s,History!$AD$2:$AD$5000,b,History!$AJ$2:$AJ$5000,"<>Removed")>0),IF(n=1,IF(watered,"Wet","Routine"),IF(low=high,"Routine",IF(w=low,"Dry",IF(w=high,"Wet","Routine"))))))))),pounds,MAP(weights,LAMBDA(w,IF(w="","",w/453.59237))),quality,MAP(qualities,methods,LAMBDA(q,m,IF(q="",m,IF(m="",q,q&" · "&m)))),HSTACK(dates,events,states,pounds,weights,heights,widths,conditions,notes,quality,statuses))`;
+    return `=LET(plant,"${id}",rows,SORT(FILTER({History!$A$2:$A$5000,History!$C$2:$C$5000,History!$E$2:$E$5000,History!$F$2:$F$5000,History!$G$2:$G$5000,History!$H$2:$H$5000,History!$I$2:$I$5000,History!$AC$2:$AC$5000,History!$AI$2:$AI$5000,History!$K$2:$K$5000,History!$J$2:$J$5000,History!$AD$2:$AD$5000,History!$AJ$2:$AJ$5000,ROW(History!$A$2:$A$5000)},History!$B$2:$B$5000=plant,History!$A$2:$A$5000<>""),1,FALSE,11,FALSE),dates,CHOOSECOLS(rows,1),events,CHOOSECOLS(rows,2),weights,CHOOSECOLS(rows,3),heights,CHOOSECOLS(rows,4),widths,CHOOSECOLS(rows,5),conditions,CHOOSECOLS(rows,6),notes,CHOOSECOLS(rows,7),qualities,CHOOSECOLS(rows,8),methods,CHOOSECOLS(rows,9),setups,CHOOSECOLS(rows,10),batches,CHOOSECOLS(rows,12),statuses,CHOOSECOLS(rows,13),sourceRows,CHOOSECOLS(rows,14),states,MAP(dates,weights,setups,batches,statuses,sourceRows,LAMBDA(d,w,s,b,status,sourceRow,IF(status="Removed","Removed",IF(w="","",LET(currentKey,N(d)+sourceRow/1000000000,wet,IF(b<>"",COUNTIFS(History!$B$2:$B$5000,plant,History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,s,History!$AD$2:$AD$5000,b,History!$AJ$2:$AJ$5000,"<>Removed")+COUNTIFS(History!$B$2:$B$5000,plant,History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,s,History!$AD$2:$AD$5000,"",History!$A$2:$A$5000,d,History!$AJ$2:$AJ$5000,"<>Removed"),COUNTIFS(History!$B$2:$B$5000,plant,History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,s,History!$A$2:$A$5000,d,History!$AJ$2:$AJ$5000,"<>Removed"))>0,waterKeys,FILTER(ARRAYFORMULA(History!$A$2:$A$5000+ROW(History!$A$2:$A$5000)/1000000000),History!$B$2:$B$5000=plant,History!$C$2:$C$5000="Water",History!$K$2:$K$5000=s,History!$AJ$2:$AJ$5000<>"Removed"),nextWaterKey,IFERROR(MIN(FILTER(waterKeys,waterKeys>currentKey)),""),IF(wet,"Wet",IF(nextWaterKey="","Routine",LET(previousWaterKey,IFERROR(MAX(FILTER(waterKeys,waterKeys<nextWaterKey)),0),candidateRows,FILTER({History!$A$2:$A$5000,History!$AD$2:$AD$5000,ROW(History!$A$2:$A$5000)},History!$B$2:$B$5000=plant,History!$C$2:$C$5000="Weigh",History!$E$2:$E$5000>0,History!$K$2:$K$5000=s,History!$AJ$2:$AJ$5000<>"Removed",ARRAYFORMULA(History!$A$2:$A$5000+ROW(History!$A$2:$A$5000)/1000000000)>previousWaterKey,ARRAYFORMULA(History!$A$2:$A$5000+ROW(History!$A$2:$A$5000)/1000000000)<nextWaterKey),candidateDates,CHOOSECOLS(candidateRows,1),candidateBatches,CHOOSECOLS(candidateRows,2),candidateKeys,MAP(candidateDates,CHOOSECOLS(candidateRows,3),LAMBDA(candidateDate,candidateRow,N(candidateDate)+candidateRow/1000000000)),candidateWet,MAP(candidateDates,candidateBatches,LAMBDA(candidateDate,candidateBatch,IF(candidateBatch<>"",COUNTIFS(History!$B$2:$B$5000,plant,History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,s,History!$AD$2:$AD$5000,candidateBatch,History!$AJ$2:$AJ$5000,"<>Removed")+COUNTIFS(History!$B$2:$B$5000,plant,History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,s,History!$AD$2:$AD$5000,"",History!$A$2:$A$5000,candidateDate,History!$AJ$2:$AJ$5000,"<>Removed"),COUNTIFS(History!$B$2:$B$5000,plant,History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,s,History!$A$2:$A$5000,candidateDate,History!$AJ$2:$AJ$5000,"<>Removed"))>0)),dryKey,MAX(FILTER(candidateKeys,candidateWet=FALSE)),IF(currentKey=dryKey,"Dry","Routine"))))))))),pounds,MAP(weights,LAMBDA(w,IF(w="","",w/453.59237))),quality,MAP(qualities,methods,LAMBDA(q,m,IF(q="",m,IF(m="",q,q&" · "&m)))),HSTACK(dates,events,states,pounds,weights,heights,widths,conditions,notes,quality,statuses))`;
 }
 
 function plantPageSheet_(spreadsheet, plantId) {
@@ -4323,39 +4391,27 @@ function latestPotSizesFromRows_(historyRows) {
 
 function dryOrLowestWeightsFromRows_(historyRows) {
     const inferredStates = inferredWeightStatesByRow_(historyRows);
-    return new Map(
-        [...currentSetupWeightRecordsByPlant_(historyRows)].map(
-            ([plantId, records]) => {
-                const selected = [...records].sort((left, right) => {
-                    return (
-                        left.weight - right.weight ||
-                        right.timestamp - left.timestamp ||
-                        right.rowIndex - left.rowIndex
-                    );
-                })[0];
-                const onlyState =
-                    records.length === 1
-                        ? inferredStates.get(selected.rowIndex)
-                        : "";
-                return [
-                    plantId,
-                    {
-                        weight: selected.weight,
-                        observedAt: selected.observedAt,
-                        basis:
-                            records.length > 1
-                                ? "Inferred dry"
-                                : onlyState === "Wet"
-                                  ? "Only wet reading"
-                                  : "Only reading",
-                    },
-                ];
-            }
-        )
+    const result = new Map();
+    currentSetupWeightRecordsByPlant_(historyRows).forEach(
+        (records, plantId) => {
+            const selected = records
+                .filter(
+                    (record) => inferredStates.get(record.rowIndex) === "Dry"
+                )
+                .sort(compareHistoryRecords_)
+                .at(-1);
+            if (!selected) return;
+            result.set(plantId, {
+                weight: selected.weight,
+                observedAt: selected.observedAt,
+                basis: "Completed cycle",
+            });
+        }
     );
+    return result;
 }
 
-function currentSetupWeightRecordsByPlant_(historyRows) {
+function currentPotSetupsFromRows_(historyRows) {
     const currentSetupByPlant = new Map();
     historyRows.forEach((row) => {
         if (!activeHistoryRow_(row)) return;
@@ -4367,6 +4423,11 @@ function currentSetupWeightRecordsByPlant_(historyRows) {
             Math.max(currentSetupByPlant.get(plantId) || 1, potSetup)
         );
     });
+    return currentSetupByPlant;
+}
+
+function currentSetupWeightRecordsByPlant_(historyRows) {
+    const currentSetupByPlant = currentPotSetupsFromRows_(historyRows);
 
     const recordsByPlant = new Map();
     historyRows.forEach((row, rowIndex) => {
@@ -4398,52 +4459,85 @@ function currentSetupWeightRecordsByPlant_(historyRows) {
     return recordsByPlant;
 }
 
+function currentSetupWaterRecordsByPlant_(historyRows) {
+    const currentSetupByPlant = currentPotSetupsFromRows_(historyRows);
+    const recordsByPlant = new Map();
+    historyRows.forEach((row, rowIndex) => {
+        if (!activeHistoryRow_(row) || cleanText_(row[2]) !== "Water") return;
+        const plantId = cleanText_(row[1]);
+        const potSetup = positiveIntegerOrDefault_(row[10], 1);
+        if (!plantId || potSetup !== currentSetupByPlant.get(plantId)) return;
+        const records = recordsByPlant.get(plantId) || [];
+        records.push({
+            plantId,
+            potSetup,
+            observedAt: row[0],
+            timestamp: dateSortValue_(row[0]),
+            rowIndex,
+            saveGroup: cleanText_(row[29]),
+        });
+        recordsByPlant.set(plantId, records);
+    });
+    return recordsByPlant;
+}
+
 function inferredWeightStatesByRow_(historyRows) {
     const inferred = new Map();
-    currentSetupWeightRecordsByPlant_(historyRows).forEach((records) => {
-        if (records.length === 1) {
-            const [record] = records;
-            inferred.set(
-                record.rowIndex,
-                matchingWaterRowExists_(historyRows, record) ? "Wet" : "Routine"
-            );
-            return;
+    const waterRecordsByPlant = currentSetupWaterRecordsByPlant_(historyRows);
+    currentSetupWeightRecordsByPlant_(historyRows).forEach(
+        (unsortedRecords, plantId) => {
+            const records = [...unsortedRecords].sort(compareHistoryRecords_);
+            const waterRecords = [
+                ...(waterRecordsByPlant.get(plantId) || []),
+            ].sort(compareHistoryRecords_);
+            records.forEach((record) => {
+                inferred.set(record.rowIndex, "Routine");
+                if (
+                    waterRecords.some((waterRecord) =>
+                        historyRecordsShareSave_(record, waterRecord)
+                    )
+                ) {
+                    inferred.set(record.rowIndex, "Wet");
+                }
+            });
+
+            let previousWaterRecord = null;
+            waterRecords.forEach((waterRecord) => {
+                const selected = records
+                    .filter(
+                        (record) =>
+                            (!previousWaterRecord ||
+                                compareHistoryRecords_(
+                                    record,
+                                    previousWaterRecord
+                                ) > 0) &&
+                            compareHistoryRecords_(record, waterRecord) < 0 &&
+                            inferred.get(record.rowIndex) !== "Wet" &&
+                            !historyRecordsShareSave_(record, waterRecord)
+                    )
+                    .at(-1);
+                if (selected) inferred.set(selected.rowIndex, "Dry");
+                previousWaterRecord = waterRecord;
+            });
         }
-        const weights = records.map(({ weight }) => weight);
-        const lowest = Math.min(...weights);
-        const highest = Math.max(...weights);
-        records.forEach((record) => {
-            inferred.set(
-                record.rowIndex,
-                lowest === highest
-                    ? "Routine"
-                    : record.weight === lowest
-                      ? "Dry"
-                      : record.weight === highest
-                        ? "Wet"
-                        : "Routine"
-            );
-        });
-    });
+    );
     return inferred;
 }
 
-function matchingWaterRowExists_(historyRows, weightRecord) {
-    return historyRows.some((row) => {
-        if (
-            !activeHistoryRow_(row) ||
-            cleanText_(row[1]) !== weightRecord.plantId ||
-            cleanText_(row[2]) !== "Water" ||
-            positiveIntegerOrDefault_(row[10], 1) !== weightRecord.potSetup
-        ) {
-            return false;
-        }
-        const saveGroup = cleanText_(row[29]);
-        return (
-            (weightRecord.saveGroup && saveGroup === weightRecord.saveGroup) ||
-            dateSortValue_(row[0]) === weightRecord.timestamp
-        );
-    });
+function compareHistoryRecords_(left, right) {
+    return left.timestamp - right.timestamp || left.rowIndex - right.rowIndex;
+}
+
+function historyRecordsShareSave_(left, right) {
+    if (left.saveGroup && right.saveGroup) {
+        return left.saveGroup === right.saveGroup;
+    }
+    if (left.timestamp && left.timestamp === right.timestamp) return true;
+    const leftObservedAt = cleanText_(left.observedAt);
+    return (
+        Boolean(leftObservedAt) &&
+        leftObservedAt === cleanText_(right.observedAt)
+    );
 }
 
 function activeHistoryRow_(row) {

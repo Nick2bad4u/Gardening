@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
+  <title id="title">Elephant bush plant portrait</title>
+  <path d="M12 18V4.5m0 4-4.7-2.4m4.7 6.1-5.5-1.6m5.5-4 4.3-2m-4.3 6.5 5.2-2.4m-5.2 6.4 4.2-1.8" fill="none" stroke="#86533b" stroke-linecap="round" stroke-width="1.4"/>
+  <g fill="#56b66a" stroke="#2f6841" stroke-width=".55"><circle cx="6.5" cy="5.8" r="2.1"/><circle cx="5.8" cy="10.4" r="2.2"/><circle cx="17.2" cy="4.4" r="2.1"/><circle cx="18" cy="8.5" r="2.2"/><circle cx="17" cy="13" r="2.1"/><circle cx="11.8" cy="3.6" r="1.9"/></g>
+  <path d="M5.5 17h13l-1.5 4.4H7z" fill="#d77a49" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
+  <title id="title">Raindrops echeveria plant portrait</title>
+  <g fill="#6aaeb2" stroke="#425d76" stroke-linejoin="round" stroke-width=".55"><path d="M12 11.7C8.4 8.3 8.5 5.4 10.9 5c2.3-.4 3.2 2.4 1.1 6.7Z"/><path d="M12 11.7c4.1-2.8 6.9-1.9 6.7.5s-3.1 2.6-6.7-.5Z"/><path d="M12 11.7c-.8 4.9-3 6.8-4.9 5.2-1.9-1.5-.5-4.2 4.9-5.2Z"/><path d="M12 11.7C7.1 13 4.6 11.7 5.5 9.5c.9-2.2 3.8-1.5 6.5 2.2Z"/><path d="M12 11.7c2.6-4.1 5.5-4.8 6.3-2.5.9 2.2-1.7 3.7-6.3 2.5Z"/></g>
+  <g fill="#a4d3c8" stroke="#476b72" stroke-width=".3"><circle cx="10.6" cy="7.8" r=".8"/><circle cx="15.1" cy="10" r=".85"/><circle cx="8.5" cy="12.8" r=".75"/></g>
+  <circle cx="12" cy="11.7" r="1.3" fill="#d780a1"/>
+  <path d="M5.3 17h13.4l-1.5 4.4H6.8z" fill="#f1c751" stroke="#70521b" stroke-linejoin="round" stroke-width="1"/>
+</svg>

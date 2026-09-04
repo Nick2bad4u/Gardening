@@ -7,6 +7,8 @@ import remarkHtml from "remark-html";
 import { remark } from "remark";
 import { format, resolveConfig } from "prettier";
 
+import { syncPlantIcons } from "./sync-plant-icons.mjs";
+
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, "..");
 const outputPath = path.join(
@@ -1424,7 +1426,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         ${renderProfileMeta("status", "status", "Status", profile.statusHtml)}
         ${acquisitionDetails}
         ${renderProfileMeta("photos", "camera", "Photo history", photoHistorySummary)}
-        ${renderProfileMeta("scope", "photos", "Photo scope", escapeHtml(profile.scopeNote))}
+        ${renderProfileMeta("scope", `plant-${profile.slug}`, "Photo scope", escapeHtml(profile.scopeNote))}
       </dl>
     </div>
 
@@ -1804,6 +1806,8 @@ async function renderBooklet(profiles) {
 }
 
 async function main() {
+    const checkOnly = process.argv.includes("--check");
+    await syncPlantIcons({ checkOnly });
     const [
         profiles,
         fieldGuideProfiles,
@@ -1866,8 +1870,6 @@ async function main() {
             filepath: photoAlbumOutputPath,
         }),
     ]);
-    const checkOnly = process.argv.includes("--check");
-
     if (checkOnly) {
         const [currentBooklet, currentPhotoAlbum] = await Promise.all([
             readFile(outputPath, "utf8").catch(() => ""),

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
+  <title id="title">Chamaelobivia / peanut cactus hybrid plant portrait</title>
+  <g fill="#59ad62" stroke="#173c2b" stroke-width=".7"><rect x="5.8" y="8.7" width="3.5" height="8.4" rx="1.75"/><rect x="9.6" y="5.5" width="4" height="11.6" rx="2"/><rect x="14.1" y="9" width="3.7" height="8.1" rx="1.85"/></g>
+  <path d="M7.5 10v6m4.1-9v9m4.3-5.5V16" stroke="#cce8a9" stroke-dasharray=".8 1.1" stroke-width=".65"/>
+  <path d="m12 5.8-2.6-2.2L12 1.4l2.6 2.2Z" fill="#ef744a" stroke="#7a3d29" stroke-linejoin="round" stroke-width=".55"/>
+  <circle cx="12" cy="3.6" r=".75" fill="#f5c84c"/>
+  <path d="M4.8 16.2h14.4l-1.7 5.1h-11z" fill="#6b9cc7" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
+</svg>

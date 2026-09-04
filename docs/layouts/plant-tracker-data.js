@@ -483,6 +483,84 @@ function wateringDetails(events) {
 }
 
 /**
+ * @param {HistoryEvent} weightEvent
+ * @param {HistoryEvent} waterEvent
+ */
+function observationsShareSave(weightEvent, waterEvent) {
+    const weightSaveGroup = String(
+        weightEvent["Save group / batch ID"] ?? ""
+    ).trim();
+    const waterSaveGroup = String(
+        waterEvent["Save group / batch ID"] ?? ""
+    ).trim();
+    if (weightSaveGroup && waterSaveGroup) {
+        return weightSaveGroup === waterSaveGroup;
+    }
+    const weightDate = parseDate(weightEvent.Date);
+    const waterDate = parseDate(waterEvent.Date);
+    return weightDate && waterDate
+        ? weightDate.getTime() === waterDate.getTime()
+        : String(weightEvent.Date ?? "") === String(waterEvent.Date ?? "");
+}
+
+/**
+ * Derive weight states from completed watering cycles without rewriting the
+ * append-only state stored in History. A weight captured with Water is Wet. The
+ * last non-Wet weight before the next watering closes that drying cycle as Dry.
+ * Every weight after the most recent watering remains Routine until a later
+ * watering proves which reading was actually the cycle endpoint.
+ *
+ * @param {HistoryEvent[]} activeEvents
+ */
+function weightCycleAnalytics(activeEvents) {
+    const orderedEvents = sortEvents(activeEvents);
+    const orderByEvent = new Map(
+        orderedEvents.map((event, index) => [event, index])
+    );
+    const weights = orderedEvents.filter(
+        (event) => (numericValue(event["Weight (g)"]) ?? 0) > 0
+    );
+    const waterEvents = orderedEvents.filter(
+        (event) =>
+            String(event.Event ?? "")
+                .trim()
+                .toLowerCase() === "water"
+    );
+    const stateByEvent = new Map(weights.map((event) => [event, "Routine"]));
+    const wetAnchors = weights.filter((weightEvent) =>
+        waterEvents.some((waterEvent) =>
+            observationsShareSave(weightEvent, waterEvent)
+        )
+    );
+    wetAnchors.forEach((event) => stateByEvent.set(event, "Wet"));
+
+    /** @type {HistoryEvent[]} */
+    const dryAnchors = [];
+    let previousWaterOrder = -1;
+    waterEvents.forEach((waterEvent) => {
+        const waterOrder = orderByEvent.get(waterEvent) ?? -1;
+        const candidate = weights
+            .filter((weightEvent) => {
+                const weightOrder = orderByEvent.get(weightEvent) ?? -1;
+                return (
+                    weightOrder > previousWaterOrder &&
+                    weightOrder < waterOrder &&
+                    stateByEvent.get(weightEvent) !== "Wet" &&
+                    !observationsShareSave(weightEvent, waterEvent)
+                );
+            })
+            .at(-1);
+        if (candidate) {
+            stateByEvent.set(candidate, "Dry");
+            dryAnchors.push(candidate);
+        }
+        previousWaterOrder = waterOrder;
+    });
+
+    return { dryAnchors, stateByEvent, wetAnchors, weights };
+}
+
+/**
  * @param {HistoryEvent[]} events
  * @param {string} [plantId]
  */
@@ -495,43 +573,14 @@ export function calculateSummary(events, plantId = "") {
     const activeEvents = currentEvents.filter(
         (event) => (numericValue(event["Pot setup"]) ?? 1) === activePotSetup
     );
-    const activeWeights = activeEvents.filter(
-        (event) => numericValue(event["Weight (g)"]) !== null
+    const weightCycles = weightCycleAnalytics(activeEvents);
+    const activeWeights = weightCycles.weights;
+    const dryWeights = weightCycles.dryAnchors.map((event) =>
+        Number(event["Weight (g)"])
     );
-    const weightValues = activeWeights
-        .map((event) => numericValue(event["Weight (g)"]))
-        .filter((value) => value !== null);
-    const lowestWeight = weightValues.length ? Math.min(...weightValues) : null;
-    const highestWeight = weightValues.length
-        ? Math.max(...weightValues)
-        : null;
-    const onlyWeightWasWatered =
-        activeWeights.length === 1 &&
-        activeEvents.some((event) => {
-            if (
-                String(event.Event ?? "")
-                    .trim()
-                    .toLowerCase() !== "water"
-            ) {
-                return false;
-            }
-            const weightEvent = activeWeights[0];
-            const saveGroup = String(
-                weightEvent?.["Save group / batch ID"] ?? ""
-            ).trim();
-            const waterSaveGroup = String(
-                event["Save group / batch ID"] ?? ""
-            ).trim();
-            return saveGroup
-                ? saveGroup === waterSaveGroup
-                : String(event.Date ?? "") === String(weightEvent?.Date ?? "");
-        });
-    const dryWeights = lowestWeight === null ? [] : [lowestWeight];
-    const wetWeights =
-        highestWeight === null ||
-        (activeWeights.length === 1 && !onlyWeightWasWatered)
-            ? []
-            : [highestWeight];
+    const wetWeights = weightCycles.wetAnchors.map((event) =>
+        Number(event["Weight (g)"])
+    );
     const dryAverage = average(dryWeights);
     const wetAverage = average(wetWeights);
     const latestWeight = newest(
@@ -588,18 +637,7 @@ export function calculateSummary(events, plantId = "") {
     const weightSeries = measurementSeries(activeEvents, "Weight (g)").map(
         (point) => ({
             ...point,
-            state:
-                activeWeights.length === 1
-                    ? onlyWeightWasWatered
-                        ? "Wet"
-                        : "Routine"
-                    : lowestWeight === highestWeight
-                      ? "Routine"
-                      : point.value === lowestWeight
-                        ? "Dry"
-                        : point.value === highestWeight
-                          ? "Wet"
-                          : "Routine",
+            state: weightCycles.stateByEvent.get(point.event) ?? "Routine",
         })
     );
     const capacity =
@@ -620,13 +658,15 @@ export function calculateSummary(events, plantId = "") {
               )
             : null;
     const baselineStatus =
-        activeWeights.length >= 2
-            ? capacity !== null && capacity > 0
-                ? "Ready"
-                : "Check baseline"
-            : activeWeights.length > 0
-              ? "Provisional"
-              : "Needs dry + wet weights";
+        activeWeights.length === 0
+            ? "Needs dry + wet weights"
+            : wetWeights.length === 0
+              ? "Needs a wet weight"
+              : dryWeights.length === 0
+                ? "Needs a completed dry cycle"
+                : capacity !== null && capacity > 0
+                  ? "Ready"
+                  : "Check baseline";
     const previousWeightValue = weightSeries.at(-2)?.value ?? null;
     const weightChange =
         latestWeightValue !== null && previousWeightValue !== null

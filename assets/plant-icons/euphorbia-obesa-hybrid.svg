@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
+  <title id="title">Dragon's Egg plant portrait</title>
+  <ellipse cx="12" cy="10.8" rx="6" ry="7.7" fill="#66a866" stroke="#173c2b" stroke-width="1"/>
+  <path d="M12 3.2v15.1M8.8 4.2c2 4.2 2 9.1 0 13.2m6.4-13.2c-2 4.2-2 9.1 0 13.2" fill="none" stroke="#b8d27c" stroke-width=".8"/>
+  <path d="M6.6 8.2h10.8m-11.2 5h11.6" stroke="#47794f" stroke-dasharray="1 1.2" stroke-width=".6"/>
+  <path d="m12 3.3-1.4-1.1L12 1l1.4 1.2Z" fill="#d95862"/>
+  <path d="M5.2 17.1h13.6l-1.5 4.3H6.7z" fill="#efc24f" stroke="#6e541e" stroke-linejoin="round" stroke-width="1"/>
+</svg>

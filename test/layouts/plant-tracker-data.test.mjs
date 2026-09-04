@@ -229,7 +229,7 @@ describe("measured-only growth analytics", () => {
         expect(summary.weightMovingAverage).toBe(310);
     });
 
-    it("infers current-setup Dry, Wet, and Routine states from weight extrema", () => {
+    it("closes only the last eligible reading before Water as Dry", () => {
         const summary = calculateSummary([
             observation({
                 date: "2026-01-01",
@@ -241,19 +241,40 @@ describe("measured-only growth analytics", () => {
                 date: "2026-02-01",
                 potSetup: 2,
                 weight: 350,
-                weightState: "Dry",
+                saveGroup: "wet-1",
             }),
+            {
+                Date: "2026-02-01",
+                Event: "Water",
+                "Pot setup": 2,
+                "Save group / batch ID": "wet-1",
+            },
             observation({
                 date: "2026-02-02",
                 potSetup: 2,
                 weight: 325,
-                weightState: "Wet",
             }),
             observation({
                 date: "2026-02-03",
                 potSetup: 2,
                 weight: 300,
-                weightState: "Wet",
+            }),
+            observation({
+                date: "2026-02-04",
+                potSetup: 2,
+                saveGroup: "wet-2",
+                weight: 340,
+            }),
+            {
+                Date: "2026-02-04",
+                Event: "Water",
+                "Pot setup": 2,
+                "Save group / batch ID": "wet-2",
+            },
+            observation({
+                date: "2026-02-05",
+                potSetup: 2,
+                weight: 290,
             }),
         ]);
 
@@ -264,10 +285,12 @@ describe("measured-only growth analytics", () => {
             [350, "Wet"],
             [325, "Routine"],
             [300, "Dry"],
+            [340, "Wet"],
+            [290, "Routine"],
         ]);
         expect(summary.dryAverage).toBe(300);
-        expect(summary.wetAverage).toBe(350);
-        expect(summary.capacity).toBe(50);
+        expect(summary.wetAverage).toBe(345);
+        expect(summary.capacity).toBe(45);
         expect(summary.baselineStatus).toBe("Ready");
     });
 
@@ -290,11 +313,109 @@ describe("measured-only growth analytics", () => {
         ]);
 
         expect(watered.weightSeries[0]?.state).toBe("Wet");
-        expect(watered.dryAverage).toBe(410);
+        expect(watered.dryAverage).toBeNull();
         expect(watered.wetAverage).toBe(410);
-        expect(watered.baselineStatus).toBe("Provisional");
+        expect(watered.baselineStatus).toBe("Needs a completed dry cycle");
         expect(unwatered.weightSeries[0]?.state).toBe("Routine");
         expect(unwatered.wetAverage).toBeNull();
+        expect(unwatered.baselineStatus).toBe("Needs a wet weight");
+    });
+
+    it("derives one Dry endpoint per completed cycle and leaves the open cycle Routine", () => {
+        const entries = [
+            observation({
+                date: "2026-01-11",
+                saveGroup: "wet-3",
+                weight: 515,
+            }),
+            observation({ date: "2026-01-05", weight: 450 }),
+            {
+                Date: "2026-01-06",
+                Event: "Water",
+                "Pot setup": 1,
+                "Save group / batch ID": "wet-2",
+            },
+            observation({ date: "2026-01-10", weight: 460 }),
+            observation({
+                date: "2026-01-01",
+                saveGroup: "wet-1",
+                weight: 500,
+            }),
+            {
+                Date: "2026-01-11",
+                Event: "Water",
+                "Pot setup": 1,
+                "Save group / batch ID": "wet-3",
+            },
+            observation({ date: "2026-01-13", weight: 440 }),
+            observation({
+                date: "2026-01-06",
+                saveGroup: "wet-2",
+                weight: 510,
+            }),
+            {
+                Date: "2026-01-01",
+                Event: "Water",
+                "Pot setup": 1,
+                "Save group / batch ID": "wet-1",
+            },
+            observation({ date: "2026-01-03", weight: 470 }),
+            observation({ date: "2026-01-12", weight: 490 }),
+        ].map((entry, index) => ({ ...entry, _index: index }));
+
+        const summary = calculateSummary(entries);
+        const states = new Map(
+            summary.weightSeries.map(({ value, state }) => [value, state])
+        );
+
+        expect(states.get(450)).toBe("Dry");
+        expect(states.get(460)).toBe("Dry");
+        expect(states.get(470)).toBe("Routine");
+        expect(states.get(440)).toBe("Routine");
+        expect(states.get(490)).toBe("Routine");
+        expect([
+            states.get(500),
+            states.get(510),
+            states.get(515),
+        ]).toEqual([
+            "Wet",
+            "Wet",
+            "Wet",
+        ]);
+        expect(summary.drySamples).toBe(2);
+        expect(summary.dryAverage).toBe(455);
+        expect(summary.wetSamples).toBe(3);
+        expect(summary.wetAverage).toBeCloseTo(508.333, 3);
+    });
+
+    it("uses save groups to distinguish tied Dry and Wet timestamps", () => {
+        const summary = calculateSummary(
+            [
+                observation({
+                    date: "3/1/2026 12:00 PM",
+                    saveGroup: "previous-cycle",
+                    weight: 300,
+                }),
+                observation({
+                    date: "3/1/2026 12:00 PM",
+                    saveGroup: "new-watering",
+                    weight: 450,
+                }),
+                {
+                    Date: "3/1/2026 12:00 PM",
+                    Event: "Water",
+                    "Pot setup": 1,
+                    "Save group / batch ID": "new-watering",
+                },
+            ].map((event, index) => ({ ...event, _index: index }))
+        );
+
+        expect(
+            summary.weightSeries.map(({ value, state }) => [value, state])
+        ).toEqual([
+            [300, "Dry"],
+            [450, "Wet"],
+        ]);
     });
 
     it("keeps removed observations in history input but excludes their care analytics", () => {

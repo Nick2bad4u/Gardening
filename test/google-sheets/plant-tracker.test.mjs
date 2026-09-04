@@ -946,110 +946,97 @@ describe("Garden logger server logic", () => {
         });
     });
 
-    it("infers the current-setup dry anchor from the active low and ignores stored states", () => {
+    it("returns the latest completed-cycle dry anchor and ignores open-cycle lows", () => {
         const history = createHistorySheet([]);
         const context = loadAppsScript(history);
         const weightRow = ({
             plantId,
             observedAt,
-            state,
+            event = "Weigh",
             weight,
+            setup = 1,
+            batch = "",
             status = "",
         }) => {
             const row = Array(42).fill("");
             row[0] = observedAt;
             row[1] = plantId;
-            row[2] = "Weigh";
-            row[3] = state;
+            row[2] = event;
+            row[3] = "Dry";
             row[4] = weight;
-            row[5] = 99;
-            row[6] = 88;
+            row[10] = setup;
+            row[29] = batch;
             row[35] = status;
             return row;
         };
 
-        const result = context.dryOrLowestWeightsFromRows_([
+        const rows = [
             weightRow({
                 plantId: "P01",
                 observedAt: "2026-08-01T12:00:00Z",
-                state: "Routine",
-                weight: 300,
+                weight: 200,
+                setup: 1,
             }),
             weightRow({
                 plantId: "P01",
                 observedAt: "2026-08-02T12:00:00Z",
-                state: "Dry",
-                weight: 320,
-            }),
-            weightRow({
-                plantId: "P01",
-                observedAt: "2026-08-03T12:00:00Z",
-                state: "Dry",
-                weight: 310,
-                status: "Removed",
-            }),
-            weightRow({
-                plantId: "P01",
-                observedAt: "2026-08-04T12:00:00Z",
-                state: "Dry",
-                weight: 330,
-            }),
-            weightRow({
-                plantId: "P02",
-                observedAt: "2026-08-01T12:00:00Z",
-                state: "Wet",
-                weight: 450,
-            }),
-            weightRow({
-                plantId: "P02",
-                observedAt: "2026-08-02T12:00:00Z",
-                state: "Routine",
-                weight: 420,
-            }),
-            weightRow({
-                plantId: "P02",
-                observedAt: "2026-08-03T12:00:00Z",
-                state: "Routine",
-                weight: 420,
-            }),
-            weightRow({
-                plantId: "P02",
-                observedAt: "2026-08-04T12:00:00Z",
-                state: "Routine",
-                weight: 400,
-                status: "Removed",
-            }),
-            weightRow({
-                plantId: "P03",
-                observedAt: "invalid-older-dry-date",
-                state: "Dry",
                 weight: 500,
+                setup: 2,
+                batch: "wet-1",
             }),
             weightRow({
-                plantId: "P03",
-                observedAt: "invalid-newer-dry-date",
-                state: "Dry",
-                weight: 510,
+                plantId: "P01",
+                observedAt: "2026-08-02T12:00:00Z",
+                event: "Water",
+                setup: 2,
+                batch: "wet-1",
             }),
             weightRow({
-                plantId: "P04",
-                observedAt: "invalid-older-low-date",
-                state: "Routine",
-                weight: 410,
+                plantId: "P01",
+                observedAt: "2026-08-03T12:00:00Z",
+                weight: 470,
+                setup: 2,
             }),
             weightRow({
-                plantId: "P04",
-                observedAt: "invalid-newer-low-date",
-                state: "Routine",
-                weight: 410,
+                plantId: "P01",
+                observedAt: "2026-08-04T12:00:00Z",
+                weight: 450,
+                setup: 2,
             }),
             weightRow({
-                plantId: "P05",
+                plantId: "P01",
                 observedAt: "2026-08-05T12:00:00Z",
-                state: "Dry",
-                weight: 0,
+                weight: 510,
+                setup: 2,
+                batch: "wet-2",
             }),
-        ]);
+            weightRow({
+                plantId: "P01",
+                observedAt: "2026-08-05T12:00:00Z",
+                event: "Water",
+                setup: 2,
+                batch: "wet-2",
+            }),
+            weightRow({
+                plantId: "P01",
+                observedAt: "2026-08-06T12:00:00Z",
+                weight: 430,
+                setup: 2,
+            }),
+            weightRow({
+                plantId: "P01",
+                observedAt: "2026-08-06T12:30:00Z",
+                weight: 400,
+                setup: 2,
+                status: "Removed",
+            }),
+            weightRow({
+                plantId: "P02",
+                observedAt: "2026-08-07T12:00:00Z",
+                weight: 390,
+            }),
+        ];
+        const result = context.dryOrLowestWeightsFromRows_(rows);
 
         expect(
             [...result.entries()].map(([plantId, value]) => ({
@@ -1059,29 +1046,21 @@ describe("Garden logger server logic", () => {
         ).toEqual([
             {
                 plantId: "P01",
-                weight: 300,
-                observedAt: "2026-08-01T12:00:00Z",
-                basis: "Inferred dry",
-            },
-            {
-                plantId: "P02",
-                weight: 420,
-                observedAt: "2026-08-03T12:00:00Z",
-                basis: "Inferred dry",
-            },
-            {
-                plantId: "P03",
-                weight: 500,
-                observedAt: "invalid-older-dry-date",
-                basis: "Inferred dry",
-            },
-            {
-                plantId: "P04",
-                weight: 410,
-                observedAt: "invalid-newer-low-date",
-                basis: "Inferred dry",
+                weight: 450,
+                observedAt: "2026-08-04T12:00:00Z",
+                basis: "Completed cycle",
             },
         ]);
+        expect([...context.inferredWeightStatesByRow_(rows).entries()]).toEqual(
+            [
+                [1, "Wet"],
+                [3, "Routine"],
+                [4, "Dry"],
+                [5, "Wet"],
+                [7, "Routine"],
+                [9, "Routine"],
+            ]
+        );
     });
 
     it("scopes inferred weight states to the current setup and treats a lone Water + weigh as Wet", () => {
@@ -1111,14 +1090,10 @@ describe("Garden logger server logic", () => {
         ];
         expect(
             context.dryOrLowestWeightsFromRows_(historyRows).get("P01")
-        ).toEqual({
-            weight: 200,
-            observedAt: "2026-08-03T12:00:00Z",
-            basis: "Inferred dry",
-        });
+        ).toBeUndefined();
         expect([
             ...context.inferredWeightStatesByRow_(historyRows).values(),
-        ]).toEqual(["Wet", "Dry"]);
+        ]).toEqual(["Routine", "Routine"]);
 
         const waterBatchRows = [
             row({
@@ -1139,7 +1114,34 @@ describe("Garden logger server logic", () => {
         );
         expect(
             context.dryOrLowestWeightsFromRows_(waterBatchRows).get("P01")
-        ).toMatchObject({ weight: 500, basis: "Only wet reading" });
+        ).toBeUndefined();
+
+        const tiedTimestampRows = [
+            row({
+                weight: 300,
+                setup: 2,
+                batch: "previous-cycle",
+                observedAt: "2026-08-05T12:00:00Z",
+            }),
+            row({
+                weight: 450,
+                setup: 2,
+                batch: "new-watering",
+                observedAt: "2026-08-05T12:00:00Z",
+            }),
+            row({
+                event: "Water",
+                setup: 2,
+                batch: "new-watering",
+                observedAt: "2026-08-05T12:00:00Z",
+            }),
+        ];
+        expect([
+            ...context.inferredWeightStatesByRow_(tiedTimestampRows).values(),
+        ]).toEqual(["Dry", "Wet"]);
+        expect(
+            context.dryOrLowestWeightsFromRows_(tiedTimestampRows).get("P01")
+        ).toMatchObject({ weight: 300, basis: "Completed cycle" });
     });
 
     it("builds deterministic dry-weight and forecast formulas for the workbook views", () => {
@@ -1150,14 +1152,16 @@ describe("Garden logger server logic", () => {
         });
 
         expect(baselineRow).toHaveLength(34);
-        expect(baselineRow[22]).toMatch(/MIN\(FILTER\(History!/);
-        expect(baselineRow[24]).toMatch(/MAX\(FILTER\(History!/);
+        expect(baselineRow[22]).toMatch(/dryKeys,MAP\(waterKeys/);
+        expect(baselineRow[22]).toMatch(/lastDryKey/);
+        expect(baselineRow[24]).toMatch(/wetKeys,FILTER\(weightKeys/);
+        expect(baselineRow[24]).toMatch(/lastWetKey/);
         expect(baselineRow[30]).toMatch(/SLOPE/);
         expect(baselineRow[31]).toMatch(/C2-W2/);
-        expect(baselineRow[32]).toMatch(/Need 3 post-water weights/);
+        expect(baselineRow[32]).toMatch(/Need a completed dry cycle/);
         expect(baselineRow[33]).toMatch(/DATE\(9999,12,31\)/);
         expect(context.plantPageHistoryFormula_("P01")).toMatch(
-            /Inferred state|COUNTIFS\(History!/
+            /nextWaterKey|candidateWet/
         );
         expect(context.plantPageHistoryFormula_("P01")).toContain(
             'pounds,MAP(weights,LAMBDA(w,IF(w="","",w/453.59237)))'
@@ -1189,7 +1193,7 @@ describe("Garden logger server logic", () => {
             calls.push(["organize", ...args]);
 
         expect(context.refreshGardenWorkbook()).toEqual({
-            loggerVersion: "5.16.0",
+            loggerVersion: "5.16.2",
             plantPages: 2,
             baselineColumns: 34,
             dashboardColumns: 21,
@@ -1204,6 +1208,69 @@ describe("Garden logger server logic", () => {
             "toast",
         ]);
         expect(flushes).toEqual(["flush"]);
+    });
+
+    it("refreshes resumable plant-page batches without rebuilding shared views", () => {
+        const flushes = [];
+        const context = loadAppsScript(createHistorySheet([]), {
+            SpreadsheetApp: {
+                flush: () => flushes.push("flush"),
+                newDataValidation: createDataValidationBuilder,
+                ProtectionType: { RANGE: "RANGE" },
+            },
+        });
+        const calls = [];
+        const spreadsheet = {
+            toast: (...args) => calls.push(["toast", ...args]),
+        };
+        const plants = Array.from({ length: 30 }, (_, index) => ({
+            id: `P${String(index + 1).padStart(2, "0")}`,
+        }));
+        context.getGardenSpreadsheet_ = () => spreadsheet;
+        context.workbookPlantRecords_ = () => plants;
+        context.refreshBaselineView_ = (...args) =>
+            calls.push(["baselines", ...args]);
+        context.refreshDashboardView_ = (...args) =>
+            calls.push(["dashboard", ...args]);
+        context.refreshPlantPage_ = (...args) => calls.push(["plant", ...args]);
+        context.organizeWorkbookSheets_ = (...args) =>
+            calls.push(["organize", ...args]);
+
+        expect(context.refreshGardenWorkbookPages01To10()).toEqual({
+            loggerVersion: "5.16.2",
+            firstPlant: "P01",
+            lastPlant: "P10",
+            plantPages: 10,
+        });
+        expect(context.refreshGardenWorkbookPages11To20()).toEqual({
+            loggerVersion: "5.16.2",
+            firstPlant: "P11",
+            lastPlant: "P20",
+            plantPages: 10,
+        });
+        expect(context.refreshGardenWorkbookPages21To30()).toEqual({
+            loggerVersion: "5.16.2",
+            firstPlant: "P21",
+            lastPlant: "P30",
+            plantPages: 10,
+        });
+        const pageCalls = calls.filter(([name]) => name === "plant");
+        expect(pageCalls).toHaveLength(30);
+        expect(pageCalls[0].slice(3)).toEqual([0, plants[0]]);
+        expect(pageCalls[9].slice(3)).toEqual([9, plants[9]]);
+        expect(pageCalls[10].slice(3)).toEqual([10, plants[10]]);
+        expect(pageCalls[19].slice(3)).toEqual([19, plants[19]]);
+        expect(pageCalls[20].slice(3)).toEqual([20, plants[20]]);
+        expect(pageCalls[29].slice(3)).toEqual([29, plants[29]]);
+        expect(calls.filter(([name]) => name === "organize")).toHaveLength(3);
+        expect(calls.filter(([name]) => name === "toast")).toHaveLength(3);
+        expect(calls.some(([name]) => name === "baselines")).toBe(false);
+        expect(calls.some(([name]) => name === "dashboard")).toBe(false);
+        expect(flushes).toEqual([
+            "flush",
+            "flush",
+            "flush",
+        ]);
     });
 
     it("reads all 30 workbook plant records and rejects an incomplete tracker", () => {
@@ -1275,6 +1342,147 @@ describe("Garden logger server logic", () => {
         expect(context.formulaString_(null)).toBe("");
     });
 
+    it("removes the legacy A36:R36 footer merge before writing P30", () => {
+        const context = loadAppsScript(createHistorySheet([]));
+        const mergedRanges = [
+            { row: 36, column: 1, rowCount: 1, columnCount: 18 },
+        ];
+        const cells = new Map();
+        const overlaps = (left, right) =>
+            left.row <= right.row + right.rowCount - 1 &&
+            left.row + left.rowCount - 1 >= right.row &&
+            left.column <= right.column + right.columnCount - 1 &&
+            left.column + left.columnCount - 1 >= right.column;
+        const mergedCell = (row, column) =>
+            mergedRanges.find(
+                (range) =>
+                    row >= range.row &&
+                    row < range.row + range.rowCount &&
+                    column >= range.column &&
+                    column < range.column + range.columnCount
+            );
+        const dashboard = {
+            getName: () => "Dashboard",
+            getMaxRows: () => 254,
+            getMaxColumns: () => 21,
+            getRange(row, column, rowCount = 1, columnCount = 1) {
+                const coordinates = { row, column, rowCount, columnCount };
+                const range = {
+                    breakApart() {
+                        for (
+                            let index = mergedRanges.length - 1;
+                            index >= 0;
+                            index -= 1
+                        ) {
+                            if (overlaps(coordinates, mergedRanges[index])) {
+                                mergedRanges.splice(index, 1);
+                            }
+                        }
+                        return range;
+                    },
+                    clearContent() {
+                        for (
+                            let rowOffset = 0;
+                            rowOffset < rowCount;
+                            rowOffset += 1
+                        ) {
+                            for (
+                                let columnOffset = 0;
+                                columnOffset < columnCount;
+                                columnOffset += 1
+                            ) {
+                                cells.delete(
+                                    `${row + rowOffset}:${column + columnOffset}`
+                                );
+                            }
+                        }
+                        return range;
+                    },
+                    merge() {
+                        mergedRanges.push({ ...coordinates });
+                        return range;
+                    },
+                    setValue(value) {
+                        cells.set(`${row}:${column}`, value);
+                        return range;
+                    },
+                    setFormula(formula) {
+                        cells.set(`${row}:${column}`, formula);
+                        return range;
+                    },
+                    setValues(values) {
+                        values.forEach((valuesRow, rowOffset) => {
+                            valuesRow.forEach((value, columnOffset) => {
+                                const targetRow = row + rowOffset;
+                                const targetColumn = column + columnOffset;
+                                const merge = mergedCell(
+                                    targetRow,
+                                    targetColumn
+                                );
+                                if (
+                                    !merge ||
+                                    (targetRow === merge.row &&
+                                        targetColumn === merge.column)
+                                ) {
+                                    cells.set(
+                                        `${targetRow}:${targetColumn}`,
+                                        value
+                                    );
+                                }
+                            });
+                        });
+                        return range;
+                    },
+                };
+                [
+                    "setBackground",
+                    "setFontColor",
+                    "setFontSize",
+                    "setFontWeight",
+                    "setHorizontalAlignment",
+                    "setNumberFormat",
+                    "setVerticalAlignment",
+                    "setWrap",
+                ].forEach((method) => {
+                    range[method] = () => range;
+                });
+                return range;
+            },
+            insertColumnsAfter: () => {},
+            insertRowsAfter: () => {},
+            setColumnWidth: () => {},
+            setColumnWidths: () => {},
+            setFrozenColumns: () => {},
+            setFrozenRows: () => {},
+            setHiddenGridlines: () => {},
+        };
+        const plants = Array.from({ length: 30 }, (_, index) => ({
+            id: `P${String(index + 1).padStart(2, "0")}`,
+            name: `Plant ${index + 1}`,
+            label: index === 29 ? "#6" : `A${index + 1}`,
+            trackerRow: index + 2,
+        }));
+        const pages = new Map(
+            plants.map((plant, index) => [
+                plant.id,
+                { getSheetId: () => 1000 + index },
+            ])
+        );
+        const spreadsheet = {
+            getSheetByName: (name) =>
+                name === "Dashboard" ? dashboard : pages.get(name) || null,
+            getSheets: () => [dashboard, ...pages.values()],
+        };
+
+        context.refreshDashboardView_(spreadsheet, plants);
+
+        expect(cells.get("36:2")).toBe("P30");
+        expect(cells.get("36:3")).toContain("'Plant tracker'!B31");
+        expect(cells.get("36:3")).toContain("'Plant tracker'!O31");
+        expect(cells.get("36:18")).toBe("=Baselines!J31");
+        expect(mergedRanges.some((range) => range.row >= 6)).toBe(false);
+    });
+
     it("formats baseline, dashboard, and plant-page workbook views", () => {
         const conditionalRule = {};
         const ruleBuilder = {
@@ -1301,6 +1509,7 @@ describe("Garden logger server logic", () => {
                 "setFormula",
                 "setHorizontalAlignment",
                 "setNote",
+                "setNotes",
                 "setNumberFormat",
                 "setRowHeights",
                 "setValue",
@@ -1477,19 +1686,42 @@ describe("Garden logger server logic", () => {
         higherWeightValues[4] = 450;
         higherWeightValues[9] = new Date("2026-08-15T12:01:00Z");
         higherWeightValues[10] = 2;
+        higherWeightValues[29] = "wet-bootstrap";
         higherWeightValues[35] = "Active";
+        const firstWaterValues = Array(42).fill("");
+        firstWaterValues[0] = new Date("2026-08-15T12:00:00Z");
+        firstWaterValues[1] = "P01";
+        firstWaterValues[2] = "Water";
+        firstWaterValues[10] = 2;
+        firstWaterValues[29] = "wet-bootstrap";
+        firstWaterValues[35] = "Active";
+        const closingWaterValues = Array(42).fill("");
+        closingWaterValues[0] = new Date("2026-08-17T12:00:00Z");
+        closingWaterValues[1] = "P01";
+        closingWaterValues[2] = "Water";
+        closingWaterValues[10] = 2;
+        closingWaterValues[29] = "next-cycle";
+        closingWaterValues[35] = "Active";
         const history = createHistorySheet([
             {
                 requestId: "garden-bootstrap-12345",
                 values: repotValues,
             },
             {
+                requestId: "garden-bootstrap-24680",
+                values: higherWeightValues,
+            },
+            {
+                requestId: "garden-bootstrap-water1",
+                values: firstWaterValues,
+            },
+            {
                 requestId: "garden-bootstrap-67890",
                 values: dryWeightValues,
             },
             {
-                requestId: "garden-bootstrap-24680",
-                values: higherWeightValues,
+                requestId: "garden-bootstrap-water2",
+                values: closingWaterValues,
             },
         ]);
         const trackerHeader = Array(28).fill("");
@@ -1542,7 +1774,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.16.0");
+        expect(bootstrap.version).toBe("5.16.2");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -1551,13 +1783,13 @@ describe("Garden logger server logic", () => {
             currentPotSize: "4 in",
             latestWeight: 412,
             dryOrLowestWeight: 405,
-            dryOrLowestWeightBasis: "Inferred dry",
+            dryOrLowestWeightBasis: "Completed cycle",
             dryOrLowestWeightDate: "2026-08-16T12:00:00.000Z",
             fieldGuideUrl: "https://example.test/p01",
         });
-        expect(Array.from(bootstrap.recent)).toHaveLength(3);
+        expect(Array.from(bootstrap.recent)).toHaveLength(5);
         expect(history.__rangeReads).toEqual([
-            { row: 2, column: 1, rowCount: 3, columnCount: 42 },
+            { row: 2, column: 1, rowCount: 5, columnCount: 42 },
         ]);
     });
 
@@ -4297,9 +4529,9 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.16.0");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.16.2");
         expect(calls.toast[1]).toBe("Garden logger verified");
-        expect(calls.toast[0]).toMatch(/Logger 5\.16\.0 is ready/);
+        expect(calls.toast[0]).toMatch(/Logger 5\.16\.2 is ready/);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(
