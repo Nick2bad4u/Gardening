@@ -6,6 +6,7 @@
 .remarkrc.*
 
 # Build and output directories
+**/.print-output/
 **/.cache/
 **/coverage/
 **/dist-*/

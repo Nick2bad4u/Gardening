@@ -949,6 +949,10 @@ docs/docusaurus/static/img/coverage.svg
 .playwright-cli/
 .pages-site/
 
+# Generated printer proofs, downloaded Lulu templates, and staged full-resolution
+# photographs stay local. The reproducible source and preflight scripts are tracked.
+.print-output/
+
 # Local Google Apps Script project mapping and OAuth credentials.
 .clasp.json
 .clasprc.json
