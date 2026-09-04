@@ -1,6 +1,7 @@
 import {
     copyFile,
     mkdir,
+    readdir,
     readFile,
     rm,
     stat,
@@ -15,6 +16,7 @@ const repositoryRoot = path.resolve(scriptDirectory, "..");
 const bookletDirectory = path.join(repositoryRoot, "docs", "plant-booklet");
 const layoutsDirectory = path.join(repositoryRoot, "docs", "layouts");
 const outputDirectory = path.join(repositoryRoot, ".pages-site");
+const plantIconDirectory = path.join(repositoryRoot, "assets", "plant-icons");
 const repositoryBlobUrl = "https://github.com/Nick2bad4u/Gardening/blob/main";
 const pagesUrl = "https://nick2bad4u.github.io/Gardening/";
 const googleTagManagerId = "GTM-T8J6HPLF";
@@ -433,6 +435,23 @@ async function main() {
         assetBytes += await copyRelativeFile(relativePath);
     }
 
+    const plantIconRelativePaths = (
+        await readdir(plantIconDirectory, {
+            withFileTypes: true,
+        })
+    )
+        .filter((entry) => entry.isFile() && entry.name.endsWith(".svg"))
+        .map((entry) => path.join("assets", "plant-icons", entry.name))
+        .sort();
+    if (plantIconRelativePaths.length !== 36) {
+        throw new Error(
+            `Expected 36 standalone plant portraits for Pages but found ${plantIconRelativePaths.length}.`
+        );
+    }
+    for (const relativePath of plantIconRelativePaths) {
+        assetBytes += await copyRelativeFile(relativePath);
+    }
+
     await Promise.all([
         copyFile(
             path.join(bookletDirectory, "booklet.css"),
@@ -488,7 +507,7 @@ async function main() {
     ]);
 
     console.log(
-        `Built GitHub Pages artifact with GTM ${googleTagManagerId}, the field guide, five collection tools, ${optimizedImages.size} responsive plant-image sets, and ${assetReferences.size} copied evidence images (${(assetBytes / 1024 / 1024).toFixed(1)} MiB total).`
+        `Built GitHub Pages artifact with GTM ${googleTagManagerId}, the field guide, five collection tools, ${optimizedImages.size} responsive plant-image sets, ${plantIconRelativePaths.length} standalone plant portraits, and ${assetReferences.size} copied evidence images (${(assetBytes / 1024 / 1024).toFixed(1)} MiB total).`
     );
 }
 
