@@ -81,13 +81,15 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
 - Logger 5.17.0 learns reliable completed dry-down cycles for the same plant
   and pot setup, then blends fresh readings into a historical forecast. The
   logger shows a reweigh window and its basis; existing Dashboard and AppSheet
-  fields receive the same model. See [Dry-down learning](#dry-down-learning).
+  fields receive the same model.
 - The 5.17.0 rollout used a native Drive backup named
   `Garden Plant Tracker — before dry-down learning 5.17.0 — 2026-09-04 19-49 EDT`.
   The scoped installer preserved all 661 canonical History records, including
   the one Removed record, with 661 unique observation IDs and no duplicate
   active request/plant/event keys. All 5,725 checked workbook formulas were
   error-free. No AppSheet table regeneration was needed.
+
+The [Dry-down learning](#dry-down-learning) section explains the forecast rules.
 
 ## Local development and tests
 
