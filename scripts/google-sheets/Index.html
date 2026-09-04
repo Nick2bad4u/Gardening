@@ -4287,37 +4287,7 @@
                                 id="weightSection"
                                 class="conditional"
                             >
-                                <label class="field-label">Weight state</label>
-                                <div
-                                    id="weightStates"
-                                    class="segments"
-                                >
-                                    <button
-                                        type="button"
-                                        class="segment"
-                                        data-state="Dry"
-                                        aria-pressed="false"
-                                        >Dry</button
-                                    >
-                                    <button
-                                        type="button"
-                                        class="segment"
-                                        data-state="Wet"
-                                        aria-pressed="false"
-                                        >Wet</button
-                                    >
-                                    <button
-                                        type="button"
-                                        class="segment"
-                                        data-state="Routine"
-                                        aria-pressed="false"
-                                        >Routine</button
-                                    >
-                                </div>
-                                <div
-                                    class="field"
-                                    style="margin-top: 12px"
-                                >
+                                <div class="field">
                                     <label
                                         class="field-label"
                                         for="weight"
@@ -5271,7 +5241,6 @@
                 bootstrap: null,
                 filteredPlants: [],
                 events: new Set(),
-                weightState: "Routine",
                 measurementUnit: "in",
                 measurementQuality: "Measured",
                 measurementMethod: "Ruler",
@@ -5307,7 +5276,6 @@
 
             const PENDING_SAVE_KEY = "gardenLoggerPendingSaveV1";
             const ROUND_STATE_KEY = "gardenLoggerRoundStateV1";
-            const WEIGHT_STATE_KEY = "gardenLoggerWeightStateV1";
             const NUTRIENT_STATE_KEY = "gardenLoggerNutrientStateV1";
             const BULK_PENDING_KEY = "gardenLoggerBulkPendingV1";
             const THEME_KEY = "gardenLoggerThemeV1";
@@ -5433,11 +5401,6 @@
                         bulkEvents: [...state.bulkEvents],
                     })
                 );
-                safeStorageSet(
-                    sessionStorage,
-                    WEIGHT_STATE_KEY,
-                    state.weightState
-                );
             }
 
             function restoreRoundState() {
@@ -5488,15 +5451,6 @@
                     $("measurementQuality").value = state.measurementQuality;
                     $("measurementMethod").value = state.measurementMethod;
                     renderMeasurementControls();
-                    const savedWeightState = safeStorageGet(
-                        sessionStorage,
-                        WEIGHT_STATE_KEY
-                    );
-                    state.weightState = ["Dry", "Wet", "Routine"].includes(
-                        savedWeightState
-                    )
-                        ? savedWeightState
-                        : "Routine";
                 } catch (error) {
                     safeStorageRemove(localStorage, ROUND_STATE_KEY);
                 }
@@ -5747,7 +5701,6 @@
                     plantId: payload.plantId,
                     events: [...payload.events].sort(),
                     observedAt: payload.observedAt,
-                    weightState: payload.weightState,
                     weight: String(payload.weight || ""),
                     height: String(payload.height || ""),
                     width: String(payload.width || ""),
@@ -6795,7 +6748,6 @@
                     );
                     container.append(button);
                 });
-                renderWeightState();
                 updateConditionalFields();
             }
 
@@ -6815,17 +6767,6 @@
                 return button;
             }
 
-            function renderWeightState() {
-                document.querySelectorAll(".segment").forEach((button) => {
-                    button.setAttribute(
-                        "aria-pressed",
-                        button.dataset.state === state.weightState
-                            ? "true"
-                            : "false"
-                    );
-                });
-            }
-
             function toggleEvent(eventName, forceOn = false) {
                 if (forceOn || !state.events.has(eventName))
                     state.events.add(eventName);
@@ -6840,13 +6781,6 @@
                                 : "false"
                         );
                     });
-                updateConditionalFields();
-                persistRoundState();
-            }
-
-            function setWeightState(nextState) {
-                state.weightState = nextState;
-                renderWeightState();
                 updateConditionalFields();
                 persistRoundState();
             }
@@ -7391,7 +7325,6 @@
                 $("measurementMethod").value = state.measurementMethod;
                 renderMeasurementControls();
                 $("observedAt").value = localDateTimeValue();
-                renderWeightState();
                 persistRoundState();
                 renderEventChips();
             }
@@ -7419,7 +7352,6 @@
                     plantId: $("plantSelect").value,
                     events: [...state.events],
                     observedAt: observedDate.toISOString(),
-                    weightState: state.weightState,
                     weight: $("weight").value,
                     height: $("height").value,
                     width: $("width").value,
@@ -7987,10 +7919,6 @@
                 state.events = new Set(
                     Array.isArray(payload.events) ? payload.events : []
                 );
-                if (payload.weightState) {
-                    state.weightState = payload.weightState;
-                    sessionStorage.setItem(WEIGHT_STATE_KEY, state.weightState);
-                }
                 $("observedAt").value = localDateTimeValue(payload.observedAt);
                 $("weight").value = payload.weight || "";
                 $("height").value = payload.height || "";
@@ -8023,7 +7951,6 @@
                 $("measurementMethod").value =
                     payload.measurementMethod || "Estimated visually";
                 renderMeasurementControls();
-                renderWeightState();
                 renderEventChips();
                 showToast(
                     "Recovered the entry that was waiting for Google. Tap Save again to confirm it; retries will not create duplicates.",
@@ -8559,10 +8486,6 @@
             $("bulkModeTab").addEventListener("click", () =>
                 setEntryMode("bulk")
             );
-            $("weightStates").addEventListener("click", (event) => {
-                const button = event.target.closest("[data-state]");
-                if (button) setWeightState(button.dataset.state);
-            });
             $("weight").addEventListener("input", () => {
                 if ($("weight").value) toggleEvent("Weigh", true);
                 updateConditionalFields();

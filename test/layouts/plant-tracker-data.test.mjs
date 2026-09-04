@@ -9,7 +9,9 @@ function observation({
     date,
     height = "",
     method = "Ruler",
+    potSetup = 1,
     quality = "Measured",
+    saveGroup = "",
     status = "",
     weight = "",
     width = "",
@@ -21,8 +23,9 @@ function observation({
         "Height (cm)": height,
         "Measurement method": method,
         "Observation quality": quality,
-        "Pot setup": 1,
+        "Pot setup": potSetup,
         "Record status": status,
+        "Save group / batch ID": saveGroup,
         "Weight (g)": weight,
         "Weight state": weightState,
         "Width (cm)": width,
@@ -196,7 +199,7 @@ describe("measured-only growth analytics", () => {
         expect(summary.widthChange).toBeNull();
     });
 
-    it("leaves weight analytics unchanged by growth eligibility metadata", () => {
+    it("leaves weight analytics independent of growth-quality metadata and excludes removed weights", () => {
         const summary = calculateSummary([
             observation({
                 date: "2026-01-01",
@@ -219,12 +222,79 @@ describe("measured-only growth analytics", () => {
         expect(summary.weightSeries.map(({ value }) => value)).toEqual([
             300,
             320,
-            340,
         ]);
-        expect(summary.latestWeightValue).toBe(340);
-        expect(summary.previousWeightValue).toBe(320);
+        expect(summary.latestWeightValue).toBe(320);
+        expect(summary.previousWeightValue).toBe(300);
         expect(summary.weightChange).toBe(20);
-        expect(summary.weightMovingAverage).toBe(320);
+        expect(summary.weightMovingAverage).toBe(310);
+    });
+
+    it("infers current-setup Dry, Wet, and Routine states from weight extrema", () => {
+        const summary = calculateSummary([
+            observation({
+                date: "2026-01-01",
+                potSetup: 1,
+                weight: 200,
+                weightState: "Dry",
+            }),
+            observation({
+                date: "2026-02-01",
+                potSetup: 2,
+                weight: 350,
+                weightState: "Dry",
+            }),
+            observation({
+                date: "2026-02-02",
+                potSetup: 2,
+                weight: 325,
+                weightState: "Wet",
+            }),
+            observation({
+                date: "2026-02-03",
+                potSetup: 2,
+                weight: 300,
+                weightState: "Wet",
+            }),
+        ]);
+
+        expect(summary.activePotSetup).toBe(2);
+        expect(
+            summary.weightSeries.map(({ value, state }) => [value, state])
+        ).toEqual([
+            [350, "Wet"],
+            [325, "Routine"],
+            [300, "Dry"],
+        ]);
+        expect(summary.dryAverage).toBe(300);
+        expect(summary.wetAverage).toBe(350);
+        expect(summary.capacity).toBe(50);
+        expect(summary.baselineStatus).toBe("Ready");
+    });
+
+    it("treats a lone same-save watering weight as Wet and another lone weight as Routine", () => {
+        const watered = calculateSummary([
+            observation({
+                date: "3/1/2026 12:00 PM",
+                saveGroup: "round-1",
+                weight: 410,
+            }),
+            {
+                Date: "3/1/2026 12:00 PM",
+                Event: "Water",
+                "Pot setup": 1,
+                "Save group / batch ID": "round-1",
+            },
+        ]);
+        const unwatered = calculateSummary([
+            observation({ date: "2026-03-02", weight: 390 }),
+        ]);
+
+        expect(watered.weightSeries[0]?.state).toBe("Wet");
+        expect(watered.dryAverage).toBe(410);
+        expect(watered.wetAverage).toBe(410);
+        expect(watered.baselineStatus).toBe("Provisional");
+        expect(unwatered.weightSeries[0]?.state).toBe("Routine");
+        expect(unwatered.wetAverage).toBeNull();
     });
 
     it("keeps removed observations in history input but excludes their care analytics", () => {

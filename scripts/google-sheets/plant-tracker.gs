@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.15.0",
+    version: "5.16.0",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -234,6 +234,10 @@ const BULK_WEB_EVENT_OPTIONS = Object.freeze([
     "Other",
 ]);
 
+// Retained only to validate stale/offline payloads created before logger 5.16.
+// New observations are stored as Routine; current-setup extrema are classified
+// dynamically so an older row can become the new Dry or Wet anchor without
+// rewriting canonical History.
 const WEIGHT_STATE_OPTIONS = Object.freeze(["Dry", "Wet", "Routine"]);
 const RECENT_LIMIT_OPTIONS = Object.freeze([10, 25, 50, 100]);
 
@@ -550,12 +554,100 @@ const INITIAL_POT_SIZE_BY_PLANT = Object.freeze({
     P30: "5 in",
 });
 
+const BASELINE_VIEW_HEADERS = Object.freeze([
+    "Plant ID",
+    "Plant",
+    "Latest weight (g)",
+    "Latest weight (lb)",
+    "Last weighed",
+    "Current pot size",
+    "Current pot label",
+    "Calibration status",
+    "Trend readiness",
+    "Trend review",
+    "Remeasure status",
+    "Next dry check",
+    "Recent loss / day",
+    "Trend anchor",
+    "Last water",
+    "Plant condition",
+    "Last condition check",
+    "Medium / substrate",
+    "Data quality summary",
+    "Pot setup",
+    "Current-cycle points",
+    "Current-setup weights",
+    "Dry weight (g)",
+    "Current-setup waterings",
+    "Wet weight (g)",
+    "Capacity (g)",
+    "Last setup change",
+    "Latest measure quality",
+    "Latest dimensions",
+    "Measurement unit",
+    "Drying rate (g/day)",
+    "Predicted dry date",
+    "Forecast confidence",
+    "Forecast sort date",
+]);
+
+const DASHBOARD_VIEW_HEADERS = Object.freeze([
+    "Page",
+    "Plant ID",
+    "Plant / current label",
+    "Last watered",
+    "Days since",
+    "Latest weight (lb)",
+    "Latest weight (g)",
+    "Dry weight (g)",
+    "Predicted dry date",
+    "Forecast",
+    "Height (cm)",
+    "Width (cm)",
+    "Waterings",
+    "Measurements",
+    "Avg water interval",
+    "Calibration",
+    "Trend",
+    "Trend review",
+    "Remeasure",
+    "Next dry check",
+    "Data quality",
+]);
+
+const WORKBOOK_HELPER_SHEETS = Object.freeze([
+    "Integrity",
+    "App entries",
+    "App bulk",
+    "Insights data",
+    "App insight activity",
+    "App insight calibration",
+    "App insight followups",
+    "App plant charts",
+]);
+
+const WORKBOOK_EVENT_COLORS = Object.freeze({
+    Water: Object.freeze(["#d9eefc", "#174a68"]),
+    Weigh: Object.freeze(["#e9e1f8", "#47306b"]),
+    Measure: Object.freeze(["#dff2e4", "#24543a"]),
+    Check: Object.freeze(["#fff0c7", "#684b00"]),
+    Rotation: Object.freeze(["#e3f1f1", "#285b5b"]),
+    Clean: Object.freeze(["#f2f2f2", "#424242"]),
+    Prune: Object.freeze(["#e8f0d9", "#3c5724"]),
+    Repot: Object.freeze(["#f7e3cf", "#6e3d18"]),
+    Flower: Object.freeze(["#f9dcea", "#722a4d"]),
+    Photo: Object.freeze(["#e1e8f7", "#2d4775"]),
+    Pest: Object.freeze(["#f8d4d4", "#7a1d1d"]),
+    Other: Object.freeze(["#ece9df", "#4c5148"]),
+});
+
 function onOpen() {
     SpreadsheetApp.getUi()
         .createMenu("Garden logger")
         .addItem("Open mobile entry", "openMobileEntry")
         .addItem("Verify logger", "installGardenLogger")
         .addItem("Verify AppSheet intake", "installAppSheetIntake")
+        .addItem("Refresh workbook views", "refreshGardenWorkbook")
         .addSeparator()
         .addItem("Open Quick log", "openQuickLog")
         .addItem("Open History", "openHistory")
@@ -712,7 +804,7 @@ function normalizeWeightState_(value, weight) {
         throw new Error("Weight state must be Dry, Wet, or Routine.");
     }
     if (weight === "") return "";
-    return weightState || "Routine";
+    return "Routine";
 }
 
 function validateMeasurementEvents_(eventNames, weight, height, width) {
@@ -1332,9 +1424,10 @@ function appSheetBulkPayloadsFromRow_(row, roundId) {
             : appSheetBulkSelectedPlants_(
                   row[APP_SHEET_BULK_SELECTED_PLANTS_INDEX]
               );
-    const weightState =
-        cleanText_(row[APP_SHEET_BULK_WEIGHT_STATE_INDEX]) ||
-        (action === "Water + weigh" ? "Wet" : "Routine");
+    // Weight state is inferred from current-setup extrema after the row is
+    // archived. Ignore the legacy staging value so AppSheet and offline drafts
+    // cannot stamp a classification that will become stale.
+    const weightState = includesWeigh ? "Routine" : "";
     const notes = cleanText_(row[APP_SHEET_BULK_NOTES_INDEX]);
     const sharedDetails = {
         rotationDegrees: row[APP_SHEET_BULK_ROTATION_INDEX],
@@ -1543,10 +1636,6 @@ function installAppSheetBulkSheet() {
         .requireValueInList(APP_SHEET_BULK_ACTION_OPTIONS, true)
         .setAllowInvalid(false)
         .build();
-    const weightStateValidation = SpreadsheetApp.newDataValidation()
-        .requireValueInList(WEIGHT_STATE_OPTIONS, true)
-        .setAllowInvalid(false)
-        .build();
     const weightValidation = SpreadsheetApp.newDataValidation()
         .requireNumberGreaterThan(0)
         .setAllowInvalid(false)
@@ -1565,9 +1654,6 @@ function installAppSheetBulkSheet() {
     sheet
         .getRange(2, APP_SHEET_BULK_ACTION_INDEX + 1, dataRowCount, 2)
         .setNumberFormat("@");
-    sheet
-        .getRange(2, APP_SHEET_BULK_WEIGHT_STATE_INDEX + 1, dataRowCount, 1)
-        .setDataValidation(weightStateValidation);
     sheet
         .getRange(
             2,
@@ -2715,6 +2801,13 @@ function installGardenLogger() {
     );
     history.hideColumns(GARDEN_LOGGER.requestIdColumn);
     history.hideColumns(GARDEN_LOGGER.historyProvenanceStartColumn, 6);
+    quickLog.hideColumns(GARDEN_LOGGER.weightStateColumn);
+    history.hideColumns(GARDEN_LOGGER.historyWeightStateColumn);
+    const historyView = requireSheet_(
+        spreadsheet,
+        GARDEN_LOGGER.historyViewSheet
+    );
+    historyView.hideColumns(GARDEN_LOGGER.historyWeightStateColumn);
 
     PropertiesService.getDocumentProperties().setProperties({
         gardenLoggerVersion: GARDEN_LOGGER.version,
@@ -2724,7 +2817,7 @@ function installGardenLogger() {
     quickLog
         .getRange("E4")
         .setNote(
-            "Optional main event. Wet describes a weight without creating a Water event; weight infers Weigh; height or width infers Measure."
+            "Optional main event. Weight infers Weigh; height or width infers Measure. Dry and Wet are derived automatically from the current pot setup's low and high weights."
         );
     quickLog
         .getRange("D4")
@@ -2737,7 +2830,7 @@ function installGardenLogger() {
             `Garden logger ${GARDEN_LOGGER.version} verified. One Save tap can archive multiple event rows.`
         );
     spreadsheet.toast(
-        `Logger ${GARDEN_LOGGER.version} is ready. Wet weights are independent from watering, and rotations default to 90° when selected.`,
+        `Logger ${GARDEN_LOGGER.version} is ready. Weight state is inferred automatically, and rotations default to 90° when selected.`,
         "Garden logger verified",
         6
     );
@@ -2752,6 +2845,559 @@ function installAppSheetIntake() {
     const entryColumnsChanged = ensureAppSheetEntryColumns_(entries, true);
     const bulk = installAppSheetBulkSheet();
     return { entryColumnsChanged, bulk };
+}
+
+/**
+ * Rebuilds the human-facing Dashboard, Baselines, and P01-P30 workbook pages.
+ * Canonical History and writable intake data are never rewritten here.
+ */
+function refreshGardenWorkbook() {
+    const spreadsheet = getGardenSpreadsheet_();
+    const plants = workbookPlantRecords_(spreadsheet);
+    refreshBaselineView_(spreadsheet, plants);
+    refreshDashboardView_(spreadsheet, plants);
+    plants.forEach((plant, index) =>
+        refreshPlantPage_(spreadsheet, plants, index, plant)
+    );
+    organizeWorkbookSheets_(spreadsheet);
+    SpreadsheetApp.flush();
+    spreadsheet.toast(
+        `Dashboard, Baselines, and ${plants.length} plant pages were refreshed for logger ${GARDEN_LOGGER.version}.`,
+        "Garden workbook refreshed",
+        8
+    );
+    return {
+        loggerVersion: GARDEN_LOGGER.version,
+        plantPages: plants.length,
+        baselineColumns: BASELINE_VIEW_HEADERS.length,
+        dashboardColumns: DASHBOARD_VIEW_HEADERS.length,
+    };
+}
+
+function workbookPlantRecords_(spreadsheet) {
+    const tracker = requireSheet_(spreadsheet, GARDEN_LOGGER.plantTrackerSheet);
+    const rowCount = Math.max(0, tracker.getLastRow() - 1);
+    const range = tracker.getRange(
+        2,
+        1,
+        rowCount,
+        GARDEN_LOGGER.currentLabelColumn
+    );
+    const values = range.getDisplayValues();
+    const formulas = range.getFormulas();
+    const byId = new Map();
+    values.forEach((row, index) => {
+        const id = cleanText_(row[0]);
+        /* v8 ignore else -- Populated and trailing blank tracker rows are both tested; VM coverage reports a synthetic alternate branch. */
+        if (!id) return;
+        byId.set(id, {
+            id,
+            name: cleanText_(row[1]) || id,
+            scientificName: cleanText_(row[2]),
+            label: cleanText_(row[GARDEN_LOGGER.currentLabelColumn - 1]),
+            fieldGuideUrl: fieldGuideUrlForRow_(formulas[index]),
+            trackerRow: index + 2,
+        });
+    });
+    const plants = APP_SHEET_BULK_PLANTS.map((id) => byId.get(id));
+    const missing = APP_SHEET_BULK_PLANTS.filter((id, index) => !plants[index]);
+    /* v8 ignore else -- Complete and incomplete tracker inventories are both tested; VM coverage reports a synthetic alternate branch. */
+    if (missing.length) {
+        throw new Error(
+            `Plant tracker is missing workbook pages for: ${missing.join(", ")}.`
+        );
+    }
+    return plants;
+}
+
+function baselineViewRow_(rowNumber, plant) {
+    const row = rowNumber;
+    return [
+        plant.id,
+        plant.name,
+        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$5000,History!$J$2:$J$5000,History!$E$2:$E$5000},History!$B$2:$B$5000=$A${row},History!$E$2:$E$5000<>"",History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE,2,FALSE),1,3),"")`,
+        `=IF(C${row}="","",C${row}/453.59237)`,
+        `=IFNA(INDEX(SORT(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$E$2:$E$5000<>"",History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),1),"")`,
+        `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AB:$AB,"Not recorded")`,
+        `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$O:$O,"")`,
+        `=IFS(V${row}<2,"Collecting weights",Z${row}<=0,"Recheck weights",TRUE,"Calibrated")`,
+        `=IF(U${row}<3,"Need 3 post-anchor weights",IF(AE${row}="","Need a 2-day descending span","Ready"))`,
+        `=LET(review,XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AD:$AD,""),IF(review<>"",review,IF(M${row}="","No trend",IFS(M${row}<0,"Unexpected gain",M${row}>0.03,"Rapid loss",TRUE,"OK"))))`,
+        `=IFERROR(LET(lastEstimate,MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",History!$AC$2:$AC$5000="Estimated",History!$AJ$2:$AJ$5000<>"Removed")),lastMeasured,IFERROR(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",History!$AC$2:$AC$5000="Measured",History!$AJ$2:$AJ$5000<>"Removed")),0),IF(lastEstimate>lastMeasured,"Due now","Current")),"No measurement")`,
+        `=IF(AF${row}<>"",IF(AF${row}<=TODAY(),"Inspect / reweigh now","Check "&TEXT(AF${row},"mmm d")),IFS(O${row}="","Log a wet weight after watering",U${row}<3,"Collect 3 post-water weights",TRUE,"Reweigh to confirm"))`,
+        `=IFERROR(LET(cycle,MAX(FILTER(History!$N$2:$N$5000,History!$B$2:$B$5000=$A${row},History!$K$2:$K$5000=$T${row},History!$E$2:$E$5000<>"",History!$N$2:$N$5000<>"",History!$AJ$2:$AJ$5000<>"Removed")),points,SORT(FILTER({History!$A$2:$A$5000,History!$E$2:$E$5000},History!$B$2:$B$5000=$A${row},History!$K$2:$K$5000=$T${row},History!$E$2:$E$5000<>"",History!$N$2:$N$5000=cycle,History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),recent,ARRAY_CONSTRAIN(points,MIN(7,ROWS(points)),2),span,MAX(INDEX(recent,0,1))-MIN(INDEX(recent,0,1)),IF(OR(ROWS(recent)<3,span<2),"",-SLOPE(INDEX(recent,0,2),INDEX(recent,0,1))/INDEX(recent,1,2))),"")`,
+        `=IF(MAX(N(O${row}),N(AA${row}))=0,"No anchor",IF(N(O${row})>=N(AA${row}),"Water","Repot"))`,
+        `=IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Water",History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed")),"")`,
+        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$5000,History!$H$2:$H$5000},History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Check",History!$H$2:$H$5000<>"",History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),1,2),"Not recorded")`,
+        `=IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Check",History!$AJ$2:$AJ$5000<>"Removed")),"")`,
+        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$5000,History!$AH$2:$AH$5000},History!$B$2:$B$5000=$A${row},History!$K$2:$K$5000=$T${row},History!$AH$2:$AH$5000<>"",History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),1,2),"Not recorded")`,
+        `=LET(flags,TEXTJOIN(" · ",TRUE,IF(H${row}<>"Calibrated",H${row},""),IF(AND(J${row}<>"OK",J${row}<>"No trend",J${row}<>"Owner-confirmed normal"),J${row},""),IF(K${row}="Due now","Remeasure due",""),IF(AG${row}="Overdue — reweigh","Dry forecast overdue","")),IF(flags="","No current flags",flags))`,
+        `=IFNA(MAX(FILTER(History!$K$2:$K$5000,History!$B$2:$B$5000=$A${row},History!$AJ$2:$AJ$5000<>"Removed")),1)`,
+        `=IFERROR(LET(cycle,MAX(FILTER(History!$N$2:$N$5000,History!$B$2:$B$5000=$A${row},History!$K$2:$K$5000=$T${row},History!$E$2:$E$5000<>"",History!$N$2:$N$5000<>"",History!$AJ$2:$AJ$5000<>"Removed")),COUNT(FILTER(History!$E$2:$E$5000,History!$B$2:$B$5000=$A${row},History!$K$2:$K$5000=$T${row},History!$E$2:$E$5000<>"",History!$N$2:$N$5000=cycle,History!$AJ$2:$AJ$5000<>"Removed"))),0)`,
+        `=COUNTIFS(History!$B$2:$B$5000,$A${row},History!$E$2:$E$5000,">0",History!$K$2:$K$5000,$T${row},History!$AJ$2:$AJ$5000,"<>Removed")`,
+        `=IF(V${row}=0,"",MIN(FILTER(History!$E$2:$E$5000,History!$B$2:$B$5000=$A${row},History!$E$2:$E$5000>0,History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed")))`,
+        `=COUNTIFS(History!$B$2:$B$5000,$A${row},History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,$T${row},History!$AJ$2:$AJ$5000,"<>Removed")`,
+        `=IF(V${row}=0,"",MAX(FILTER(History!$E$2:$E$5000,History!$B$2:$B$5000=$A${row},History!$E$2:$E$5000>0,History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed")))`,
+        `=IF(V${row}<2,"",Y${row}-W${row})`,
+        `=IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Repot",History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed")),"")`,
+        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$5000,History!$AC$2:$AC$5000},History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),1,2),"No measurement")`,
+        `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AJ:$AJ,"Not recorded")`,
+        `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AI:$AI,"cm")`,
+        `=IFERROR(LET(cycle,MAX(FILTER(History!$N$2:$N$5000,History!$B$2:$B$5000=$A${row},History!$K$2:$K$5000=$T${row},History!$E$2:$E$5000<>"",History!$N$2:$N$5000<>"",History!$AJ$2:$AJ$5000<>"Removed")),points,SORT(FILTER({History!$A$2:$A$5000,History!$E$2:$E$5000},History!$B$2:$B$5000=$A${row},History!$K$2:$K$5000=$T${row},History!$E$2:$E$5000<>"",History!$N$2:$N$5000=cycle,History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),recent,ARRAY_CONSTRAIN(points,MIN(7,ROWS(points)),2),span,MAX(INDEX(recent,0,1))-MIN(INDEX(recent,0,1)),loss,-SLOPE(INDEX(recent,0,2),INDEX(recent,0,1)),IF(OR(ROWS(recent)<3,span<2,loss<=0),"",loss)),"")`,
+        `=IF(OR(AE${row}="",W${row}="",C${row}="",E${row}=""),"",E${row}+MAX(0,(C${row}-W${row})/AE${row}))`,
+        `=IFS(O${row}="","Need a watering",U${row}<3,"Need 3 post-water weights",AE${row}="","Need a 2-day descending span",AF${row}<TODAY(),"Overdue — reweigh",U${row}<5,"Provisional",TRUE,"Good")`,
+        `=IF(AF${row}="",DATE(9999,12,31),AF${row})`,
+    ];
+}
+
+function refreshBaselineView_(spreadsheet, plants) {
+    const sheet = requireSheet_(spreadsheet, GARDEN_LOGGER.baselinesSheet);
+    ensureSheetColumnCapacity_(sheet, BASELINE_VIEW_HEADERS.length);
+    ensureSheetRowCapacity_(sheet, plants.length + 1);
+    sheet
+        .getRange(1, 1, sheet.getMaxRows(), BASELINE_VIEW_HEADERS.length)
+        .clearContent();
+    sheet
+        .getRange(1, 1, 1, BASELINE_VIEW_HEADERS.length)
+        .setValues([[...BASELINE_VIEW_HEADERS]])
+        .setBackground("#24533f")
+        .setFontColor("#ffffff")
+        .setFontWeight("bold")
+        .setWrap(true);
+    sheet
+        .getRange(2, 1, plants.length, BASELINE_VIEW_HEADERS.length)
+        .setValues(
+            plants.map((plant, index) => baselineViewRow_(index + 2, plant))
+        )
+        .setVerticalAlignment("middle");
+    sheet.setFrozenRows(1);
+    sheet.setFrozenColumns(2);
+    sheet.setHiddenGridlines(true);
+    sheet.getRange(2, 3, plants.length, 1).setNumberFormat("0.0");
+    sheet.getRange(2, 4, plants.length, 1).setNumberFormat("0.000");
+    [5, 15, 17, 27].forEach((column) =>
+        sheet
+            .getRange(2, column, plants.length, 1)
+            .setNumberFormat("mmm d, yyyy h:mm am/pm")
+    );
+    [32, 34].forEach((column) =>
+        sheet
+            .getRange(2, column, plants.length, 1)
+            .setNumberFormat("mmm d, yyyy")
+    );
+    [23, 25, 26, 31].forEach((column) =>
+        sheet.getRange(2, column, plants.length, 1).setNumberFormat("0.0")
+    );
+    sheet.getRange(2, 13, plants.length, 1).setNumberFormat("0.0000");
+    sheet.setColumnWidths(1, BASELINE_VIEW_HEADERS.length, 120);
+    sheet.setColumnWidth(2, 230);
+    sheet.setColumnWidth(12, 210);
+    sheet.setColumnWidth(18, 220);
+    sheet.setColumnWidth(19, 240);
+    sheet.setColumnWidth(33, 220);
+}
+
+function dashboardViewRow_(spreadsheet, plant, index) {
+    const dashboardRow = index + 7;
+    const trackerRow = plant.trackerRow;
+    const baselineRow = index + 2;
+    const page = plantPageSheet_(spreadsheet, plant.id);
+    return [
+        `=HYPERLINK("#gid=${page.getSheetId()}","View")`,
+        plant.id,
+        `='Plant tracker'!B${trackerRow}&IF('Plant tracker'!O${trackerRow}="",""," · label "&'Plant tracker'!O${trackerRow})`,
+        `='Plant tracker'!D${trackerRow}`,
+        `='Plant tracker'!E${trackerRow}`,
+        `=Baselines!D${baselineRow}`,
+        `=Baselines!C${baselineRow}`,
+        `=Baselines!W${baselineRow}`,
+        `=Baselines!AF${baselineRow}`,
+        `=Baselines!AG${baselineRow}`,
+        `='Plant tracker'!I${trackerRow}`,
+        `='Plant tracker'!K${trackerRow}`,
+        `=COUNTIFS(History!$B$2:$B$5000,$B${dashboardRow},History!$C$2:$C$5000,"Water",History!$AJ$2:$AJ$5000,"<>Removed")`,
+        `=COUNTIFS(History!$B$2:$B$5000,$B${dashboardRow},History!$C$2:$C$5000,"Measure",History!$AJ$2:$AJ$5000,"<>Removed")`,
+        `=IF(M${dashboardRow}<2,"—",(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$B${dashboardRow},History!$C$2:$C$5000="Water",History!$AJ$2:$AJ$5000<>"Removed"))-MIN(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$B${dashboardRow},History!$C$2:$C$5000="Water",History!$AJ$2:$AJ$5000<>"Removed")))/(M${dashboardRow}-1))`,
+        `=Baselines!H${baselineRow}`,
+        `=Baselines!I${baselineRow}`,
+        `=Baselines!J${baselineRow}`,
+        `=Baselines!K${baselineRow}`,
+        `=Baselines!L${baselineRow}`,
+        `=Baselines!S${baselineRow}`,
+    ];
+}
+
+function refreshDashboardView_(spreadsheet, plants) {
+    const sheet = requireSheet_(spreadsheet, "Dashboard");
+    ensureSheetColumnCapacity_(sheet, DASHBOARD_VIEW_HEADERS.length);
+    ensureSheetRowCapacity_(sheet, plants.length + 6);
+    sheet.getRange(1, 1, 6, DASHBOARD_VIEW_HEADERS.length).breakApart();
+    sheet
+        .getRange(1, 1, sheet.getMaxRows(), DASHBOARD_VIEW_HEADERS.length)
+        .clearContent();
+    sheet.getRange(1, 1, 1, DASHBOARD_VIEW_HEADERS.length).merge();
+    sheet
+        .getRange(1, 1)
+        .setValue(
+            "Garden Dashboard · live weights, care, and dry-date forecasts"
+        )
+        .setBackground("#173c2b")
+        .setFontColor("#ffffff")
+        .setFontSize(18)
+        .setFontWeight("bold")
+        .setHorizontalAlignment("left");
+    const summary = [
+        ["Plants tracked", `=COUNTA('Plant tracker'!$A$2:$A$31)`],
+        [
+            "Logs this month",
+            `=COUNTIFS(History!$A$2:$A$5000,">="&EOMONTH(TODAY(),-1)+1,History!$AJ$2:$AJ$5000,"<>Removed")`,
+        ],
+        [
+            "Waterings this month",
+            `=COUNTIFS(History!$C$2:$C$5000,"Water",History!$A$2:$A$5000,">="&EOMONTH(TODAY(),-1)+1,History!$AJ$2:$AJ$5000,"<>Removed")`,
+        ],
+        ["Remeasure due", `=COUNTIF(Baselines!$K$2:$K$31,"Due now")`],
+        [
+            "Last observation",
+            `=IFNA(TEXT(MAX(FILTER(History!$A$2:$A$5000,History!$AJ$2:$AJ$5000<>"Removed")),"mmm d, yyyy"),"—")`,
+        ],
+        [
+            "Active source rows",
+            `=COUNTIFS(History!$A$2:$A$5000,"<>",History!$AJ$2:$AJ$5000,"<>Removed")`,
+        ],
+        [
+            "Weight readings",
+            `=COUNTIFS(History!$E$2:$E$5000,">0",History!$AJ$2:$AJ$5000,"<>Removed")`,
+        ],
+        [
+            "Forecast ready",
+            `=COUNT(Baselines!$AF$2:$AF$31)&" / "&COUNTA(Baselines!$A$2:$A$31)`,
+        ],
+        [
+            "Trend ready",
+            `=COUNTIF(Baselines!$I$2:$I$31,"Ready")&" / "&COUNTA(Baselines!$A$2:$A$31)`,
+        ],
+        [
+            "Calibrated",
+            `=COUNTIF(Baselines!$H$2:$H$31,"Calibrated")&" / "&COUNTA(Baselines!$A$2:$A$31)`,
+        ],
+    ];
+    summary.forEach(([label, formula], index) => {
+        const column = index * 2 + 1;
+        sheet.getRange(2, column, 1, 2).merge().setValue(label);
+        sheet.getRange(3, column, 1, 2).merge().setFormula(formula);
+    });
+    sheet
+        .getRange(2, 1, 2, 20)
+        .setBackground("#edf4ee")
+        .setFontColor("#173c2b")
+        .setVerticalAlignment("middle");
+    sheet.getRange(2, 1, 1, 20).setFontWeight("bold").setFontSize(9);
+    sheet.getRange(3, 1, 1, 20).setFontWeight("bold").setFontSize(14);
+    sheet
+        .getRange(6, 1, 1, DASHBOARD_VIEW_HEADERS.length)
+        .setValues([[...DASHBOARD_VIEW_HEADERS]])
+        .setBackground("#24533f")
+        .setFontColor("#ffffff")
+        .setFontWeight("bold")
+        .setWrap(true);
+    sheet
+        .getRange(7, 1, plants.length, DASHBOARD_VIEW_HEADERS.length)
+        .setValues(
+            plants.map((plant, index) =>
+                dashboardViewRow_(spreadsheet, plant, index)
+            )
+        )
+        .setVerticalAlignment("middle");
+    sheet.getRange(7, 4, plants.length, 1).setNumberFormat("mmm d, yyyy");
+    sheet.getRange(7, 6, plants.length, 1).setNumberFormat("0.000");
+    sheet.getRange(7, 7, plants.length, 2).setNumberFormat("0.0");
+    sheet.getRange(7, 9, plants.length, 1).setNumberFormat("mmm d, yyyy");
+    sheet.getRange(7, 11, plants.length, 2).setNumberFormat("0.##");
+    sheet.setFrozenRows(6);
+    // The full-width title in row 1 spans every Dashboard column, so freezing
+    // any proper subset of columns would bisect that merged range in Sheets.
+    sheet.setFrozenColumns(0);
+    sheet.setHiddenGridlines(true);
+    sheet.setColumnWidths(1, DASHBOARD_VIEW_HEADERS.length, 115);
+    sheet.setColumnWidth(3, 260);
+    sheet.setColumnWidth(10, 200);
+    sheet.setColumnWidth(18, 180);
+    sheet.setColumnWidth(20, 210);
+    sheet.setColumnWidth(21, 240);
+}
+
+function plantPageHistoryFormula_(plantId) {
+    const id = formulaString_(plantId);
+    return `=LET(plant,"${id}",rows,SORT(FILTER({History!$A$2:$A$5000,History!$C$2:$C$5000,History!$E$2:$E$5000,History!$F$2:$F$5000,History!$G$2:$G$5000,History!$H$2:$H$5000,History!$I$2:$I$5000,History!$AC$2:$AC$5000,History!$AI$2:$AI$5000,History!$K$2:$K$5000,History!$J$2:$J$5000,History!$AD$2:$AD$5000,History!$AJ$2:$AJ$5000},History!$B$2:$B$5000=plant,History!$A$2:$A$5000<>""),1,FALSE,11,FALSE),dates,CHOOSECOLS(rows,1),events,CHOOSECOLS(rows,2),weights,CHOOSECOLS(rows,3),heights,CHOOSECOLS(rows,4),widths,CHOOSECOLS(rows,5),conditions,CHOOSECOLS(rows,6),notes,CHOOSECOLS(rows,7),qualities,CHOOSECOLS(rows,8),methods,CHOOSECOLS(rows,9),setups,CHOOSECOLS(rows,10),batches,CHOOSECOLS(rows,12),statuses,CHOOSECOLS(rows,13),states,MAP(dates,weights,setups,batches,statuses,LAMBDA(d,w,s,b,status,IF(status="Removed","Removed",IF(w="","",LET(n,COUNTIFS(History!$B$2:$B$5000,plant,History!$E$2:$E$5000,">0",History!$K$2:$K$5000,s,History!$AJ$2:$AJ$5000,"<>Removed"),low,MINIFS(History!$E$2:$E$5000,History!$B$2:$B$5000,plant,History!$E$2:$E$5000,">0",History!$K$2:$K$5000,s,History!$AJ$2:$AJ$5000,"<>Removed"),high,MAXIFS(History!$E$2:$E$5000,History!$B$2:$B$5000,plant,History!$E$2:$E$5000,">0",History!$K$2:$K$5000,s,History!$AJ$2:$AJ$5000,"<>Removed"),watered,AND(b<>"",COUNTIFS(History!$B$2:$B$5000,plant,History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,s,History!$AD$2:$AD$5000,b,History!$AJ$2:$AJ$5000,"<>Removed")>0),IF(n=1,IF(watered,"Wet","Routine"),IF(low=high,"Routine",IF(w=low,"Dry",IF(w=high,"Wet","Routine"))))))))),pounds,MAP(weights,LAMBDA(w,IF(w="","",w/453.59237))),quality,MAP(qualities,methods,LAMBDA(q,m,IF(q="",m,IF(m="",q,q&" · "&m)))),HSTACK(dates,events,states,pounds,weights,heights,widths,conditions,notes,quality,statuses))`;
+}
+
+function plantPageSheet_(spreadsheet, plantId) {
+    const normalizedId = cleanText_(plantId).toUpperCase();
+    /* v8 ignore else -- Valid and invalid permanent IDs are both tested; VM coverage reports a synthetic alternate branch. */
+    if (!/^P\d{2}$/u.test(normalizedId)) {
+        throw new Error(`Invalid workbook plant ID: ${plantId}.`);
+    }
+    const exact = spreadsheet.getSheetByName(normalizedId);
+    /* v8 ignore else -- Exact and descriptive page names are both tested; VM coverage reports a synthetic alternate branch. */
+    if (exact) return exact;
+    const matches = spreadsheet
+        .getSheets()
+        .filter((sheet) =>
+            new RegExp(`^${normalizedId}(?:\\s|$)`, "u").test(sheet.getName())
+        );
+    if (matches.length !== 1) {
+        throw new Error(
+            matches.length
+                ? `More than one workbook page starts with ${normalizedId}.`
+                : `Workbook page for ${normalizedId} is missing.`
+        );
+    }
+    return matches[0];
+}
+
+function refreshPlantPage_(spreadsheet, plants, index, plant) {
+    const sheet = plantPageSheet_(spreadsheet, plant.id);
+    ensureSheetColumnCapacity_(sheet, 18);
+    ensureSheetRowCapacity_(sheet, 1000);
+    const contentRows = Math.min(1000, sheet.getMaxRows());
+    sheet.getRange(1, 1, 12, 13).breakApart();
+    const filter = sheet.getFilter();
+    /* v8 ignore else -- Pages with and without an old filter are both tested; VM coverage reports a synthetic alternate branch. */
+    if (filter) filter.remove();
+    sheet.getRange(1, 1, contentRows, 13).clearContent().clearFormat();
+    sheet.getRange(1, 1, 1, 10).merge();
+    sheet
+        .getRange(1, 1)
+        .setValue(`${plant.id} · ${plant.name}`)
+        .setBackground("#173c2b")
+        .setFontColor("#ffffff")
+        .setFontSize(18)
+        .setFontWeight("bold");
+    sheet.getRange(2, 1, 1, 10).merge();
+    sheet
+        .getRange(2, 1)
+        .setValue(plant.scientificName || "Identification not recorded")
+        .setBackground("#e8f1ea")
+        .setFontColor("#24533f")
+        .setFontStyle("italic");
+    const dashboard = requireSheet_(spreadsheet, "Dashboard");
+    const previous = plants[(index - 1 + plants.length) % plants.length];
+    const next = plants[(index + 1) % plants.length];
+    [
+        [1, 3, `=HYPERLINK("#gid=${dashboard.getSheetId()}","← Dashboard")`],
+        [
+            4,
+            3,
+            `=HYPERLINK("${formulaString_(plant.fieldGuideUrl)}","Open field guide ↗")`,
+        ],
+        [
+            7,
+            4,
+            `=HYPERLINK("#gid=${plantPageSheet_(spreadsheet, next.id).getSheetId()}","Next · ${formulaString_(next.id)} →")`,
+        ],
+    ].forEach(([column, width, formula]) => {
+        sheet.getRange(3, column, 1, width).merge().setFormula(formula);
+    });
+    sheet
+        .getRange(3, 1, 1, 10)
+        .setBackground("#f6f7f3")
+        .setFontColor("#24533f")
+        .setFontWeight("bold");
+    [
+        [1, 3, "Current weight"],
+        [4, 3, "Care forecast"],
+        [7, 4, "Data quality"],
+    ].forEach(([column, width, label]) => {
+        sheet
+            .getRange(4, column, 1, width)
+            .merge()
+            .setValue(label)
+            .setBackground("#24533f")
+            .setFontColor("#ffffff")
+            .setFontWeight("bold");
+    });
+    const baselineRow = index + 2;
+    const metricRows = [
+        [
+            "Latest weight (lb)",
+            `=Baselines!D${baselineRow}`,
+            "Last watered",
+            `=Baselines!O${baselineRow}`,
+            "Calibration",
+            `=Baselines!H${baselineRow}`,
+        ],
+        [
+            "Latest weight (g)",
+            `=Baselines!C${baselineRow}`,
+            "Predicted dry date",
+            `=Baselines!AF${baselineRow}`,
+            "Trend readiness",
+            `=Baselines!I${baselineRow}`,
+        ],
+        [
+            "Dry weight (g)",
+            `=Baselines!W${baselineRow}`,
+            "Forecast confidence",
+            `=Baselines!AG${baselineRow}`,
+            "Trend review",
+            `=Baselines!J${baselineRow}`,
+        ],
+        [
+            "Last weighed",
+            `=Baselines!E${baselineRow}`,
+            "Condition",
+            `=Baselines!P${baselineRow}`,
+            "Remeasure",
+            `=Baselines!K${baselineRow}`,
+        ],
+        [
+            "Pot / setup",
+            `=Baselines!F${baselineRow}&" · setup "&Baselines!T${baselineRow}`,
+            "Medium",
+            `=Baselines!R${baselineRow}`,
+            "Next dry check",
+            `=Baselines!L${baselineRow}`,
+        ],
+    ];
+    metricRows.forEach((values, metricIndex) => {
+        const row = metricIndex + 5;
+        [1, 4, 7].forEach((column, groupIndex) => {
+            const label = values[groupIndex * 2];
+            const formula = values[groupIndex * 2 + 1];
+            sheet
+                .getRange(row, column)
+                .setValue(label)
+                .setFontWeight("bold")
+                .setFontColor("#52655a");
+            const width = column === 7 ? 3 : 2;
+            sheet
+                .getRange(row, column + 1, 1, width)
+                .merge()
+                .setFormula(formula)
+                .setWrap(true);
+        });
+    });
+    sheet.getRange(5, 2, 1, 2).setNumberFormat("0.000");
+    sheet.getRange(6, 2, 2, 2).setNumberFormat("0.0");
+    sheet.getRange(8, 2, 1, 2).setNumberFormat("mmm d, yyyy h:mm am/pm");
+    sheet.getRange(5, 5, 2, 2).setNumberFormat("mmm d, yyyy");
+    sheet.getRange(11, 1, 1, 10).merge();
+    sheet
+        .getRange(11, 1)
+        .setValue("Complete history · newest first · scroll normally")
+        .setBackground("#dcebdd")
+        .setFontColor("#173c2b")
+        .setFontWeight("bold");
+    const historyHeaders = [
+        "Date",
+        "Event",
+        "Inferred state",
+        "Weight (lb)",
+        "Weight (g)",
+        "Height (cm)",
+        "Width (cm)",
+        "Condition",
+        "Notes",
+        "Quality / method",
+        "Record status",
+    ];
+    sheet
+        .getRange(12, 1, 1, historyHeaders.length)
+        .setValues([historyHeaders])
+        .setBackground("#24533f")
+        .setFontColor("#ffffff")
+        .setFontWeight("bold")
+        .setWrap(true);
+    sheet.getRange(13, 1).setFormula(plantPageHistoryFormula_(plant.id));
+    sheet
+        .getRange(13, 1, contentRows - 12, 1)
+        .setNumberFormat("mmm d, yyyy h:mm am/pm");
+    sheet.getRange(13, 4, contentRows - 12, 1).setNumberFormat("0.000");
+    sheet.getRange(13, 5, contentRows - 12, 3).setNumberFormat("0.0");
+    sheet.setFrozenRows(0);
+    sheet.setFrozenColumns(0);
+    sheet.setHiddenGridlines(true);
+    sheet.setColumnWidth(1, 150);
+    sheet.setColumnWidth(2, 115);
+    sheet.setColumnWidth(3, 120);
+    sheet.setColumnWidths(4, 4, 105);
+    sheet.setColumnWidth(8, 180);
+    sheet.setColumnWidth(9, 300);
+    sheet.setColumnWidth(10, 190);
+    sheet.setColumnWidth(11, 120);
+    sheet.setRowHeights(5, 5, 38);
+    sheet.setRowHeight(12, 40);
+    const rules = [];
+    Object.entries(WORKBOOK_EVENT_COLORS).forEach(
+        ([eventName, [background, foreground]]) => {
+            rules.push(
+                SpreadsheetApp.newConditionalFormatRule()
+                    .whenTextEqualTo(eventName)
+                    .setBackground(background)
+                    .setFontColor(foreground)
+                    .setBold(true)
+                    .setRanges([sheet.getRange(13, 2, contentRows - 12, 1)])
+                    .build()
+            );
+        }
+    );
+    [
+        ["Dry", "#d9eefc", "#174a68"],
+        ["Wet", "#c8e6c9", "#1d5a3e"],
+        ["Routine", "#eeede7", "#52635b"],
+        ["Removed", "#f7d9d5", "#7b2e2e"],
+    ].forEach(([state, background, foreground]) => {
+        rules.push(
+            SpreadsheetApp.newConditionalFormatRule()
+                .whenTextEqualTo(state)
+                .setBackground(background)
+                .setFontColor(foreground)
+                .setBold(true)
+                .setRanges([sheet.getRange(13, 3, contentRows - 12, 1)])
+                .build()
+        );
+    });
+    sheet.setConditionalFormatRules(rules);
+    sheet
+        .getRange(3, 1)
+        .setNote(`Previous page: ${previous.id} · ${previous.name}`);
+}
+
+function organizeWorkbookSheets_(spreadsheet) {
+    const dashboard = requireSheet_(spreadsheet, "Dashboard");
+    const quickLog = requireSheet_(spreadsheet, GARDEN_LOGGER.quickLogSheet);
+    const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
+    const historyView = requireSheet_(
+        spreadsheet,
+        GARDEN_LOGGER.historyViewSheet
+    );
+    quickLog.hideColumns(GARDEN_LOGGER.weightStateColumn);
+    history.hideColumns(GARDEN_LOGGER.historyWeightStateColumn);
+    historyView.hideColumns(GARDEN_LOGGER.historyWeightStateColumn);
+    spreadsheet.setActiveSheet(dashboard);
+    WORKBOOK_HELPER_SHEETS.forEach((sheetName) => {
+        const sheet = spreadsheet.getSheetByName(sheetName);
+        if (!sheet) return;
+        /* v8 ignore else -- Visible and hidden helper sheets are both tested; VM coverage reports a synthetic alternate branch. */
+        if (sheet.isSheetHidden()) sheet.showSheet();
+        spreadsheet.setActiveSheet(sheet);
+        spreadsheet.moveActiveSheet(spreadsheet.getNumSheets());
+        sheet.hideSheet();
+    });
+    spreadsheet.setActiveSheet(dashboard);
+}
+
+function formulaString_(value) {
+    return String(value || "").replace(/"/g, '""');
+}
+
+function ensureSheetRowCapacity_(sheet, requiredRows) {
+    const currentRows = sheet.getMaxRows();
+    /* v8 ignore else -- Undersized and already-capacious workbook sheets are both tested; VM coverage reports a synthetic alternate branch. */
+    if (currentRows < requiredRows) {
+        sheet.insertRowsAfter(currentRows, requiredRows - currentRows);
+    }
 }
 
 function openQuickLog() {
@@ -2923,23 +3569,13 @@ function archiveQuickLogRow_(quickLog, rowNumber) {
     const condition = cleanText_(conditionInput);
     const notes = cleanText_(notesInput);
     const selectedEvent = cleanText_(eventInput);
-    let weightState = cleanText_(weightStateInput);
+    const weightState = normalizeWeightState_(weightStateInput, weight);
 
     if (selectedEvent && !WEB_EVENT_OPTIONS.includes(selectedEvent)) {
         throw new Error(
             `Event must be one of: ${WEB_EVENT_OPTIONS.join(", ")}.`
         );
     }
-    if (weightState && !WEIGHT_STATE_OPTIONS.includes(weightState)) {
-        throw new Error("Weight state must be Dry, Wet, or Routine.");
-    }
-
-    if (weight === "" && weightState) {
-        throw new Error(
-            "Weight state was selected, but no weight was entered."
-        );
-    }
-    if (weight !== "" && !weightState) weightState = "Routine";
     if (selectedEvent === "Weigh" && weight === "") {
         throw new Error("Weigh was selected, but no weight was entered.");
     }
@@ -3154,8 +3790,8 @@ function sameCanonicalObservationRow_(actual, expected) {
     // part of the browser request. Everything else below is canonical user
     // input or request provenance and must still match for an idempotent retry.
     const comparableColumns = [
-        0, 1, 2, 3, 4, 5, 6, 7, 8, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26,
-        27, 28, 29, 30, 31, 32, 33, 34, 36, 39, 40, 41,
+        0, 1, 2, 4, 5, 6, 7, 8, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27,
+        28, 29, 30, 31, 32, 33, 34, 36, 39, 40, 41,
     ];
     return comparableColumns.every(
         (index) =>
@@ -3686,79 +4322,145 @@ function latestPotSizesFromRows_(historyRows) {
 }
 
 function dryOrLowestWeightsFromRows_(historyRows) {
-    const candidates = new Map();
-    historyRows.forEach((row, rowIndex) => {
+    const inferredStates = inferredWeightStatesByRow_(historyRows);
+    return new Map(
+        [...currentSetupWeightRecordsByPlant_(historyRows)].map(
+            ([plantId, records]) => {
+                const selected = [...records].sort((left, right) => {
+                    return (
+                        left.weight - right.weight ||
+                        right.timestamp - left.timestamp ||
+                        right.rowIndex - left.rowIndex
+                    );
+                })[0];
+                const onlyState =
+                    records.length === 1
+                        ? inferredStates.get(selected.rowIndex)
+                        : "";
+                return [
+                    plantId,
+                    {
+                        weight: selected.weight,
+                        observedAt: selected.observedAt,
+                        basis:
+                            records.length > 1
+                                ? "Inferred dry"
+                                : onlyState === "Wet"
+                                  ? "Only wet reading"
+                                  : "Only reading",
+                    },
+                ];
+            }
+        )
+    );
+}
+
+function currentSetupWeightRecordsByPlant_(historyRows) {
+    const currentSetupByPlant = new Map();
+    historyRows.forEach((row) => {
+        if (!activeHistoryRow_(row)) return;
         const plantId = cleanText_(row[1]);
-        const eventName = cleanText_(row[2]);
-        const status = cleanText_(
-            row[
-                GARDEN_LOGGER.historyProvenanceStartColumn +
-                    GARDEN_LOGGER.historyProvenanceColumns -
-                    2
-            ]
+        if (!plantId) return;
+        const potSetup = positiveIntegerOrDefault_(row[10], 1);
+        currentSetupByPlant.set(
+            plantId,
+            Math.max(currentSetupByPlant.get(plantId) || 1, potSetup)
         );
+    });
+
+    const recordsByPlant = new Map();
+    historyRows.forEach((row, rowIndex) => {
+        if (!activeHistoryRow_(row) || cleanText_(row[2]) !== "Weigh") return;
+        const plantId = cleanText_(row[1]);
+        const potSetup = positiveIntegerOrDefault_(row[10], 1);
         const weight = Number(row[GARDEN_LOGGER.historyWeightColumn - 1]);
         if (
             !plantId ||
-            eventName !== "Weigh" ||
-            status === "Removed" ||
+            potSetup !== currentSetupByPlant.get(plantId) ||
             !Number.isFinite(weight) ||
             weight <= 0
         ) {
             return;
         }
-
-        const observedAt = row[0];
-        const timestamp = new Date(observedAt).getTime();
-        const candidate = {
+        const timestamp = dateSortValue_(row[0]);
+        const records = recordsByPlant.get(plantId) || [];
+        records.push({
+            plantId,
+            potSetup,
             weight,
-            observedAt,
-            timestamp: Number.isFinite(timestamp) ? timestamp : 0,
+            observedAt: row[0],
+            timestamp,
             rowIndex,
-        };
-        const record = candidates.get(plantId) || {
-            latestDry: null,
-            lowest: null,
-        };
-        if (
-            cleanText_(row[GARDEN_LOGGER.historyWeightStateColumn - 1]) ===
-            "Dry"
-        ) {
-            if (
-                !record.latestDry ||
-                candidate.timestamp > record.latestDry.timestamp ||
-                (candidate.timestamp === record.latestDry.timestamp &&
-                    candidate.rowIndex > record.latestDry.rowIndex)
-            ) {
-                record.latestDry = candidate;
-            }
-        }
-        if (
-            !record.lowest ||
-            candidate.weight < record.lowest.weight ||
-            (candidate.weight === record.lowest.weight &&
-                (candidate.timestamp > record.lowest.timestamp ||
-                    (candidate.timestamp === record.lowest.timestamp &&
-                        candidate.rowIndex > record.lowest.rowIndex)))
-        ) {
-            record.lowest = candidate;
-        }
-        candidates.set(plantId, record);
+            saveGroup: cleanText_(row[29]),
+        });
+        recordsByPlant.set(plantId, records);
     });
+    return recordsByPlant;
+}
 
-    return new Map(
-        [...candidates.entries()].map(([plantId, record]) => {
-            const selected = record.latestDry || record.lowest;
-            return [
-                plantId,
-                {
-                    weight: selected.weight,
-                    observedAt: selected.observedAt,
-                    basis: record.latestDry ? "Dry" : "Lowest",
-                },
-            ];
-        })
+function inferredWeightStatesByRow_(historyRows) {
+    const inferred = new Map();
+    currentSetupWeightRecordsByPlant_(historyRows).forEach((records) => {
+        if (records.length === 1) {
+            const [record] = records;
+            inferred.set(
+                record.rowIndex,
+                matchingWaterRowExists_(historyRows, record) ? "Wet" : "Routine"
+            );
+            return;
+        }
+        const weights = records.map(({ weight }) => weight);
+        const lowest = Math.min(...weights);
+        const highest = Math.max(...weights);
+        records.forEach((record) => {
+            inferred.set(
+                record.rowIndex,
+                lowest === highest
+                    ? "Routine"
+                    : record.weight === lowest
+                      ? "Dry"
+                      : record.weight === highest
+                        ? "Wet"
+                        : "Routine"
+            );
+        });
+    });
+    return inferred;
+}
+
+function matchingWaterRowExists_(historyRows, weightRecord) {
+    return historyRows.some((row) => {
+        if (
+            !activeHistoryRow_(row) ||
+            cleanText_(row[1]) !== weightRecord.plantId ||
+            cleanText_(row[2]) !== "Water" ||
+            positiveIntegerOrDefault_(row[10], 1) !== weightRecord.potSetup
+        ) {
+            return false;
+        }
+        const saveGroup = cleanText_(row[29]);
+        return (
+            (weightRecord.saveGroup && saveGroup === weightRecord.saveGroup) ||
+            dateSortValue_(row[0]) === weightRecord.timestamp
+        );
+    });
+}
+
+function activeHistoryRow_(row) {
+    return (
+        cleanText_(
+            row[
+                GARDEN_LOGGER.historyProvenanceStartColumn +
+                    GARDEN_LOGGER.historyProvenanceColumns -
+                    2
+            ]
+        ) !== "Removed"
     );
+}
+
+function positiveIntegerOrDefault_(value, fallback) {
+    const number = Number(value);
+    return Number.isInteger(number) && number > 0 ? number : fallback;
 }
 
 function updateBaselinePotSetup_(spreadsheet, plantId, potSetup) {
@@ -3841,6 +4543,7 @@ function getRecentObservations_(
 }
 
 function recentObservationsFromRows_(historyRows, timeZone, limit, plantNames) {
+    const inferredWeightStates = inferredWeightStatesByRow_(historyRows);
     return historyRows
         .map((row, index) => ({ row, index }))
         .filter(
@@ -3865,7 +4568,7 @@ function recentObservationsFromRows_(historyRows, timeZone, limit, plantNames) {
             return recordedDifference || right.index - left.index;
         })
         .slice(0, limit)
-        .map(({ row }) => {
+        .map(({ row, index }) => {
             const plantId = cleanText_(row[1]);
             return {
                 observedAt: formatClientDate_(
@@ -3875,7 +4578,10 @@ function recentObservationsFromRows_(historyRows, timeZone, limit, plantNames) {
                 ),
                 plantId,
                 event: cleanText_(row[2]),
-                weightState: cleanText_(row[3]),
+                weightState:
+                    cleanText_(row[2]) === "Weigh"
+                        ? inferredWeightStates.get(index) || "Routine"
+                        : "",
                 weight: row[4] === "" || row[4] === null ? "" : Number(row[4]),
                 name: plantNames.get(plantId) || plantId,
             };

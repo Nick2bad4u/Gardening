@@ -23,9 +23,11 @@
 
 ## Entry behavior and safety
 
-- Default weights to Routine in the browser session. Dry and Wet are explicit
-  overrides. Wet describes a weight state only: it never infers Water, and Water
-  never implies that a weight exists.
+- Do not ask the user to classify a weight. Keep the canonical `Weight state`
+  field only for backward compatibility, store new weights as `Routine`, and
+  derive the current setup's lowest value as Dry, highest value as Wet, and
+  intermediate values as Routine. A lone weight saved with a matching Water
+  event may display as Wet; Water still never implies that a weight exists.
 - Keep mobile entries recoverable until Google confirms the callback, lock
   writes, escape formula-like text, validate URLs, and make bulk operations
   retry-safe per plant.

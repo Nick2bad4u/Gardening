@@ -842,14 +842,12 @@ describe("Garden logger browser recovery", () => {
         );
     });
 
-    it("queues a Wet weight without adding Water or requiring nutrients", () => {
+    it("queues a weight without asking for a manual state or adding Water", () => {
         const { window } = createLoggerWindow();
+        expect(window.document.querySelector("#weightStates")).toBeNull();
         const weight = window.document.querySelector("#weight");
         weight.value = "889";
         weight.dispatchEvent(new window.Event("input", { bubbles: true }));
-        window.document
-            .querySelector('[data-state="Wet"]')
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
         window.document
             .querySelector("#queueButton")
             .dispatchEvent(new window.Event("click", { bubbles: true }));
@@ -860,10 +858,10 @@ describe("Garden logger browser recovery", () => {
         expect(queue).toHaveLength(1);
         expect(queue[0].payload).toMatchObject({
             weight: "889",
-            weightState: "Wet",
             events: ["Weigh"],
             nutrientsUsed: "",
         });
+        expect(queue[0].payload).not.toHaveProperty("weightState");
     });
 
     it("remembers nutrient choices across single and bulk care in one session", () => {

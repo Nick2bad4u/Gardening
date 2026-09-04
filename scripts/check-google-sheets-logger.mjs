@@ -27,7 +27,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.15.0");
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.16.0");
 const webPlantImageUrls = JSON.parse(
     JSON.stringify(vm.runInContext("WEB_PLANT_IMAGE_URLS", context))
 );
@@ -118,16 +118,16 @@ const dryOrLowestWeights = context.dryOrLowestWeightsFromRows_([
 assert.deepEqual(
     { ...dryOrLowestWeights.get("P01") },
     {
-        weight: 300,
-        basis: "Dry",
-        observedAt: "2026-08-02T12:00:00Z",
+        weight: 280,
+        basis: "Inferred dry",
+        observedAt: "2026-08-01T12:00:00Z",
     }
 );
 assert.deepEqual(
     { ...dryOrLowestWeights.get("P02") },
     {
         weight: 390,
-        basis: "Lowest",
+        basis: "Inferred dry",
         observedAt: "2026-08-04T12:00:00Z",
     }
 );
@@ -345,14 +345,9 @@ assert.match(html, /function readCachedBootstrap\(\)/);
 assert.match(html, /function refreshCachedBootstrap\(\)/);
 assert.match(html, /target="_top"/);
 assert.match(html, /pending\.replaceable = true;/);
-assert.match(html, /function renderWeightState\(\)/);
-assert.match(html, /renderWeightState\(\);\s*updateConditionalFields\(\);/);
-assert.doesNotMatch(
-    html,
-    /if \(!keepEvents\) state\.weightState = "";/,
-    "Dry/Wet/Routine must survive confirmed round saves"
-);
-assert.match(html, /weightState:\s*"Routine"/);
+assert.doesNotMatch(html, /id="weightStates"/);
+assert.doesNotMatch(html, /function renderWeightState\(\)/);
+assert.doesNotMatch(html, /weightState:\s*state\.weightState/);
 assert.match(html, /"Last dry \/ lowest"/);
 assert.match(html, /plant\.dryOrLowestWeightBasis/);
 assert.match(html, /plant\.dryOrLowestWeightDate/);
@@ -480,6 +475,19 @@ assert.match(source, /entrySource:\s*"AppSheet"/);
 assert.match(source, /storedStatus === "Saved"/);
 assert.match(source, /`appsheet-\$\{normalizedEntryId\}`/);
 assert.match(source, /function removeSelectedHistoryObservations\(\)/);
+assert.match(source, /function refreshGardenWorkbook\(\)/);
+assert.match(source, /function inferredWeightStatesByRow_\(historyRows\)/);
+assert.match(
+    source,
+    /function currentSetupWeightRecordsByPlant_\(historyRows\)/
+);
+assert.match(source, /function plantPageSheet_\(spreadsheet, plantId\)/);
+assert.match(source, /"Dry weight \(g\)"/);
+assert.match(source, /"Latest weight \(lb\)"/);
+assert.match(source, /"Predicted dry date"/);
+assert.match(source, /SLOPE\(/);
+assert.match(source, /sheet\.setFrozenRows\(0\)/);
+assert.match(source, /sheet\.setFrozenColumns\(0\)/);
 
 const publishedHistoryDate = parseDate("8/12/2026 2:47 AM");
 assert.equal(publishedHistoryDate?.getFullYear(), 2026);

@@ -490,32 +490,48 @@ export function calculateSummary(events, plantId = "") {
     const currentEvents = events.filter(isActiveHistoryEvent);
     const activePotSetup = Math.max(
         1,
-        ...events.map((event) => numericValue(event["Pot setup"]) ?? 1)
+        ...currentEvents.map((event) => numericValue(event["Pot setup"]) ?? 1)
     );
-    const activeEvents = events.filter(
+    const activeEvents = currentEvents.filter(
         (event) => (numericValue(event["Pot setup"]) ?? 1) === activePotSetup
     );
     const activeWeights = activeEvents.filter(
         (event) => numericValue(event["Weight (g)"]) !== null
     );
-    const dryWeights = activeWeights
-        .filter(
-            (event) =>
-                String(event["Weight state"] ?? "")
-                    .trim()
-                    .toLowerCase() === "dry"
-        )
+    const weightValues = activeWeights
         .map((event) => numericValue(event["Weight (g)"]))
         .filter((value) => value !== null);
-    const wetWeights = activeWeights
-        .filter(
-            (event) =>
-                String(event["Weight state"] ?? "")
+    const lowestWeight = weightValues.length ? Math.min(...weightValues) : null;
+    const highestWeight = weightValues.length
+        ? Math.max(...weightValues)
+        : null;
+    const onlyWeightWasWatered =
+        activeWeights.length === 1 &&
+        activeEvents.some((event) => {
+            if (
+                String(event.Event ?? "")
                     .trim()
-                    .toLowerCase() === "wet"
-        )
-        .map((event) => numericValue(event["Weight (g)"]))
-        .filter((value) => value !== null);
+                    .toLowerCase() !== "water"
+            ) {
+                return false;
+            }
+            const weightEvent = activeWeights[0];
+            const saveGroup = String(
+                weightEvent?.["Save group / batch ID"] ?? ""
+            ).trim();
+            const waterSaveGroup = String(
+                event["Save group / batch ID"] ?? ""
+            ).trim();
+            return saveGroup
+                ? saveGroup === waterSaveGroup
+                : String(event.Date ?? "") === String(weightEvent?.Date ?? "");
+        });
+    const dryWeights = lowestWeight === null ? [] : [lowestWeight];
+    const wetWeights =
+        highestWeight === null ||
+        (activeWeights.length === 1 && !onlyWeightWasWatered)
+            ? []
+            : [highestWeight];
     const dryAverage = average(dryWeights);
     const wetAverage = average(wetWeights);
     const latestWeight = newest(
@@ -523,18 +539,18 @@ export function calculateSummary(events, plantId = "") {
         (event) => numericValue(event["Weight (g)"]) !== null
     );
     const latestHeight = newest(
-        events,
+        currentEvents,
         (event) => numericValue(event["Height (cm)"]) !== null
     );
     const latestWidth = newest(
-        events,
+        currentEvents,
         (event) => numericValue(event["Width (cm)"]) !== null
     );
     const latestCondition = newest(
-        events,
+        currentEvents,
         (event) => String(event["Condition / soil"] ?? "").trim() !== ""
     );
-    const latestActivity = newest(events, () => true);
+    const latestActivity = newest(currentEvents, () => true);
     /** @param {string} name */
     const eventNamed = (name) =>
         currentEvents.filter(
@@ -572,7 +588,18 @@ export function calculateSummary(events, plantId = "") {
     const weightSeries = measurementSeries(activeEvents, "Weight (g)").map(
         (point) => ({
             ...point,
-            state: point.event["Weight state"] || "Routine",
+            state:
+                activeWeights.length === 1
+                    ? onlyWeightWasWatered
+                        ? "Wet"
+                        : "Routine"
+                    : lowestWeight === highestWeight
+                      ? "Routine"
+                      : point.value === lowestWeight
+                        ? "Dry"
+                        : point.value === highestWeight
+                          ? "Wet"
+                          : "Routine",
         })
     );
     const capacity =
@@ -593,11 +620,11 @@ export function calculateSummary(events, plantId = "") {
               )
             : null;
     const baselineStatus =
-        dryWeights.length >= 2 && wetWeights.length >= 2
+        activeWeights.length >= 2
             ? capacity !== null && capacity > 0
                 ? "Ready"
                 : "Check baseline"
-            : dryWeights.length > 0 || wetWeights.length > 0
+            : activeWeights.length > 0
               ? "Provisional"
               : "Needs dry + wet weights";
     const previousWeightValue = weightSeries.at(-2)?.value ?? null;
@@ -612,7 +639,7 @@ export function calculateSummary(events, plantId = "") {
             ? weightChange / previousWeightValue
             : null;
     const watering = wateringDetails(currentEvents);
-    const datedEvents = sortEvents(events).filter((event) =>
+    const datedEvents = sortEvents(currentEvents).filter((event) =>
         parseDate(event.Date)
     );
 

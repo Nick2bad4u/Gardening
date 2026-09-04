@@ -23,8 +23,8 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-As of September 3, 2026, the checked-in source and stable production deployment
-both identify the logger as **5.15.0** on immutable Apps Script version **50**.
+As of September 4, 2026, the checked-in source and stable production deployment
+both identify the logger as **5.16.0** on immutable Apps Script version **51**.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
@@ -37,7 +37,7 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
   AG and AH store the watering application and optional amount; and Plant ID
   validation covers P01-P30.
 - `App bulk` contains 54 physical columns, A:BB, with P01-P30 weight fields and
-  the two watering fields at BA:BB. The 5.15.0 installer recognizes the older
+  the two watering fields at BA:BB. The 5.16.0 installer recognizes the older
   P01-P22, intermediate P01-P28, P01-P30, and pre-watering contracts, inserts
   only missing columns, and preserves staging rows and trailing care fields.
 - `Plant tracker`, `Baselines`, `Quick log`, and the individual workbook tabs
@@ -47,19 +47,23 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
   append-only schema gains AO:AP.
 - Detailed entry supports 12 events: Water, Weigh, Measure, Check, Rotation,
   Clean, Prune, Repot, Flower, Photo, Pest, and Other. Rotation defaults to 90°.
-- A Wet weight is independent from Water. Nutrient choice, product, and amount
-  are remembered across single and bulk logger entry for the current browser
-  session. The live staging columns now validate against `MSU 13-3-15` and
-  `SuperThrive Foliage Pro`; logger 5.15.0 presents the same exact choices as
+- A weight and a Water event remain independent inputs. The logger no longer
+  asks for Dry/Wet/Routine: it stores new weights as `Routine` for append-only
+  compatibility and derives the current setup's low/high/intermediate readings
+  as Dry/Wet/Routine in summaries. Nutrient choice, product, and amount are
+  remembered across single and bulk logger entry for the current browser
+  session. The live staging columns validate against `MSU 13-3-15` and
+  `SuperThrive Foliage Pro`; logger 5.16.0 presents the same exact choices as
   mobile-logger dropdowns. Older product text remains untouched in History.
-- Logger 5.15.0 sorts the compact label picker from `A1`–`H3` in natural
+- Logger 5.16.0 sorts the compact label picker from `A1`–`H3` in natural
   alphanumeric order, then presents numbered labels `#1`–`#6` last, without
   changing canonical `P01`–`P30` request order. P29-P30 cached photo summaries
   are live and use verified 960 px Gyazo thumbnails.
-- The selected-plant summary shows the most recent active `Dry` Weigh reading
-  with its date. If a plant has no Dry-tagged reading, it shows the lowest
-  active historical Weigh value instead and labels that basis `lowest`.
-  Removed, non-Weigh, invalid, and nonpositive records are ignored.
+- The selected-plant summary shows the lowest positive Weigh reading from the
+  current pot setup and labels it `Inferred dry`. With only one reading it says
+  `Only reading`, or `Only wet reading` when that reading shares a save with a
+  Water event. Removed, non-Weigh, invalid, old-setup, and nonpositive records
+  are ignored.
 - The AppSheet bridge uses exactly one five-minute
   `processQueuedAppSheetEntries` trigger. Reinstalling it creates the replacement
   first, then removes every previously matching trigger so a transient creation
@@ -221,8 +225,8 @@ through `processAppSheetEntry(entryId)`, `processQueuedAppSheetEntries()`, and
 action, or automation to add or edit `History` directly.
 
 The user-facing view map, visual assets, image-provenance rules, watering badge,
-eight-chart Insights dashboard, per-plant chart dashboard, helper-table
-contract, and sync troubleshooting are documented in
+ten-panel Insights dashboard, per-plant chart dashboard, helper-table contract,
+and sync troubleshooting are documented in
 [`docs/appsheet-companion.md`](../../docs/appsheet-companion.md).
 
 Each intake row has a stable `Entry ID` key and a deterministic
@@ -253,15 +257,16 @@ The AppSheet form contract is:
 The `App bulk` contract is deliberately narrower and faster: one row is one
 collection-wide Water, Weigh, Water + weigh, Rotation, Check, Clean, Prune,
 Pest, or Other round. It stores `Round ID`, observation time, one action
-selector, a compact EnumList of selected plant IDs, one shared weight state,
-optional shared care details, and P01-P30 gram fields. Empty weight fields are
+selector, a compact EnumList of selected plant IDs, a hidden legacy weight-state
+field, optional shared care details, and P01-P30 gram fields. Empty weight fields are
 skipped. `processQueuedAppSheetEntries()` combines the selected IDs and
 nonblank weights into no more than one deterministic
 `appsheet-bulk-{Round ID}-{Plant ID}` request per plant and sends the complete
 round through one `saveWebObservationBatch()` call. A selected plant with a
 weight becomes one Water + Weigh request; a selected plant without a weight is
-Water-only; a non-selected plant with a weight is Weigh-only. Combined rounds
-default to `Wet`, while Weigh-only rounds default to `Routine`.
+Water-only; a non-selected plant with a weight is Weigh-only. New canonical
+weight rows are stored as `Routine`; current-setup Dry/Wet/Routine labels are
+derived when the workbook, logger, or public tracker reads them.
 Other bulk actions use the selected IDs and their shared rotation, check, pest,
 nutrient, or note fields without fabricating per-plant values.
 
@@ -452,8 +457,7 @@ or update it in the workbook once:
 The mobile app remembers the selected plant, theme, plant-picker style, and
 recent-History length on that device. The searchable selector can be switched
 to a compact grid containing every current pot label. Selected round events can
-be retained between plants, while the weight state defaults to `Routine` and
-remembers the last Dry/Wet/Routine choice only for the current browser session.
+be retained between plants; weight state is inferred and has no manual control.
 The nutrient yes/no choice, product, and amount are remembered and mirrored
 between single and bulk care for that browser session. The 12 single-entry
 event buttons form a three-by-four grid; bulk care offers Water, Check,
@@ -473,15 +477,17 @@ installable trigger is not required.
 
 ## Logging behavior
 
-- Editing Event, Weight state, Weight, Height, Width, Plant condition, or Notes stamps
+- Editing Event, Weight, Height, Width, Plant condition, or Notes stamps
   `Started at` once. You can edit that timestamp before saving a backdated
   observation.
 - One Save can append several event-specific rows. For example, `Water` plus a
   weight and height produces Water, Weigh, and Measure rows without duplicating
   the input values.
-- `Wet` describes a weight state only. It never creates a Water event and does
-  not require nutrient details; select Water explicitly when watering was part
-  of the same observation. A weight with no state is stored as `Routine`.
+- Select Water explicitly when watering was part of the observation; entering a
+  weight alone never creates a Water event. New weight rows are stored as
+  `Routine`, while current-setup extrema are displayed dynamically as Dry and
+  Wet. This preserves History while allowing a later lower weight to become the
+  Dry anchor automatically.
 - Height and width can be entered together or independently; both belong to one
   Measure row. The mobile logger accepts inches or centimeters and defaults to
   inches. `History` keeps normalized centimeter values for comparable charts,
@@ -541,9 +547,14 @@ installable trigger is not required.
   display uses a separately published and verified Gyazo capture recorded by
   `scripts/publish-collection-photo.ps1`. Camera originals stay private and no
   new collection-photo binary is added to the repository.
-- `Baselines` uses completed wet-to-dry cycles to estimate drying time, which is
-  shown in `Plant tracker`. Treat that estimate as context, not a watering
-  deadline.
+- `Baselines` derives current-setup dry and wet anchors from the lowest and
+  highest positive readings. Its dry-date forecast fits a linear slope to up to
+  seven recent post-anchor weights and requires at least three readings across
+  two days with a descending trend. Treat the result as a reweigh prompt, not a
+  watering deadline. Its 34th physical field, hidden `Forecast sort date`, uses
+  the predicted date when available and a far-future fallback otherwise. This
+  keeps actionable forecasts ahead of plants that do not yet have enough
+  evidence without exposing a helper value in AppSheet.
 
 The workbook and public pages are personal but publicly viewable. Do not put
 private addresses, credentials, or precise home-location information in Notes.

@@ -30,36 +30,38 @@ updates, or deletes `History` rows directly.
 The bridge contract and trigger details live in
 [`scripts/google-sheets/README.md`](../scripts/google-sheets/README.md#appsheet-companion-intake).
 
-Migration status as of 2026-09-03: logger 5.15.0 and immutable Apps Script
-version 50 are live at the existing stable deployment URL. The live workbook
+Migration status as of 2026-09-04: logger 5.16.0 and immutable Apps Script
+version 51 are live at the existing stable deployment URL. The live workbook
 has P29 and P30 in `Plant tracker`, `Baselines`, `Quick log`, the individual
 plant tabs, and `App bulk`. `History` and `History view` now contain 42 physical
 columns, A:AP; `App entries` contains 34, A:AH; and `App bulk` contains 54,
 A:BB. The production AppSheet schemas were regenerated to 35 and 55 columns,
-respectively, including `_RowNumber`. Water forms expose `Flood / soak-through`,
+respectively, including `_RowNumber`; the regenerated 34-field `Baselines`
+table exposes 35 columns including `_RowNumber`. Water forms expose
+`Flood / soak-through`,
 `Thorough`, `Partial`, and `Spot`, with optional measured milliliters. P29 and
 P30 Decimal weight fields use the same positive-number validation and Weigh /
 Water + weigh visibility rule as P01-P28, while `Selected plants` remains an
 EnumList of `Plant tracker` refs. The live image mapping uses cached Gyazo
 thumbnails for P19, P20, and P23-P30, and natural label order now runs through
-#6. The rollout preserved all 625 canonical `History` data rows, retained the
+#6. The rollout preserved all 661 canonical `History` data rows, retained the
 duplicate P20 watering as an auditable `Removed` record, and left zero duplicate
-observation IDs, duplicate request/plant/event keys, or formula errors.
+active request/plant/event keys, blank request IDs, or formula errors.
 
 ## View map
 
-| View            | Position | Purpose                                                                                                     |
-| --------------- | -------- | ----------------------------------------------------------------------------------------------------------- |
-| Plants          | Primary  | Image-first list with watering age, pot label, current weight, height, width, field guide, and care action. |
-| History         | Primary  | Four-panel care overview with recent activity, watering age, activity counts, and data-quality flags.       |
-| Log             | Primary  | Full event-aware form with plant-name, pot-label, and Plant-ID lookup for every supported care event.       |
-| Bulk Log        | Primary  | Fast collection-wide Water, Weigh, combined, Rotation, Check, Clean, Prune, Pest, or Other entry.           |
-| Insights        | Primary  | Eight collection-wide charts described below.                                                               |
-| Baselines       | Menu     | Current dry/wet calibration, current weight, next-check, and drying-rate reference values.                  |
-| Bulk rounds     | Menu     | Submitted bulk-round rows and their save receipts.                                                          |
-| Care history    | Menu     | Read-only active history with plant thumbnails, event badges, and observation times.                        |
-| Needs attention | Menu     | Staged entries that need correction or an explicit retry, including the exact status message.               |
-| Plant charts    | Menu     | Interactive plant picker with measurement history, full weight history, and the current dry-down cycle.     |
+| View              | Position | Purpose                                                                                                     |
+| ----------------- | -------- | ----------------------------------------------------------------------------------------------------------- |
+| Plants            | Primary  | Image-first list with watering age, pot label, current weight, height, width, field guide, and care action. |
+| History           | Primary  | Four-panel care overview with recent activity, watering age, activity counts, and data-quality flags.       |
+| Log               | Primary  | Full event-aware form with plant-name, pot-label, and Plant-ID lookup for every supported care event.       |
+| Bulk Log          | Primary  | Fast collection-wide Water, Weigh, combined, Rotation, Check, Clean, Prune, Pest, or Other entry.           |
+| Insights          | Primary  | Ten collection-wide chart and forecast panels described below.                                              |
+| Watering forecast | Menu     | Current dry/wet calibration, current weight, next-check, and deterministic dry-date forecasts.              |
+| Bulk rounds       | Menu     | Submitted bulk-round rows and their save receipts.                                                          |
+| Care history      | Menu     | Read-only active history with plant thumbnails, event badges, and observation times.                        |
+| Needs attention   | Menu     | Staged entries that need correction or an explicit retry, including the exact status message.               |
+| Plant charts      | Menu     | Interactive plant picker with measurement history, full weight history, and the current dry-down cycle.     |
 
 All ten user-facing views use distinct navigation icons. On a desktop they
 appear in the left rail; on a phone the five primary views stay immediately
@@ -67,9 +69,9 @@ available while the five supporting views remain in the navigation menu.
 
 ### Production UX layout
 
-The production view configuration was refreshed on 2026-09-03 after creating
-the native Drive backup `Garden Plant Tracker — AppSheet UX backup —
-2026-09-03`. The view choices are deliberate:
+The production view configuration was refreshed on 2026-09-04 after creating
+the native Drive backup `Garden Plant Tracker — pre-5.16 automatic weight
+forecast backup — 2026-09-04`. The view choices are deliberate:
 
 - **Plants** sorts by `Natural label order`, uses `Plant metrics` as its
   secondary line, and keeps `Watering age` visible at the right edge. This puts
@@ -79,16 +81,19 @@ the native Drive backup `Garden Plant Tracker — AppSheet UX backup —
   follow-ups. Mobile tabs remain enabled. Interactive mode is disabled so a
   care-history row still opens its detail instead of being intercepted as a
   dashboard filter.
-- **Insights** contains exactly eight charts, which avoids the empty ninth-tile
-  row that a redundant Plants panel previously created. Mobile tabs remain
-  enabled.
+- **Insights** contains exactly ten useful panels: eight established collection
+  charts, the actionable Watering forecast table, and the three-series Weight
+  range chart. Mobile tabs remain enabled so a narrow screen shows one readable
+  panel at a time.
 - **Plant charts** contains Plants first, then measurement history, weight
   history, and current-cycle dry-down. Interactive mode is enabled: selecting
   one plant filters all three chart panels without leaving the dashboard.
-- **Baselines** uses a 14-column manual layout limited to identity, weight,
-  capacity, calibration, trend, next-check, dry/wet averages, and data-quality
-  fields. It does not expose the complete helper schema as a horizontally
-  unbounded table.
+- **Watering forecast** uses a 19-column manual layout limited to identity,
+  pounds before grams, current weight, capacity, calibration, trend,
+  next-check, dry/wet anchors, prediction, confidence, and data-quality fields.
+  It sorts by the hidden `Forecast sort date` helper so real and overdue
+  predictions appear before plants that still need more evidence; the helper
+  itself is not displayed.
 - **Bulk rounds** sorts newest first and uses a manual round-level layout. The
   thirty P01-P30 weight-entry columns remain available in Bulk Log but are
   intentionally absent from the submitted-round table.
@@ -122,12 +127,15 @@ Blank values display as an em dash rather than a fabricated zero. The existing
 physical measurements can be scanned together without opening the detail
 view.
 
-## Wet weights, nutrients, and rotation
+## Inferred weight states, nutrients, and rotation
 
-`Wet` is a weight-state label, not a Water event. Detailed log accepts a Wet
-weight without Water and without nutrient fields. Choose Water explicitly only
-when the same observation should also create a Water row; event ordering keeps
-the post-watering Weigh row before its Water row in History.
+AppSheet no longer asks the user to choose Dry, Wet, or Routine. Choose Water
+explicitly only when the observation should also create a Water row; event
+ordering keeps the post-watering Weigh row before its Water row in History. New
+weights are stored as `Routine` for compatibility, while the current pot
+setup's lowest, highest, and intermediate readings are displayed dynamically as
+Dry, Wet, and Routine. This avoids rewriting canonical History when a later
+weight becomes a new low or high.
 
 Rotation is available in Log and Bulk Log. It accepts 1–360 degrees
 and defaults to 90. The degree value is archived in `History!AN:AN`, displayed
@@ -187,9 +195,10 @@ The app uses AppSheet's native dark theme, the garden-green `#43a047` primary
 color, colored header/footer treatment, Source Sans Pro at 16 px, the
 repository-owned logo and launch artwork, and distinct Font Awesome icons for
 every primary and menu view. Plant charts uses an area-chart icon so it does
-not duplicate the Insights icon. The eleven reference charts also use unique
+not duplicate the Insights icon. The twelve reference charts also use distinct
 icons: traffic light, calendar, water drop, clipboard check, combined ruler,
-ruler, shapes, hanging weight, speedometer, tasks, and stopwatch.
+ruler, shapes, hanging weight, speedometer, tasks, stopwatch, and a compact
+range-series mark.
 
 AppSheet does not expose a supported arbitrary CSS or custom Nerd Font
 stylesheet injection surface. Keep future polish inside the native theme,
@@ -218,8 +227,8 @@ watering is appropriate.
 
 ## Collection Insights
 
-The Insights dashboard carries all eight charts from the workbook's Insights
-surface in this production order:
+The Insights dashboard carries ten collection-wide panels in this production
+order:
 
 1. **Watering recency** — days since water by plant.
 2. **Recent drying rate** — the recent moisture-loss rate from Baselines.
@@ -231,9 +240,13 @@ surface in this production order:
 7. **Calibration status** — the collection's calibration-status distribution.
 8. **Data-quality follow-ups** — calibration, remeasurement, and anomaly flags
    by plant.
+9. **Watering forecast** — latest pounds and grams, current-setup dry/wet
+   anchors, drying rate, predicted dry date, confidence, and next action.
+10. **Weight range** — latest, inferred-dry, and inferred-wet gram weights for
+    each plant on one comparable chart.
 
-Desktop layout shows the charts in a compact grid. Mobile layout uses tabs so
-one chart remains readable at a time.
+Desktop layout shows the panels in a compact grid. Mobile layout uses tabs so
+one chart or table remains readable at a time.
 
 Chart ordering and colors encode meaning rather than relying on AppSheet's
 defaults. Watering recency and recent loss are sorted from highest to lowest;
@@ -243,6 +256,12 @@ remeasurement, and anomaly flags ahead of Plant ID. Water is blue,
 measurements are green/cyan or purple where a third series is required,
 weights and drying are orange, and anomalies are red. Calibration keeps the
 native multi-slice palette so its categories remain distinguishable.
+
+Dry-date prediction is deterministic rather than an AppSheet predictive model.
+The workbook fits a transparent linear slope to up to seven recent post-anchor
+weights and requires at least three readings across two days before publishing a
+date. The two obsolete AppSheet predictive models were removed so the app has
+one reproducible forecast source and does not imply machine-learning precision.
 
 The following hidden workbook sheets are presentation helpers, not canonical
 datasets:
