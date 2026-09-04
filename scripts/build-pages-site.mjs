@@ -149,16 +149,18 @@ async function optimizePlantImage(relativePath) {
         6,
         7,
         8,
-    ].includes(metadata.orientation);
+    ].includes(metadata.orientation ?? 1);
     const sourceWidth = rotated ? metadata.height : metadata.width;
     if (!sourceWidth) {
         throw new Error(`Could not read image width: ${relativePath}`);
     }
+    const maximumOptimizedWidth =
+        optimizedPlantImageWidths.at(-1) ?? sourceWidth;
 
     const widths = [
         ...new Set([
             ...optimizedPlantImageWidths.filter((width) => width < sourceWidth),
-            Math.min(sourceWidth, optimizedPlantImageWidths.at(-1)),
+            Math.min(sourceWidth, maximumOptimizedWidth),
         ]),
     ].sort((left, right) => left - right);
     const variants = [];

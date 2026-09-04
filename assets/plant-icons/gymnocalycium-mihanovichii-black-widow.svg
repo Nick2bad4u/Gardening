@@ -1,7 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
   <title id="title">Black Widow chin cactus plant portrait</title>
-  <path d="M5.3 16.3C5.5 9.7 7.8 5.5 12 5.5s6.5 4.2 6.7 10.8Z" fill="#4f385e" stroke="#20182a" stroke-width="1"/>
-  <path d="M12 5.8v10.1m-3.5-8.7c1.9 2.6 1.9 5.9.6 8.8m6.4-8.8c-1.9 2.6-1.9 5.9-.6 8.8" fill="none" stroke="#9a5f9f" stroke-width=".8"/>
-  <g fill="#f06091"><circle cx="8.2" cy="9.3" r=".65"/><circle cx="15.8" cy="9.3" r=".65"/><circle cx="8.4" cy="13.2" r=".65"/><circle cx="15.6" cy="13.2" r=".65"/></g>
+  <path d="M5.1 16.3c.2-6.5 2.7-10.5 6.9-10.5s6.7 4 6.9 10.5Z" fill="#4f385e" stroke="#20182a" stroke-linejoin="round" stroke-width="1"/>
+  <path d="M5.8 15.9c.2-3.3.9-6.2 2.4-8.2 1.5 2.4 1.7 5.1.7 8.2Z" fill="#4f8356"/>
+  <path d="M13.8 6.2c2.5 1 4.1 4.7 4.3 9.7h-3.7c.6-3.6.4-6.8-.6-9.7Z" fill="#71364f"/>
+  <path d="M12 6.1v9.8M8.6 7.3c1.8 2.5 1.8 5.6.6 8.6m6.2-8.6c-1.8 2.5-1.8 5.6-.6 8.6" fill="none" stroke="#9a5f9f" stroke-linecap="round" stroke-width=".75"/>
+  <g fill="#f5e4ce" stroke="#8a6a58" stroke-width=".22"><circle cx="8.2" cy="9.3" r=".5"/><circle cx="15.8" cy="9.3" r=".5"/><circle cx="8.4" cy="13.2" r=".5"/><circle cx="15.6" cy="13.2" r=".5"/></g>
+  <path d="m8.2 9.3-1.2-.7m1.2.7-1.1.8m8.7-.8 1.2-.7m-1.2.7 1.1.8m-8.5 3.1-1.2.5m8.4-.5 1.2.5" fill="none" stroke="#f2c6b7" stroke-linecap="round" stroke-width=".5"/>
   <path d="M4.7 15.9h14.6l-1.7 5.5H6.4z" fill="#e0aa3e" stroke="#70521b" stroke-linejoin="round" stroke-width="1"/>
 </svg>

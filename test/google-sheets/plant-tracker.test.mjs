@@ -1144,6 +1144,83 @@ describe("Garden logger server logic", () => {
         ).toMatchObject({ weight: 300, basis: "Completed cycle" });
     });
 
+    it("uses the first weight within five days after Water as Wet and ages later weights to Routine", () => {
+        const context = loadAppsScript(createHistorySheet([]));
+        const row = ({ event = "Weigh", observedAt, weight = "" }) => {
+            const values = Array(42).fill("");
+            values[0] = observedAt;
+            values[1] = "P02";
+            values[2] = event;
+            values[4] = weight;
+            values[10] = 2;
+            values[35] = "Active";
+            return values;
+        };
+        const withinWindow = [
+            row({
+                event: "Water",
+                observedAt: "2026-08-26T16:22:00Z",
+            }),
+            row({
+                observedAt: "2026-08-27T00:15:00Z",
+                weight: 473.5,
+            }),
+            row({
+                observedAt: "2026-08-27T23:08:00Z",
+                weight: 434.5,
+            }),
+        ];
+        expect([
+            ...context.inferredWeightStatesByRow_(withinWindow).values(),
+        ]).toEqual(["Wet", "Routine"]);
+
+        const outsideWindow = [
+            row({
+                event: "Water",
+                observedAt: "2026-08-01T00:00:00Z",
+            }),
+            row({
+                observedAt: "2026-08-06T00:00:01Z",
+                weight: 400,
+            }),
+        ];
+        expect([
+            ...context.inferredWeightStatesByRow_(outsideWindow).values(),
+        ]).toEqual(["Routine"]);
+
+        const nextWaterWins = [
+            row({
+                event: "Water",
+                observedAt: "2026-08-10T00:00:00Z",
+            }),
+            row({
+                event: "Water",
+                observedAt: "2026-08-11T00:00:00Z",
+            }),
+            row({
+                observedAt: "2026-08-12T00:00:00Z",
+                weight: 390,
+            }),
+        ];
+        expect([
+            ...context.inferredWeightStatesByRow_(nextWaterWins).values(),
+        ]).toEqual(["Wet"]);
+
+        const exactBoundary = [
+            row({
+                event: "Water",
+                observedAt: "2026-08-15T00:00:00Z",
+            }),
+            row({
+                observedAt: "2026-08-20T00:00:00Z",
+                weight: 380,
+            }),
+        ];
+        expect([
+            ...context.inferredWeightStatesByRow_(exactBoundary).values(),
+        ]).toEqual(["Wet"]);
+    });
+
     it("builds deterministic dry-weight and forecast formulas for the workbook views", () => {
         const context = loadAppsScript(createHistorySheet([]));
         const baselineRow = context.baselineViewRow_(2, {
@@ -1152,16 +1229,37 @@ describe("Garden logger server logic", () => {
         });
 
         expect(baselineRow).toHaveLength(34);
-        expect(baselineRow[22]).toMatch(/dryKeys,MAP\(waterKeys/);
+        expect(baselineRow[22]).toMatch(
+            /dryKeys,IF\(waterCount,MAP\(waterKeys/
+        );
         expect(baselineRow[22]).toMatch(/lastDryKey/);
-        expect(baselineRow[24]).toMatch(/wetKeys,FILTER\(weightKeys/);
+        expect(baselineRow[24]).toMatch(
+            /wetKeys,IF\(waterCount,MAP\(waterKeys/
+        );
+        expect(baselineRow[24]).toContain("weightDates<=wd+5");
         expect(baselineRow[24]).toMatch(/lastWetKey/);
-        expect(baselineRow[30]).toMatch(/SLOPE/);
-        expect(baselineRow[31]).toMatch(/C2-W2/);
+        expect(baselineRow[25]).toContain('Y2<=W2),"",Y2-W2');
+        expect(baselineRow[20]).toContain("currentWetKey");
+        expect(baselineRow[20]).toContain("weightKeys>=currentWetKey");
+        expect(baselineRow[20]).not.toContain("History!$N$2:$N$5000");
+        expect(baselineRow[30]).toContain("SLOPE(logResiduals,elapsed)");
+        expect(baselineRow[30]).toContain("RSQ(logResiduals,elapsed)");
+        expect(baselineRow[30]).toContain("ROWS(recent)<4");
+        expect(baselineRow[30]).toContain("span<3");
+        expect(baselineRow[30]).toContain("decay*MAX(0,currentResidual)");
+        expect(baselineRow[30]).not.toContain("History!$N$2:$N$5000");
+        expect(baselineRow[31]).toContain("MAX(2,Z2*0.05)");
+        expect(baselineRow[31]).toContain("LN(residual/tolerance)");
+        expect(baselineRow[12]).toBe('=IF(OR(AE2="",C2<=0),"",AE2/C2)');
         expect(baselineRow[32]).toMatch(/Need a completed dry cycle/);
+        expect(baselineRow[32]).toContain("Provisional curve");
+        expect(baselineRow[32]).toContain("<0.85");
         expect(baselineRow[33]).toMatch(/DATE\(9999,12,31\)/);
-        expect(context.plantPageHistoryFormula_("P01")).toMatch(
-            /nextWaterKey|candidateWet/
+        expect(context.plantPageHistoryFormula_("P01")).toContain(
+            "weightDates<=wd+5"
+        );
+        expect(context.plantPageHistoryFormula_("P01")).toContain(
+            'IF(COUNTIF(wetKeys,currentKey),"Wet"'
         );
         expect(context.plantPageHistoryFormula_("P01")).toContain(
             'pounds,MAP(weights,LAMBDA(w,IF(w="","",w/453.59237)))'
@@ -1193,7 +1291,7 @@ describe("Garden logger server logic", () => {
             calls.push(["organize", ...args]);
 
         expect(context.refreshGardenWorkbook()).toEqual({
-            loggerVersion: "5.16.2",
+            loggerVersion: "5.16.3",
             plantPages: 2,
             baselineColumns: 34,
             dashboardColumns: 21,
@@ -1237,19 +1335,19 @@ describe("Garden logger server logic", () => {
             calls.push(["organize", ...args]);
 
         expect(context.refreshGardenWorkbookPages01To10()).toEqual({
-            loggerVersion: "5.16.2",
+            loggerVersion: "5.16.3",
             firstPlant: "P01",
             lastPlant: "P10",
             plantPages: 10,
         });
         expect(context.refreshGardenWorkbookPages11To20()).toEqual({
-            loggerVersion: "5.16.2",
+            loggerVersion: "5.16.3",
             firstPlant: "P11",
             lastPlant: "P20",
             plantPages: 10,
         });
         expect(context.refreshGardenWorkbookPages21To30()).toEqual({
-            loggerVersion: "5.16.2",
+            loggerVersion: "5.16.3",
             firstPlant: "P21",
             lastPlant: "P30",
             plantPages: 10,
@@ -1774,7 +1872,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.16.2");
+        expect(bootstrap.version).toBe("5.16.3");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -4529,9 +4627,9 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.16.2");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.16.3");
         expect(calls.toast[1]).toBe("Garden logger verified");
-        expect(calls.toast[0]).toMatch(/Logger 5\.16\.2 is ready/);
+        expect(calls.toast[0]).toMatch(/Logger 5\.16\.3 is ready/);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(

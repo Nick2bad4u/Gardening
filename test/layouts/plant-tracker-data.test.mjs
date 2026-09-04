@@ -321,6 +321,46 @@ describe("measured-only growth analytics", () => {
         expect(unwatered.baselineStatus).toBe("Needs a wet weight");
     });
 
+    it("infers only the first post-water weight within five days as Wet", () => {
+        const withinWindow = calculateSummary([
+            {
+                Date: "8/26/2026 4:22:00 PM",
+                Event: "Water",
+                "Pot setup": 2,
+            },
+            observation({
+                date: "8/27/2026 12:15:00 AM",
+                potSetup: 2,
+                weight: 473.5,
+            }),
+            observation({
+                date: "8/27/2026 11:08:00 PM",
+                potSetup: 2,
+                weight: 434.5,
+            }),
+        ]);
+        expect(
+            withinWindow.weightSeries.map(({ value, state }) => [value, state])
+        ).toEqual([
+            [473.5, "Wet"],
+            [434.5, "Routine"],
+        ]);
+
+        const outsideWindow = calculateSummary([
+            {
+                Date: "8/1/2026 12:00:00 AM",
+                Event: "Water",
+                "Pot setup": 1,
+            },
+            observation({
+                date: "8/6/2026 12:00:01 AM",
+                weight: 400,
+            }),
+        ]);
+        expect(outsideWindow.weightSeries[0]?.state).toBe("Routine");
+        expect(outsideWindow.wetAverage).toBeNull();
+    });
+
     it("derives one Dry endpoint per completed cycle and leaves the open cycle Routine", () => {
         const entries = [
             observation({

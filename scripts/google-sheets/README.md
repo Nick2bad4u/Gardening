@@ -50,9 +50,10 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
 - A weight and a Water event remain independent inputs. The logger no longer
   asks for Dry/Wet/Routine: it stores new weights as `Routine` for append-only
   compatibility and derives states from completed watering cycles in summaries.
-  A same-save watering weight is Wet, only the final eligible reading before
-  the next Water is Dry, and an open cycle remains Routine. Nutrient choice,
-  product, and amount are
+  A same-save watering weight is Wet; otherwise, the first positive weight
+  within five days after Water is Wet. Only the final eligible non-Wet reading
+  before the next Water is Dry, and later readings in an open cycle remain
+  Routine. Nutrient choice, product, and amount are
   remembered across single and bulk logger entry for the current browser
   session. The live staging columns validate against `MSU 13-3-15` and
   `SuperThrive Foliage Pro`; the logger presents the same exact choices as
@@ -61,11 +62,12 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
   alphanumeric order, then presents numbered labels `#1`–`#6` last, without
   changing canonical `P01`–`P30` request order. P29-P30 cached photo summaries
   are live and use verified 960 px Gyazo thumbnails.
-- The selected-plant summary shows the last completed-cycle Dry reading. A
-  lower reading after the latest Water remains Routine until the next Water
-  closes the cycle. Removed, non-Weigh, invalid, old-setup, and nonpositive
-  records are ignored. Plant photos can be hidden without creating image
-  requests, and that preference persists locally between sessions.
+- The selected-plant summary shows the last completed-cycle Dry reading. The
+  first eligible reading within five days after the latest Water is Wet; later
+  lower readings remain Routine until the next Water closes the cycle.
+  Removed, non-Weigh, invalid, old-setup, and nonpositive records are ignored.
+  Plant photos can be hidden without creating image requests, and that
+  preference persists locally between sessions.
 - The list and label pickers reuse the field guide's plant-specific multicolor
   portraits. Recent History rows use the same per-event colors as the workbook.
 - The AppSheet bridge uses exactly one five-minute
@@ -499,10 +501,11 @@ installable trigger is not required.
   the input values.
 - Select Water explicitly when watering was part of the observation; entering a
   weight alone never creates a Water event. New weight rows are stored as
-  `Routine`. Derived views mark a weight saved with Water as Wet and mark only
-  the last eligible reading before the following Water as Dry. This preserves
-  History and prevents an unfinished drying cycle's newest low from being
-  mislabeled Dry.
+  `Routine`. Derived views mark a weight saved with Water as Wet. If that save
+  did not include a weight, they use the first positive reading within the next
+  five days. Only the last eligible non-Wet reading before the following Water
+  becomes Dry. This preserves History and prevents an unfinished drying
+  cycle's newest low from being mislabeled Dry.
 - Height and width can be entered together or independently; both belong to one
   Measure row. The mobile logger accepts inches or centimeters and defaults to
   inches. `History` keeps normalized centimeter values for comparable charts,
@@ -562,14 +565,20 @@ installable trigger is not required.
   display uses a separately published and verified Gyazo capture recorded by
   `scripts/publish-collection-photo.ps1`. Camera originals stay private and no
   new collection-photo binary is added to the repository.
-- `Baselines` derives the latest completed Dry endpoint and latest same-save Wet
-  anchor for the current setup. Its dry-date forecast fits a linear slope to up to
-  seven recent post-anchor weights and requires at least three readings across
-  two days with a descending trend. Treat the result as a reweigh prompt, not a
-  watering deadline. Its 34th physical field, hidden `Forecast sort date`, uses
-  the predicted date when available and a far-future fallback otherwise. This
-  keeps actionable forecasts ahead of plants that do not yet have enough
-  evidence without exposing a helper value in AppSheet.
+- `Baselines` derives the latest completed Dry endpoint and the latest Wet
+  anchor for the current setup. Wet is either a same-save weight or the first
+  positive reading within five days after Water. The forecast fits an
+  exponential approach to the completed Dry anchor using up to 12 weights from
+  the current cycle. It requires at least four eligible readings across three
+  days and a log-linear fit with R² of at least 0.60. The displayed drying rate
+  is the model's current rate, so it slows with the curve instead of extending
+  day-one loss through the whole cycle. The predicted date is when the model
+  reaches a near-dry band (within 5% of learned capacity or 2 g, whichever is
+  larger). Treat it as a reweigh prompt, not a watering deadline. Its 34th
+  physical field, hidden `Forecast sort date`, uses the predicted date when
+  available and a far-future fallback otherwise. This keeps actionable
+  forecasts ahead of plants that do not yet have enough evidence without
+  exposing a helper value in AppSheet.
 
 The workbook and public pages are personal but publicly viewable. Do not put
 private addresses, credentials, or precise home-location information in Notes.

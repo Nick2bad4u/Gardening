@@ -258,10 +258,16 @@ weights and drying are orange, and anomalies are red. Calibration keeps the
 native multi-slice palette so its categories remain distinguishable.
 
 Dry-date prediction is deterministic rather than an AppSheet predictive model.
-The workbook fits a transparent linear slope to up to seven recent post-anchor
-weights and requires at least three readings across two days before publishing a
-date. The two obsolete AppSheet predictive models were removed so the app has
-one reproducible forecast source and does not imply machine-learning precision.
+The workbook fits an exponential approach to the most recent completed Dry
+anchor using up to 12 current-cycle weights. It publishes a forecast only after
+at least four eligible readings across three days produce a log-linear fit with
+R² of at least 0.60. The current loss rate therefore slows with the fitted curve
+instead of projecting the first day or two across the whole cycle. The forecast
+is the date the curve enters a near-dry band (within 5% of learned capacity or
+2 g, whichever is larger), so it remains a reweigh prompt rather than a watering
+deadline. The two obsolete AppSheet predictive models were removed so the app
+has one reproducible forecast source and does not imply machine-learning
+precision.
 
 The following hidden workbook sheets are presentation helpers, not canonical
 datasets:

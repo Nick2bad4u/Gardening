@@ -503,12 +503,15 @@ function observationsShareSave(weightEvent, waterEvent) {
         : String(weightEvent.Date ?? "") === String(waterEvent.Date ?? "");
 }
 
+const WET_WEIGHT_WINDOW_MS = 5 * 24 * 60 * 60 * 1000;
+
 /**
  * Derive weight states from completed watering cycles without rewriting the
- * append-only state stored in History. A weight captured with Water is Wet. The
- * last non-Wet weight before the next watering closes that drying cycle as Dry.
- * Every weight after the most recent watering remains Routine until a later
- * watering proves which reading was actually the cycle endpoint.
+ * append-only state stored in History. A weight captured with Water is Wet; if
+ * there is no same-save weight, the first reading within five days is the Wet
+ * anchor. The last non-Wet weight before the next watering closes that drying
+ * cycle as Dry. Other readings remain Routine until a later watering proves
+ * which one was actually the cycle endpoint.
  *
  * @param {HistoryEvent[]} activeEvents
  */
@@ -527,12 +530,41 @@ function weightCycleAnalytics(activeEvents) {
                 .toLowerCase() === "water"
     );
     const stateByEvent = new Map(weights.map((event) => [event, "Routine"]));
-    const wetAnchors = weights.filter((weightEvent) =>
-        waterEvents.some((waterEvent) =>
-            observationsShareSave(weightEvent, waterEvent)
-        )
-    );
-    wetAnchors.forEach((event) => stateByEvent.set(event, "Wet"));
+    /** @type {HistoryEvent[]} */
+    const wetAnchors = [];
+    waterEvents.forEach((waterEvent, waterIndex) => {
+        const waterOrder = orderByEvent.get(waterEvent) ?? -1;
+        const nextWaterOrder =
+            orderByEvent.get(waterEvents[waterIndex + 1]) ??
+            Number.POSITIVE_INFINITY;
+        const sameSaveWeight = weights
+            .filter((weightEvent) =>
+                observationsShareSave(weightEvent, waterEvent)
+            )
+            .at(-1);
+        const waterDate = parseDate(waterEvent.Date);
+        const firstPromptWeight = sameSaveWeight
+            ? null
+            : weights.find((weightEvent) => {
+                  const weightOrder = orderByEvent.get(weightEvent) ?? -1;
+                  const weightDate = parseDate(weightEvent.Date);
+                  if (
+                      weightOrder <= waterOrder ||
+                      weightOrder >= nextWaterOrder ||
+                      !waterDate ||
+                      !weightDate
+                  ) {
+                      return false;
+                  }
+                  const elapsed = weightDate.getTime() - waterDate.getTime();
+                  return elapsed >= 0 && elapsed <= WET_WEIGHT_WINDOW_MS;
+              });
+        const wetAnchor = sameSaveWeight ?? firstPromptWeight;
+        if (wetAnchor && !wetAnchors.includes(wetAnchor)) {
+            wetAnchors.push(wetAnchor);
+            stateByEvent.set(wetAnchor, "Wet");
+        }
+    });
 
     /** @type {HistoryEvent[]} */
     const dryAnchors = [];

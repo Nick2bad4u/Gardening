@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
   <title id="title">Indigo Wave plant portrait</title>
-  <path d="M5.8 16.5c.1-4.4 1.2-8.8 3.3-11.7 1.2 2.5 1.9 4.4 3 5.4 1.3-1.6 2.3-4.4 3.2-7.1 2 3.8 2.8 8.2 2.9 13.4Z" fill="#58a7b8" stroke="#244e54" stroke-linejoin="round" stroke-width="1"/>
-  <path d="M8.6 6.2c.5 3.4.3 6.8-.7 10m7.2-11.1c-.2 4-.1 7.8.8 11.1M12 10.6v5.6" fill="none" stroke="#b5e0d8" stroke-width=".8"/>
-  <g fill="#f1c64d"><circle cx="8.7" cy="9.2" r=".45"/><circle cx="15.4" cy="8.5" r=".45"/><circle cx="12" cy="13" r=".45"/></g>
+  <path d="M5.4 16.5c.2-3.7 1-7.4 2.6-10.3 1.7.8 2.6 2.3 2.9 4.4.4-3.9 1.6-7 3.4-8.4 1.5 2.5 1.4 5.3.7 7.9 1.4-1.9 2.8-2.8 3.8-2.5.7 2.7 1 5.6.8 8.9Z" fill="#58a7b8" stroke="#244e54" stroke-linejoin="round" stroke-width="1"/>
+  <path d="M8.2 6.9c.4 3.3.3 6.5-.6 9.2m6.5-12.5c-.1 4.1-.3 8.2-1 12.5m5-7c-.4 2.5-.5 4.8-.2 7" fill="none" stroke="#b5e0d8" stroke-linecap="round" stroke-width=".8"/>
+  <path d="M10.8 10.8c.6 1.3 1.3 1.9 2.2 1.8m1.8-2.2c.6 1.1 1.4 1.5 2.3 1.3" fill="none" stroke="#347b83" stroke-linecap="round" stroke-width=".55"/>
+  <g fill="#f1c64d"><circle cx="8.4" cy="9.5" r=".42"/><circle cx="14.1" cy="7.7" r=".42"/><circle cx="17.9" cy="11.8" r=".42"/></g>
   <path d="M4.8 16h14.4l-1.6 5.4H6.4z" fill="#7156a3" stroke="#493467" stroke-linejoin="round" stroke-width="1"/>
 </svg>

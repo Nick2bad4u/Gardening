@@ -27,7 +27,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.16.2");
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.16.3");
 const webPlantImageUrls = JSON.parse(
     JSON.stringify(vm.runInContext("WEB_PLANT_IMAGE_URLS", context))
 );
@@ -387,71 +387,85 @@ for (const [
     eventName,
     background,
     foreground,
+    accent,
 ] of [
     [
         "Water",
         "#d9eefc",
         "#174a68",
+        "#2f8fca",
     ],
     [
         "Weigh",
         "#e9e1f8",
         "#47306b",
+        "#8059bd",
     ],
     [
         "Measure",
         "#dff2e4",
         "#24543a",
+        "#3d9a60",
     ],
     [
         "Check",
         "#fff0c7",
         "#684b00",
+        "#c58a00",
     ],
     [
         "Rotation",
         "#e3f1f1",
         "#285b5b",
+        "#398d8d",
     ],
     [
         "Clean",
         "#f2f2f2",
         "#424242",
+        "#6e7770",
     ],
     [
         "Prune",
         "#e8f0d9",
         "#3c5724",
+        "#6d9636",
     ],
     [
         "Repot",
         "#f7e3cf",
         "#6e3d18",
+        "#c97836",
     ],
     [
         "Flower",
         "#f9dcea",
         "#722a4d",
+        "#c84f89",
     ],
     [
         "Photo",
         "#e1e8f7",
         "#2d4775",
+        "#5879bd",
     ],
     [
         "Pest",
         "#f8d4d4",
         "#7a1d1d",
+        "#c54b4b",
     ],
 ]) {
     assert.match(
         html,
         new RegExp(
-            `\\.recent-item\\[data-event="${eventName}"\\]\\s*\\{[\\s\\S]*?--event-bg: ${background};[\\s\\S]*?--event-ink: ${foreground};`,
+            `\\.recent-item\\[data-event="${eventName}"\\]\\s*\\{[\\s\\S]*?--event-bg: ${background};[\\s\\S]*?--event-ink: ${foreground};[\\s\\S]*?--event-accent: ${accent};`,
             "u"
         )
     );
 }
+assert.match(html, /var\(--event-accent\) 10%/u);
+assert.doesNotMatch(html, /var\(--event-bg\) 74%/u);
 assert.match(html, /id="bulkWaterForm"/);
 assert.match(html, /saveBulkCareObservation/);
 assert.match(html, /id="bulkEventChips"/);
@@ -589,7 +603,16 @@ assert.match(source, /function plantPageSheet_\(spreadsheet, plantId\)/);
 assert.match(source, /"Dry weight \(g\)"/);
 assert.match(source, /"Latest weight \(lb\)"/);
 assert.match(source, /"Predicted dry date"/);
-assert.match(source, /SLOPE\(/);
+assert.match(source, /WET_WEIGHT_WINDOW_DAYS = 5/u);
+assert.match(source, /SLOPE\(logResiduals,elapsed\)/u);
+assert.match(source, /RSQ\(logResiduals,elapsed\)/u);
+assert.match(source, /MAX\(2,Z\$\{row\}\*0\.05\)/u);
+const forecastFormulaRow = Array.from(
+    context.baselineViewRow_(2, { id: "P01", name: "Test plant" })
+);
+assert.match(forecastFormulaRow[20], /currentWetKey/u);
+assert.match(forecastFormulaRow[30], /weightKeys>=currentWetKey/u);
+assert.doesNotMatch(forecastFormulaRow[30], /History!\$N\$2:\$N\$5000/u);
 assert.match(source, /sheet\.setFrozenRows\(0\)/);
 assert.match(source, /sheet\.setFrozenColumns\(0\)/);
 

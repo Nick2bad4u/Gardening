@@ -1,8 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
   <title id="title">Dragon's Egg plant portrait</title>
-  <ellipse cx="12" cy="10.8" rx="6" ry="7.7" fill="#66a866" stroke="#173c2b" stroke-width="1"/>
-  <path d="M12 3.2v15.1M8.8 4.2c2 4.2 2 9.1 0 13.2m6.4-13.2c-2 4.2-2 9.1 0 13.2" fill="none" stroke="#b8d27c" stroke-width=".8"/>
-  <path d="M6.6 8.2h10.8m-11.2 5h11.6" stroke="#47794f" stroke-dasharray="1 1.2" stroke-width=".6"/>
-  <path d="m12 3.3-1.4-1.1L12 1l1.4 1.2Z" fill="#d95862"/>
+  <ellipse cx="12" cy="11.2" rx="6.2" ry="6.5" fill="#66a866" stroke="#173c2b" stroke-width="1"/>
+  <path d="M12 4.9v12.6M8.8 5.8c1.9 3.4 1.9 7.4 0 10.8m6.4-10.8c-1.9 3.4-1.9 7.4 0 10.8" fill="none" stroke="#b8d27c" stroke-linecap="round" stroke-width=".8"/>
+  <path d="M6.4 8.8h11.2m-11.6 4.8h12" fill="none" stroke="#47794f" stroke-dasharray="1 1.2" stroke-width=".6"/>
+  <path d="M9.2 5.5c.9 2.5.7 5.1 0 7.3-.5 1.6-.3 3 .3 4.1" fill="none" stroke="#c88258" stroke-linecap="round" stroke-width="1"/>
+  <path d="M12 4.8v-1.4" stroke="#6e541e" stroke-linecap="round" stroke-width=".55"/>
+  <g fill="#d95862" stroke="#8f3840" stroke-width=".25"><circle cx="11.2" cy="2.9" r=".65"/><circle cx="12.8" cy="2.9" r=".65"/><circle cx="12" cy="2.1" r=".62"/></g>
   <path d="M5.2 17.1h13.6l-1.5 4.3H6.7z" fill="#efc24f" stroke="#6e541e" stroke-linejoin="round" stroke-width="1"/>
 </svg>

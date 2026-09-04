@@ -1272,6 +1272,9 @@ describe("Garden logger browser recovery", () => {
         ).toEqual(["Water", "Pest"]);
         expect(html).toContain("--event-bg: #d9eefc;");
         expect(html).toContain("--event-ink: #7a1d1d;");
+        expect(html).toContain("--event-accent: #2f8fca;");
+        expect(html).toContain("var(--event-accent) 10%");
+        expect(html).not.toContain("var(--event-bg) 74%");
     });
 
     it("starts safely when browser storage and theme detection are unavailable", () => {

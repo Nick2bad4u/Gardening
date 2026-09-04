@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title">
   <title id="title">Rainbow hedgehog cactus plant portrait</title>
-  <path d="M7.6 17V8.4c0-3.5 1.8-5.6 4.4-5.6s4.4 2.1 4.4 5.6V17Z" fill="#6cad68" stroke="#173c2b" stroke-width="1"/>
-  <path d="M9.2 4.4v12m2-13.2V17m2-13.5V17m2-11.6v11.4" stroke="#ec6f91" stroke-width="1"/>
-  <path d="M7.9 7.2h8.2m-8.5 3h8.8m-8.7 3h8.6" stroke="#f7b2c6" stroke-width=".65"/>
-  <path d="m12 3-1.3-1.4L12 1l1.3.6Z" fill="#f4c34d" stroke="#7a531d" stroke-width=".55"/>
+  <path d="M7.6 17V8.2c0-3.4 1.8-5.6 4.4-5.6s4.4 2.2 4.4 5.6V17Z" fill="#6f9869" stroke="#173c2b" stroke-linejoin="round" stroke-width="1"/>
+  <path d="M9.1 4.4v12.2m2-13.5v13.5m2-13.3v13.3m2-11.9v11.9" fill="none" stroke="#ec6f91" stroke-linecap="round" stroke-width="1"/>
+  <path d="M7.9 6.8h8.2m-8.5 2.8h8.8m-8.7 2.8h8.6m-8.2 2.8H16" fill="none" stroke="#f7b2c6" stroke-linecap="round" stroke-width=".65"/>
+  <circle cx="12" cy="2.5" r=".7" fill="#f4c34d" stroke="#7a531d" stroke-width=".4"/>
   <path d="M5.9 16.3h12.2l-1.4 5H7.3z" fill="#e2874d" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
 </svg>
