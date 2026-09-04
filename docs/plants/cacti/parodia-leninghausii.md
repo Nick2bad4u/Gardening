@@ -6,7 +6,8 @@
 - Visual description: A densely ribbed green body wrapped in fine golden spines, rounded while young but gradually stretching into an upright column as it matures.
 - Interesting fact: An older plant can crown that golden column with repeated flushes of pale-yellow flowers, concentrating the blooms around the growing tip rather than down the sides.
 - Identification: **high confidence**
-- Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
+- Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan
+- Acquired on: 2026-08-10
 - Current pot: 4-inch individual pot
 - Photo archive: [licensed species-reference images](../../../assets/plants/parodia-leninghausii/)
 

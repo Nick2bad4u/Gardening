@@ -6,7 +6,8 @@
 - Visual description: A tall ribbed column with a powdery blue-green surface, vertical cream streaks, and regular golden areoles; the pale variegation runs with the ribs rather than forming isolated spots.
 - Interesting fact: Two different surface effects create the color: a waxy bloom produces the blue cast, while the cream sectors contain less chlorophyll and can scorch before the greener tissue does.
 - Identification: **probable; better areole/base photos or flowers could revise it**
-- Acquired from: Existing shared cactus planter; exact source and date not recorded
+- Acquired from: Gerych's Design, Fenton, Michigan, as part of the shared cactus planter
+- Acquired on: 2023-06-21
 - Photo archive: [licensed normal-species reference images](../../../assets/plants/pilosocereus-pachycladus-variegated/)
 
 ## Names and identification

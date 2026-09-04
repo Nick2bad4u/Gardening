@@ -9,7 +9,7 @@
 - Ordered from: Mountain Crest Gardens on 2026-08-25
 - Order status: **Received 2026-08-28; owner inspected roots and plant by hand**
 - Received container: **2-inch nursery pot; shape not reliably documented**
-- Current pot: **4-inch round terracotta pot; repotted 2026-08-28**
+- Current pot: **4-inch round pot (4 × 4 × 3.7 in); repotted 2026-08-28**
 - Photo archive: [licensed species-reference images](../../../assets/plants/pleiospilos-nelii-royal-flush/)
 
 ## Names and identity
@@ -31,8 +31,9 @@ The 2026-08-25 order lists one _P. nelii_ 'Royal Flush', and the owner
 documented receipt on 2026-08-28. It arrived rooted in a 2-inch nursery pot;
 the received container's shape is not reliably documented. The owner reports
 removing about 95% of the nursery soil during repotting. The owner-entered live
-tracker pot size is 4 inches, and current photographs show a round terracotta
-pot. The corrected pot label is `G3`, and the permanent tracker ID is `P28`.
+tracker pot size is 4 inches. The current pot is the same 4 × 4 × 3.7-inch
+round model used for all six plants in this shipment. The corrected pot label
+is `G3`, and the permanent tracker ID is `P28`.
 
 Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
 slightly moist substrate. The live 2026-08-29 Measurement record is **353.5 g**
@@ -86,7 +87,7 @@ horticultural color selection rather than a separate wild population.
 | Grow-light position | Bright succulent zone after gradual acclimation; keep it out of the highest cactus hotspot during the first week. Exact maintained placement remains unrecorded.                                                                               |
 | Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use the active leaf cycle, firmness, medium dryness, and pot-weight trend as evidence.                                                                          |
 | Leaf replacement    | Let the old pair be consumed while a new inner pair develops; wrinkling old leaves alone is not an automatic water signal.                                                                                                                     |
-| Pot and mix         | The tracker records a 4-inch current pot, and photographs show a round terracotta pot. Received-pot shape and replacement-medium composition are unrecorded; depth still matters.                                                              |
+| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape and replacement-medium composition are unrecorded; depth still matters.                                                                                                    |
 
 ## Rotation, propagation, and watch points
 

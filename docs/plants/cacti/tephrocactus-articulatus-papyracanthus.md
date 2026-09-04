@@ -9,7 +9,7 @@
 - Ordered from: Mountain Crest Gardens on 2026-08-25
 - Order status: **Received 2026-08-28; owner inspected roots and plant by hand**
 - Received container: **2-inch nursery pot; shape not reliably documented**
-- Current pot: **4-inch square pot; repotted 2026-08-28**
+- Current pot: **4-inch round pot (4 × 4 × 3.7 in); repotted 2026-08-28**
 - Photo archive: [licensed species-reference images](../../../assets/plants/tephrocactus-articulatus-papyracanthus/)
 
 ## Names and identity
@@ -31,8 +31,9 @@ Mountain Crest Gardens listed one paper spine cactus in the 2026-08-25 order,
 and the owner documented receipt on 2026-08-28. It arrived rooted in a 2-inch
 nursery pot; the received container's shape is not reliably documented. The
 owner reports removing about 95% of the nursery soil during repotting. The
-owner-entered live tracker pot size is 4 inches, and current photographs show a
-square pot. The confirmed pot label is `G2`, and the permanent tracker ID is
+owner-entered live tracker pot size is 4 inches. The current pot is the same
+4 × 4 × 3.7-inch round model used for all six plants in this shipment. The
+confirmed pot label is `G2`, and the permanent tracker ID is
 `P23`.
 
 Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
@@ -87,7 +88,7 @@ seller record.
 | Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual top and side views are archived; add base and complete all-side diagnostic views when available. |
 | Grow-light position | Use a bright cactus zone after acclimation, but begin outside the hottest center until the shipped surface adjusts. Exact maintained placement remains unrecorded.                                                                |
 | Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use medium dryness, plant response, and pot-weight trend as evidence.                                                                              |
-| Pot and mix         | The tracker records a 4-inch current pot, and photographs show a square shape. Received-pot shape and replacement-medium composition are unrecorded; keep the setup stable.                                                       |
+| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape and replacement-medium composition are unrecorded; keep the setup stable.                                                                                     |
 | Handling            | Support the lowest segment instead of grabbing the paper spines or upper joints.                                                                                                                                                  |
 
 ## Rotation, propagation, and watch points

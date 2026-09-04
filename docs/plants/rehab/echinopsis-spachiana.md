@@ -6,7 +6,8 @@
 - Visual description: An upright green column divided by strong vertical ribs, with close golden-brown spine clusters tracing each rib from base to tip like parallel dotted lines.
 - Interesting fact: Golden torch combines two very different horticultural roles: a mature column can open a large white flower at night, while vigorous stems are also used as grafting stock for other cacti.
 - Identification: **probable**
-- Acquired from: Existing shared cactus planter; exact source and date not recorded
+- Acquired from: Gerych's Design, Fenton, Michigan, as part of the shared cactus planter
+- Acquired on: 2023-06-21
 - Photo archive: [licensed species-reference images](../../../assets/plants/echinopsis-spachiana/)
 
 ## Names and identification

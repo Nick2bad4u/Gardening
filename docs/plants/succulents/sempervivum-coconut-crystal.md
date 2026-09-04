@@ -9,7 +9,7 @@
 - Ordered from: Mountain Crest Gardens on 2026-08-25
 - Order status: **Received 2026-08-28; owner inspected roots and plant by hand**
 - Received container: **2-inch nursery pot; shape not reliably documented**
-- Current pot: **4-inch square pot; repotted 2026-08-28**
+- Current pot: **4-inch round pot (4 × 4 × 3.7 in); repotted 2026-08-28**
 - Photo archive: [licensed genus and cultivar references](../../../assets/plants/sempervivum-coconut-crystal/)
 
 ## Names and identity
@@ -39,7 +39,8 @@ The 2026-08-25 order lists one Colorockz® 'Coconut Crystal', and the owner
 documented receipt on 2026-08-28. It arrived rooted in a 2-inch nursery pot;
 the received container's shape is not reliably documented. The owner reports
 removing about 95% of the nursery soil during repotting. The owner-entered live
-tracker pot size is 4 inches, and current photographs show a square pot. The
+tracker pot size is 4 inches. The current pot is the same 4 × 4 × 3.7-inch
+round model used for all six plants in this shipment. The
 corrected pot label is `H1`, and the permanent tracker ID is `P24`.
 
 Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
@@ -100,7 +101,7 @@ coolest available succulent position with steady airflow.
 | Water             | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use drainage, rosette firmness, and pot-weight trend; never leave water standing in the crown or saucer.                                           |
 | Heat              | Move toward a cooler edge or add distance if leaves bleach, the rosette opens, or sustained canopy heat becomes excessive.                                                                                                        |
 | Winter            | Keep indoors; favor cooler nights and seasonal temperature variation without exposing it to freezing drafts.                                                                                                                      |
-| Pot               | The tracker records a 4-inch current pot, and photographs show a square shape. Received-pot shape and replacement-medium composition are unrecorded; monitor the larger mix volume indoors.                                       |
+| Pot               | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape and replacement-medium composition are unrecorded; monitor the larger mix volume indoors.                                                                     |
 
 ## Rotation, propagation, and watch points
 

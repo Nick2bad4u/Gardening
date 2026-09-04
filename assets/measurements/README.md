@@ -50,9 +50,9 @@ measurement photograph was supplied for this folder.
 | P27 / G1        | Black Widow     | 388.0 g | 0.50 in | 1.20 in |
 | P28 / G3        | Royal Flush     | 353.5 g | 1.30 in | 1.70 in |
 
-All six are currently in 4-inch pots. P23–P27 are in square pots and P28 is in
-a round terracotta pot. Exact tabletop placement and riser clearance remain to
-be measured separately.
+All six are currently in the same 4-inch round pot model, measured at
+4 × 4 × 3.7 inches. Exact tabletop placement and riser clearance remain to be
+measured separately.
 
 The photographs establish height tiers rather than 12 exact individual
 readings. The revised starting plan aims for a main starter canopy around 8–9

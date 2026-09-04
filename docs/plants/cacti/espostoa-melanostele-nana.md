@@ -6,7 +6,8 @@
 - Visual description: A compact upright column almost completely wrapped in cream-white wool, with the darker stem and fine spines only peeking through where the fibers separate.
 - Interesting fact: The invitingly soft coat is camouflage: it conceals numerous sharp spines, so this is a look-don't-stroke cactus despite its plush appearance.
 - Identification: **probable; _Espostoa lanata_ remains the main alternative**
-- Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
+- Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan
+- Acquired on: 2026-08-10
 - Current pot: 4-inch individual pot
 - Photo archive: [licensed species-reference images](../../../assets/plants/espostoa-melanostele-nana/)
 

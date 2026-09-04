@@ -143,6 +143,10 @@ the rosette.
 | Rehab-03     | `#1`; formerly `A4-B4` | [_Echinopsis spachiana_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A88507-2)                 | Golden torch cactus      | Probable   | Alive. The better photo shows continuous ribs, which rules against the earlier _Mammillaria_ guess.                                                                                                             |
 | Rehab-04     | —                      | Probably [_Mammillaria bombycina_](https://www.rhs.org.uk/plants/106175/mammillaria-bombycina/details)               | Silken pincushion cactus | Probable   | Removed 2026-07-24. Final inspection found only a tiny patch of green flesh near the top—too little viable tissue to salvage. The probable ID and older photos remain as a historical record.                   |
 
+The three living components now sharing label `#1` were acquired together from
+Gerych's Design in Fenton on 2023-06-21. Rehab-04 is historical and has no
+confirmed acquisition record, so that date is not imputed to it.
+
 The thin green whip visible in an older photo belongs to the monkey tail. It is
 etiolated growth from the low-light period, not a fifth cactus. Some of that
 stretched growth has since been trimmed. The improved new growth after a month
@@ -154,9 +158,9 @@ plan. Its inventory ID is intentionally not being reused.
 ## August 2026 individual cacti
 
 These six cacti came from
-[Carlsons' Greenhouse](https://carlsonsgreenhouse.com/) on Torrey Road. Their
-permanent `E1`–`E3` and `F1`–`F3` mappings were recorded from the physical pots
-on 2026-08-10.
+[Carlsons' Greenhouse](https://carlsonsgreenhouse.com/) on Torrey Road on
+2026-08-10. Their permanent `E1`–`E3` and `F1`–`F3` mappings were recorded from
+the physical pots the same day.
 
 | Inventory ID | Label ID | Working identification                                                                                                        | Common name                          | Confidence         | Pot and notes                                                                   |
 | ------------ | -------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ------------------ | ------------------------------------------------------------------------------- |
@@ -174,10 +178,10 @@ hybrid group rather than claiming a cultivar.
 
 ## August 2026 succulent and houseplant additions
 
-| Inventory ID  | Label ID | Working identification                                                                    | Common name  | Confidence                    | Source and pot                                                                                                          |
-| ------------- | -------- | ----------------------------------------------------------------------------------------- | ------------ | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Succulent-05  | `#4`     | [_Aeonium haworthii_ 'Dream Color'](./plants/succulents/aeonium-haworthii-dream-color.md) | Kiwi aeonium | Very high                     | Carlsons' Greenhouse; approximately 5-inch pot                                                                          |
-| Houseplant-01 | `#3`     | [_Pachira glabra_](./plants/houseplants/pachira-glabra.md)                                | Money tree   | Genus tag; working species ID | Lowe's; moved from a 4-inch nursery pot into a 6-inch Amazon Basics pot; purchased 8-inch pot reserved for later growth |
+| Inventory ID  | Label ID | Working identification                                                                    | Common name  | Confidence                    | Source and pot                                                                                          |
+| ------------- | -------- | ----------------------------------------------------------------------------------------- | ------------ | ----------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Succulent-05  | `#4`     | [_Aeonium haworthii_ 'Dream Color'](./plants/succulents/aeonium-haworthii-dream-color.md) | Kiwi aeonium | Very high                     | Carlsons' Greenhouse; acquired 2026-08-10; approximately 5-inch pot                                     |
+| Houseplant-01 | `#3`     | [_Pachira glabra_](./plants/houseplants/pachira-glabra.md)                                | Money tree   | Genus tag; working species ID | Howell Home Depot; acquired 2026-07-29; moved from a 4-inch nursery pot into a 6-inch Amazon Basics pot |
 
 The numbered mapping was copied from the physical labels on 2026-08-10: the
 shared rehab cactus planter is `#1`, the shared succulent planter is `#2`, the
@@ -211,8 +215,8 @@ These six records come from a Mountain Crest Gardens order placed on
 2026-08-25 and received on 2026-08-28. Every plant arrived rooted in a 2-inch
 nursery pot, but the received containers' shapes are not reliably documented.
 The owner reports removing about 95% of the nursery soil during repotting. The
-owner-entered live tracker pot size is 4 inches for all six. Current
-photographs show `P23`–`P27` in square pots and `P28` in a round terracotta pot.
+owner-entered live tracker pot size is 4 inches for all six. They now use the
+same round 4 × 4 × 3.7-inch pot model.
 
 The owner hand-inspected every plant and chose not to quarantine the shipment.
 The box carried a California agriculture sticker reported to say the shipment
@@ -221,14 +225,14 @@ outdoors in California sun. Preserve those as arrival evidence, not as a
 guarantee against later pest signs or indoor light-acclimation stress. Continue
 close inspections while the plants settle.
 
-| Inventory ID | Label ID | Tracker ID | Seller identification                                                                                               | Common name                     | Seller SKU | Received container     | Current pot           |
-| ------------ | -------- | ---------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------- | ---------- | ---------------------- | --------------------- |
-| Cactus-09    | `G1`     | `P27`      | [_Gymnocalycium mihanovichii_ f. variegata 'Black Widow'](./plants/cacti/gymnocalycium-mihanovichii-black-widow.md) | Black Widow chin cactus         | `C2ZY7804` | 2 in; shape unrecorded | 4 in square           |
-| Cactus-08    | `G2`     | `P23`      | [_Tephrocactus articulatus_ var. _papyracanthus_](./plants/cacti/tephrocactus-articulatus-papyracanthus.md)         | Paper spine cactus              | `C2KY3308` | 2 in; shape unrecorded | 4 in square           |
-| Succulent-06 | `G3`     | `P28`      | [_Pleiospilos nelii_ 'Royal Flush'](./plants/succulents/pleiospilos-nelii-royal-flush.md)                           | Royal Flush split rock          | `S2JY2848` | 2 in; shape unrecorded | 4 in round terracotta |
-| Succulent-08 | `H1`     | `P24`      | [_Sempervivum_ Colorockz® 'Coconut Crystal'](./plants/succulents/sempervivum-coconut-crystal.md)                    | Coconut Crystal hens and chicks | `S2JN7271` | 2 in; shape unrecorded | 4 in square           |
-| Succulent-07 | `H2`     | `P25`      | [_Echeveria_ 'Raindrops'](./plants/succulents/echeveria-raindrops.md)                                               | Raindrops echeveria             | `S2JN3225` | 2 in; shape unrecorded | 4 in square           |
-| Cactus-07    | `H3`     | `P26`      | [_Austrocylindropuntia subulata_](./plants/cacti/austrocylindropuntia-subulata.md)                                  | Eve's needle cactus             | `C2KY2600` | 2 in; shape unrecorded | 4 in square           |
+| Inventory ID | Label ID | Tracker ID | Seller identification                                                                                               | Common name                     | Seller SKU | Received container     | Current pot                |
+| ------------ | -------- | ---------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------- | ---------- | ---------------------- | -------------------------- |
+| Cactus-09    | `G1`     | `P27`      | [_Gymnocalycium mihanovichii_ f. variegata 'Black Widow'](./plants/cacti/gymnocalycium-mihanovichii-black-widow.md) | Black Widow chin cactus         | `C2ZY7804` | 2 in; shape unrecorded | 4 in round; 4 × 4 × 3.7 in |
+| Cactus-08    | `G2`     | `P23`      | [_Tephrocactus articulatus_ var. _papyracanthus_](./plants/cacti/tephrocactus-articulatus-papyracanthus.md)         | Paper spine cactus              | `C2KY3308` | 2 in; shape unrecorded | 4 in round; 4 × 4 × 3.7 in |
+| Succulent-06 | `G3`     | `P28`      | [_Pleiospilos nelii_ 'Royal Flush'](./plants/succulents/pleiospilos-nelii-royal-flush.md)                           | Royal Flush split rock          | `S2JY2848` | 2 in; shape unrecorded | 4 in round; 4 × 4 × 3.7 in |
+| Succulent-08 | `H1`     | `P24`      | [_Sempervivum_ Colorockz® 'Coconut Crystal'](./plants/succulents/sempervivum-coconut-crystal.md)                    | Coconut Crystal hens and chicks | `S2JN7271` | 2 in; shape unrecorded | 4 in round; 4 × 4 × 3.7 in |
+| Succulent-07 | `H2`     | `P25`      | [_Echeveria_ 'Raindrops'](./plants/succulents/echeveria-raindrops.md)                                               | Raindrops echeveria             | `S2JN3225` | 2 in; shape unrecorded | 4 in round; 4 × 4 × 3.7 in |
+| Cactus-07    | `H3`     | `P26`      | [_Austrocylindropuntia subulata_](./plants/cacti/austrocylindropuntia-subulata.md)                                  | Eve's needle cactus             | `C2KY2600` | 2 in; shape unrecorded | 4 in round; 4 × 4 × 3.7 in |
 
 The 2026-08-28 live Check/Clean bulk round records the substrate as slightly
 moist for all six. This is a condition observation, not evidence of watering or

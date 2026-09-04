@@ -6,7 +6,8 @@
 - Visual description: A green globe patterned with close-set tubercles, fine pale radial spines, and scattered darker central spines whose hooked tips break the otherwise tidy surface.
 - Interesting fact: Those hooked central spines act like tiny grappling hooks and readily catch skin or fabric, even though the surrounding pale radial spines make the plant look delicate.
 - Identification: **probable; _M. zeilmanniana_ / _M. crinita_ and a horticultural hybrid remain alternatives**
-- Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
+- Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan
+- Acquired on: 2026-08-10
 - Current pot: 4-inch individual pot
 - Photo archive: [licensed species-reference images](../../../assets/plants/mammillaria-rekoi/)
 

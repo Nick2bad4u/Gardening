@@ -6,7 +6,8 @@
 - Visual description: A crowded cushion of short, peanut-shaped green stems, each divided into shallow ribs and dotted with small pale areoles; offsets make the mound look fuller than any single stem.
 - Interesting fact: Chamaelobivia hybrids were selected for an unusually broad flower palette, so genetically related plants can open vivid yellow, orange, red, or pink blooms above nearly identical green clumps.
 - Identification: **probable at the Chamaelobivia hybrid-group level; cultivar unknown**
-- Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
+- Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan
+- Acquired on: 2026-08-10
 - Current pot: small 4-inch individual pot
 - Photo archive: [licensed peanut-cactus ancestry references](../../../assets/plants/chamaelobivia-hybrid/)
 

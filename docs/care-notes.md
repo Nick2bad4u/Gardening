@@ -150,8 +150,8 @@ plant or planter IDs, not provisional table-position coordinates.
 The six plants ordered on 2026-08-25 were received rooted on 2026-08-28 and
 repotted from 2-inch nursery pots into 4-inch pots. Received-pot shapes are not
 reliably documented. The owner reports removing about 95% of the nursery soil
-during repotting. The owner-entered live tracker lists all six at 4 inches; current photos
-show `P23`–`P27` in square pots and `P28` in a round terracotta pot.
+during repotting. The owner-entered live tracker lists all six at 4 inches. All
+six now use the same round 4 × 4 × 3.7-inch pot model.
 
 The owner did not quarantine after hand inspection, near-complete soil removal,
 and seeing a California agriculture sticker on the box reported to say the

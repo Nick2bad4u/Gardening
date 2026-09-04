@@ -6,7 +6,8 @@
 - Visual description: Branching rosettes of spoon-shaped leaves blend green and creamy yellow through the center, then sharpen into vivid pink-red margins; older bare stems hold the colorful crowns above the pot.
 - Interesting fact: Aeoniums reverse the rhythm many people expect from succulents: they often grow most actively in cooler bright seasons and may slow down or partially rest during summer heat.
 - Identification: **probable cultivar; appearance is consistent, but no nursery label or seller provenance is archived**
-- Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
+- Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan
+- Acquired on: 2026-08-10
 - Current pot: approximately 5-inch pot from Carlsons' Greenhouse
 - Photo archive: [licensed cultivar and species references](../../../assets/plants/aeonium-haworthii-dream-color/)
 

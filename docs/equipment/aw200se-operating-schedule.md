@@ -494,8 +494,8 @@ The six Mountain Crest plants received on August 28 have 2026-08-29 Ruler
 height/width measurements: `P23` 1.25 × 1.15 in, `P24` 1.0 × 2.55 in, `P25`
 1.35 × 2.75 in, `P26` 1.8 × 1.6 in, `P27` 0.5 × 1.2 in, and `P28` 1.3 × 1.7 in.
 Those are plant dimensions, not maintained grid coordinates or measured
-plant-to-light clearances. The owner-entered live tracker records 4-inch current pots;
-current photos show square pots for `P23`–`P27` and round terracotta for `P28`.
+plant-to-light clearances. The owner-entered live tracker records 4-inch current
+pots; all six use the same round 4 × 4 × 3.7-inch pot model.
 Use temporary edge placement without inventing risers or precise coordinates.
 'Black Widow' starts at the gentler variegated edge, Royal Flush keeps separate
 leaf-cycle watering, and indoor-only 'Coconut Crystal' gets the brightest and

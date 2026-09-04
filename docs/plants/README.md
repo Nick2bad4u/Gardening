@@ -74,8 +74,8 @@ The physical `E1`–`E3` and `F1`–`F3` mappings were copied from the pots on
 | Cactus-09    | `G1`     | [Black Widow chin cactus (_Gymnocalycium mihanovichii_ f. variegata)](./cacti/gymnocalycium-mihanovichii-black-widow.md)  | Seller-labeled cultivar; owner-inspected; P27 |
 
 All three arrived rooted in 2-inch nursery pots of unrecorded shape and moved
-to 4-inch pots on 2026-08-28. Current photos show square pots. Their 2026-08-29
-Scale weights and Ruler dimensions are recorded in the individual profiles.
+to matching round 4 × 4 × 3.7-inch pots on 2026-08-28. Their 2026-08-29 Scale
+weights and Ruler dimensions are recorded in the individual profiles.
 
 ## Succulents
 
@@ -93,8 +93,7 @@ Scale weights and Ruler dimensions are recorded in the individual profiles.
 | Succulent-10 | `#6`                   | [Tiny mixed succulent planter](./succulents/tiny-mixed-succulent-planter.md)                                                | Seller-described five-plant garden; component IDs provisional; P30 |
 
 All three arrived rooted in 2-inch nursery pots of unrecorded shape and moved
-to 4-inch pots on 2026-08-28. Current photos show Raindrops and Coconut Crystal
-in square pots and Royal Flush in round terracotta. Their 2026-08-29 Scale
+to matching round 4 × 4 × 3.7-inch pots on 2026-08-28. Their 2026-08-29 Scale
 weights and Ruler dimensions are recorded in the individual profiles.
 
 The live 2026-08-28 Check/Clean bulk round records slightly moist substrate for

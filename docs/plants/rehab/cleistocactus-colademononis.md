@@ -6,7 +6,8 @@
 - Visual description: Long fingerlike stems trail over the planter edge beneath a dense coat of soft white hairs, turning each green cylinder into a shaggy silver tail.
 - Interesting fact: The hanging habit is not a sign that the stems need support: in its Bolivian habitat this cactus naturally spills from steep rock faces rather than growing as an upright column.
 - Identification: **high; an owner-observed red-orange flower strongly supports it, although the bloom photo is not retained here**
-- Acquired from: Existing shared cactus planter; exact source and date not recorded
+- Acquired from: Gerych's Design, Fenton, Michigan, as part of the shared cactus planter
+- Acquired on: 2023-06-21
 - Photo archive: [licensed reference images](../../../assets/plants/cleistocactus-colademononis/)
 
 ## Names and identity

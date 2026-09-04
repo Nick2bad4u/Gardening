@@ -6,7 +6,8 @@
 - Visual description: A young tropical tree with a smooth green trunk and long leaf stalks ending in glossy, hand-shaped fans of narrow leaflets; its open canopy reads very differently from the compact succulents nearby.
 - Interesting fact: “Money tree” is a trade name shared by more than one cultivated _Pachira_. Because this retail tag says only _Pachira_, the working _P. glabra_ identification remains evidence-based rather than absolute.
 - Identification: **retail tag confirms genus _Pachira_; _P. glabra_ is a supplied working candidate, not a proven species identification**
-- Acquired from: Lowe's; exact store and date not recorded
+- Acquired from: Home Depot, Howell, Michigan
+- Acquired on: 2026-07-29
 - Current pot: transplanted from 4 inches into a 6-inch Amazon Basics pot
 - Photo archive: [licensed species-reference images](../../../assets/plants/pachira-glabra/)
 

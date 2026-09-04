@@ -6,7 +6,8 @@
 - Visual description: A woolly green globe built from large rounded tubercles, each carrying a star of pale radial spines and a few stronger dark central spines; a red club-shaped fruit stands out near the crown.
 - Interesting fact: The conspicuous red projection on this plant is a fruit rather than a flower—evidence of an earlier bloom that can remain visible long after the petals are gone.
 - Identification: **probable from close photographs; formerly recorded as _Mammillaria_ cf. _melanocentra_**
-- Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
+- Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan
+- Acquired on: 2026-08-10
 - Current pot: 4-inch individual pot
 - Photo archive: [licensed species-reference images](../../../assets/plants/mammillaria-mammillaris/)
 

@@ -6,7 +6,8 @@
 - Visual description: A blue-green upright column whose ribs swell into repeated rounded, breastlike knobs, creating the stacked sculptural form sold as 'Fukurokuryuzinboku'.
 - Interesting fact: Beneath the odd cultivated shape is _Myrtillocactus geometrizans_, a species whose normal form bears sweet edible garambullo berries sold in Mexican markets.
 - Identification: **very high confidence**
-- Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan; exact date not recorded
+- Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan
+- Acquired on: 2026-08-10
 - Current pot: small 3-inch individual pot
 - Photo archive: [licensed cultivar and species references](../../../assets/plants/myrtillocactus-geometrizans-fukurokuryuzinboku/)
 
