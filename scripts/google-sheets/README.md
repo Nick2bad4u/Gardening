@@ -23,8 +23,8 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-As of September 5, 2026, the stable production deployment identifies the logger
-as **5.18.0** on immutable Apps Script version **64**.
+As of September 5, 2026, the checked-in source and stable production deployment
+both identify the logger as **5.18.1** on immutable Apps Script version **65**.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
@@ -138,6 +138,21 @@ corrected Quick Log navigation, P01-P30 bulk validation, nutrient amounts with
 units, clearer prompts, protected processing receipts, and a corrected
 current-cycle chart filter. It preserved the
 logger's existing 5.18.0/version-64 deployment and canonical workbook data.
+
+The later 5.18.1 patch fixes portrait flashing during plant selection. External
+Edge checks at phone and desktop widths retained all 30 decoded SVGs on the
+first frame after a tap; the previous renderer retained none and briefly showed
+zero ready portraits. All 222 logger tests and the coverage gate passed, along
+with GitHub CI, SonarCloud, Codecov, and security checks. The authenticated stable
+page reports `Connected · logger 5.18.1`, and all three immutable version-65 files
+match the committed source.
+The native pre-verification Drive backup and post-deployment comparison preserve
+all 691 History records and their formulas exactly, including 691 unique
+observation IDs, one Removed record, and no duplicate active request/plant/event
+keys. All 6,874 checked formula cells are error-free. The logger and AppSheet
+intake installers completed successfully; the bulk installer reported no
+migration. The single Head queue trigger remains scheduled every five minutes
+and has run since deployment. No synthetic observation was submitted.
 
 ## Plant portrait caching
 
