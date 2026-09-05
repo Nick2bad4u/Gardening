@@ -1,20 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-sun-title" data-ui-icon="sun" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-sun-title" aria-describedby="ui-sun-description" data-ui-icon="sun" focusable="false">
   <title id="ui-sun-title">Sun</title>
+<desc id="ui-sun-description">
+    A round golden sun with eight balanced rays and a subtle highlight.
+</desc>
 <defs>
-<linearGradient id="ui-sun-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
-<linearGradient id="ui-sun-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#80bf8b"/>
-<stop offset="0.55" stop-color="#66b57c"/>
-<stop offset="1" stop-color="#5ca06f"/>
-</linearGradient>
+    <path
+        id="ui-sun-ray"
+        d="M32 11v-5"
+        fill="none"
+        stroke="#cb8852"
+        stroke-width="2.6"
+    />
+    <radialGradient id="ui-sun-gold-round" cx="32%" cy="24%" r="82%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </radialGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<circle cx="12" cy="12" r="4.5" fill="url(#ui-sun-material-0)" stroke="#765a28" stroke-width="1"/>
-    <path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2.1 2.1M16.9 16.9 19 19m0-14-2.1 2.1M7.1 16.9 5 19" stroke="#d58150" stroke-linecap="round" stroke-width="1.5"/>
-    <path d="M14.5 20c0.3-2.5 1.7-3.9 4.2-4.2-0.2 2.4-1.6 3.8-4.2 4.2Z" fill="url(#ui-sun-material-1)" stroke="#3c6145" stroke-linejoin="round" stroke-width="0.6"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <use href="#ui-sun-ray" transform="rotate(0 32 32)" />
+    <use href="#ui-sun-ray" transform="rotate(45 32 32)" />
+    <use href="#ui-sun-ray" transform="rotate(90 32 32)" />
+    <use href="#ui-sun-ray" transform="rotate(135 32 32)" />
+    <use href="#ui-sun-ray" transform="rotate(180 32 32)" />
+    <use href="#ui-sun-ray" transform="rotate(225 32 32)" />
+    <use href="#ui-sun-ray" transform="rotate(270 32 32)" />
+    <use href="#ui-sun-ray" transform="rotate(315 32 32)" />
+    <circle
+        cx="32"
+        cy="32"
+        r="14"
+        fill="url(#ui-sun-gold-round)"
+        stroke="#825736"
+        stroke-width="2"
+    />
+    <path
+        d="M23 29a9 9 0 0 1 9 -9"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.8"
+        opacity="0.72"
+    />
 </g>
 </svg>

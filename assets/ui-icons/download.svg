@@ -1,20 +1,60 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-download-title" data-ui-icon="download" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-download-title" aria-describedby="ui-download-description" data-ui-icon="download" focusable="false">
   <title id="ui-download-title">Download</title>
+<desc id="ui-download-description">
+    A descending green arrow aligned with a blue file tray.
+</desc>
 <defs>
-<linearGradient id="ui-download-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#91b4cb"/>
-<stop offset="0.55" stop-color="#7ba7ca"/>
-<stop offset="1" stop-color="#6d95ae"/>
-</linearGradient>
-<linearGradient id="ui-download-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e7c772"/>
-<stop offset="0.55" stop-color="#e4bf5e"/>
-<stop offset="1" stop-color="#c1a857"/>
-</linearGradient>
+    <linearGradient
+        id="ui-download-metal"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <linearGradient
+        id="ui-download-leaf"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M5 15v5h14v-5" fill="url(#ui-download-material-0)" stroke="#405e71" stroke-linejoin="round" stroke-width="1.1"/>
-    <path d="M12 3v11" stroke="#5aae74" stroke-linecap="round" stroke-width="1.8"/>
-    <path d="m8.5 10.5 3.5 3.7 3.5-3.7" fill="url(#ui-download-material-1)" stroke="#765a28" stroke-linejoin="round" stroke-width="1"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M8 42v14h48V42h-9v5H17v-5Z"
+        fill="url(#ui-download-metal)"
+        stroke="#3d606e"
+        stroke-width="2.2"
+    />
+    <g>
+        <path
+            d="M27 8h10v22h9L32 43 18 30h9Z"
+            fill="url(#ui-download-leaf)"
+            stroke="#2c5146"
+            stroke-width="2"
+        />
+        <path
+            d="M31 13v21"
+            fill="none"
+            stroke="#fff4d8"
+            stroke-width="1.6"
+            opacity="0.72"
+        />
+    </g>
+    <path
+        d="M13 52h37"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.5"
+        opacity="0.72"
+    />
 </g>
 </svg>

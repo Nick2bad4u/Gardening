@@ -25,13 +25,18 @@ silver spoons, copper spoons, and the front rosette in their rectangular planter
 Their shapes follow the owner's Gyazo collection photographs, without replacing
 the individual component profiles or asserting a new identification.
 
-All 83 interface and category symbols now use the same 64-unit drawing canvas,
-multicolor material palette, and optical padding as the plant portraits. The
-water drop, digital scale, calendar, clock, dry-soil indicator, and directional
-arrows have revised silhouettes and details. Every symbol is exported to
+All 83 interface and category symbols have been redrawn with native 64-unit
+geometry, a multicolor material palette, and consistent optical padding. Linear
+and radial gradients, clipped surfaces, local reusable details, and restrained
+highlights provide depth. Every standalone export has explicit 64×64 dimensions,
+a descriptive title, and an associated description. The September 5 review
+covered each icon at 64 px and 16–32 px on light and dark backgrounds, correcting
+joins, clipped edges, blade pivots, handles, stems, layering, and unclear symbols.
+Every symbol is exported to
 [`assets/ui-icons/`](../../assets/ui-icons/README.md); the build also synchronizes
 the logger's inline copies with namespaced gradient IDs. This keeps the logger's
 controls self-contained while making each icon available as a standalone SVG.
+The field guide's add and close controls also use the shared SVG artwork.
 
 These are navigation illustrations, not botanical diagrams,
 collection-identification evidence, or licensed species-reference photographs.

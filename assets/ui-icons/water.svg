@@ -1,16 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-water-title" data-ui-icon="water" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-water-title" aria-describedby="ui-water-description" data-ui-icon="water" focusable="false">
   <title id="ui-water-title">Water</title>
+<desc id="ui-water-description">
+    A shaded blue water drop has a clear tip and a gentle ripple underneath.
+</desc>
 <defs>
-<linearGradient id="ui-water-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#91b9c1"/>
-<stop offset="0.55" stop-color="#7badbe"/>
-<stop offset="1" stop-color="#6d99a4"/>
-</linearGradient>
+    <radialGradient id="ui-water-water-round" cx="32%" cy="24%" r="82%">
+        <stop offset="0" stop-color="#b3e3ec" />
+        <stop offset="0.52" stop-color="#69b7d0" />
+        <stop offset="1" stop-color="#3981ab" />
+    </radialGradient>
+    <linearGradient id="ui-water-teal" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a6d8ba" />
+        <stop offset="0.52" stop-color="#5aac99" />
+        <stop offset="1" stop-color="#2d786e" />
+    </linearGradient>
 </defs>
-<g>
-<path d="M32 6C26 16 17 26 17 36a15 15 0 0 0 30 0C47 26 38 16 32 6Z" fill="url(#ui-water-material-0)" stroke="#47676d" stroke-width="1.8" stroke-linejoin="round"/>
-    <path d="M23 32C23 27 26 23 28 20" fill="none" stroke="#d3ddd3" stroke-width="2.5" stroke-linecap="round"/>
-    <path d="M26 43C29 47 36 47 40 41" fill="none" stroke="#9dc5bd" stroke-width="1.8" stroke-linecap="round"/>
-    <path d="M10 55C17 52 23 52 30 55S46 58 54 54" fill="none" stroke="#659889" stroke-width="2.3" stroke-linecap="round"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <g transform="translate(0 0) scale(1)">
+        <path
+            d="M32 7C26 16 17 26 17 35a15 15 0 0 0 30 0C47 26 38 16 32 7Z"
+            fill="url(#ui-water-water-round)"
+            stroke="#3d606e"
+            stroke-width="2"
+        />
+        <path
+            d="M25 24c-3 4-5 9-4 13"
+            fill="none"
+            stroke="#fff4d8"
+            stroke-width="2.5"
+            opacity="0.72"
+        />
+    </g>
+    <path
+        d="M9 55c8-3 15-3 23 0s15 3 23 0"
+        fill="none"
+        stroke="url(#ui-water-teal)"
+        stroke-width="2.4"
+    />
+    <path
+        d="M26 42c3 4 9 5 13 1"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.7"
+        opacity="0.72"
+    />
 </g>
 </svg>

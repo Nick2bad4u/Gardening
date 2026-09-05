@@ -1,27 +1,101 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-print-title" data-ui-icon="print" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-print-title" aria-describedby="ui-print-description" data-ui-icon="print" focusable="false">
   <title id="ui-print-title">Print</title>
+<desc id="ui-print-description">
+    A compact blue printer feeds a cream page with green printed lines.
+</desc>
 <defs>
-<linearGradient id="ui-print-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#f0ead6"/>
-<stop offset="0.55" stop-color="#eee9d8"/>
-<stop offset="1" stop-color="#c9c9b9"/>
-</linearGradient>
-<linearGradient id="ui-print-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#88b4c6"/>
-<stop offset="0.55" stop-color="#70a7c4"/>
-<stop offset="1" stop-color="#6495a9"/>
-</linearGradient>
-<linearGradient id="ui-print-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
+    <linearGradient id="ui-print-paper" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <linearGradient id="ui-print-metal" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <linearGradient
+        id="ui-print-charcoal"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#9ab0b3" />
+        <stop offset="0.52" stop-color="#6b8e94" />
+        <stop offset="1" stop-color="#3d636c" />
+    </linearGradient>
+    <linearGradient id="ui-print-leaf" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient id="ui-print-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M7 3h10v6H7z" fill="url(#ui-print-material-0)" stroke="#405767" stroke-width="1.1"/>
-    <rect x="3" y="8" width="18" height="9" rx="2.5" fill="url(#ui-print-material-1)" stroke="#405767" stroke-width="1.1"/>
-    <path d="M7 14h10v7H7z" fill="url(#ui-print-material-0)" stroke="#405767" stroke-width="1.1"/>
-    <path d="M9 17h6m-6 2h4" stroke="#5a9c6a" stroke-linecap="round" stroke-width="1"/>
-    <circle cx="17.4" cy="11.2" r="1" fill="url(#ui-print-material-2)"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <rect
+        x="18"
+        y="7"
+        width="28"
+        height="20"
+        rx="1.5"
+        fill="url(#ui-print-paper)"
+        stroke="#3d606e"
+        stroke-width="2"
+    />
+    <path
+        d="M24 14h16M24 19h13"
+        fill="none"
+        stroke="#b7b999"
+        stroke-width="1.4"
+    />
+    <rect
+        x="7"
+        y="24"
+        width="50"
+        height="25"
+        rx="7"
+        fill="url(#ui-print-metal)"
+        stroke="#3d606e"
+        stroke-width="2.2"
+    />
+    <rect
+        x="16"
+        y="38"
+        width="32"
+        height="8"
+        rx="1.5"
+        fill="url(#ui-print-charcoal)"
+        stroke="#3d606e"
+        stroke-width="1.2"
+    />
+    <rect
+        x="19"
+        y="40"
+        width="26"
+        height="18"
+        rx="1"
+        fill="url(#ui-print-paper)"
+        stroke="#3d606e"
+        stroke-width="1.8"
+    />
+    <path
+        d="M25 47h14m-14 6h10"
+        fill="none"
+        stroke="url(#ui-print-leaf)"
+        stroke-width="2"
+    />
+    <circle
+        cx="49"
+        cy="31"
+        r="2.3"
+        fill="url(#ui-print-gold)"
+        stroke="#825736"
+        stroke-width="1"
+    />
 </g>
 </svg>

@@ -23,8 +23,8 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-As of September 5, 2026, the checked-in source and stable production deployment
-both identify the logger as **5.18.1** on immutable Apps Script version **65**.
+As of September 5, 2026, the stable production deployment identifies the logger
+as **5.18.1** on immutable Apps Script version **65**.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
@@ -155,6 +155,12 @@ migration. The single Head queue trigger remains scheduled every five minutes
 and has run since deployment. No synthetic observation was submitted.
 
 ## Plant portrait caching
+
+Logger 5.18.2 synchronizes the full 83-icon UI/category redraw from the canonical
+sprite. Its embedded controls use native 64-unit geometry with namespaced
+gradients, clipping, reusable details, and accessible descriptions. UI icons
+remain inline and require no separate image downloads. Plant-portrait caching
+and the 5.18.1 selection fix remain in place.
 
 Logger 5.17.1 loads portraits as they enter the visible picker area and shares
 one download between repeated uses of a plant in the current page. The browser's

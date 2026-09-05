@@ -1,25 +1,121 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-inventory-title" data-ui-icon="inventory" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-inventory-title" aria-describedby="ui-inventory-description" data-ui-icon="inventory" focusable="false">
   <title id="ui-inventory-title">Inventory</title>
+<desc id="ui-inventory-description">
+    Four distinct labeled compartments sit inside a blue inventory tray.
+</desc>
 <defs>
-<linearGradient id="ui-inventory-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#8dadb4"/>
-<stop offset="0.55" stop-color="#769fae"/>
-<stop offset="1" stop-color="#698e97"/>
-</linearGradient>
-<linearGradient id="ui-inventory-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#dae6d1"/>
-<stop offset="0.55" stop-color="#d4e4d2"/>
-<stop offset="1" stop-color="#b4c5b4"/>
-</linearGradient>
-<linearGradient id="ui-inventory-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
+    <linearGradient
+        id="ui-inventory-metal"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <linearGradient
+        id="ui-inventory-paper"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <linearGradient
+        id="ui-inventory-leaf"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient
+        id="ui-inventory-clay"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#f8c18b" />
+        <stop offset="0.52" stop-color="#e19864" />
+        <stop offset="1" stop-color="#b86545" />
+    </linearGradient>
+    <linearGradient
+        id="ui-inventory-gold"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<rect x="3" y="3" width="18" height="18" rx="3" fill="url(#ui-inventory-material-0)" stroke="#3a5762" stroke-width="1.1"/>
-    <path d="M7 7h4v4H7zm6 0h4v4h-4zM7 13h4v4H7z" fill="url(#ui-inventory-material-1)" stroke="#3a5762" stroke-width="0.7"/>
-    <path d="M13 13h4v4h-4z" fill="url(#ui-inventory-material-2)" stroke="#3a5762" stroke-width="0.7"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <rect
+        x="7"
+        y="7"
+        width="50"
+        height="50"
+        rx="8"
+        fill="url(#ui-inventory-metal)"
+        stroke="#3d606e"
+        stroke-width="2.3"
+    />
+    <rect
+        x="14"
+        y="14"
+        width="14"
+        height="14"
+        rx="2"
+        fill="url(#ui-inventory-paper)"
+        stroke="#2c5146"
+        stroke-width="1.5"
+    />
+    <rect
+        x="36"
+        y="14"
+        width="14"
+        height="14"
+        rx="2"
+        fill="url(#ui-inventory-leaf)"
+        stroke="#2c5146"
+        stroke-width="1.5"
+    />
+    <rect
+        x="14"
+        y="36"
+        width="14"
+        height="14"
+        rx="2"
+        fill="url(#ui-inventory-clay)"
+        stroke="#825736"
+        stroke-width="1.5"
+    />
+    <rect
+        x="36"
+        y="36"
+        width="14"
+        height="14"
+        rx="2"
+        fill="url(#ui-inventory-gold)"
+        stroke="#825736"
+        stroke-width="1.5"
+    />
+    <path
+        d="M18 19h6m16 0h6m-28 22h6m16 0h6"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.5"
+    />
 </g>
 </svg>

@@ -1,31 +1,88 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-habitat-title" data-ui-icon="habitat" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-habitat-title" aria-describedby="ui-habitat-description" data-ui-icon="habitat" focusable="false">
   <title id="ui-habitat-title">Habitat</title>
+<desc id="ui-habitat-description">
+    Layered green mountain slopes meet blue water beneath a golden sun.
+</desc>
 <defs>
-<linearGradient id="ui-habitat-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
-<linearGradient id="ui-habitat-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#83c286"/>
-<stop offset="0.55" stop-color="#69b876"/>
-<stop offset="1" stop-color="#5ea26a"/>
-</linearGradient>
-<linearGradient id="ui-habitat-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e2e7d1"/>
-<stop offset="0.55" stop-color="#dde6d1"/>
-<stop offset="1" stop-color="#bbc7b3"/>
-</linearGradient>
-<linearGradient id="ui-habitat-material-3" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#8bb7c9"/>
-<stop offset="0.55" stop-color="#73abc8"/>
-<stop offset="1" stop-color="#6698ac"/>
-</linearGradient>
+    <radialGradient id="ui-habitat-gold-round" cx="32%" cy="24%" r="82%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </radialGradient>
+    <linearGradient
+        id="ui-habitat-leaf"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient
+        id="ui-habitat-paper"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <linearGradient
+        id="ui-habitat-water"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#b3e3ec" />
+        <stop offset="0.52" stop-color="#69b7d0" />
+        <stop offset="1" stop-color="#3981ab" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<circle cx="17.2" cy="6.3" r="3" fill="url(#ui-habitat-material-0)"/>
-    <path d="M2.5 18 8.4 9.2l3.1 4.4 2.1-2.8 7.9 7.2Z" fill="url(#ui-habitat-material-1)" stroke="#3c6145" stroke-linejoin="round" stroke-width="1"/>
-    <path d="m8.4 9.2 1.5 2.2-2.2 1.1-1-1Z" fill="url(#ui-habitat-material-2)"/>
-    <path d="M2.5 18h19v3h-19Z" fill="url(#ui-habitat-material-3)" stroke="#3c6276" stroke-width="0.8"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <circle
+        cx="47"
+        cy="14"
+        r="7"
+        fill="url(#ui-habitat-gold-round)"
+        stroke="#825736"
+        stroke-width="2"
+    />
+    <path
+        d="M45 11a2 2 0 0 1 2 -2"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.8"
+        opacity="0.72"
+    />
+    <path
+        d="M5 47 22 17l12 19 8-10 17 21Z"
+        fill="url(#ui-habitat-leaf)"
+        stroke="#2c5146"
+        stroke-width="2.1"
+    />
+    <path
+        d="m15 29 7-12 8 13-7-4Z"
+        fill="url(#ui-habitat-paper)"
+        stroke="#2c5146"
+        stroke-width="1.2"
+    />
+    <path
+        d="M5 46q15-5 27 0t27 0v11H5Z"
+        fill="url(#ui-habitat-water)"
+        stroke="#3d606e"
+        stroke-width="2"
+    />
+    <path
+        d="M12 51h16m9 1h15"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.6"
+        opacity="0.72"
+    />
 </g>
 </svg>

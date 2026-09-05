@@ -1,26 +1,67 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-handling-title" data-ui-icon="handling" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-handling-title" aria-describedby="ui-handling-description" data-ui-icon="handling" focusable="false">
   <title id="ui-handling-title">Handling</title>
+<desc id="ui-handling-description">
+    A protective garden glove with a warm reinforced palm and joined
+    fingers.
+</desc>
 <defs>
-<linearGradient id="ui-handling-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#7ebf8b"/>
-<stop offset="0.55" stop-color="#63b57c"/>
-<stop offset="1" stop-color="#5aa06f"/>
-</linearGradient>
-<linearGradient id="ui-handling-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e6b16f"/>
-<stop offset="0.55" stop-color="#e2a45a"/>
-<stop offset="1" stop-color="#bf9254"/>
-</linearGradient>
-<linearGradient id="ui-handling-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
+    <linearGradient
+        id="ui-handling-paper"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <linearGradient
+        id="ui-handling-clay"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#f8c18b" />
+        <stop offset="0.52" stop-color="#e19864" />
+        <stop offset="1" stop-color="#b86545" />
+    </linearGradient>
+    <linearGradient
+        id="ui-handling-leaf"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<circle cx="8" cy="17" r="3" fill="url(#ui-handling-material-0)" stroke="#3c6145" stroke-width="1"/>
-    <circle cx="16" cy="17" r="3" fill="url(#ui-handling-material-1)" stroke="#765729" stroke-width="1"/>
-    <path d="m9.8 14.6 7-10m-2.6 10-7-10" stroke="#708b9c" stroke-linecap="round" stroke-width="1.8"/>
-    <circle cx="12" cy="11" r="1.5" fill="url(#ui-handling-material-2)" stroke="#6d5729" stroke-width="0.7"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M18 55 9 35c-3-7 4-11 8-5l3 5V14c0-6 7-6 7 0v11-16c0-6 7-6 7 0v16-13c0-6 7-6 7 0v16-10c0-6 7-6 7 0v25l-5 12Z"
+        fill="url(#ui-handling-paper)"
+        stroke="#2c5146"
+        stroke-width="2.1"
+    />
+    <path
+        d="M22 34c3-6 16-6 20 0v13H26Z"
+        fill="url(#ui-handling-clay)"
+        stroke="#825736"
+        stroke-width="1.5"
+    />
+    <rect
+        x="17"
+        y="52"
+        width="28"
+        height="7"
+        rx="2"
+        fill="url(#ui-handling-leaf)"
+        stroke="#2c5146"
+        stroke-width="1.7"
+    />
+    <path d="M23 55h16" fill="none" stroke="#fff4d8" stroke-width="1.2" />
 </g>
 </svg>

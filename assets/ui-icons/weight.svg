@@ -1,34 +1,119 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-weight-title" data-ui-icon="weight" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-weight-title" aria-describedby="ui-weight-description" data-ui-icon="weight" focusable="false">
   <title id="ui-weight-title">Weight</title>
+<desc id="ui-weight-description">
+    A digital blue scale has a readable display, balanced foot plates, and a
+    gold center button.
+</desc>
 <defs>
-<linearGradient id="ui-weight-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#687465"/>
-<stop offset="0.55" stop-color="#48594e"/>
-<stop offset="1" stop-color="#44564a"/>
-</linearGradient>
-<linearGradient id="ui-weight-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#91a2a4"/>
-<stop offset="0.55" stop-color="#7a919a"/>
-<stop offset="1" stop-color="#6c8387"/>
-</linearGradient>
-<linearGradient id="ui-weight-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#dce0c9"/>
-<stop offset="0.55" stop-color="#d6ddc8"/>
-<stop offset="1" stop-color="#b6c0ac"/>
-</linearGradient>
-<linearGradient id="ui-weight-material-3" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#d5b77e"/>
-<stop offset="0.55" stop-color="#ceab6c"/>
-<stop offset="1" stop-color="#af9862"/>
-</linearGradient>
+    <linearGradient
+        id="ui-weight-charcoal"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#9ab0b3" />
+        <stop offset="0.52" stop-color="#6b8e94" />
+        <stop offset="1" stop-color="#3d636c" />
+    </linearGradient>
+    <linearGradient
+        id="ui-weight-paper"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <linearGradient
+        id="ui-weight-metal"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <linearGradient id="ui-weight-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
 </defs>
-<g>
-<ellipse cx="32" cy="56" rx="24" ry="3" fill="url(#ui-weight-material-0)" opacity="0.15"/>
-    <rect x="8" y="12" width="48" height="43" rx="10" fill="url(#ui-weight-material-1)" stroke="#40545b" stroke-width="1.8"/>
-    <path d="M10 23C10 14 13 14 21 14H43C51 14 54 16 54 23" fill="none" stroke="#afc1bd" stroke-width="1.5"/>
-    <rect x="18" y="20" width="28" height="13" rx="3" fill="url(#ui-weight-material-2)" stroke="#586b5d" stroke-width="1.3"/>
-    <path d="M24 24H28V29H24V24ZM34 24H38V29H34V24Z" fill="none" stroke="#5c7265" stroke-width="1.1"/>
-    <path d="M18 39V45M23 39V45M41 39V45M46 39V45" stroke="#acbbb5" stroke-width="1.6" stroke-linecap="round"/>
-    <circle cx="32" cy="43" r="3" fill="url(#ui-weight-material-3)" stroke="#7a6747" stroke-width="0.8"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <ellipse
+        cx="32"
+        cy="58"
+        rx="23"
+        ry="2"
+        fill="#294d3d"
+        stroke="none"
+        stroke-width="0"
+        opacity="0.12"
+    />
+    <rect
+        x="7"
+        y="7"
+        width="50"
+        height="49"
+        rx="10"
+        fill="url(#ui-weight-charcoal)"
+        stroke="#3d606e"
+        stroke-width="2.3"
+    />
+    <rect
+        x="20"
+        y="13"
+        width="24"
+        height="12"
+        rx="3"
+        fill="url(#ui-weight-paper)"
+        stroke="#2c5146"
+        stroke-width="1.5"
+    />
+    <path
+        d="M25 17h4v4h-4Zm10 0h4v4h-4Z"
+        fill="none"
+        stroke="#3d606e"
+        stroke-width="1.2"
+    />
+    <rect
+        x="13"
+        y="31"
+        width="11"
+        height="16"
+        rx="3"
+        fill="url(#ui-weight-metal)"
+        stroke="#3d606e"
+        stroke-width="1.2"
+    />
+    <rect
+        x="40"
+        y="31"
+        width="11"
+        height="16"
+        rx="3"
+        fill="url(#ui-weight-metal)"
+        stroke="#3d606e"
+        stroke-width="1.2"
+    />
+    <path
+        d="M17 35v8m3-8v8m24-8v8m3-8v8"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.2"
+    />
+    <circle
+        cx="32"
+        cy="42"
+        r="4"
+        fill="url(#ui-weight-gold)"
+        stroke="#825736"
+        stroke-width="1.4"
+    />
 </g>
 </svg>

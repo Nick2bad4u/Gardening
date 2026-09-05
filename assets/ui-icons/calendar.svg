@@ -1,40 +1,144 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-calendar-title" data-ui-icon="calendar" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-calendar-title" aria-describedby="ui-calendar-description" data-ui-icon="calendar" focusable="false">
   <title id="ui-calendar-title">Calendar</title>
+<desc id="ui-calendar-description">
+    A bound calendar page with clear weekday cells and one checked date.
+</desc>
 <defs>
-<linearGradient id="ui-calendar-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#9fac9f"/>
-<stop offset="0.55" stop-color="#8c9e94"/>
-<stop offset="1" stop-color="#7a8d82"/>
-</linearGradient>
-<linearGradient id="ui-calendar-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e4dfcc"/>
-<stop offset="0.55" stop-color="#e0dccb"/>
-<stop offset="1" stop-color="#bebfae"/>
-</linearGradient>
-<linearGradient id="ui-calendar-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#c3997f"/>
-<stop offset="0.55" stop-color="#b8876d"/>
-<stop offset="1" stop-color="#9e7b63"/>
-</linearGradient>
-<linearGradient id="ui-calendar-material-3" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#95aa84"/>
-<stop offset="0.55" stop-color="#809b73"/>
-<stop offset="1" stop-color="#718b68"/>
-</linearGradient>
-<linearGradient id="ui-calendar-material-4" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#d5bd7f"/>
-<stop offset="0.55" stop-color="#ceb26d"/>
-<stop offset="1" stop-color="#af9d63"/>
-</linearGradient>
+    <clipPath id="ui-calendar-page" clipPathUnits="userSpaceOnUse">
+        <rect
+            x="10"
+            y="11"
+            width="44"
+            height="46"
+            rx="6"
+            fill="#ffffff"
+            stroke="none"
+            stroke-width="0"
+        />
+    </clipPath>
+    <linearGradient
+        id="ui-calendar-paper"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <linearGradient
+        id="ui-calendar-clay"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#f8c18b" />
+        <stop offset="0.52" stop-color="#e19864" />
+        <stop offset="1" stop-color="#b86545" />
+    </linearGradient>
+    <linearGradient
+        id="ui-calendar-leaf"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient
+        id="ui-calendar-gold"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
 </defs>
-<g>
-<rect x="9" y="13" width="46" height="44" rx="7" fill="url(#ui-calendar-material-0)" opacity="0.3"/>
-    <rect x="8" y="10" width="46" height="44" rx="6" fill="url(#ui-calendar-material-1)" stroke="#59685b" stroke-width="1.7"/>
-    <path d="M8 24V16Q8 10 14 10H48Q54 10 54 16V24Z" fill="url(#ui-calendar-material-2)"/>
-    <path d="M18 7V16M44 7V16" stroke="#657b86" stroke-width="3.3" stroke-linecap="round"/>
-    <path d="M18 28V45M27 28V45M36 28V45M45 28V45M16 32H47M16 41H47" stroke="#babcac" stroke-width="0.9"/>
-    <rect x="27" y="32" width="9" height="9" rx="1.5" fill="url(#ui-calendar-material-3)"/>
-    <path d="M29 36L31 38L34 34" fill="none" stroke="#e3ddc9" stroke-width="1.4" stroke-linecap="round"/>
-    <circle cx="42" cy="45" r="2" fill="url(#ui-calendar-material-4)"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <ellipse
+        cx="32"
+        cy="56"
+        rx="22"
+        ry="2"
+        fill="#294d3d"
+        stroke="none"
+        stroke-width="0"
+        opacity="0.12"
+    />
+    <rect
+        x="10"
+        y="11"
+        width="44"
+        height="46"
+        rx="6"
+        fill="url(#ui-calendar-paper)"
+        stroke="none"
+        stroke-width="0"
+    />
+    <rect
+        x="10"
+        y="11"
+        width="44"
+        height="13"
+        rx="0"
+        fill="url(#ui-calendar-clay)"
+        stroke="none"
+        stroke-width="0"
+        clip-path="url(#ui-calendar-page)"
+    />
+    <rect
+        x="10"
+        y="11"
+        width="44"
+        height="46"
+        rx="6"
+        fill="none"
+        stroke="#2c5146"
+        stroke-width="2.2"
+    />
+    <path d="M10 24h44" fill="none" stroke="#825736" stroke-width="1.5" />
+    <path
+        d="M21 6v12M43 6v12"
+        fill="none"
+        stroke="#3d606e"
+        stroke-width="3.5"
+    />
+    <path
+        d="M17 33h30M17 42h30M25 29v21M37 29v21"
+        fill="none"
+        stroke="#b7b696"
+        stroke-width="1.2"
+    />
+    <rect
+        x="27"
+        y="35"
+        width="8"
+        height="7"
+        rx="1.2"
+        fill="url(#ui-calendar-leaf)"
+        stroke="none"
+        stroke-width="0"
+    />
+    <path
+        d="m28.5 38 1.8 1.8 3-3"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.3"
+    />
+    <circle
+        cx="43"
+        cy="48"
+        r="2"
+        fill="url(#ui-calendar-gold)"
+        stroke="none"
+        stroke-width="0"
+    />
 </g>
 </svg>

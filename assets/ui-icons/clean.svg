@@ -1,25 +1,60 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-clean-title" data-ui-icon="clean" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-clean-title" aria-describedby="ui-clean-description" data-ui-icon="clean" focusable="false">
   <title id="ui-clean-title">Clean</title>
+<desc id="ui-clean-description">
+    A soft cleaning brush sweeps beside two small sparkles.
+</desc>
 <defs>
-<linearGradient id="ui-clean-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
-<linearGradient id="ui-clean-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#8fb4c8"/>
-<stop offset="0.55" stop-color="#78a7c6"/>
-<stop offset="1" stop-color="#6a95aa"/>
-</linearGradient>
-<linearGradient id="ui-clean-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#80bf8b"/>
-<stop offset="0.55" stop-color="#66b57c"/>
-<stop offset="1" stop-color="#5ca06f"/>
-</linearGradient>
+    <linearGradient id="ui-clean-clay" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#f8c18b" />
+        <stop offset="0.52" stop-color="#e19864" />
+        <stop offset="1" stop-color="#b86545" />
+    </linearGradient>
+    <linearGradient id="ui-clean-metal" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <linearGradient id="ui-clean-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
+    <linearGradient id="ui-clean-leaf" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="m8 4 3 3-5 5-3-3Z" fill="url(#ui-clean-material-0)" stroke="#765a28" stroke-linejoin="round" stroke-width="1"/>
-    <path d="m6 12 6 8H3Z" fill="url(#ui-clean-material-1)" stroke="#405e71" stroke-linejoin="round" stroke-width="1"/>
-    <path d="m15 3 0.7 2.3L18 6l-2.3 0.7L15 9l-0.7-2.3L12 6l2.3-0.7Zm4 7 0.5 1.5 1.5 0.5-1.5 0.5L19 14l-0.5-1.5L17 12l1.5-0.5Z" fill="url(#ui-clean-material-2)" stroke="#3c6145" stroke-linejoin="round" stroke-width="0.6"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="m18 39 21-26c3-4 9 1 6 5L25 44Z"
+        fill="url(#ui-clean-clay)"
+        stroke="#825736"
+        stroke-width="2"
+    />
+    <path
+        d="m14 34 16 11-6 14H5Z"
+        fill="url(#ui-clean-metal)"
+        stroke="#3d606e"
+        stroke-width="2.2"
+    />
+    <path
+        d="m11 45 12 8m-6-12-7 13m14-8-6 11"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.3"
+    />
+    <path
+        d="M49 28l1.96 5.04L56 35l-5.04 1.96L49 42l-1.96 -5.04L42 35l5.04 -1.96Z"
+        fill="url(#ui-clean-gold)"
+        stroke="#825736"
+        stroke-width="1.5"
+    />
+    <path
+        d="M52 48l1.12 2.88L56 52l-2.88 1.12L52 56l-1.12 -2.88L48 52l2.88 -1.12Z"
+        fill="url(#ui-clean-leaf)"
+        stroke="#825736"
+        stroke-width="1.5"
+    />
 </g>
 </svg>

@@ -1,21 +1,78 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-refresh-title" data-ui-icon="refresh" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-refresh-title" aria-describedby="ui-refresh-description" data-ui-icon="refresh" focusable="false">
   <title id="ui-refresh-title">Refresh</title>
+<desc id="ui-refresh-description">
+    Two opposing curved arrows make a balanced blue-and-green refresh loop.
+</desc>
 <defs>
-<linearGradient id="ui-refresh-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e7c772"/>
-<stop offset="0.55" stop-color="#e4bf5e"/>
-<stop offset="1" stop-color="#c1a857"/>
-</linearGradient>
-<linearGradient id="ui-refresh-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e19f6c"/>
-<stop offset="0.55" stop-color="#dc8e56"/>
-<stop offset="1" stop-color="#ba8151"/>
-</linearGradient>
+    <linearGradient
+        id="ui-refresh-metal"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <linearGradient
+        id="ui-refresh-gold"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
+    <linearGradient
+        id="ui-refresh-leaf"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient
+        id="ui-refresh-clay"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#f8c18b" />
+        <stop offset="0.52" stop-color="#e19864" />
+        <stop offset="1" stop-color="#b86545" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M19 8.5A8 8 0 0 0 5.3 6.2L3.5 8" fill="none" stroke="#5f8bae" stroke-linecap="round" stroke-width="1.8"/>
-    <path d="M3.5 4.5V8H7" fill="url(#ui-refresh-material-0)" stroke="#765a28" stroke-linejoin="round" stroke-width="0.8"/>
-    <path d="M5 15.5a8 8 0 0 0 13.7 2.3l1.8-1.8" fill="none" stroke="#5aae74" stroke-linecap="round" stroke-width="1.8"/>
-    <path d="M20.5 19.5V16H17" fill="url(#ui-refresh-material-1)" stroke="#754f2b" stroke-linejoin="round" stroke-width="0.8"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M12 25C16 7 39 3 51 20"
+        fill="none"
+        stroke="url(#ui-refresh-metal)"
+        stroke-width="5"
+    />
+    <path
+        d="M43 20h14V6Z"
+        fill="url(#ui-refresh-gold)"
+        stroke="#825736"
+        stroke-width="1.7"
+    />
+    <path
+        d="M52 39C48 57 25 61 13 44"
+        fill="none"
+        stroke="url(#ui-refresh-leaf)"
+        stroke-width="5"
+    />
+    <path
+        d="M21 44H7v14Z"
+        fill="url(#ui-refresh-clay)"
+        stroke="#825736"
+        stroke-width="1.7"
+    />
 </g>
 </svg>

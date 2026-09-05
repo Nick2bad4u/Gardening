@@ -1,20 +1,90 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-history-title" data-ui-icon="history" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-history-title" aria-describedby="ui-history-description" data-ui-icon="history" focusable="false">
   <title id="ui-history-title">History</title>
+<desc id="ui-history-description">
+    A blue clock is encircled by a clear backward history arrow.
+</desc>
 <defs>
-<linearGradient id="ui-history-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#95b8ca"/>
-<stop offset="0.55" stop-color="#7facc9"/>
-<stop offset="1" stop-color="#7099ad"/>
-</linearGradient>
-<linearGradient id="ui-history-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e7c369"/>
-<stop offset="0.55" stop-color="#e4ba53"/>
-<stop offset="1" stop-color="#c1a44e"/>
-</linearGradient>
+    <radialGradient id="ui-history-metal-round" cx="32%" cy="24%" r="82%">
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </radialGradient>
+    <linearGradient
+        id="ui-history-paper"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <linearGradient
+        id="ui-history-gold"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
+    <linearGradient
+        id="ui-history-leaf"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<circle cx="12" cy="12" r="8.5" fill="url(#ui-history-material-0)" stroke="#405e71" stroke-width="1.1"/>
-    <path d="M12 7.2v5.1l3.4 2" fill="none" stroke="#e9e2d0" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
-    <path d="M5.2 4.8 3.5 8.5l4-0.5" fill="url(#ui-history-material-1)" stroke="#765a28" stroke-linejoin="round" stroke-width="0.7"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <circle
+        cx="34"
+        cy="33"
+        r="22"
+        fill="url(#ui-history-metal-round)"
+        stroke="#3d606e"
+        stroke-width="2.1"
+    />
+    <circle
+        cx="34"
+        cy="33"
+        r="17"
+        fill="url(#ui-history-paper)"
+        stroke="#3d606e"
+        stroke-width="1.2"
+    />
+    <path
+        d="M34 22v12l10 6"
+        fill="none"
+        stroke="#3d606e"
+        stroke-width="2.7"
+    />
+    <circle
+        cx="34"
+        cy="33"
+        r="2.2"
+        fill="url(#ui-history-gold)"
+        stroke="#825736"
+        stroke-width="1"
+    />
+    <path
+        d="M9 24C12 10 28 3 42 10"
+        fill="none"
+        stroke="url(#ui-history-leaf)"
+        stroke-width="4"
+    />
+    <path
+        d="M5 13 7 28l15-4Z"
+        fill="url(#ui-history-gold)"
+        stroke="#825736"
+        stroke-width="1.6"
+    />
 </g>
 </svg>

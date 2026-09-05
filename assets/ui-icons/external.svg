@@ -1,20 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-external-title" data-ui-icon="external" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-external-title" aria-describedby="ui-external-description" data-ui-icon="external" focusable="false">
   <title id="ui-external-title">External</title>
+<desc id="ui-external-description">
+    An outward arrow leaves an open blue square through its top-right
+    corner.
+</desc>
 <defs>
-<linearGradient id="ui-external-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#95b8ca"/>
-<stop offset="0.55" stop-color="#7facc9"/>
-<stop offset="1" stop-color="#7099ad"/>
-</linearGradient>
-<linearGradient id="ui-external-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e8c770"/>
-<stop offset="0.55" stop-color="#e5bf5b"/>
-<stop offset="1" stop-color="#c2a855"/>
-</linearGradient>
+    <linearGradient
+        id="ui-external-metal"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <linearGradient
+        id="ui-external-leaf"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<rect x="3" y="7" width="14" height="14" rx="2.5" fill="url(#ui-external-material-0)" stroke="#405e71" stroke-width="1.1"/>
-    <path d="M11 5h8v8" fill="url(#ui-external-material-1)" stroke="#6f5827" stroke-linejoin="round" stroke-width="1.1"/>
-    <path d="m19 5-9 9" stroke="#3c6145" stroke-linecap="round" stroke-width="1.8"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M31 12H13a5 5 0 0 0-5 5v34a5 5 0 0 0 5 5h34a5 5 0 0 0 5-5V34"
+        fill="url(#ui-external-metal)"
+        stroke="#3d606e"
+        stroke-width="2.3"
+    />
+    <path
+        d="M34 7h23v23l-7-7-22 22-8-8 22-22Z"
+        fill="url(#ui-external-leaf)"
+        stroke="#2c5146"
+        stroke-width="2"
+    />
+    <path
+        d="m26 37 19-19"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.6"
+        opacity="0.72"
+    />
 </g>
 </svg>

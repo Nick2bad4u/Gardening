@@ -1,21 +1,109 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-research-title" data-ui-icon="research" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-research-title" aria-describedby="ui-research-description" data-ui-icon="research" focusable="false">
   <title id="ui-research-title">Research</title>
+<desc id="ui-research-description">
+    A botanical research page is paired with a detailed magnifying glass.
+</desc>
 <defs>
-<linearGradient id="ui-research-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#f0e9d6"/>
-<stop offset="0.55" stop-color="#eee8d7"/>
-<stop offset="1" stop-color="#c9c9b8"/>
-</linearGradient>
-<linearGradient id="ui-research-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#d9cfdb"/>
-<stop offset="0.55" stop-color="#d2c8de"/>
-<stop offset="1" stop-color="#b2afbe"/>
-</linearGradient>
+    <linearGradient
+        id="ui-research-leaf"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient
+        id="ui-research-paper"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <linearGradient
+        id="ui-research-metal"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <linearGradient
+        id="ui-research-clay"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#f8c18b" />
+        <stop offset="0.52" stop-color="#e19864" />
+        <stop offset="1" stop-color="#b86545" />
+    </linearGradient>
+    <radialGradient id="ui-research-metal-round" cx="32%" cy="24%" r="82%">
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </radialGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M4 3.5h12v17H4Z" fill="url(#ui-research-material-0)" stroke="#5f5764" stroke-linejoin="round" stroke-width="1"/>
-    <path d="M7 7h6m-6 3h5m-5 3h4" stroke="#5eae74" stroke-linecap="round" stroke-width="1.2"/>
-    <circle cx="16.3" cy="15.7" r="3.4" fill="url(#ui-research-material-1)" stroke="#715a92" stroke-width="1"/>
-    <path d="m18.8 18.2 2.3 2.3" stroke="#d3844c" stroke-linecap="round" stroke-width="1.6"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M14 7h26l11 11v39H14Z"
+        fill="url(#ui-research-paper)"
+        stroke="#3d606e"
+        stroke-width="2.2"
+    />
+    <path
+        d="M40 7v11h11"
+        fill="url(#ui-research-metal)"
+        stroke="#3d606e"
+        stroke-width="1.8"
+    />
+    <path
+        d="M21 23h19M21 30h14M21 37h11"
+        fill="none"
+        stroke="url(#ui-research-leaf)"
+        stroke-width="2.4"
+    />
+    <path d="M21 45h9" fill="none" stroke="#3d606e" stroke-width="2" />
+    <g transform="translate(29 29) scale(0.48)">
+        <path
+            d="M40 38 56 52a3 3 0 0 1-4 4L37 41Z"
+            fill="url(#ui-research-clay)"
+            stroke="#825736"
+            stroke-width="2"
+        />
+        <circle
+            cx="27"
+            cy="26"
+            r="19"
+            fill="url(#ui-research-metal-round)"
+            stroke="#3d606e"
+            stroke-width="2.5"
+        />
+        <circle
+            cx="27"
+            cy="26"
+            r="14"
+            fill="url(#ui-research-paper)"
+            stroke="#3d606e"
+            stroke-width="1.5"
+        />
+        <path
+            d="M16 24a12 12 0 0 1 9-10"
+            fill="none"
+            stroke="#fff4d8"
+            stroke-width="2"
+            opacity="0.72"
+        />
+    </g>
 </g>
 </svg>

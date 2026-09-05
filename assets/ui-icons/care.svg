@@ -1,25 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-care-title" data-ui-icon="care" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-care-title" aria-describedby="ui-care-description" data-ui-icon="care" focusable="false">
   <title id="ui-care-title">Care</title>
+<desc id="ui-care-description">
+    A warm heart carries a small green leaf for attentive plant care.
+</desc>
 <defs>
-<linearGradient id="ui-care-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e09787"/>
-<stop offset="0.55" stop-color="#db8477"/>
-<stop offset="1" stop-color="#ba796b"/>
-</linearGradient>
-<linearGradient id="ui-care-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#80c089"/>
-<stop offset="0.55" stop-color="#66b67a"/>
-<stop offset="1" stop-color="#5ca16e"/>
-</linearGradient>
-<linearGradient id="ui-care-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
+    <linearGradient id="ui-care-rose" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#f6c5b7" />
+        <stop offset="0.52" stop-color="#e89785" />
+        <stop offset="1" stop-color="#be645d" />
+    </linearGradient>
+    <linearGradient id="ui-care-leaf" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M12 20C7.7 16.7 4 13.8 4 9.2a4.4 4.4 0 0 1 7.9-2.7A4.4 4.4 0 0 1 20 9.2c0 4.6-3.7 7.5-8 10.8Z" fill="url(#ui-care-material-0)" stroke="#77504d" stroke-linejoin="round" stroke-width="1"/>
-    <path d="M12 6.5V20c4.3-3.3 8-6.2 8-10.8a4.4 4.4 0 0 0-8.1-2.7Z" fill="url(#ui-care-material-1)"/>
-    <path d="m17.2 4.2 0.5 1.2 1.3 0.2-1 0.8 0.3 1.3-1.1-0.7-1.1 0.7 0.3-1.3-1-0.8 1.3-0.2Z" fill="url(#ui-care-material-2)"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M32 56C24 49 7 38 7 23 7 7 26 4 32 17 39 4 57 7 57 23c0 15-17 26-25 33Z"
+        fill="url(#ui-care-rose)"
+        stroke="#85584d"
+        stroke-width="2.4"
+    />
+    <path
+        d="M13 24c-1-7 4-11 10-10"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="2.2"
+        opacity="0.72"
+    />
+    <path
+        d="M31 39c-1-14 8-24 22-24 1 14-8 25-22 24Z"
+        fill="url(#ui-care-leaf)"
+        stroke="#2c5146"
+        stroke-width="1.8"
+    />
+    <path
+        d="M34 35 47 22"
+        fill="none"
+        stroke="#e4efc1"
+        stroke-width="1.3"
+        opacity="0.8"
+    />
 </g>
 </svg>

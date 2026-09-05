@@ -1,20 +1,49 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-trash-title" data-ui-icon="trash" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-trash-title" aria-describedby="ui-trash-description" data-ui-icon="trash" focusable="false">
   <title id="ui-trash-title">Trash</title>
+<desc id="ui-trash-description">
+    A terracotta bin has an attached lid handle and evenly spaced vertical
+    slots.
+</desc>
 <defs>
-<linearGradient id="ui-trash-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e09a77"/>
-<stop offset="0.55" stop-color="#db8864"/>
-<stop offset="1" stop-color="#ba7c5c"/>
-</linearGradient>
-<linearGradient id="ui-trash-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
+    <linearGradient id="ui-trash-clay" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#f8c18b" />
+        <stop offset="0.52" stop-color="#e19864" />
+        <stop offset="1" stop-color="#b86545" />
+    </linearGradient>
+    <linearGradient id="ui-trash-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M6 7h12l-1 14H7Z" fill="url(#ui-trash-material-0)" stroke="#754d42" stroke-linejoin="round" stroke-width="1"/>
-    <path d="M4 7h16M9 4h6l1 3H8Z" fill="url(#ui-trash-material-1)" stroke="#765a28" stroke-linejoin="round" stroke-width="1"/>
-    <path d="M10 10v7m4-7v7" stroke="#e9e3d2" stroke-linecap="round" stroke-width="1.2"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M13 20h38l-4 37H17Z"
+        fill="url(#ui-trash-clay)"
+        stroke="#825736"
+        stroke-width="2.2"
+    />
+    <path
+        d="M24 13V7h16v6"
+        fill="url(#ui-trash-gold)"
+        stroke="#825736"
+        stroke-width="2"
+    />
+    <rect
+        x="9"
+        y="13"
+        width="46"
+        height="7"
+        rx="2"
+        fill="url(#ui-trash-gold)"
+        stroke="#825736"
+        stroke-width="2"
+    />
+    <path
+        d="M23 29v19M32 29v19M41 29v19"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="2.6"
+    />
 </g>
 </svg>

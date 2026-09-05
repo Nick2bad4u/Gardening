@@ -1,20 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-upload-title" data-ui-icon="upload" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-upload-title" aria-describedby="ui-upload-description" data-ui-icon="upload" focusable="false">
   <title id="ui-upload-title">Upload</title>
+<desc id="ui-upload-description">
+    A rising green arrow aligned with a blue file tray.
+</desc>
 <defs>
-<linearGradient id="ui-upload-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#95b8ca"/>
-<stop offset="0.55" stop-color="#7facc9"/>
-<stop offset="1" stop-color="#7099ad"/>
-</linearGradient>
-<linearGradient id="ui-upload-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
+    <linearGradient
+        id="ui-upload-metal"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <linearGradient id="ui-upload-leaf" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M5 15v5h14v-5" fill="url(#ui-upload-material-0)" stroke="#405e71" stroke-linejoin="round" stroke-width="1"/>
-    <path d="M12 16V4" stroke="#5eae74" stroke-linecap="round" stroke-width="1.8"/>
-    <path d="m8.5 7.5 3.5-3.7 3.5 3.7" fill="url(#ui-upload-material-1)" stroke="#765a28" stroke-linejoin="round" stroke-width="1"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M8 42v14h48V42h-9v5H17v-5Z"
+        fill="url(#ui-upload-metal)"
+        stroke="#3d606e"
+        stroke-width="2.2"
+    />
+    <g transform="translate(0 47) scale(1 -1)">
+        <path
+            d="M27 8h10v22h9L32 43 18 30h9Z"
+            fill="url(#ui-upload-leaf)"
+            stroke="#2c5146"
+            stroke-width="2"
+        />
+        <path
+            d="M31 13v21"
+            fill="none"
+            stroke="#fff4d8"
+            stroke-width="1.6"
+            opacity="0.72"
+        />
+    </g>
+    <path
+        d="M13 52h37"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.5"
+        opacity="0.72"
+    />
 </g>
 </svg>

@@ -1,31 +1,93 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-save-title" data-ui-icon="save" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-save-title" aria-describedby="ui-save-description" data-ui-icon="save" focusable="false">
   <title id="ui-save-title">Save</title>
+<desc id="ui-save-description">
+    A blue save disk has a defined top slot, cream label, and green
+    confirmation badge.
+</desc>
 <defs>
-<linearGradient id="ui-save-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#8fb4c8"/>
-<stop offset="0.55" stop-color="#78a7c6"/>
-<stop offset="1" stop-color="#6a95aa"/>
-</linearGradient>
-<linearGradient id="ui-save-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#f0ead6"/>
-<stop offset="0.55" stop-color="#eee9d8"/>
-<stop offset="1" stop-color="#c9c9b9"/>
-</linearGradient>
-<linearGradient id="ui-save-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e0e5d1"/>
-<stop offset="0.55" stop-color="#dbe3d1"/>
-<stop offset="1" stop-color="#bac5b3"/>
-</linearGradient>
-<linearGradient id="ui-save-material-3" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
+    <linearGradient id="ui-save-metal" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <linearGradient id="ui-save-paper" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <linearGradient
+        id="ui-save-charcoal"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#9ab0b3" />
+        <stop offset="0.52" stop-color="#6b8e94" />
+        <stop offset="1" stop-color="#3d636c" />
+    </linearGradient>
+    <radialGradient id="ui-save-leaf-round" cx="32%" cy="24%" r="82%">
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </radialGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M4 3h13l3 3v15H4Z" fill="url(#ui-save-material-0)" stroke="#405e71" stroke-linejoin="round" stroke-width="1"/>
-    <path d="M7 3h8v6H7Z" fill="url(#ui-save-material-1)" stroke="#405e71" stroke-width="0.8"/>
-    <path d="M7 13h10v8H7Z" fill="url(#ui-save-material-2)" stroke="#3c6145" stroke-width="0.8"/>
-    <circle cx="12" cy="17" r="2" fill="url(#ui-save-material-3)"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M10 7h34l12 12v38H10Z"
+        fill="url(#ui-save-metal)"
+        stroke="#3d606e"
+        stroke-width="2.2"
+    />
+    <rect
+        x="19"
+        y="8"
+        width="23"
+        height="17"
+        rx="1"
+        fill="url(#ui-save-paper)"
+        stroke="#3d606e"
+        stroke-width="1.6"
+    />
+    <rect
+        x="33"
+        y="10"
+        width="5"
+        height="12"
+        rx="0.6"
+        fill="url(#ui-save-charcoal)"
+        stroke="none"
+        stroke-width="0"
+    />
+    <rect
+        x="18"
+        y="34"
+        width="28"
+        height="22"
+        rx="2"
+        fill="url(#ui-save-paper)"
+        stroke="#3d606e"
+        stroke-width="1.6"
+    />
+    <path
+        d="M24 40h15M24 46h10"
+        fill="none"
+        stroke="#a4b298"
+        stroke-width="1.6"
+    />
+    <circle
+        cx="47"
+        cy="47"
+        r="11"
+        fill="url(#ui-save-leaf-round)"
+        stroke="#2c5146"
+        stroke-width="1.8"
+    />
+    <path
+        d="m41 47 4 4 8-9"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="2.8"
+    />
 </g>
 </svg>

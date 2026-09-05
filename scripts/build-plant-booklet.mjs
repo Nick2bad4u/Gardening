@@ -350,7 +350,7 @@ function renderSiteIcon(
     spritePath = "./plant-icons.svg"
 ) {
     const classes = ["site-icon", className].filter(Boolean).join(" ");
-    return `<svg class="${escapeHtml(classes)}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="${escapeHtml(spritePath)}#icon-${escapeHtml(name)}" width="24" height="24"></use></svg>`;
+    return `<svg class="${escapeHtml(classes)}" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><use href="${escapeHtml(spritePath)}#icon-${escapeHtml(name)}" width="64" height="64"></use></svg>`;
 }
 
 function renderLayoutIcon(name, className = "") {
@@ -938,7 +938,7 @@ function renderCollectionGallery(profile) {
     const content = growthPhotos.length
         ? growthHistory
         : `<div class="collection-photo-pending">
-        <span class="geometric-icon geometric-icon--plus" aria-hidden="true"></span>
+        ${renderSiteIcon("add")}
         <p><strong>Collection photo pending.</strong> ${escapeHtml(profile.collectionRecord.pending_note)}</p>
       </div>`;
 
@@ -1737,7 +1737,7 @@ async function renderBooklet(profiles) {
   <dialog class="contents-dialog" id="contents-dialog">
     <header>
       <div><span class="dialog-kicker">Field guide</span><h1>Find a plant</h1></div>
-      <button class="close-button" id="close-contents" type="button" aria-label="Close contents"><span class="geometric-icon geometric-icon--close" aria-hidden="true"></span></button>
+      <button class="close-button" id="close-contents" type="button" aria-label="Close contents">${renderSiteIcon("close")}</button>
     </header>
     <label class="search-label" for="plant-search">Search names, IDs, care, origins, or warnings</label>
     <input id="plant-search" type="search" placeholder="Try A3, Mexico, flowers, or latex" autocomplete="off">

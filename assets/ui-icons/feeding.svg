@@ -1,26 +1,111 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-feeding-title" data-ui-icon="feeding" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-feeding-title" aria-describedby="ui-feeding-description" data-ui-icon="feeding" focusable="false">
   <title id="ui-feeding-title">Feeding</title>
+<desc id="ui-feeding-description">
+    A capped green nutrient bottle with a leaf label and a measured blue
+    drop.
+</desc>
 <defs>
-<linearGradient id="ui-feeding-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#7fbf89"/>
-<stop offset="0.55" stop-color="#65b57a"/>
-<stop offset="1" stop-color="#5ba06e"/>
-</linearGradient>
-<linearGradient id="ui-feeding-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#91b4cb"/>
-<stop offset="0.55" stop-color="#7ba7ca"/>
-<stop offset="1" stop-color="#6d95ae"/>
-</linearGradient>
-<linearGradient id="ui-feeding-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
+    <linearGradient
+        id="ui-feeding-metal"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <linearGradient
+        id="ui-feeding-leaf"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient
+        id="ui-feeding-paper"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <radialGradient id="ui-feeding-water-round" cx="32%" cy="24%" r="82%">
+        <stop offset="0" stop-color="#b3e3ec" />
+        <stop offset="0.52" stop-color="#69b7d0" />
+        <stop offset="1" stop-color="#3981ab" />
+    </radialGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M7 7h9v14H7z" fill="url(#ui-feeding-material-0)" stroke="#3c6145" stroke-linejoin="round" stroke-width="1.1"/>
-    <path d="M9 3h5v4H9z" fill="url(#ui-feeding-material-1)" stroke="#405e71" stroke-width="1"/>
-    <path d="M9.5 13h4m-2-2v4" stroke="#e9e3d2" stroke-linecap="round" stroke-width="1.4"/>
-    <path d="M17.7 9.5c1.9 0.1 3 1 3.2 2.8-1.9 0-3-1-3.2-2.8Z" fill="url(#ui-feeding-material-2)" stroke="#7a5f2a" stroke-width="0.6"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <rect
+        x="17"
+        y="7"
+        width="19"
+        height="8"
+        rx="2"
+        fill="url(#ui-feeding-metal)"
+        stroke="#3d606e"
+        stroke-width="1.8"
+    />
+    <path
+        d="M22 9v4m6-4v4m5-4v4"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.2"
+    />
+    <path
+        d="M18 15h17v7l5 5v29H12V27l6-5Z"
+        fill="url(#ui-feeding-leaf)"
+        stroke="#2c5146"
+        stroke-width="2.2"
+    />
+    <rect
+        x="17"
+        y="30"
+        width="18"
+        height="19"
+        rx="3"
+        fill="url(#ui-feeding-paper)"
+        stroke="#2c5146"
+        stroke-width="1.1"
+    />
+    <path
+        d="M21 45c-1-7 2-11 10-12 0 7-3 11-10 12Z"
+        fill="url(#ui-feeding-leaf)"
+        stroke="#2c5146"
+        stroke-width="1.8"
+    />
+    <path
+        d="m23 42 5-5"
+        fill="none"
+        stroke="#e4efc1"
+        stroke-width="1.3"
+        opacity="0.8"
+    />
+    <g transform="translate(40 28) scale(0.37)">
+        <g transform="translate(0 0) scale(1)">
+            <path
+                d="M32 7C26 16 17 26 17 35a15 15 0 0 0 30 0C47 26 38 16 32 7Z"
+                fill="url(#ui-feeding-water-round)"
+                stroke="#3d606e"
+                stroke-width="2"
+            />
+            <path
+                d="M25 24c-3 4-5 9-4 13"
+                fill="none"
+                stroke="#fff4d8"
+                stroke-width="2.5"
+                opacity="0.72"
+            />
+        </g>
+    </g>
 </g>
 </svg>

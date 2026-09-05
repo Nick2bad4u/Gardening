@@ -1,25 +1,59 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-eye-title" data-ui-icon="eye" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-eye-title" aria-describedby="ui-eye-description" data-ui-icon="eye" focusable="false">
   <title id="ui-eye-title">Eye</title>
+<desc id="ui-eye-description">
+    An open blue eye with a green iris and a clear pupil.
+</desc>
 <defs>
-<linearGradient id="ui-eye-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#95b8ca"/>
-<stop offset="0.55" stop-color="#7facc9"/>
-<stop offset="1" stop-color="#7099ad"/>
-</linearGradient>
-<linearGradient id="ui-eye-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#80c38b"/>
-<stop offset="0.55" stop-color="#66ba7c"/>
-<stop offset="1" stop-color="#5ca46f"/>
-</linearGradient>
-<linearGradient id="ui-eye-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
+    <linearGradient id="ui-eye-water" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#b3e3ec" />
+        <stop offset="0.52" stop-color="#69b7d0" />
+        <stop offset="1" stop-color="#3981ab" />
+    </linearGradient>
+    <radialGradient id="ui-eye-leaf-round" cx="32%" cy="24%" r="82%">
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </radialGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M2.5 12s3.6-6 9.5-6 9.5 6 9.5 6-3.6 6-9.5 6-9.5-6-9.5-6Z" fill="url(#ui-eye-material-0)" stroke="#405e71" stroke-linejoin="round" stroke-width="1.1"/>
-    <circle cx="12" cy="12" r="3.4" fill="url(#ui-eye-material-1)" stroke="#3c6147" stroke-width="1"/>
-    <circle cx="12" cy="12" r="1.25" fill="url(#ui-eye-material-2)"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M6 32C18 12 46 12 58 32 46 52 18 52 6 32Z"
+        fill="url(#ui-eye-water)"
+        stroke="#3d606e"
+        stroke-width="2.2"
+    />
+    <g>
+        <circle
+            cx="32"
+            cy="32"
+            r="12"
+            fill="url(#ui-eye-leaf-round)"
+            stroke="#2c5146"
+            stroke-width="1.6"
+        />
+        <circle
+            cx="32"
+            cy="32"
+            r="6"
+            fill="#42626b"
+            stroke="none"
+            stroke-width="0"
+        />
+        <circle
+            cx="28"
+            cy="28"
+            r="2.6"
+            fill="#fff4d8"
+            stroke="none"
+            stroke-width="0"
+        />
+    </g>
+    <path
+        d="M15 29c4-5 10-8 15-8"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.5"
+        opacity="0.72"
+    />
 </g>
 </svg>

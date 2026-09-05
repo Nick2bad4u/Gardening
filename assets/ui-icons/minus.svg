@@ -1,14 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-minus-title" data-ui-icon="minus" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-minus-title" aria-describedby="ui-minus-description" data-ui-icon="minus" focusable="false">
   <title id="ui-minus-title">Minus</title>
+<desc id="ui-minus-description">
+    A lavender circular button with a centered cream minus.
+</desc>
 <defs>
-<linearGradient id="ui-minus-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e0d8df"/>
-<stop offset="0.55" stop-color="#dbd3e2"/>
-<stop offset="1" stop-color="#bab8c1"/>
-</linearGradient>
+    <radialGradient id="ui-minus-purple-round" cx="32%" cy="24%" r="82%">
+        <stop offset="0" stop-color="#e0c5e6" />
+        <stop offset="0.52" stop-color="#b792c6" />
+        <stop offset="1" stop-color="#816495" />
+    </radialGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<circle cx="12" cy="12" r="9" fill="url(#ui-minus-material-0)" stroke="#715a92" stroke-width="1"/>
-    <path d="M7.5 12h9" stroke="#d18649" stroke-linecap="round" stroke-width="2"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <circle
+        cx="32"
+        cy="32"
+        r="24"
+        fill="url(#ui-minus-purple-round)"
+        stroke="#665078"
+        stroke-width="2.4"
+    />
+    <path
+        d="M15 26a18 18 0 0 1 13-12"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.8"
+        opacity="0.72"
+    />
+    <path d="M21 32h22" fill="none" stroke="#fff4d8" stroke-width="5" />
 </g>
 </svg>

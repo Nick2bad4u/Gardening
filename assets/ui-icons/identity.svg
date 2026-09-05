@@ -1,25 +1,122 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-identity-title" data-ui-icon="identity" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-identity-title" aria-describedby="ui-identity-description" data-ui-icon="identity" focusable="false">
   <title id="ui-identity-title">Identity</title>
+<desc id="ui-identity-description">
+    A botanical identification tag combines a leaf specimen and a small
+    magnifier.
+</desc>
 <defs>
-<linearGradient id="ui-identity-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#bea6ca"/>
-<stop offset="0.55" stop-color="#b196c9"/>
-<stop offset="1" stop-color="#9887ad"/>
-</linearGradient>
-<linearGradient id="ui-identity-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#80c38b"/>
-<stop offset="0.55" stop-color="#66ba7c"/>
-<stop offset="1" stop-color="#5ca46f"/>
-</linearGradient>
-<linearGradient id="ui-identity-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
+    <linearGradient
+        id="ui-identity-paper"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <linearGradient
+        id="ui-identity-purple"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#e0c5e6" />
+        <stop offset="0.52" stop-color="#b792c6" />
+        <stop offset="1" stop-color="#816495" />
+    </linearGradient>
+    <linearGradient
+        id="ui-identity-leaf"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient
+        id="ui-identity-clay"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#f8c18b" />
+        <stop offset="0.52" stop-color="#e19864" />
+        <stop offset="1" stop-color="#b86545" />
+    </linearGradient>
+    <radialGradient id="ui-identity-metal-round" cx="32%" cy="24%" r="82%">
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </radialGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M2.5 12s3.6-6 9.5-6 9.5 6 9.5 6-3.6 6-9.5 6-9.5-6-9.5-6Z" fill="url(#ui-identity-material-0)" stroke="#654e7a" stroke-linejoin="round" stroke-width="1.1"/>
-    <circle cx="12" cy="12" r="3.4" fill="url(#ui-identity-material-1)" stroke="#3c6147" stroke-width="1"/>
-    <circle cx="12" cy="12" r="1.25" fill="url(#ui-identity-material-2)"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M11 7h30l12 12v38H11Z"
+        fill="url(#ui-identity-paper)"
+        stroke="#2c5146"
+        stroke-width="2"
+    />
+    <path
+        d="M41 7v12h12"
+        fill="url(#ui-identity-purple)"
+        stroke="#6f547f"
+        stroke-width="1.6"
+    />
+    <path
+        d="M21 36c-2-13 5-20 17-21 1 12-4 21-17 21Z"
+        fill="url(#ui-identity-leaf)"
+        stroke="#2c5146"
+        stroke-width="1.8"
+    />
+    <path
+        d="m24 31 9-10"
+        fill="none"
+        stroke="#e4efc1"
+        stroke-width="1.3"
+        opacity="0.8"
+    />
+    <path
+        d="M19 44h14M19 50h9"
+        fill="none"
+        stroke="#3d606e"
+        stroke-width="2"
+    />
+    <g transform="translate(32 31) scale(0.45)">
+        <path
+            d="M40 38 56 52a3 3 0 0 1-4 4L37 41Z"
+            fill="url(#ui-identity-clay)"
+            stroke="#825736"
+            stroke-width="2"
+        />
+        <circle
+            cx="27"
+            cy="26"
+            r="19"
+            fill="url(#ui-identity-metal-round)"
+            stroke="#3d606e"
+            stroke-width="2.5"
+        />
+        <circle
+            cx="27"
+            cy="26"
+            r="14"
+            fill="url(#ui-identity-paper)"
+            stroke="#3d606e"
+            stroke-width="1.5"
+        />
+        <path
+            d="M16 24a12 12 0 0 1 9-10"
+            fill="none"
+            stroke="#fff4d8"
+            stroke-width="2"
+            opacity="0.72"
+        />
+    </g>
 </g>
 </svg>

@@ -63,7 +63,7 @@ export async function syncUiIcons({ checkOnly = false } = {}) {
             throw new Error(`UI icon ${name} needs a 64-unit viewBox.`);
         return {
             name: `${name}.svg`,
-            value: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" role="img" aria-labelledby="ui-${name}-title" data-ui-icon="${name}" focusable="false">\n  <title id="ui-${name}-title">${titleFor(name)}</title>\n${body}\n</svg>\n`,
+            value: `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="${viewBox}" role="img" aria-labelledby="ui-${name}-title" aria-describedby="ui-${name}-description" data-ui-icon="${name}" focusable="false">\n  <title id="ui-${name}-title">${titleFor(name)}</title>\n${body}\n</svg>\n`,
         };
     });
     if (checkOnly) {

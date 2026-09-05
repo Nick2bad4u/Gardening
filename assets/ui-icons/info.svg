@@ -1,21 +1,49 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-info-title" data-ui-icon="info" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-info-title" aria-describedby="ui-info-description" data-ui-icon="info" focusable="false">
   <title id="ui-info-title">Info</title>
+<desc id="ui-info-description">
+    A blue information disc with a legible cream lowercase information mark.
+</desc>
 <defs>
-<linearGradient id="ui-info-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#95b8ca"/>
-<stop offset="0.55" stop-color="#7facc9"/>
-<stop offset="1" stop-color="#7099ad"/>
-</linearGradient>
-<linearGradient id="ui-info-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
+    <radialGradient id="ui-info-water-round" cx="32%" cy="24%" r="82%">
+        <stop offset="0" stop-color="#b3e3ec" />
+        <stop offset="0.52" stop-color="#69b7d0" />
+        <stop offset="1" stop-color="#3981ab" />
+    </radialGradient>
+    <linearGradient id="ui-info-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<circle cx="12" cy="12" r="9" fill="url(#ui-info-material-0)" stroke="#405e71" stroke-width="1.1"/>
-    <circle cx="12" cy="7" r="1.3" fill="url(#ui-info-material-1)"/>
-    <path d="M12 10v7" stroke="#e9e3d2" stroke-linecap="round" stroke-width="2"/>
-    <path d="M9.8 17h4.4" stroke="#5aae74" stroke-linecap="round" stroke-width="1"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <circle
+        cx="32"
+        cy="32"
+        r="24"
+        fill="url(#ui-info-water-round)"
+        stroke="#3d606e"
+        stroke-width="2.4"
+    />
+    <path
+        d="M15 26a18 18 0 0 1 13-12"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.8"
+        opacity="0.72"
+    />
+    <circle
+        cx="32"
+        cy="20"
+        r="3.3"
+        fill="url(#ui-info-gold)"
+        stroke="#825736"
+        stroke-width="1"
+    />
+    <path
+        d="M28 30h4v16m-5 0h10"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="3.6"
+    />
 </g>
 </svg>

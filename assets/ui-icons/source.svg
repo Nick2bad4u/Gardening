@@ -1,26 +1,94 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-source-title" data-ui-icon="source" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-source-title" aria-describedby="ui-source-description" data-ui-icon="source" focusable="false">
   <title id="ui-source-title">Source</title>
+<desc id="ui-source-description">
+    A small greenhouse-like source building has a clear roof, entrance, and
+    window.
+</desc>
 <defs>
-<linearGradient id="ui-source-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e19d70"/>
-<stop offset="0.55" stop-color="#dc8c5b"/>
-<stop offset="1" stop-color="#ba7f55"/>
-</linearGradient>
-<linearGradient id="ui-source-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#f0e6cc"/>
-<stop offset="0.55" stop-color="#eee4cb"/>
-<stop offset="1" stop-color="#c9c5ae"/>
-</linearGradient>
-<linearGradient id="ui-source-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#8abf8b"/>
-<stop offset="0.55" stop-color="#72b57c"/>
-<stop offset="1" stop-color="#66a06f"/>
-</linearGradient>
+    <linearGradient id="ui-source-clay" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#f8c18b" />
+        <stop offset="0.52" stop-color="#e19864" />
+        <stop offset="1" stop-color="#b86545" />
+    </linearGradient>
+    <linearGradient id="ui-source-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
+    <linearGradient id="ui-source-leaf" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient
+        id="ui-source-paper"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="m4 8 8-5 8 5v11.5H4Z" fill="url(#ui-source-material-0)" stroke="#6c4c35" stroke-linejoin="round" stroke-width="1.1"/>
-    <path d="M7 10h10v9.5H7z" fill="url(#ui-source-material-1)" stroke="#6c4c35" stroke-width="0.9"/>
-    <path d="M10 19.5v-5h4v5" fill="url(#ui-source-material-2)" stroke="#3c5f45" stroke-width="0.8"/>
-    <path d="M4 8h16" stroke="#e1bb4f" stroke-width="2"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M9 28h46v29H9Z"
+        fill="url(#ui-source-clay)"
+        stroke="#825736"
+        stroke-width="2"
+    />
+    <path
+        d="M5 28 32 8l27 20Z"
+        fill="url(#ui-source-gold)"
+        stroke="#825736"
+        stroke-width="2.2"
+    />
+    <rect
+        x="24"
+        y="36"
+        width="13"
+        height="21"
+        rx="1"
+        fill="url(#ui-source-leaf)"
+        stroke="#2c5146"
+        stroke-width="1.8"
+    />
+    <rect
+        x="13"
+        y="34"
+        width="7"
+        height="10"
+        rx="1"
+        fill="url(#ui-source-paper)"
+        stroke="#825736"
+        stroke-width="1.2"
+    />
+    <rect
+        x="42"
+        y="34"
+        width="7"
+        height="10"
+        rx="1"
+        fill="url(#ui-source-paper)"
+        stroke="#825736"
+        stroke-width="1.2"
+    />
+    <circle
+        cx="33"
+        cy="47"
+        r="1"
+        fill="#fff4d8"
+        stroke="none"
+        stroke-width="0"
+    />
+    <path
+        d="m15 24 16-11"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.5"
+        opacity="0.72"
+    />
 </g>
 </svg>

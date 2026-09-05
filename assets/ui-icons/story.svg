@@ -1,25 +1,50 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-story-title" data-ui-icon="story" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-story-title" aria-describedby="ui-story-description" data-ui-icon="story" focusable="false">
   <title id="ui-story-title">Story</title>
+<desc id="ui-story-description">
+    An open storybook has flowing page lines and a golden story star.
+</desc>
 <defs>
-<linearGradient id="ui-story-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#94bf96"/>
-<stop offset="0.55" stop-color="#7eb589"/>
-<stop offset="1" stop-color="#6fa07a"/>
-</linearGradient>
-<linearGradient id="ui-story-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#95b4c8"/>
-<stop offset="0.55" stop-color="#7fa8c7"/>
-<stop offset="1" stop-color="#7095ab"/>
-</linearGradient>
-<linearGradient id="ui-story-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
+    <linearGradient id="ui-story-paper" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <linearGradient id="ui-story-metal" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <linearGradient id="ui-story-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M3 5.5c3.4-0.8 6.4-0.1 9 2v12c-2.6-2.1-5.6-2.8-9-2Z" fill="url(#ui-story-material-0)" stroke="#3c6145" stroke-linejoin="round" stroke-width="1"/>
-    <path d="M21 5.5c-3.4-0.8-6.4-0.1-9 2v12c2.6-2.1 5.6-2.8 9-2Z" fill="url(#ui-story-material-1)" stroke="#405e71" stroke-linejoin="round" stroke-width="1"/>
-    <path d="m17.1 8.3 0.6 1.3 1.4 0.2-1 0.9 0.2 1.4-1.2-0.7-1.2 0.7 0.2-1.4-1-0.9 1.4-0.2Z" fill="url(#ui-story-material-2)"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M32 15C23 8 14 7 6 10v43c9-2 18-1 26 5 8-6 17-7 26-5V10c-8-3-17-2-26 5Z"
+        fill="url(#ui-story-paper)"
+        stroke="#3d606e"
+        stroke-width="2.2"
+    />
+    <path
+        d="M32 15c8-7 17-8 26-5v43c-9-2-18-1-26 5Z"
+        fill="url(#ui-story-metal)"
+        stroke="#3d606e"
+        stroke-width="1.8"
+    />
+    <path d="M32 16v41" fill="none" stroke="#3d606e" stroke-width="2" />
+    <path
+        d="M12 22c5-1 10 1 14 3m-14 5c5-1 10 1 14 3m-14 5c5-1 10 1 14 3"
+        fill="none"
+        stroke="#2c5146"
+        stroke-width="1.7"
+    />
+    <path
+        d="M45 22l2.24 5.76L53 30l-5.76 2.24L45 38l-2.24 -5.76L37 30l5.76 -2.24Z"
+        fill="url(#ui-story-gold)"
+        stroke="#825736"
+        stroke-width="1.5"
+    />
 </g>
 </svg>

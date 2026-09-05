@@ -1,16 +1,72 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-growth-title" data-ui-icon="growth" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-growth-title" aria-describedby="ui-growth-description" data-ui-icon="growth" focusable="false">
   <title id="ui-growth-title">Growth</title>
+<desc id="ui-growth-description">
+    A rooted green sprout rises beside a small upward gold growth arrow.
+</desc>
 <defs>
-<linearGradient id="ui-growth-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#80c281"/>
-<stop offset="0.55" stop-color="#66b970"/>
-<stop offset="1" stop-color="#5ca366"/>
-</linearGradient>
+    <linearGradient id="ui-growth-leaf" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient id="ui-growth-teal" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a6d8ba" />
+        <stop offset="0.52" stop-color="#5aac99" />
+        <stop offset="1" stop-color="#2d786e" />
+    </linearGradient>
+    <linearGradient id="ui-growth-soil" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#bc9c70" />
+        <stop offset="0.52" stop-color="#917353" />
+        <stop offset="1" stop-color="#68543e" />
+    </linearGradient>
+    <linearGradient id="ui-growth-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M12 21V8" stroke="#3c6145" stroke-linecap="round" stroke-width="1.5"/>
-    <path d="M11.8 12C7.7 11.8 5.5 9.6 5.6 6.5c4-0.4 6.3 1.6 6.2 5.5Zm0.3 3.5c0.4-4 2.8-6.1 6.2-5.5-0.1 3.5-2.3 5.5-6.2 5.5Z" fill="url(#ui-growth-material-0)" stroke="#3c6145" stroke-linejoin="round" stroke-width="0.9"/>
-    <path d="M4 21h16" stroke="#d4864c" stroke-linecap="round" stroke-width="1.8"/>
-    <path d="M17.8 3v4m-2-2h4" stroke="#e1bb4f" stroke-linecap="round" stroke-width="1.4"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <g transform="translate(-3 6) scale(0.88)">
+        <path d="M32 52V23" fill="none" stroke="#2c5146" stroke-width="3" />
+        <path
+            d="M31 32C19 33 12 26 12 16c12 0 20 5 19 16Z"
+            fill="url(#ui-growth-leaf)"
+            stroke="#2c5146"
+            stroke-width="1.8"
+        />
+        <path
+            d="M18 22l12 10"
+            fill="none"
+            stroke="#e4efc1"
+            stroke-width="1.3"
+            opacity="0.8"
+        />
+        <path
+            d="M33 38c0-12 8-19 20-19-1 12-7 19-20 19Z"
+            fill="url(#ui-growth-teal)"
+            stroke="#2c5146"
+            stroke-width="1.8"
+        />
+        <path
+            d="M47 25 35 36"
+            fill="none"
+            stroke="#fff4d8"
+            stroke-width="1.3"
+            opacity="0.72"
+        />
+    </g>
+    <path
+        d="M5 54q18-7 36 0"
+        fill="url(#ui-growth-soil)"
+        stroke="#825736"
+        stroke-width="2"
+    />
+    <path d="M11 58h25" fill="none" stroke="#825736" stroke-width="1.6" />
+    <path
+        d="M46 30V17h-7L50 6l11 11h-7v13Z"
+        fill="url(#ui-growth-gold)"
+        stroke="#825736"
+        stroke-width="1.8"
+    />
 </g>
 </svg>

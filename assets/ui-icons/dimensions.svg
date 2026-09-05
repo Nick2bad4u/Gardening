@@ -1,15 +1,58 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-dimensions-title" data-ui-icon="dimensions" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-dimensions-title" aria-describedby="ui-dimensions-description" data-ui-icon="dimensions" focusable="false">
   <title id="ui-dimensions-title">Dimensions</title>
+<desc id="ui-dimensions-description">
+    A diagonal gold ruler with evenly spaced ticks and green measurement
+    corners.
+</desc>
 <defs>
-<linearGradient id="ui-dimensions-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e7c772"/>
-<stop offset="0.55" stop-color="#e4bf5e"/>
-<stop offset="1" stop-color="#c1a857"/>
-</linearGradient>
+    <linearGradient
+        id="ui-dimensions-gold"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
+    <linearGradient
+        id="ui-dimensions-leaf"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M4 18 18 4l3 3L7 21Z" fill="url(#ui-dimensions-material-0)" stroke="#70592a" stroke-linejoin="round" stroke-width="1.1"/>
-    <path d="m8.5 15.5 2 2m0.2-5.2 2 2m0.2-5.2 2 2m0.2-5.2 2 2" stroke="#70592a" stroke-linecap="round" stroke-width="0.8"/>
-    <path d="M3 5h6M3 5v6m18 8h-6m6 0v-6" stroke="#5dae74" stroke-linecap="round" stroke-width="1.3"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="m10 45 34-34 10 10-34 34Z"
+        fill="url(#ui-dimensions-gold)"
+        stroke="#825736"
+        stroke-width="2.2"
+    />
+    <path
+        d="m19 37 5 5m2-12 4 4m3-11 5 5m2-12 4 4"
+        fill="none"
+        stroke="#825736"
+        stroke-width="1.7"
+    />
+    <path
+        d="M8 24V8h16M40 56h16V40"
+        fill="none"
+        stroke="url(#ui-dimensions-leaf)"
+        stroke-width="3"
+    />
+    <path
+        d="m15 45 28-28"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.4"
+        opacity="0.72"
+    />
 </g>
 </svg>

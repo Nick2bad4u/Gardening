@@ -1,31 +1,121 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-camera-title" data-ui-icon="camera" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-camera-title" aria-describedby="ui-camera-description" data-ui-icon="camera" focusable="false">
   <title id="ui-camera-title">Camera</title>
+<desc id="ui-camera-description">
+    A blue camera with a centered glass lens, grip, and shutter button.
+</desc>
 <defs>
-<linearGradient id="ui-camera-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#8fb4c8"/>
-<stop offset="0.55" stop-color="#78a7c6"/>
-<stop offset="1" stop-color="#6a95aa"/>
-</linearGradient>
-<linearGradient id="ui-camera-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e0e5d1"/>
-<stop offset="0.55" stop-color="#dbe3d1"/>
-<stop offset="1" stop-color="#bac5b3"/>
-</linearGradient>
-<linearGradient id="ui-camera-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
-<linearGradient id="ui-camera-material-3" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e09a70"/>
-<stop offset="0.55" stop-color="#db885b"/>
-<stop offset="1" stop-color="#ba7c55"/>
-</linearGradient>
+    <linearGradient id="ui-camera-clay" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#f8c18b" />
+        <stop offset="0.52" stop-color="#e19864" />
+        <stop offset="1" stop-color="#b86545" />
+    </linearGradient>
+    <linearGradient
+        id="ui-camera-metal"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <linearGradient
+        id="ui-camera-charcoal"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#9ab0b3" />
+        <stop offset="0.52" stop-color="#6b8e94" />
+        <stop offset="1" stop-color="#3d636c" />
+    </linearGradient>
+    <radialGradient id="ui-camera-water-round" cx="32%" cy="24%" r="82%">
+        <stop offset="0" stop-color="#b3e3ec" />
+        <stop offset="0.52" stop-color="#69b7d0" />
+        <stop offset="1" stop-color="#3981ab" />
+    </radialGradient>
+    <linearGradient id="ui-camera-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M4 7h4l1.4-2h5.2L16 7h4a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z" fill="url(#ui-camera-material-0)" stroke="#405e71" stroke-linejoin="round" stroke-width="1.1"/>
-    <circle cx="12" cy="13" r="4" fill="url(#ui-camera-material-1)" stroke="#3c6145" stroke-width="1"/>
-    <circle cx="12" cy="13" r="1.7" fill="url(#ui-camera-material-2)"/>
-    <circle cx="18.5" cy="9.5" r="0.9" fill="url(#ui-camera-material-3)"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <rect
+        x="43"
+        y="13"
+        width="8"
+        height="5"
+        rx="1.5"
+        fill="url(#ui-camera-clay)"
+        stroke="#825736"
+        stroke-width="1.4"
+    />
+    <path
+        d="M8 19h11l4-7h18l4 7h11v34H8Z"
+        fill="url(#ui-camera-metal)"
+        stroke="#3d606e"
+        stroke-width="2.3"
+    />
+    <rect
+        x="10"
+        y="25"
+        width="7"
+        height="23"
+        rx="2"
+        fill="url(#ui-camera-charcoal)"
+        stroke="none"
+        stroke-width="0"
+    />
+    <circle
+        cx="34"
+        cy="35"
+        r="13"
+        fill="url(#ui-camera-charcoal)"
+        stroke="#3d606e"
+        stroke-width="1.6"
+    />
+    <circle
+        cx="34"
+        cy="35"
+        r="9"
+        fill="url(#ui-camera-water-round)"
+        stroke="#fff4d8"
+        stroke-width="1.7"
+    />
+    <circle
+        cx="34"
+        cy="35"
+        r="4"
+        fill="#3a738a"
+        stroke="none"
+        stroke-width="0"
+    />
+    <circle
+        cx="31"
+        cy="32"
+        r="2.5"
+        fill="#edf9e4"
+        stroke="none"
+        stroke-width="0"
+        opacity="0.8"
+    />
+    <circle
+        cx="49"
+        cy="25"
+        r="2"
+        fill="url(#ui-camera-gold)"
+        stroke="none"
+        stroke-width="0"
+    />
+    <path
+        d="M22 17h16"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.5"
+        opacity="0.72"
+    />
 </g>
 </svg>

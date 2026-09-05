@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import { describe, expect, it } from "vitest";
+import sharp from "sharp";
 import { parseUiIcons } from "../scripts/sync-ui-icons.mjs";
 
 const sprite = fs.readFileSync(
@@ -30,12 +31,20 @@ describe("shared multicolor interface artwork", () => {
             expect(asset, icon.name).toContain(
                 `aria-labelledby="ui-${icon.name}-title"`
             );
+            expect(asset, icon.name).toContain('width="64" height="64"');
+            expect(asset, icon.name).toContain(
+                `aria-describedby="ui-${icon.name}-description"`
+            );
+            expect(asset, icon.name).toMatch(
+                new RegExp(`<desc id="ui-${icon.name}-description">\\s*\\S`)
+            );
             expect(asset, icon.name).not.toMatch(
                 /<script|<foreignObject|currentcolor|href="https?:|onload=/i
             );
             const ids = [...asset.matchAll(/\bid="([^"]+)"/g)].map(
                 (match) => match[1]
             );
+            expect(new Set(ids).size, icon.name).toBe(ids.length);
             for (const ref of asset.matchAll(/(?:url\(#|href="#)([\w-]+)/g)) {
                 expect(ids, `${icon.name}: ${ref[1]}`).toContain(ref[1]);
             }
@@ -46,6 +55,36 @@ describe("shared multicolor interface artwork", () => {
                     )
                 ).size
             ).toBeGreaterThanOrEqual(2);
+        }
+    });
+
+    it("renders every icon at 64 pixels without empty artwork or clipped edges", async () => {
+        for (const icon of icons) {
+            const { data, info } = await sharp(
+                fs.readFileSync(
+                    new URL(
+                        `../assets/ui-icons/${icon.name}.svg`,
+                        import.meta.url
+                    )
+                )
+            )
+                .ensureAlpha()
+                .raw()
+                .toBuffer({ resolveWithObject: true });
+            expect([info.width, info.height], icon.name).toEqual([64, 64]);
+            let paintedPixels = 0;
+            let clippedPixels = 0;
+            for (let y = 0; y < info.height; y++) {
+                for (let x = 0; x < info.width; x++) {
+                    const alpha =
+                        data[(y * info.width + x) * info.channels + 3];
+                    if (alpha <= 16) continue;
+                    paintedPixels++;
+                    if (x < 2 || y < 2 || x >= 62 || y >= 62) clippedPixels++;
+                }
+            }
+            expect(paintedPixels, icon.name).toBeGreaterThan(120);
+            expect(clippedPixels, icon.name).toBe(0);
         }
     });
 

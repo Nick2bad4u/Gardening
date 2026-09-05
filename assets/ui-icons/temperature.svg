@@ -1,21 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-temperature-title" data-ui-icon="temperature" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-temperature-title" aria-describedby="ui-temperature-description" data-ui-icon="temperature" focusable="false">
   <title id="ui-temperature-title">Temperature</title>
+<desc id="ui-temperature-description">
+    A red thermometer has clear graduations and a small blue frost symbol.
+</desc>
 <defs>
-<linearGradient id="ui-temperature-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#f0e7d2"/>
-<stop offset="0.55" stop-color="#eee6d3"/>
-<stop offset="1" stop-color="#c9c7b5"/>
-</linearGradient>
-<linearGradient id="ui-temperature-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e48b76"/>
-<stop offset="0.55" stop-color="#e07562"/>
-<stop offset="1" stop-color="#be6d5a"/>
-</linearGradient>
+    <linearGradient
+        id="ui-temperature-paper"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <radialGradient
+        id="ui-temperature-rose-round"
+        cx="32%"
+        cy="24%"
+        r="82%"
+    >
+        <stop offset="0" stop-color="#f6c5b7" />
+        <stop offset="0.52" stop-color="#e89785" />
+        <stop offset="1" stop-color="#be645d" />
+    </radialGradient>
+    <linearGradient
+        id="ui-temperature-water"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#b3e3ec" />
+        <stop offset="0.52" stop-color="#69b7d0" />
+        <stop offset="1" stop-color="#3981ab" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M8.5 4.5a3 3 0 0 1 6 0v8.2a5 5 0 1 1-6 0Z" fill="url(#ui-temperature-material-0)" stroke="#6f5b60" stroke-width="1.1"/>
-    <path d="M11.5 6v9.4" stroke="#da6c59" stroke-linecap="round" stroke-width="2.2"/>
-    <circle cx="11.5" cy="17" r="2.5" fill="url(#ui-temperature-material-1)"/>
-    <path d="m17.5 5 3 3m0-3-3 3m1.5-4.5v6" stroke="#60a5cb" stroke-linecap="round" stroke-width="1"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M17 35V15c0-12 16-12 16 0v20a13 13 0 1 1-16 0Z"
+        fill="url(#ui-temperature-paper)"
+        stroke="#78636b"
+        stroke-width="2.2"
+    />
+    <circle
+        cx="25"
+        cy="46"
+        r="7"
+        fill="url(#ui-temperature-rose-round)"
+        stroke="#a86259"
+        stroke-width="1.4"
+    />
+    <path d="M25 17v29" fill="none" stroke="#d47867" stroke-width="6" />
+    <path
+        d="M31 20h3m-3 7h3m-3 7h3"
+        fill="none"
+        stroke="#825736"
+        stroke-width="1.2"
+    />
+    <path
+        d="M48 12v23m-9-17 18 11m-18 0 18-11m-12-3 3-3 3 3m-6 17 3 3 3-3"
+        fill="none"
+        stroke="url(#ui-temperature-water)"
+        stroke-width="2.2"
+    />
 </g>
 </svg>

@@ -1,31 +1,114 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-photos-title" data-ui-icon="photos" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-photos-title" aria-describedby="ui-photos-description" data-ui-icon="photos" focusable="false">
   <title id="ui-photos-title">Photos</title>
+<desc id="ui-photos-description">
+    Two offset photo prints have complete frames and a clipped mountain
+    scene.
+</desc>
 <defs>
-<linearGradient id="ui-photos-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#91b4cb"/>
-<stop offset="0.55" stop-color="#7ba7ca"/>
-<stop offset="1" stop-color="#6d95ae"/>
-</linearGradient>
-<linearGradient id="ui-photos-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#f0ead6"/>
-<stop offset="0.55" stop-color="#eee9d8"/>
-<stop offset="1" stop-color="#c9c9b9"/>
-</linearGradient>
-<linearGradient id="ui-photos-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
-<linearGradient id="ui-photos-material-3" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#73bf8d"/>
-<stop offset="0.55" stop-color="#56b57e"/>
-<stop offset="1" stop-color="#4fa071"/>
-</linearGradient>
+    <linearGradient
+        id="ui-photos-metal"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <clipPath id="ui-photos-photo-window" clipPathUnits="userSpaceOnUse">
+        <rect
+            x="21"
+            y="18"
+            width="32"
+            height="32"
+            rx="2"
+            fill="#ffffff"
+            stroke="none"
+            stroke-width="0"
+        />
+    </clipPath>
+    <linearGradient
+        id="ui-photos-paper"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <linearGradient
+        id="ui-photos-water"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#b3e3ec" />
+        <stop offset="0.52" stop-color="#69b7d0" />
+        <stop offset="1" stop-color="#3981ab" />
+    </linearGradient>
+    <linearGradient id="ui-photos-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
+    <linearGradient id="ui-photos-leaf" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<rect x="3" y="4" width="15" height="14" rx="2" fill="url(#ui-photos-material-0)" stroke="#314a58" stroke-width="1.1" transform="rotate(-6 10.5 11)"/>
-    <rect x="6" y="5.5" width="15" height="14" rx="2" fill="url(#ui-photos-material-1)" stroke="#314a58" stroke-width="1.1"/>
-    <circle cx="16.8" cy="9.2" r="1.7" fill="url(#ui-photos-material-2)"/>
-    <path d="m7.8 17 4.2-4 2.4 2.1 2.2-2 3 3V18H7.8Z" fill="url(#ui-photos-material-3)" stroke="#314a58" stroke-linejoin="round" stroke-width="0.7"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <rect
+        x="7"
+        y="10"
+        width="38"
+        height="44"
+        rx="4"
+        fill="url(#ui-photos-metal)"
+        stroke="#3d606e"
+        stroke-width="2"
+        transform="rotate(-8 26 32)"
+    />
+    <rect
+        x="17"
+        y="13"
+        width="40"
+        height="44"
+        rx="4"
+        fill="url(#ui-photos-paper)"
+        stroke="#3d606e"
+        stroke-width="2"
+    />
+    <g clip-path="url(#ui-photos-photo-window)">
+        <rect
+            x="21"
+            y="18"
+            width="32"
+            height="32"
+            rx="2"
+            fill="url(#ui-photos-water)"
+            stroke="none"
+            stroke-width="0"
+        />
+        <circle
+            cx="45"
+            cy="26"
+            r="4"
+            fill="url(#ui-photos-gold)"
+            stroke="none"
+            stroke-width="0"
+        />
+        <path
+            d="M21 48l12 -14 8 8 7-5 12 14Z"
+            fill="url(#ui-photos-leaf)"
+            stroke="#2c5146"
+            stroke-width="1.5"
+        />
+    </g>
+    <path d="M25 53h24" fill="none" stroke="#ccb98e" stroke-width="1" />
 </g>
 </svg>

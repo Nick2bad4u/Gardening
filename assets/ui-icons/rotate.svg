@@ -1,21 +1,78 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-rotate-title" data-ui-icon="rotate" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-rotate-title" aria-describedby="ui-rotate-description" data-ui-icon="rotate" focusable="false">
   <title id="ui-rotate-title">Rotate</title>
+<desc id="ui-rotate-description">
+    A curved blue rotation arrow wraps around a rooted green plant.
+</desc>
 <defs>
-<linearGradient id="ui-rotate-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
-<linearGradient id="ui-rotate-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#80bf8b"/>
-<stop offset="0.55" stop-color="#66b57c"/>
-<stop offset="1" stop-color="#5ca06f"/>
-</linearGradient>
+    <linearGradient
+        id="ui-rotate-metal"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <linearGradient id="ui-rotate-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
+    <linearGradient id="ui-rotate-leaf" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient id="ui-rotate-teal" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a6d8ba" />
+        <stop offset="0.52" stop-color="#5aac99" />
+        <stop offset="1" stop-color="#2d786e" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M19 8.5A8 8 0 0 0 5.3 6.2L3.5 8" fill="none" stroke="#5f8bae" stroke-linecap="round" stroke-width="1.8"/>
-    <path d="M3.5 4.5V8H7" fill="url(#ui-rotate-material-0)" stroke="#765a28" stroke-linejoin="round" stroke-width="0.8"/>
-    <path d="M12 20V10" stroke="#3c6145" stroke-linecap="round" stroke-width="1.3"/>
-    <path d="M11.9 13c-3.2-0.1-5-1.8-4.9-4.2 3.2-0.3 5 1.3 4.9 4.2Zm0.2 2.7c0.3-3.1 2.2-4.7 4.9-4.2-0.1 2.8-1.9 4.3-4.9 4.2Z" fill="url(#ui-rotate-material-1)" stroke="#3c6145" stroke-linejoin="round" stroke-width="0.7"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M8 24C13 8 33 2 47 12"
+        fill="none"
+        stroke="url(#ui-rotate-metal)"
+        stroke-width="4"
+    />
+    <path
+        d="m41 6 16 8-15 7Z"
+        fill="url(#ui-rotate-gold)"
+        stroke="#825736"
+        stroke-width="1.6"
+    />
+    <g transform="translate(6 15) scale(0.79)">
+        <path d="M32 52V23" fill="none" stroke="#2c5146" stroke-width="3" />
+        <path
+            d="M31 32C19 33 12 26 12 16c12 0 20 5 19 16Z"
+            fill="url(#ui-rotate-leaf)"
+            stroke="#2c5146"
+            stroke-width="1.8"
+        />
+        <path
+            d="M18 22l12 10"
+            fill="none"
+            stroke="#e4efc1"
+            stroke-width="1.3"
+            opacity="0.8"
+        />
+        <path
+            d="M33 38c0-12 8-19 20-19-1 12-7 19-20 19Z"
+            fill="url(#ui-rotate-teal)"
+            stroke="#2c5146"
+            stroke-width="1.8"
+        />
+        <path
+            d="M47 25 35 36"
+            fill="none"
+            stroke="#fff4d8"
+            stroke-width="1.3"
+            opacity="0.72"
+        />
+    </g>
+    <path d="M22 56h25" fill="none" stroke="#825736" stroke-width="3" />
 </g>
 </svg>

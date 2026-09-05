@@ -1,15 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-reset-title" data-ui-icon="reset" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-reset-title" aria-describedby="ui-reset-description" data-ui-icon="reset" focusable="false">
   <title id="ui-reset-title">Reset</title>
+<desc id="ui-reset-description">
+    A backward blue reset arrow surrounds a small terracotta cross.
+</desc>
 <defs>
-<linearGradient id="ui-reset-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e7c772"/>
-<stop offset="0.55" stop-color="#e4bf5e"/>
-<stop offset="1" stop-color="#c1a857"/>
-</linearGradient>
+    <linearGradient id="ui-reset-metal" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <linearGradient id="ui-reset-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M19 8.5A8 8 0 1 0 19.4 15" fill="none" stroke="#5f8bae" stroke-linecap="round" stroke-width="1.8"/>
-    <path d="M19 4.5v4h-4" fill="url(#ui-reset-material-0)" stroke="#765a28" stroke-linejoin="round" stroke-width="0.9"/>
-    <path d="m9 10 6 6m0-6-6 6" stroke="#d37d58" stroke-linecap="round" stroke-width="1.4"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M12 23C18 6 42 5 53 22c12 19-6 39-25 34"
+        fill="none"
+        stroke="url(#ui-reset-metal)"
+        stroke-width="4.5"
+    />
+    <path
+        d="M8 10v17h16Z"
+        fill="url(#ui-reset-gold)"
+        stroke="#825736"
+        stroke-width="1.8"
+    />
+    <path
+        d="m26 27 15 15m0-15L26 42"
+        fill="none"
+        stroke="#c57855"
+        stroke-width="4"
+    />
 </g>
 </svg>

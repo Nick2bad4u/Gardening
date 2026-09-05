@@ -1,27 +1,120 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-repot-title" data-ui-icon="repot" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-repot-title" aria-describedby="ui-repot-description" data-ui-icon="repot" focusable="false">
   <title id="ui-repot-title">Repot</title>
+<desc id="ui-repot-description">
+    A rooted plant moves from a small pot into a larger open clay pot.
+</desc>
 <defs>
-<linearGradient id="ui-repot-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#80bf8b"/>
-<stop offset="0.55" stop-color="#66b57c"/>
-<stop offset="1" stop-color="#5ca06f"/>
-</linearGradient>
-<linearGradient id="ui-repot-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e09b6e"/>
-<stop offset="0.55" stop-color="#db8959"/>
-<stop offset="1" stop-color="#ba7d53"/>
-</linearGradient>
-<linearGradient id="ui-repot-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
+    <linearGradient id="ui-repot-leaf" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient id="ui-repot-teal" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a6d8ba" />
+        <stop offset="0.52" stop-color="#5aac99" />
+        <stop offset="1" stop-color="#2d786e" />
+    </linearGradient>
+    <linearGradient id="ui-repot-clay" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#f8c18b" />
+        <stop offset="0.52" stop-color="#e19864" />
+        <stop offset="1" stop-color="#b86545" />
+    </linearGradient>
+    <linearGradient id="ui-repot-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
+    <linearGradient id="ui-repot-soil" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#bc9c70" />
+        <stop offset="0.52" stop-color="#917353" />
+        <stop offset="1" stop-color="#68543e" />
+    </linearGradient>
+    <linearGradient id="ui-repot-metal" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M12 15V7" stroke="#3c6145" stroke-linecap="round" stroke-width="1.3"/>
-    <path d="M11.9 10.5C8.4 10.3 6.6 8.6 6.7 6c3.4-0.4 5.3 1.3 5.2 4.5Zm0.2 2.5c0.3-3.2 2.2-4.8 5-4.4-0.1 2.9-1.9 4.5-5 4.4Z" fill="url(#ui-repot-material-0)" stroke="#3c6145" stroke-linejoin="round" stroke-width="0.7"/>
-    <path d="M5 15h14l-2 7H7Z" fill="url(#ui-repot-material-1)" stroke="#754f2b" stroke-linejoin="round" stroke-width="1"/>
-    <path d="M3 14h7m-3-3 3 3-3 3" fill="none" stroke="#5f8bae" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"/>
-    <circle cx="18.5" cy="5" r="1.5" fill="url(#ui-repot-material-2)"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <g transform="translate(-1 2) scale(0.64)">
+        <path d="M32 52V23" fill="none" stroke="#2c5146" stroke-width="3" />
+        <path
+            d="M31 32C19 33 12 26 12 16c12 0 20 5 19 16Z"
+            fill="url(#ui-repot-leaf)"
+            stroke="#2c5146"
+            stroke-width="1.8"
+        />
+        <path
+            d="M18 22l12 10"
+            fill="none"
+            stroke="#e4efc1"
+            stroke-width="1.3"
+            opacity="0.8"
+        />
+        <path
+            d="M33 38c0-12 8-19 20-19-1 12-7 19-20 19Z"
+            fill="url(#ui-repot-teal)"
+            stroke="#2c5146"
+            stroke-width="1.8"
+        />
+        <path
+            d="M47 25 35 36"
+            fill="none"
+            stroke="#fff4d8"
+            stroke-width="1.3"
+            opacity="0.72"
+        />
+    </g>
+    <path
+        d="M6 32H24l-3 11H9Z"
+        fill="url(#ui-repot-clay)"
+        stroke="#825736"
+        stroke-width="2"
+    />
+    <path
+        d="M10 36h10"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.5"
+        opacity="0.72"
+    />
+    <rect
+        x="4"
+        y="29"
+        width="22"
+        height="5"
+        rx="1.5"
+        fill="url(#ui-repot-gold)"
+        stroke="#825736"
+        stroke-width="1.8"
+    />
+    <path
+        d="M34 40h25l-4 18H38Z"
+        fill="url(#ui-repot-clay)"
+        stroke="#825736"
+        stroke-width="2"
+    />
+    <ellipse
+        cx="46.5"
+        cy="40"
+        rx="12.5"
+        ry="3.8"
+        fill="url(#ui-repot-soil)"
+        stroke="#825736"
+        stroke-width="1.8"
+    />
+    <path
+        d="M28 20c10-1 18 5 18 13"
+        fill="none"
+        stroke="url(#ui-repot-metal)"
+        stroke-width="3"
+    />
+    <path
+        d="m39 29 7 10 7-10Z"
+        fill="url(#ui-repot-gold)"
+        stroke="#825736"
+        stroke-width="1.5"
+    />
+    <path d="M41 49h11" fill="none" stroke="#fff4d8" stroke-width="1.3" />
 </g>
 </svg>

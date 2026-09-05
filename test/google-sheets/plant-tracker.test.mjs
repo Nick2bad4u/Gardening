@@ -1342,7 +1342,7 @@ describe("Garden logger server logic", () => {
             calls.push(["organize", ...args]);
 
         expect(context.refreshGardenWorkbook()).toEqual({
-            loggerVersion: "5.18.1",
+            loggerVersion: "5.18.2",
             plantPages: 2,
             baselineColumns: 36,
             dashboardColumns: 23,
@@ -1386,19 +1386,19 @@ describe("Garden logger server logic", () => {
             calls.push(["organize", ...args]);
 
         expect(context.refreshGardenWorkbookPages01To10()).toEqual({
-            loggerVersion: "5.18.1",
+            loggerVersion: "5.18.2",
             firstPlant: "P01",
             lastPlant: "P10",
             plantPages: 10,
         });
         expect(context.refreshGardenWorkbookPages11To20()).toEqual({
-            loggerVersion: "5.18.1",
+            loggerVersion: "5.18.2",
             firstPlant: "P11",
             lastPlant: "P20",
             plantPages: 10,
         });
         expect(context.refreshGardenWorkbookPages21To30()).toEqual({
-            loggerVersion: "5.18.1",
+            loggerVersion: "5.18.2",
             firstPlant: "P21",
             lastPlant: "P30",
             plantPages: 10,
@@ -1928,7 +1928,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.18.1");
+        expect(bootstrap.version).toBe("5.18.2");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -4723,9 +4723,9 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.18.1");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.18.2");
         expect(calls.toast[1]).toBe("Garden logger verified");
-        expect(calls.toast[0]).toMatch(/Logger 5\.18\.1 is ready/);
+        expect(calls.toast[0]).toMatch(/Logger 5\.18\.2 is ready/);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(

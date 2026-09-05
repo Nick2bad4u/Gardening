@@ -1,20 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-seller-title" data-ui-icon="seller" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-seller-title" aria-describedby="ui-seller-description" data-ui-icon="seller" focusable="false">
   <title id="ui-seller-title">Seller</title>
+<desc id="ui-seller-description">
+    A warm paper shopping bag has a secure handle and botanical leaf emblem.
+</desc>
 <defs>
-<linearGradient id="ui-seller-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e4a170"/>
-<stop offset="0.55" stop-color="#e0905b"/>
-<stop offset="1" stop-color="#be8255"/>
-</linearGradient>
-<linearGradient id="ui-seller-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#8ac280"/>
-<stop offset="0.55" stop-color="#72b96f"/>
-<stop offset="1" stop-color="#66a365"/>
-</linearGradient>
+    <linearGradient id="ui-seller-clay" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#f8c18b" />
+        <stop offset="0.52" stop-color="#e19864" />
+        <stop offset="1" stop-color="#b86545" />
+    </linearGradient>
+    <linearGradient id="ui-seller-leaf" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M5 8h14l-1 12H6Z" fill="url(#ui-seller-material-0)" stroke="#6d4c33" stroke-linejoin="round" stroke-width="1.1"/>
-    <path d="M8 8a4 4 0 0 1 8 0" fill="none" stroke="#5f7b9c" stroke-linecap="round" stroke-width="1.5"/>
-    <path d="M9.2 13.5c2.8 0.1 4.5 1.5 4.8 4.2-2.8 0-4.4-1.4-4.8-4.2Zm5.3 1.7c0.1-2.2 1.2-3.5 3.3-3.7 0 2.1-1.1 3.4-3.3 3.7Z" fill="url(#ui-seller-material-1)" stroke="#3c6145" stroke-linejoin="round" stroke-width="0.6"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M21 18v-4c0-13 22-13 22 0v4"
+        fill="none"
+        stroke="#3d606e"
+        stroke-width="3.4"
+    />
+    <path
+        d="M11 18h42l-4 40H15Z"
+        fill="url(#ui-seller-clay)"
+        stroke="#825736"
+        stroke-width="2.2"
+    />
+    <path d="M18 23h28" fill="none" stroke="#fff4d8" stroke-width="1.4" />
+    <path
+        d="M24 48c-2-13 5-21 18-21 0 13-6 21-18 21Z"
+        fill="url(#ui-seller-leaf)"
+        stroke="#2c5146"
+        stroke-width="1.8"
+    />
+    <path
+        d="m27 44 10-11"
+        fill="none"
+        stroke="#e4efc1"
+        stroke-width="1.3"
+        opacity="0.8"
+    />
+    <circle
+        cx="21"
+        cy="22"
+        r="1.6"
+        fill="#825736"
+        stroke="none"
+        stroke-width="0"
+    />
+    <circle
+        cx="43"
+        cy="22"
+        r="1.6"
+        fill="#825736"
+        stroke="none"
+        stroke-width="0"
+    />
 </g>
 </svg>

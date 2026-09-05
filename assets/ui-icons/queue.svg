@@ -1,32 +1,93 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-queue-title" data-ui-icon="queue" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-queue-title" aria-describedby="ui-queue-description" data-ui-icon="queue" focusable="false">
   <title id="ui-queue-title">Queue</title>
+<desc id="ui-queue-description">
+    Three stacked sheets and numbered-position dots indicate entries waiting
+    to be sent.
+</desc>
 <defs>
-<linearGradient id="ui-queue-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e0e5d1"/>
-<stop offset="0.55" stop-color="#dbe3d1"/>
-<stop offset="1" stop-color="#bac5b3"/>
-</linearGradient>
-<linearGradient id="ui-queue-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
-<linearGradient id="ui-queue-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#80bf8b"/>
-<stop offset="0.55" stop-color="#66b57c"/>
-<stop offset="1" stop-color="#5ca06f"/>
-</linearGradient>
-<linearGradient id="ui-queue-material-3" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e09b6e"/>
-<stop offset="0.55" stop-color="#db8959"/>
-<stop offset="1" stop-color="#ba7d53"/>
-</linearGradient>
+    <linearGradient id="ui-queue-metal" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
+    <linearGradient id="ui-queue-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
+    <linearGradient id="ui-queue-paper" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <linearGradient id="ui-queue-leaf" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient id="ui-queue-clay" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#f8c18b" />
+        <stop offset="0.52" stop-color="#e19864" />
+        <stop offset="1" stop-color="#b86545" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<rect x="4" y="3" width="16" height="18" rx="2.5" fill="url(#ui-queue-material-0)" stroke="#4e664d" stroke-width="1"/>
-    <circle cx="8" cy="8" r="1.4" fill="url(#ui-queue-material-1)"/>
-    <circle cx="8" cy="12" r="1.4" fill="url(#ui-queue-material-2)"/>
-    <circle cx="8" cy="16" r="1.4" fill="url(#ui-queue-material-3)"/>
-    <path d="M11 8h5m-5 4h5m-5 4h5" stroke="#5f8bae" stroke-linecap="round" stroke-width="1.3"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <rect
+        x="8"
+        y="7"
+        width="38"
+        height="43"
+        rx="5"
+        fill="url(#ui-queue-metal)"
+        stroke="#3d606e"
+        stroke-width="1.8"
+    />
+    <rect
+        x="13"
+        y="11"
+        width="38"
+        height="43"
+        rx="5"
+        fill="url(#ui-queue-gold)"
+        stroke="#825736"
+        stroke-width="1.6"
+    />
+    <rect
+        x="18"
+        y="16"
+        width="38"
+        height="42"
+        rx="5"
+        fill="url(#ui-queue-paper)"
+        stroke="#2c5146"
+        stroke-width="2"
+    />
+    <circle
+        cx="26"
+        cy="27"
+        r="2.6"
+        fill="url(#ui-queue-leaf)"
+        stroke="none"
+        stroke-width="0"
+    />
+    <path d="M34 27h13" fill="none" stroke="#3d606e" stroke-width="2.6" />
+    <circle
+        cx="26"
+        cy="37"
+        r="2.6"
+        fill="url(#ui-queue-gold)"
+        stroke="none"
+        stroke-width="0"
+    />
+    <path d="M34 37h13" fill="none" stroke="#3d606e" stroke-width="2.6" />
+    <circle
+        cx="26"
+        cy="47"
+        r="2.6"
+        fill="url(#ui-queue-clay)"
+        stroke="none"
+        stroke-width="0"
+    />
+    <path d="M34 47h13" fill="none" stroke="#3d606e" stroke-width="2.6" />
 </g>
 </svg>

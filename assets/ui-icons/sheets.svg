@@ -1,32 +1,67 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-sheets-title" data-ui-icon="sheets" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-sheets-title" aria-describedby="ui-sheets-description" data-ui-icon="sheets" focusable="false">
   <title id="ui-sheets-title">Sheets</title>
+<desc id="ui-sheets-description">
+    A green spreadsheet document has a folded corner and a clear four-cell
+    table.
+</desc>
 <defs>
-<linearGradient id="ui-sheets-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#75b87f"/>
-<stop offset="0.55" stop-color="#58ac6e"/>
-<stop offset="1" stop-color="#519964"/>
-</linearGradient>
-<linearGradient id="ui-sheets-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#a4d1a4"/>
-<stop offset="0.55" stop-color="#92cb9a"/>
-<stop offset="1" stop-color="#7fb187"/>
-</linearGradient>
-<linearGradient id="ui-sheets-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#f0ead6"/>
-<stop offset="0.55" stop-color="#eee9d8"/>
-<stop offset="1" stop-color="#c9c9b9"/>
-</linearGradient>
-<linearGradient id="ui-sheets-material-3" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e7c369"/>
-<stop offset="0.55" stop-color="#e4ba53"/>
-<stop offset="1" stop-color="#c1a44e"/>
-</linearGradient>
+    <linearGradient
+        id="ui-sheets-paper"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <linearGradient id="ui-sheets-leaf" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient
+        id="ui-sheets-metal"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M5 2.5h10l4 4V21.5H5Z" fill="url(#ui-sheets-material-0)" stroke="#315940" stroke-linejoin="round" stroke-width="1.1"/>
-    <path d="M15 2.5v4h4" fill="url(#ui-sheets-material-1)" stroke="#315940" stroke-linejoin="round" stroke-width="1.1"/>
-    <path d="M8 9.5h8v8H8z" fill="url(#ui-sheets-material-2)" stroke="#315940" stroke-width="0.8"/>
-    <path d="M8 12.2h8M8 14.8h8M10.7 9.5v8" stroke="#558766" stroke-width="0.7"/>
-    <path d="M15.4 18.4h3.9v3.1h-3.9z" fill="url(#ui-sheets-material-3)" stroke="#315940" stroke-width="0.7"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M14 7h26l11 11v39H14Z"
+        fill="url(#ui-sheets-leaf)"
+        stroke="#3d606e"
+        stroke-width="2.2"
+    />
+    <path
+        d="M40 7v11h11"
+        fill="url(#ui-sheets-metal)"
+        stroke="#3d606e"
+        stroke-width="1.8"
+    />
+    <rect
+        x="20"
+        y="29"
+        width="25"
+        height="22"
+        rx="1.2"
+        fill="url(#ui-sheets-paper)"
+        stroke="#2c5146"
+        stroke-width="1.5"
+    />
+    <path
+        d="M20 36h25M31 29v22"
+        fill="none"
+        stroke="#2c5146"
+        stroke-width="1.5"
+    />
+    <path d="M21 22h12" fill="none" stroke="#fff4d8" stroke-width="1.7" />
 </g>
 </svg>

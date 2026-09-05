@@ -229,7 +229,7 @@ describe("same-setup dry-down learning", () => {
         (existingColumns) => {
             const { context, calls } = installerFixture({ existingColumns });
             expect(context.installWateringRecommendations()).toEqual({
-                loggerVersion: "5.18.1",
+                loggerVersion: "5.18.2",
                 plants: 2,
                 historyChanged: false,
             });
@@ -886,7 +886,7 @@ describe("same-setup dry-down learning", () => {
         };
         context.workbookPlantRecords_ = () => [{ id: "P01", name: "Plant 1" }];
         expect(context.installDryDownLearning()).toMatchObject({
-            loggerVersion: "5.18.1",
+            loggerVersion: "5.18.2",
             plants: 1,
             historyChanged: false,
             baselineColumns: 36,

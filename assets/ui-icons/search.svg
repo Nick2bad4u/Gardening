@@ -1,20 +1,80 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-search-title" data-ui-icon="search" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-search-title" aria-describedby="ui-search-description" data-ui-icon="search" focusable="false">
   <title id="ui-search-title">Search</title>
+<desc id="ui-search-description">
+    A clear glass magnifier has a blue lens and a joined terracotta handle.
+</desc>
 <defs>
-<linearGradient id="ui-search-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e0d8df"/>
-<stop offset="0.55" stop-color="#dbd3e3"/>
-<stop offset="1" stop-color="#bab8c2"/>
-</linearGradient>
-<linearGradient id="ui-search-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#78c187"/>
-<stop offset="0.55" stop-color="#5cb777"/>
-<stop offset="1" stop-color="#54a16b"/>
-</linearGradient>
+    <radialGradient id="ui-search-water-round" cx="32%" cy="24%" r="82%">
+        <stop offset="0" stop-color="#b3e3ec" />
+        <stop offset="0.52" stop-color="#69b7d0" />
+        <stop offset="1" stop-color="#3981ab" />
+    </radialGradient>
+    <linearGradient id="ui-search-clay" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#f8c18b" />
+        <stop offset="0.52" stop-color="#e19864" />
+        <stop offset="1" stop-color="#b86545" />
+    </linearGradient>
+    <radialGradient id="ui-search-metal-round" cx="32%" cy="24%" r="82%">
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </radialGradient>
+    <linearGradient
+        id="ui-search-paper"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<circle cx="10.5" cy="10.5" r="6.5" fill="url(#ui-search-material-0)" stroke="#715a92" stroke-width="1.5"/>
-    <path d="m15.3 15.3 5 5" stroke="#d38149" stroke-linecap="round" stroke-width="2.2"/>
-    <path d="M8.1 12.6c0.3-2.8 1.8-4.5 4.7-4.8-0.2 2.8-1.8 4.4-4.7 4.8Z" fill="url(#ui-search-material-1)" stroke="#355a40" stroke-linejoin="round" stroke-width="0.7"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M40 38 56 52a3 3 0 0 1-4 4L37 41Z"
+        fill="url(#ui-search-clay)"
+        stroke="#825736"
+        stroke-width="2"
+    />
+    <circle
+        cx="27"
+        cy="26"
+        r="19"
+        fill="url(#ui-search-metal-round)"
+        stroke="#3d606e"
+        stroke-width="2.5"
+    />
+    <circle
+        cx="27"
+        cy="26"
+        r="14"
+        fill="url(#ui-search-paper)"
+        stroke="#3d606e"
+        stroke-width="1.5"
+    />
+    <circle
+        cx="28"
+        cy="28"
+        r="8"
+        fill="url(#ui-search-water-round)"
+        stroke="none"
+        stroke-width="0"
+    />
+    <path
+        d="M25 22c3-1 6 0 8 2"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.4"
+        opacity="0.72"
+    />
+    <path
+        d="M16 24a12 12 0 0 1 9-10"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="2"
+        opacity="0.72"
+    />
 </g>
 </svg>

@@ -1,21 +1,74 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-moisture-title" data-ui-icon="moisture" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-moisture-title" aria-describedby="ui-moisture-description" data-ui-icon="moisture" focusable="false">
   <title id="ui-moisture-title">Moisture</title>
+<desc id="ui-moisture-description">
+    A blue water drop rests above a soil section with a small rooted leaf.
+</desc>
 <defs>
-<linearGradient id="ui-moisture-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#88c2d5"/>
-<stop offset="0.55" stop-color="#70b8d6"/>
-<stop offset="1" stop-color="#64a2b7"/>
-</linearGradient>
-<linearGradient id="ui-moisture-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#80bf8b"/>
-<stop offset="0.55" stop-color="#66b57c"/>
-<stop offset="1" stop-color="#5ca06f"/>
-</linearGradient>
+    <radialGradient id="ui-moisture-water-round" cx="32%" cy="24%" r="82%">
+        <stop offset="0" stop-color="#b3e3ec" />
+        <stop offset="0.52" stop-color="#69b7d0" />
+        <stop offset="1" stop-color="#3981ab" />
+    </radialGradient>
+    <linearGradient
+        id="ui-moisture-soil"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#bc9c70" />
+        <stop offset="0.52" stop-color="#917353" />
+        <stop offset="1" stop-color="#68543e" />
+    </linearGradient>
+    <linearGradient
+        id="ui-moisture-leaf"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M12 2.5C9.2 6.5 6.5 9.6 6.5 13a5.5 5.5 0 0 0 11 0c0-3.4-2.7-6.5-5.5-10.5Z" fill="url(#ui-moisture-material-0)" stroke="#3c6276" stroke-linejoin="round" stroke-width="1.1"/>
-    <path d="M9.2 13.6c0.3 1.8 1.3 2.7 3.1 2.9" fill="none" stroke="#e9e3d2" stroke-linecap="round" stroke-width="1.2"/>
-    <path d="M4 20h16" stroke="#876c40" stroke-linecap="round" stroke-width="2"/>
-    <path d="M8 20c0.4-2.2 1.7-3.4 3.8-3.6-0.2 2.1-1.5 3.3-3.8 3.6Z" fill="url(#ui-moisture-material-1)" stroke="#3c6145" stroke-linejoin="round" stroke-width="0.6"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <g transform="translate(0 -2) scale(1)">
+        <g transform="translate(0 0) scale(1)">
+            <path
+                d="M32 7C26 16 17 26 17 35a15 15 0 0 0 30 0C47 26 38 16 32 7Z"
+                fill="url(#ui-moisture-water-round)"
+                stroke="#3d606e"
+                stroke-width="2"
+            />
+            <path
+                d="M25 24c-3 4-5 9-4 13"
+                fill="none"
+                stroke="#fff4d8"
+                stroke-width="2.5"
+                opacity="0.72"
+            />
+        </g>
+    </g>
+    <path
+        d="M7 52q25-7 50 0v6H7Z"
+        fill="url(#ui-moisture-soil)"
+        stroke="#825736"
+        stroke-width="1.8"
+    />
+    <path
+        d="M30 51c1-9 7-14 16-13-1 9-7 14-16 13Z"
+        fill="url(#ui-moisture-leaf)"
+        stroke="#2c5146"
+        stroke-width="1.8"
+    />
+    <path
+        d="m32 49 9-7"
+        fill="none"
+        stroke="#e4efc1"
+        stroke-width="1.3"
+        opacity="0.8"
+    />
+    <path d="M31 52v6" fill="none" stroke="#2c5146" stroke-width="1.7" />
 </g>
 </svg>

@@ -1,25 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-label-title" data-ui-icon="label" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-label-title" aria-describedby="ui-label-description" data-ui-icon="label" focusable="false">
   <title id="ui-label-title">Label</title>
+<desc id="ui-label-description">
+    A golden pot-label tag has a reinforced hole and two aligned writing
+    lines.
+</desc>
 <defs>
-<linearGradient id="ui-label-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e8c770"/>
-<stop offset="0.55" stop-color="#e5bf5b"/>
-<stop offset="1" stop-color="#c2a855"/>
-</linearGradient>
-<linearGradient id="ui-label-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e4a272"/>
-<stop offset="0.55" stop-color="#e0915d"/>
-<stop offset="1" stop-color="#be8356"/>
-</linearGradient>
-<linearGradient id="ui-label-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#7ebe8d"/>
-<stop offset="0.55" stop-color="#63b47e"/>
-<stop offset="1" stop-color="#5a9f71"/>
-</linearGradient>
+    <linearGradient id="ui-label-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
+    <linearGradient id="ui-label-metal" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#c1dce0" />
+        <stop offset="0.52" stop-color="#8db4bf" />
+        <stop offset="1" stop-color="#5c8395" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M3.5 5.2 11.2 3l9.3 9.3-8.2 8.2L3 11.2Z" fill="url(#ui-label-material-0)" stroke="#6d5228" stroke-linejoin="round" stroke-width="1.1"/>
-    <path d="m14.3 6.1 6.2 6.2-2.5 2.5-6.2-6.2Z" fill="url(#ui-label-material-1)" opacity="0.85"/>
-    <circle cx="7.6" cy="7.6" r="1.7" fill="url(#ui-label-material-2)" stroke="#3c5c44" stroke-width="0.8"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M8 10h25l24 24-23 23L8 31Z"
+        fill="url(#ui-label-gold)"
+        stroke="#825736"
+        stroke-width="2.3"
+    />
+    <circle
+        cx="19"
+        cy="21"
+        r="4.5"
+        fill="url(#ui-label-metal)"
+        stroke="#3d606e"
+        stroke-width="1.8"
+    />
+    <path
+        d="m29 27 15 15m-20-9 10 10"
+        fill="none"
+        stroke="#825736"
+        stroke-width="2"
+    />
+    <path
+        d="M12 14h18"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.6"
+        opacity="0.72"
+    />
 </g>
 </svg>

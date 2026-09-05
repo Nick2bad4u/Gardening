@@ -1,26 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-pin-title" data-ui-icon="pin" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-pin-title" aria-describedby="ui-pin-description" data-ui-icon="pin" focusable="false">
   <title id="ui-pin-title">Pin</title>
+<desc id="ui-pin-description">
+    A terracotta map pin has a round golden center and a clearly joined
+    pointed tip.
+</desc>
 <defs>
-<linearGradient id="ui-pin-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e09b6e"/>
-<stop offset="0.55" stop-color="#db8959"/>
-<stop offset="1" stop-color="#ba7d53"/>
-</linearGradient>
-<linearGradient id="ui-pin-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#80bf8b"/>
-<stop offset="0.55" stop-color="#66b57c"/>
-<stop offset="1" stop-color="#5ca06f"/>
-</linearGradient>
-<linearGradient id="ui-pin-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
+    <linearGradient id="ui-pin-clay" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#f8c18b" />
+        <stop offset="0.52" stop-color="#e19864" />
+        <stop offset="1" stop-color="#b86545" />
+    </linearGradient>
+    <linearGradient id="ui-pin-paper" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#fff7e4" />
+        <stop offset="0.52" stop-color="#f1e8ce" />
+        <stop offset="1" stop-color="#d6cba8" />
+    </linearGradient>
+    <linearGradient id="ui-pin-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="m8 3 8 1-1.3 5 3 3-1 1.7-4.1-1.2-2.1 7.8-1.4-8.2-4.3-1.3 0.9-1.8 3.6-1.8Z" fill="url(#ui-pin-material-0)" stroke="#754f2b" stroke-linejoin="round" stroke-width="1"/>
-    <path d="m11.2 12.3-2.1 8" stroke="#405e71" stroke-linecap="round" stroke-width="1.5"/>
-    <path d="M8.4 6.2c1.7-1.7 3.5-2 5.4-0.9-1.4 1.8-3.2 2.1-5.4 0.9Z" fill="url(#ui-pin-material-1)" stroke="#3c6145" stroke-linejoin="round" stroke-width="0.65"/>
-    <circle cx="16.9" cy="4.5" r="1.5" fill="url(#ui-pin-material-2)"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <ellipse
+        cx="32"
+        cy="57"
+        rx="14"
+        ry="2"
+        fill="#294d3d"
+        stroke="none"
+        stroke-width="0"
+        opacity="0.12"
+    />
+    <path
+        d="M32 56C28 49 13 34 13 23a19 19 0 0 1 38 0c0 11-15 26-19 33Z"
+        fill="url(#ui-pin-clay)"
+        stroke="#825736"
+        stroke-width="2.2"
+    />
+    <circle
+        cx="32"
+        cy="23"
+        r="9"
+        fill="url(#ui-pin-paper)"
+        stroke="#825736"
+        stroke-width="1.7"
+    />
+    <circle
+        cx="32"
+        cy="23"
+        r="4"
+        fill="url(#ui-pin-gold)"
+        stroke="#825736"
+        stroke-width="1.2"
+    />
+    <path
+        d="M19 22c0-7 5-12 11-12"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.8"
+        opacity="0.72"
+    />
 </g>
 </svg>

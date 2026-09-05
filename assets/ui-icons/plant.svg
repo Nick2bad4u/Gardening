@@ -1,21 +1,59 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-plant-title" data-ui-icon="plant" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-plant-title" aria-describedby="ui-plant-description" data-ui-icon="plant" focusable="false">
   <title id="ui-plant-title">Plant</title>
+<desc id="ui-plant-description">
+    A simple green sprout joins a short soil baseline.
+</desc>
 <defs>
-<linearGradient id="ui-plant-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#83c684"/>
-<stop offset="0.55" stop-color="#69be73"/>
-<stop offset="1" stop-color="#5ea768"/>
-</linearGradient>
-<linearGradient id="ui-plant-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#68b48d"/>
-<stop offset="0.55" stop-color="#49a87f"/>
-<stop offset="1" stop-color="#459572"/>
-</linearGradient>
+    <linearGradient id="ui-plant-leaf" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient id="ui-plant-teal" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a6d8ba" />
+        <stop offset="0.52" stop-color="#5aac99" />
+        <stop offset="1" stop-color="#2d786e" />
+    </linearGradient>
+    <linearGradient id="ui-plant-soil" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#bc9c70" />
+        <stop offset="0.52" stop-color="#917353" />
+        <stop offset="1" stop-color="#68543e" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M12 20V9" stroke="#386a4a" stroke-linecap="round" stroke-width="1.5"/>
-    <path d="M11.9 12C7.4 11.8 5 9.5 5.1 6.1c4.3-0.5 6.9 1.7 6.8 5.9Z" fill="url(#ui-plant-material-0)" stroke="#325940" stroke-linejoin="round" stroke-width="1"/>
-    <path d="M12.1 15.1c0.5-4.3 3.1-6.5 6.8-5.9-0.1 3.8-2.5 5.9-6.8 5.9Z" fill="url(#ui-plant-material-1)" stroke="#325940" stroke-linejoin="round" stroke-width="1"/>
-    <path d="M8 20h8" stroke="#cf8850" stroke-linecap="round" stroke-width="2"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path d="M32 52V23" fill="none" stroke="#2c5146" stroke-width="3" />
+    <path
+        d="M31 32C19 33 12 26 12 16c12 0 20 5 19 16Z"
+        fill="url(#ui-plant-leaf)"
+        stroke="#2c5146"
+        stroke-width="1.8"
+    />
+    <path
+        d="M18 22l12 10"
+        fill="none"
+        stroke="#e4efc1"
+        stroke-width="1.3"
+        opacity="0.8"
+    />
+    <path
+        d="M33 38c0-12 8-19 20-19-1 12-7 19-20 19Z"
+        fill="url(#ui-plant-teal)"
+        stroke="#2c5146"
+        stroke-width="1.8"
+    />
+    <path
+        d="M47 25 35 36"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.3"
+        opacity="0.72"
+    />
+    <path
+        d="M12 52q20-8 40 0v5H12Z"
+        fill="url(#ui-plant-soil)"
+        stroke="#825736"
+        stroke-width="2"
+    />
+    <path d="M21 58h22" fill="none" stroke="#825736" stroke-width="1.4" />
 </g>
 </svg>

@@ -1,25 +1,68 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-sparkles-title" data-ui-icon="sparkles" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-sparkles-title" aria-describedby="ui-sparkles-description" data-ui-icon="sparkles" focusable="false">
   <title id="ui-sparkles-title">Sparkles</title>
+<desc id="ui-sparkles-description">
+    Three balanced four-point sparkles in gold, green, and lavender.
+</desc>
 <defs>
-<linearGradient id="ui-sparkles-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e9ca6d"/>
-<stop offset="0.55" stop-color="#e6c258"/>
-<stop offset="1" stop-color="#c2aa52"/>
-</linearGradient>
-<linearGradient id="ui-sparkles-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#c1a5cb"/>
-<stop offset="0.55" stop-color="#b595ca"/>
-<stop offset="1" stop-color="#9b86ae"/>
-</linearGradient>
-<linearGradient id="ui-sparkles-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#7ebf8b"/>
-<stop offset="0.55" stop-color="#63b57c"/>
-<stop offset="1" stop-color="#5aa06f"/>
-</linearGradient>
+    <linearGradient
+        id="ui-sparkles-gold"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
+    <linearGradient
+        id="ui-sparkles-leaf"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient
+        id="ui-sparkles-purple"
+        x1="12%"
+        y1="0%"
+        x2="88%"
+        y2="100%"
+    >
+        <stop offset="0" stop-color="#e0c5e6" />
+        <stop offset="0.52" stop-color="#b792c6" />
+        <stop offset="1" stop-color="#816495" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="m12 2 1.5 5 4.5 1.5-4.5 1.5-1.5 5-1.5-5L6 8.5 10.5 7Z" fill="url(#ui-sparkles-material-0)" stroke="#765a28" stroke-linejoin="round" stroke-width="0.8"/>
-    <path d="m18.5 12.5 0.8 2.7 2.7 0.8-2.7 0.8-0.8 2.7-0.8-2.7-2.7-0.8 2.7-0.8Z" fill="url(#ui-sparkles-material-1)" stroke="#715a92" stroke-linejoin="round" stroke-width="0.7"/>
-    <path d="m5 14 0.6 2 2 0.6-2 0.6-0.6 2-0.6-2-2-0.6 2-0.6Z" fill="url(#ui-sparkles-material-2)" stroke="#3c6145" stroke-linejoin="round" stroke-width="0.6"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M31 5l5.6 14.4L51 25l-14.4 5.6L31 45l-5.6 -14.4L11 25l14.4 -5.6Z"
+        fill="url(#ui-sparkles-gold)"
+        stroke="#825736"
+        stroke-width="1.5"
+    />
+    <path
+        d="M13 41l2.24 5.76L21 49l-5.76 2.24L13 57l-2.24 -5.76L5 49l5.76 -2.24Z"
+        fill="url(#ui-sparkles-leaf)"
+        stroke="#825736"
+        stroke-width="1.5"
+    />
+    <path
+        d="M50 39l2.8 7.2L60 49l-7.2 2.8L50 59l-2.8 -7.2L40 49l7.2 -2.8Z"
+        fill="url(#ui-sparkles-purple)"
+        stroke="#825736"
+        stroke-width="1.5"
+    />
+    <path
+        d="M29 13 27 21"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="1.5"
+        opacity="0.72"
+    />
 </g>
 </svg>

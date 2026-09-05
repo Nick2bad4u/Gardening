@@ -1,28 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-cable-title" data-ui-icon="cable" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-cable-title" aria-describedby="ui-cable-description" data-ui-icon="cable" focusable="false">
   <title id="ui-cable-title">Cable</title>
+<desc id="ui-cable-description">
+    A two-prong plug joins a curved green cable and a terracotta outlet.
+</desc>
 <defs>
-<linearGradient id="ui-cable-material-0" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e7c772"/>
-<stop offset="0.55" stop-color="#e4bf5e"/>
-<stop offset="1" stop-color="#c1a857"/>
-</linearGradient>
-<linearGradient id="ui-cable-material-1" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#e09a70"/>
-<stop offset="0.55" stop-color="#db885b"/>
-<stop offset="1" stop-color="#ba7c55"/>
-</linearGradient>
-<linearGradient id="ui-cable-material-2" x1="0" y1="0" x2="0.8" y2="1">
-<stop stop-color="#f0ead6"/>
-<stop offset="0.55" stop-color="#eee9d8"/>
-<stop offset="1" stop-color="#c9c9b9"/>
-</linearGradient>
+    <linearGradient id="ui-cable-gold" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#ffe7a1" />
+        <stop offset="0.52" stop-color="#ebc65d" />
+        <stop offset="1" stop-color="#c29136" />
+    </linearGradient>
+    <linearGradient id="ui-cable-leaf" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#a8dea1" />
+        <stop offset="0.52" stop-color="#68b780" />
+        <stop offset="1" stop-color="#347b62" />
+    </linearGradient>
+    <linearGradient id="ui-cable-clay" x1="12%" y1="0%" x2="88%" y2="100%">
+        <stop offset="0" stop-color="#f8c18b" />
+        <stop offset="0.52" stop-color="#e19864" />
+        <stop offset="1" stop-color="#b86545" />
+    </linearGradient>
 </defs>
-<g transform="translate(2 2) scale(2.5)">
-<path d="M5 3v5m4-5v5" stroke="#5f8bae" stroke-linecap="round" stroke-width="1.6"/>
-    <path d="M3.5 7.5h7v3.2a3.5 3.5 0 0 1-7 0Z" fill="url(#ui-cable-material-0)" stroke="#765a28" stroke-linejoin="round" stroke-width="1"/>
-    <path d="M7 14.2v2.3c0 2.3 1.8 4.1 4.1 4.1h1.4" fill="none" stroke="#5aae74" stroke-linecap="round" stroke-width="1.6"/>
-    <path d="M12.5 17.3h8v6h-8z" fill="url(#ui-cable-material-1)" stroke="#754f2b" stroke-linejoin="round" stroke-width="1"/>
-    <circle cx="15" cy="20.3" r="0.8" fill="url(#ui-cable-material-2)"/>
-    <circle cx="18" cy="20.3" r="0.8" fill="url(#ui-cable-material-2)"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M17 7v11M29 7v11"
+        fill="none"
+        stroke="#3d606e"
+        stroke-width="3.8"
+    />
+    <path
+        d="M12 17h22v9c0 7-5 12-11 12S12 33 12 26Z"
+        fill="url(#ui-cable-gold)"
+        stroke="#825736"
+        stroke-width="2"
+    />
+    <path
+        d="M16 22v6"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="2"
+        opacity="0.72"
+    />
+    <path
+        d="M23 39v5c0 8 10 10 17 10"
+        fill="none"
+        stroke="url(#ui-cable-leaf)"
+        stroke-width="4.5"
+    />
+    <rect
+        x="39"
+        y="39"
+        width="19"
+        height="19"
+        rx="3"
+        fill="url(#ui-cable-clay)"
+        stroke="#825736"
+        stroke-width="2"
+    />
+    <path
+        d="M45 46v5m7-5v5"
+        fill="none"
+        stroke="#fff4d8"
+        stroke-width="2.6"
+    />
 </g>
 </svg>
