@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-save-title" data-ui-icon="save" focusable="false">
+  <title id="ui-save-title">Save</title>
+<defs>
+<linearGradient id="ui-save-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#8fb4c8"/>
+<stop offset="0.55" stop-color="#78a7c6"/>
+<stop offset="1" stop-color="#6a95aa"/>
+</linearGradient>
+<linearGradient id="ui-save-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#f0ead6"/>
+<stop offset="0.55" stop-color="#eee9d8"/>
+<stop offset="1" stop-color="#c9c9b9"/>
+</linearGradient>
+<linearGradient id="ui-save-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e0e5d1"/>
+<stop offset="0.55" stop-color="#dbe3d1"/>
+<stop offset="1" stop-color="#bac5b3"/>
+</linearGradient>
+<linearGradient id="ui-save-material-3" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="M4 3h13l3 3v15H4Z" fill="url(#ui-save-material-0)" stroke="#405e71" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M7 3h8v6H7Z" fill="url(#ui-save-material-1)" stroke="#405e71" stroke-width="0.8"/>
+    <path d="M7 13h10v8H7Z" fill="url(#ui-save-material-2)" stroke="#3c6145" stroke-width="0.8"/>
+    <circle cx="12" cy="17" r="2" fill="url(#ui-save-material-3)"/>
+</g>
+</svg>

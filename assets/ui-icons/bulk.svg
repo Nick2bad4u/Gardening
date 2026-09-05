@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-bulk-title" data-ui-icon="bulk" focusable="false">
+  <title id="ui-bulk-title">Bulk</title>
+<defs>
+<linearGradient id="ui-bulk-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#95b8ca"/>
+<stop offset="0.55" stop-color="#7facc9"/>
+<stop offset="1" stop-color="#7099ad"/>
+</linearGradient>
+<linearGradient id="ui-bulk-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e0e5d1"/>
+<stop offset="0.55" stop-color="#dbe3d1"/>
+<stop offset="1" stop-color="#bac5b3"/>
+</linearGradient>
+<linearGradient id="ui-bulk-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#80bf8b"/>
+<stop offset="0.55" stop-color="#66b57c"/>
+<stop offset="1" stop-color="#5ca06f"/>
+</linearGradient>
+<linearGradient id="ui-bulk-material-3" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+<linearGradient id="ui-bulk-material-4" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e09b6e"/>
+<stop offset="0.55" stop-color="#db8959"/>
+<stop offset="1" stop-color="#ba7d53"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<rect x="2.5" y="5" width="9" height="14" rx="2" fill="url(#ui-bulk-material-0)" stroke="#405e71" stroke-width="1"/>
+    <rect x="12.5" y="5" width="9" height="14" rx="2" fill="url(#ui-bulk-material-1)" stroke="#4e664d" stroke-width="1"/>
+    <path d="M7 15V9m10 6V9" stroke="#3c6145" stroke-linecap="round" stroke-width="1"/>
+    <path d="M7 11c-2-0.1-3-1.1-3-2.6 2-0.2 3.1 0.8 3 2.6Zm10 0c-2-0.1-3-1.1-3-2.6 2-0.2 3.1 0.8 3 2.6Z" fill="url(#ui-bulk-material-2)"/>
+    <circle cx="7" cy="16.5" r="1" fill="url(#ui-bulk-material-3)"/>
+    <circle cx="17" cy="16.5" r="1" fill="url(#ui-bulk-material-4)"/>
+</g>
+</svg>

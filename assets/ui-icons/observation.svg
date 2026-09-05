@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-observation-title" data-ui-icon="observation" focusable="false">
+  <title id="ui-observation-title">Observation</title>
+<defs>
+<linearGradient id="ui-observation-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#dfd5de"/>
+<stop offset="0.55" stop-color="#dad0e1"/>
+<stop offset="1" stop-color="#b9b5c0"/>
+</linearGradient>
+<linearGradient id="ui-observation-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#7ebf8b"/>
+<stop offset="0.55" stop-color="#63b57c"/>
+<stop offset="1" stop-color="#5aa06f"/>
+</linearGradient>
+<linearGradient id="ui-observation-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<circle cx="9.5" cy="9.5" r="6.3" fill="url(#ui-observation-material-0)" stroke="#715a92" stroke-width="1.3"/>
+    <path d="m14.2 14.2 5.6 5.6" stroke="#d3844c" stroke-linecap="round" stroke-width="2"/>
+    <path d="M7 11.7c0.2-2.9 1.8-4.5 4.7-4.8-0.2 2.8-1.8 4.4-4.7 4.8Z" fill="url(#ui-observation-material-1)" stroke="#3c6145" stroke-linejoin="round" stroke-width="0.7"/>
+    <circle cx="10.9" cy="7.6" r="0.8" fill="url(#ui-observation-material-2)"/>
+</g>
+</svg>

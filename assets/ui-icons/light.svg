@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-light-title" data-ui-icon="light" focusable="false">
+  <title id="ui-light-title">Light</title>
+<defs>
+<linearGradient id="ui-light-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+<linearGradient id="ui-light-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#7ebf8b"/>
+<stop offset="0.55" stop-color="#63b57c"/>
+<stop offset="1" stop-color="#5aa06f"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<circle cx="11" cy="11" r="4.5" fill="url(#ui-light-material-0)" stroke="#845f27" stroke-width="1"/>
+    <path d="M11 2v2m0 14v2M2 11h2m14 0h2M4.6 4.6 6 6m10 10 1.4 1.4m0-12.8L16 6M6 16l-1.4 1.4" stroke="#d9854b" stroke-linecap="round" stroke-width="1.4"/>
+    <path d="M14 20c0.3-3 1.9-4.7 4.9-5-0.2 2.9-1.8 4.6-4.9 5Z" fill="url(#ui-light-material-1)" stroke="#3c6145" stroke-linejoin="round" stroke-width="0.8"/>
+</g>
+</svg>

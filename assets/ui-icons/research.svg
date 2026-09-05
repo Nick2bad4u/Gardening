@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-research-title" data-ui-icon="research" focusable="false">
+  <title id="ui-research-title">Research</title>
+<defs>
+<linearGradient id="ui-research-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#f0e9d6"/>
+<stop offset="0.55" stop-color="#eee8d7"/>
+<stop offset="1" stop-color="#c9c9b8"/>
+</linearGradient>
+<linearGradient id="ui-research-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#d9cfdb"/>
+<stop offset="0.55" stop-color="#d2c8de"/>
+<stop offset="1" stop-color="#b2afbe"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="M4 3.5h12v17H4Z" fill="url(#ui-research-material-0)" stroke="#5f5764" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M7 7h6m-6 3h5m-5 3h4" stroke="#5eae74" stroke-linecap="round" stroke-width="1.2"/>
+    <circle cx="16.3" cy="15.7" r="3.4" fill="url(#ui-research-material-1)" stroke="#715a92" stroke-width="1"/>
+    <path d="m18.8 18.2 2.3 2.3" stroke="#d3844c" stroke-linecap="round" stroke-width="1.6"/>
+</g>
+</svg>

@@ -1050,6 +1050,125 @@ describe("Garden logger browser recovery", () => {
         expect(window.localStorage.getItem("gardenPlantId")).toBe("P01");
     });
 
+    it("keeps bulk selections, filters, and SVG portraits across list and label views", () => {
+        const { window } = createLoggerWindow();
+        const $ = (selector) => window.document.querySelector(selector);
+        const click = (selector) => $(selector).click();
+        click("#bulkModeTab");
+        expect(
+            $("#bulkPlantList .bulk-plant img").getAttribute("src")
+        ).toContain("gymnocalycium-mihanovichii-variegated.svg");
+        const checkbox = $('#bulkPlantList input[value="P01"]');
+        checkbox.checked = true;
+        checkbox.dispatchEvent(new window.Event("change", { bubbles: true }));
+        click("#bulkLabelPickerMode");
+        expect(
+            $('#bulkPlantList [data-bulk-plant-id="P01"]').getAttribute(
+                "aria-pressed"
+            )
+        ).toBe("true");
+        expect(
+            $('#bulkPlantList [data-bulk-plant-id="P02"] img').getAttribute(
+                "src"
+            )
+        ).toContain("parodia-leninghausii.svg");
+        click('#bulkPlantList [data-bulk-plant-id="P02"]');
+        expect($("#bulkCount").textContent).toBe("2 selected");
+        $("#bulkSearch").value = "Yellow";
+        $("#bulkSearch").dispatchEvent(
+            new window.Event("input", { bubbles: true })
+        );
+        click("#bulkListPickerMode");
+        expect($("#bulkPlantList").querySelectorAll("input")).toHaveLength(1);
+        expect($('#bulkPlantList input[value="P02"]').checked).toBe(true);
+        click("#singleModeTab");
+        click("#bulkModeTab");
+        expect($("#bulkPlantList").querySelectorAll("input")).toHaveLength(1);
+        expect($("#bulkCount").textContent).toBe("2 selected");
+        $("#bulkSearch").value = "";
+        $("#bulkSearch").dispatchEvent(
+            new window.Event("input", { bubbles: true })
+        );
+        expect($('#bulkPlantList input[value="P01"]').checked).toBe(true);
+        expect($("#plantSelect").value).toBe("P01");
+        click("#bulkLabelPickerMode");
+        click('#bulkPlantList [data-bulk-plant-id="P01"]');
+        expect(
+            $('#bulkPlantList [data-bulk-plant-id="P01"]').getAttribute(
+                "aria-pressed"
+            )
+        ).toBe("false");
+        expect($("#bulkCount").textContent).toBe("1 selected");
+        expect(
+            window.localStorage.getItem("gardenLoggerBulkPickerModeV1")
+        ).toBe("labels");
+        expect($("#listPickerMode").getAttribute("aria-pressed")).toBe("true");
+    });
+
+    it("restores the bulk label preference and selects only visible matches without losing hidden selections", () => {
+        const { window } = createLoggerWindow({
+            storage: { gardenLoggerBulkPickerModeV1: "labels" },
+        });
+        const $ = (selector) => window.document.querySelector(selector);
+        $("#bulkModeTab").click();
+        expect($("#bulkLabelPickerMode").getAttribute("aria-pressed")).toBe(
+            "true"
+        );
+        $('#bulkPlantList [data-bulk-plant-id="P01"]').click();
+        $("#bulkSearch").value = "Yellow";
+        $("#bulkSearch").dispatchEvent(
+            new window.Event("input", { bubbles: true })
+        );
+        $("#bulkSelectVisible").click();
+        expect($("#bulkCount").textContent).toBe("2 selected");
+        $("#bulkSearch").value = "no matching plant";
+        $("#bulkSearch").dispatchEvent(
+            new window.Event("input", { bubbles: true })
+        );
+        expect($("#bulkPlantList").textContent).toContain(
+            "Your other selections are kept"
+        );
+        $("#bulkSelectVisible").click();
+        expect($("#bulkCount").textContent).toBe("2 selected");
+        $("#bulkClear").click();
+        expect($("#bulkCount").textContent).toBe("0 selected");
+    });
+
+    it("places the device queue and History after both forms and keeps a nonempty queue visible in bulk mode", () => {
+        const { window } = createLoggerWindow({
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify([
+                    queuedWeight(),
+                ]),
+            },
+            bootstrapData: {
+                ...bootstrap,
+                recent: [
+                    {
+                        name: "Moon cactus",
+                        event: "Weigh",
+                        observedAt: "Sep 5, 2026",
+                        weight: 430,
+                    },
+                ],
+            },
+        });
+        const $ = (selector) => window.document.querySelector(selector);
+        const ids = [...$(".workbench").children].map(({ id }) => id);
+        expect(ids.slice(-4)).toEqual([
+            "entryForm",
+            "bulkWaterForm",
+            "queueCard",
+            "recentCard",
+        ]);
+        expect($(".sidebar #recentCard")).toBeNull();
+        expect($("#queueCard").hidden).toBe(false);
+        $("#bulkModeTab").click();
+        expect($("#queueCard").hidden).toBe(false);
+        expect($("#queueList").textContent).toContain("430");
+        expect($("#recentCard").hidden).toBe(false);
+    });
+
     it("sorts lettered labels before numbered planters while keeping requests in P order", () => {
         const bootstrapData = canonicalBootstrap();
         const canonicalIds = bootstrapData.plants.map(({ id }) => id);
@@ -1096,6 +1215,20 @@ describe("Garden logger browser recovery", () => {
                 ),
             ].map(({ value }) => value)
         ).toEqual(canonicalIds);
+
+        window.document.querySelector("#bulkLabelPickerMode").click();
+        expect(
+            [
+                ...window.document.querySelectorAll(
+                    "#bulkPlantList [data-bulk-plant-id]"
+                ),
+            ].map(({ dataset }) => dataset.bulkPlantId)
+        ).toEqual(
+            [...window.document.querySelectorAll("#labelPicker button")].map(
+                ({ dataset }) => dataset.plantId
+            )
+        );
+        window.document.querySelector("#bulkListPickerMode").click();
 
         [
             "P28",
@@ -1269,7 +1402,7 @@ describe("Garden logger browser recovery", () => {
         );
     });
 
-    it("uses the built-in portrait for shared planters without requesting a contents SVG", () => {
+    it("uses the built-in portrait for an unknown contents-only mapping", () => {
         const { window } = createLoggerWindow({
             bootstrapData: {
                 ...bootstrap,
@@ -1289,6 +1422,73 @@ describe("Garden logger browser recovery", () => {
                 .querySelector("#plantChoiceSummary use")
                 .getAttribute("href")
         ).toBe("#app-icon-plant");
+        expect(
+            window.document.querySelector("#plantChoiceSummary").textContent
+        ).toContain("Moon cactus");
+    });
+
+    it.each([
+        ["P19", "shared-rehab-cactus-planter"],
+        ["P20", "shared-succulent-planter"],
+    ])("uses the accurate shared-planter portrait for %s", (id, slug) => {
+        const { window } = createLoggerWindow({
+            bootstrapData: {
+                ...bootstrap,
+                plants: [
+                    {
+                        ...bootstrap.plants[0],
+                        id,
+                        fieldGuideUrl: "https://example.test/#contents",
+                    },
+                ],
+            },
+        });
+        const portrait = window.document.querySelector(
+            "#plantChoiceSummary img"
+        );
+        expect(portrait.getAttribute("src")).toContain(`${slug}.svg`);
+        expect(portrait.getAttribute("src")).not.toContain("contents.svg");
+    });
+
+    it("separates large metric values from supporting dates and groups the watering plan", () => {
+        const { window } = createLoggerWindow({
+            bootstrapData: {
+                ...bootstrap,
+                plants: [
+                    {
+                        ...bootstrap.plants[0],
+                        recommendedWaterDate: "Sep 12",
+                        wateringGuidance: "Confirm dry roots first.",
+                        dryForecastWindow: "Sep 10–Sep 16",
+                        dryForecastBasis:
+                            "Historical estimate · 2 learned cycles",
+                    },
+                ],
+            },
+        });
+        const summary = window.document.querySelector("#plantSummary");
+        expect(summary.querySelectorAll(".metric")).toHaveLength(4);
+        expect(summary.querySelectorAll(".metric-value")[2].textContent).toBe(
+            "398 g"
+        );
+        expect(summary.querySelectorAll(".metric-detail")[2].textContent).toBe(
+            "Aug 10, 2026"
+        );
+        expect(summary.querySelector(".forecast-date").textContent).toBe(
+            "Sep 12"
+        );
+        expect(summary.querySelector(".forecast-guidance").textContent).toBe(
+            "Confirm dry roots first."
+        );
+        expect(
+            summary.querySelector(".forecast-reweigh").textContent
+        ).toContain("Sep 10–Sep 16");
+        expect(summary.querySelector(".forecast-basis").textContent).toContain(
+            "2 learned cycles"
+        );
+        expect(
+            summary.querySelector(".plant-summary-heading .plant-id")
+        ).not.toBeNull();
     });
 
     it("loads only visible portraits and shares one download between duplicate images", async () => {
@@ -1415,22 +1615,23 @@ describe("Garden logger browser recovery", () => {
     it("shows the selected plant's last completed dry-cycle weight", () => {
         const { window } = createLoggerWindow();
         const summary = window.document.querySelector("#plantSummary");
-        const metricText = [...summary.querySelectorAll(".metric")].map(
-            ({ textContent }) => textContent
+        const dryMetric = () => summary.querySelectorAll(".metric")[2];
+        expect(dryMetric().querySelector(".metric-value").textContent).toBe(
+            "398 g"
         );
-
-        expect(metricText).toContain(
-            "Last completed dry398 g · completed cycle · Aug 10, 2026"
+        expect(dryMetric().querySelector(".metric-detail").textContent).toBe(
+            "Aug 10, 2026"
         );
 
         const select = window.document.querySelector("#plantSelect");
         select.value = "P02";
         select.dispatchEvent(new window.Event("change", { bubbles: true }));
-        expect(
-            [...summary.querySelectorAll(".metric")].map(
-                ({ textContent }) => textContent
-            )
-        ).toContain("Last completed dry475 g · completed cycle · Aug 2, 2026");
+        expect(dryMetric().querySelector(".metric-value").textContent).toBe(
+            "475 g"
+        );
+        expect(dryMetric().querySelector(".metric-detail").textContent).toBe(
+            "Aug 2, 2026"
+        );
     });
 
     it("shows the learned reweigh window and forecast basis, including old-cache fallbacks", () => {
@@ -1450,22 +1651,20 @@ describe("Garden logger browser recovery", () => {
             },
         });
         const summary = window.document.querySelector("#plantSummary");
-        expect(summary.textContent).toContain("Reweigh windowSep 10–Sep 25");
+        expect(summary.textContent).toContain("Reweigh: Sep 10–Sep 25");
         expect(summary.textContent).toContain(
-            "Forecast basisHistorical estimate · 1 learned cycle(s)"
+            "Historical estimate · 1 learned cycle(s)"
         );
         const select = window.document.querySelector("#plantSelect");
         select.value = "P02";
         select.dispatchEvent(new window.Event("change", { bubbles: true }));
         expect(summary.textContent).toContain(
-            "Reweigh windowNot enough evidence yet"
+            "Reweigh: Not enough evidence yet"
         );
-        expect(summary.textContent).toContain(
-            "Forecast basisNeeds watering-cycle data"
-        );
+        expect(summary.textContent).toContain("Needs watering-cycle data");
         expect(
             summary.querySelectorAll(".metric svg[aria-hidden='true']").length
-        ).toBe(7);
+        ).toBe(4);
     });
 
     it("restores and updates the recent-history length", () => {

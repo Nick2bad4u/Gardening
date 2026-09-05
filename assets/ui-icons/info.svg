@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-info-title" data-ui-icon="info" focusable="false">
+  <title id="ui-info-title">Info</title>
+<defs>
+<linearGradient id="ui-info-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#95b8ca"/>
+<stop offset="0.55" stop-color="#7facc9"/>
+<stop offset="1" stop-color="#7099ad"/>
+</linearGradient>
+<linearGradient id="ui-info-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<circle cx="12" cy="12" r="9" fill="url(#ui-info-material-0)" stroke="#405e71" stroke-width="1.1"/>
+    <circle cx="12" cy="7" r="1.3" fill="url(#ui-info-material-1)"/>
+    <path d="M12 10v7" stroke="#e9e3d2" stroke-linecap="round" stroke-width="2"/>
+    <path d="M9.8 17h4.4" stroke="#5aae74" stroke-linecap="round" stroke-width="1"/>
+</g>
+</svg>

@@ -89,6 +89,295 @@ function model(history, id = "P01", context = runtime()) {
 }
 
 describe("same-setup dry-down learning", () => {
+    it("weights learned timing by recency and rejects a zero-information prior", () => {
+        const context = runtime();
+        expect(context.dryDownPrior_([], 60)).toEqual({ log: 0, spread: 0 });
+        expect(
+            context.dryDownPrior_([{ ended: 60, fit: 0, decay: 0.2 }], 60)
+        ).toEqual({ log: 0, spread: 0 });
+        const prior = context.dryDownPrior_(
+            [
+                { ended: 0, fit: 1, decay: 0.1 },
+                { ended: 60, fit: 1, decay: 0.2 },
+            ],
+            60
+        );
+        expect(prior.log).toBeCloseTo((Math.log(0.1) + 2 * Math.log(0.2)) / 3);
+        expect(prior.spread).toBeGreaterThan(0);
+    });
+
+    function installerFixture({ conflict = "", existingColumns = false } = {}) {
+        const context = runtime();
+        const calls = [];
+        const plants = [{ id: "P22" }, { id: "P19" }];
+        const sheets = new Map(
+            ["Baselines", "Dashboard"].map((name) => {
+                const firstColumn = name === "Baselines" ? 35 : 22;
+                let columns =
+                    existingColumns === "first"
+                        ? firstColumn
+                        : existingColumns
+                          ? firstColumn + 1
+                          : firstColumn - 1;
+                const sheet = {
+                    getMaxColumns: () => columns,
+                    getMaxRows: () => 100,
+                    insertColumnsAfter: (after, count) => {
+                        calls.push({
+                            name,
+                            method: "insertColumnsAfter",
+                            after,
+                            count,
+                        });
+                        columns += count;
+                    },
+                    getRange: (...args) => {
+                        const range = {};
+                        range.getValues = () => {
+                            const values = [
+                                ["Recommended water date", "Watering guidance"],
+                                ["", ""],
+                                ["", ""],
+                            ];
+                            if (name === "Dashboard" && conflict) {
+                                values[0][0] =
+                                    conflict === "header" ? "Owner notes" : "";
+                                if (conflict === "body")
+                                    values[1][0] = "Keep this";
+                            }
+                            return values.map((row) =>
+                                row
+                                    .slice(0, args[3])
+                                    .map((value) =>
+                                        existingColumns === "blank" ? "" : value
+                                    )
+                            );
+                        };
+                        range.getFormulas = () => [
+                            ["", ""],
+                            [
+                                name === "Dashboard" && conflict === "formula"
+                                    ? '=IF(TRUE,"",1)'
+                                    : "",
+                                "",
+                            ],
+                            ["", ""],
+                        ];
+                        for (const method of [
+                            "setValues",
+                            "setNotes",
+                            "setBackground",
+                            "setFontColor",
+                            "setFontWeight",
+                            "setWrap",
+                            "setNumberFormat",
+                            "setVerticalAlignment",
+                        ]) {
+                            range[method] = (value) => {
+                                calls.push({ name, args, method, value });
+                                return range;
+                            };
+                        }
+                        return range;
+                    },
+                    setColumnWidth: (...args) =>
+                        calls.push({ name, method: "setColumnWidth", args }),
+                };
+                return [name, sheet];
+            })
+        );
+        context.SpreadsheetApp = {
+            openById: () => ({ getSheetByName: (name) => sheets.get(name) }),
+            flush: () => calls.push({ method: "flush" }),
+        };
+        context.workbookPlantRecords_ = () => plants;
+        context.installDryDownLearning = () =>
+            calls.push({ method: "installDryDownLearning" });
+        return { context, calls };
+    }
+
+    it.each([
+        false,
+        true,
+        "blank",
+        "first",
+    ])(
+        "appends or refreshes only the derived water columns using each displayed row's ID (existing: %s)",
+        (existingColumns) => {
+            const { context, calls } = installerFixture({ existingColumns });
+            expect(context.installWateringRecommendations()).toEqual({
+                loggerVersion: "5.18.0",
+                plants: 2,
+                historyChanged: false,
+            });
+            const writes = calls.filter((call) => call.method === "setValues");
+            expect(writes.map(({ name, args }) => [name, args])).toEqual([
+                [
+                    "Baselines",
+                    [
+                        1,
+                        35,
+                        1,
+                        2,
+                    ],
+                ],
+                [
+                    "Baselines",
+                    [
+                        2,
+                        35,
+                        2,
+                        2,
+                    ],
+                ],
+                [
+                    "Dashboard",
+                    [
+                        6,
+                        22,
+                        1,
+                        2,
+                    ],
+                ],
+                [
+                    "Dashboard",
+                    [
+                        7,
+                        22,
+                        2,
+                        2,
+                    ],
+                ],
+            ]);
+            expect(writes[1].value[0][0]).toContain("XLOOKUP($A2,");
+            expect(writes[1].value[1][1]).toContain(
+                "'Dry-down models'!$P$2:$P$31"
+            );
+            expect(writes[3].value[1][0]).toContain("XLOOKUP($B8,");
+            expect(calls.some((call) => call.name === "History")).toBe(false);
+            expect(
+                calls.filter((call) => call.method === "insertColumnsAfter")
+            ).toHaveLength(
+                existingColumns === true || existingColumns === "blank" ? 0 : 2
+            );
+        }
+    );
+
+    it.each([
+        "header",
+        "body",
+        "formula",
+    ])(
+        "refuses every write if either destination contains owner content (%s)",
+        (conflict) => {
+            const { context, calls } = installerFixture({
+                existingColumns: true,
+                conflict,
+            });
+            expect(() => context.installWateringRecommendations()).toThrow(
+                "Unexpected Dashboard column 22"
+            );
+            expect(calls).toEqual([]);
+        }
+    );
+
+    it("adds a conditional water date that follows the learned curve without a fabricated drought delay", () => {
+        const context = runtime();
+        const history = [...completed(), ...current()];
+        const before = structuredClone(history);
+        const first = context.GARDEN_DRY_DOWN(history, "P01")[0];
+        expect(first[14]).toBe(Math.ceil(first[7]));
+        expect(first[15]).toContain("confirm readiness first");
+        expect(first[15]).toContain("No fixed extra dry days");
+        const updated = context.GARDEN_DRY_DOWN(
+            [
+                ...completed(),
+                ...current(
+                    20,
+                    [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                    ],
+                    0.3
+                ),
+            ],
+            "P01"
+        )[0];
+        expect(updated[14]).toBeLessThan(first[14]);
+        expect(updated[14]).toBe(Math.ceil(updated[7]));
+        expect(history).toEqual(before);
+    });
+
+    it.each([
+        undefined,
+        "46270",
+        NaN,
+        Infinity,
+        0,
+        -1,
+    ])(
+        "withholds malformed model dates instead of creating an invalid calendar value: %s",
+        (date) => {
+            expect(
+                runtime().wateringRecommendation_("P01", {
+                    date,
+                    basis: "Unsupported model",
+                })
+            ).toEqual({
+                date: "",
+                guidance: expect.stringContaining("Unsupported model"),
+            });
+        }
+    );
+
+    it("does not schedule tropical or leaf-replacement plants from a near-dry pot forecast", () => {
+        const context = runtime();
+        for (const id of ["P21", "P28"]) {
+            const values = context.GARDEN_DRY_DOWN(
+                [
+                    ...completed(0, 0.2, { id }),
+                    ...current(20, [0], 0.2, { id }),
+                ],
+                id
+            )[0];
+            expect(values[7]).not.toBe("");
+            expect(values[14]).toBe("");
+            expect(values[15]).toMatch(/upper 2 in|inner-leaf/);
+        }
+        expect(context.wateringRecommendation_("unknown", {}).date).toBe("");
+        expect(context.wateringReadinessGuidance_("P22")).toContain(
+            "active growth"
+        );
+        for (const id of ["P20", "P30"]) {
+            expect(context.wateringReadinessGuidance_(id)).toContain(
+                "every component"
+            );
+        }
+    });
+
+    it("withholds a water date with unsupported, partial, removed, or reset cycle data", () => {
+        const context = runtime();
+        const cases = [
+            [],
+            [weight(-1, 100), ...current(0, [0, 1])],
+            [
+                ...completed(),
+                ...current(20, [0], 0.2, { application: "Partial" }),
+            ],
+            [...completed(), ...current(20, [0], 0.2, { setup: 2 })],
+            [...completed(0, 0.2, { removed: true }), ...current()],
+        ];
+        for (const history of cases) {
+            const values = context.GARDEN_DRY_DOWN(history, "P01")[0];
+            expect(values[14]).toBe("");
+            expect(values[15]).toContain("Confirm the root zone");
+        }
+    });
+
     it("uses a completed cycle immediately after the next wet anchor, without changing History", () => {
         const history = [...completed(), ...current()];
         const before = structuredClone(history);
@@ -574,10 +863,10 @@ describe("same-setup dry-down learning", () => {
         };
         context.workbookPlantRecords_ = () => [{ id: "P01", name: "Plant 1" }];
         expect(context.installDryDownLearning()).toMatchObject({
-            loggerVersion: "5.17.1",
+            loggerVersion: "5.18.0",
             plants: 1,
             historyChanged: false,
-            baselineColumns: 34,
+            baselineColumns: 36,
         });
         expect(
             calls

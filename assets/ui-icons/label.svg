@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-label-title" data-ui-icon="label" focusable="false">
+  <title id="ui-label-title">Label</title>
+<defs>
+<linearGradient id="ui-label-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e8c770"/>
+<stop offset="0.55" stop-color="#e5bf5b"/>
+<stop offset="1" stop-color="#c2a855"/>
+</linearGradient>
+<linearGradient id="ui-label-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e4a272"/>
+<stop offset="0.55" stop-color="#e0915d"/>
+<stop offset="1" stop-color="#be8356"/>
+</linearGradient>
+<linearGradient id="ui-label-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#7ebe8d"/>
+<stop offset="0.55" stop-color="#63b47e"/>
+<stop offset="1" stop-color="#5a9f71"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="M3.5 5.2 11.2 3l9.3 9.3-8.2 8.2L3 11.2Z" fill="url(#ui-label-material-0)" stroke="#6d5228" stroke-linejoin="round" stroke-width="1.1"/>
+    <path d="m14.3 6.1 6.2 6.2-2.5 2.5-6.2-6.2Z" fill="url(#ui-label-material-1)" opacity="0.85"/>
+    <circle cx="7.6" cy="7.6" r="1.7" fill="url(#ui-label-material-2)" stroke="#3c5c44" stroke-width="0.8"/>
+</g>
+</svg>

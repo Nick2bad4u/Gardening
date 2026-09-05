@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-tracker-title" data-ui-icon="tracker" focusable="false">
+  <title id="ui-tracker-title">Tracker</title>
+<defs>
+<linearGradient id="ui-tracker-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e0e5d1"/>
+<stop offset="0.55" stop-color="#dbe3d1"/>
+<stop offset="1" stop-color="#bac5b3"/>
+</linearGradient>
+<linearGradient id="ui-tracker-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e0996f"/>
+<stop offset="0.55" stop-color="#db865a"/>
+<stop offset="1" stop-color="#ba7a54"/>
+</linearGradient>
+<linearGradient id="ui-tracker-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+<linearGradient id="ui-tracker-material-3" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#80bf8b"/>
+<stop offset="0.55" stop-color="#66b57c"/>
+<stop offset="1" stop-color="#5ca06f"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<rect x="3" y="3" width="18" height="18" rx="3" fill="url(#ui-tracker-material-0)" stroke="#3c6145" stroke-width="1.1"/>
+    <path d="M6 17 10 13l3 2 5-7" fill="none" stroke="#5f8bae" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+    <circle cx="10" cy="13" r="1.3" fill="url(#ui-tracker-material-1)"/>
+    <circle cx="13" cy="15" r="1.3" fill="url(#ui-tracker-material-2)"/>
+    <circle cx="18" cy="8" r="1.3" fill="url(#ui-tracker-material-3)"/>
+</g>
+</svg>

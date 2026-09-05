@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-field-guide-title" data-ui-icon="field-guide" focusable="false">
+  <title id="ui-field-guide-title">Field guide</title>
+<defs>
+<linearGradient id="ui-field-guide-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#8ec08b"/>
+<stop offset="0.55" stop-color="#77b67c"/>
+<stop offset="1" stop-color="#6aa16f"/>
+</linearGradient>
+<linearGradient id="ui-field-guide-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e7c772"/>
+<stop offset="0.55" stop-color="#e4bf5e"/>
+<stop offset="1" stop-color="#c1a857"/>
+</linearGradient>
+<linearGradient id="ui-field-guide-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="M3 4.5c3.5-0.8 6.5-0.1 9 2v13c-2.5-2.1-5.5-2.8-9-2Z" fill="url(#ui-field-guide-material-0)" stroke="#3c6145" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M21 4.5c-3.5-0.8-6.5-0.1-9 2v13c2.5-2.1 5.5-2.8 9-2Z" fill="url(#ui-field-guide-material-1)" stroke="#765a28" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M6 9c1.6-0.1 2.9 0.2 4 1M18 9c-1.6-0.1-2.9 0.2-4 1" fill="none" stroke="#e9e3d2" stroke-linecap="round" stroke-width="1"/>
+    <path d="M9.5 13.8c-1.8 0-2.9-0.9-3.2-2.6 1.8-0.1 2.9 0.8 3.2 2.6Z" fill="url(#ui-field-guide-material-2)"/>
+</g>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-sparkles-title" data-ui-icon="sparkles" focusable="false">
+  <title id="ui-sparkles-title">Sparkles</title>
+<defs>
+<linearGradient id="ui-sparkles-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+<linearGradient id="ui-sparkles-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#c1a5cb"/>
+<stop offset="0.55" stop-color="#b595ca"/>
+<stop offset="1" stop-color="#9b86ae"/>
+</linearGradient>
+<linearGradient id="ui-sparkles-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#7ebf8b"/>
+<stop offset="0.55" stop-color="#63b57c"/>
+<stop offset="1" stop-color="#5aa06f"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="m12 2 1.5 5 4.5 1.5-4.5 1.5-1.5 5-1.5-5L6 8.5 10.5 7Z" fill="url(#ui-sparkles-material-0)" stroke="#765a28" stroke-linejoin="round" stroke-width="0.8"/>
+    <path d="m18.5 12.5 0.8 2.7 2.7 0.8-2.7 0.8-0.8 2.7-0.8-2.7-2.7-0.8 2.7-0.8Z" fill="url(#ui-sparkles-material-1)" stroke="#715a92" stroke-linejoin="round" stroke-width="0.7"/>
+    <path d="m5 14 0.6 2 2 0.6-2 0.6-0.6 2-0.6-2-2-0.6 2-0.6Z" fill="url(#ui-sparkles-material-2)" stroke="#3c6145" stroke-linejoin="round" stroke-width="0.6"/>
+</g>
+</svg>

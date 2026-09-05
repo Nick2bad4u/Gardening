@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-download-title" data-ui-icon="download" focusable="false">
+  <title id="ui-download-title">Download</title>
+<defs>
+<linearGradient id="ui-download-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#91b4cb"/>
+<stop offset="0.55" stop-color="#7ba7ca"/>
+<stop offset="1" stop-color="#6d95ae"/>
+</linearGradient>
+<linearGradient id="ui-download-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e7c772"/>
+<stop offset="0.55" stop-color="#e4bf5e"/>
+<stop offset="1" stop-color="#c1a857"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="M5 15v5h14v-5" fill="url(#ui-download-material-0)" stroke="#405e71" stroke-linejoin="round" stroke-width="1.1"/>
+    <path d="M12 3v11" stroke="#5aae74" stroke-linecap="round" stroke-width="1.8"/>
+    <path d="m8.5 10.5 3.5 3.7 3.5-3.7" fill="url(#ui-download-material-1)" stroke="#765a28" stroke-linejoin="round" stroke-width="1"/>
+</g>
+</svg>

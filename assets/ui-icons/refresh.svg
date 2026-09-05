@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-refresh-title" data-ui-icon="refresh" focusable="false">
+  <title id="ui-refresh-title">Refresh</title>
+<defs>
+<linearGradient id="ui-refresh-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e7c772"/>
+<stop offset="0.55" stop-color="#e4bf5e"/>
+<stop offset="1" stop-color="#c1a857"/>
+</linearGradient>
+<linearGradient id="ui-refresh-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e19f6c"/>
+<stop offset="0.55" stop-color="#dc8e56"/>
+<stop offset="1" stop-color="#ba8151"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="M19 8.5A8 8 0 0 0 5.3 6.2L3.5 8" fill="none" stroke="#5f8bae" stroke-linecap="round" stroke-width="1.8"/>
+    <path d="M3.5 4.5V8H7" fill="url(#ui-refresh-material-0)" stroke="#765a28" stroke-linejoin="round" stroke-width="0.8"/>
+    <path d="M5 15.5a8 8 0 0 0 13.7 2.3l1.8-1.8" fill="none" stroke="#5aae74" stroke-linecap="round" stroke-width="1.8"/>
+    <path d="M20.5 19.5V16H17" fill="url(#ui-refresh-material-1)" stroke="#754f2b" stroke-linejoin="round" stroke-width="0.8"/>
+</g>
+</svg>

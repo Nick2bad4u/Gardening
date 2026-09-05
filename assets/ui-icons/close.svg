@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-close-title" data-ui-icon="close" focusable="false">
+  <title id="ui-close-title">Close</title>
+<defs>
+<linearGradient id="ui-close-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e09a77"/>
+<stop offset="0.55" stop-color="#db8864"/>
+<stop offset="1" stop-color="#ba7c5c"/>
+</linearGradient>
+<linearGradient id="ui-close-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<circle cx="12" cy="12" r="9" fill="url(#ui-close-material-0)" stroke="#754d42" stroke-width="1"/>
+    <path d="m8 8 8 8m0-8-8 8" stroke="#e9e3d2" stroke-linecap="round" stroke-width="2"/>
+    <circle cx="18" cy="6" r="1.4" fill="url(#ui-close-material-1)"/>
+</g>
+</svg>

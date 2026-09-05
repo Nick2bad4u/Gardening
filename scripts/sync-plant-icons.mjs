@@ -90,11 +90,24 @@ function profileTitles(profileData) {
     // The historical, removed Rehab-04 profile is intentionally absent from
     // the live tracker map but still has a booklet portrait and export.
     titles.set("mammillaria-bombycina", "Silken pincushion cactus");
+    titles.set(
+        "shared-rehab-cactus-planter",
+        "Shared rehab cactus planter · #1"
+    );
+    titles.set("shared-succulent-planter", "Shared succulent planter · #2");
     return titles;
 }
 
 function portraitDescriptions() {
     return new Map([
+        [
+            "shared-rehab-cactus-planter",
+            "A cream-striped blue-green column, golden-spined torch, and pale hairy trailing monkey-tail stems share a dark round planter with light etched markings.",
+        ],
+        [
+            "shared-succulent-planter",
+            "A red-edged blue-green rosette, bright round-leaved elephant bush, silver teaspoons, and copper spoons share a low charcoal rectangular planter.",
+        ],
         [
             "aeonium-haworthii-dream-color",
             "Three branching rosettes with cream-green spoon-shaped leaves and pink margins above a white planter.",

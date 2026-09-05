@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-rotate-title" data-ui-icon="rotate" focusable="false">
+  <title id="ui-rotate-title">Rotate</title>
+<defs>
+<linearGradient id="ui-rotate-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+<linearGradient id="ui-rotate-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#80bf8b"/>
+<stop offset="0.55" stop-color="#66b57c"/>
+<stop offset="1" stop-color="#5ca06f"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="M19 8.5A8 8 0 0 0 5.3 6.2L3.5 8" fill="none" stroke="#5f8bae" stroke-linecap="round" stroke-width="1.8"/>
+    <path d="M3.5 4.5V8H7" fill="url(#ui-rotate-material-0)" stroke="#765a28" stroke-linejoin="round" stroke-width="0.8"/>
+    <path d="M12 20V10" stroke="#3c6145" stroke-linecap="round" stroke-width="1.3"/>
+    <path d="M11.9 13c-3.2-0.1-5-1.8-4.9-4.2 3.2-0.3 5 1.3 4.9 4.2Zm0.2 2.7c0.3-3.1 2.2-4.7 4.9-4.2-0.1 2.8-1.9 4.3-4.9 4.2Z" fill="url(#ui-rotate-material-1)" stroke="#3c6145" stroke-linejoin="round" stroke-width="0.7"/>
+</g>
+</svg>

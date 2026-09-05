@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-status-title" data-ui-icon="status" focusable="false">
+  <title id="ui-status-title">Status</title>
+<defs>
+<linearGradient id="ui-status-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#8ac280"/>
+<stop offset="0.55" stop-color="#72b96f"/>
+<stop offset="1" stop-color="#66a365"/>
+</linearGradient>
+<linearGradient id="ui-status-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e8c96f"/>
+<stop offset="0.55" stop-color="#e5c15a"/>
+<stop offset="1" stop-color="#c2a954"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<circle cx="12" cy="12" r="9.5" fill="url(#ui-status-material-0)" stroke="#3c6242" stroke-width="1.1"/>
+    <path d="m7.4 12.2 3 3.1 6.4-6.6" fill="none" stroke="#e9e3d2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path d="M15.7 5.2c1.8 0.4 2.9 1.4 3.3 3.2-1.8 0-3-0.9-3.3-3.2Z" fill="url(#ui-status-material-1)"/>
+</g>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-cable-title" data-ui-icon="cable" focusable="false">
+  <title id="ui-cable-title">Cable</title>
+<defs>
+<linearGradient id="ui-cable-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e7c772"/>
+<stop offset="0.55" stop-color="#e4bf5e"/>
+<stop offset="1" stop-color="#c1a857"/>
+</linearGradient>
+<linearGradient id="ui-cable-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e09a70"/>
+<stop offset="0.55" stop-color="#db885b"/>
+<stop offset="1" stop-color="#ba7c55"/>
+</linearGradient>
+<linearGradient id="ui-cable-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#f0ead6"/>
+<stop offset="0.55" stop-color="#eee9d8"/>
+<stop offset="1" stop-color="#c9c9b9"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="M5 3v5m4-5v5" stroke="#5f8bae" stroke-linecap="round" stroke-width="1.6"/>
+    <path d="M3.5 7.5h7v3.2a3.5 3.5 0 0 1-7 0Z" fill="url(#ui-cable-material-0)" stroke="#765a28" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M7 14.2v2.3c0 2.3 1.8 4.1 4.1 4.1h1.4" fill="none" stroke="#5aae74" stroke-linecap="round" stroke-width="1.6"/>
+    <path d="M12.5 17.3h8v6h-8z" fill="url(#ui-cable-material-1)" stroke="#754f2b" stroke-linejoin="round" stroke-width="1"/>
+    <circle cx="15" cy="20.3" r="0.8" fill="url(#ui-cable-material-2)"/>
+    <circle cx="18" cy="20.3" r="0.8" fill="url(#ui-cable-material-2)"/>
+</g>
+</svg>

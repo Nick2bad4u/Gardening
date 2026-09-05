@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-source-title" data-ui-icon="source" focusable="false">
+  <title id="ui-source-title">Source</title>
+<defs>
+<linearGradient id="ui-source-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e19d70"/>
+<stop offset="0.55" stop-color="#dc8c5b"/>
+<stop offset="1" stop-color="#ba7f55"/>
+</linearGradient>
+<linearGradient id="ui-source-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#f0e6cc"/>
+<stop offset="0.55" stop-color="#eee4cb"/>
+<stop offset="1" stop-color="#c9c5ae"/>
+</linearGradient>
+<linearGradient id="ui-source-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#8abf8b"/>
+<stop offset="0.55" stop-color="#72b57c"/>
+<stop offset="1" stop-color="#66a06f"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="m4 8 8-5 8 5v11.5H4Z" fill="url(#ui-source-material-0)" stroke="#6c4c35" stroke-linejoin="round" stroke-width="1.1"/>
+    <path d="M7 10h10v9.5H7z" fill="url(#ui-source-material-1)" stroke="#6c4c35" stroke-width="0.9"/>
+    <path d="M10 19.5v-5h4v5" fill="url(#ui-source-material-2)" stroke="#3c5f45" stroke-width="0.8"/>
+    <path d="M4 8h16" stroke="#e1bb4f" stroke-width="2"/>
+</g>
+</svg>

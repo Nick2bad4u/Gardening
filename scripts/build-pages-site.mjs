@@ -443,12 +443,27 @@ async function main() {
         .filter((entry) => entry.isFile() && entry.name.endsWith(".svg"))
         .map((entry) => path.join("assets", "plant-icons", entry.name))
         .sort();
-    if (plantIconRelativePaths.length !== 36) {
+    if (plantIconRelativePaths.length !== 38) {
         throw new Error(
-            `Expected 36 standalone plant portraits for Pages but found ${plantIconRelativePaths.length}.`
+            `Expected 36 profile and two shared-planter portraits for Pages but found ${plantIconRelativePaths.length}.`
         );
     }
     for (const relativePath of plantIconRelativePaths) {
+        assetBytes += await copyRelativeFile(relativePath);
+    }
+
+    const uiIconRelativePaths = (
+        await readdir(path.join(repositoryRoot, "assets", "ui-icons"))
+    )
+        .filter((name) => name.endsWith(".svg"))
+        .map((name) => path.join("assets", "ui-icons", name))
+        .sort();
+    if (uiIconRelativePaths.length !== 83) {
+        throw new Error(
+            `Expected 83 shared interface SVG exports for Pages but found ${uiIconRelativePaths.length}.`
+        );
+    }
+    for (const relativePath of uiIconRelativePaths) {
         assetBytes += await copyRelativeFile(relativePath);
     }
 

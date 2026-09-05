@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-upload-title" data-ui-icon="upload" focusable="false">
+  <title id="ui-upload-title">Upload</title>
+<defs>
+<linearGradient id="ui-upload-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#95b8ca"/>
+<stop offset="0.55" stop-color="#7facc9"/>
+<stop offset="1" stop-color="#7099ad"/>
+</linearGradient>
+<linearGradient id="ui-upload-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="M5 15v5h14v-5" fill="url(#ui-upload-material-0)" stroke="#405e71" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M12 16V4" stroke="#5eae74" stroke-linecap="round" stroke-width="1.8"/>
+    <path d="m8.5 7.5 3.5-3.7 3.5 3.7" fill="url(#ui-upload-material-1)" stroke="#765a28" stroke-linejoin="round" stroke-width="1"/>
+</g>
+</svg>

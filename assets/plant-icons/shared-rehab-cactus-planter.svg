@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="shared-rehab-cactus-planter-title shared-rehab-cactus-planter-description" data-plant-slug="shared-rehab-cactus-planter" focusable="false">
+  <title id="shared-rehab-cactus-planter-title">Shared rehab cactus planter · #1 plant portrait</title>
+  <desc id="shared-rehab-cactus-planter-description">A cream-striped blue-green column, golden-spined torch, and pale hairy trailing monkey-tail stems share a dark round planter with light etched markings.</desc>
+  <defs>
+    <linearGradient id="shared-rehab-pot" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#535956"/>
+      <stop offset="0.5" stop-color="#252e2b"/>
+      <stop offset="1" stop-color="#434945"/>
+    </linearGradient>
+    <linearGradient id="shared-rehab-blue" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#728e87"/>
+      <stop offset="0.45" stop-color="#a4bbae"/>
+      <stop offset="1" stop-color="#3e6459"/>
+    </linearGradient>
+    <linearGradient id="shared-rehab-gold" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#416544"/>
+      <stop offset="0.45" stop-color="#799261"/>
+      <stop offset="1" stop-color="#2f493c"/>
+    </linearGradient>
+    <clipPath id="shared-rehab-column-clip">
+      <path d="M16 39L14 11C13 3 24 2 24 10L27 40Z"/>
+    </clipPath>
+    <g id="shared-rehab-spine">
+      <path d="M-2 -2L2 2M-2 2L2 -2M0 -3V3M-3 0H3" fill="none" stroke="#dacbb1" stroke-width="0.5" stroke-linecap="round"/>
+      <circle r="0.65" fill="#efe1c9"/>
+    </g>
+    <g id="shared-rehab-hair">
+      <path d="M-3 -2L3 2M-3 2L3 -2M-1 -3L1 3M-3 0H3" fill="none" stroke="#e7e5d6" stroke-width="0.45" stroke-linecap="round" opacity="0.9"/>
+    </g>
+  </defs>
+  <ellipse cx="32" cy="58" rx="23" ry="3" fill="#243c30" opacity="0.15"/>
+  <path d="M10 40H54L50 54C48 59 16 59 14 54Z" fill="url(#shared-rehab-pot)" stroke="#28372f" stroke-width="1"/>
+  <path d="M15 44L20 56M20 44L25 57M26 44L30 57M32 44L35 57M38 44L40 56M44 44L46 54" fill="none" stroke="#c3bdae" stroke-width="0.8"/>
+  <path d="M15 48L24 51L17 54M25 47L36 51L27 54M37 47L47 50L40 54" fill="none" stroke="#aaa699" stroke-width="0.65"/>
+  <ellipse cx="32" cy="40" rx="22" ry="7" fill="#62635a" stroke="#28372f" stroke-width="1"/>
+  <ellipse cx="32" cy="39" rx="19.8" ry="5.5" fill="#544637"/>
+  <path d="M17 37L20 35L24 37L21 40ZM34 37L38 36L40 39L36 41ZM46 38L49 40L47 42L44 40ZM26 40L29 39L32 42L28 44Z" fill="#b19c7e"/>
+  <path d="M16 39L14 11C13 3 24 2 24 10L27 40Z" fill="url(#shared-rehab-blue)" stroke="#3f6054" stroke-width="0.85"/>
+  <g clip-path="url(#shared-rehab-column-clip)">
+    <path d="M17 4L21 42L24 42L20 4Z" fill="#d4cf9e"/>
+    <path d="M14 5L18 42M22 4L26 42" fill="none" stroke="#3f695b" stroke-width="0.75"/>
+    <path d="M16 5L20 41" stroke="#e0dabb" stroke-width="0.5"/>
+  </g>
+  <g>
+    <use href="#shared-rehab-spine" transform="translate(15.8 12) scale(0.6)"/>
+    <use href="#shared-rehab-spine" transform="translate(16.5 18) scale(0.6)"/>
+    <use href="#shared-rehab-spine" transform="translate(17 24) scale(0.6)"/>
+    <use href="#shared-rehab-spine" transform="translate(17.7 30) scale(0.6)"/>
+    <use href="#shared-rehab-spine" transform="translate(22.8 12) scale(0.6)"/>
+    <use href="#shared-rehab-spine" transform="translate(23.5 18) scale(0.6)"/>
+    <use href="#shared-rehab-spine" transform="translate(24 24) scale(0.6)"/>
+    <use href="#shared-rehab-spine" transform="translate(24.8 30) scale(0.6)"/>
+  </g>
+  <path d="M38 40L37 23C36.5 12 48 12 49 23L50 40Z" fill="url(#shared-rehab-gold)" stroke="#344a37" stroke-width="0.9"/>
+  <path d="M40 20L41 40M44 17L45 40M47 20L48 40" fill="none" stroke="#b0ac78" stroke-width="0.8"/>
+  <g>
+    <use href="#shared-rehab-spine" transform="translate(40 21)"/>
+    <use href="#shared-rehab-spine" transform="translate(40.5 27)"/>
+    <use href="#shared-rehab-spine" transform="translate(41 33)"/>
+    <use href="#shared-rehab-spine" transform="translate(45 18)"/>
+    <use href="#shared-rehab-spine" transform="translate(45 24)"/>
+    <use href="#shared-rehab-spine" transform="translate(45.5 30)"/>
+    <use href="#shared-rehab-spine" transform="translate(46 36)"/>
+    <use href="#shared-rehab-spine" transform="translate(49 25)"/>
+    <use href="#shared-rehab-spine" transform="translate(49.5 32)"/>
+  </g>
+  <path d="M32 39C33 32 32 24 31 22M30 39C20 30 9 29 8 37C7 42 11 45 15 43M31 40C34 42 38 47 35 53M29 40C25 44 21 46 19 50" fill="none" stroke="#cdd0b7" stroke-width="7" stroke-linecap="round"/>
+  <path d="M32 39C33 32 32 24 31 22M30 39C20 30 9 29 8 37C7 42 11 45 15 43M31 40C34 42 38 47 35 53M29 40C25 44 21 46 19 50" fill="none" stroke="#9aa979" stroke-width="3.6" stroke-linecap="round"/>
+  <g>
+    <use href="#shared-rehab-hair" transform="translate(31 23)"/>
+    <use href="#shared-rehab-hair" transform="translate(32 27)"/>
+    <use href="#shared-rehab-hair" transform="translate(32 31)"/>
+    <use href="#shared-rehab-hair" transform="translate(32 35)"/>
+    <use href="#shared-rehab-hair" transform="translate(31 39)"/>
+    <use href="#shared-rehab-hair" transform="translate(26 35)"/>
+    <use href="#shared-rehab-hair" transform="translate(22 33)"/>
+    <use href="#shared-rehab-hair" transform="translate(18 32)"/>
+    <use href="#shared-rehab-hair" transform="translate(13 32)"/>
+    <use href="#shared-rehab-hair" transform="translate(9 35)"/>
+    <use href="#shared-rehab-hair" transform="translate(8 39)"/>
+    <use href="#shared-rehab-hair" transform="translate(11 43)"/>
+    <use href="#shared-rehab-hair" transform="translate(15 43)"/>
+    <use href="#shared-rehab-hair" transform="translate(34 43)"/>
+    <use href="#shared-rehab-hair" transform="translate(36 47)"/>
+    <use href="#shared-rehab-hair" transform="translate(35 52)"/>
+    <use href="#shared-rehab-hair" transform="translate(26 44)"/>
+    <use href="#shared-rehab-hair" transform="translate(22 47)"/>
+    <use href="#shared-rehab-hair" transform="translate(19 50)"/>
+  </g>
+</svg>

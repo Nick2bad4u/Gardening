@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-layout-title" data-ui-icon="layout" focusable="false">
+  <title id="ui-layout-title">Layout</title>
+<defs>
+<linearGradient id="ui-layout-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#f0e9d6"/>
+<stop offset="0.55" stop-color="#eee8d7"/>
+<stop offset="1" stop-color="#c9c9b8"/>
+</linearGradient>
+<linearGradient id="ui-layout-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#83c18a"/>
+<stop offset="0.55" stop-color="#69b77b"/>
+<stop offset="1" stop-color="#5ea16e"/>
+</linearGradient>
+<linearGradient id="ui-layout-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e7c772"/>
+<stop offset="0.55" stop-color="#e4bf5e"/>
+<stop offset="1" stop-color="#c1a857"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2Z" fill="url(#ui-layout-material-0)" stroke="#55625a" stroke-linejoin="round" stroke-width="1"/>
+    <path d="M9 3v16m6-14v16" stroke="#55625a" stroke-width="0.8"/>
+    <path d="m4.5 9 3-1 1.5 0.5v5l-4.5 1.5Zm6-3.5L14 6.7v5l-3.5-1.2Zm6 7 3-1v5l-3 1Z" fill="url(#ui-layout-material-1)"/>
+    <circle cx="12.5" cy="15.2" r="1.7" fill="url(#ui-layout-material-2)"/>
+</g>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-minus-title" data-ui-icon="minus" focusable="false">
+  <title id="ui-minus-title">Minus</title>
+<defs>
+<linearGradient id="ui-minus-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e0d8df"/>
+<stop offset="0.55" stop-color="#dbd3e2"/>
+<stop offset="1" stop-color="#bab8c1"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<circle cx="12" cy="12" r="9" fill="url(#ui-minus-material-0)" stroke="#715a92" stroke-width="1"/>
+    <path d="M7.5 12h9" stroke="#d18649" stroke-linecap="round" stroke-width="2"/>
+</g>
+</svg>

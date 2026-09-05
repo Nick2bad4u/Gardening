@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-inventory-title" data-ui-icon="inventory" focusable="false">
+  <title id="ui-inventory-title">Inventory</title>
+<defs>
+<linearGradient id="ui-inventory-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#8dadb4"/>
+<stop offset="0.55" stop-color="#769fae"/>
+<stop offset="1" stop-color="#698e97"/>
+</linearGradient>
+<linearGradient id="ui-inventory-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#dae6d1"/>
+<stop offset="0.55" stop-color="#d4e4d2"/>
+<stop offset="1" stop-color="#b4c5b4"/>
+</linearGradient>
+<linearGradient id="ui-inventory-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<rect x="3" y="3" width="18" height="18" rx="3" fill="url(#ui-inventory-material-0)" stroke="#3a5762" stroke-width="1.1"/>
+    <path d="M7 7h4v4H7zm6 0h4v4h-4zM7 13h4v4H7z" fill="url(#ui-inventory-material-1)" stroke="#3a5762" stroke-width="0.7"/>
+    <path d="M13 13h4v4h-4z" fill="url(#ui-inventory-material-2)" stroke="#3a5762" stroke-width="0.7"/>
+</g>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-cactus-title" data-ui-icon="cactus" focusable="false">
+  <title id="ui-cactus-title">Cactus</title>
+<defs>
+<linearGradient id="ui-cactus-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#65cb83"/>
+<stop offset="0.55" stop-color="#45c372"/>
+<stop offset="1" stop-color="#42ab67"/>
+</linearGradient>
+<linearGradient id="ui-cactus-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#eacb6d"/>
+<stop offset="0.55" stop-color="#e7c358"/>
+<stop offset="1" stop-color="#c3ab52"/>
+</linearGradient>
+<linearGradient id="ui-cactus-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e4a567"/>
+<stop offset="0.55" stop-color="#e09550"/>
+<stop offset="1" stop-color="#be864c"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="M8.3 15V6.2c0-2.1 1.2-3.7 3.2-3.7s3.2 1.6 3.2 3.7V15" fill="url(#ui-cactus-material-0)" stroke="#264533" stroke-linejoin="round" stroke-width="1.25"/>
+    <path d="M8.3 9.2H6.8c-1.7 0-2.8-1.2-2.8-2.9V5.1c0-1 0.7-1.8 1.7-1.8s1.7 0.8 1.7 1.8v0.7c0 0.3 0.2 0.5 0.5 0.5h0.4m6.4 5h1.2c1.6 0 2.7-1.2 2.7-2.8V7.3c0-1 0.7-1.8 1.7-1.8s1.7 0.8 1.7 1.8v1.9c0 2.8-2.2 5-5 5h-2.3" fill="url(#ui-cactus-material-0)" stroke="#264533" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.25"/>
+    <path d="M10.8 3.2v3m0 2.3v2.6m0 2.2V15M5.5 4.3v2.1m15-0.1v2.2" fill="none" stroke="#c8e0be" stroke-linecap="round" stroke-width="0.7"/>
+    <path d="M5.8 14.4h12.4v2.5H5.8z" fill="url(#ui-cactus-material-1)" stroke="#264533" stroke-linejoin="round" stroke-width="1.1"/>
+    <path d="m7 16.9 1.2 4.4h7.6l1.2-4.4z" fill="url(#ui-cactus-material-1)" stroke="#264533" stroke-linejoin="round" stroke-width="1.1"/>
+    <path d="m7.7 18 2 1.8 2.3-2 2.3 2 2-1.8" fill="none" stroke="#5ab1d2" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.25"/>
+    <path d="M17 14.4h1.2v2.5H17zm-1.2 2.5H17l-1.2 4.4h-1.1z" fill="url(#ui-cactus-material-2)" opacity="0.9"/>
+</g>
+</svg>

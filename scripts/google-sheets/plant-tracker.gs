@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.17.1",
+    version: "5.18.0",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -593,6 +593,8 @@ const BASELINE_VIEW_HEADERS = Object.freeze([
     "Predicted dry date",
     "Forecast confidence",
     "Forecast sort date",
+    "Recommended water date",
+    "Watering guidance",
 ]);
 
 const DASHBOARD_VIEW_HEADERS = Object.freeze([
@@ -617,6 +619,8 @@ const DASHBOARD_VIEW_HEADERS = Object.freeze([
     "Remeasure",
     "Next dry check",
     "Data quality",
+    "Recommended water date",
+    "Watering guidance",
 ]);
 
 const WORKBOOK_HELPER_SHEETS = Object.freeze([
@@ -781,6 +785,10 @@ function getWebAppBootstrap() {
                     forecasts.get(cleanText_(plantId))?.window || "",
                 dryForecastBasis:
                     forecasts.get(cleanText_(plantId))?.basis || "",
+                recommendedWaterDate:
+                    forecasts.get(cleanText_(plantId))?.waterDate || "",
+                wateringGuidance:
+                    forecasts.get(cleanText_(plantId))?.waterGuidance || "",
                 fieldGuideUrl,
                 historyUrl: `${GARDEN_LOGGER.historyUrl}?id=${encodeURIComponent(cleanText_(plantId))}`,
             };
@@ -2982,6 +2990,8 @@ const DRY_DOWN_MODEL_HEADERS = Object.freeze([
     "Trend readiness",
     "Trend review",
     "Current fit",
+    "Recommended water date",
+    "Watering guidance",
 ]);
 
 /**
@@ -3021,6 +3031,7 @@ function GARDEN_DRY_DOWN(history, plantIds) {
             const model = dryDownModelForPlant_(
                 grouped.get(cleanText_(id)) || []
             );
+            const watering = wateringRecommendation_(cleanText_(id), model);
             return [
                 cleanText_(id),
                 model.setup,
@@ -3036,8 +3047,54 @@ function GARDEN_DRY_DOWN(history, plantIds) {
                 model.readiness,
                 model.review,
                 model.fit,
+                watering.date,
+                watering.guidance,
             ];
         });
+}
+
+/**
+ * Conditional planning dates, not automatic watering instructions. A completed
+ * pre-water weight is not proof of bone-dry soil. The learned dry-down curve
+ * updates the date; it cannot learn an optimal drought delay from watering
+ * timestamps without independent root-zone and plant-condition evidence.
+ */
+function wateringRecommendation_(plantId, model) {
+    const manual = {
+        P21: "Inspect upper 2 in of mix; water when dry there. Do not wait for the whole root ball to become bone dry.",
+        P28: "Inspect inner-leaf firmness and leaf replacement. A dry pot or wrinkled old leaves alone do not mean water.",
+    };
+    if (manual[plantId]) {
+        return { date: "", guidance: manual[plantId] };
+    }
+    if (!/^P(?:0[1-9]|[12][0-9]|30)$/.test(plantId)) {
+        return {
+            date: "",
+            guidance: "No verified watering rule — inspect plant.",
+        };
+    }
+    const guidance = wateringReadinessGuidance_(plantId);
+    if (
+        typeof model.date !== "number" ||
+        !Number.isFinite(model.date) ||
+        model.date <= 0
+    ) {
+        return { date: "", guidance: model.basis + ". " + guidance };
+    }
+    return {
+        date: Math.ceil(model.date),
+        guidance: "Estimated; confirm readiness first. " + guidance,
+    };
+}
+
+function wateringReadinessGuidance_(plantId) {
+    if (plantId === "P22") {
+        return "During active growth, let much of the mix dry; no extra drought delay. If resting, inspect before watering.";
+    }
+    if (["P20", "P30"].includes(plantId)) {
+        return "Confirm the shared root zone is dry and inspect every component; no fixed extra dry days.";
+    }
+    return "Confirm the root zone is dry and the plant is ready; reduce watering during rest. No fixed extra dry days.";
 }
 
 function dryDownRecordsShareSave_(left, right) {
@@ -3481,7 +3538,11 @@ function dryDownModelsFromHistory_(historyRows, plantIds, timeZone) {
                 const suffix = model[5] === 1 ? "" : "s";
                 basis += " · " + model[5] + " learned cycle" + suffix;
             }
-            return [model[0], { window, basis }];
+            const waterDate = model[14] === "" ? "" : day(model[14]);
+            return [
+                model[0],
+                { window, basis, waterDate, waterGuidance: model[15] },
+            ];
         })
     );
 }
@@ -3513,6 +3574,7 @@ function refreshDryDownModels_(spreadsheet) {
         .clearContent();
     sheet.getRange("A2").setFormula(dryDownModelFormula_());
     sheet.getRange("H2:J31").setNumberFormat("mmm d, yyyy");
+    sheet.getRange("O2:O31").setNumberFormat("mmm d, yyyy");
     sheet
         .getRange("A1")
         .setNote(
@@ -3560,6 +3622,108 @@ function installDryDownLearning() {
 
 function completedDryWeightFormula_(row) {
     return "=" + dryDownLookupFormula_(row, "C");
+}
+
+/** Append only the requested derived columns; keep owner charts/layout intact. */
+function installWateringRecommendations() {
+    const spreadsheet = getGardenSpreadsheet_();
+    const plants = workbookPlantRecords_(spreadsheet);
+    /** @type {[string, number, number, string][]} */
+    const targets = [
+        [GARDEN_LOGGER.baselinesSheet, 1, 35, "A"],
+        ["Dashboard", 6, 22, "B"],
+    ];
+    // Preflight both destinations before changing either one.
+    targets.forEach(([name, headerRow, column]) => {
+        const sheet = requireSheet_(spreadsheet, name);
+        if (sheet.getMaxColumns() < column) {
+            return;
+        }
+        const width = Math.min(2, sheet.getMaxColumns() - column + 1);
+        const destination = sheet.getRange(
+            headerRow,
+            column,
+            plants.length + 1,
+            width
+        );
+        const values = destination.getValues();
+        const formulas = destination.getFormulas();
+        const headers = values[0];
+        const expected = ["Recommended water date", "Watering guidance"];
+        headers.forEach((value, index) => {
+            const unlabelledContent =
+                value === "" &&
+                values.some(
+                    (row, rowIndex) =>
+                        row[index] !== "" || formulas[rowIndex][index] !== ""
+                );
+            if (
+                (value !== "" && value !== expected[index]) ||
+                unlabelledContent
+            ) {
+                throw new Error(
+                    `Unexpected ${name} column ${column + index}; review before installing.`
+                );
+            }
+        });
+    });
+    installDryDownLearning();
+    targets.forEach(([name, headerRow, column, idColumn]) => {
+        const sheet = requireSheet_(spreadsheet, name);
+        ensureSheetColumnCapacity_(sheet, column + 1);
+        ensureSheetRowCapacity_(sheet, headerRow + plants.length);
+        sheet
+            .getRange(headerRow, column, 1, 2)
+            .setValues([["Recommended water date", "Watering guidance"]]);
+        sheet
+            .getRange(headerRow + 1, column, plants.length, 2)
+            .setValues(
+                plants.map((_, index) =>
+                    ["O", "P"].map(
+                        (modelColumn) =>
+                            `=XLOOKUP($${idColumn}${headerRow + index + 1},'Dry-down models'!$A$2:$A$31,'Dry-down models'!$${modelColumn}$2:$${modelColumn}$31,"")`
+                    )
+                )
+            );
+        formatWateringRecommendationColumns_(
+            sheet,
+            headerRow,
+            column,
+            plants.length
+        );
+    });
+    SpreadsheetApp.flush();
+    return {
+        loggerVersion: GARDEN_LOGGER.version,
+        plants: plants.length,
+        historyChanged: false,
+    };
+}
+
+function formatWateringRecommendationColumns_(sheet, headerRow, column, count) {
+    sheet
+        .getRange(headerRow, column, 1, 2)
+        .setBackground("#24533f")
+        .setFontColor("#ffffff")
+        .setFontWeight("bold")
+        .setWrap(true)
+        .setNotes([
+            [
+                "Conditional planning date from the learned same-plant, same-pot dry-down curve. Confirm actual dryness and plant readiness; not a watering deadline. No universal 4- or 6-day drought delay.",
+                "Plant-specific readiness checks. Money tree and split rock intentionally have no weight-only water date. Historical watering timing does not establish an optimal drought duration.",
+            ],
+        ]);
+    sheet
+        .getRange(headerRow + 1, column, count, 1)
+        .setNumberFormat("mmm d, yyyy");
+    sheet
+        .getRange(headerRow + 1, column, count, 2)
+        .setBackground("#edf4ee")
+        .setFontColor("#173c2b")
+        .setWrap(true)
+        .setVerticalAlignment("middle");
+    sheet.setColumnWidth(column, 165);
+    sheet.setColumnWidth(column + 1, 360);
 }
 
 function latestWetWeightFormula_(row) {
@@ -3615,6 +3779,8 @@ function baselineViewRow_(rowNumber, plant) {
         predictedDryDateFormula_(row),
         `=LET(basis,${dryDownLookupFormula_(row, "K")},learned,${dryDownLookupFormula_(row, "F")},late,${dryDownLookupFormula_(row, "J")},basis&IF(learned>0," · "&learned&" learned cycle"&IF(learned=1,"","s"),"")&IF(AND(late<>"",late<TODAY())," · Overdue — reweigh",""))`,
         `=IF(AF${row}="",DATE(9999,12,31),AF${row})`,
+        `=${dryDownLookupFormula_(row, "O")}`,
+        `=${dryDownLookupFormula_(row, "P")}`,
     ];
 }
 
@@ -3688,6 +3854,7 @@ function refreshBaselineView_(spreadsheet, plants) {
     sheet.setColumnWidth(18, 220);
     sheet.setColumnWidth(19, 240);
     sheet.setColumnWidth(33, 220);
+    formatWateringRecommendationColumns_(sheet, 1, 35, plants.length);
     sheet.getRange("I2:J31").setWrap(true);
     sheet.getRange("L2:L31").setWrap(true);
     sheet.getRange("AG2:AG31").setWrap(true);
@@ -3721,6 +3888,8 @@ function dashboardViewRow_(spreadsheet, plant, index) {
         `=Baselines!K${baselineRow}`,
         `=Baselines!L${baselineRow}`,
         `=Baselines!S${baselineRow}`,
+        `=Baselines!AI${baselineRow}`,
+        `=Baselines!AJ${baselineRow}`,
     ];
 }
 
@@ -3829,6 +3998,7 @@ function refreshDashboardView_(spreadsheet, plants) {
     sheet.setColumnWidth(18, 180);
     sheet.setColumnWidth(20, 210);
     sheet.setColumnWidth(21, 240);
+    formatWateringRecommendationColumns_(sheet, 6, 22, plants.length);
 }
 
 function plantPageHistoryFormula_(plantId) {

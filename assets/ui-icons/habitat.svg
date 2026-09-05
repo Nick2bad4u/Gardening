@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-habitat-title" data-ui-icon="habitat" focusable="false">
+  <title id="ui-habitat-title">Habitat</title>
+<defs>
+<linearGradient id="ui-habitat-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+<linearGradient id="ui-habitat-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#83c286"/>
+<stop offset="0.55" stop-color="#69b876"/>
+<stop offset="1" stop-color="#5ea26a"/>
+</linearGradient>
+<linearGradient id="ui-habitat-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e2e7d1"/>
+<stop offset="0.55" stop-color="#dde6d1"/>
+<stop offset="1" stop-color="#bbc7b3"/>
+</linearGradient>
+<linearGradient id="ui-habitat-material-3" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#8bb7c9"/>
+<stop offset="0.55" stop-color="#73abc8"/>
+<stop offset="1" stop-color="#6698ac"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<circle cx="17.2" cy="6.3" r="3" fill="url(#ui-habitat-material-0)"/>
+    <path d="M2.5 18 8.4 9.2l3.1 4.4 2.1-2.8 7.9 7.2Z" fill="url(#ui-habitat-material-1)" stroke="#3c6145" stroke-linejoin="round" stroke-width="1"/>
+    <path d="m8.4 9.2 1.5 2.2-2.2 1.1-1-1Z" fill="url(#ui-habitat-material-2)"/>
+    <path d="M2.5 18h19v3h-19Z" fill="url(#ui-habitat-material-3)" stroke="#3c6276" stroke-width="0.8"/>
+</g>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-handling-title" data-ui-icon="handling" focusable="false">
+  <title id="ui-handling-title">Handling</title>
+<defs>
+<linearGradient id="ui-handling-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#7ebf8b"/>
+<stop offset="0.55" stop-color="#63b57c"/>
+<stop offset="1" stop-color="#5aa06f"/>
+</linearGradient>
+<linearGradient id="ui-handling-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e6b16f"/>
+<stop offset="0.55" stop-color="#e2a45a"/>
+<stop offset="1" stop-color="#bf9254"/>
+</linearGradient>
+<linearGradient id="ui-handling-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<circle cx="8" cy="17" r="3" fill="url(#ui-handling-material-0)" stroke="#3c6145" stroke-width="1"/>
+    <circle cx="16" cy="17" r="3" fill="url(#ui-handling-material-1)" stroke="#765729" stroke-width="1"/>
+    <path d="m9.8 14.6 7-10m-2.6 10-7-10" stroke="#708b9c" stroke-linecap="round" stroke-width="1.8"/>
+    <circle cx="12" cy="11" r="1.5" fill="url(#ui-handling-material-2)" stroke="#6d5729" stroke-width="0.7"/>
+</g>
+</svg>

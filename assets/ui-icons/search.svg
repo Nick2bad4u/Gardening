@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-search-title" data-ui-icon="search" focusable="false">
+  <title id="ui-search-title">Search</title>
+<defs>
+<linearGradient id="ui-search-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e0d8df"/>
+<stop offset="0.55" stop-color="#dbd3e3"/>
+<stop offset="1" stop-color="#bab8c2"/>
+</linearGradient>
+<linearGradient id="ui-search-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#78c187"/>
+<stop offset="0.55" stop-color="#5cb777"/>
+<stop offset="1" stop-color="#54a16b"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<circle cx="10.5" cy="10.5" r="6.5" fill="url(#ui-search-material-0)" stroke="#715a92" stroke-width="1.5"/>
+    <path d="m15.3 15.3 5 5" stroke="#d38149" stroke-linecap="round" stroke-width="2.2"/>
+    <path d="M8.1 12.6c0.3-2.8 1.8-4.5 4.7-4.8-0.2 2.8-1.8 4.4-4.7 4.8Z" fill="url(#ui-search-material-1)" stroke="#355a40" stroke-linejoin="round" stroke-width="0.7"/>
+</g>
+</svg>

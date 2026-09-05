@@ -767,6 +767,58 @@ function createLoggerWorkbook(plantIds = ["P01"], historyOptions = {}) {
 }
 
 describe("Garden logger server logic", () => {
+    it("keeps save-group identity authoritative when deriving wet/dry anchors", () => {
+        const context = loadAppsScript(createHistorySheet());
+        expect(
+            context.historyRecordsShareSave_(
+                { saveGroup: "batch-a", timestamp: 1 },
+                { saveGroup: "batch-a", timestamp: 2 }
+            )
+        ).toBe(true);
+        expect(
+            context.historyRecordsShareSave_(
+                { saveGroup: "batch-a", timestamp: 1 },
+                { saveGroup: "batch-b", timestamp: 1 }
+            )
+        ).toBe(false);
+        expect(
+            context.historyRecordsShareSave_({ timestamp: 1 }, { timestamp: 1 })
+        ).toBe(true);
+        expect(
+            context.historyRecordsShareSave_(
+                { observedAt: "2026-09-05" },
+                { observedAt: "2026-09-05" }
+            )
+        ).toBe(true);
+        expect(context.historyRecordsShareSave_({}, {})).toBe(false);
+        expect(
+            context.historyRecordsShareSave_(
+                { observedAt: "2026-09-05" },
+                { observedAt: "2026-09-06" }
+            )
+        ).toBe(false);
+    });
+
+    it("names the appended water-date columns correctly across the Z/AA boundary", () => {
+        const context = loadAppsScript(createHistorySheet());
+        expect(
+            [
+                22,
+                23,
+                26,
+                27,
+                35,
+                36,
+            ].map((index) => context.columnName_(index))
+        ).toEqual([
+            "V",
+            "W",
+            "Z",
+            "AA",
+            "AI",
+            "AJ",
+        ]);
+    });
     it("infers independent event rows from a combined observation", () => {
         const context = loadAppsScript(createHistorySheet());
 
@@ -1228,7 +1280,7 @@ describe("Garden logger server logic", () => {
             name: "Test plant",
         });
 
-        expect(baselineRow).toHaveLength(34);
+        expect(baselineRow).toHaveLength(36);
         for (const [index, column] of [
             [22, "C"],
             [24, "D"],
@@ -1290,10 +1342,10 @@ describe("Garden logger server logic", () => {
             calls.push(["organize", ...args]);
 
         expect(context.refreshGardenWorkbook()).toEqual({
-            loggerVersion: "5.17.1",
+            loggerVersion: "5.18.0",
             plantPages: 2,
-            baselineColumns: 34,
-            dashboardColumns: 21,
+            baselineColumns: 36,
+            dashboardColumns: 23,
         });
         expect(calls.filter(([name]) => name === "plant")).toHaveLength(2);
         expect(calls.map(([name]) => name)).toEqual([
@@ -1334,19 +1386,19 @@ describe("Garden logger server logic", () => {
             calls.push(["organize", ...args]);
 
         expect(context.refreshGardenWorkbookPages01To10()).toEqual({
-            loggerVersion: "5.17.1",
+            loggerVersion: "5.18.0",
             firstPlant: "P01",
             lastPlant: "P10",
             plantPages: 10,
         });
         expect(context.refreshGardenWorkbookPages11To20()).toEqual({
-            loggerVersion: "5.17.1",
+            loggerVersion: "5.18.0",
             firstPlant: "P11",
             lastPlant: "P20",
             plantPages: 10,
         });
         expect(context.refreshGardenWorkbookPages21To30()).toEqual({
-            loggerVersion: "5.17.1",
+            loggerVersion: "5.18.0",
             firstPlant: "P21",
             lastPlant: "P30",
             plantPages: 10,
@@ -1410,7 +1462,7 @@ describe("Garden logger server logic", () => {
             0
         );
 
-        expect(row).toHaveLength(21);
+        expect(row).toHaveLength(23);
         expect(row[0]).toBe('=HYPERLINK("#gid=12345","View")');
         expect(row[5]).toBe("=Baselines!D2");
         expect(row[6]).toBe("=Baselines!C2");
@@ -1538,6 +1590,7 @@ describe("Garden logger server logic", () => {
                     "setFontWeight",
                     "setHorizontalAlignment",
                     "setNumberFormat",
+                    "setNotes",
                     "setVerticalAlignment",
                     "setWrap",
                 ].forEach((method) => {
@@ -1874,7 +1927,7 @@ describe("Garden logger server logic", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.17.1");
+        expect(bootstrap.version).toBe("5.18.0");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             id: "P01",
@@ -1960,6 +2013,46 @@ describe("Garden logger server logic", () => {
         expect(plants.at(-1)).toMatchObject({
             id: "P30",
             currentPotSize: "5 in",
+        });
+    });
+
+    it("keeps the logger usable when a forecast is missing and forwards the new date/guidance when present", () => {
+        const workbook = createLoggerWorkbook(["P01", "P02"]);
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+        });
+        context.dryDownModelsFromHistory_ = () =>
+            new Map([["P01", { window: "Sep 10–Sep 15" }]]);
+        const missing = context.getWebAppBootstrap().plants;
+        expect(missing).toHaveLength(2);
+        expect(missing[0]).toMatchObject({
+            dryForecastWindow: "Sep 10–Sep 15",
+            dryForecastBasis: "",
+            recommendedWaterDate: "",
+            wateringGuidance: "",
+        });
+        expect(missing[1]).toMatchObject({
+            dryForecastWindow: "",
+            dryForecastBasis: "",
+            recommendedWaterDate: "",
+            wateringGuidance: "",
+        });
+        context.dryDownModelsFromHistory_ = () =>
+            new Map([
+                [
+                    "P01",
+                    {
+                        window: "Sep 10–Sep 15",
+                        basis: "Historical estimate · 2 learned cycles",
+                        waterDate: "Sep 12, 2026",
+                        waterGuidance: "Confirm dry roots and plant readiness.",
+                    },
+                ],
+            ]);
+        expect(context.getWebAppBootstrap().plants[0]).toMatchObject({
+            recommendedWaterDate: "Sep 12, 2026",
+            wateringGuidance: "Confirm dry roots and plant readiness.",
+            dryForecastBasis: "Historical estimate · 2 learned cycles",
         });
     });
 
@@ -4629,9 +4722,9 @@ describe("Garden logger server logic", () => {
         context.installGardenLogger();
         context.installGardenLogger();
 
-        expect(calls.properties.gardenLoggerVersion).toBe("5.17.1");
+        expect(calls.properties.gardenLoggerVersion).toBe("5.18.0");
         expect(calls.toast[1]).toBe("Garden logger verified");
-        expect(calls.toast[0]).toMatch(/Logger 5\.17\.1 is ready/);
+        expect(calls.toast[0]).toMatch(/Logger 5\.18\.0 is ready/);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(
@@ -5727,6 +5820,74 @@ describe("Garden logger server logic", () => {
         context.archiveQuickLogRow_(quick, 5);
         expect(workbook.history.__rows[1][3]).toBe("Routine");
     });
+
+    it.each([
+        { event: "Weigh", application: "Partial", amount: "", reject: true },
+        { event: "Weigh", application: "", amount: 40, reject: true },
+        {
+            event: "Water",
+            application: "Flood / soak-through",
+            amount: 200,
+            reject: false,
+        },
+        { event: "Water", application: "Partial", amount: 40, reject: false },
+        { event: "Water", application: "Spot", amount: 20, reject: false },
+    ])(
+        "keeps watering details attached to a real Water event in Quick log: %j",
+        ({ event, application, amount, reject }) => {
+            const workbook = createLoggerWorkbook();
+            workbook.spreadsheet.toast = () => {};
+            const row = [
+                "P01",
+                "Plant P01",
+                true,
+                new Date("2026-09-05T12:00:00Z"),
+                event,
+                "Routine",
+                451,
+                "",
+                "",
+                "",
+                "",
+                1,
+                "in",
+                application,
+                amount,
+            ];
+            const quick = createDataSheet("Quick log", [
+                [],
+                [],
+                [],
+                [],
+                row,
+            ]);
+            workbook.sheets.set("Quick log", quick);
+            quick.__setParent(workbook.spreadsheet);
+            const context = loadAppsScript(workbook.history, {
+                spreadsheet: workbook.spreadsheet,
+                globals: workbook.globals,
+            });
+            if (reject) {
+                const before = [...row];
+                expect(() => context.archiveQuickLogRow_(quick, 5)).toThrow(
+                    /only for a Water event/
+                );
+                expect(row).toEqual(before);
+                expect(workbook.history.__rows).toHaveLength(1);
+            } else {
+                context.archiveQuickLogRow_(quick, 5);
+                const saved = workbook.history.__rows.find(
+                    (record) => record[2] === "Water"
+                );
+                expect(saved.slice(40, 42)).toEqual([application, amount]);
+                expect(
+                    workbook.history.__rows.find(
+                        (record) => record[2] === "Weigh"
+                    )[4]
+                ).toBe(451);
+            }
+        }
+    );
 
     it("covers Quick log edit guards, bulk errors, and label misses", () => {
         const workbook = createLoggerWorkbook();

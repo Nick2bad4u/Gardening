@@ -27,7 +27,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.17.1");
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.18.0");
 const webPlantImageUrls = JSON.parse(
     JSON.stringify(vm.runInContext("WEB_PLANT_IMAGE_URLS", context))
 );
@@ -370,6 +370,16 @@ assert.doesNotMatch(html, /weightState:\s*state\.weightState/);
 assert.match(html, /"Last completed dry"/);
 assert.match(html, /plant\.dryOrLowestWeightBasis/);
 assert.match(html, /plant\.dryOrLowestWeightDate/);
+assert.match(html, /plant\.recommendedWaterDate/);
+assert.match(html, /plant\.wateringGuidance/);
+assert.match(source, /function installWateringRecommendations\(\)/);
+assert.equal(vm.runInContext("BASELINE_VIEW_HEADERS.length", context), 36);
+assert.equal(vm.runInContext("DASHBOARD_VIEW_HEADERS.length", context), 23);
+assert.equal(vm.runInContext("DRY_DOWN_MODEL_HEADERS.length", context), 16);
+assert.deepEqual(
+    Array.from(vm.runInContext("BASELINE_VIEW_HEADERS.slice(-2)", context)),
+    ["Recommended water date", "Watering guidance"]
+);
 assert.match(
     html,
     /const PHOTO_VISIBILITY_KEY = "gardenLoggerPhotosVisibleV1"/

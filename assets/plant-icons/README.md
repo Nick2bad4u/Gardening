@@ -2,8 +2,12 @@
 
 These standalone multicolor SVGs are generated from
 [`docs/plant-booklet/plant-icons.svg`](../../docs/plant-booklet/plant-icons.svg).
-Each file represents one field-guide profile and can be reused without loading
-the complete sprite.
+The 38 files cover 36 field-guide profiles and two whole-planter portraits and
+can be used without loading the complete sprite. The latter are
+`shared-rehab-cactus-planter.svg` (**#1 / P19**) and
+`shared-succulent-planter.svg` (**#2 / P20**). They fix the generic-seedling
+fallback for tracker records that link to the field guide's contents instead
+of a single component profile.
 
 Plant portraits use a native `0 0 64 64` coordinate system. The larger drawing
 grid supports collection-specific silhouettes, clipped rib and spine detail,

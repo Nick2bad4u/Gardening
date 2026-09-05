@@ -8,6 +8,7 @@ import { remark } from "remark";
 import { format, resolveConfig } from "prettier";
 
 import { syncPlantIcons } from "./sync-plant-icons.mjs";
+import { syncUiIcons } from "./sync-ui-icons.mjs";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, "..");
@@ -1807,6 +1808,7 @@ async function renderBooklet(profiles) {
 
 async function main() {
     const checkOnly = process.argv.includes("--check");
+    await syncUiIcons({ checkOnly });
     await syncPlantIcons({ checkOnly });
     const [
         profiles,

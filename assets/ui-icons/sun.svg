@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-sun-title" data-ui-icon="sun" focusable="false">
+  <title id="ui-sun-title">Sun</title>
+<defs>
+<linearGradient id="ui-sun-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+<linearGradient id="ui-sun-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#80bf8b"/>
+<stop offset="0.55" stop-color="#66b57c"/>
+<stop offset="1" stop-color="#5ca06f"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<circle cx="12" cy="12" r="4.5" fill="url(#ui-sun-material-0)" stroke="#765a28" stroke-width="1"/>
+    <path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2.1 2.1M16.9 16.9 19 19m0-14-2.1 2.1M7.1 16.9 5 19" stroke="#d58150" stroke-linecap="round" stroke-width="1.5"/>
+    <path d="M14.5 20c0.3-2.5 1.7-3.9 4.2-4.2-0.2 2.4-1.6 3.8-4.2 4.2Z" fill="url(#ui-sun-material-1)" stroke="#3c6145" stroke-linejoin="round" stroke-width="0.6"/>
+</g>
+</svg>

@@ -294,6 +294,22 @@ regeneration or predictive model is needed for this upgrade. The two obsolete
 AppSheet predictive models remain removed; there is one reproducible forecast
 source.
 
+The **5.18.0 source extension** appends `Recommended water date` and
+`Watering guidance` to Baselines (AI:AJ), increasing its derived schema to 36
+fields. After the workbook installer is applied, regenerate **only Baselines**,
+keep it read-only, set the new fields to Date and LongText, and include them in
+the Watering forecast view. Save the app only after checking the regenerated
+columns and existing views. Do not expose the hidden model helper or regenerate
+canonical History and staging tables for this change.
+
+The new date is conditional on inspection and follows the learned dry-down
+curve; it does not add a fixed four- or six-day drought delay. Money tree and
+split rock intentionally use condition-based guidance instead of weight-only
+water dates. See the
+[watering-planning rules and deployment procedure](../scripts/google-sheets/README.md#conditional-watering-planning-dates-5180-source).
+This describes the source extension, not a claim that the current live app has
+already been regenerated.
+
 The following hidden workbook sheets are presentation helpers, not canonical
 datasets:
 

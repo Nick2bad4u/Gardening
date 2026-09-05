@@ -415,16 +415,18 @@ async function main() {
             requiredIconSymbols.every((name) => iconSymbolSet.has(name)),
         "The shared icon sprite is missing a required symbol or contains duplicate IDs."
     );
-    const expectedPlantIconSymbols = profileSlugs.map(
-        (slug) => `plant-${slug}`
-    );
+    const expectedPlantIconSymbols = [
+        ...profileSlugs.map((slug) => `plant-${slug}`),
+        "plant-shared-rehab-cactus-planter",
+        "plant-shared-succulent-planter",
+    ];
     const renderedPlantIconSymbols = iconSymbols.filter((name) =>
         name.startsWith("plant-")
     );
     assert(
-        renderedPlantIconSymbols.length === profiles.length &&
+        renderedPlantIconSymbols.length === expectedPlantIconSymbols.length &&
             expectedPlantIconSymbols.every((name) => iconSymbolSet.has(name)),
-        "The shared icon sprite must contain exactly one plant-specific portrait for every profile."
+        "The sprite must contain one portrait per profile plus the two shared-planter portraits."
     );
     const plantPortraitBodies = expectedPlantIconSymbols.map((name) => {
         const escapedName = name.replaceAll("-", "\\-");
@@ -439,7 +441,8 @@ async function main() {
     });
     assert(
         plantPortraitBodies.every(Boolean) &&
-            new Set(plantPortraitBodies).size === profiles.length,
+            new Set(plantPortraitBodies).size ===
+                expectedPlantIconSymbols.length,
         "Every profile must use distinct morphology-led SVG portrait artwork."
     );
     assert(

@@ -113,16 +113,16 @@ Cache Storage retains each SVG across reloads, including when the image server
 is unreachable. This caches artwork only; it does not make the Google-hosted
 logger itself available offline.
 
-`npm run build:booklet` derives `PLANT_ICON_REVISION` from the 36 exported SVGs.
+`npm run build:booklet` derives `PLANT_ICON_REVISION` from the 38 exported SVGs.
 Each image URL includes this revision. The cache stores one entry per portrait
 and replaces an older revision when needed, so future artwork updates do not
 leave the logger stuck on old icons or accumulate a second complete set.
 Publish the Pages assets before deploying a logger that refers to their revision.
 
 If persistent image storage is unavailable, portraits use ordinary browser HTTP
-caching. Missing images fall back to the built-in plant icon. The shared P19 and
-P20 planters use that icon directly because their field-guide links point to the
-collection contents rather than a single plant profile. Portrait caching never
+caching. Missing images fall back to the built-in plant icon. Logger 5.18.0 gives
+the shared P19 and P20 planters their own photo-informed portraits, independent
+of their collection-contents links. Portrait caching never
 clears the local draft, save-recovery, or queued-observation storage.
 
 ## Local development and tests
@@ -531,9 +531,16 @@ The nutrient yes/no choice, product, and amount are remembered and mirrored
 between single and bulk care for that browser session. The 12 single-entry
 event buttons form a three-by-four grid; bulk care offers Water, Check,
 Rotation, Clean, Prune, Pest, and Other.
-It deliberately clears measurements after each confirmed save. The desktop
-view keeps links and recent History in a sidebar; phone layouts stack those
-surfaces above the single-entry and bulk-care tabs.
+It deliberately clears measurements after each confirmed save. Bulk care has
+its own remembered **List / Labels** switch, with cached SVG portraits in both
+views and multiple selections shared across them. Filtering or switching modes
+does not discard selected plants; **Select visible** adds only the current
+matches, and **Clear selection** removes all selections. Label buttons use
+natural pot-label order while save requests retain canonical P-ID order.
+The desktop sidebar keeps the garden links. On both desktop and phones, the
+active form's save/queue controls come first, followed by the phone queue when
+it contains entries (or a storage warning), then Recent History last. A queued
+single-plant observation remains visible and sendable while using bulk care.
 
 Apps Script serves HTML inside Google's own sandboxed wrapper. The Google
 authorship banner belongs to that wrapper and cannot be hidden by this project's
@@ -678,13 +685,71 @@ recalculates when the referenced History data changes. This follows Google's
 [range-based custom-function guidance](https://developers.google.com/apps-script/guides/sheets/functions).
 Ordinary formulas in the existing Baselines fields feed Dashboard, plant
 pages, and AppSheet. Keep this helper disconnected from AppSheet; all existing
-History, staging, and 34-column Baselines contracts are unchanged.
+History and staging contracts are unchanged. The original learning rollout used
+34 Baselines columns; the watering-planning extension below appends two derived
+fields without moving the existing ones.
 
 After backing up and deploying the checked-in script, run
 `installDryDownLearning()` to install the helper and replace only the
 forecast-related Baselines formulas. It preserves the owner's sheet layout,
 charts, and all canonical observations. `refreshGardenWorkbook()` also
 includes the helper when deliberately rebuilding the full presentation.
+
+### Conditional watering-planning dates (5.18.0 source)
+
+`Recommended water date` is a **planning estimate, conditional on inspection**,
+not an instruction to water on a deadline. It uses the supported near-dry date
+from the same learned curve, rounded up to a calendar day. New measurements and
+reliable completed cycles update it automatically. Repots, unsupported curves,
+and partial watering retain the existing forecast safeguards.
+
+There is no automatic four- or six-day delay after the modeled dry point. A
+pre-watering weight does not prove bone-dry soil, and past watering timestamps
+cannot establish an optimal drought duration without independent observations
+of root-zone dryness and plant condition. The logger retains the broader
+**Reweigh** window and model basis beside the date so its uncertainty stays
+visible. Missed windows require fresh inspection, not an automatic watering.
+
+- Most cacti and succulent records receive a conditional date with a dry-root
+  and plant-readiness check, reducing watering during rest.
+- **P21 / money tree** has no weight-only water date. Check the upper 2 in of
+  medium as documented by its nursery label; do not wait for the whole root ball
+  to become bone dry.
+- **P28 / split rock** has no weight-only water date. Check inner-leaf firmness
+  and leaf replacement; wrinkled old leaves or a dry pot alone are insufficient.
+- **P22 / Kiwi aeonium** calls out active growth versus resting conditions.
+- **P20 and P30 / shared succulent planters** require checking the shared root
+  zone and every component, not just one visible plant.
+
+The appended source schema is:
+
+| Sheet                    | Recommended water date | Watering guidance | Total derived fields |
+| ------------------------ | ---------------------- | ----------------- | -------------------- |
+| Baselines                | AI                     | AJ                | 36                   |
+| Dashboard                | V                      | W                 | 23                   |
+| Dry-down models (hidden) | O                      | P                 | 16                   |
+
+After a native Drive backup and fresh preflight, `installWateringRecommendations()`
+installs the model/forecast formulas and appends only these two visible columns.
+It checks both destinations before writing and refuses unexpected headers,
+unlabelled content, or formulas. The new formulas use each displayed row's Plant
+ID, preserving custom ordering, charts, all original columns, and canonical
+History. Existing `installDryDownLearning()` remains available for a forecast-only
+refresh. Do not run a full workbook rebuild merely to add these fields.
+
+AppSheet needs a **Baselines-only regeneration and save** to expose the appended
+fields in its app. Keep Baselines read-only, configure the new date as Date and
+the guidance as LongText, then include both in the Watering forecast view. Do not
+add the hidden helper as an AppSheet table or regenerate History/staging for this
+change. This section describes checked-in behavior; the deployment baseline at
+the top records the last verified production release.
+
+Care basis: [University of Minnesota cacti and succulent guidance](https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents)
+supports drying between waterings and reducing water in low-light rest, not a
+universal extra drought interval. Collection-specific exceptions remain in the
+[money tree](../../docs/plants/houseplants/pachira-glabra.md),
+[split rock](../../docs/plants/succulents/pleiospilos-nelii-royal-flush.md), and
+[Kiwi aeonium](../../docs/plants/succulents/aeonium-haworthii-dream-color.md) profiles.
 
 The workbook and public pages are personal but publicly viewable. Do not put
 private addresses, credentials, or precise home-location information in Notes.

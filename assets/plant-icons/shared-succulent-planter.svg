@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="shared-succulent-planter-title shared-succulent-planter-description" data-plant-slug="shared-succulent-planter" focusable="false">
+  <title id="shared-succulent-planter-title">Shared succulent planter · #2 plant portrait</title>
+  <desc id="shared-succulent-planter-description">A red-edged blue-green rosette, bright round-leaved elephant bush, silver teaspoons, and copper spoons share a low charcoal rectangular planter.</desc>
+  <defs>
+    <linearGradient id="shared-succulent-pot" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#686c67"/>
+      <stop offset="1" stop-color="#343e3a"/>
+    </linearGradient>
+    <linearGradient id="shared-succulent-green" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#c4d86b"/>
+      <stop offset="0.45" stop-color="#83ac5a"/>
+      <stop offset="1" stop-color="#426944"/>
+    </linearGradient>
+    <linearGradient id="shared-succulent-rosette" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#c5ccc0"/>
+      <stop offset="0.55" stop-color="#94b0a5"/>
+      <stop offset="1" stop-color="#536f69"/>
+    </linearGradient>
+    <linearGradient id="shared-succulent-silver" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#e0e3d5"/>
+      <stop offset="1" stop-color="#9cae9e"/>
+    </linearGradient>
+    <linearGradient id="shared-succulent-copper" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#d8b895"/>
+      <stop offset="1" stop-color="#956849"/>
+    </linearGradient>
+    <g id="shared-succulent-round-pair">
+      <ellipse cx="-2.3" cy="-1" rx="2.8" ry="2.1" transform="rotate(25 -2.3 -1)" fill="url(#shared-succulent-green)" stroke="#4e7247" stroke-width="0.35"/>
+      <ellipse cx="2.2" cy="-2" rx="2.5" ry="2" transform="rotate(-32 2.2 -2)" fill="url(#shared-succulent-green)" stroke="#4e7247" stroke-width="0.35"/>
+      <path d="M-4 -1.4L-2 -0.9M1 -2.4L3 -3" stroke="#d6e6a2" stroke-width="0.4" stroke-linecap="round"/>
+    </g>
+    <g id="shared-succulent-rosette-leaf">
+      <path d="M0 0C-5 -3 -6 -10 -2 -14C-0.8 -15 0 -16 0 -17C1 -15 3 -14 4 -12C7 -7 4 -2 0 0Z" fill="url(#shared-succulent-rosette)" stroke="#b27d82" stroke-width="0.5"/>
+      <path d="M0 -2C-1 -6 -2 -10 0 -14" fill="none" stroke="#d3d9c9" stroke-width="0.55" opacity="0.65"/>
+    </g>
+    <g id="shared-succulent-spoon">
+      <path d="M0 0C-6 -1 -10 -5 -8 -8C-5 -12 0 -6 0 0Z" fill="url(#shared-succulent-silver)" stroke="#849b8a" stroke-width="0.5"/>
+      <path d="M-1 -1L-7 -7" stroke="#e9ebdf" stroke-width="0.6"/>
+    </g>
+  </defs>
+  <ellipse cx="33" cy="58" rx="24" ry="2.5" fill="#243c30" opacity="0.15"/>
+  <path d="M7 40L56 36L54 55L11 59Z" fill="url(#shared-succulent-pot)" stroke="#34443b" stroke-width="0.9"/>
+  <path d="M7 39L54 34L59 39L11 46Z" fill="#95988b" stroke="#34443b" stroke-width="0.8"/>
+  <path d="M12 40L52 36L55 39L13 43Z" fill="#665442"/>
+  <path d="M13 48L52 43" stroke="#91968c" stroke-width="0.7"/>
+  <path d="M39 38L37 10" stroke="#888b64" stroke-width="1.5"/>
+  <use href="#shared-succulent-spoon" transform="translate(38 31)"/>
+  <use href="#shared-succulent-spoon" transform="translate(38 29) scale(-1 1)"/>
+  <use href="#shared-succulent-spoon" transform="translate(37.5 24)"/>
+  <use href="#shared-succulent-spoon" transform="translate(37.5 22) scale(-1 1)"/>
+  <use href="#shared-succulent-spoon" transform="translate(37 17) scale(0.8)"/>
+  <use href="#shared-succulent-spoon" transform="translate(37 15) scale(-0.8 0.8)"/>
+  <path d="M49 38L49 18" stroke="#8e7851" stroke-width="1.25"/>
+  <path d="M49 31C42 31 40 25 43 23C47 22 49 27 49 31ZM49 25C55 25 59 20 56 17C53 15 49 21 49 25ZM49 36C54 37 60 33 58 29C55 26 50 31 49 36Z" fill="url(#shared-succulent-copper)" stroke="#96795a" stroke-width="0.6"/>
+  <path d="M48 29L43 25M50 24L55 19M51 35L57 30" stroke="#e0c5a4" stroke-width="0.45"/>
+  <path d="M24 42L24 18L19 9M24 32L12 24L8 20M24 27L30 19L30 13M24 37L13 35L7 30M20 25L16 17" fill="none" stroke="#795c44" stroke-linecap="round" stroke-width="1.5"/>
+  <g>
+    <use href="#shared-succulent-round-pair" transform="translate(19 10) scale(0.8)"/>
+    <use href="#shared-succulent-round-pair" transform="translate(22 16)"/>
+    <use href="#shared-succulent-round-pair" transform="translate(24 22)"/>
+    <use href="#shared-succulent-round-pair" transform="translate(30 14) scale(0.8)"/>
+    <use href="#shared-succulent-round-pair" transform="translate(29 20)"/>
+    <use href="#shared-succulent-round-pair" transform="translate(8 21) scale(0.8)"/>
+    <use href="#shared-succulent-round-pair" transform="translate(14 25)"/>
+    <use href="#shared-succulent-round-pair" transform="translate(18 19) scale(0.9)"/>
+    <use href="#shared-succulent-round-pair" transform="translate(20 29)"/>
+    <use href="#shared-succulent-round-pair" transform="translate(27 28)"/>
+    <use href="#shared-succulent-round-pair" transform="translate(8 31) scale(0.8)"/>
+    <use href="#shared-succulent-round-pair" transform="translate(15 35)"/>
+    <use href="#shared-succulent-round-pair" transform="translate(24 35)"/>
+    <use href="#shared-succulent-round-pair" transform="translate(22 40) scale(0.8)"/>
+  </g>
+  <g transform="translate(40 42)">
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(15) scale(1 0.9)"/>
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(70) scale(0.95 0.85)"/>
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(125) scale(0.95 0.8)"/>
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(180) scale(0.85 0.65)"/>
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(230) scale(0.9 0.8)"/>
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(285) scale(0.95 0.85)"/>
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(340) scale(0.65 0.65)"/>
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(45) scale(0.65 0.6)"/>
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(110) scale(0.65 0.55)"/>
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(175) scale(0.6 0.5)"/>
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(240) scale(0.6 0.55)"/>
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(310) scale(0.4 0.4)"/>
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(30) scale(0.4 0.4)"/>
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(115) scale(0.4 0.35)"/>
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(210) scale(0.35 0.3)"/>
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(295) scale(0.22 0.22)"/>
+    <use href="#shared-succulent-rosette-leaf" transform="rotate(60) scale(0.22 0.22)"/>
+  </g>
+</svg>

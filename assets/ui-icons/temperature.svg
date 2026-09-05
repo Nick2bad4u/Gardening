@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-temperature-title" data-ui-icon="temperature" focusable="false">
+  <title id="ui-temperature-title">Temperature</title>
+<defs>
+<linearGradient id="ui-temperature-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#f0e7d2"/>
+<stop offset="0.55" stop-color="#eee6d3"/>
+<stop offset="1" stop-color="#c9c7b5"/>
+</linearGradient>
+<linearGradient id="ui-temperature-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e48b76"/>
+<stop offset="0.55" stop-color="#e07562"/>
+<stop offset="1" stop-color="#be6d5a"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="M8.5 4.5a3 3 0 0 1 6 0v8.2a5 5 0 1 1-6 0Z" fill="url(#ui-temperature-material-0)" stroke="#6f5b60" stroke-width="1.1"/>
+    <path d="M11.5 6v9.4" stroke="#da6c59" stroke-linecap="round" stroke-width="2.2"/>
+    <circle cx="11.5" cy="17" r="2.5" fill="url(#ui-temperature-material-1)"/>
+    <path d="m17.5 5 3 3m0-3-3 3m1.5-4.5v6" stroke="#60a5cb" stroke-linecap="round" stroke-width="1"/>
+</g>
+</svg>

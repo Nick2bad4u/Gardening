@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-clean-title" data-ui-icon="clean" focusable="false">
+  <title id="ui-clean-title">Clean</title>
+<defs>
+<linearGradient id="ui-clean-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+<linearGradient id="ui-clean-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#8fb4c8"/>
+<stop offset="0.55" stop-color="#78a7c6"/>
+<stop offset="1" stop-color="#6a95aa"/>
+</linearGradient>
+<linearGradient id="ui-clean-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#80bf8b"/>
+<stop offset="0.55" stop-color="#66b57c"/>
+<stop offset="1" stop-color="#5ca06f"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="m8 4 3 3-5 5-3-3Z" fill="url(#ui-clean-material-0)" stroke="#765a28" stroke-linejoin="round" stroke-width="1"/>
+    <path d="m6 12 6 8H3Z" fill="url(#ui-clean-material-1)" stroke="#405e71" stroke-linejoin="round" stroke-width="1"/>
+    <path d="m15 3 0.7 2.3L18 6l-2.3 0.7L15 9l-0.7-2.3L12 6l2.3-0.7Zm4 7 0.5 1.5 1.5 0.5-1.5 0.5L19 14l-0.5-1.5L17 12l1.5-0.5Z" fill="url(#ui-clean-material-2)" stroke="#3c6145" stroke-linejoin="round" stroke-width="0.6"/>
+</g>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-mobile-title" data-ui-icon="mobile" focusable="false">
+  <title id="ui-mobile-title">Mobile</title>
+<defs>
+<linearGradient id="ui-mobile-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#8fb3c8"/>
+<stop offset="0.55" stop-color="#78a6c6"/>
+<stop offset="1" stop-color="#6a94aa"/>
+</linearGradient>
+<linearGradient id="ui-mobile-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#f0ead6"/>
+<stop offset="0.55" stop-color="#eee9d8"/>
+<stop offset="1" stop-color="#c9c9b9"/>
+</linearGradient>
+<linearGradient id="ui-mobile-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+<linearGradient id="ui-mobile-material-3" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#7ebf8b"/>
+<stop offset="0.55" stop-color="#63b57c"/>
+<stop offset="1" stop-color="#5aa06f"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<rect x="6" y="2" width="12" height="20" rx="2.5" fill="url(#ui-mobile-material-0)" stroke="#405e71" stroke-width="1.1"/>
+    <rect x="7.7" y="4.4" width="8.6" height="13.5" rx="1" fill="url(#ui-mobile-material-1)"/>
+    <circle cx="12" cy="20" r="1" fill="url(#ui-mobile-material-2)"/>
+    <path d="M9.2 12.6c0.2-2.8 1.7-4.4 4.5-4.6-0.2 2.7-1.7 4.2-4.5 4.6Z" fill="url(#ui-mobile-material-3)" stroke="#3c6145" stroke-linejoin="round" stroke-width="0.7"/>
+</g>
+</svg>

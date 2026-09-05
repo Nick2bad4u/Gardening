@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-arrow-right-title" data-ui-icon="arrow-right" focusable="false">
+  <title id="ui-arrow-right-title">Arrow right</title>
+<defs>
+<linearGradient id="ui-arrow-right-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#99aca5"/>
+<stop offset="0.55" stop-color="#849e9c"/>
+<stop offset="1" stop-color="#748d89"/>
+</linearGradient>
+</defs>
+<g>
+<g transform="rotate(0 32 32)">
+<path d="M9 26H35V15L55 32L35 49V38H9Q6 38 6 35V29Q6 26 9 26Z" fill="url(#ui-arrow-right-material-0)" stroke="#496261" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M11 29H38V22L48 31" fill="none" stroke="#ccd5c0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M38 42L49 33" fill="none" stroke="#baa169" stroke-width="2.1" stroke-linecap="round"/>
+</g>
+</g>
+</svg>

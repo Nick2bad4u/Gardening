@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-photos-title" data-ui-icon="photos" focusable="false">
+  <title id="ui-photos-title">Photos</title>
+<defs>
+<linearGradient id="ui-photos-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#91b4cb"/>
+<stop offset="0.55" stop-color="#7ba7ca"/>
+<stop offset="1" stop-color="#6d95ae"/>
+</linearGradient>
+<linearGradient id="ui-photos-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#f0ead6"/>
+<stop offset="0.55" stop-color="#eee9d8"/>
+<stop offset="1" stop-color="#c9c9b9"/>
+</linearGradient>
+<linearGradient id="ui-photos-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+<linearGradient id="ui-photos-material-3" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#73bf8d"/>
+<stop offset="0.55" stop-color="#56b57e"/>
+<stop offset="1" stop-color="#4fa071"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<rect x="3" y="4" width="15" height="14" rx="2" fill="url(#ui-photos-material-0)" stroke="#314a58" stroke-width="1.1" transform="rotate(-6 10.5 11)"/>
+    <rect x="6" y="5.5" width="15" height="14" rx="2" fill="url(#ui-photos-material-1)" stroke="#314a58" stroke-width="1.1"/>
+    <circle cx="16.8" cy="9.2" r="1.7" fill="url(#ui-photos-material-2)"/>
+    <path d="m7.8 17 4.2-4 2.4 2.1 2.2-2 3 3V18H7.8Z" fill="url(#ui-photos-material-3)" stroke="#314a58" stroke-linejoin="round" stroke-width="0.7"/>
+</g>
+</svg>

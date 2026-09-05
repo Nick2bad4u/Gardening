@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-identity-title" data-ui-icon="identity" focusable="false">
+  <title id="ui-identity-title">Identity</title>
+<defs>
+<linearGradient id="ui-identity-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#bea6ca"/>
+<stop offset="0.55" stop-color="#b196c9"/>
+<stop offset="1" stop-color="#9887ad"/>
+</linearGradient>
+<linearGradient id="ui-identity-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#80c38b"/>
+<stop offset="0.55" stop-color="#66ba7c"/>
+<stop offset="1" stop-color="#5ca46f"/>
+</linearGradient>
+<linearGradient id="ui-identity-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="M2.5 12s3.6-6 9.5-6 9.5 6 9.5 6-3.6 6-9.5 6-9.5-6-9.5-6Z" fill="url(#ui-identity-material-0)" stroke="#654e7a" stroke-linejoin="round" stroke-width="1.1"/>
+    <circle cx="12" cy="12" r="3.4" fill="url(#ui-identity-material-1)" stroke="#3c6147" stroke-width="1"/>
+    <circle cx="12" cy="12" r="1.25" fill="url(#ui-identity-material-2)"/>
+</g>
+</svg>

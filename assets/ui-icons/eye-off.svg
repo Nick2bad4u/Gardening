@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-eye-off-title" data-ui-icon="eye-off" focusable="false">
+  <title id="ui-eye-off-title">Eye off</title>
+<defs>
+<linearGradient id="ui-eye-off-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#95b8ca"/>
+<stop offset="0.55" stop-color="#7facc9"/>
+<stop offset="1" stop-color="#7099ad"/>
+</linearGradient>
+<linearGradient id="ui-eye-off-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#80c38b"/>
+<stop offset="0.55" stop-color="#66ba7c"/>
+<stop offset="1" stop-color="#5ca46f"/>
+</linearGradient>
+<linearGradient id="ui-eye-off-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="M2.5 12s3.6-6 9.5-6 9.5 6 9.5 6-3.6 6-9.5 6-9.5-6-9.5-6Z" fill="url(#ui-eye-off-material-0)" stroke="#405e71" stroke-linejoin="round" stroke-width="1.1"/>
+    <circle cx="12" cy="12" r="3.4" fill="url(#ui-eye-off-material-1)" stroke="#3c6147" stroke-width="1"/>
+    <path d="m4 3 16 18" stroke="#d37d56" stroke-linecap="round" stroke-width="2.2"/>
+    <circle cx="18.5" cy="5.5" r="1.4" fill="url(#ui-eye-off-material-2)"/>
+</g>
+</svg>

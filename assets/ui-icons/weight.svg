@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-weight-title" data-ui-icon="weight" focusable="false">
+  <title id="ui-weight-title">Weight</title>
+<defs>
+<linearGradient id="ui-weight-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#687465"/>
+<stop offset="0.55" stop-color="#48594e"/>
+<stop offset="1" stop-color="#44564a"/>
+</linearGradient>
+<linearGradient id="ui-weight-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#91a2a4"/>
+<stop offset="0.55" stop-color="#7a919a"/>
+<stop offset="1" stop-color="#6c8387"/>
+</linearGradient>
+<linearGradient id="ui-weight-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#dce0c9"/>
+<stop offset="0.55" stop-color="#d6ddc8"/>
+<stop offset="1" stop-color="#b6c0ac"/>
+</linearGradient>
+<linearGradient id="ui-weight-material-3" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#d5b77e"/>
+<stop offset="0.55" stop-color="#ceab6c"/>
+<stop offset="1" stop-color="#af9862"/>
+</linearGradient>
+</defs>
+<g>
+<ellipse cx="32" cy="56" rx="24" ry="3" fill="url(#ui-weight-material-0)" opacity="0.15"/>
+    <rect x="8" y="12" width="48" height="43" rx="10" fill="url(#ui-weight-material-1)" stroke="#40545b" stroke-width="1.8"/>
+    <path d="M10 23C10 14 13 14 21 14H43C51 14 54 16 54 23" fill="none" stroke="#afc1bd" stroke-width="1.5"/>
+    <rect x="18" y="20" width="28" height="13" rx="3" fill="url(#ui-weight-material-2)" stroke="#586b5d" stroke-width="1.3"/>
+    <path d="M24 24H28V29H24V24ZM34 24H38V29H34V24Z" fill="none" stroke="#5c7265" stroke-width="1.1"/>
+    <path d="M18 39V45M23 39V45M41 39V45M46 39V45" stroke="#acbbb5" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="32" cy="43" r="3" fill="url(#ui-weight-material-3)" stroke="#7a6747" stroke-width="0.8"/>
+</g>
+</svg>

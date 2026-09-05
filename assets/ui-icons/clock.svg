@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-clock-title" data-ui-icon="clock" focusable="false">
+  <title id="ui-clock-title">Clock</title>
+<defs>
+<linearGradient id="ui-clock-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#687869"/>
+<stop offset="0.55" stop-color="#495e53"/>
+<stop offset="1" stop-color="#455a4e"/>
+</linearGradient>
+<linearGradient id="ui-clock-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#9db299"/>
+<stop offset="0.55" stop-color="#89a58d"/>
+<stop offset="1" stop-color="#78937d"/>
+</linearGradient>
+<linearGradient id="ui-clock-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e6e2cd"/>
+<stop offset="0.55" stop-color="#e2dfcc"/>
+<stop offset="1" stop-color="#bfc1af"/>
+</linearGradient>
+<linearGradient id="ui-clock-material-3" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#cfb07f"/>
+<stop offset="0.55" stop-color="#c6a36d"/>
+<stop offset="1" stop-color="#a99163"/>
+</linearGradient>
+</defs>
+<g>
+<circle cx="33" cy="34" r="24" fill="url(#ui-clock-material-0)" opacity="0.12"/>
+    <circle cx="32" cy="31" r="24" fill="url(#ui-clock-material-1)" stroke="#496151" stroke-width="1.8"/>
+    <circle cx="32" cy="31" r="19" fill="url(#ui-clock-material-2)" stroke="#b5bda9" stroke-width="1"/>
+    <path d="M32 14V17M32 45V48M15 31H18M46 31H49" stroke="#748370" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M21 20L22 21M43 20L42 21M21 42L22 41M43 42L42 41" stroke="#9ca58d" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M32 21V31L41 36" fill="none" stroke="#5a7585" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="32" cy="31" r="2.8" fill="url(#ui-clock-material-3)" stroke="#7f6b4c" stroke-width="0.9"/>
+</g>
+</svg>

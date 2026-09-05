@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-prune-title" data-ui-icon="prune" focusable="false">
+  <title id="ui-prune-title">Prune</title>
+<defs>
+<linearGradient id="ui-prune-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#80bf8b"/>
+<stop offset="0.55" stop-color="#66b57c"/>
+<stop offset="1" stop-color="#5ca06f"/>
+</linearGradient>
+<linearGradient id="ui-prune-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e09b6e"/>
+<stop offset="0.55" stop-color="#db8959"/>
+<stop offset="1" stop-color="#ba7d53"/>
+</linearGradient>
+<linearGradient id="ui-prune-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<circle cx="7" cy="17" r="3" fill="url(#ui-prune-material-0)" stroke="#3c6145" stroke-width="1"/>
+    <circle cx="17" cy="17" r="3" fill="url(#ui-prune-material-1)" stroke="#754f2b" stroke-width="1"/>
+    <path d="m8.8 14.6 8-11m-2.6 11-7-10" stroke="#5f8bae" stroke-linecap="round" stroke-width="1.8"/>
+    <circle cx="12" cy="10.5" r="1.5" fill="url(#ui-prune-material-2)" stroke="#765a28" stroke-width="0.7"/>
+</g>
+</svg>

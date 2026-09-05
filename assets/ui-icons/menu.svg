@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-menu-title" data-ui-icon="menu" focusable="false">
+  <title id="ui-menu-title">Menu</title>
+<defs>
+<linearGradient id="ui-menu-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e0e5d1"/>
+<stop offset="0.55" stop-color="#dbe3d1"/>
+<stop offset="1" stop-color="#bac5b3"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<rect x="2.5" y="3" width="19" height="18" rx="4" fill="url(#ui-menu-material-0)" stroke="#31523c" stroke-width="1.1"/>
+    <path d="M7 8h10" stroke="#43a169" stroke-linecap="round" stroke-width="2"/>
+    <path d="M7 12h10" stroke="#d39446" stroke-linecap="round" stroke-width="2"/>
+    <path d="M7 16h10" stroke="#638cb6" stroke-linecap="round" stroke-width="2"/>
+</g>
+</svg>

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-print-title" data-ui-icon="print" focusable="false">
+  <title id="ui-print-title">Print</title>
+<defs>
+<linearGradient id="ui-print-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#f0ead6"/>
+<stop offset="0.55" stop-color="#eee9d8"/>
+<stop offset="1" stop-color="#c9c9b9"/>
+</linearGradient>
+<linearGradient id="ui-print-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#88b4c6"/>
+<stop offset="0.55" stop-color="#70a7c4"/>
+<stop offset="1" stop-color="#6495a9"/>
+</linearGradient>
+<linearGradient id="ui-print-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="M7 3h10v6H7z" fill="url(#ui-print-material-0)" stroke="#405767" stroke-width="1.1"/>
+    <rect x="3" y="8" width="18" height="9" rx="2.5" fill="url(#ui-print-material-1)" stroke="#405767" stroke-width="1.1"/>
+    <path d="M7 14h10v7H7z" fill="url(#ui-print-material-0)" stroke="#405767" stroke-width="1.1"/>
+    <path d="M9 17h6m-6 2h4" stroke="#5a9c6a" stroke-linecap="round" stroke-width="1"/>
+    <circle cx="17.4" cy="11.2" r="1" fill="url(#ui-print-material-2)"/>
+</g>
+</svg>

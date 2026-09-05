@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-sheets-title" data-ui-icon="sheets" focusable="false">
+  <title id="ui-sheets-title">Sheets</title>
+<defs>
+<linearGradient id="ui-sheets-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#75b87f"/>
+<stop offset="0.55" stop-color="#58ac6e"/>
+<stop offset="1" stop-color="#519964"/>
+</linearGradient>
+<linearGradient id="ui-sheets-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#a4d1a4"/>
+<stop offset="0.55" stop-color="#92cb9a"/>
+<stop offset="1" stop-color="#7fb187"/>
+</linearGradient>
+<linearGradient id="ui-sheets-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#f0ead6"/>
+<stop offset="0.55" stop-color="#eee9d8"/>
+<stop offset="1" stop-color="#c9c9b9"/>
+</linearGradient>
+<linearGradient id="ui-sheets-material-3" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e7c369"/>
+<stop offset="0.55" stop-color="#e4ba53"/>
+<stop offset="1" stop-color="#c1a44e"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="M5 2.5h10l4 4V21.5H5Z" fill="url(#ui-sheets-material-0)" stroke="#315940" stroke-linejoin="round" stroke-width="1.1"/>
+    <path d="M15 2.5v4h4" fill="url(#ui-sheets-material-1)" stroke="#315940" stroke-linejoin="round" stroke-width="1.1"/>
+    <path d="M8 9.5h8v8H8z" fill="url(#ui-sheets-material-2)" stroke="#315940" stroke-width="0.8"/>
+    <path d="M8 12.2h8M8 14.8h8M10.7 9.5v8" stroke="#558766" stroke-width="0.7"/>
+    <path d="M15.4 18.4h3.9v3.1h-3.9z" fill="url(#ui-sheets-material-3)" stroke="#315940" stroke-width="0.7"/>
+</g>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ui-camera-title" data-ui-icon="camera" focusable="false">
+  <title id="ui-camera-title">Camera</title>
+<defs>
+<linearGradient id="ui-camera-material-0" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#8fb4c8"/>
+<stop offset="0.55" stop-color="#78a7c6"/>
+<stop offset="1" stop-color="#6a95aa"/>
+</linearGradient>
+<linearGradient id="ui-camera-material-1" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e0e5d1"/>
+<stop offset="0.55" stop-color="#dbe3d1"/>
+<stop offset="1" stop-color="#bac5b3"/>
+</linearGradient>
+<linearGradient id="ui-camera-material-2" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e9ca6d"/>
+<stop offset="0.55" stop-color="#e6c258"/>
+<stop offset="1" stop-color="#c2aa52"/>
+</linearGradient>
+<linearGradient id="ui-camera-material-3" x1="0" y1="0" x2="0.8" y2="1">
+<stop stop-color="#e09a70"/>
+<stop offset="0.55" stop-color="#db885b"/>
+<stop offset="1" stop-color="#ba7c55"/>
+</linearGradient>
+</defs>
+<g transform="translate(2 2) scale(2.5)">
+<path d="M4 7h4l1.4-2h5.2L16 7h4a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z" fill="url(#ui-camera-material-0)" stroke="#405e71" stroke-linejoin="round" stroke-width="1.1"/>
+    <circle cx="12" cy="13" r="4" fill="url(#ui-camera-material-1)" stroke="#3c6145" stroke-width="1"/>
+    <circle cx="12" cy="13" r="1.7" fill="url(#ui-camera-material-2)"/>
+    <circle cx="18.5" cy="9.5" r="0.9" fill="url(#ui-camera-material-3)"/>
+</g>
+</svg>
