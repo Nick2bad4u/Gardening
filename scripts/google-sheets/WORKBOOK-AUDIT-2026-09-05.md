@@ -68,3 +68,41 @@ Google's [chart specification API](https://developers.google.com/workspace/sheet
 defines the explicit domains, series, point styling, and null interpolation used
 here. The [chart update request](https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets/request#updatechartspecrequest)
 changes the specification without moving or resizing the embedded chart.
+
+## Production verification
+
+The scoped repair and watering-column extension were applied on September 5,
+2026, after their native-copy rehearsals and fresh destination checks. The backup
+remains separate from the disposable test copy. Apps Script editor/Execution API
+startup failed before the installer ran; the watering formulas and styles were
+therefore generated from the checked-in installer functions and applied through
+the supported native Sheets API. No full workbook rebuild was run.
+
+- All 691 canonical records, including the Removed record, and their formulas
+  match the pre-write snapshot cell-for-cell across A1:AP692. There are 691 unique
+  observation IDs and no duplicate active request/plant/event keys.
+- The final bounded scan covered all 46 tabs and 7,558 formulas, with no formula
+  errors. All 537 active weight values match App plant charts exactly. All 22
+  visual-estimate observations remain in History, excluded from growth helpers.
+- The live workbook retains 98 charts. Exactly 95 specifications changed; all
+  IDs and positions were preserved. All 90 individual-plant charts now have
+  explicit nonempty series. Readiness shows 18 supported current curves, two
+  plants awaiting a completed calibration cycle, and zero false trend flags.
+- Baselines AI:AJ, Dashboard V:W, and hidden model O:P are live. Twenty plants
+  currently have conditional dates. Money tree and split rock intentionally
+  retain condition-based guidance without a weight-only date.
+- AppSheet 1.100099 is saved and deployed. Baselines and the changed Insights
+  data helper were regenerated; both remain read-only. The forecast view displays
+  the optional Date and LongText fields after Next dry check. History and staging
+  schemas were not regenerated.
+- The stable logger reports 5.18.0 from immutable Apps Script version 64. Its
+  live bulk list contains 30 inline portraits and preserves multi-selection when
+  switching List / Labels. No production save or queue action was used for QA.
+  The existing Head queue schedule was re-saved and verified as exactly one
+  five-minute trigger; scheduled executions complete successfully.
+
+Browser DOM/accessibility inspection and native formatting/chart specifications
+were checked. The browser screenshot service repeatedly timed out, so final
+pixel-level review of the live workbook and AppSheet is **not** claimed. Earlier
+local logger checks covered desktop and 390 px layouts, both themes, focus,
+overflow, and the queue/history order.

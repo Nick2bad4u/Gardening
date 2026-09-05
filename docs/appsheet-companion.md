@@ -30,15 +30,15 @@ updates, or deletes `History` rows directly.
 The bridge contract and trigger details live in
 [`scripts/google-sheets/README.md`](../scripts/google-sheets/README.md#appsheet-companion-intake).
 
-Logger deployment as of 2026-09-04: logger 5.17.1 and immutable Apps Script
-version 63 are live at the existing stable deployment URL. The AppSheet schema
-and UX baseline below was verified during the earlier 5.17.0 rollout. The workbook
+Logger deployment as of 2026-09-05: logger 5.18.0 and immutable Apps Script
+version 64 are live at the existing stable deployment URL. AppSheet version
+**1.100099** is saved, deployed, and verified in its authenticated preview. The workbook
 has P29 and P30 in `Plant tracker`, `Baselines`, `Quick log`, the individual
 plant tabs, and `App bulk`. `History` and `History view` now contain 42 physical
 columns, A:AP; `App entries` contains 34, A:AH; and `App bulk` contains 54,
 A:BB. The production AppSheet schemas were regenerated to 35 and 55 columns,
-respectively, including `_RowNumber`; the regenerated 34-field `Baselines`
-table exposes 35 columns including `_RowNumber`. Water forms expose
+respectively, including `_RowNumber`; the regenerated 36-field `Baselines`
+table exposes 37 columns including `_RowNumber`. Water forms expose
 `Flood / soak-through`,
 `Thorough`, `Partial`, and `Spot`, with optional measured milliliters. P29 and
 P30 Decimal weight fields use the same positive-number validation and Weigh /
@@ -46,24 +46,25 @@ Water + weigh visibility rule as P01-P28, while `Selected plants` remains an
 EnumList of `Plant tracker` refs. The live image mapping uses cached Gyazo
 thumbnails for P19, P20, and P23-P30, and natural label order now runs through
 #6. The current-cycle refresh restored P06's completed Dry and Wet anchors and
-curve forecast without changing its observations. The rollout preserved all
-661 canonical `History` data rows, retained the duplicate P20 watering as an
+curve forecast without changing its observations. The September 5 rollout preserved all
+691 canonical `History` data rows, retained the duplicate P20 watering as an
 auditable `Removed` record, and left zero duplicate active request/plant/event
 keys, blank request IDs, or formula errors.
 
 The 5.17.1 release publishes the reviewed field-guide portraits and adds
 persistent portrait caching to the separate quick logger. Its 36 public SVGs
 were checked against the committed artwork. The AppSheet image mapping,
-navigation, and offline/sync settings have not yet been changed by that release:
-the editor is awaiting an authenticated browser session. Do not treat the quick
+navigation, and offline/sync settings were not changed by that release. The
+September 5 session verified the authenticated AppSheet editor and updated only
+the affected read-only schemas and forecast fields. Do not treat the quick
 logger's cache verification as proof of AppSheet image caching.
 
 The 5.17.0 forecast update learns completed cycles within each plant's current
 pot setup and blends new readings into that history. At rollout, P20, P21, and
 P22 qualified for historical estimates before collecting four new weights.
 The existing `Baselines` fields now expose the forecast basis and reweigh
-window. Sync AppSheet to refresh those values; no editor save or table
-regeneration is required. The new hidden `Dry-down models` helper remains
+window. That forecast-only change did not require schema regeneration; the
+later watering-plan fields did, as described below. The hidden `Dry-down models` helper remains
 disconnected from AppSheet.
 
 ## View map
@@ -75,7 +76,7 @@ disconnected from AppSheet.
 | Log               | Primary  | Full event-aware form with plant-name, pot-label, and Plant-ID lookup for every supported care event.       |
 | Bulk Log          | Primary  | Fast collection-wide Water, Weigh, combined, Rotation, Check, Clean, Prune, Pest, or Other entry.           |
 | Insights          | Primary  | Ten collection-wide chart and forecast panels described below.                                              |
-| Watering forecast | Menu     | Current dry/wet calibration, current weight, next-check, and deterministic dry-date forecasts.              |
+| Watering forecast | Menu     | Dry/wet calibration, recheck windows, conditional water dates, and plant-specific readiness guidance.       |
 | Bulk rounds       | Menu     | Submitted bulk-round rows and their save receipts.                                                          |
 | Care history      | Menu     | Read-only active history with plant thumbnails, event badges, and observation times.                        |
 | Needs attention   | Menu     | Staged entries that need correction or an explicit retry, including the exact status message.               |
@@ -289,26 +290,29 @@ See the [dry-down learning rules](../scripts/google-sheets/README.md#dry-down-le
 for exclusions, recency weighting, uncertainty, and alert thresholds.
 
 The hidden `Dry-down models` sheet is a read-only calculation helper, not an
-AppSheet table. It feeds the existing 34-column Baselines contract, so no table
-regeneration or predictive model is needed for this upgrade. The two obsolete
+AppSheet table. Its original forecast fields did not expand the then-34-column
+Baselines contract. The two obsolete
 AppSheet predictive models remain removed; there is one reproducible forecast
 source.
 
-The **5.18.0 source extension** appends `Recommended water date` and
+The **live 5.18.0 extension** appends `Recommended water date` and
 `Watering guidance` to Baselines (AI:AJ), increasing its derived schema to 36
-fields. After the workbook installer is applied, regenerate **only Baselines**,
-keep it read-only, set the new fields to Date and LongText, and include them in
-the Watering forecast view. Save the app only after checking the regenerated
-columns and existing views. Do not expose the hidden model helper or regenerate
-canonical History and staging tables for this change.
+fields. Baselines was regenerated and remains read-only. The new fields use
+Date and LongText, are optional and non-editable, and appear immediately after
+Next dry check in Watering forecast. The separate chart audit expanded the
+read-only Insights data helper from 25 to 30 physical columns; its schema was
+also regenerated to resolve the resulting app-load mismatch. No canonical
+History or staging table was regenerated, and the hidden model helper remains
+disconnected from AppSheet. The saved preview loads real records and shows the
+new dates as dates, not serial numbers.
 
 The new date is conditional on inspection and follows the learned dry-down
 curve; it does not add a fixed four- or six-day drought delay. Money tree and
 split rock intentionally use condition-based guidance instead of weight-only
 water dates. See the
-[watering-planning rules and deployment procedure](../scripts/google-sheets/README.md#conditional-watering-planning-dates-5180-source).
-This describes the source extension, not a claim that the current live app has
-already been regenerated.
+[watering-planning rules and deployment procedure](../scripts/google-sheets/README.md#conditional-watering-planning-dates-5180)
+and the [September 5 workbook audit](../scripts/google-sheets/WORKBOOK-AUDIT-2026-09-05.md)
+for the backup, exact History comparison, formula checks, and chart repairs.
 
 The following hidden workbook sheets are presentation helpers, not canonical
 datasets:

@@ -23,8 +23,8 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-As of September 4, 2026, the checked-in source and stable production deployment
-both identify the logger as **5.17.1** on immutable Apps Script version **63**.
+As of September 5, 2026, the checked-in source and stable production deployment
+both identify the logger as **5.18.0** on immutable Apps Script version **64**.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
@@ -41,10 +41,9 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
   P01-P22, intermediate P01-P28, P01-P30, and pre-watering contracts, inserts
   only missing columns, and preserves staging rows and trailing care fields.
 - `Plant tracker`, `Baselines`, `Quick log`, and the individual workbook tabs
-  include P29-P30. The native `QuickCareLog` table remains
-  `'Quick log'!A4:M34`; the two logger-managed watering fields sit immediately
-  beside it at N:O. Existing canonical History rows remain unchanged while its
-  append-only schema gains AO:AP.
+  include P29-P30. The native `QuickCareLog` table covers
+  `'Quick log'!A4:O34`, including the two logger-managed watering fields at N:O.
+  Canonical History retains its 42-column append-only contract.
 - Detailed entry supports 12 events: Water, Weigh, Measure, Check, Rotation,
   Clean, Prune, Repot, Flower, Photo, Pest, and Other. Rotation defaults to 90°.
 - A weight and a Water event remain independent inputs. The logger no longer
@@ -98,10 +97,34 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
   their formulas exactly, with 661 unique observation IDs, no duplicate active
   request/plant/event keys, and no errors in the checked History, tracker,
   Baselines, staging, and Quick log ranges. No workbook writes were needed.
-  The authenticated logger page, installer/trigger follow-up, and AppSheet
-  editor review still require browser sign-in; the CLI deployment and source
-  verification do not establish those runtime checks. AppSheet configuration
-  has not been changed by this rollout.
+  That rollout's browser follow-up was pending at the time; the September 5
+  verification below supersedes that runtime limitation.
+- The 5.18.0 rollout verified the authenticated stable page, all 30 inline
+  bulk-list SVG portraits, selection preservation between List and Labels,
+  and the form/actions → nonempty queue → Recent History order. No test
+  observation was submitted. Pages artwork was published before version 64.
+- The native September 5 workbook backup and separate disposable rehearsal
+  preceded the scoped chart/formula/formatting repair. The final comparison
+  preserved all **691 History records and their formulas**, with 691 unique
+  observation IDs and no duplicate active request/plant/event keys. All 7,558
+  checked formulas across 46 tabs were error-free. All 537 active weight values
+  remained identical in the chart helper; all 22 visual estimates remained in
+  History. Of 98 chart definitions, 95 were repaired or extended without moving
+  any chart. See the [audit receipt](./WORKBOOK-AUDIT-2026-09-05.md).
+- Baselines now has 36 derived fields, Dashboard 23, and the hidden model 16.
+  Twenty plants currently have conditional planning dates; money tree and
+  split rock retain inspection-based guidance. AppSheet **1.100099** is saved
+  and deployed: Baselines exposes 37 columns including `_RowNumber`, and its
+  new Date and LongText fields are read-only, optional, and adjacent to Next
+  dry check in Watering forecast. The changed read-only Insights data helper
+  was also regenerated to 31 columns including `_RowNumber`; History and the
+  staging schemas were not regenerated.
+- Apps Script's editor/Execution API could not start the scoped installer, so
+  the watering-column formulas and formatting were applied through the native
+  Sheets API from the checked-in installer functions after a successful copy
+  rehearsal and fresh preflight. The existing queue trigger was re-saved through
+  its native editor with Head / every five minutes, leaving exactly one matching
+  trigger. The queue processor and version-64 web app have successful executions.
 
 The [Dry-down learning](#dry-down-learning) section explains the forecast rules.
 
@@ -699,7 +722,7 @@ forecast-related Baselines formulas. It preserves the owner's sheet layout,
 charts, and all canonical observations. `refreshGardenWorkbook()` also
 includes the helper when deliberately rebuilding the full presentation.
 
-### Conditional watering-planning dates (5.18.0 source)
+### Conditional watering-planning dates (5.18.0)
 
 `Recommended water date` is a **planning estimate, conditional on inspection**,
 not an instruction to water on a deadline. It uses the supported near-dry date
@@ -725,7 +748,7 @@ visible. Missed windows require fresh inspection, not an automatic watering.
 - **P20 and P30 / shared succulent planters** require checking the shared root
   zone and every component, not just one visible plant.
 
-The appended source schema is:
+The verified live derived schema is:
 
 | Sheet                    | Recommended water date | Watering guidance | Total derived fields |
 | ------------------------ | ---------------------- | ----------------- | -------------------- |
@@ -745,8 +768,10 @@ AppSheet needs a **Baselines-only regeneration and save** to expose the appended
 fields in its app. Keep Baselines read-only, configure the new date as Date and
 the guidance as LongText, then include both in the Watering forecast view. Do not
 add the hidden helper as an AppSheet table or regenerate History/staging for this
-change. This section describes checked-in behavior; the deployment baseline at
-the top records the last verified production release.
+change. This watering-only procedure does not require other table changes. The
+September 5 chart audit separately expanded Insights data, so that read-only
+helper also required regeneration. Both updates are live; the deployment
+baseline above records the verified configuration.
 
 Care basis: [University of Minnesota cacti and succulent guidance](https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents)
 supports drying between waterings and reducing water in low-light rest, not a
