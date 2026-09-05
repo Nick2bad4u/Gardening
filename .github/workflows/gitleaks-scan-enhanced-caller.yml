@@ -39,9 +39,45 @@ on:
 
 permissions: {}
 
+defaults:
+    run:
+        shell: "bash"
+
 jobs:
     gitleaks:
         name: "Gitleaks Secret Scan"
         permissions:
             contents: "read"
-        uses: "Nick2bad4u/workflow-templates/.github/workflows/reusable-gitleaks-scan-enhanced.yml@21e4110a3a1ea9bfa06561a893794099a312c9da"
+        # The shared workflow pins Node 24 without a runtime input. Keep the
+        # same hardened scan locally until it supports this repo's Node 26.
+        runs-on: "ubuntu-latest"
+        timeout-minutes: 20
+        steps:
+            - name: "Harden runner"
+              uses: "step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920" # v2.20.0
+              with:
+                  egress-policy: "audit"
+
+            - name: "Check out repository"
+              uses: "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1" # v7.0.1
+              with:
+                  fetch-depth: 0
+
+            - name: "Set up Node.js"
+              uses: "actions/setup-node@820762786026740c76f36085b0efc47a31fe5020" # v7.0.0
+              with:
+                  node-version: 26
+                  package-manager-cache: false
+
+            - name: "Set up npm 12"
+              working-directory: "${{ runner.temp }}"
+              run: "npm install --global --ignore-scripts --no-audit --no-fund npm@12.0.2"
+
+            - name: "Install locked scan configuration"
+              run: "npm ci --ignore-scripts"
+
+            - name: "Scan repository history"
+              uses: "gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e" # v3.0.0
+              env:
+                  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+                  GITLEAKS_CONFIG: ".gitleaks.toml"
