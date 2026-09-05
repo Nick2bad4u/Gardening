@@ -24,7 +24,7 @@ overwritten. The bound Apps Script in
 ## Current production baseline
 
 As of September 4, 2026, the checked-in source and stable production deployment
-both identify the logger as **5.17.0** on immutable Apps Script version **61**.
+both identify the logger as **5.17.0** on immutable Apps Script version **62**.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
@@ -88,6 +88,8 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
   the one Removed record, with 661 unique observation IDs and no duplicate
   active request/plant/event keys. All 5,725 checked workbook formulas were
   error-free. No AppSheet table regeneration was needed.
+  Version 62 simplifies the forecast decisions without changing any of the
+  30 live-data model results; the cleanup also passed the native Sheets fixture.
 
 The [Dry-down learning](#dry-down-learning) section explains the forecast rules.
 
