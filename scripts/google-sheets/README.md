@@ -23,8 +23,8 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-The production baseline verified before the 5.17.1 rollout on September 4, 2026,
-identifies the logger as **5.17.0** on immutable Apps Script version **62**.
+As of September 4, 2026, the checked-in source and stable production deployment
+both identify the logger as **5.17.1** on immutable Apps Script version **63**.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
@@ -90,6 +90,18 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
   error-free. No AppSheet table regeneration was needed.
   Version 62 simplifies the forecast decisions without changing any of the
   30 live-data model results; the cleanup also passed the native Sheets fixture.
+- The 5.17.1 portrait rollout published all 36 reviewed SVGs before updating
+  the existing Apps Script deployment to version 63. All three immutable
+  deployment files match the committed source. A native Drive backup named
+  `Garden Plant Tracker — before icon caching and AppSheet review — 2026-09-04`
+  was created. The post-deployment read preserved all 661 History records and
+  their formulas exactly, with 661 unique observation IDs, no duplicate active
+  request/plant/event keys, and no errors in the checked History, tracker,
+  Baselines, staging, and Quick log ranges. No workbook writes were needed.
+  The authenticated logger page, installer/trigger follow-up, and AppSheet
+  editor review still require browser sign-in; the CLI deployment and source
+  verification do not establish those runtime checks. AppSheet configuration
+  has not been changed by this rollout.
 
 The [Dry-down learning](#dry-down-learning) section explains the forecast rules.
 

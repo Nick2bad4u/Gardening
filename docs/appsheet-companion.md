@@ -30,8 +30,9 @@ updates, or deletes `History` rows directly.
 The bridge contract and trigger details live in
 [`scripts/google-sheets/README.md`](../scripts/google-sheets/README.md#appsheet-companion-intake).
 
-Migration status as of 2026-09-04: logger 5.17.0 and immutable Apps Script
-version 62 are live at the existing stable deployment URL. The live workbook
+Logger deployment as of 2026-09-04: logger 5.17.1 and immutable Apps Script
+version 63 are live at the existing stable deployment URL. The AppSheet schema
+and UX baseline below was verified during the earlier 5.17.0 rollout. The workbook
 has P29 and P30 in `Plant tracker`, `Baselines`, `Quick log`, the individual
 plant tabs, and `App bulk`. `History` and `History view` now contain 42 physical
 columns, A:AP; `App entries` contains 34, A:AH; and `App bulk` contains 54,
@@ -49,6 +50,13 @@ curve forecast without changing its observations. The rollout preserved all
 661 canonical `History` data rows, retained the duplicate P20 watering as an
 auditable `Removed` record, and left zero duplicate active request/plant/event
 keys, blank request IDs, or formula errors.
+
+The 5.17.1 release publishes the reviewed field-guide portraits and adds
+persistent portrait caching to the separate quick logger. Its 36 public SVGs
+were checked against the committed artwork. The AppSheet image mapping,
+navigation, and offline/sync settings have not yet been changed by that release:
+the editor is awaiting an authenticated browser session. Do not treat the quick
+logger's cache verification as proof of AppSheet image caching.
 
 The 5.17.0 forecast update learns completed cycles within each plant's current
 pot setup and blends new readings into that history. At rollout, P20, P21, and
