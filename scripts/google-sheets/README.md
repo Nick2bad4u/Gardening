@@ -23,8 +23,8 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-As of September 5, 2026, the stable production deployment identifies the logger
-as **5.18.1** on immutable Apps Script version **65**.
+As of September 5, 2026, the checked-in source and stable production deployment
+identify the logger as **5.18.2** on immutable Apps Script version **66**.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
@@ -144,8 +144,8 @@ Edge checks at phone and desktop widths retained all 30 decoded SVGs on the
 first frame after a tap; the previous renderer retained none and briefly showed
 zero ready portraits. All 222 logger tests and the coverage gate passed, along
 with GitHub CI, SonarCloud, Codecov, and security checks. The authenticated stable
-page reports `Connected · logger 5.18.1`, and all three immutable version-65 files
-match the committed source.
+page reported `Connected · logger 5.18.1`, and all three immutable version-65
+files matched the committed source at that rollout.
 The native pre-verification Drive backup and post-deployment comparison preserve
 all 691 History records and their formulas exactly, including 691 unique
 observation IDs, one Removed record, and no duplicate active request/plant/event
@@ -154,10 +154,25 @@ intake installers completed successfully; the bulk installer reported no
 migration. The single Head queue trigger remains scheduled every five minutes
 and has run since deployment. No synthetic observation was submitted.
 
+The 5.18.2 interface update uses immutable version 66 at the same production
+URL. All three deployment files match the committed source, and all 83 public
+UI SVGs plus the shared sprite match their reviewed files. The live logger
+reports `Connected · logger 5.18.2`; all 82 embedded controls use native
+64-unit geometry, and all 30 plant-picker portraits decode successfully.
+The 38 portrait exports and their cache revision remain unchanged. All 283
+focused logger, icon, and site tests passed, along with CI, SonarCloud, Codecov,
+and security checks. A fresh native Drive backup and post-installer comparison
+preserved all 691 History observations, formulas, and checked validations;
+6,874 checked formula cells have no errors. Both installers completed without
+an intake migration, and the queue installer replaced the previous trigger
+with exactly one Head trigger scheduled every five minutes. Version-66 web-app
+executions and a post-deployment time-driven queue execution completed
+successfully. No synthetic observation was submitted.
+
 ## Plant portrait caching
 
-Logger 5.18.2 synchronizes the full 83-icon UI/category redraw from the canonical
-sprite. Its embedded controls use native 64-unit geometry with namespaced
+Logger 5.18.2 uses the shared 83-icon UI/category redraw from the canonical
+sprite. Its 82 embedded controls use native 64-unit geometry with namespaced
 gradients, clipping, reusable details, and accessible descriptions. UI icons
 remain inline and require no separate image downloads. Plant-portrait caching
 and the 5.18.1 selection fix remain in place.
