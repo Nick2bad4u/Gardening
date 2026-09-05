@@ -89,6 +89,27 @@ function model(history, id = "P01", context = runtime()) {
 }
 
 describe("same-setup dry-down learning", () => {
+    it("shares measured-only formula eligibility while preserving all weight values", () => {
+        const context = runtime();
+        const eligibility = context.measuredDimensionCondition_();
+        expect(eligibility).toContain('="measured"');
+        expect(eligibility).toContain('="corrected"');
+        expect(eligibility).toContain('="ruler"');
+        expect(eligibility).toContain('"estimat")=FALSE');
+        const remeasure = context.remeasureStatusFormula_(24);
+        expect(remeasure).toContain("$A24");
+        expect(remeasure.match(/IFNA\(MAX/g)).toHaveLength(2);
+        expect(remeasure).toContain(
+            'IF(lastMeasured>0,"Current","No measurement")'
+        );
+        const charts = context.appPlantChartsFormula_();
+        expect(charts).toContain(eligibility);
+        expect(charts).toContain("History!E2:E5000");
+        expect(charts).toContain('History!AJ2:AJ5000<>"Removed"');
+        expect(context.plantChartHelperFormula_("P02")).toContain(
+            'B2:B5000="P02"'
+        );
+    });
     it("weights learned timing by recency and rejects a zero-information prior", () => {
         const context = runtime();
         expect(context.dryDownPrior_([], 60)).toEqual({ log: 0, spread: 0 });
@@ -182,6 +203,8 @@ describe("same-setup dry-down learning", () => {
                     },
                     setColumnWidth: (...args) =>
                         calls.push({ name, method: "setColumnWidth", args }),
+                    autoResizeRows: (...args) =>
+                        calls.push({ name, method: "autoResizeRows", args }),
                 };
                 return [name, sheet];
             })

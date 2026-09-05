@@ -1600,6 +1600,7 @@ describe("Garden logger server logic", () => {
             },
             insertColumnsAfter: () => {},
             insertRowsAfter: () => {},
+            autoResizeRows: () => {},
             setColumnWidth: () => {},
             setColumnWidths: () => {},
             setFrozenColumns: () => {},

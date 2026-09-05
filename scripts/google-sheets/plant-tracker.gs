@@ -3724,6 +3724,24 @@ function formatWateringRecommendationColumns_(sheet, headerRow, column, count) {
         .setVerticalAlignment("middle");
     sheet.setColumnWidth(column, 165);
     sheet.setColumnWidth(column + 1, 360);
+    sheet.autoResizeRows(headerRow + 1, count);
+}
+
+// Match the public growth-series policy without changing canonical evidence.
+function measuredDimensionCondition_() {
+    return '(((LOWER(TRIM(History!$AC$2:$AC$5000))="measured")+((LOWER(TRIM(History!$AC$2:$AC$5000))="corrected")*(LOWER(TRIM(History!$AI$2:$AI$5000))="ruler")))>0)*(REGEXMATCH(LOWER(History!$AI$2:$AI$5000),"estimat")=FALSE)';
+}
+
+function remeasureStatusFormula_(row) {
+    return `=LET(lastEstimate,IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",REGEXMATCH(LOWER(History!$AC$2:$AC$5000&" "&History!$AI$2:$AI$5000),"estimat"),History!$AJ$2:$AJ$5000<>"Removed")),0),lastMeasured,IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",${measuredDimensionCondition_()},History!$AJ$2:$AJ$5000<>"Removed")),0),IF(lastEstimate>lastMeasured,"Due now",IF(lastMeasured>0,"Current","No measurement")))`;
+}
+
+function appPlantChartsFormula_() {
+    return `=IFNA(LET(eligible,ARRAYFORMULA(${measuredDimensionCondition_()}),heights,ARRAYFORMULA(IF(eligible,History!AL2:AL5000,"")),widths,ARRAYFORMULA(IF(eligible,History!AM2:AM5000,"")),FILTER({History!A2:A5000,History!B2:B5000,History!E2:E5000,ARRAYFORMULA(IF(History!E2:E5000="","",History!E2:E5000/453.59237)),heights,widths,History!O2:O5000,ARRAYFORMULA(IF(History!O2:O5000="","",History!E2:E5000))},History!AJ2:AJ5000<>"Removed",History!B2:B5000<>"",((History!E2:E5000<>"")+(heights<>"")+(widths<>""))>0)),"")`;
+}
+
+function plantChartHelperFormula_(plantId) {
+    return `=IFNA(SORT(FILTER({'App plant charts'!A2:A5000,'App plant charts'!C2:C5000,ARRAYFORMULA(IF('App plant charts'!E2:E5000="","",'App plant charts'!E2:E5000*2.54)),ARRAYFORMULA(IF('App plant charts'!F2:F5000="","",'App plant charts'!F2:F5000*2.54))},'App plant charts'!B2:B5000="${formulaString_(plantId)}"),1,TRUE),"")`;
 }
 
 function latestWetWeightFormula_(row) {
@@ -3755,7 +3773,7 @@ function baselineViewRow_(rowNumber, plant) {
         `=IFS(V${row}<1,"Collecting weights",Y${row}="","Need a wet weight",W${row}="","Need a completed dry cycle",Z${row}="","Recheck weights",TRUE,"Calibrated")`,
         `=${dryDownLookupFormula_(row, "L")}`,
         `=LET(review,XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AD:$AD,""),IF(review<>"",review,${dryDownLookupFormula_(row, "M")}))`,
-        `=IFERROR(LET(lastEstimate,MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",History!$AC$2:$AC$5000="Estimated",History!$AJ$2:$AJ$5000<>"Removed")),lastMeasured,IFERROR(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",History!$AC$2:$AC$5000="Measured",History!$AJ$2:$AJ$5000<>"Removed")),0),IF(lastEstimate>lastMeasured,"Due now","Current")),"No measurement")`,
+        remeasureStatusFormula_(row),
         `=IF(AF${row}<>"",LET(early,${dryDownLookupFormula_(row, "I")},late,${dryDownLookupFormula_(row, "J")},IF(late<TODAY(),"Inspect / reweigh now","Reweigh "&TEXT(early,"mmm d")&"–"&TEXT(late,"mmm d"))),${dryDownLookupFormula_(row, "K")})`,
         `=IF(OR(AE${row}="",C${row}<=0),"",AE${row}/C${row})`,
         `=IF(MAX(N(O${row}),N(AA${row}))=0,"No anchor",IF(N(O${row})>=N(AA${row}),"Water","Repot"))`,
@@ -3947,8 +3965,8 @@ function refreshDashboardView_(spreadsheet, plants) {
             `=COUNT(Baselines!$AF$2:$AF$31)&" / "&COUNTA(Baselines!$A$2:$A$31)`,
         ],
         [
-            "Trend ready",
-            `=COUNTIF(Baselines!$I$2:$I$31,"Ready")&" / "&COUNTA(Baselines!$A$2:$A$31)`,
+            "Current curve supported",
+            `=COUNTIF(Baselines!$I$2:$I$31,"Current cycle supported")&" / "&COUNTA(Baselines!$A$2:$A$31)`,
         ],
         [
             "Calibrated",
@@ -3986,7 +4004,9 @@ function refreshDashboardView_(spreadsheet, plants) {
     sheet.getRange(7, 6, plants.length, 1).setNumberFormat("0.000");
     sheet.getRange(7, 7, plants.length, 2).setNumberFormat("0.0");
     sheet.getRange(7, 9, plants.length, 1).setNumberFormat("mmm d, yyyy");
-    sheet.getRange(7, 11, plants.length, 2).setNumberFormat("0.##");
+    sheet.getRange(7, 11, plants.length, 2).setNumberFormat("0.0#");
+    sheet.getRange(7, 13, plants.length, 2).setNumberFormat("0");
+    sheet.getRange(7, 15, plants.length, 1).setNumberFormat('0.0 "days"');
     sheet.setFrozenRows(6);
     // The full-width title in row 1 spans every Dashboard column, so freezing
     // any proper subset of columns would bisect that merged range in Sheets.
@@ -4166,7 +4186,7 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
     const historyHeaders = [
         "Date",
         "Event",
-        "Inferred state",
+        "Recorded state",
         "Weight (lb)",
         "Weight (g)",
         "Height (cm)",

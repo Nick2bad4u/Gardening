@@ -105,6 +105,10 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
 
 The [Dry-down learning](#dry-down-learning) section explains the forecast rules.
 
+The [September 5 workbook audit](./WORKBOOK-AUDIT-2026-09-05.md) documents the
+scoped repairs to chart bindings, measured-only helpers, summary coverage,
+conditional formatting, and display precision, including the native-copy rehearsal.
+
 ## Plant portrait caching
 
 Logger 5.17.1 loads portraits as they enter the visible picker area and shares
