@@ -2,8 +2,8 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
     test: {
+        clearMocks: true,
         coverage: {
-            all: true,
             clean: true,
             include: ["scripts/google-sheets/plant-tracker.gs"],
             provider: "v8",
@@ -21,5 +21,9 @@ export default defineConfig({
                 statements: 90,
             },
         },
+        environment: "node",
+        include: ["test/**/*.test.mjs"],
+        restoreMocks: true,
+        slowTestThreshold: 300,
     },
 });

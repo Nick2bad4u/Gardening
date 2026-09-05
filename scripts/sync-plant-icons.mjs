@@ -1,11 +1,21 @@
-import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
-import path from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
-
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import * as path from "node:path";
+import { pathToFileURL } from "node:url";
 import { format, resolveConfig } from "prettier";
 
-const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
+import {
+    compareText,
+    isNonemptyString,
+    isPlantSlug,
+    isProfileData,
+    readDirectoryIfPresent,
+    readJson,
+    readTextIfPresent,
+    required,
+} from "./build-data.mjs";
+
+const scriptDirectory = import.meta.dirname;
 const repositoryRoot = path.resolve(scriptDirectory, "..");
 const spritePath = path.join(
     repositoryRoot,
@@ -28,8 +38,101 @@ const loggerPath = path.join(
 const assetDirectory = path.join(repositoryRoot, "assets", "plant-icons");
 const startMarker = "<!-- GENERATED PLANT ICONS START -->";
 const endMarker = "<!-- GENERATED PLANT ICONS END -->";
-const leadingZeroOmissionPattern = /(?:^|[^\d])\.(?=\d)|\d+\.\d+\.(?=\d)/m;
+const leadingZeroOmissionPattern = /(?:^|\D)\.(?=\d)|(?<!\d)\d+\.\d+\.(?=\d)/mv;
 
+export async function syncPlantIcons({ checkOnly = false } = {}) {
+    const [
+        sprite,
+        profileData,
+        logger,
+    ] = await Promise.all([
+        readFile(spritePath, "utf8"),
+        readJson(profileDataPath, isProfileData),
+        readFile(loggerPath, "utf8"),
+    ]);
+    const symbols = parsePlantSymbols(sprite);
+    const titles = profileTitles(profileData);
+    const descriptions = portraitDescriptions();
+    validateSymbols(symbols, titles, descriptions);
+
+    if (!/const PLANT_ICON_REVISION = "[^"]+";/v.test(logger)) {
+        throw new Error(
+            "The logger is missing its plant-icon revision constant."
+        );
+    }
+    const standalone = symbols.map(({ body, slug, viewBox }) => {
+        const filepath = path.join(assetDirectory, `${slug}.svg`);
+        const title = titles.get(slug);
+        const description = descriptions.get(slug);
+        const indentedBody = body
+            .split(/\r?\n/v)
+            .map((line) => `  ${line}`)
+            .join("\n");
+        return {
+            filepath,
+            output: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" role="img" aria-labelledby="${slug}-title ${slug}-description" data-plant-slug="${slug}" focusable="false">\n  <title id="${slug}-title">${escapeXml(title)} plant portrait</title>\n  <desc id="${slug}-description">${escapeXml(description)}</desc>\n${indentedBody}\n</svg>\n`,
+            slug,
+        };
+    });
+    const revision = createHash("sha256")
+        .update(standalone.map(({ output }) => output).join("\n"))
+        .digest("hex")
+        .slice(0, 16);
+    const nextLogger = await formatted(
+        replaceGeneratedLoggerSymbols(logger).replace(
+            /const PLANT_ICON_REVISION = "[^"]+";/v,
+            () => `const PLANT_ICON_REVISION = "${revision}";`
+        ),
+        loggerPath
+    );
+
+    if (checkOnly) {
+        if (logger !== nextLogger) {
+            throw new Error(
+                "The logger plant portraits are stale. Run `npm run build:booklet`."
+            );
+        }
+        const currentAssetNames = await readDirectoryIfPresent(assetDirectory);
+        const expectedAssetNames = standalone.map(({ filepath }) =>
+            path.basename(filepath)
+        );
+        if (
+            currentAssetNames
+                .filter((name) => name.endsWith(".svg"))
+                .toSorted(compareText)
+                .join("\n") !==
+            expectedAssetNames.toSorted(compareText).join("\n")
+        ) {
+            throw new Error(
+                "The standalone plant-portrait asset inventory is stale. Run `npm run build:booklet`."
+            );
+        }
+        await Promise.all(
+            standalone.map(async ({ filepath, output, slug }) => {
+                const current = await readTextIfPresent(filepath);
+                if (current !== output) {
+                    throw new Error(
+                        `Standalone plant portrait ${slug} is stale. Run \`npm run build:booklet\`.`
+                    );
+                }
+            })
+        );
+        return symbols;
+    }
+
+    await mkdir(assetDirectory, { recursive: true });
+    await Promise.all([
+        writeFile(loggerPath, nextLogger, "utf8"),
+        ...standalone.map(({ filepath, output }) =>
+            writeFile(filepath, output, "utf8")
+        ),
+    ]);
+    return symbols;
+}
+
+/**
+ * @param {string | undefined} value
+ */
 function escapeXml(value) {
     return String(value)
         .replaceAll("&", "&amp;")
@@ -38,76 +141,65 @@ function escapeXml(value) {
         .replaceAll(">", "&gt;");
 }
 
-function normalizeSymbolBody(value) {
-    const lines = value
-        .replace(/^\r?\n/, "")
-        .replace(/\r?\n\s*$/, "")
-        .split(/\r?\n/);
-    const indentation = Math.min(
-        ...lines
-            .filter((line) => line.trim())
-            .map((line) => line.match(/^\s*/)[0].length)
-    );
-    return lines.map((line) => line.slice(indentation)).join("\n");
-}
-
-function parsePlantSymbols(sprite) {
-    return [
-        ...sprite.matchAll(
-            /<symbol\s+id="icon-plant-([^"]+)"\s+viewBox="([^"]+)"\s*>([\s\S]*?)<\/symbol>/g
-        ),
-    ].map((match) => ({
-        slug: match[1],
-        viewBox: match[2],
-        body: normalizeSymbolBody(match[3]),
-    }));
-}
-
-function replaceGeneratedLoggerSymbols(logger) {
-    const start = logger.indexOf(startMarker);
-    const end = logger.indexOf(endMarker);
-    if (start < 0 || end < start) {
-        throw new Error(
-            "The logger is missing its generated plant-icon boundary markers."
-        );
-    }
-    const generated =
-        "<!-- Plant portraits load from their cached standalone SVG assets. -->";
-    return `${logger.slice(0, start + startMarker.length)}\n${generated}\n${logger.slice(end)}`;
-}
-
+/**
+ * @param {string} value
+ * @param {string} filepath
+ */
 async function formatted(value, filepath) {
     const config = (await resolveConfig(filepath)) ?? {};
     return format(value, { ...config, filepath });
 }
 
-function profileTitles(profileData) {
-    const titles = new Map(
-        Object.values(profileData)
-            .flat()
-            .map(([slug, title]) => [slug, title])
+/**
+ * @param {string} value
+ */
+function normalizeSymbolBody(value) {
+    const bodyAfterLeadingNewline = value.replace(/^\r?\n/v, "");
+    const trailingWhitespace = bodyAfterLeadingNewline.slice(
+        bodyAfterLeadingNewline.trimEnd().length
     );
-    // The historical, removed Rehab-04 profile is intentionally absent from
-    // the live tracker map but still has a booklet portrait and export.
-    titles.set("mammillaria-bombycina", "Silken pincushion cactus");
-    titles.set(
-        "shared-rehab-cactus-planter",
-        "Shared rehab cactus planter · #1"
+    const newlineOffset = trailingWhitespace.indexOf("\n");
+    const trailingLineOffset =
+        newlineOffset === -1
+            ? trailingWhitespace.length
+            : newlineOffset -
+              (trailingWhitespace[newlineOffset - 1] === "\r" ? 1 : 0);
+    const end =
+        bodyAfterLeadingNewline.length -
+        trailingWhitespace.length +
+        trailingLineOffset;
+    const lines = bodyAfterLeadingNewline.slice(0, end).split(/\r?\n/v);
+    const indentation = Math.min(
+        ...lines
+            .filter((/** @type {string} */ line) => line.trim())
+            .map((line) => /^\s*/v.exec(line)?.[0].length ?? 0)
     );
-    titles.set("shared-succulent-planter", "Shared succulent planter · #2");
-    return titles;
+    return lines.map((line) => line.slice(indentation)).join("\n");
+}
+
+/**
+ * @param {string} sprite
+ */
+function parsePlantSymbols(sprite) {
+    return sprite
+        .matchAll(
+            /<symbol\s+id="icon-plant-(?<slug>[^"]+)"\s+viewBox="(?<viewBox>[^"]+)"\s*>(?<body>[\s\S]*?)<\/symbol>/gv
+        )
+        .map((match) => ({
+            body: normalizeSymbolBody(
+                required(match.groups?.["body"], "plant symbol body")
+            ),
+            slug: required(match.groups?.["slug"], "plant symbol slug"),
+            viewBox: required(
+                match.groups?.["viewBox"],
+                "plant symbol viewBox"
+            ),
+        }))
+        .toArray();
 }
 
 function portraitDescriptions() {
     return new Map([
-        [
-            "shared-rehab-cactus-planter",
-            "A cream-striped blue-green column, golden-spined torch, and pale hairy trailing monkey-tail stems share a dark round planter with light etched markings.",
-        ],
-        [
-            "shared-succulent-planter",
-            "A red-edged blue-green rosette, bright round-leaved elephant bush, silver teaspoons, and copper spoons share a low charcoal rectangular planter.",
-        ],
         [
             "aeonium-haworthii-dream-color",
             "Three branching rosettes with cream-green spoon-shaped leaves and pink margins above a white planter.",
@@ -241,6 +333,14 @@ function portraitDescriptions() {
             "A tightly layered lime-green rosette with pointed leaves and muted burgundy leaf bases in a yellow planter.",
         ],
         [
+            "shared-rehab-cactus-planter",
+            "A cream-striped blue-green column, golden-spined torch, and pale hairy trailing monkey-tail stems share a dark round planter with light etched markings.",
+        ],
+        [
+            "shared-succulent-planter",
+            "A red-edged blue-green rosette, bright round-leaved elephant bush, silver teaspoons, and copper spoons share a low charcoal rectangular planter.",
+        ],
+        [
             "stenocactus-phyllacanthus",
             "A squat green cactus with closely packed wavy ribs and long flattened tan crown spines.",
         ],
@@ -255,6 +355,47 @@ function portraitDescriptions() {
     ]);
 }
 
+/**
+ * @param {import("./build-data.mjs").ProfileData} profileData
+ */
+function profileTitles(profileData) {
+    const titles = new Map(
+        Object.values(profileData)
+            .flat()
+            .map(([slug, title]) => [slug, title])
+    );
+    // The historical, removed Rehab-04 profile is intentionally absent from
+    // the live tracker map but still has a booklet portrait and export.
+    titles.set("mammillaria-bombycina", "Silken pincushion cactus");
+    titles.set(
+        "shared-rehab-cactus-planter",
+        "Shared rehab cactus planter · #1"
+    );
+    titles.set("shared-succulent-planter", "Shared succulent planter · #2");
+    return titles;
+}
+
+/**
+ * @param {string} logger
+ */
+function replaceGeneratedLoggerSymbols(logger) {
+    const start = logger.indexOf(startMarker);
+    const end = logger.indexOf(endMarker);
+    if (start === -1 || end < start) {
+        throw new Error(
+            "The logger is missing its generated plant-icon boundary markers."
+        );
+    }
+    const generated =
+        "<!-- Plant portraits load from their cached standalone SVG assets. -->";
+    return `${logger.slice(0, start + startMarker.length)}\n${generated}\n${logger.slice(end)}`;
+}
+
+/**
+ * @param {ReturnType<typeof parsePlantSymbols>} symbols
+ * @param {Map<string, string>} titles
+ * @param {Map<string, string>} descriptions
+ */
 function validateSymbols(symbols, titles, descriptions) {
     if (
         symbols.length !== titles.size ||
@@ -265,7 +406,7 @@ function validateSymbols(symbols, titles, descriptions) {
         );
     }
     for (const { body, slug, viewBox } of symbols) {
-        if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+        if (!isPlantSlug(slug)) {
             throw new Error(
                 `Plant portrait slug ${slug} is not identifier-safe.`
             );
@@ -296,103 +437,14 @@ function validateSymbols(symbols, titles, descriptions) {
     }
 }
 
-export async function syncPlantIcons({ checkOnly = false } = {}) {
-    const [
-        sprite,
-        profileData,
-        logger,
-    ] = await Promise.all([
-        readFile(spritePath, "utf8"),
-        readFile(profileDataPath, "utf8").then(JSON.parse),
-        readFile(loggerPath, "utf8"),
-    ]);
-    const symbols = parsePlantSymbols(sprite);
-    const titles = profileTitles(profileData);
-    const descriptions = portraitDescriptions();
-    validateSymbols(symbols, titles, descriptions);
-
-    const standalone = await Promise.all(
-        symbols.map(async ({ slug, viewBox, body }) => {
-            const filepath = path.join(assetDirectory, `${slug}.svg`);
-            const title = titles.get(slug);
-            const description = descriptions.get(slug);
-            const indentedBody = body
-                .split(/\r?\n/)
-                .map((line) => `  ${line}`)
-                .join("\n");
-            return {
-                filepath,
-                output: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" role="img" aria-labelledby="${slug}-title ${slug}-description" data-plant-slug="${slug}" focusable="false">\n  <title id="${slug}-title">${escapeXml(title)} plant portrait</title>\n  <desc id="${slug}-description">${escapeXml(description)}</desc>\n${indentedBody}\n</svg>\n`,
-                slug,
-            };
-        })
-    );
-    const revision = createHash("sha256")
-        .update(standalone.map(({ output }) => output).join("\n"))
-        .digest("hex")
-        .slice(0, 16);
-    if (!/const PLANT_ICON_REVISION = "[^"]+";/.test(logger)) {
-        throw new Error(
-            "The logger is missing its plant-icon revision constant."
-        );
-    }
-    const nextLogger = await formatted(
-        replaceGeneratedLoggerSymbols(logger).replace(
-            /const PLANT_ICON_REVISION = "[^"]+";/,
-            `const PLANT_ICON_REVISION = "${revision}";`
-        ),
-        loggerPath
-    );
-
-    if (checkOnly) {
-        if (logger !== nextLogger) {
-            throw new Error(
-                "The logger plant portraits are stale. Run `npm run build:booklet`."
-            );
-        }
-        const currentAssetNames = await readdir(assetDirectory).catch(() => []);
-        const expectedAssetNames = standalone.map(({ filepath }) =>
-            path.basename(filepath)
-        );
-        if (
-            currentAssetNames
-                .filter((name) => name.endsWith(".svg"))
-                .sort()
-                .join("\n") !== expectedAssetNames.sort().join("\n")
-        ) {
-            throw new Error(
-                "The standalone plant-portrait asset inventory is stale. Run `npm run build:booklet`."
-            );
-        }
-        for (const { filepath, output, slug } of standalone) {
-            const current = await readFile(filepath, "utf8").catch(() => "");
-            if (current !== output) {
-                throw new Error(
-                    `Standalone plant portrait ${slug} is stale. Run \`npm run build:booklet\`.`
-                );
-            }
-        }
-        return symbols;
-    }
-
-    await mkdir(assetDirectory, { recursive: true });
-    await Promise.all([
-        writeFile(loggerPath, nextLogger, "utf8"),
-        ...standalone.map(({ filepath, output }) =>
-            writeFile(filepath, output, "utf8")
-        ),
-    ]);
-    return symbols;
-}
-
 if (
-    process.argv[1] &&
+    isNonemptyString(process.argv[1]) &&
     import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href
 ) {
     const symbols = await syncPlantIcons({
         checkOnly: process.argv.includes("--check"),
     });
-    console.log(
-        `${process.argv.includes("--check") ? "Verified" : "Synchronized"} ${symbols.length} custom plant portraits.`
+    process.stdout.write(
+        `${process.argv.includes("--check") ? "Verified" : "Synchronized"} ${symbols.length} custom plant portraits.\n`
     );
 }

@@ -1,3 +1,4 @@
+---
 # yaml-language-server: $schema=https://www.schemastore.org/codecov.json
 
 codecov:
@@ -16,9 +17,9 @@ comment:
 component_management:
     default_rules:
         statuses:
-            - type: "project"
-              target: "auto"
+            - target: "auto"
               threshold: "1%"
+              type: "project"
     individual_components:
         - component_id: "apps-script-server"
           name: "Apps Script server"

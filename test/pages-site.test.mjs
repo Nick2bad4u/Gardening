@@ -6,14 +6,16 @@ import {
     rewritePublishedPlantImages,
 } from "../scripts/build-pages-site.mjs";
 
-describe("GitHub Pages publication transforms", () => {
+describe("the GitHub Pages publication transforms", () => {
     it("installs the production GTM container once in the head and body", () => {
+        expect.hasAssertions();
+
         const output = injectGoogleTagManager(
             "<!doctype html><html><head><title>Garden</title></head><body><main>Plants</main></body></html>"
         );
 
-        expect(output.match(/GTM-T8J6HPLF/g)).toHaveLength(2);
-        expect(output).toContain("https:" + "//www.googletagmanager.com");
+        expect(output.match(/GTM-T8J6HPLF/gv)).toHaveLength(2);
+        expect(output).toContain("https://www.googletagmanager.com");
         expect(output).toContain('"/gtm.js?id="');
         expect(output).toContain(
             "https://www.googletagmanager.com/ns.html?id=GTM-T8J6HPLF"
@@ -27,32 +29,39 @@ describe("GitHub Pages publication transforms", () => {
     });
 
     it("refuses to install a duplicate GTM container", () => {
+        expect.hasAssertions();
+
         const installed = injectGoogleTagManager(
             "<html><head></head><body></body></html>"
         );
+
         expect(() => injectGoogleTagManager(installed)).toThrow(
-            /already present/
+            /already present/v
         );
     });
 
     it("marks only the generated 404 entry point with an explicit event", () => {
+        expect.hasAssertions();
+
         const indexHtml = injectGoogleTagManager(
             "<!doctype html><html><head><title>Garden</title></head><body><main>Plants</main></body></html>"
         );
         const notFoundHtml = injectPageNotFoundEvent(indexHtml);
 
         expect(indexHtml).not.toContain('event: "page_not_found"');
-        expect(notFoundHtml.match(/event: "page_not_found"/g)).toHaveLength(1);
+        expect(notFoundHtml.match(/event: "page_not_found"/gv)).toHaveLength(1);
         expect(notFoundHtml).toContain("http_status: 404");
         expect(notFoundHtml).toContain("page_location: window.location.href");
         expect(notFoundHtml).toContain("page_referrer: document.referrer");
         expect(notFoundHtml).toContain("page_title: document.title");
         expect(() => injectPageNotFoundEvent(notFoundHtml)).toThrow(
-            /already present/
+            /already present/v
         );
     });
 
     it("rewrites local reference images to responsive publication WebPs", () => {
+        expect.hasAssertions();
+
         const source = "assets/plants/example/reference.jpg";
         const images = new Map([
             [

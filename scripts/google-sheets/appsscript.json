@@ -4,7 +4,7 @@
     "runtimeVersion": "V8",
     "timeZone": "America/New_York",
     "webapp": {
-        "executeAs": "USER_DEPLOYING",
-        "access": "MYSELF"
+        "access": "MYSELF",
+        "executeAs": "USER_DEPLOYING"
     }
 }

@@ -6,5 +6,5 @@ title = "Nick2bad4u shared Gitleaks configuration"
     path = "node_modules/gitleaks-config-nick2bad4u/gitleaks.toml"
 
 [[allowlists]]
-    description = "Ignore local scratch command output"
-    paths       = [ '''^temp/''' ]
+    description = "Ignore Git-excluded local audit output and scratch files"
+    paths       = [ '''^temp/''', '''^output/''' ]

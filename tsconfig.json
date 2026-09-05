@@ -1,0 +1,32 @@
+{
+    "$schema": "https://www.schemastore.org/tsconfig.json",
+    "compilerOptions": {
+        "lib": [
+            "ESNext",
+            "DOM",
+            "DOM.Iterable"
+        ],
+        "types": [
+            "node",
+            "vite/client"
+        ]
+    },
+    "exclude": [
+        "test/fixtures/**"
+    ],
+    "extends": [
+        "tsconfig-nick2bad4u/tsconfig.node.json",
+        "tsconfig-nick2bad4u/tsconfig.js.json"
+    ],
+    "include": [
+        "*.mjs",
+        ".*.mjs",
+        "*.ts",
+        ".storybook/**/*.ts",
+        "scripts/**/*.mjs",
+        "docs/**/*.js",
+        "test/**/*.mjs",
+        "test/**/*.ts",
+        "types/**/*.d.ts"
+    ]
+}

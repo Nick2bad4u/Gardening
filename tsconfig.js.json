@@ -1,0 +1,15 @@
+{
+    "$schema": "https://www.schemastore.org/tsconfig.json",
+    "compilerOptions": {
+        "lib": [
+            "ES2024",
+            "DOM",
+            "DOM.Iterable"
+        ]
+    },
+    "extends": "./tsconfig.json",
+    "include": [
+        "docs/**/*.js",
+        "types/**/*.d.ts"
+    ]
+}

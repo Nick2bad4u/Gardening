@@ -1,54 +1,65 @@
 import assert from "node:assert/strict";
-import fs from "node:fs";
+import { readFile, stat } from "node:fs/promises";
 import vm from "node:vm";
 
-const source = fs.readFileSync(
-    new URL("./google-sheets/plant-tracker.gs", import.meta.url),
-    "utf8"
-);
-const html = fs.readFileSync(
-    new URL("./google-sheets/Index.html", import.meta.url),
-    "utf8"
-);
-const trackerDataSource = fs.readFileSync(
-    new URL("../docs/layouts/plant-tracker-data.js", import.meta.url),
-    "utf8"
-);
-const { comparePlantsByNaturalLabel, parseDate } = await import(
-    `data:text/javascript;base64,${Buffer.from(trackerDataSource).toString("base64")}`
-);
+import {
+    comparePlantsByNaturalLabel,
+    parseDate,
+} from "../docs/layouts/plant-tracker-data.js";
+import {
+    arrayOf,
+    compareText,
+    hasFields,
+    isNonemptyString,
+    isPlantSlug,
+    isRecord,
+    isString,
+    parseJson,
+    required,
+} from "./build-data.mjs";
 
+const source = await readFile(
+    new URL("google-sheets/plant-tracker.gs", import.meta.url),
+    "utf8"
+);
+const html = await readFile(
+    new URL("google-sheets/Index.html", import.meta.url),
+    "utf8"
+);
+/** @type {Record<string, unknown>} */
 const context = vm.createContext({
     console,
+    encodeURIComponent,
     Map,
     Set,
     URL,
-    encodeURIComponent,
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.18.2");
-const webPlantImageUrls = JSON.parse(
-    JSON.stringify(vm.runInContext("WEB_PLANT_IMAGE_URLS", context))
+assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.18.3");
+const webPlantImageUrls = evaluateLogger("WEB_PLANT_IMAGE_URLS");
+assert.ok(
+    isImageUrls(webPlantImageUrls),
+    "Logger image URLs must have the expected record shape."
 );
 assert.equal(Object.keys(webPlantImageUrls).length, 30);
 assert.ok(
     Object.values(webPlantImageUrls).every(({ currentImageUrl }) =>
-        /^https:\/\/thumb\.gyazo\.com\/thumb\/960\/[a-f\d]{32}\.(?:jpg|png)$/u.test(
+        /^https:\/\/thumb\.gyazo\.com\/thumb\/960\/[\da-f]{32}\.(?:jpg|png)$/v.test(
             currentImageUrl
         )
     ),
     "Every current P01-P30 logger photo must use a cached 960 px Gyazo thumbnail."
 );
 assert.match(
-    webPlantImageUrls.P20.currentImageUrl,
-    /7954fb6f93fc71827ac45cd854eeb25a/,
+    required(webPlantImageUrls["P20"], "P20 image URL").currentImageUrl,
+    /7954fb6f93fc71827ac45cd854eeb25a/v,
     "P20 must show the shared succulent planter."
 );
 
 assert.deepEqual(
-    Array.from(
-        context.buildEventNamesFromList_(
+    strings(
+        loggerFunction("buildEventNamesFromList_")(
             ["Water"],
             "Wet",
             420,
@@ -66,11 +77,16 @@ assert.deepEqual(
     ]
 );
 assert.deepEqual(
-    Array.from(context.buildEventNames_("Weigh", "Wet", 420, "", "", "", "")),
+    strings(
+        loggerFunction("buildEventNames_")("Weigh", "Wet", 420, "", "", "", "")
+    ),
     ["Weigh"]
 );
-assert.equal(context.safeSheetText_('=IMPORTXML("x")'), '\'=IMPORTXML("x")');
-assert.equal(context.safeSheetText_("healthy"), "healthy");
+assert.equal(
+    loggerFunction("safeSheetText_")('=IMPORTXML("x")'),
+    '\'=IMPORTXML("x")'
+);
+assert.equal(loggerFunction("safeSheetText_")("healthy"), "healthy");
 /**
  * @param {{
  *     plantId: string;
@@ -82,14 +98,15 @@ assert.equal(context.safeSheetText_("healthy"), "healthy");
  * }} record
  */
 const checkWeightRow = ({
-    plantId,
-    observedAt,
-    event = "Weigh",
-    weight = "",
     batch = "",
+    event = "Weigh",
+    observedAt,
+    plantId,
     status = "",
+    weight = "",
 }) => {
-    const row = Array(42).fill("");
+    /** @type {(string | number)[]} */
+    const row = Array.from({ length: 42 }, () => "");
     row[0] = observedAt;
     row[1] = plantId;
     row[2] = event;
@@ -100,59 +117,55 @@ const checkWeightRow = ({
     row[35] = status;
     return row;
 };
-const dryOrLowestWeights = context.dryOrLowestWeightsFromRows_([
+const dryOrLowestWeights = loggerFunction("dryOrLowestWeightsFromRows_")([
     checkWeightRow({
-        plantId: "P01",
+        batch: "wet-1",
         observedAt: "2026-08-01T12:00:00Z",
+        plantId: "P01",
         weight: 320,
-        batch: "wet-1",
     }),
     checkWeightRow({
-        plantId: "P01",
-        observedAt: "2026-08-01T12:00:00Z",
+        batch: "wet-1",
         event: "Water",
-        batch: "wet-1",
+        observedAt: "2026-08-01T12:00:00Z",
+        plantId: "P01",
     }),
     checkWeightRow({
-        plantId: "P01",
         observedAt: "2026-08-02T12:00:00Z",
+        plantId: "P01",
         weight: 280,
     }),
     checkWeightRow({
-        plantId: "P01",
+        batch: "wet-2",
         observedAt: "2026-08-03T12:00:00Z",
+        plantId: "P01",
         weight: 330,
-        batch: "wet-2",
     }),
     checkWeightRow({
-        plantId: "P01",
-        observedAt: "2026-08-03T12:00:00Z",
+        batch: "wet-2",
         event: "Water",
-        batch: "wet-2",
+        observedAt: "2026-08-03T12:00:00Z",
+        plantId: "P01",
     }),
     checkWeightRow({
-        plantId: "P02",
         observedAt: "2026-08-03T12:00:00Z",
+        plantId: "P02",
         weight: 410,
     }),
     checkWeightRow({
-        plantId: "P02",
         observedAt: "2026-08-04T12:00:00Z",
+        plantId: "P02",
         weight: 390,
     }),
 ]);
-assert.deepEqual(
-    { ...dryOrLowestWeights.get("P01") },
-    {
-        weight: 280,
-        basis: "Completed cycle",
-        observedAt: "2026-08-02T12:00:00Z",
-    }
-);
+assert.ok(isUnknownMap(dryOrLowestWeights));
+assert.deepEqual(structuredClone(dryOrLowestWeights.get("P01")), {
+    basis: "Completed cycle",
+    observedAt: "2026-08-02T12:00:00Z",
+    weight: 280,
+});
 assert.equal(dryOrLowestWeights.has("P02"), false);
-const appSheetEntryHeaders = Array.from(
-    vm.runInContext("APP_SHEET_ENTRY_HEADERS", context)
-);
+const appSheetEntryHeaders = strings(evaluateLogger("APP_SHEET_ENTRY_HEADERS"));
 assert.deepEqual(appSheetEntryHeaders, [
     "Entry ID",
     "Started at",
@@ -189,9 +202,7 @@ assert.deepEqual(appSheetEntryHeaders, [
     "Watering application",
     "Water amount (mL)",
 ]);
-const appSheetBulkHeaders = Array.from(
-    vm.runInContext("APP_SHEET_BULK_HEADERS", context)
-);
+const appSheetBulkHeaders = strings(evaluateLogger("APP_SHEET_BULK_HEADERS"));
 assert.equal(appSheetBulkHeaders.length, 54);
 assert.deepEqual(appSheetBulkHeaders.slice(0, 6), [
     "Round ID",
@@ -214,12 +225,12 @@ assert.equal(appSheetBulkHeaders[44], "Rotation (°)");
 assert.equal(appSheetBulkHeaders[51], "Nutrient amount");
 assert.equal(appSheetBulkHeaders[52], "Watering application");
 assert.equal(appSheetBulkHeaders[53], "Water amount (mL)");
-assert.deepEqual(
-    Array.from(vm.runInContext("NUTRIENT_PRODUCT_OPTIONS", context)),
-    ["MSU 13-3-15", "SuperThrive Foliage Pro"]
-);
-const appSheetBulkV512Headers = Array.from(
-    vm.runInContext("APP_SHEET_BULK_V512_HEADERS", context)
+assert.deepEqual(strings(evaluateLogger("NUTRIENT_PRODUCT_OPTIONS")), [
+    "MSU 13-3-15",
+    "SuperThrive Foliage Pro",
+]);
+const appSheetBulkV512Headers = strings(
+    evaluateLogger("APP_SHEET_BULK_V512_HEADERS")
 );
 assert.equal(appSheetBulkV512Headers.length, 44);
 assert.deepEqual(
@@ -229,8 +240,8 @@ assert.deepEqual(
         (_, index) => `P${String(index + 1).padStart(2, "0")} weight (g)`
     )
 );
-const appSheetBulkV513Headers = Array.from(
-    vm.runInContext("APP_SHEET_BULK_V513_HEADERS", context)
+const appSheetBulkV513Headers = strings(
+    evaluateLogger("APP_SHEET_BULK_V513_HEADERS")
 );
 assert.equal(appSheetBulkV513Headers.length, 50);
 assert.deepEqual(
@@ -260,34 +271,34 @@ assert.deepEqual(appSheetBulkHeaders.slice(-18), [
     "Watering application",
     "Water amount (mL)",
 ]);
+assert.deepEqual(strings(evaluateLogger("WATERING_APPLICATION_OPTIONS")), [
+    "Flood / soak-through",
+    "Thorough",
+    "Partial",
+    "Spot",
+]);
 assert.deepEqual(
-    Array.from(vm.runInContext("WATERING_APPLICATION_OPTIONS", context)),
-    [
-        "Flood / soak-through",
-        "Thorough",
-        "Partial",
-        "Spot",
-    ]
-);
-assert.deepEqual(
-    Array.from(context.appSheetEventList_("Water; Weigh, Water")),
+    strings(loggerFunction("appSheetEventList_")("Water; Weigh, Water")),
     ["Water", "Weigh"]
 );
-assert.equal(context.normalizeWebEntrySource_("AppSheet"), "AppSheet");
 assert.equal(
-    context.normalizeWebEntrySource_("Mobile bulk water"),
+    loggerFunction("normalizeWebEntrySource_")("AppSheet"),
+    "AppSheet"
+);
+assert.equal(
+    loggerFunction("normalizeWebEntrySource_")("Mobile bulk water"),
     "Mobile bulk water"
 );
 assert.equal(
-    context.normalizeWebEntrySource_("Mobile bulk care"),
+    loggerFunction("normalizeWebEntrySource_")("Mobile bulk care"),
     "Mobile bulk care"
 );
 assert.throws(
-    () => context.normalizeWebEntrySource_("untrusted client"),
-    /Entry source/
+    () => loggerFunction("normalizeWebEntrySource_")("untrusted client"),
+    /Entry source/v
 );
 assert.equal(
-    context.fieldGuideUrlForRow_([
+    loggerFunction("fieldGuideUrlForRow_")([
         "",
         "",
         "",
@@ -306,24 +317,26 @@ assert.equal(
     "https://example.test/#p01"
 );
 assert.throws(
-    () => context.normalizeRequestId_("", true),
-    /missing its retry key/
+    () => loggerFunction("normalizeRequestId_")("", true),
+    /missing its retry key/v
 );
 assert.equal(
-    context.normalizeRequestId_("garden-1234567890", true),
+    loggerFunction("normalizeRequestId_")("garden-1234567890", true),
     "garden-1234567890"
 );
 assert.equal(
-    context.isGooglePhotosShareUrl_("https://" + "photos.app.goo.gl/abc123"),
+    loggerFunction("isGooglePhotosShareUrl_")(
+        "https://photos.app.goo.gl/abc123"
+    ),
     true
 );
 assert.equal(
-    context.isGooglePhotosShareUrl_("https://example.test/photo"),
+    loggerFunction("isGooglePhotosShareUrl_")("https://example.test/photo"),
     false
 );
 assert.deepEqual(
-    Array.from(
-        context.uniqueTextValues_([
+    strings(
+        loggerFunction("uniqueTextValues_")([
             "P01",
             "P01",
             " P02 ",
@@ -333,83 +346,92 @@ assert.deepEqual(
     ["P01", "P02"]
 );
 
-assert.match(source, /LockService\.getScriptLock\(\)/);
-assert.doesNotMatch(source, /LockService\.getDocumentLock\(\)/);
-assert.match(source, /function getWebSaveStatus\(payload\)/);
-assert.match(source, /function savedRequestStatus_\(history, requestId\)/);
-assert.match(source, /setFaviconUrl\(GARDEN_LOGGER\.faviconUrl\)/);
-assert.match(source, /0fdb0739ffe391ade24deb6df2973a21\.png/);
-assert.match(html, /id="themeToggle"/);
-assert.match(html, /function safeStorageGet\(storage, key, fallback = null\)/);
-assert.match(html, /function safeStorageSet\(storage, key, value\)/);
-assert.match(html, /function safeStorageRemove\(storage, key\)/);
-assert.match(html, /const ROUND_STATE_KEY = "gardenLoggerRoundStateV1"/);
-assert.match(html, /const NUTRIENT_STATE_KEY = "gardenLoggerNutrientStateV1"/);
-assert.match(html, /function reconcileSingleSave\(requestId, options = \{\}\)/);
-assert.match(html, /function reconcileBulkSave\(requestId, options = \{\}\)/);
-assert.match(html, /function beginSaveAttempt\(timeoutMs = SAVE_WATCHDOG_MS\)/);
-assert.match(html, /state\.saveTimer = setTimeout\(\(\) => \{/);
-assert.match(html, /state\.saveStartedAt = Date\.now\(\);/);
-assert.match(html, /function browserIsOnline\(\)/);
-assert.match(html, /const BOOTSTRAP_TIMEOUT_MS = 20000;/);
-assert.match(html, /const BOOTSTRAP_AUTO_RETRIES = 1;/);
-assert.match(html, /const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV2";/);
-assert.match(html, /const BOOTSTRAP_CACHE_MAX_AGE_MS = 6 \* 60 \* 60 \* 1000;/);
+assert.match(source, /LockService\.getScriptLock\(\)/v);
+assert.doesNotMatch(source, /LockService\.getDocumentLock\(\)/v);
+assert.match(source, /function getWebSaveStatus\(payload\)/v);
+assert.match(source, /function savedRequestStatus_\(history, requestId\)/v);
+assert.match(source, /setFaviconUrl\(GARDEN_LOGGER\.faviconUrl\)/v);
+assert.match(source, /0fdb0739ffe391ade24deb6df2973a21\.png/v);
+assert.match(html, /id="themeToggle"/v);
+assert.match(html, /function safeStorageGet\(storage, key, fallback = null\)/v);
+assert.match(html, /function safeStorageSet\(storage, key, value\)/v);
+assert.match(html, /function safeStorageRemove\(storage, key\)/v);
+assert.match(html, /const ROUND_STATE_KEY = "gardenLoggerRoundStateV1"/v);
+assert.match(html, /const NUTRIENT_STATE_KEY = "gardenLoggerNutrientStateV1"/v);
 assert.match(
     html,
-    /function requestBootstrap\(\{ resetRetries = false \} = \{\}\)/
+    /function reconcileSingleSave\(requestId, options = \{\}\)/v
 );
-assert.match(html, /id="retryBootstrapButton"/);
-assert.match(html, /function readCachedBootstrap\(\)/);
-assert.match(html, /function refreshCachedBootstrap\(\)/);
-assert.match(html, /target="_top"/);
-assert.match(html, /pending\.replaceable = true;/);
-assert.doesNotMatch(html, /id="weightStates"/);
-assert.doesNotMatch(html, /function renderWeightState\(\)/);
-assert.doesNotMatch(html, /weightState:\s*state\.weightState/);
-assert.match(html, /"Last completed dry"/);
-assert.match(html, /plant\.dryOrLowestWeightBasis/);
-assert.match(html, /plant\.dryOrLowestWeightDate/);
-assert.match(html, /plant\.recommendedWaterDate/);
-assert.match(html, /plant\.wateringGuidance/);
-assert.match(source, /function installWateringRecommendations\(\)/);
+assert.match(html, /function reconcileBulkSave\(requestId, options = \{\}\)/v);
+assert.match(
+    html,
+    /function beginSaveAttempt\(timeoutMs = SAVE_WATCHDOG_MS\)/v
+);
+assert.match(html, /state\.saveTimer = setTimeout\(\(\) => \{/v);
+assert.match(html, /state\.saveStartedAt = Date\.now\(\);/v);
+assert.match(html, /function browserIsOnline\(\)/v);
+assert.match(html, /const BOOTSTRAP_TIMEOUT_MS = 20000;/v);
+assert.match(html, /const BOOTSTRAP_AUTO_RETRIES = 1;/v);
+assert.match(html, /const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV2";/v);
+assert.match(
+    html,
+    /const BOOTSTRAP_CACHE_MAX_AGE_MS = 6 \* 60 \* 60 \* 1000;/v
+);
+assert.match(
+    html,
+    /function requestBootstrap\(\{ resetRetries = false \} = \{\}\)/v
+);
+assert.match(html, /id="retryBootstrapButton"/v);
+assert.match(html, /function readCachedBootstrap\(\)/v);
+assert.match(html, /function refreshCachedBootstrap\(\)/v);
+assert.match(html, /target="_top"/v);
+assert.match(html, /pending\.replaceable = true;/v);
+assert.doesNotMatch(html, /id="weightStates"/v);
+assert.doesNotMatch(html, /function renderWeightState\(\)/v);
+assert.doesNotMatch(html, /weightState:\s*state\.weightState/v);
+assert.match(html, /"Last completed dry"/v);
+assert.match(html, /plant\.dryOrLowestWeightBasis/v);
+assert.match(html, /plant\.dryOrLowestWeightDate/v);
+assert.match(html, /plant\.recommendedWaterDate/v);
+assert.match(html, /plant\.wateringGuidance/v);
+assert.match(source, /function installWateringRecommendations\(\)/v);
 assert.equal(vm.runInContext("BASELINE_VIEW_HEADERS.length", context), 36);
 assert.equal(vm.runInContext("DASHBOARD_VIEW_HEADERS.length", context), 23);
 assert.equal(vm.runInContext("DRY_DOWN_MODEL_HEADERS.length", context), 16);
-assert.deepEqual(
-    Array.from(vm.runInContext("BASELINE_VIEW_HEADERS.slice(-2)", context)),
-    ["Recommended water date", "Watering guidance"]
-);
+assert.deepEqual(strings(evaluateLogger("BASELINE_VIEW_HEADERS.slice(-2)")), [
+    "Recommended water date",
+    "Watering guidance",
+]);
 assert.match(
     html,
-    /const PHOTO_VISIBILITY_KEY = "gardenLoggerPhotosVisibleV1"/
+    /const PHOTO_VISIBILITY_KEY = "gardenLoggerPhotosVisibleV1"/v
 );
-assert.match(html, /id="photoVisibilityToggle"/);
-assert.match(html, /state\.photosVisible && photoData\.length/);
-assert.match(html, /id="plantChoiceList"/);
-assert.match(html, /function plantIconName\(plant\)/);
-assert.match(html, /function createPlantPortrait\(plant, className\)/);
-assert.match(html, /const PLANT_ICON_REVISION = "[a-f0-9]{16}";/);
-const appSheetPortraits = JSON.parse(
-    fs.readFileSync(
-        new URL(
-            "./google-sheets/appsheet-plant-portraits.json",
-            import.meta.url
-        ),
+assert.match(html, /id="photoVisibilityToggle"/v);
+assert.match(html, /state\.photosVisible && photoData\.length/v);
+assert.match(html, /id="plantChoiceList"/v);
+assert.match(html, /function plantIconName\(plant\)/v);
+assert.match(html, /function createPlantPortrait\(plant, className\)/v);
+assert.match(html, /const PLANT_ICON_REVISION = "[0-9a-f]{16}";/v);
+const appSheetPortraits = parseJson(
+    await readFile(
+        new URL("google-sheets/appsheet-plant-portraits.json", import.meta.url),
         "utf8"
-    )
+    ),
+    isAppSheetPortraits,
+    "AppSheet portrait manifest"
 );
-const appSheetImageExpression = fs.readFileSync(
-    new URL("./google-sheets/appsheet-plant-portrait.txt", import.meta.url),
+const appSheetImageExpression = await readFile(
+    new URL("google-sheets/appsheet-plant-portrait.txt", import.meta.url),
     "utf8"
 );
-const appSheetBulkValidation = fs.readFileSync(
-    new URL("./google-sheets/appsheet-bulk-validation.txt", import.meta.url),
+const appSheetBulkValidation = await readFile(
+    new URL("google-sheets/appsheet-bulk-validation.txt", import.meta.url),
     "utf8"
 );
 assert.equal(
     appSheetPortraits.revision,
-    html.match(/const PLANT_ICON_REVISION = "([a-f0-9]{16})";/)[1],
+    /const PLANT_ICON_REVISION = "(?<revision>[0-9a-f]{16})";/v.exec(html)
+        ?.groups?.["revision"],
     "Publish the current portrait revision to AppSheet as well as the logger."
 );
 assert.equal(
@@ -419,43 +441,48 @@ assert.equal(
 assert.ok(appSheetImageExpression.includes(`"${appSheetPortraits.folder}/"`));
 assert.deepEqual(
     appSheetPortraits.portraits.map(({ id }) => id),
-    Object.keys(webPlantImageUrls).sort(),
+    Object.keys(webPlantImageUrls).toSorted(compareText),
     "Every current plant must have an AppSheet portrait."
 );
 assert.deepEqual(
     Array.from(
-        appSheetImageExpression.matchAll(/"(P\d{2})"/gu),
+        appSheetImageExpression.matchAll(/"(?<trackerId>P\d{2})"/gv),
         ([, id]) => id
     ),
     appSheetPortraits.portraits.map(({ id }) => id)
 );
 assert.deepEqual(
     Array.from(
-        appSheetBulkValidation.matchAll(/\[(P\d{2} weight \(g\))\] > 0/gu),
+        appSheetBulkValidation.matchAll(
+            /\[(?<label>P\d{2} weight \(g\))\] > 0/gv
+        ),
         ([, header]) => header
     ),
     appSheetBulkHeaders.filter((header) =>
-        /^P\d{2} weight \(g\)$/u.test(header)
+        /^P\d{2} weight \(g\)$/v.test(header)
     ),
     "AppSheet bulk validation must include every supported plant weight."
 );
-for (const { slug } of appSheetPortraits.portraits) {
-    assert.match(slug, /^[a-z0-9]+(?:-[a-z0-9]+)*$/u);
-    assert.ok(
-        fs.existsSync(
+await Promise.all(
+    appSheetPortraits.portraits.map(async ({ slug }) => {
+        assert.ok(isPlantSlug(slug), `Unsafe plant portrait slug: ${slug}`);
+        const fileStats1 = await stat(
             new URL(`../assets/plant-icons/${slug}.svg`, import.meta.url)
-        ),
-        `Missing AppSheet portrait source: ${slug}`
-    );
-}
-assert.match(html, /"nick2bad4u\.github\.io"/);
-assert.match(html, /\.join\("\/"\)/);
+        );
+        assert.ok(
+            fileStats1.isFile(),
+            `Missing AppSheet portrait source: ${slug}`
+        );
+    })
+);
+assert.match(html, /"nick2bad4u\.github\.io"/v);
+assert.match(html, /\.join\("\/"\)/v);
 assert.match(
     html,
-    /const PLANT_ICON_PATH = "\/Gardening\/assets\/plant-icons\/"/
+    /const PLANT_ICON_PATH = "\/Gardening\/assets\/plant-icons\/"/v
 );
 assert.equal(
-    (html.match(/id="app-icon-plant-[a-z0-9-]+"/gu) || []).length,
+    (html.match(/id="app-icon-plant-[\-0-9a-z]+"/gv) ?? []).length,
     0,
     "The logger must load the small standalone plant portraits instead of inlining the complete sprite."
 );
@@ -464,7 +491,7 @@ for (const [
     background,
     foreground,
     accent,
-] of [
+] of /** @type {const} */ ([
     [
         "Water",
         "#d9eefc",
@@ -531,36 +558,56 @@ for (const [
         "#7a1d1d",
         "#c54b4b",
     ],
-]) {
-    assert.match(
-        html,
-        new RegExp(
-            `\\.recent-item\\[data-event="${eventName}"\\]\\s*\\{[\\s\\S]*?--event-bg: ${background};[\\s\\S]*?--event-ink: ${foreground};[\\s\\S]*?--event-accent: ${accent};`,
-            "u"
-        )
+])) {
+    const styles = required(
+        /<style>(?<css>[\s\S]*?)<\/style>/v.exec(html)?.groups?.["css"],
+        "logger CSS"
     );
+    const recentItemStyles = required(
+        cssBlock(styles, ".recent-item"),
+        "recent item CSS"
+    );
+    const eventStyles = required(
+        cssBlock(recentItemStyles, `&[data-event="${eventName}"]`) ??
+            cssBlock(styles, `.recent-item[data-event="${eventName}"]`),
+        `recent ${eventName} CSS`
+    );
+    for (const [property, value] of /** @type {const} */ ([
+        ["--event-bg", background],
+        ["--event-ink", foreground],
+        ["--event-accent", accent],
+    ])) {
+        assert.ok(
+            eventStyles.includes(`${property}: ${value};`),
+            `${eventName} must retain ${property}: ${value}.`
+        );
+    }
 }
-assert.match(html, /var\(--event-accent\) 10%/u);
-assert.doesNotMatch(html, /var\(--event-bg\) 74%/u);
-assert.match(html, /id="bulkWaterForm"/);
-assert.match(html, /saveBulkCareObservation/);
-assert.match(html, /id="bulkEventChips"/);
-assert.match(html, /id="rotationDegrees"/);
-assert.match(html, /id="bulkRotationDegrees"/);
-assert.match(html, /id="nutrientsUsed"/);
-assert.match(html, /id="wateringApplication"/);
-assert.match(html, /id="waterAmount"/);
-assert.match(html, /id="bulkWateringApplication"/);
-assert.match(html, /id="bulkWaterAmount"/);
+assert.match(html, /var\(--event-accent\) 10%/v);
+assert.doesNotMatch(html, /var\(--event-bg\) 74%/v);
+assert.match(html, /id="bulkWaterForm"/v);
+assert.match(html, /saveBulkCareObservation/v);
+assert.match(html, /id="bulkEventChips"/v);
+assert.match(html, /id="rotationDegrees"/v);
+assert.match(html, /id="bulkRotationDegrees"/v);
+assert.match(html, /id="nutrientsUsed"/v);
+assert.match(html, /id="wateringApplication"/v);
+assert.match(html, /id="waterAmount"/v);
+assert.match(html, /id="bulkWateringApplication"/v);
+assert.match(html, /id="bulkWaterAmount"/v);
 for (const selectId of ["nutrientProduct", "bulkNutrientProduct"]) {
-    const selectMarkup = new RegExp(
-        `<select\\s+id="${selectId}"[\\s\\S]*?<\\/select\\s*>`,
+    const pattern2 = new RegExp(
+        String.raw`<select\s+id="${selectId}"[\s\S]*?<\/select\s*>`,
         "u"
-    ).exec(html)?.[0];
-    assert.ok(selectMarkup, `${selectId} must be a select element.`);
+    );
+    const selectMarkup = pattern2.exec(html)?.[0];
+    assert.ok(
+        isNonemptyString(selectMarkup),
+        `${selectId} must be a select element.`
+    );
     assert.deepEqual(
         Array.from(
-            selectMarkup.matchAll(/<option\s+value="([^"]*)"/gu),
+            selectMarkup.matchAll(/<option\s+value="(?<value>[^"]*)"/gv),
             ([, value]) => value
         ),
         [
@@ -571,132 +618,145 @@ for (const selectId of ["nutrientProduct", "bulkNutrientProduct"]) {
         `${selectId} must expose only the two current nutrient products.`
     );
 }
-assert.match(html, /id="potSetup"\s+type="hidden"/);
-assert.match(html, /createLink\("Spreadsheet", links\.spreadsheet, "sheets"\)/);
-assert.match(html, /id="app-icon-cactus"/);
-assert.match(html, /id="app-icon-water"/);
-assert.match(html, /id="app-icon-queue"/);
+assert.match(html, /id="potSetup"\s+type="hidden"/v);
 assert.match(
     html,
-    /function createIcon\(iconName, className\s*=\s*"app-icon"\)/
+    /createLink\("Spreadsheet", links\.spreadsheet, "sheets"\)/v
 );
-assert.match(html, /const EVENT_ICON_NAMES = Object\.freeze\(\{/);
-assert.doesNotMatch(html, /[☀☾✎▦💧⚖↔✓↻✂🪴✿📷⚠⋯]/u);
-assert.doesNotMatch(html, /Add this logger to your phone/);
-assert.doesNotMatch(html, /Permanent ID stays the same/);
-assert.doesNotMatch(html, /Pot setup is not pot size/);
-assert.doesNotMatch(html, /Current pot setup/);
-assert.doesNotMatch(html, /potSetupDisplay/);
+assert.match(html, /id="app-icon-cactus"/v);
+assert.match(html, /id="app-icon-water"/v);
+assert.match(html, /id="app-icon-queue"/v);
 assert.match(
     html,
-    /const productFieldId = prefix\s*\? `\$\{prefix\}NutrientProductField`\s*:\s*"nutrientProductField";/,
+    /function createIcon\(iconName, className\s*=\s*"app-icon"\)/v
+);
+assert.match(html, /const EVENT_ICON_NAMES = Object\.freeze\(\{/v);
+assert.doesNotMatch(html, /[↔↻⋯▦☀☾⚖⚠✂✎✓✿💧📷🪴]/v);
+assert.doesNotMatch(html, /Add this logger to your phone/v);
+assert.doesNotMatch(html, /Permanent ID stays the same/v);
+assert.doesNotMatch(html, /Pot setup is not pot size/v);
+assert.doesNotMatch(html, /Current pot setup/v);
+assert.doesNotMatch(html, /potSetupDisplay/v);
+assert.match(
+    html,
+    /const productFieldId = prefix\s*\? `\$\{prefix\}NutrientProductField`\s*:\s*"nutrientProductField";/v,
     "single-plant nutrient fields must use their lowercase DOM IDs"
 );
-assert.match(html, /id="repotSection"/);
-assert.match(html, /id="photoUrl"/);
-assert.match(html, /id="labelPickerMode"/);
-assert.match(html, /gardenLoggerPlantPickerModeV1/);
-assert.match(html, /id="recentLimit"/);
-assert.match(html, /gardenLoggerRecentLimitV1/);
-assert.match(html, /gardenLoggerObservationQueueV1/);
-assert.match(html, /saveWebObservationBatch/);
-assert.match(html, /function sendObservationQueueBatch\(retryIds = null\)/);
-assert.match(html, /function applySuccessfulObservationBatch/);
-assert.doesNotMatch(html, /QUEUE_CHUNK_SIZE/);
-assert.match(html, /const QUEUE_EXECUTION_LIMIT_MS = 390000;/);
-assert.match(html, /const QUEUE_RETRY_DELAYS_MS = \[2000, 5000, 10000\];/);
-assert.match(html, /function queueStatusDescriptor\(entry\)/);
-assert.match(html, /id="queueSendButton"/);
-assert.match(html, /id="queueButton"[\s\S]*?Add to queue/);
-assert.match(html, /id="advanceAfterQueue"/);
-assert.match(html, /queue-complete/);
-assert.match(html, /@media \(hover: none\) and \(pointer: coarse\)/);
-assert.match(html, /function guardMobileButtonHit\(event\)/);
+assert.match(html, /id="repotSection"/v);
+assert.match(html, /id="photoUrl"/v);
+assert.match(html, /id="labelPickerMode"/v);
+assert.match(html, /gardenLoggerPlantPickerModeV1/v);
+assert.match(html, /id="recentLimit"/v);
+assert.match(html, /gardenLoggerRecentLimitV1/v);
+assert.match(html, /gardenLoggerObservationQueueV1/v);
+assert.match(html, /saveWebObservationBatch/v);
+assert.match(html, /function sendObservationQueueBatch\(retryIds = null\)/v);
+assert.match(html, /function applySuccessfulObservationBatch/v);
+assert.doesNotMatch(html, /QUEUE_CHUNK_SIZE/v);
+assert.match(html, /const QUEUE_EXECUTION_LIMIT_MS = 390000;/v);
+assert.match(html, /const QUEUE_RETRY_DELAYS_MS = \[2000, 5000, 10000\];/v);
+assert.match(html, /function queueStatusDescriptor\(entry\)/v);
+assert.match(html, /id="queueSendButton"/v);
+assert.match(html, /id="queueButton"[\s\S]*?Add to queue/v);
+assert.match(html, /id="advanceAfterQueue"/v);
+assert.match(html, /queue-complete/v);
+assert.match(html, /@media \(hover: none\) and \(pointer: coarse\)/v);
+assert.match(html, /function guardMobileButtonHit\(event\)/v);
 assert.match(
     html,
-    /document\.addEventListener\("click", guardMobileButtonHit, true\)/
+    /document\.addEventListener\("click", guardMobileButtonHit, true\)/v
 );
-assert.match(html, /id="openGooglePhotos"/);
+assert.match(html, /id="openGooglePhotos"/v);
 assert.match(
     html,
-    /createLink\(\s*"History & charts",\s*plant\.historyUrl,\s*"history"\s*\)/
+    /createLink\(\s*"History & charts",\s*plant\.historyUrl,\s*"history"\s*\)/v
 );
-assert.match(source, /const HISTORY_DETAIL_HEADERS/);
-assert.match(source, /const HISTORY_ROTATION_HEADERS/);
-assert.match(source, /const HISTORY_WATER_HEADERS/);
-assert.match(source, /ensureHistoryDetailColumns_\(history\)/);
-assert.match(source, /ensureHistoryWaterColumns_\(history\)/);
-assert.match(source, /function ensureHistoryView_\(spreadsheet\)/);
-assert.match(source, /SEQUENCE\(1,\$\{remainingColumns\},2,1\)/);
+assert.match(source, /const HISTORY_DETAIL_HEADERS/v);
+assert.match(source, /const HISTORY_ROTATION_HEADERS/v);
+assert.match(source, /const HISTORY_WATER_HEADERS/v);
+assert.match(source, /ensureHistoryDetailColumns_\(history\)/v);
+assert.match(source, /ensureHistoryWaterColumns_\(history\)/v);
+assert.match(source, /function ensureHistoryView_\(spreadsheet\)/v);
+assert.match(source, /SEQUENCE\(1,\$\{remainingColumns\},2,1\)/v);
 assert.match(
     source,
-    /updateBaselinePotSetup_\(\s*spreadsheet,\s*prepared\.observation\.plantId,\s*result\.potSetup\s*\)/,
+    /updateBaselinePotSetup_\(\s*spreadsheet,\s*prepared\.observation\.plantId,\s*result\.potSetup\s*\)/v,
     "Repot retries must reuse the pot setup stored in the archived row"
 );
-assert.match(source, /function saveWebObservationBatch\(payloads\)/);
-assert.match(source, /function appendPreparedWebObservationBatch_/);
-assert.match(source, /function clearUnexpectedMeasurementValidations_/);
+assert.match(source, /function saveWebObservationBatch\(payloads\)/v);
+assert.match(source, /function appendPreparedWebObservationBatch_/v);
+assert.match(source, /function clearUnexpectedMeasurementValidations_/v);
 assert.match(
     source,
-    /\.clearDataValidations\(\)\s*\.setNumberFormat\("0\.##"\)/
+    /\.clearDataValidations\(\)\s*\.setNumberFormat\("0\.##"\)/v
 );
-assert.match(source, /function getWebBatchSaveStatus\(requests\)/);
-assert.match(source, /function processAppSheetEntry\(entryId\)/);
-assert.match(source, /function processQueuedAppSheetEntries\(\)/);
+assert.match(source, /function getWebBatchSaveStatus\(requests\)/v);
+assert.match(source, /function processAppSheetEntry\(entryId\)/v);
+assert.match(source, /function processQueuedAppSheetEntries\(\)/v);
 assert.match(
     source,
-    /function processQueuedAppSheetBulkEntries_\(spreadsheet\)/
+    /function processQueuedAppSheetBulkEntries_\(spreadsheet\)/v
 );
-assert.match(source, /function installAppSheetBulkSheet\(\)/);
-assert.match(source, /function migrateLegacyAppSheetBulkSheet_\(sheet\)/);
-assert.match(source, /function normalizeAppSheetBulkAction_\(value\)/);
-assert.match(source, /function appSheetBulkWateredPlants_\(value\)/);
-assert.match(source, /function appSheetBulkSelectedPlants_\(value\)/);
-assert.match(source, /`appsheet-bulk-\$\{roundId\}-\$\{plantId\}`/);
-assert.match(source, /function installAppSheetQueueTrigger\(\)/);
-assert.match(source, /\.timeBased\(\)\.everyMinutes\(5\)\.create\(\)/);
-assert.doesNotMatch(source, /Logger 5\.8 is ready/);
+assert.match(source, /function installAppSheetBulkSheet\(\)/v);
+assert.match(source, /function migrateLegacyAppSheetBulkSheet_\(sheet\)/v);
+assert.match(source, /function normalizeAppSheetBulkAction_\(value\)/v);
+assert.match(source, /function appSheetBulkWateredPlants_\(value\)/v);
+assert.match(source, /function appSheetBulkSelectedPlants_\(value\)/v);
+assert.match(source, /`appsheet-bulk-\$\{roundId\}-\$\{plantId\}`/v);
+assert.match(source, /function installAppSheetQueueTrigger\(\)/v);
+assert.match(source, /\.timeBased\(\)\.everyMinutes\(5\)\.create\(\)/v);
+assert.doesNotMatch(source, /Logger 5\.8 is ready/v);
 assert.match(
     source,
-    /function saveBulkCareObservation\(payload\)[\s\S]*?saveWebObservationBatch\(/
+    /function saveBulkCareObservation\(payload\)[\s\S]*?saveWebObservationBatch\(/v
 );
-assert.match(source, /function saveBulkWaterObservation\(payload\)/);
-assert.match(source, /function appSheetPayloadFromRow_\(row, requestId\)/);
-assert.match(source, /entrySource:\s*"AppSheet"/);
-assert.match(source, /storedStatus === "Saved"/);
-assert.match(source, /`appsheet-\$\{normalizedEntryId\}`/);
-assert.match(source, /function removeSelectedHistoryObservations\(\)/);
-assert.match(source, /function refreshGardenWorkbook\(\)/);
-assert.match(source, /function refreshGardenWorkbookPages01To10\(\)/);
-assert.match(source, /function refreshGardenWorkbookPages11To20\(\)/);
-assert.match(source, /function refreshGardenWorkbookPages21To30\(\)/);
-assert.match(source, /function inferredWeightStatesByRow_\(historyRows\)/);
+assert.match(source, /function saveBulkWaterObservation\(payload\)/v);
+assert.match(source, /function appSheetPayloadFromRow_\(row, requestId\)/v);
+assert.match(source, /entrySource:\s*"AppSheet"/v);
+assert.match(source, /storedStatus === "Saved"/v);
+assert.match(source, /`appsheet-\$\{normalizedEntryId\}`/v);
+assert.match(source, /function removeSelectedHistoryObservations\(\)/v);
+assert.match(source, /function refreshGardenWorkbook\(\)/v);
+assert.match(source, /function refreshGardenWorkbookPages01To10\(\)/v);
+assert.match(source, /function refreshGardenWorkbookPages11To20\(\)/v);
+assert.match(source, /function refreshGardenWorkbookPages21To30\(\)/v);
+assert.match(source, /function inferredWeightStatesByRow_\(historyRows\)/v);
 assert.match(
     source,
-    /function currentSetupWeightRecordsByPlant_\(historyRows\)/
+    /function currentSetupWeightRecordsByPlant_\(historyRows\)/v
 );
-assert.match(source, /function plantPageSheet_\(spreadsheet, plantId\)/);
-assert.match(source, /"Dry weight \(g\)"/);
-assert.match(source, /"Latest weight \(lb\)"/);
-assert.match(source, /"Predicted dry date"/);
-assert.match(source, /WET_WEIGHT_WINDOW_DAYS = 5/u);
-assert.match(source, /function GARDEN_DRY_DOWN\(history, plantIds\)/u);
-assert.match(source, /function installDryDownLearning\(\)/u);
-assert.match(source, /curve\.count >= 4 &&\s+curve\.span >= 3/u);
-const forecastFormulaRow = Array.from(
-    context.baselineViewRow_(2, { id: "P01", name: "Test plant" })
+assert.match(source, /function plantPageSheet_\(spreadsheet, plantId\)/v);
+assert.match(source, /"Dry weight \(g\)"/v);
+assert.match(source, /"Latest weight \(lb\)"/v);
+assert.match(source, /"Predicted dry date"/v);
+assert.match(source, /WET_WEIGHT_WINDOW_DAYS = 5/v);
+assert.match(source, /function GARDEN_DRY_DOWN\(history, plantIds\)/v);
+assert.match(source, /function installDryDownLearning\(\)/v);
+assert.match(source, /curve\.count >= 4 &&\s+curve\.span >= 3/v);
+const forecastFormulaRow = strings(
+    loggerFunction("baselineViewRow_")(2, { id: "P01", name: "Test plant" })
 );
-assert.match(forecastFormulaRow[20], /'Dry-down models'!\$E\$2:\$E\$31/u);
-assert.match(forecastFormulaRow[30], /'Dry-down models'!\$G\$2:\$G\$31/u);
-assert.doesNotMatch(forecastFormulaRow[30], /History!\$N\$2:\$N\$5000/u);
-assert.match(source, /sheet\.setFrozenRows\(0\)/);
-assert.match(source, /sheet\.setFrozenColumns\(0\)/);
+assert.match(
+    required(forecastFormulaRow[20], "forecast formula"),
+    /'Dry-down models'!\$E\$2:\$E\$31/v
+);
+assert.match(
+    required(forecastFormulaRow[30], "forecast formula"),
+    /'Dry-down models'!\$G\$2:\$G\$31/v
+);
+assert.doesNotMatch(
+    required(forecastFormulaRow[30], "forecast formula"),
+    /History!\$N\$2:\$N\$5000/v
+);
+assert.match(source, /sheet\.setFrozenRows\(0\)/v);
+assert.match(source, /sheet\.setFrozenColumns\(0\)/v);
 
 const publishedHistoryDate = parseDate("8/12/2026 2:47 AM");
-assert.equal(publishedHistoryDate?.getFullYear(), 2026);
-assert.equal(publishedHistoryDate?.getMonth(), 7);
-assert.equal(publishedHistoryDate?.getDate(), 12);
-assert.equal(publishedHistoryDate?.getHours(), 2);
+assert.ok(publishedHistoryDate instanceof Date);
+assert.equal(publishedHistoryDate.getFullYear(), 2026);
+assert.equal(publishedHistoryDate.getMonth(), 7);
+assert.equal(publishedHistoryDate.getDate(), 12);
+assert.equal(publishedHistoryDate.getHours(), 2);
 assert.equal(parseDate("8/12/2026 12:05 PM")?.getHours(), 12);
 assert.equal(parseDate("8/12/2026 12:05 AM")?.getHours(), 0);
 
@@ -753,9 +813,96 @@ assert.deepEqual(
             "Current pot label": label,
             "Plant ID": `P${String(index + 1).padStart(2, "0")}`,
         }))
-        .sort(comparePlantsByNaturalLabel)
+        .toSorted(comparePlantsByNaturalLabel)
         .map((plant) => plant["Current pot label"]),
     naturallyOrderedPlantLabels
 );
 
-console.log("Google Sheets logger pure-function checks passed.");
+process.stdout.write("Google Sheets logger pure-function checks passed.\n");
+
+/**
+ * Read one checked-in CSS rule, keeping native nested blocks inside its body.
+ *
+ * @param {string} css
+ * @param {string} selector
+ */
+function cssBlock(css, selector) {
+    const start = css.indexOf(selector);
+    if (start === -1) return undefined;
+    const opening = css.indexOf("{", start + selector.length);
+    if (opening === -1 || css.slice(start, opening).trim() !== selector)
+        return undefined;
+    let depth = 1;
+    let quote = "";
+    for (let index = opening + 1; index < css.length; index += 1) {
+        const character = css[index];
+        if (quote) {
+            if (character === "\\") index += 1;
+            quote = character === quote ? "" : quote;
+            continue;
+        }
+        if (character === '"' || character === "'") quote = character;
+        depth += character === "{" ? 1 : 0;
+        depth -= character === "}" ? 1 : 0;
+        if (depth === 0) return css.slice(opening + 1, index);
+    }
+    throw new Error(`Unclosed CSS rule for ${selector}.`);
+}
+
+/** @param {string} expression @returns {unknown} */
+function evaluateLogger(expression) {
+    return vm.runInContext(expression, context);
+}
+
+/**
+ * @param {unknown} value @returns {value is {revision: string, folder: string,
+ *   portraits: {id: string, slug: string}[]}}
+ */
+function isAppSheetPortraits(value) {
+    return hasFields(value, {
+        folder: isString,
+        portraits: arrayOf(isPortrait),
+        revision: isString,
+    });
+}
+
+/** @param {unknown} value @returns {value is (...args: unknown[]) => unknown} */
+function isCallable(value) {
+    return typeof value === "function";
+}
+
+/**
+ * @param {unknown} value @returns {value is Record<string, {currentImageUrl:
+ *   string}>}
+ */
+function isImageUrls(value) {
+    return (
+        isRecord(value) &&
+        Object.values(value).every((entry) =>
+            hasFields(entry, { currentImageUrl: isString })
+        )
+    );
+}
+
+/** @param {unknown} value @returns {value is {id: string, slug: string}} */
+function isPortrait(value) {
+    return hasFields(value, { id: isString, slug: isString });
+}
+
+/** @param {unknown} value @returns {value is Map<unknown, unknown>} */
+function isUnknownMap(value) {
+    return value instanceof Map;
+}
+
+/** @param {string} name */
+function loggerFunction(name) {
+    const callable = context[name];
+    assert.ok(isCallable(callable), `Missing logger function ${name}.`);
+    return callable;
+}
+
+/** @param {unknown} value */
+function strings(value) {
+    assert.ok(arrayOf(isString)(value), "Expected logger string array.");
+    return [...value];
+}

@@ -1,0 +1,9 @@
+# Dependencies, caches, and generated build/test artifacts.
+node_modules/
+.cache/
+.pages-site/
+.print-output/
+coverage/
+output/
+temp/
+.codex-remote-attachments/

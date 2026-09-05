@@ -1,11 +1,20 @@
+---
 name: "Dependabot Auto Merge"
 
 run-name: >-
     ${{
         github.event_name == 'pull_request' &&
-        format('Dependabot Auto Merge #{0}', github.event.pull_request.number) ||
+        format(
+            'Dependabot Auto Merge #{0}',
+            github.event.pull_request.number
+        ) ||
         github.event_name == 'merge_group' &&
-        format('Dependabot Auto Merge merge group {0}', github.event.merge_group.head_sha || github.ref_name || github.run_id) ||
+        format(
+            'Dependabot Auto Merge merge group {0}',
+            github.event.merge_group.head_sha ||
+            github.ref_name ||
+            github.run_id
+        ) ||
         format('Dependabot Auto Merge {0}', github.ref_name || github.run_id)
     }}
 

@@ -2,8 +2,10 @@ import {
     comparePlantsByNaturalLabel,
     dayColor,
     daysSince,
+    displayValue,
     formatDate,
     formatMeasurement,
+    getRequiredElement,
     historyPageUrl,
     installThemeToggle,
     loadCollectionData,
@@ -12,66 +14,101 @@ import {
 } from "./plant-tracker-data.js";
 
 /** @typedef {Awaited<ReturnType<typeof loadCollectionData>>} CollectionData */
+/** @typedef {CollectionData["plants"][number]} CollectionPlant */
+/** @typedef {import("./plant-tracker-data.js").HistoryEvent} HistoryEvent */
 
-const tableBody = /** @type {HTMLTableSectionElement} */ (
-    document.querySelector("#tracker-table tbody")
+const tableBody = getRequiredElement(
+    "#tracker-table tbody",
+    HTMLTableSectionElement
 );
-const status = /** @type {HTMLElement} */ (
-    document.querySelector("#sheet-status")
+const status = getRequiredElement("#sheet-status", HTMLElement);
+const refreshButton = getRequiredElement("#refresh-sheet", HTMLButtonElement);
+const searchInput = getRequiredElement("#tracker-search", HTMLInputElement);
+const baselineFilter = getRequiredElement(
+    "#baseline-filter",
+    HTMLSelectElement
 );
-const refreshButton = /** @type {HTMLButtonElement} */ (
-    document.querySelector("#refresh-sheet")
-);
-const searchInput = /** @type {HTMLInputElement} */ (
-    document.querySelector("#tracker-search")
-);
-const baselineFilter = /** @type {HTMLSelectElement} */ (
-    document.querySelector("#baseline-filter")
-);
-const sortSelect = /** @type {HTMLSelectElement} */ (
-    document.querySelector("#tracker-sort")
-);
-const sheetPanel = /** @type {HTMLElement} */ (
-    document.querySelector(".sheet-panel")
-);
-const maximizeButton = /** @type {HTMLButtonElement} */ (
-    document.querySelector("#maximize-table")
-);
-const maximizeLabel = /** @type {HTMLElement} */ (
-    document.querySelector("#maximize-label")
-);
-/** @type {HTMLElement[]} */
+const sortSelect = getRequiredElement("#tracker-sort", HTMLSelectElement);
+const sheetPanel = getRequiredElement(".sheet-panel", HTMLElement);
+const maximizeButton = getRequiredElement("#maximize-table", HTMLButtonElement);
+const maximizeLabel = getRequiredElement("#maximize-label", HTMLElement);
 const sortHeaders = [
     ...document.querySelectorAll("#tracker-table th[data-sort]"),
-].map((header) => /** @type {HTMLElement} */ (header));
-/** @type {CollectionData | null} */
-let collection = null;
-let sortDirection = "asc";
+].filter((header) => header instanceof HTMLTableCellElement);
+/** @type {{ collection: CollectionData | null; sortDirection: string }} */
+const state = { collection: null, sortDirection: "asc" };
 
-function element(tagName, text, className) {
-    const node = document.createElement(tagName);
-    if (text !== undefined) node.textContent = text;
-    if (className) node.className = className;
-    return node;
-}
-
+/**
+ * @param {unknown} value
+ * @param {string} unit
+ * @param {HistoryEvent | undefined} event
+ */
 function datedValue(value, unit, event) {
     const container = element("div", undefined, "dated-value");
     container.append(element("strong", formatMeasurement(value, unit)));
     container.append(
         element(
             "small",
-            event ? `Checked ${formatDate(event.Date)}` : "Not checked yet"
+            event ? `Checked ${formatDate(event["Date"])}` : "Not checked yet"
         )
     );
     return container;
 }
 
-function plantLink(plant, labelOnly = false) {
-    const link = element("a", labelOnly ? plantLabel(plant) : undefined);
+/**
+ * @template {Exclude<keyof HTMLElementTagNameMap, "script">} T
+ *
+ * @param {T} tagName
+ * @param {string | number | undefined} [text]
+ * @param {string | undefined} [className]
+ */
+function element(tagName, text, className) {
+    const node = document.createElement(tagName);
+    if (text !== undefined) node.append(document.createTextNode(String(text)));
+    if (className !== undefined && className !== "") node.className = className;
+    return node;
+}
+
+/** @param {CollectionPlant} plant */
+function latestActivityTime(plant) {
+    return parseDate(plant.summary.latestActivity?.["Date"])?.getTime() ?? 0;
+}
+
+async function loadData() {
+    refreshButton.disabled = true;
+    status.textContent = "Loading the latest Google Sheets observations…";
+    try {
+        state.collection = await loadCollectionData();
+        renderStats();
+        renderTable();
+        status.textContent = `${state.collection.plants.length} containers and ${state.collection.history.length} observations loaded from Google Sheets.`;
+    } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        const row = document.createElement("tr");
+        const cell = element(
+            "td",
+            `Live data unavailable: ${message}`,
+            "loading-cell error-cell"
+        );
+        cell.colSpan = 12;
+        row.append(cell);
+        tableBody.replaceChildren(row);
+        status.textContent =
+            "The published log could not load. Open Google Sheets with the button above.";
+    } finally {
+        refreshButton.disabled = false;
+    }
+}
+
+/**
+ * @param {CollectionPlant} plant
+ * @param {boolean} [isLabelOnly]
+ */
+function plantLink(plant, isLabelOnly = false) {
+    const link = element("a", isLabelOnly ? plantLabel(plant) : undefined);
     link.href = historyPageUrl(plant["Plant ID"]);
     link.title = `${plantLabel(plant)} · permanent ID ${plant["Plant ID"]}`;
-    if (!labelOnly) {
+    if (!isLabelOnly) {
         link.append(element("strong", plant["Plant / planter"]));
         link.append(
             element(
@@ -84,10 +121,11 @@ function plantLink(plant, labelOnly = false) {
     return link;
 }
 
+/** @param {CollectionPlant} plant */
 function renderRow(plant) {
     const row = document.createElement("tr");
     const summary = plant.summary;
-    const lastWaterDate = summary.lastWater?.Date ?? "";
+    const lastWaterDate = summary.lastWater?.["Date"] ?? "";
     const waterDays = daysSince(lastWaterDate);
 
     const idCell = element("td");
@@ -130,30 +168,7 @@ function renderRow(plant) {
     );
     row.append(weightCell);
 
-    const trendCell = element("td");
-    if (summary.weightChange === null) {
-        trendCell.append(element("span", "Needs 2 weights", "trend-muted"));
-    } else {
-        const value = summary.weightChange;
-        const direction = value > 0 ? "up" : value < 0 ? "down" : "steady";
-        const sign = value > 0 ? "+" : value < 0 ? "−" : "";
-        trendCell.append(
-            element(
-                "strong",
-                `${sign}${Math.abs(value).toFixed(1)} g`,
-                `trend-chip ${direction}`
-            )
-        );
-        trendCell.append(
-            element(
-                "small",
-                summary.weightChangePercent === null
-                    ? "from previous"
-                    : `${Math.abs(summary.weightChangePercent * 100).toFixed(1)}% from previous`,
-                "trend-detail"
-            )
-        );
-    }
+    const trendCell = weightTrendCell(summary);
     row.append(trendCell);
 
     const heightCell = element("td");
@@ -181,11 +196,11 @@ function renderRow(plant) {
         rotationCell.append(
             element(
                 "strong",
-                `${summary.latestRotation["Rotation (°)"] || 90}°`
+                `${displayValue(summary.latestRotation["Rotation (°)"], "90")}°`
             ),
             element(
                 "small",
-                `Rotated ${formatDate(summary.latestRotation.Date)}`
+                `Rotated ${formatDate(summary.latestRotation["Date"])}`
             )
         );
     } else {
@@ -196,11 +211,16 @@ function renderRow(plant) {
     row.append(
         element(
             "td",
-            summary.latestCondition?.["Condition / soil"] || "Not logged",
+            displayValue(
+                summary.latestCondition?.["Condition / soil"],
+                "Not logged"
+            ),
             "condition-cell"
         )
     );
-    row.append(element("td", formatDate(summary.latestActivity?.Date ?? "")));
+    row.append(
+        element("td", formatDate(summary.latestActivity?.["Date"] ?? ""))
+    );
 
     const historyCell = element("td");
     const historyLink = element(
@@ -214,104 +234,28 @@ function renderRow(plant) {
     return row;
 }
 
-function latestActivityTime(plant) {
-    return plant.summary.latestActivity?.Date
-        ? (parseDate(plant.summary.latestActivity.Date)?.getTime() ?? 0)
-        : 0;
-}
-
-function visiblePlants() {
-    const query = searchInput.value.trim().toLowerCase();
-    const filter = baselineFilter.value;
-    const plants = collection.plants.filter((plant) => {
-        const matchesQuery = [
-            plant["Plant ID"],
-            plantLabel(plant),
-            plant["Plant / planter"],
-            plant["Scientific name / contents"],
-        ].some((value) => String(value).toLowerCase().includes(query));
-        const matchesFilter =
-            filter === "all" ||
-            (filter === "needs-baseline" &&
-                plant.summary.baselineStatus !== "Ready") ||
-            (filter === "has-weight" &&
-                plant.summary.latestWeightValue !== null);
-        return matchesQuery && matchesFilter;
-    });
-
-    const collator = new Intl.Collator("en", {
-        numeric: true,
-        sensitivity: "base",
-    });
-    const sorted = plants.sort((left, right) => {
-        if (sortSelect.value === "water") {
-            return (
-                (daysSince(left.summary.lastWater?.Date ?? "") ?? -1) -
-                (daysSince(right.summary.lastWater?.Date ?? "") ?? -1)
-            );
-        }
-        if (sortSelect.value === "activity") {
-            return latestActivityTime(left) - latestActivityTime(right);
-        }
-        if (sortSelect.value === "water-date") {
-            return (
-                (parseDate(left.summary.lastWater?.Date ?? "")?.getTime() ??
-                    0) -
-                (parseDate(right.summary.lastWater?.Date ?? "")?.getTime() ?? 0)
-            );
-        }
-        if (sortSelect.value === "weight") {
-            return (
-                (left.summary.latestWeightValue ?? -Infinity) -
-                (right.summary.latestWeightValue ?? -Infinity)
-            );
-        }
-        if (sortSelect.value === "name") {
-            return collator.compare(
-                left["Plant / planter"],
-                right["Plant / planter"]
-            );
-        }
-        return comparePlantsByNaturalLabel(left, right);
-    });
-    return sortDirection === "desc" ? sorted.reverse() : sorted;
-}
-
-function updateSortHeaders() {
-    sortHeaders.forEach((header) => {
-        const active = header.dataset.sort === sortSelect.value;
-        header.setAttribute(
-            "aria-sort",
-            active
-                ? sortDirection === "asc"
-                    ? "ascending"
-                    : "descending"
-                : "none"
-        );
-    });
-}
-
-function setSort(key, toggleDirection = false) {
-    if (toggleDirection && sortSelect.value === key) {
-        sortDirection = sortDirection === "asc" ? "desc" : "asc";
-    } else {
-        sortSelect.value = key;
-        sortDirection = ["water", "activity"].includes(key) ? "desc" : "asc";
-    }
-    updateSortHeaders();
-    if (collection) renderTable();
-}
-
-function setMaximized(maximized) {
-    sheetPanel.classList.toggle("is-maximized", maximized);
-    document.body.classList.toggle("table-maximized", maximized);
-    maximizeButton.setAttribute("aria-pressed", String(maximized));
-    maximizeLabel.textContent = maximized ? "Restore page" : "Maximize table";
-    if (maximized) {
-        /** @type {HTMLElement} */ (
-            document.querySelector("#tracker-table-wrap")
-        ).focus();
-    }
+function renderStats() {
+    if (!state.collection) return;
+    const ready = state.collection.plants.filter(
+        (plant) => plant.summary.baselineStatus === "Ready"
+    ).length;
+    const latest = state.collection.plants
+        .map((plant) => plant.summary.latestActivity?.["Date"] ?? "")
+        .toSorted(
+            (left, right) =>
+                (parseDate(right)?.getTime() ?? 0) -
+                (parseDate(left)?.getTime() ?? 0)
+        )[0];
+    getRequiredElement("#container-count", HTMLElement).textContent = String(
+        state.collection.plants.length
+    );
+    getRequiredElement("#observation-count", HTMLElement).textContent = String(
+        state.collection.history.length
+    );
+    getRequiredElement("#baseline-count", HTMLElement).textContent =
+        `${ready} / ${state.collection.plants.length}`;
+    getRequiredElement("#latest-activity", HTMLElement).textContent =
+        formatDate(latest);
 }
 
 function renderTable() {
@@ -328,85 +272,184 @@ function renderTable() {
         tableBody.replaceChildren(row);
         return;
     }
-    tableBody.replaceChildren(...plants.map(renderRow));
+    tableBody.replaceChildren(...plants.map((plant) => renderRow(plant)));
 }
 
-function renderStats() {
-    const ready = collection.plants.filter(
-        (plant) => plant.summary.baselineStatus === "Ready"
-    ).length;
-    const latest = collection.plants
-        .map((plant) => plant.summary.latestActivity?.Date ?? "")
-        .sort(
-            (left, right) =>
-                (parseDate(right)?.getTime() ?? 0) -
-                (parseDate(left)?.getTime() ?? 0)
-        )[0];
-    /** @type {HTMLElement} */ (
-        document.querySelector("#container-count")
-    ).textContent = String(collection.plants.length);
-    /** @type {HTMLElement} */ (
-        document.querySelector("#observation-count")
-    ).textContent = String(collection.history.length);
-    /** @type {HTMLElement} */ (
-        document.querySelector("#baseline-count")
-    ).textContent = `${ready} / ${collection.plants.length}`;
-    /** @type {HTMLElement} */ (
-        document.querySelector("#latest-activity")
-    ).textContent = formatDate(latest);
+/**
+ * @param {boolean} maximized
+ */
+function setMaximized(maximized) {
+    sheetPanel.classList.toggle("is-maximized", maximized);
+    document.body.classList.toggle("table-maximized", maximized);
+    maximizeButton.setAttribute("aria-pressed", String(maximized));
+    maximizeLabel.textContent = maximized ? "Restore page" : "Maximize table";
+    if (maximized) {
+        getRequiredElement("#tracker-table-wrap", HTMLElement).focus();
+    }
 }
 
-async function loadData() {
-    refreshButton.disabled = true;
-    status.textContent = "Loading the latest Google Sheets observations…";
-    try {
-        collection = await loadCollectionData();
-        renderStats();
-        renderTable();
-        status.textContent = `${collection.plants.length} containers and ${collection.history.length} observations loaded from Google Sheets.`;
-    } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
-        const row = document.createElement("tr");
-        const cell = element(
-            "td",
-            `Live data unavailable: ${message}`,
-            "loading-cell error-cell"
+/**
+ * @param {string} key
+ */
+function setSort(key, shouldToggleDirection = false) {
+    if (shouldToggleDirection && sortSelect.value === key) {
+        state.sortDirection = state.sortDirection === "asc" ? "desc" : "asc";
+    } else {
+        sortSelect.value = key;
+        state.sortDirection = ["activity", "water"].includes(key)
+            ? "desc"
+            : "asc";
+    }
+    updateSortHeaders();
+    if (state.collection) renderTable();
+}
+
+function updateSortHeaders() {
+    for (const header of sortHeaders) {
+        const isActive = header.dataset["sort"] === sortSelect.value;
+        header.setAttribute(
+            "aria-sort",
+            isActive
+                ? state.sortDirection === "asc"
+                    ? "ascending"
+                    : "descending"
+                : "none"
         );
-        cell.colSpan = 12;
-        row.append(cell);
-        tableBody.replaceChildren(row);
-        status.textContent =
-            "The published log could not load. Open Google Sheets with the button above.";
-    } finally {
-        refreshButton.disabled = false;
     }
 }
 
-installThemeToggle(
-    /** @type {HTMLButtonElement} */ (document.querySelector("#theme-toggle"))
-);
-refreshButton.addEventListener("click", loadData);
-searchInput.addEventListener("input", () => collection && renderTable());
-baselineFilter.addEventListener("change", () => collection && renderTable());
-sortSelect.addEventListener("change", () => setSort(sortSelect.value));
-sortHeaders.forEach((header) => {
-    const button = header.querySelector("button");
-    if (!(button instanceof HTMLButtonElement)) return;
-    button.addEventListener("click", () => {
-        if (header.dataset.sort) setSort(header.dataset.sort, true);
+function visiblePlants() {
+    if (!state.collection) return [];
+    const query = searchInput.value.trim().toLowerCase();
+    const filter = baselineFilter.value;
+    const plants = state.collection.plants.filter((plant) => {
+        const isMatchesQuery = [
+            plant["Plant ID"],
+            plantLabel(plant),
+            plant["Plant / planter"],
+            plant["Scientific name / contents"],
+        ].some((value) => value.toLowerCase().includes(query));
+        const isMatchesFilter =
+            filter === "all" ||
+            (filter === "needs-baseline" &&
+                plant.summary.baselineStatus !== "Ready") ||
+            (filter === "has-weight" &&
+                plant.summary.latestWeightValue !== null);
+        return isMatchesQuery && isMatchesFilter;
     });
-});
-maximizeButton.addEventListener("click", () =>
-    setMaximized(!sheetPanel.classList.contains("is-maximized"))
-);
-document.addEventListener("keydown", (event) => {
-    if (
-        event.key === "Escape" &&
-        sheetPanel.classList.contains("is-maximized")
-    ) {
-        setMaximized(false);
-        maximizeButton.focus();
-    }
-});
+
+    const collator = new Intl.Collator("en", {
+        numeric: true,
+        sensitivity: "base",
+    });
+    const sorted = plants.toSorted((left, right) => {
+        if (sortSelect.value === "water") {
+            return (
+                (daysSince(left.summary.lastWater?.["Date"] ?? "") ?? -1) -
+                (daysSince(right.summary.lastWater?.["Date"] ?? "") ?? -1)
+            );
+        }
+        if (sortSelect.value === "activity") {
+            return latestActivityTime(left) - latestActivityTime(right);
+        }
+        if (sortSelect.value === "water-date") {
+            return lastWaterTime(left) - lastWaterTime(right);
+        }
+        if (sortSelect.value === "weight") {
+            return (
+                (left.summary.latestWeightValue ?? -Infinity) -
+                (right.summary.latestWeightValue ?? -Infinity)
+            );
+        }
+        if (sortSelect.value === "name") {
+            return collator.compare(
+                left["Plant / planter"],
+                right["Plant / planter"]
+            );
+        }
+        return comparePlantsByNaturalLabel(left, right);
+    });
+    return state.sortDirection === "desc" ? sorted.toReversed() : sorted;
+}
+
+installThemeToggle(getRequiredElement("#theme-toggle", HTMLButtonElement));
+refreshButton.addEventListener("click", refreshData);
+searchInput.addEventListener("input", renderTable);
+baselineFilter.addEventListener("change", renderTable);
+sortSelect.addEventListener("change", changeSort);
+for (const header of sortHeaders) {
+    const button = header.querySelector("button");
+    if (button instanceof HTMLButtonElement)
+        button.addEventListener("click", changeHeaderSort);
+}
+maximizeButton.addEventListener("click", toggleMaximized);
+document.addEventListener("keydown", handleEscape);
 updateSortHeaders();
-loadData();
+await loadData();
+
+/** @param {Event} event */
+function changeHeaderSort(event) {
+    const button = event.currentTarget;
+    if (!(button instanceof HTMLButtonElement)) return;
+    const header = button.closest("th");
+    if (!(header instanceof HTMLTableCellElement)) return;
+    const key = header.dataset["sort"];
+    if (key !== undefined && key !== "") setSort(key, true);
+}
+
+function changeSort() {
+    setSort(sortSelect.value);
+}
+
+/** @param {KeyboardEvent} event */
+function handleEscape(event) {
+    if (
+        event.key !== "Escape" ||
+        !sheetPanel.classList.contains("is-maximized")
+    )
+        return;
+    setMaximized(false);
+    maximizeButton.focus();
+}
+
+/** @param {CollectionPlant} plant */
+function lastWaterTime(plant) {
+    return parseDate(plant.summary.lastWater?.["Date"])?.getTime() ?? 0;
+}
+
+function refreshData() {
+    void loadData();
+}
+
+function toggleMaximized() {
+    setMaximized(!sheetPanel.classList.contains("is-maximized"));
+}
+
+/** @param {CollectionPlant["summary"]} summary */
+function weightTrendCell(summary) {
+    const trendCell = element("td");
+    if (summary.weightChange === null) {
+        trendCell.append(element("span", "Needs 2 weights", "trend-muted"));
+    } else {
+        const value = summary.weightChange;
+        const direction = value > 0 ? "up" : value < 0 ? "down" : "steady";
+        const sign = value > 0 ? "+" : value < 0 ? "−" : "";
+        trendCell.append(
+            element(
+                "strong",
+                `${sign}${Math.abs(value).toFixed(1)} g`,
+                `trend-chip ${direction}`
+            )
+        );
+        trendCell.append(
+            element(
+                "small",
+                summary.weightChangePercent === null
+                    ? "from previous"
+                    : `${Math.abs(summary.weightChangePercent * 100).toFixed(1)}% from previous`,
+                "trend-detail"
+            )
+        );
+    }
+    return trendCell;
+}

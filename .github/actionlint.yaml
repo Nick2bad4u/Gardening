@@ -1,5 +1,7 @@
+---
 # ActionLint Configuration for Shared Projects
-# Modern configuration following ActionLint v1.7.7+ best practices and security standards
+# Modern configuration following ActionLint v1.7.7+ best practices
+# and security standards
 # See: https://github.com/rhysd/actionlint/blob/main/docs/config.md
 # yaml-language-server: $schema=https://www.schemastore.org/actionlint.json
 
@@ -52,7 +54,8 @@ config-variables:
 paths:
     .github/workflows/summary.{yml,yaml}:
         ignore:
-            # Match unknown permission scope "SOMETHING" (matches any scope name inside quotes)
+            # Match unknown permission scope "SOMETHING"
+            # (matches any scope name inside quotes)
             # prettier-ignore
             - "^unknown permission scope \"[^\"]+\".*"
 

@@ -1,29 +1,46 @@
-import fs from "node:fs";
-
-import { Window } from "happy-dom";
+import {
+    DOMRect,
+    Element,
+    HTMLAnchorElement,
+    HTMLButtonElement,
+    HTMLElement,
+    HTMLFormElement,
+    HTMLImageElement,
+    HTMLInputElement,
+    HTMLOptionElement,
+    HTMLSelectElement,
+    HTMLTextAreaElement,
+    IntersectionObserver,
+    IntersectionObserverEntry,
+    Window,
+} from "happy-dom";
+import * as fs from "node:fs";
 import { afterEach, describe, expect, it, vi } from "vitest";
+
+import { comparePlantsByNaturalLabel } from "../../docs/layouts/plant-tracker-data.js";
+import { queryElement, queryElements, required } from "../helpers/required.mjs";
+import {
+    jsonRecord,
+    parseStoredJson,
+    parseStoredQueue,
+    parseStoredRecord,
+} from "../helpers/stored-json.mjs";
 
 const html = fs.readFileSync(
     new URL("../../scripts/google-sheets/Index.html", import.meta.url),
     "utf8"
 );
-const scriptSource = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].at(
-    -1
-)[1];
-const portraitRevision = html.match(
-    /const PLANT_ICON_REVISION = "([a-f0-9]+)";/
-)[1];
-const trackerDataSource = fs.readFileSync(
-    new URL("../../docs/layouts/plant-tracker-data.js", import.meta.url),
-    "utf8"
+const scripts = Array.from(
+    html.matchAll(/<script>(?<source>[\s\S]*?)<\/script>/gv)
 );
-const { comparePlantsByNaturalLabel } = await import(
-    `data:text/javascript;base64,${Buffer.from(trackerDataSource).toString("base64")}`
+const scriptSource = required(scripts.at(-1)?.groups?.["source"]);
+const portraitRevision = required(
+    /const PLANT_ICON_REVISION = "(?<revision>[0-9a-f]+)";/v.exec(html)
+        ?.groups?.["revision"]
 );
 
+/** @type {import("../logger-fixtures.d.ts").Bootstrap} */
 const bootstrap = {
-    version: "test",
-    serverTime: "2026-08-15T14:00:00.000Z",
     events: [
         "Water",
         "Weigh",
@@ -39,50 +56,52 @@ const bootstrap = {
         "Other",
     ],
     links: {
-        spreadsheet: "https://example.test/sheet",
-        quickLog: "https://example.test/quick",
-        fieldGuide: "https://example.test/guide",
-        tracker: "https://example.test/tracker",
-        layout: "https://example.test/layout",
         calendar: "https://example.test/calendar",
+        fieldGuide: "https://example.test/guide",
+        layout: "https://example.test/layout",
         photos: "https://example.test/photos",
+        quickLog: "https://example.test/quick",
+        spreadsheet: "https://example.test/sheet",
+        tracker: "https://example.test/tracker",
     },
     plants: [
         {
-            id: "P01",
-            name: "Moon cactus",
-            scientificName: "Gymnocalycium mihanovichii",
-            label: "A1",
-            potSetup: 2,
             currentPotSize: "4 in",
-            lastWatered: "Jul 31, 2026",
             daysSinceWater: 15,
-            latestWeight: 420,
             dryOrLowestWeight: 398,
             dryOrLowestWeightBasis: "Completed cycle",
             dryOrLowestWeightDate: "Aug 10, 2026",
             fieldGuideUrl:
                 "https://example.test/guide#gymnocalycium-mihanovichii-variegated",
             historyUrl: "https://example.test/history?id=P01",
+            id: "P01",
+            label: "A1",
+            lastWatered: "Jul 31, 2026",
+            latestWeight: 420,
+            name: "Moon cactus",
+            potSetup: 2,
+            scientificName: "Gymnocalycium mihanovichii",
         },
         {
-            id: "P02",
-            name: "Yellow tower cactus",
-            scientificName: "Parodia leninghausii",
-            label: "F3",
-            potSetup: 2,
             currentPotSize: "4 in",
-            lastWatered: "Aug 15, 2026",
             daysSinceWater: 1,
-            latestWeight: 510,
             dryOrLowestWeight: 475,
             dryOrLowestWeightBasis: "Completed cycle",
             dryOrLowestWeightDate: "Aug 2, 2026",
             fieldGuideUrl: "https://example.test/guide#parodia-leninghausii",
             historyUrl: "https://example.test/history?id=P02",
+            id: "P02",
+            label: "F3",
+            lastWatered: "Aug 15, 2026",
+            latestWeight: 510,
+            name: "Yellow tower cactus",
+            potSetup: 2,
+            scientificName: "Parodia leninghausii",
         },
     ],
     recent: [],
+    serverTime: "2026-08-15T14:00:00.000Z",
+    version: "test",
 };
 
 const canonicalPlantLabels = [
@@ -125,119 +144,48 @@ const p23ImageUrls = {
         "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-08-29-p23-paper-spine-label.webp",
 };
 
+/** @returns {import("../logger-fixtures.d.ts").Bootstrap} */
 function canonicalBootstrap() {
     return {
         ...bootstrap,
         plants: canonicalPlantLabels.map((label, index) => {
             const id = `P${String(index + 1).padStart(2, "0")}`;
             return {
-                id,
-                name: `Plant ${id}`,
-                scientificName: `Scientific ${id}`,
-                label,
-                potSetup: 1,
+                currentImageUrl:
+                    id === "P23" ? p23ImageUrls.currentImageUrl : "",
                 currentPotSize: "4 in",
-                lastWatered: "",
                 daysSinceWater: "",
-                latestWeight: "",
                 dryOrLowestWeight: "",
                 dryOrLowestWeightBasis: "",
                 dryOrLowestWeightDate: "",
                 fieldGuideUrl: `https://example.test/guide#${id}`,
                 historyUrl: `https://example.test/history?id=${id}`,
-                currentImageUrl:
-                    id === "P23" ? p23ImageUrls.currentImageUrl : "",
+                id,
+                label,
+                lastWatered: "",
+                latestWeight: "",
+                name: `Plant ${id}`,
                 nurseryLabelImageUrl:
                     id === "P23" ? p23ImageUrls.nurseryLabelImageUrl : "",
+                potSetup: 1,
+                scientificName: `Scientific ${id}`,
             };
         }),
     };
 }
 
-function queuedWeight({
-    requestId = "garden-queued-weight-12345",
-    plantId = "P01",
-    weight = "430",
-    attemptedAt,
-} = {}) {
-    return {
-        requestId,
-        addedAt: "2026-08-16T12:00:00.000Z",
-        ...(attemptedAt ? { attemptedAt } : {}),
-        payload: {
-            plantId,
-            events: ["Weigh"],
-            observedAt: "2026-08-16T12:00:00.000Z",
-            weightState: "Routine",
-            weight,
-            height: "",
-            width: "",
-            condition: "",
-            notes: "",
-            potSetup: "2",
-            nutrientsUsed: "",
-            nutrientProduct: "",
-            nutrientAmount: "",
-            potSize: "",
-            flowerCount: "",
-            flowerDetails: "",
-            photoUrl: "",
-            pestIssue: "",
-            pestTreatment: "",
-            rotationDegrees: "",
-        },
-    };
-}
-
-function createScriptRunner(behaviors, calls) {
-    return function createChain() {
-        let successHandler = () => {};
-        let failureHandler = () => {};
-        const chain = new Proxy(
-            {},
-            {
-                get(_target, property) {
-                    if (property === "withSuccessHandler") {
-                        return (handler) => {
-                            successHandler = handler;
-                            return chain;
-                        };
-                    }
-                    if (property === "withFailureHandler") {
-                        return (handler) => {
-                            failureHandler = handler;
-                            return chain;
-                        };
-                    }
-                    return (...args) => {
-                        calls.push({ method: property, args });
-                        const behavior = behaviors[property];
-                        if (behavior) {
-                            behavior({
-                                args,
-                                success: successHandler,
-                                failure: failureHandler,
-                            });
-                        }
-                    };
-                },
-            }
-        );
-        return chain;
-    };
-}
-
+/** @param {import("../logger-fixtures.d.ts").LoggerOptions} [options] */
 function createLoggerWindow({
-    bootstrapData = bootstrap,
+    batchSaveStatus = "missing",
     bootstrapBehavior,
+    bootstrapData = bootstrap,
+    configureWindow = () => {},
+    matchMediaUnavailable = false,
     online = true,
     pendingSave,
     saveStatus = "missing",
-    batchSaveStatus = "missing",
     storage = {},
     storageUnavailable = false,
-    matchMediaUnavailable = false,
-    configureWindow = () => {},
 } = {}) {
     const window = new Window({
         url: "https://script.google.com/macros/s/test/exec",
@@ -246,12 +194,11 @@ function createLoggerWindow({
         configurable: true,
         value: online,
     });
-    window.setTimeout = globalThis.setTimeout;
-    window.clearTimeout = globalThis.clearTimeout;
+    window.setTimeout = setTimeout;
+    window.clearTimeout = clearTimeout;
     window.document.write(html);
-    Object.entries(storage).forEach(([key, value]) =>
-        window.localStorage.setItem(key, value)
-    );
+    for (const [key, value] of Object.entries(storage))
+        window.localStorage.setItem(key, value);
     if (pendingSave) {
         window.localStorage.setItem(
             "gardenLoggerPendingSaveV1",
@@ -265,11 +212,11 @@ function createLoggerWindow({
                 "SecurityError"
             );
         };
-        [window.localStorage, window.sessionStorage].forEach((target) => {
+        for (const target of [window.localStorage, window.sessionStorage]) {
             vi.spyOn(target, "getItem").mockImplementation(unavailable);
             vi.spyOn(target, "setItem").mockImplementation(unavailable);
             vi.spyOn(target, "removeItem").mockImplementation(unavailable);
-        });
+        }
     }
     if (matchMediaUnavailable) {
         Object.defineProperty(window, "matchMedia", {
@@ -283,16 +230,19 @@ function createLoggerWindow({
         });
     }
 
+    /** @type {import("../logger-fixtures.d.ts").ScriptCall[]} */
     const calls = [];
+    /** @type {import("../logger-fixtures.d.ts").ScriptBehaviors} */
     const behaviors = {
+        getRecentWebObservations: ({ success }) => {
+            success([]);
+        },
         getWebAppBootstrap:
-            bootstrapBehavior || (({ success }) => success(bootstrapData)),
-        getWebSaveStatus: ({ success }) =>
-            success({
-                state: saveStatus,
-                message: "Status checked",
+            bootstrapBehavior ??
+            (({ success }) => {
+                success(bootstrapData);
             }),
-        getWebBatchSaveStatus: ({ args, success }) =>
+        getWebBatchSaveStatus: ({ args, success }) => {
             success(
                 args[0].map((request) => ({
                     requestId:
@@ -304,8 +254,14 @@ function createLoggerWindow({
                             ? batchSaveStatus(request)
                             : batchSaveStatus,
                 }))
-            ),
-        getRecentWebObservations: ({ success }) => success([]),
+            );
+        },
+        getWebSaveStatus: ({ success }) => {
+            success({
+                message: "Status checked",
+                state: saveStatus,
+            });
+        },
     };
     const createChain = createScriptRunner(behaviors, calls);
     Object.defineProperty(window, "google", {
@@ -323,73 +279,235 @@ function createLoggerWindow({
     return { behaviors, calls, window };
 }
 
-function portraitCacheFixture({
-    saved = new Map(),
-    offline = false,
-    writeFails = false,
-    openFails = false,
-} = {}) {
-    const observers = [];
-    const fetch = vi.fn(async () => {
-        if (offline) throw new Error("Offline");
-        return new Response(
-            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="20"/></svg>',
-            {
-                headers: { "Content-Type": "image/svg+xml" },
-            }
-        );
-    });
-    const cache = {
-        match: vi.fn(async (key) => saved.get(key)?.clone()),
-        put: vi.fn(async (key, response) => {
-            if (writeFails) throw new Error("Cache quota exceeded");
-            saved.set(key, response.clone());
-        }),
-    };
-    const configureWindow = (window) => {
-        Object.defineProperty(window, "caches", {
-            value: {
-                open: vi.fn(async () => {
-                    if (openFails) throw new Error("Storage blocked");
-                    return cache;
-                }),
+/**
+ * @param {import("../logger-fixtures.d.ts").ScriptBehaviors} behaviors
+ * @param {import("../logger-fixtures.d.ts").ScriptCall[]} calls
+ */
+function createScriptRunner(behaviors, calls) {
+    return function createChain() {
+        /** @type {(response: unknown) => void} */
+        let successHandler = () => {};
+        /** @type {(error: unknown) => void} */
+        let failureHandler = () => {};
+        /**
+         * @template {keyof import("../logger-fixtures.d.ts").ScriptArguments} M
+         *
+         * @param {M} method
+         * @param {import("../logger-fixtures.d.ts").ScriptArguments[M]} args
+         */
+        function invoke(method, args) {
+            // The browser calls each named endpoint through its real public
+            // argument shape; keep method/arguments paired in the call receipt.
+            const call =
+                /** @type {import("../logger-fixtures.d.ts").ScriptCall} */ ({
+                    args,
+                    method,
+                });
+            calls.push(call);
+            behaviors[method]?.({
+                args,
+                failure: failureHandler,
+                success: successHandler,
+            });
+        }
+        const chain = {
+            /** @param {number} limit */
+            getRecentWebObservations(limit) {
+                invoke("getRecentWebObservations", [limit]);
             },
-        });
-        window.fetch = fetch;
-        window.Response = Response;
-        window.URL.createObjectURL = vi.fn(
-            () =>
-                `blob:portrait-${window.URL.createObjectURL.mock.calls.length}`
-        );
-        window.IntersectionObserver = class {
-            targets = new Set();
-            constructor(callback) {
-                this.callback = callback;
-                observers.push(this);
-            }
-            observe(target) {
-                this.targets.add(target);
-            }
-            unobserve(target) {
-                this.targets.delete(target);
-            }
-            show(...targets) {
-                this.callback(
-                    targets.map((target) => ({ target, isIntersecting: true }))
-                );
-            }
+            getWebAppBootstrap() {
+                invoke("getWebAppBootstrap", []);
+            },
+            /** @param {import("../logger-fixtures.d.ts").ObservationPayload[]} requests */
+            getWebBatchSaveStatus(requests) {
+                invoke("getWebBatchSaveStatus", [requests]);
+            },
+            /** @param {import("../logger-fixtures.d.ts").ObservationPayload} request */
+            getWebSaveStatus(request) {
+                invoke("getWebSaveStatus", [request]);
+            },
+            /** @param {import("../logger-fixtures.d.ts").ObservationPayload} payload */
+            saveBulkCareObservation(payload) {
+                invoke("saveBulkCareObservation", [payload]);
+            },
+            /** @param {import("../logger-fixtures.d.ts").ObservationPayload} payload */
+            saveWebObservation(payload) {
+                invoke("saveWebObservation", [payload]);
+            },
+            /** @param {import("../logger-fixtures.d.ts").ObservationPayload[]} payloads */
+            saveWebObservationBatch(payloads) {
+                invoke("saveWebObservationBatch", [payloads]);
+            },
+            /** @param {(error: unknown) => void} handler */
+            withFailureHandler(handler) {
+                failureHandler = handler;
+                return chain;
+            },
+            /** @param {(value: unknown) => void} handler */
+            withSuccessHandler(handler) {
+                successHandler = handler;
+                return chain;
+            },
         };
+        return chain;
     };
-    return { saved, cache, fetch, observers, configureWindow };
 }
 
-afterEach(() => {
+/**
+ * @param {{
+ *     offline?: boolean;
+ *     openFails?: boolean;
+ *     saved?: Map<string, Response>;
+ *     writeFails?: boolean;
+ * }} [options]
+ */
+function portraitCacheFixture({
+    offline = false,
+    openFails = false,
+    saved = new Map(),
+    writeFails = false,
+} = {}) {
+    /** @type {PortraitObserver[]} */
+    const observers = [];
+    /** @type {typeof globalThis.fetch} */
+    const fetchImage = (_input, _options) => {
+        if (offline) return Promise.reject(new Error("Offline"));
+        return Promise.resolve(
+            new Response(
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="20"/></svg>',
+                { headers: { "Content-Type": "image/svg+xml" } }
+            )
+        );
+    };
+    const fetch = vi.fn(fetchImage);
+    const cache = {
+        match: vi.fn((/** @type {string} */ key) =>
+            Promise.resolve(saved.get(key)?.clone())
+        ),
+        put: vi.fn(
+            (/** @type {string} */ key, /** @type {Response} */ response) => {
+                if (writeFails)
+                    return Promise.reject(new Error("Cache quota exceeded"));
+                saved.set(key, response.clone());
+                return Promise.resolve();
+            }
+        ),
+    };
+    class PortraitObserver extends IntersectionObserver {
+        /** @type {Set<import("happy-dom").Element>} */
+        targets = new Set();
+        /** @param {ConstructorParameters<typeof IntersectionObserver>[0]} callback */
+        constructor(callback) {
+            super(callback);
+            this.callback = callback;
+            observers.push(this);
+        }
+        /** @override @param {import("happy-dom").Element} target */
+        observe(target) {
+            this.targets.add(target);
+        }
+        /** @param {import("happy-dom").Element[]} targets */
+        show(...targets) {
+            this.callback(
+                targets.map(
+                    (target) =>
+                        new IntersectionObserverEntry({
+                            isIntersecting: true,
+                            target,
+                        })
+                ),
+                this
+            );
+        }
+        /** @override @param {import("happy-dom").Element} target */
+        unobserve(target) {
+            this.targets.delete(target);
+        }
+    }
+    /** @param {Window} window */
+    const configureWindow = (window) => {
+        Object.defineProperties(window, {
+            caches: {
+                value: {
+                    open: vi.fn((/** @type {string} */ _name) =>
+                        openFails
+                            ? Promise.reject(new Error("Storage blocked"))
+                            : Promise.resolve(cache)
+                    ),
+                },
+            },
+            fetch: { value: fetch },
+            IntersectionObserver: { value: PortraitObserver },
+            Response: { value: Response },
+        });
+        let objectUrlCount = 0;
+        vi.spyOn(window.URL, "createObjectURL").mockReturnValue(
+            `blob:portrait-${objectUrlCount++}`
+        );
+    };
+    return { cache, configureWindow, fetch, observers, saved };
+}
+
+/**
+ * @param {{
+ *     attemptedAt?: string;
+ *     plantId?: string;
+ *     requestId?: string;
+ *     weight?: string;
+ * }} [options]
+ *
+ * @returns {import("../logger-fixtures.d.ts").QueuedObservation}
+ */
+function queuedWeight({
+    attemptedAt,
+    plantId = "P01",
+    requestId = "garden-queued-weight-12345",
+    weight = "430",
+} = {}) {
+    return {
+        addedAt: "2026-08-16T12:00:00.000Z",
+        requestId,
+        ...(attemptedAt !== undefined && { attemptedAt }),
+        payload: {
+            condition: "",
+            events: ["Weigh"],
+            flowerCount: "",
+            flowerDetails: "",
+            height: "",
+            notes: "",
+            nutrientAmount: "",
+            nutrientProduct: "",
+            nutrientsUsed: "",
+            observedAt: "2026-08-16T12:00:00.000Z",
+            pestIssue: "",
+            pestTreatment: "",
+            photoUrl: "",
+            plantId,
+            potSetup: "2",
+            potSize: "",
+            rotationDegrees: "",
+            weight,
+            weightState: "Routine",
+            width: "",
+        },
+    };
+}
+
+function restoreLoggerMocks() {
     vi.useRealTimers();
     vi.restoreAllMocks();
-});
+}
 
-describe("Garden logger browser recovery", () => {
+describe("garden logger bootstrap cache and connection recovery", () => {
+    afterEach(restoreLoggerMocks);
+
     it("opens from a recent saved plant list while Google refreshes in the background", () => {
+        expect.hasAssertions();
+
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">
+         *     | undefined}
+         */
         let refreshHandlers;
         const { calls, window } = createLoggerWindow({
             bootstrapBehavior: (handlers) => {
@@ -397,8 +515,8 @@ describe("Garden logger browser recovery", () => {
             },
             storage: {
                 gardenLoggerBootstrapV2: JSON.stringify({
-                    savedAt: Date.now(),
                     bootstrap,
+                    savedAt: Date.now(),
                 }),
             },
         });
@@ -406,51 +524,71 @@ describe("Garden logger browser recovery", () => {
         expect(
             calls.filter((call) => call.method === "getWebAppBootstrap")
         ).toHaveLength(1);
-        expect(window.document.querySelector("#loading").hidden).toBe(true);
-        expect(window.document.querySelector("#modeTabs").hidden).toBe(false);
         expect(
-            window.document.querySelector("#connectionStatus").textContent
+            queryElement(window.document, "#loading", HTMLElement).hidden
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#modeTabs", HTMLElement).hidden
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#connectionStatus", HTMLElement)
+                .textContent
         ).toBe("Using saved plant list · refreshing Google…");
         expect(
-            window.document.querySelector("#observedAt").value
+            queryElement(window.document, "#observedAt", HTMLInputElement).value
         ).not.toContain("2026-08-15");
 
-        refreshHandlers.success({ ...bootstrap, version: "fresh" });
+        required(refreshHandlers).success({ ...bootstrap, version: "fresh" });
 
         expect(
-            window.document.querySelector("#connectionStatus").textContent
+            queryElement(window.document, "#connectionStatus", HTMLElement)
+                .textContent
         ).toBe("Connected · logger fresh");
-        expect(
-            JSON.parse(window.localStorage.getItem("gardenLoggerBootstrapV2"))
-                .bootstrap.version
-        ).toBe("fresh");
+
+        const storedBootstrap = parseStoredRecord(
+            window.localStorage.getItem("gardenLoggerBootstrapV2")
+        );
+
+        expect(jsonRecord(storedBootstrap["bootstrap"])["version"]).toBe(
+            "fresh"
+        );
     });
 
     it("keeps the cached logger usable when its background refresh fails", () => {
+        expect.hasAssertions();
+
         const { window } = createLoggerWindow({
-            bootstrapBehavior: ({ failure }) =>
-                failure({ message: "Storage unavailable" }),
+            bootstrapBehavior: ({ failure }) => {
+                failure({ message: "Storage unavailable" });
+            },
             storage: {
                 gardenLoggerBootstrapV2: JSON.stringify({
-                    savedAt: Date.now(),
                     bootstrap,
+                    savedAt: Date.now(),
                 }),
             },
         });
 
-        expect(window.document.querySelector("#loading").hidden).toBe(true);
-        expect(window.document.querySelector("#modeTabs").hidden).toBe(false);
         expect(
-            window.document.querySelector("#connectionStatus").textContent
+            queryElement(window.document, "#loading", HTMLElement).hidden
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#modeTabs", HTMLElement).hidden
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#connectionStatus", HTMLElement)
+                .textContent
         ).toBe("Using saved plant list · Google refresh unavailable");
     });
 
     it("ignores an expired saved plant list and requests current data", () => {
+        expect.hasAssertions();
+
         const { calls, window } = createLoggerWindow({
             storage: {
                 gardenLoggerBootstrapV2: JSON.stringify({
-                    savedAt: Date.now() - 6 * 60 * 60 * 1000 - 1,
                     bootstrap,
+                    savedAt: Date.now() - 6 * 60 * 60 * 1000 - 1,
                 }),
             },
         });
@@ -459,15 +597,22 @@ describe("Garden logger browser recovery", () => {
             calls.filter((call) => call.method === "getWebAppBootstrap")
         ).toHaveLength(1);
         expect(
-            window.document.querySelector("#connectionStatus").textContent
+            queryElement(window.document, "#connectionStatus", HTMLElement)
+                .textContent
         ).toBe("Connected · logger test");
-        expect(
-            JSON.parse(window.localStorage.getItem("gardenLoggerBootstrapV2"))
-                .bootstrap.version
-        ).toBe("test");
+
+        const storedBootstrap = parseStoredRecord(
+            window.localStorage.getItem("gardenLoggerBootstrapV2")
+        );
+
+        expect(jsonRecord(storedBootstrap["bootstrap"])["version"]).toBe(
+            "test"
+        );
     });
 
     it("automatically retries a dropped bootstrap callback and clears its watchdog after recovery", () => {
+        expect.hasAssertions();
+
         vi.useFakeTimers();
         let attempt = 0;
         const { calls, window } = createLoggerWindow({
@@ -480,24 +625,33 @@ describe("Garden logger browser recovery", () => {
         expect(
             calls.filter((call) => call.method === "getWebAppBootstrap")
         ).toHaveLength(1);
+
         vi.advanceTimersByTime(20_000);
 
         expect(
             calls.filter((call) => call.method === "getWebAppBootstrap")
         ).toHaveLength(2);
-        expect(window.document.querySelector("#loading").hidden).toBe(true);
-        expect(window.document.querySelector("#modeTabs").hidden).toBe(false);
         expect(
-            window.document.querySelector("#connectionStatus").textContent
+            queryElement(window.document, "#loading", HTMLElement).hidden
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#modeTabs", HTMLElement).hidden
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#connectionStatus", HTMLElement)
+                .textContent
         ).toBe("Connected · logger test");
 
         vi.advanceTimersByTime(20_000);
+
         expect(
             calls.filter((call) => call.method === "getWebAppBootstrap")
         ).toHaveLength(2);
     });
 
     it("replaces an endless loading state with recovery controls and supports a manual retry", () => {
+        expect.hasAssertions();
+
         vi.useFakeTimers();
         let shouldSucceed = false;
         const { calls, window } = createLoggerWindow({
@@ -511,101 +665,169 @@ describe("Garden logger browser recovery", () => {
         expect(
             calls.filter((call) => call.method === "getWebAppBootstrap")
         ).toHaveLength(2);
-        expect(window.document.querySelector("#loadingTitle").textContent).toBe(
-            "Could not finish loading your plants."
-        );
         expect(
-            window.document.querySelector("#loadingDetail").textContent
-        ).toMatch(/did not answer within 20 seconds/);
-        expect(window.document.querySelector("#loadingActions").hidden).toBe(
-            false
-        );
-        expect(window.document.querySelector("#loadingSpinner").hidden).toBe(
-            true
-        );
+            queryElement(window.document, "#loadingTitle", HTMLElement)
+                .textContent
+        ).toBe("Could not finish loading your plants.");
         expect(
-            window.document.querySelector("#connectionStatus").textContent
+            queryElement(window.document, "#loadingDetail", HTMLElement)
+                .textContent
+        ).toMatch(/did not answer within 20 seconds/v);
+        expect(
+            queryElement(window.document, "#loadingActions", HTMLElement).hidden
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#loadingSpinner", HTMLElement).hidden
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#connectionStatus", HTMLElement)
+                .textContent
         ).toBe("Connection failed");
 
         shouldSucceed = true;
-        window.document
-            .querySelector("#retryBootstrapButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#retryBootstrapButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
 
         expect(
             calls.filter((call) => call.method === "getWebAppBootstrap")
         ).toHaveLength(3);
-        expect(window.document.querySelector("#loading").hidden).toBe(true);
-        expect(window.document.querySelector("#modeTabs").hidden).toBe(false);
+        expect(
+            queryElement(window.document, "#loading", HTMLElement).hidden
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#modeTabs", HTMLElement).hidden
+        ).toBe(false);
     });
 
     it("ignores a late callback from an expired bootstrap attempt", () => {
+        expect.hasAssertions();
+
         vi.useFakeTimers();
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">[]} */
         const attempts = [];
         const { window } = createLoggerWindow({
-            bootstrapBehavior: (handlers) => attempts.push(handlers),
+            bootstrapBehavior: (handlers) => {
+                attempts.push(handlers);
+            },
         });
 
         vi.advanceTimersByTime(20_000);
+
         expect(attempts).toHaveLength(2);
 
-        attempts[0].success({ ...bootstrap, version: "stale" });
-        expect(window.document.querySelector("#modeTabs").hidden).toBe(true);
+        required(attempts[0]).success({ ...bootstrap, version: "stale" });
+
         expect(
-            window.document.querySelector("#connectionStatus").textContent
+            queryElement(window.document, "#modeTabs", HTMLElement).hidden
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#connectionStatus", HTMLElement)
+                .textContent
         ).toBe("Retrying the spreadsheet connection…");
 
-        attempts[1].success(bootstrap);
-        expect(window.document.querySelector("#modeTabs").hidden).toBe(false);
+        required(attempts[1]).success(bootstrap);
+
         expect(
-            window.document.querySelector("#connectionStatus").textContent
+            queryElement(window.document, "#modeTabs", HTMLElement).hidden
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#connectionStatus", HTMLElement)
+                .textContent
         ).toBe("Connected · logger test");
-        attempts[1].failure({ message: "Late failure" });
+
+        required(attempts[1]).failure({ message: "Late failure" });
+
         expect(
-            window.document.querySelector("#connectionStatus").textContent
+            queryElement(window.document, "#connectionStatus", HTMLElement)
+                .textContent
         ).toBe("Connected · logger test");
     });
 
     it("shows a useful recovery state when Google reports a bootstrap failure", () => {
+        expect.hasAssertions();
+
         const { window } = createLoggerWindow({
-            bootstrapBehavior: ({ failure }) => failure({}),
+            bootstrapBehavior: ({ failure }) => {
+                failure({});
+            },
         });
 
-        expect(window.document.querySelector("#loadingTitle").textContent).toBe(
-            "Could not finish loading garden data."
-        );
         expect(
-            window.document.querySelector("#loadingDetail").textContent
-        ).toMatch(/Google did not return an error message/);
-        expect(window.document.querySelector("#loadingActions").hidden).toBe(
-            false
-        );
+            queryElement(window.document, "#loadingTitle", HTMLElement)
+                .textContent
+        ).toBe("Could not finish loading garden data.");
+        expect(
+            queryElement(window.document, "#loadingDetail", HTMLElement)
+                .textContent
+        ).toMatch(/Google did not return an error message/v);
+        expect(
+            queryElement(window.document, "#loadingActions", HTMLElement).hidden
+        ).toBe(false);
     });
 
+    it("starts safely when browser storage and theme detection are unavailable", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow({
+            matchMediaUnavailable: true,
+            storageUnavailable: true,
+        });
+
+        expect(window.document.documentElement.dataset["theme"]).toBe("light");
+        expect(
+            queryElement(window.document, "#loading", HTMLElement).hidden
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#connectionStatus", HTMLElement)
+                .textContent
+        ).toBe("Connected · logger test");
+        expect(calls.some((call) => call.method === "getWebAppBootstrap")).toBe(
+            true
+        );
+
+        expect(() =>
+            queryElement(
+                window.document,
+                "#themeToggle",
+                HTMLButtonElement
+            ).dispatchEvent(new window.Event("click", { bubbles: true }))
+        ).not.toThrow();
+        expect(window.document.documentElement.dataset["theme"]).toBe("dark");
+    });
+});
+
+describe("garden logger single-save and watering-round recovery", () => {
+    afterEach(restoreLoggerMocks);
+
     it("automatically clears a recovered draft that already reached History", () => {
+        expect.hasAssertions();
+
         const pendingSave = {
-            requestId: "garden-recovered-12345",
             payload: {
-                plantId: "P01",
-                events: ["Weigh"],
-                observedAt: "2026-08-15T14:00:00.000Z",
-                weightState: "Routine",
-                weight: "420",
-                height: "",
-                width: "",
                 condition: "",
-                notes: "",
-                potSetup: "2",
-                nutrientsUsed: "",
-                nutrientProduct: "",
-                nutrientAmount: "",
-                potSize: "",
+                events: ["Weigh"],
                 flowerCount: "",
                 flowerDetails: "",
-                photoUrl: "",
+                height: "",
+                notes: "",
+                nutrientAmount: "",
+                nutrientProduct: "",
+                nutrientsUsed: "",
+                observedAt: "2026-08-15T14:00:00.000Z",
                 pestIssue: "",
                 pestTreatment: "",
+                photoUrl: "",
+                plantId: "P01",
+                potSetup: "2",
+                potSize: "",
+                weight: "420",
+                weightState: "Routine",
+                width: "",
             },
+            requestId: "garden-recovered-12345",
         };
         const { calls, window } = createLoggerWindow({
             pendingSave,
@@ -615,98 +837,137 @@ describe("Garden logger browser recovery", () => {
         expect(
             window.localStorage.getItem("gardenLoggerPendingSaveV1")
         ).toBeNull();
-        expect(window.document.querySelector("#weight").value).toBe("");
-        expect(window.document.querySelector("#toast").textContent).toMatch(
-            /already in History/
-        );
+        expect(
+            queryElement(window.document, "#weight", HTMLInputElement).value
+        ).toBe("");
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toMatch(/already in History/v);
         expect(calls.some((call) => call.method === "getWebSaveStatus")).toBe(
             true
         );
     });
 
     it("keeps an unconfirmed recovered draft available for a safe retry", () => {
+        expect.hasAssertions();
+
         const pendingSave = {
-            requestId: "garden-missing-12345",
             payload: {
-                plantId: "P01",
-                events: ["Weigh"],
-                observedAt: "2026-08-15T14:00:00.000Z",
-                weightState: "Routine",
-                weight: "421",
-                height: "",
-                width: "",
                 condition: "",
-                notes: "",
-                potSetup: "2",
-                nutrientsUsed: "",
-                nutrientProduct: "",
-                nutrientAmount: "",
-                potSize: "",
+                events: ["Weigh"],
                 flowerCount: "",
                 flowerDetails: "",
-                photoUrl: "",
+                height: "",
+                notes: "",
+                nutrientAmount: "",
+                nutrientProduct: "",
+                nutrientsUsed: "",
+                observedAt: "2026-08-15T14:00:00.000Z",
                 pestIssue: "",
                 pestTreatment: "",
+                photoUrl: "",
+                plantId: "P01",
+                potSetup: "2",
+                potSize: "",
+                weight: "421",
+                weightState: "Routine",
+                width: "",
             },
+            requestId: "garden-missing-12345",
         };
         const { window } = createLoggerWindow({ pendingSave });
 
         expect(
-            window.localStorage.getItem("gardenLoggerPendingSaveV1")
-        ).not.toBeNull();
-        expect(window.document.querySelector("#weight").value).toBe("421");
-        expect(window.document.querySelector("#measurementUnit").value).toBe(
-            "cm"
-        );
-        expect(window.document.querySelector("#heightLabel").textContent).toBe(
-            "Height (cm)"
-        );
-        expect(window.document.querySelector("#saveButton").disabled).toBe(
-            false
-        );
+            parseStoredRecord(
+                window.localStorage.getItem("gardenLoggerPendingSaveV1")
+            )
+        ).toStrictEqual(pendingSave);
+        expect(
+            queryElement(window.document, "#weight", HTMLInputElement).value
+        ).toBe("421");
+        expect(
+            queryElement(window.document, "#measurementUnit", HTMLSelectElement)
+                .value
+        ).toBe("cm");
+        expect(
+            queryElement(window.document, "#heightLabel", HTMLElement)
+                .textContent
+        ).toBe("Height (cm)");
+        expect(
+            queryElement(window.document, "#saveButton", HTMLButtonElement)
+                .disabled
+        ).toBe(false);
     });
 
     it("releases a hanging save after the watchdog and checks History", () => {
+        expect.hasAssertions();
+
         vi.useFakeTimers();
         const { behaviors, calls, window } = createLoggerWindow();
         behaviors.saveWebObservation = () => {};
 
-        const weight = window.document.querySelector("#weight");
+        const weight = queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        );
         weight.value = "422";
         weight.dispatchEvent(new window.Event("input", { bubbles: true }));
-        window.document.querySelector("#entryForm").dispatchEvent(
+        queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        ).dispatchEvent(
             new window.Event("submit", {
                 bubbles: true,
                 cancelable: true,
             })
         );
 
-        expect(window.document.querySelector("#saveButton").disabled).toBe(
-            true
-        );
+        expect(
+            queryElement(window.document, "#saveButton", HTMLButtonElement)
+                .disabled
+        ).toBe(true);
+
         vi.advanceTimersByTime(20_000);
 
-        expect(window.document.querySelector("#saveButton").disabled).toBe(
-            false
-        );
         expect(
-            window.localStorage.getItem("gardenLoggerPendingSaveV1")
-        ).not.toBeNull();
+            queryElement(window.document, "#saveButton", HTMLButtonElement)
+                .disabled
+        ).toBe(false);
+        expect(
+            parseStoredRecord(
+                window.localStorage.getItem("gardenLoggerPendingSaveV1")
+            )
+        ).toMatchObject({ payload: { plantId: "P01", weight: "422" } });
         expect(calls.some((call) => call.method === "getWebSaveStatus")).toBe(
             true
         );
     });
 
     it("ignores a late callback from an older retry attempt", () => {
+        expect.hasAssertions();
+
         vi.useFakeTimers();
         const { behaviors, window } = createLoggerWindow();
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"saveWebObservation">[]} */
         const saves = [];
-        behaviors.saveWebObservation = (handlers) => saves.push(handlers);
+        behaviors.saveWebObservation = (handlers) => {
+            saves.push(handlers);
+        };
 
-        const weight = window.document.querySelector("#weight");
+        const weight = queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        );
         weight.value = "423";
         weight.dispatchEvent(new window.Event("input", { bubbles: true }));
-        const form = window.document.querySelector("#entryForm");
+        const form = queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        );
         form.dispatchEvent(
             new window.Event("submit", {
                 bubbles: true,
@@ -722,29 +983,47 @@ describe("Garden logger browser recovery", () => {
         );
 
         expect(saves).toHaveLength(2);
-        expect(window.document.querySelector("#saveButton").disabled).toBe(
-            true
-        );
-        saves[0].failure({ message: "Late failure" });
-        expect(window.document.querySelector("#saveButton").disabled).toBe(
-            true
-        );
-        saves[1].success({ message: "Saved" });
-        expect(window.document.querySelector("#saveButton").disabled).toBe(
-            false
-        );
+        expect(
+            queryElement(window.document, "#saveButton", HTMLButtonElement)
+                .disabled
+        ).toBe(true);
+
+        required(saves[0]).failure({ message: "Late failure" });
+
+        expect(
+            queryElement(window.document, "#saveButton", HTMLButtonElement)
+                .disabled
+        ).toBe(true);
+
+        required(saves[1]).success({ message: "Saved" });
+
+        expect(
+            queryElement(window.document, "#saveButton", HTMLButtonElement)
+                .disabled
+        ).toBe(false);
         expect(
             window.localStorage.getItem("gardenLoggerPendingSaveV1")
         ).toBeNull();
     });
 
     it("lets a confirmed failed entry be corrected without Clear entry", () => {
-        const { behaviors, calls, window } = createLoggerWindow();
-        behaviors.saveWebObservation = ({ failure }) =>
-            failure({ message: "Server rejected the entry" });
+        expect.hasAssertions();
 
-        const weight = window.document.querySelector("#weight");
-        const form = window.document.querySelector("#entryForm");
+        const { behaviors, calls, window } = createLoggerWindow();
+        behaviors.saveWebObservation = ({ failure }) => {
+            failure({ message: "Server rejected the entry" });
+        };
+
+        const weight = queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        );
+        const form = queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        );
         weight.value = "424";
         weight.dispatchEvent(new window.Event("input", { bubbles: true }));
         form.dispatchEvent(
@@ -757,10 +1036,11 @@ describe("Garden logger browser recovery", () => {
         const firstSave = calls.find(
             (call) => call.method === "saveWebObservation"
         );
-        const failedPending = JSON.parse(
+        const failedPending = parseStoredRecord(
             window.localStorage.getItem("gardenLoggerPendingSaveV1")
         );
-        expect(failedPending.replaceable).toBe(true);
+
+        expect(failedPending["replaceable"]).toBe(true);
 
         weight.value = "425";
         weight.dispatchEvent(new window.Event("input", { bubbles: true }));
@@ -774,20 +1054,31 @@ describe("Garden logger browser recovery", () => {
         const saveCalls = calls.filter(
             (call) => call.method === "saveWebObservation"
         );
+
         expect(saveCalls).toHaveLength(2);
-        expect(saveCalls[1].args[0].requestId).not.toBe(
-            firstSave.args[0].requestId
+        expect(required(saveCalls[1]).args[0].requestId).not.toBe(
+            required(firstSave).args[0].requestId
         );
-        expect(saveCalls[1].args[0].weight).toBe("425");
+        expect(required(saveCalls[1]).args[0].weight).toBe("425");
     });
 
     it("does not replace a timed-out request that may still be running", () => {
+        expect.hasAssertions();
+
         vi.useFakeTimers();
         const { behaviors, calls, window } = createLoggerWindow();
         behaviors.saveWebObservation = () => {};
 
-        const weight = window.document.querySelector("#weight");
-        const form = window.document.querySelector("#entryForm");
+        const weight = queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        );
+        const form = queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        );
         weight.value = "426";
         weight.dispatchEvent(new window.Event("input", { bubbles: true }));
         form.dispatchEvent(
@@ -811,74 +1102,121 @@ describe("Garden logger browser recovery", () => {
             calls.filter((call) => call.method === "saveWebObservation")
         ).toHaveLength(1);
         expect(
-            JSON.parse(window.localStorage.getItem("gardenLoggerPendingSaveV1"))
-                .replaceable
+            parseStoredRecord(
+                window.localStorage.getItem("gardenLoggerPendingSaveV1")
+            )["replaceable"]
         ).not.toBe(true);
     });
 
     it("also releases and reconciles a hanging watering-round save", () => {
+        expect.hasAssertions();
+
         vi.useFakeTimers();
         const { behaviors, calls, window } = createLoggerWindow();
         behaviors.saveBulkCareObservation = () => {};
 
-        window.document
-            .querySelector("#bulkModeTab")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-        window.document.querySelector("#bulkNutrientsUsed").value = "No";
-        const checkbox = window.document.querySelector(
-            "#bulkPlantList input[type='checkbox']"
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#bulkNutrientsUsed",
+            HTMLSelectElement
+        ).value = "No";
+        const checkbox = queryElement(
+            window.document,
+            "#bulkPlantList input[type='checkbox']",
+            HTMLInputElement
         );
         checkbox.checked = true;
         checkbox.dispatchEvent(new window.Event("change", { bubbles: true }));
-        window.document.querySelector("#bulkWaterForm").dispatchEvent(
+        queryElement(
+            window.document,
+            "#bulkWaterForm",
+            HTMLFormElement
+        ).dispatchEvent(
             new window.Event("submit", {
                 bubbles: true,
                 cancelable: true,
             })
         );
 
-        expect(window.document.querySelector("#bulkSaveButton").disabled).toBe(
-            true
-        );
+        expect(
+            queryElement(window.document, "#bulkSaveButton", HTMLButtonElement)
+                .disabled
+        ).toBe(true);
+
         vi.advanceTimersByTime(20_000);
 
-        expect(window.document.querySelector("#bulkSaveButton").disabled).toBe(
-            false
-        );
         expect(
-            window.localStorage.getItem("gardenLoggerBulkPendingV1")
-        ).not.toBeNull();
+            queryElement(window.document, "#bulkSaveButton", HTMLButtonElement)
+                .disabled
+        ).toBe(false);
+        expect(
+            parseStoredRecord(
+                window.localStorage.getItem("gardenLoggerBulkPendingV1")
+            )
+        ).toMatchObject({
+            payload: {
+                events: ["Water"],
+                nutrientsUsed: "No",
+                plantIds: ["P01"],
+            },
+        });
         expect(calls.some((call) => call.method === "getWebSaveStatus")).toBe(
             true
         );
 
-        window.document.querySelector("#bulkNotes").value = "Changed round";
-        window.document.querySelector("#bulkWaterForm").dispatchEvent(
+        queryElement(window.document, "#bulkNotes", HTMLTextAreaElement).value =
+            "Changed round";
+        queryElement(
+            window.document,
+            "#bulkWaterForm",
+            HTMLFormElement
+        ).dispatchEvent(
             new window.Event("submit", {
                 bubbles: true,
                 cancelable: true,
             })
         );
+
         expect(
             calls.filter((call) => call.method === "saveBulkCareObservation")
         ).toHaveLength(1);
     });
 
     it("lets a confirmed failed watering round be corrected", () => {
-        const { behaviors, calls, window } = createLoggerWindow();
-        behaviors.saveBulkCareObservation = ({ failure }) =>
-            failure({ message: "Server rejected the round" });
+        expect.hasAssertions();
 
-        window.document
-            .querySelector("#bulkModeTab")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-        window.document.querySelector("#bulkNutrientsUsed").value = "No";
-        const checkbox = window.document.querySelector(
-            "#bulkPlantList input[type='checkbox']"
+        const { behaviors, calls, window } = createLoggerWindow();
+        behaviors.saveBulkCareObservation = ({ failure }) => {
+            failure({ message: "Server rejected the round" });
+        };
+
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#bulkNutrientsUsed",
+            HTMLSelectElement
+        ).value = "No";
+        const checkbox = queryElement(
+            window.document,
+            "#bulkPlantList input[type='checkbox']",
+            HTMLInputElement
         );
         checkbox.checked = true;
         checkbox.dispatchEvent(new window.Event("change", { bubbles: true }));
-        const form = window.document.querySelector("#bulkWaterForm");
+        const form = queryElement(
+            window.document,
+            "#bulkWaterForm",
+            HTMLFormElement
+        );
         form.dispatchEvent(
             new window.Event("submit", {
                 bubbles: true,
@@ -886,12 +1224,14 @@ describe("Garden logger browser recovery", () => {
             })
         );
 
-        const failedPending = JSON.parse(
+        const failedPending = parseStoredRecord(
             window.localStorage.getItem("gardenLoggerBulkPendingV1")
         );
-        expect(failedPending.replaceable).toBe(true);
 
-        window.document.querySelector("#bulkNotes").value = "Corrected round";
+        expect(failedPending["replaceable"]).toBe(true);
+
+        queryElement(window.document, "#bulkNotes", HTMLTextAreaElement).value =
+            "Corrected round";
         form.dispatchEvent(
             new window.Event("submit", {
                 bubbles: true,
@@ -902,43 +1242,75 @@ describe("Garden logger browser recovery", () => {
         const saveCalls = calls.filter(
             (call) => call.method === "saveBulkCareObservation"
         );
+
         expect(saveCalls).toHaveLength(2);
-        expect(saveCalls[1].args[0].requestId).not.toBe(
-            saveCalls[0].args[0].requestId
+        expect(required(saveCalls[1]).args[0].requestId).not.toBe(
+            required(saveCalls[0]).args[0].requestId
         );
     });
+});
+
+describe("garden logger observation entry and preferences", () => {
+    afterEach(restoreLoggerMocks);
 
     it("queues a weight without asking for a manual state or adding Water", () => {
+        expect.hasAssertions();
+
         const { window } = createLoggerWindow();
+
         expect(window.document.querySelector("#weightStates")).toBeNull();
-        const weight = window.document.querySelector("#weight");
+
+        const weight = queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        );
         weight.value = "889";
         weight.dispatchEvent(new window.Event("input", { bubbles: true }));
-        window.document
-            .querySelector("#queueButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
 
-        const queue = JSON.parse(
+        const queue = parseStoredQueue(
             window.localStorage.getItem("gardenLoggerObservationQueueV1")
         );
+
         expect(queue).toHaveLength(1);
-        expect(queue[0].payload).toMatchObject({
-            weight: "889",
+        expect(required(queue[0]).payload).toMatchObject({
             events: ["Weigh"],
             nutrientsUsed: "",
+            weight: "889",
         });
-        expect(queue[0].payload).not.toHaveProperty("weightState");
+        expect(required(queue[0]).payload).not.toHaveProperty("weightState");
     });
 
     it("remembers nutrient choices across single and bulk care in one session", () => {
+        expect.hasAssertions();
+
         const { window } = createLoggerWindow();
-        const water = window.document.querySelector(
-            '#eventChips [data-event="Water"]'
+        const water = queryElement(
+            window.document,
+            '#eventChips [data-event="Water"]',
+            HTMLElement
         );
         water.dispatchEvent(new window.Event("click", { bubbles: true }));
-        const nutrients = window.document.querySelector("#nutrientsUsed");
-        const product = window.document.querySelector("#nutrientProduct");
-        const amount = window.document.querySelector("#nutrientAmount");
+        const nutrients = queryElement(
+            window.document,
+            "#nutrientsUsed",
+            HTMLSelectElement
+        );
+        const product = queryElement(
+            window.document,
+            "#nutrientProduct",
+            HTMLSelectElement
+        );
+        const amount = queryElement(
+            window.document,
+            "#nutrientAmount",
+            HTMLInputElement
+        );
         nutrients.value = "Yes";
         nutrients.dispatchEvent(new window.Event("change", { bubbles: true }));
         product.value = "MSU 13-3-15";
@@ -946,69 +1318,108 @@ describe("Garden logger browser recovery", () => {
         amount.value = "0.5 g/gal";
         amount.dispatchEvent(new window.Event("input", { bubbles: true }));
 
-        window.document
-            .querySelector("#queueButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-        window.document
-            .querySelector("#bulkModeTab")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
 
-        expect(window.document.querySelector("#bulkNutrientsUsed").value).toBe(
-            "Yes"
-        );
         expect(
-            window.document.querySelector("#bulkNutrientProduct").value
+            queryElement(
+                window.document,
+                "#bulkNutrientsUsed",
+                HTMLSelectElement
+            ).value
+        ).toBe("Yes");
+        expect(
+            queryElement(
+                window.document,
+                "#bulkNutrientProduct",
+                HTMLSelectElement
+            ).value
         ).toBe("MSU 13-3-15");
-        expect(window.document.querySelector("#bulkNutrientAmount").value).toBe(
-            "0.5 g/gal"
-        );
         expect(
-            JSON.parse(
+            queryElement(
+                window.document,
+                "#bulkNutrientAmount",
+                HTMLInputElement
+            ).value
+        ).toBe("0.5 g/gal");
+        expect(
+            parseStoredJson(
                 window.sessionStorage.getItem("gardenLoggerNutrientStateV1")
             )
-        ).toEqual({
-            nutrientsUsed: "Yes",
-            nutrientProduct: "MSU 13-3-15",
+        ).toStrictEqual({
             nutrientAmount: "0.5 g/gal",
+            nutrientProduct: "MSU 13-3-15",
+            nutrientsUsed: "Yes",
         });
     });
 
     it("queues a 90 degree rotation and submits bulk rotation generically", () => {
+        expect.hasAssertions();
+
         const { behaviors, calls, window } = createLoggerWindow();
-        window.document
-            .querySelector('#eventChips [data-event="Rotation"]')
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-        expect(window.document.querySelector("#rotationDegrees").value).toBe(
-            "90"
-        );
-        window.document
-            .querySelector("#queueButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-        const queue = JSON.parse(
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Rotation"]',
+            HTMLElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        expect(
+            queryElement(window.document, "#rotationDegrees", HTMLInputElement)
+                .value
+        ).toBe("90");
+
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+        const queue = parseStoredQueue(
             window.localStorage.getItem("gardenLoggerObservationQueueV1")
         );
-        expect(queue[0].payload).toMatchObject({
+
+        expect(required(queue[0]).payload).toMatchObject({
             events: ["Rotation"],
             rotationDegrees: "90",
         });
 
-        behaviors.saveBulkCareObservation = ({ success }) =>
+        behaviors.saveBulkCareObservation = ({ success }) => {
             success({ message: "Rotation saved." });
-        window.document
-            .querySelector("#bulkModeTab")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-        window.document
-            .querySelector('#bulkEventChips [data-event="Water"]')
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-        window.document
-            .querySelector('#bulkEventChips [data-event="Rotation"]')
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-        const checkbox = window.document.querySelector(
-            "#bulkPlantList input[type='checkbox']"
+        };
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(
+            window.document,
+            '#bulkEventChips [data-event="Water"]',
+            HTMLElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(
+            window.document,
+            '#bulkEventChips [data-event="Rotation"]',
+            HTMLElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+        const checkbox = queryElement(
+            window.document,
+            "#bulkPlantList input[type='checkbox']",
+            HTMLInputElement
         );
         checkbox.checked = true;
         checkbox.dispatchEvent(new window.Event("change", { bubbles: true }));
-        window.document.querySelector("#bulkWaterForm").dispatchEvent(
+        queryElement(
+            window.document,
+            "#bulkWaterForm",
+            HTMLFormElement
+        ).dispatchEvent(
             new window.Event("submit", {
                 bubbles: true,
                 cancelable: true,
@@ -1018,14 +1429,265 @@ describe("Garden logger browser recovery", () => {
         const call = calls.find(
             (candidate) => candidate.method === "saveBulkCareObservation"
         );
-        expect(call.args[0]).toMatchObject({
+
+        expect(required(call).args[0]).toMatchObject({
+            entrySource: "Mobile bulk care",
             events: ["Rotation"],
             rotationDegrees: "90",
-            entrySource: "Mobile bulk care",
         });
     });
 
+    it("queues a reading locally without changing the selected plant", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow();
+        const weight = queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        );
+        weight.value = "430";
+        weight.dispatchEvent(new window.Event("input", { bubbles: true }));
+
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        const queue = parseStoredQueue(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+
+        expect(queue).toHaveLength(1);
+        expect(required(queue[0]).payload).toMatchObject({
+            plantId: "P01",
+            weight: "430",
+        });
+        expect(
+            queryElement(window.document, "#plantSelect", HTMLSelectElement)
+                .value
+        ).toBe("P01");
+        expect(
+            queryElement(window.document, "#weight", HTMLInputElement).value
+        ).toBe("");
+        expect(calls.some((call) => call.method === "saveWebObservation")).toBe(
+            false
+        );
+
+        queryElement(
+            window.document,
+            "#labelPickerMode",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+        const queuedButton = queryElement(
+            window.document,
+            '#labelPicker [data-plant-id="P01"]',
+            HTMLElement
+        );
+
+        expect(queuedButton.classList.contains("queued-weighed")).toBe(true);
+        expect(queuedButton.getAttribute("aria-label")).toMatch(
+            /weight safely queued/v
+        );
+        expect(
+            queryElement(window.document, "#queueProgress", HTMLElement)
+                .textContent
+        ).toBe("1 of 2 plants have a weight safely queued.");
+    });
+
+    it("defaults measurements to inches, remembers the method, and shows dimensions in the queue", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        const unit = queryElement(
+            window.document,
+            "#measurementUnit",
+            HTMLSelectElement
+        );
+        const quality = queryElement(
+            window.document,
+            "#measurementQuality",
+            HTMLSelectElement
+        );
+        const method = queryElement(
+            window.document,
+            "#measurementMethod",
+            HTMLSelectElement
+        );
+
+        expect(unit.value).toBe("in");
+        expect(quality.value).toBe("Measured");
+        expect(method.value).toBe("Ruler");
+        expect(
+            queryElement(window.document, "#heightLabel", HTMLElement)
+                .textContent
+        ).toBe("Height (in)");
+
+        method.value = "Estimated from photo";
+        method.dispatchEvent(new window.Event("change", { bubbles: true }));
+
+        expect(quality.value).toBe("Estimated");
+
+        method.value = "Ruler";
+        method.dispatchEvent(new window.Event("change", { bubbles: true }));
+
+        expect(quality.value).toBe("Measured");
+
+        const height = queryElement(
+            window.document,
+            "#height",
+            HTMLInputElement
+        );
+        const width = queryElement(window.document, "#width", HTMLInputElement);
+        height.value = "3.35";
+        height.dispatchEvent(new window.Event("input", { bubbles: true }));
+        width.value = "2.5";
+        width.dispatchEvent(new window.Event("input", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        const queue = parseStoredQueue(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+
+        expect(required(queue[0]).payload).toMatchObject({
+            height: "3.35",
+            measurementMethod: "Ruler",
+            measurementQuality: "Measured",
+            measurementUnit: "in",
+            width: "2.5",
+        });
+        expect(
+            queryElement(window.document, "#queueList", HTMLElement).textContent
+        ).toMatch(/3\.35 × 2\.5 in/v);
+        expect(unit.value).toBe("in");
+        expect(method.value).toBe("Ruler");
+        expect(quality.value).toBe("Measured");
+        expect(
+            parseStoredJson(
+                window.localStorage.getItem("gardenLoggerRoundStateV1")
+            )
+        ).toMatchObject({
+            measurementMethod: "Ruler",
+            measurementQuality: "Measured",
+            measurementUnit: "in",
+        });
+    });
+
+    it("keeps weight controls closed until a weight is being recorded", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        const weightSection = queryElement(
+            window.document,
+            "#weightSection",
+            HTMLElement
+        );
+
+        expect(weightSection.classList.contains("visible")).toBe(false);
+
+        const weighChip = queryElement(
+            window.document,
+            '[data-event="Weigh"]',
+            HTMLElement
+        );
+        weighChip.dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        expect(weightSection.classList.contains("visible")).toBe(true);
+
+        weighChip.dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        expect(weightSection.classList.contains("visible")).toBe(false);
+    });
+
+    it("queues the current weight when Enter is pressed in the weight box", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow();
+        const weighChip = queryElement(
+            window.document,
+            '[data-event="Weigh"]',
+            HTMLElement
+        );
+        weighChip.dispatchEvent(new window.Event("click", { bubbles: true }));
+        const weight = queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        );
+        weight.value = "431.2";
+        weight.dispatchEvent(new window.Event("input", { bubbles: true }));
+
+        weight.dispatchEvent(
+            new window.KeyboardEvent("keydown", {
+                bubbles: true,
+                cancelable: true,
+                key: "Enter",
+            })
+        );
+
+        const queue = parseStoredQueue(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+
+        expect(queue).toHaveLength(1);
+        expect(required(queue[0]).payload).toMatchObject({
+            plantId: "P01",
+            weight: "431.2",
+        });
+        expect(weight.value).toBe("");
+        expect(calls.some((call) => call.method === "saveWebObservation")).toBe(
+            false
+        );
+    });
+
+    it("can optionally advance after queueing and remembers that preference", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        const advance = queryElement(
+            window.document,
+            "#advanceAfterQueue",
+            HTMLInputElement
+        );
+        advance.checked = true;
+        advance.dispatchEvent(new window.Event("change", { bubbles: true }));
+        const weight = queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        );
+        weight.value = "430";
+        weight.dispatchEvent(new window.Event("input", { bubbles: true }));
+
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        expect(
+            queryElement(window.document, "#plantSelect", HTMLSelectElement)
+                .value
+        ).toBe("P02");
+        expect(
+            parseStoredRecord(
+                window.localStorage.getItem("gardenLoggerRoundStateV1")
+            )["advanceAfterQueue"]
+        ).toBe(true);
+    });
+});
+
+describe("garden logger plant selection and label ordering", () => {
+    afterEach(restoreLoggerMocks);
+
     it("restores the label-button picker and remembers a selected plant", () => {
+        expect.hasAssertions();
+
         const { window } = createLoggerWindow({
             storage: {
                 gardenLoggerPlantPickerModeV1: "labels",
@@ -1033,38 +1695,57 @@ describe("Garden logger browser recovery", () => {
             },
         });
 
-        expect(window.document.querySelector("#labelPicker").hidden).toBe(
-            false
-        );
         expect(
-            window.document
-                .querySelector('#labelPicker [data-plant-id="P02"]')
-                .getAttribute("aria-pressed")
+            queryElement(window.document, "#labelPicker", HTMLElement).hidden
+        ).toBe(false);
+        expect(
+            queryElement(
+                window.document,
+                '#labelPicker [data-plant-id="P02"]',
+                HTMLElement
+            ).getAttribute("aria-pressed")
         ).toBe("true");
 
-        window.document
-            .querySelector('#labelPicker [data-plant-id="P01"]')
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(
+            window.document,
+            '#labelPicker [data-plant-id="P01"]',
+            HTMLElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
 
-        expect(window.document.querySelector("#plantSelect").value).toBe("P01");
+        expect(
+            queryElement(window.document, "#plantSelect", HTMLSelectElement)
+                .value
+        ).toBe("P01");
         expect(window.localStorage.getItem("gardenPlantId")).toBe("P01");
     });
 
     it("keeps loaded label portraits and keyboard focus during repeated plant selections", async () => {
+        expect.hasAssertions();
+
         const fixture = portraitCacheFixture();
         const { window } = createLoggerWindow({
             ...fixture,
             storage: { gardenLoggerPlantPickerModeV1: "labels" },
         });
-        const picker = window.document.querySelector("#labelPicker");
-        const buttons = [...picker.children];
-        const portraits = buttons.map((button) => button.querySelector("img"));
-        fixture.observers[0].show(...portraits);
-        await vi.waitFor(() =>
+        const picker = queryElement(
+            window.document,
+            "#labelPicker",
+            HTMLElement
+        );
+        const buttons = queryElements(
+            picker,
+            ":scope > button",
+            HTMLButtonElement
+        );
+        const portraits = buttons.map((button) =>
+            queryElement(button, "img", HTMLImageElement)
+        );
+        required(fixture.observers[0]).show(...portraits);
+        await vi.waitFor(() => {
             expect(
                 portraits.every((image) => image.src.startsWith("blob:"))
-            ).toBe(true)
-        );
+            ).toBe(true);
+        });
         const sources = portraits.map((image) => image.src);
 
         for (const index of [
@@ -1073,26 +1754,37 @@ describe("Garden logger browser recovery", () => {
             1,
             1,
         ]) {
-            const button = picker.children[index];
-            button.focus();
-            button.click();
-            expect(window.document.activeElement === button).toBe(true);
-            buttons.forEach((original, position) => {
-                expect(picker.children[position] === original).toBe(true);
-                expect(
-                    original.querySelector("img") === portraits[position]
-                ).toBe(true);
-                expect(portraits[position].src).toBe(sources[position]);
+            const button = buttons[index];
+            required(button).focus();
+            required(button).click();
+
+            expect(window.document.activeElement).toBe(button);
+
+            for (const [position, original] of buttons.entries()) {
+                expect(picker.children[position]).toBe(original);
+                expect(queryElement(original, "img", HTMLImageElement)).toBe(
+                    portraits[position]
+                );
+                expect(required(portraits[position]).src).toBe(
+                    sources[position]
+                );
                 expect(original.getAttribute("aria-pressed")).toBe(
                     String(position === index)
                 );
-            });
+            }
         }
+
         expect(fixture.fetch).toHaveBeenCalledTimes(2);
         expect(window.localStorage.getItem("gardenPlantId")).toBe("P02");
     });
 
     it("reconciles refreshed plant labels without replacing unchanged portraits", () => {
+        expect.hasAssertions();
+
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">
+         *     | undefined}
+         */
         let refreshHandlers;
         const fixture = portraitCacheFixture();
         const { window } = createLoggerWindow({
@@ -1101,47 +1793,78 @@ describe("Garden logger browser recovery", () => {
                 refreshHandlers = handlers;
             },
             storage: {
-                gardenLoggerPlantPickerModeV1: "labels",
                 gardenLoggerBootstrapV2: JSON.stringify({
-                    savedAt: Date.now(),
                     bootstrap,
+                    savedAt: Date.now(),
                 }),
+                gardenLoggerPlantPickerModeV1: "labels",
             },
         });
-        const picker = window.document.querySelector("#labelPicker");
-        const original = picker.querySelector('[data-plant-id="P01"]');
-        const originalPortrait = original.querySelector("img");
-        const removed = picker.querySelector('[data-plant-id="P02"] img');
-        refreshHandlers.success({
+        const picker = queryElement(
+            window.document,
+            "#labelPicker",
+            HTMLElement
+        );
+        const original = queryElement(
+            picker,
+            '[data-plant-id="P01"]',
+            HTMLElement
+        );
+        const originalPortrait = queryElement(
+            original,
+            "img",
+            HTMLImageElement
+        );
+        const removed = queryElement(
+            picker,
+            '[data-plant-id="P02"] img',
+            HTMLImageElement
+        );
+        required(refreshHandlers).success({
             ...bootstrap,
             plants: [
                 {
-                    ...bootstrap.plants[0],
+                    ...required(bootstrap.plants[0]),
                     label: "H3",
                     name: "Updated moon cactus",
                 },
                 { ...bootstrap.plants[1], id: "P03", label: "A2" },
             ],
         });
+
         expect(
-            [...picker.children].map((button) => button.dataset.plantId)
-        ).toEqual(["P03", "P01"]);
-        expect(picker.children[1] === original).toBe(true);
-        expect(original.querySelector("img") === originalPortrait).toBe(true);
-        expect(original.querySelector("span").textContent).toBe("H3");
+            structuredClone(
+                queryElements(picker, ":scope > button", HTMLButtonElement).map(
+                    (button) => button.dataset["plantId"]
+                )
+            )
+        ).toStrictEqual(["P03", "P01"]);
+        expect(picker.querySelector(":scope > :nth-child(2)")).toBe(original);
+        expect(queryElement(original, "img", HTMLImageElement)).toBe(
+            originalPortrait
+        );
+        expect(queryElement(original, "span", HTMLElement).textContent).toBe(
+            "H3"
+        );
         expect(original.getAttribute("aria-label")).toContain(
             "Updated moon cactus"
         );
         expect(removed.isConnected).toBe(false);
-        expect(fixture.observers[0].targets.has(removed)).toBe(false);
+        expect(required(fixture.observers[0]).targets.has(removed)).toBe(false);
         expect(
-            [...fixture.observers[0].targets].every(
+            [...required(fixture.observers[0]).targets].every(
                 (image) => image.isConnected
             )
         ).toBe(true);
     });
 
     it("replaces a label portrait only when the plant's artwork mapping changes", () => {
+        expect.hasAssertions();
+
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">
+         *     | undefined}
+         */
         let refreshHandlers;
         const fixture = portraitCacheFixture();
         const { window } = createLoggerWindow({
@@ -1150,155 +1873,67 @@ describe("Garden logger browser recovery", () => {
                 refreshHandlers = handlers;
             },
             storage: {
-                gardenLoggerPlantPickerModeV1: "labels",
                 gardenLoggerBootstrapV2: JSON.stringify({
-                    savedAt: Date.now(),
                     bootstrap,
+                    savedAt: Date.now(),
                 }),
+                gardenLoggerPlantPickerModeV1: "labels",
             },
         });
-        const picker = window.document.querySelector("#labelPicker");
-        const replaced = picker.children[0].querySelector("img");
-        const retained = picker.children[1].querySelector("img");
-        refreshHandlers.success({
+        const picker = queryElement(
+            window.document,
+            "#labelPicker",
+            HTMLElement
+        );
+        const replaced = queryElement(
+            required(picker.firstElementChild),
+            "img",
+            HTMLImageElement
+        );
+        const retained = queryElement(
+            queryElement(picker, ":scope > :nth-child(2)", HTMLButtonElement),
+            "img",
+            HTMLImageElement
+        );
+        required(refreshHandlers).success({
             ...bootstrap,
             plants: [
                 {
-                    ...bootstrap.plants[0],
+                    ...required(bootstrap.plants[0]),
                     fieldGuideUrl:
                         "https://example.test/guide#mammillaria-plumosa",
                 },
                 bootstrap.plants[1],
             ],
         });
+
         expect(replaced.isConnected).toBe(false);
-        expect(fixture.observers[0].targets.has(replaced)).toBe(false);
+        expect(required(fixture.observers[0]).targets.has(replaced)).toBe(
+            false
+        );
         expect(
-            picker.children[0].querySelector("img").dataset.portraitUrl
+            queryElement(
+                required(picker.firstElementChild),
+                "img",
+                HTMLImageElement
+            ).dataset["portraitUrl"]
         ).toContain("mammillaria-plumosa.svg");
-        expect(picker.children[1].querySelector("img") === retained).toBe(true);
-    });
-
-    it("keeps bulk selections, filters, and SVG portraits across list and label views", () => {
-        const { window } = createLoggerWindow();
-        const $ = (selector) => window.document.querySelector(selector);
-        const click = (selector) => $(selector).click();
-        click("#bulkModeTab");
         expect(
-            $("#bulkPlantList .bulk-plant img").getAttribute("src")
-        ).toContain("gymnocalycium-mihanovichii-variegated.svg");
-        const checkbox = $('#bulkPlantList input[value="P01"]');
-        checkbox.checked = true;
-        checkbox.dispatchEvent(new window.Event("change", { bubbles: true }));
-        click("#bulkLabelPickerMode");
-        expect(
-            $('#bulkPlantList [data-bulk-plant-id="P01"]').getAttribute(
-                "aria-pressed"
+            queryElement(
+                queryElement(
+                    picker,
+                    ":scope > :nth-child(2)",
+                    HTMLButtonElement
+                ),
+                "img",
+                HTMLImageElement
             )
-        ).toBe("true");
-        expect(
-            $('#bulkPlantList [data-bulk-plant-id="P02"] img').getAttribute(
-                "src"
-            )
-        ).toContain("parodia-leninghausii.svg");
-        click('#bulkPlantList [data-bulk-plant-id="P02"]');
-        expect($("#bulkCount").textContent).toBe("2 selected");
-        $("#bulkSearch").value = "Yellow";
-        $("#bulkSearch").dispatchEvent(
-            new window.Event("input", { bubbles: true })
-        );
-        click("#bulkListPickerMode");
-        expect($("#bulkPlantList").querySelectorAll("input")).toHaveLength(1);
-        expect($('#bulkPlantList input[value="P02"]').checked).toBe(true);
-        click("#singleModeTab");
-        click("#bulkModeTab");
-        expect($("#bulkPlantList").querySelectorAll("input")).toHaveLength(1);
-        expect($("#bulkCount").textContent).toBe("2 selected");
-        $("#bulkSearch").value = "";
-        $("#bulkSearch").dispatchEvent(
-            new window.Event("input", { bubbles: true })
-        );
-        expect($('#bulkPlantList input[value="P01"]').checked).toBe(true);
-        expect($("#plantSelect").value).toBe("P01");
-        click("#bulkLabelPickerMode");
-        click('#bulkPlantList [data-bulk-plant-id="P01"]');
-        expect(
-            $('#bulkPlantList [data-bulk-plant-id="P01"]').getAttribute(
-                "aria-pressed"
-            )
-        ).toBe("false");
-        expect($("#bulkCount").textContent).toBe("1 selected");
-        expect(
-            window.localStorage.getItem("gardenLoggerBulkPickerModeV1")
-        ).toBe("labels");
-        expect($("#listPickerMode").getAttribute("aria-pressed")).toBe("true");
-    });
-
-    it("restores the bulk label preference and selects only visible matches without losing hidden selections", () => {
-        const { window } = createLoggerWindow({
-            storage: { gardenLoggerBulkPickerModeV1: "labels" },
-        });
-        const $ = (selector) => window.document.querySelector(selector);
-        $("#bulkModeTab").click();
-        expect($("#bulkLabelPickerMode").getAttribute("aria-pressed")).toBe(
-            "true"
-        );
-        $('#bulkPlantList [data-bulk-plant-id="P01"]').click();
-        $("#bulkSearch").value = "Yellow";
-        $("#bulkSearch").dispatchEvent(
-            new window.Event("input", { bubbles: true })
-        );
-        $("#bulkSelectVisible").click();
-        expect($("#bulkCount").textContent).toBe("2 selected");
-        $("#bulkSearch").value = "no matching plant";
-        $("#bulkSearch").dispatchEvent(
-            new window.Event("input", { bubbles: true })
-        );
-        expect($("#bulkPlantList").textContent).toContain(
-            "Your other selections are kept"
-        );
-        $("#bulkSelectVisible").click();
-        expect($("#bulkCount").textContent).toBe("2 selected");
-        $("#bulkClear").click();
-        expect($("#bulkCount").textContent).toBe("0 selected");
-    });
-
-    it("places the device queue and History after both forms and keeps a nonempty queue visible in bulk mode", () => {
-        const { window } = createLoggerWindow({
-            storage: {
-                gardenLoggerObservationQueueV1: JSON.stringify([
-                    queuedWeight(),
-                ]),
-            },
-            bootstrapData: {
-                ...bootstrap,
-                recent: [
-                    {
-                        name: "Moon cactus",
-                        event: "Weigh",
-                        observedAt: "Sep 5, 2026",
-                        weight: 430,
-                    },
-                ],
-            },
-        });
-        const $ = (selector) => window.document.querySelector(selector);
-        const ids = [...$(".workbench").children].map(({ id }) => id);
-        expect(ids.slice(-4)).toEqual([
-            "entryForm",
-            "bulkWaterForm",
-            "queueCard",
-            "recentCard",
-        ]);
-        expect($(".sidebar #recentCard")).toBeNull();
-        expect($("#queueCard").hidden).toBe(false);
-        $("#bulkModeTab").click();
-        expect($("#queueCard").hidden).toBe(false);
-        expect($("#queueList").textContent).toContain("430");
-        expect($("#recentCard").hidden).toBe(false);
+        ).toBe(retained);
     });
 
     it("sorts lettered labels before numbered planters while keeping requests in P order", () => {
+        expect.hasAssertions();
+
         const bootstrapData = canonicalBootstrap();
         const canonicalIds = bootstrapData.plants.map(({ id }) => id);
         const { behaviors, calls, window } = createLoggerWindow({
@@ -1306,19 +1941,34 @@ describe("Garden logger browser recovery", () => {
         });
 
         expect(
-            [...window.document.querySelectorAll("#plantSelect option")].map(
-                ({ value }) => value
+            structuredClone(
+                [
+                    ...queryElements(
+                        window.document,
+                        "#plantSelect option",
+                        HTMLOptionElement
+                    ),
+                ].map(({ value }) => value)
             )
-        ).toEqual(canonicalIds);
+        ).toStrictEqual(canonicalIds);
 
-        window.document
-            .querySelector("#labelPickerMode")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#labelPickerMode",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+
         expect(
-            [...window.document.querySelectorAll("#labelPicker button")].map(
-                ({ dataset }) => dataset.plantId
+            structuredClone(
+                [
+                    ...queryElements(
+                        window.document,
+                        "#labelPicker button",
+                        HTMLButtonElement
+                    ),
+                ].map(({ dataset }) => dataset["plantId"])
             )
-        ).toEqual([
+        ).toStrictEqual([
             ...canonicalIds.slice(0, 18),
             "P27",
             "P23",
@@ -1334,58 +1984,97 @@ describe("Garden logger browser recovery", () => {
             "P30",
         ]);
 
-        window.document
-            .querySelector("#bulkModeTab")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-        expect(
-            [
-                ...window.document.querySelectorAll(
-                    "#bulkPlantList input[type='checkbox']"
-                ),
-            ].map(({ value }) => value)
-        ).toEqual(canonicalIds);
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
 
-        window.document.querySelector("#bulkLabelPickerMode").click();
         expect(
-            [
-                ...window.document.querySelectorAll(
-                    "#bulkPlantList [data-bulk-plant-id]"
-                ),
-            ].map(({ dataset }) => dataset.bulkPlantId)
-        ).toEqual(
-            [...window.document.querySelectorAll("#labelPicker button")].map(
-                ({ dataset }) => dataset.plantId
+            structuredClone(
+                [
+                    ...queryElements(
+                        window.document,
+                        "#bulkPlantList input[type='checkbox']",
+                        HTMLInputElement
+                    ),
+                ].map(({ value }) => value)
             )
-        );
-        window.document.querySelector("#bulkListPickerMode").click();
+        ).toStrictEqual(canonicalIds);
 
-        [
+        queryElement(
+            window.document,
+            "#bulkLabelPickerMode",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            structuredClone(
+                [
+                    ...queryElements(
+                        window.document,
+                        "#bulkPlantList [data-bulk-plant-id]",
+                        HTMLElement
+                    ),
+                ].map(({ dataset }) => dataset["bulkPlantId"])
+            )
+        ).toStrictEqual(
+            [
+                ...queryElements(
+                    window.document,
+                    "#labelPicker button",
+                    HTMLButtonElement
+                ),
+            ].map(({ dataset }) => dataset["plantId"])
+        );
+
+        queryElement(
+            window.document,
+            "#bulkListPickerMode",
+            HTMLButtonElement
+        ).click();
+
+        for (const plantId of [
             "P28",
             "P01",
             "P27",
-        ].forEach((plantId) => {
-            const checkbox = window.document.querySelector(
-                `#bulkPlantList input[value="${plantId}"]`
+        ]) {
+            const checkbox = queryElement(
+                window.document,
+                `#bulkPlantList input[value="${window.CSS.escape(plantId)}"]`,
+                HTMLInputElement
             );
             checkbox.checked = true;
             checkbox.dispatchEvent(
                 new window.Event("change", { bubbles: true })
             );
-        });
-        window.document.querySelector("#bulkNutrientsUsed").value = "No";
-        behaviors.saveBulkCareObservation = ({ success }) =>
+        }
+        queryElement(
+            window.document,
+            "#bulkNutrientsUsed",
+            HTMLSelectElement
+        ).value = "No";
+        behaviors.saveBulkCareObservation = ({ success }) => {
             success({ message: "Bulk care saved." });
-        window.document.querySelector("#bulkWaterForm").dispatchEvent(
+        };
+        queryElement(
+            window.document,
+            "#bulkWaterForm",
+            HTMLFormElement
+        ).dispatchEvent(
             new window.Event("submit", {
                 bubbles: true,
                 cancelable: true,
             })
         );
 
-        expect(
-            calls.find(({ method }) => method === "saveBulkCareObservation")
-                .args[0].plantIds
-        ).toEqual([
+        const submittedPlantIds = structuredClone(
+            required(
+                calls.find((call) => call.method === "saveBulkCareObservation")
+            ).args[0].plantIds
+        );
+
+        expect(submittedPlantIds).toStrictEqual([
             "P01",
             "P27",
             "P28",
@@ -1393,15 +2082,17 @@ describe("Garden logger browser recovery", () => {
     });
 
     it("uses the same natural order for the public tracker and history pager", () => {
+        expect.hasAssertions();
+
         const orderedLabels = canonicalPlantLabels
             .map((label, index) => ({
                 "Current pot label": label,
                 "Plant ID": `P${String(index + 1).padStart(2, "0")}`,
             }))
-            .sort(comparePlantsByNaturalLabel)
+            .toSorted(comparePlantsByNaturalLabel)
             .map((plant) => plant["Current pot label"]);
 
-        expect(orderedLabels).toEqual([
+        expect(structuredClone(orderedLabels)).toStrictEqual([
             ...canonicalPlantLabels.slice(0, 18),
             "G1",
             "G2",
@@ -1417,36 +2108,336 @@ describe("Garden logger browser recovery", () => {
             "#6",
         ]);
     });
+});
+
+describe("garden logger bulk selection and form layout", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("keeps bulk selections, filters, and SVG portraits across list and label views", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        const elementById = (/** @type {string} */ selector) =>
+            queryElement(window.document, selector, HTMLElement);
+        const click = (/** @type {string} */ selector) => {
+            elementById(selector).click();
+        };
+        click("#bulkModeTab");
+
+        expect(
+            queryElement(
+                window.document,
+                "#bulkPlantList .bulk-plant img",
+                HTMLImageElement
+            ).getAttribute("src")
+        ).toContain("gymnocalycium-mihanovichii-variegated.svg");
+
+        const checkbox = queryElement(
+            window.document,
+            '#bulkPlantList input[value="P01"]',
+            HTMLInputElement
+        );
+        checkbox.checked = true;
+        checkbox.dispatchEvent(new window.Event("change", { bubbles: true }));
+        click("#bulkLabelPickerMode");
+
+        expect(
+            queryElement(
+                window.document,
+                '#bulkPlantList [data-bulk-plant-id="P01"]',
+                HTMLElement
+            ).getAttribute("aria-pressed")
+        ).toBe("true");
+        expect(
+            queryElement(
+                window.document,
+                '#bulkPlantList [data-bulk-plant-id="P02"] img',
+                HTMLImageElement
+            ).getAttribute("src")
+        ).toContain("parodia-leninghausii.svg");
+
+        click('#bulkPlantList [data-bulk-plant-id="P02"]');
+
+        expect(
+            queryElement(window.document, "#bulkCount", HTMLElement).textContent
+        ).toBe("2 selected");
+
+        queryElement(window.document, "#bulkSearch", HTMLInputElement).value =
+            "Yellow";
+        queryElement(
+            window.document,
+            "#bulkSearch",
+            HTMLInputElement
+        ).dispatchEvent(new window.Event("input", { bubbles: true }));
+        click("#bulkListPickerMode");
+
+        expect(
+            queryElements(
+                elementById("#bulkPlantList"),
+                "input",
+                HTMLInputElement
+            )
+        ).toHaveLength(1);
+        expect(
+            queryElement(
+                window.document,
+                '#bulkPlantList input[value="P02"]',
+                HTMLInputElement
+            ).checked
+        ).toBe(true);
+
+        click("#singleModeTab");
+        click("#bulkModeTab");
+
+        expect(
+            queryElements(
+                elementById("#bulkPlantList"),
+                "input",
+                HTMLInputElement
+            )
+        ).toHaveLength(1);
+        expect(
+            queryElement(window.document, "#bulkCount", HTMLElement).textContent
+        ).toBe("2 selected");
+
+        queryElement(window.document, "#bulkSearch", HTMLInputElement).value =
+            "";
+        queryElement(
+            window.document,
+            "#bulkSearch",
+            HTMLInputElement
+        ).dispatchEvent(new window.Event("input", { bubbles: true }));
+
+        expect(
+            queryElement(
+                window.document,
+                '#bulkPlantList input[value="P01"]',
+                HTMLInputElement
+            ).checked
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#plantSelect", HTMLSelectElement)
+                .value
+        ).toBe("P01");
+
+        click("#bulkLabelPickerMode");
+        click('#bulkPlantList [data-bulk-plant-id="P01"]');
+
+        expect(
+            queryElement(
+                window.document,
+                '#bulkPlantList [data-bulk-plant-id="P01"]',
+                HTMLElement
+            ).getAttribute("aria-pressed")
+        ).toBe("false");
+        expect(
+            queryElement(window.document, "#bulkCount", HTMLElement).textContent
+        ).toBe("1 selected");
+        expect(
+            window.localStorage.getItem("gardenLoggerBulkPickerModeV1")
+        ).toBe("labels");
+        expect(
+            queryElement(
+                window.document,
+                "#listPickerMode",
+                HTMLButtonElement
+            ).getAttribute("aria-pressed")
+        ).toBe("true");
+    });
+
+    it("restores the bulk label preference and selects only visible matches without losing hidden selections", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            storage: { gardenLoggerBulkPickerModeV1: "labels" },
+        });
+
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(
+                window.document,
+                "#bulkLabelPickerMode",
+                HTMLButtonElement
+            ).getAttribute("aria-pressed")
+        ).toBe("true");
+
+        queryElement(
+            window.document,
+            '#bulkPlantList [data-bulk-plant-id="P01"]',
+            HTMLElement
+        ).click();
+        queryElement(window.document, "#bulkSearch", HTMLInputElement).value =
+            "Yellow";
+        queryElement(
+            window.document,
+            "#bulkSearch",
+            HTMLInputElement
+        ).dispatchEvent(new window.Event("input", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#bulkSelectVisible",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(window.document, "#bulkCount", HTMLElement).textContent
+        ).toBe("2 selected");
+
+        queryElement(window.document, "#bulkSearch", HTMLInputElement).value =
+            "no matching plant";
+        queryElement(
+            window.document,
+            "#bulkSearch",
+            HTMLInputElement
+        ).dispatchEvent(new window.Event("input", { bubbles: true }));
+
+        expect(
+            queryElement(window.document, "#bulkPlantList", HTMLElement)
+                .textContent
+        ).toContain("Your other selections are kept");
+
+        queryElement(
+            window.document,
+            "#bulkSelectVisible",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(window.document, "#bulkCount", HTMLElement).textContent
+        ).toBe("2 selected");
+
+        queryElement(window.document, "#bulkClear", HTMLButtonElement).click();
+
+        expect(
+            queryElement(window.document, "#bulkCount", HTMLElement).textContent
+        ).toBe("0 selected");
+    });
+
+    it("places the device queue and History after both forms and keeps a nonempty queue visible in bulk mode", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: {
+                ...bootstrap,
+                recent: [
+                    {
+                        event: "Weigh",
+                        name: "Moon cactus",
+                        observedAt: "Sep 5, 2026",
+                        weight: 430,
+                    },
+                ],
+            },
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify([
+                    queuedWeight(),
+                ]),
+            },
+        });
+
+        const ids = [
+            ...queryElement(window.document, ".workbench", HTMLElement)
+                .children,
+        ].map(({ id }) => id);
+
+        expect(structuredClone(ids.slice(-4))).toStrictEqual([
+            "entryForm",
+            "bulkWaterForm",
+            "queueCard",
+            "recentCard",
+        ]);
+        expect(
+            window.document.querySelector(".sidebar #recentCard")
+        ).toBeNull();
+        expect(
+            queryElement(window.document, "#queueCard", HTMLElement).hidden
+        ).toBe(false);
+
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(window.document, "#queueCard", HTMLElement).hidden
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#queueList", HTMLElement).textContent
+        ).toContain("430");
+        expect(
+            queryElement(window.document, "#recentCard", HTMLElement).hidden
+        ).toBe(false);
+    });
+});
+
+describe("garden logger plant photos and portrait rendering", () => {
+    afterEach(restoreLoggerMocks);
 
     it("shows honest accessible plant photos and hides absent image slots", () => {
+        expect.hasAssertions();
+
         const { window } = createLoggerWindow({
             bootstrapData: canonicalBootstrap(),
             storage: { gardenPlantId: "P23" },
         });
-        const summary = window.document.querySelector("#plantSummary");
-        const images = [...summary.querySelectorAll(".plant-photo-card img")];
+        const summary = queryElement(
+            window.document,
+            "#plantSummary",
+            HTMLElement
+        );
+        const images = [
+            ...queryElements(
+                summary,
+                ".plant-photo-card img",
+                HTMLImageElement
+            ),
+        ];
 
-        expect(images.map(({ src }) => src)).toEqual([
+        expect(structuredClone(images.map(({ src }) => src))).toStrictEqual([
             p23ImageUrls.currentImageUrl,
             p23ImageUrls.nurseryLabelImageUrl,
         ]);
-        expect(images.map(({ alt }) => alt)).toEqual([
+        expect(structuredClone(images.map(({ alt }) => alt))).toStrictEqual([
             "Current collection photograph of Plant P23 (P23).",
             "Nursery label evidence for Plant P23 (P23).",
         ]);
         expect(
-            [...summary.querySelectorAll(".plant-photo-card figcaption")].map(
-                ({ textContent }) => textContent
+            structuredClone(
+                [
+                    ...queryElements(
+                        summary,
+                        ".plant-photo-card figcaption",
+                        HTMLElement
+                    ),
+                ].map(({ textContent }) => textContent)
             )
-        ).toEqual(["Current collection photograph", "Nursery label evidence"]);
+        ).toStrictEqual([
+            "Current collection photograph",
+            "Nursery label evidence",
+        ]);
 
-        const select = window.document.querySelector("#plantSelect");
+        const select = queryElement(
+            window.document,
+            "#plantSelect",
+            HTMLSelectElement
+        );
         select.value = "P22";
         select.dispatchEvent(new window.Event("change", { bubbles: true }));
-        expect(summary.querySelectorAll(".plant-photo-card")).toHaveLength(0);
+
+        expect(
+            queryElements(summary, ".plant-photo-card", HTMLElement)
+        ).toHaveLength(0);
     });
 
     it("persists the photo preference and does not create hidden image requests", () => {
+        expect.hasAssertions();
+
         const bootstrapData = canonicalBootstrap();
         const hidden = createLoggerWindow({
             bootstrapData,
@@ -1455,25 +2446,43 @@ describe("Garden logger browser recovery", () => {
                 gardenPlantId: "P23",
             },
         }).window;
-        const toggle = hidden.document.querySelector("#photoVisibilityToggle");
+        const toggle = queryElement(
+            hidden.document,
+            "#photoVisibilityToggle",
+            HTMLButtonElement
+        );
 
         expect(
-            hidden.document.querySelectorAll("#plantSummary img")
+            queryElements(
+                hidden.document,
+                "#plantSummary img",
+                HTMLImageElement
+            )
         ).toHaveLength(0);
         expect(toggle.textContent).toContain("Show photos");
         expect(toggle.getAttribute("aria-pressed")).toBe("false");
 
         toggle.click();
+
         expect(
-            hidden.document.querySelectorAll("#plantSummary img")
+            queryElements(
+                hidden.document,
+                "#plantSummary img",
+                HTMLImageElement
+            )
         ).toHaveLength(2);
         expect(hidden.localStorage.getItem("gardenLoggerPhotosVisibleV1")).toBe(
             "shown"
         );
 
         toggle.click();
+
         expect(
-            hidden.document.querySelectorAll("#plantSummary img")
+            queryElements(
+                hidden.document,
+                "#plantSummary img",
+                HTMLImageElement
+            )
         ).toHaveLength(0);
         expect(hidden.localStorage.getItem("gardenLoggerPhotosVisibleV1")).toBe(
             "hidden"
@@ -1486,41 +2495,55 @@ describe("Garden logger browser recovery", () => {
                 gardenPlantId: "P23",
             },
         }).window;
+
         expect(
-            restored.document.querySelectorAll("#plantSummary img")
+            queryElements(
+                restored.document,
+                "#plantSummary img",
+                HTMLImageElement
+            )
         ).toHaveLength(0);
         expect(
-            restored.document.querySelector("#photoVisibilityToggle")
-                .textContent
+            queryElement(
+                restored.document,
+                "#photoVisibilityToggle",
+                HTMLButtonElement
+            ).textContent
         ).toContain("Show photos");
     });
 
     it("uses the selected plant's lightweight SVG portrait in list and label pickers", () => {
+        expect.hasAssertions();
+
         const { window } = createLoggerWindow();
-        const expectedSrc = new URL(
-            `/Gardening/assets/plant-icons/gymnocalycium-mihanovichii-variegated.svg?v=${portraitRevision}`,
-            [
-                "https:",
-                "",
-                "nick2bad4u.github.io",
-            ].join("/")
-        ).href;
+        const expectedSrc = `https://nick2bad4u.github.io/Gardening/assets/plant-icons/gymnocalycium-mihanovichii-variegated.svg?v=${portraitRevision}`;
 
         expect(
-            window.document
-                .querySelector("#plantChoiceSummary img")
-                .getAttribute("src")
+            queryElement(
+                window.document,
+                "#plantChoiceSummary img",
+                HTMLImageElement
+            ).getAttribute("src")
         ).toBe(expectedSrc);
         expect(
-            window.document
-                .querySelector('#plantChoiceList [data-plant-id="P01"] img')
-                .getAttribute("src")
+            queryElement(
+                window.document,
+                '#plantChoiceList [data-plant-id="P01"] img',
+                HTMLImageElement
+            ).getAttribute("src")
         ).toBe(expectedSrc);
 
-        window.document.querySelector("#labelPickerMode").click();
-        const labelPortrait = window.document.querySelector(
-            '#labelPicker [data-plant-id="P01"] img'
+        queryElement(
+            window.document,
+            "#labelPickerMode",
+            HTMLButtonElement
+        ).click();
+        const labelPortrait = queryElement(
+            window.document,
+            '#labelPicker [data-plant-id="P01"] img',
+            HTMLImageElement
         );
+
         expect(labelPortrait.getAttribute("src")).toBe(expectedSrc);
         expect(labelPortrait.getAttribute("alt")).toBe("");
         expect(labelPortrait.getAttribute("aria-hidden")).toBe("true");
@@ -1532,27 +2555,33 @@ describe("Garden logger browser recovery", () => {
     });
 
     it("uses the built-in portrait for an unknown contents-only mapping", () => {
+        expect.hasAssertions();
+
         const { window } = createLoggerWindow({
             bootstrapData: {
                 ...bootstrap,
                 plants: [
                     {
-                        ...bootstrap.plants[0],
+                        ...required(bootstrap.plants[0]),
                         fieldGuideUrl: "https://example.test/#contents",
                     },
                 ],
             },
         });
+
         expect(
             window.document.querySelector("#plantChoiceSummary img")
         ).toBeNull();
         expect(
-            window.document
-                .querySelector("#plantChoiceSummary use")
-                .getAttribute("href")
+            queryElement(
+                window.document,
+                "#plantChoiceSummary use",
+                Element
+            ).getAttribute("href")
         ).toBe("#app-icon-plant");
         expect(
-            window.document.querySelector("#plantChoiceSummary").textContent
+            queryElement(window.document, "#plantChoiceSummary", HTMLElement)
+                .textContent
         ).toContain("Moon cactus");
     });
 
@@ -1560,79 +2589,73 @@ describe("Garden logger browser recovery", () => {
         ["P19", "shared-rehab-cactus-planter"],
         ["P20", "shared-succulent-planter"],
     ])("uses the accurate shared-planter portrait for %s", (id, slug) => {
+        expect.hasAssertions();
+
         const { window } = createLoggerWindow({
             bootstrapData: {
                 ...bootstrap,
                 plants: [
                     {
-                        ...bootstrap.plants[0],
-                        id,
+                        ...required(bootstrap.plants[0]),
                         fieldGuideUrl: "https://example.test/#contents",
+                        id,
                     },
                 ],
             },
         });
-        const portrait = window.document.querySelector(
-            "#plantChoiceSummary img"
+        const portrait = queryElement(
+            window.document,
+            "#plantChoiceSummary img",
+            HTMLImageElement
         );
+
         expect(portrait.getAttribute("src")).toContain(`${slug}.svg`);
         expect(portrait.getAttribute("src")).not.toContain("contents.svg");
     });
 
-    it("separates large metric values from supporting dates and groups the watering plan", () => {
-        const { window } = createLoggerWindow({
-            bootstrapData: {
-                ...bootstrap,
-                plants: [
-                    {
-                        ...bootstrap.plants[0],
-                        recommendedWaterDate: "Sep 12",
-                        wateringGuidance: "Confirm dry roots first.",
-                        dryForecastWindow: "Sep 10–Sep 16",
-                        dryForecastBasis:
-                            "Historical estimate · 2 learned cycles",
-                    },
-                ],
-            },
-        });
-        const summary = window.document.querySelector("#plantSummary");
-        expect(summary.querySelectorAll(".metric")).toHaveLength(4);
-        expect(summary.querySelectorAll(".metric-value")[2].textContent).toBe(
-            "398 g"
+    it("offers an honest Google Photos handoff for photo links", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        const link = queryElement(
+            window.document,
+            "#openGooglePhotos",
+            HTMLAnchorElement
         );
-        expect(summary.querySelectorAll(".metric-detail")[2].textContent).toBe(
-            "Aug 10, 2026"
-        );
-        expect(summary.querySelector(".forecast-date").textContent).toBe(
-            "Sep 12"
-        );
-        expect(summary.querySelector(".forecast-guidance").textContent).toBe(
-            "Confirm dry roots first."
-        );
-        expect(
-            summary.querySelector(".forecast-reweigh").textContent
-        ).toContain("Sep 10–Sep 16");
-        expect(summary.querySelector(".forecast-basis").textContent).toContain(
-            "2 learned cycles"
-        );
-        expect(
-            summary.querySelector(".plant-summary-heading .plant-id")
-        ).not.toBeNull();
+
+        expect(link.href).toBe("https://photos.google.com/");
+        expect(link.target).toBe("_blank");
+        expect(link.rel).toContain("noopener");
     });
+});
+
+describe("garden logger portrait caching and offline reuse", () => {
+    afterEach(restoreLoggerMocks);
 
     it("loads only visible portraits and shares one download between duplicate images", async () => {
+        expect.hasAssertions();
+
         const fixture = portraitCacheFixture();
         const { window } = createLoggerWindow(fixture);
-        const selected = window.document.querySelector(
-            "#plantChoiceSummary img"
+        const selected = queryElement(
+            window.document,
+            "#plantChoiceSummary img",
+            HTMLImageElement
         );
-        const duplicate = window.document.querySelector(
-            '#plantChoiceList [data-plant-id="P01"] img'
+        const duplicate = queryElement(
+            window.document,
+            '#plantChoiceList [data-plant-id="P01"] img',
+            HTMLImageElement
         );
         const observer = fixture.observers[0];
+
         expect(fixture.fetch).not.toHaveBeenCalled();
-        observer.show(selected, duplicate);
-        await vi.waitFor(() => expect(selected.src).toMatch(/^blob:/));
+
+        required(observer).show(selected, duplicate);
+        await vi.waitFor(() => {
+            expect(selected.src).toMatch(/^blob:/v);
+        });
+
         expect(duplicate.src).toBe(selected.src);
         expect(fixture.fetch).toHaveBeenCalledTimes(1);
         expect(fixture.fetch).toHaveBeenCalledWith(
@@ -1645,40 +2668,61 @@ describe("Garden logger browser recovery", () => {
         );
         expect(fixture.saved.size).toBe(1);
         expect(
-            [...fixture.saved.values()][0].headers.get("X-Garden-Icon-Revision")
+            required(fixture.saved.values().toArray()[0]).headers.get(
+                "X-Garden-Icon-Revision"
+            )
         ).toBe(portraitRevision);
-        window.document.querySelector("#plantSearch").value = "Yellow";
-        window.document
-            .querySelector("#plantSearch")
-            .dispatchEvent(new window.Event("input"));
+
+        queryElement(window.document, "#plantSearch", HTMLInputElement).value =
+            "Yellow";
+        queryElement(
+            window.document,
+            "#plantSearch",
+            HTMLInputElement
+        ).dispatchEvent(new window.Event("input"));
+
         expect(
-            [...observer.targets].every((target) => target.isConnected)
+            [...required(observer).targets].every(
+                (target) => target.isConnected
+            )
         ).toBe(true);
     });
 
     it("reuses a downloaded portrait after a reload without any network request, including offline", async () => {
+        expect.hasAssertions();
+
         const first = portraitCacheFixture();
         const firstWindow = createLoggerWindow(first).window;
-        const firstImage = firstWindow.document.querySelector(
-            "#plantChoiceSummary img"
+        const firstImage = queryElement(
+            firstWindow.document,
+            "#plantChoiceSummary img",
+            HTMLImageElement
         );
-        first.observers[0].show(firstImage);
-        await vi.waitFor(() => expect(firstImage.src).toMatch(/^blob:/));
+        required(first.observers[0]).show(firstImage);
+        await vi.waitFor(() => {
+            expect(firstImage.src).toMatch(/^blob:/v);
+        });
 
         const next = portraitCacheFixture({
-            saved: first.saved,
             offline: true,
+            saved: first.saved,
         });
         const nextWindow = createLoggerWindow(next).window;
-        const nextImage = nextWindow.document.querySelector(
-            "#plantChoiceSummary img"
+        const nextImage = queryElement(
+            nextWindow.document,
+            "#plantChoiceSummary img",
+            HTMLImageElement
         );
-        next.observers[0].show(nextImage);
-        await vi.waitFor(() => expect(nextImage.src).toMatch(/^blob:/));
+        required(next.observers[0]).show(nextImage);
+        await vi.waitUntil(() => nextImage.src.startsWith("blob:"));
+
+        expect(nextImage.src).toMatch(/^blob:/v);
         expect(next.fetch).not.toHaveBeenCalled();
     });
 
     it("replaces old artwork in the same cache entry when the generated revision changes", async () => {
+        expect.hasAssertions();
+
         const key =
             "https://nick2bad4u.github.io/Gardening/assets/plant-icons/gymnocalycium-mihanovichii-variegated.svg";
         const saved = new Map([
@@ -1694,23 +2738,48 @@ describe("Garden logger browser recovery", () => {
         ]);
         const fixture = portraitCacheFixture({ saved });
         const { window } = createLoggerWindow(fixture);
-        const image = window.document.querySelector("#plantChoiceSummary img");
-        fixture.observers[0].show(image);
-        await vi.waitFor(() => expect(image.src).toMatch(/^blob:/));
+        const image = queryElement(
+            window.document,
+            "#plantChoiceSummary img",
+            HTMLImageElement
+        );
+        required(fixture.observers[0]).show(image);
+        await vi.waitFor(() => {
+            expect(image.src).toMatch(/^blob:/v);
+        });
+
         expect(fixture.fetch).toHaveBeenCalledTimes(1);
         expect(saved.size).toBe(1);
-        expect(saved.get(key).headers.get("X-Garden-Icon-Revision")).toBe(
-            portraitRevision
-        );
+        expect(
+            required(saved.get(key)).headers.get("X-Garden-Icon-Revision")
+        ).toBe(portraitRevision);
     });
 
     it.each([
-        { writeFails: true },
-        { openFails: true },
-        { offline: true },
+        {
+            expectedSource: expect.stringMatching(/^blob:/v),
+            failure: { writeFails: true },
+            name: "write fails",
+        },
+        {
+            expectedSource: expect.stringContaining(
+                `.svg?v=${portraitRevision}`
+            ),
+            failure: { openFails: true },
+            name: "open fails",
+        },
+        {
+            expectedSource: expect.stringContaining(
+                `.svg?v=${portraitRevision}`
+            ),
+            failure: { offline: true },
+            name: "offline",
+        },
     ])(
-        "keeps unsent observations intact when the image cache or download fails: %j",
-        async (failure) => {
+        "keeps unsent observations intact when the image cache or download fails: $name",
+        async ({ expectedSource, failure }) => {
+            expect.hasAssertions();
+
             const fixture = portraitCacheFixture(failure);
             const queue = JSON.stringify([queuedWeight()]);
             const { window } = createLoggerWindow({
@@ -1720,50 +2789,130 @@ describe("Garden logger browser recovery", () => {
             const storedQueue = window.localStorage.getItem(
                 "gardenLoggerObservationQueueV1"
             );
-            const image = window.document.querySelector(
-                "#plantChoiceSummary img"
+            const image = queryElement(
+                window.document,
+                "#plantChoiceSummary img",
+                HTMLImageElement
             );
-            fixture.observers[0].show(image);
-            await vi.waitFor(() =>
-                expect(image.getAttribute("src")).toBeTruthy()
-            );
-            if (failure.writeFails) expect(image.src).toMatch(/^blob:/);
-            else expect(image.src).toContain(`.svg?v=${portraitRevision}`);
+            required(fixture.observers[0]).show(image);
+            await vi.waitFor(() => {
+                expect(image.getAttribute("src")).toMatch(/^(?:blob:|https:)/v);
+            });
+
+            expect(image.src).toStrictEqual(expectedSource);
+
             expect(
                 window.localStorage.getItem("gardenLoggerObservationQueueV1")
             ).toBe(storedQueue);
+
             image.dispatchEvent(new window.Event("error"));
+
             expect(
-                window.document
-                    .querySelector("#plantChoiceSummary svg use")
-                    .getAttribute("href")
+                queryElement(
+                    window.document,
+                    "#plantChoiceSummary svg use",
+                    Element
+                ).getAttribute("href")
             ).toBe("#app-icon-plant");
         }
     );
+});
+
+describe("garden logger watering forecasts and recent History", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("separates large metric values from supporting dates and groups the watering plan", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: {
+                ...bootstrap,
+                plants: [
+                    {
+                        ...required(bootstrap.plants[0]),
+                        dryForecastBasis:
+                            "Historical estimate · 2 learned cycles",
+                        dryForecastWindow: "Sep 10–Sep 16",
+                        recommendedWaterDate: "Sep 12",
+                        wateringGuidance: "Confirm dry roots first.",
+                    },
+                ],
+            },
+        });
+        const summary = queryElement(
+            window.document,
+            "#plantSummary",
+            HTMLElement
+        );
+
+        expect(queryElements(summary, ".metric", HTMLElement)).toHaveLength(4);
+        expect(
+            required(queryElements(summary, ".metric-value", HTMLElement)[2])
+                .textContent
+        ).toBe("398 g");
+        expect(
+            required(queryElements(summary, ".metric-detail", HTMLElement)[2])
+                .textContent
+        ).toBe("Aug 10, 2026");
+        expect(
+            queryElement(summary, ".forecast-date", HTMLElement).textContent
+        ).toBe("Sep 12");
+        expect(
+            queryElement(summary, ".forecast-guidance", HTMLElement).textContent
+        ).toBe("Confirm dry roots first.");
+        expect(
+            queryElement(summary, ".forecast-reweigh", HTMLElement).textContent
+        ).toContain("Sep 10–Sep 16");
+        expect(
+            queryElement(summary, ".forecast-basis", HTMLElement).textContent
+        ).toContain("2 learned cycles");
+        expect(
+            queryElement(
+                summary,
+                ":scope .plant-summary-heading .plant-id",
+                HTMLElement
+            ).textContent
+        ).toBe("P01");
+    });
 
     it("shows the selected plant's last completed dry-cycle weight", () => {
-        const { window } = createLoggerWindow();
-        const summary = window.document.querySelector("#plantSummary");
-        const dryMetric = () => summary.querySelectorAll(".metric")[2];
-        expect(dryMetric().querySelector(".metric-value").textContent).toBe(
-            "398 g"
-        );
-        expect(dryMetric().querySelector(".metric-detail").textContent).toBe(
-            "Aug 10, 2026"
-        );
+        expect.hasAssertions();
 
-        const select = window.document.querySelector("#plantSelect");
+        const { window } = createLoggerWindow();
+        const summary = queryElement(
+            window.document,
+            "#plantSummary",
+            HTMLElement
+        );
+        const dryMetric = () =>
+            required(queryElements(summary, ".metric", HTMLElement)[2]);
+
+        expect(
+            queryElement(dryMetric(), ".metric-value", HTMLElement).textContent
+        ).toBe("398 g");
+        expect(
+            queryElement(dryMetric(), ".metric-detail", HTMLElement).textContent
+        ).toBe("Aug 10, 2026");
+
+        const select = queryElement(
+            window.document,
+            "#plantSelect",
+            HTMLSelectElement
+        );
         select.value = "P02";
         select.dispatchEvent(new window.Event("change", { bubbles: true }));
-        expect(dryMetric().querySelector(".metric-value").textContent).toBe(
-            "475 g"
-        );
-        expect(dryMetric().querySelector(".metric-detail").textContent).toBe(
-            "Aug 2, 2026"
-        );
+
+        expect(
+            queryElement(dryMetric(), ".metric-value", HTMLElement).textContent
+        ).toBe("475 g");
+        expect(
+            queryElement(dryMetric(), ".metric-detail", HTMLElement).textContent
+        ).toBe("Aug 2, 2026");
     });
 
     it("shows the learned reweigh window and forecast basis, including old-cache fallbacks", () => {
+        expect.hasAssertions();
+
         const { window } = createLoggerWindow({
             bootstrapData: {
                 ...bootstrap,
@@ -1771,37 +2920,53 @@ describe("Garden logger browser recovery", () => {
                     index === 0
                         ? {
                               ...plant,
-                              dryForecastWindow: "Sep 10–Sep 25",
                               dryForecastBasis:
                                   "Historical estimate · 1 learned cycle(s)",
+                              dryForecastWindow: "Sep 10–Sep 25",
                           }
                         : plant
                 ),
             },
         });
-        const summary = window.document.querySelector("#plantSummary");
+        const summary = queryElement(
+            window.document,
+            "#plantSummary",
+            HTMLElement
+        );
+
         expect(summary.textContent).toContain("Reweigh: Sep 10–Sep 25");
         expect(summary.textContent).toContain(
             "Historical estimate · 1 learned cycle(s)"
         );
-        const select = window.document.querySelector("#plantSelect");
+
+        const select = queryElement(
+            window.document,
+            "#plantSelect",
+            HTMLSelectElement
+        );
         select.value = "P02";
         select.dispatchEvent(new window.Event("change", { bubbles: true }));
+
         expect(summary.textContent).toContain(
             "Reweigh: Not enough evidence yet"
         );
         expect(summary.textContent).toContain("Needs watering-cycle data");
         expect(
-            summary.querySelectorAll(".metric svg[aria-hidden='true']").length
-        ).toBe(4);
+            queryElements(summary, ".metric svg[aria-hidden='true']", Element)
+        ).toHaveLength(4);
     });
 
     it("restores and updates the recent-history length", () => {
+        expect.hasAssertions();
+
         const { calls, window } = createLoggerWindow({
             storage: { gardenLoggerRecentLimitV1: "50" },
         });
 
-        expect(window.document.querySelector("#recentLimit").value).toBe("50");
+        expect(
+            queryElement(window.document, "#recentLimit", HTMLSelectElement)
+                .value
+        ).toBe("50");
         expect(
             calls.some(
                 (call) =>
@@ -1810,15 +2975,22 @@ describe("Garden logger browser recovery", () => {
             )
         ).toBe(true);
 
-        const select = window.document.querySelector("#recentLimit");
+        const select = queryElement(
+            window.document,
+            "#recentLimit",
+            HTMLSelectElement
+        );
         select.value = "25";
         select.dispatchEvent(new window.Event("change", { bubbles: true }));
+
         expect(window.localStorage.getItem("gardenLoggerRecentLimitV1")).toBe(
             "25"
         );
     });
 
     it("marks recent History rows with the spreadsheet event palette key", () => {
+        expect.hasAssertions();
+
         const { window } = createLoggerWindow({
             bootstrapData: {
                 ...bootstrap,
@@ -1843,218 +3015,44 @@ describe("Garden logger browser recovery", () => {
             },
         });
         const rows = [
-            ...window.document.querySelectorAll("#recentList .recent-item"),
+            ...queryElements(
+                window.document,
+                "#recentList .recent-item",
+                HTMLElement
+            ),
         ];
 
-        expect(rows.map(({ dataset }) => dataset.event)).toEqual([
-            "Water",
-            "Pest",
-        ]);
         expect(
-            rows.map((row) => row.querySelector(".event-badge").textContent)
-        ).toEqual(["Water", "Pest"]);
+            structuredClone(rows.map(({ dataset }) => dataset["event"]))
+        ).toStrictEqual(["Water", "Pest"]);
+        expect(
+            structuredClone(
+                rows.map(
+                    (row) =>
+                        queryElement(row, ".event-badge", HTMLElement)
+                            .textContent
+                )
+            )
+        ).toStrictEqual(["Water", "Pest"]);
         expect(html).toContain("--event-bg: #d9eefc;");
         expect(html).toContain("--event-ink: #7a1d1d;");
         expect(html).toContain("--event-accent: #2f8fca;");
         expect(html).toContain("var(--event-accent) 10%");
         expect(html).not.toContain("var(--event-bg) 74%");
     });
+});
 
-    it("starts safely when browser storage and theme detection are unavailable", () => {
-        const { calls, window } = createLoggerWindow({
-            storageUnavailable: true,
-            matchMediaUnavailable: true,
-        });
-
-        expect(window.document.documentElement.dataset.theme).toBe("light");
-        expect(window.document.querySelector("#loading").hidden).toBe(true);
-        expect(
-            window.document.querySelector("#connectionStatus").textContent
-        ).toBe("Connected · logger test");
-        expect(calls.some((call) => call.method === "getWebAppBootstrap")).toBe(
-            true
-        );
-
-        expect(() =>
-            window.document
-                .querySelector("#themeToggle")
-                .dispatchEvent(new window.Event("click", { bubbles: true }))
-        ).not.toThrow();
-        expect(window.document.documentElement.dataset.theme).toBe("dark");
-    });
-
-    it("offers an honest Google Photos handoff for photo links", () => {
-        const { window } = createLoggerWindow();
-        const link = window.document.querySelector("#openGooglePhotos");
-
-        expect(link.href).toBe("https://photos.google.com/");
-        expect(link.target).toBe("_blank");
-        expect(link.rel).toContain("noopener");
-    });
-
-    it("queues a reading locally without changing the selected plant", () => {
-        const { calls, window } = createLoggerWindow();
-        const weight = window.document.querySelector("#weight");
-        weight.value = "430";
-        weight.dispatchEvent(new window.Event("input", { bubbles: true }));
-
-        window.document
-            .querySelector("#queueButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-
-        const queue = JSON.parse(
-            window.localStorage.getItem("gardenLoggerObservationQueueV1")
-        );
-        expect(queue).toHaveLength(1);
-        expect(queue[0].payload).toMatchObject({
-            plantId: "P01",
-            weight: "430",
-        });
-        expect(window.document.querySelector("#plantSelect").value).toBe("P01");
-        expect(window.document.querySelector("#weight").value).toBe("");
-        expect(calls.some((call) => call.method === "saveWebObservation")).toBe(
-            false
-        );
-        window.document
-            .querySelector("#labelPickerMode")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-        const queuedButton = window.document.querySelector(
-            '#labelPicker [data-plant-id="P01"]'
-        );
-        expect(queuedButton.classList.contains("queued-weighed")).toBe(true);
-        expect(queuedButton.getAttribute("aria-label")).toMatch(
-            /weight safely queued/
-        );
-        expect(
-            window.document.querySelector("#queueProgress").textContent
-        ).toBe("1 of 2 plants have a weight safely queued.");
-    });
-
-    it("defaults measurements to inches, remembers the method, and shows dimensions in the queue", () => {
-        const { window } = createLoggerWindow();
-        const unit = window.document.querySelector("#measurementUnit");
-        const quality = window.document.querySelector("#measurementQuality");
-        const method = window.document.querySelector("#measurementMethod");
-
-        expect(unit.value).toBe("in");
-        expect(quality.value).toBe("Measured");
-        expect(method.value).toBe("Ruler");
-        expect(window.document.querySelector("#heightLabel").textContent).toBe(
-            "Height (in)"
-        );
-
-        method.value = "Estimated from photo";
-        method.dispatchEvent(new window.Event("change", { bubbles: true }));
-        expect(quality.value).toBe("Estimated");
-        method.value = "Ruler";
-        method.dispatchEvent(new window.Event("change", { bubbles: true }));
-        expect(quality.value).toBe("Measured");
-
-        const height = window.document.querySelector("#height");
-        const width = window.document.querySelector("#width");
-        height.value = "3.35";
-        height.dispatchEvent(new window.Event("input", { bubbles: true }));
-        width.value = "2.5";
-        width.dispatchEvent(new window.Event("input", { bubbles: true }));
-        window.document
-            .querySelector("#queueButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-
-        const queue = JSON.parse(
-            window.localStorage.getItem("gardenLoggerObservationQueueV1")
-        );
-        expect(queue[0].payload).toMatchObject({
-            height: "3.35",
-            width: "2.5",
-            measurementUnit: "in",
-            measurementQuality: "Measured",
-            measurementMethod: "Ruler",
-        });
-        expect(window.document.querySelector("#queueList").textContent).toMatch(
-            /3\.35 × 2\.5 in/
-        );
-        expect(unit.value).toBe("in");
-        expect(method.value).toBe("Ruler");
-        expect(quality.value).toBe("Measured");
-        expect(
-            JSON.parse(window.localStorage.getItem("gardenLoggerRoundStateV1"))
-        ).toMatchObject({
-            measurementUnit: "in",
-            measurementQuality: "Measured",
-            measurementMethod: "Ruler",
-        });
-    });
-
-    it("keeps weight controls closed until a weight is being recorded", () => {
-        const { window } = createLoggerWindow();
-        const weightSection = window.document.querySelector("#weightSection");
-
-        expect(weightSection.classList.contains("visible")).toBe(false);
-
-        const weighChip = window.document.querySelector('[data-event="Weigh"]');
-        weighChip.dispatchEvent(new window.Event("click", { bubbles: true }));
-        expect(weightSection.classList.contains("visible")).toBe(true);
-
-        weighChip.dispatchEvent(new window.Event("click", { bubbles: true }));
-        expect(weightSection.classList.contains("visible")).toBe(false);
-    });
-
-    it("queues the current weight when Enter is pressed in the weight box", () => {
-        const { calls, window } = createLoggerWindow();
-        const weighChip = window.document.querySelector('[data-event="Weigh"]');
-        weighChip.dispatchEvent(new window.Event("click", { bubbles: true }));
-        const weight = window.document.querySelector("#weight");
-        weight.value = "431.2";
-        weight.dispatchEvent(new window.Event("input", { bubbles: true }));
-
-        weight.dispatchEvent(
-            new window.KeyboardEvent("keydown", {
-                key: "Enter",
-                bubbles: true,
-                cancelable: true,
-            })
-        );
-
-        const queue = JSON.parse(
-            window.localStorage.getItem("gardenLoggerObservationQueueV1")
-        );
-        expect(queue).toHaveLength(1);
-        expect(queue[0].payload).toMatchObject({
-            plantId: "P01",
-            weight: "431.2",
-        });
-        expect(weight.value).toBe("");
-        expect(calls.some((call) => call.method === "saveWebObservation")).toBe(
-            false
-        );
-    });
-
-    it("can optionally advance after queueing and remembers that preference", () => {
-        const { window } = createLoggerWindow();
-        const advance = window.document.querySelector("#advanceAfterQueue");
-        advance.checked = true;
-        advance.dispatchEvent(new window.Event("change", { bubbles: true }));
-        const weight = window.document.querySelector("#weight");
-        weight.value = "430";
-        weight.dispatchEvent(new window.Event("input", { bubbles: true }));
-
-        window.document
-            .querySelector("#queueButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-
-        expect(window.document.querySelector("#plantSelect").value).toBe("P02");
-        expect(
-            JSON.parse(window.localStorage.getItem("gardenLoggerRoundStateV1"))
-                .advanceAfterQueue
-        ).toBe(true);
-    });
+describe("garden logger durable queue storage", () => {
+    afterEach(restoreLoggerMocks);
 
     it("marks the queue complete after every plant has a queued weight", () => {
+        expect.hasAssertions();
+
         const queued = [
             queuedWeight(),
             queuedWeight({
-                requestId: "garden-queued-weight-67890",
                 plantId: "P02",
+                requestId: "garden-queued-weight-67890",
                 weight: "510",
             }),
         ];
@@ -2063,32 +3061,43 @@ describe("Garden logger browser recovery", () => {
                 gardenLoggerObservationQueueV1: JSON.stringify(queued),
             },
         });
-        window.document
-            .querySelector("#labelPickerMode")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#labelPickerMode",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
 
         expect(
-            [...window.document.querySelectorAll(".label-choice")].every(
-                (button) => button.classList.contains("queued-weighed")
-            )
+            [
+                ...queryElements(window.document, ".label-choice", HTMLElement),
+            ].every((button) => button.classList.contains("queued-weighed"))
         ).toBe(true);
-        expect(window.document.querySelector("#queueCard").classList).toContain(
-            "queue-complete"
-        );
         expect(
-            window.document.querySelector("#queueProgress").textContent
+            queryElement(window.document, "#queueCard", HTMLElement).classList
+        ).toContain("queue-complete");
+        expect(
+            queryElement(window.document, "#queueProgress", HTMLElement)
+                .textContent
         ).toBe("All 2 plants have a weight safely queued on this device.");
         expect(
-            [...window.document.querySelectorAll("#plantSelect option")].map(
-                (option) => option.textContent
+            structuredClone(
+                [
+                    ...queryElements(
+                        window.document,
+                        "#plantSelect option",
+                        HTMLOptionElement
+                    ),
+                ].map((option) => option.textContent)
             )
-        ).toEqual([
-            expect.stringMatching(/^Queued · Moon cactus/),
-            expect.stringMatching(/^Queued · Yellow tower cactus/),
+        ).toStrictEqual([
+            expect.stringMatching(/^Queued · Moon cactus/v),
+            expect.stringMatching(/^Queued · Yellow tower cactus/v),
         ]);
     });
 
     it("keeps the form intact when durable queue storage fails", () => {
+        expect.hasAssertions();
+
         const { window } = createLoggerWindow();
         const originalSetItem = window.localStorage.setItem.bind(
             window.localStorage
@@ -2102,60 +3111,81 @@ describe("Garden logger browser recovery", () => {
                         "QuotaExceededError"
                     );
                 }
-                return originalSetItem(key, value);
+                originalSetItem(key, value);
             });
-        const weight = window.document.querySelector("#weight");
+        const weight = queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        );
         weight.value = "433";
         weight.dispatchEvent(new window.Event("input", { bubbles: true }));
 
-        window.document
-            .querySelector("#queueButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
 
         expect(weight.value).toBe("433");
-        expect(window.document.querySelector("#plantSelect").value).toBe("P01");
+        expect(
+            queryElement(window.document, "#plantSelect", HTMLSelectElement)
+                .value
+        ).toBe("P01");
         expect(
             window.localStorage.getItem("gardenLoggerObservationQueueV1")
         ).toBeNull();
-        expect(window.document.querySelector("#toast").textContent).toMatch(
-            /could not durably store/i
-        );
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toMatch(/could not durably store/iv);
+
         setItem.mockRestore();
     });
 
     it("recovers a damaged primary queue from its verified backup", () => {
+        expect.hasAssertions();
+
         const backup = [queuedWeight({ weight: "434" })];
         const { window } = createLoggerWindow({
             storage: {
-                gardenLoggerObservationQueueV1: "{broken-json",
                 gardenLoggerObservationQueueBackupV1: JSON.stringify(backup),
+                gardenLoggerObservationQueueV1: "{broken-json",
             },
         });
 
         expect(
-            JSON.parse(
+            parseStoredQueue(
                 window.localStorage.getItem("gardenLoggerObservationQueueV1")
             )
-        ).toEqual(backup);
+        ).toStrictEqual(backup);
         expect(
             window.localStorage.getItem(
                 "gardenLoggerObservationQueueRecoveryV1"
             )
         ).toContain("broken-json");
         expect(
-            window.document.querySelector("#queueStorageWarning").textContent
-        ).toMatch(/restored its verified backup/i);
-        window.document
-            .querySelector("#labelPickerMode")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
+            queryElement(window.document, "#queueStorageWarning", HTMLElement)
+                .textContent
+        ).toMatch(/restored its verified backup/iv);
+
+        queryElement(
+            window.document,
+            "#labelPickerMode",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+
         expect(
-            window.document
-                .querySelector('#labelPicker [data-plant-id="P01"]')
-                .classList.contains("queued-weighed")
+            queryElement(
+                window.document,
+                '#labelPicker [data-plant-id="P01"]',
+                HTMLElement
+            ).classList.contains("queued-weighed")
         ).toBe(true);
     });
 
     it("restores the backup when the primary queue key is missing", () => {
+        expect.hasAssertions();
+
         const backup = [queuedWeight({ weight: "435" })];
         const { window } = createLoggerWindow({
             storage: {
@@ -2164,409 +3194,21 @@ describe("Garden logger browser recovery", () => {
         });
 
         expect(
-            JSON.parse(
+            parseStoredQueue(
                 window.localStorage.getItem("gardenLoggerObservationQueueV1")
             )
-        ).toEqual(backup);
+        ).toStrictEqual(backup);
         expect(
-            window.document.querySelector("#queueStorageWarning").textContent
-        ).toMatch(/main phone queue was missing/i);
-    });
-
-    it("accepts a complete successful batch without a History status call", () => {
-        const queued = [queuedWeight({ requestId: "garden-queued-one-12345" })];
-        const { behaviors, calls, window } = createLoggerWindow({
-            batchSaveStatus: "saved",
-            storage: {
-                gardenLoggerObservationQueueV1: JSON.stringify(queued),
-            },
-        });
-        behaviors.saveWebObservationBatch = ({ args, success }) =>
-            success({
-                ok: true,
-                savedCount: 1,
-                failedCount: 0,
-                message: "1 queued observation saved.",
-                results: [
-                    {
-                        ok: true,
-                        requestId: args[0][0].requestId,
-                        plantId: "P01",
-                    },
-                ],
-            });
-
-        window.document
-            .querySelector("#queueSendButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-
-        const batchCalls = calls.filter(
-            (call) => call.method === "saveWebObservationBatch"
-        );
-        expect(batchCalls).toHaveLength(1);
-        expect(batchCalls[0].args[0]).toHaveLength(1);
-        expect(
-            calls.filter((call) => call.method === "getWebBatchSaveStatus")
-        ).toHaveLength(0);
-        expect(
-            window.localStorage.getItem("gardenLoggerObservationQueueV1")
-        ).toBe("[]");
-        expect(window.document.querySelector("#queueCard").hidden).toBe(true);
-    });
-
-    it("sends all 30 queued observations in one durable server call", () => {
-        const queued = Array.from({ length: 30 }, (_, index) =>
-            queuedWeight({
-                requestId: `garden-round-${String(index + 1).padStart(2, "0")}-12345`,
-                plantId: index % 2 ? "P02" : "P01",
-                weight: String(430 + index),
-            })
-        );
-        const { behaviors, calls, window } = createLoggerWindow({
-            batchSaveStatus: "saved",
-            storage: {
-                gardenLoggerObservationQueueV1: JSON.stringify(queued),
-            },
-        });
-        const pending = [];
-        behaviors.saveWebObservationBatch = (handlers) =>
-            pending.push(handlers);
-
-        window.document
-            .querySelector("#queueSendButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-
-        expect(pending).toHaveLength(1);
-        expect(pending[0].args[0]).toHaveLength(30);
-        expect(
-            window.document.querySelector("#queueSendButton").textContent
-        ).toBe("Sending all 30…");
-        const attemptedPrimary = JSON.parse(
-            window.localStorage.getItem("gardenLoggerObservationQueueV1")
-        );
-        const attemptedBackup = JSON.parse(
-            window.localStorage.getItem("gardenLoggerObservationQueueBackupV1")
-        );
-        expect(attemptedPrimary).toHaveLength(30);
-        expect(attemptedPrimary.every((entry) => entry.attemptedAt)).toBe(true);
-        expect(attemptedBackup).toEqual(attemptedPrimary);
-
-        const current = pending.shift();
-        current.success({
-            ok: true,
-            savedCount: 30,
-            failedCount: 0,
-            results: current.args[0].map((payload) => ({
-                ok: true,
-                requestId: payload.requestId,
-            })),
-        });
-
-        const batchCalls = calls.filter(
-            (call) => call.method === "saveWebObservationBatch"
-        );
-        expect(batchCalls.map((call) => call.args[0].length)).toEqual([30]);
-        expect(
-            calls.filter((call) => call.method === "getWebBatchSaveStatus")
-        ).toHaveLength(0);
-        expect(
-            window.localStorage.getItem("gardenLoggerObservationQueueV1")
-        ).toBe("[]");
-        expect(window.document.querySelector("#queueSendButton").disabled).toBe(
-            true
-        );
-    });
-
-    it("keeps Send disabled and accepts a successful callback after 112 seconds", () => {
-        vi.useFakeTimers();
-        const queued = [queuedWeight()];
-        const { behaviors, calls, window } = createLoggerWindow({
-            batchSaveStatus: "saved",
-            storage: {
-                gardenLoggerObservationQueueV1: JSON.stringify(queued),
-            },
-        });
-        let pending;
-        behaviors.saveWebObservationBatch = (handlers) => {
-            pending = handlers;
-        };
-
-        const send = window.document.querySelector("#queueSendButton");
-        send.dispatchEvent(new window.Event("click", { bubbles: true }));
-        vi.advanceTimersByTime(45000);
-
-        expect(send.disabled).toBe(true);
-        expect(window.document.querySelector("#plantSelect").disabled).toBe(
-            true
-        );
-        expect(window.document.querySelector("#toast").textContent).toMatch(
-            /still processing/i
-        );
-        expect(
-            calls.filter((call) => call.method === "getWebBatchSaveStatus")
-        ).toHaveLength(0);
-        send.dispatchEvent(new window.Event("click", { bubbles: true }));
-        expect(
-            calls.filter((call) => call.method === "saveWebObservationBatch")
-        ).toHaveLength(1);
-        expect(
-            calls.filter((call) => call.method === "getWebBatchSaveStatus")
-        ).toHaveLength(0);
-
-        vi.advanceTimersByTime(67000);
-        pending.success({
-            ok: true,
-            savedCount: 1,
-            failedCount: 0,
-            results: [{ ok: true, requestId: queued[0].requestId }],
-        });
-
-        expect(
-            window.localStorage.getItem("gardenLoggerObservationQueueV1")
-        ).toBe("[]");
-        expect(
-            calls.filter((call) => call.method === "getWebBatchSaveStatus")
-        ).toHaveLength(0);
-    });
-
-    it("reconciles transient failures and retries after 2 and 5 seconds", () => {
-        vi.useFakeTimers();
-        const queued = [queuedWeight()];
-        const { behaviors, calls, window } = createLoggerWindow({
-            storage: {
-                gardenLoggerObservationQueueV1: JSON.stringify(queued),
-            },
-        });
-        let attempts = 0;
-        behaviors.saveWebObservationBatch = ({ args, success, failure }) => {
-            attempts += 1;
-            if (attempts < 3) {
-                failure({ message: "Transient Google error" });
-                return;
-            }
-            success({
-                ok: true,
-                savedCount: 1,
-                failedCount: 0,
-                results: [{ ok: true, requestId: args[0][0].requestId }],
-            });
-        };
-        behaviors.getWebBatchSaveStatus = ({ args, success }) =>
-            success(
-                args[0].map((request) => ({
-                    requestId: request.requestId,
-                    state: attempts >= 3 ? "saved" : "missing",
-                    expectedCount: request.expectedCount,
-                    savedCount: attempts >= 3 ? request.expectedCount : 0,
-                }))
-            );
-
-        window.document
-            .querySelector("#queueSendButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-        expect(attempts).toBe(1);
-        vi.advanceTimersByTime(1999);
-        expect(attempts).toBe(1);
-        vi.advanceTimersByTime(1);
-        expect(attempts).toBe(2);
-        vi.advanceTimersByTime(4999);
-        expect(attempts).toBe(2);
-        vi.advanceTimersByTime(1);
-        expect(attempts).toBe(3);
-        expect(
-            window.localStorage.getItem("gardenLoggerObservationQueueV1")
-        ).toBe("[]");
-        expect(
-            calls.filter((call) => call.method === "getWebBatchSaveStatus")
-        ).toHaveLength(2);
-    });
-
-    it("reconciles a nominal response that omits an expected request ID", () => {
-        const queued = [
-            queuedWeight({ requestId: "garden-omitted-one-12345" }),
-            queuedWeight({
-                requestId: "garden-omitted-two-12345",
-                plantId: "P02",
-            }),
-        ];
-        const { behaviors, calls, window } = createLoggerWindow({
-            batchSaveStatus: "saved",
-            storage: {
-                gardenLoggerObservationQueueV1: JSON.stringify(queued),
-            },
-        });
-        behaviors.saveWebObservationBatch = ({ success }) =>
-            success({
-                ok: true,
-                savedCount: 2,
-                failedCount: 0,
-                results: [
-                    {
-                        ok: true,
-                        requestId: "garden-omitted-one-12345",
-                    },
-                ],
-            });
-
-        window.document
-            .querySelector("#queueSendButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-
-        expect(
-            calls.filter((call) => call.method === "getWebBatchSaveStatus")
-        ).toHaveLength(1);
-        expect(
-            window.localStorage.getItem("gardenLoggerObservationQueueV1")
-        ).toBe("[]");
-    });
-
-    it("retries every confirmed-missing ID together after a failed whole-queue call", () => {
-        vi.useFakeTimers();
-        const queued = [
-            queuedWeight({ requestId: "garden-grouped-saved-12345" }),
-            queuedWeight({
-                requestId: "garden-grouped-missing-one-12345",
-                plantId: "P02",
-            }),
-            queuedWeight({ requestId: "garden-grouped-missing-two-12345" }),
-        ];
-        const { behaviors, calls, window } = createLoggerWindow({
-            storage: {
-                gardenLoggerObservationQueueV1: JSON.stringify(queued),
-            },
-        });
-        let attempts = 0;
-        behaviors.saveWebObservationBatch = ({ args, failure, success }) => {
-            attempts += 1;
-            if (attempts === 1) {
-                failure({ message: "Transient Google error" });
-                return;
-            }
-            success({
-                ok: true,
-                savedCount: args[0].length,
-                failedCount: 0,
-                results: args[0].map((payload) => ({
-                    ok: true,
-                    requestId: payload.requestId,
-                })),
-            });
-        };
-        behaviors.getWebBatchSaveStatus = ({ args, success }) =>
-            success(
-                args[0].map((request) => ({
-                    requestId: request.requestId,
-                    state: request.requestId.includes("saved")
-                        ? "saved"
-                        : "missing",
-                    expectedCount: request.expectedCount,
-                    savedCount: request.requestId.includes("saved") ? 1 : 0,
-                }))
-            );
-
-        window.document
-            .querySelector("#queueSendButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-        vi.advanceTimersByTime(2000);
-
-        const batchCalls = calls.filter(
-            (call) => call.method === "saveWebObservationBatch"
-        );
-        expect(batchCalls.map((call) => call.args[0].length)).toEqual([3, 2]);
-        expect(
-            batchCalls[1].args[0].map((payload) => payload.requestId)
-        ).toEqual([
-            "garden-grouped-missing-one-12345",
-            "garden-grouped-missing-two-12345",
-        ]);
-        expect(
-            calls.filter((call) => call.method === "getWebBatchSaveStatus")
-        ).toHaveLength(1);
-        expect(
-            window.localStorage.getItem("gardenLoggerObservationQueueV1")
-        ).toBe("[]");
-    });
-
-    it("stops after three bounded retries and preserves unresolved entries", () => {
-        vi.useFakeTimers();
-        const queued = [queuedWeight()];
-        const { behaviors, calls, window } = createLoggerWindow({
-            storage: {
-                gardenLoggerObservationQueueV1: JSON.stringify(queued),
-            },
-        });
-        behaviors.saveWebObservationBatch = ({ failure }) =>
-            failure({ message: "Transient Google error" });
-
-        window.document
-            .querySelector("#queueSendButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-        vi.advanceTimersByTime(2000);
-        vi.advanceTimersByTime(5000);
-        vi.advanceTimersByTime(10000);
-
-        expect(
-            calls.filter((call) => call.method === "saveWebObservationBatch")
-        ).toHaveLength(4);
-        const remaining = JSON.parse(
-            window.localStorage.getItem("gardenLoggerObservationQueueV1")
-        );
-        expect(remaining).toHaveLength(1);
-        expect(remaining[0].error).toMatch(/three automatic retries/i);
-        expect(window.document.querySelector("#queueSendButton").disabled).toBe(
-            false
-        );
-        expect(
-            window.document.querySelector("#queueProgress").textContent
-        ).toBe("0 confirmed · 1 still safely queued");
-    });
-
-    it("does not retry a deterministic per-entry validation failure", () => {
-        vi.useFakeTimers();
-        const queued = [queuedWeight()];
-        const { behaviors, calls, window } = createLoggerWindow({
-            storage: {
-                gardenLoggerObservationQueueV1: JSON.stringify(queued),
-            },
-        });
-        behaviors.saveWebObservationBatch = ({ args, success }) =>
-            success({
-                ok: false,
-                savedCount: 0,
-                failedCount: 1,
-                results: [
-                    {
-                        ok: false,
-                        requestId: args[0][0].requestId,
-                        retryable: false,
-                        message: "Fix this measurement.",
-                    },
-                ],
-            });
-
-        window.document
-            .querySelector("#queueSendButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-        vi.runAllTimers();
-
-        expect(
-            calls.filter((call) => call.method === "saveWebObservationBatch")
-        ).toHaveLength(1);
-        expect(
-            calls.filter((call) => call.method === "getWebBatchSaveStatus")
-        ).toHaveLength(0);
-        const remaining = JSON.parse(
-            window.localStorage.getItem("gardenLoggerObservationQueueV1")
-        );
-        expect(remaining[0]).toMatchObject({
-            attemptedAt: "",
-            error: "Fix this measurement.",
-        });
+            queryElement(window.document, "#queueStorageWarning", HTMLElement)
+                .textContent
+        ).toMatch(/main phone queue was missing/iv);
     });
 
     it("retains the full queue if confirmed removal cannot be stored", () => {
+        expect.hasAssertions();
+
         const queued = [queuedWeight()];
-        const { behaviors, calls, window } = createLoggerWindow({
+        const { behaviors, window } = createLoggerWindow({
             batchSaveStatus: "saved",
             storage: {
                 gardenLoggerObservationQueueV1: JSON.stringify(queued),
@@ -2587,79 +3229,48 @@ describe("Garden logger browser recovery", () => {
                         "QuotaExceededError"
                     );
                 }
-                return originalSetItem(key, value);
+                originalSetItem(key, value);
             });
-        behaviors.saveWebObservationBatch = ({ args, success }) =>
+        behaviors.saveWebObservationBatch = ({ args, success }) => {
             success({
-                ok: true,
-                savedCount: 1,
                 failedCount: 0,
-                results: [{ ok: true, requestId: args[0][0].requestId }],
+                ok: true,
+                results: [
+                    { ok: true, requestId: required(args[0][0]).requestId },
+                ],
+                savedCount: 1,
             });
+        };
 
-        window.document
-            .querySelector("#queueSendButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#queueSendButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
 
-        const primary = JSON.parse(
+        const primary = parseStoredQueue(
             window.localStorage.getItem("gardenLoggerObservationQueueV1")
         );
-        const backup = JSON.parse(
+        const backup = parseStoredQueue(
             window.localStorage.getItem("gardenLoggerObservationQueueBackupV1")
         );
-        expect(primary.map((entry) => entry.requestId)).toEqual([
-            queued[0].requestId,
-        ]);
-        expect(backup.map((entry) => entry.requestId)).toEqual([
-            queued[0].requestId,
-        ]);
-        expect(window.document.querySelector("#toast").textContent).toMatch(
-            /full pre-confirmation queue/i
-        );
+
+        expect(
+            structuredClone(primary.map((entry) => entry.requestId))
+        ).toStrictEqual([required(queued[0]).requestId]);
+        expect(
+            structuredClone(backup.map((entry) => entry.requestId))
+        ).toStrictEqual([required(queued[0]).requestId]);
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toMatch(/full pre-confirmation queue/iv);
+
         setItem.mockRestore();
     });
 
-    it("reconciles once after six minutes thirty seconds and ignores a later callback", () => {
-        vi.useFakeTimers();
-        const queued = [queuedWeight()];
-        const { behaviors, calls, window } = createLoggerWindow({
-            storage: {
-                gardenLoggerObservationQueueV1: JSON.stringify(queued),
-            },
-        });
-        let pending;
-        behaviors.saveWebObservationBatch = (handlers) => {
-            pending = handlers;
-        };
-
-        window.document
-            .querySelector("#queueSendButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-        vi.advanceTimersByTime(390000);
-
-        expect(
-            calls.filter((call) => call.method === "getWebBatchSaveStatus")
-        ).toHaveLength(1);
-        const remainingBeforeLateCallback = window.localStorage.getItem(
-            "gardenLoggerObservationQueueV1"
-        );
-        expect(JSON.parse(remainingBeforeLateCallback)).toHaveLength(1);
-        expect(window.document.querySelector("#queueSendButton").disabled).toBe(
-            false
-        );
-
-        pending.success({
-            ok: true,
-            savedCount: 1,
-            failedCount: 0,
-            results: [{ ok: true, requestId: queued[0].requestId }],
-        });
-        expect(
-            window.localStorage.getItem("gardenLoggerObservationQueueV1")
-        ).toBe(remainingBeforeLateCallback);
-    });
-
     it("does not send a batch unless attempted state is durably stored", () => {
+        expect.hasAssertions();
+
         const queued = [queuedWeight()];
         const { calls, window } = createLoggerWindow({
             storage: {
@@ -2678,33 +3289,608 @@ describe("Garden logger browser recovery", () => {
                         "QuotaExceededError"
                     );
                 }
-                return originalSetItem(key, value);
+                originalSetItem(key, value);
             });
 
-        window.document
-            .querySelector("#queueSendButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#queueSendButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
 
         expect(
             calls.some((call) => call.method === "saveWebObservationBatch")
         ).toBe(false);
         expect(
-            JSON.parse(
+            parseStoredQueue(
                 window.localStorage.getItem("gardenLoggerObservationQueueV1")
             )
-        ).toEqual(queued);
-        expect(window.document.querySelector("#toast").textContent).toMatch(
-            /retry safety could not be guaranteed/i
-        );
+        ).toStrictEqual(queued);
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toMatch(/retry safety could not be guaranteed/iv);
+
         setItem.mockRestore();
     });
 
+    it("keeps a queued round on the phone while offline", () => {
+        expect.hasAssertions();
+
+        const queued = [queuedWeight()];
+        const { calls, window } = createLoggerWindow({
+            online: false,
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify(queued),
+            },
+        });
+
+        queryElement(
+            window.document,
+            "#queueSendButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        expect(
+            parseStoredQueue(
+                window.localStorage.getItem("gardenLoggerObservationQueueV1")
+            )
+        ).toHaveLength(1);
+        expect(
+            calls.some((call) => call.method === "saveWebObservationBatch")
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toMatch(/offline/iv);
+    });
+});
+
+describe("garden logger batch delivery and bounded retries", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("accepts a complete successful batch without a History status call", () => {
+        expect.hasAssertions();
+
+        const queued = [queuedWeight({ requestId: "garden-queued-one-12345" })];
+        const { behaviors, calls, window } = createLoggerWindow({
+            batchSaveStatus: "saved",
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify(queued),
+            },
+        });
+        behaviors.saveWebObservationBatch = ({ args, success }) => {
+            success({
+                failedCount: 0,
+                message: "1 queued observation saved.",
+                ok: true,
+                results: [
+                    {
+                        ok: true,
+                        plantId: "P01",
+                        requestId: required(args[0][0]).requestId,
+                    },
+                ],
+                savedCount: 1,
+            });
+        };
+
+        queryElement(
+            window.document,
+            "#queueSendButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        const batchCalls = calls.filter(
+            (call) => call.method === "saveWebObservationBatch"
+        );
+
+        expect(batchCalls).toHaveLength(1);
+        expect(required(batchCalls[0]).args[0]).toHaveLength(1);
+        expect(
+            calls.filter((call) => call.method === "getWebBatchSaveStatus")
+        ).toHaveLength(0);
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBe("[]");
+        expect(
+            queryElement(window.document, "#queueCard", HTMLElement).hidden
+        ).toBe(true);
+    });
+
+    it("sends all 30 queued observations in one durable server call", () => {
+        expect.hasAssertions();
+
+        const queued = Array.from({ length: 30 }, (_, index) =>
+            queuedWeight({
+                plantId: index % 2 ? "P02" : "P01",
+                requestId: `garden-round-${String(index + 1).padStart(2, "0")}-12345`,
+                weight: String(430 + index),
+            })
+        );
+        const { behaviors, calls, window } = createLoggerWindow({
+            batchSaveStatus: "saved",
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify(queued),
+            },
+        });
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"saveWebObservationBatch">[]} */
+        const pending = [];
+        behaviors.saveWebObservationBatch = (handlers) => {
+            pending.push(handlers);
+        };
+
+        queryElement(
+            window.document,
+            "#queueSendButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        expect(pending).toHaveLength(1);
+        expect(required(pending[0]).args[0]).toHaveLength(30);
+        expect(
+            queryElement(window.document, "#queueSendButton", HTMLButtonElement)
+                .textContent
+        ).toBe("Sending all 30…");
+
+        const attemptedPrimary = parseStoredQueue(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+        const attemptedBackup = parseStoredQueue(
+            window.localStorage.getItem("gardenLoggerObservationQueueBackupV1")
+        );
+
+        expect(attemptedPrimary).toHaveLength(30);
+        expect(
+            attemptedPrimary.every((entry) => (entry.attemptedAt ?? "") !== "")
+        ).toBe(true);
+        expect(structuredClone(attemptedBackup)).toStrictEqual(
+            attemptedPrimary
+        );
+
+        const [current] = pending;
+        required(current).success({
+            failedCount: 0,
+            ok: true,
+            results: required(current).args[0].map((payload) => ({
+                ok: true,
+                requestId: payload.requestId,
+            })),
+            savedCount: 30,
+        });
+
+        const batchCalls = calls.filter(
+            (call) => call.method === "saveWebObservationBatch"
+        );
+
+        expect(
+            structuredClone(batchCalls.map((call) => call.args[0].length))
+        ).toStrictEqual([30]);
+        expect(
+            calls.filter((call) => call.method === "getWebBatchSaveStatus")
+        ).toHaveLength(0);
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBe("[]");
+        expect(
+            queryElement(window.document, "#queueSendButton", HTMLButtonElement)
+                .disabled
+        ).toBe(true);
+    });
+
+    it("keeps Send disabled and accepts a successful callback after 112 seconds", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const queued = [queuedWeight()];
+        const { behaviors, calls, window } = createLoggerWindow({
+            batchSaveStatus: "saved",
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify(queued),
+            },
+        });
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"saveWebObservationBatch">
+         *     | undefined}
+         */
+        let pending;
+        behaviors.saveWebObservationBatch = (handlers) => {
+            pending = handlers;
+        };
+
+        const send = queryElement(
+            window.document,
+            "#queueSendButton",
+            HTMLButtonElement
+        );
+        send.dispatchEvent(new window.Event("click", { bubbles: true }));
+        vi.advanceTimersByTime(45_000);
+
+        expect(send.disabled).toBe(true);
+        expect(
+            queryElement(window.document, "#plantSelect", HTMLSelectElement)
+                .disabled
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toMatch(/still processing/iv);
+        expect(
+            calls.filter((call) => call.method === "getWebBatchSaveStatus")
+        ).toHaveLength(0);
+
+        send.dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        expect(
+            calls.filter((call) => call.method === "saveWebObservationBatch")
+        ).toHaveLength(1);
+        expect(
+            calls.filter((call) => call.method === "getWebBatchSaveStatus")
+        ).toHaveLength(0);
+
+        vi.advanceTimersByTime(67_000);
+        required(pending).success({
+            failedCount: 0,
+            ok: true,
+            results: [{ ok: true, requestId: required(queued[0]).requestId }],
+            savedCount: 1,
+        });
+
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBe("[]");
+        expect(
+            calls.filter((call) => call.method === "getWebBatchSaveStatus")
+        ).toHaveLength(0);
+    });
+
+    it("reconciles transient failures and retries after 2 and 5 seconds", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const queued = [queuedWeight()];
+        const { behaviors, calls, window } = createLoggerWindow({
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify(queued),
+            },
+        });
+        let attempts = 0;
+        behaviors.saveWebObservationBatch = ({ args, failure, success }) => {
+            attempts += 1;
+            if (attempts < 3) {
+                failure({ message: "Transient Google error" });
+                return;
+            }
+            success({
+                failedCount: 0,
+                ok: true,
+                results: [
+                    { ok: true, requestId: required(args[0][0]).requestId },
+                ],
+                savedCount: 1,
+            });
+        };
+        behaviors.getWebBatchSaveStatus = ({ args, success }) => {
+            success(
+                args[0].map((request) => ({
+                    expectedCount: request.expectedCount,
+                    requestId: request.requestId,
+                    savedCount: attempts >= 3 ? request.expectedCount : 0,
+                    state: attempts >= 3 ? "saved" : "missing",
+                }))
+            );
+        };
+
+        queryElement(
+            window.document,
+            "#queueSendButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        expect(attempts).toBe(1);
+
+        vi.advanceTimersByTime(1999);
+
+        expect(attempts).toBe(1);
+
+        vi.advanceTimersByTime(1);
+
+        expect(attempts).toBe(2);
+
+        vi.advanceTimersByTime(4999);
+
+        expect(attempts).toBe(2);
+
+        vi.advanceTimersByTime(1);
+
+        expect(attempts).toBe(3);
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBe("[]");
+        expect(
+            calls.filter((call) => call.method === "getWebBatchSaveStatus")
+        ).toHaveLength(2);
+    });
+
+    it("reconciles a nominal response that omits an expected request ID", () => {
+        expect.hasAssertions();
+
+        const queued = [
+            queuedWeight({ requestId: "garden-omitted-one-12345" }),
+            queuedWeight({
+                plantId: "P02",
+                requestId: "garden-omitted-two-12345",
+            }),
+        ];
+        const { behaviors, calls, window } = createLoggerWindow({
+            batchSaveStatus: "saved",
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify(queued),
+            },
+        });
+        behaviors.saveWebObservationBatch = ({ success }) => {
+            success({
+                failedCount: 0,
+                ok: true,
+                results: [
+                    {
+                        ok: true,
+                        requestId: "garden-omitted-one-12345",
+                    },
+                ],
+                savedCount: 2,
+            });
+        };
+
+        queryElement(
+            window.document,
+            "#queueSendButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+
+        expect(
+            calls.filter((call) => call.method === "getWebBatchSaveStatus")
+        ).toHaveLength(1);
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBe("[]");
+    });
+
+    it("retries every confirmed-missing ID together after a failed whole-queue call", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const queued = [
+            queuedWeight({ requestId: "garden-grouped-saved-12345" }),
+            queuedWeight({
+                plantId: "P02",
+                requestId: "garden-grouped-missing-one-12345",
+            }),
+            queuedWeight({ requestId: "garden-grouped-missing-two-12345" }),
+        ];
+        const { behaviors, calls, window } = createLoggerWindow({
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify(queued),
+            },
+        });
+        let attempts = 0;
+        behaviors.saveWebObservationBatch = ({ args, failure, success }) => {
+            attempts += 1;
+            if (attempts === 1) {
+                failure({ message: "Transient Google error" });
+                return;
+            }
+            success({
+                failedCount: 0,
+                ok: true,
+                results: args[0].map((payload) => ({
+                    ok: true,
+                    requestId: payload.requestId,
+                })),
+                savedCount: args[0].length,
+            });
+        };
+        behaviors.getWebBatchSaveStatus = ({ args, success }) => {
+            success(
+                args[0].map((request) => ({
+                    expectedCount: request.expectedCount,
+                    requestId: request.requestId,
+                    savedCount: request.requestId.includes("saved") ? 1 : 0,
+                    state: request.requestId.includes("saved")
+                        ? "saved"
+                        : "missing",
+                }))
+            );
+        };
+
+        queryElement(
+            window.document,
+            "#queueSendButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+        vi.advanceTimersByTime(2000);
+
+        const batchCalls = calls.filter(
+            (call) => call.method === "saveWebObservationBatch"
+        );
+
+        expect(
+            structuredClone(batchCalls.map((call) => call.args[0].length))
+        ).toStrictEqual([3, 2]);
+        expect(
+            structuredClone(
+                required(batchCalls[1]).args[0].map(
+                    (payload) => payload.requestId
+                )
+            )
+        ).toStrictEqual([
+            "garden-grouped-missing-one-12345",
+            "garden-grouped-missing-two-12345",
+        ]);
+        expect(
+            calls.filter((call) => call.method === "getWebBatchSaveStatus")
+        ).toHaveLength(1);
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBe("[]");
+    });
+
+    it("stops after three bounded retries and preserves unresolved entries", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const queued = [queuedWeight()];
+        const { behaviors, calls, window } = createLoggerWindow({
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify(queued),
+            },
+        });
+        behaviors.saveWebObservationBatch = ({ failure }) => {
+            failure({ message: "Transient Google error" });
+        };
+
+        queryElement(
+            window.document,
+            "#queueSendButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+        vi.advanceTimersByTime(2000);
+        vi.advanceTimersByTime(5000);
+        vi.advanceTimersByTime(10_000);
+
+        expect(
+            calls.filter((call) => call.method === "saveWebObservationBatch")
+        ).toHaveLength(4);
+
+        const remaining = parseStoredQueue(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+
+        expect(remaining).toHaveLength(1);
+        expect(required(remaining[0]).error).toMatch(
+            /three automatic retries/iv
+        );
+        expect(
+            queryElement(window.document, "#queueSendButton", HTMLButtonElement)
+                .disabled
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#queueProgress", HTMLElement)
+                .textContent
+        ).toBe("0 confirmed · 1 still safely queued");
+    });
+
+    it("does not retry a deterministic per-entry validation failure", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const queued = [queuedWeight()];
+        const { behaviors, calls, window } = createLoggerWindow({
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify(queued),
+            },
+        });
+        behaviors.saveWebObservationBatch = ({ args, success }) => {
+            success({
+                failedCount: 1,
+                ok: false,
+                results: [
+                    {
+                        message: "Fix this measurement.",
+                        ok: false,
+                        requestId: required(args[0][0]).requestId,
+                        retryable: false,
+                    },
+                ],
+                savedCount: 0,
+            });
+        };
+
+        queryElement(
+            window.document,
+            "#queueSendButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+        vi.runAllTimers();
+
+        expect(
+            calls.filter((call) => call.method === "saveWebObservationBatch")
+        ).toHaveLength(1);
+        expect(
+            calls.filter((call) => call.method === "getWebBatchSaveStatus")
+        ).toHaveLength(0);
+
+        const remaining = parseStoredQueue(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+
+        expect(remaining[0]).toMatchObject({
+            attemptedAt: "",
+            error: "Fix this measurement.",
+        });
+    });
+});
+
+describe("garden logger queue reconciliation and reload recovery", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("reconciles once after six minutes thirty seconds and ignores a later callback", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const queued = [queuedWeight()];
+        const { behaviors, calls, window } = createLoggerWindow({
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify(queued),
+            },
+        });
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"saveWebObservationBatch">
+         *     | undefined}
+         */
+        let pending;
+        behaviors.saveWebObservationBatch = (handlers) => {
+            pending = handlers;
+        };
+
+        queryElement(
+            window.document,
+            "#queueSendButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+        vi.advanceTimersByTime(390_000);
+
+        expect(
+            calls.filter((call) => call.method === "getWebBatchSaveStatus")
+        ).toHaveLength(1);
+
+        const remainingBeforeLateCallback = window.localStorage.getItem(
+            "gardenLoggerObservationQueueV1"
+        );
+
+        expect(parseStoredQueue(remainingBeforeLateCallback)).toHaveLength(1);
+        expect(
+            queryElement(window.document, "#queueSendButton", HTMLButtonElement)
+                .disabled
+        ).toBe(false);
+
+        required(pending).success({
+            failedCount: 0,
+            ok: true,
+            results: [{ ok: true, requestId: required(queued[0]).requestId }],
+            savedCount: 1,
+        });
+
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBe(remainingBeforeLateCallback);
+    });
+
     it("removes confirmed items but retains failed batch entries", () => {
+        expect.hasAssertions();
+
         const queued = [
             queuedWeight({ requestId: "garden-queued-saved-12345" }),
             queuedWeight({
-                requestId: "garden-queued-failed-12345",
                 plantId: "P02",
+                requestId: "garden-queued-failed-12345",
                 weight: "510",
             }),
         ];
@@ -2713,74 +3899,81 @@ describe("Garden logger browser recovery", () => {
                 gardenLoggerObservationQueueV1: JSON.stringify(queued),
             },
         });
-        behaviors.saveWebObservationBatch = ({ success }) =>
+        behaviors.saveWebObservationBatch = ({ success }) => {
             success({
-                ok: false,
-                savedCount: 1,
                 failedCount: 1,
                 message: "1 saved; 1 needs attention.",
+                ok: false,
                 results: [
                     {
                         ok: true,
                         requestId: "garden-queued-saved-12345",
                     },
                     {
+                        message: "Weight needs review.",
                         ok: false,
                         requestId: "garden-queued-failed-12345",
                         retryable: false,
-                        message: "Weight needs review.",
                     },
                 ],
+                savedCount: 1,
             });
-        behaviors.getWebBatchSaveStatus = ({ args, success }) =>
+        };
+        behaviors.getWebBatchSaveStatus = ({ args, success }) => {
             success(
                 args[0].map((request) => ({
-                    requestId: request.requestId,
-                    state:
-                        request.requestId === "garden-queued-saved-12345"
-                            ? "saved"
-                            : "missing",
                     expectedCount: request.expectedCount,
+                    requestId: request.requestId,
                     savedCount:
                         request.requestId === "garden-queued-saved-12345"
                             ? request.expectedCount
                             : 0,
+                    state:
+                        request.requestId === "garden-queued-saved-12345"
+                            ? "saved"
+                            : "missing",
                 }))
             );
+        };
 
-        window.document
-            .querySelector("#queueSendButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#queueSendButton",
+            HTMLButtonElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
 
-        const remaining = JSON.parse(
+        const remaining = parseStoredQueue(
             window.localStorage.getItem("gardenLoggerObservationQueueV1")
         );
+
         expect(remaining).toHaveLength(1);
         expect(remaining[0]).toMatchObject({
-            requestId: "garden-queued-failed-12345",
             attemptedAt: "",
             error: "Weight needs review.",
+            requestId: "garden-queued-failed-12345",
         });
-        expect(window.document.querySelector("#queueList").textContent).toMatch(
-            /Weight needs review/
-        );
+        expect(
+            queryElement(window.document, "#queueList", HTMLElement).textContent
+        ).toMatch(/Weight needs review/v);
         expect(
             calls.filter((call) => call.method === "getWebBatchSaveStatus")
         ).toHaveLength(0);
     });
 
     it("reconciles an attempted queue after reload", () => {
+        expect.hasAssertions();
+
         const queued = [
             {
-                requestId: "garden-queued-saved-12345",
                 attemptedAt: "2026-08-16T12:01:00.000Z",
                 payload: {
-                    plantId: "P01",
                     events: ["Weigh"],
                     observedAt: "2026-08-16T12:00:00.000Z",
-                    weightState: "Routine",
+                    plantId: "P01",
                     weight: "431",
+                    weightState: "Routine",
                 },
+                requestId: "garden-queued-saved-12345",
             },
         ];
         const { window } = createLoggerWindow({
@@ -2796,22 +3989,26 @@ describe("Garden logger browser recovery", () => {
     });
 
     it("reload recovery clears saved entries, resets missing ones, and preserves incomplete ones", () => {
+        expect.hasAssertions();
+
         const queued = [
             queuedWeight({
+                attemptedAt: "2026-08-16T12:01:00.000Z",
                 requestId: "garden-reload-saved-12345",
-                attemptedAt: "2026-08-16T12:01:00.000Z",
             }),
             queuedWeight({
+                attemptedAt: "2026-08-16T12:01:00.000Z",
                 requestId: "garden-reload-missing-12345",
-                attemptedAt: "2026-08-16T12:01:00.000Z",
             }),
             queuedWeight({
-                requestId: "garden-reload-incomplete-12345",
                 attemptedAt: "2026-08-16T12:01:00.000Z",
+                requestId: "garden-reload-incomplete-12345",
             }),
         ];
         const { window } = createLoggerWindow({
-            batchSaveStatus: (request) =>
+            batchSaveStatus: (
+                /** @type {{ requestId: string | string[] }} */ request
+            ) =>
                 request.requestId.includes("saved")
                     ? "saved"
                     : request.requestId.includes("incomplete")
@@ -2822,29 +4019,44 @@ describe("Garden logger browser recovery", () => {
             },
         });
 
-        const remaining = JSON.parse(
+        const remaining = parseStoredQueue(
             window.localStorage.getItem("gardenLoggerObservationQueueV1")
         );
+
         expect(remaining).toHaveLength(2);
         expect(remaining[0]).toMatchObject({
-            requestId: "garden-reload-missing-12345",
             attemptedAt: "",
+            requestId: "garden-reload-missing-12345",
         });
         expect(remaining[1]).toMatchObject({
-            requestId: "garden-reload-incomplete-12345",
             attemptedAt: "2026-08-16T12:01:00.000Z",
+            requestId: "garden-reload-incomplete-12345",
         });
-        expect(remaining[1].error).toMatch(/kept for review/i);
+        expect(required(remaining[1]).error).toMatch(/kept for review/iv);
     });
+});
+
+describe("garden logger mobile orientation and hit targets", () => {
+    afterEach(restoreLoggerMocks);
 
     it("does not cancel an active save when the phone orientation changes", () => {
+        expect.hasAssertions();
+
         vi.useFakeTimers();
         const { behaviors, calls, window } = createLoggerWindow();
         behaviors.saveWebObservation = () => {};
-        const weight = window.document.querySelector("#weight");
+        const weight = queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        );
         weight.value = "432";
         weight.dispatchEvent(new window.Event("input", { bubbles: true }));
-        window.document.querySelector("#entryForm").dispatchEvent(
+        queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        ).dispatchEvent(
             new window.Event("submit", {
                 bubbles: true,
                 cancelable: true,
@@ -2854,39 +4066,42 @@ describe("Garden logger browser recovery", () => {
         window.dispatchEvent(new window.Event("orientationchange"));
         vi.advanceTimersByTime(350);
 
-        expect(window.document.querySelector("#saveButton").disabled).toBe(
-            true
-        );
+        expect(
+            queryElement(window.document, "#saveButton", HTMLButtonElement)
+                .disabled
+        ).toBe(true);
         expect(calls.some((call) => call.method === "getWebSaveStatus")).toBe(
             false
         );
 
-        vi.advanceTimersByTime(20000);
+        vi.advanceTimersByTime(20_000);
 
-        expect(window.document.querySelector("#saveButton").disabled).toBe(
-            false
-        );
+        expect(
+            queryElement(window.document, "#saveButton", HTMLButtonElement)
+                .disabled
+        ).toBe(false);
         expect(calls.some((call) => call.method === "getWebSaveStatus")).toBe(
             true
         );
     });
 
     it("blocks a stale mobile hit target from submitting outside the visible Save button", () => {
+        expect.hasAssertions();
+
         const { calls, window } = createLoggerWindow();
-        const weight = window.document.querySelector("#weight");
-        const saveButton = window.document.querySelector("#saveButton");
+        const weight = queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        );
+        const saveButton = queryElement(
+            window.document,
+            "#saveButton",
+            HTMLButtonElement
+        );
         weight.value = "433";
         weight.dispatchEvent(new window.Event("input", { bubbles: true }));
-        saveButton.getBoundingClientRect = () => ({
-            bottom: 752,
-            height: 52,
-            left: 10,
-            right: 190,
-            top: 700,
-            width: 180,
-            x: 10,
-            y: 700,
-        });
+        saveButton.getBoundingClientRect = () => new DOMRect(10, 700, 180, 52);
 
         saveButton.dispatchEvent(
             new window.MouseEvent("click", {
@@ -2904,28 +4119,29 @@ describe("Garden logger browser recovery", () => {
         expect(window.document.documentElement.className).toContain(
             "mobile-hit-recovery"
         );
-        expect(window.document.querySelector("#toast").textContent).toMatch(
-            /misplaced tap/i
-        );
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toMatch(/misplaced tap/iv);
         expect(weight.value).toBe("433");
     });
 
     it("still accepts a physical tap inside the visible Save button", () => {
+        expect.hasAssertions();
+
         const { calls, window } = createLoggerWindow();
-        const weight = window.document.querySelector("#weight");
-        const saveButton = window.document.querySelector("#saveButton");
+        const weight = queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        );
+        const saveButton = queryElement(
+            window.document,
+            "#saveButton",
+            HTMLButtonElement
+        );
         weight.value = "434";
         weight.dispatchEvent(new window.Event("input", { bubbles: true }));
-        saveButton.getBoundingClientRect = () => ({
-            bottom: 752,
-            height: 52,
-            left: 10,
-            right: 190,
-            top: 700,
-            width: 180,
-            x: 10,
-            y: 700,
-        });
+        saveButton.getBoundingClientRect = () => new DOMRect(10, 700, 180, 52);
 
         saveButton.dispatchEvent(
             new window.MouseEvent("click", {
@@ -2946,22 +4162,17 @@ describe("Garden logger browser recovery", () => {
     });
 
     it("blocks a stale label-grid target after a phone layout change", () => {
+        expect.hasAssertions();
+
         const { window } = createLoggerWindow({
             storage: { gardenLoggerPlantPickerModeV1: "labels" },
         });
-        const staleTarget = window.document.querySelector(
-            '#labelPicker [data-plant-id="P02"]'
+        const staleTarget = queryElement(
+            window.document,
+            '#labelPicker [data-plant-id="P02"]',
+            HTMLElement
         );
-        staleTarget.getBoundingClientRect = () => ({
-            bottom: 160,
-            height: 48,
-            left: 10,
-            right: 70,
-            top: 112,
-            width: 60,
-            x: 10,
-            y: 112,
-        });
+        staleTarget.getBoundingClientRect = () => new DOMRect(10, 112, 60, 48);
 
         staleTarget.dispatchEvent(
             new window.MouseEvent("click", {
@@ -2973,67 +4184,58 @@ describe("Garden logger browser recovery", () => {
             })
         );
 
-        expect(window.document.querySelector("#plantSelect").value).toBe("P01");
+        expect(
+            queryElement(window.document, "#plantSelect", HTMLSelectElement)
+                .value
+        ).toBe("P01");
         expect(window.document.documentElement.className).toContain(
             "mobile-hit-recovery"
         );
-        expect(window.document.querySelector("#toast").textContent).toMatch(
-            /misplaced tap/i
-        );
         expect(
-            window.document.querySelector('#labelPicker [data-plant-id="P02"]')
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toMatch(/misplaced tap/iv);
+        expect(
+            queryElement(
+                window.document,
+                '#labelPicker [data-plant-id="P02"]',
+                HTMLElement
+            )
         ).not.toBe(staleTarget);
     });
 
     it("rebuilds label hit targets after orientation changes while retaining portraits", () => {
+        expect.hasAssertions();
+
         vi.useFakeTimers();
         const { window } = createLoggerWindow({
             storage: { gardenLoggerPlantPickerModeV1: "labels" },
         });
-        const original = window.document.querySelector(
-            '#labelPicker [data-plant-id="P01"]'
+        const original = queryElement(
+            window.document,
+            '#labelPicker [data-plant-id="P01"]',
+            HTMLElement
         );
-        const portrait = original.querySelector("img");
+        const portrait = queryElement(original, "img", HTMLImageElement);
 
         window.dispatchEvent(new window.Event("orientationchange"));
         vi.advanceTimersByTime(250);
 
         expect(
-            window.document.querySelector('#labelPicker [data-plant-id="P01"]')
+            queryElement(
+                window.document,
+                '#labelPicker [data-plant-id="P01"]',
+                HTMLElement
+            )
         ).not.toBe(original);
         expect(
-            window.document.querySelector(
-                '#labelPicker [data-plant-id="P01"] img'
-            ) === portrait
-        ).toBe(true);
+            queryElement(
+                window.document,
+                '#labelPicker [data-plant-id="P01"] img',
+                HTMLImageElement
+            )
+        ).toBe(portrait);
         expect(window.document.documentElement.className).toContain(
             "mobile-hit-recovery"
-        );
-    });
-
-    it("keeps a queued round on the phone while offline", () => {
-        const queued = [queuedWeight()];
-        const { calls, window } = createLoggerWindow({
-            online: false,
-            storage: {
-                gardenLoggerObservationQueueV1: JSON.stringify(queued),
-            },
-        });
-
-        window.document
-            .querySelector("#queueSendButton")
-            .dispatchEvent(new window.Event("click", { bubbles: true }));
-
-        expect(
-            JSON.parse(
-                window.localStorage.getItem("gardenLoggerObservationQueueV1")
-            )
-        ).toHaveLength(1);
-        expect(
-            calls.some((call) => call.method === "saveWebObservationBatch")
-        ).toBe(false);
-        expect(window.document.querySelector("#toast").textContent).toMatch(
-            /offline/i
         );
     });
 });

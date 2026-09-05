@@ -46,7 +46,7 @@ P30 Decimal weight fields use the same positive-number validation and Weigh /
 Water + weigh visibility rule as P01-P28, while `Selected plants` remains an
 EnumList of `Plant tracker` refs. The live image mapping uses cached Gyazo
 thumbnails for P19, P20, and P23-P30, and natural label order now runs through
-#6. The current-cycle refresh restored P06's completed Dry and Wet anchors and
+\#6. The current-cycle refresh restored P06's completed Dry and Wet anchors and
 curve forecast without changing its observations. The September 5 rollout preserved all
 691 canonical `History` data rows, retained the duplicate P20 watering as an
 auditable `Removed` record, and left zero duplicate active request/plant/event

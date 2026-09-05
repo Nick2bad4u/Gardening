@@ -1,39 +1,35 @@
-import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
-import path from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import * as path from "node:path";
+import { pathToFileURL } from "node:url";
 import { format, resolveConfig } from "prettier";
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+import { compareText, isNonemptyString, required } from "./build-data.mjs";
+
+const root = path.resolve(import.meta.dirname, "..");
 const spritePath = path.join(root, "docs/plant-booklet/plant-icons.svg");
 const loggerPath = path.join(root, "scripts/google-sheets/Index.html");
 const assetDirectory = path.join(root, "assets/ui-icons");
 
+/**
+ * @param {string} sprite
+ */
 export function parseUiIcons(sprite) {
-    return [
-        ...sprite.matchAll(
-            /<symbol\s+id="icon-([a-z-]+)"\s+viewBox="([^"]+)"\s*>([\s\S]*?)<\/symbol>/g
-        ),
-    ]
-        .filter((match) => !match[1].startsWith("plant-"))
+    return sprite
+        .matchAll(
+            /<symbol\s+id="icon-(?<slug>[\-a-z]+)"\s+viewBox="(?<viewBox>[^"]+)"\s*>(?<body>[\s\S]*?)<\/symbol>/gv
+        )
+        .filter(
+            (match) =>
+                !required(match.groups?.["slug"], "UI icon name").startsWith(
+                    "plant-"
+                )
+        )
         .map((match) => ({
-            name: match[1],
-            viewBox: match[2],
-            body: match[3].trim(),
-        }));
-}
-
-function titleFor(name) {
-    return name
-        .replaceAll("-", " ")
-        .replace(/^./, (character) => character.toUpperCase());
-}
-
-function loggerSymbol({ name, viewBox, body }) {
-    const namespaced = body
-        .replaceAll(/id="([^"]+)"/g, 'id="app-$1"')
-        .replaceAll("url(#", "url(#app-")
-        .replaceAll('href="#', 'href="#app-');
-    return `<symbol id="app-icon-${name}" viewBox="${viewBox}">\n${namespaced}\n</symbol>`;
+            body: required(match.groups?.["body"], "UI icon body").trim(),
+            name: required(match.groups?.["slug"], "UI icon name"),
+            viewBox: required(match.groups?.["viewBox"], "UI icon viewBox"),
+        }))
+        .toArray();
 }
 
 export async function syncUiIcons({ checkOnly = false } = {}) {
@@ -48,17 +44,19 @@ export async function syncUiIcons({ checkOnly = false } = {}) {
     }
     const config = await resolveConfig(loggerPath);
     const nextLogger = await format(
-        logger.replace(
-            /<symbol\s+id="app-icon-([a-z-]+)"[\s\S]*?<\/symbol>/g,
-            (_, name) => {
+        logger.replaceAll(
+            /<symbol\s+id="app-icon-(?<icon>[\-a-z]+)"[\s\S]*?<\/symbol>/gv,
+            (/** @type {string} */ _match, /** @type {string} */ name) => {
                 if (!byName.has(name))
                     throw new Error(`Unmapped logger icon: ${name}`);
-                return loggerSymbol(byName.get(name));
+                return loggerSymbol(
+                    required(byName.get(name), `logger icon ${name}`)
+                );
             }
         ),
         { ...config, filepath: loggerPath }
     );
-    const outputs = icons.map(({ name, viewBox, body }) => {
+    const outputs = icons.map(({ body, name, viewBox }) => {
         if (viewBox !== "0 0 64 64")
             throw new Error(`UI icon ${name} needs a 64-unit viewBox.`);
         return {
@@ -71,28 +69,33 @@ export async function syncUiIcons({ checkOnly = false } = {}) {
             throw new Error(
                 "Logger UI icons are stale. Run npm run build:booklet."
             );
-        const names = (await readdir(assetDirectory))
+        const directoryEntries1 = await readdir(assetDirectory);
+        const names = directoryEntries1
             .filter((name) => name.endsWith(".svg"))
-            .sort();
+            .toSorted(compareText);
         if (
             names.join("\n") !==
             outputs
                 .map(({ name }) => name)
-                .sort()
+                .toSorted(compareText)
                 .join("\n")
         ) {
             throw new Error("Standalone UI-icon inventory is stale.");
         }
-        for (const { name, value } of outputs) {
-            if (
-                (await readFile(path.join(assetDirectory, name), "utf8")) !==
-                value
-            ) {
-                throw new Error(
-                    `UI icon ${name} is stale. Run npm run build:booklet.`
-                );
-            }
-        }
+        await Promise.all(
+            outputs.map(async ({ name, value }) => {
+                if (
+                    (await readFile(
+                        path.join(assetDirectory, name),
+                        "utf8"
+                    )) !== value
+                ) {
+                    throw new Error(
+                        `UI icon ${name} is stale. Run npm run build:booklet.`
+                    );
+                }
+            })
+        );
     } else {
         await mkdir(assetDirectory, { recursive: true });
         await Promise.all([
@@ -105,14 +108,36 @@ export async function syncUiIcons({ checkOnly = false } = {}) {
     return icons;
 }
 
+/**
+ * @param {ReturnType<typeof parseUiIcons>[number]} icon
+ */
+function loggerSymbol({ body, name, viewBox }) {
+    const namespaced = body
+        .replaceAll(/id="(?<id>[^"]+)"/gv, 'id="app-$<id>"')
+        .replaceAll("url(#", "url(#app-")
+        .replaceAll('href="#', 'href="#app-');
+    return `<symbol id="app-icon-${name}" viewBox="${viewBox}">\n${namespaced}\n</symbol>`;
+}
+
+/**
+ * @param {string} name
+ */
+function titleFor(name) {
+    return name
+        .replaceAll("-", " ")
+        .replace(/^./v, (/** @type {string} */ character) =>
+            character.toUpperCase()
+        );
+}
+
 if (
-    process.argv[1] &&
+    isNonemptyString(process.argv[1]) &&
     import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href
 ) {
     const icons = await syncUiIcons({
         checkOnly: process.argv.includes("--check"),
     });
-    console.log(
-        `Verified/synchronized ${icons.length} shared interface icons.`
+    process.stdout.write(
+        `Verified/synchronized ${icons.length} shared interface icons.\n`
     );
 }

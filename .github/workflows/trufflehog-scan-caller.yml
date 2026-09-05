@@ -1,3 +1,4 @@
+---
 # yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
 
 name: "Trufflehog Secret Scan"
@@ -5,9 +6,15 @@ name: "Trufflehog Secret Scan"
 run-name: >-
     ${{
         github.event_name == 'pull_request' &&
-        format('Trufflehog Secret Scan #{0}', github.event.pull_request.number) ||
+        format(
+            'Trufflehog Secret Scan #{0}',
+            github.event.pull_request.number
+        ) ||
         github.event_name == 'merge_group' &&
-        format('Trufflehog Secret Scan merge group {0}', github.sha || github.ref_name || github.run_id) ||
+        format(
+            'Trufflehog Secret Scan merge group {0}',
+            github.sha || github.ref_name || github.run_id
+        ) ||
         github.event_name == 'schedule' &&
         format('Trufflehog Secret Scan scheduled {0}', github.run_id) ||
         format('Trufflehog Secret Scan {0}', github.ref_name || github.run_id)

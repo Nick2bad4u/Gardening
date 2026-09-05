@@ -1,16 +1,26 @@
+---
 # yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
 
-name: "Stale Issues And Pull Requests"
+name: "Stale Issues and Pull Requests"
 
 run-name: >-
     ${{
         github.event_name == 'issues' &&
-        format('Stale Issues And Pull Requests issue #{0}', github.event.issue.number) ||
+        format(
+            'Stale Issues And Pull Requests issue #{0}',
+            github.event.issue.number
+        ) ||
         github.event_name == 'pull_request_target' &&
-        format('Stale Issues And Pull Requests #{0}', github.event.pull_request.number) ||
+        format(
+            'Stale Issues And Pull Requests #{0}',
+            github.event.pull_request.number
+        ) ||
         github.event_name == 'schedule' &&
         format('Stale Issues And Pull Requests scheduled {0}', github.run_id) ||
-        format('Stale Issues And Pull Requests {0}', github.ref_name || github.run_id)
+        format(
+            'Stale Issues And Pull Requests {0}',
+            github.ref_name || github.run_id
+        )
     }}
 
 concurrency:

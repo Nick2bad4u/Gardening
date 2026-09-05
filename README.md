@@ -13,7 +13,7 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
   per-plant history URLs, dry/wet baselines, calculations, charts, and direct
   links back to the editable workbook
 - [Garden Entry Logger](https://script.google.com/macros/s/AKfycbytpdMto4ZAqOf49igDNoGYr-J6fmSRDNJOKP4-dKDFRmM2YkTCKJp3kmhrD4gOJShF/exec) —
-  the signed-in 5.14.1 mobile logger with a durable one-call queue, independent
+  the signed-in mobile logger with a durable one-call queue, independent
   Wet weights, remembered nutrient details, a 12-event grid, and generic bulk
   care including 90° rotations
 - [AppSheet garden companion](docs/appsheet-companion.md) — signed-in phone and
@@ -22,15 +22,15 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
   and weight charts
 - [Browser plant field guide](docs/plant-booklet/) — magazine-style cover,
   searchable contents, one deep page per plant, licensed reference galleries
-  for all 34 records, collection and nursery-label photos where archived,
+  for all 36 records, collection and nursery-label photos where archived,
   source and live-history links, a random-profile jump, dark mode, keyboard
   navigation, mobile layout, and print styling
 - [Plant photo Collections index](docs/layouts/photo-album.html) — a searchable,
   mobile-friendly index of one public Gyazo Collection per current plant plus
   the collection-wide overview timeline
 - [Plant profiles](docs/plants/) — names, origins, history, flowers, care,
-  propagation, risks, sources, and photo-archive status for all 34 collection
-  records (33 physically present and one historical)
+  propagation, risks, sources, and photo-archive status for all 36 collection
+  records (35 physically present and one historical)
 - [AW200SE and E25 deep guide](docs/equipment/vivosun-aw200se.md) — PPFD maps,
   DLI/lux conversions, distances, dimming, placement, and a simple starting
   program
@@ -83,3 +83,7 @@ The public browser tools are available from the
 [indoor acclimation calendar](https://nick2bad4u.github.io/Gardening/layouts/indoor-acclimation-calendar.html),
 and [photo album entry](https://nick2bad4u.github.io/Gardening/layouts/photo-album.html)
 cross-link to one another.
+
+For local builds, strict checks, the icon workbench, and browser tests, see
+[Maintaining the browser tools](docs/development.md). The Apps Script production
+procedure remains in the [logger runbook](scripts/google-sheets/README.md).

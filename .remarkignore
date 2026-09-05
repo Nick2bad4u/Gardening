@@ -7,11 +7,14 @@
 
 # Build and output directories
 **/.print-output/
+**/.pages-site/
+**/.codex-remote-attachments/
 **/.cache/
 **/coverage/
 **/dist-*/
 **/dist/
 **/node_modules/
+**/output/
 **/playwright-report/
 **/temp/
 **/test-results/

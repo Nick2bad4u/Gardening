@@ -933,6 +933,27 @@ function ConvertTo-MarkdownLinkTarget {
     return "(<$($Value -replace '>', '%3E')>)"
 }
 
+function ConvertTo-MarkdownAuthor {
+    param([AllowEmptyString()][string] $Value)
+
+    $cell = ConvertTo-MarkdownCell $Value
+    # Preserve raw author provenance in JSON; only link visible website text
+    # when rendering Markdown credits and attribution-table cells.
+    return [regex]::Replace(
+        $cell,
+        '(?<![\w./])www\.[\w.-]+\.[a-z]{2,}(?:/[^\s<>()[\]\\|]*)?',
+        {
+            param([System.Text.RegularExpressions.Match] $Website)
+
+            $label = $Website.Value.TrimEnd('.', ',', ';', ':', '!', '?')
+            $suffix = $Website.Value.Substring($label.Length)
+            $target = ConvertTo-MarkdownLinkTarget "https://$label"
+            return "[$label]$target$suffix"
+        },
+        [System.Text.RegularExpressions.RegexOptions]::IgnoreCase
+    )
+}
+
 function Get-ProfileGroup {
     param([Parameter(Mandatory)][string] $InventoryId)
 
@@ -1228,7 +1249,7 @@ foreach ($plant in $plantCatalog) {
         $profileLines.Add('')
         $profileLines.Add(
             "*$($record.subject)* - [$((ConvertTo-MarkdownCell $record.title))]$((ConvertTo-MarkdownLinkTarget $record.source_url)); " +
-            "$((ConvertTo-MarkdownCell $record.author)); " +
+            "$((ConvertTo-MarkdownAuthor $record.author)); " +
             "[$($record.license)]$((ConvertTo-MarkdownLinkTarget $record.license_url))."
         )
         $profileLines.Add('')
@@ -1241,7 +1262,7 @@ foreach ($plant in $plantCatalog) {
         $fileName = Split-Path -Leaf $record.file
         $profileLines.Add(
             "| [$fileName](./$fileName) | $((ConvertTo-MarkdownCell $record.subject)) | " +
-            "[$($record.source)]$((ConvertTo-MarkdownLinkTarget $record.source_url)) | $((ConvertTo-MarkdownCell $record.author)) | " +
+            "[$($record.source)]$((ConvertTo-MarkdownLinkTarget $record.source_url)) | $((ConvertTo-MarkdownAuthor $record.author)) | " +
             "[$($record.license)]$((ConvertTo-MarkdownLinkTarget $record.license_url)) |"
         )
     }
@@ -1283,7 +1304,7 @@ $attributionLines.Add('| --- | --- | --- | --- | --- |')
 foreach ($record in $sortedRecords) {
     $attributionLines.Add(
         "| [$($record.file)](../../$($record.file)) | *$($record.scientific_name)* | " +
-        "[$($record.source)]$((ConvertTo-MarkdownLinkTarget $record.source_url)) | $((ConvertTo-MarkdownCell $record.author)) | " +
+        "[$($record.source)]$((ConvertTo-MarkdownLinkTarget $record.source_url)) | $((ConvertTo-MarkdownAuthor $record.author)) | " +
         "[$($record.license)]$((ConvertTo-MarkdownLinkTarget $record.license_url)) |"
     )
 }

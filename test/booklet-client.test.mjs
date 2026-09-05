@@ -1,19 +1,32 @@
-import fs from "node:fs";
-
-import { Window } from "happy-dom";
+import {
+    HTMLButtonElement,
+    HTMLElement,
+    HTMLImageElement,
+    Window,
+} from "happy-dom";
+import * as fs from "node:fs";
 import { describe, expect, it, vi } from "vitest";
+
+import { queryElement } from "./helpers/required.mjs";
 
 const clientSource = fs.readFileSync(
     new URL("../docs/plant-booklet/booklet.js", import.meta.url),
     "utf8"
 );
 
+/**
+ * @param {string} [hash]
+ * @param {{ dataLayer?: Record<string, string>[] }} [options]
+ */
 function createReader(hash = "#plant-b-photo-history", { dataLayer } = {}) {
     const window = new Window({
         url: `https://example.test/garden/${hash}`,
     });
-    window.print = vi.fn();
-    window.requestAnimationFrame = (callback) => callback(0);
+    Object.defineProperty(window, "print", { value: vi.fn(() => {}) });
+    window.requestAnimationFrame = (callback) => {
+        callback(0);
+        return setImmediate(() => {});
+    };
     window.document.body.innerHTML = `
         <header>
             <button id="open-contents" type="button">Contents</button>
@@ -64,63 +77,81 @@ function createReader(hash = "#plant-b-photo-history", { dataLayer } = {}) {
         </nav>
         <p id="page-announcer"></p>
     `;
-    if (dataLayer) window.dataLayer = dataLayer;
+    if (dataLayer)
+        Object.defineProperty(window, "dataLayer", { value: dataLayer });
     window.eval(clientSource);
     return window;
 }
 
 describe("field-guide profile mounting", () => {
     it("mounts a nested deep link without materializing every profile", () => {
+        expect.hasAssertions();
+
         const window = createReader();
-        const plantA = window.document.querySelector("#plant-a");
-        const plantB = window.document.querySelector("#plant-b");
+        const plantA = queryElement(window.document, "#plant-a", HTMLElement);
+        const plantB = queryElement(window.document, "#plant-b", HTMLElement);
 
         expect(plantA.childElementCount).toBe(0);
         expect(plantA.hidden).toBe(true);
-        expect(plantB.dataset.profileMounted).toBe("true");
+        expect(plantB.dataset["profileMounted"]).toBe("true");
         expect(plantB.hidden).toBe(false);
         expect(
-            window.document.querySelector("#plant-b-photo-history")
-        ).not.toBeNull();
-        expect(plantB.querySelector(".profile-hero > img").fetchPriority).toBe(
-            "high"
-        );
-        expect(plantB.querySelector("img[data-external-image]").hidden).toBe(
-            false
-        );
-        expect(plantB.querySelector(".external-image-fallback").hidden).toBe(
-            true
-        );
+            queryElement(window.document, "#plant-b-photo-history", HTMLElement)
+                .textContent
+        ).toBe("B history");
         expect(
-            window.document
-                .querySelector("#previous-page")
-                .hasAttribute("aria-label")
+            Reflect.get(
+                queryElement(plantB, ".profile-hero > img", HTMLImageElement),
+                "fetchPriority"
+            )
+        ).toBe("high");
+        expect(
+            queryElement(plantB, "img[data-external-image]", HTMLImageElement)
+                .hidden
         ).toBe(false);
         expect(
-            window.document
-                .querySelector("#next-page")
-                .hasAttribute("aria-label")
+            queryElement(plantB, ".external-image-fallback", HTMLElement).hidden
+        ).toBe(true);
+        expect(
+            queryElement(
+                window.document,
+                "#previous-page",
+                HTMLButtonElement
+            ).hasAttribute("aria-label")
+        ).toBe(false);
+        expect(
+            queryElement(
+                window.document,
+                "#next-page",
+                HTMLButtonElement
+            ).hasAttribute("aria-label")
         ).toBe(false);
     });
 
     it("recycles inactive profile markup during hash navigation", () => {
+        expect.hasAssertions();
+
         const window = createReader();
         window.location.hash = "#plant-a";
         window.dispatchEvent(new window.HashChangeEvent("hashchange"));
 
-        const plantA = window.document.querySelector("#plant-a");
-        const plantB = window.document.querySelector("#plant-b");
-        expect(plantA.dataset.profileMounted).toBe("true");
+        const plantA = queryElement(window.document, "#plant-a", HTMLElement);
+        const plantB = queryElement(window.document, "#plant-b", HTMLElement);
+
+        expect(plantA.dataset["profileMounted"]).toBe("true");
         expect(plantA.hidden).toBe(false);
         expect(plantB.childElementCount).toBe(0);
-        expect(plantB.dataset.profileMounted).toBeUndefined();
+        expect(plantB.dataset["profileMounted"]).toBeUndefined();
     });
 
     it("publishes one profile event after each distinct plant view", () => {
+        expect.hasAssertions();
+
+        /** @type {Record<string, string>[]} */
         const dataLayer = [];
         const window = createReader("#plant-b-photo-history", { dataLayer });
 
-        expect(dataLayer).toEqual([
+        expect(structuredClone(dataLayer)).toStrictEqual([
             {
                 event: "view_plant_profile",
                 page_location:
@@ -134,10 +165,12 @@ describe("field-guide profile mounting", () => {
 
         window.location.hash = "#plant-b";
         window.dispatchEvent(new window.HashChangeEvent("hashchange"));
+
         expect(dataLayer).toHaveLength(1);
 
         window.location.hash = "#plant-a";
         window.dispatchEvent(new window.HashChangeEvent("hashchange"));
+
         expect(dataLayer).toHaveLength(2);
         expect(dataLayer[1]).toMatchObject({
             event: "view_plant_profile",
@@ -150,88 +183,129 @@ describe("field-guide profile mounting", () => {
         window.dispatchEvent(new window.HashChangeEvent("hashchange"));
         window.location.hash = "#plant-a";
         window.dispatchEvent(new window.HashChangeEvent("hashchange"));
+
         expect(dataLayer).toHaveLength(3);
     });
 
     it("does not create a local analytics queue when GTM is absent", () => {
+        expect.hasAssertions();
+
         const window = createReader("#plant-a");
 
-        expect(window.dataLayer).toBeUndefined();
+        expect(Reflect.get(window, "dataLayer")).toBeUndefined();
     });
 
     it("pins and unpins the scroll-aware page navigation", () => {
+        expect.hasAssertions();
+
         const window = createReader("#plant-a");
-        const navigation = window.document.querySelector(
-            "#page-controls-navigation"
+        const navigation = queryElement(
+            window.document,
+            "#page-controls-navigation",
+            HTMLElement
         );
-        const toggle = window.document.querySelector("#page-controls-toggle");
+        const toggle = queryElement(
+            window.document,
+            "#page-controls-toggle",
+            HTMLButtonElement
+        );
 
         toggle.click();
+
         expect(navigation.classList.contains("is-pinned")).toBe(true);
         expect(toggle.getAttribute("aria-pressed")).toBe("true");
         expect(toggle.getAttribute("aria-label")).toBe("Unpin page navigation");
         expect(
-            toggle.querySelector(".page-controls-pin-label").textContent
+            queryElement(toggle, ".page-controls-pin-label", HTMLElement)
+                .textContent
         ).toBe("Pinned");
 
         toggle.click();
+
         expect(navigation.classList.contains("is-pinned")).toBe(false);
         expect(toggle.getAttribute("aria-pressed")).toBe("false");
         expect(toggle.getAttribute("aria-label")).toBe("Pin page navigation");
         expect(
-            toggle.querySelector(".page-controls-pin-label").textContent
+            queryElement(toggle, ".page-controls-pin-label", HTMLElement)
+                .textContent
         ).toBe("Pin");
     });
 
     it("tracks reading progress and reveals navigation when scrolling up", () => {
+        expect.hasAssertions();
+
         const window = createReader("#plant-a");
-        const navigation = window.document.querySelector(
-            "#page-controls-navigation"
+        const navigation = queryElement(
+            window.document,
+            "#page-controls-navigation",
+            HTMLElement
         );
-        const progress = window.document.querySelector("#reader-progress");
+        const progress = queryElement(
+            window.document,
+            "#reader-progress",
+            HTMLElement
+        );
 
         Object.defineProperty(window.document.documentElement, "scrollHeight", {
             configurable: true,
             value: 2000,
         });
-        Object.defineProperty(window, "innerHeight", {
-            configurable: true,
-            value: 500,
-        });
-        Object.defineProperty(window, "scrollY", {
-            configurable: true,
-            value: 300,
-            writable: true,
+        Object.defineProperties(window, {
+            innerHeight: {
+                configurable: true,
+                value: 500,
+            },
+            scrollY: {
+                configurable: true,
+                value: 300,
+                writable: true,
+            },
         });
 
         window.dispatchEvent(new window.Event("scroll"));
+
         expect(progress.style.width).toBe("20%");
         expect(navigation.classList.contains("is-scroll-hidden")).toBe(true);
 
-        window.scrollY = 150;
+        Object.defineProperty(window, "scrollY", {
+            configurable: true,
+            value: 150,
+        });
         window.dispatchEvent(new window.Event("scroll"));
+
         expect(progress.style.width).toBe("10%");
         expect(navigation.classList.contains("is-scroll-hidden")).toBe(false);
     });
 
     it("mounts every profile for print and restores the lean reader afterward", () => {
-        const window = createReader("#plant-a");
-        window.document.querySelector("#print-booklet").click();
+        expect.hasAssertions();
 
-        expect(window.print).toHaveBeenCalledOnce();
+        const window = createReader("#plant-a");
+        queryElement(
+            window.document,
+            "#print-booklet",
+            HTMLButtonElement
+        ).click();
+
+        expect(Reflect.get(window, "print")).toHaveBeenCalledExactlyOnceWith();
         expect(
-            window.document.querySelector("#plant-a").childElementCount
+            queryElement(window.document, "#plant-a", HTMLElement)
+                .childElementCount
         ).toBeGreaterThan(0);
         expect(
-            window.document.querySelector("#plant-b").childElementCount
+            queryElement(window.document, "#plant-b", HTMLElement)
+                .childElementCount
         ).toBeGreaterThan(0);
 
         window.dispatchEvent(new window.Event("afterprint"));
+
         expect(
-            window.document.querySelector("#plant-a").childElementCount
+            queryElement(window.document, "#plant-a", HTMLElement)
+                .childElementCount
         ).toBeGreaterThan(0);
         expect(
-            window.document.querySelector("#plant-b").childElementCount
+            queryElement(window.document, "#plant-b", HTMLElement)
+                .childElementCount
         ).toBe(0);
     });
 });

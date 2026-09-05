@@ -1,10 +1,37 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    calculateSummary,
     isActiveHistoryEvent,
+    calculateSummary as summarizeIndexedHistory,
 } from "../../docs/layouts/plant-tracker-data.js";
+import { required } from "../helpers/required.mjs";
 
+/**
+ * @param {Omit<
+ *     import("../../docs/layouts/plant-tracker-data.js").HistoryEvent,
+ *     "_index"
+ * >[]} events
+ */
+function calculateSummary(events) {
+    return summarizeIndexedHistory(
+        events.map((event, index) => Object.assign(event, { _index: index }))
+    );
+}
+
+/**
+ * @param {{
+ *     date: string;
+ *     height?: number | string;
+ *     width?: number | string;
+ *     weight?: number | string;
+ *     method?: string;
+ *     potSetup?: number;
+ *     quality?: string;
+ *     saveGroup?: string;
+ *     status?: string;
+ *     weightState?: string;
+ * }} options
+ */
 function observation({
     date,
     height = "",
@@ -14,10 +41,11 @@ function observation({
     saveGroup = "",
     status = "",
     weight = "",
-    width = "",
     weightState = "Routine",
+    width = "",
 }) {
     return {
+        _index: 0,
         Date: date,
         Event: height === "" && width === "" ? "Weigh" : "Measure",
         "Height (cm)": height,
@@ -34,6 +62,8 @@ function observation({
 
 describe("measured-only growth analytics", () => {
     it("excludes estimate-only and blank-quality dimensions", () => {
+        expect.hasAssertions();
+
         const summary = calculateSummary([
             observation({
                 date: "2026-01-01",
@@ -57,13 +87,15 @@ describe("measured-only growth analytics", () => {
             }),
         ]);
 
-        expect(summary.heightSeries).toEqual([]);
-        expect(summary.widthSeries).toEqual([]);
+        expect(summary.heightSeries).toStrictEqual([]);
+        expect(summary.widthSeries).toStrictEqual([]);
         expect(summary.heightChange).toBeNull();
         expect(summary.widthMonthlyRate).toBeNull();
     });
 
     it("requires two eligible readings for a trend", () => {
+        expect.hasAssertions();
+
         const summary = calculateSummary([
             observation({
                 date: "2026-01-01",
@@ -81,6 +113,8 @@ describe("measured-only growth analytics", () => {
     });
 
     it("calculates height and width trends from two measured readings", () => {
+        expect.hasAssertions();
+
         const summary = calculateSummary([
             observation({
                 date: "2026-01-01",
@@ -94,11 +128,14 @@ describe("measured-only growth analytics", () => {
             }),
         ]);
 
-        expect(summary.heightSeries.map(({ value }) => value)).toEqual([
+        expect(summary.heightSeries.map(({ value }) => value)).toStrictEqual([
             10,
             13,
         ]);
-        expect(summary.widthSeries.map(({ value }) => value)).toEqual([8, 6]);
+        expect(summary.widthSeries.map(({ value }) => value)).toStrictEqual([
+            8,
+            6,
+        ]);
         expect(summary.heightChange).toBe(3);
         expect(summary.heightMonthlyRate).toBeCloseTo(3.04375);
         expect(summary.widthChange).toBe(-2);
@@ -106,6 +143,8 @@ describe("measured-only growth analytics", () => {
     });
 
     it("ignores estimated points mixed between measured readings", () => {
+        expect.hasAssertions();
+
         const estimated = observation({
             date: "2026-01-16",
             height: 100,
@@ -131,15 +170,20 @@ describe("measured-only growth analytics", () => {
         expect(summary.heightSeries.map(({ event }) => event)).not.toContain(
             estimated
         );
-        expect(summary.heightSeries.map(({ value }) => value)).toEqual([
+        expect(summary.heightSeries.map(({ value }) => value)).toStrictEqual([
             10,
             13,
         ]);
-        expect(summary.widthSeries.map(({ value }) => value)).toEqual([8, 9]);
+        expect(summary.widthSeries.map(({ value }) => value)).toStrictEqual([
+            8,
+            9,
+        ]);
         expect(events).toContain(estimated);
     });
 
     it("includes corrected ruler readings but no other corrected methods", () => {
+        expect.hasAssertions();
+
         const correctedRuler = observation({
             date: "2026-02-01",
             height: 12,
@@ -170,15 +214,22 @@ describe("measured-only growth analytics", () => {
             }),
         ]);
 
-        expect(summary.heightSeries.map(({ value }) => value)).toEqual([
+        expect(summary.heightSeries.map(({ value }) => value)).toStrictEqual([
             10,
             12,
         ]);
-        expect(summary.widthSeries.map(({ value }) => value)).toEqual([8, 9]);
-        expect(summary.heightSeries.at(-1).event).toBe(correctedRuler);
+        expect(summary.widthSeries.map(({ value }) => value)).toStrictEqual([
+            8,
+            9,
+        ]);
+        expect(required(summary.heightSeries.at(-1)).event).toBe(
+            correctedRuler
+        );
     });
 
     it("excludes removed measured readings", () => {
+        expect.hasAssertions();
+
         const summary = calculateSummary([
             observation({
                 date: "2026-01-01",
@@ -193,13 +244,19 @@ describe("measured-only growth analytics", () => {
             }),
         ]);
 
-        expect(summary.heightSeries.map(({ value }) => value)).toEqual([10]);
-        expect(summary.widthSeries.map(({ value }) => value)).toEqual([8]);
+        expect(summary.heightSeries.map(({ value }) => value)).toStrictEqual([
+            10,
+        ]);
+        expect(summary.widthSeries.map(({ value }) => value)).toStrictEqual([
+            8,
+        ]);
         expect(summary.heightChange).toBeNull();
         expect(summary.widthChange).toBeNull();
     });
 
     it("leaves weight analytics independent of growth-quality metadata and excludes removed weights", () => {
+        expect.hasAssertions();
+
         const summary = calculateSummary([
             observation({
                 date: "2026-01-01",
@@ -219,7 +276,7 @@ describe("measured-only growth analytics", () => {
             }),
         ]);
 
-        expect(summary.weightSeries.map(({ value }) => value)).toEqual([
+        expect(summary.weightSeries.map(({ value }) => value)).toStrictEqual([
             300,
             320,
         ]);
@@ -230,6 +287,8 @@ describe("measured-only growth analytics", () => {
     });
 
     it("closes only the last eligible reading before Water as Dry", () => {
+        expect.hasAssertions();
+
         const summary = calculateSummary([
             observation({
                 date: "2026-01-01",
@@ -240,8 +299,8 @@ describe("measured-only growth analytics", () => {
             observation({
                 date: "2026-02-01",
                 potSetup: 2,
-                weight: 350,
                 saveGroup: "wet-1",
+                weight: 350,
             }),
             {
                 Date: "2026-02-01",
@@ -280,8 +339,8 @@ describe("measured-only growth analytics", () => {
 
         expect(summary.activePotSetup).toBe(2);
         expect(
-            summary.weightSeries.map(({ value, state }) => [value, state])
-        ).toEqual([
+            summary.weightSeries.map(({ state, value }) => [value, state])
+        ).toStrictEqual([
             [350, "Wet"],
             [325, "Routine"],
             [300, "Dry"],
@@ -295,6 +354,8 @@ describe("measured-only growth analytics", () => {
     });
 
     it("treats a lone same-save watering weight as Wet and another lone weight as Routine", () => {
+        expect.hasAssertions();
+
         const watered = calculateSummary([
             observation({
                 date: "3/1/2026 12:00 PM",
@@ -322,6 +383,8 @@ describe("measured-only growth analytics", () => {
     });
 
     it("infers only the first post-water weight within five days as Wet", () => {
+        expect.hasAssertions();
+
         const withinWindow = calculateSummary([
             {
                 Date: "8/26/2026 4:22:00 PM",
@@ -339,9 +402,10 @@ describe("measured-only growth analytics", () => {
                 weight: 434.5,
             }),
         ]);
+
         expect(
-            withinWindow.weightSeries.map(({ value, state }) => [value, state])
-        ).toEqual([
+            withinWindow.weightSeries.map(({ state, value }) => [value, state])
+        ).toStrictEqual([
             [473.5, "Wet"],
             [434.5, "Routine"],
         ]);
@@ -357,11 +421,14 @@ describe("measured-only growth analytics", () => {
                 weight: 400,
             }),
         ]);
+
         expect(outsideWindow.weightSeries[0]?.state).toBe("Routine");
         expect(outsideWindow.wetAverage).toBeNull();
     });
 
     it("derives one Dry endpoint per completed cycle and leaves the open cycle Routine", () => {
+        expect.hasAssertions();
+
         const entries = [
             observation({
                 date: "2026-01-11",
@@ -405,7 +472,7 @@ describe("measured-only growth analytics", () => {
 
         const summary = calculateSummary(entries);
         const states = new Map(
-            summary.weightSeries.map(({ value, state }) => [value, state])
+            summary.weightSeries.map(({ state, value }) => [value, state])
         );
 
         expect(states.get(450)).toBe("Dry");
@@ -417,7 +484,7 @@ describe("measured-only growth analytics", () => {
             states.get(500),
             states.get(510),
             states.get(515),
-        ]).toEqual([
+        ]).toStrictEqual([
             "Wet",
             "Wet",
             "Wet",
@@ -429,6 +496,8 @@ describe("measured-only growth analytics", () => {
     });
 
     it("uses save groups to distinguish tied Dry and Wet timestamps", () => {
+        expect.hasAssertions();
+
         const summary = calculateSummary(
             [
                 observation({
@@ -451,15 +520,18 @@ describe("measured-only growth analytics", () => {
         );
 
         expect(
-            summary.weightSeries.map(({ value, state }) => [value, state])
-        ).toEqual([
+            summary.weightSeries.map(({ state, value }) => [value, state])
+        ).toStrictEqual([
             [300, "Dry"],
             [450, "Wet"],
         ]);
     });
 
     it("keeps removed observations in history input but excludes their care analytics", () => {
+        expect.hasAssertions();
+
         const originalWater = {
+            _index: 0,
             Date: "8/13/2026 10:00 AM",
             Event: "Water",
             "Nutrients used": "Yes",
@@ -467,6 +539,7 @@ describe("measured-only growth analytics", () => {
             "Record status": "",
         };
         const removedDuplicate = {
+            _index: 1,
             Date: "8/20/2026 10:00 AM",
             Event: "Water",
             "Nutrients used": "Yes",
@@ -480,9 +553,9 @@ describe("measured-only growth analytics", () => {
         expect(events).toContain(removedDuplicate);
         expect(isActiveHistoryEvent(originalWater)).toBe(true);
         expect(isActiveHistoryEvent(removedDuplicate)).toBe(false);
-        expect(summary.watering.events.map(({ event }) => event)).toEqual([
-            originalWater,
-        ]);
+        expect(summary.watering.events.map(({ event }) => event)).toStrictEqual(
+            [originalWater]
+        );
         expect(summary.lastWater).toBe(originalWater);
         expect(summary.eventCounts.nutrients).toBe(1);
     });

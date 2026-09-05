@@ -1,0 +1,16 @@
+{
+    "$schema": "https://www.schemastore.org/tsconfig.json",
+    "exclude": [
+        "test/fixtures/**"
+    ],
+    "extends": [
+        "./tsconfig.json",
+        "tsconfig-nick2bad4u/tsconfig.vitest-typecheck.json"
+    ],
+    "include": [
+        "test/**/*.mjs",
+        "test/**/*.ts",
+        "vitest.config.mjs",
+        "types/**/*.d.ts"
+    ]
+}
