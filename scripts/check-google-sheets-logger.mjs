@@ -390,6 +390,64 @@ assert.match(html, /id="plantChoiceList"/);
 assert.match(html, /function plantIconName\(plant\)/);
 assert.match(html, /function createPlantPortrait\(plant, className\)/);
 assert.match(html, /const PLANT_ICON_REVISION = "[a-f0-9]{16}";/);
+const appSheetPortraits = JSON.parse(
+    fs.readFileSync(
+        new URL(
+            "./google-sheets/appsheet-plant-portraits.json",
+            import.meta.url
+        ),
+        "utf8"
+    )
+);
+const appSheetImageExpression = fs.readFileSync(
+    new URL("./google-sheets/appsheet-plant-portrait.txt", import.meta.url),
+    "utf8"
+);
+const appSheetBulkValidation = fs.readFileSync(
+    new URL("./google-sheets/appsheet-bulk-validation.txt", import.meta.url),
+    "utf8"
+);
+assert.equal(
+    appSheetPortraits.revision,
+    html.match(/const PLANT_ICON_REVISION = "([a-f0-9]{16})";/)[1],
+    "Publish the current portrait revision to AppSheet as well as the logger."
+);
+assert.equal(
+    appSheetPortraits.folder,
+    `GardenPlantPortraits-${appSheetPortraits.revision}`
+);
+assert.ok(appSheetImageExpression.includes(`"${appSheetPortraits.folder}/"`));
+assert.deepEqual(
+    appSheetPortraits.portraits.map(({ id }) => id),
+    Object.keys(webPlantImageUrls).sort(),
+    "Every current plant must have an AppSheet portrait."
+);
+assert.deepEqual(
+    Array.from(
+        appSheetImageExpression.matchAll(/"(P\d{2})"/gu),
+        ([, id]) => id
+    ),
+    appSheetPortraits.portraits.map(({ id }) => id)
+);
+assert.deepEqual(
+    Array.from(
+        appSheetBulkValidation.matchAll(/\[(P\d{2} weight \(g\))\] > 0/gu),
+        ([, header]) => header
+    ),
+    appSheetBulkHeaders.filter((header) =>
+        /^P\d{2} weight \(g\)$/u.test(header)
+    ),
+    "AppSheet bulk validation must include every supported plant weight."
+);
+for (const { slug } of appSheetPortraits.portraits) {
+    assert.match(slug, /^[a-z0-9]+(?:-[a-z0-9]+)*$/u);
+    assert.ok(
+        fs.existsSync(
+            new URL(`../assets/plant-icons/${slug}.svg`, import.meta.url)
+        ),
+        `Missing AppSheet portrait source: ${slug}`
+    );
+}
 assert.match(html, /"nick2bad4u\.github\.io"/);
 assert.match(html, /\.join\("\/"\)/);
 assert.match(

@@ -32,7 +32,8 @@ The bridge contract and trigger details live in
 
 Logger deployment as of 2026-09-05: logger 5.18.0 and immutable Apps Script
 version 64 are live at the existing stable deployment URL. AppSheet version
-**1.100099** is saved, deployed, and verified in its authenticated preview. The workbook
+**1.100104** is saved, deployed, and verified in authenticated desktop and
+390 px mobile browser layouts. The workbook
 has P29 and P30 in `Plant tracker`, `Baselines`, `Quick log`, the individual
 plant tabs, and `App bulk`. `History` and `History view` now contain 42 physical
 columns, A:AP; `App entries` contains 34, A:AH; and `App bulk` contains 54,
@@ -51,13 +52,16 @@ curve forecast without changing its observations. The September 5 rollout preser
 auditable `Removed` record, and left zero duplicate active request/plant/event
 keys, blank request IDs, or formula errors.
 
-The 5.17.1 release publishes the reviewed field-guide portraits and adds
-persistent portrait caching to the separate quick logger. Its 36 public SVGs
-were checked against the committed artwork. The AppSheet image mapping,
-navigation, and offline/sync settings were not changed by that release. The
-September 5 session verified the authenticated AppSheet editor and updated only
-the affected read-only schemas and forecast fields. Do not treat the quick
-logger's cache verification as proof of AppSheet image caching.
+The current artwork contains 38 exported SVGs, including separate portraits
+for the shared P19 and P20 planters. AppSheet now uses thirty P01-P30 portraits
+in Plants, reference pickers, and Care history, while preserving the existing
+reference and collection photos in plant details. The September 5
+[portrait and usability review](../scripts/google-sheets/APPSHEET-REVIEW-2026-09-05.md)
+also repairs the Quick Log target, bulk validation for P23-P30, nutrient fields,
+receipt editing, compact watering-age badges, current-cycle filtering, and
+stale app information.
+The quick logger and native AppSheet client have different caching behavior;
+see [portrait storage and caching](#portrait-storage-and-caching).
 
 The 5.17.0 forecast update learns completed cycles within each plant's current
 pot setup and blends new readings into that history. At rollout, P20, P21, and
@@ -107,9 +111,10 @@ forecast backup — 2026-09-04`. The view choices are deliberate:
 - **Plant charts** contains Plants first, then measurement history, weight
   history, and current-cycle dry-down. Interactive mode is enabled: selecting
   one plant filters all three chart panels without leaving the dashboard.
-- **Watering forecast** uses a 19-column manual layout limited to identity,
+- **Watering forecast** uses a 21-column manual layout limited to identity,
   pounds before grams, current weight, capacity, calibration, trend,
-  next-check, dry/wet anchors, prediction, confidence, and data-quality fields.
+  next-check, conditional water date and guidance, dry/wet anchors, prediction,
+  confidence, and data-quality fields.
   It sorts by the hidden `Forecast sort date` helper so real and overdue
   predictions appear before plants that still need more evidence; the helper
   itself is not displayed.
@@ -132,6 +137,11 @@ reference pickers search the referenced row label, so this composite label is
 what makes all three identifiers usable in the same picker. Keep the Plant ID
 as the key; changing the label is presentation-only and must not change bridge
 payloads.
+
+The Image label `Plant portrait` adds the corresponding illustration beside
+that text in reference pickers. The per-plant **Quick Log** action targets
+`LINKTOFORM("Log", "Plant ID", [Plant ID])`, so it opens the existing Log form
+with the selected plant already filled in.
 
 The Plants deck uses the virtual `Plant metrics` secondary line. It shows the
 physical pot label plus the latest available weight in grams and measured
@@ -167,6 +177,18 @@ an EnumList of refs with `Valid_If` set to `SORT(Plant tracker[Plant ID])`; if
 that expression is removed, the deployed picker can appear empty even while
 the source table contains plants.
 
+The Round action validation checks all thirty weight fields. Weigh requires
+at least one positive weight; Water + weigh also requires selected plants.
+Other shared care actions require selected plants. The maintained expression
+is [`appsheet-bulk-validation.txt`](../scripts/google-sheets/appsheet-bulk-validation.txt).
+Bulk nutrient amounts use Text so an amount such as `1 mL/L` retains its units.
+The form distinguishes nutrient choice, product, and amount explicitly.
+
+Both staging tables allow adds and updates but prohibit deletes. Their Edit
+actions appear only for `Needs correction` rows. Saved or processing receipts
+stay available for inspection; an explicit Retry save action preserves the
+original request ID after a correction.
+
 ## Images and visual identity
 
 The app icon and launch artwork are the repository-owned
@@ -195,24 +217,53 @@ label.
 Canonical IDs and writable picker values remain P01-P30; do not replace them
 with the display-order helper.
 
-Care history derives its round left-side `Plant image` through the `Plant ID`
-reference (`[Plant ID].[Reference image]`). Round thumbnails intentionally
-crop every source to a uniform 70 px viewport; AppSheet's square deck mode can
-clip tall portrait sources behind neighboring rows. Use the direct reference
+Plants uses the Image virtual column `Plant portrait` as its square main
+image. Care history derives its round left-side `Plant image` through the
+`Plant ID` reference (`[Plant ID].[Plant portrait]`). The square 150 px SVG
+canvas keeps the whole silhouette inside the thumbnail, including trailing
+stems. Use the direct reference
 instead of a broad lookup: the latter can accidentally repeat one plant's
 image across unrelated history rows. The virtual `Event badge` column adds a
 compact event symbol and name such as `💧 Water`, `⚖ Weigh`, `📏 Measure`, or
 `📝 Other` without changing the canonical `Event` value.
 
-If an image is missing in AppSheet, verify that its repository path exists,
-that the raw GitHub URL returns the image itself, and that the `Reference
-image` expression maps the correct Plant ID. Do not replace a missing image
-with an unrelated taxon merely to fill the thumbnail.
+If a portrait is missing, verify its P01-P30 mapping, the revisioned Drive
+folder and filename, and signed-in app access. For a missing reference photo,
+verify its external URL and the `Reference image` expression. Do not replace
+a missing image with an unrelated taxon merely to fill the thumbnail.
+
+### Portrait storage and caching
+
+The thirty app portraits are private SVG files named `P01.svg` through
+`P30.svg` in `GardenPlantPortraits-2e71bf2a701aa61f`, beside the source
+workbook in Drive. The
+[portrait manifest](../scripts/google-sheets/appsheet-plant-portraits.json)
+records their canonical source slugs, and the
+[image expression](../scripts/google-sheets/appsheet-plant-portrait.txt)
+uses relative paths. Keep image URL signing enabled.
+
+Offline startup and Store content for offline use are enabled. On native
+mobile AppSheet, complete an online sync and image download before expecting
+offline portraits. AppSheet web browsers do not provide the same offline image
+cache, and external reference-photo URLs are not covered by native offline
+storage. The desktop network check still observed image requests with
+provider-controlled `private, max-age=0` responses; it does not demonstrate
+zero-download reloads or phone airplane-mode behavior.
+[AppSheet offline behavior](https://support.google.com/appsheet/answer/10107724?hl=en)
+and [image paths and caching](https://support.google.com/appsheet/answer/10107317?hl=en)
+document these constraints.
+
+For a future artwork release, publish the SVGs and logger revision first,
+update the checked-in manifest, upload the mapped P01-P30 SVGs to a new
+revisioned folder beside the workbook, and update the AppSheet expression.
+Verify all thirty images after saving and syncing. Keep older folders until
+existing clients have synced; do not overwrite old paths with new bytes.
+This AppSheet step is separate from the logger's persistent Cache Storage.
 
 ## Theme and icon conventions
 
 The app uses AppSheet's native dark theme, the garden-green `#43a047` primary
-color, colored header/footer treatment, Source Sans Pro at 16 px, the
+color, colored header/footer treatment, Roboto at 18 px, the
 repository-owned logo and launch artwork, and distinct Font Awesome icons for
 every primary and menu view. Plant charts uses an area-chart icon so it does
 not duplicate the Insights icon. The twelve reference charts also use distinct
@@ -240,7 +291,10 @@ visible on both desktop and narrow phone layouts:
 - red: 15 or more days since water;
 - neutral: no usable watering record.
 
-For example, a plant at 25 days displays a red badge. These colors are a
+For example, a plant at 25 days displays `🔴 25d`; a missing record displays
+`⚪ No log`. Full dates and elapsed days remain in plant details. The
+[maintained expression](../scripts/google-sheets/appsheet-watering-age.txt)
+avoids clipped text and the former `1 days since water` wording. These colors are a
 scanning aid, not a watering schedule: pot weight, dry-down trend, plant
 condition, pot setup, and the species-specific notes still determine whether
 watering is appropriate.
@@ -340,8 +394,17 @@ that plant through the permanent `Plant ID` reference:
 - **Plant measurement history** plots nonzero height and width measurements in
   inches.
 - **Plant weight history** plots every positive recorded weight in grams.
-- **Current-cycle dry-down** plots positive weights that have a valid latest
-  Water or Repot anchor.
+- **Current-cycle dry-down** plots positive weights at or after the latest
+  active Water or Repot timestamp in the current pot setup. It excludes older
+  watering cycles and retains observation times for same-day boundaries.
+
+The hidden DateTime `Plant tracker[Current cycle start]` uses
+[`appsheet-current-cycle-start.txt`](../scripts/google-sheets/appsheet-current-cycle-start.txt).
+The read-only slice uses
+[`appsheet-current-cycle-filter.txt`](../scripts/google-sheets/appsheet-current-cycle-filter.txt).
+Keep `App plant charts[Date]` typed DateTime. The spreadsheet helper's
+`Days after anchor` refers to each historical row's own anchor; a nonblank
+value alone does not establish membership in the current cycle.
 
 Use **Plant charts** as the collection-wide exploratory dashboard. Select a
 plant in its left/top Plants pane to filter all three charts together.

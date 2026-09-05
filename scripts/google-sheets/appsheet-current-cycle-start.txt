@@ -1,0 +1,15 @@
+IF(
+  IN([Trend anchor], LIST("Water", "Repot")),
+  MAX(
+    SELECT(
+      History[Date],
+      AND(
+        [Plant ID] = [_THISROW].[Plant ID],
+        [Pot setup] = [_THISROW].[Pot setup],
+        IN([Event], LIST("Water", "Repot")),
+        [Record status] <> "Removed"
+      )
+    )
+  ),
+  ""
+)

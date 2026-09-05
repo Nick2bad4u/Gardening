@@ -1,0 +1,5 @@
+AND(
+  [Current cycle weight (g)] > 0,
+  ISNOTBLANK([Plant ID].[Current cycle start]),
+  [Date] >= [Plant ID].[Current cycle start]
+)

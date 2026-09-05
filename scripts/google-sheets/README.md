@@ -132,6 +132,13 @@ The [September 5 workbook audit](./WORKBOOK-AUDIT-2026-09-05.md) documents the
 scoped repairs to chart bindings, measured-only helpers, summary coverage,
 conditional formatting, and display precision, including the native-copy rehearsal.
 
+The subsequent [AppSheet review](./APPSHEET-REVIEW-2026-09-05.md) published
+AppSheet **1.100104** with all thirty illustrated plant/planter portraits,
+corrected Quick Log navigation, P01-P30 bulk validation, nutrient amounts with
+units, clearer prompts, protected processing receipts, and a corrected
+current-cycle chart filter. It preserved the
+logger's existing 5.18.0/version-64 deployment and canonical workbook data.
+
 ## Plant portrait caching
 
 Logger 5.17.1 loads portraits as they enter the visible picker area and shares
@@ -151,6 +158,14 @@ caching. Missing images fall back to the built-in plant icon. Logger 5.18.0 give
 the shared P19 and P20 planters their own photo-informed portraits, independent
 of their collection-contents links. Portrait caching never
 clears the local draft, save-recovery, or queued-observation storage.
+
+AppSheet uses a separate revisioned Drive folder and relative Image paths,
+recorded in [`appsheet-plant-portraits.json`](./appsheet-plant-portraits.json)
+and [`appsheet-plant-portrait.txt`](./appsheet-plant-portrait.txt). Its native
+mobile offline-content setting is enabled, but browser AppSheet does not
+provide the same offline image cache. See the
+[AppSheet storage and refresh procedure](../../docs/appsheet-companion.md#portrait-storage-and-caching)
+before publishing a future portrait revision.
 
 ## Local development and tests
 
@@ -359,6 +374,11 @@ nutrient, or note fields without fabricating per-plant values.
 In AppSheet, `Selected plants` is an EnumList of refs whose `Valid_If` is
 `SORT(Plant tracker[Plant ID])`. Keep that expression in place so shared-action
 rounds can select all current P01-P30 records after the source schema changes.
+The `Round action` validation must also cover all thirty weight fields; keep
+it aligned with [`appsheet-bulk-validation.txt`](./appsheet-bulk-validation.txt).
+The prior P01-P22-only check rejected valid weigh-only rounds for newer plants.
+`Nutrient amount` is Text in AppSheet, matching the Apps Script contract and
+preserving entered units such as `1 mL/L`.
 
 A normal 30-plant round therefore reaches History as one canonical batch,
 while partial validation failures keep the round editable and retries recognize
@@ -375,6 +395,9 @@ must not expose edit or delete actions; their action bars are limited to useful
 navigation such as `Detailed log`, the field guide, and the referenced plant. The
 `Needs attention` view keeps Edit, plant/photo navigation, and `Retry save`, but
 does not expose Delete.
+Both staging tables use `ADDS_AND_UPDATES`, and their system Edit actions are
+shown only when `[Status] = "Needs correction"`. This keeps saved or processing
+receipts inspectable without offering edits that the bridge will not consume.
 
 New AppSheet rows start with `Status = Queued`. Do not configure an AppSheet
 **Call a script** task for this bridge. AppSheet currently supports only
@@ -421,8 +444,10 @@ workbook promptly, so leave server caching, delta sync, and quick sync disabled;
 enable sync on start and automatic updates; and disable delayed sync. The bound
 trigger normally archives a queued entry within five minutes, and the next app
 sync retrieves its receipt. The app may start offline so a field note can remain
-queued until connectivity returns, but do not cache every image and file for
-offline use.
+queued until connectivity returns. Store content for offline use is enabled
+for the relative Drive portrait paths; complete the first online download in
+the native mobile app. External photo URLs and browser AppSheet retain the
+offline limitations documented in the companion guide.
 The app's primary views should expose the plant collection, current baselines,
 active History, new-care form, and any intake rows needing correction. Do not
 connect the generated Dashboard, Integrity, Insights layout, or individual

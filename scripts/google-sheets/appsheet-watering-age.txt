@@ -1,0 +1,9 @@
+IF(
+  ISBLANK([Days since water]),
+  "⚪ No log",
+  CONCATENATE(
+    IFS([Days since water] <= 7, "🟢 ", [Days since water] <= 14, "🟡 ", TRUE, "🔴 "),
+    [Days since water],
+    "d"
+  )
+)
