@@ -10172,6 +10172,12 @@
             function refreshMobileHitTargets() {
                 document.documentElement.classList.add("mobile-hit-recovery");
                 if (state.bootstrap && state.plantPickerMode === "labels") {
+                    // Replace stale hit boxes while retaining decoded portraits.
+                    [...$("labelPicker").children].forEach((button) => {
+                        const replacement = button.cloneNode(false);
+                        replacement.append(...button.childNodes);
+                        button.replaceWith(replacement);
+                    });
                     renderLabelPicker();
                 }
                 document.body.getBoundingClientRect();
@@ -11255,23 +11261,44 @@
                 const picker = $("labelPicker");
                 const currentId = $("plantSelect").value;
                 const weighedPlantIds = queuedWeighedPlantIds();
-                clearPlantPortraits(picker);
+                const existingButtons = new Map(
+                    [...picker.children].map((button) => [
+                        button.dataset.plantId,
+                        button,
+                    ])
+                );
                 [...state.bootstrap.plants]
                     .sort(comparePlantsByNaturalLabel)
-                    .forEach((plant) => {
-                        const button = document.createElement("button");
-                        button.type = "button";
-                        button.className = "label-choice";
-                        button.dataset.plantId = plant.id;
-                        const label = document.createElement("span");
-                        label.textContent = plant.label || plant.id;
-                        button.append(
-                            createPlantPortrait(
-                                plant,
-                                "app-icon plant-choice-icon"
-                            ),
-                            label
-                        );
+                    .forEach((plant, index) => {
+                        let button = existingButtons.get(plant.id);
+                        existingButtons.delete(plant.id);
+                        const portraitName = plantIconName(plant);
+                        if (
+                            button &&
+                            button.dataset.portraitName !== portraitName
+                        ) {
+                            clearPlantPortraits(button);
+                            button.remove();
+                            button = null;
+                        }
+                        if (!button) {
+                            button = document.createElement("button");
+                            button.type = "button";
+                            button.className = "label-choice";
+                            button.dataset.plantId = plant.id;
+                            button.dataset.portraitName = portraitName;
+                            button.append(
+                                createPlantPortrait(
+                                    plant,
+                                    "app-icon plant-choice-icon"
+                                ),
+                                document.createElement("span")
+                            );
+                        }
+                        const label = button.querySelector("span");
+                        const labelText = plant.label || plant.id;
+                        if (label.textContent !== labelText)
+                            label.textContent = labelText;
                         const weighed = weighedPlantIds.has(plant.id);
                         button.classList.toggle("queued-weighed", weighed);
                         button.dataset.queuedWeighed = String(weighed);
@@ -11285,8 +11312,18 @@
                             "aria-pressed",
                             String(plant.id === currentId)
                         );
-                        picker.append(button);
+                        // Keep unchanged images connected and decoded. Rebuilding
+                        // the grid makes every cached SVG blink on mobile taps.
+                        if (picker.children[index] !== button)
+                            picker.insertBefore(
+                                button,
+                                picker.children[index] || null
+                            );
                     });
+                existingButtons.forEach((button) => {
+                    clearPlantPortraits(button);
+                    button.remove();
+                });
             }
 
             function setPlantPickerMode(mode, persist = true) {

@@ -23,8 +23,8 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-As of September 5, 2026, the checked-in source and stable production deployment
-both identify the logger as **5.18.0** on immutable Apps Script version **64**.
+As of September 5, 2026, the stable production deployment identifies the logger
+as **5.18.0** on immutable Apps Script version **64**.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
@@ -158,6 +158,13 @@ caching. Missing images fall back to the built-in plant icon. Logger 5.18.0 give
 the shared P19 and P20 planters their own photo-informed portraits, independent
 of their collection-contents links. Portrait caching never
 clears the local draft, save-recovery, or queued-observation storage.
+
+Logger 5.18.1 keeps label buttons and their decoded portraits in place when a
+plant is selected. Rebuilding the grid on each tap briefly blanked every SVG
+while the asynchronous image loader reattached cached artwork. Background plant
+refreshes now update labels, order, and selection while replacing only changed
+portraits. Phone hit-target recovery still replaces stale button hit boxes but
+retains their images, so orientation changes do not restart portrait loading.
 
 AppSheet uses a separate revisioned Drive folder and relative Image paths,
 recorded in [`appsheet-plant-portraits.json`](./appsheet-plant-portraits.json)

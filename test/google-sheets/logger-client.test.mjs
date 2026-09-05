@@ -1050,6 +1050,135 @@ describe("Garden logger browser recovery", () => {
         expect(window.localStorage.getItem("gardenPlantId")).toBe("P01");
     });
 
+    it("keeps loaded label portraits and keyboard focus during repeated plant selections", async () => {
+        const fixture = portraitCacheFixture();
+        const { window } = createLoggerWindow({
+            ...fixture,
+            storage: { gardenLoggerPlantPickerModeV1: "labels" },
+        });
+        const picker = window.document.querySelector("#labelPicker");
+        const buttons = [...picker.children];
+        const portraits = buttons.map((button) => button.querySelector("img"));
+        fixture.observers[0].show(...portraits);
+        await vi.waitFor(() =>
+            expect(
+                portraits.every((image) => image.src.startsWith("blob:"))
+            ).toBe(true)
+        );
+        const sources = portraits.map((image) => image.src);
+
+        for (const index of [
+            1,
+            0,
+            1,
+            1,
+        ]) {
+            const button = picker.children[index];
+            button.focus();
+            button.click();
+            expect(window.document.activeElement === button).toBe(true);
+            buttons.forEach((original, position) => {
+                expect(picker.children[position] === original).toBe(true);
+                expect(
+                    original.querySelector("img") === portraits[position]
+                ).toBe(true);
+                expect(portraits[position].src).toBe(sources[position]);
+                expect(original.getAttribute("aria-pressed")).toBe(
+                    String(position === index)
+                );
+            });
+        }
+        expect(fixture.fetch).toHaveBeenCalledTimes(2);
+        expect(window.localStorage.getItem("gardenPlantId")).toBe("P02");
+    });
+
+    it("reconciles refreshed plant labels without replacing unchanged portraits", () => {
+        let refreshHandlers;
+        const fixture = portraitCacheFixture();
+        const { window } = createLoggerWindow({
+            ...fixture,
+            bootstrapBehavior: (handlers) => {
+                refreshHandlers = handlers;
+            },
+            storage: {
+                gardenLoggerPlantPickerModeV1: "labels",
+                gardenLoggerBootstrapV2: JSON.stringify({
+                    savedAt: Date.now(),
+                    bootstrap,
+                }),
+            },
+        });
+        const picker = window.document.querySelector("#labelPicker");
+        const original = picker.querySelector('[data-plant-id="P01"]');
+        const originalPortrait = original.querySelector("img");
+        const removed = picker.querySelector('[data-plant-id="P02"] img');
+        refreshHandlers.success({
+            ...bootstrap,
+            plants: [
+                {
+                    ...bootstrap.plants[0],
+                    label: "H3",
+                    name: "Updated moon cactus",
+                },
+                { ...bootstrap.plants[1], id: "P03", label: "A2" },
+            ],
+        });
+        expect(
+            [...picker.children].map((button) => button.dataset.plantId)
+        ).toEqual(["P03", "P01"]);
+        expect(picker.children[1] === original).toBe(true);
+        expect(original.querySelector("img") === originalPortrait).toBe(true);
+        expect(original.querySelector("span").textContent).toBe("H3");
+        expect(original.getAttribute("aria-label")).toContain(
+            "Updated moon cactus"
+        );
+        expect(removed.isConnected).toBe(false);
+        expect(fixture.observers[0].targets.has(removed)).toBe(false);
+        expect(
+            [...fixture.observers[0].targets].every(
+                (image) => image.isConnected
+            )
+        ).toBe(true);
+    });
+
+    it("replaces a label portrait only when the plant's artwork mapping changes", () => {
+        let refreshHandlers;
+        const fixture = portraitCacheFixture();
+        const { window } = createLoggerWindow({
+            ...fixture,
+            bootstrapBehavior: (handlers) => {
+                refreshHandlers = handlers;
+            },
+            storage: {
+                gardenLoggerPlantPickerModeV1: "labels",
+                gardenLoggerBootstrapV2: JSON.stringify({
+                    savedAt: Date.now(),
+                    bootstrap,
+                }),
+            },
+        });
+        const picker = window.document.querySelector("#labelPicker");
+        const replaced = picker.children[0].querySelector("img");
+        const retained = picker.children[1].querySelector("img");
+        refreshHandlers.success({
+            ...bootstrap,
+            plants: [
+                {
+                    ...bootstrap.plants[0],
+                    fieldGuideUrl:
+                        "https://example.test/guide#mammillaria-plumosa",
+                },
+                bootstrap.plants[1],
+            ],
+        });
+        expect(replaced.isConnected).toBe(false);
+        expect(fixture.observers[0].targets.has(replaced)).toBe(false);
+        expect(
+            picker.children[0].querySelector("img").dataset.portraitUrl
+        ).toContain("mammillaria-plumosa.svg");
+        expect(picker.children[1].querySelector("img") === retained).toBe(true);
+    });
+
     it("keeps bulk selections, filters, and SVG portraits across list and label views", () => {
         const { window } = createLoggerWindow();
         const $ = (selector) => window.document.querySelector(selector);
@@ -2856,7 +2985,7 @@ describe("Garden logger browser recovery", () => {
         ).not.toBe(staleTarget);
     });
 
-    it("rebuilds label hit targets after orientation changes", () => {
+    it("rebuilds label hit targets after orientation changes while retaining portraits", () => {
         vi.useFakeTimers();
         const { window } = createLoggerWindow({
             storage: { gardenLoggerPlantPickerModeV1: "labels" },
@@ -2864,6 +2993,7 @@ describe("Garden logger browser recovery", () => {
         const original = window.document.querySelector(
             '#labelPicker [data-plant-id="P01"]'
         );
+        const portrait = original.querySelector("img");
 
         window.dispatchEvent(new window.Event("orientationchange"));
         vi.advanceTimersByTime(250);
@@ -2871,6 +3001,11 @@ describe("Garden logger browser recovery", () => {
         expect(
             window.document.querySelector('#labelPicker [data-plant-id="P01"]')
         ).not.toBe(original);
+        expect(
+            window.document.querySelector(
+                '#labelPicker [data-plant-id="P01"] img'
+            ) === portrait
+        ).toBe(true);
         expect(window.document.documentElement.className).toContain(
             "mobile-hit-recovery"
         );
