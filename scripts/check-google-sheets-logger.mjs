@@ -27,7 +27,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.17.0");
+assert.equal(vm.runInContext("GARDEN_LOGGER.version", context), "5.17.1");
 const webPlantImageUrls = JSON.parse(
     JSON.stringify(vm.runInContext("WEB_PLANT_IMAGE_URLS", context))
 );
@@ -379,6 +379,7 @@ assert.match(html, /state\.photosVisible && photoData\.length/);
 assert.match(html, /id="plantChoiceList"/);
 assert.match(html, /function plantIconName\(plant\)/);
 assert.match(html, /function createPlantPortrait\(plant, className\)/);
+assert.match(html, /const PLANT_ICON_REVISION = "[a-f0-9]{16}";/);
 assert.match(html, /"nick2bad4u\.github\.io"/);
 assert.match(html, /\.join\("\/"\)/);
 assert.match(

@@ -1,29 +1,154 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="portulacaria-afra-title portulacaria-afra-description" data-plant-slug="portulacaria-afra" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="portulacaria-afra-title portulacaria-afra-description" data-plant-slug="portulacaria-afra" focusable="false">
   <title id="portulacaria-afra-title">Elephant bush plant portrait</title>
-  <desc id="portulacaria-afra-description">A branching reddish-brown succulent shrub with many small round green leaves.</desc>
-  <path d="M12 18V4.5m0 3.2L8.2 5.8m3.8 5.5-5.2-1.7m5.2-3.3 4.2-2.1m-4.2 6 5-2.4m-5 6 4.8-1.9m-8.6-2.3-2.4 3.1m9.4-2.7 2.8 3" fill="none" stroke="#86533b" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.25"/>
-  <g fill="#56b66a" stroke="#2f6841" stroke-width="0.48">
-    <ellipse cx="6.3" cy="5.4" rx="1.55" ry="1.75"/>
-    <ellipse cx="5.2" cy="8.7" rx="1.65" ry="1.8"/>
-    <ellipse cx="5.5" cy="12.5" rx="1.55" ry="1.7"/>
-    <ellipse cx="8.4" cy="4.1" rx="1.45" ry="1.6"/>
-    <ellipse cx="8.5" cy="8" rx="1.55" ry="1.7"/>
-    <ellipse cx="8.5" cy="11.7" rx="1.45" ry="1.6"/>
-    <ellipse cx="11.8" cy="2.9" rx="1.5" ry="1.65"/>
-    <ellipse cx="12" cy="6.1" rx="1.45" ry="1.6"/>
-    <ellipse cx="13.6" cy="10" rx="1.55" ry="1.7"/>
-    <ellipse cx="16.5" cy="4" rx="1.55" ry="1.7"/>
-    <ellipse cx="18.1" cy="7.1" rx="1.65" ry="1.8"/>
-    <ellipse cx="17.6" cy="10.7" rx="1.55" ry="1.7"/>
-    <ellipse cx="16" cy="13.5" rx="1.45" ry="1.6"/>
-    <ellipse cx="11" cy="13.5" rx="1.4" ry="1.55"/>
-  </g>
-  <g fill="#84cf7f">
-    <circle cx="5.9" cy="4.9" r="0.38"/>
-    <circle cx="8.1" cy="7.5" r="0.38"/>
-    <circle cx="11.4" cy="2.5" r="0.38"/>
-    <circle cx="17.6" cy="6.5" r="0.4"/>
-    <circle cx="15.6" cy="13" r="0.36"/>
-  </g>
-  <path d="M5.5 17h13l-1.5 4.4H7z" fill="#d77a49" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  <desc id="portulacaria-afra-description">A fine branching reddish-brown succulent shrub with small rounded green leaves in opposite pairs.</desc>
+  <defs>
+      <linearGradient id="port-pot" x1="0" x2="0.9" y1="0" y2="1">
+          <stop offset="0" stop-color="#f2a46b" />
+          <stop offset="1" stop-color="#c35a38" />
+      </linearGradient>
+      <radialGradient id="elephant-leaf" cx="35%" cy="23%" r="80%">
+          <stop offset="0" stop-color="#bddc88" />
+          <stop offset="0.5" stop-color="#7cb366" />
+          <stop offset="1" stop-color="#4e8c54" />
+      </radialGradient>
+      <g id="elephant-blade">
+          <path
+              d="M0 0c-3-4-7-4-8-1-1 4 4 6 8 1Z"
+              fill="url(#elephant-leaf)"
+              stroke="#43764a"
+              stroke-width="0.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+          />
+          <path
+              d="M-6-1q1-1 2.5-0.6"
+              fill="none"
+              stroke="#d7e6a9"
+              stroke-width="0.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-opacity="0.7"
+          />
+      </g>
+  </defs>
+  <ellipse
+      cx="32"
+      cy="60.5"
+      rx="23"
+      ry="1.9"
+      fill="#244b3b"
+      stroke="none"
+      stroke-width="0"
+      opacity="0.12"
+  />
+  <ellipse
+      cx="32"
+      cy="45.5"
+      rx="23"
+      ry="2.1"
+      fill="#745c45"
+      stroke="none"
+      stroke-width="1"
+  />
+  <path
+      d="M31 47C30 37 31 26 31 17M31 35L18 28M31 37L46 28M31 26L23 21M31 30L41 21M31 42L23 36L17 37M31 41L38 35L43 38"
+      fill="none"
+      stroke="#925746"
+      stroke-width="1.65"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(31 17) rotate(0) scale(0.75)"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(31 17) rotate(180) scale(0.75)"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(23 21) rotate(-30) scale(0.85)"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(23 21) rotate(150) scale(0.85)"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(41 21) rotate(30) scale(0.9)"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(41 21) rotate(210) scale(0.9)"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(18 28) rotate(-25) scale(0.92)"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(18 28) rotate(155) scale(0.92)"
+  />
+  <use href="#elephant-blade" transform="translate(30 29) rotate(0) scale(0.9)" />
+  <use
+      href="#elephant-blade"
+      transform="translate(30 29) rotate(180) scale(0.9)"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(46 28) rotate(25) scale(0.89)"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(46 28) rotate(205) scale(0.89)"
+  />
+  <use href="#elephant-blade" transform="translate(23 36) rotate(-30) scale(1)" />
+  <use href="#elephant-blade" transform="translate(23 36) rotate(150) scale(1)" />
+  <use
+      href="#elephant-blade"
+      transform="translate(38 35) rotate(20) scale(0.95)"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(38 35) rotate(200) scale(0.95)"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(17 37) rotate(-15) scale(0.7)"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(17 37) rotate(165) scale(0.7)"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(31 42) rotate(0) scale(0.87)"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(31 42) rotate(180) scale(0.87)"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(43 38) rotate(32) scale(0.8)"
+  />
+  <use
+      href="#elephant-blade"
+      transform="translate(43 38) rotate(212) scale(0.8)"
+  />
+  <path
+      d="M7 45h50v7H7z"
+      fill="#f3a76e"
+      stroke="#5f3a2a"
+      stroke-linejoin="round"
+      stroke-width="1.7"
+  />
+  <path
+      d="m10 52 4 9h36l4-9Z"
+      fill="url(#port-pot)"
+      stroke="#5f3a2a"
+      stroke-linejoin="round"
+      stroke-width="1.7"
+  />
 </svg>

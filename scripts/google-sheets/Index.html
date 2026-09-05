@@ -5538,6 +5538,12 @@
                 "nick2bad4u.github.io",
             ].join("/");
             const PLANT_ICON_PATH = "/Gardening/assets/plant-icons/";
+            // Generated from the exported artwork by sync-plant-icons.mjs.
+            const PLANT_ICON_REVISION = "a1783c74311d9438";
+            const PLANT_ICON_CACHE = "gardenLoggerPlantPortraitsV1";
+            const plantPortraitRequests = new Map();
+            let plantPortraitCache;
+            let plantPortraitObserver;
             const OBSERVATION_QUEUE_KEY = "gardenLoggerObservationQueueV1";
             const OBSERVATION_QUEUE_BACKUP_KEY =
                 "gardenLoggerObservationQueueBackupV1";
@@ -6694,7 +6700,83 @@
                 const match = /#([a-z0-9-]+)$/i.exec(
                     String(plant?.fieldGuideUrl || "")
                 );
-                return match ? match[1].toLowerCase() : "";
+                const slug = match ? match[1].toLowerCase() : "";
+                // Shared planters link to the contents, not a species portrait.
+                return slug === "contents" ? "" : slug;
+            }
+
+            async function cachedPlantPortrait(source) {
+                try {
+                    plantPortraitCache ??= window.caches.open(PLANT_ICON_CACHE);
+                    const cache = await plantPortraitCache;
+                    const key = source.split("?")[0];
+                    const cached = await cache.match(key);
+                    let blob;
+                    if (
+                        cached?.headers.get("X-Garden-Icon-Revision") ===
+                        PLANT_ICON_REVISION
+                    ) {
+                        blob = await cached.blob();
+                    } else {
+                        const response = await fetch(source, {
+                            cache: "force-cache",
+                            credentials: "omit",
+                            referrerPolicy: "no-referrer",
+                        });
+                        if (
+                            !response.ok ||
+                            !response.headers
+                                .get("Content-Type")
+                                ?.includes("image/svg+xml")
+                        ) {
+                            return source;
+                        }
+                        blob = await response.blob();
+                        if (blob.size > 128 * 1024) return source;
+                        // One entry per portrait replaces older artwork without
+                        // touching localStorage, where unsent observations live.
+                        await cache
+                            .put(
+                                key,
+                                new Response(blob, {
+                                    headers: {
+                                        "Content-Type": "image/svg+xml",
+                                        "X-Garden-Icon-Revision":
+                                            PLANT_ICON_REVISION,
+                                    },
+                                })
+                            )
+                            .catch(() => {});
+                    }
+                    return URL.createObjectURL(blob);
+                } catch {
+                    // Storage restrictions or offline downloads must never
+                    // prevent logging; the normal image cache is the fallback.
+                    return source;
+                }
+            }
+
+            function loadPlantPortrait(image) {
+                const source = image.dataset.portraitUrl;
+                delete image.dataset.portraitUrl;
+                if (!plantPortraitRequests.has(source)) {
+                    plantPortraitRequests.set(
+                        source,
+                        cachedPlantPortrait(source)
+                    );
+                }
+                plantPortraitRequests.get(source).then((url) => {
+                    image.src = url;
+                });
+            }
+
+            function clearPlantPortraits(container) {
+                container
+                    .querySelectorAll("img[data-portrait-url]")
+                    .forEach((image) => {
+                        plantPortraitObserver?.unobserve(image);
+                    });
+                container.replaceChildren();
             }
 
             function createPlantPortrait(plant, className) {
@@ -6707,12 +6789,34 @@
                 image.decoding = "async";
                 image.loading = "lazy";
                 image.referrerPolicy = "no-referrer";
-                image.src = `${PUBLIC_SITE_ORIGIN}${PLANT_ICON_PATH}${encodeURIComponent(iconName)}.svg`;
+                const source = `${PUBLIC_SITE_ORIGIN}${PLANT_ICON_PATH}${encodeURIComponent(iconName)}.svg?v=${PLANT_ICON_REVISION}`;
                 image.addEventListener(
                     "error",
                     () => image.replaceWith(createIcon("plant", className)),
                     { once: true }
                 );
+                if (!window.caches || !URL.createObjectURL) {
+                    image.src = source;
+                } else {
+                    image.dataset.portraitUrl = source;
+                    if (window.IntersectionObserver) {
+                        plantPortraitObserver ??= new IntersectionObserver(
+                            (entries) => {
+                                entries.forEach(
+                                    ({ isIntersecting, target }) => {
+                                        if (!isIntersecting) return;
+                                        plantPortraitObserver.unobserve(target);
+                                        loadPlantPortrait(target);
+                                    }
+                                );
+                            },
+                            { rootMargin: "120px" }
+                        );
+                        plantPortraitObserver.observe(image);
+                    } else {
+                        loadPlantPortrait(image);
+                    }
+                }
                 return image;
             }
 
@@ -6733,8 +6837,8 @@
                 );
                 const summary = $("plantChoiceSummary");
                 const list = $("plantChoiceList");
-                summary.replaceChildren();
-                list.replaceChildren();
+                clearPlantPortraits(summary);
+                clearPlantPortraits(list);
                 if (!selected) {
                     summary.append(
                         createIcon("plant", "app-icon plant-choice-icon"),
@@ -6863,7 +6967,7 @@
                 const picker = $("labelPicker");
                 const currentId = $("plantSelect").value;
                 const weighedPlantIds = queuedWeighedPlantIds();
-                picker.replaceChildren();
+                clearPlantPortraits(picker);
                 [...state.bootstrap.plants]
                     .sort(comparePlantsByNaturalLabel)
                     .forEach((plant) => {

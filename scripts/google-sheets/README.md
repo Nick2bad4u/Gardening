@@ -23,8 +23,8 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-As of September 4, 2026, the checked-in source and stable production deployment
-both identify the logger as **5.17.0** on immutable Apps Script version **62**.
+The production baseline verified before the 5.17.1 rollout on September 4, 2026,
+identifies the logger as **5.17.0** on immutable Apps Script version **62**.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
@@ -92,6 +92,26 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
   30 live-data model results; the cleanup also passed the native Sheets fixture.
 
 The [Dry-down learning](#dry-down-learning) section explains the forecast rules.
+
+## Plant portrait caching
+
+Logger 5.17.1 loads portraits as they enter the visible picker area and shares
+one download between repeated uses of a plant in the current page. The browser's
+Cache Storage retains each SVG across reloads, including when the image server
+is unreachable. This caches artwork only; it does not make the Google-hosted
+logger itself available offline.
+
+`npm run build:booklet` derives `PLANT_ICON_REVISION` from the 36 exported SVGs.
+Each image URL includes this revision. The cache stores one entry per portrait
+and replaces an older revision when needed, so future artwork updates do not
+leave the logger stuck on old icons or accumulate a second complete set.
+Publish the Pages assets before deploying a logger that refers to their revision.
+
+If persistent image storage is unavailable, portraits use ordinary browser HTTP
+caching. Missing images fall back to the built-in plant icon. The shared P19 and
+P20 planters use that icon directly because their field-guide links point to the
+collection contents rather than a single plant profile. Portrait caching never
+clears the local draft, save-recovery, or queued-observation storage.
 
 ## Local development and tests
 

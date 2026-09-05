@@ -574,7 +574,7 @@ describe("same-setup dry-down learning", () => {
         };
         context.workbookPlantRecords_ = () => [{ id: "P01", name: "Plant 1" }];
         expect(context.installDryDownLearning()).toMatchObject({
-            loggerVersion: "5.17.0",
+            loggerVersion: "5.17.1",
             plants: 1,
             historyChanged: false,
             baselineColumns: 34,

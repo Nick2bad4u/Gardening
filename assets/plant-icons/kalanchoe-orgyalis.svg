@@ -1,16 +1,166 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="kalanchoe-orgyalis-title kalanchoe-orgyalis-description" data-plant-slug="kalanchoe-orgyalis" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="kalanchoe-orgyalis-title kalanchoe-orgyalis-description" data-plant-slug="kalanchoe-orgyalis" focusable="false">
   <title id="kalanchoe-orgyalis-title">Copper spoons plant portrait</title>
-  <desc id="kalanchoe-orgyalis-description">A branching succulent with copper-brown spoon-shaped leaves in a blue planter.</desc>
-  <path d="M12 18V4.9m0 4.1L8 6.5m4 5.9-4.7-1.5m4.7 0.2 4.2-2.8m-4.2 6.1 4.9-1.7m-4.9-6 3.5-2.6" fill="none" stroke="#6e553c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.15"/>
-  <g fill="#bd7350" stroke="#6e452f" stroke-width="0.65">
-    <ellipse cx="7.2" cy="6.2" rx="2.8" ry="1.55" transform="rotate(28 7.2 6.2)"/>
-    <ellipse cx="6.9" cy="10.9" rx="3" ry="1.65" transform="rotate(12 6.9 10.9)"/>
-    <ellipse cx="16.5" cy="8.1" rx="2.9" ry="1.55" transform="rotate(-28 16.5 8.1)"/>
-    <ellipse cx="17" cy="12.7" rx="3" ry="1.65" transform="rotate(-15 17 12.7)"/>
-    <ellipse cx="12" cy="3.9" rx="2.15" ry="1.35"/>
-    <ellipse cx="16.2" cy="3.7" rx="2.3" ry="1.35" transform="rotate(-24 16.2 3.7)"/>
-    <ellipse cx="8.1" cy="14.2" rx="2.4" ry="1.4" transform="rotate(18 8.1 14.2)"/>
+  <desc id="kalanchoe-orgyalis-description">A branching succulent with felted copper-brown spoon-shaped leaves and pale new tips in a blue planter.</desc>
+  <defs>
+      <linearGradient id="orgyalis-pot" x1="0" x2="0.9" y1="0" y2="1">
+          <stop offset="0" stop-color="#78bee5" />
+          <stop offset="1" stop-color="#347bb3" />
+      </linearGradient>
+      <linearGradient id="copper-leaf" x1="0" y1="0" x2="0.85" y2="1">
+          <stop offset="0" stop-color="#d9a370" />
+          <stop offset="0.5" stop-color="#b47f55" />
+          <stop offset="1" stop-color="#845d46" />
+      </linearGradient>
+      <linearGradient id="copper-young" x1="0" y1="0" x2="0.85" y2="1">
+          <stop offset="0" stop-color="#d4d4ae" />
+          <stop offset="0.5" stop-color="#aab792" />
+          <stop offset="1" stop-color="#7c9475" />
+      </linearGradient>
+      <clipPath id="copper-clip" clipPathUnits="userSpaceOnUse">
+          <path
+              d="M0 0C-3 1-9-0.5-12-4-14-7-12-9-9-9-4-9-1-4 0 0Z"
+              fill="none"
+              stroke="none"
+              stroke-width="1"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+          />
+      </clipPath>
+      <pattern
+          id="copper-felt"
+          width="2.8"
+          height="2.8"
+          patternUnits="userSpaceOnUse"
+      >
+          <ellipse
+              cx="0.8"
+              cy="0.8"
+              rx="0.23"
+              ry="0.23"
+              fill="#fff9e8"
+              stroke="none"
+              stroke-width="1"
+          />
+          <ellipse
+              cx="2.2"
+              cy="2.1"
+              rx="0.18"
+              ry="0.18"
+              fill="#fff9e8"
+              stroke="none"
+              stroke-width="1"
+          />
+      </pattern>
+      <g id="copper-blade">
+          <path
+              d="M0 0C-3 1-9-0.5-12-4-14-7-12-9-9-9-4-9-1-4 0 0Z"
+              fill="url(#copper-leaf)"
+              stroke="#805940"
+              stroke-width="0.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+          />
+          <g clip-path="url(#copper-clip)">
+              <path
+                  d="M0 0C-3 1-9-0.5-12-4-14-7-12-9-9-9-4-9-1-4 0 0Z"
+                  fill="url(#copper-felt)"
+                  stroke="none"
+                  stroke-width="0"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  opacity="0.48"
+              />
+              <path
+                  d="M-1-0.8q-4-4-9-5.3"
+                  fill="none"
+                  stroke="#e1b98a"
+                  stroke-width="0.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-opacity="0.65"
+              />
+          </g>
+      </g>
+  </defs>
+  <ellipse
+      cx="32"
+      cy="60.5"
+      rx="21"
+      ry="1.9"
+      fill="#244b3b"
+      stroke="none"
+      stroke-width="0"
+      opacity="0.12"
+  />
+  <ellipse
+      cx="32"
+      cy="45.5"
+      rx="21"
+      ry="2.1"
+      fill="#745c45"
+      stroke="none"
+      stroke-width="1"
+  />
+  <path
+      d="M32 47C31 38 31 26 32 12M31.6 42L27 40M31.6 42L36 40M31.2 35L22 30M31.2 35L41 30M31.5 27L26 22M31.5 27L37 22M32 17L31 14M32 17L33 14"
+      fill="none"
+      stroke="#806349"
+      stroke-width="1.65"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+  <use href="#copper-blade" transform="translate(27 40) rotate(-7) scale(1)" />
+  <use
+      href="#copper-blade"
+      transform="translate(36 40) scale(-1 1) rotate(-7) scale(0.98)"
+  />
+  <use href="#copper-blade" transform="translate(22 30) rotate(3) scale(1.03)" />
+  <use
+      href="#copper-blade"
+      transform="translate(41 30) scale(-1 1) rotate(3) scale(0.98)"
+  />
+  <use href="#copper-blade" transform="translate(26 22) rotate(8) scale(0.8)" />
+  <use
+      href="#copper-blade"
+      transform="translate(37 22) scale(-1 1) rotate(8) scale(0.8)"
+  />
+  <use href="#copper-blade" transform="translate(31 14) rotate(30) scale(0.73)" />
+  <use
+      href="#copper-blade"
+      transform="translate(33 14) scale(-1 1) rotate(30) scale(0.7)"
+  />
+  <g transform="translate(32 12) rotate(50) scale(0.43)">
+      <path
+          d="M0 0C-3 1-9-0.5-12-4-14-7-12-9-9-9-4-9-1-4 0 0Z"
+          fill="url(#copper-young)"
+          stroke="#7f8e6d"
+          stroke-width="0.75"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+      />
   </g>
-  <path d="m5.6 5.6 3 0.8m5.2 2.4 3.2-1m-3.1 5.6 3.4-1" fill="none" stroke="#e2a077" stroke-linecap="round" stroke-width="0.55"/>
-  <path d="M5.6 17h12.8L17 21.4H7z" fill="#70a9c8" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
+  <g transform="translate(33 12) scale(-1 1) rotate(50) scale(0.38)">
+      <path
+          d="M0 0C-3 1-9-0.5-12-4-14-7-12-9-9-9-4-9-1-4 0 0Z"
+          fill="url(#copper-young)"
+          stroke="#7f8e6d"
+          stroke-width="0.75"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+      />
+  </g>
+  <path
+      d="M9 45h46v7H9z"
+      fill="#80c3e7"
+      stroke="#28577e"
+      stroke-linejoin="round"
+      stroke-width="1.7"
+  />
+  <path
+      d="m12 52 4 9h32l4-9Z"
+      fill="url(#orgyalis-pot)"
+      stroke="#28577e"
+      stroke-linejoin="round"
+      stroke-width="1.7"
+  />
 </svg>

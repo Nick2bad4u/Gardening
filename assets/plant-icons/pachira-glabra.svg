@@ -1,34 +1,107 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="pachira-glabra-title pachira-glabra-description" data-plant-slug="pachira-glabra" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="pachira-glabra-title pachira-glabra-description" data-plant-slug="pachira-glabra" focusable="false">
   <title id="pachira-glabra-title">Money tree plant portrait</title>
-  <desc id="pachira-glabra-description">A braided brown trunk supporting three fans of green palmate leaves in a blue planter.</desc>
-  <path d="M10.4 18.6c2-3.4 2.9-6.2 1.2-9.2m2 9.2c-1.9-3.5-2.8-6.3-1.1-9.2" fill="none" stroke="#6e452f" stroke-linecap="round" stroke-width="2.5"/>
-  <path d="M10.4 18.6c1.3-2.1 2.1-4 2-5.8m1.2 5.8c-1.2-2.2-2-4.1-1.9-5.9" fill="none" stroke="#b37b4e" stroke-linecap="round" stroke-width="1"/>
-  <path d="M12 11V7.2m-0.2 3.1-4.4-1.8m4.8 1.2 4.5-2" fill="none" stroke="#6e452f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1"/>
-  <g fill="#4da965" stroke="#2c6240" stroke-linejoin="round" stroke-width="0.42">
-    <path d="M7.2 9.1c-1.1-1.8-0.8-4.1 0.4-4.8 1.3 0.9 1.2 3.2-0.4 4.8Z" transform="rotate(-58 7.2 9.1)"/>
-    <path d="M7.2 9.1c-1.1-1.8-0.8-4.1 0.4-4.8 1.3 0.9 1.2 3.2-0.4 4.8Z" transform="rotate(-28 7.2 9.1)"/>
-    <path d="M7.2 9.1c-1.1-1.8-0.8-4.1 0.4-4.8 1.3 0.9 1.2 3.2-0.4 4.8Z"/>
-    <path d="M7.2 9.1c-1.1-1.8-0.8-4.1 0.4-4.8 1.3 0.9 1.2 3.2-0.4 4.8Z" transform="rotate(28 7.2 9.1)"/>
-    <path d="M7.2 9.1c-1.1-1.8-0.8-4.1 0.4-4.8 1.3 0.9 1.2 3.2-0.4 4.8Z" transform="rotate(58 7.2 9.1)"/>
-  </g>
-  <g fill="#58b76d" stroke="#2c6240" stroke-linejoin="round" stroke-width="0.42">
-    <path d="M12 7.3c-1.1-1.8-0.8-4.1 0.4-4.8 1.3 0.9 1.2 3.2-0.4 4.8Z" transform="rotate(-58 12 7.3)"/>
-    <path d="M12 7.3c-1.1-1.8-0.8-4.1 0.4-4.8 1.3 0.9 1.2 3.2-0.4 4.8Z" transform="rotate(-28 12 7.3)"/>
-    <path d="M12 7.3c-1.1-1.8-0.8-4.1 0.4-4.8 1.3 0.9 1.2 3.2-0.4 4.8Z"/>
-    <path d="M12 7.3c-1.1-1.8-0.8-4.1 0.4-4.8 1.3 0.9 1.2 3.2-0.4 4.8Z" transform="rotate(28 12 7.3)"/>
-    <path d="M12 7.3c-1.1-1.8-0.8-4.1 0.4-4.8 1.3 0.9 1.2 3.2-0.4 4.8Z" transform="rotate(58 12 7.3)"/>
-  </g>
-  <g fill="#3e955e" stroke="#2c6240" stroke-linejoin="round" stroke-width="0.42">
-    <path d="M16.8 8.4c-1.1-1.8-0.8-4.1 0.4-4.8 1.3 0.9 1.2 3.2-0.4 4.8Z" transform="rotate(-58 16.8 8.4)"/>
-    <path d="M16.8 8.4c-1.1-1.8-0.8-4.1 0.4-4.8 1.3 0.9 1.2 3.2-0.4 4.8Z" transform="rotate(-28 16.8 8.4)"/>
-    <path d="M16.8 8.4c-1.1-1.8-0.8-4.1 0.4-4.8 1.3 0.9 1.2 3.2-0.4 4.8Z"/>
-    <path d="M16.8 8.4c-1.1-1.8-0.8-4.1 0.4-4.8 1.3 0.9 1.2 3.2-0.4 4.8Z" transform="rotate(28 16.8 8.4)"/>
-    <path d="M16.8 8.4c-1.1-1.8-0.8-4.1 0.4-4.8 1.3 0.9 1.2 3.2-0.4 4.8Z" transform="rotate(58 16.8 8.4)"/>
-  </g>
-  <g fill="#d0d47a" stroke="#617141" stroke-width="0.18">
-    <circle cx="7.2" cy="9.1" r="0.38"/>
-    <circle cx="12" cy="7.3" r="0.38"/>
-    <circle cx="16.8" cy="8.4" r="0.38"/>
-  </g>
-  <path d="M5.4 17.7h13.2l-1.5 3.8H6.9z" fill="#6c9ec7" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
+  <desc id="pachira-glabra-description">A slim tapering trunk with connected stalks and fans of long pointed green palmate leaflets in a blue planter.</desc>
+  <defs>
+      <linearGradient id="pachira-pot" x1="0" x2="0.9" y1="0" y2="1">
+          <stop offset="0" stop-color="#7dc1e7" />
+          <stop offset="1" stop-color="#347ab2" />
+      </linearGradient>
+      <linearGradient id="money-leaf" x1="0" y1="0" x2="0.85" y2="1">
+          <stop offset="0" stop-color="#a6c879" />
+          <stop offset="0.5" stop-color="#5a9b58" />
+          <stop offset="1" stop-color="#2e6948" />
+      </linearGradient>
+      <linearGradient id="money-trunk" x1="0" y1="0" x2="0.85" y2="1">
+          <stop offset="0" stop-color="#af9e76" />
+          <stop offset="0.5" stop-color="#877755" />
+          <stop offset="1" stop-color="#5e6144" />
+      </linearGradient>
+      <g id="money-blade">
+          <path
+              d="M0 0C-2-3-3.4-8 0-14 3.4-8 2-3 0 0Z"
+              fill="url(#money-leaf)"
+              stroke="#356747"
+              stroke-width="0.55"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+          />
+          <path
+              d="M0-1v-10.5"
+              fill="none"
+              stroke="#c2d498"
+              stroke-width="0.45"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+          />
+      </g>
+      <g id="money-fan">
+          <use href="#money-blade" transform="rotate(-68) scale(0.9)" />
+          <use href="#money-blade" transform="rotate(-35) scale(0.9)" />
+          <use href="#money-blade" transform="rotate(0) scale(1)" />
+          <use href="#money-blade" transform="rotate(35) scale(0.9)" />
+          <use href="#money-blade" transform="rotate(68) scale(0.9)" />
+      </g>
+  </defs>
+  <ellipse
+      cx="32"
+      cy="60.5"
+      rx="22"
+      ry="1.9"
+      fill="#244b3b"
+      stroke="none"
+      stroke-width="0"
+      opacity="0.12"
+  />
+  <ellipse
+      cx="32"
+      cy="45.5"
+      rx="22"
+      ry="2.1"
+      fill="#745c45"
+      stroke="none"
+      stroke-width="1"
+  />
+  <path
+      d="M28 47c3-9 3-21 3-28h3c-1 9 0 19 3 28Z"
+      fill="url(#money-trunk)"
+      stroke="#586348"
+      stroke-width="1.1"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+  <path
+      d="M32 45c-1-7 2-13 0-19"
+      fill="none"
+      stroke="#c0b386"
+      stroke-width="0.65"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+  <path
+      d="M32 29L19 23M32 27L46 21M32 35L16 33M32 35L48 32M32 26L33 18"
+      fill="none"
+      stroke="#63844e"
+      stroke-width="1.25"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+  <use href="#money-fan" transform="translate(19 23) rotate(-34) scale(0.88)" />
+  <use href="#money-fan" transform="translate(46 21) rotate(30) scale(0.9)" />
+  <use href="#money-fan" transform="translate(16 33) rotate(-45) scale(0.66)" />
+  <use href="#money-fan" transform="translate(48 32) rotate(48) scale(0.66)" />
+  <use href="#money-fan" transform="translate(33 18) rotate(0) scale(0.98)" />
+  <path
+      d="M8 45h48v7H8z"
+      fill="#82c4e8"
+      stroke="#28577e"
+      stroke-linejoin="round"
+      stroke-width="1.7"
+  />
+  <path
+      d="m11 52 4 9h34l4-9Z"
+      fill="url(#pachira-pot)"
+      stroke="#28577e"
+      stroke-linejoin="round"
+      stroke-width="1.7"
+  />
 </svg>

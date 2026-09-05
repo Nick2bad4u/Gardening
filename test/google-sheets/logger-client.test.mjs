@@ -10,6 +10,9 @@ const html = fs.readFileSync(
 const scriptSource = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].at(
     -1
 )[1];
+const portraitRevision = html.match(
+    /const PLANT_ICON_REVISION = "([a-f0-9]+)";/
+)[1];
 const trackerDataSource = fs.readFileSync(
     new URL("../../docs/layouts/plant-tracker-data.js", import.meta.url),
     "utf8"
@@ -234,6 +237,7 @@ function createLoggerWindow({
     storage = {},
     storageUnavailable = false,
     matchMediaUnavailable = false,
+    configureWindow = () => {},
 } = {}) {
     const window = new Window({
         url: "https://script.google.com/macros/s/test/exec",
@@ -314,8 +318,69 @@ function createLoggerWindow({
         },
     });
 
+    configureWindow(window);
     window.eval(scriptSource);
     return { behaviors, calls, window };
+}
+
+function portraitCacheFixture({
+    saved = new Map(),
+    offline = false,
+    writeFails = false,
+    openFails = false,
+} = {}) {
+    const observers = [];
+    const fetch = vi.fn(async () => {
+        if (offline) throw new Error("Offline");
+        return new Response(
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="20"/></svg>',
+            {
+                headers: { "Content-Type": "image/svg+xml" },
+            }
+        );
+    });
+    const cache = {
+        match: vi.fn(async (key) => saved.get(key)?.clone()),
+        put: vi.fn(async (key, response) => {
+            if (writeFails) throw new Error("Cache quota exceeded");
+            saved.set(key, response.clone());
+        }),
+    };
+    const configureWindow = (window) => {
+        Object.defineProperty(window, "caches", {
+            value: {
+                open: vi.fn(async () => {
+                    if (openFails) throw new Error("Storage blocked");
+                    return cache;
+                }),
+            },
+        });
+        window.fetch = fetch;
+        window.Response = Response;
+        window.URL.createObjectURL = vi.fn(
+            () =>
+                `blob:portrait-${window.URL.createObjectURL.mock.calls.length}`
+        );
+        window.IntersectionObserver = class {
+            targets = new Set();
+            constructor(callback) {
+                this.callback = callback;
+                observers.push(this);
+            }
+            observe(target) {
+                this.targets.add(target);
+            }
+            unobserve(target) {
+                this.targets.delete(target);
+            }
+            show(...targets) {
+                this.callback(
+                    targets.map((target) => ({ target, isIntersecting: true }))
+                );
+            }
+        };
+    };
+    return { saved, cache, fetch, observers, configureWindow };
 }
 
 afterEach(() => {
@@ -1171,7 +1236,7 @@ describe("Garden logger browser recovery", () => {
     it("uses the selected plant's lightweight SVG portrait in list and label pickers", () => {
         const { window } = createLoggerWindow();
         const expectedSrc = new URL(
-            "/Gardening/assets/plant-icons/gymnocalycium-mihanovichii-variegated.svg",
+            `/Gardening/assets/plant-icons/gymnocalycium-mihanovichii-variegated.svg?v=${portraitRevision}`,
             [
                 "https:",
                 "",
@@ -1203,6 +1268,149 @@ describe("Garden logger browser recovery", () => {
             "no-referrer"
         );
     });
+
+    it("uses the built-in portrait for shared planters without requesting a contents SVG", () => {
+        const { window } = createLoggerWindow({
+            bootstrapData: {
+                ...bootstrap,
+                plants: [
+                    {
+                        ...bootstrap.plants[0],
+                        fieldGuideUrl: "https://example.test/#contents",
+                    },
+                ],
+            },
+        });
+        expect(
+            window.document.querySelector("#plantChoiceSummary img")
+        ).toBeNull();
+        expect(
+            window.document
+                .querySelector("#plantChoiceSummary use")
+                .getAttribute("href")
+        ).toBe("#app-icon-plant");
+    });
+
+    it("loads only visible portraits and shares one download between duplicate images", async () => {
+        const fixture = portraitCacheFixture();
+        const { window } = createLoggerWindow(fixture);
+        const selected = window.document.querySelector(
+            "#plantChoiceSummary img"
+        );
+        const duplicate = window.document.querySelector(
+            '#plantChoiceList [data-plant-id="P01"] img'
+        );
+        const observer = fixture.observers[0];
+        expect(fixture.fetch).not.toHaveBeenCalled();
+        observer.show(selected, duplicate);
+        await vi.waitFor(() => expect(selected.src).toMatch(/^blob:/));
+        expect(duplicate.src).toBe(selected.src);
+        expect(fixture.fetch).toHaveBeenCalledTimes(1);
+        expect(fixture.fetch).toHaveBeenCalledWith(
+            expect.stringContaining(`?v=${portraitRevision}`),
+            {
+                cache: "force-cache",
+                credentials: "omit",
+                referrerPolicy: "no-referrer",
+            }
+        );
+        expect(fixture.saved.size).toBe(1);
+        expect(
+            [...fixture.saved.values()][0].headers.get("X-Garden-Icon-Revision")
+        ).toBe(portraitRevision);
+        window.document.querySelector("#plantSearch").value = "Yellow";
+        window.document
+            .querySelector("#plantSearch")
+            .dispatchEvent(new window.Event("input"));
+        expect(
+            [...observer.targets].every((target) => target.isConnected)
+        ).toBe(true);
+    });
+
+    it("reuses a downloaded portrait after a reload without any network request, including offline", async () => {
+        const first = portraitCacheFixture();
+        const firstWindow = createLoggerWindow(first).window;
+        const firstImage = firstWindow.document.querySelector(
+            "#plantChoiceSummary img"
+        );
+        first.observers[0].show(firstImage);
+        await vi.waitFor(() => expect(firstImage.src).toMatch(/^blob:/));
+
+        const next = portraitCacheFixture({
+            saved: first.saved,
+            offline: true,
+        });
+        const nextWindow = createLoggerWindow(next).window;
+        const nextImage = nextWindow.document.querySelector(
+            "#plantChoiceSummary img"
+        );
+        next.observers[0].show(nextImage);
+        await vi.waitFor(() => expect(nextImage.src).toMatch(/^blob:/));
+        expect(next.fetch).not.toHaveBeenCalled();
+    });
+
+    it("replaces old artwork in the same cache entry when the generated revision changes", async () => {
+        const key =
+            "https://nick2bad4u.github.io/Gardening/assets/plant-icons/gymnocalycium-mihanovichii-variegated.svg";
+        const saved = new Map([
+            [
+                key,
+                new Response("<svg/>", {
+                    headers: {
+                        "Content-Type": "image/svg+xml",
+                        "X-Garden-Icon-Revision": "old",
+                    },
+                }),
+            ],
+        ]);
+        const fixture = portraitCacheFixture({ saved });
+        const { window } = createLoggerWindow(fixture);
+        const image = window.document.querySelector("#plantChoiceSummary img");
+        fixture.observers[0].show(image);
+        await vi.waitFor(() => expect(image.src).toMatch(/^blob:/));
+        expect(fixture.fetch).toHaveBeenCalledTimes(1);
+        expect(saved.size).toBe(1);
+        expect(saved.get(key).headers.get("X-Garden-Icon-Revision")).toBe(
+            portraitRevision
+        );
+    });
+
+    it.each([
+        { writeFails: true },
+        { openFails: true },
+        { offline: true },
+    ])(
+        "keeps unsent observations intact when the image cache or download fails: %j",
+        async (failure) => {
+            const fixture = portraitCacheFixture(failure);
+            const queue = JSON.stringify([queuedWeight()]);
+            const { window } = createLoggerWindow({
+                ...fixture,
+                storage: { gardenLoggerObservationQueueV1: queue },
+            });
+            const storedQueue = window.localStorage.getItem(
+                "gardenLoggerObservationQueueV1"
+            );
+            const image = window.document.querySelector(
+                "#plantChoiceSummary img"
+            );
+            fixture.observers[0].show(image);
+            await vi.waitFor(() =>
+                expect(image.getAttribute("src")).toBeTruthy()
+            );
+            if (failure.writeFails) expect(image.src).toMatch(/^blob:/);
+            else expect(image.src).toContain(`.svg?v=${portraitRevision}`);
+            expect(
+                window.localStorage.getItem("gardenLoggerObservationQueueV1")
+            ).toBe(storedQueue);
+            image.dispatchEvent(new window.Event("error"));
+            expect(
+                window.document
+                    .querySelector("#plantChoiceSummary svg use")
+                    .getAttribute("href")
+            ).toBe("#app-icon-plant");
+        }
+    );
 
     it("shows the selected plant's last completed dry-cycle weight", () => {
         const { window } = createLoggerWindow();

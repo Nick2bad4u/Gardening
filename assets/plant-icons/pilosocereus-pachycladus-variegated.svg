@@ -1,15 +1,173 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="pilosocereus-pachycladus-variegated-title pilosocereus-pachycladus-variegated-description" data-plant-slug="pilosocereus-pachycladus-variegated" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="pilosocereus-pachycladus-variegated-title pilosocereus-pachycladus-variegated-description" data-plant-slug="pilosocereus-pachycladus-variegated" focusable="false">
   <title id="pilosocereus-pachycladus-variegated-title">Variegated blue torch cactus plant portrait</title>
-  <desc id="pilosocereus-pachycladus-variegated-description">A blue-green columnar cactus with a broad yellow variegated stripe in a terracotta planter.</desc>
-  <path d="M8.2 17V6c0-2.3 1.4-3.8 3.8-3.8s3.8 1.5 3.8 3.8v11Z" fill="#579eb4" stroke="#244e54" stroke-linejoin="round" stroke-width="1"/>
-  <path d="M12 2.6v14M9.6 3.8v13m4.8-13v13" fill="none" stroke="#b7d9ce" stroke-linecap="round" stroke-width="0.65"/>
-  <path d="M8.6 6.1c1.7-0.7 2.7 0.4 2.5 2.1-0.2 1.6-1.1 2.5-0.8 4 0.2 1.2-0.4 2.9-1.7 3.7Zm4.1-3.4c2.2 0.2 3 1.7 2.7 3.5-0.3 1.9-1.8 2.7-1.5 4.4 0.3 1.7 1.3 2.8 0.8 5.9h-2Z" fill="#f1d05c"/>
-  <g fill="#fff0d2" stroke="#8b6b4a" stroke-width="0.2">
-    <circle cx="9" cy="8" r="0.42"/>
-    <circle cx="15" cy="7" r="0.42"/>
-    <circle cx="11" cy="13" r="0.42"/>
-    <circle cx="14.5" cy="12.2" r="0.4"/>
+  <desc id="pilosocereus-pachycladus-variegated-description">A blue-green columnar cactus with lengthwise cream variegation and golden spine clusters in a terracotta planter.</desc>
+  <defs>
+      <linearGradient id="pilo-pot" x1="0" x2="0.9" y1="0" y2="1">
+          <stop offset="0" stop-color="#f2a36a" />
+          <stop offset="1" stop-color="#c25a38" />
+      </linearGradient>
+      <linearGradient id="bluetorch-body" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#739f92" />
+          <stop offset="0.5" stop-color="#8ab5a2" />
+          <stop offset="1" stop-color="#467c70" />
+      </linearGradient>
+      <clipPath id="bluetorch-clip" clipPathUnits="userSpaceOnUse">
+          <path
+              d="M21 47V18c0-9 4-13 11-13s11 4 11 13v29Z"
+              fill="none"
+              stroke="none"
+              stroke-width="1"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+          />
+      </clipPath>
+      <linearGradient id="bluetorch-cream" x1="0" y1="0" x2="0.3" y2="1">
+          <stop offset="0" stop-color="#e5d9a2" />
+          <stop offset="0.5" stop-color="#d4cb91" />
+          <stop offset="1" stop-color="#bcc194" />
+      </linearGradient>
+      <g id="pilosocereus-pachycladus-variegated-detail-1">
+          <path
+              d="M-2.8 0H2.8M-2-1.8 2 1.8M-2 1.8 2-1.8M0-2.8V2.8"
+              fill="none"
+              stroke="#d2b877"
+              stroke-width="0.48"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+          />
+          <ellipse
+              cx="0"
+              cy="0"
+              rx="0.62"
+              ry="0.62"
+              fill="#e3c994"
+              stroke="none"
+              stroke-width="1"
+          />
+      </g>
+  </defs>
+  <ellipse
+      cx="32"
+      cy="60.5"
+      rx="15"
+      ry="1.9"
+      fill="#244b3b"
+      stroke="none"
+      stroke-width="0"
+      opacity="0.12"
+  />
+  <ellipse
+      cx="32"
+      cy="45.5"
+      rx="15"
+      ry="2.1"
+      fill="#745c45"
+      stroke="none"
+      stroke-width="1"
+  />
+  <path
+      d="M21 47V18c0-9 4-13 11-13s11 4 11 13v29Z"
+      fill="url(#bluetorch-body)"
+      stroke="#244b3b"
+      stroke-width="1.45"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+  <g clip-path="url(#bluetorch-clip)">
+      <path
+          d="M30 5c-1 9 1 15 0 22s1 14 0 20h7c-2-9-1-14-2-21s1-14-1-21Z"
+          fill="url(#bluetorch-cream)"
+          stroke="none"
+          stroke-width="1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+      />
+      <path
+          d="M24 9c-1 11 0 24-1 38h2c1-11-1-28 1-40Z"
+          fill="#c1cdab"
+          stroke="none"
+          stroke-width="1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+      />
+      <path
+          d="M27 7c-2 10 0 27-1 40m7-41v41M38 8c2 10 0 26 1 39"
+          fill="none"
+          stroke="#bfd2b8"
+          stroke-width="0.75"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+      />
+      <path
+          d="M28.3 8c-1 12 0 25-0.3 39m8.5-39c2 11 1 26 1 39"
+          fill="none"
+          stroke="#517e69"
+          stroke-width="0.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-opacity="0.8"
+      />
+      <use
+          href="#pilosocereus-pachycladus-variegated-detail-1"
+          transform="translate(24 14) scale(0.61)"
+      />
+      <use
+          href="#pilosocereus-pachycladus-variegated-detail-1"
+          transform="translate(38 14) scale(0.61)"
+      />
+      <use
+          href="#pilosocereus-pachycladus-variegated-detail-1"
+          transform="translate(24 20) scale(0.61)"
+      />
+      <use
+          href="#pilosocereus-pachycladus-variegated-detail-1"
+          transform="translate(38 20) scale(0.61)"
+      />
+      <use
+          href="#pilosocereus-pachycladus-variegated-detail-1"
+          transform="translate(24 26) scale(0.61)"
+      />
+      <use
+          href="#pilosocereus-pachycladus-variegated-detail-1"
+          transform="translate(38 26) scale(0.61)"
+      />
+      <use
+          href="#pilosocereus-pachycladus-variegated-detail-1"
+          transform="translate(24 32) scale(0.61)"
+      />
+      <use
+          href="#pilosocereus-pachycladus-variegated-detail-1"
+          transform="translate(38 32) scale(0.61)"
+      />
+      <use
+          href="#pilosocereus-pachycladus-variegated-detail-1"
+          transform="translate(24 38) scale(0.61)"
+      />
+      <use
+          href="#pilosocereus-pachycladus-variegated-detail-1"
+          transform="translate(38 38) scale(0.61)"
+      />
+      <use
+          href="#pilosocereus-pachycladus-variegated-detail-1"
+          transform="translate(24 44) scale(0.61)"
+      />
+      <use
+          href="#pilosocereus-pachycladus-variegated-detail-1"
+          transform="translate(38 44) scale(0.61)"
+      />
   </g>
-  <path d="M9 7.3v1.4m-0.6-1.05 1.2 0.7m-1.2 0 1.2-0.7M15 6.3v1.4m-0.6-1.05 1.2 0.7m-1.2 0 1.2-0.7M11 12.3v1.4m-0.6-1.05 1.2 0.7m-1.2 0 1.2-0.7m4.1-1.15v1.4m-0.6-1.05 1.2 0.7m-1.2 0 1.2-0.7" fill="none" stroke="#f0c36a" stroke-linecap="round" stroke-width="0.44"/>
-  <path d="M5.7 16.2h12.6l-1.5 5.2H7.2z" fill="#e5844c" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  <path
+      d="M15 45h34v7H15z"
+      fill="#f3a66d"
+      stroke="#5f3a2a"
+      stroke-linejoin="round"
+      stroke-width="1.7"
+  />
+  <path
+      d="m18 52 3 9h22l3-9Z"
+      fill="url(#pilo-pot)"
+      stroke="#5f3a2a"
+      stroke-linejoin="round"
+      stroke-width="1.7"
+  />
 </svg>

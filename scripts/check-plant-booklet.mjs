@@ -348,7 +348,7 @@ async function main() {
     );
     const profileSlugs = profiles.map((profile) => profile.slug);
     const iconSymbols = [
-        ...iconSprite.matchAll(/<symbol id="icon-([a-z-]+)"/g),
+        ...iconSprite.matchAll(/<symbol\s+id="icon-([a-z-]+)"/g),
     ].map((match) => match[1]);
     const iconSymbolSet = new Set(iconSymbols);
     const requiredIconSymbols = [
@@ -431,7 +431,7 @@ async function main() {
         return iconSprite
             .match(
                 new RegExp(
-                    `<symbol id="icon-${escapedName}"[^>]*>([\\s\\S]*?)<\\/symbol>`
+                    `<symbol\\s+id="icon-${escapedName}"[^>]*>([\\s\\S]*?)<\\/symbol>`
                 )
             )?.[1]
             ?.replaceAll(/\s+/g, " ")

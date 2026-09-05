@@ -1,15 +1,278 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="euphorbia-obesa-hybrid-title euphorbia-obesa-hybrid-description" data-plant-slug="euphorbia-obesa-hybrid" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="euphorbia-obesa-hybrid-title euphorbia-obesa-hybrid-description" data-plant-slug="euphorbia-obesa-hybrid" focusable="false">
   <title id="euphorbia-obesa-hybrid-title">Dragon's Egg plant portrait</title>
-  <desc id="euphorbia-obesa-hybrid-description">A round ribbed green body with rusty variegation and tiny red crown flowers in a yellow planter.</desc>
-  <ellipse cx="12" cy="11.2" rx="6.2" ry="6.5" fill="#66a866" stroke="#173c2b" stroke-width="1"/>
-  <path d="M12 4.9v12.6M8.8 5.8c1.9 3.4 1.9 7.4 0 10.8m6.4-10.8c-1.9 3.4-1.9 7.4 0 10.8" fill="none" stroke="#b8d27c" stroke-linecap="round" stroke-width="0.8"/>
-  <path d="M6.4 8.8h11.2m-11.6 4.8h12" fill="none" stroke="#47794f" stroke-dasharray="1 1.2" stroke-width="0.6"/>
-  <path d="M9.2 5.5c0.9 2.5 0.7 5.1 0 7.3-0.5 1.6-0.3 3 0.3 4.1" fill="none" stroke="#c88258" stroke-linecap="round" stroke-width="1"/>
-  <path d="M12 4.8v-1.4" stroke="#6e541e" stroke-linecap="round" stroke-width="0.55"/>
-  <g fill="#d95862" stroke="#8f3840" stroke-width="0.25">
-    <circle cx="11.2" cy="2.9" r="0.65"/>
-    <circle cx="12.8" cy="2.9" r="0.65"/>
-    <circle cx="12" cy="2.1" r="0.62"/>
+  <desc id="euphorbia-obesa-hybrid-description">A round muted-green body with fine dotted ribs, faint brown banding, and a tiny crown in a yellow planter.</desc>
+  <defs>
+      <linearGradient id="obesa-pot" x1="0" x2="0.8" y1="0" y2="1">
+          <stop offset="0" stop-color="#f9dd67" />
+          <stop offset="1" stop-color="#e2a32e" />
+      </linearGradient>
+      <radialGradient id="baseball-body" cx="35%" cy="23%" r="80%">
+          <stop offset="0" stop-color="#9bb293" />
+          <stop offset="0.5" stop-color="#6e9377" />
+          <stop offset="1" stop-color="#3d6c58" />
+      </radialGradient>
+      <clipPath id="baseball-clip" clipPathUnits="userSpaceOnUse">
+          <ellipse
+              cx="32"
+              cy="31"
+              rx="19"
+              ry="19"
+              fill="none"
+              stroke="none"
+              stroke-width="1"
+          />
+      </clipPath>
+  </defs>
+  <ellipse
+      cx="32"
+      cy="60.5"
+      rx="20"
+      ry="1.9"
+      fill="#244b3b"
+      stroke="none"
+      stroke-width="0"
+      opacity="0.12"
+  />
+  <ellipse
+      cx="32"
+      cy="46.5"
+      rx="20"
+      ry="2.1"
+      fill="#745c45"
+      stroke="none"
+      stroke-width="1"
+  />
+  <ellipse
+      cx="32"
+      cy="31"
+      rx="19"
+      ry="19"
+      fill="url(#baseball-body)"
+      stroke="#244b3b"
+      stroke-width="1.45"
+  />
+  <g clip-path="url(#baseball-clip)">
+      <path
+          d="M32 12C17 15 14 35 17 49"
+          fill="none"
+          stroke="#466f5c"
+          stroke-width="2.1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-opacity="0.45"
+      />
+      <path
+          d="M32 12C17 15 14 35 17 49"
+          fill="none"
+          stroke="#bac7a1"
+          stroke-width="0.72"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+      />
+      <path
+          d="M32 12C17 15 14 35 17 49"
+          fill="none"
+          stroke="#e2d6b1"
+          stroke-width="0.72"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-dasharray="0.2 2.4"
+      />
+      <path
+          d="M32 12C22 15 18 35 22 49"
+          fill="none"
+          stroke="#466f5c"
+          stroke-width="2.1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-opacity="0.45"
+      />
+      <path
+          d="M32 12C22 15 18 35 22 49"
+          fill="none"
+          stroke="#bac7a1"
+          stroke-width="0.72"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+      />
+      <path
+          d="M32 12C22 15 18 35 22 49"
+          fill="none"
+          stroke="#e2d6b1"
+          stroke-width="0.72"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-dasharray="0.2 2.4"
+      />
+      <path
+          d="M32 12C27 15 25 35 27 49"
+          fill="none"
+          stroke="#466f5c"
+          stroke-width="2.1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-opacity="0.45"
+      />
+      <path
+          d="M32 12C27 15 25 35 27 49"
+          fill="none"
+          stroke="#bac7a1"
+          stroke-width="0.72"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+      />
+      <path
+          d="M32 12C27 15 25 35 27 49"
+          fill="none"
+          stroke="#e2d6b1"
+          stroke-width="0.72"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-dasharray="0.2 2.4"
+      />
+      <path
+          d="M32 12C32 15 32 35 32 49"
+          fill="none"
+          stroke="#466f5c"
+          stroke-width="2.1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-opacity="0.45"
+      />
+      <path
+          d="M32 12C32 15 32 35 32 49"
+          fill="none"
+          stroke="#bac7a1"
+          stroke-width="0.72"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+      />
+      <path
+          d="M32 12C32 15 32 35 32 49"
+          fill="none"
+          stroke="#e2d6b1"
+          stroke-width="0.72"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-dasharray="0.2 2.4"
+      />
+      <path
+          d="M32 12C37 15 39 35 37 49"
+          fill="none"
+          stroke="#466f5c"
+          stroke-width="2.1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-opacity="0.45"
+      />
+      <path
+          d="M32 12C37 15 39 35 37 49"
+          fill="none"
+          stroke="#bac7a1"
+          stroke-width="0.72"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+      />
+      <path
+          d="M32 12C37 15 39 35 37 49"
+          fill="none"
+          stroke="#e2d6b1"
+          stroke-width="0.72"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-dasharray="0.2 2.4"
+      />
+      <path
+          d="M32 12C42 15 46 35 42 49"
+          fill="none"
+          stroke="#466f5c"
+          stroke-width="2.1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-opacity="0.45"
+      />
+      <path
+          d="M32 12C42 15 46 35 42 49"
+          fill="none"
+          stroke="#bac7a1"
+          stroke-width="0.72"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+      />
+      <path
+          d="M32 12C42 15 46 35 42 49"
+          fill="none"
+          stroke="#e2d6b1"
+          stroke-width="0.72"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-dasharray="0.2 2.4"
+      />
+      <path
+          d="M32 12C47 15 50 35 47 49"
+          fill="none"
+          stroke="#466f5c"
+          stroke-width="2.1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-opacity="0.45"
+      />
+      <path
+          d="M32 12C47 15 50 35 47 49"
+          fill="none"
+          stroke="#bac7a1"
+          stroke-width="0.72"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+      />
+      <path
+          d="M32 12C47 15 50 35 47 49"
+          fill="none"
+          stroke="#e2d6b1"
+          stroke-width="0.72"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-dasharray="0.2 2.4"
+      />
+      <path
+          d="M12 25q19 3 40 0m-40 5q19 3 40 0m-40 5q19 3 40 0m-40 5q19 3 40 0"
+          fill="none"
+          stroke="#a29479"
+          stroke-width="0.45"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-opacity="0.28"
+      />
   </g>
-  <path d="M5.2 17.1h13.6l-1.5 4.3H6.7z" fill="#efc24f" stroke="#6e541e" stroke-linejoin="round" stroke-width="1"/>
+  <path
+      d="M30 13l0.5-1.8m1.5 1.6V11m1.4 2 0.9-1.5"
+      fill="none"
+      stroke="#9d805b"
+      stroke-width="0.7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+  <ellipse
+      cx="32"
+      cy="13"
+      rx="2.2"
+      ry="0.65"
+      fill="#b5b99a"
+      stroke="none"
+      stroke-width="1"
+  />
+  <path
+      d="M10 46h44v6H10z"
+      fill="#f8dc69"
+      stroke="#725016"
+      stroke-linejoin="round"
+      stroke-width="1.7"
+  />
+  <path
+      d="m13 52 4 9h30l4-9Z"
+      fill="url(#obesa-pot)"
+      stroke="#725016"
+      stroke-linejoin="round"
+      stroke-width="1.7"
+  />
 </svg>

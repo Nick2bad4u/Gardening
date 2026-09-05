@@ -1,15 +1,199 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="nyctocereus-serpentinus-title nyctocereus-serpentinus-description" data-plant-slug="nyctocereus-serpentinus" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="nyctocereus-serpentinus-title nyctocereus-serpentinus-description" data-plant-slug="nyctocereus-serpentinus" focusable="false">
   <title id="nyctocereus-serpentinus-title">Serpent cactus plant portrait</title>
   <desc id="nyctocereus-serpentinus-description">Three slender curving green cactus stems with pale areoles in a terracotta planter.</desc>
-  <g fill="#ef7087" stroke="#7a3649" stroke-width="0.35">
-    <ellipse cx="7.2" cy="3.8" rx="0.75" ry="1.8"/>
-    <ellipse cx="7.2" cy="3.8" rx="0.75" ry="1.8" transform="rotate(60 7.2 3.8)"/>
-    <ellipse cx="7.2" cy="3.8" rx="0.75" ry="1.8" transform="rotate(120 7.2 3.8)"/>
-  </g>
-  <circle cx="7.2" cy="3.8" r="0.55" fill="#f6c94c"/>
-  <path d="M7 17.8c-1.4-3.1 1.9-4.7 1.4-7.3C8 8.2 6.2 7.1 7.2 5.1m4.1 12.7c-1.2-2.7 1.6-4.4 0.7-7-0.8-2.2 0.8-3.8 2.2-5.6m2.2 12.6c1-2.4-1.1-4-0.3-6.1 0.7-1.9 2.1-2.6 1.7-5" fill="none" stroke="#173c2b" stroke-linecap="round" stroke-width="3.6"/>
-  <path d="M7 17.8c-1.4-3.1 1.9-4.7 1.4-7.3C8 8.2 6.2 7.1 7.2 5.1m4.1 12.7c-1.2-2.7 1.6-4.4 0.7-7-0.8-2.2 0.8-3.8 2.2-5.6m2.2 12.6c1-2.4-1.1-4-0.3-6.1 0.7-1.9 2.1-2.6 1.7-5" fill="none" stroke="#35aa64" stroke-linecap="round" stroke-width="2.65"/>
-  <path d="M7.4 5.7c0.4 1.9 0.8 3.8 0.8 5.8m5.7-5.7c-0.8 1.8-1.6 3.5-1.4 5.4m5-3.7c-0.5 1.6-1.5 3.1-1.5 4.8" fill="none" stroke="#f2ecd3" stroke-dasharray="0.25 1" stroke-linecap="round" stroke-width="0.8"/>
-  <path d="M6.8 10.8h2.8m-3 2.7h2.7m1.6 0.3h2.6m-2.3-3.2 2.4 0.4m1.1 0.3h2.6m-2.2 2.8 2.5 0.4M11.7 8l2.1 0.3" fill="none" stroke="#e9e9c8" stroke-linecap="round" stroke-width="0.62"/>
-  <path d="M4.9 17.1h14.2l-1.7 4.3H6.6z" fill="#e58a4c" stroke="#6c432b" stroke-linejoin="round" stroke-width="1"/>
+  <defs>
+      <linearGradient id="nycto-pot" x1="0" x2="0.9" y1="0" y2="1">
+          <stop offset="0" stop-color="#f3a36a" />
+          <stop offset="1" stop-color="#c35b39" />
+      </linearGradient>
+      <linearGradient id="serpent-body" x1="0" y1="0" x2="0.85" y2="1">
+          <stop offset="0" stop-color="#91bc83" />
+          <stop offset="0.5" stop-color="#529465" />
+          <stop offset="1" stop-color="#2d6852" />
+      </linearGradient>
+      <g id="nyctocereus-serpentinus-detail-1">
+          <path
+              d="M-2.8 0H2.8M-2-1.8 2 1.8M-2 1.8 2-1.8M0-2.8V2.8"
+              fill="none"
+              stroke="#e6dfbf"
+              stroke-width="0.48"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+          />
+          <ellipse
+              cx="0"
+              cy="0"
+              rx="0.62"
+              ry="0.62"
+              fill="#e3c994"
+              stroke="none"
+              stroke-width="1"
+          />
+      </g>
+  </defs>
+  <ellipse
+      cx="32"
+      cy="60.5"
+      rx="22"
+      ry="1.9"
+      fill="#244b3b"
+      stroke="none"
+      stroke-width="0"
+      opacity="0.12"
+  />
+  <ellipse
+      cx="32"
+      cy="45.5"
+      rx="22"
+      ry="2.1"
+      fill="#745c45"
+      stroke="none"
+      stroke-width="1"
+  />
+  <path
+      d="M22 47c-2-7-7-12-8-18-1-6 1-11 4-15"
+      fill="none"
+      stroke="#244b3b"
+      stroke-width="8.7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+  <path
+      d="M22 47c-2-7-7-12-8-18-1-6 1-11 4-15"
+      fill="none"
+      stroke="url(#serpent-body)"
+      stroke-width="6.4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+  <path
+      d="M22 47c-2-7-7-12-8-18-1-6 1-11 4-15"
+      fill="none"
+      stroke="#c0d49e"
+      stroke-width="0.65"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+  <use
+      href="#nyctocereus-serpentinus-detail-1"
+      transform="translate(21 42) scale(0.68)"
+  />
+  <use
+      href="#nyctocereus-serpentinus-detail-1"
+      transform="translate(17 35) scale(0.68)"
+  />
+  <use
+      href="#nyctocereus-serpentinus-detail-1"
+      transform="translate(14 28) scale(0.68)"
+  />
+  <use
+      href="#nyctocereus-serpentinus-detail-1"
+      transform="translate(15 21) scale(0.68)"
+  />
+  <use
+      href="#nyctocereus-serpentinus-detail-1"
+      transform="translate(18 15) scale(0.68)"
+  />
+  <path
+      d="M32 47c1-8 5-13 11-14 5-1 8 1 10 4"
+      fill="none"
+      stroke="#244b3b"
+      stroke-width="8.7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+  <path
+      d="M32 47c1-8 5-13 11-14 5-1 8 1 10 4"
+      fill="none"
+      stroke="url(#serpent-body)"
+      stroke-width="6.4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+  <path
+      d="M32 47c1-8 5-13 11-14 5-1 8 1 10 4"
+      fill="none"
+      stroke="#c0d49e"
+      stroke-width="0.65"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+  <use
+      href="#nyctocereus-serpentinus-detail-1"
+      transform="translate(33 42) scale(0.68)"
+  />
+  <use
+      href="#nyctocereus-serpentinus-detail-1"
+      transform="translate(37 37) scale(0.68)"
+  />
+  <use
+      href="#nyctocereus-serpentinus-detail-1"
+      transform="translate(43 33) scale(0.68)"
+  />
+  <use
+      href="#nyctocereus-serpentinus-detail-1"
+      transform="translate(49 34) scale(0.68)"
+  />
+  <path
+      d="M27 47c-2-8-3-19 1-25 4-7 12-8 18-4"
+      fill="none"
+      stroke="#244b3b"
+      stroke-width="8.7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+  <path
+      d="M27 47c-2-8-3-19 1-25 4-7 12-8 18-4"
+      fill="none"
+      stroke="url(#serpent-body)"
+      stroke-width="6.4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+  <path
+      d="M27 47c-2-8-3-19 1-25 4-7 12-8 18-4"
+      fill="none"
+      stroke="#c0d49e"
+      stroke-width="0.65"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+  <use
+      href="#nyctocereus-serpentinus-detail-1"
+      transform="translate(27 42) scale(0.68)"
+  />
+  <use
+      href="#nyctocereus-serpentinus-detail-1"
+      transform="translate(26 35) scale(0.68)"
+  />
+  <use
+      href="#nyctocereus-serpentinus-detail-1"
+      transform="translate(27 28) scale(0.68)"
+  />
+  <use
+      href="#nyctocereus-serpentinus-detail-1"
+      transform="translate(30 21) scale(0.68)"
+  />
+  <use
+      href="#nyctocereus-serpentinus-detail-1"
+      transform="translate(37 17) scale(0.68)"
+  />
+  <use
+      href="#nyctocereus-serpentinus-detail-1"
+      transform="translate(44 17) scale(0.68)"
+  />
+  <path
+      d="M8 45h48v7H8z"
+      fill="#f5aa71"
+      stroke="#5f3a2a"
+      stroke-linejoin="round"
+      stroke-width="1.7"
+  />
+  <path
+      d="m11 52 4 9h34l4-9Z"
+      fill="url(#nycto-pot)"
+      stroke="#5f3a2a"
+      stroke-linejoin="round"
+      stroke-width="1.7"
+  />
 </svg>

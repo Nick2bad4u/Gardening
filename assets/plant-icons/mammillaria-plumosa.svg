@@ -1,19 +1,198 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="mammillaria-plumosa-title mammillaria-plumosa-description" data-plant-slug="mammillaria-plumosa" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="mammillaria-plumosa-title mammillaria-plumosa-description" data-plant-slug="mammillaria-plumosa" focusable="false">
   <title id="mammillaria-plumosa-title">Feather cactus plant portrait</title>
   <desc id="mammillaria-plumosa-description">Three rounded cactus offsets covered in soft white feather-like spines in a blue planter.</desc>
-  <g fill="#f2efe0" stroke="#46654e" stroke-width="0.7">
-    <circle cx="8.1" cy="12.5" r="4.2"/>
-    <circle cx="12" cy="9.2" r="5"/>
-    <circle cx="16.2" cy="12.6" r="4.1"/>
-  </g>
-  <g fill="none" stroke="#ffffff" stroke-linecap="round" stroke-width="0.65">
-    <path d="M12 5.6v3.1m-1.8-2.5 3.6 1.9m-3.7 0 3.8-1.8M8.1 9.6v3m-1.8-2.3 3.5 1.7m-3.4 0.2 3.3-2M16.2 9.8v2.9m-1.7-2.2 3.3 1.7m-3.3 0.1 3.2-1.9"/>
-  </g>
-  <g fill="#c9b98f" stroke="#7f6b4f" stroke-width="0.25">
-    <circle cx="12" cy="7.3" r="0.48"/>
-    <circle cx="8.1" cy="11.5" r="0.45"/>
-    <circle cx="16.2" cy="11.7" r="0.45"/>
-  </g>
-  <path d="M9.3 9.3c1.4 1.1 2.9 1.1 4.3 0m-7.4 4.2c1.2 0.8 2.5 0.8 3.7 0m4.2 0.1c1.2 0.8 2.5 0.8 3.6 0" fill="none" stroke="#d9e5d4" stroke-linecap="round" stroke-width="0.55"/>
-  <path d="M4.5 15.7h15l-1.8 5.6H6.3z" fill="#67a9cf" stroke="#35536b" stroke-linejoin="round" stroke-width="1"/>
+  <defs>
+      <linearGradient id="plumosa-pot" x1="0" x2="0.9" y1="0" y2="1">
+          <stop offset="0" stop-color="#78bde4" />
+          <stop offset="1" stop-color="#347bb5" />
+      </linearGradient>
+      <radialGradient id="feather-body" cx="35%" cy="23%" r="80%">
+          <stop offset="0" stop-color="#fffbed" />
+          <stop offset="0.5" stop-color="#e6e3d3" />
+          <stop offset="1" stop-color="#bbc3b0" />
+      </radialGradient>
+      <clipPath id="feather-clip" clipPathUnits="userSpaceOnUse">
+          <path
+              d="M-12 9c-3-9-1-17 3-21 5-6 14-6 19 0 4 4 6 12 3 21C10 19-9 19-12 9Z"
+              fill="none"
+              stroke="none"
+              stroke-width="1"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+          />
+      </clipPath>
+      <g id="feather-head">
+          <path
+              d="M-12 9c-3-9-1-17 3-21 5-6 14-6 19 0 4 4 6 12 3 21C10 19-9 19-12 9Z"
+              fill="url(#feather-body)"
+              stroke="#81947c"
+              stroke-width="1.15"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+          />
+          <g clip-path="url(#feather-clip)">
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(-12 -11) rotate(0)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(-6.5 -11) rotate(7)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(-1 -11) rotate(14)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(4.5 -11) rotate(21)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(10 -11) rotate(28)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(-9.3 -5.8) rotate(17)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(-3.8 -5.8) rotate(24)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(1.7 -5.8) rotate(31)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(7.2 -5.8) rotate(38)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(12.7 -5.8) rotate(45)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(-12 -0.6) rotate(34)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(-6.5 -0.6) rotate(41)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(-1 -0.6) rotate(48)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(4.5 -0.6) rotate(55)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(10 -0.6) rotate(62)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(-9.3 4.6) rotate(51)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(-3.8 4.6) rotate(58)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(1.7 4.6) rotate(65)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(7.2 4.6) rotate(72)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(12.7 4.6) rotate(79)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(-12 9.8) rotate(68)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(-6.5 9.8) rotate(75)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(-1 9.8) rotate(82)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(4.5 9.8) rotate(89)"
+              />
+              <use
+                  href="#mammillaria-plumosa-detail-1"
+                  transform="translate(10 9.8) rotate(96)"
+              />
+          </g>
+      </g>
+      <g id="mammillaria-plumosa-detail-1">
+          <path
+              d="M0 0Q-3-4-4-3M0 0q3-4 4-3M0 0q-4 2-4 3M0 0q4 2 4 3M0 0v-4M0 0v4"
+              fill="none"
+              stroke="#b2bba8"
+              stroke-width="0.48"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+          />
+          <path
+              d="M-1-1.2l-2.1-0.2m1.2-1 0.4-1.7m2.5 2.9 2.1-0.2m-1.2-1-0.4-1.7M-1 1.2l-2 0.4m2-0.4-0.6 1.8m2.6-1.8 2 0.4m-2-0.4 0.6 1.8"
+              fill="none"
+              stroke="#fcf8e9"
+              stroke-width="0.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+          />
+      </g>
+  </defs>
+  <ellipse
+      cx="32"
+      cy="60.5"
+      rx="22"
+      ry="1.9"
+      fill="#244b3b"
+      stroke="none"
+      stroke-width="0"
+      opacity="0.12"
+  />
+  <ellipse
+      cx="32"
+      cy="45.5"
+      rx="22"
+      ry="2.1"
+      fill="#745c45"
+      stroke="none"
+      stroke-width="1"
+  />
+  <!-- The main stem reaches the soil behind both foreground offsets. -->
+  <use href="#feather-head" transform="translate(32 31) scale(1.07 1.04)" />
+  <use
+      href="#feather-head"
+      transform="translate(20 42) scale(0.84) rotate(-24)"
+  />
+  <use
+      href="#feather-head"
+      transform="translate(44 42) scale(0.76) rotate(20)"
+  />
+  <path
+      d="M8 45h48v7H8z"
+      fill="#80c4e8"
+      stroke="#28577e"
+      stroke-linejoin="round"
+      stroke-width="1.7"
+  />
+  <path
+      d="m11 52 4 9h34l4-9Z"
+      fill="url(#plumosa-pot)"
+      stroke="#28577e"
+      stroke-linejoin="round"
+      stroke-width="1.7"
+  />
 </svg>

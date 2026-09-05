@@ -1,4 +1,5 @@
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -96,7 +97,7 @@ function portraitDescriptions() {
     return new Map([
         [
             "aeonium-haworthii-dream-color",
-            "Three branching green rosettes with magenta-edged leaves above a white planter.",
+            "Three branching rosettes with cream-green spoon-shaped leaves and pink margins above a white planter.",
         ],
         [
             "astrophytum-ornatum",
@@ -108,7 +109,7 @@ function portraitDescriptions() {
         ],
         [
             "cereus-forbesii-ming-thing",
-            "A low knobbly green monstrose cactus clump in a purple planter.",
+            "A low blue-green monstrose cactus clump with irregular connected folds in a purple planter.",
         ],
         [
             "chamaelobivia-hybrid",
@@ -128,15 +129,15 @@ function portraitDescriptions() {
         ],
         [
             "echinocereus-rigidissimus-rubispinus",
-            "An upright cactus wrapped in dense muted-pink radial spines in a terracotta planter.",
+            "An upright cactus wrapped in close cream and muted-pink comb-like spine bands in a terracotta planter.",
         ],
         [
             "echinopsis-spachiana",
-            "A cluster of upright green torch cacti with golden ribs in a blue planter.",
+            "A cluster of upright ribbed green torch cacti with rows of golden spine clusters in a blue planter.",
         ],
         [
             "echinopsis-subdenudata",
-            "A rounded dark-green ribbed cactus with white woolly areoles and a pale flower.",
+            "A rounded dark-green ribbed cactus with large white woolly areoles in a terracotta planter.",
         ],
         [
             "espostoa-melanostele-nana",
@@ -144,23 +145,23 @@ function portraitDescriptions() {
         ],
         [
             "euphorbia-obesa-hybrid",
-            "A round ribbed green body with rusty variegation and tiny red crown flowers in a yellow planter.",
+            "A round muted-green body with fine dotted ribs, faint brown banding, and a tiny crown in a yellow planter.",
         ],
         [
             "faucaria-tuberculosa",
-            "A compact green rosette of triangular toothed leaves with pale raised tubercles.",
+            "Three opposing pairs of thick triangular green leaves with pale marginal teeth and raised white tubercles.",
         ],
         [
             "gymnocalycium-mihanovichii-black-widow",
-            "A low dark-purple ribbed cactus with pale radial spines in a mustard planter.",
+            "A low wine-purple cactus with muted green mottling, rib chins, and pale radial spines in a mustard planter.",
         ],
         [
             "gymnocalycium-mihanovichii-variegated",
-            "A round green cactus divided into coral and yellow variegated sectors in a blue planter.",
+            "A round green ribbed cactus with blush, bronze, and cream variegated sectors in a blue planter.",
         ],
         [
             "gymnocalycium-saglionis",
-            "A broad gray-green ribbed cactus with long golden spines in a terracotta planter.",
+            "A broad blue-green cactus with heavy ribs and curved reddish-brown spines in a terracotta planter.",
         ],
         [
             "kalanchoe-bracteata",
@@ -168,15 +169,15 @@ function portraitDescriptions() {
         ],
         [
             "kalanchoe-orgyalis",
-            "A branching succulent with copper-brown spoon-shaped leaves in a blue planter.",
+            "A branching succulent with felted copper-brown spoon-shaped leaves and pale new tips in a blue planter.",
         ],
         [
             "mammillaria-bombycina",
-            "A clustered green pincushion cactus with pale radial spines and pink crown flowers.",
+            "A clustered pincushion cactus with dense pale radial spines and reddish hooked central spines.",
         ],
         [
             "mammillaria-mammillaris",
-            "A clustered green pincushion cactus with white starry areoles and pink crown flowers.",
+            "A clustered green cactus with rounded tubercles, pale radial spines, and red club-shaped fruits.",
         ],
         [
             "mammillaria-plumosa",
@@ -184,15 +185,15 @@ function portraitDescriptions() {
         ],
         [
             "mammillaria-rekoi",
-            "A rounded green cactus covered in dense golden radial spines in a blue planter.",
+            "A rounded green cactus with close tubercles, pale radial spines, and dark hooked central spines in a blue planter.",
         ],
         [
             "myrtillocactus-geometrizans-fukurokuryuzinboku",
-            "A knobbly green column with stacked rounded bulges in a terracotta planter.",
+            "A continuous blue-green column with staggered rounded rib swellings in a terracotta planter.",
         ],
         [
             "myrtillocactus-geometrizans-indigo-wave",
-            "A blue-green crested cactus forming a low ruffled fan in a purple planter.",
+            "A blue-green monstrose cactus with irregular folded ridges and knobby fan-shaped growth in a purple planter.",
         ],
         [
             "nyctocereus-serpentinus",
@@ -204,7 +205,7 @@ function portraitDescriptions() {
         ],
         [
             "pachira-glabra",
-            "A braided brown trunk supporting three fans of green palmate leaves in a blue planter.",
+            "A slim tapering trunk with connected stalks and fans of long pointed green palmate leaflets in a blue planter.",
         ],
         [
             "parodia-leninghausii",
@@ -212,31 +213,31 @@ function portraitDescriptions() {
         ],
         [
             "pilosocereus-pachycladus-variegated",
-            "A blue-green columnar cactus with a broad yellow variegated stripe in a terracotta planter.",
+            "A blue-green columnar cactus with lengthwise cream variegation and golden spine clusters in a terracotta planter.",
         ],
         [
             "pleiospilos-nelii-royal-flush",
-            "A pair of fleshy purple split-rock leaves divided by a narrow pink cleft.",
+            "Two thick, dark-speckled purple split-rock leaves separated by a deep dark fissure in a white planter.",
         ],
         [
             "portulacaria-afra",
-            "A branching reddish-brown succulent shrub with many small round green leaves.",
+            "A fine branching reddish-brown succulent shrub with small rounded green leaves in opposite pairs.",
         ],
         [
             "sempervivum-coconut-crystal",
-            "A layered green hens-and-chicks rosette with a burgundy center in a yellow planter.",
+            "A tightly layered lime-green rosette with pointed leaves and muted burgundy leaf bases in a yellow planter.",
         ],
         [
             "stenocactus-phyllacanthus",
-            "A squat green cactus with many narrow wavy ribs and long tan spines.",
+            "A squat green cactus with closely packed wavy ribs and long flattened tan crown spines.",
         ],
         [
             "tephrocactus-articulatus-papyracanthus",
-            "Stacked gray-green cactus segments surrounded by long flat papery spines.",
+            "Jointed gray-green cactus segments with long tapered ivory spines curling like paper ribbons.",
         ],
         [
             "tiny-mixed-succulent-planter",
-            "Five overlapping blue-green, copper, and red-edged succulents in a striped terracotta planter.",
+            "Two large pale rosettes and a smaller open rosette surround broad red-edged green paddles, copper-orange shoots, and a green-and-burgundy shoot in a striped terracotta planter.",
         ],
     ]);
 }
@@ -250,10 +251,15 @@ function validateSymbols(symbols, titles, descriptions) {
             `Expected ${titles.size} titled and described plant portraits but found ${symbols.length}.`
         );
     }
-    for (const { body, slug } of symbols) {
+    for (const { body, slug, viewBox } of symbols) {
         if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
             throw new Error(
                 `Plant portrait slug ${slug} is not identifier-safe.`
+            );
+        }
+        if (viewBox !== "0 0 64 64") {
+            throw new Error(
+                `Plant portrait ${slug} must use the native 0 0 64 64 viewBox.`
             );
         }
         if (!titles.has(slug)) {
@@ -292,10 +298,6 @@ export async function syncPlantIcons({ checkOnly = false } = {}) {
     const descriptions = portraitDescriptions();
     validateSymbols(symbols, titles, descriptions);
 
-    const nextLogger = await formatted(
-        replaceGeneratedLoggerSymbols(logger),
-        loggerPath
-    );
     const standalone = await Promise.all(
         symbols.map(async ({ slug, viewBox, body }) => {
             const filepath = path.join(assetDirectory, `${slug}.svg`);
@@ -311,6 +313,22 @@ export async function syncPlantIcons({ checkOnly = false } = {}) {
                 slug,
             };
         })
+    );
+    const revision = createHash("sha256")
+        .update(standalone.map(({ output }) => output).join("\n"))
+        .digest("hex")
+        .slice(0, 16);
+    if (!/const PLANT_ICON_REVISION = "[^"]+";/.test(logger)) {
+        throw new Error(
+            "The logger is missing its plant-icon revision constant."
+        );
+    }
+    const nextLogger = await formatted(
+        replaceGeneratedLoggerSymbols(logger).replace(
+            /const PLANT_ICON_REVISION = "[^"]+";/,
+            `const PLANT_ICON_REVISION = "${revision}";`
+        ),
+        loggerPath
     );
 
     if (checkOnly) {

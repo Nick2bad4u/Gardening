@@ -51,10 +51,38 @@ describe("custom plant portrait exports", () => {
     });
 
     it("keeps canonical portrait markup readable and explicit", () => {
-        for (const { body, slug } of plantSymbols) {
+        for (const { body, slug, viewBox } of plantSymbols) {
+            expect(viewBox, slug).toBe("0 0 64 64");
             expect(body, slug).not.toContain("><");
             expect(body, slug).not.toMatch(leadingZeroOmissionPattern);
         }
+    });
+
+    it("keeps advanced SVG definitions unique and standalone-safe", () => {
+        const allDefinitionIds = [];
+
+        for (const { body, slug } of plantSymbols) {
+            const definitionIds = [...body.matchAll(/\bid="([^"]+)"/g)].map(
+                (match) => match[1]
+            );
+            const localReferences = [
+                ...body.matchAll(
+                    /(?:href="#|url\(#)([a-zA-Z][\w:-]*)(?:\)|")/g
+                ),
+            ].map((match) => match[1]);
+
+            expect(new Set(definitionIds).size, slug).toBe(
+                definitionIds.length
+            );
+            for (const reference of localReferences) {
+                expect(definitionIds, `${slug}: #${reference}`).toContain(
+                    reference
+                );
+            }
+            allDefinitionIds.push(...definitionIds);
+        }
+
+        expect(new Set(allDefinitionIds).size).toBe(allDefinitionIds.length);
     });
 
     it.each(standaloneNames)(
