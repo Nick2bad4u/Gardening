@@ -477,9 +477,13 @@ describe("same-setup dry-down learning", () => {
         ).toBeCloseTo(46269 + 30 / 1440);
         expect(context.dryDownSerialDate_("bad date", "UTC")).toBe(0);
         expect(context.dryDownSerialDate_("", "UTC")).toBe(0);
+        offset = "unavailable";
+        expect(context.dryDownSerialDate_(midnight, "UTC")).toBeCloseTo(
+            midnight.getTime() / 86400000 + 25569
+        );
         offset = "+0000";
-        const canonical = [...completed(), ...current()].map((input) => {
-            const record = Array(42).fill("");
+        const toCanonical = (input) => {
+            const record = new Array(42).fill("");
             record[0] = new Date((input[0] - 25569) * 86400000);
             [
                 1,
@@ -497,7 +501,8 @@ describe("same-setup dry-down learning", () => {
                 record[column] = input[i + 1];
             });
             return record;
-        });
+        };
+        const canonical = [...completed(), ...current()].map(toCanonical);
         const result = context.dryDownModelsFromHistory_(
             canonical,
             [["P01"], ["P02"]],
@@ -506,6 +511,16 @@ describe("same-setup dry-down learning", () => {
         expect(result.get("P01").window).toContain("Overdue — reweigh");
         expect(result.get("P01").basis).toContain("1 learned cycle");
         expect(result.get("P02").window).toBe("");
+        const multipleCycles = [
+            ...completed(),
+            ...completed(20),
+            ...current(40),
+        ].map(toCanonical);
+        expect(
+            context
+                .dryDownModelsFromHistory_(multipleCycles, [["P01"]], "UTC")
+                .get("P01").basis
+        ).toBe("Historical estimate · 2 learned cycles");
         canonical.forEach((r) => {
             r[0] = new Date(r[0].getTime() + 365 * 86400000);
         });

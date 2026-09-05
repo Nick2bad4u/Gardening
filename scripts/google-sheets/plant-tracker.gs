@@ -3082,15 +3082,13 @@ function dryDownCycles_(records) {
                 r.date < next.date ||
                 (r.date === next.date && r.index < next.index)) &&
             (!next || !dryDownRecordsShareSave_(r, next));
-        const sameSave = weights
-            .filter(
-                (r) =>
-                    r.date >= water.date &&
-                    r.date <= water.date + WET_WEIGHT_WINDOW_DAYS &&
-                    dryDownRecordsShareSave_(r, water) &&
-                    within(r)
-            )
-            .at(-1);
+        const sameSave = weights.findLast(
+            (r) =>
+                r.date >= water.date &&
+                r.date <= water.date + WET_WEIGHT_WINDOW_DAYS &&
+                dryDownRecordsShareSave_(r, water) &&
+                within(r)
+        );
         const wet =
             sameSave ||
             weights.find(
@@ -3116,20 +3114,17 @@ function dryDownCycles_(records) {
     /** @type {DryDownRecord | null} */
     let previous = null;
     cycles.forEach((cycle) => {
-        cycle.beforeDry = weights
-            .filter(
-                (r) =>
-                    (!previous ||
-                        r.date > previous.date ||
-                        (r.date === previous.date &&
-                            r.index > previous.index)) &&
-                    (r.date < cycle.water.date ||
-                        (r.date === cycle.water.date &&
-                            r.index < cycle.water.index)) &&
-                    !wetIndices.has(r.index) &&
-                    !dryDownRecordsShareSave_(r, cycle.water)
-            )
-            .at(-1);
+        cycle.beforeDry = weights.findLast(
+            (r) =>
+                (!previous ||
+                    r.date > previous.date ||
+                    (r.date === previous.date && r.index > previous.index)) &&
+                (r.date < cycle.water.date ||
+                    (r.date === cycle.water.date &&
+                        r.index < cycle.water.index)) &&
+                !wetIndices.has(r.index) &&
+                !dryDownRecordsShareSave_(r, cycle.water)
+        );
         previous = cycle.water;
     });
     cycles.forEach((cycle, index) => {
@@ -3253,10 +3248,7 @@ function dryDownModelForPlant_(records) {
         fit: "",
     };
     if (!current) return model;
-    const completedDry = cycles
-        .map((c) => c.beforeDry)
-        .filter(Boolean)
-        .at(-1);
+    const completedDry = cycles.map((c) => c.beforeDry).findLast(Boolean);
     model.dry = completedDry ? completedDry.weight : "";
     model.wet = current.wet ? current.wet.weight : "";
     model.count = new Set(current.points.map((p) => p.date)).size;
@@ -3284,18 +3276,8 @@ function dryDownModelForPlant_(records) {
     const learned = learnedDryDownCurves_(cycles, current);
     model.learned = learned.length;
     const supported = usableDryDownCurve_(curve);
-    model.readiness = supported
-        ? "Current cycle supported"
-        : curve.count < 4
-          ? "Need 4 post-water weights"
-          : "Need a stable 3-day curve";
-    const latest = current.points.at(-1) || current.wet;
-    if (
-        curve.gain ||
-        (curve.count >= 4 &&
-            curve.span >= 3 &&
-            (curve.decay <= 0 || curve.fit < 0.6))
-    ) {
+    model.readiness = dryDownCurrentReadiness_(curve, supported);
+    if (dryDownCurveContradicts_(curve)) {
         return {
             ...model,
             basis: "Current cycle differs — reweigh",
@@ -3307,43 +3289,112 @@ function dryDownModelForPlant_(records) {
     if (!supported && learned.length === 0) {
         return { ...model, basis: model.readiness };
     }
+    return applyDryDownForecast_(
+        model,
+        current,
+        curve,
+        learned,
+        tolerance,
+        supported
+    );
+}
+
+function dryDownCurrentReadiness_(curve, supported) {
+    const collecting =
+        curve.count < 4
+            ? "Need 4 post-water weights"
+            : "Need a stable 3-day curve";
+    return supported ? "Current cycle supported" : collecting;
+}
+
+function dryDownCurveContradicts_(curve) {
+    return (
+        curve.gain ||
+        (curve.count >= 4 &&
+            curve.span >= 3 &&
+            (curve.decay <= 0 || curve.fit < 0.6))
+    );
+}
+
+function dryDownPrior_(learned, currentDate) {
     const weights = learned.map(
-        (c) =>
-            c.fit * Math.exp((-Math.LN2 * (current.water.date - c.ended)) / 60)
+        (c) => c.fit * Math.exp((-Math.LN2 * (currentDate - c.ended)) / 60)
     );
     const sum = weights.reduce((a, b) => a + b, 0);
-    const priorLog =
-        sum > 0
-            ? learned.reduce(
-                  (total, c, i) => total + weights[i] * Math.log(c.decay),
-                  0
-              ) / sum
-            : 0;
-    const priorSpread =
-        sum > 0
-            ? Math.sqrt(
-                  learned.reduce(
-                      (total, c, i) =>
-                          total +
-                          weights[i] * (Math.log(c.decay) - priorLog) ** 2,
-                      0
-                  ) / sum
-              )
-            : 0;
-    // Early points can update a learned estimate, but never fully replace it.
+    if (sum <= 0) return { log: 0, spread: 0 };
+    const log =
+        learned.reduce(
+            (total, c, i) => total + weights[i] * Math.log(c.decay),
+            0
+        ) / sum;
+    const spread = Math.sqrt(
+        learned.reduce(
+            (total, c, i) =>
+                total + weights[i] * (Math.log(c.decay) - log) ** 2,
+            0
+        ) / sum
+    );
+    return { log, spread };
+}
+
+/** Early points can update a learned estimate, but never fully replace it. */
+function dryDownCurrentInfluence_(curve, hasHistory, currentUsable, supported) {
+    const early = Math.min(0.4, (curve.count - 1) * 0.2, curve.span / 10);
+    const supportedInfluence = Math.min(1, 0.7 + (curve.count - 4) * 0.15);
+    const currentInfluence = supported ? supportedInfluence : early;
+    const learnedInfluence = currentUsable ? currentInfluence : 0;
+    return hasHistory ? learnedInfluence : 1;
+}
+
+function dryDownMinimumSpread_(curve, learnedCount, supported) {
+    const historical = learnedCount > 1 ? Math.log(1.4) : Math.log(1.6);
+    return supported && curve.count >= 6 ? Math.log(1.25) : historical;
+}
+
+function dryDownForecastBasis_(alpha, supported) {
+    const current =
+        alpha < 1 ? "Current curve + history" : "Current-cycle curve";
+    const updated = supported ? current : "Blended historical estimate";
+    return alpha === 0 ? "Historical estimate" : updated;
+}
+
+function dryDownForecastReview_(
+    curve,
+    learnedCount,
+    priorLog,
+    lossFraction,
+    supported
+) {
+    const historical =
+        curve.decay > Math.exp(priorLog) * 1.75
+            ? "Faster than learned — reweigh"
+            : "OK";
+    const unlearned = lossFraction > 0.03 ? "Rapid loss — reweigh" : "OK";
+    const current = learnedCount > 0 ? historical : unlearned;
+    return supported ? current : "No current-cycle alert";
+}
+
+function applyDryDownForecast_(
+    model,
+    current,
+    curve,
+    learned,
+    tolerance,
+    supported
+) {
+    const latest = current.points.at(-1) || current.wet;
+    const prior = dryDownPrior_(learned, current.water.date);
     const currentUsable =
         curve.span >= 1 && curve.decay > 0 && curve.fit >= 0.6;
-    const alpha =
-        learned.length === 0
-            ? 1
-            : !currentUsable
-              ? 0
-              : supported
-                ? Math.min(1, 0.7 + (curve.count - 4) * 0.15)
-                : Math.min(0.4, (curve.count - 1) * 0.2, curve.span / 10);
-    const currentLog = currentUsable ? Math.log(curve.decay) : priorLog;
-    const decay = Math.exp((1 - alpha) * priorLog + alpha * currentLog);
-    const residual = latest.weight - (completedDry.weight - tolerance);
+    const alpha = dryDownCurrentInfluence_(
+        curve,
+        learned.length > 0,
+        currentUsable,
+        supported
+    );
+    const currentLog = currentUsable ? Math.log(curve.decay) : prior.log;
+    const decay = Math.exp((1 - alpha) * prior.log + alpha * currentLog);
+    const residual = latest.weight - (model.dry - tolerance);
     const days = Math.max(
         0,
         Math.log(Math.max(1, residual / (tolerance * 2))) / decay
@@ -3352,43 +3403,30 @@ function dryDownModelForPlant_(records) {
         return { ...model, basis: "Forecast too uncertain — reweigh" };
     }
     // A planning envelope, NOT a statistical confidence interval.
-    const minimumSpread =
-        supported && curve.count >= 6
-            ? Math.log(1.25)
-            : learned.length > 1
-              ? Math.log(1.4)
-              : Math.log(1.6);
     const spread = Math.min(
         Math.log(3),
         Math.max(
-            minimumSpread,
-            priorSpread * 1.64,
+            dryDownMinimumSpread_(curve, learned.length, supported),
+            prior.spread * 1.64,
             supported ? curve.error * 1.64 : 0,
-            Math.abs(currentLog - priorLog) * Math.sqrt(alpha * (1 - alpha))
+            Math.abs(currentLog - prior.log) * Math.sqrt(alpha * (1 - alpha))
         )
     );
     model.loss = decay * Math.max(0, residual);
     model.date = latest.date + days;
     model.early = latest.date + Math.max(0, days / Math.exp(spread) - 1);
     model.late = latest.date + days * Math.exp(spread) + 1;
-    model.basis =
-        alpha === 0
-            ? "Historical estimate"
-            : supported
-              ? alpha < 1
-                  ? "Current curve + history"
-                  : "Current-cycle curve"
-              : "Blended historical estimate";
+    model.basis = dryDownForecastBasis_(alpha, supported);
     model.readiness = supported
         ? "Current cycle supported"
         : "Historical estimate · " + curve.count + "/4 current readings";
-    model.review = !supported
-        ? "No current-cycle alert"
-        : learned.length > 0 && curve.decay > Math.exp(priorLog) * 1.75
-          ? "Faster than learned — reweigh"
-          : learned.length === 0 && model.loss / latest.weight > 0.03
-            ? "Rapid loss — reweigh"
-            : "OK";
+    model.review = dryDownForecastReview_(
+        curve,
+        learned.length,
+        prior.log,
+        model.loss / latest.weight,
+        supported
+    );
     return model;
 }
 
@@ -3398,10 +3436,11 @@ function dryDownSerialDate_(value, timeZone) {
     const offset = Utilities.formatDate(date, timeZone, "Z").match(
         /^([+-])(\d{2})(\d{2})$/
     );
-    const minutes = offset
-        ? (Number(offset[2]) * 60 + Number(offset[3])) *
-          (offset[1] === "-" ? -1 : 1)
-        : 0;
+    let minutes = 0;
+    if (offset) {
+        minutes = Number(offset[2]) * 60 + Number(offset[3]);
+        if (offset[1] === "-") minutes = -minutes;
+    }
     return date.getTime() / 86400000 + 25569 + minutes / 1440;
 }
 
@@ -3428,28 +3467,22 @@ function dryDownModelsFromHistory_(historyRows, plantIds, timeZone) {
             "MMM d"
         );
     return new Map(
-        GARDEN_DRY_DOWN(rows, plantIds).map((model) => [
-            model[0],
-            {
-                window:
-                    model[7] === ""
-                        ? ""
-                        : (Number(model[9]) < Math.floor(today)
-                              ? "Overdue — reweigh · "
-                              : "") +
-                          day(model[8]) +
-                          "–" +
-                          day(model[9]),
-                basis:
-                    model[10] +
-                    (model[5]
-                        ? " · " +
-                          model[5] +
-                          " learned cycle" +
-                          (model[5] === 1 ? "" : "s")
-                        : ""),
-            },
-        ])
+        GARDEN_DRY_DOWN(rows, plantIds).map((model) => {
+            let window = "";
+            if (model[7] !== "") {
+                const overdue =
+                    Number(model[9]) < Math.floor(today)
+                        ? "Overdue — reweigh · "
+                        : "";
+                window = overdue + day(model[8]) + "–" + day(model[9]);
+            }
+            let basis = String(model[10]);
+            if (model[5]) {
+                const suffix = model[5] === 1 ? "" : "s";
+                basis += " · " + model[5] + " learned cycle" + suffix;
+            }
+            return [model[0], { window, basis }];
+        })
     );
 }
 
@@ -3557,7 +3590,7 @@ function baselineViewRow_(rowNumber, plant) {
         `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$O:$O,"")`,
         `=IFS(V${row}<1,"Collecting weights",Y${row}="","Need a wet weight",W${row}="","Need a completed dry cycle",Z${row}="","Recheck weights",TRUE,"Calibrated")`,
         `=${dryDownLookupFormula_(row, "L")}`,
-        `=LET(review,XLOOKUP($A${row},\'Plant tracker\'!$A:$A,\'Plant tracker\'!$AD:$AD,""),IF(review<>"",review,${dryDownLookupFormula_(row, "M")}))`,
+        `=LET(review,XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AD:$AD,""),IF(review<>"",review,${dryDownLookupFormula_(row, "M")}))`,
         `=IFERROR(LET(lastEstimate,MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",History!$AC$2:$AC$5000="Estimated",History!$AJ$2:$AJ$5000<>"Removed")),lastMeasured,IFERROR(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",History!$AC$2:$AC$5000="Measured",History!$AJ$2:$AJ$5000<>"Removed")),0),IF(lastEstimate>lastMeasured,"Due now","Current")),"No measurement")`,
         `=IF(AF${row}<>"",LET(early,${dryDownLookupFormula_(row, "I")},late,${dryDownLookupFormula_(row, "J")},IF(late<TODAY(),"Inspect / reweigh now","Reweigh "&TEXT(early,"mmm d")&"–"&TEXT(late,"mmm d"))),${dryDownLookupFormula_(row, "K")})`,
         `=IF(OR(AE${row}="",C${row}<=0),"",AE${row}/C${row})`,
