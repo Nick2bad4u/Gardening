@@ -201,8 +201,8 @@ keyboard focus can preview a label's plant name. This gives touch users the
 name without relying on a browser's hover-only tooltip.
 
 The summary keeps its main metrics in two columns and the Waterings,
-Dimensions, and Weights totals in three equal cells on a phone. Counts cover
-active History across pot setups. Measurements counts Measure events, so a
+Size logs, and Weights totals in three equal cells on a phone. Counts cover
+active History across pot setups. Size logs counts Measure events, so a
 single height-and-width observation counts once. Weights counts positive
 numeric Weigh readings and excludes estimates and Removed rows.
 

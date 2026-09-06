@@ -15532,7 +15532,8 @@
                     return "—";
                 const rounded =
                     value < 0.1 ? "<0.1" : String(Math.round(value * 10) / 10);
-                return `${rounded} ${unit}`;
+                const label = unit === "days" && rounded === "1" ? "day" : unit;
+                return `${rounded} ${label}`;
             }
 
             function createActivityCounts(activity) {
@@ -15549,7 +15550,7 @@
                     ],
                     [
                         "dimensions",
-                        "Dimensions",
+                        "Size logs",
                         activity.totalMeasurements,
                         "Total active height/width measurement events across the entire history. One event with both height and width counts once.",
                     ],
