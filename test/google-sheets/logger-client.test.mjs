@@ -1,6 +1,7 @@
 import {
     DOMRect,
     Element,
+    EventTarget,
     HTMLAnchorElement,
     HTMLButtonElement,
     HTMLDetailsElement,
@@ -2528,6 +2529,7 @@ describe("garden logger plant photos and portrait rendering", () => {
     it("persists the photo preference and does not create hidden image requests", () => {
         expect.hasAssertions();
 
+        const sourceWrites = vi.spyOn(HTMLImageElement.prototype, "src", "set");
         const bootstrapData = canonicalBootstrap();
         const hidden = createLoggerWindow({
             bootstrapData,
@@ -2538,39 +2540,81 @@ describe("garden logger plant photos and portrait rendering", () => {
         }).window;
         const toggle = queryElement(
             hidden.document,
-            "#photoVisibilityToggle",
+            "#plantSummary #plantDisplayTools #photoVisibilityToggle",
             HTMLButtonElement
         );
+        const summary = queryElement(
+            hidden.document,
+            "#plantSummary",
+            HTMLElement
+        );
+        const tools = queryElement(summary, "#plantDisplayTools", HTMLElement);
+        const portrait = queryElement(
+            summary,
+            ".summary-portrait",
+            HTMLImageElement
+        );
+
+        expect(summary.lastElementChild).toBe(tools);
+
+        for (const url of Object.values(p23ImageUrls)) {
+            expect(sourceWrites.mock.calls.flat()).not.toContain(url);
+        }
 
         expect(
             queryElements(
                 hidden.document,
-                "#plantSummary img",
+                "#plantSummary .plant-photo-card img",
                 HTMLImageElement
             )
         ).toHaveLength(0);
         expect(toggle.textContent).toContain("Show photos");
         expect(toggle.getAttribute("aria-pressed")).toBe("false");
 
+        toggle.focus();
         toggle.click();
 
         expect(
+            queryElement(summary, "#photoVisibilityToggle", HTMLButtonElement)
+        ).toBe(toggle);
+        expect(hidden.document.activeElement).toBe(toggle);
+        expect(
+            queryElement(summary, ".summary-portrait", HTMLImageElement)
+        ).toBe(portrait);
+        expect(
             queryElements(
                 hidden.document,
-                "#plantSummary img",
+                "#plantSummary .plant-photo-card img",
                 HTMLImageElement
             )
         ).toHaveLength(2);
+        expect(sourceWrites.mock.calls.flat()).toStrictEqual(
+            expect.arrayContaining(Object.values(p23ImageUrls))
+        );
         expect(hidden.localStorage.getItem("gardenLoggerPhotosVisibleV1")).toBe(
             "shown"
         );
 
+        sourceWrites.mockClear();
         toggle.click();
+
+        expect(
+            queryElement(summary, "#photoVisibilityToggle", HTMLButtonElement)
+        ).toBe(toggle);
+        expect(hidden.document.activeElement).toBe(toggle);
+        expect(
+            queryElement(summary, ".summary-portrait", HTMLImageElement)
+        ).toBe(portrait);
+        expect(summary.lastElementChild).toBe(tools);
+
+        for (const url of Object.values(p23ImageUrls)) {
+            expect(sourceWrites.mock.calls.flat()).not.toContain(url);
+        }
 
         expect(
             queryElements(
                 hidden.document,
-                "#plantSummary img",
+                "#plantSummary .plant-photo-card img",
                 HTMLImageElement
             )
         ).toHaveLength(0);
@@ -2589,7 +2633,7 @@ describe("garden logger plant photos and portrait rendering", () => {
         expect(
             queryElements(
                 restored.document,
-                "#plantSummary img",
+                "#plantSummary .plant-photo-card img",
                 HTMLImageElement
             )
         ).toHaveLength(0);
@@ -2600,6 +2644,134 @@ describe("garden logger plant photos and portrait rendering", () => {
                 HTMLButtonElement
             ).textContent
         ).toContain("Show photos");
+    });
+
+    it("keeps the photo control usable after a search has no matches", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: canonicalBootstrap(),
+            storage: { gardenPlantId: "P23" },
+        });
+        const summary = queryElement(
+            window.document,
+            "#plantSummary",
+            HTMLElement
+        );
+        const tools = queryElement(summary, "#plantDisplayTools", HTMLElement);
+        const toggle = queryElement(
+            tools,
+            "#photoVisibilityToggle",
+            HTMLButtonElement
+        );
+        const search = queryElement(
+            window.document,
+            "#plantSearch",
+            HTMLInputElement
+        );
+        search.value = "no such plant";
+        search.dispatchEvent(new window.Event("input", { bubbles: true }));
+
+        expect(summary.textContent).toContain("No plants match that search.");
+        expect(tools.hidden).toBe(true);
+        expect(toggle.isConnected).toBe(true);
+
+        search.value = "P23";
+        search.dispatchEvent(new window.Event("input", { bubbles: true }));
+
+        expect(
+            queryElement(summary, "#photoVisibilityToggle", HTMLButtonElement)
+        ).toBe(toggle);
+        expect(summary.lastElementChild).toBe(tools);
+        expect(tools.hidden).toBe(false);
+        expect(
+            queryElements(summary, ".plant-photo-card img", HTMLImageElement)
+        ).toHaveLength(2);
+
+        toggle.focus();
+        toggle.click();
+
+        expect(window.document.activeElement).toBe(toggle);
+        expect(
+            queryElements(summary, ".plant-photo-card img", HTMLImageElement)
+        ).toHaveLength(0);
+        expect(
+            queryElement(summary, ".summary-portrait", HTMLImageElement)
+                .isConnected
+        ).toBe(true);
+    });
+
+    it("reuses the header portrait for the same plant and preserves label portraits when selection changes", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            storage: { gardenLoggerPlantPickerModeV1: "labels" },
+        });
+        const summary = queryElement(
+            window.document,
+            "#plantSummary",
+            HTMLElement
+        );
+        const portrait = queryElement(
+            summary,
+            ".plant-summary-heading .summary-portrait",
+            HTMLImageElement
+        );
+        const picker = queryElement(
+            window.document,
+            "#labelPicker",
+            HTMLElement
+        );
+        const labelPortraits = queryElements(picker, "img", HTMLImageElement);
+        const expectedSrc = `https://nick2bad4u.github.io/Gardening/assets/plant-icons/gymnocalycium-mihanovichii-variegated.svg?v=${portraitRevision}`;
+
+        expect(portrait.src).toBe(expectedSrc);
+
+        queryElement(
+            picker,
+            '[data-plant-id="P01"]',
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(summary, ".summary-portrait", HTMLImageElement)
+        ).toBe(portrait);
+        expect(portrait.isConnected).toBe(true);
+
+        queryElement(
+            summary,
+            "#photoVisibilityToggle",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(summary, ".summary-portrait", HTMLImageElement)
+        ).toBe(portrait);
+
+        queryElement(
+            picker,
+            '[data-plant-id="P02"]',
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(summary, ".summary-portrait", HTMLImageElement).src
+        ).toBe(
+            `https://nick2bad4u.github.io/Gardening/assets/plant-icons/parodia-leninghausii.svg?v=${portraitRevision}`
+        );
+
+        const refreshedPortraits = queryElements(
+            picker,
+            "img",
+            HTMLImageElement
+        );
+
+        expect(refreshedPortraits).toHaveLength(labelPortraits.length);
+
+        for (const [index, image] of refreshedPortraits.entries()) {
+            expect(image).toBe(labelPortraits[index]);
+            expect(image.isConnected).toBe(true);
+        }
     });
 
     it("uses the selected plant's lightweight SVG portrait in list and label pickers", () => {
@@ -2908,6 +3080,108 @@ describe("garden logger portrait caching and offline reuse", () => {
     );
 });
 
+describe("garden logger latest weight comparison", () => {
+    afterEach(restoreLoggerMocks);
+
+    it.each([
+        [
+            420,
+            398,
+            "+22 g vs last dry",
+        ],
+        [
+            390,
+            398,
+            "-8 g vs last dry",
+        ],
+        [
+            398,
+            398,
+            "0 g vs last dry",
+        ],
+        [
+            420.26,
+            398.1,
+            "+22.2 g vs last dry",
+        ],
+        [
+            397.84,
+            398.1,
+            "-0.3 g vs last dry",
+        ],
+        [
+            397.98,
+            398,
+            "0 g vs last dry",
+        ],
+    ])(
+        "compares %s g with a last dry reading of %s g",
+        (latestWeight, dryOrLowestWeight, expected) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow({
+                bootstrapData: {
+                    ...bootstrap,
+                    plants: [
+                        {
+                            ...required(bootstrap.plants[0]),
+                            dryOrLowestWeight,
+                            latestWeight,
+                        },
+                    ],
+                },
+            });
+
+            expect(
+                queryElement(
+                    window.document,
+                    "#plantSummary .weight-comparison",
+                    HTMLElement
+                ).textContent
+            ).toBe(expected);
+        }
+    );
+
+    it.each(["latestWeight", "dryOrLowestWeight"])(
+        "omits the comparison for invalid %s readings",
+        (field) => {
+            expect.hasAssertions();
+
+            for (const value of [
+                undefined,
+                null,
+                "",
+                0,
+                -1,
+                NaN,
+                Infinity,
+                -Infinity,
+                "420",
+                "unknown",
+                true,
+            ]) {
+                const plant = { ...required(bootstrap.plants[0]) };
+                // Exercise malformed RPC data without claiming it satisfies the fixture type.
+                Reflect.set(plant, field, value);
+                const { window } = createLoggerWindow({
+                    bootstrapData: { ...bootstrap, plants: [plant] },
+                });
+                const summary = queryElement(
+                    window.document,
+                    "#plantSummary",
+                    HTMLElement
+                );
+
+                expect(
+                    queryElements(summary, ".weight-comparison", HTMLElement),
+                    `${field}: ${String(value)}`
+                ).toHaveLength(0);
+                expect(summary.textContent).not.toContain("vs last dry");
+            }
+        }
+    );
+});
+
 describe("garden logger watering forecasts and recent History", () => {
     afterEach(restoreLoggerMocks);
 
@@ -2948,7 +3222,11 @@ describe("garden logger watering forecasts and recent History", () => {
             queryElement(summary, ".forecast-date", HTMLElement).textContent
         ).toBe("Sep 12");
         expect(
-            queryElement(summary, ".forecast-guidance", HTMLElement).textContent
+            queryElement(
+                summary,
+                ".forecast-guidance .help-paragraph",
+                HTMLElement
+            ).textContent
         ).toBe("Confirm dry roots first.");
         expect(
             queryElement(summary, ".forecast-reweigh", HTMLElement).textContent
@@ -3042,7 +3320,11 @@ describe("garden logger watering forecasts and recent History", () => {
         );
         expect(summary.textContent).toContain("Needs watering-cycle data");
         expect(
-            queryElements(summary, ".metric svg[aria-hidden='true']", Element)
+            queryElements(
+                summary,
+                ".metric > .metric-icon svg, .metric > .help-disclosure > summary > svg",
+                Element
+            )
         ).toHaveLength(6);
     });
 
@@ -3370,7 +3652,7 @@ describe("garden logger local History loading and portraits", () => {
     });
 });
 
-describe("garden logger selection help and activity metrics", () => {
+describe("garden logger selection and portrait stability", () => {
     afterEach(restoreLoggerMocks);
 
     it("puts the summary above both pickers and immediately names tapped labels without replacing portraits", () => {
@@ -3509,6 +3791,347 @@ describe("garden logger selection help and activity metrics", () => {
             ).toStrictEqual(portraits);
         }
     });
+});
+
+describe("garden logger help disclosures", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("opens only one help panel across clicks, focus and hover, clearing old pins", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        const first = queryElement(
+            window.document,
+            ".forecast-heading .help-disclosure",
+            HTMLDetailsElement
+        );
+        const second = queryElement(
+            window.document,
+            ".forecast-reweigh",
+            HTMLDetailsElement
+        );
+        const firstTrigger = queryElement(first, "summary", HTMLElement);
+        const secondTrigger = queryElement(second, "summary", HTMLElement);
+        firstTrigger.click();
+        secondTrigger.click();
+
+        expect(
+            queryElements(
+                window.document,
+                ".help-disclosure[open]",
+                HTMLDetailsElement
+            )
+        ).toStrictEqual([second]);
+        expect(first.dataset["pinned"]).toBe("false");
+
+        firstTrigger.focus();
+
+        expect(
+            queryElements(
+                window.document,
+                ".help-disclosure[open]",
+                HTMLDetailsElement
+            )
+        ).toStrictEqual([first]);
+        expect(second.dataset["pinned"]).toBe("false");
+
+        firstTrigger.click();
+        second.dispatchEvent(
+            new window.PointerEvent("pointerenter", { pointerType: "mouse" })
+        );
+
+        expect(
+            queryElements(
+                window.document,
+                ".help-disclosure[open]",
+                HTMLDetailsElement
+            )
+        ).toStrictEqual([second]);
+        expect(first.dataset["pinned"]).toBe("false");
+
+        firstTrigger.click();
+
+        expect(
+            queryElements(
+                window.document,
+                ".help-disclosure[open]",
+                HTMLDetailsElement
+            )
+        ).toStrictEqual([first]);
+        expect(first.dataset["pinned"]).toBe("true");
+    });
+
+    it.each(["pointerdown", "click"])(
+        "dismisses pinned help on outside %s without consuming the other control's input",
+        (eventType) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow();
+            const help = queryElement(
+                window.document,
+                ".forecast-heading .help-disclosure",
+                HTMLDetailsElement
+            );
+            queryElement(help, "summary", HTMLElement).click();
+            const control = queryElement(
+                window.document,
+                '#eventChips [data-event="Check"]',
+                HTMLButtonElement
+            );
+            control.getBoundingClientRect = () => new DOMRect(10, 100, 180, 48);
+            const event = new window.PointerEvent(eventType, {
+                bubbles: true,
+                cancelable: true,
+                clientX: 90,
+                clientY: 120,
+                detail: 1,
+                pointerType: "touch",
+            });
+            control.dispatchEvent(event);
+
+            expect(event.defaultPrevented).toBe(false);
+            expect(help.open).toBe(false);
+            expect(help.dataset["pinned"]).toBe("false");
+            expect(control.disabled).toBe(false);
+            expect(window.document.documentElement.className).not.toContain(
+                "mobile-hit-recovery"
+            );
+
+            const pressed = control.getAttribute("aria-pressed");
+            control.click();
+
+            expect(control.getAttribute("aria-pressed")).not.toBe(pressed);
+        }
+    );
+
+    it.each([
+        {
+            action: "close button",
+            dismiss: (
+                /** @type {Window} */ _window,
+                /** @type {HTMLButtonElement} */ close
+            ) => {
+                close.click();
+            },
+        },
+        {
+            action: "Escape",
+            dismiss: (
+                /** @type {Window} */ window,
+                /** @type {HTMLButtonElement} */ close
+            ) => {
+                close.dispatchEvent(
+                    new window.KeyboardEvent("keydown", {
+                        bubbles: true,
+                        key: "Escape",
+                    })
+                );
+            },
+        },
+    ])(
+        "restores trigger focus after $action inside help without reopening",
+        ({ dismiss }) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow();
+            const help = queryElement(
+                window.document,
+                ".forecast-heading .help-disclosure",
+                HTMLDetailsElement
+            );
+            const trigger = queryElement(help, "summary", HTMLElement);
+            const close = queryElement(help, ".help-close", HTMLButtonElement);
+            trigger.click();
+            close.focus();
+
+            expect(window.document.activeElement).toBe(close);
+            expect(help.open).toBe(true);
+
+            dismiss(window, close);
+
+            expect(help.open).toBe(false);
+            expect(help.dataset["pinned"]).toBe("false");
+            expect(window.document.activeElement).toBe(trigger);
+
+            trigger.click();
+
+            expect(help.open).toBe(true);
+        }
+    );
+
+    it("closes pinned help when keyboard focus moves to another control", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        const help = queryElement(
+            window.document,
+            ".forecast-heading .help-disclosure",
+            HTMLDetailsElement
+        );
+        queryElement(help, "summary", HTMLElement).click();
+        queryElement(help, ".help-close", HTMLButtonElement).focus();
+        const outside = queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        );
+        outside.focus();
+
+        expect(window.document.activeElement).toBe(outside);
+        expect(help.open).toBe(false);
+        expect(help.dataset["pinned"]).toBe("false");
+    });
+
+    it.each(["page", "ancestor"])(
+        "closes help on %s scroll but permits scrolling inside its text",
+        (target) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow();
+            const help = queryElement(
+                window.document,
+                ".forecast-heading .help-disclosure",
+                HTMLDetailsElement
+            );
+            queryElement(help, "summary", HTMLElement).click();
+            const panel = queryElement(help, ".help-text", HTMLElement);
+            for (const inside of [
+                panel,
+                queryElement(panel, ".help-paragraph", HTMLElement),
+            ]) {
+                const scroll = new window.Event("scroll", { cancelable: true });
+                inside.dispatchEvent(scroll);
+
+                expect(help.open).toBe(true);
+                expect(scroll.defaultPrevented).toBe(false);
+            }
+            const outside =
+                target === "page"
+                    ? window.document
+                    : queryElement(
+                          window.document,
+                          "#plantSummary",
+                          HTMLElement
+                      );
+            const scroll = new window.Event("scroll", { cancelable: true });
+            outside.dispatchEvent(scroll);
+
+            expect(help.open).toBe(false);
+            expect(help.dataset["pinned"]).toBe("false");
+            expect(scroll.defaultPrevented).toBe(false);
+        }
+    );
+
+    it.each(["resize", "orientationchange"])(
+        "closes help when the window receives %s",
+        (eventType) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow();
+            const help = queryElement(
+                window.document,
+                ".forecast-heading .help-disclosure",
+                HTMLDetailsElement
+            );
+            queryElement(help, "summary", HTMLElement).click();
+            window.dispatchEvent(new window.Event(eventType));
+
+            expect(help.open).toBe(false);
+            expect(help.dataset["pinned"]).toBe("false");
+        }
+    );
+
+    it.each(["resize", "scroll"])(
+        "closes help on supported visual viewport %s events",
+        (eventType) => {
+            expect.hasAssertions();
+
+            const viewport = Object.assign(new EventTarget(), {
+                height: 844,
+                offsetLeft: 0,
+                offsetTop: 0,
+                width: 390,
+            });
+            const { window } = createLoggerWindow({
+                configureWindow: (target) => {
+                    // Happy DOM has no visual viewport; provide its event surface before startup.
+                    Object.defineProperty(target, "visualViewport", {
+                        value: viewport,
+                    });
+                },
+            });
+            const help = queryElement(
+                window.document,
+                ".forecast-heading .help-disclosure",
+                HTMLDetailsElement
+            );
+            queryElement(help, "summary", HTMLElement).click();
+            viewport.dispatchEvent(new window.Event(eventType));
+
+            expect(help.open).toBe(false);
+            expect(help.dataset["pinned"]).toBe("false");
+        }
+    );
+
+    it("gives transient help a leave grace period and cancels dismissal on pointer re-entry", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const { window } = createLoggerWindow();
+        const help = queryElement(
+            window.document,
+            ".forecast-heading .help-disclosure",
+            HTMLDetailsElement
+        );
+        help.dispatchEvent(
+            new window.PointerEvent("pointerenter", { pointerType: "mouse" })
+        );
+        help.dispatchEvent(
+            new window.PointerEvent("pointerleave", { pointerType: "mouse" })
+        );
+        vi.advanceTimersByTime(100);
+
+        expect(help.open).toBe(true);
+
+        help.dispatchEvent(
+            new window.PointerEvent("pointerenter", { pointerType: "mouse" })
+        );
+        vi.advanceTimersByTime(200);
+
+        expect(help.open).toBe(true);
+
+        help.dispatchEvent(
+            new window.PointerEvent("pointerleave", { pointerType: "mouse" })
+        );
+        vi.advanceTimersByTime(200);
+
+        expect(help.open).toBe(false);
+
+        queryElement(help, "summary", HTMLElement).click();
+        help.dispatchEvent(
+            new window.PointerEvent("pointerleave", { pointerType: "mouse" })
+        );
+        vi.advanceTimersByTime(200);
+
+        expect(help.open).toBe(true);
+        expect(help.dataset["pinned"]).toBe("true");
+    });
+
+    it.each(["touch", "pen"])("ignores %s hover for help", (pointerType) => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        const help = queryElement(
+            window.document,
+            ".forecast-heading .help-disclosure",
+            HTMLDetailsElement
+        );
+        help.dispatchEvent(
+            new window.PointerEvent("pointerenter", { pointerType })
+        );
+
+        expect(help.open).toBe(false);
+    });
 
     it("opens care help by tap, hover or keyboard focus and closes with Escape without capturing touch scroll", () => {
         expect.hasAssertions();
@@ -3585,6 +4208,10 @@ describe("garden logger selection help and activity metrics", () => {
 
         expect(help.open).toBe(false);
     });
+});
+
+describe("garden logger activity metrics and guidance", () => {
+    afterEach(restoreLoggerMocks);
 
     it.each([
         [

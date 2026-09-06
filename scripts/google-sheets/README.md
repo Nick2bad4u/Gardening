@@ -261,6 +261,28 @@ The final versioned web-app executions also completed successfully. AppSheet
 remains on verified version 1.100104 with portrait revision `2e71bf2a701aa61f`.
 No synthetic observation was submitted.
 
+## Plant summary and help polish (5.18.5)
+
+The selected plant's 64-unit SVG portrait sits at the top right of its summary,
+above the plant ID. The photo toggle lives at the summary's bottom right and
+retains focus and its stored preference through updates. Hiding photos keeps
+the cached portrait visible. The six metric pills use centered labels, values,
+and supporting text, matching the three activity totals.
+
+Latest weight also shows its signed difference from the last completed dry
+reading in the current pot setup, for example **+21.5 g vs last dry**. Missing
+or invalid readings do not produce a difference. This is a whole-pot mass
+comparison, not a measurement of remaining water or a watering instruction.
+
+Help panels have a colored heading, a close button, separated paragraphs, and
+highlighted cautions. Only one panel opens at a time. A mouse hover or keyboard
+focus opens temporary help; a tap or activation pins it until another tap,
+outside interaction, focus departure, Escape, or page movement dismisses it.
+The panel stays inside the viewport and can scroll internally. A brief pointer
+leave delay allows moving from the trigger into the panel without losing it.
+Opening another help control clears the previous pin. Closing from inside the
+panel returns keyboard focus to its trigger without reopening it.
+
 ## Plant portrait caching
 
 Logger 5.18.2 uses the shared 83-icon UI/category redraw from the canonical

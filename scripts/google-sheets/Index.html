@@ -26,6 +26,11 @@
                 --control: #ffffff;
                 --hero-start: #153721;
                 --hero-end: #286b3f;
+                --help-surface: #f2f8fa;
+                --help-accent: #245d69;
+                --help-border: #9bbfc4;
+                --help-note: #fff3d5;
+                --help-note-ink: #684812;
 
                 &[data-theme="dark"] {
                     color-scheme: dark;
@@ -43,6 +48,11 @@
                     --control: #111914;
                     --hero-start: #14251a;
                     --hero-end: #235a36;
+                    --help-surface: #182c2e;
+                    --help-accent: #b3e2dc;
+                    --help-border: #537d80;
+                    --help-note: #382f1d;
+                    --help-note-ink: #f3dca4;
                     --shadow: 0 10px 30px rgb(0 0 0 / 0.3);
                 }
             }
@@ -506,15 +516,17 @@
 
             .plant-display-tools {
                 display: flex;
+                grid-column: 1 / -1;
                 justify-content: flex-end;
-                margin-block-start: 10px;
+                padding-block-start: 8px;
+                border-block-start: 1px solid var(--line);
             }
 
             .photo-visibility-toggle {
                 display: inline-flex;
                 gap: 7px;
                 align-items: center;
-                min-block-size: 40px;
+                min-block-size: 44px;
                 padding: 7px 10px;
                 font-size: 1rem;
                 font-weight: 800;
@@ -598,6 +610,22 @@
                 & .plant-id {
                     flex: none;
                 }
+            }
+            .plant-summary-portrait {
+                display: grid;
+                flex: none;
+                gap: 6px;
+                justify-items: center;
+            }
+            .summary-portrait {
+                display: block;
+                inline-size: 64px;
+                block-size: 64px;
+                padding: 3px;
+                object-fit: contain;
+                background: var(--control);
+                border: 1px solid var(--line);
+                border-radius: 16px;
             }
             .plant-label-badge {
                 display: inline-flex;
@@ -686,16 +714,14 @@
             .metric {
                 display: grid;
                 grid-template-columns:
-                    [primary-start] 1.75rem [primary-end secondary-start] minmax(
-                        0,
-                        1fr
-                    )
-                    [secondary-end];
+                    [content-start] minmax(0, 1fr)
+                    [content-end];
                 column-gap: 6px;
                 align-content: start;
                 min-inline-size: 0;
                 padding: 11px;
                 color: var(--ink);
+                text-align: center;
                 background: var(--control);
                 border: 1px solid
                     color-mix(in srgb, var(--line) 85%, transparent);
@@ -705,6 +731,7 @@
             .metric-icon {
                 display: inline-grid;
                 place-items: center;
+                justify-self: center;
                 inline-size: 1.75rem;
                 block-size: 1.75rem;
                 margin-block-end: 0;
@@ -721,6 +748,12 @@
                 font-weight: 400;
                 line-height: 1.5;
                 color: var(--muted);
+            }
+            .weight-comparison {
+                display: block;
+                margin-block-start: 5px;
+                font-weight: 700;
+                color: var(--forest-2);
             }
             .plant-forecast {
                 padding: 13px;
@@ -740,12 +773,6 @@
                 font-size: 16px;
                 font-weight: 800;
                 line-height: 1.25;
-            }
-            .forecast-guidance {
-                margin: 6px 0 10px;
-                font-size: 1rem;
-                line-height: 1.5;
-                color: var(--muted);
             }
             .forecast-reweigh {
                 padding-block-start: 9px;
@@ -790,7 +817,6 @@
 
                 .metric &,
                 .activity-count & {
-                    position: static;
                     grid-column: 1 / -1;
                 }
             }
@@ -812,6 +838,7 @@
                     outline-offset: 3px;
                 }
 
+                .metric &,
                 .activity-count & {
                     flex-direction: column;
                     gap: 4px;
@@ -822,20 +849,64 @@
             }
 
             .help-text {
-                position: absolute;
-                inset-inline: 0;
-                z-index: 5;
-                padding: 12px;
-                margin: 3px 0 0;
+                position: fixed;
+                z-index: 40;
+                padding: 14px;
+                margin: 0;
+                overflow: auto;
+                overscroll-behavior: contain;
                 font-size: 1rem;
                 font-weight: 400;
                 line-height: 1.5;
                 color: var(--ink);
                 text-align: start;
-                background: var(--card);
-                border: 1px solid var(--line);
-                border-radius: 10px;
-                box-shadow: 0 5px 16px rgb(0 0 0 / 0.16);
+                background: var(--help-surface);
+                border: 1px solid var(--help-border);
+                border-radius: 14px;
+            }
+            .help-heading {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                padding-block-end: 8px;
+                margin-block-end: 10px;
+                color: var(--help-accent);
+                border-block-end: 1px solid var(--help-border);
+
+                & strong {
+                    flex: 1;
+                    min-inline-size: 0;
+                }
+            }
+            .help-close {
+                display: grid;
+                flex: none;
+                place-items: center;
+                inline-size: 44px;
+                block-size: 44px;
+                padding: 8px;
+                cursor: pointer;
+                background: var(--control);
+                border: 1px solid var(--help-border);
+                border-radius: 50%;
+
+                &:focus-visible {
+                    outline: 2px solid var(--help-accent);
+                    outline-offset: 2px;
+                }
+            }
+            .help-paragraph {
+                margin: 0;
+
+                & + & {
+                    margin-block-start: 10px;
+                }
+            }
+            .help-note {
+                padding: 9px 11px;
+                color: var(--help-note-ink);
+                background: var(--help-note);
+                border-radius: 8px;
             }
 
             .picker-name {
@@ -12332,7 +12403,20 @@
                             <div
                                 id="plantSummary"
                                 class="plant-summary"
-                            ></div>
+                            >
+                                <div
+                                    id="plantDisplayTools"
+                                    class="plant-display-tools"
+                                >
+                                    <button
+                                        id="photoVisibilityToggle"
+                                        class="photo-visibility-toggle"
+                                        type="button"
+                                        aria-pressed="true"
+                                        >Hide photos</button
+                                    >
+                                </div>
+                            </div>
                             <div class="picker-toolbar">
                                 <span class="hint"
                                     >Use the searchable list or tap a pot
@@ -12426,15 +12510,6 @@
                                 aria-label="Choose plant by pot label"
                                 hidden
                             ></div>
-                            <div class="plant-display-tools">
-                                <button
-                                    id="photoVisibilityToggle"
-                                    class="photo-visibility-toggle"
-                                    type="button"
-                                    aria-pressed="true"
-                                    >Hide photos</button
-                                >
-                            </div>
                         </section>
 
                         <section class="card">
@@ -15298,14 +15373,26 @@
             }
 
             function renderPlantSummary() {
+                closeHelpPanels();
                 const plant = selectedPlant();
                 const summary = $("plantSummary");
-                summary.replaceChildren();
+                const displayTools = $("plantDisplayTools");
+                const restorePhotoFocus =
+                    document.activeElement === $("photoVisibilityToggle");
+                const previousPortrait =
+                    summary.querySelector(".summary-portrait");
+                const portrait =
+                    plant && previousPortrait?.dataset.plantId === plant.id
+                        ? previousPortrait
+                        : null;
+                portrait?.remove();
+                clearPlantPortraits(summary);
+                displayTools.hidden = !plant;
                 showPickerName(plant);
                 if (!plant) {
                     const empty = document.createElement("div");
                     empty.textContent = "No plants match that search.";
-                    summary.append(empty);
+                    summary.append(empty, displayTools);
                     return;
                 }
                 safeStorageSet(localStorage, "gardenPlantId", plant.id);
@@ -15355,7 +15442,10 @@
                     activity.waterIntervalCount > 0
                         ? `Average of ${activity.waterIntervalCount} intervals`
                         : "Average interval";
-                const intervalHelp = `${intervalEvidence} between active watering events across the entire history. At least two waterings are needed. Past intervals are observations, not a fixed watering schedule.`;
+                const intervalHelp = [
+                    `${intervalEvidence} between active watering events across the entire history. At least two waterings are needed.`,
+                    "Past intervals are observations, not a fixed watering schedule.",
+                ];
                 const lossWindow = positiveMetric(activity.dryDownDays, "days");
                 const recentLoss = positiveMetric(
                     activity.recentDryDownGramsPerDay,
@@ -15365,11 +15455,16 @@
                     activity.recentDryDownDays,
                     "days"
                 );
-                const lossHelp =
-                    `Observed whole-pot mass loss over ${lossWindow === "—" ? "a measured time window" : lossWindow}, using ${activity.dryDownReadingCount || "available"} measured weights in the current pot setup and watering cycle. This is net mass loss divided by actual elapsed days, not plant water use alone. Drying can slow; this is not a fixed watering schedule. Removed, estimated, invalid, nonpositive, pre-watering and older-setup readings are excluded. An invalid or upward-conflicting sequence withholds the rate.` +
-                    (recentLoss === "—" || recentWindow === "—"
-                        ? ""
-                        : ` Last interval: ${recentLoss} over ${recentWindow}.`);
+                const lossHelp = [
+                    `Observed whole-pot mass loss over ${lossWindow === "—" ? "a measured time window" : lossWindow}, using ${activity.dryDownReadingCount || "available"} measured weights in the current pot setup and watering cycle.`,
+                    ...(recentLoss === "—" || recentWindow === "—"
+                        ? []
+                        : [
+                              `Last interval: ${recentLoss} over ${recentWindow}.`,
+                          ]),
+                    "This is net mass loss divided by elapsed days. Removed, estimated, invalid, nonpositive, pre-watering and older-setup readings are excluded; conflicting gains withhold the rate.",
+                    "Pot weight loss is not plant water use alone. Drying can slow; this is not a fixed watering schedule.",
+                ];
                 const metricData = [
                     [
                         "water",
@@ -15448,6 +15543,15 @@
                     const detailNode = document.createElement("div");
                     detailNode.className = "metric-detail";
                     detailNode.textContent = detail;
+                    if (label === "Latest weight") {
+                        const comparison = latestWeightComparison(plant);
+                        if (comparison) {
+                            const difference = document.createElement("span");
+                            difference.className = "weight-comparison";
+                            difference.textContent = comparison;
+                            detailNode.append(difference);
+                        }
+                    }
                     metric.append(iconNode, labelNode, valueNode, detailNode);
                     if (help) {
                         const disclosure = createHelp(label, help, iconName);
@@ -15467,7 +15571,13 @@
                     ),
                     createLink("History & charts", plant.historyUrl, "history")
                 );
-                heading.append(identity, badge);
+                const portraitGroup = document.createElement("div");
+                portraitGroup.className = "plant-summary-portrait";
+                const summaryPortrait =
+                    portrait || createPlantPortrait(plant, "summary-portrait");
+                summaryPortrait.dataset.plantId = plant.id;
+                portraitGroup.append(summaryPortrait, badge);
+                heading.append(identity, portraitGroup);
                 left.append(
                     heading,
                     metrics,
@@ -15521,6 +15631,25 @@
                     });
                     summary.append(photos);
                 }
+                summary.append(displayTools);
+                if (restorePhotoFocus)
+                    $("photoVisibilityToggle").focus({ preventScroll: true });
+            }
+
+            function latestWeightComparison(plant) {
+                const { latestWeight, dryOrLowestWeight } = plant;
+                if (
+                    ![latestWeight, dryOrLowestWeight].every(
+                        (value) =>
+                            typeof value === "number" &&
+                            Number.isFinite(value) &&
+                            value > 0
+                    )
+                )
+                    return "";
+                const difference =
+                    Math.round((latestWeight - dryOrLowestWeight) * 10) / 10;
+                return `${difference > 0 ? "+" : ""}${difference} g vs last dry`;
             }
 
             function positiveMetric(value, unit) {
@@ -15575,6 +15704,67 @@
                 return counts;
             }
 
+            let helpCloseTimer;
+
+            function closeHelp(help, restoreFocus = false) {
+                clearTimeout(helpCloseTimer);
+                help.dataset.pinned = "false";
+                help.open = false;
+                if (restoreFocus && help.contains(document.activeElement)) {
+                    help.dataset.restoringFocus = "true";
+                    help.querySelector("summary").focus({
+                        preventScroll: true,
+                    });
+                    delete help.dataset.restoringFocus;
+                }
+            }
+
+            function closeHelpPanels(except = null, restoreFocus = false) {
+                clearTimeout(helpCloseTimer);
+                document
+                    .querySelectorAll(".help-disclosure[open]")
+                    .forEach((help) => {
+                        if (help !== except) closeHelp(help, restoreFocus);
+                    });
+            }
+
+            function positionHelp(help) {
+                const panel = help.querySelector(".help-text");
+                const trigger = help
+                    .querySelector("summary")
+                    .getBoundingClientRect();
+                const viewport = window.visualViewport;
+                const startX = viewport?.offsetLeft || 0;
+                const startY = viewport?.offsetTop || 0;
+                const width = viewport?.width || window.innerWidth;
+                const height = viewport?.height || window.innerHeight;
+                const panelWidth = Math.min(384, width - 24);
+                panel.style.inlineSize = `${panelWidth}px`;
+                panel.style.maxBlockSize = `${Math.max(0, height - 24)}px`;
+                const panelHeight = panel.getBoundingClientRect().height;
+                const below = trigger.bottom + 6;
+                const top =
+                    below + panelHeight <= startY + height - 12
+                        ? below
+                        : trigger.top - panelHeight - 6;
+                panel.style.insetBlockStart = `${Math.max(startY + 12, Math.min(top, startY + height - panelHeight - 12))}px`;
+                panel.style.insetInlineStart = `${Math.max(startX + 12, Math.min(trigger.left + trigger.width / 2 - panelWidth / 2, startX + width - panelWidth - 12))}px`;
+            }
+
+            function openHelp(help, pinned = false) {
+                closeHelpPanels(help);
+                help.dataset.pinned = String(
+                    pinned || help.dataset.pinned === "true"
+                );
+                help.open = true;
+                positionHelp(help);
+            }
+
+            function dismissOutsideHelp(event) {
+                if (!event.target.closest?.(".help-disclosure"))
+                    closeHelpPanels();
+            }
+
             function createHelp(label, explanation, iconName = "info") {
                 const help = document.createElement("details");
                 help.className = "help-disclosure";
@@ -15586,34 +15776,59 @@
                     label,
                     "app-icon app-icon--small"
                 );
-                const text = document.createElement("p");
+                const text = document.createElement("div");
                 text.className = "help-text";
-                text.textContent = explanation;
+                const heading = document.createElement("div");
+                heading.className = "help-heading";
+                const title = document.createElement("strong");
+                title.textContent = label;
+                const close = document.createElement("button");
+                close.type = "button";
+                close.className = "help-close";
+                close.setAttribute("aria-label", `Close ${label} help`);
+                close.append(createIcon("close", "app-icon"));
+                close.addEventListener("click", () => closeHelp(help, true));
+                heading.append(createIcon(iconName, "app-icon"), title, close);
+                text.append(heading);
+                const paragraphs = Array.isArray(explanation)
+                    ? explanation
+                    : [explanation];
+                paragraphs.forEach((paragraph, index) => {
+                    const body = document.createElement("p");
+                    body.className = "help-paragraph";
+                    if (
+                        paragraphs.length > 1 &&
+                        index === paragraphs.length - 1
+                    )
+                        body.classList.add("help-note");
+                    body.textContent = paragraph;
+                    text.append(body);
+                });
                 help.append(trigger, text);
                 trigger.addEventListener("click", (event) => {
                     event.preventDefault();
-                    help.dataset.pinned = String(
-                        help.dataset.pinned !== "true"
-                    );
-                    help.open = help.dataset.pinned === "true";
+                    if (help.dataset.pinned === "true") closeHelp(help);
+                    else openHelp(help, true);
                 });
                 help.addEventListener("pointerenter", (event) => {
-                    if (event.pointerType === "mouse") help.open = true;
+                    if (event.pointerType === "mouse") openHelp(help);
                 });
                 help.addEventListener("pointerleave", () => {
-                    if (
-                        help.dataset.pinned !== "true" &&
-                        !help.contains(document.activeElement)
-                    )
-                        help.open = false;
+                    clearTimeout(helpCloseTimer);
+                    helpCloseTimer = setTimeout(() => {
+                        if (
+                            help.dataset.pinned !== "true" &&
+                            !help.contains(document.activeElement)
+                        )
+                            closeHelp(help);
+                    }, 160);
                 });
                 trigger.addEventListener("focus", () => {
-                    help.open = true;
+                    if (help.dataset.restoringFocus !== "true") openHelp(help);
                 });
                 help.addEventListener("focusout", (event) => {
                     if (!help.contains(event.relatedTarget)) {
-                        help.dataset.pinned = "false";
-                        help.open = false;
+                        closeHelp(help);
                     }
                 });
                 return help;
@@ -15669,6 +15884,9 @@
                 waterHelp
                     .querySelector(".help-text")
                     .classList.add("forecast-guidance");
+                waterHelp
+                    .querySelector(".help-paragraph")
+                    .classList.add("help-note");
                 heading.append(waterHelp);
                 const date = document.createElement("div");
                 date.className = "forecast-date";
@@ -17745,14 +17963,32 @@
             });
             $("bulkResetButton").addEventListener("click", clearBulkRound);
             document.addEventListener("click", guardMobileButtonHit, true);
+            document.addEventListener("pointerdown", dismissOutsideHelp, {
+                capture: true,
+                passive: true,
+            });
+            document.addEventListener("click", dismissOutsideHelp);
+            document.addEventListener(
+                "scroll",
+                (event) => {
+                    if (!event.target.closest?.(".help-text"))
+                        closeHelpPanels();
+                },
+                { capture: true, passive: true }
+            );
+            window.addEventListener("resize", () => closeHelpPanels());
+            window.addEventListener("orientationchange", () =>
+                closeHelpPanels()
+            );
+            window.visualViewport?.addEventListener("resize", () =>
+                closeHelpPanels()
+            );
+            window.visualViewport?.addEventListener("scroll", () =>
+                closeHelpPanels()
+            );
             document.addEventListener("keydown", (event) => {
                 if (event.key !== "Escape") return;
-                document
-                    .querySelectorAll(".help-disclosure[open]")
-                    .forEach((help) => {
-                        help.dataset.pinned = "false";
-                        help.open = false;
-                    });
+                closeHelpPanels(null, true);
             });
             $("bulkWaterForm").addEventListener("submit", (event) => {
                 event.preventDefault();
