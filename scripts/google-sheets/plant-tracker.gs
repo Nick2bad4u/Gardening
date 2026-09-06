@@ -891,7 +891,7 @@ function normalizeMeasurementMethod_(value, eventNames) {
 }
 
 function prepareWebObservation_(spreadsheet, payload, plantRecords) {
-    const plantId = cleanText_(payload && payload.plantId);
+    const plantId = cleanText_(payload?.plantId);
     const plant = plantRecords
         ? plantRecords.get(plantId)
         : plantRecordForId_(spreadsheet, plantId);
@@ -922,11 +922,11 @@ function prepareWebObservation_(spreadsheet, payload, plantRecords) {
     );
     validateMeasurementEvents_(eventNames, weight, heightInput, widthInput);
     const measurementMethod = normalizeMeasurementMethod_(
-        payload && payload.measurementMethod,
+        payload.measurementMethod,
         eventNames
     );
     const measurementQuality = normalizeMeasurementQuality_(
-        payload && payload.measurementQuality,
+        payload.measurementQuality,
         eventNames,
         measurementMethod
     );
@@ -934,7 +934,7 @@ function prepareWebObservation_(spreadsheet, payload, plantRecords) {
     // unit remains centimeters for backward-compatible retries. Logger 5.8
     // always sends an explicit unit and defaults new form entries to inches.
     const measurementUnit = normalizeMeasurementUnit_(
-        payload && payload.measurementUnit,
+        payload.measurementUnit,
         eventNames,
         "cm"
     );
@@ -942,7 +942,7 @@ function prepareWebObservation_(spreadsheet, payload, plantRecords) {
     const width = measurementToCentimeters_(widthInput, measurementUnit);
     const details = eventDetailsFromPayload_(payload, eventNames, plant);
 
-    const requestId = normalizeRequestId_(payload && payload.requestId, true);
+    const requestId = normalizeRequestId_(payload.requestId, true);
     const observationDate = normalizeDate_(payload.observedAt);
     const potSetup = eventNames.includes("Repot")
         ? plant.potSetup + 1
@@ -965,9 +965,7 @@ function prepareWebObservation_(spreadsheet, payload, plantRecords) {
             currentLabel: plant.label,
             requestId,
             details,
-            entrySource: normalizeWebEntrySource_(
-                payload && payload.entrySource
-            ),
+            entrySource: normalizeWebEntrySource_(payload.entrySource),
             measurementQuality,
             measurementMethod,
             measurementUnit,
@@ -1032,7 +1030,7 @@ function processAppSheetEntry(entryId) {
     try {
         const batch = saveWebObservationBatch([payload]);
         const result = batch.results[0];
-        if (result && result.ok) {
+        if (result?.ok) {
             writeAppSheetEntryReceipt_(entries, rowNumber, {
                 status: "Saved",
                 message: result.message,
@@ -1048,10 +1046,10 @@ function processAppSheetEntry(entryId) {
         }
 
         const message =
-            (result && result.message) ||
+            result?.message ||
             "This entry needs correction before it can be saved.";
         writeAppSheetEntryReceipt_(entries, rowNumber, {
-            status: result && result.retryable ? "Retry" : "Needs correction",
+            status: result?.retryable ? "Retry" : "Needs correction",
             message,
             requestId,
             historyRows: 0,
@@ -1156,17 +1154,14 @@ function processQueuedAppSheetEntries() {
             );
             pending.forEach((item, index) => {
                 const result = batch.results[index];
-                const ok = Boolean(result && result.ok);
-                const retryable = Boolean(result && result.retryable);
+                const ok = Boolean(result?.ok);
+                const retryable = Boolean(result?.retryable);
+                const failureStatus = retryable ? "Retry" : "Needs correction";
                 receipts.push({
                     rowNumber: item.rowNumber,
-                    status: ok
-                        ? "Saved"
-                        : retryable
-                          ? "Retry"
-                          : "Needs correction",
+                    status: ok ? "Saved" : failureStatus,
                     message:
-                        (result && result.message) ||
+                        result?.message ||
                         "This entry needs correction before it can be saved.",
                     requestId: item.requestId,
                     historyRows: ok ? Number(result.historyRows) || 0 : 0,
@@ -1189,7 +1184,6 @@ function processQueuedAppSheetEntries() {
         }
     }
 
-    /* v8 ignore next -- Receipt and empty-queue paths are both covered; V8 reports a synthetic alternate branch. */
     if (receipts.length) {
         receipts.forEach((receipt) =>
             writeAppSheetEntryReceipt_(entries, receipt.rowNumber, receipt)
@@ -1292,7 +1286,6 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
     const idCounts = new Map();
     rows.forEach((row) => {
         const roundId = cleanText_(row[0]);
-        /* v8 ignore next -- Rows with and without round IDs are both covered; VM coverage reports a synthetic alternate branch. */
         if (roundId) {
             idCounts.set(roundId, (idCounts.get(roundId) || 0) + 1);
         }
@@ -1313,7 +1306,6 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
     queued.forEach(({ row, rowNumber }) => {
         const roundId = cleanText_(row[0]);
         try {
-            /* v8 ignore next -- Missing and populated round IDs are both covered; VM coverage reports a synthetic alternate branch. */
             if (!roundId) throw new Error("AppSheet Round ID is required.");
             if (idCounts.get(roundId) !== 1) {
                 throw new Error(`AppSheet Round ID ${roundId} is duplicated.`);
@@ -1358,19 +1350,16 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
                     result: batch.results[resultIndex++],
                 }));
                 const savedCount = results.filter(
-                    ({ result }) => result && result.ok
+                    ({ result }) => result?.ok
                 ).length;
-                const failures = results.filter(
-                    ({ result }) => !result || !result.ok
-                );
+                const failures = results.filter(({ result }) => !result?.ok);
                 const hasDeterministicFailure = failures.some(
                     ({ result }) => result && !result.retryable
                 );
-                const status = failures.length
-                    ? hasDeterministicFailure
-                        ? "Needs correction"
-                        : "Retry"
-                    : "Saved";
+                const failureStatus = hasDeterministicFailure
+                    ? "Needs correction"
+                    : "Retry";
+                const status = failures.length ? failureStatus : "Saved";
                 receipts.push({
                     rowNumber: round.rowNumber,
                     status,
@@ -1400,7 +1389,6 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
         }
     }
 
-    /* v8 ignore next -- Receipt and empty-queue paths are both covered; V8 reports a synthetic alternate branch. */
     if (receipts.length) {
         receipts.forEach((receipt) =>
             writeAppSheetBulkReceipt_(bulkSheet, receipt.rowNumber, receipt)
@@ -1489,7 +1477,6 @@ function appSheetBulkPayloadsFromRow_(row, roundId) {
 
     return APP_SHEET_BULK_PLANTS.flatMap((plantId) => {
         const events = [];
-        /* v8 ignore next -- Watered and unwatered plants are both covered; VM coverage reports a synthetic alternate branch. */
         if (includesWater && selectedPlants.has(plantId)) events.push("Water");
         const hasWeight = weights.has(plantId);
         const weight = hasWeight ? weights.get(plantId) : "";
@@ -1534,14 +1521,11 @@ function normalizeAppSheetBulkAction_(value) {
 function appSheetBulkSelectedPlants_(value) {
     const values = Array.isArray(value)
         ? value
-        : cleanText_(value)
-              .split(/\s*[,;]\s*/)
-              .filter(Boolean);
+        : cleanText_(value).split(/[,;]/).map(cleanText_).filter(Boolean);
     const selected = new Set(values.map((plantId) => cleanText_(plantId)));
     const invalid = [...selected].filter(
         (plantId) => !APP_SHEET_BULK_PLANTS.includes(plantId)
     );
-    /* v8 ignore next -- Valid and invalid selected plant IDs are both covered; VM coverage reports a synthetic alternate branch. */
     if (invalid.length) {
         throw new Error(`Unknown selected plant ID: ${invalid.join(", ")}.`);
     }
@@ -1554,14 +1538,13 @@ function appSheetBulkWateredPlants_(value) {
 }
 
 function appSheetBulkResultMessage_(requestCount, savedCount, failures) {
-    /* v8 ignore next -- Successful and partially failed round receipts are both covered; VM coverage reports a synthetic alternate branch. */
     if (!failures.length) {
         return `${savedCount} plant update${savedCount === 1 ? "" : "s"} saved.`;
     }
     const details = failures
         .map(({ plantId, result }) => {
             const message =
-                (result && result.message) ||
+                result?.message ||
                 "The server returned no result for this plant.";
             return `${plantId}: ${message}`;
         })
@@ -1632,7 +1615,6 @@ function installAppSheetBulkSheet() {
     const spreadsheet = getGardenSpreadsheet_();
     let sheet = spreadsheet.getSheetByName(GARDEN_LOGGER.appSheetBulkSheet);
     const created = !sheet;
-    /* v8 ignore next -- Existing-sheet and create-sheet installers are both covered; VM coverage reports a synthetic alternate branch. */
     if (!sheet) {
         const entries = requireSheet_(
             spreadsheet,
@@ -1826,7 +1808,6 @@ function migrateLegacyAppSheetBulkSheet_(sheet) {
                 .getRange(1, 4, 1, 2)
                 .setValues([["Round action", "Watered plants"]]);
             const migratedRows = Math.max(0, sheet.getLastRow() - 1);
-            /* v8 ignore next -- Header-only and populated legacy migrations are both covered; VM coverage reports a synthetic alternate branch. */
             if (migratedRows) {
                 sheet.getRange(2, 4, migratedRows, 1).setValue("Weigh");
             }
@@ -1925,7 +1906,6 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
     const changed = expectedExtension.some(
         (header, index) => extensionHeaders[index] !== header
     );
-    /* v8 ignore next -- Both migrated and already-current History-view formulas are tested; V8 reports a synthetic alternate branch. */
     if (changed) {
         sheet
             .getRange(1, extensionStartColumn, 1, expectedExtension.length)
@@ -2065,9 +2045,8 @@ function appSheetPayloadFromRow_(row, requestId) {
 }
 
 function appSheetEventList_(value) {
-    /* v8 ignore next -- Enum arrays and delimited strings are both covered; VM coverage reports a synthetic alternate branch. */
     if (Array.isArray(value)) return uniqueTextValues_(value);
-    return uniqueTextValues_(cleanText_(value).split(/\s*(?:,|;)\s*/));
+    return uniqueTextValues_(cleanText_(value).split(/[,;]/));
 }
 
 function writeAppSheetEntryReceipt_(sheet, rowNumber, receipt) {
@@ -2149,15 +2128,19 @@ function saveWebObservationBatch(payloads) {
     }
 
     const startedAt = Date.now();
-    const results = Array(payloads.length).fill(null);
+    const results = new Array(payloads.length).fill(null);
     const requestIds = payloads.map((payload, index) => {
+        // Preserve malformed falsy payload values in validation errors and receipts.
         try {
-            return normalizeRequestId_(payload && payload.requestId, true);
+            return normalizeRequestId_(
+                payload ? payload.requestId : payload,
+                true
+            );
         } catch (error) {
             results[index] = {
                 ok: false,
-                requestId: cleanText_(payload && payload.requestId),
-                plantId: cleanText_(payload && payload.plantId),
+                requestId: cleanText_(payload ? payload.requestId : payload),
+                plantId: cleanText_(payload ? payload.plantId : payload),
                 retryable: false,
                 errorCode: "VALIDATION",
                 message: error instanceof Error ? error.message : String(error),
@@ -2176,7 +2159,6 @@ function saveWebObservationBatch(payloads) {
     const plantRecords = plantRecordsById_(spreadsheet);
     const prepared = [];
     payloads.forEach((payload, index) => {
-        /* v8 ignore next -- Prevalidated failures and valid payload preparation are both covered; VM coverage reports a synthetic alternate branch. */
         if (results[index]) return;
         try {
             prepared.push({
@@ -2191,7 +2173,7 @@ function saveWebObservationBatch(payloads) {
             results[index] = {
                 ok: false,
                 requestId: requestIds[index],
-                plantId: cleanText_(payload && payload.plantId),
+                plantId: cleanText_(payload?.plantId),
                 retryable: false,
                 errorCode: "VALIDATION",
                 message: error instanceof Error ? error.message : String(error),
@@ -2199,7 +2181,6 @@ function saveWebObservationBatch(payloads) {
         }
     });
 
-    /* v8 ignore next -- All-invalid and writable mixed batches are both covered; VM coverage reports a synthetic alternate branch. */
     if (!prepared.length) {
         return batchObservationResult_(results);
     }
@@ -2227,8 +2208,7 @@ function saveWebObservationBatch(payloads) {
         prepared
             .filter(
                 (item) =>
-                    results[item.index] &&
-                    results[item.index].ok &&
+                    results[item.index]?.ok &&
                     item.value.observation.eventNames.includes("Repot")
             )
             .forEach((item) =>
@@ -2282,6 +2262,7 @@ function saveWebObservationBatch(payloads) {
 
 function batchObservationResult_(results) {
     const savedCount = results.filter((result) => result.ok).length;
+    const savedMessage = `${savedCount} queued observation${savedCount === 1 ? "" : "s"} saved`;
     return {
         ok: savedCount === results.length,
         savedCount,
@@ -2289,8 +2270,8 @@ function batchObservationResult_(results) {
         results,
         message:
             savedCount === results.length
-                ? `${savedCount} queued observation${savedCount === 1 ? "" : "s"} saved.`
-                : `${savedCount} queued observation${savedCount === 1 ? "" : "s"} saved; ${results.length - savedCount} still need attention.`,
+                ? `${savedMessage}.`
+                : `${savedMessage}; ${results.length - savedCount} still need attention.`,
     };
 }
 
@@ -2315,7 +2296,6 @@ function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
         try {
             const existing = snapshot.rowsByRequest.get(requestId) || [];
             /* New request IDs and existing retry IDs are both covered; V8 reports a synthetic alternate branch. */
-            /* v8 ignore else */
             if (existing.length) {
                 const existingResult = existingObservationResult_(
                     input,
@@ -2324,7 +2304,6 @@ function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
                     existing.map((entry) => entry.values)
                 );
                 /* Complete retries and incomplete reservations are both covered; V8 reports a synthetic alternate branch. */
-                /* v8 ignore else */
                 if (existingResult) {
                     results[index] = webObservationResult_(
                         prepared,
@@ -2383,7 +2362,6 @@ function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
         writeTiming.validationRowsCleared += timing.validationRowsCleared;
         writeTiming.historyWriteMs += timing.historyWriteMs;
     });
-    /* v8 ignore next -- New-row and duplicate-or-repair-only batches are both covered; VM coverage reports a synthetic alternate branch. */
     if (newRows.length) {
         const timing = writeStoredObservationRows_(
             history,
@@ -2403,7 +2381,6 @@ function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
 function historyObservationSnapshot_(history) {
     const rowCount = Math.max(0, history.getLastRow() - 1);
     const rowsByRequest = new Map();
-    /* v8 ignore next -- Empty and populated History snapshots are both tested; V8 reports a synthetic alternate branch. */
     if (!rowCount) return { lastReservedRow: 1, rowsByRequest };
 
     const storedRows = history
@@ -2416,7 +2393,6 @@ function historyObservationSnapshot_(history) {
         if (cleanText_(values[0]) || cleanText_(values[1]) || requestId) {
             lastReservedRow = rowNumber;
         }
-        /* v8 ignore next -- Reserved rows with and without request IDs are both covered; VM coverage reports a synthetic alternate branch. */
         if (!requestId) return;
 
         if (!rowsByRequest.has(requestId)) rowsByRequest.set(requestId, []);
@@ -2428,29 +2404,25 @@ function historyObservationSnapshot_(history) {
 function saveBulkCareObservation(payload) {
     const spreadsheet = getGardenSpreadsheet_();
     const plantIds = uniqueTextValues_(
-        Array.isArray(payload && payload.plantIds) ? payload.plantIds : []
+        Array.isArray(payload?.plantIds) ? payload.plantIds : []
     );
     if (!plantIds.length) throw new Error("Choose at least one plant.");
 
-    const eventNames = normalizeBulkWebEvents_(payload && payload.events);
+    const eventNames = normalizeBulkWebEvents_(payload.events);
     const entrySource = normalizeWebEntrySource_(
-        (payload && payload.entrySource) || "Mobile bulk care"
+        payload.entrySource || "Mobile bulk care"
     );
 
     const plantRecords = plantRecordsById_(spreadsheet);
     const plants = plantIds.map((plantId) => {
         const plant = plantRecords.get(plantId);
-        /* v8 ignore next -- Valid and invalid bulk-watering plant IDs are both tested; V8 reports a synthetic alternate branch. */
         if (!plant) throw new Error(`Plant ID ${plantId} is not valid.`);
         return plant;
     });
     const details = eventDetailsFromPayload_(payload, eventNames, null);
-    const notes = cleanText_(payload && payload.notes);
-    const observationDate = normalizeDate_(payload && payload.observedAt);
-    const baseRequestId = normalizeRequestId_(
-        payload && payload.requestId,
-        true
-    );
+    const notes = cleanText_(payload.notes);
+    const observationDate = normalizeDate_(payload.observedAt);
+    const baseRequestId = normalizeRequestId_(payload.requestId, true);
     let batch;
     try {
         batch = saveWebObservationBatch(
@@ -2463,8 +2435,8 @@ function saveBulkCareObservation(payload) {
                 nutrientsUsed: details.nutrientsUsed,
                 nutrientProduct: details.nutrientProduct,
                 nutrientAmount: details.nutrientAmount,
-                condition: cleanText_(payload && payload.condition),
-                soilMoisture: cleanText_(payload && payload.soilMoisture),
+                condition: cleanText_(payload.condition),
+                soilMoisture: cleanText_(payload.soilMoisture),
                 pestIssue: details.pestIssue,
                 pestTreatment: details.pestTreatment,
                 rotationDegrees: details.rotationDegrees,
@@ -2480,14 +2452,11 @@ function saveBulkCareObservation(payload) {
         }
         throw error;
     }
-    const failedIndex = batch.results.findIndex(
-        (result) => !result || !result.ok
-    );
-    /* v8 ignore else -- Success and per-entry failure responses are both covered; V8 reports a synthetic alternate branch. */
+    const failedIndex = batch.results.findIndex((result) => !result?.ok);
     if (failedIndex >= 0) {
         const failed = batch.results[failedIndex];
         throw new Error(
-            (failed && failed.message) ||
+            failed?.message ||
                 "The bulk-care round could not be saved. Try again with the same round."
         );
     }
@@ -2513,14 +2482,12 @@ function saveBulkCareObservation(payload) {
 
 function normalizeBulkWebEvents_(events) {
     const requested = uniqueTextValues_(Array.isArray(events) ? events : []);
-    /* v8 ignore else -- Empty and populated event lists are both covered; V8 reports a synthetic alternate branch. */
     if (!requested.length) {
         throw new Error("Choose at least one bulk-care event.");
     }
     const invalid = requested.filter(
         (eventName) => !BULK_WEB_EVENT_OPTIONS.includes(eventName)
     );
-    /* v8 ignore else -- Supported and unsupported bulk events are both covered; V8 reports a synthetic alternate branch. */
     if (invalid.length) {
         throw new Error(
             `Bulk care supports only: ${BULK_WEB_EVENT_OPTIONS.join(", ")}.`
@@ -2560,9 +2527,12 @@ function getWebSaveStatus(payload) {
     assertHeaders_(history, HISTORY_HEADERS, 1);
     ensureHistoryRequestIdColumn_(history);
 
-    const requestId = normalizeRequestId_(payload && payload.requestId, true);
+    const requestId = normalizeRequestId_(
+        payload ? payload.requestId : payload,
+        true
+    );
     const plantIds = uniqueTextValues_(
-        Array.isArray(payload && payload.plantIds) ? payload.plantIds : []
+        Array.isArray(payload.plantIds) ? payload.plantIds : []
     );
     const requestIds = plantIds.length
         ? plantIds.map((plantId) => `${requestId.slice(0, 88)}-${plantId}`)
@@ -2624,13 +2594,15 @@ function getWebBatchSaveStatus(requests) {
 }
 
 function normalizeBatchStatusRequest_(request) {
-    /* v8 ignore next -- Legacy string IDs and structured status descriptors are both covered; VM coverage reports a synthetic alternate branch. */
     if (typeof request === "string") {
         return { requestId: normalizeRequestId_(request, true) };
     }
-    const requestId = normalizeRequestId_(request && request.requestId, true);
-    const plantId = cleanText_(request && request.plantId);
-    const rawExpectedCount = request && request.expectedCount;
+    const requestId = normalizeRequestId_(
+        request ? request.requestId : request,
+        true
+    );
+    const plantId = cleanText_(request.plantId);
+    const rawExpectedCount = request.expectedCount;
     if (rawExpectedCount === undefined || rawExpectedCount === null) {
         return { requestId, plantId };
     }
@@ -2652,7 +2624,6 @@ function savedRequestStatusFromSnapshot_(snapshot, request) {
     const expectedCount = request.expectedCount;
     const includeShape =
         Boolean(request.plantId) || expectedCount !== undefined;
-    /* v8 ignore next -- Missing and present request IDs are both tested; V8 reports a synthetic alternate branch. */
     if (!entries.length) {
         return {
             state: "missing",
@@ -2685,11 +2656,15 @@ function savedRequestStatusFromSnapshot_(snapshot, request) {
 }
 
 function onEdit(event) {
-    if (!event || !event.range) return;
+    if (!event?.range) {
+        return;
+    }
 
     const range = event.range;
     const sheet = range.getSheet();
-    if (sheet.getName() !== GARDEN_LOGGER.quickLogSheet) return;
+    if (sheet.getName() !== GARDEN_LOGGER.quickLogSheet) {
+        return;
+    }
 
     if (
         range.getRow() === GARDEN_LOGGER.bulkControlRow &&
@@ -2925,7 +2900,7 @@ function refreshGardenWorkbookPageRange_(startIndex, endIndex) {
     organizeWorkbookSheets_(spreadsheet);
     SpreadsheetApp.flush();
     const firstPlant = pageBatch[0].id;
-    const lastPlant = pageBatch[pageBatch.length - 1].id;
+    const lastPlant = pageBatch.at(-1).id;
     spreadsheet.toast(
         `${firstPlant}-${lastPlant} pages were refreshed for logger ${GARDEN_LOGGER.version}.`,
         "Garden plant pages refreshed",
@@ -2953,7 +2928,6 @@ function workbookPlantRecords_(spreadsheet) {
     const byId = new Map();
     values.forEach((row, index) => {
         const id = cleanText_(row[0]);
-        /* v8 ignore else -- Populated and trailing blank tracker rows are both tested; VM coverage reports a synthetic alternate branch. */
         if (!id) return;
         byId.set(id, {
             id,
@@ -2966,7 +2940,6 @@ function workbookPlantRecords_(spreadsheet) {
     });
     const plants = APP_SHEET_BULK_PLANTS.map((id) => byId.get(id));
     const missing = APP_SHEET_BULK_PLANTS.filter((id, index) => !plants[index]);
-    /* v8 ignore else -- Complete and incomplete tracker inventories are both tested; VM coverage reports a synthetic alternate branch. */
     if (missing.length) {
         throw new Error(
             `Plant tracker is missing workbook pages for: ${missing.join(", ")}.`
@@ -3067,7 +3040,7 @@ function wateringRecommendation_(plantId, model) {
     if (manual[plantId]) {
         return { date: "", guidance: manual[plantId] };
     }
-    if (!/^P(?:0[1-9]|[12][0-9]|30)$/.test(plantId)) {
+    if (!/^P(?:0[1-9]|[12]\d|30)$/.test(plantId)) {
         return {
             date: "",
             guidance: "No verified watering rule — inspect plant.",
@@ -4028,17 +4001,17 @@ function plantPageHistoryFormula_(plantId) {
 
 function plantPageSheet_(spreadsheet, plantId) {
     const normalizedId = cleanText_(plantId).toUpperCase();
-    /* v8 ignore else -- Valid and invalid permanent IDs are both tested; VM coverage reports a synthetic alternate branch. */
     if (!/^P\d{2}$/u.test(normalizedId)) {
         throw new Error(`Invalid workbook plant ID: ${plantId}.`);
     }
     const exact = spreadsheet.getSheetByName(normalizedId);
-    /* v8 ignore else -- Exact and descriptive page names are both tested; VM coverage reports a synthetic alternate branch. */
     if (exact) return exact;
     const matches = spreadsheet
         .getSheets()
         .filter((sheet) =>
-            new RegExp(`^${normalizedId}(?:\\s|$)`, "u").test(sheet.getName())
+            new RegExp(String.raw`^${normalizedId}(?:\s|$)`, "u").test(
+                sheet.getName()
+            )
         );
     if (matches.length !== 1) {
         throw new Error(
@@ -4057,7 +4030,6 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
     const contentRows = Math.min(1000, sheet.getMaxRows());
     sheet.getRange(1, 1, 12, 13).breakApart();
     const filter = sheet.getFilter();
-    /* v8 ignore else -- Pages with and without an old filter are both tested; VM coverage reports a synthetic alternate branch. */
     if (filter) filter.remove();
     sheet.getRange(1, 1, contentRows, 13).clearContent().clearFormat();
     sheet.getRange(1, 1, 1, 10).merge();
@@ -4273,7 +4245,6 @@ function organizeWorkbookSheets_(spreadsheet) {
     WORKBOOK_HELPER_SHEETS.forEach((sheetName) => {
         const sheet = spreadsheet.getSheetByName(sheetName);
         if (!sheet) return;
-        /* v8 ignore else -- Visible and hidden helper sheets are both tested; VM coverage reports a synthetic alternate branch. */
         if (sheet.isSheetHidden()) sheet.showSheet();
         spreadsheet.setActiveSheet(sheet);
         spreadsheet.moveActiveSheet(spreadsheet.getNumSheets());
@@ -4283,12 +4254,11 @@ function organizeWorkbookSheets_(spreadsheet) {
 }
 
 function formulaString_(value) {
-    return String(value || "").replace(/"/g, '""');
+    return String(value || "").replaceAll('"', '""');
 }
 
 function ensureSheetRowCapacity_(sheet, requiredRows) {
     const currentRows = sheet.getMaxRows();
-    /* v8 ignore else -- Undersized and already-capacious workbook sheets are both tested; VM coverage reports a synthetic alternate branch. */
     if (currentRows < requiredRows) {
         sheet.insertRowsAfter(currentRows, requiredRows - currentRows);
     }
@@ -4322,7 +4292,6 @@ function removeSelectedHistoryObservations() {
 
     const firstRow = Math.max(2, selection.getRow());
     const lastRow = selection.getLastRow();
-    /* v8 ignore next -- Header-only and data-row selections are both tested; V8 reports a synthetic alternate branch. */
     if (firstRow > lastRow) {
         spreadsheet.toast(
             "The History header cannot be removed.",
@@ -4350,7 +4319,6 @@ function removeSelectedHistoryObservations() {
         .filter(({ values: row }) =>
             row.slice(0, GARDEN_LOGGER.historyColumns).some(cleanText_)
         );
-    /* v8 ignore next -- Empty and populated selections are both tested; V8 reports a synthetic alternate branch. */
     if (!observations.length) {
         spreadsheet.toast(
             "The selected History rows do not contain observations.",
@@ -4454,7 +4422,6 @@ function archiveQuickLogRow_(quickLog, rowNumber) {
     ] = values;
 
     const id = cleanText_(labelId);
-    /* v8 ignore next -- Missing-ID rejection and valid-row archival are both tested; V8 reports a synthetic alternate branch. */
     if (!id) throw new Error("This row has no Plant ID.");
 
     const weight = optionalPositiveNumber_(weightInput, "Weight");
@@ -4631,7 +4598,6 @@ function existingObservationResult_(
     const contiguous = existingRequestRows.every(
         (rowNumber, index) => rowNumber === firstRow + index
     );
-    /* v8 ignore next -- Wrong-length and noncontiguous request shapes are both covered; V8 reports a synthetic alternate branch. */
     if (existingRequestRows.length !== expectedRows || !contiguous) {
         throw new Error(
             "This saved request has an unexpected History shape. Open History and check the newest rows before retrying."
@@ -4642,7 +4608,6 @@ function existingObservationResult_(
         (row) =>
             row[0] instanceof Date && cleanText_(row[1]) && cleanText_(row[2])
     );
-    /* v8 ignore next -- Complete retries and incomplete reservations are both tested; V8 reports a synthetic alternate branch. */
     if (!complete) return null;
 
     const recordedAt =
@@ -4658,7 +4623,6 @@ function existingObservationResult_(
     const sameRequest = existingValues.every((row, index) =>
         sameCanonicalObservationRow_(row, expectedValues[index])
     );
-    /* v8 ignore next -- Exact retries and changed-payload conflicts are both covered; V8 reports a synthetic alternate branch. */
     if (!sameRequest) {
         throw new Error(
             "This retry no longer matches the entry that was already saved. Refresh to restore the pending entry."
@@ -4694,8 +4658,13 @@ function sameCanonicalObservationRow_(actual, expected) {
     );
 }
 
+/**
+ * Normalize cell values for retry comparison while keeping dates distinct from
+ * text that happens to contain the same timestamp.
+ * @param {unknown} value - Canonical cell value.
+ * @returns {number | string} A date timestamp or trimmed scalar text.
+ */
 function comparableHistoryValue_(value) {
-    /* v8 ignore next -- Date and scalar comparisons are both covered; V8 reports a synthetic alternate branch. */
     if (value instanceof Date) return value.getTime();
     return value === null || value === undefined ? "" : String(value).trim();
 }
@@ -4722,27 +4691,11 @@ function storedObservationRows_(input, requestId, targetRow, recordedAt) {
             input.potSetup,
             safeCurrentLabel,
         ];
-        const detail = [
-            eventName === "Water" ? safeSheetText_(details.nutrientsUsed) : "",
-            eventName === "Water"
-                ? safeSheetText_(details.nutrientProduct)
-                : "",
-            eventName === "Water" ? safeSheetText_(details.nutrientAmount) : "",
-            eventName === "Repot"
-                ? safeSheetText_(details.previousPotSize)
-                : "",
-            eventName === "Repot" ? safeSheetText_(details.potSize) : "",
-            eventName === "Flower" ? details.flowerCount : "",
-            eventName === "Flower" ? safeSheetText_(details.flowerDetails) : "",
-            eventName === "Photo" ? safeSheetText_(details.photoUrl) : "",
-            eventName === "Pest" ? safeSheetText_(details.pestIssue) : "",
-            eventName === "Pest" ? safeSheetText_(details.pestTreatment) : "",
-        ];
         return [
             ...core,
             ...historyHelperFormulas_(rowNumber),
             requestId,
-            ...detail,
+            ...historyDetailRow_(details, eventName),
             ...historyProvenanceRow_(input, requestId, eventName, index),
             ...historyMeasurementRow_(input, eventName, rowNumber),
             ...historyRotationRow_(input, eventName),
@@ -4752,6 +4705,21 @@ function storedObservationRows_(input, requestId, targetRow, recordedAt) {
             eventName === "Water" ? details.waterAmount : "",
         ];
     });
+}
+
+function historyDetailRow_(details, eventName) {
+    return [
+        eventName === "Water" ? safeSheetText_(details.nutrientsUsed) : "",
+        eventName === "Water" ? safeSheetText_(details.nutrientProduct) : "",
+        eventName === "Water" ? safeSheetText_(details.nutrientAmount) : "",
+        eventName === "Repot" ? safeSheetText_(details.previousPotSize) : "",
+        eventName === "Repot" ? safeSheetText_(details.potSize) : "",
+        eventName === "Flower" ? details.flowerCount : "",
+        eventName === "Flower" ? safeSheetText_(details.flowerDetails) : "",
+        eventName === "Photo" ? safeSheetText_(details.photoUrl) : "",
+        eventName === "Pest" ? safeSheetText_(details.pestIssue) : "",
+        eventName === "Pest" ? safeSheetText_(details.pestTreatment) : "",
+    ];
 }
 
 function writeStoredObservationRows_(history, targetRow, storedRows) {
@@ -4808,9 +4776,7 @@ function clearUnexpectedMeasurementValidations_(history, targetRow, rowCount) {
         2
     );
     const validations = range.getDataValidations();
-    const unexpected = validations.some((row) =>
-        row.some((validation) => Boolean(validation))
-    );
+    const unexpected = validations.some((row) => row.some(Boolean));
     if (unexpected) range.clearDataValidations();
     return unexpected;
 }
@@ -4857,7 +4823,6 @@ function historyProvenanceRow_(input, requestId, eventName, eventIndex) {
     } else if (eventName === "Weigh") {
         quality = "Measured";
         method = "Scale";
-        /* v8 ignore next -- Measure and non-Measure provenance rows are both asserted; V8 reports a synthetic alternate branch. */
     } else if (eventName === "Measure") {
         quality = measurementQuality || "Estimated";
         method = measurementMethod || "Unspecified";
@@ -4890,7 +4855,7 @@ function historyMeasurementRow_(input, eventName, rowNumber) {
 function historyRotationRow_(input, eventName) {
     return [
         eventName === "Rotation"
-            ? Number(input.details && input.details.rotationDegrees) || 90
+            ? Number(input.details?.rotationDegrees) || 90
             : "",
     ];
 }
@@ -4912,27 +4877,21 @@ function buildEventNamesFromList_(
 
     requestedEvents.forEach(addUnique);
     /* Observations with and without a weight are both tested; V8 reports a synthetic alternate branch. */
-    /* v8 ignore else */
     if (weight !== "") addUnique("Weigh");
-    /* v8 ignore else -- Measured and non-measured observations are both covered; V8 reports a synthetic alternate branch. */
     if (height !== "" || width !== "") addUnique("Measure");
     /* Both outcomes have tests; V8 reports a synthetic alternate branch for this one-sided guard. */
-    /* v8 ignore else */
     if (condition) addUnique("Check");
     /* Both outcomes have tests; V8 reports a synthetic alternate branch for this one-sided guard. */
-    /* v8 ignore else */
     if (eventNames.length === 0 && notes) addUnique("Note");
 
     const waterIndex = eventNames.indexOf("Water");
     const weighIndex = eventNames.indexOf("Weigh");
-    /* v8 ignore else -- Water/Weigh reordering and already-ordered observations are both covered; V8 reports a synthetic alternate branch. */
     if (waterIndex >= 0 && weighIndex >= 0 && waterIndex < weighIndex) {
         eventNames.splice(waterIndex, 1);
         eventNames.splice(eventNames.indexOf("Weigh") + 1, 0, "Water");
     }
 
     /* Both outcomes have tests; V8 reports a synthetic alternate branch for this one-sided guard. */
-    /* v8 ignore else */
     if (eventNames.length === 0) {
         throw new Error(
             "Choose an event or enter a measurement, condition, or note."
@@ -4969,8 +4928,10 @@ function eventDetailsFromPayload_(payload, eventNames, plant) {
 }
 
 function addRotationDetails_(details, payload, eventNames) {
-    if (!eventNames.includes("Rotation")) return;
-    const raw = cleanText_(payload && payload.rotationDegrees) || "90";
+    if (!eventNames.includes("Rotation")) {
+        return;
+    }
+    const raw = cleanText_(payload?.rotationDegrees) || "90";
     const rotationDegrees = Number(raw);
     if (
         !Number.isFinite(rotationDegrees) ||
@@ -4985,22 +4946,23 @@ function addRotationDetails_(details, payload, eventNames) {
 }
 
 function addWaterDetails_(details, payload, eventNames) {
-    if (!eventNames.includes("Water")) return;
+    if (!eventNames.includes("Water")) {
+        return;
+    }
 
     details.wateringApplication = normalizeWateringApplication_(
-        payload && payload.wateringApplication
+        payload?.wateringApplication
     );
     details.waterAmount = optionalPositiveNumber_(
-        payload && payload.waterAmount,
+        payload?.waterAmount,
         "Water amount"
     );
-    const nutrientsUsed = cleanText_(payload && payload.nutrientsUsed);
-    const nutrientProduct = cleanText_(payload && payload.nutrientProduct);
-    const nutrientAmount = cleanText_(payload && payload.nutrientAmount);
+    const nutrientsUsed = cleanText_(payload?.nutrientsUsed);
+    const nutrientProduct = cleanText_(payload?.nutrientProduct);
+    const nutrientAmount = cleanText_(payload?.nutrientAmount);
     if (!NUTRIENT_OPTIONS.includes(nutrientsUsed)) {
         throw new Error("For Water, choose whether nutrients were used.");
     }
-    /* v8 ignore else -- Complete and incomplete nutrient details are both covered; V8 reports a synthetic alternate branch. */
     if (nutrientsUsed === "Yes" && (!nutrientProduct || !nutrientAmount)) {
         throw new Error(
             "Enter both the nutrient product and amount used with this watering."
@@ -5008,7 +4970,6 @@ function addWaterDetails_(details, payload, eventNames) {
     }
 
     details.nutrientsUsed = nutrientsUsed;
-    /* v8 ignore next -- Yes and No nutrient paths are both covered. */
     if (nutrientsUsed === "Yes") {
         details.nutrientProduct = nutrientProduct;
         details.nutrientAmount = nutrientAmount;
@@ -5026,27 +4987,27 @@ function normalizeWateringApplication_(value) {
 }
 
 function addRepotDetails_(details, payload, eventNames, plant) {
-    if (!eventNames.includes("Repot")) return;
+    if (!eventNames.includes("Repot")) {
+        return;
+    }
 
-    const potSize = cleanText_(payload && payload.potSize);
-    /* v8 ignore next -- Missing and valid pot-size paths are both covered. */
+    const potSize = cleanText_(payload?.potSize);
     if (!potSize) {
         throw new Error("Enter the new pot size for the Repot event.");
     }
 
-    details.previousPotSize = cleanText_(plant && plant.currentPotSize);
+    details.previousPotSize = cleanText_(plant?.currentPotSize);
     details.potSize = potSize;
 }
 
 function addFlowerDetails_(details, payload, eventNames) {
-    /* v8 ignore else -- Flower and non-Flower observations are both covered; V8 reports a synthetic alternate branch. */
     if (!eventNames.includes("Flower")) return;
 
     const flowerCount = optionalPositiveInteger_(
-        payload && payload.flowerCount,
+        payload?.flowerCount,
         "Flower count"
     );
-    const flowerDetails = cleanText_(payload && payload.flowerDetails);
+    const flowerDetails = cleanText_(payload?.flowerDetails);
     if (flowerCount === "" && !flowerDetails) {
         throw new Error(
             "Enter a flower count, a description, or both for the Flower event."
@@ -5058,11 +5019,9 @@ function addFlowerDetails_(details, payload, eventNames) {
 }
 
 function addPhotoDetails_(details, payload, eventNames) {
-    /* v8 ignore next -- Photo and non-Photo event detail paths are both tested; V8 reports a synthetic alternate branch. */
     if (!eventNames.includes("Photo")) return;
 
-    const photoUrl = cleanText_(payload && payload.photoUrl);
-    /* v8 ignore next -- Valid and invalid Google Photos links are both covered. */
+    const photoUrl = cleanText_(payload?.photoUrl);
     if (!isGooglePhotosShareUrl_(photoUrl)) {
         throw new Error(
             "Photo needs a Google Photos share link from photos.google.com or photos.app.goo.gl."
@@ -5073,12 +5032,10 @@ function addPhotoDetails_(details, payload, eventNames) {
 }
 
 function addPestDetails_(details, payload, eventNames) {
-    /* v8 ignore next -- Pest and non-pest events are both covered. */
     if (!eventNames.includes("Pest")) return;
 
-    const pestIssue = cleanText_(payload && payload.pestIssue);
-    const pestTreatment = cleanText_(payload && payload.pestTreatment);
-    /* v8 ignore next -- Complete and incomplete pest details are both covered. */
+    const pestIssue = cleanText_(payload?.pestIssue);
+    const pestTreatment = cleanText_(payload?.pestTreatment);
     if (!pestIssue || !pestTreatment) {
         throw new Error(
             "Describe both the pest or issue and the treatment or action taken."
@@ -5096,7 +5053,6 @@ function isGooglePhotosShareUrl_(value) {
 }
 
 function plantRecordForId_(spreadsheet, plantId) {
-    /* v8 ignore next -- Empty, invalid, and valid plant lookups are all tested; V8 reports a synthetic alternate branch. */
     if (!plantId) return null;
     return plantRecordsById_(spreadsheet).get(plantId) || null;
 }
@@ -5104,7 +5060,6 @@ function plantRecordForId_(spreadsheet, plantId) {
 function plantRecordsById_(spreadsheet) {
     const tracker = requireSheet_(spreadsheet, GARDEN_LOGGER.plantTrackerSheet);
     const rowCount = Math.max(0, tracker.getLastRow() - 1);
-    /* v8 ignore next -- Empty and populated tracker sheets are both tested; V8 reports a synthetic alternate branch. */
     if (rowCount === 0) return new Map();
     const currentPotSizeColumn = optionalColumnForHeader_(
         tracker,
@@ -5128,7 +5083,6 @@ function plantRecordsById_(spreadsheet) {
     const needsPotSizeFallback = rows.some(
         (row) => !cleanText_(row[currentPotSizeColumn - 1])
     );
-    /* v8 ignore next -- Tracker-provided and History-fallback pot sizes are both tested; V8 reports a synthetic alternate branch. */
     const potSizes = needsPotSizeFallback
         ? latestPotSizesByPlant_(spreadsheet)
         : new Map();
@@ -5167,7 +5121,6 @@ function latestPotSizesByPlant_(spreadsheet) {
 function readHistorySnapshot_(spreadsheet) {
     const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
     const rowCount = Math.max(0, history.getLastRow() - 1);
-    /* v8 ignore else -- Empty and populated History snapshots are both covered; V8 reports a synthetic alternate branch. */
     if (!rowCount) return [];
 
     const columnCount = Math.min(
@@ -5323,11 +5276,9 @@ function inferredWeightStatesByRow_(historyRows) {
 
             waterRecords.forEach((waterRecord, waterIndex) => {
                 const nextWaterRecord = waterRecords[waterIndex + 1];
-                const sameSaveRecord = records
-                    .filter((record) =>
-                        historyRecordsShareSave_(record, waterRecord)
-                    )
-                    .at(-1);
+                const sameSaveRecord = records.findLast((record) =>
+                    historyRecordsShareSave_(record, waterRecord)
+                );
                 const firstPromptRecord = sameSaveRecord
                     ? null
                     : records.find((record) => {
@@ -5345,25 +5296,27 @@ function inferredWeightStatesByRow_(historyRows) {
                           );
                       });
                 const wetRecord = sameSaveRecord || firstPromptRecord;
-                if (wetRecord) inferred.set(wetRecord.rowIndex, "Wet");
+                if (wetRecord) {
+                    inferred.set(wetRecord.rowIndex, "Wet");
+                }
             });
 
             let previousWaterRecord = null;
             waterRecords.forEach((waterRecord) => {
-                const selected = records
-                    .filter(
-                        (record) =>
-                            (!previousWaterRecord ||
-                                compareHistoryRecords_(
-                                    record,
-                                    previousWaterRecord
-                                ) > 0) &&
-                            compareHistoryRecords_(record, waterRecord) < 0 &&
-                            inferred.get(record.rowIndex) !== "Wet" &&
-                            !historyRecordsShareSave_(record, waterRecord)
-                    )
-                    .at(-1);
-                if (selected) inferred.set(selected.rowIndex, "Dry");
+                const selected = records.findLast(
+                    (record) =>
+                        (!previousWaterRecord ||
+                            compareHistoryRecords_(
+                                record,
+                                previousWaterRecord
+                            ) > 0) &&
+                        compareHistoryRecords_(record, waterRecord) < 0 &&
+                        inferred.get(record.rowIndex) !== "Wet" &&
+                        !historyRecordsShareSave_(record, waterRecord)
+                );
+                if (selected) {
+                    inferred.set(selected.rowIndex, "Dry");
+                }
                 previousWaterRecord = waterRecord;
             });
         }
@@ -5410,7 +5363,6 @@ function updateBaselinePotSetup_(spreadsheet, plantId, potSetup) {
     const index = baselineData.rows.findIndex(
         ([candidateId]) => cleanText_(candidateId) === plantId
     );
-    /* v8 ignore next -- Successful updates and missing plant IDs are both tested; V8 reports a synthetic alternate branch. */
     if (index < 0) {
         throw new Error(`Plant ID ${plantId} is missing from Baselines.`);
     }
@@ -5421,7 +5373,6 @@ function updateBaselinePotSetup_(spreadsheet, plantId, potSetup) {
 
 function baselinePotSetupData_(baselines) {
     const rowCount = Math.max(0, baselines.getLastRow() - 1);
-    /* v8 ignore next -- Header-only and populated Baselines sheets are both tested; V8 reports a synthetic alternate branch. */
     if (!rowCount) return { potSetupColumn: 0, rows: [] };
 
     const plantIdColumn = requiredColumnForHeader_(baselines, "Plant ID");
@@ -5438,18 +5389,15 @@ function baselinePotSetupData_(baselines) {
 
 function optionalColumnForHeader_(sheet, expectedHeader) {
     const columnCount = sheet.getLastColumn();
-    /* v8 ignore next -- Empty and populated header rows are both tested; V8 reports a synthetic alternate branch. */
     if (!columnCount) return 0;
     const headers = sheet
         .getRange(1, 1, 1, columnCount)
         .getDisplayValues()[0]
         .map(cleanText_);
     const matches = headers.reduce((indexes, header, index) => {
-        /* v8 ignore next -- Matching and nonmatching headers are both tested; V8 reports a synthetic alternate branch. */
         if (header === expectedHeader) indexes.push(index + 1);
         return indexes;
     }, []);
-    /* v8 ignore next -- Unique and duplicate headers are both tested; V8 reports a synthetic alternate branch. */
     if (matches.length > 1) {
         throw new Error(
             `${sheet.getName()} has more than one "${expectedHeader}" header.`
@@ -5460,7 +5408,6 @@ function optionalColumnForHeader_(sheet, expectedHeader) {
 
 function requiredColumnForHeader_(sheet, expectedHeader) {
     const column = optionalColumnForHeader_(sheet, expectedHeader);
-    /* v8 ignore next -- Present and missing required headers are both tested; V8 reports a synthetic alternate branch. */
     if (!column) {
         throw new Error(
             `${sheet.getName()} is missing the "${expectedHeader}" header.`
@@ -5502,7 +5449,6 @@ function recentObservationsFromRows_(historyRows, timeZone, limit, plantNames) {
         .sort((left, right) => {
             const observedDifference =
                 dateSortValue_(right.row[0]) - dateSortValue_(left.row[0]);
-            /* v8 ignore else -- Different and equal observation times are both covered; V8 reports a synthetic alternate branch. */
             if (observedDifference) return observedDifference;
             const recordedDifference =
                 dateSortValue_(right.row[9]) - dateSortValue_(left.row[9]);
@@ -5532,7 +5478,6 @@ function recentObservationsFromRows_(historyRows, timeZone, limit, plantNames) {
 function plantNamesById_(spreadsheet) {
     const tracker = requireSheet_(spreadsheet, GARDEN_LOGGER.plantTrackerSheet);
     const rowCount = Math.max(0, tracker.getLastRow() - 1);
-    /* v8 ignore else -- Empty and populated plant-name maps are both covered; V8 reports a synthetic alternate branch. */
     if (!rowCount) return new Map();
     return new Map(
         tracker
@@ -5561,7 +5506,6 @@ function flushAndReleaseLock_(lock) {
 
 function lastHistoryDataRow_(history) {
     const rowCount = Math.max(0, history.getLastRow() - 1);
-    /* v8 ignore else -- Empty and populated History sheets are both covered; V8 reports a synthetic alternate branch. */
     if (rowCount === 0) return 1;
     const identityColumns = history
         .getRange(2, 1, rowCount, 2)
@@ -5576,7 +5520,6 @@ function lastHistoryDataRow_(history) {
 function lastHistoryReservedRow_(history) {
     const lastObservationRow = lastHistoryDataRow_(history);
     const rowCount = Math.max(0, history.getLastRow() - 1);
-    /* v8 ignore else -- Empty and populated request-ID columns are both covered; V8 reports a synthetic alternate branch. */
     if (rowCount === 0) return lastObservationRow;
     const requestIds = history
         .getRange(2, GARDEN_LOGGER.requestIdColumn, rowCount, 1)
@@ -5590,7 +5533,6 @@ function lastHistoryReservedRow_(history) {
 
 function historyRowsForRequest_(history, requestId) {
     const rowCount = Math.max(0, history.getLastRow() - 1);
-    /* v8 ignore else -- Missing and present History request IDs are both covered; V8 reports a synthetic alternate branch. */
     if (rowCount === 0) return [];
     return history
         .getRange(2, GARDEN_LOGGER.requestIdColumn, rowCount, 1)
@@ -5603,14 +5545,12 @@ function historyRowsForRequest_(history, requestId) {
 
 function savedRequestStatus_(history, requestId) {
     const rowNumbers = historyRowsForRequest_(history, requestId);
-    /* v8 ignore else -- Missing and present saved requests are both covered; V8 reports a synthetic alternate branch. */
     if (!rowNumbers.length) return { state: "missing", requestId };
 
     const firstRow = rowNumbers[0];
     const contiguous = rowNumbers.every(
         (rowNumber, index) => rowNumber === firstRow + index
     );
-    /* v8 ignore else -- Contiguous and noncontiguous saved requests are both covered; V8 reports a synthetic alternate branch. */
     if (!contiguous) return { state: "incomplete", requestId };
 
     const values = history
@@ -5729,7 +5669,6 @@ function ensureHistoryMeasurementColumns_(history, configureColumn = false) {
         });
     }
 
-    /* v8 ignore next -- Installer configuration and lightweight append verification are both tested; V8 reports a synthetic alternate branch. */
     if (!configureColumn) return;
     const dataRows = Math.max(1, history.getMaxRows() - 1);
     const unitRule = SpreadsheetApp.newDataValidation()
@@ -5773,7 +5712,6 @@ function ensureHistoryRotationColumns_(history, configureColumn = false) {
         );
     }
 
-    /* v8 ignore next -- Installer configuration and lightweight append verification are both tested. */
     if (!configureColumn) return;
     const dataRows = Math.max(1, history.getMaxRows() - 1);
     const rotationRule = SpreadsheetApp.newDataValidation()
@@ -5821,7 +5759,6 @@ function ensureHistoryWaterColumns_(history, configureColumn = false) {
         ]);
     }
 
-    /* v8 ignore next -- Installer configuration and lightweight append verification are both tested. */
     if (!configureColumn) return;
     const dataRows = Math.max(1, history.getMaxRows() - 1);
     const applicationRule = SpreadsheetApp.newDataValidation()
@@ -5872,7 +5809,6 @@ function ensureHistoryGrid_(history) {
         );
     }
     const currentRows = history.getMaxRows();
-    /* v8 ignore next -- Undersized and already-capacious History grids are both exercised; V8 reports a synthetic alternate branch. */
     if (currentRows < GARDEN_LOGGER.historyCapacityRows) {
         history.insertRowsAfter(
             currentRows,
@@ -5905,7 +5841,6 @@ function ensureQuickLogWaterColumns_(quickLog, configureColumns = false) {
     const changed = expected.some((header, index) => current[index] !== header);
     if (changed) range.setValues([[...expected]]);
 
-    /* v8 ignore next -- Installer configuration and lightweight append verification are both tested. */
     if (!configureColumns) return changed;
     const dataRows = Math.max(
         1,
@@ -6014,9 +5949,9 @@ function formatClientDate_(value, timeZone, pattern) {
 
 function fieldGuideUrlForRow_(formulaRow) {
     const formula = cleanText_(
-        formulaRow && formulaRow[GARDEN_LOGGER.fieldGuideColumn - 1]
+        formulaRow?.[GARDEN_LOGGER.fieldGuideColumn - 1]
     );
-    const match = formula.match(/HYPERLINK\(\s*"([^"]+)"/i);
+    const match = /HYPERLINK\(\s*"([^"]+)"/i.exec(formula);
     return match ? match[1] : GARDEN_LOGGER.fieldGuideUrl;
 }
 
@@ -6264,6 +6199,13 @@ function normalizeDate_(value) {
     return parsed;
 }
 
+/**
+ * Preserve empty measurements as blank Sheets cells and valid measurements as
+ * numbers, so missing observations are never stored as zero or numeric text.
+ * @param {unknown} value - Submitted measurement or blank cell.
+ * @param {string} label - Measurement name in validation errors.
+ * @returns {number | ""} A positive measurement or a blank cell.
+ */
 function optionalPositiveNumber_(value, label) {
     if (value === "" || value === null || value === undefined) return "";
     const number = Number(value);
@@ -6273,6 +6215,12 @@ function optionalPositiveNumber_(value, label) {
     return number;
 }
 
+/**
+ * Preserve an omitted count as a blank cell while validating entered counts.
+ * @param {unknown} value - Submitted count or blank cell.
+ * @param {string} label - Count name in validation errors.
+ * @returns {number | ""} A positive whole-number count or a blank cell.
+ */
 function optionalPositiveInteger_(value, label) {
     if (value === "" || value === null || value === undefined) return "";
     const number = Number(value);

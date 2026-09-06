@@ -1089,6 +1089,8 @@ describe("garden logger input normalization", () => {
         expect(context.columnName_(27)).toBe("AA");
 
         const comparisonDate = new Date("2026-08-16T12:00:00Z");
+        const comparisonTimestamp = comparisonDate.getTime();
+        const comparisonText = String(comparisonTimestamp);
 
         expect(context.comparableHistoryValue_(comparisonDate)).toBe(
             comparisonDate.getTime()
@@ -1096,6 +1098,37 @@ describe("garden logger input normalization", () => {
         expect(context.comparableHistoryValue_(null)).toBe("");
         expect(context.comparableHistoryValue_(undefined)).toBe("");
         expect(context.comparableHistoryValue_("  value  ")).toBe("value");
+        expect(context.comparableHistoryValue_(comparisonText)).toBe(
+            comparisonText
+        );
+        expect(context.comparableHistoryValue_(comparisonTimestamp)).toBe(
+            comparisonText
+        );
+    });
+
+    it("extracts mixed-case field guide formulas and rejects incomplete links", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet());
+        const formulaRow = emptyCells(14);
+        formulaRow[13] =
+            '=hyperlink( \t"https://example.test/guide?q=1","Guide")';
+
+        expect(context.fieldGuideUrlForRow_(formulaRow)).toBe(
+            "https://example.test/guide?q=1"
+        );
+
+        formulaRow[13] = '=HYPERLINK("https://example.test/unclosed';
+
+        expect(context.fieldGuideUrlForRow_(formulaRow)).toBe(
+            context.fieldGuideUrlForRow_(null)
+        );
+
+        formulaRow[13] = '=HYPERLINK("","Guide")';
+
+        expect(context.fieldGuideUrlForRow_(formulaRow)).toBe(
+            context.fieldGuideUrlForRow_(undefined)
+        );
     });
 
     it("formats valid client dates and withholds malformed dates", () => {
@@ -2679,6 +2712,24 @@ describe("garden logger workbook refresh and navigation", () => {
                 "p01"
             )
         ).toThrow(/More than one workbook page/v);
+    });
+
+    it("requires an exact plant ID boundary before a descriptive page name", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet());
+        const spreadsheet = {
+            getSheetByName: () => null,
+            getSheets: () => [
+                { getName: () => "P010 Other plant" },
+                { getName: () => "P01suffix" },
+                { getName: () => "P01\u{00A0}Moon cactus" },
+            ],
+        };
+
+        expect(context.plantPageSheet_(spreadsheet, " P01 ").getName()).toBe(
+            "P01\u{00A0}Moon cactus"
+        );
     });
 });
 
@@ -4676,6 +4727,46 @@ describe("garden logger AppSheet entry intake", () => {
         expect(observedAppSheetEventList).toStrictEqual(["Water", "Weigh"]);
     });
 
+    it("normalizes delimited AppSheet lists without changing array validation", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet());
+        const whitespace = " \t\n\u{00A0}".repeat(12_500);
+
+        expect(
+            Array.from(
+                context.appSheetEventList_(
+                    ` ; Water${whitespace}; , Weigh, Water;\t; `
+                )
+            )
+        ).toStrictEqual(["Water", "Weigh"]);
+        expect(
+            Array.from(context.appSheetEventList_(`Check${whitespace}unknown`))
+        ).toStrictEqual([`Check${whitespace}unknown`]);
+        expect(
+            Array.from(context.appSheetEventList_(" ; ,\t; "))
+        ).toStrictEqual([]);
+        expect(
+            Array.from(
+                context.appSheetBulkWateredPlants_(
+                    ` ; P01${whitespace}; , P30, P01;\t; `
+                )
+            )
+        ).toStrictEqual(["P01", "P30"]);
+        expect(
+            Array.from(context.appSheetBulkWateredPlants_(whitespace))
+        ).toStrictEqual([]);
+        expect(() =>
+            context.appSheetBulkWateredPlants_(`P01${whitespace}P30`)
+        ).toThrow(/Unknown selected plant ID/v);
+        expect(() => context.appSheetBulkWateredPlants_(["P01", " "])).toThrow(
+            /Unknown selected plant ID/v
+        );
+        expect(() => context.appSheetBulkWateredPlants_("P01, p30")).toThrow(
+            "Unknown selected plant ID: p30."
+        );
+    });
+
     it("returns a stable receipt for an already-saved AppSheet row", () => {
         expect.hasAssertions();
 
@@ -6494,6 +6585,50 @@ describe("garden logger History snapshots and request status", () => {
             "P02",
             "P01",
         ]);
+    });
+
+    it("preserves malformed retry keys and accepts absent expected row counts", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook(["P01"]);
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+
+        for (const payload of [false, 0]) {
+            expect(() => context.getWebSaveStatus(payload)).toThrow(
+                "The mobile save request ID is not valid."
+            );
+            expect(() => context.getWebBatchSaveStatus([payload])).toThrow(
+                "The mobile save request ID is not valid."
+            );
+        }
+        for (const payload of [
+            null,
+            undefined,
+            "",
+        ]) {
+            expect(() => context.getWebSaveStatus(payload)).toThrow(
+                "This save is missing its retry key."
+            );
+            expect(() => context.getWebBatchSaveStatus([payload])).toThrow(
+                "This save is missing its retry key."
+            );
+        }
+
+        expect(
+            context.getWebBatchSaveStatus([
+                {
+                    expectedCount: null,
+                    plantId: "P01",
+                    requestId: "garden-null-count-12345",
+                },
+            ])
+        ).toMatchObject([
+            { requestId: "garden-null-count-12345", state: "missing" },
+        ]);
+        expect(workbook.history.__rows).toHaveLength(1);
     });
 
     it("reports queue request status and rejects unsafe status queries", () => {

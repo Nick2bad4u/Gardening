@@ -22,6 +22,9 @@ export default defineConfig({
             },
         },
         environment: "node",
+        // Tests execute .gs source verbatim in VM contexts. Native imports keep
+        // V8 coverage offsets aligned with that source instead of Vite's SSR copy.
+        experimental: { viteModuleRunner: false },
         include: ["test/**/*.test.mjs"],
         restoreMocks: true,
         slowTestThreshold: 300,

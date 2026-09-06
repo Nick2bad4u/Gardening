@@ -37,6 +37,14 @@ selected Vitest version consistent; remove it when the shared package declares
 a compatible peer range. Installation does not require `--force` or
 `--legacy-peer-deps`.
 
+Vitest uses native Node imports through `experimental.viteModuleRunner: false`.
+The tests already use native ESM, and the logger harness evaluates the Apps
+Script source verbatim in VM contexts. Vite's SSR transform inserts characters
+into that file, so applying it only during coverage reporting shifts the V8
+offsets and reports exercised code as uncovered. Native execution keeps coverage
+aligned with the actual source. The previous per-branch V8 ignore comments are
+removed; the existing 90% coverage thresholds remain in force.
+
 The HTML parser dependencies are pinned separately. `@html-eslint/parser@0.65.0`
 uses `es-html-parser@0.3.1`, whose source-location helper rescans a document for
 each token. The large generated field guide makes that quadratic cost visible.
