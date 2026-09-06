@@ -24,9 +24,10 @@ overwritten. The bound Apps Script in
 ## Current production baseline
 
 As of September 6, 2026, the stable production deployment identifies the logger
-as **5.18.4** on immutable Apps Script version **70**. Plant activity summaries,
-compact guidance, History feedback, and Dashboard weight totals are live and
-verified.
+as **5.18.5** on immutable Apps Script version **71**. The summary portrait,
+centered metrics, signed dry-weight comparison, photo footer control, and
+dismissible help panels are live and verified, alongside plant activity
+summaries, History feedback, and Dashboard weight totals.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
@@ -282,6 +283,27 @@ The panel stays inside the viewport and can scroll internally. A brief pointer
 leave delay allows moving from the trigger into the panel without losing it.
 Opening another help control clears the previous pin. Closing from inside the
 panel returns keyboard focus to its trigger without reopening it.
+
+The September 6 rollout published source commit `73a0010` at the existing
+production URL. All three immutable version-71 files match that commit. The
+authenticated page reports `Connected · logger 5.18.5`; external Edge checks
+verified the summary and help at desktop and 390 px widths in light and dark
+themes, including decoded portraits and collection photos. All 324 logger
+tests passed, including 125 client tests, and the server retained 97.43% branch
+coverage. Type, lint, formatting, HTML, security, GitHub Pages, SonarCloud, and
+Codecov checks passed before deployment.
+
+A native Drive backup named `Garden Plant Tracker — before summary and help
+polish 5.18.5 — 2026-09-06` preceded the installer verification. The post-rollout
+comparison preserved all 700 canonical History records, 700 unique observation
+IDs, 6,636 checked formulas, and 8,416 validations. There were no formula errors
+or duplicate active request/plant/event keys; Dashboard weight counts still
+matched all 546 active measured weights. Logger and AppSheet intake installers
+completed successfully without a schema migration. The queue-trigger installer
+created one Head trigger, removed its predecessor, and retained the verified
+five-minute schedule. Its first scheduled run at 17:35:30 EDT completed
+successfully, as did the version-71 web-app executions. No synthetic
+observations were submitted.
 
 ## Plant portrait caching
 

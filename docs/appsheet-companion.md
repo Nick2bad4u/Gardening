@@ -30,8 +30,8 @@ updates, or deletes `History` rows directly.
 The bridge contract and trigger details live in
 [`scripts/google-sheets/README.md`](../scripts/google-sheets/README.md#appsheet-companion-intake).
 
-Logger deployment as of 2026-09-06: logger 5.18.4 and immutable Apps Script
-version 70 are live at the existing stable deployment URL. AppSheet version
+Logger deployment as of 2026-09-06: logger 5.18.5 and immutable Apps Script
+version 71 are live at the existing stable deployment URL. AppSheet version
 **1.100104** is saved, deployed, and verified in authenticated desktop and
 390 px mobile browser layouts. The workbook
 has P29 and P30 in `Plant tracker`, `Baselines`, `Quick log`, the individual
