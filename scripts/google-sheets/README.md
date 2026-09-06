@@ -23,9 +23,10 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-As of September 5, 2026, the stable production deployment identifies the logger
-as **5.18.3** on immutable Apps Script version **68**. The mobile typography,
-semantic HTML, and strict-tooling update is live and verified.
+As of September 6, 2026, the stable production deployment identifies the logger
+as **5.18.4** on immutable Apps Script version **70**. Plant activity summaries,
+compact guidance, History feedback, and Dashboard weight totals are live and
+verified.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
@@ -45,6 +46,8 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
   include P29-P30. The native `QuickCareLog` table covers
   `'Quick log'!A4:O34`, including the two logger-managed watering fields at N:O.
   Canonical History retains its 42-column append-only contract.
+- `Dashboard` contains 24 columns, A:X. Its new `Weight measurements` column
+  counts active, positive measured Weigh events for each plant.
 - Detailed entry supports 12 events: Water, Weigh, Measure, Check, Rotation,
   Clean, Prune, Repot, Flower, Photo, Pest, and Other. Rotation defaults to 90°.
 - A weight and a Water event remain independent inputs. The logger no longer
@@ -112,7 +115,8 @@ substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
   remained identical in the chart helper; all 22 visual estimates remained in
   History. Of 98 chart definitions, 95 were repaired or extended without moving
   any chart. See the [audit receipt](./WORKBOOK-AUDIT-2026-09-05.md).
-- Baselines now has 36 derived fields, Dashboard 23, and the hidden model 16.
+- The watering-plan rollout gave Baselines 36 derived fields, Dashboard 23,
+  and the hidden model 16. Dashboard now has the additional weight-count field.
   Twenty plants currently have conditional planning dates; money tree and
   split rock retain inspection-based guidance. AppSheet **1.100099** is saved
   and deployed: Baselines exposes 37 columns including `_RowNumber`, and its
@@ -170,9 +174,9 @@ with exactly one Head trigger scheduled every five minutes. Version-66 web-app
 executions and a post-deployment time-driven queue execution completed
 successfully. No synthetic observation was submitted.
 
-The 5.18.3 cleanup is live on immutable version 68 at the same production URL.
-All three immutable files match the committed source, and the authenticated
-phone-width page reports `Connected · logger 5.18.3`. It preserves the portrait
+The 5.18.3 cleanup was published on immutable version 68 at the same production
+URL. All three immutable files matched the committed source, and the authenticated
+phone-width page reported `Connected · logger 5.18.3`. It preserves the portrait
 cache revision and the selection-rendering fix. The server cleanup preserves
 retry behavior and mixed Sheets cell values, with 2,463 comparisons against the
 previous source and 341 passing unit tests. Native Vitest execution fixes the
@@ -232,6 +236,30 @@ mobile summary. It preserves the existing A:W columns and all canonical and
 staging schemas; `refreshGardenWorkbook()` also includes the new column when
 the complete generated Dashboard is deliberately rebuilt. Dashboard is not an
 AppSheet source table, so this addition requires no AppSheet regeneration.
+
+The September 6 rollout published logger 5.18.4 on immutable version 70 at the
+same production URL. All three immutable files match source commit `951e545`.
+The authenticated phone-width page reports `Connected · logger 5.18.4`;
+the final mobile review shortened the measurement count label to **Size logs**
+so individual letters do not wrap. Desktop and 390 px light/dark checks covered
+the metric alignment, portrait display, picker-name feedback, local History
+loading, and keyboard/touch-friendly help. The full suite passed 393 tests;
+the final logger suite passed 299, with 97.43% branch coverage against the
+unchanged 90% floor. Type, lint, CI, SonarCloud, Codecov, and security gates pass.
+
+A native Drive backup named `Garden Plant Tracker — before logger summaries
+5.18.4 — 2026-09-06` and a separate native rehearsal copy preceded the scoped
+Dashboard installer. All 30 weight totals match an independent count of the
+546 valid measured weights. The final comparison preserved all 700 canonical
+History records, 700 unique observation IDs, the one Removed record, and zero
+duplicate active request/plant/event keys. All 6,636 checked formula cells are
+error-free; the existing entered values, formulas, and 8,416 checked validations
+remain identical. The logger and intake installers completed without a bulk
+schema migration. The replacement Head queue trigger is the only matching
+trigger, runs every five minutes, and has completed a scheduled execution.
+The final versioned web-app executions also completed successfully. AppSheet
+remains on verified version 1.100104 with portrait revision `2e71bf2a701aa61f`.
+No synthetic observation was submitted.
 
 ## Plant portrait caching
 

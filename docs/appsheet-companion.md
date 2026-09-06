@@ -30,8 +30,8 @@ updates, or deletes `History` rows directly.
 The bridge contract and trigger details live in
 [`scripts/google-sheets/README.md`](../scripts/google-sheets/README.md#appsheet-companion-intake).
 
-Logger deployment as of 2026-09-05: logger 5.18.3 and immutable Apps Script
-version 68 are live at the existing stable deployment URL. AppSheet version
+Logger deployment as of 2026-09-06: logger 5.18.4 and immutable Apps Script
+version 70 are live at the existing stable deployment URL. AppSheet version
 **1.100104** is saved, deployed, and verified in authenticated desktop and
 390 px mobile browser layouts. The workbook
 has P29 and P30 in `Plant tracker`, `Baselines`, `Quick log`, the individual
@@ -51,6 +51,13 @@ curve forecast without changing its observations. The September 5 rollout preser
 691 canonical `History` data rows, retained the duplicate P20 watering as an
 auditable `Removed` record, and left zero duplicate active request/plant/event
 keys, blank request IDs, or formula errors.
+
+The September 6 logger update adds live activity summaries and a derived
+`Weight measurements` column at `Dashboard!X6:X36`. Dashboard is not an AppSheet
+source table, so this addition required no AppSheet schema regeneration. The
+rollout preserved all 700 then-current History records, existing entered values,
+formulas, and checked validations; the single five-minute queue trigger and
+versioned logger executions were verified after deployment.
 
 The current artwork contains 38 exported SVGs, including separate portraits
 for the shared P19 and P20 planters. AppSheet now uses thirty P01-P30 portraits
