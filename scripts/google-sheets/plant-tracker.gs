@@ -5397,7 +5397,7 @@ function observedDryDownSummary_(points) {
     if (gain || first.weight <= last.weight) return summary;
     summary.averageDryDownGramsPerDay =
         (first.weight - last.weight) / summary.dryDownDays;
-    const previous = unique[unique.length - 2];
+    const previous = unique.at(-2);
     const recentDays = last.date - previous.date;
     if (recentDays >= 1 && previous.weight >= last.weight) {
         summary.recentDryDownDays = recentDays;
