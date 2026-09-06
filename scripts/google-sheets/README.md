@@ -24,9 +24,8 @@ overwritten. The bound Apps Script in
 ## Current production baseline
 
 As of September 5, 2026, the stable production deployment identifies the logger
-as **5.18.2** on immutable Apps Script version **66**. The checked-in **5.18.3**
-client prepares the mobile typography, semantic HTML, and strict-tooling update;
-its deployment receipt will replace this baseline after live verification.
+as **5.18.3** on immutable Apps Script version **68**. The mobile typography,
+semantic HTML, and strict-tooling update is live and verified.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
@@ -170,6 +169,29 @@ an intake migration, and the queue installer replaced the previous trigger
 with exactly one Head trigger scheduled every five minutes. Version-66 web-app
 executions and a post-deployment time-driven queue execution completed
 successfully. No synthetic observation was submitted.
+
+The 5.18.3 cleanup is live on immutable version 68 at the same production URL.
+All three immutable files match the committed source, and the authenticated
+phone-width page reports `Connected · logger 5.18.3`. It preserves the portrait
+cache revision and the selection-rendering fix. The server cleanup preserves
+retry behavior and mixed Sheets cell values, with 2,463 comparisons against the
+previous source and 341 passing unit tests. Native Vitest execution fixes the
+source-offset mismatch in coverage reporting, allowing removal of all 75 old
+V8 ignore comments; branch coverage is 97.3% against the unchanged 90% floor.
+GitHub checks, Codecov, and SonarCloud pass, with zero open Sonar issues or
+security hotspots.
+
+A native Drive backup named `Garden Plant Tracker — before mobile UI and strict
+tooling 5.18.3 — 2026-09-05` preceded the installers. The final comparison
+preserved all 691 History observations, 691 unique observation IDs, one Removed
+record, and zero duplicate active request/plant/event keys. All 5,936 checked
+formula cells are error-free, and the checked entered values, formulas, and
+264 validations remain identical. The logger and intake installers completed;
+the bulk intake reported no migration. The queue installer replaced one prior
+trigger with exactly one Head trigger scheduled every five minutes. AppSheet
+remains on verified version 1.100104 with portrait revision `2e71bf2a701aa61f`.
+Version-68 web-app executions and the replacement time-driven queue execution
+completed successfully. No synthetic observation was submitted.
 
 ## Plant portrait caching
 
