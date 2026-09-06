@@ -294,7 +294,7 @@ export function buildWorkbookAuditRequests({ cells, metadata }) {
         "History!A2:AP5000",
         "Baselines!A2:AJ1000",
         "'Plant tracker'!A2:AJ1000",
-        "Dashboard!A1:W254",
+        "Dashboard!A1:X254",
         "Insights!A1:R239",
         "'Insights data'!A1:AD5000",
         "'Dry-down models'!A1:P1000",
@@ -431,11 +431,11 @@ export function buildWorkbookAuditRequests({ cells, metadata }) {
         }
     }
 
-    columns("Dashboard", 23);
+    columns("Dashboard", 24);
     columns("Baselines", 36);
     const displayedColumns = {
         Baselines: 36,
-        Dashboard: 23,
+        Dashboard: 24,
         History: 42,
         [plantTrackerSheet]: 36,
     };
@@ -446,6 +446,9 @@ export function buildWorkbookAuditRequests({ cells, metadata }) {
         numberFormat: { pattern: "0.0#", type: "NUMBER" },
     });
     format("Dashboard", 6, 12, 30, 2, {
+        numberFormat: { pattern: "0", type: "NUMBER" },
+    });
+    format("Dashboard", 6, 23, 30, 1, {
         numberFormat: { pattern: "0", type: "NUMBER" },
     });
     format(
@@ -487,7 +490,7 @@ export function buildWorkbookAuditRequests({ cells, metadata }) {
     format(appPlantChartsSheet, 1, 7, 4999, 1, {
         numberFormat: { pattern: "0.0", type: "NUMBER" },
     });
-    format("Dashboard", 6, 0, 30, 23, {
+    format("Dashboard", 6, 0, 30, 24, {
         verticalAlignment: "MIDDLE",
         wrapStrategy: "WRAP",
     });

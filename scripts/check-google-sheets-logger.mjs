@@ -36,7 +36,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.18.3");
+assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.18.4");
 const webPlantImageUrls = evaluateLogger("WEB_PLANT_IMAGE_URLS");
 assert.ok(
     isImageUrls(webPlantImageUrls),
@@ -383,7 +383,10 @@ assert.match(
 );
 assert.match(html, /id="retryBootstrapButton"/v);
 assert.match(html, /function readCachedBootstrap\(\)/v);
-assert.match(html, /function refreshCachedBootstrap\(\)/v);
+assert.match(
+    html,
+    /function refreshCachedBootstrap\(\{ updateHistory = true \} = \{\}\)/v
+);
 assert.match(html, /target="_top"/v);
 assert.match(html, /pending\.replaceable = true;/v);
 assert.doesNotMatch(html, /id="weightStates"/v);
@@ -396,7 +399,12 @@ assert.match(html, /plant\.recommendedWaterDate/v);
 assert.match(html, /plant\.wateringGuidance/v);
 assert.match(source, /function installWateringRecommendations\(\)/v);
 assert.equal(vm.runInContext("BASELINE_VIEW_HEADERS.length", context), 36);
-assert.equal(vm.runInContext("DASHBOARD_VIEW_HEADERS.length", context), 23);
+assert.equal(vm.runInContext("DASHBOARD_VIEW_HEADERS.length", context), 24);
+assert.equal(
+    evaluateLogger("DASHBOARD_VIEW_HEADERS.at(-1)"),
+    "Weight measurements"
+);
+assert.match(source, /function installDashboardWeightCounts\(\)/v);
 assert.equal(vm.runInContext("DRY_DOWN_MODEL_HEADERS.length", context), 16);
 assert.deepEqual(strings(evaluateLogger("BASELINE_VIEW_HEADERS.slice(-2)")), [
     "Recommended water date",

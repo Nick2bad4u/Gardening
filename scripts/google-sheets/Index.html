@@ -673,9 +673,10 @@
             }
 
             .metrics {
+                position: relative;
                 display: grid;
                 grid-template-columns: repeat(
-                    4,
+                    2,
                     [item-start] minmax(0, 1fr) [item-end]
                 );
                 gap: 8px;
@@ -683,7 +684,6 @@
             }
 
             .metric {
-                position: relative;
                 display: grid;
                 grid-template-columns:
                     [primary-start] 1.75rem [primary-end secondary-start] minmax(
@@ -731,9 +731,6 @@
                 border-radius: 11px;
             }
             .forecast-heading {
-                display: flex;
-                gap: 7px;
-                align-items: center;
                 margin: 0 0 9px;
                 font-size: 1rem;
                 line-height: 1.375;
@@ -751,9 +748,6 @@
                 color: var(--muted);
             }
             .forecast-reweigh {
-                display: flex;
-                gap: 7px;
-                align-items: flex-start;
                 padding-block-start: 9px;
                 font-size: 1rem;
                 line-height: 1.5;
@@ -764,6 +758,91 @@
                 font-size: 1rem;
                 line-height: 1.5;
                 color: var(--muted);
+            }
+
+            .activity-counts {
+                position: relative;
+                display: grid;
+                grid-template-columns: repeat(
+                    3,
+                    [item-start] minmax(0, 1fr) [item-end]
+                );
+                gap: 8px;
+                margin-block-start: 8px;
+            }
+
+            .activity-count {
+                display: grid;
+                grid-template-rows:
+                    [label-start] 1fr [label-end value-start] auto
+                    [value-end];
+                min-inline-size: 0;
+                padding: 8px 4px;
+                text-align: center;
+                background: var(--control);
+                border: 1px solid var(--line);
+                border-radius: 11px;
+            }
+
+            .help-disclosure {
+                position: relative;
+                min-inline-size: 0;
+
+                .metric &,
+                .activity-count & {
+                    position: static;
+                    grid-column: 1 / -1;
+                }
+            }
+
+            .help-trigger {
+                display: flex;
+                gap: 7px;
+                align-items: center;
+                min-block-size: 44px;
+                padding: 3px 0;
+                color: var(--forest-2);
+                text-decoration: underline dotted;
+                text-underline-offset: 4px;
+                cursor: pointer;
+                list-style-type: "";
+
+                &:focus-visible {
+                    outline: 2px solid var(--forest-2);
+                    outline-offset: 3px;
+                }
+
+                .activity-count & {
+                    flex-direction: column;
+                    gap: 4px;
+                    justify-content: center;
+                    text-align: center;
+                    overflow-wrap: anywhere;
+                }
+            }
+
+            .help-text {
+                position: absolute;
+                inset-inline: 0;
+                z-index: 5;
+                padding: 12px;
+                margin: 3px 0 0;
+                font-size: 1rem;
+                font-weight: 400;
+                line-height: 1.5;
+                color: var(--ink);
+                text-align: start;
+                background: var(--card);
+                border: 1px solid var(--line);
+                border-radius: 10px;
+                box-shadow: 0 5px 16px rgb(0 0 0 / 0.16);
+            }
+
+            .picker-name {
+                min-block-size: 2.5em;
+                margin: 8px 0;
+                color: var(--forest-2);
+                overflow-wrap: anywhere;
             }
 
             :root[data-theme="dark"] .metric-icon {
@@ -1333,6 +1412,47 @@
             .recent-list {
                 display: grid;
                 gap: 8px;
+            }
+
+            .recent-status {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                margin-block-end: 10px;
+                color: var(--muted);
+
+                &[data-loading="true"]::before {
+                    flex: none;
+                    inline-size: 1rem;
+                    block-size: 1rem;
+                    content: "";
+                    border: 2px solid var(--line);
+                    border-block-start-color: var(--forest-2);
+                    border-radius: 50%;
+                    animation: spin 0.9s linear infinite;
+
+                    @media (prefers-reduced-motion: reduce) {
+                        animation: none;
+                    }
+                }
+            }
+
+            .recent-plant {
+                display: flex;
+                gap: 9px;
+                align-items: center;
+                min-inline-size: 0;
+
+                & > div {
+                    min-inline-size: 0;
+                    overflow-wrap: anywhere;
+                }
+            }
+
+            .recent-portrait {
+                flex: none;
+                inline-size: 2.25rem;
+                block-size: 2.25rem;
             }
 
             .history-limit {
@@ -12209,6 +12329,10 @@
                                     <use href="#app-icon-search"></use></svg
                                 >1. Choose plant</h2
                             >
+                            <div
+                                id="plantSummary"
+                                class="plant-summary"
+                            ></div>
                             <div class="picker-toolbar">
                                 <span class="hint"
                                     >Use the searchable list or tap a pot
@@ -12251,6 +12375,13 @@
                                     >
                                 </div>
                             </div>
+                            <p
+                                id="plantPickerName"
+                                class="picker-name"
+                                role="status"
+                                aria-live="polite"
+                                >Choose a plant to see its name.</p
+                            >
                             <div
                                 id="listPicker"
                                 class="list-picker"
@@ -12304,11 +12435,6 @@
                                     >Hide photos</button
                                 >
                             </div>
-                            <div
-                                id="plantSummary"
-                                class="plant-summary"
-                                aria-live="polite"
-                            ></div>
                         </section>
 
                         <section class="card">
@@ -13053,6 +13179,13 @@
                                     >Clear selection</button
                                 >
                             </div>
+                            <p
+                                id="bulkPickerName"
+                                class="picker-name"
+                                role="status"
+                                aria-live="polite"
+                                >Tap a plant to see its name and selection.</p
+                            >
                             <div
                                 id="bulkPlantList"
                                 class="bulk-list"
@@ -13461,6 +13594,13 @@
                                 ></div
                             >
                             <div
+                                id="recentStatus"
+                                class="recent-status"
+                                role="status"
+                                aria-live="polite"
+                                hidden
+                            ></div>
+                            <div
                                 id="recentList"
                                 class="recent-list"
                             ></div>
@@ -13503,6 +13643,8 @@
                 bulkPickerMode: "list",
                 photosVisible: true,
                 recentLimit: 10,
+                recentAttempt: 0,
+                recentTimer: null,
                 queue: [],
                 queueSendSession: null,
                 queueSendSummary: null,
@@ -14841,9 +14983,10 @@
                 );
                 const summary = $("plantChoiceSummary");
                 const list = $("plantChoiceList");
-                clearPlantPortraits(summary);
-                clearPlantPortraits(list);
                 if (!selected) {
+                    clearPlantPortraits(summary);
+                    clearPlantPortraits(list);
+                    delete summary.dataset.plantId;
                     summary.append(
                         createIcon("plant", "app-icon plant-choice-icon"),
                         document.createTextNode("No matching plants"),
@@ -14859,33 +15002,89 @@
                     weighedPlantIds.has(selected.id)
                 );
                 summaryText.className = "plant-choice-summary-text";
-                summary.append(
-                    createPlantPortrait(selected, "app-icon plant-choice-icon"),
-                    summaryText,
-                    createIcon("arrow-down", "app-icon plant-choice-chevron")
-                );
+                const selectedPortrait = plantIconName(selected);
+                if (
+                    summary.dataset.plantId !== selected.id ||
+                    summary.dataset.portraitName !== selectedPortrait
+                ) {
+                    clearPlantPortraits(summary);
+                    summary.append(
+                        createPlantPortrait(
+                            selected,
+                            "app-icon plant-choice-icon"
+                        ),
+                        summaryText,
+                        createIcon(
+                            "arrow-down",
+                            "app-icon plant-choice-chevron"
+                        )
+                    );
+                    summary.dataset.plantId = selected.id;
+                    summary.dataset.portraitName = selectedPortrait;
+                } else {
+                    summary
+                        .querySelector(".plant-choice-summary-text")
+                        .replaceWith(summaryText);
+                }
                 summary.setAttribute(
                     "aria-label",
                     `Choose plant. Current selection: ${selected.name}, ${selected.id}${selected.label ? `, label ${selected.label}` : ""}`
                 );
-                plants.forEach((plant) => {
-                    const button = document.createElement("button");
-                    button.type = "button";
-                    button.className = "plant-choice-option";
-                    button.dataset.plantId = plant.id;
-                    button.setAttribute("role", "option");
+                const existingButtons = new Map(
+                    [...list.children].map((button) => [
+                        button.dataset.plantId,
+                        button,
+                    ])
+                );
+                plants.forEach((plant, index) => {
+                    let button = existingButtons.get(plant.id);
+                    existingButtons.delete(plant.id);
+                    const portraitName = plantIconName(plant);
+                    if (
+                        button &&
+                        button.dataset.portraitName !== portraitName
+                    ) {
+                        clearPlantPortraits(button);
+                        button.remove();
+                        button = null;
+                    }
+                    if (!button) {
+                        button = document.createElement("button");
+                        button.type = "button";
+                        button.className = "plant-choice-option";
+                        button.dataset.plantId = plant.id;
+                        button.dataset.portraitName = portraitName;
+                        button.setAttribute("role", "option");
+                        button.append(
+                            createPlantPortrait(
+                                plant,
+                                "app-icon plant-choice-icon"
+                            ),
+                            plantChoiceText(
+                                plant,
+                                weighedPlantIds.has(plant.id)
+                            )
+                        );
+                    } else {
+                        button
+                            .querySelector(".plant-choice-text")
+                            .replaceWith(
+                                plantChoiceText(
+                                    plant,
+                                    weighedPlantIds.has(plant.id)
+                                )
+                            );
+                    }
                     button.setAttribute(
                         "aria-selected",
                         String(plant.id === selected.id)
                     );
-                    button.append(
-                        createPlantPortrait(
-                            plant,
-                            "app-icon plant-choice-icon"
-                        ),
-                        plantChoiceText(plant, weighedPlantIds.has(plant.id))
-                    );
-                    list.append(button);
+                    if (list.children[index] !== button)
+                        list.insertBefore(button, list.children[index] || null);
+                });
+                existingButtons.forEach((button) => {
+                    clearPlantPortraits(button);
+                    button.remove();
                 });
             }
 
@@ -15079,10 +15278,30 @@
                 );
             }
 
+            function showPickerName(plant = selectedPlant(), selected = true) {
+                $("plantPickerName").textContent = plant
+                    ? `${selected ? "Selected: " : ""}${plant.name} · ${plant.label || plant.id}`
+                    : "No matching plant";
+            }
+
+            function previewPickerName(event) {
+                if (
+                    event.type === "pointerover" &&
+                    event.pointerType !== "mouse"
+                )
+                    return;
+                const button = event.target.closest("[data-plant-id]");
+                const plant = state.bootstrap?.plants.find(
+                    (candidate) => candidate.id === button?.dataset.plantId
+                );
+                if (plant) showPickerName(plant, false);
+            }
+
             function renderPlantSummary() {
                 const plant = selectedPlant();
                 const summary = $("plantSummary");
                 summary.replaceChildren();
+                showPickerName(plant);
                 if (!plant) {
                     const empty = document.createElement("div");
                     empty.textContent = "No plants match that search.";
@@ -15131,6 +15350,26 @@
 
                 const metrics = document.createElement("div");
                 metrics.className = "metrics";
+                const activity = plant.activitySummary || {};
+                const intervalEvidence =
+                    activity.waterIntervalCount > 0
+                        ? `Average of ${activity.waterIntervalCount} intervals`
+                        : "Average interval";
+                const intervalHelp = `${intervalEvidence} between active watering events across the entire history. At least two waterings are needed. Past intervals are observations, not a fixed watering schedule.`;
+                const lossWindow = positiveMetric(activity.dryDownDays, "days");
+                const recentLoss = positiveMetric(
+                    activity.recentDryDownGramsPerDay,
+                    "g/day"
+                );
+                const recentWindow = positiveMetric(
+                    activity.recentDryDownDays,
+                    "days"
+                );
+                const lossHelp =
+                    `Observed whole-pot mass loss over ${lossWindow === "—" ? "a measured time window" : lossWindow}, using ${activity.dryDownReadingCount || "available"} measured weights in the current pot setup and watering cycle. This is net mass loss divided by actual elapsed days, not plant water use alone. Drying can slow; this is not a fixed watering schedule. Removed, estimated, invalid, nonpositive, pre-watering and older-setup readings are excluded. An invalid or upward-conflicting sequence withholds the rate.` +
+                    (recentLoss === "—" || recentWindow === "—"
+                        ? ""
+                        : ` Last interval: ${recentLoss} over ${recentWindow}.`);
                 const metricData = [
                     [
                         "water",
@@ -15162,11 +15401,33 @@
                         plant.currentPotSize || "—",
                         `Setup ${plant.potSetup || 1}`,
                     ],
+                    [
+                        "calendar",
+                        "Avg water interval",
+                        positiveMetric(
+                            activity.averageWaterIntervalDays,
+                            "days"
+                        ),
+                        "Across recorded history",
+                        intervalHelp,
+                    ],
+                    [
+                        "dry",
+                        "Cycle avg loss",
+                        positiveMetric(
+                            activity.averageDryDownGramsPerDay,
+                            "g/day"
+                        ),
+                        lossWindow === "—"
+                            ? "Needs measured dry-down"
+                            : `Over ${lossWindow}`,
+                        lossHelp,
+                    ],
                 ];
-                metricData.forEach(([iconName, label, value, detail]) => {
+                metricData.forEach(([iconName, label, value, detail, help]) => {
                     const metric = document.createElement("div");
                     metric.className = "metric";
-                    if (iconName === "dry") {
+                    if (label === "Last completed dry") {
                         metric.setAttribute(
                             "aria-description",
                             plant.dryOrLowestWeightBasis ||
@@ -15188,6 +15449,12 @@
                     detailNode.className = "metric-detail";
                     detailNode.textContent = detail;
                     metric.append(iconNode, labelNode, valueNode, detailNode);
+                    if (help) {
+                        const disclosure = createHelp(label, help, iconName);
+                        labelNode.remove();
+                        iconNode.remove();
+                        metric.prepend(disclosure);
+                    }
                     metrics.append(metric);
                 });
                 const plantLinks = document.createElement("div");
@@ -15201,7 +15468,12 @@
                     createLink("History & charts", plant.historyUrl, "history")
                 );
                 heading.append(identity, badge);
-                left.append(heading, metrics, createWateringPlan(plant));
+                left.append(
+                    heading,
+                    metrics,
+                    createActivityCounts(activity),
+                    createWateringPlan(plant)
+                );
                 left.append(plantLinks);
                 summary.append(left);
 
@@ -15251,40 +15523,173 @@
                 }
             }
 
+            function positiveMetric(value, unit) {
+                if (
+                    typeof value !== "number" ||
+                    !Number.isFinite(value) ||
+                    value <= 0
+                )
+                    return "—";
+                const rounded =
+                    value < 0.1 ? "<0.1" : String(Math.round(value * 10) / 10);
+                return `${rounded} ${unit}`;
+            }
+
+            function createActivityCounts(activity) {
+                const counts = document.createElement("div");
+                counts.className = "activity-counts";
+                counts.setAttribute("role", "group");
+                counts.setAttribute("aria-label", "Recorded activity totals");
+                [
+                    [
+                        "water",
+                        "Waterings",
+                        activity.totalWaterings,
+                        "Total active watering events across the entire history.",
+                    ],
+                    [
+                        "dimensions",
+                        "Dimensions",
+                        activity.totalMeasurements,
+                        "Total active height/width measurement events across the entire history. One event with both height and width counts once.",
+                    ],
+                    [
+                        "weight",
+                        "Weights",
+                        activity.totalWeights,
+                        "Total active, valid, positive measured Weigh events across the entire history. Estimates and removed records are excluded.",
+                    ],
+                ].forEach(([icon, label, value, help]) => {
+                    const count = document.createElement("div");
+                    count.className = "activity-count";
+                    const number = document.createElement("div");
+                    number.className = "metric-value";
+                    number.textContent =
+                        Number.isInteger(value) && value >= 0
+                            ? String(value)
+                            : "—";
+                    count.append(createHelp(label, help, icon), number);
+                    counts.append(count);
+                });
+                return counts;
+            }
+
+            function createHelp(label, explanation, iconName = "info") {
+                const help = document.createElement("details");
+                help.className = "help-disclosure";
+                const trigger = document.createElement("summary");
+                trigger.className = "help-trigger";
+                setIconLabel(
+                    trigger,
+                    iconName,
+                    label,
+                    "app-icon app-icon--small"
+                );
+                const text = document.createElement("p");
+                text.className = "help-text";
+                text.textContent = explanation;
+                help.append(trigger, text);
+                trigger.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    help.dataset.pinned = String(
+                        help.dataset.pinned !== "true"
+                    );
+                    help.open = help.dataset.pinned === "true";
+                });
+                help.addEventListener("pointerenter", (event) => {
+                    if (event.pointerType === "mouse") help.open = true;
+                });
+                help.addEventListener("pointerleave", () => {
+                    if (
+                        help.dataset.pinned !== "true" &&
+                        !help.contains(document.activeElement)
+                    )
+                        help.open = false;
+                });
+                trigger.addEventListener("focus", () => {
+                    help.open = true;
+                });
+                help.addEventListener("focusout", (event) => {
+                    if (!help.contains(event.relatedTarget)) {
+                        help.dataset.pinned = "false";
+                        help.open = false;
+                    }
+                });
+                return help;
+            }
+
+            function forecastBasisHelp(basis) {
+                if (/conflict|upward|invalid|differs|recheck/i.test(basis))
+                    return [
+                        "caution",
+                        "Readings conflict or are invalid, so the model cannot give a reliable dry-down estimate. Check the recorded weights and setup, then take a new measured weight before planning.",
+                    ];
+                if (basis.startsWith("Current-cycle curve"))
+                    return [
+                        "growth",
+                        "The forecast follows measured dry-down readings from the current watering cycle and pot setup. Drying can slow; confirm actual dryness and plant condition before watering.",
+                    ];
+                if (
+                    basis.startsWith("Current curve + history") ||
+                    basis.startsWith("Blended historical estimate")
+                )
+                    return [
+                        "tracker",
+                        "The forecast blends current-cycle measurements with reliable completed dry-down cycles for this plant and pot setup. New readings can change the estimate.",
+                    ];
+                if (basis.startsWith("Historical estimate"))
+                    return [
+                        "history",
+                        "The estimate relies mainly on reliable completed dry-down cycles for this plant and pot setup. Current-cycle evidence is limited; reweigh to update it.",
+                    ];
+                if (basis.startsWith("Partial / spot watering"))
+                    return [
+                        "care",
+                        "Partial or spot watering does not establish a reliable whole-pot wet anchor for this forecast. Reweigh and inspect actual dryness before planning another watering.",
+                    ];
+                return [
+                    "info",
+                    "There is not enough reliable watering-cycle evidence to schedule from this model. Inspect actual dryness and plant condition, and collect measured weights. Any date remains conditional on readiness.",
+                ];
+            }
+
             function createWateringPlan(plant) {
                 const panel = document.createElement("section");
                 panel.className = "plant-forecast";
                 panel.setAttribute("aria-label", "Watering plan");
-                const heading = document.createElement("h3");
+                const heading = document.createElement("div");
                 heading.className = "forecast-heading";
-                setIconLabel(
-                    heading,
-                    "calendar",
-                    "Recommended water date · if ready",
-                    "app-icon app-icon--small"
+                const waterHelp = createHelp(
+                    "Water date · if ready",
+                    plant.wateringGuidance ||
+                        "Confirm actual dryness and plant condition. The forecast is not a watering instruction.",
+                    "calendar"
                 );
+                waterHelp
+                    .querySelector(".help-text")
+                    .classList.add("forecast-guidance");
+                heading.append(waterHelp);
                 const date = document.createElement("div");
                 date.className = "forecast-date";
                 date.textContent =
                     plant.recommendedWaterDate || "Inspect before scheduling";
-                const guidance = document.createElement("p");
-                guidance.className = "forecast-guidance";
-                guidance.textContent =
-                    plant.wateringGuidance ||
-                    "Confirm actual dryness and plant condition. The forecast is not a watering instruction.";
-                const reweigh = document.createElement("div");
-                reweigh.className = "forecast-reweigh";
-                setIconLabel(
-                    reweigh,
-                    "weight",
+                const reweigh = createHelp(
                     `Reweigh: ${plant.dryForecastWindow || "Not enough evidence yet"}`,
-                    "app-icon app-icon--small"
+                    "This is a window to take another whole-pot weight and inspect dryness, not an instruction to water. New measurements can move the forecast; keep using the same pot setup.",
+                    "weight"
                 );
-                const basis = document.createElement("p");
-                basis.className = "forecast-basis";
-                basis.textContent =
+                reweigh.classList.add("forecast-reweigh");
+                const basisLabel =
                     plant.dryForecastBasis || "Needs watering-cycle data";
-                panel.append(heading, date, guidance, reweigh, basis);
+                const [basisIcon, basisExplanation] =
+                    forecastBasisHelp(basisLabel);
+                const basis = createHelp(
+                    basisLabel,
+                    basisExplanation,
+                    basisIcon
+                );
+                basis.classList.add("forecast-basis");
+                panel.append(heading, date, reweigh, basis);
                 return panel;
             }
 
@@ -15411,7 +15816,9 @@
             function renderRecent(entries) {
                 const card = $("recentCard");
                 const list = $("recentList");
-                list.replaceChildren();
+                state.recentAttempt += 1;
+                setRecentStatus("");
+                clearPlantPortraits(list);
                 if (!entries || !entries.length) {
                     card.hidden = true;
                     return;
@@ -15421,6 +15828,8 @@
                     item.className = "recent-item";
                     item.dataset.event = entry.event || "Other";
                     const left = document.createElement("div");
+                    left.className = "recent-plant";
+                    const text = document.createElement("div");
                     const main = document.createElement("div");
                     main.className = "recent-main";
                     main.textContent = `${entry.name || entry.plantId}${entry.weight !== "" ? ` · ${entry.weight} g` : ""}`;
@@ -15435,7 +15844,16 @@
                         entry.event,
                         "app-icon app-icon--small"
                     );
-                    left.append(main, sub);
+                    text.append(main, sub);
+                    left.append(
+                        createPlantPortrait(
+                            state.bootstrap?.plants.find(
+                                (plant) => plant.id === entry.plantId
+                            ),
+                            "app-icon recent-portrait"
+                        ),
+                        text
+                    );
                     item.append(left, badge);
                     list.append(item);
                 });
@@ -15521,7 +15939,30 @@
             function setBulkPlantSelected(plantId, selected) {
                 if (selected) state.bulkSelected.add(plantId);
                 else state.bulkSelected.delete(plantId);
+                $("bulkPickerName").dataset.plantId = plantId;
                 renderBulkCount();
+            }
+
+            function previewBulkPickerName(event) {
+                if (
+                    event.type === "pointerover" &&
+                    event.pointerType !== "mouse"
+                )
+                    return;
+                const button = event.target.closest("[data-bulk-plant-id]");
+                if (button) showBulkPickerName(button.dataset.bulkPlantId);
+            }
+
+            function showBulkPickerName(
+                plantId = $("bulkPickerName").dataset.plantId
+            ) {
+                const plant = state.bootstrap?.plants.find(
+                    (candidate) => candidate.id === plantId
+                );
+                if (!plant) return;
+                const name = $("bulkPickerName");
+                name.dataset.plantId = plant.id;
+                name.textContent = `${state.bulkSelected.has(plant.id) ? "Selected" : "Not selected"}: ${plant.name} · ${plant.label || plant.id}`;
             }
 
             function renderBulkPlants(query = "") {
@@ -15579,6 +16020,7 @@
                     }
                     const label = document.createElement("label");
                     label.className = "bulk-plant";
+                    label.dataset.bulkPlantId = plant.id;
                     const checkbox = document.createElement("input");
                     checkbox.type = "checkbox";
                     checkbox.value = plant.id;
@@ -15618,6 +16060,7 @@
 
             function renderBulkCount() {
                 const count = state.bulkSelected.size;
+                showBulkPickerName();
                 $("bulkCount").textContent = `${count} selected`;
                 const actionCount = state.bulkEvents.size;
                 const saveLabel = count
@@ -15907,7 +16350,7 @@
                 localStorage.removeItem(BULK_PENDING_KEY);
                 showToast(result.message);
                 clearBulkRound();
-                refreshRecent();
+                refreshSavedPlantData();
                 return true;
             }
 
@@ -16490,7 +16933,7 @@
                     ? `${confirmed} confirmed · ${remaining} safely queued`
                     : "Connected to the spreadsheet";
                 showToast(message, isError, isError ? 14000 : 9000);
-                if (confirmed) refreshRecent();
+                if (confirmed) refreshSavedPlantData();
             }
 
             function reconcileObservationQueue(requestIds, options = {}) {
@@ -16555,7 +16998,7 @@
                             showToast(
                                 `${recovered} queued observation${recovered === 1 ? " was" : "s were"} already in History and cleared from this phone.`
                             );
-                            refreshRecent();
+                            refreshSavedPlantData();
                         }
                     })
                     .withFailureHandler(() => {
@@ -16564,12 +17007,64 @@
                     .getWebBatchSaveStatus(descriptors);
             }
 
+            function refreshSavedPlantData() {
+                refreshRecent();
+                refreshCachedBootstrap({ updateHistory: false });
+            }
+
             function refreshRecent() {
-                if (!browserIsOnline()) return;
+                const attempt = ++state.recentAttempt;
+                if (!browserIsOnline()) {
+                    setRecentStatus(
+                        "Offline · keeping previous History entries. Reconnect and change Show to retry."
+                    );
+                    return;
+                }
+                setRecentStatus(
+                    `Loading ${state.recentLimit} recent entries…`,
+                    true
+                );
+                state.recentTimer = setTimeout(() => {
+                    if (attempt !== state.recentAttempt) return;
+                    state.recentAttempt += 1;
+                    setRecentStatus(
+                        "History refresh timed out · keeping previous entries. Change Show to retry."
+                    );
+                }, 20000);
                 google.script.run
-                    .withSuccessHandler(renderRecent)
-                    .withFailureHandler(() => {})
+                    .withSuccessHandler((entries) => {
+                        if (attempt !== state.recentAttempt) return;
+                        if (!Array.isArray(entries)) {
+                            setRecentStatus(
+                                "History response was unavailable · keeping previous entries. Change Show to retry."
+                            );
+                            return;
+                        }
+                        renderRecent(entries);
+                        setRecentStatus(
+                            entries.length
+                                ? `Showing ${entries.length} recent ${entries.length === 1 ? "entry" : "entries"}.`
+                                : "No recent entries."
+                        );
+                    })
+                    .withFailureHandler(() => {
+                        if (attempt !== state.recentAttempt) return;
+                        setRecentStatus(
+                            "Could not refresh History · keeping previous entries. Change Show to retry."
+                        );
+                    })
                     .getRecentWebObservations(state.recentLimit);
+            }
+
+            function setRecentStatus(message, loading = false) {
+                clearTimeout(state.recentTimer);
+                state.recentTimer = null;
+                const status = $("recentStatus");
+                status.textContent = message;
+                status.dataset.loading = String(loading);
+                status.hidden = !message;
+                $("recentList").setAttribute("aria-busy", String(loading));
+                if (message) $("recentCard").hidden = false;
             }
 
             function restorePendingSave() {
@@ -16740,7 +17235,7 @@
                 showToast(result.message);
                 clearEntry({ afterSave: true });
                 if (advanceAfterSave) advancePlant();
-                refreshRecent();
+                refreshSavedPlantData();
                 return true;
             }
 
@@ -16888,15 +17383,22 @@
                 state.bootstrapRefreshTimer = null;
             }
 
-            function applyBootstrapRefresh(bootstrap) {
+            function applyBootstrapRefresh(
+                bootstrap,
+                recentAttempt,
+                updateHistory = true
+            ) {
                 if (!bootstrapIsUsable(bootstrap)) return false;
                 const selectedPlantId = $("plantSelect").value;
                 state.bootstrap = bootstrap;
                 cacheBootstrap(bootstrap);
                 renderGlobalLinks();
                 renderPlantOptions($("plantSearch").value, selectedPlantId);
-                if (state.recentLimit === 10) renderRecent(bootstrap.recent);
-                else refreshRecent();
+                if (updateHistory && recentAttempt === state.recentAttempt) {
+                    if (state.recentLimit === 10)
+                        renderRecent(bootstrap.recent);
+                    else refreshRecent();
+                }
                 if (state.entryMode === "bulk")
                     renderBulkPlants($("bulkSearch").value);
                 $("connectionStatus").textContent =
@@ -16904,7 +17406,7 @@
                 return true;
             }
 
-            function refreshCachedBootstrap() {
+            function refreshCachedBootstrap({ updateHistory = true } = {}) {
                 if (!browserIsOnline()) {
                     $("connectionStatus").textContent =
                         "Offline · using the saved plant list";
@@ -16912,6 +17414,7 @@
                 }
                 clearBootstrapRefreshTimer();
                 const attemptId = ++state.bootstrapRefreshAttempt;
+                const recentAttempt = state.recentAttempt;
                 state.bootstrapRefreshTimer = window.setTimeout(() => {
                     if (attemptId !== state.bootstrapRefreshAttempt) return;
                     state.bootstrapRefreshTimer = null;
@@ -16922,7 +17425,13 @@
                     .withSuccessHandler((bootstrap) => {
                         if (attemptId !== state.bootstrapRefreshAttempt) return;
                         clearBootstrapRefreshTimer();
-                        if (!applyBootstrapRefresh(bootstrap))
+                        if (
+                            !applyBootstrapRefresh(
+                                bootstrap,
+                                recentAttempt,
+                                updateHistory
+                            )
+                        )
                             $("connectionStatus").textContent =
                                 "Using saved plant list · Google returned invalid data";
                     })
@@ -17122,6 +17631,14 @@
                 const button = event.target.closest("[data-plant-id]");
                 if (button) selectPlantById(button.dataset.plantId);
             });
+            $("labelPicker").addEventListener("pointerover", previewPickerName);
+            $("labelPicker").addEventListener("focusin", previewPickerName);
+            $("labelPicker").addEventListener("pointerleave", () =>
+                showPickerName()
+            );
+            $("labelPicker").addEventListener("focusout", () =>
+                showPickerName()
+            );
             $("recentLimit").addEventListener("change", (event) => {
                 state.recentLimit = Number(event.target.value);
                 safeStorageSet(
@@ -17201,6 +17718,14 @@
             $("bulkSearch").addEventListener("input", (event) =>
                 renderBulkPlants(event.target.value)
             );
+            $("bulkPlantList").addEventListener(
+                "pointerover",
+                previewBulkPickerName
+            );
+            $("bulkPlantList").addEventListener(
+                "focusin",
+                previewBulkPickerName
+            );
             $("bulkListPickerMode").addEventListener("click", () =>
                 setBulkPickerMode("list")
             );
@@ -17219,6 +17744,15 @@
             });
             $("bulkResetButton").addEventListener("click", clearBulkRound);
             document.addEventListener("click", guardMobileButtonHit, true);
+            document.addEventListener("keydown", (event) => {
+                if (event.key !== "Escape") return;
+                document
+                    .querySelectorAll(".help-disclosure[open]")
+                    .forEach((help) => {
+                        help.dataset.pinned = "false";
+                        help.open = false;
+                    });
+            });
             $("bulkWaterForm").addEventListener("submit", (event) => {
                 event.preventDefault();
                 submitBulkCare();
@@ -17279,6 +17813,12 @@
                 scheduleInterruptedWorkCheck(100);
             });
             window.addEventListener("offline", () => {
+                if (state.recentTimer !== null) {
+                    state.recentAttempt += 1;
+                    setRecentStatus(
+                        "Offline · keeping previous History entries. Reconnect and change Show to retry."
+                    );
+                }
                 if (!state.saving)
                     $("connectionStatus").textContent =
                         "Offline · entries stay on this phone";

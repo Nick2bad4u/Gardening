@@ -60,6 +60,18 @@ export interface ObservationPayload {
 }
 
 export interface PlantSummary {
+    activitySummary?: {
+        averageDryDownGramsPerDay: "" | number;
+        averageWaterIntervalDays: "" | number;
+        dryDownDays: "" | number;
+        dryDownReadingCount: number;
+        recentDryDownDays: "" | number;
+        recentDryDownGramsPerDay: "" | number;
+        totalMeasurements: number;
+        totalWaterings: number;
+        totalWeights: number;
+        waterIntervalCount: number;
+    };
     currentImageUrl?: string;
     currentPotSize: string;
     daysSinceWater: number | string;

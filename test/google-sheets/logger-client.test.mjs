@@ -3,6 +3,7 @@ import {
     Element,
     HTMLAnchorElement,
     HTMLButtonElement,
+    HTMLDetailsElement,
     HTMLElement,
     HTMLFormElement,
     HTMLImageElement,
@@ -38,6 +39,22 @@ const portraitRevision = required(
     /const PLANT_ICON_REVISION = "(?<revision>[0-9a-f]+)";/v.exec(html)
         ?.groups?.["revision"]
 );
+
+/** @type {Set<Window>} */
+const loggerWindows = new Set();
+/** @type {Map<ReturnType<typeof setTimeout>, typeof clearTimeout>} */
+const loggerTimers = new Map();
+
+/**
+ * @param {Parameters<typeof setTimeout>[0]} callback
+ * @param {number} [delay]
+ * @param {unknown[]} args
+ */
+function trackedLoggerTimeout(callback, delay, ...args) {
+    const timer = setTimeout(callback, delay, ...args);
+    loggerTimers.set(timer, clearTimeout);
+    return timer;
+}
 
 /** @type {import("../logger-fixtures.d.ts").Bootstrap} */
 const bootstrap = {
@@ -103,6 +120,26 @@ const bootstrap = {
     serverTime: "2026-08-15T14:00:00.000Z",
     version: "test",
 };
+
+const recentExample = {
+    event: "Weigh",
+    name: "Moon cactus",
+    observedAt: "Sep 5, 2026",
+    plantId: "P01",
+    weight: 430,
+    weightState: "Routine",
+};
+
+/** @param {Window} window @param {string} value */
+function changeRecentLimit(window, value) {
+    const select = queryElement(
+        window.document,
+        "#recentLimit",
+        HTMLSelectElement
+    );
+    select.value = value;
+    select.dispatchEvent(new window.Event("change", { bubbles: true }));
+}
 
 const canonicalPlantLabels = [
     "A1",
@@ -174,6 +211,52 @@ function canonicalBootstrap() {
     };
 }
 
+/** @param {Window} window @param {string} mode */
+function confirmSummarySave(window, mode) {
+    if (mode === "queue") {
+        queryElement(
+            window.document,
+            "#queueSendButton",
+            HTMLButtonElement
+        ).click();
+        return;
+    }
+    if (mode === "bulk") {
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).click();
+        queryElement(
+            window.document,
+            "#bulkNutrientsUsed",
+            HTMLSelectElement
+        ).value = "No";
+        const checkbox = queryElement(
+            window.document,
+            "#bulkPlantList input[type='checkbox']",
+            HTMLInputElement
+        );
+        checkbox.checked = true;
+        checkbox.dispatchEvent(new window.Event("change", { bubbles: true }));
+    } else {
+        const weight = queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        );
+        weight.value = "450";
+        weight.dispatchEvent(new window.Event("input", { bubbles: true }));
+    }
+    queryElement(
+        window.document,
+        mode === "bulk" ? "#bulkWaterForm" : "#entryForm",
+        HTMLFormElement
+    ).dispatchEvent(
+        new window.Event("submit", { bubbles: true, cancelable: true })
+    );
+}
+
 /** @param {import("../logger-fixtures.d.ts").LoggerOptions} [options] */
 function createLoggerWindow({
     batchSaveStatus = "missing",
@@ -190,11 +273,12 @@ function createLoggerWindow({
     const window = new Window({
         url: "https://script.google.com/macros/s/test/exec",
     });
+    loggerWindows.add(window);
     Object.defineProperty(window.navigator, "onLine", {
         configurable: true,
         value: online,
     });
-    window.setTimeout = setTimeout;
+    window.setTimeout = trackedLoggerTimeout;
     window.clearTimeout = clearTimeout;
     window.document.write(html);
     for (const [key, value] of Object.entries(storage))
@@ -493,7 +577,13 @@ function queuedWeight({
     };
 }
 
-function restoreLoggerMocks() {
+async function restoreLoggerMocks() {
+    for (const [timer, clearTimer] of loggerTimers) clearTimer(timer);
+    loggerTimers.clear();
+    await Promise.all(
+        [...loggerWindows].map((window) => window.happyDOM.close())
+    );
+    loggerWindows.clear();
     vi.useRealTimers();
     vi.restoreAllMocks();
 }
@@ -2845,7 +2935,7 @@ describe("garden logger watering forecasts and recent History", () => {
             HTMLElement
         );
 
-        expect(queryElements(summary, ".metric", HTMLElement)).toHaveLength(4);
+        expect(queryElements(summary, ".metric", HTMLElement)).toHaveLength(6);
         expect(
             required(queryElements(summary, ".metric-value", HTMLElement)[2])
                 .textContent
@@ -2953,7 +3043,7 @@ describe("garden logger watering forecasts and recent History", () => {
         expect(summary.textContent).toContain("Needs watering-cycle data");
         expect(
             queryElements(summary, ".metric svg[aria-hidden='true']", Element)
-        ).toHaveLength(4);
+        ).toHaveLength(6);
     });
 
     it("restores and updates the recent-history length", () => {
@@ -3039,6 +3129,884 @@ describe("garden logger watering forecasts and recent History", () => {
         expect(html).toContain("--event-accent: #2f8fca;");
         expect(html).toContain("var(--event-accent) 10%");
         expect(html).not.toContain("var(--event-bg) 74%");
+    });
+});
+
+describe("garden logger local History loading and portraits", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("keeps entries and the form usable while loading, and ignores older successes and failures", () => {
+        expect.hasAssertions();
+
+        const { behaviors, window } = createLoggerWindow({
+            bootstrapData: { ...bootstrap, recent: [recentExample] },
+        });
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getRecentWebObservations">[]} */
+        const pending = [];
+        behaviors.getRecentWebObservations = (handlers) => {
+            pending.push(handlers);
+        };
+        const list = queryElement(window.document, "#recentList", HTMLElement);
+        const original = required(list.firstElementChild);
+        const status = queryElement(
+            window.document,
+            "#recentStatus",
+            HTMLElement
+        );
+        changeRecentLimit(window, "25");
+
+        expect(status.textContent).toContain("Loading 25");
+        expect(status.getAttribute("role")).toBe("status");
+        expect(status.dataset["loading"]).toBe("true");
+        expect(list.getAttribute("aria-busy")).toBe("true");
+        expect(list.firstElementChild).toBe(original);
+        expect(
+            queryElement(window.document, "#weight", HTMLInputElement).disabled
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#saveButton", HTMLButtonElement)
+                .disabled
+        ).toBe(false);
+
+        changeRecentLimit(window, "50");
+        required(pending[0]).success([{ ...recentExample, weight: 999 }]);
+
+        expect(list.firstElementChild).toBe(original);
+        expect(status.textContent).toContain("Loading 50");
+
+        required(pending[1]).success([{ ...recentExample, weight: 410 }]);
+
+        expect(list.textContent).toContain("410 g");
+        expect(list.getAttribute("aria-busy")).toBe("false");
+        expect(status.dataset["loading"]).toBe("false");
+
+        required(pending[0]).failure(new Error("Old failure"));
+        required(pending[0]).success([{ ...recentExample, weight: 999 }]);
+
+        expect(status.textContent).toBe("Showing 1 recent entry.");
+        expect(list.textContent).not.toContain("999");
+    });
+
+    it("announces failure, invalid response, timeout and offline locally without losing entries", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const { behaviors, calls, window } = createLoggerWindow({
+            bootstrapData: { ...bootstrap, recent: [recentExample] },
+        });
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getRecentWebObservations">[]} */
+        const pending = [];
+        behaviors.getRecentWebObservations = (handlers) => {
+            pending.push(handlers);
+        };
+        const list = queryElement(window.document, "#recentList", HTMLElement);
+        const original = required(list.firstElementChild);
+        const status = queryElement(
+            window.document,
+            "#recentStatus",
+            HTMLElement
+        );
+        changeRecentLimit(window, "25");
+        required(pending[0]).failure(new Error("Unavailable"));
+
+        expect(status.textContent).toContain("Could not refresh History");
+        expect(status.dataset["loading"]).toBe("false");
+        expect(list.firstElementChild).toBe(original);
+
+        changeRecentLimit(window, "50");
+        required(pending[1]).success(null);
+
+        expect(status.textContent).toContain("response was unavailable");
+        expect(list.firstElementChild).toBe(original);
+
+        changeRecentLimit(window, "100");
+        vi.advanceTimersByTime(20_000);
+
+        expect(status.textContent).toContain("timed out");
+
+        required(pending[2]).success([]);
+
+        expect(list.firstElementChild).toBe(original);
+
+        changeRecentLimit(window, "10");
+        Object.defineProperty(window.navigator, "onLine", {
+            configurable: true,
+            value: false,
+        });
+        window.dispatchEvent(new window.Event("offline"));
+
+        expect(status.textContent).toContain("Offline");
+        expect(list.getAttribute("aria-busy")).toBe("false");
+
+        required(pending[3]).success([]);
+
+        expect(list.firstElementChild).toBe(original);
+
+        const count = calls.length;
+        changeRecentLimit(window, "25");
+
+        expect(calls).toHaveLength(count);
+        expect(status.textContent).toContain(
+            "keeping previous History entries"
+        );
+    });
+
+    it("keeps the History controls visible after an empty response", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        changeRecentLimit(window, "25");
+
+        expect(
+            queryElement(window.document, "#recentStatus", HTMLElement)
+                .textContent
+        ).toBe("No recent entries.");
+        expect(
+            queryElement(window.document, "#recentCard", HTMLElement).hidden
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#recentLimit", HTMLSelectElement)
+                .disabled
+        ).toBe(false);
+    });
+
+    it("does not let a delayed bootstrap replace a more recent History selection", () => {
+        expect.hasAssertions();
+
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">[]} */
+        const pendingBootstrap = [];
+        const { behaviors, window } = createLoggerWindow({
+            bootstrapBehavior: (handlers) => {
+                pendingBootstrap.push(handlers);
+            },
+            storage: {
+                gardenLoggerBootstrapV2: JSON.stringify({
+                    bootstrap: { ...bootstrap, recent: [recentExample] },
+                    savedAt: Date.now(),
+                }),
+            },
+        });
+        behaviors.getRecentWebObservations = ({ success }) => {
+            success([{ ...recentExample, weight: 409 }]);
+        };
+        changeRecentLimit(window, "25");
+        changeRecentLimit(window, "10");
+        required(pendingBootstrap[0]).success({
+            ...bootstrap,
+            recent: [recentExample],
+        });
+
+        expect(
+            queryElement(window.document, "#recentList", HTMLElement)
+                .textContent
+        ).toContain("409 g");
+    });
+
+    it("reuses one portrait download in History and both pickers, and falls back for unknown or failed artwork", async () => {
+        expect.hasAssertions();
+
+        const fixture = portraitCacheFixture();
+        const { window } = createLoggerWindow({
+            bootstrapData: {
+                ...bootstrap,
+                recent: [
+                    recentExample,
+                    { ...recentExample, name: "Unknown", plantId: "P99" },
+                ],
+            },
+            configureWindow: fixture.configureWindow,
+            storage: { gardenLoggerPlantPickerModeV1: "labels" },
+        });
+        const images = queryElements(
+            window.document,
+            '#recentList img, #labelPicker [data-plant-id="P01"] img, #plantChoiceSummary img',
+            HTMLImageElement
+        );
+
+        expect(images).toHaveLength(3);
+
+        required(fixture.observers[0]).show(...images);
+        await vi.waitFor(() => {
+            expect(images.every((image) => image.src.startsWith("blob:"))).toBe(
+                true
+            );
+        });
+
+        expect(fixture.fetch).toHaveBeenCalledTimes(1);
+
+        const sources = new Set(images.map((image) => image.src));
+
+        expect(sources.size).toBe(1);
+
+        const rows = queryElements(
+            window.document,
+            ".recent-item",
+            HTMLElement
+        );
+
+        expect(
+            queryElement(required(rows[0]), ".recent-plant", HTMLElement)
+                .firstElementChild
+        ).toBe(images[2]);
+        expect(
+            queryElement(
+                required(rows[1]),
+                ".recent-portrait use",
+                Element
+            ).getAttribute("href")
+        ).toBe("#app-icon-plant");
+
+        queryElement(required(rows[0]), "img", HTMLImageElement).dispatchEvent(
+            new window.Event("error")
+        );
+
+        expect(
+            queryElement(
+                required(rows[0]),
+                ".recent-portrait use",
+                Element
+            ).getAttribute("href")
+        ).toBe("#app-icon-plant");
+    });
+});
+
+describe("garden logger selection help and activity metrics", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("puts the summary above both pickers and immediately names tapped labels without replacing portraits", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            storage: { gardenLoggerPlantPickerModeV1: "labels" },
+        });
+        const summary = queryElement(
+            window.document,
+            "#plantSummary",
+            HTMLElement
+        );
+        const picker = queryElement(
+            window.document,
+            "#labelPicker",
+            HTMLElement
+        );
+        const name = queryElement(
+            window.document,
+            "#plantPickerName",
+            HTMLElement
+        );
+        const button = queryElement(
+            picker,
+            '[data-plant-id="P02"]',
+            HTMLButtonElement
+        );
+        const portrait = queryElement(button, "img", HTMLImageElement);
+        for (const id of [
+            "listPicker",
+            "labelPicker",
+            "listPickerMode",
+            "labelPickerMode",
+        ]) {
+            expect(
+                summary.compareDocumentPosition(
+                    queryElement(window.document, `#${id}`, HTMLElement)
+                )
+            ).toBe(4);
+        }
+        button.dispatchEvent(
+            new window.PointerEvent("pointerover", {
+                bubbles: true,
+                pointerType: "mouse",
+            })
+        );
+
+        expect(name.textContent).toBe("Yellow tower cactus · F3");
+        expect(
+            queryElement(window.document, "#plantSelect", HTMLSelectElement)
+                .value
+        ).toBe("P01");
+
+        button.focus();
+
+        expect(name.textContent).toContain("Yellow tower cactus");
+
+        button.click();
+
+        expect(name.textContent).toBe("Selected: Yellow tower cactus · F3");
+        expect(queryElement(button, "img", HTMLImageElement)).toBe(portrait);
+        expect(button.getAttribute("aria-label")).toContain(
+            "Yellow tower cactus"
+        );
+        expect(window.document.activeElement).toBe(button);
+    });
+
+    it("names bulk label taps and focus without toggling twice or leaving stale selection text", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            storage: { gardenLoggerBulkPickerModeV1: "labels" },
+        });
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).click();
+        const button = queryElement(
+            window.document,
+            '#bulkPlantList [data-bulk-plant-id="P02"]',
+            HTMLButtonElement
+        );
+        const name = queryElement(
+            window.document,
+            "#bulkPickerName",
+            HTMLElement
+        );
+        const portrait = queryElement(button, "img", HTMLImageElement);
+        button.focus();
+
+        expect(name.textContent).toBe("Not selected: Yellow tower cactus · F3");
+
+        button.click();
+
+        expect(name.textContent).toBe("Selected: Yellow tower cactus · F3");
+        expect(button.getAttribute("aria-pressed")).toBe("true");
+        expect(queryElement(button, "img", HTMLImageElement)).toBe(portrait);
+
+        queryElement(window.document, "#bulkClear", HTMLButtonElement).click();
+
+        expect(name.textContent).toBe("Not selected: Yellow tower cactus · F3");
+    });
+
+    it("keeps list portrait nodes connected across repeated selections", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        const buttons = queryElements(
+            window.document,
+            "#plantChoiceList button",
+            HTMLButtonElement
+        );
+        const portraits = buttons.map((button) =>
+            queryElement(button, "img", HTMLImageElement)
+        );
+        for (const button of [
+            required(buttons[1]),
+            required(buttons[0]),
+            required(buttons[1]),
+        ]) {
+            button.click();
+
+            expect(
+                queryElements(
+                    window.document,
+                    "#plantChoiceList button",
+                    HTMLButtonElement
+                )
+            ).toStrictEqual(buttons);
+            expect(
+                buttons.map((item) =>
+                    queryElement(item, "img", HTMLImageElement)
+                )
+            ).toStrictEqual(portraits);
+        }
+    });
+
+    it("opens care help by tap, hover or keyboard focus and closes with Escape without capturing touch scroll", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        const help = queryElement(
+            window.document,
+            ".forecast-heading .help-disclosure",
+            HTMLDetailsElement
+        );
+        const trigger = queryElement(help, "summary", HTMLElement);
+
+        expect(trigger.textContent).toBe("Water date · if ready");
+        expect(help.open).toBe(false);
+
+        help.dispatchEvent(
+            new window.PointerEvent("pointerenter", { pointerType: "touch" })
+        );
+
+        expect(help.open).toBe(false);
+
+        const scroll = new window.Event("touchmove", {
+            bubbles: true,
+            cancelable: true,
+        });
+        trigger.dispatchEvent(scroll);
+
+        expect(scroll.defaultPrevented).toBe(false);
+
+        trigger.click();
+
+        expect(help.open).toBe(true);
+        expect(help.textContent).toContain("Confirm actual dryness");
+
+        trigger.click();
+
+        expect(help.open).toBe(false);
+
+        help.dispatchEvent(
+            new window.PointerEvent("pointerenter", { pointerType: "mouse" })
+        );
+
+        expect(help.open).toBe(true);
+
+        window.document.dispatchEvent(
+            new window.KeyboardEvent("keydown", {
+                bubbles: true,
+                key: "Escape",
+            })
+        );
+
+        expect(help.open).toBe(false);
+
+        trigger.focus();
+
+        expect(help.open).toBe(true);
+
+        trigger.dispatchEvent(
+            new window.KeyboardEvent("keydown", {
+                bubbles: true,
+                key: "Escape",
+            })
+        );
+
+        expect(help.open).toBe(false);
+        expect(window.document.activeElement).toBe(trigger);
+
+        trigger.blur();
+        trigger.focus();
+
+        expect(help.open).toBe(true);
+
+        trigger.blur();
+
+        expect(help.open).toBe(false);
+    });
+
+    it.each([
+        [
+            "Current-cycle curve · 4 readings",
+            "growth",
+            "current watering cycle",
+        ],
+        [
+            "Current curve + history · 2 cycles",
+            "tracker",
+            "blends current-cycle",
+        ],
+        [
+            "Historical estimate · 3 cycles",
+            "history",
+            "relies mainly",
+        ],
+        [
+            "Insufficient data",
+            "info",
+            "not enough reliable",
+        ],
+        [
+            "Conflicting upward readings",
+            "caution",
+            "Readings conflict",
+        ],
+        [
+            "Current cycle differs — reweigh",
+            "caution",
+            "Readings conflict",
+        ],
+        [
+            "Recheck wet / dry anchors",
+            "caution",
+            "Readings conflict",
+        ],
+        [
+            "Blended historical estimate",
+            "tracker",
+            "blends current-cycle",
+        ],
+        [
+            "Partial / spot watering — reweigh",
+            "care",
+            "whole-pot wet anchor",
+        ],
+    ])("explains %s with its existing icon", (basis, icon, explanation) => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: {
+                ...bootstrap,
+                plants: [
+                    {
+                        ...required(bootstrap.plants[0]),
+                        dryForecastBasis: basis,
+                    },
+                ],
+            },
+        });
+        const help = queryElement(
+            window.document,
+            ".forecast-basis",
+            HTMLDetailsElement
+        );
+
+        expect(queryElement(help, "summary", HTMLElement).textContent).toBe(
+            basis
+        );
+        expect(queryElement(help, "use", Element).getAttribute("href")).toBe(
+            `#app-icon-${icon}`
+        );
+        expect(
+            queryElement(help, ".help-text", HTMLElement).textContent
+        ).toContain(explanation);
+    });
+
+    it.each([
+        "single",
+        "bulk",
+        "queue",
+    ])(
+        "refreshes plant totals and clears the previous cycle after a %s save",
+        (mode) => {
+            expect.hasAssertions();
+
+            const activitySummary = {
+                averageDryDownGramsPerDay: 50,
+                averageWaterIntervalDays: 10,
+                dryDownDays: 2,
+                dryDownReadingCount: 3,
+                recentDryDownDays: 1,
+                recentDryDownGramsPerDay: 30,
+                totalMeasurements: 1,
+                totalWaterings: 2,
+                totalWeights: 3,
+                waterIntervalCount: 1,
+            };
+            const plant = { ...required(bootstrap.plants[0]), activitySummary };
+            const { behaviors, calls, window } = createLoggerWindow({
+                bootstrapData: { ...bootstrap, plants: [plant] },
+                storage:
+                    mode === "queue"
+                        ? {
+                              gardenLoggerObservationQueueV1: JSON.stringify([
+                                  queuedWeight(),
+                              ]),
+                          }
+                        : {},
+            });
+            /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">[]} */
+            const pending = [];
+            behaviors.getWebAppBootstrap = (handlers) => {
+                pending.push(handlers);
+            };
+            behaviors.getRecentWebObservations = ({ success }) => {
+                success([recentExample]);
+            };
+            behaviors.saveWebObservation = ({ success }) => {
+                success({ message: "Saved" });
+            };
+            behaviors.saveBulkCareObservation = ({ success }) => {
+                success({ message: "Saved" });
+            };
+            behaviors.saveWebObservationBatch = ({ args, success }) => {
+                success({
+                    failedCount: 0,
+                    ok: true,
+                    results: args[0].map(({ requestId }) => ({
+                        ok: true,
+                        requestId,
+                    })),
+                    savedCount: args[0].length,
+                });
+            };
+            confirmSummarySave(window, mode);
+
+            expect(pending).toHaveLength(1);
+            expect(
+                queryElement(window.document, "#saveButton", HTMLButtonElement)
+                    .disabled
+            ).toBe(false);
+
+            required(pending[0]).success({
+                ...bootstrap,
+                plants: [
+                    {
+                        ...plant,
+                        activitySummary: {
+                            ...activitySummary,
+                            averageDryDownGramsPerDay: "",
+                            dryDownDays: "",
+                            dryDownReadingCount: 1,
+                            totalMeasurements: 2,
+                            totalWaterings: 3,
+                            totalWeights: 4,
+                        },
+                    },
+                ],
+            });
+
+            expect(
+                queryElements(
+                    window.document,
+                    ".activity-count .metric-value",
+                    HTMLElement
+                ).map((element) => element.textContent)
+            ).toStrictEqual([
+                "3",
+                "2",
+                "4",
+            ]);
+            expect(
+                required(
+                    queryElements(
+                        window.document,
+                        ".metrics .metric-value",
+                        HTMLElement
+                    )[5]
+                ).textContent
+            ).toBe("—");
+            expect(
+                queryElement(window.document, "#recentList", HTMLElement)
+                    .textContent
+            ).toContain("430 g");
+            expect(
+                calls.filter(
+                    ({ method }) => method === "getRecentWebObservations"
+                )
+            ).toHaveLength(1);
+        }
+    );
+
+    it("keeps the newest saved plant summary and an in-progress weight when refreshes arrive out of order", () => {
+        expect.hasAssertions();
+
+        const { behaviors, window } = createLoggerWindow();
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">[]} */
+        const pending = [];
+        behaviors.getWebAppBootstrap = (handlers) => {
+            pending.push(handlers);
+        };
+        behaviors.saveWebObservation = ({ success }) => {
+            success({ message: "Saved" });
+        };
+        confirmSummarySave(window, "single");
+        confirmSummarySave(window, "single");
+        const weight = queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        );
+        weight.value = "333";
+
+        expect(pending).toHaveLength(2);
+
+        required(pending[1]).success({
+            ...bootstrap,
+            plants: [
+                {
+                    ...required(bootstrap.plants[0]),
+                    activitySummary: {
+                        averageDryDownGramsPerDay: "",
+                        averageWaterIntervalDays: 10,
+                        dryDownDays: "",
+                        dryDownReadingCount: 1,
+                        recentDryDownDays: "",
+                        recentDryDownGramsPerDay: "",
+                        totalMeasurements: 2,
+                        totalWaterings: 3,
+                        totalWeights: 5,
+                        waterIntervalCount: 2,
+                    },
+                },
+            ],
+        });
+        required(pending[0]).success(bootstrap);
+
+        expect(
+            queryElements(
+                window.document,
+                ".activity-count .metric-value",
+                HTMLElement
+            ).map((element) => element.textContent)
+        ).toStrictEqual([
+            "3",
+            "2",
+            "5",
+        ]);
+        expect(weight.value).toBe("333");
+        expect(
+            queryElement(window.document, "#saveButton", HTMLButtonElement)
+                .disabled
+        ).toBe(false);
+    });
+
+    it("shows rounded interval and whole-cycle loss with aligned event totals and evidence explanations", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: {
+                ...bootstrap,
+                plants: [
+                    {
+                        ...required(bootstrap.plants[0]),
+                        activitySummary: {
+                            averageDryDownGramsPerDay: 3.678,
+                            averageWaterIntervalDays: 12.345,
+                            dryDownDays: 5.678,
+                            dryDownReadingCount: 4,
+                            recentDryDownDays: 2.345,
+                            recentDryDownGramsPerDay: 1.678,
+                            totalMeasurements: 7,
+                            totalWaterings: 5,
+                            totalWeights: 19,
+                            waterIntervalCount: 4,
+                        },
+                    },
+                ],
+            },
+        });
+        const metrics = queryElements(
+            window.document,
+            ".metrics .metric",
+            HTMLElement
+        );
+
+        expect(metrics).toHaveLength(6);
+        expect(
+            queryElement(required(metrics[4]), ".metric-value", HTMLElement)
+                .textContent
+        ).toBe("12.3 days");
+        expect(
+            queryElement(required(metrics[5]), ".metric-value", HTMLElement)
+                .textContent
+        ).toBe("3.7 g/day");
+        expect(required(metrics[4]).textContent).toContain("4 intervals");
+        expect(required(metrics[5]).textContent).toContain("over 5.7 days");
+        expect(required(metrics[5]).textContent).toContain(
+            "whole-pot mass loss"
+        );
+        expect(required(metrics[5]).textContent).toContain("Drying can slow");
+        expect(required(metrics[5]).textContent).toContain(
+            "Last interval: 1.7 g/day over 2.3 days"
+        );
+
+        const counts = queryElements(
+            window.document,
+            ".activity-counts .activity-count",
+            HTMLElement
+        );
+
+        expect(counts).toHaveLength(3);
+        expect(
+            counts.map(
+                (count) =>
+                    queryElement(count, ".metric-value", HTMLElement)
+                        .textContent
+            )
+        ).toStrictEqual([
+            "5",
+            "7",
+            "19",
+        ]);
+        expect(required(counts[1]).textContent).toContain(
+            "both height and width counts once"
+        );
+        expect(required(counts[2]).textContent).toContain(
+            "Estimates and removed records are excluded"
+        );
+    });
+
+    it("keeps blank or invalid rates unknown, preserves real zero totals, and rounds tiny positive loss honestly", () => {
+        expect.hasAssertions();
+
+        /** @type {(number | "")[]} */
+        const unavailable = [
+            "",
+            0,
+            -1,
+            NaN,
+            Infinity,
+        ];
+        for (const rate of [...unavailable, 0.03]) {
+            const { window } = createLoggerWindow({
+                bootstrapData: {
+                    ...bootstrap,
+                    plants: [
+                        {
+                            ...required(bootstrap.plants[0]),
+                            activitySummary: {
+                                averageDryDownGramsPerDay: rate,
+                                averageWaterIntervalDays: "",
+                                dryDownDays: "",
+                                dryDownReadingCount: 0,
+                                recentDryDownDays: "",
+                                recentDryDownGramsPerDay: "",
+                                totalMeasurements: 0,
+                                totalWaterings: 0,
+                                totalWeights: 0,
+                                waterIntervalCount: 0,
+                            },
+                        },
+                    ],
+                },
+            });
+            const values = queryElements(
+                window.document,
+                ".metrics .metric-value",
+                HTMLElement
+            );
+
+            expect(required(values[4]).textContent).toBe("—");
+            expect(required(values[5]).textContent).toBe(
+                rate === 0.03 ? "<0.1 g/day" : "—"
+            );
+            expect(
+                queryElements(
+                    window.document,
+                    ".activity-counts .metric-value",
+                    HTMLElement
+                ).map((value) => value.textContent)
+            ).toStrictEqual([
+                "0",
+                "0",
+                "0",
+            ]);
+        }
+    });
+
+    it("shows unknown metrics for an older cached bootstrap and does not turn insufficient data into zero", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            online: false,
+            storage: {
+                gardenLoggerBootstrapV2: JSON.stringify({
+                    bootstrap,
+                    savedAt: Date.now(),
+                }),
+            },
+        });
+        const values = queryElements(
+            window.document,
+            ".metrics .metric-value, .activity-counts .metric-value",
+            HTMLElement
+        );
+
+        expect(values.slice(4).map((value) => value.textContent)).toStrictEqual(
+            [
+                "—",
+                "—",
+                "—",
+                "—",
+                "—",
+            ]
+        );
+        expect(
+            queryElement(window.document, "#plantSummary", HTMLElement)
+                .textContent
+        ).not.toMatch(/0 g\/day|NaN|undefined/v);
     });
 });
 

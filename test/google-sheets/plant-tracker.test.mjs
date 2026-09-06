@@ -2130,8 +2130,8 @@ describe("garden logger workbook refresh and navigation", () => {
 
         expect(structuredClone(context.refreshGardenWorkbook())).toStrictEqual({
             baselineColumns: 36,
-            dashboardColumns: 23,
-            loggerVersion: "5.18.3",
+            dashboardColumns: 24,
+            loggerVersion: "5.18.4",
             plantPages: 2,
         });
         expect(calls.filter(([name]) => name === "plant")).toHaveLength(2);
@@ -2190,7 +2190,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P01",
             lastPlant: "P10",
-            loggerVersion: "5.18.3",
+            loggerVersion: "5.18.4",
             plantPages: 10,
         });
         expect(
@@ -2198,7 +2198,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P11",
             lastPlant: "P20",
-            loggerVersion: "5.18.3",
+            loggerVersion: "5.18.4",
             plantPages: 10,
         });
         expect(
@@ -2206,7 +2206,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P21",
             lastPlant: "P30",
-            loggerVersion: "5.18.3",
+            loggerVersion: "5.18.4",
             plantPages: 10,
         });
 
@@ -2300,7 +2300,7 @@ describe("garden logger workbook refresh and navigation", () => {
             0
         );
 
-        expect(row).toHaveLength(23);
+        expect(row).toHaveLength(24);
         expect(row[0]).toBe('=HYPERLINK("#gid=12345","View")');
         expect(row[5]).toBe("=Baselines!D2");
         expect(row[6]).toBe("=Baselines!C2");
@@ -2499,6 +2499,10 @@ describe("garden logger workbook refresh and navigation", () => {
         expect(cells.get("36:3")).toContain("'Plant tracker'!B31");
         expect(cells.get("36:3")).toContain("'Plant tracker'!O31");
         expect(cells.get("36:18")).toBe("=Baselines!J31");
+        expect(cells.get("6:24")).toBe("Weight measurements");
+        expect(cells.get("36:24")).toBe(
+            context.dashboardWeightCountFormula_(36)
+        );
         expect(mergedRanges.some((range) => range.row >= 6)).toBe(false);
     });
 
@@ -2733,6 +2737,660 @@ describe("garden logger workbook refresh and navigation", () => {
     });
 });
 
+describe("scoped Dashboard weight count installer", () => {
+    function dashboardFixture(columns = 26) {
+        const rows = Array.from({ length: 40 }, (_, index) =>
+            Array.from({ length: columns }, (_, column) =>
+                column === 23 && index >= 5 && index <= 35
+                    ? ""
+                    : `owner ${index + 1}:${column + 1}`
+            )
+        );
+        const formulas = Array.from({ length: 40 }, (_, index) =>
+            Array.from({ length: columns }, (_, column) =>
+                column === 23 && index >= 5 && index <= 35
+                    ? ""
+                    : `="formula ${index + 1}:${column + 1}"`
+            )
+        );
+        const sheet = createDataSheet("Dashboard", rows, formulas);
+        let capacity = columns;
+        let isMerged = false;
+        const originalRange = sheet.getRange;
+        /** @type {number[][]} */
+        const ranges = [];
+        sheet.getRange = (row, column, rowCount = 1, columnCount = 1) => {
+            ranges.push([
+                row,
+                column,
+                rowCount,
+                columnCount,
+            ]);
+            const range = originalRange(row, column, rowCount, columnCount);
+            Reflect.set(range, "isPartOfMerge", () => isMerged);
+            Reflect.set(range, "setWrap", () => range);
+            return range;
+        };
+        sheet.getMaxColumns = () => capacity;
+        /** @type {number[][]} */
+        const insertions = [];
+        sheet.insertColumnsAfter = (column, count) => {
+            insertions.push([column, count]);
+            capacity += count;
+            return sheet;
+        };
+        const context = loadAppsScript(createHistorySheet([]), {
+            spreadsheet: {
+                getSheetByName: (/** @type {string} */ name) => {
+                    expect(name).toBe("Dashboard");
+
+                    return sheet;
+                },
+            },
+        });
+        return {
+            context,
+            insertions,
+            markMerged: () => {
+                isMerged = true;
+            },
+            originalRange,
+            ranges,
+            rows,
+            sheet,
+        };
+    }
+
+    it.each([23, 26])(
+        "installs and reruns idempotently with %i existing columns while preserving everything outside X6:X36",
+        (columns) => {
+            expect.hasAssertions();
+
+            const fixture = dashboardFixture(columns);
+            const { context, insertions, originalRange, ranges, rows } =
+                fixture;
+            const before = structuredClone(rows);
+            const beforeFormulas = originalRange(
+                1,
+                1,
+                40,
+                columns
+            ).getFormulas();
+
+            expect(
+                structuredClone(context.installDashboardWeightCounts())
+            ).toStrictEqual({
+                plants: 30,
+                range: "Dashboard!X6:X36",
+                version: "5.18.4",
+            });
+
+            const after = structuredClone(rows);
+
+            expect(context.installDashboardWeightCounts().range).toBe(
+                "Dashboard!X6:X36"
+            );
+            expect(rows).toStrictEqual(after);
+            expect(
+                originalRange(1, 1, 40, columns).getFormulas()
+            ).toStrictEqual(beforeFormulas);
+
+            const untouched = before
+                .flatMap((row, index) =>
+                    row.map((value, column) => ({ column, index, value }))
+                )
+                .filter(
+                    ({ column, index }) =>
+                        column !== 23 || index < 5 || index > 35
+                );
+            for (const { column, index, value } of untouched) {
+                expect(required(rows[index])[column]).toBe(value);
+            }
+
+            expect(required(rows[5])[23]).toBe("Weight measurements");
+
+            for (let row = 7; row <= 36; row += 1) {
+                expect(required(rows[row - 1])[23]).toBe(
+                    context.dashboardWeightCountFormula_(row)
+                );
+            }
+
+            expect(
+                ranges.every(
+                    ([
+                        row,
+                        column,
+                        height,
+                        width,
+                    ]) =>
+                        required(column) === 24 &&
+                        required(row) >= 6 &&
+                        required(row) + required(height) - 1 <= 36 &&
+                        width === 1
+                )
+            ).toBe(true);
+            expect(insertions).toStrictEqual(columns === 23 ? [[23, 1]] : []);
+        }
+    );
+
+    it.each([
+        [
+            "header",
+            6,
+            "Owner notes",
+            "",
+        ],
+        [
+            "unlabelled value",
+            8,
+            "Preserve me",
+            "",
+        ],
+        [
+            "unlabelled formula",
+            8,
+            "",
+            "=123",
+        ],
+    ])(
+        "refuses %s conflicts before mutating the destination",
+        (_kind, row, value, formula) => {
+            expect.hasAssertions();
+
+            const { context, insertions, originalRange, rows } =
+                dashboardFixture();
+            originalRange(row, 24).setValue(value).setFormula(formula);
+            const before = structuredClone(rows);
+            const formulas = originalRange(1, 1, 40, 26).getFormulas();
+
+            expect(() => context.installDashboardWeightCounts()).toThrow(
+                "Unexpected Dashboard column X"
+            );
+            expect(rows).toStrictEqual(before);
+            expect(originalRange(1, 1, 40, 26).getFormulas()).toStrictEqual(
+                formulas
+            );
+            expect(insertions).toHaveLength(0);
+        }
+    );
+
+    it("refuses merged destination cells before writing through a merge outside X", () => {
+        expect.hasAssertions();
+
+        const { context, insertions, markMerged, rows } = dashboardFixture();
+        const before = structuredClone(rows);
+        markMerged();
+
+        expect(() => context.installDashboardWeightCounts()).toThrow(
+            "contains merged cells"
+        );
+        expect(rows).toStrictEqual(before);
+        expect(insertions).toHaveLength(0);
+    });
+
+    it("refuses an undersized Dashboard without resizing rows or touching other sheets", () => {
+        expect.hasAssertions();
+
+        const { context, insertions, ranges, sheet } = dashboardFixture();
+        sheet.getMaxRows = () => 35;
+
+        expect(() => context.installDashboardWeightCounts()).toThrow(
+            "existing plant rows through row 36"
+        );
+        expect(ranges).toHaveLength(0);
+        expect(insertions).toHaveLength(0);
+    });
+
+    it("generates numeric measured-only counts at X while preserving M/N and V/W positions", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet([]));
+        const row = context.dashboardViewRow_(
+            {
+                getSheetByName: () => ({ getSheetId: () => 1 }),
+            },
+            { id: "P01", trackerRow: 2 },
+            0
+        );
+
+        expect(row).toHaveLength(24);
+        expect(row[12]).toContain('"Water"');
+        expect(row[13]).toContain('"Measure"');
+        expect(row[21]).toBe("=Baselines!AI2");
+        expect(row[22]).toBe("=Baselines!AJ2");
+        expect(row[23]).toBe(context.dashboardWeightCountFormula_(7));
+
+        const formula = context.dashboardWeightCountFormula_(7);
+
+        expect(formula).toContain('EXACT(TRIM(History!$C$2:$C$5000),"Weigh")');
+        expect(formula).toContain(
+            'EXACT(TRIM(History!$AJ$2:$AJ$5000),"Removed")=FALSE'
+        );
+        expect(formula).toContain("ISNUMBER(History!$E$2:$E$5000)");
+        expect(formula).toContain("History!$E$2:$E$5000>0");
+        expect(formula).toContain(
+            'History!$AC$2:$AC$5000&" "&History!$AI$2:$AI$5000,"(?i)estimat"'
+        );
+        expect(formula).not.toContain("History!$K");
+    });
+});
+
+describe("per-plant activity summaries", () => {
+    /**
+     * @param {number | string | Date | null | boolean} day
+     * @param {string} event
+     * @param {import("../logger-fixtures.d.ts").CellValue} [grams]
+     * @param {{
+     *     id?: string;
+     *     setup?: number;
+     *     status?: string;
+     *     quality?: string;
+     *     method?: string;
+     *     save?: string;
+     *     application?: string;
+     * }} [options]
+     */
+    function activityRow(day, event, grams = "", options = {}) {
+        const values = emptyCells(42);
+        values[0] =
+            typeof day === "number"
+                ? new Date(Date.UTC(2026, 8, 1) + day * 86_400_000)
+                : day;
+        values[1] = options.id ?? "P01";
+        values[2] = event;
+        values[4] = grams;
+        values[10] = options.setup ?? 1;
+        values[28] = options.quality ?? "Measured";
+        values[29] = options.save ?? "";
+        values[34] = options.method ?? "Scale";
+        values[35] = options.status ?? "Active";
+        values[40] = options.application ?? "";
+        return values;
+    }
+    const emptySummary = {
+        averageDryDownGramsPerDay: "",
+        averageWaterIntervalDays: "",
+        dryDownDays: "",
+        dryDownReadingCount: 0,
+        recentDryDownDays: "",
+        recentDryDownGramsPerDay: "",
+        totalMeasurements: 0,
+        totalWaterings: 0,
+        totalWeights: 0,
+        waterIntervalCount: 0,
+    };
+
+    it("returns the exact empty API for plants without history", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet([]));
+
+        expect(
+            structuredClone(context.plantActivitySummary_([], "P01", 1))
+        ).toStrictEqual(emptySummary);
+    });
+
+    it("counts active event rows across setups without counting weight companions, estimates, or invalid numeric cells", () => {
+        expect.hasAssertions();
+
+        const rows = [
+            activityRow(0, "Water", 600),
+            activityRow(0, "Weigh", 600),
+            activityRow(0, "Measure", 600),
+            activityRow(2, "Measure", "", { quality: "Estimated" }),
+            activityRow(2, "Weigh", 580, { setup: 2 }),
+            activityRow(2, "Weigh", 580, { setup: 2 }),
+            activityRow(2, "Weigh", 570, { quality: "Estimated visually" }),
+            activityRow(2, "Weigh", 570, {
+                method: "ESTIMATED from photo",
+                quality: "Corrected",
+            }),
+            activityRow(2, " Weigh ", 570, {
+                id: " P01 ",
+                method: "",
+                quality: "",
+            }),
+            ...[
+                0,
+                -1,
+                NaN,
+                Infinity,
+                "bad",
+                "500",
+                true,
+                null,
+                "",
+            ].map((grams) => activityRow(3, "Weigh", grams)),
+            ...[
+                "Water",
+                "Measure",
+                "Weigh",
+            ].map((event) =>
+                activityRow(3, event, 800, { status: " Removed " })
+            ),
+            activityRow(3, "Weigh", 800, { id: "P02" }),
+            activityRow(3, "Check", 800),
+        ];
+        const context = loadAppsScript(createHistorySheet([]));
+
+        expect(
+            structuredClone(context.plantActivitySummary_(rows, "P01", 2))
+        ).toStrictEqual({
+            ...emptySummary,
+            totalMeasurements: 2,
+            totalWaterings: 1,
+            totalWeights: 4,
+        });
+    });
+
+    it("averages chronological valid Water timestamps across all history including zero-length duplicate intervals", () => {
+        expect.hasAssertions();
+
+        const rows = [
+            activityRow(10, "Water", "", { setup: 2 }),
+            activityRow(0, "Water"),
+            activityRow(4, "Water"),
+            activityRow(4, "Water"),
+            activityRow("invalid", "Water"),
+            activityRow(null, "Water"),
+            activityRow(true, "Water"),
+            activityRow(20, "Water", "", { status: "Removed" }),
+        ];
+        const context = loadAppsScript(createHistorySheet([]));
+
+        expect(context.plantActivitySummary_(rows, "P01", 2)).toMatchObject({
+            averageWaterIntervalDays: 10 / 3,
+            totalWaterings: 7,
+            waterIntervalCount: 3,
+        });
+    });
+
+    it("describes observed drying slowdown using unequal real elapsed intervals and preserves model results", () => {
+        expect.hasAssertions();
+
+        const rows = [
+            activityRow(0, "Water"),
+            activityRow(0, "Weigh", 1000),
+            activityRow(2, "Weigh", 800),
+            activityRow(5.5, "Weigh", 730),
+        ];
+        const context = loadAppsScript(createHistorySheet([]));
+        const before = context.dryDownModelsFromHistory_(
+            rows,
+            [["P01"]],
+            "UTC"
+        );
+
+        expect(context.plantActivitySummary_(rows, "P01", 1)).toMatchObject({
+            averageDryDownGramsPerDay: 270 / 5.5,
+            dryDownDays: 5.5,
+            dryDownReadingCount: 3,
+            recentDryDownDays: 3.5,
+            recentDryDownGramsPerDay: 20,
+            totalWaterings: 1,
+            totalWeights: 3,
+        });
+        expect(
+            context.dryDownModelsFromHistory_(rows, [["P01"]], "UTC")
+        ).toStrictEqual(before);
+    });
+
+    it("uses the current setup and latest watering regardless of history row order", () => {
+        expect.hasAssertions();
+
+        const rows = [
+            activityRow(8, "Weigh", 450, { setup: 2 }),
+            activityRow(0, "Water"),
+            activityRow(0, "Weigh", 1200),
+            activityRow(4, "Weigh", 1100),
+            activityRow(6, "Weigh", 500, { save: "water2", setup: 2 }),
+            activityRow(5, "Weigh", 300, { setup: 2 }),
+            activityRow(6, "Water", "", {
+                application: "Thorough",
+                save: "water2",
+                setup: 2,
+            }),
+            activityRow(7, "Weigh", 1000, { quality: "Estimated", setup: 2 }),
+            activityRow(7, "Weigh", 1100, { setup: 2, status: "Removed" }),
+        ];
+        const context = loadAppsScript(createHistorySheet([]));
+
+        expect(context.plantActivitySummary_(rows, "P01", 2)).toMatchObject({
+            averageDryDownGramsPerDay: 25,
+            dryDownDays: 2,
+            dryDownReadingCount: 2,
+            totalWeights: 5,
+        });
+        expect(
+            context.plantActivitySummary_(rows, "P01", 3)
+                .averageDryDownGramsPerDay
+        ).toBe("");
+    });
+
+    it("collapses duplicate timestamps to their last weight, tolerates tiny noise, and ignores invalid reading gaps", () => {
+        expect.hasAssertions();
+
+        const rows = [
+            activityRow(0, "Water"),
+            activityRow(0, "Weigh", 1000),
+            activityRow(2, "Weigh", 901),
+            activityRow(2, "Weigh", 900),
+            activityRow(3, "Weigh", 901),
+            activityRow("invalid", "Weigh", 1500),
+            activityRow(4, "Weigh", "bad"),
+            activityRow(6, "Weigh", 850),
+        ];
+        const context = loadAppsScript(createHistorySheet([]));
+
+        expect(context.plantActivitySummary_(rows, "P01", 1)).toMatchObject({
+            averageDryDownGramsPerDay: 25,
+            dryDownDays: 6,
+            dryDownReadingCount: 4,
+            recentDryDownDays: 3,
+            recentDryDownGramsPerDay: 17,
+            totalWeights: 6,
+        });
+    });
+
+    it.each([
+        [
+            "gain then loss",
+            [
+                1000,
+                800,
+                850,
+                700,
+            ],
+        ],
+        [
+            "cumulative small gains",
+            [
+                1000,
+                800,
+                802,
+                804,
+                700,
+            ],
+        ],
+        ["only gain", [1000, 1100]],
+        ["no observed loss", [1000, 1000]],
+    ])("withholds positive loss rates for %s", (_label, grams) => {
+        expect.hasAssertions();
+
+        const rows = [
+            activityRow(0, "Water"),
+            ...grams.map((value, index) =>
+                activityRow(index * 2, "Weigh", value)
+            ),
+        ];
+        const context = loadAppsScript(createHistorySheet([]));
+
+        expect(context.plantActivitySummary_(rows, "P01", 1)).toMatchObject({
+            averageDryDownGramsPerDay: "",
+            recentDryDownGramsPerDay: "",
+        });
+    });
+
+    it("withholds rates when wet duplicates disagree even if the final duplicate would look usable", () => {
+        expect.hasAssertions();
+
+        const rows = [
+            activityRow(0, "Water"),
+            activityRow(0, "Weigh", 900),
+            activityRow(0, "Weigh", 1000),
+            activityRow(2, "Weigh", 800),
+        ];
+        const context = loadAppsScript(createHistorySheet([]));
+
+        expect(context.plantActivitySummary_(rows, "P01", 1)).toMatchObject({
+            averageDryDownGramsPerDay: "",
+            dryDownReadingCount: 2,
+        });
+    });
+
+    it.each([
+        "Partial",
+        "Spot",
+        "Unknown",
+    ])(
+        "withholds whole-pot comparisons for watering application %s",
+        (application) => {
+            expect.hasAssertions();
+
+            const rows = [
+                activityRow(0, "Water", "", { application }),
+                activityRow(0, "Weigh", 1000),
+                activityRow(2, "Weigh", 800),
+            ];
+            const context = loadAppsScript(createHistorySheet([]));
+
+            expect(context.plantActivitySummary_(rows, "P01", 1)).toMatchObject(
+                { averageDryDownGramsPerDay: "", dryDownReadingCount: 0 }
+            );
+        }
+    );
+
+    it("withholds after a partial latest watering, an undated boundary, or a confusing repot", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet([]));
+        const base = [
+            activityRow(0, "Water"),
+            activityRow(0, "Weigh", 1000),
+            activityRow(2, "Weigh", 800),
+        ];
+        for (const boundary of [
+            activityRow(3, "Water", "", {
+                application: "Partial",
+            }),
+            activityRow("invalid", "Water"),
+            activityRow("", "Repot"),
+            activityRow(1, "Repot"),
+        ]) {
+            expect(
+                context.plantActivitySummary_(
+                    [
+                        ...base,
+                        boundary,
+                        activityRow(4, "Weigh", 700),
+                    ],
+                    "P01",
+                    1
+                ).averageDryDownGramsPerDay
+            ).toBe("");
+        }
+    });
+
+    it("requires a watering boundary and a meaningful observed span", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet([]));
+        for (const rows of [
+            [activityRow(0, "Weigh", 1000), activityRow(2, "Weigh", 800)],
+            [activityRow(0, "Water"), activityRow(0, "Weigh", 1000)],
+            [
+                activityRow(0, "Water"),
+                activityRow(0, "Weigh", 1000),
+                activityRow(0.5, "Weigh", 800),
+            ],
+        ]) {
+            expect(
+                context.plantActivitySummary_(rows, "P01", 1)
+                    .averageDryDownGramsPerDay
+            ).toBe("");
+        }
+    });
+
+    it("describes late-starting observations without borrowing the forecast's Wet-anchor window", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet([]));
+        const rows = [
+            activityRow(0, "Water"),
+            activityRow(6, "Weigh", 1000),
+            activityRow(8, "Weigh", 800),
+        ];
+
+        expect(context.plantActivitySummary_(rows, "P01", 1)).toMatchObject({
+            averageDryDownGramsPerDay: 100,
+            dryDownDays: 2,
+            dryDownReadingCount: 2,
+        });
+    });
+
+    it("reports a flat recent interval and withholds too-short or rising last intervals", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet([]));
+        const base = [
+            activityRow(0, "Water"),
+            activityRow(0, "Weigh", 1000),
+            activityRow(2, "Weigh", 800),
+        ];
+
+        expect(
+            context.plantActivitySummary_(
+                [...base, activityRow(4, "Weigh", 800)],
+                "P01",
+                1
+            )
+        ).toMatchObject({
+            averageDryDownGramsPerDay: 50,
+            recentDryDownDays: 2,
+            recentDryDownGramsPerDay: 0,
+        });
+
+        for (const last of [
+            activityRow(2.5, "Weigh", 790),
+            activityRow(4, "Weigh", 801),
+        ]) {
+            expect(
+                context.plantActivitySummary_([...base, last], "P01", 1)
+                    .recentDryDownGramsPerDay
+            ).toBe("");
+        }
+    });
+
+    it("uses actual elapsed time across a daylight-saving clock change", () => {
+        expect.hasAssertions();
+
+        const rows = [
+            activityRow("2026-11-01T00:00:00-04:00", "Water"),
+            activityRow("2026-11-01T00:00:00-04:00", "Weigh", 1000),
+            activityRow("2026-11-02T00:00:00-05:00", "Weigh", 975),
+        ];
+        const context = loadAppsScript(createHistorySheet([]));
+
+        expect(
+            context.plantActivitySummary_(rows, "P01", 1).dryDownDays
+        ).toBeCloseTo(25 / 24, 8);
+        expect(
+            context.plantActivitySummary_(rows, "P01", 1)
+                .averageDryDownGramsPerDay
+        ).toBeCloseTo(24, 8);
+    });
+});
+
 describe("garden logger mobile bootstrap and collection lookups", () => {
     it("builds the mobile bootstrap from tracker, baseline, and history data", () => {
         expect.hasAssertions();
@@ -2886,9 +3544,21 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.18.3");
+        expect(bootstrap.version).toBe("5.18.4");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
+            activitySummary: {
+                averageDryDownGramsPerDay: "",
+                averageWaterIntervalDays: 2,
+                dryDownDays: "",
+                dryDownReadingCount: 0,
+                recentDryDownDays: "",
+                recentDryDownGramsPerDay: "",
+                totalMeasurements: 0,
+                totalWaterings: 2,
+                totalWeights: 2,
+                waterIntervalCount: 1,
+            },
             currentPotSize: "4 in",
             dryOrLowestWeight: 405,
             dryOrLowestWeightBasis: "Completed cycle",
@@ -7416,10 +8086,10 @@ describe("garden logger workbook installation and History headers", () => {
         context.installGardenLogger();
 
         expect(required(calls.properties)["gardenLoggerVersion"]).toBe(
-            "5.18.3"
+            "5.18.4"
         );
         expect(required(calls.toast)[1]).toBe("Garden logger verified");
-        expect(required(calls.toast)[0]).toMatch(/Logger 5\.18\.3 is ready/v);
+        expect(required(calls.toast)[0]).toMatch(/Logger 5\.18\.4 is ready/v);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(

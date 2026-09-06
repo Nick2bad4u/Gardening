@@ -4,6 +4,18 @@ import type {
     ObservationPayload,
 } from "./logger-fixtures.js";
 
+export interface ActivitySummary {
+    averageDryDownGramsPerDay: "" | number;
+    averageWaterIntervalDays: "" | number;
+    dryDownDays: "" | number;
+    dryDownReadingCount: number;
+    recentDryDownDays: "" | number;
+    recentDryDownGramsPerDay: "" | number;
+    totalMeasurements: number;
+    totalWaterings: number;
+    totalWeights: number;
+    waterIntervalCount: number;
+}
 export interface AppendResult {
     duplicate: boolean;
     eventNames: string[];
@@ -109,6 +121,7 @@ export interface AppsScriptTestApi {
         plant: unknown,
         index: unknown
     ) => CellValue[];
+    dashboardWeightCountFormula_: (row: number) => string;
     dateSortValue_: (value: unknown) => number;
     doGet: () => object;
     dryDownModelFormula_: () => string;
@@ -212,7 +225,11 @@ export interface AppsScriptTestApi {
         plantNames?: Map<unknown, unknown>
     ) => RecentObservation[];
     getRecentWebObservations: (limit: unknown) => RecentObservation[];
-    getWebAppBootstrap: () => Bootstrap;
+    getWebAppBootstrap: () => Omit<Bootstrap, "plants"> & {
+        plants: (Bootstrap["plants"][number] & {
+            activitySummary: ActivitySummary;
+        })[];
+    };
     getWebBatchSaveStatus: (requests: unknown) => SaveStatus[];
     getWebSaveStatus: (payload: unknown) => SaveStatus;
     historyObservationSnapshot_: (history: unknown) => {
@@ -253,6 +270,11 @@ export interface AppsScriptTestApi {
         handler: string;
         removedDuplicateCount: number;
         removedTriggerCount: unknown;
+    };
+    installDashboardWeightCounts: () => {
+        plants: number;
+        range: string;
+        version: string;
     };
     installDryDownLearning: () => {
         baselineColumns: number;
@@ -312,6 +334,11 @@ export interface AppsScriptTestApi {
     optionalPositiveInteger_: (value: unknown, label: unknown) => "" | number;
     optionalPositiveNumber_: (value: unknown, label: unknown) => "" | number;
     organizeWorkbookSheets_: (spreadsheet: unknown) => void;
+    plantActivitySummary_: (
+        historyRows: CellValue[][],
+        plantId: string,
+        potSetup: number
+    ) => ActivitySummary;
     plantChartHelperFormula_: (plantId: unknown) => string;
     plantNamesById_: (spreadsheet: unknown) => Map<string, string>;
     plantPageHistoryFormula_: (plantId: unknown) => string;

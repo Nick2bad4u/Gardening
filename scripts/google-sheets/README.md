@@ -193,6 +193,46 @@ remains on verified version 1.100104 with portrait revision `2e71bf2a701aa61f`.
 Version-68 web-app executions and the replacement time-driven queue execution
 completed successfully. No synthetic observation was submitted.
 
+## Plant summaries and History feedback (5.18.4)
+
+The selected plant's information appears above the List/Labels picker. A name
+line beside the picker updates immediately after a selection; mouse hover and
+keyboard focus can preview a label's plant name. This gives touch users the
+name without relying on a browser's hover-only tooltip.
+
+The summary keeps its main metrics in two columns and the Waterings,
+Dimensions, and Weights totals in three equal cells on a phone. Counts cover
+active History across pot setups. Measurements counts Measure events, so a
+single height-and-width observation counts once. Weights counts positive
+numeric Weigh readings and excludes estimates and Removed rows.
+
+Average water interval describes the elapsed time between recorded Water
+events; it is blank until there are at least two valid dates. **Cycle avg
+loss** describes net whole-pot mass loss per elapsed day in the current pot
+setup and watering cycle. Its help includes the observed duration and latest
+usable interval, making changes in drying speed visible. It needs at least a
+day of comparable measured readings; partial watering, ambiguous setup changes,
+or conflicting weight gains withhold the rate. Neither average is a watering
+schedule or a replacement for inspecting the plant and root zone.
+
+Water dates retain **if ready** beside the compact label. Tap, hover, or focus
+the help controls for the full readiness guidance, reweigh-window explanation,
+and forecast-basis explanation; Escape dismisses the help. Recent History uses
+cached plant portraits to the left of each entry. Refreshing its length shows
+a local loading status while the entry form remains usable. Failed refreshes
+retain the previous entries, and older responses cannot replace a newer request.
+Confirmed single, bulk, and queued saves also refresh the plant summaries in
+the background. New watering and weight observations therefore update the
+totals and current-cycle figures without reloading the page or clearing a new
+entry already being typed.
+
+`installDashboardWeightCounts()` adds **Weight measurements** at
+`Dashboard!X6:X36`. Its count uses the same measured-weight criteria as the
+mobile summary. It preserves the existing A:W columns and all canonical and
+staging schemas; `refreshGardenWorkbook()` also includes the new column when
+the complete generated Dashboard is deliberately rebuilt. Dashboard is not an
+AppSheet source table, so this addition requires no AppSheet regeneration.
+
 ## Plant portrait caching
 
 Logger 5.18.2 uses the shared 83-icon UI/category redraw from the canonical
@@ -845,7 +885,7 @@ The verified live derived schema is:
 | Sheet                    | Recommended water date | Watering guidance | Total derived fields |
 | ------------------------ | ---------------------- | ----------------- | -------------------- |
 | Baselines                | AI                     | AJ                | 36                   |
-| Dashboard                | V                      | W                 | 23                   |
+| Dashboard                | V                      | W                 | 24                   |
 | Dry-down models (hidden) | O                      | P                 | 16                   |
 
 After a native Drive backup and fresh preflight, `installWateringRecommendations()`

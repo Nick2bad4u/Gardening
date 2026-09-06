@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.18.3",
+    version: "5.18.4",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -621,6 +621,7 @@ const DASHBOARD_VIEW_HEADERS = Object.freeze([
     "Data quality",
     "Recommended water date",
     "Watering guidance",
+    "Weight measurements",
 ]);
 
 const WORKBOOK_HELPER_SHEETS = Object.freeze([
@@ -789,6 +790,14 @@ function getWebAppBootstrap() {
                     forecasts.get(cleanText_(plantId))?.waterDate || "",
                 wateringGuidance:
                     forecasts.get(cleanText_(plantId))?.waterGuidance || "",
+                activitySummary: plantActivitySummary_(
+                    historyRows,
+                    cleanText_(plantId),
+                    positiveInteger_(
+                        potSetupByPlant.get(cleanText_(plantId)) || 1,
+                        "Pot setup"
+                    )
+                ),
                 fieldGuideUrl,
                 historyUrl: `${GARDEN_LOGGER.historyUrl}?id=${encodeURIComponent(cleanText_(plantId))}`,
             };
@@ -3852,6 +3861,63 @@ function refreshBaselineView_(spreadsheet, plants) {
     sheet.autoResizeRows(2, plants.length);
 }
 
+/** Count numeric scale readings, using the same exclusions as the summary. */
+function dashboardWeightCountFormula_(row) {
+    return `=IF(TRIM($B${row})="","",SUMPRODUCT(IFERROR(N(EXACT(TRIM(History!$B$2:$B$5000),TRIM($B${row})))*N(EXACT(TRIM(History!$C$2:$C$5000),"Weigh"))*N(EXACT(TRIM(History!$AJ$2:$AJ$5000),"Removed")=FALSE)*N(ISNUMBER(History!$E$2:$E$5000))*N(History!$E$2:$E$5000>0)*N(REGEXMATCH(History!$AC$2:$AC$5000&" "&History!$AI$2:$AI$5000,"(?i)estimat")=FALSE),0)))`;
+}
+
+/** Install only Dashboard X6:X36; preserve every other cell and sheet. */
+function installDashboardWeightCounts() {
+    const spreadsheet = getGardenSpreadsheet_();
+    const sheet = requireSheet_(spreadsheet, "Dashboard");
+    if (sheet.getMaxRows() < 36) {
+        throw new Error("Dashboard needs existing plant rows through row 36.");
+    }
+    if (sheet.getMaxColumns() >= 24) {
+        const destination = sheet.getRange(6, 24, 31, 1);
+        if (destination.isPartOfMerge()) {
+            throw new Error(
+                "Dashboard X6:X36 contains merged cells; review before installing."
+            );
+        }
+        const values = destination.getValues();
+        const formulas = destination.getFormulas();
+        const header = values[0][0];
+        if (
+            (header !== "" && header !== "Weight measurements") ||
+            (header === "" &&
+                values.some(
+                    (row, index) => row[0] !== "" || formulas[index][0] !== ""
+                ))
+        ) {
+            throw new Error(
+                "Unexpected Dashboard column X; review before installing."
+            );
+        }
+    }
+    ensureSheetColumnCapacity_(sheet, 24);
+    sheet
+        .getRange(6, 24)
+        .setValue("Weight measurements")
+        .setBackground("#24533f")
+        .setFontColor("#ffffff")
+        .setFontWeight("bold")
+        .setWrap(true);
+    sheet
+        .getRange(7, 24, 30, 1)
+        .setValues(
+            Array.from({ length: 30 }, (_, index) => [
+                dashboardWeightCountFormula_(index + 7),
+            ])
+        )
+        .setNumberFormat("0");
+    return {
+        version: GARDEN_LOGGER.version,
+        range: "Dashboard!X6:X36",
+        plants: 30,
+    };
+}
+
 function dashboardViewRow_(spreadsheet, plant, index) {
     const dashboardRow = index + 7;
     const trackerRow = plant.trackerRow;
@@ -3881,6 +3947,7 @@ function dashboardViewRow_(spreadsheet, plant, index) {
         `=Baselines!S${baselineRow}`,
         `=Baselines!AI${baselineRow}`,
         `=Baselines!AJ${baselineRow}`,
+        dashboardWeightCountFormula_(dashboardRow),
     ];
 }
 
@@ -3979,6 +4046,7 @@ function refreshDashboardView_(spreadsheet, plants) {
     sheet.getRange(7, 9, plants.length, 1).setNumberFormat("mmm d, yyyy");
     sheet.getRange(7, 11, plants.length, 2).setNumberFormat("0.0#");
     sheet.getRange(7, 13, plants.length, 2).setNumberFormat("0");
+    sheet.getRange(7, 24, plants.length, 1).setNumberFormat("0");
     sheet.getRange(7, 15, plants.length, 1).setNumberFormat('0.0 "days"');
     sheet.setFrozenRows(6);
     // The full-width title in row 1 spans every Dashboard column, so freezing
@@ -5189,6 +5257,154 @@ function dryOrLowestWeightsFromRows_(historyRows) {
         }
     );
     return result;
+}
+
+/**
+ * A measured weight must be a numeric Sheets cell. Numeric-looking text,
+ * booleans, estimates, and non-Weigh companion rows are not scale readings.
+ * Legacy blank quality/method remains eligible, as in the dry-down model.
+ */
+function measuredHistoryWeight_(row) {
+    return (
+        cleanText_(row[2]) === "Weigh" &&
+        typeof row[4] === "number" &&
+        Number.isFinite(row[4]) &&
+        row[4] > 0 &&
+        !/estimat/i.test(cleanText_(row[28]) + " " + cleanText_(row[34]))
+    );
+}
+
+/**
+ * All-history activity totals and descriptive current-cycle loss, independent
+ * of forecast training. Elapsed days use actual timestamps (including DST).
+ */
+function plantActivitySummary_(historyRows, plantId, potSetup) {
+    const rows = historyRows.filter(
+        (row) => activeHistoryRow_(row) && cleanText_(row[1]) === plantId
+    );
+    /** @type {{totalWaterings: number, totalMeasurements: number, totalWeights: number,
+     * averageWaterIntervalDays: number | "", waterIntervalCount: number,
+     * averageDryDownGramsPerDay: number | "", dryDownDays: number | "",
+     * dryDownReadingCount: number, recentDryDownGramsPerDay: number | "",
+     * recentDryDownDays: number | ""}} */
+    const summary = {
+        totalWaterings: rows.filter((row) => cleanText_(row[2]) === "Water")
+            .length,
+        totalMeasurements: rows.filter(
+            (row) => cleanText_(row[2]) === "Measure"
+        ).length,
+        totalWeights: rows.filter(measuredHistoryWeight_).length,
+        averageWaterIntervalDays: "",
+        waterIntervalCount: 0,
+        averageDryDownGramsPerDay: "",
+        dryDownDays: "",
+        dryDownReadingCount: 0,
+        recentDryDownGramsPerDay: "",
+        recentDryDownDays: "",
+    };
+    const records = rows.map((row, index) => {
+        const timestamp =
+            row[0] instanceof Date || typeof row[0] === "string"
+                ? dateSortValue_(row[0])
+                : 0;
+        return {
+            index,
+            date: timestamp > 0 ? timestamp / 86400000 + 25569 : 0,
+            setup: positiveIntegerOrDefault_(row[10], 1),
+            event: cleanText_(row[2]),
+            weight: measuredHistoryWeight_(row) ? row[4] : 0,
+            save: cleanText_(row[29] || row[15]),
+            application: cleanText_(row[40]),
+            estimated: !measuredHistoryWeight_(row),
+        };
+    });
+    const dates = records
+        .filter((r) => r.event === "Water" && r.date > 0)
+        .map((r) => r.date)
+        .sort((a, b) => a - b);
+    summary.waterIntervalCount = Math.max(0, dates.length - 1);
+    if (summary.waterIntervalCount) {
+        summary.averageWaterIntervalDays =
+            (dates.at(-1) - dates[0]) / summary.waterIntervalCount;
+    }
+    const setup = Math.max(potSetup, ...records.map((r) => r.setup));
+    const currentRecords = records.filter((r) => r.setup === setup);
+    // An undated boundary cannot be safely placed before or after these weights.
+    if (
+        currentRecords.some(
+            (r) => ["Water", "Repot"].includes(r.event) && !r.date
+        )
+    )
+        return summary;
+    const current = dryDownCycles_(currentRecords).at(-1);
+    if (
+        !current ||
+        !fullWateringForForecast_(current.water) ||
+        currentRecords.some(
+            (r) =>
+                r.event === "Repot" &&
+                r.date >= current.water.date &&
+                !dryDownRecordsShareSave_(r, current.water)
+        )
+    )
+        return summary;
+    // Descriptive loss needs an observed span, not the forecast's prompt Wet
+    // anchor. Same-save identity includes a Weigh row ordered before Water.
+    const water = current.water;
+    const points = currentRecords
+        .filter(
+            (r) =>
+                r.event === "Weigh" &&
+                !r.estimated &&
+                (r.date > water.date ||
+                    (r.date === water.date &&
+                        (r.index > water.index ||
+                            dryDownRecordsShareSave_(r, water))))
+        )
+        .sort((a, b) => a.date - b.date || a.index - b.index);
+    return { ...summary, ...observedDryDownSummary_(points) };
+}
+
+/**
+ * Endpoint loss / actual elapsed days, never a fixed future drying rate.
+ * Require a day of observation, collapse equal timestamps to the last reading,
+ * and withhold rates after a gain exceeding 2 g above any prior cycle low.
+ * The small noise allowance does not change forecast/model tolerance rules.
+ * @param {DryDownRecord[]} points
+ */
+function observedDryDownSummary_(points) {
+    const unique = [
+        ...new Map(points.map((point) => [point.date, point])).values(),
+    ];
+    const first = unique[0];
+    const last = unique.at(-1);
+    /** @type {{averageDryDownGramsPerDay: number | "", dryDownDays: number | "",
+     * dryDownReadingCount: number, recentDryDownGramsPerDay: number | "", recentDryDownDays: number | ""}} */
+    const summary = {
+        averageDryDownGramsPerDay: "",
+        dryDownDays: "",
+        dryDownReadingCount: unique.length,
+        recentDryDownGramsPerDay: "",
+        recentDryDownDays: "",
+    };
+    if (!first || !last || last.date - first.date < 1) return summary;
+    summary.dryDownDays = last.date - first.date;
+    let lowest = points[0].weight;
+    const gain = points.some((point) => {
+        lowest = Math.min(lowest, point.weight);
+        return point.weight - lowest > 2;
+    });
+    if (gain || first.weight <= last.weight) return summary;
+    summary.averageDryDownGramsPerDay =
+        (first.weight - last.weight) / summary.dryDownDays;
+    const previous = unique[unique.length - 2];
+    const recentDays = last.date - previous.date;
+    if (recentDays >= 1 && previous.weight >= last.weight) {
+        summary.recentDryDownDays = recentDays;
+        summary.recentDryDownGramsPerDay =
+            (previous.weight - last.weight) / recentDays;
+    }
+    return summary;
 }
 
 function currentPotSetupsFromRows_(historyRows) {
