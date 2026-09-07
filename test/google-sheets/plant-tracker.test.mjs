@@ -918,6 +918,70 @@ function quickLogWateringFixture({ amount, application, event }) {
 }
 
 describe("garden logger input normalization", () => {
+    it("infers a single weight event when an older client omits the events array", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook();
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+        const result = context.saveWebObservation({
+            observedAt: "2026-09-03T12:00:00Z",
+            plantId: "P01",
+            requestId: "legacy-client-weight-001",
+            weight: 375,
+        });
+
+        expect(result).toMatchObject({ historyRows: 1, ok: true });
+        expect(workbook.history.__rows).toHaveLength(2);
+        expect(required(workbook.history.__rows[1]).slice(1, 5)).toStrictEqual([
+            "P01",
+            "Weigh",
+            "Routine",
+            375,
+        ]);
+    });
+
+    it("rejects bulk care without an events array before writing any observations", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook();
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+        });
+        const before = structuredClone(workbook.history.__rows);
+
+        expect(() =>
+            context.saveBulkCareObservation({ plantIds: ["P01"] })
+        ).toThrow("Choose at least one bulk-care event");
+        expect(workbook.history.__rows).toStrictEqual(before);
+    });
+
+    it.each([1, appSheetEntryHeaders.length])(
+        "leaves %s unrecognized App entries headers untouched",
+        (width) => {
+            expect.hasAssertions();
+
+            const headers = Array.from({ length: width }, () => "Owner header");
+            const entries = createDataSheet("App entries", [
+                headers,
+                ["Owner data"],
+            ]);
+            const before = structuredClone(entries.__rows);
+            const columns = entries.getMaxColumns();
+            const context = loadAppsScript(createHistorySheet());
+
+            expect(context.ensureAppSheetEntryColumns_(entries, true)).toBe(
+                false
+            );
+            expect(entries.__rows).toStrictEqual(before);
+            expect(entries.getMaxColumns()).toBe(columns);
+            expect(entries.__dataValidationCalls).toStrictEqual([]);
+            expect(entries.__protections).toStrictEqual([]);
+        }
+    );
+
     it("escapes formula-like notes and validates request metadata", () => {
         expect.hasAssertions();
 
@@ -2091,6 +2155,33 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
 });
 
 describe("garden logger workbook refresh and navigation", () => {
+    it("uses current tracker pot sizes without consulting History and defaults legacy blank setups", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook();
+        const tracker = required(workbook.sheets.get("Plant tracker"));
+        required(tracker.__rows[0])[3] = "Current pot size";
+        required(tracker.__rows[1])[3] = "4 in";
+        required(required(workbook.sheets.get("Baselines")).__rows[1])[19] = "";
+        const anonymous = emptyCells(15);
+        anonymous[3] = "Owner annotation";
+        tracker.__rows.push(anonymous);
+        workbook.sheets.delete("History");
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+        });
+
+        expect(
+            context.plantRecordsById_(workbook.spreadsheet).keys().toArray()
+        ).toStrictEqual(["P01"]);
+        expect(
+            context.plantRecordForId_(workbook.spreadsheet, "P01")
+        ).toMatchObject({ currentPotSize: "4 in", potSetup: 1 });
+        expect(
+            context.plantRecordForId_(workbook.spreadsheet, "P99")
+        ).toBeNull();
+    });
+
     it("rebuilds every workbook surface through the public refresh command", () => {
         expect.hasAssertions();
 
@@ -4718,6 +4809,49 @@ describe("garden logger phone queue batches and per-entry failures", () => {
         );
     });
 
+    it("returns per-item validation receipts for falsy RPC entries without writing History", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook();
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+        const before = structuredClone(workbook.history.__rows);
+        const result = vm.runInContext(
+            "saveWebObservationBatch([null, false, 0])",
+            context
+        );
+
+        expect(result).toMatchObject({
+            results: [
+                {
+                    errorCode: "VALIDATION",
+                    ok: false,
+                    plantId: "",
+                    requestId: "",
+                    retryable: false,
+                },
+                {
+                    errorCode: "VALIDATION",
+                    ok: false,
+                    plantId: "false",
+                    requestId: "false",
+                    retryable: false,
+                },
+                {
+                    errorCode: "VALIDATION",
+                    ok: false,
+                    plantId: "0",
+                    requestId: "0",
+                    retryable: false,
+                },
+            ],
+            savedCount: 0,
+        });
+        expect(workbook.history.__rows).toStrictEqual(before);
+    });
+
     it("returns durable per-item failures for invalid and failed queue entries", () => {
         expect.hasAssertions();
 
@@ -5579,6 +5713,21 @@ describe("garden logger AppSheet entry intake", () => {
 });
 
 describe("garden logger AppSheet bulk submission and validation", () => {
+    it("rejects a care round with no selected plants while preserving staging input", () => {
+        expect.hasAssertions();
+
+        const round = emptyCells(appSheetBulkHeaders.length);
+        round[appSheetBulkActionIndex] = "Clean";
+        round[appSheetBulkNotesIndex] = "Clean leaves";
+        const before = [...round];
+        const context = loadAppsScript(createHistorySheet());
+
+        expect(() =>
+            context.appSheetBulkPayloadsFromRow_(round, "NO-PLANTS")
+        ).toThrow("Select at least one plant for this round");
+        expect(round).toStrictEqual(before);
+    });
+
     it("submits a 30-plant AppSheet weight round in one canonical batch", () => {
         expect.hasAssertions();
 
@@ -7064,6 +7213,15 @@ describe("garden logger History snapshots and request status", () => {
 
         expect(Array.from(snapshot)).toHaveLength(1);
         expect(required(snapshot[0])[1]).toBe("P01");
+
+        emptyHistory.__rows.push(emptyCells(42));
+
+        expect(emptyContext.lastHistoryDataRow_(emptyHistory)).toBe(1);
+        expect([
+            ...emptyContext.readHistorySnapshot_({
+                getSheetByName: () => emptyHistory,
+            }),
+        ]).toStrictEqual([]);
     });
 
     it("sorts recent activity by timestamps and resolves names without History helpers", () => {
@@ -8957,6 +9115,56 @@ describe("garden logger Quick log editing and archiving", () => {
         context.updateInferredEvent_(quick, 5, 8);
 
         expect(required(rows[4])[4]).toBe("");
+    });
+
+    it("infers width-only measurements and retains the event until both dimensions are cleared", () => {
+        expect.hasAssertions();
+
+        const rows = Array.from({ length: 5 }, () => emptyCells(15));
+        const values = required(rows[4]);
+        values[0] = "P01";
+        values[8] = 2;
+        const quick = createDataSheet("Quick log", rows);
+        const context = loadAppsScript(createHistorySheet());
+
+        context.updateInferredEvent_(quick, 5, 9);
+
+        expect(values[4]).toBe("Measure");
+
+        context.updateInferredEvent_(quick, 5, 8);
+
+        expect(values[4]).toBe("Measure");
+
+        values[8] = "";
+        context.updateInferredEvent_(quick, 5, 9);
+
+        expect(values[4]).toBe("");
+    });
+
+    it("archives a width-only Quick log measurement with default setup and honest estimated provenance", () => {
+        expect.hasAssertions();
+
+        const { context, quick, row, workbook } = quickLogWateringFixture({
+            amount: "",
+            application: "",
+            event: "Measure",
+        });
+        row[6] = "";
+        row[8] = 2;
+        row[11] = "";
+        context.archiveQuickLogRow_(quick, 5);
+
+        const saved = required(workbook.history.__rows[1]);
+
+        expect(saved[2]).toBe("Measure");
+        expect(saved[5]).toBe("");
+        expect(saved[6]).toBe(5.08);
+        expect(saved[10]).toBe(1);
+        expect(saved[28]).toBe("Estimated");
+        expect(saved[34]).toBe("Unspecified");
+        expect(saved[36]).toBe("in");
+        expect(required(quick.__rows[4])[8]).toBe("");
+        expect(required(quick.__rows[4])[2]).toBe(false);
     });
 
     it("archives a Quick log weight and leaves the row ready for reuse", () => {

@@ -215,6 +215,66 @@ function fixture(
 }
 
 describe("scoped daily Dashboard presentation", () => {
+    it.each([
+        [
+            1,
+            42,
+            "History needs room",
+        ],
+        [
+            5000,
+            41,
+            "42-column History schema",
+        ],
+    ])(
+        "rejects a History grid with %s rows and %s columns before installing",
+        (rows, columns, message) => {
+            expect.hasAssertions();
+
+            const { api, sheet, sheets } = fixture();
+            sheet("History").state.rows = rows;
+            sheet("History").state.columns = columns;
+
+            expect(() => api.installDailyCareDashboard()).toThrow(message);
+            expect(sheets.has("Daily care")).toBe(false);
+            expect(
+                sheets
+                    .values()
+                    .flatMap((item) => item.state.writes)
+                    .toArray()
+            ).toStrictEqual([]);
+        }
+    );
+
+    it.each([
+        "U2:W2",
+        "U2:V3",
+        "V2:W2",
+        "U1:V2",
+    ])("preserves an unexpected KPI merge at %s", (range) => {
+        expect.hasAssertions();
+
+        const { api, sheet, sheets } = fixture();
+        const dashboard = sheet("Dashboard");
+        dashboard.api.getRange("A1:X1").breakApart();
+        dashboard.api.getRange(range).merge();
+        for (const item of sheets.values()) item.state.writes.length = 0;
+
+        expect(() => api.installDailyCareDashboard()).toThrow(
+            "Unexpected Dashboard KPI merge"
+        );
+        expect(
+            dashboard.state.merges.map((merge) => merge.getA1Notation())
+        ).toContain(range);
+        expect(sheets.has("Daily care")).toBe(false);
+        expect(
+            sheets
+                .values()
+                .flatMap((item) => item.state.writes)
+                .toArray()
+        ).toStrictEqual([]);
+    });
+
     it("preserves the complete Dashboard and source data while installing native presentation", () => {
         expect.hasAssertions();
 

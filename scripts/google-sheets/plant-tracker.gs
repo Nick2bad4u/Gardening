@@ -4080,7 +4080,7 @@ function dailyCareSources_(spreadsheet) {
 /** Exclude only the new KPI cells from the existing scan to avoid a cycle. */
 function dailyCareErrorScanFormula_(formula) {
     const scan =
-        /ARRAYFORMULA\(N\(ISERROR\((?:'Dashboard'|Dashboard)!\$?A\$?1:\$?(X|Z)\$?(\d+)\)\)\)/gu;
+        /ARRAYFORMULA\(N\(ISERROR\((?:'Dashboard'|Dashboard)!\$?A\$?1:\$?([XZ])\$?(\d+)\)\)\)/gu;
     const matches = [...formula.matchAll(scan)];
     const dashboardReferences = (formula.match(/Dashboard/gu) || []).length;
     if (
@@ -4164,7 +4164,10 @@ function dailyCareIndicatorFormula_(status, sheetId, range) {
 }
 
 function dailyCareChecksAvailableFormula_(range) {
-    return `SUM(${["Pass", "Fail", "Action", "Info"].map((status) => `COUNTIF(${range},"${status}")`).join(",")})=ROWS(${range})`;
+    const counts = ["Pass", "Fail", "Action", "Info"].map(
+        (status) => `COUNTIF(${range},"${status}")`
+    );
+    return `SUM(${counts.join(",")})=ROWS(${range})`;
 }
 
 function dailyCareDashboardMerges_(dashboard) {
@@ -4224,7 +4227,7 @@ function dailyCareDestination_(spreadsheet, dashboard) {
     const slots = dashboard.getRange(2, 21, 2, 4);
     const values = slots.getDisplayValues();
     const formulas = slots.getFormulas();
-    const owned = daily && daily.getRange(1, 1).getNote() === marker;
+    const owned = daily?.getRange(1, 1).getNote() === marker;
     const expected = [
         ["Data issues", "", "Observations still needed", ""],
         [
@@ -4493,36 +4496,26 @@ function installDailyCareDashboard() {
 
 /** Preserve unrelated Dashboard rules; replace only rules on our own KPI cells. */
 function dailyCareIndicatorStyles_(sheet, indicators) {
-    const owned = indicators.map(([range]) => range);
+    const owned = new Set(indicators.map(([range]) => range));
     const rules = sheet
         .getConditionalFormatRules()
         .filter(
             (rule) =>
                 !rule
                     .getRanges()
-                    .every((range) => owned.includes(range.getA1Notation()))
+                    .every((range) => owned.has(range.getA1Notation()))
         );
     indicators.forEach(([range, status]) => {
+        const issueBackground = status === "Fail" ? "#f8d4d4" : "#fff0c7";
+        const issueForeground = status === "Fail" ? "#7a1d1d" : "#684b00";
         [true, false].forEach((healthy) =>
             rules.push(
                 SpreadsheetApp.newConditionalFormatRule()
                     .whenFormulaSatisfied(
                         `=AND(${dailyCareChecksAvailableFormula_('INDIRECT("Integrity!C5:C21")')},COUNTIF(INDIRECT("Integrity!C5:C21"),"${status}")${healthy ? "=0" : ">0"})`
                     )
-                    .setBackground(
-                        healthy
-                            ? "#edf4ee"
-                            : status === "Fail"
-                              ? "#f8d4d4"
-                              : "#fff0c7"
-                    )
-                    .setFontColor(
-                        healthy
-                            ? "#173c2b"
-                            : status === "Fail"
-                              ? "#7a1d1d"
-                              : "#684b00"
-                    )
+                    .setBackground(healthy ? "#edf4ee" : issueBackground)
+                    .setFontColor(healthy ? "#173c2b" : issueForeground)
                     .setRanges([sheet.getRange(range)])
                     .build()
             )
@@ -5068,9 +5061,7 @@ function saveWebObservationCorrection(request) {
                 38,
                 [{}, {}],
                 "dataValidation"
-            )
-        );
-        requests.push(
+            ),
             correctionCellsRequest_(snapshot.history, original.rowNumber, 36, [
                 { userEnteredValue: { stringValue: "Removed" } },
             ])
@@ -5239,7 +5230,12 @@ function correctionDigest_(value) {
         if (item && typeof item === "object") {
             return Object.fromEntries(
                 Object.keys(item)
-                    .sort()
+                    // Canonical hashes require locale-independent UTF-16 order,
+                    // matching the browser's key ordering exactly.
+                    .sort(
+                        (left, right) =>
+                            Number(left > right) - Number(left < right)
+                    )
                     .map((key) => [key, canonical(item[key])])
             );
         }
@@ -5476,32 +5472,13 @@ function correctionEvents_() {
 }
 
 function correctionFieldDefinitions_(event) {
-    const field = (
-        key,
-        column,
-        label,
-        type = "text",
-        options = [],
-        required = false,
-        unit = "",
-        events = []
-    ) => ({
-        key,
-        column,
-        label,
-        type,
-        options: [...options],
-        required,
-        unit,
-        events,
-    });
     return [
-        field("observationDate", 0, "Saved date", "datetime", [], true),
-        field("notes", 8, "Notes"),
-        field("weight", 4, "Weight", "number", [], true, "g", ["Weigh"]),
-        field("heightCm", 5, "Height", "number", [], false, "cm", ["Measure"]),
-        field("widthCm", 6, "Width", "number", [], false, "cm", ["Measure"]),
-        field(
+        ["observationDate", 0, "Saved date", "datetime", [], true],
+        ["notes", 8, "Notes"],
+        ["weight", 4, "Weight", "number", [], true, "g", ["Weigh"]],
+        ["heightCm", 5, "Height", "number", [], false, "cm", ["Measure"]],
+        ["widthCm", 6, "Width", "number", [], false, "cm", ["Measure"]],
+        [
             "measurementUnit",
             36,
             "Original measurement unit",
@@ -5509,9 +5486,9 @@ function correctionFieldDefinitions_(event) {
             MEASUREMENT_UNIT_OPTIONS,
             true,
             "",
-            ["Measure"]
-        ),
-        field(
+            ["Measure"],
+        ],
+        [
             "measurementQuality",
             28,
             "Measurement quality",
@@ -5519,9 +5496,9 @@ function correctionFieldDefinitions_(event) {
             MEASUREMENT_QUALITY_OPTIONS,
             true,
             "",
-            ["Weigh", "Measure"]
-        ),
-        field(
+            ["Weigh", "Measure"],
+        ],
+        [
             "measurementMethod",
             34,
             "Measurement method",
@@ -5537,12 +5514,10 @@ function correctionFieldDefinitions_(event) {
                 : MEASUREMENT_METHOD_OPTIONS,
             true,
             "",
-            ["Weigh", "Measure"]
-        ),
-        field("condition", 7, "Plant condition", "text", [], false, "", [
-            "Check",
-        ]),
-        field(
+            ["Weigh", "Measure"],
+        ],
+        ["condition", 7, "Plant condition", "text", [], false, "", ["Check"]],
+        [
             "soilMoisture",
             32,
             "Soil moisture",
@@ -5550,9 +5525,9 @@ function correctionFieldDefinitions_(event) {
             SOIL_MOISTURE_OPTIONS,
             false,
             "",
-            ["Check"]
-        ),
-        field(
+            ["Check"],
+        ],
+        [
             "nutrientsUsed",
             16,
             "Nutrients used",
@@ -5560,9 +5535,9 @@ function correctionFieldDefinitions_(event) {
             NUTRIENT_OPTIONS,
             true,
             "",
-            ["Water"]
-        ),
-        field(
+            ["Water"],
+        ],
+        [
             "nutrientProduct",
             17,
             "Nutrient product",
@@ -5570,12 +5545,19 @@ function correctionFieldDefinitions_(event) {
             NUTRIENT_PRODUCT_OPTIONS,
             false,
             "",
-            ["Water"]
-        ),
-        field("nutrientAmount", 18, "Nutrient amount", "text", [], false, "", [
-            "Water",
-        ]),
-        field(
+            ["Water"],
+        ],
+        [
+            "nutrientAmount",
+            18,
+            "Nutrient amount",
+            "text",
+            [],
+            false,
+            "",
+            ["Water"],
+        ],
+        [
             "wateringApplication",
             40,
             "Watering application",
@@ -5583,12 +5565,19 @@ function correctionFieldDefinitions_(event) {
             WATERING_APPLICATION_OPTIONS,
             true,
             "",
-            ["Water"]
-        ),
-        field("waterAmount", 41, "Water amount", "number", [], false, "mL", [
-            "Water",
-        ]),
-        field(
+            ["Water"],
+        ],
+        [
+            "waterAmount",
+            41,
+            "Water amount",
+            "number",
+            [],
+            false,
+            "mL",
+            ["Water"],
+        ],
+        [
             "previousPotSize",
             19,
             "Previous pot size",
@@ -5596,34 +5585,89 @@ function correctionFieldDefinitions_(event) {
             [],
             false,
             "",
-            ["Repot"]
-        ),
-        field("potSize", 20, "Pot size", "text", [], true, "", ["Repot"]),
-        field("medium", 33, "Medium / substrate", "text", [], false, "", [
-            "Repot",
-        ]),
-        field("flowerCount", 21, "Flower count", "number", [], false, "", [
-            "Flower",
-        ]),
-        field("flowerDetails", 22, "Flower details", "text", [], false, "", [
-            "Flower",
-        ]),
-        field("photoUrl", 23, "Google Photos share URL", "url", [], true, "", [
-            "Photo",
-        ]),
-        field("pestIssue", 24, "Pest / issue", "text", [], true, "", ["Pest"]),
-        field("pestTreatment", 25, "Treatment / action", "text", [], true, "", [
-            "Pest",
-        ]),
-        field("rotationDegrees", 39, "Rotation", "number", [], true, "°", [
+            ["Repot"],
+        ],
+        ["potSize", 20, "Pot size", "text", [], true, "", ["Repot"]],
+        ["medium", 33, "Medium / substrate", "text", [], false, "", ["Repot"]],
+        [
+            "flowerCount",
+            21,
+            "Flower count",
+            "number",
+            [],
+            false,
+            "",
+            ["Flower"],
+        ],
+        [
+            "flowerDetails",
+            22,
+            "Flower details",
+            "text",
+            [],
+            false,
+            "",
+            ["Flower"],
+        ],
+        [
+            "photoUrl",
+            23,
+            "Google Photos share URL",
+            "url",
+            [],
+            true,
+            "",
+            ["Photo"],
+        ],
+        ["pestIssue", 24, "Pest / issue", "text", [], true, "", ["Pest"]],
+        [
+            "pestTreatment",
+            25,
+            "Treatment / action",
+            "text",
+            [],
+            true,
+            "",
+            ["Pest"],
+        ],
+        [
+            "rotationDegrees",
+            39,
             "Rotation",
-        ]),
-    ].filter(
-        (definition) =>
-            !event ||
-            !definition.events.length ||
-            definition.events.includes(event)
-    );
+            "number",
+            [],
+            true,
+            "°",
+            ["Rotation"],
+        ],
+    ]
+        .map(
+            ([
+                key,
+                column,
+                label,
+                type = "text",
+                options = [],
+                required = false,
+                unit = "",
+                events = [],
+            ]) => ({
+                key,
+                column,
+                label,
+                type,
+                options: [...options],
+                required,
+                unit,
+                events,
+            })
+        )
+        .filter(
+            (definition) =>
+                !event ||
+                !definition.events.length ||
+                definition.events.includes(event)
+        );
 }
 
 function correctionDto_(row) {
@@ -5765,65 +5809,85 @@ function correctionPatchedRow_(original, changes) {
             throw correctionValidationError_(
                 `INVALID_CORRECTION: ${key} cannot be changed for ${row[2]}.`
             );
-        let value = input;
-        if (definition.type === "number") {
-            if (
-                typeof value === "string" &&
-                value !== "" &&
-                !/^\d+(?:\.\d+)?$/.test(value)
-            ) {
-                throw correctionValidationError_(
-                    `INVALID_CORRECTION: ${definition.label} must be a positive number or blank.`
-                );
-            }
-            if (value !== "") value = Number(value);
-            if (
-                (value !== "" && (!Number.isFinite(value) || value <= 0)) ||
-                (key === "flowerCount" &&
-                    value !== "" &&
-                    !Number.isInteger(value)) ||
-                (key === "rotationDegrees" && value > 360)
-            ) {
-                throw correctionValidationError_(
-                    `INVALID_CORRECTION: ${definition.label} is outside its supported range.`
-                );
-            }
-        } else {
-            if (typeof value !== "string")
-                throw correctionValidationError_(
-                    `INVALID_CORRECTION: ${definition.label} must be text.`
-                );
-            if (
-                definition.type === "select" &&
-                value !== "" &&
-                !definition.options.includes(value)
-            ) {
-                throw correctionValidationError_(
-                    `INVALID_CORRECTION: Choose a listed ${definition.label.toLowerCase()}.`
-                );
-            }
-            if (definition.type === "datetime") value = correctionDate_(value);
-            if (
-                definition.type === "url" &&
-                !/^https:\/\/(?:photos\.google\.com|photos\.app\.goo\.gl)\/[^\s]+$/i.test(
-                    value
-                )
-            ) {
-                throw correctionValidationError_(
-                    "INVALID_CORRECTION: Photo needs a valid HTTPS Google Photos share URL."
-                );
-            }
-        }
-        if (
-            definition.required &&
-            (value === "" || (typeof value === "string" && !value.trim()))
-        ) {
-            throw correctionValidationError_(
-                `INVALID_CORRECTION: ${definition.label} cannot be cleared.`
-            );
-        }
-        row[definition.column] = value;
+        correctionAssignField_(row, definition, input);
     }
+    correctionValidateDependencies_(row, changes);
+    return row;
+}
+
+function correctionAssignField_(row, definition, input) {
+    const value =
+        definition.type === "number"
+            ? correctionNumericValue_(definition, input)
+            : correctionTextValue_(definition, input);
+    if (
+        definition.required &&
+        (value === "" || (typeof value === "string" && !value.trim()))
+    ) {
+        throw correctionValidationError_(
+            `INVALID_CORRECTION: ${definition.label} cannot be cleared.`
+        );
+    }
+    row[definition.column] = value;
+}
+
+function correctionNumericValue_(definition, input) {
+    let value = input;
+    const { key } = definition;
+    if (
+        typeof value === "string" &&
+        value !== "" &&
+        !/^\d+(?:\.\d+)?$/.test(value)
+    ) {
+        throw correctionValidationError_(
+            `INVALID_CORRECTION: ${definition.label} must be a positive number or blank.`
+        );
+    }
+    if (value !== "") value = Number(value);
+    if (
+        (value !== "" && (!Number.isFinite(value) || value <= 0)) ||
+        (key === "flowerCount" && value !== "" && !Number.isInteger(value)) ||
+        (key === "rotationDegrees" && value > 360)
+    ) {
+        throw correctionValidationError_(
+            `INVALID_CORRECTION: ${definition.label} is outside its supported range.`
+        );
+    }
+
+    return value;
+}
+
+function correctionTextValue_(definition, input) {
+    let value = input;
+    if (typeof value !== "string")
+        throw correctionValidationError_(
+            `INVALID_CORRECTION: ${definition.label} must be text.`
+        );
+    if (
+        definition.type === "select" &&
+        value !== "" &&
+        !definition.options.includes(value)
+    ) {
+        throw correctionValidationError_(
+            `INVALID_CORRECTION: Choose a listed ${definition.label.toLowerCase()}.`
+        );
+    }
+    if (definition.type === "datetime") value = correctionDate_(value);
+    if (
+        definition.type === "url" &&
+        !/^https:\/\/(?:photos\.google\.com|photos\.app\.goo\.gl)\/[^\s]+$/i.test(
+            value
+        )
+    ) {
+        throw correctionValidationError_(
+            "INVALID_CORRECTION: Photo needs a valid HTTPS Google Photos share URL."
+        );
+    }
+
+    return value;
+}
+
+function correctionValidateDependencies_(row, changes) {
     const changed = (...keys) =>
         keys.some((key) => Object.hasOwn(changes, key));
     if (
@@ -5837,32 +5901,13 @@ function correctionPatchedRow_(original, changes) {
         );
     }
     if (changed("measurementQuality", "measurementMethod")) {
-        const quality = row[28];
-        const method = row[34];
-        if (
-            (/Estimated/i.test(method) && quality !== "Estimated") ||
-            (["Scale", "Ruler"].includes(method) &&
-                !["Measured", "Corrected"].includes(quality)) ||
-            (quality === "Measured" && !["Scale", "Ruler"].includes(method))
-        ) {
-            throw correctionValidationError_(
-                "INVALID_CORRECTION: Measurement quality and method must describe the same evidence."
-            );
-        }
+        correctionValidateMeasurementEvidence_(row);
     }
     if (
         row[2] === "Water" &&
         changed("nutrientsUsed", "nutrientProduct", "nutrientAmount")
     ) {
-        if (
-            (row[16] === "Yes" && (!row[17].trim() || !row[18].trim())) ||
-            (row[16] === "No" && (row[17] || row[18])) ||
-            !NUTRIENT_OPTIONS.includes(row[16])
-        ) {
-            throw correctionValidationError_(
-                "INVALID_CORRECTION: Nutrients Yes needs product and amount; No needs both explicitly cleared."
-            );
-        }
+        correctionValidateNutrients_(row);
     }
     if (
         row[2] === "Flower" &&
@@ -5874,7 +5919,33 @@ function correctionPatchedRow_(original, changes) {
             "INVALID_CORRECTION: Keep a flower count or details."
         );
     }
-    return row;
+}
+
+function correctionValidateMeasurementEvidence_(row) {
+    const quality = row[28];
+    const method = row[34];
+    if (
+        (/Estimated/i.test(method) && quality !== "Estimated") ||
+        (["Scale", "Ruler"].includes(method) &&
+            !["Measured", "Corrected"].includes(quality)) ||
+        (quality === "Measured" && !["Scale", "Ruler"].includes(method))
+    ) {
+        throw correctionValidationError_(
+            "INVALID_CORRECTION: Measurement quality and method must describe the same evidence."
+        );
+    }
+}
+
+function correctionValidateNutrients_(row) {
+    if (
+        (row[16] === "Yes" && (!row[17].trim() || !row[18].trim())) ||
+        (row[16] === "No" && (row[17] || row[18])) ||
+        !NUTRIENT_OPTIONS.includes(row[16])
+    ) {
+        throw correctionValidationError_(
+            "INVALID_CORRECTION: Nutrients Yes needs product and amount; No needs both explicitly cleared."
+        );
+    }
 }
 
 function correctionDate_(value) {
@@ -5982,7 +6053,7 @@ function correctionReceipt_(snapshot, payload) {
     const original = snapshot.rows.find(
         (row) => row.values[26] === payload.observationId
     );
-    if (!original || original.values[35] !== "Removed") {
+    if (original?.values[35] !== "Removed") {
         throw new Error(
             "CORRECTION_RECEIPT_INVALID: The original retirement is missing. Inspect History before retrying."
         );
@@ -6044,7 +6115,7 @@ function correctionBatchUpdate_(spreadsheet, requests) {
         typeof Sheets === "undefined" ||
         typeof Sheets.Spreadsheets?.batchUpdate !== "function"
     ) {
-        throw new Error(
+        throw new TypeError(
             "CORRECTION_API_UNAVAILABLE: Enable the Advanced Sheets v4 service and verify its API grant before correcting."
         );
     }
@@ -7442,7 +7513,7 @@ function webHistoryTimestamp_(value) {
     )
         return 0;
     const timestamp = dateSortValue_(value);
-    return timestamp > 0 ? timestamp : 0;
+    return Math.max(timestamp, 0);
 }
 
 /** Derive all plant reads from the bootstrap's one History snapshot. */
@@ -7534,7 +7605,13 @@ function webWeightReadModelsFromRows_(
             )
         );
     });
-    return { dayKey, weighedTodayPlantIds: [...weighedToday].sort(), byPlant };
+    return {
+        dayKey,
+        weighedTodayPlantIds: [...weighedToday].sort((left, right) =>
+            left.localeCompare(right)
+        ),
+        byPlant,
+    };
 }
 
 /** A chart is measured history, independent of the watering forecast model. */
@@ -7559,6 +7636,9 @@ function webPlantWeightReadModel_(records, potSetup, nowMs, previousDry) {
         (record) => record.active && record.event === "Water"
     );
     const start = water || repot || measured[0];
+    let startKind = start ? "First reading" : "";
+    if (repot) startKind = "Repot";
+    if (water) startKind = "Water";
     const iso = (record) =>
         record ? new Date(record.timestamp).toISOString() : "";
     const span = inSetup.filter((record) => afterBoundary(record, start));
@@ -7608,13 +7688,7 @@ function webPlantWeightReadModel_(records, potSetup, nowMs, previousDry) {
             potSetup,
             setupStartedAt: iso(repot),
             startedAt: iso(start),
-            startKind: water
-                ? "Water"
-                : repot
-                  ? "Repot"
-                  : start
-                    ? "First reading"
-                    : "",
+            startKind,
             points,
             waterings: span
                 .filter((record) => record.active && record.event === "Water")
@@ -7658,7 +7732,10 @@ function normalizeWebHistoryFilters_(filters, plantNames) {
     return { plantId, event };
 }
 
-/** Whitelist scalar cell values; never return objects or non-finite numbers. */
+/**
+ * Whitelist JSON scalar cell values; retain numbers and booleans for the DTO.
+ * @returns {string | number | boolean} A valid scalar, or an empty string.
+ */
 function webHistoryDetailValue_(value) {
     if (value instanceof Date) {
         return Number.isNaN(value.getTime()) ? "" : value.toISOString();
@@ -7707,14 +7784,11 @@ function webHistoryDetails_(row) {
     const details = {};
     Object.entries({ ...fields, ...eventFields[event] }).forEach(
         ([key, index]) => {
-            const value =
-                key === "recordedAtIso"
-                    ? webHistoryTimestamp_(row[index])
-                        ? new Date(
-                              webHistoryTimestamp_(row[index])
-                          ).toISOString()
-                        : ""
-                    : webHistoryDetailValue_(row[index]);
+            let value;
+            if (key === "recordedAtIso") {
+                const timestamp = webHistoryTimestamp_(row[index]);
+                value = timestamp ? new Date(timestamp).toISOString() : "";
+            } else value = webHistoryDetailValue_(row[index]);
             if (value !== "") details[key] = value;
         }
     );

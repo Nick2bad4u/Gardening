@@ -1186,6 +1186,162 @@ describe("atomic saved History corrections", () => {
 });
 
 describe("correction validation and durable receipt boundaries", () => {
+    it("preserves legacy blank setup and recording metadata while moving a date within setup one", () => {
+        expect.hasAssertions();
+
+        const model = fixture([
+            observation("Weigh", "original-1", { 9: "", 10: "" }),
+            observation("Weigh", "legacy-reading", {
+                0: new Date("2026-09-02T12:00:00Z"),
+                10: "",
+                26: "",
+            }),
+            observation("Water", "legacy-sibling", {
+                0: "",
+                9: "",
+                29: "save-original-1",
+                35: "Removed",
+            }),
+        ]);
+        const entry = model.api.getWebCorrectionEntry({
+            observationId: "original-1",
+        });
+
+        expect(entry.original.recordedAt).toBe("");
+        expect(entry.siblings).toMatchObject([
+            {
+                observationDate: "",
+                observationId: "legacy-sibling",
+                recordedAt: "",
+            },
+        ]);
+
+        const before = structuredClone(model.state.rows.slice(2));
+        model.api.saveWebObservationCorrection(
+            prepare(model, { observationDate: "2026-09-03T18:00:00Z" })
+        );
+
+        expect(stored(model, 5, 1).value).toStrictEqual(
+            new Date("2026-09-03T18:00:00Z")
+        );
+        expect(stored(model, 5, 11).value).toBe("");
+        expect(model.state.rows.slice(2, 4)).toStrictEqual(before);
+    });
+
+    it.each([NaN, Infinity])(
+        "rejects a nonfinite canonical weight %s before reserving a correction",
+        (weight) => {
+            expect.hasAssertions();
+
+            const model = fixture([
+                observation("Weigh", "original-1", { 4: weight }),
+            ]);
+            const before = structuredClone(model.state.rows);
+
+            expect(() => prepare(model)).toThrow(
+                "HISTORY_SCHEMA: Unsupported canonical cell type"
+            );
+            expect(model.state.rows).toStrictEqual(before);
+            expect(model.state.properties.size).toBe(0);
+            expect(model.state.batches).toHaveLength(0);
+        }
+    );
+
+    it("rejects a date move when a related reading has a blank date", () => {
+        expect.hasAssertions();
+
+        const model = fixture([
+            observation(),
+            observation("Weigh", "invalid-related-date", { 0: "" }),
+        ]);
+        const before = structuredClone(model.state.rows);
+
+        expect(() =>
+            prepare(model, { observationDate: "2026-09-03T18:00:00Z" })
+        ).toThrow("HISTORY_SCHEMA: A related observation has an invalid date");
+        expect(model.state.rows).toStrictEqual(before);
+        expect(model.state.batches).toHaveLength(0);
+    });
+
+    it("rejects moving into an earlier setup even without an intervening Repot record", () => {
+        expect.hasAssertions();
+
+        const model = fixture([
+            observation(),
+            observation("Weigh", "earlier-setup", {
+                0: new Date("2026-09-02T12:00:00Z"),
+                10: 1,
+            }),
+        ]);
+        const before = structuredClone(model.state.rows);
+
+        expect(() =>
+            prepare(model, { observationDate: "2026-09-02T12:00:00Z" })
+        ).toThrow("SETUP_BOUNDARY");
+        expect(model.state.rows).toStrictEqual(before);
+        expect(model.state.batches).toHaveLength(0);
+    });
+
+    it("rejects moving a Repot backward across an already recorded dependent reading", () => {
+        expect.hasAssertions();
+
+        const model = fixture([
+            observation("Repot"),
+            observation("Weigh", "dependent-reading", {
+                0: new Date("2026-09-03T12:00:00Z"),
+            }),
+        ]);
+        const before = structuredClone(model.state.rows);
+
+        expect(() =>
+            prepare(model, { observationDate: "2026-09-03T11:00:00Z" })
+        ).toThrow("SETUP_BOUNDARY");
+        expect(model.state.rows).toStrictEqual(before);
+        expect(model.state.batches).toHaveLength(0);
+    });
+
+    it.each([
+        ["2026-09-03T12:00:00Z", "2026-09-03T13:00:00Z"],
+        ["2026-09-03T18:00:00Z", "2026-09-03T15:00:00Z"],
+    ])(
+        "checks a backward Repot move against a reading at %s when moving to %s",
+        (readingDate, destination) => {
+            expect.hasAssertions();
+
+            const model = fixture([
+                observation("Repot"),
+                observation("Weigh", "dependent-reading", {
+                    0: new Date(readingDate),
+                }),
+            ]);
+            const before = structuredClone(model.state.rows);
+            const preview = prepare(model, { observationDate: destination });
+
+            expect(preview.changes).toStrictEqual({
+                observationDate: destination,
+            });
+            expect(model.state.rows).toStrictEqual(before);
+            expect(model.state.batches).toHaveLength(0);
+        }
+    );
+
+    it("accepts a consistent downgrade to estimated provenance without changing saved dimensions", () => {
+        expect.hasAssertions();
+
+        const model = fixture([observation("Measure")]);
+        model.api.saveWebObservationCorrection(
+            prepare(model, {
+                measurementMethod: "Estimated visually",
+                measurementQuality: "Estimated",
+            })
+        );
+
+        expect(stored(model, 3, 29).value).toBe("Estimated");
+        expect(stored(model, 3, 35).value).toBe("Estimated visually");
+        expect(stored(model, 3, 6).value).toBe(12.34567);
+        expect(stored(model, 3, 7).value).toBe(4.32109);
+    });
+
     it("changes canonical centimetres without converting through the saved display unit", () => {
         expect.hasAssertions();
 
@@ -1774,6 +1930,39 @@ describe("durable pre-batch correction rejection", () => {
 });
 
 describe("menu exclusion identity recheck", () => {
+    it("excludes multiple confirmed identities atomically and creates missing audit reasons", () => {
+        expect.hasAssertions();
+
+        const model = fixture([
+            observation("Weigh", "original-1", { 31: "" }),
+            observation("Water", "original-2", { 31: "" }),
+            observation("Check", "untouched"),
+        ]);
+        const before = structuredClone(model.state.rows);
+        model.state.lastSelectedRow = 3;
+        model.api.removeSelectedHistoryObservations();
+
+        for (const rowNumber of [2, 3]) {
+            const reason = stored(model, rowNumber, 32).value;
+
+            expect(reason).toMatch(
+                /^Excluded from active analysis through the Garden logger menu on /v
+            );
+
+            required(required(before[rowNumber - 1])[31]).value = reason;
+            required(required(before[rowNumber - 1])[35]).value = "Removed";
+        }
+
+        expect(model.state.rows).toStrictEqual(before);
+        expect(model.state).toMatchObject({
+            acquisitions: 1,
+            alerts: 1,
+            releases: 1,
+            writes: 1,
+        });
+        expect(model.state.batches).toHaveLength(1);
+    });
+
     it("resolves selection by ID after an alert-time sort and appends the old reason", () => {
         expect.hasAssertions();
 

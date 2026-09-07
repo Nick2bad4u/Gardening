@@ -162,6 +162,53 @@ function runtime(historyRows = []) {
 }
 
 describe("logger History-backed read models", () => {
+    it("ignores anonymous History rows and defaults a blank baseline setup to the first pot", () => {
+        expect.hasAssertions();
+
+        const models = runtime().api.webWeightReadModelsFromRows_(
+            [
+                row("2026-09-06T12:00:00Z", "Weigh", { 1: "", 4: 9999 }),
+                row("2026-09-06T13:00:00Z", "Weigh", { 4: 350, 10: "" }),
+            ],
+            new Map([["P01", 0]]),
+            now,
+            zone
+        );
+
+        expect(models.byPlant.keys().toArray()).toStrictEqual(["P01"]);
+        expect([...models.weighedTodayPlantIds]).toStrictEqual(["P01"]);
+        expect(models.byPlant.get("P01")).toMatchObject({
+            latestWeight: 350,
+            weightSeries: { points: [{ weight: 350 }], potSetup: 1 },
+        });
+    });
+
+    it("keeps the completed dry reference after a Repot only when it belongs to the new setup", () => {
+        expect.hasAssertions();
+
+        const plant = readPlant(
+            [
+                row("2026-09-01T12:00:00Z", "Repot", { 10: 2 }),
+                row("2026-09-02T12:00:00Z", "Water", { 10: 2 }),
+                row("2026-09-02T13:00:00Z", "Weigh", { 4: 600, 10: 2 }),
+                row("2026-09-04T12:00:00Z", "Weigh", { 4: 400, 10: 2 }),
+                row("2026-09-05T12:00:00Z", "Water", { 10: 2 }),
+                row("2026-09-05T13:00:00Z", "Weigh", { 4: 610, 10: 2 }),
+            ],
+            2
+        );
+
+        expect(plant.weightSeries).toMatchObject({
+            points: [{ weight: 610 }],
+            previousDry: {
+                observedAt: "2026-09-04T12:00:00.000Z",
+                weight: 400,
+            },
+            setupStartedAt: "2026-09-01T12:00:00.000Z",
+            startedAt: "2026-09-05T12:00:00.000Z",
+        });
+    });
+
     it("uses a workbook day ahead of UTC and accepts legacy blank measured provenance", () => {
         expect.hasAssertions();
 
@@ -770,6 +817,50 @@ describe("corrected weight read models", () => {
 });
 
 describe("logger filtered recent History and event details", () => {
+    it("serializes accidental date-valued notes safely and omits invalid dates", () => {
+        expect.hasAssertions();
+
+        const { api } = runtime([
+            row("2026-09-05T12:00:00Z", "Other", {
+                8: new Date("2026-09-01T12:00:00Z"),
+            }),
+            row("2026-09-06T12:00:00Z", "Other", { 8: new Date("invalid") }),
+        ]);
+        const entries = api.getRecentWebObservations(2);
+
+        expect(required(entries[0]).details).not.toHaveProperty("notes");
+        expect(required(entries[1]).details.notes).toBe(
+            "2026-09-01T12:00:00.000Z"
+        );
+
+        const serialized = JSON.stringify(entries);
+
+        expect(JSON.parse(serialized)).toStrictEqual(structuredClone(entries));
+    });
+
+    it("keeps canonical centimetres and derived inches without guessing an unknown display unit", () => {
+        expect.hasAssertions();
+
+        const { api } = runtime([
+            row("2026-09-05T12:00:00Z", "Measure", {
+                5: 10.16,
+                6: 5.08,
+                36: "feet",
+            }),
+        ]);
+        const details = required(api.getRecentWebObservations(1)[0]).details;
+
+        expect(details).toMatchObject({
+            heightCm: 10.16,
+            heightIn: 4,
+            measurementUnit: "feet",
+            widthCm: 5.08,
+            widthIn: 2,
+        });
+        expect(details).not.toHaveProperty("height");
+        expect(details).not.toHaveProperty("width");
+    });
+
     it("filters on the server before the limit and retains legacy one-argument behavior", () => {
         expect.hasAssertions();
 

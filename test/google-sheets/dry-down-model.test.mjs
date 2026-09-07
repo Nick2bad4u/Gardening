@@ -569,6 +569,74 @@ describe("dry-down formulas and workbook installation", () => {
 });
 
 describe("same-setup cycle learning", () => {
+    it("uses row order to choose an ungrouped wet reading at the exact watering time", () => {
+        expect.hasAssertions();
+
+        const result = model([
+            weight(0, 100, { batch: "before-water" }),
+            row(0, "Water", "", { batch: "water-only" }),
+            weight(0, 200, { batch: "after-water" }),
+        ]);
+
+        expect(result).toMatchObject({
+            count: 1,
+            date: "",
+            dry: 100,
+            learned: 0,
+            wet: 200,
+        });
+    });
+
+    it("withholds learning when a full-water cycle loses only three grams", () => {
+        expect.hasAssertions();
+
+        const result = model([
+            row(0, "Water", "", { application: "Thorough" }),
+            weight(0, 200),
+            weight(1, 199),
+            weight(2, 198),
+            weight(3, 197),
+            row(4, "Water", "", { application: "Thorough" }),
+            weight(4, 300),
+        ]);
+
+        expect(result).toMatchObject({
+            date: "",
+            dry: 197,
+            learned: 0,
+            wet: 300,
+        });
+    });
+
+    it("reports normal loss for a supported first cycle with gradual drying", () => {
+        expect.hasAssertions();
+
+        const result = model([
+            weight(-1, 100),
+            ...current(
+                0,
+                [
+                    0,
+                    2,
+                    4,
+                    6,
+                ],
+                0.05
+            ),
+        ]);
+
+        expect(result).toMatchObject({
+            learned: 0,
+            readiness: "Current cycle supported",
+            review: "OK",
+        });
+        expect(finiteNumber(result.date)).toBeGreaterThan(epoch + 6);
+        expect(finiteNumber(result.loss)).toBeGreaterThan(0);
+        expect(
+            finiteNumber(result.loss) / finiteNumber(result.wet)
+        ).toBeLessThan(0.03);
+    });
+
     it("weights learned timing by recency and rejects a zero-information prior", () => {
         expect.hasAssertions();
 
