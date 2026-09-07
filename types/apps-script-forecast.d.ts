@@ -27,6 +27,12 @@ interface GardenDryDownCycle {
     wet: DryDownRecord | undefined;
 }
 
+interface GardenDryDownForecastAnchors {
+    currentDate: number;
+    dry: number;
+    latest: DryDownRecord;
+}
+
 interface GardenDryDownModel {
     basis: string;
     count: number;

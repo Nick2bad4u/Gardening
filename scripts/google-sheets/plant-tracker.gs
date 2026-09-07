@@ -1055,7 +1055,8 @@ function processAppSheetEntry(entryId) {
     const matches = rows
         .map((row, index) => ({ row, rowNumber: index + 2 }))
         .filter(({ row }) => cleanText_(row[0]) === normalizedEntryId);
-    if (matches.length !== 1) {
+    const match = matches[0];
+    if (!match || matches.length !== 1) {
         throw new Error(
             matches.length
                 ? `AppSheet Entry ID ${normalizedEntryId} is duplicated.`
@@ -1063,9 +1064,6 @@ function processAppSheetEntry(entryId) {
         );
     }
 
-    const match = matches[0];
-    if (!match)
-        throw new Error(`AppSheet entry ${normalizedEntryId} was not found.`);
     const { row, rowNumber } = match;
     const storedStatus = cleanText_(row[26]);
     const storedRequestId = cleanText_(row[28]);
@@ -1226,7 +1224,9 @@ function processQueuedAppSheetEntries() {
                         result?.message ||
                         "This entry needs correction before it can be saved.",
                     requestId: item.requestId,
-                    historyRows: ok ? Number(result?.historyRows) || 0 : 0,
+                    historyRows: result?.ok
+                        ? Number(result.historyRows) || 0
+                        : 0,
                     savedAt: ok ? new Date() : "",
                 });
             });
@@ -1870,11 +1870,9 @@ function migrateLegacyAppSheetBulkSheet_(sheet) {
     /** @param {readonly string[]} expectedHeaders @returns {boolean} */
     const hasHeaders = (expectedHeaders) => {
         if (sheet.getLastColumn() < expectedHeaders.length) return false;
-        const currentHeaders =
-            sheet
-                .getRange(1, 1, 1, expectedHeaders.length)
-                .getDisplayValues()[0]
-                ?.map((value) => value.trim()) || [];
+        const currentHeaders = firstDisplayRow_(
+            sheet.getRange(1, 1, 1, expectedHeaders.length)
+        ).map((value) => value.trim());
         return expectedHeaders.every(
             (header, index) => currentHeaders[index] === header
         );
@@ -1892,11 +1890,9 @@ function migrateLegacyAppSheetBulkSheet_(sheet) {
 
     let migrated = false;
     if (sheet.getLastColumn() >= APP_SHEET_BULK_LEGACY_HEADERS.length) {
-        const legacyHeaders =
-            sheet
-                .getRange(1, 1, 1, APP_SHEET_BULK_LEGACY_HEADERS.length)
-                .getDisplayValues()[0]
-                ?.map((value) => value.trim()) || [];
+        const legacyHeaders = firstDisplayRow_(
+            sheet.getRange(1, 1, 1, APP_SHEET_BULK_LEGACY_HEADERS.length)
+        ).map((value) => value.trim());
         const isLegacy = APP_SHEET_BULK_LEGACY_HEADERS.every(
             (header, index) => legacyHeaders[index] === header
         );
@@ -1917,11 +1913,9 @@ function migrateLegacyAppSheetBulkSheet_(sheet) {
         if (sheet.getLastColumn() < APP_SHEET_BULK_V511_HEADERS.length) {
             return false;
         }
-        const currentHeaders =
-            sheet
-                .getRange(1, 1, 1, APP_SHEET_BULK_V511_HEADERS.length)
-                .getDisplayValues()[0]
-                ?.map((value) => value.trim()) || [];
+        const currentHeaders = firstDisplayRow_(
+            sheet.getRange(1, 1, 1, APP_SHEET_BULK_V511_HEADERS.length)
+        ).map((value) => value.trim());
         return APP_SHEET_BULK_V511_HEADERS.every(
             (header, index) =>
                 currentHeaders[index] === header ||
@@ -1969,11 +1963,9 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
         APP_SHEET_ENTRY_LEGACY_HEADERS.length
     );
     if (currentWidth < APP_SHEET_ENTRY_LEGACY_HEADERS.length) return false;
-    const currentHeaders =
-        sheet
-            .getRange(1, 1, 1, APP_SHEET_ENTRY_LEGACY_HEADERS.length)
-            .getDisplayValues()[0]
-            ?.map((value) => value.trim()) || [];
+    const currentHeaders = firstDisplayRow_(
+        sheet.getRange(1, 1, 1, APP_SHEET_ENTRY_LEGACY_HEADERS.length)
+    ).map((value) => value.trim());
     const compatible = APP_SHEET_ENTRY_LEGACY_HEADERS.every(
         (header, index) => currentHeaders[index] === header
     );
@@ -1981,17 +1973,15 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
 
     ensureSheetColumnCapacity_(sheet, APP_SHEET_ENTRY_HEADERS.length);
     const extensionStartColumn = APP_SHEET_ENTRY_LEGACY_HEADERS.length + 1;
-    const extensionHeaders =
-        sheet
-            .getRange(
-                1,
-                extensionStartColumn,
-                1,
-                APP_SHEET_ENTRY_HEADERS.length -
-                    APP_SHEET_ENTRY_LEGACY_HEADERS.length
-            )
-            .getDisplayValues()[0]
-            ?.map((value) => value.trim()) || [];
+    const extensionHeaders = firstDisplayRow_(
+        sheet.getRange(
+            1,
+            extensionStartColumn,
+            1,
+            APP_SHEET_ENTRY_HEADERS.length -
+                APP_SHEET_ENTRY_LEGACY_HEADERS.length
+        )
+    ).map((value) => value.trim());
     const expectedExtension = APP_SHEET_ENTRY_HEADERS.slice(
         APP_SHEET_ENTRY_LEGACY_HEADERS.length
     );
@@ -3364,9 +3354,9 @@ function fitDryDownCurve_(points, dry, tolerance) {
         error: 0,
         gain: false,
     };
-    const first = recent[0];
-    const last = recent.at(-1);
-    if (recent.length < 2 || !first || !last) return empty;
+    const [first, ...remaining] = recent;
+    const last = remaining.at(-1);
+    if (!first || !last) return empty;
     const span = last.date - first.date;
     const gain = recent.some((p, i) => {
         const previous = recent[i - 1];
@@ -3379,26 +3369,28 @@ function fitDryDownCurve_(points, dry, tolerance) {
     if (span < 1 || recent.some((p) => p.weight <= floor)) {
         return { ...empty, span, gain };
     }
-    const xs = recent.map((p) => p.date - first.date);
-    const ys = recent.map((p) => Math.log(p.weight - floor));
-    const xMean = xs.reduce((a, b) => a + b, 0) / xs.length;
-    const yMean = ys.reduce((a, b) => a + b, 0) / ys.length;
-    const xx = xs.reduce((sum, x) => sum + (x - xMean) ** 2, 0);
-    const yy = ys.reduce((sum, y) => sum + (y - yMean) ** 2, 0);
-    const xy = xs.reduce((sum, x, i) => {
-        const y = ys[i];
-        if (y === undefined)
-            throw new Error("Dry-down coordinates must align.");
-        return sum + (x - xMean) * (y - yMean);
-    }, 0);
+    const coordinates = recent.map((p) => ({
+        x: p.date - first.date,
+        y: Math.log(p.weight - floor),
+    }));
+    const xMean =
+        coordinates.reduce((sum, point) => sum + point.x, 0) /
+        coordinates.length;
+    const yMean =
+        coordinates.reduce((sum, point) => sum + point.y, 0) /
+        coordinates.length;
+    const xx = coordinates.reduce((sum, { x }) => sum + (x - xMean) ** 2, 0);
+    const yy = coordinates.reduce((sum, { y }) => sum + (y - yMean) ** 2, 0);
+    const xy = coordinates.reduce(
+        (sum, { x, y }) => sum + (x - xMean) * (y - yMean),
+        0
+    );
     const slope = xy / xx;
     const fit = yy > 0 ? Math.min(1, xy ** 2 / (xx * yy)) : 0;
-    const residualError = ys.reduce((sum, y, i) => {
-        const x = xs[i];
-        if (x === undefined)
-            throw new Error("Dry-down coordinates must align.");
-        return sum + (y - yMean - slope * (x - xMean)) ** 2;
-    }, 0);
+    const residualError = coordinates.reduce(
+        (sum, { x, y }) => sum + (y - yMean - slope * (x - xMean)) ** 2,
+        0
+    );
     const error =
         recent.length > 2 && slope !== 0
             ? Math.sqrt(residualError / (recent.length - 2) / xx) /
@@ -3521,7 +3513,11 @@ function dryDownModelForPlant_(records) {
     }
     return applyDryDownForecast_(
         model,
-        current,
+        {
+            currentDate: current.water.date,
+            dry: completedDry.weight,
+            latest: current.points.reduce((_, point) => point, current.wet),
+        },
         curve,
         learned,
         tolerance,
@@ -3554,25 +3550,26 @@ function dryDownCurveContradicts_(curve) {
  * @returns {{log: number, spread: number}}
  */
 function dryDownPrior_(learned, currentDate) {
-    const weights = learned.map(
-        (c) => c.fit * Math.exp((-Math.LN2 * (currentDate - c.ended)) / 60)
-    );
-    const sum = weights.reduce((a, b) => a + b, 0);
+    const weightedCurves = learned.map((curve) => ({
+        curve,
+        weight:
+            curve.fit *
+            Math.exp((-Math.LN2 * (currentDate - curve.ended)) / 60),
+    }));
+    const sum = weightedCurves.reduce((total, { weight }) => total + weight, 0);
     if (sum <= 0) return { log: 0, spread: 0 };
     const log =
-        learned.reduce((total, c, i) => {
-            const weight = weights[i];
-            if (weight === undefined)
-                throw new Error("Dry-down weights must align.");
-            return total + weight * Math.log(c.decay);
-        }, 0) / sum;
+        weightedCurves.reduce(
+            (total, { curve, weight }) =>
+                total + weight * Math.log(curve.decay),
+            0
+        ) / sum;
     const spread = Math.sqrt(
-        learned.reduce((total, c, i) => {
-            const weight = weights[i];
-            if (weight === undefined)
-                throw new Error("Dry-down weights must align.");
-            return total + weight * (Math.log(c.decay) - log) ** 2;
-        }, 0) / sum
+        weightedCurves.reduce(
+            (total, { curve, weight }) =>
+                total + weight * (Math.log(curve.decay) - log) ** 2,
+            0
+        ) / sum
     );
     return { log, spread };
 }
@@ -3638,7 +3635,7 @@ function dryDownForecastReview_(
 
 /**
  * @param {GardenDryDownModel} model
- * @param {GardenDryDownCycle} current
+ * @param {GardenDryDownForecastAnchors} anchors
  * @param {GardenDryDownCurve} curve
  * @param {GardenLearnedDryDownCurve[]} learned
  * @param {number} tolerance
@@ -3647,19 +3644,14 @@ function dryDownForecastReview_(
  */
 function applyDryDownForecast_(
     model,
-    current,
+    anchors,
     curve,
     learned,
     tolerance,
     supported
 ) {
-    const latest = current.points.at(-1) || current.wet;
-    if (!latest || typeof model.dry !== "number") {
-        throw new Error(
-            "Dry-down forecast needs measured wet and dry anchors."
-        );
-    }
-    const prior = dryDownPrior_(learned, current.water.date);
+    const { latest, dry, currentDate } = anchors;
+    const prior = dryDownPrior_(learned, currentDate);
     const currentUsable =
         curve.span >= 1 && curve.decay > 0 && curve.fit >= 0.6;
     const alpha = dryDownCurrentInfluence_(
@@ -3670,7 +3662,7 @@ function applyDryDownForecast_(
     );
     const currentLog = currentUsable ? Math.log(curve.decay) : prior.log;
     const decay = Math.exp((1 - alpha) * prior.log + alpha * currentLog);
-    const residual = latest.weight - (model.dry - tolerance);
+    const residual = latest.weight - (dry - tolerance);
     const days = Math.max(
         0,
         Math.log(Math.max(1, residual / (tolerance * 2))) / decay
@@ -4254,7 +4246,7 @@ function dailyCareSources_(spreadsheet) {
             "Daily care requires the existing 42-column History schema."
         );
     }
-    const historyHeaders = history.getRange(1, 1, 1, 42).getDisplayValues()[0];
+    const historyHeaders = firstDisplayRow_(history.getRange(1, 1, 1, 42));
     /** @type {[number, string][]} */
     const expectedHistoryHeaders = [
         [0, "Date"],
@@ -4269,7 +4261,7 @@ function dailyCareSources_(spreadsheet) {
         [41, "Water amount (mL)"],
     ];
     expectedHistoryHeaders.forEach(([index, header]) => {
-        if (historyHeaders?.[index] !== header)
+        if (historyHeaders[index] !== header)
             throw new Error(`Unexpected History header: ${header}.`);
     });
     const bounds = {
@@ -5112,6 +5104,7 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
             .setFontWeight("bold");
     });
     const baselineRow = index + 2;
+    /** @type {[string, string, string, string, string, string][]} */
     const metricRows = [
         [
             "Latest weight (lb)",
@@ -5156,20 +5149,18 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
     ];
     metricRows.forEach((values, metricIndex) => {
         const row = metricIndex + 5;
-        [1, 4, 7].forEach((column, groupIndex) => {
-            const label = values[groupIndex * 2];
-            const formula = values[groupIndex * 2 + 1];
-            if (label === undefined || formula === undefined) {
-                throw new Error(
-                    "Plant page metrics need paired labels and formulas."
-                );
-            }
+        /** @type {[number, number, string, string][]} */
+        const metrics = [
+            [1, 2, values[0], values[1]],
+            [4, 2, values[2], values[3]],
+            [7, 3, values[4], values[5]],
+        ];
+        metrics.forEach(([column, width, label, formula]) => {
             sheet
                 .getRange(row, column)
                 .setValue(label)
                 .setFontWeight("bold")
                 .setFontColor("#52655a");
-            const width = column === 7 ? 3 : 2;
             sheet
                 .getRange(row, column + 1, 1, width)
                 .merge()
@@ -5231,9 +5222,6 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
     const rules = [];
     Object.entries(WORKBOOK_EVENT_COLORS).forEach(
         ([eventName, [background, foreground]]) => {
-            if (background === undefined || foreground === undefined) {
-                throw new Error(`Missing workbook colors for ${eventName}.`);
-            }
             rules.push(
                 SpreadsheetApp.newConditionalFormatRule()
                     .whenTextEqualTo(eventName)
@@ -7062,13 +7050,13 @@ function existingObservationResult_(
 ) {
     const expectedRows = input.eventNames.length;
     const firstRow = existingRequestRows[0];
-    if (firstRow === undefined) {
-        throw new Error("This saved request has no reserved History row.");
-    }
-    const contiguous = existingRequestRows.every(
-        (rowNumber, index) => rowNumber === firstRow + index
-    );
-    if (existingRequestRows.length !== expectedRows || !contiguous) {
+    if (
+        firstRow === undefined ||
+        existingRequestRows.length !== expectedRows ||
+        existingRequestRows.some(
+            (rowNumber, index) => rowNumber !== firstRow + index
+        )
+    ) {
         throw new Error(
             "This saved request has an unexpected History shape. Open History and check the newest rows before retrying."
         );
@@ -7837,13 +7825,10 @@ function plantActivitySummary_(historyRows, plantId, potSetup) {
         .map((r) => r.date)
         .sort((a, b) => a - b);
     summary.waterIntervalCount = Math.max(0, dates.length - 1);
+    const elapsedDays = (dates.at(-1) ?? 0) - (dates[0] ?? 0);
     if (summary.waterIntervalCount) {
-        const firstDate = dates[0];
-        const lastDate = dates.at(-1);
         summary.averageWaterIntervalDays =
-            firstDate !== undefined && lastDate !== undefined
-                ? (lastDate - firstDate) / summary.waterIntervalCount
-                : "";
+            elapsedDays / summary.waterIntervalCount;
     }
     const setup = Math.max(potSetup, ...records.map((r) => r.setup));
     const currentRecords = records.filter((r) => r.setup === setup);
@@ -7896,6 +7881,7 @@ function observedDryDownSummary_(points) {
     ];
     const first = unique[0];
     const last = unique.at(-1);
+    const previous = unique.at(-2);
     /** @type {{averageDryDownGramsPerDay: number | "", dryDownDays: number | "",
      * dryDownReadingCount: number, recentDryDownGramsPerDay: number | "", recentDryDownDays: number | ""}} */
     const summary = {
@@ -7905,7 +7891,8 @@ function observedDryDownSummary_(points) {
         recentDryDownGramsPerDay: "",
         recentDryDownDays: "",
     };
-    if (!first || !last || last.date - first.date < 1) return summary;
+    if (!first || !last || !previous || last.date - first.date < 1)
+        return summary;
     summary.dryDownDays = last.date - first.date;
     let lowest = first.weight;
     const gain = points.some((point) => {
@@ -7915,8 +7902,6 @@ function observedDryDownSummary_(points) {
     if (gain || first.weight <= last.weight) return summary;
     summary.averageDryDownGramsPerDay =
         (first.weight - last.weight) / summary.dryDownDays;
-    const previous = unique.at(-2);
-    if (!previous) return summary;
     const recentDays = last.date - previous.date;
     if (recentDays >= 1 && previous.weight >= last.weight) {
         summary.recentDryDownDays = recentDays;
@@ -8233,16 +8218,23 @@ function baselinePotSetupData_(baselines) {
     return { potSetupColumn, rows };
 }
 
-/**
- * @param {GardenSheet} sheet
- * @param {string} expectedHeader
- */
+/** @param {GardenRange} range @returns {string[]} */
+function firstDisplayRow_(range) {
+    const row = range.getDisplayValues()[0];
+    if (!row)
+        throw new Error(
+            "The spreadsheet returned no values for the requested row."
+        );
+    return row;
+}
+
+/** @param {GardenSheet} sheet @param {string} expectedHeader */
 function optionalColumnForHeader_(sheet, expectedHeader) {
     const columnCount = sheet.getLastColumn();
     if (!columnCount) return 0;
-    const headers = (
-        sheet.getRange(1, 1, 1, columnCount).getDisplayValues()[0] || []
-    ).map(cleanText_);
+    const headers = firstDisplayRow_(sheet.getRange(1, 1, 1, columnCount)).map(
+        cleanText_
+    );
     const matches = headers.flatMap((header, index) =>
         header === expectedHeader ? [index + 1] : []
     );
@@ -8819,10 +8811,8 @@ function historyRowsForRequest_(history, requestId) {
  */
 function savedRequestStatus_(history, requestId) {
     const rowNumbers = historyRowsForRequest_(history, requestId);
-    if (!rowNumbers.length) return { state: "missing", requestId };
-
     const firstRow = rowNumbers[0];
-    if (firstRow === undefined) return { state: "incomplete", requestId };
+    if (firstRow === undefined) return { state: "missing", requestId };
     const contiguous = rowNumbers.every(
         (rowNumber, index) => rowNumber === firstRow + index
     );
@@ -8871,7 +8861,7 @@ function ensureHistoryDetailColumns_(history) {
         1,
         GARDEN_LOGGER.historyDetailColumns
     );
-    const current = (range.getDisplayValues()[0] || []).map(cleanText_);
+    const current = firstDisplayRow_(range).map(cleanText_);
     const empty = current.every((value) => !value);
     if (empty) {
         range.setValues([[...HISTORY_DETAIL_HEADERS]]);
@@ -8903,7 +8893,7 @@ function ensureHistoryProvenanceColumns_(history) {
         1,
         GARDEN_LOGGER.historyProvenanceColumns
     );
-    const current = (range.getDisplayValues()[0] || []).map(cleanText_);
+    const current = firstDisplayRow_(range).map(cleanText_);
     const empty = current.every((value) => !value);
     if (empty) {
         range.setValues([[...HISTORY_PROVENANCE_HEADERS]]);
@@ -8935,7 +8925,7 @@ function ensureHistoryMeasurementColumns_(history, configureColumn = false) {
         1,
         GARDEN_LOGGER.historyMeasurementColumns
     );
-    const current = (range.getDisplayValues()[0] || []).map(cleanText_);
+    const current = firstDisplayRow_(range).map(cleanText_);
     const empty = current.every((value) => !value);
     if (empty) {
         range.setValues([[...HISTORY_MEASUREMENT_HEADERS]]);
@@ -8987,7 +8977,7 @@ function ensureHistoryRotationColumns_(history, configureColumn = false) {
         1,
         GARDEN_LOGGER.historyRotationColumns
     );
-    const current = (range.getDisplayValues()[0] || []).map(cleanText_);
+    const current = firstDisplayRow_(range).map(cleanText_);
     const empty = current.every((value) => !value);
     if (empty) {
         range.setValues([[...HISTORY_ROTATION_HEADERS]]);
@@ -9025,7 +9015,7 @@ function ensureHistoryWaterColumns_(history, configureColumn = false) {
         1,
         GARDEN_LOGGER.historyWaterColumns
     );
-    const current = (range.getDisplayValues()[0] || []).map(cleanText_);
+    const current = firstDisplayRow_(range).map(cleanText_);
     current.forEach((header, index) => {
         if (
             header !== HISTORY_WATER_HEADERS[index] &&
@@ -9129,7 +9119,7 @@ function ensureQuickLogWaterColumns_(quickLog, configureColumns = false) {
         1,
         expected.length
     );
-    const current = (range.getDisplayValues()[0] || []).map(cleanText_);
+    const current = firstDisplayRow_(range).map(cleanText_);
     current.forEach((header, index) => {
         if (
             header !== expected[index] &&
@@ -9697,10 +9687,8 @@ function requireSheet_(spreadsheet, name) {
  * @param {number} rowNumber
  */
 function assertHeaders_(sheet, expected, rowNumber) {
-    const actual = (
-        sheet
-            .getRange(rowNumber, 1, 1, expected.length)
-            .getDisplayValues()[0] || []
+    const actual = firstDisplayRow_(
+        sheet.getRange(rowNumber, 1, 1, expected.length)
     ).map((value) => value.trim());
     expected.forEach((header, index) => {
         if (actual[index] !== header) {

@@ -1204,6 +1204,21 @@ describe("dry-down numeric and calendar safeguards", () => {
         expect(model(rapid).review).toBe("Rapid loss — reweigh");
     });
 
+    it("ignores boolean and missing date cells without inventing epoch observations", () => {
+        expect.hasAssertions();
+
+        const context = runtime();
+
+        for (const value of [
+            true,
+            false,
+            null,
+            undefined,
+        ]) {
+            expect(context.dryDownSerialDate_(value, "UTC")).toBe(0);
+        }
+    });
+
     it("preserves local calendar dates and safely formats bootstrap forecast windows", () => {
         expect.hasAssertions();
 

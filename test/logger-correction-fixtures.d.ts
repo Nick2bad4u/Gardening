@@ -3,6 +3,7 @@ export interface CorrectionCell {
     formula: string;
     validation: string;
     value:
+        | boolean
         | Date
         | number
         | string;

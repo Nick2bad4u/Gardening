@@ -918,6 +918,66 @@ function quickLogWateringFixture({ amount, application, event }) {
 }
 
 describe("garden logger input normalization", () => {
+    it.each([
+        null,
+        undefined,
+        false,
+        12,
+        "P01",
+        [],
+    ])(
+        "rejects a non-object mobile payload (%j) without changing History",
+        (payload) => {
+            expect.hasAssertions();
+
+            const workbook = createLoggerWorkbook();
+            const context = loadAppsScript(workbook.history, {
+                globals: workbook.globals,
+                spreadsheet: workbook.spreadsheet,
+            });
+            const before = structuredClone(workbook.history.__rows);
+
+            expect(() => context.saveWebObservation(payload)).toThrow(
+                "Choose a valid plant."
+            );
+            expect(() => context.saveBulkCareObservation(payload)).toThrow(
+                "Choose at least one plant."
+            );
+            expect(workbook.history.__rows).toStrictEqual(before);
+        }
+    );
+
+    it("stops header installation when the sheet cannot return its requested row", () => {
+        expect.hasAssertions();
+
+        const history = createHistorySheet();
+        const getRange = history.getRange.bind(history);
+        history.getRange = (...args) => ({
+            ...getRange(...args),
+            getDisplayValues: () => [],
+        });
+        const context = loadAppsScript(history);
+        const before = structuredClone(history.__rows);
+
+        expect(() => {
+            context.ensureHistoryDetailColumns_(history);
+        }).toThrow("The spreadsheet returned no values for the requested row.");
+        expect(history.__rows).toStrictEqual(before);
+    });
+
+    it("preserves numeric and Date timestamp inputs and rejects an invalid Date", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet());
+        const timestamp = Date.UTC(2026, 8, 7, 12);
+        const date = new Date(timestamp);
+
+        expect(context.normalizeDate_(timestamp)).toStrictEqual(date);
+        expect(context.normalizeDate_(date)).toBe(date);
+        expect(context.dateSortValue_(timestamp)).toBe(timestamp);
+        expect(context.dateSortValue_(new Date(NaN))).toBe(0);
+    });
+
     it("infers a single weight event when an older client omits the events array", () => {
         expect.hasAssertions();
 

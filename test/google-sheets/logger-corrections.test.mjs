@@ -179,12 +179,14 @@ function fixture(
         confirmed: true,
         fault: "",
         firstSelectedRow: 2,
+        hasActiveWorkbook: true,
         hasSelection: true,
         lastSelectedRow: 2,
         locked: false,
         lockUnavailable: false,
         maxColumns: 42,
         maxRows: Math.max(100, observations.length + 1),
+        missingFormulaReadRow: 0,
         onAlert: () => {},
         /** @type {Map<string, string>} */
         properties: new Map(),
@@ -211,14 +213,16 @@ function fixture(
                 throw new Error("Range outside grid");
             return {
                 getFormulas: () =>
-                    selectedMatrix(
-                        state.rows,
-                        row,
-                        column,
-                        rowCount,
-                        columnCount,
-                        "formula"
-                    ),
+                    state.missingFormulaReadRow === row
+                        ? []
+                        : selectedMatrix(
+                              state.rows,
+                              row,
+                              column,
+                              rowCount,
+                              columnCount,
+                              "formula"
+                          ),
                 getValues: () =>
                     selectedMatrix(
                         state.rows,
@@ -327,7 +331,7 @@ function fixture(
         Set,
         Sheets: { Spreadsheets: { batchUpdate } },
         SpreadsheetApp: {
-            getActive: () => spreadsheet,
+            getActive: () => (state.hasActiveWorkbook ? spreadsheet : null),
             getUi: () => ({
                 alert: (
                     /** @type {string} */ title,
@@ -1186,6 +1190,75 @@ describe("atomic saved History corrections", () => {
 });
 
 describe("correction validation and durable receipt boundaries", () => {
+    it("rejects an active original with a cleared date and keeps that retry rejected after repair", () => {
+        expect.hasAssertions();
+
+        const model = fixture();
+        const payload = prepare(model);
+        const originalDate = stored(model, 2, 1).value;
+        stored(model, 2, 1).value = "";
+        const corrupted = structuredClone(model.state.rows);
+
+        expect(() =>
+            model.api.getWebCorrectionEntry({ observationId: "original-1" })
+        ).toThrow(
+            "HISTORY_SCHEMA: The saved observation has invalid canonical types"
+        );
+        expect(model.state.properties.size).toBe(0);
+        expect(() => model.api.saveWebObservationCorrection(payload)).toThrow(
+            "HISTORY_SCHEMA"
+        );
+
+        const rejection = model.api.getWebCorrectionStatus(payload);
+
+        expect(rejection).toMatchObject({
+            code: "HISTORY_SCHEMA",
+            observationId: payload.observationId,
+            requestId: payload.requestId,
+            status: "rejected",
+        });
+        expect(model.state.rows).toStrictEqual(corrupted);
+
+        const receipts = new Map(model.state.properties);
+        stored(model, 2, 1).value = originalDate;
+
+        expect(model.api.getWebCorrectionStatus(payload)).toStrictEqual(
+            rejection
+        );
+        expect(model.state.properties).toStrictEqual(receipts);
+        expect(model.state.batches).toHaveLength(0);
+        expect(model.state).toMatchObject({ locked: false, writes: 0 });
+        expect(model.state.acquisitions).toBe(model.state.releases);
+    });
+
+    it.each([false, true])(
+        "rejects a native boolean canonical value %s through the correction RPC without coercing it",
+        (value) => {
+            expect.hasAssertions();
+
+            const model = fixture();
+            const payload = prepare(model);
+            stored(model, 2, 5).value = value;
+            const corrupted = structuredClone(model.state.rows);
+
+            expect(() =>
+                model.api.getWebCorrectionEntry({ observationId: "original-1" })
+            ).toThrow("HISTORY_SCHEMA: Unsupported canonical cell type");
+            expect(model.state.properties.size).toBe(0);
+            expect(() =>
+                model.api.saveWebObservationCorrection(payload)
+            ).toThrow("HISTORY_SCHEMA: Unsupported canonical cell type");
+            expect(model.api.getWebCorrectionStatus(payload)).toMatchObject({
+                code: "HISTORY_SCHEMA",
+                status: "rejected",
+            });
+            expect(model.state.rows).toStrictEqual(corrupted);
+            expect(model.state.batches).toHaveLength(0);
+            expect(model.state).toMatchObject({ locked: false, writes: 0 });
+            expect(model.state.acquisitions).toBe(model.state.releases);
+        }
+    );
+
     it("preserves legacy blank setup and recording metadata while moving a date within setup one", () => {
         expect.hasAssertions();
 
@@ -1697,6 +1770,118 @@ describe("correction validation and durable receipt boundaries", () => {
 });
 
 describe("durable pre-batch correction rejection", () => {
+    it.each([
+        { message: "History headers changed", row: 1 },
+        { message: "Missing History formula row", row: 2 },
+    ])(
+        "retains an attempted correction when the formula read for row $row is incomplete",
+        ({ message, row }) => {
+            expect.hasAssertions();
+
+            const model = fixture();
+            const payload = prepare(model);
+            model.state.fault = "before";
+
+            expect(() =>
+                model.api.saveWebObservationCorrection(payload)
+            ).toThrow("before commit");
+
+            model.state.fault = "";
+            const before = structuredClone(model.state.rows);
+            const receipts = new Map(model.state.properties);
+            const batches = structuredClone(model.state.batches);
+            model.state.missingFormulaReadRow = row;
+
+            expect(() =>
+                model.api.getWebCorrectionEntry({ observationId: "original-1" })
+            ).toThrow(`HISTORY_SCHEMA: ${message}`);
+            expect(() =>
+                model.api.saveWebObservationCorrection(payload)
+            ).toThrow(`HISTORY_SCHEMA: ${message}`);
+            expect(() => model.api.getWebCorrectionStatus(payload)).toThrow(
+                `HISTORY_SCHEMA: ${message}`
+            );
+            expect(model.state.rows).toStrictEqual(before);
+            expect(model.state.properties).toStrictEqual(receipts);
+            expect(model.state.batches).toStrictEqual(batches);
+            expect(model.state).toMatchObject({ locked: false, writes: 0 });
+            expect(model.state.acquisitions).toBe(model.state.releases);
+
+            model.state.missingFormulaReadRow = 0;
+
+            expect(model.api.getWebCorrectionStatus(payload).status).toBe(
+                "missing"
+            );
+
+            const saved = model.api.saveWebObservationCorrection(payload);
+
+            expect(saved.status).toBe("saved");
+            expect(model.api.getWebCorrectionStatus(payload)).toStrictEqual(
+                saved
+            );
+            expect(model.state.writes).toBe(1);
+            expect(stored(model, 2, 36).value).toBe("Removed");
+            expect(stored(model, 3, 36).value).toBe("Active");
+        }
+    );
+
+    it.each([
+        "observationId",
+        "operationDigest",
+        "payloadDigest",
+        "requestId",
+    ])(
+        "retains the pending payload when its durable operation is missing %s",
+        (missingField) => {
+            expect.hasAssertions();
+
+            const model = fixture();
+            const payload = prepare(model);
+            model.state.fault = "before";
+
+            expect(() =>
+                model.api.saveWebObservationCorrection(payload)
+            ).toThrow("before commit");
+
+            const key = `gardenLoggerCorrectionOperationV1:${payload.requestId}`;
+            const originalOperation = required(model.state.properties.get(key));
+            /** @type {Record<string, unknown>} */
+            const pendingOperation = {
+                ...model.api.getWebCorrectionStatus(payload),
+                status: "attempted",
+            };
+            const corruptedOperation = Object.fromEntries(
+                Object.entries(pendingOperation).filter(
+                    ([field]) => field !== missingField
+                )
+            );
+            model.state.properties.set(key, JSON.stringify(corruptedOperation));
+            model.state.fault = "";
+            const before = structuredClone(model.state.rows);
+            const receipts = new Map(model.state.properties);
+            const batches = structuredClone(model.state.batches);
+
+            expect(() => model.api.getWebCorrectionStatus(payload)).toThrow(
+                "REQUEST_CONFLICT: This retry ID belongs to a different or damaged correction operation. Retain the pending payload."
+            );
+            expect(() =>
+                model.api.saveWebObservationCorrection(payload)
+            ).toThrow("REQUEST_CONFLICT");
+            expect(model.state.rows).toStrictEqual(before);
+            expect(model.state.properties).toStrictEqual(receipts);
+            expect(model.state.batches).toStrictEqual(batches);
+            expect(model.state).toMatchObject({ locked: false, writes: 0 });
+            expect(model.state.acquisitions).toBe(model.state.releases);
+
+            model.state.properties.set(key, originalOperation);
+
+            expect(model.api.saveWebObservationCorrection(payload).status).toBe(
+                "saved"
+            );
+            expect(model.state.writes).toBe(1);
+        }
+    );
+
     it("terminates a stale sibling preview under lock and cannot revive it after History is restored", () => {
         expect.hasAssertions();
 
@@ -1930,6 +2115,29 @@ describe("durable pre-batch correction rejection", () => {
 });
 
 describe("menu exclusion identity recheck", () => {
+    it("requires an active workbook before confirming exclusion or acquiring its writer lock", () => {
+        expect.hasAssertions();
+
+        const model = fixture();
+        const before = structuredClone(model.state.rows);
+        const receipts = new Map(model.state.properties);
+        model.state.hasActiveWorkbook = false;
+
+        expect(() => {
+            model.api.removeSelectedHistoryObservations();
+        }).toThrow("Open the Garden workbook before removing observations.");
+        expect(model.state.rows).toStrictEqual(before);
+        expect(model.state.properties).toStrictEqual(receipts);
+        expect(model.state.batches).toHaveLength(0);
+        expect(model.state).toMatchObject({
+            acquisitions: 0,
+            alerts: 0,
+            locked: false,
+            releases: 0,
+            writes: 0,
+        });
+    });
+
     it("excludes multiple confirmed identities atomically and creates missing audit reasons", () => {
         expect.hasAssertions();
 
