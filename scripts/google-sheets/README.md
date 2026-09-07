@@ -24,8 +24,10 @@ overwritten. The bound Apps Script in
 ## Current production baseline
 
 As of September 7, 2026, the stable production deployment identifies the logger
-as **5.19.1** on immutable Apps Script version **73**, matching source commit
-`a314f15`. The selected plant name appears below the pot labels, entered weights
+as **5.19.2** on immutable Apps Script version **74**, matching source commit
+`3b9f35`. Native Apps Script now has strict type and lint gates, checked domain
+contracts, and validated input and sheet-read boundaries.
+The selected plant name appears below the pot labels, entered weights
 show independent comparisons with the latest reading and the last completed Dry,
 and the compact Not weighed today control includes the weight icon.
 History-backed daily progress, filtered History, refreshable summaries,
