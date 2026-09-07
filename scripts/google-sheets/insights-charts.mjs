@@ -507,6 +507,10 @@ export function buildInsightsRequests({ cells, metadata }) {
                         basicChart: {
                             axis: [
                                 {
+                                    format: {
+                                        fontFamily: "Roboto",
+                                        fontSize: 11,
+                                    },
                                     position: "BOTTOM_AXIS",
                                     title:
                                         type === "BAR"
@@ -514,6 +518,10 @@ export function buildInsightsRequests({ cells, metadata }) {
                                             : "Days after latest Water / Repot",
                                 },
                                 {
+                                    format: {
+                                        fontFamily: "Roboto",
+                                        fontSize: 11,
+                                    },
                                     position: "LEFT_AXIS",
                                     title: type === "BAR" ? "Plant ID" : unit,
                                 },
@@ -571,7 +579,7 @@ export function buildInsightsRequests({ cells, metadata }) {
     };
     addChart(
         "Current dry-down cycle • measured weights",
-        `Plant selector: B${selectorRow} • scale readings with wet and dry references • gaps reflect measurement timing`,
+        "Plant selector above • scale readings with wet and dry references • gaps reflect measurement timing",
         firstRow + 7,
         0,
         30,

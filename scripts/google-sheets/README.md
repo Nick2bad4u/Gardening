@@ -11,7 +11,7 @@ The Dashboard, Insights, Baselines, individual plant tabs, and public website
 all read from that shared history.
 
 The [Insights chart guide](INSIGHTS-CHARTS.md) covers the dry-down explorer at
-**Insights A240**, its plant selector in **B242**, and the collection comparisons
+**Insights A226**, its plant selector in **B228**, and the collection comparisons
 for retained water, measured loss, forecast windows, and model evidence.
 
 For phone entry, open the
@@ -42,8 +42,12 @@ readings before that cutoff belong to the previous weighing day.
 History-backed daily progress, filtered History, refreshable summaries,
 current-cycle weight charts, input comparisons, and recoverable saved-entry
 corrections are live. The protected Daily care sheet and linked Dashboard
-Integrity indicators are installed, and Dashboard freezes its three identity
-columns.
+Integrity indicators are installed. Dashboard hides its title row (1), spacer
+rows (4–5), and Page/View column (A). The physical freeze remains at row 6 and
+column C, leaving three visible frozen rows and the two visible identity columns.
+The merged Plants tracked KPI remains visible in B2:B3. These native presentation
+settings preserve all A:X formulas and survive the existing Dashboard refresh;
+restore them with `hiddenByUser` dimension updates if the sheet is rebuilt.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,

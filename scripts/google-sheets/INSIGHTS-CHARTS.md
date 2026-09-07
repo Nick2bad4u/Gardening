@@ -1,8 +1,9 @@
 # Insights dry-down charts
 
 The native **Insights** sheet has 19 charts. Its dry-down explorer starts at
-**A240**; choose **P01–P30 in B242**. The selected plant's care guidance, predicted
-dry-check date, and earliest/latest window appear above the graphs.
+**A226**; choose **P01–P30 in B228** in the current native layout. The selected
+plant's care guidance, predicted dry-check date, and earliest/latest window
+appear above the graphs.
 
 | View                              | What it helps answer                                                              |
 | --------------------------------- | --------------------------------------------------------------------------------- |
@@ -19,8 +20,12 @@ dry-check date, and earliest/latest window appear above the graphs.
 | Forecast basis                    | How much of the collection has current-cycle, historical, or incomplete evidence? |
 
 The existing drying-rate chart reads **Baselines AE** and is labeled as a modeled
-rate. Its labels and styling are preserved. The other seven existing Insights
-charts and all individual plant charts keep their specifications and positions.
+rate. All 19 Insights charts share Roboto text, 18-point green titles, and
+11-point subtitles and axis titles. Missing series colors use the
+existing green, blue, and gold palette; established series colors retain their
+meaning. Chart data, scales, labels, legends, and heights remain as configured.
+The first chart shares the 1,155-pixel width and 10-pixel left inset used by the
+other Insights charts. Individual plant charts retain their existing styling.
 
 ## Reading the graphs
 
