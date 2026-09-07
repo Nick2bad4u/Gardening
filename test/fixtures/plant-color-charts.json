@@ -1156,7 +1156,11 @@
                                         }
                                     }
                                 ],
-                                "headerCount": 1
+                                "headerCount": 1,
+                                "stackedType": "STACKED",
+                                "totalDataLabel": {
+                                    "type": "DATA"
+                                }
                             }
                         }
                     },
@@ -1263,7 +1267,11 @@
                                         }
                                     }
                                 ],
-                                "headerCount": 1
+                                "headerCount": 1,
+                                "stackedType": "STACKED",
+                                "totalDataLabel": {
+                                    "type": "DATA"
+                                }
                             }
                         }
                     },

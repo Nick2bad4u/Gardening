@@ -15,6 +15,8 @@ export interface PlantColorChart extends Omit<Chart, "position" | "spec"> {
             headerCount?: number;
             legendPosition?: string;
             series: PlantColorSeries[];
+            stackedType?: string;
+            totalDataLabel?: object;
         };
     };
 }

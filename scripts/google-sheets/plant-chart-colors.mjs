@@ -478,6 +478,40 @@ function colorComparisonChart(spec, metadata, comparisonIndex) {
             type: "CUSTOM",
         };
     }
+    if (basic.series.length > 1) {
+        const descriptions = new Map([
+            [
+                "Data-quality follow-ups by plant",
+                "Grouped bars: calibration needed / remeasure due / anomaly • color identifies the plant",
+            ],
+            [
+                "Evidence behind the dry-down models",
+                "Paired bars: current-cycle readings / learned cycles • evidence counts, not a confidence score",
+            ],
+            [
+                "Plant dimensions • latest measured snapshot",
+                "Paired bars: height / width (cm) • latest measured snapshot • color identifies the plant",
+            ],
+            [
+                "Predicted dry-check timing",
+                "Grouped bars: earliest / central / latest, in days from today • negative means elapsed • inspect and reweigh",
+            ],
+            [
+                "Tracking coverage by plant",
+                "Grouped bars: Measure / Water / Weigh • active entries • color identifies the plant",
+            ],
+        ]);
+        const subtitle = descriptions.get(spec.title);
+        if (subtitle === undefined)
+            throw new Error(`Unrecognized comparison metrics: ${spec.title}`);
+        spec.subtitle = subtitle;
+        spec.altText = `${spec.title}. ${subtitle}`;
+        basic.legendPosition = "NO_LEGEND";
+        // Same-colored stacked segments merge visually. Keep metric bars
+        // separate, with their names available in both the subtitle and tooltip.
+        delete basic.stackedType;
+        delete basic.totalDataLabel;
+    }
     return write;
 }
 

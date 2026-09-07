@@ -152,6 +152,23 @@ describe("plant chart color identity", () => {
                 JSON.stringify(request).includes('"chartId":644668554')
             )
         ).toBe(false);
+
+        const coverage = requests.find((request) =>
+            JSON.stringify(request).includes('"chartId":1075919061')
+        );
+
+        expect(coverage).toMatchObject({
+            updateChartSpec: {
+                spec: {
+                    basicChart: { legendPosition: "NO_LEGEND" },
+                    subtitle: expect.stringContaining(
+                        "Grouped bars: Measure / Water / Weigh"
+                    ),
+                },
+            },
+        });
+        expect(JSON.stringify(coverage)).not.toContain('"stackedType"');
+        expect(JSON.stringify(coverage)).not.toContain('"totalDataLabel"');
     });
 
     it("looks metrics up by plant ID and keeps missing readings distinct from zero", () => {

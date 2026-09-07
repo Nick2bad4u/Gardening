@@ -32,7 +32,10 @@ All 90 charts on the individual plant sheets use that plant's color. The 14
 plant comparison charts use the same colors for each plant's bars or points, in
 consistent P01–P30 order. This fixed order prevents point colors from moving to
 another plant when a sorted source recalculates. Source values still update
-automatically. The two cycle-explorer charts change to the selected plant's
+automatically. Comparisons with several metrics use separate grouped bars, with
+the metric order in the subtitle and names in the tooltips; the old metric-color
+legends are removed because color now identifies the plant. The two
+cycle-explorer charts change to the selected plant's
 color automatically. Measured weights use solid lines and circles, dry references
 use dotted lines and diamonds, and wet references use dashed lines and squares.
 Height and width on individual plant pages use solid/circle and dashed/diamond
