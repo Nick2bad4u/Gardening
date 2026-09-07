@@ -369,8 +369,12 @@ canonical units, and native formula edge cases before production deployment.
 
 The plant picker distinguishes **Queued** weights on this device from **Saved
 today** readings confirmed in History. The **Not weighed today** filter uses
-the workbook's timezone and excludes Removed, estimated, invalid, and future
-readings. Sending the queue does not erase saved progress. A fresh read restores
+the workbook's timezone and a **4:00 a.m. day boundary**, excluding Removed,
+estimated, invalid, and future readings. For example, a September 7 reading at
+12:30 a.m. belongs to the September 6 weighing day; September 7 starts at 4:00 a.m.
+The cutoff follows local wall-clock time through daylight-saving changes. Actual
+History timestamps, chart times, and watering forecasts retain their original
+meaning. Sending the queue does not erase saved progress. A fresh read restores
 that progress on another device; cached data retains its last refresh time.
 
 Recent History offers **All plants / This plant**, event filters, and expandable
@@ -651,7 +655,8 @@ secondary direct-to-Google path. The optional **Advance to the next plant after
 queueing** setting restores sequential entry and remembers that preference. The
 queue is not cleared until Google confirms each request ID in History. A colored
 queued marker identifies every plant with a weight in the queue. Separate
-History-backed markers show weights saved today in the workbook's timezone;
+History-backed markers show weights saved in the current weighing day, beginning
+at **4:00 a.m. in the workbook's timezone**;
 the progress line and **Not weighed today** filter distinguish that saved
 progress from local queued work. Weight-state controls stay collapsed unless the Weigh
 event is active or a weight value is present.

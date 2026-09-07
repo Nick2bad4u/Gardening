@@ -20,9 +20,12 @@ const zone = "America/New_York";
 
 /** @param {Date} date @param {string} timeZone @param {string} pattern */
 function formatDate(date, timeZone, pattern) {
-    if (pattern !== "yyyy-MM-dd") return date.toISOString();
+    if (pattern !== "yyyy-MM-dd" && pattern !== "yyyy-MM-dd HH")
+        return date.toISOString();
     const formatter = new Intl.DateTimeFormat("en-US", {
         day: "2-digit",
+        hour: "2-digit",
+        hourCycle: "h23",
         month: "2-digit",
         timeZone,
         year: "numeric",
@@ -30,7 +33,10 @@ function formatDate(date, timeZone, pattern) {
     const parts = formatter.formatToParts(date);
     const part = (/** @type {string} */ type) =>
         required(parts.find((entry) => entry.type === type)).value;
-    return `${part("year")}-${part("month")}-${part("day")}`;
+    const calendarDay = `${part("year")}-${part("month")}-${part("day")}`;
+    return pattern === "yyyy-MM-dd HH"
+        ? `${calendarDay} ${part("hour")}`
+        : calendarDay;
 }
 
 /**
@@ -214,11 +220,11 @@ describe("logger History-backed read models", () => {
 
         const result = runtime().api.webWeightReadModelsFromRows_(
             [
-                row("2026-09-06T15:00:00Z", "Weigh", { 28: "", 34: "" }),
-                row("2026-09-06T14:59:59Z", "Weigh", { 1: "P02" }),
+                row("2026-09-06T19:00:00Z", "Weigh", { 28: "", 34: "" }),
+                row("2026-09-06T18:59:59Z", "Weigh", { 1: "P02" }),
             ],
             new Map(),
-            new Date("2026-09-06T15:01:00Z"),
+            new Date("2026-09-06T19:01:00Z"),
             "Asia/Tokyo"
         );
 
@@ -314,6 +320,7 @@ describe("logger History-backed read models", () => {
 
             expect(bootstrap).toMatchObject({
                 dayKey: "2026-09-06",
+                dayStartHour: 4,
                 serverTime: now.toISOString(),
                 timeZone: zone,
                 weighedTodayPlantIds: ["P01"],
@@ -337,31 +344,61 @@ describe("logger History-backed read models", () => {
 
     it.each([
         [
-            "2026-09-06T03:59:59Z",
+            "2026-09-06T07:59:59Z",
             "2026-09-05",
-            "2026-09-05T04:00:00Z",
-            "2026-09-06T04:00:00Z",
+            "2026-09-05T08:00:00Z",
+            "2026-09-06T08:00:00Z",
         ],
         [
-            "2026-09-06T04:00:00Z",
+            "2026-09-06T08:00:00Z",
             "2026-09-06",
-            "2026-09-06T04:00:00Z",
-            "2026-09-06T04:00:01Z",
+            "2026-09-06T08:00:00Z",
+            "2026-09-06T08:00:01Z",
         ],
         [
-            "2026-03-08T07:30:00Z",
-            "2026-03-08",
-            "2026-03-08T05:00:00Z",
+            "2026-09-07T04:30:00Z",
+            "2026-09-06",
+            "2026-09-06T23:50:00Z",
+            "2026-09-07T05:00:00Z",
+        ],
+        [
+            "2026-03-08T07:59:59Z",
+            "2026-03-07",
+            "2026-03-07T09:00:00Z",
             "2026-03-08T08:00:00Z",
         ],
         [
-            "2026-11-01T06:30:00Z",
+            "2026-03-08T08:00:00Z",
+            "2026-03-08",
+            "2026-03-08T08:00:00Z",
+            "2026-03-08T08:00:01Z",
+        ],
+        [
+            "2026-11-01T08:59:59Z",
+            "2026-10-31",
+            "2026-10-31T08:00:00Z",
+            "2026-11-01T09:00:00Z",
+        ],
+        [
+            "2026-11-01T09:00:00Z",
             "2026-11-01",
-            "2026-11-01T05:30:00Z",
-            "2026-11-01T06:30:01Z",
+            "2026-11-01T09:00:00Z",
+            "2026-11-01T09:00:01Z",
+        ],
+        [
+            "2026-01-01T08:59:59Z",
+            "2025-12-31",
+            "2025-12-31T09:00:00Z",
+            "2026-01-01T09:00:00Z",
+        ],
+        [
+            "2024-03-01T08:59:59Z",
+            "2024-02-29",
+            "2024-02-29T09:00:00Z",
+            "2024-03-01T09:00:00Z",
         ],
     ])(
-        "uses workbook midnight and DST at %s",
+        "uses the 4 a.m. workbook cutoff across DST and calendar boundaries at %s",
         (at, dayKey, savedAt, futureAt) => {
             expect.hasAssertions();
 
@@ -370,7 +407,7 @@ describe("logger History-backed read models", () => {
                     row(savedAt),
                     row(savedAt),
                     row(futureAt, "Weigh", { 1: "P02" }),
-                    row("2026-03-07T12:00:00Z", "Weigh", { 1: "P03" }),
+                    row("2023-01-01T12:00:00Z", "Weigh", { 1: "P03" }),
                 ],
                 new Map(),
                 new Date(at),
@@ -401,6 +438,7 @@ describe("logger History-backed read models", () => {
             "P01",
             "P02",
         ]);
+        expect(result.dayKey).toBe("2026-10-31");
     });
 
     it.each([

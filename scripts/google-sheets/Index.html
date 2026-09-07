@@ -15110,20 +15110,39 @@
             }
 
             function workbookDay() {
-                if (!state.bootstrap?.timeZone) return "";
+                // A midnight-based cached bootstrap cannot describe this round.
+                if (
+                    !state.bootstrap?.timeZone ||
+                    state.bootstrap.dayStartHour !== 4
+                )
+                    return "";
                 try {
                     const parts = new Intl.DateTimeFormat("en-US", {
                         timeZone: state.bootstrap.timeZone,
                         year: "numeric",
                         month: "2-digit",
                         day: "2-digit",
+                        hour: "2-digit",
+                        hourCycle: "h23",
                     }).formatToParts(new Date());
-                    return ["year", "month", "day"]
+                    const calendarDay = ["year", "month", "day"]
                         .map(
                             (type) =>
                                 parts.find((part) => part.type === type).value
                         )
                         .join("-");
+                    if (
+                        Number(
+                            parts.find((part) => part.type === "hour").value
+                        ) >= state.bootstrap.dayStartHour
+                    )
+                        return calendarDay;
+                    // Move the local calendar date, preserving the 4 a.m. DST cutoff.
+                    return new Date(
+                        Date.parse(`${calendarDay}T00:00:00Z`) - 86400000
+                    )
+                        .toISOString()
+                        .slice(0, 10);
                 } catch (error) {
                     return "";
                 }
@@ -15182,7 +15201,7 @@
                 setIconLabel(
                     note,
                     "weight",
-                    "Not weighed today excludes saved weights and queued weights.",
+                    `Day starts at 4:00 a.m. (${state.bootstrap.timeZone || "workbook time"}). Not weighed today excludes saved weights and queued weights.`,
                     "app-icon app-icon--small"
                 );
                 progress.append(note);

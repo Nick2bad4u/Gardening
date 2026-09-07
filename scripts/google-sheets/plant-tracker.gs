@@ -14,7 +14,8 @@
    refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30 */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.19.4",
+    version: "5.19.5",
+    dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -824,6 +825,7 @@ function getWebAppBootstrap() {
         timeZone,
         serverTime: refreshedAt.toISOString(),
         dayKey: weightReads.dayKey,
+        dayStartHour: GARDEN_LOGGER.dayStartHour,
         weighedTodayPlantIds: weightReads.weighedTodayPlantIds.filter((id) =>
             plantNames.has(id)
         ),
@@ -8301,6 +8303,23 @@ function webHistoryTimestamp_(value) {
     return Math.max(timestamp, 0);
 }
 
+/**
+ * Use the workbook's wall-clock hour, then move the calendar date back before
+ * 4 a.m. Subtracting four elapsed hours instead would move the cutoff on DST days.
+ * @param {Date} date
+ * @param {string} timeZone
+ * @returns {string}
+ */
+function webWeighingDay_(date, timeZone) {
+    const local = Utilities.formatDate(date, timeZone, "yyyy-MM-dd HH");
+    const calendarDay = local.slice(0, 10);
+    if (Number(local.slice(11)) >= GARDEN_LOGGER.dayStartHour)
+        return calendarDay;
+    return new Date(Date.parse(`${calendarDay}T00:00:00Z`) - 86400000)
+        .toISOString()
+        .slice(0, 10);
+}
+
 /** Derive all plant reads from the bootstrap's one History snapshot. */
 /**
  * @param {GardenHistoryRow[]} historyRows
@@ -8315,7 +8334,7 @@ function webWeightReadModelsFromRows_(
     timeZone
 ) {
     const nowMs = now.getTime();
-    const dayKey = Utilities.formatDate(now, timeZone, "yyyy-MM-dd");
+    const dayKey = webWeighingDay_(now, timeZone);
     /** @type {Set<string>} */
     const weighedToday = new Set();
     /** @type {Map<string, GardenWebWeightRecord[]>} */
@@ -8354,11 +8373,7 @@ function webWeightReadModelsFromRows_(
         if (
             measured &&
             plantId &&
-            Utilities.formatDate(
-                new Date(timestamp),
-                timeZone,
-                "yyyy-MM-dd"
-            ) === dayKey
+            webWeighingDay_(new Date(timestamp), timeZone) === dayKey
         ) {
             weighedToday.add(plantId);
         }

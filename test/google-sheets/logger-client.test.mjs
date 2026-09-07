@@ -161,6 +161,7 @@ function workflowBootstrap() {
     return {
         ...bootstrap,
         dayKey: "2026-09-06",
+        dayStartHour: 4,
         plants: bootstrap.plants.map((plant) => ({
             ...plant,
             latestWeightAt: "2026-09-05T16:00:00.000Z",
@@ -213,6 +214,94 @@ function workflowBootstrap() {
         weighedTodayPlantIds: ["P01"],
     };
 }
+
+describe("garden logger 4 a.m. weighing day", () => {
+    afterEach(restoreLoggerMocks);
+
+    it.each([
+        ["2026-09-07T04:00:00Z", "2026-09-06"],
+        ["2026-09-07T07:59:59Z", "2026-09-06"],
+        ["2026-09-07T08:00:00Z", "2026-09-07"],
+        ["2026-03-08T07:59:59Z", "2026-03-07"],
+        ["2026-03-08T08:00:00Z", "2026-03-08"],
+        ["2026-11-01T05:30:00Z", "2026-10-31"],
+        ["2026-11-01T06:30:00Z", "2026-10-31"],
+        ["2026-11-01T08:59:59Z", "2026-10-31"],
+        ["2026-11-01T09:00:00Z", "2026-11-01"],
+        ["2026-01-01T08:59:59Z", "2025-12-31"],
+        ["2024-03-01T08:59:59Z", "2024-02-29"],
+    ])("retains the correct round's saved badges at %s", (at, dayKey) => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date(at));
+        const { window } = createLoggerWindow({
+            bootstrapData: { ...workflowBootstrap(), dayKey, serverTime: at },
+            storage: { gardenLoggerPlantPickerModeV1: "labels" },
+        });
+
+        expect(
+            queryElement(window.document, "#roundProgress", HTMLElement)
+                .textContent
+        ).toContain("1 of 2 Saved today");
+        expect(
+            queryElement(window.document, "#roundProgress", HTMLElement)
+                .textContent
+        ).toContain("Day starts at 4:00 a.m. (America/New_York)");
+        expect(
+            queryElement(
+                window.document,
+                '#labelPicker [data-plant-id="P01"]',
+                HTMLButtonElement
+            ).dataset["savedToday"]
+        ).toBe("true");
+    });
+
+    it("keeps saved progress through midnight without refreshing Google", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date("2026-09-07T03:59:30Z"));
+        const { calls, window } = createLoggerWindow({
+            bootstrapData: workflowBootstrap(),
+        });
+        const refreshes = calls.filter(
+            (call) => call.method === "getWebAppBootstrap"
+        ).length;
+        vi.advanceTimersByTime(60_000);
+
+        expect(
+            calls.filter((call) => call.method === "getWebAppBootstrap")
+        ).toHaveLength(refreshes);
+        expect(
+            queryElement(window.document, "#roundProgress", HTMLElement)
+                .textContent
+        ).toContain("1 of 2 Saved today");
+    });
+
+    it("withholds midnight-based cached progress until a fresh read confirms the new cutoff", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date("2026-09-06T16:05:00Z"));
+        const old = workflowBootstrap();
+        delete old.dayStartHour;
+        const { window } = createLoggerWindow({
+            online: false,
+            storage: {
+                gardenLoggerBootstrapV2: JSON.stringify({
+                    bootstrap: old,
+                    savedAt: Date.now(),
+                }),
+            },
+        });
+
+        expect(
+            queryElement(window.document, "#roundProgress", HTMLElement)
+                .textContent
+        ).toContain("Saved today unavailable");
+    });
+});
 
 describe("garden logger daily progress, filtered History and measured charts", () => {
     afterEach(restoreLoggerMocks);
@@ -294,11 +383,11 @@ describe("garden logger daily progress, filtered History and measured charts", (
         ).toBe(false);
     });
 
-    it("expires previous-day saved markers at workbook midnight while offline and preserves queued weights and pot setup", () => {
+    it("expires previous-day saved markers at 4 a.m. while offline and preserves queued weights and pot setup", () => {
         expect.hasAssertions();
 
         vi.useFakeTimers();
-        vi.setSystemTime(new Date("2026-09-07T03:59:30Z"));
+        vi.setSystemTime(new Date("2026-09-07T07:59:30Z"));
         const { window } = createLoggerWindow({
             bootstrapData: workflowBootstrap(),
             online: false,

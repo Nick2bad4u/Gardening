@@ -9,6 +9,7 @@ import type {
 
 export interface Bootstrap {
     dayKey?: string;
+    dayStartHour?: number;
     events: string[];
     links: Record<string, string>;
     plants: PlantSummary[];
