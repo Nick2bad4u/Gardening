@@ -5,6 +5,7 @@ import {
     HTMLAnchorElement,
     HTMLButtonElement,
     HTMLDetailsElement,
+    HTMLDialogElement,
     HTMLElement,
     HTMLFormElement,
     HTMLImageElement,
@@ -16,6 +17,7 @@ import {
     IntersectionObserverEntry,
     Window,
 } from "happy-dom";
+import { createHash } from "node:crypto";
 import * as fs from "node:fs";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -131,6 +133,926 @@ const recentExample = {
     weightState: "Routine",
 };
 
+/** @param {Window} window @param {string} id @param {string} value */
+function changeWorkflowSelect(window, id, value) {
+    const select = queryElement(window.document, `#${id}`, HTMLSelectElement);
+    select.value = value;
+    select.dispatchEvent(new window.Event("change", { bubbles: true }));
+}
+
+/** @param {Window} window @param {string} id @param {string} value */
+function enterWorkflowValue(window, id, value) {
+    const input = queryElement(window.document, `#${id}`, HTMLInputElement);
+    input.value = value;
+    input.dispatchEvent(new window.Event("input", { bubbles: true }));
+}
+
+/** @param {Window} window */
+function refreshWorkflow(window) {
+    queryElement(
+        window.document,
+        "#refreshDataButton",
+        HTMLButtonElement
+    ).click();
+}
+
+/** @returns {import("../logger-fixtures.d.ts").Bootstrap} */
+function workflowBootstrap() {
+    return {
+        ...bootstrap,
+        dayKey: "2026-09-06",
+        plants: bootstrap.plants.map((plant) => ({
+            ...plant,
+            latestWeightAt: "2026-09-05T16:00:00.000Z",
+            weightSeries: {
+                excludedCount: 1,
+                points: [
+                    {
+                        breakBefore: false,
+                        observationId: "first",
+                        observedAt: "2026-09-01T16:00:00.000Z",
+                        weight: 480,
+                    },
+                    {
+                        breakBefore: false,
+                        observationId: "second",
+                        observedAt: "2026-09-02T16:00:00.000Z",
+                        weight: 460,
+                    },
+                    {
+                        breakBefore: true,
+                        observationId: "third",
+                        observedAt: "2026-09-03T16:00:00.000Z",
+                        weight: 445,
+                    },
+                    {
+                        breakBefore: false,
+                        observationId: "fourth",
+                        observedAt: "2026-09-05T17:00:00.000Z",
+                        weight: 420,
+                    },
+                ],
+                potSetup: 2,
+                previousDry: {
+                    observedAt: "2026-08-31T16:00:00.000Z",
+                    weight: 400,
+                },
+                setupStartedAt: "2026-08-14T16:00:00.000Z",
+                startedAt: "2026-09-01T16:00:00.000Z",
+                startKind: "Water",
+                waterings: [
+                    {
+                        application: "Thorough",
+                        observedAt: "2026-09-01T16:00:00.000Z",
+                    },
+                ],
+            },
+        })),
+        serverTime: "2026-09-06T16:00:00.000Z",
+        timeZone: "America/New_York",
+        weighedTodayPlantIds: ["P01"],
+    };
+}
+
+describe("garden logger daily progress, filtered History and measured charts", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("shows independent saved and queued markers, keeps the selected completed plant accessible, and reuses portraits", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date("2026-09-06T16:05:00Z"));
+        const { window } = createLoggerWindow({
+            bootstrapData: workflowBootstrap(),
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify([
+                    queuedWeight(),
+                    queuedWeight({
+                        plantId: "P02",
+                        requestId: "garden-second-queued-12345",
+                    }),
+                ]),
+                gardenLoggerPlantPickerModeV1: "labels",
+            },
+        });
+        const first = queryElement(
+            window.document,
+            '#labelPicker [data-plant-id="P01"]',
+            HTMLButtonElement
+        );
+        const portrait = required(first.querySelector(".plant-choice-icon"));
+
+        expect(first.dataset["savedToday"]).toBe("true");
+        expect(first.dataset["queuedWeighed"]).toBe("true");
+        expect(first.getAttribute("aria-label")).toContain(
+            "Queued · Saved today"
+        );
+        expect(
+            queryElement(window.document, "#roundProgress", HTMLElement)
+                .textContent
+        ).toContain("1 of 2 Saved today · 2 Queued");
+
+        queryElement(
+            window.document,
+            "#notWeighedToday",
+            HTMLInputElement
+        ).click();
+
+        expect(
+            queryElement(window.document, "#plantFilterStatus", HTMLElement)
+                .textContent
+        ).toContain("No remaining plants");
+        expect(first.hidden).toBe(false);
+        expect(
+            queryElement(
+                window.document,
+                '#labelPicker [data-plant-id="P02"]',
+                HTMLButtonElement
+            ).hidden
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#plantSelect", HTMLSelectElement)
+                .value
+        ).toBe("P01");
+
+        queryElement(
+            window.document,
+            "#notWeighedToday",
+            HTMLInputElement
+        ).click();
+
+        expect(first.querySelector(".plant-choice-icon")).toBe(portrait);
+        expect(
+            queryElement(
+                window.document,
+                '#labelPicker [data-plant-id="P02"]',
+                HTMLButtonElement
+            ).hidden
+        ).toBe(false);
+    });
+
+    it("expires previous-day saved markers at workbook midnight while offline and preserves queued weights and pot setup", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date("2026-09-07T03:59:30Z"));
+        const { window } = createLoggerWindow({
+            bootstrapData: workflowBootstrap(),
+            online: false,
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify([
+                    queuedWeight(),
+                ]),
+                gardenLoggerPlantPickerModeV1: "labels",
+            },
+        });
+        enterWorkflowValue(window, "potSetup", "7");
+        enterWorkflowValue(window, "weight", "419.5");
+        queryElement(
+            window.document,
+            "#notWeighedToday",
+            HTMLInputElement
+        ).click();
+        vi.advanceTimersByTime(60_000);
+
+        expect(
+            queryElement(window.document, "#roundProgress", HTMLElement)
+                .textContent
+        ).toContain("Saved today unavailable");
+
+        const button = queryElement(
+            window.document,
+            '#labelPicker [data-plant-id="P01"]',
+            HTMLButtonElement
+        );
+
+        expect(button.dataset["savedToday"]).toBe("false");
+        expect(button.dataset["queuedWeighed"]).toBe("true");
+        expect(
+            queryElement(window.document, "#potSetup", HTMLInputElement).value
+        ).toBe("7");
+        expect(
+            queryElement(window.document, "#weight", HTMLInputElement).value
+        ).toBe("419.5");
+    });
+
+    it("restores History-backed progress from the bootstrap cache without inventing absent fields", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date("2026-09-06T16:05:00Z"));
+        const current = createLoggerWindow({
+            online: false,
+            storage: {
+                gardenLoggerBootstrapV2: JSON.stringify({
+                    bootstrap: workflowBootstrap(),
+                    savedAt: Date.now(),
+                }),
+            },
+        });
+
+        expect(
+            queryElement(current.window.document, "#roundProgress", HTMLElement)
+                .textContent
+        ).toContain("1 of 2 Saved today");
+
+        const old = { ...bootstrap, serverTime: "" };
+        const legacy = createLoggerWindow({
+            online: false,
+            storage: {
+                gardenLoggerBootstrapV2: JSON.stringify({
+                    bootstrap: old,
+                    savedAt: Date.now(),
+                }),
+            },
+        });
+
+        expect(
+            queryElement(legacy.window.document, "#roundProgress", HTMLElement)
+                .textContent
+        ).toContain("Saved today unavailable");
+        expect(
+            queryElement(legacy.window.document, "#dataFreshness", HTMLElement)
+                .textContent
+        ).toBe("Updated from Google: time unavailable");
+        expect(
+            queryElement(legacy.window.document, ".weight-chart", HTMLElement)
+                .textContent
+        ).toContain("chart data unavailable");
+    });
+
+    it.each(["single", "queue"])(
+        "updates saved-today progress after a confirmed %s send and persists it for reload",
+        (mode) => {
+            expect.hasAssertions();
+
+            vi.useFakeTimers();
+            vi.setSystemTime(new Date("2026-09-06T16:05:00Z"));
+            const initial = {
+                ...workflowBootstrap(),
+                weighedTodayPlantIds: [],
+            };
+            const { behaviors, window } = createLoggerWindow({
+                bootstrapData: initial,
+                storage:
+                    mode === "queue"
+                        ? {
+                              gardenLoggerObservationQueueV1: JSON.stringify([
+                                  queuedWeight(),
+                              ]),
+                          }
+                        : {},
+            });
+            behaviors.getWebAppBootstrap = ({ success }) => {
+                success(workflowBootstrap());
+            };
+            behaviors.saveWebObservation = ({ success }) => {
+                success({ message: "Saved" });
+            };
+            behaviors.saveWebObservationBatch = ({ args, success }) => {
+                success({
+                    failedCount: 0,
+                    ok: true,
+                    results: args[0].map(({ requestId }) => ({
+                        ok: true,
+                        requestId,
+                    })),
+                    savedCount: args[0].length,
+                });
+            };
+            confirmSummarySave(window, mode);
+
+            expect(
+                queryElement(window.document, "#roundProgress", HTMLElement)
+                    .textContent
+            ).toContain("1 of 2 Saved today · 0 Queued");
+
+            const reload = createLoggerWindow({
+                online: false,
+                storage: {
+                    gardenLoggerBootstrapV2: required(
+                        window.localStorage.getItem("gardenLoggerBootstrapV2")
+                    ),
+                },
+            });
+
+            expect(
+                queryElement(
+                    reload.window.document,
+                    "#roundProgress",
+                    HTMLElement
+                ).textContent
+            ).toContain("1 of 2 Saved today");
+        }
+    );
+
+    it("does not invent saved-today progress when the successful-send refresh fails", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date("2026-09-06T16:05:00Z"));
+        const { behaviors, window } = createLoggerWindow({
+            bootstrapData: { ...workflowBootstrap(), weighedTodayPlantIds: [] },
+        });
+        behaviors.saveWebObservation = ({ success }) => {
+            success({ message: "Saved" });
+        };
+        behaviors.getWebAppBootstrap = ({ failure }) => {
+            failure(new Error("Read failed"));
+        };
+        confirmSummarySave(window, "single");
+
+        expect(
+            queryElement(window.document, "#roundProgress", HTMLElement)
+                .textContent
+        ).toContain("0 of 2 Saved today");
+        expect(
+            queryElement(window.document, "#dataFreshness", HTMLElement)
+                .textContent
+        ).toContain("5 min ago");
+    });
+
+    it("filters History before the server limit and ignores old callbacks after event and plant changes", () => {
+        expect.hasAssertions();
+
+        const { behaviors, calls, window } = createLoggerWindow({
+            bootstrapData: { ...bootstrap, recent: [recentExample] },
+        });
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getRecentWebObservations">[]} */
+        const pending = [];
+        behaviors.getRecentWebObservations = (handlers) => {
+            pending.push(handlers);
+        };
+        changeWorkflowSelect(window, "recentScope", "plant");
+        changeWorkflowSelect(window, "recentEvent", "Water");
+        changeWorkflowSelect(window, "plantSelect", "P02");
+
+        expect(
+            structuredClone(
+                calls
+                    .filter(
+                        ({ method }) => method === "getRecentWebObservations"
+                    )
+                    .map(({ args }) => args)
+            )
+        ).toStrictEqual([
+            [10, { event: "", plantId: "P01" }],
+            [10, { event: "Water", plantId: "P01" }],
+            [10, { event: "Water", plantId: "P02" }],
+        ]);
+
+        const list = queryElement(window.document, "#recentList", HTMLElement);
+
+        expect(list.children).toHaveLength(0);
+
+        required(pending[2]).success([
+            {
+                ...recentExample,
+                event: "Water",
+                name: "Newest plant",
+                plantId: "P02",
+                weight: "",
+            },
+        ]);
+        required(pending[0]).success([recentExample]);
+        required(pending[1]).failure(new Error("Old failure"));
+
+        expect(list.textContent).toContain("Newest plant");
+        expect(list.textContent).not.toContain("Moon cactus");
+        expect(
+            queryElement(window.document, "#recentStatus", HTMLElement)
+                .textContent
+        ).toBe("Showing 1 recent entry.");
+    });
+
+    it("keeps every History filter visible on initial empty, filtered empty, offline, and no-selected-plant states", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow();
+
+        expect(
+            queryElement(window.document, "#recentCard", HTMLElement).hidden
+        ).toBe(false);
+        expect(
+            queryElements(
+                window.document,
+                "#recentEvent option",
+                HTMLOptionElement
+            ).map((option) => option.value)
+        ).toStrictEqual(["", ...bootstrap.events]);
+
+        changeWorkflowSelect(window, "recentEvent", "Repot");
+
+        expect(
+            queryElement(window.document, "#recentStatus", HTMLElement)
+                .textContent
+        ).toBe("No History entries match these filters.");
+
+        enterWorkflowValue(window, "plantSearch", "no such plant");
+        const count = calls.length;
+        changeWorkflowSelect(window, "recentScope", "plant");
+
+        expect(calls).toHaveLength(count);
+        expect(
+            queryElement(window.document, "#recentStatus", HTMLElement)
+                .textContent
+        ).toBe("Choose a plant to view its History.");
+        expect(
+            queryElement(window.document, "#recentEvent", HTMLSelectElement)
+                .disabled
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#recentScope", HTMLSelectElement)
+                .disabled
+        ).toBe(false);
+
+        Object.defineProperty(window.navigator, "onLine", {
+            configurable: true,
+            value: false,
+        });
+        changeWorkflowSelect(window, "recentScope", "all");
+
+        expect(
+            queryElement(window.document, "#recentStatus", HTMLElement)
+                .textContent
+        ).toContain("Offline");
+        expect(
+            queryElement(window.document, "#recentCard", HTMLElement).hidden
+        ).toBe(false);
+    });
+
+    it("expands escaped event details with original measurement units and preserves the correction observation ID", () => {
+        expect.hasAssertions();
+
+        const { behaviors, window } = createLoggerWindow();
+        /** @type {import("../logger-workflow-fixtures.d.ts").WebRecentObservation} */
+        const entry = {
+            ...recentExample,
+            details: {
+                height: 2.5,
+                heightCm: 6.35,
+                measurementMethod: "Ruler",
+                measurementUnit: "in",
+                notes: "<img src=x onerror=alert(1)>\nsecond line",
+                observationQuality: "Measured",
+                potSetup: 2,
+                width: 1.25,
+            },
+            event: "Measure",
+            observationId: "observation-correct-later",
+            observedAtIso: "2026-09-05T16:00:00Z",
+            weight: "",
+        };
+        behaviors.getRecentWebObservations = ({ success }) => {
+            success([entry]);
+        };
+        changeWorkflowSelect(window, "recentEvent", "Measure");
+        const item = queryElement(window.document, ".recent-item", HTMLElement);
+
+        expect(item.dataset["observationId"]).toBe("observation-correct-later");
+
+        const details = queryElement(
+            item,
+            ".history-details",
+            HTMLDetailsElement
+        );
+
+        expect(details.open).toBe(false);
+
+        queryElement(details, "summary", HTMLElement).click();
+
+        expect(details.open).toBe(true);
+        expect(details.textContent).toContain("2.5");
+        expect(details.textContent).toContain("Original measurement unitin");
+        expect(details.textContent).toContain(
+            "<img src=x onerror=alert(1)>\nsecond line"
+        );
+        expect(details.querySelector("img")).toBeNull();
+        expect(details.textContent).toContain("Ruler");
+    });
+
+    it("uses measured dots, gram labels, water markers and a dry reference without bridging excluded or long gaps", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: workflowBootstrap(),
+        });
+        const chart = queryElement(
+            window.document,
+            ".weight-chart",
+            HTMLElement
+        );
+
+        expect(chart.querySelectorAll(".chart-point")).toHaveLength(4);
+        expect(chart.querySelectorAll(".chart-segment")).toHaveLength(1);
+        expect(chart.querySelectorAll(".chart-watering")).toHaveLength(1);
+        expect(chart.querySelectorAll(".chart-dry")).toHaveLength(1);
+        expect(chart.textContent).toContain("Setup 2");
+
+        const readings = queryElement(
+            chart,
+            ".chart-readings",
+            HTMLDetailsElement
+        );
+
+        expect(readings.open).toBe(false);
+        expect(readings.textContent).toContain("Aug 14, 2026");
+        expect(readings.textContent).toContain("400 g");
+        expect(readings.textContent).toContain("48 hours");
+        expect(readings.textContent).toContain("1 reading excluded.");
+        expect(readings.textContent).toContain("Thorough");
+        expect(
+            [...chart.children]
+                .filter((child) => child.tagName === "P")
+                .map((child) => child.textContent)
+                .join(" ")
+        ).not.toMatch(/48 hours|readings excluded|setup started/v);
+        expect(
+            queryElement(chart, "svg", Element).getAttribute("aria-label")
+        ).toContain("4 measured weights in grams");
+        expect(
+            chart.querySelectorAll(":scope .chart-readings li")
+        ).toHaveLength(5);
+        expect(
+            queryElement(
+                chart,
+                '.chart-point[data-observation-id="fourth"]',
+                Element
+            ).querySelector("title")?.textContent
+        ).toContain("420 g");
+    });
+
+    it.each([0, 1])(
+        "shows an honest current-cycle state for %s measured points",
+        (count) => {
+            expect.hasAssertions();
+
+            const data = workflowBootstrap();
+            const plant = required(data.plants[0]);
+            const series = required(plant.weightSeries);
+            plant.weightSeries = {
+                ...series,
+                excludedCount: 0,
+                points: series.points.slice(0, count),
+                previousDry: null,
+            };
+            const { window } = createLoggerWindow({ bootstrapData: data });
+            const chart = queryElement(
+                window.document,
+                ".weight-chart",
+                HTMLElement
+            );
+
+            expect(chart.textContent).toContain(
+                count ? "One measured point" : "No measured weights"
+            );
+            expect(chart.querySelectorAll(".chart-point")).toHaveLength(count);
+            expect(chart.querySelectorAll(".chart-segment")).toHaveLength(0);
+            expect(chart.textContent).toContain("No completed dry reference");
+            expect(chart.textContent).toContain("Water (W)");
+        }
+    );
+
+    it("rejects a mismatched-setup series instead of joining old-pot weights", () => {
+        expect.hasAssertions();
+
+        const data = workflowBootstrap();
+        const plant = required(data.plants[0]);
+        plant.weightSeries = { ...required(plant.weightSeries), potSetup: 1 };
+        const { window } = createLoggerWindow({ bootstrapData: data });
+
+        expect(
+            queryElement(window.document, ".weight-chart", HTMLElement)
+                .textContent
+        ).toContain("chart data unavailable");
+        expect(window.document.querySelector(".chart-point")).toBeNull();
+    });
+
+    it("refreshes only read data and preserves every draft control, bulk selection, queue, and an external correction hook", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date("2026-09-06T16:05:00Z"));
+        const { behaviors, window } = createLoggerWindow({
+            bootstrapData: workflowBootstrap(),
+            storage: {
+                gardenLoggerObservationQueueV1: JSON.stringify([
+                    queuedWeight(),
+                ]),
+            },
+        });
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).click();
+        queryElement(
+            window.document,
+            "#bulkPlantList input",
+            HTMLInputElement
+        ).click();
+        enterWorkflowValue(window, "bulkSearch", "Moon");
+        enterWorkflowValue(window, "plantSearch", "Moon");
+        enterWorkflowValue(window, "weight", "419.1");
+        enterWorkflowValue(window, "height", "2.25");
+        enterWorkflowValue(window, "width", "1.5");
+        enterWorkflowValue(window, "potSetup", "9");
+        enterWorkflowValue(window, "observedAt", "2026-09-05T10:31");
+        enterWorkflowValue(window, "bulkObservedAt", "2026-09-04T11:42");
+        queryElement(window.document, "#notes", HTMLTextAreaElement).value =
+            "  exact draft\nkeep spaces  ";
+        queryElement(window.document, "#bulkNotes", HTMLTextAreaElement).value =
+            "bulk draft";
+        changeWorkflowSelect(window, "recentScope", "plant");
+        changeWorkflowSelect(window, "recentEvent", "Water");
+        const hook = window.document.createElement("input");
+        hook.id = "externalCorrectionDraft";
+        hook.value = "pending correction integration";
+        window.document.body.append(hook);
+        const controls = () =>
+            [
+                ...queryElements(window.document, "input", HTMLInputElement),
+                ...queryElements(window.document, "select", HTMLSelectElement),
+                ...queryElements(
+                    window.document,
+                    "textarea",
+                    HTMLTextAreaElement
+                ),
+            ].map((control) => ({
+                checked:
+                    control instanceof HTMLInputElement
+                        ? control.checked
+                        : false,
+                disabled: control.disabled,
+                id: control.id,
+                value: control.value,
+            }));
+        const before = controls();
+        const queue = window.localStorage.getItem(
+            "gardenLoggerObservationQueueV1"
+        );
+        const eventChoices = queryElement(
+            window.document,
+            "#eventChips",
+            HTMLElement
+        ).getHTML();
+        const bulkChoices = queryElement(
+            window.document,
+            "#bulkEventChips",
+            HTMLElement
+        ).getHTML();
+        behaviors.getWebAppBootstrap = ({ success }) => {
+            success({
+                ...workflowBootstrap(),
+                plants: workflowBootstrap().plants.map((plant) => ({
+                    ...plant,
+                    latestWeight: 418,
+                    potSetup: 3,
+                })),
+                serverTime: "2026-09-06T16:05:00Z",
+            });
+        };
+        refreshWorkflow(window);
+
+        expect(controls()).toStrictEqual(before);
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBe(queue);
+        expect(
+            queryElement(window.document, "#eventChips", HTMLElement).getHTML()
+        ).toBe(eventChoices);
+        expect(
+            queryElement(
+                window.document,
+                "#bulkEventChips",
+                HTMLElement
+            ).getHTML()
+        ).toBe(bulkChoices);
+        expect(
+            queryElement(window.document, "#bulkWaterForm", HTMLFormElement)
+                .hidden
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#dataFreshness", HTMLElement)
+                .textContent
+        ).toContain("less than a minute ago");
+        expect(
+            queryElement(window.document, ".metrics", HTMLElement).textContent
+        ).toContain("Sep 5, 2026");
+        expect(
+            queryElement(
+                window.document,
+                "#externalCorrectionDraft",
+                HTMLInputElement
+            )
+        ).toBe(hook);
+    });
+
+    it.each([
+        "single",
+        "bulk",
+        "queue",
+    ])(
+        "refresh keeps an active %s save locked with its original draft and retry ID",
+        (mode) => {
+            expect.hasAssertions();
+
+            const { behaviors, calls, window } = createLoggerWindow({
+                bootstrapData: workflowBootstrap(),
+                storage:
+                    mode === "queue"
+                        ? {
+                              gardenLoggerObservationQueueV1: JSON.stringify([
+                                  queuedWeight(),
+                              ]),
+                          }
+                        : {},
+            });
+            confirmSummarySave(window, mode);
+            const pending = window.localStorage.getItem(
+                "gardenLoggerPendingSaveV1"
+            );
+            const bulk = window.localStorage.getItem(
+                "gardenLoggerBulkPendingV1"
+            );
+            const queue = window.localStorage.getItem(
+                "gardenLoggerObservationQueueV1"
+            );
+            const savingStatus = queryElement(
+                window.document,
+                "#connectionStatus",
+                HTMLElement
+            ).textContent;
+
+            expect(
+                queryElement(window.document, "#saveButton", HTMLButtonElement)
+                    .disabled
+            ).toBe(true);
+            expect(
+                queryElement(
+                    window.document,
+                    "#refreshDataButton",
+                    HTMLButtonElement
+                ).disabled
+            ).toBe(false);
+
+            behaviors.getWebAppBootstrap = ({ success }) => {
+                success(workflowBootstrap());
+            };
+            refreshWorkflow(window);
+
+            expect(
+                window.localStorage.getItem("gardenLoggerPendingSaveV1")
+            ).toBe(pending);
+            expect(
+                window.localStorage.getItem("gardenLoggerBulkPendingV1")
+            ).toBe(bulk);
+            expect(
+                window.localStorage.getItem("gardenLoggerObservationQueueV1")
+            ).toBe(queue);
+            expect(
+                queryElement(window.document, "#saveButton", HTMLButtonElement)
+                    .disabled
+            ).toBe(true);
+            expect(
+                queryElement(window.document, "#weight", HTMLInputElement)
+                    .disabled
+            ).toBe(true);
+            expect(
+                queryElements(
+                    window.document,
+                    "#plantChoiceList button",
+                    HTMLButtonElement
+                ).every((button) => button.disabled)
+            ).toBe(true);
+            expect(
+                queryElement(window.document, "#connectionStatus", HTMLElement)
+                    .textContent
+            ).toBe(savingStatus);
+            expect(
+                calls.filter(({ method }) => method.startsWith("save"))
+            ).toHaveLength(1);
+            expect(
+                queryElements(
+                    window.document,
+                    "#bulkPlantList input",
+                    HTMLInputElement
+                ).every((input) => input.disabled)
+            ).toBe(true);
+        }
+    );
+
+    it("ignores stale summary and History refreshes and timed-out callbacks without advancing freshness", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date("2026-09-06T16:05:00Z"));
+        const { behaviors, window } = createLoggerWindow({
+            bootstrapData: workflowBootstrap(),
+        });
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">[]} */
+        const summaries = [];
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getRecentWebObservations">[]} */
+        const history = [];
+        behaviors.getWebAppBootstrap = (handlers) => {
+            summaries.push(handlers);
+        };
+        behaviors.getRecentWebObservations = (handlers) => {
+            history.push(handlers);
+        };
+        refreshWorkflow(window);
+        refreshWorkflow(window);
+        required(summaries[1]).success({
+            ...workflowBootstrap(),
+            serverTime: "2026-09-06T16:05:00Z",
+            weighedTodayPlantIds: ["P01", "P02"],
+        });
+        required(history[1]).success([{ ...recentExample, weight: 418 }]);
+        required(summaries[0]).success(workflowBootstrap());
+        required(history[0]).success([{ ...recentExample, weight: 999 }]);
+        required(summaries[1]).failure(new Error("Duplicate old callback"));
+
+        expect(
+            queryElement(window.document, "#roundProgress", HTMLElement)
+                .textContent
+        ).toContain("2 of 2 Saved today");
+        expect(
+            queryElement(window.document, "#recentList", HTMLElement)
+                .textContent
+        ).toContain("418 g");
+        expect(
+            queryElement(window.document, "#dataFreshness", HTMLElement)
+                .textContent
+        ).toContain("less than a minute ago");
+        expect(
+            queryElement(window.document, "#connectionStatus", HTMLElement)
+                .textContent
+        ).toContain("Connected");
+
+        refreshWorkflow(window);
+        vi.advanceTimersByTime(20_000);
+        required(summaries[2]).success(workflowBootstrap());
+        required(history[2]).success([]);
+
+        expect(
+            queryElement(window.document, "#roundProgress", HTMLElement)
+                .textContent
+        ).toContain("2 of 2 Saved today");
+        expect(
+            queryElement(window.document, "#recentList", HTMLElement)
+                .textContent
+        ).toContain("418 g");
+        expect(
+            queryElement(
+                window.document,
+                "#refreshDataButton",
+                HTMLButtonElement
+            ).getAttribute("aria-busy")
+        ).toBe("false");
+    });
+
+    it("shows signed input changes and elapsed observation time, clears invalid input, and never changes the entered value", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: workflowBootstrap(),
+        });
+        const feedback = queryElement(
+            window.document,
+            "#weightFeedback",
+            HTMLElement
+        );
+        enterWorkflowValue(window, "weight", "425.5");
+
+        expect(feedback.textContent).toContain(
+            "+5.5 g vs latest 420 g · 1 d 0 h since latest reading"
+        );
+
+        enterWorkflowValue(window, "weight", "400");
+
+        expect(feedback.textContent).toContain("-20 g");
+
+        enterWorkflowValue(window, "weight", "420");
+
+        expect(feedback.textContent).toContain("0 g vs latest");
+
+        enterWorkflowValue(window, "potSetup", "3");
+
+        expect(feedback.textContent).toContain("Different pot setup");
+        expect(
+            queryElement(window.document, "#weight", HTMLInputElement).value
+        ).toBe("420");
+
+        enterWorkflowValue(window, "weight", "0");
+
+        expect(feedback.hidden).toBe(true);
+
+        enterWorkflowValue(window, "weight", "");
+
+        expect(feedback.textContent).toBe("");
+    });
+});
+
 /** @param {Window} window @param {string} value */
 function changeRecentLimit(window, value) {
     const select = queryElement(
@@ -141,6 +1063,1674 @@ function changeRecentLimit(window, value) {
     select.value = value;
     select.dispatchEvent(new window.Event("change", { bubbles: true }));
 }
+
+const correctionDraftKey = "gardenLoggerCorrectionDraftV1";
+const correctionPendingKey = "gardenLoggerCorrectionPendingV1";
+const correctionPayloadDigest = "a".repeat(64);
+const correctionOperationDigest = "b".repeat(64);
+
+/** @param {Window} window @param {string} id */
+function clickCorrection(window, id) {
+    queryElement(window.document, `#${id}`, HTMLButtonElement).click();
+}
+
+/**
+ * @param {string} [event] @returns
+ *   {import("../logger-correction-fixtures.d.ts").CorrectionContext}
+ */
+function correctionContext(event = "Weigh") {
+    /**
+     * @type {Record<
+     *     string,
+     *     import("../logger-correction-fixtures.d.ts").CorrectionField[]
+     * >}
+     */
+    const eventFields = {
+        Check: [
+            correctionField("condition", "select", "", ["Healthy", "Watch"]),
+            correctionField("soilMoisture", "select", "", ["Dry", "Damp"]),
+        ],
+        Clean: [],
+        Flower: [
+            correctionField("flowerCount", "number"),
+            correctionField("flowerDetails"),
+        ],
+        Measure: [
+            correctionField("heightCm", "number", "cm"),
+            correctionField("widthCm", "number", "cm"),
+            correctionField("measurementUnit", "select", "", ["cm", "in"]),
+        ],
+        Note: [],
+        Other: [],
+        Pest: [correctionField("pestIssue"), correctionField("pestTreatment")],
+        Photo: [correctionField("photoUrl", "url")],
+        Prune: [],
+        Repot: [
+            correctionField("previousPotSize"),
+            correctionField("potSize"),
+            correctionField("medium"),
+        ],
+        Rotation: [correctionField("rotationDegrees", "number", "°")],
+        Water: [
+            correctionField("nutrientsUsed", "select", "", ["No", "Yes"]),
+            correctionField("nutrientProduct"),
+            correctionField("nutrientAmount"),
+            correctionField("wateringApplication", "select", "", [
+                "Thorough",
+                "Partial",
+            ]),
+            correctionField("waterAmount", "number", "mL"),
+        ],
+        Weigh: [correctionField("weight", "number", "g")],
+    };
+    const fields = [
+        correctionField("observationDate", "datetime"),
+        ...required(eventFields[event]),
+        correctionField("notes"),
+    ];
+    if (["Measure", "Weigh"].includes(event))
+        fields.push(
+            correctionField("measurementQuality", "select", "", [
+                "Measured",
+                "Estimated",
+            ]),
+            correctionField("measurementMethod", "select", "", [
+                "Scale",
+                "Ruler",
+            ])
+        );
+    const values = Object.fromEntries(
+        fields.map((field) => [
+            field.key,
+            field.type === "number" ? 10 : (field.options[0] ?? "saved text"),
+        ])
+    );
+    values["observationDate"] = "2026-09-05T16:23:47.123Z";
+    values["notes"] = "=SUM(A1:A2)\n<img src=x onerror=alert(1)>";
+    switch (event) {
+        case "Measure": {
+            values["heightCm"] = 6.350000000000001;
+            values["widthCm"] = 4.572;
+            values["measurementUnit"] = "in";
+            break;
+        }
+        case "Photo": {
+            values["photoUrl"] = "https://example.test/photo";
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+    return {
+        baseRevision: "saved-revision-1",
+        contextDigest: "context-1",
+        fields,
+        notices: [
+            "Only this event is corrected. Other events retain their dates.",
+            "The pot setup boundary is unchanged.",
+        ],
+        original: {
+            correctionReason: "",
+            correctsObservationId: "",
+            event,
+            label: "A1",
+            observationDate: values["observationDate"],
+            observationId: "saved-observation-1",
+            plantId: "P01",
+            potSetup: 2,
+            recordedAt: "2026-09-05T16:25:00Z",
+            recordStatus: "Active",
+            requestId: "saved-group-request",
+            saveGroupId: "saved-group-request",
+            values,
+        },
+        siblings: [],
+        timeZone: "America/New_York",
+    };
+}
+
+/**
+ * @param {string} key
+ * @param {import("../logger-correction-fixtures.d.ts").CorrectionField["type"]} [type]
+ * @param {string} [unit]
+ * @param {string[]} [options]
+ *
+ * @returns {import("../logger-correction-fixtures.d.ts").CorrectionField}
+ */
+function correctionField(key, type = "text", unit = "", options = []) {
+    return {
+        key,
+        label: key,
+        options,
+        required: key === "observationDate",
+        type,
+        unit,
+    };
+}
+
+/**
+ * @param {import("../logger-correction-fixtures.d.ts").CorrectionContext} context
+ * @param {import("../logger-correction-fixtures.d.ts").CorrectionPreviewPayload} payload
+ *
+ * @returns {import("../logger-correction-fixtures.d.ts").CorrectionPreview}
+ */
+function correctionPreview(context, payload) {
+    return {
+        ...context,
+        differences: Object.entries(payload.changes).map(([key, after]) => ({
+            after,
+            before: context.original.values[key] ?? "",
+            key,
+            label: key,
+        })),
+        payloadDigest: correctionPayloadDigest,
+        previewToken: "signed-preview-token",
+        replacement: {
+            ...context.original,
+            values: { ...context.original.values, ...payload.changes },
+        },
+    };
+}
+
+/**
+ * @param {import("../logger-correction-fixtures.d.ts").CorrectionSavePayload} payload
+ *
+ * @returns {import("../logger-correction-fixtures.d.ts").CorrectionReceipt}
+ */
+function correctionReceipt(payload) {
+    return {
+        observationId: payload.observationId,
+        operationDigest: correctionOperationDigest,
+        originalObservationId: payload.observationId,
+        payloadDigest: correctionPayloadDigest,
+        replacementObservationId: `correction:${payload.requestId}:${correctionOperationDigest}`,
+        requestId: payload.requestId,
+        status: "saved",
+    };
+}
+
+/**
+ * @param {import("../logger-correction-fixtures.d.ts").CorrectionSavePayload} payload
+ *
+ * @returns {import("../logger-correction-fixtures.d.ts").CorrectionRejected}
+ */
+function correctionRejection(payload) {
+    return {
+        code: "STALE_PREVIEW",
+        message: "Related History changed. Reload the entry and review again.",
+        observationId: payload.observationId,
+        operationDigest: createHash("sha256")
+            .update(
+                JSON.stringify({
+                    payloadDigest: correctionPayloadDigest,
+                    previewToken: payload.previewToken,
+                    requestId: payload.requestId,
+                })
+            )
+            .digest("hex"),
+        payloadDigest: correctionPayloadDigest,
+        requestId: payload.requestId,
+        status: "rejected",
+    };
+}
+
+/** @param {string} [event] */
+function createCorrectionLogger(event = "Weigh") {
+    const context = correctionContext(event);
+    const logger = createLoggerWindow({
+        bootstrapData: {
+            ...workflowBootstrap(),
+            recent: [
+                {
+                    ...recentExample,
+                    event,
+                    observationId: context.original.observationId,
+                },
+                { ...recentExample, observationId: "second-observation" },
+            ],
+        },
+    });
+    logger.behaviors.getWebCorrectionEntry = ({ success }) => {
+        success(context);
+    };
+    logger.behaviors.previewWebObservationCorrection = ({ args, success }) => {
+        success(correctionPreview(context, args[0]));
+    };
+    return { ...logger, context };
+}
+
+/** @param {Window} window @param {string} key @param {string} value */
+function editCorrection(window, key, value) {
+    const selector =
+        key === "reason" ? "#correctionReason" : `#correctionField-${key}`;
+    const input = required(window.document.querySelector(selector));
+    if (
+        !(input instanceof HTMLInputElement) &&
+        !(input instanceof HTMLTextAreaElement) &&
+        !(input instanceof HTMLSelectElement)
+    )
+        throw new TypeError("Expected an editable correction field.");
+    input.value = value;
+    input.dispatchEvent(new window.Event("input", { bubbles: true }));
+    input.dispatchEvent(new window.Event("change", { bubbles: true }));
+}
+
+/** @param {Window} window */
+function openFirstCorrection(window) {
+    queryElement(
+        window.document,
+        ".recent-item .correct-entry",
+        HTMLButtonElement
+    ).click();
+}
+
+/** @param {Window} window */
+function prepareWeightCorrection(window) {
+    openFirstCorrection(window);
+    editCorrection(window, "weight", "432.5");
+    editCorrection(window, "reason", "Transposed digits on scale");
+    submitCorrectionReview(window);
+}
+
+/** @param {Window} window */
+function submitCorrectionReview(window) {
+    queryElement(
+        window.document,
+        "#correctionForm",
+        HTMLFormElement
+    ).dispatchEvent(
+        new window.Event("submit", { bubbles: true, cancelable: true })
+    );
+}
+
+describe("saved History correction editor and durable recovery", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("fetches a full Weigh entry, reviews safe stacked values and confirms without changing the ordinary draft", () => {
+        expect.hasAssertions();
+
+        const { behaviors, calls, context, window } = createCorrectionLogger();
+        context.siblings = [
+            {
+                ...context.original,
+                event: "Water",
+                observationId: "saved-water-sibling",
+            },
+        ];
+        enterWorkflowValue(window, "weight", "501");
+        const ordinaryNotes = queryElement(
+            window.document,
+            "#notes",
+            HTMLTextAreaElement
+        );
+        ordinaryNotes.value = "ordinary draft";
+        behaviors.saveWebObservationCorrection = ({ args, success }) => {
+            expect(window.localStorage.getItem(correctionPendingKey)).toContain(
+                args[0].requestId
+            );
+            expect(window.localStorage.getItem(correctionDraftKey)).toContain(
+                "Transposed digits"
+            );
+            expect(Object.isFrozen(args[0])).toBe(true);
+            expect(Object.isFrozen(args[0].changes)).toBe(true);
+
+            success(correctionReceipt(args[0]));
+        };
+        prepareWeightCorrection(window);
+        const review = queryElement(
+            window.document,
+            "#correctionReview",
+            HTMLElement
+        );
+
+        expect(
+            structuredClone(
+                calls.find((call) => call.method === "getWebCorrectionEntry")
+                    ?.args
+            )
+        ).toStrictEqual(
+            structuredClone([{ observationId: "saved-observation-1" }])
+        );
+        expect(review.hidden).toBe(false);
+        expect(
+            structuredClone(
+                [...review.querySelectorAll(":scope > section > h3")].map(
+                    (heading) => heading.textContent
+                )
+            )
+        ).toStrictEqual(structuredClone(["Original", "Replacement"]));
+        expect(review.textContent).toContain(context.original.values["notes"]);
+        expect(review.querySelector("img")).toBeNull();
+        expect(review.textContent).toContain("America/New_York");
+        expect(review.textContent).toContain("23:47");
+        expect(review.textContent).toContain("432.5 g");
+        expect(review.textContent).toContain(
+            "Other entries from this save (1)"
+        );
+        expect(review.textContent).toContain("Only this event is corrected");
+        expect(
+            queryElement(window.document, "#correctionIdentity", HTMLElement)
+                .textContent
+        ).toContain("P01 · Weigh · Setup 2 · Historical label A1");
+        expect(
+            calls.filter(
+                (call) => call.method === "saveWebObservationCorrection"
+            )
+        ).toHaveLength(0);
+
+        clickCorrection(window, "correctionConfirm");
+        const saved = required(
+            calls.find((call) => call.method === "saveWebObservationCorrection")
+        );
+
+        expect(structuredClone(saved.args[0].changes)).toStrictEqual(
+            structuredClone({ weight: 432.5 })
+        );
+        expect(
+            queryElement(window.document, "#weight", HTMLInputElement).value
+        ).toBe("501");
+        expect(ordinaryNotes.value).toBe("ordinary draft");
+        expect(window.localStorage.getItem(correctionPendingKey)).toBeNull();
+        expect(window.localStorage.getItem(correctionDraftKey)).toBeNull();
+        expect(
+            queryElement(
+                window.document,
+                "#correctionDialog",
+                HTMLDialogElement
+            ).open
+        ).toBe(false);
+        expect(
+            calls.filter((call) => call.method === "getWebAppBootstrap")
+        ).toHaveLength(2);
+    });
+
+    it("hides the action for legacy History rows without an observation ID", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: { ...bootstrap, recent: [recentExample] },
+        });
+
+        expect(window.document.querySelector(".correct-entry")).toBeNull();
+    });
+
+    it("preserves exact canonical Measure values and the original instant through unit round trips and note-only edits", () => {
+        expect.hasAssertions();
+
+        const { behaviors, calls, context, window } =
+            createCorrectionLogger("Measure");
+        openFirstCorrection(window);
+
+        expect(
+            queryElement(
+                window.document,
+                "#correctionField-heightCm",
+                HTMLInputElement
+            ).value
+        ).toBe("6.350000000000001");
+        expect(
+            queryElement(
+                window.document,
+                'label[for="correctionField-heightCm"]',
+                HTMLElement
+            ).textContent
+        ).toContain("(cm)");
+        expect(
+            queryElement(window.document, "#correctionFields", HTMLElement)
+                .textContent
+        ).toContain("changing this unit does not convert or rewrite");
+
+        editCorrection(window, "measurementUnit", "cm");
+        editCorrection(window, "measurementUnit", "in");
+        editCorrection(window, "notes", "Updated note");
+        editCorrection(window, "reason", "Clarify measurement");
+        submitCorrectionReview(window);
+        const preview = required(
+            calls.find(
+                (call) => call.method === "previewWebObservationCorrection"
+            )
+        );
+
+        expect(structuredClone(preview.args[0].changes)).toStrictEqual(
+            structuredClone({
+                notes: "Updated note",
+            })
+        );
+        expect(context.original.values["observationDate"]).toBe(
+            "2026-09-05T16:23:47.123Z"
+        );
+        expect(
+            queryElement(window.document, "#correctionReview", HTMLElement)
+                .textContent
+        ).toContain("6.350000000000001 cm");
+
+        clickCorrection(window, "correctionEdit");
+        editCorrection(window, "heightCm", String(3 * 2.54));
+        editCorrection(window, "measurementUnit", "cm");
+        submitCorrectionReview(window);
+
+        expect(
+            structuredClone(
+                calls.findLast(
+                    (call) => call.method === "previewWebObservationCorrection"
+                )?.args[0].changes
+            )
+        ).toStrictEqual(
+            structuredClone({
+                heightCm: 7.62,
+                measurementUnit: "cm",
+                notes: "Updated note",
+            })
+        );
+
+        behaviors.saveWebObservationCorrection = ({ args, success }) => {
+            success(correctionReceipt(args[0]));
+        };
+        clickCorrection(window, "correctionConfirm");
+        const saved = required(
+            calls.find((call) => call.method === "saveWebObservationCorrection")
+        );
+
+        expect(structuredClone(saved.args[0].changes)).toStrictEqual({
+            heightCm: 7.62,
+            measurementUnit: "cm",
+            notes: "Updated note",
+        });
+        expect(window.localStorage.getItem(correctionPendingKey)).toBeNull();
+    });
+
+    it.each([
+        [
+            "Repot",
+            "medium",
+            "fresh grit",
+            "potSize",
+        ],
+        [
+            "Check",
+            "condition",
+            "Watch",
+            "soilMoisture",
+        ],
+        [
+            "Water",
+            "waterAmount",
+            "125",
+            "nutrientProduct",
+        ],
+        [
+            "Flower",
+            "flowerCount",
+            "3",
+            "flowerDetails",
+        ],
+        [
+            "Photo",
+            "photoUrl",
+            "https://example.test/new-photo",
+            "notes",
+        ],
+        [
+            "Pest",
+            "pestTreatment",
+            "Rinsed",
+            "pestIssue",
+        ],
+        [
+            "Rotation",
+            "rotationDegrees",
+            "180",
+            "notes",
+        ],
+        [
+            "Clean",
+            "notes",
+            "Cleaned leaves",
+            "observationDate",
+        ],
+        [
+            "Prune",
+            "notes",
+            "Removed dry leaf",
+            "observationDate",
+        ],
+        [
+            "Other",
+            "notes",
+            "Moved shelf",
+            "observationDate",
+        ],
+        [
+            "Note",
+            "notes",
+            "Archived observation",
+            "observationDate",
+        ],
+    ])(
+        "exposes the server-defined %s fields and patches only the changed field",
+        (event, key, value, unchanged) => {
+            expect.hasAssertions();
+
+            const { behaviors, calls, context, window } =
+                createCorrectionLogger(event);
+            openFirstCorrection(window);
+
+            expect(
+                window.document.querySelector(`#correctionField-${unchanged}`)
+            ).not.toBeNull();
+            expect(
+                window.document.querySelectorAll("#correctionFields label")
+            ).toHaveLength(context.fields.length);
+
+            editCorrection(window, key, value);
+            editCorrection(window, "reason", "Correct saved detail");
+            submitCorrectionReview(window);
+            const payload = required(
+                calls.find(
+                    (call) => call.method === "previewWebObservationCorrection"
+                )
+            ).args[0];
+            const field = required(
+                context.fields.find((candidate) => candidate.key === key)
+            );
+
+            expect(structuredClone(payload.changes)).toStrictEqual(
+                structuredClone({
+                    [key]: field.type === "number" ? Number(value) : value,
+                })
+            );
+            expect(
+                queryElement(
+                    window.document,
+                    "#correctionConfirm",
+                    HTMLButtonElement
+                ).hidden
+            ).toBe(false);
+
+            behaviors.saveWebObservationCorrection = ({ args, success }) => {
+                success(correctionReceipt(args[0]));
+            };
+            clickCorrection(window, "correctionConfirm");
+            const saved = required(
+                calls.find(
+                    (call) => call.method === "saveWebObservationCorrection"
+                )
+            );
+
+            expect(structuredClone(saved.args[0].changes)).toStrictEqual(
+                structuredClone(payload.changes)
+            );
+            expect(
+                window.localStorage.getItem(correctionPendingKey)
+            ).toBeNull();
+        }
+    );
+
+    it("sends explicit blank optional clears and converts changed device dates into zoned ISO timestamps", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createCorrectionLogger("Repot");
+        openFirstCorrection(window);
+        editCorrection(window, "medium", "");
+        editCorrection(window, "observationDate", "2026-09-04T11:22:33");
+        editCorrection(
+            window,
+            "reason",
+            "Correct date and remove medium guess"
+        );
+        submitCorrectionReview(window);
+        const payload = required(
+            calls.find(
+                (call) => call.method === "previewWebObservationCorrection"
+            )
+        ).args[0];
+        const changedDate = new Date("2026-09-04T11:22:33");
+        const deviceFormatter = new Intl.DateTimeFormat();
+
+        expect(structuredClone(payload.changes)).toStrictEqual(
+            structuredClone({
+                medium: "",
+                observationDate: changedDate.toISOString(),
+            })
+        );
+        expect(
+            queryElement(
+                window.document,
+                'label[for="correctionField-observationDate"]',
+                HTMLElement
+            ).textContent
+        ).toContain(deviceFormatter.resolvedOptions().timeZone);
+    });
+
+    it("preserves unchanged legacy blanks and historical options even when current field definitions require a value", () => {
+        expect.hasAssertions();
+
+        const { calls, context, window } = createCorrectionLogger();
+        const quality = required(
+            context.fields.find((field) => field.key === "measurementQuality")
+        );
+        quality.required = true;
+        context.original.values["measurementQuality"] = "";
+        context.original.values["measurementMethod"] =
+            "Historical unknown method";
+        openFirstCorrection(window);
+        editCorrection(window, "notes", "Correct the note only");
+        editCorrection(window, "reason", "Fix wording");
+        submitCorrectionReview(window);
+        const review = required(
+            calls.find(
+                (call) => call.method === "previewWebObservationCorrection"
+            )
+        );
+
+        expect(structuredClone(review.args[0].changes)).toStrictEqual({
+            notes: "Correct the note only",
+        });
+        expect(
+            queryElement(window.document, "#correctionReview", HTMLElement)
+                .textContent
+        ).toContain("Historical unknown method");
+    });
+
+    it("requires changes and a reason, and preserves the editor on informative server validation errors", () => {
+        expect.hasAssertions();
+
+        const { behaviors, calls, window } = createCorrectionLogger("Photo");
+        openFirstCorrection(window);
+        submitCorrectionReview(window);
+
+        expect(
+            queryElement(window.document, "#correctionStatus", HTMLElement)
+                .textContent
+        ).toContain("reason");
+
+        editCorrection(window, "reason", "Correct link");
+        submitCorrectionReview(window);
+
+        expect(
+            queryElement(window.document, "#correctionStatus", HTMLElement)
+                .textContent
+        ).toContain("Change at least one");
+
+        behaviors.previewWebObservationCorrection = ({ failure }) => {
+            failure(
+                new Error("INVALID_CORRECTION: Photo URL is not accepted.")
+            );
+        };
+        editCorrection(
+            window,
+            "photoUrl",
+            "https://example.test/unsupported-photo"
+        );
+        submitCorrectionReview(window);
+
+        expect(
+            queryElement(window.document, "#correctionStatus", HTMLElement)
+                .textContent
+        ).toContain("INVALID_CORRECTION");
+        expect(
+            queryElement(
+                window.document,
+                "#correctionField-photoUrl",
+                HTMLInputElement
+            ).value
+        ).toBe("https://example.test/unsupported-photo");
+        expect(
+            calls.filter(
+                (call) => call.method === "saveWebObservationCorrection"
+            )
+        ).toHaveLength(0);
+    });
+
+    it("retains its draft through refresh, close, Escape cancel and a fresh reload", () => {
+        expect.hasAssertions();
+
+        const { behaviors, context, window } = createCorrectionLogger();
+        openFirstCorrection(window);
+        editCorrection(window, "weight", "455");
+        editCorrection(window, "reason", "Keep this draft");
+        behaviors.getRecentWebObservations = ({ success }) => {
+            success([
+                {
+                    ...recentExample,
+                    observationId: context.original.observationId,
+                },
+            ]);
+        };
+        refreshWorkflow(window);
+
+        expect(
+            queryElement(
+                window.document,
+                "#correctionField-weight",
+                HTMLInputElement
+            ).value
+        ).toBe("455");
+
+        queryElement(
+            window.document,
+            "#correctionDialog",
+            HTMLDialogElement
+        ).dispatchEvent(new window.Event("cancel", { cancelable: true }));
+
+        expect(
+            queryElement(
+                window.document,
+                "#correctionDialog",
+                HTMLDialogElement
+            ).open
+        ).toBe(false);
+        expect(window.document.activeElement?.id).toBe("correctionResume");
+        expect(window.localStorage.getItem(correctionDraftKey)).toContain(
+            "Keep this draft"
+        );
+
+        const reloaded = createLoggerWindow({
+            storage: {
+                [correctionDraftKey]: required(
+                    window.localStorage.getItem(correctionDraftKey)
+                ),
+            },
+        });
+        reloaded.behaviors.getWebCorrectionEntry = ({ success }) => {
+            success(context);
+        };
+        clickCorrection(reloaded.window, "correctionResume");
+
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#correctionField-weight",
+                HTMLInputElement
+            ).value
+        ).toBe("455");
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#correctionReason",
+                HTMLTextAreaElement
+            ).value
+        ).toBe("Keep this draft");
+    });
+
+    it("restores focus to the opening button and ignores a preview callback after closing", () => {
+        expect.hasAssertions();
+
+        const { behaviors, context, window } = createCorrectionLogger();
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"previewWebObservationCorrection">[]} */
+        const previews = [];
+        behaviors.previewWebObservationCorrection = (handler) => {
+            previews.push(handler);
+        };
+        const trigger = queryElement(
+            window.document,
+            ".correct-entry",
+            HTMLButtonElement
+        );
+        prepareWeightCorrection(window);
+        clickCorrection(window, "correctionClose");
+        const callback = required(previews[0]);
+        callback.success(correctionPreview(context, callback.args[0]));
+
+        expect(window.document.activeElement).toBe(trigger);
+        expect(
+            queryElement(
+                window.document,
+                "#correctionDialog",
+                HTMLDialogElement
+            ).open
+        ).toBe(false);
+        expect(
+            queryElement(
+                window.document,
+                "#correctionConfirm",
+                HTMLButtonElement
+            ).hidden
+        ).toBe(true);
+    });
+
+    it("ignores obsolete load and preview callbacks when another saved entry opens", () => {
+        expect.hasAssertions();
+
+        const { behaviors, context, window } = createCorrectionLogger();
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebCorrectionEntry">[]} */
+        const loads = [];
+        behaviors.getWebCorrectionEntry = (handler) => {
+            loads.push(handler);
+        };
+        openFirstCorrection(window);
+        const second = required(
+            queryElements(
+                window.document,
+                ".correct-entry",
+                HTMLButtonElement
+            )[1]
+        );
+        second.click();
+        const secondContext = {
+            ...correctionContext("Repot"),
+            original: {
+                ...correctionContext("Repot").original,
+                observationId: "second-observation",
+            },
+        };
+        required(loads[1]).success(secondContext);
+        required(loads[0]).success(context);
+
+        expect(
+            queryElement(window.document, "#correctionIdentity", HTMLElement)
+                .textContent
+        ).toContain("second-observation");
+        expect(
+            window.document.querySelector("#correctionField-weight")
+        ).toBeNull();
+
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"previewWebObservationCorrection">[]} */
+        const previews = [];
+        behaviors.previewWebObservationCorrection = (handler) => {
+            previews.push(handler);
+        };
+        editCorrection(window, "medium", "fresh medium");
+        editCorrection(window, "reason", "correct medium");
+        submitCorrectionReview(window);
+        openFirstCorrection(window);
+        required(loads[2]).success(context);
+        const late = required(previews[0]);
+        late.success(correctionPreview(secondContext, late.args[0]));
+
+        expect(
+            queryElement(window.document, "#correctionIdentity", HTMLElement)
+                .textContent
+        ).toContain("saved-observation-1");
+        expect(
+            queryElement(window.document, "#correctionReview", HTMLElement)
+                .hidden
+        ).toBe(true);
+    });
+
+    it("requires a fresh fetch and review after a stale preview, keeping edits until explicit reload", () => {
+        expect.hasAssertions();
+
+        const { behaviors, calls, window } = createCorrectionLogger();
+        behaviors.previewWebObservationCorrection = ({ failure }) => {
+            failure(
+                new Error("STALE_PREVIEW: Another correction changed this row.")
+            );
+        };
+        prepareWeightCorrection(window);
+
+        expect(
+            queryElement(window.document, "#correctionStatus", HTMLElement)
+                .textContent
+        ).toContain("Fetch the saved entry again");
+        expect(
+            queryElement(
+                window.document,
+                "#correctionField-weight",
+                HTMLInputElement
+            ).value
+        ).toBe("432.5");
+
+        submitCorrectionReview(window);
+
+        expect(
+            calls.filter(
+                (call) => call.method === "previewWebObservationCorrection"
+            )
+        ).toHaveLength(1);
+
+        clickCorrection(window, "correctionReload");
+
+        expect(
+            queryElement(
+                window.document,
+                "#correctionField-weight",
+                HTMLInputElement
+            ).value
+        ).toBe("10");
+        expect(
+            calls.filter((call) => call.method === "getWebCorrectionEntry")
+        ).toHaveLength(2);
+    });
+});
+
+describe("saved History correction immutable requests and receipts", () => {
+    afterEach(restoreLoggerMocks);
+
+    it.each([
+        "failure",
+        "timeout",
+        "empty",
+    ])(
+        "recovers a %s save callback through a matched locked status receipt",
+        (mode) => {
+            expect.hasAssertions();
+
+            vi.useFakeTimers();
+            const { behaviors, calls, window } = createCorrectionLogger();
+            behaviors.saveWebObservationCorrection = ({ failure, success }) => {
+                switch (mode) {
+                    case "empty": {
+                        success(undefined);
+                        break;
+                    }
+                    case "failure": {
+                        failure(new Error("Lost response"));
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+            };
+            behaviors.getWebCorrectionStatus = ({ args, success }) => {
+                success(correctionReceipt(args[0]));
+            };
+            prepareWeightCorrection(window);
+            clickCorrection(window, "correctionConfirm");
+            vi.advanceTimersByTime(20_000);
+
+            expect(
+                window.localStorage.getItem(correctionPendingKey)
+            ).toBeNull();
+            expect(
+                calls.filter(
+                    (call) => call.method === "saveWebObservationCorrection"
+                )
+            ).toHaveLength(1);
+
+            const save = required(
+                calls.find(
+                    (call) => call.method === "saveWebObservationCorrection"
+                )
+            );
+
+            expect(
+                structuredClone(
+                    calls.find(
+                        (call) => call.method === "getWebCorrectionStatus"
+                    )?.args[0]
+                )
+            ).toStrictEqual(structuredClone(save.args[0]));
+            expect(
+                queryElement(
+                    window.document,
+                    "#correctionBannerStatus",
+                    HTMLElement
+                ).textContent
+            ).toContain("confirmed");
+        }
+    );
+
+    it("keeps one immutable request across missing status, status failure, double click, blocked new edits and exact retry", () => {
+        expect.hasAssertions();
+
+        const { behaviors, calls, window } = createCorrectionLogger();
+        behaviors.saveWebObservationCorrection = ({ failure }) => {
+            failure(new Error("Disconnected"));
+        };
+        behaviors.getWebCorrectionStatus = ({ args, success }) => {
+            success({ ...correctionReceipt(args[0]), status: "missing" });
+        };
+        prepareWeightCorrection(window);
+        clickCorrection(window, "correctionConfirm");
+        clickCorrection(window, "correctionConfirm");
+        const stored = required(
+            window.localStorage.getItem(correctionPendingKey)
+        );
+        openFirstCorrection(window);
+
+        expect(
+            calls.filter((call) => call.method === "getWebCorrectionEntry")
+        ).toHaveLength(1);
+        expect(
+            calls.filter(
+                (call) => call.method === "saveWebObservationCorrection"
+            )
+        ).toHaveLength(1);
+        expect(
+            queryElement(
+                window.document,
+                "#correctionResume",
+                HTMLButtonElement
+            ).hidden
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#weight", HTMLInputElement).disabled
+        ).toBe(false);
+
+        behaviors.getWebCorrectionStatus = ({ failure }) => {
+            failure(new Error("Status unavailable"));
+        };
+        clickCorrection(window, "correctionCheck");
+
+        expect(window.localStorage.getItem(correctionPendingKey)).toBe(stored);
+        expect(
+            queryElement(
+                window.document,
+                "#correctionBannerStatus",
+                HTMLElement
+            ).textContent
+        ).toContain("outcome is still unknown");
+
+        behaviors.saveWebObservationCorrection = ({ args, success }) => {
+            success(correctionReceipt(args[0]));
+        };
+        clickCorrection(window, "correctionRetry");
+        const saves = calls.filter(
+            (call) => call.method === "saveWebObservationCorrection"
+        );
+
+        expect(saves).toHaveLength(2);
+        expect(structuredClone(required(saves[1]).args[0])).toStrictEqual(
+            structuredClone(required(saves[0]).args[0])
+        );
+        expect(window.localStorage.getItem(correctionPendingKey)).toBeNull();
+    });
+
+    it("restores a pending correction after reload, checks automatically, and retries its exact payload", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const first = createCorrectionLogger();
+        prepareWeightCorrection(first.window);
+        clickCorrection(first.window, "correctionConfirm");
+        const stored = required(
+            first.window.localStorage.getItem(correctionPendingKey)
+        );
+        const original = required(
+            first.calls.find(
+                (call) => call.method === "saveWebObservationCorrection"
+            )
+        ).args[0];
+        const reloaded = createLoggerWindow({
+            storage: { [correctionPendingKey]: stored },
+        });
+
+        expect(
+            structuredClone(
+                reloaded.calls.find(
+                    (call) => call.method === "getWebCorrectionStatus"
+                )?.args[0]
+            )
+        ).toStrictEqual(structuredClone(original));
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#correctionBanner",
+                HTMLElement
+            ).hidden
+        ).toBe(false);
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#correctionRetry",
+                HTMLButtonElement
+            ).disabled
+        ).toBe(true);
+
+        vi.advanceTimersByTime(20_000);
+        reloaded.behaviors.saveWebObservationCorrection = ({
+            args,
+            success,
+        }) => {
+            success(correctionReceipt(args[0]));
+        };
+        clickCorrection(reloaded.window, "correctionRetry");
+
+        expect(
+            structuredClone(
+                reloaded.calls.find(
+                    (call) => call.method === "saveWebObservationCorrection"
+                )?.args[0]
+            )
+        ).toStrictEqual(structuredClone(original));
+        expect(
+            reloaded.window.localStorage.getItem(correctionPendingKey)
+        ).toBeNull();
+    });
+
+    it("does not dispatch when localStorage cannot retain the immutable pending payload", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createCorrectionLogger();
+        prepareWeightCorrection(window);
+        const setItem = window.localStorage.setItem.bind(window.localStorage);
+        vi.spyOn(window.localStorage, "setItem").mockImplementation(
+            (key, value) => {
+                if (key === correctionPendingKey)
+                    throw new window.DOMException(
+                        "Quota exceeded",
+                        "QuotaExceededError"
+                    );
+                setItem(key, value);
+            }
+        );
+        clickCorrection(window, "correctionConfirm");
+
+        expect(
+            calls.filter(
+                (call) => call.method === "saveWebObservationCorrection"
+            )
+        ).toHaveLength(0);
+        expect(
+            queryElement(window.document, "#correctionReview", HTMLElement)
+                .hidden
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#correctionStatus", HTMLElement)
+                .textContent
+        ).toContain("Correction was not sent");
+        expect(window.localStorage.getItem(correctionDraftKey)).toContain(
+            "432.5"
+        );
+    });
+
+    it.each([
+        "requestId",
+        "observationId",
+        "originalObservationId",
+        "replacementObservationId",
+        "payloadDigest",
+        "operationDigest",
+    ])(
+        "rejects a mismatched %s receipt and preserves pending recovery",
+        (key) => {
+            expect.hasAssertions();
+
+            const { behaviors, calls, window } = createCorrectionLogger();
+            behaviors.saveWebObservationCorrection = ({ args, success }) => {
+                success({
+                    ...correctionReceipt(args[0]),
+                    [key]: "wrong-receipt",
+                });
+            };
+            behaviors.getWebCorrectionStatus = ({ args, success }) => {
+                success({
+                    ...correctionReceipt(args[0]),
+                    [key]: "wrong-receipt",
+                });
+            };
+            prepareWeightCorrection(window);
+            clickCorrection(window, "correctionConfirm");
+
+            expect(
+                window.localStorage.getItem(correctionPendingKey)
+            ).not.toBeNull();
+            expect(
+                queryElement(
+                    window.document,
+                    "#correctionBannerStatus",
+                    HTMLElement
+                ).textContent
+            ).toContain("did not match");
+            expect(
+                calls.filter((call) => call.method === "getWebAppBootstrap")
+            ).toHaveLength(1);
+        }
+    );
+
+    it("pins a missing-status operation digest and rejects a different valid digest and replacement identity", () => {
+        expect.hasAssertions();
+
+        const { behaviors, window } = createCorrectionLogger();
+        behaviors.saveWebObservationCorrection = ({ failure }) => {
+            failure(new Error("No response"));
+        };
+        behaviors.getWebCorrectionStatus = ({ args, success }) => {
+            success({ ...correctionReceipt(args[0]), status: "missing" });
+        };
+        prepareWeightCorrection(window);
+        clickCorrection(window, "correctionConfirm");
+        const stored = required(
+            window.localStorage.getItem(correctionPendingKey)
+        );
+        behaviors.getWebCorrectionStatus = ({ args, success }) => {
+            const operationDigest = "c".repeat(64);
+            success({
+                ...correctionReceipt(args[0]),
+                operationDigest,
+                replacementObservationId: `correction:${args[0].requestId}:${operationDigest}`,
+            });
+        };
+        clickCorrection(window, "correctionCheck");
+
+        expect(window.localStorage.getItem(correctionPendingKey)).toBe(stored);
+        expect(
+            queryElement(
+                window.document,
+                "#correctionBannerStatus",
+                HTMLElement
+            ).textContent
+        ).toContain("did not match");
+    });
+
+    it("keeps recoverable pending state when local receipt cleanup fails and accepts the same receipt after a later correction", () => {
+        expect.hasAssertions();
+
+        const { behaviors, calls, window } = createCorrectionLogger();
+        const removeItem = window.localStorage.removeItem.bind(
+            window.localStorage
+        );
+        const remove = vi
+            .spyOn(window.localStorage, "removeItem")
+            .mockImplementation((key) => {
+                if (key === correctionPendingKey)
+                    throw new Error("Storage temporarily unavailable");
+                removeItem(key);
+            });
+        behaviors.saveWebObservationCorrection = ({ args, success }) => {
+            success(correctionReceipt(args[0]));
+        };
+        prepareWeightCorrection(window);
+        clickCorrection(window, "correctionConfirm");
+
+        expect(
+            parseStoredRecord(window.localStorage.getItem(correctionPendingKey))
+        ).toMatchObject({
+            payload: {
+                changes: { weight: 432.5 },
+                observationId: "saved-observation-1",
+            },
+            payloadDigest: correctionPayloadDigest,
+        });
+        expect(
+            queryElement(
+                window.document,
+                "#correctionBannerStatus",
+                HTMLElement
+            ).textContent
+        ).toContain("could not clear");
+
+        remove.mockRestore();
+        // A later correction can supersede the replacement. The terminal
+        // receipt is still the same; no current row status or revision check.
+        behaviors.getWebCorrectionStatus = ({ args, success }) => {
+            success(correctionReceipt(args[0]));
+        };
+        clickCorrection(window, "correctionCheck");
+
+        expect(window.localStorage.getItem(correctionPendingKey)).toBeNull();
+        expect(
+            calls.filter((call) => call.method === "getWebCorrectionEntry")
+        ).toHaveLength(1);
+    });
+
+    it("accepts a late matching terminal receipt and ignores subsequent obsolete missing or failure callbacks", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const { behaviors, calls, window } = createCorrectionLogger();
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"saveWebObservationCorrection">[]} */
+        const saves = [];
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebCorrectionStatus">[]} */
+        const statuses = [];
+        behaviors.saveWebObservationCorrection = (handler) => {
+            saves.push(handler);
+        };
+        behaviors.getWebCorrectionStatus = (handler) => {
+            statuses.push(handler);
+        };
+        prepareWeightCorrection(window);
+        clickCorrection(window, "correctionConfirm");
+        vi.advanceTimersByTime(20_000);
+        const save = required(saves[0]);
+        save.success(correctionReceipt(save.args[0]));
+        const status = required(statuses[0]);
+        status.success({
+            ...correctionReceipt(status.args[0]),
+            status: "missing",
+        });
+        save.failure(new Error("Late failure"));
+        save.success(correctionReceipt(save.args[0]));
+
+        expect(window.localStorage.getItem(correctionPendingKey)).toBeNull();
+        expect(
+            queryElement(
+                window.document,
+                "#correctionBannerStatus",
+                HTMLElement
+            ).textContent
+        ).toContain("confirmed");
+        expect(
+            calls.filter((call) => call.method === "getWebAppBootstrap")
+        ).toHaveLength(2);
+    });
+});
+
+describe("server-confirmed terminal correction recovery", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("retains typed correction and ordinary drafts plus the queue, then requires a fresh review and request", async () => {
+        expect.hasAssertions();
+
+        const { behaviors, calls, window } = createCorrectionLogger();
+        enterWorkflowValue(window, "weight", "499");
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).click();
+        enterWorkflowValue(window, "weight", "501");
+        const notes = queryElement(
+            window.document,
+            "#notes",
+            HTMLTextAreaElement
+        );
+        notes.value = "ordinary unsaved note";
+        const queueKey = "gardenLoggerObservationQueueV1";
+        const queue = required(window.localStorage.getItem(queueKey));
+        behaviors.saveWebObservationCorrection = ({ failure }) => {
+            failure(new Error("STALE_PREVIEW: sibling changed"));
+        };
+        behaviors.getWebCorrectionStatus = ({ args, success }) => {
+            success(correctionRejection(args[0]));
+        };
+        prepareWeightCorrection(window);
+        const draft = window.localStorage.getItem(correctionDraftKey);
+        clickCorrection(window, "correctionConfirm");
+        await vi.waitFor(() => {
+            expect(
+                window.localStorage.getItem(correctionPendingKey)
+            ).toBeNull();
+        });
+
+        expect(window.localStorage.getItem(correctionDraftKey)).toBe(draft);
+        expect(window.localStorage.getItem(queueKey)).toBe(queue);
+        expect(notes.value).toBe("ordinary unsaved note");
+        expect(
+            queryElement(window.document, "#weight", HTMLInputElement).value
+        ).toBe("501");
+        expect(
+            queryElement(
+                window.document,
+                "#correctionResume",
+                HTMLButtonElement
+            ).hidden
+        ).toBe(false);
+
+        clickCorrection(window, "correctionResume");
+
+        expect(
+            queryElement(
+                window.document,
+                "#correctionField-weight",
+                HTMLInputElement
+            ).value
+        ).toBe("432.5");
+        expect(
+            queryElement(
+                window.document,
+                "#correctionReason",
+                HTMLTextAreaElement
+            ).value
+        ).toBe("Transposed digits on scale");
+        expect(
+            queryElement(
+                window.document,
+                "#correctionConfirm",
+                HTMLButtonElement
+            ).hidden
+        ).toBe(true);
+
+        clickCorrection(window, "correctionConfirm");
+
+        expect(
+            calls.filter(
+                (call) => call.method === "saveWebObservationCorrection"
+            )
+        ).toHaveLength(1);
+
+        submitCorrectionReview(window);
+        behaviors.saveWebObservationCorrection = ({ args, success }) => {
+            success(correctionReceipt(args[0]));
+        };
+        clickCorrection(window, "correctionConfirm");
+        const saves = calls.filter(
+            (call) => call.method === "saveWebObservationCorrection"
+        );
+
+        expect(saves).toHaveLength(2);
+        expect(required(saves[1]).args[0].requestId).not.toBe(
+            required(saves[0]).args[0].requestId
+        );
+    });
+
+    it("restores the same terminal request after reload and recovers its retained typed draft", async () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const first = createCorrectionLogger();
+        prepareWeightCorrection(first.window);
+        clickCorrection(first.window, "correctionConfirm");
+        const pending = required(
+            first.window.localStorage.getItem(correctionPendingKey)
+        );
+        const draft = required(
+            first.window.localStorage.getItem(correctionDraftKey)
+        );
+        const reloaded = createLoggerWindow({
+            storage: {
+                [correctionDraftKey]: draft,
+                [correctionPendingKey]: pending,
+            },
+        });
+
+        expect(
+            reloaded.calls.some(
+                (call) => call.method === "getWebCorrectionStatus"
+            )
+        ).toBe(true);
+
+        vi.advanceTimersByTime(20_000);
+        reloaded.behaviors.getWebCorrectionStatus = ({ args, success }) => {
+            success(correctionRejection(args[0]));
+        };
+        clickCorrection(reloaded.window, "correctionCheck");
+        await vi.waitFor(() => {
+            expect(
+                reloaded.window.localStorage.getItem(correctionPendingKey)
+            ).toBeNull();
+        });
+
+        expect(reloaded.window.localStorage.getItem(correctionDraftKey)).toBe(
+            draft
+        );
+
+        reloaded.behaviors.getWebCorrectionEntry = ({ success }) => {
+            success(correctionContext());
+        };
+        clickCorrection(reloaded.window, "correctionResume");
+
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#correctionField-weight",
+                HTMLInputElement
+            ).value
+        ).toBe("432.5");
+        expect(
+            reloaded.calls.filter(
+                (call) => call.method === "saveWebObservationCorrection"
+            )
+        ).toHaveLength(0);
+    });
+
+    it.each([
+        { fault: "throw", removeCalls: 1, storedReason: "Transposed digits" },
+        { fault: "silent", removeCalls: 1, storedReason: "Transposed digits" },
+        {
+            fault: "different-key",
+            removeCalls: 0,
+            storedReason: "Another correction",
+        },
+    ])(
+        "retains recovery when matching pending cleanup fails: $fault",
+        async ({ fault, removeCalls, storedReason }) => {
+            expect.hasAssertions();
+
+            const { behaviors, window } = createCorrectionLogger();
+            behaviors.saveWebObservationCorrection = ({ failure }) => {
+                failure(new Error("stale commit"));
+            };
+            behaviors.getWebCorrectionStatus = ({ args, success }) => {
+                success(correctionRejection(args[0]));
+            };
+            prepareWeightCorrection(window);
+            const remove = window.localStorage.removeItem.bind(
+                window.localStorage
+            );
+            const removal = vi
+                .spyOn(window.localStorage, "removeItem")
+                .mockImplementation((key) => {
+                    if (key !== correctionPendingKey) {
+                        remove(key);
+                        return;
+                    }
+                    if (fault === "throw")
+                        throw new Error("Storage unavailable");
+                });
+            clickCorrection(window, "correctionConfirm");
+            const pending = required(
+                window.localStorage.getItem(correctionPendingKey)
+            );
+            window.localStorage.setItem(
+                correctionPendingKey,
+                pending.replace("Transposed digits", () => storedReason)
+            );
+            const retained = window.localStorage.getItem(correctionPendingKey);
+            await vi.waitFor(() => {
+                expect(
+                    queryElement(
+                        window.document,
+                        "#correctionBannerStatus",
+                        HTMLElement
+                    ).textContent
+                ).toContain("could not be verified");
+            });
+
+            expect(window.localStorage.getItem(correctionPendingKey)).toBe(
+                retained
+            );
+            expect(window.localStorage.getItem(correctionDraftKey)).toContain(
+                "Transposed digits"
+            );
+            expect(
+                queryElement(
+                    window.document,
+                    "#correctionResume",
+                    HTMLButtonElement
+                ).hidden
+            ).toBe(true);
+
+            expect(removal).toHaveBeenCalledTimes(removeCalls);
+
+            removal.mockRestore();
+            window.localStorage.setItem(correctionPendingKey, pending);
+            clickCorrection(window, "correctionCheck");
+            await vi.waitFor(() => {
+                expect(
+                    window.localStorage.getItem(correctionPendingKey)
+                ).toBeNull();
+            });
+        }
+    );
+
+    it.each([
+        "requestId",
+        "observationId",
+        "payloadDigest",
+        "operationDigest",
+        "code",
+        "message",
+        "status",
+    ])("keeps a mismatched rejected %s protected", async (field) => {
+        expect.hasAssertions();
+
+        const { behaviors, window } = createCorrectionLogger();
+        behaviors.saveWebObservationCorrection = ({ failure }) => {
+            failure(new Error("STALE_PREVIEW"));
+        };
+        behaviors.getWebCorrectionStatus = ({ args, success }) => {
+            success({
+                ...correctionRejection(args[0]),
+                [field]: field === "message" ? "" : "f".repeat(64),
+            });
+        };
+        prepareWeightCorrection(window);
+        clickCorrection(window, "correctionConfirm");
+        const pending = window.localStorage.getItem(correctionPendingKey);
+        await vi.waitFor(() => {
+            expect(
+                queryElement(
+                    window.document,
+                    "#correctionCheck",
+                    HTMLButtonElement
+                ).disabled
+            ).toBe(false);
+        });
+
+        expect(window.localStorage.getItem(correctionPendingKey)).toBe(pending);
+        expect(
+            queryElement(
+                window.document,
+                "#correctionResume",
+                HTMLButtonElement
+            ).hidden
+        ).toBe(true);
+    });
+
+    it("restores the exact pending key if removal succeeds but its verification read fails", async () => {
+        expect.hasAssertions();
+
+        const { behaviors, window } = createCorrectionLogger();
+        behaviors.saveWebObservationCorrection = ({ failure }) => {
+            failure(new Error("STALE_PREVIEW"));
+        };
+        behaviors.getWebCorrectionStatus = ({ args, success }) => {
+            success(correctionRejection(args[0]));
+        };
+        prepareWeightCorrection(window);
+        const remove = window.localStorage.removeItem.bind(window.localStorage);
+        const removal = vi
+            .spyOn(window.localStorage, "removeItem")
+            .mockImplementation((key) => {
+                remove(key);
+                if (key === correctionPendingKey)
+                    vi.spyOn(
+                        window.localStorage,
+                        "getItem"
+                    ).mockImplementationOnce(() => {
+                        throw new Error("Read-back unavailable");
+                    });
+            });
+        clickCorrection(window, "correctionConfirm");
+        const pending = window.localStorage.getItem(correctionPendingKey);
+        await vi.waitFor(() => {
+            expect(
+                queryElement(
+                    window.document,
+                    "#correctionBannerStatus",
+                    HTMLElement
+                ).textContent
+            ).toContain("could not be verified");
+        });
+
+        expect(window.localStorage.getItem(correctionPendingKey)).toBe(pending);
+        expect(window.localStorage.getItem(correctionDraftKey)).toContain(
+            "Transposed digits"
+        );
+
+        removal.mockRestore();
+        clickCorrection(window, "correctionCheck");
+        await vi.waitFor(() => {
+            expect(
+                window.localStorage.getItem(correctionPendingKey)
+            ).toBeNull();
+        });
+    });
+});
 
 const canonicalPlantLabels = [
     "A1",
@@ -275,6 +2865,8 @@ function createLoggerWindow({
         url: "https://script.google.com/macros/s/test/exec",
     });
     loggerWindows.add(window);
+    // Keep the VM clock aligned with test timers for workbook-day rollover.
+    Object.defineProperty(window, "Date", { configurable: true, value: Date });
     Object.defineProperty(window.navigator, "onLine", {
         configurable: true,
         value: online,
@@ -396,9 +2988,13 @@ function createScriptRunner(behaviors, calls) {
             });
         }
         const chain = {
-            /** @param {number} limit */
-            getRecentWebObservations(limit) {
-                invoke("getRecentWebObservations", [limit]);
+            /**
+             * @param {number} limit @param
+             *   {import("../logger-workflow-fixtures.d.ts").WebHistoryFilters}
+             *   [filters]
+             */
+            getRecentWebObservations(limit, filters = {}) {
+                invoke("getRecentWebObservations", [limit, filters]);
             },
             getWebAppBootstrap() {
                 invoke("getWebAppBootstrap", []);
@@ -407,9 +3003,21 @@ function createScriptRunner(behaviors, calls) {
             getWebBatchSaveStatus(requests) {
                 invoke("getWebBatchSaveStatus", [requests]);
             },
+            /** @param {import("../logger-fixtures.d.ts").ScriptArguments["getWebCorrectionEntry"][0]} request */
+            getWebCorrectionEntry(request) {
+                invoke("getWebCorrectionEntry", [request]);
+            },
+            /** @param {import("../logger-correction-fixtures.d.ts").CorrectionSavePayload} request */
+            getWebCorrectionStatus(request) {
+                invoke("getWebCorrectionStatus", [request]);
+            },
             /** @param {import("../logger-fixtures.d.ts").ObservationPayload} request */
             getWebSaveStatus(request) {
                 invoke("getWebSaveStatus", [request]);
+            },
+            /** @param {import("../logger-correction-fixtures.d.ts").CorrectionPreviewPayload} request */
+            previewWebObservationCorrection(request) {
+                invoke("previewWebObservationCorrection", [request]);
             },
             /** @param {import("../logger-fixtures.d.ts").ObservationPayload} payload */
             saveBulkCareObservation(payload) {
@@ -422,6 +3030,10 @@ function createScriptRunner(behaviors, calls) {
             /** @param {import("../logger-fixtures.d.ts").ObservationPayload[]} payloads */
             saveWebObservationBatch(payloads) {
                 invoke("saveWebObservationBatch", [payloads]);
+            },
+            /** @param {import("../logger-correction-fixtures.d.ts").CorrectionSavePayload} request */
+            saveWebObservationCorrection(request) {
+                invoke("saveWebObservationCorrection", [request]);
             },
             /** @param {(error: unknown) => void} handler */
             withFailureHandler(handler) {
@@ -5403,7 +8015,9 @@ describe("garden logger batch delivery and bounded retries", () => {
             "#queueSendButton",
             HTMLButtonElement
         ).dispatchEvent(new window.Event("click", { bubbles: true }));
-        vi.runAllTimers();
+        // Advance beyond the complete queue execution/retry window. The UI's
+        // clock continues to tick for freshness and workbook-day rollover.
+        vi.advanceTimersByTime(600_000);
 
         expect(
             calls.filter((call) => call.method === "saveWebObservationBatch")

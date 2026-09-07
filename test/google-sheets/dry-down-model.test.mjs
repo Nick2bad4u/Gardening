@@ -139,6 +139,61 @@ function model(history, id = "P01", context = runtime()) {
     };
 }
 
+describe("dry-down correction ordering", () => {
+    it("keeps a corrected pre-water reading in its completed cycle when timestamps tie", () => {
+        expect.hasAssertions();
+
+        const history = [
+            [
+                ...row(0, "Water", "", { batch: "first" }),
+                "water-1",
+                "",
+            ],
+            [
+                ...weight(0, 100, { batch: "first" }),
+                "wet-1",
+                "",
+            ],
+            [
+                ...weight(3, 80, { batch: "pre-water", removed: true }),
+                "dry-1",
+                "",
+            ],
+            [
+                ...row(3, "Water", "", { batch: "second" }),
+                "water-2",
+                "",
+            ],
+            [
+                ...weight(3, 110, { batch: "second" }),
+                "wet-2",
+                "",
+            ],
+            [
+                ...weight(3, 75, { batch: "pre-water", removed: true }),
+                "dry-2",
+                "dry-1",
+            ],
+            [
+                ...weight(3, 70, { batch: "pre-water" }),
+                "dry-3",
+                "dry-2",
+            ],
+        ];
+
+        expect(model(history)).toMatchObject({ dry: 70, setup: 1, wet: 110 });
+        expect(
+            model([
+                row(0, "Water", "", { batch: "first" }),
+                weight(0, 100, { batch: "first" }),
+                weight(3, 70, { batch: "pre-water" }),
+                row(3, "Water", "", { batch: "second" }),
+                weight(3, 110, { batch: "second" }),
+            ])
+        ).toMatchObject({ dry: 70, setup: 1, wet: 110 });
+    });
+});
+
 describe("dry-down formulas and workbook installation", () => {
     /**
      * @param {{
@@ -321,7 +376,7 @@ describe("dry-down formulas and workbook installation", () => {
                 structuredClone(context.installWateringRecommendations())
             ).toStrictEqual({
                 historyChanged: false,
-                loggerVersion: "5.18.5",
+                loggerVersion: "5.19.0",
                 plants: 2,
             });
 
@@ -468,7 +523,7 @@ describe("dry-down formulas and workbook installation", () => {
         expect(context.installDryDownLearning()).toMatchObject({
             baselineColumns: 36,
             historyChanged: false,
-            loggerVersion: "5.18.5",
+            loggerVersion: "5.19.0",
             plants: 1,
         });
         expect(

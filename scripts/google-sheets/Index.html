@@ -545,6 +545,7 @@
             }
 
             .label-choice.queued-weighed {
+                flex-wrap: wrap;
                 color: #174d2b;
                 background: #d9f2df;
                 border-color: #27864b;
@@ -552,17 +553,211 @@
             }
 
             .label-choice.queued-weighed::after {
-                inline-size: 0.55rem;
-                block-size: 0.55rem;
-                content: "";
-                background: #f5c84c;
-                border: 2px solid #27864b;
-                border-radius: 50%;
+                flex-basis: 100%;
+                font-size: 0.75rem;
+                font-weight: 800;
+                content: "Queued";
             }
 
             .label-choice.queued-weighed[aria-pressed="true"] {
                 color: #ffffff;
                 background: #27864b;
+            }
+
+            .label-choice.saved-today {
+                flex-wrap: wrap;
+                border-block-end: 4px solid var(--forest-2);
+            }
+
+            .label-choice.saved-today::before {
+                flex-basis: 100%;
+                font-size: 0.75rem;
+                font-weight: 800;
+                content: "Saved today";
+            }
+
+            .workflow-refresh,
+            .history-filters {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .workflow-refresh {
+                padding: 8px 4px;
+            }
+
+            .history-filters {
+                margin-block: 12px;
+
+                & label {
+                    flex: 1 1 120px;
+                    min-inline-size: 0;
+                }
+
+                & select {
+                    min-block-size: 44px;
+                }
+            }
+
+            .round-filter {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                min-block-size: 44px;
+                cursor: pointer;
+
+                & input {
+                    inline-size: 20px;
+                    block-size: 20px;
+                }
+            }
+
+            .history-details {
+                flex-basis: 100%;
+                grid-column: 1 / -1;
+                min-inline-size: 0;
+                overflow-wrap: anywhere;
+            }
+
+            .history-details summary,
+            .chart-readings summary {
+                padding-block: 12px;
+                cursor: pointer;
+            }
+
+            .history-details dt {
+                margin-block-start: 8px;
+                font-weight: 800;
+            }
+
+            .history-details dd {
+                margin-inline-start: 0;
+                white-space: pre-wrap;
+            }
+
+            .weight-chart {
+                min-inline-size: 0;
+                padding-block: 12px;
+                margin-block: 16px;
+                border-block: 1px solid var(--line);
+
+                & h3,
+                & > p {
+                    margin-block: 0 4px;
+                }
+
+                & svg {
+                    display: block;
+                    inline-size: 100%;
+                    block-size: 170px;
+                    overflow: visible;
+                    color: var(--forest-2);
+                }
+
+                & text {
+                    font-size: 16px;
+                    fill: currentcolor;
+                }
+            }
+
+            .correction-dialog {
+                box-sizing: border-box;
+                inline-size: min(600px, calc(100% - 24px));
+                max-block-size: calc(100dvb - 24px);
+                padding: 18px;
+                overflow: auto;
+                color: var(--ink);
+                overflow-wrap: anywhere;
+                background: var(--card);
+                border: 1px solid var(--line);
+                border-radius: 16px;
+
+                &::backdrop {
+                    background: rgb(0 0 0 / 45%);
+                }
+
+                & fieldset {
+                    min-inline-size: 0;
+                    padding: 0;
+                    margin: 0;
+                    border: 0;
+                }
+
+                & input,
+                & select,
+                & textarea {
+                    box-sizing: border-box;
+                    min-inline-size: 0;
+                    max-inline-size: 100%;
+                }
+
+                & dd {
+                    margin-inline-start: 0;
+                    white-space: pre-wrap;
+                }
+
+                & dt {
+                    margin-block-start: 8px;
+                    font-weight: 700;
+                }
+            }
+
+            .correction-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-block: 12px;
+
+                & button {
+                    min-block-size: 44px;
+                    padding: 10px 14px;
+                    white-space: normal;
+                }
+            }
+
+            .correction-banner,
+            .correction-review-entry {
+                padding: 12px;
+                margin-block: 12px;
+                overflow-wrap: anywhere;
+                background: var(--control);
+                border: 1px solid var(--line);
+                border-radius: 12px;
+            }
+
+            .correct-entry {
+                grid-column: 1 / -1;
+                justify-self: start;
+                min-block-size: 44px;
+                padding: 10px 14px;
+            }
+
+            .chart-grid {
+                stroke: var(--line);
+                stroke-width: 1;
+            }
+
+            .chart-segment {
+                stroke: currentcolor;
+                stroke-width: 2;
+            }
+
+            .chart-point {
+                fill: currentcolor;
+            }
+
+            .chart-watering,
+            .chart-dry {
+                stroke: currentcolor;
+                stroke-width: 1.5;
+                stroke-dasharray: 4 4;
+            }
+
+            .chart-dry {
+                stroke-dasharray: 8 3 2 3;
             }
 
             :root[data-theme="dark"] .label-choice.queued-weighed {
@@ -592,10 +787,12 @@
                 gap: 5px;
                 align-items: center;
                 align-self: start;
+                max-inline-size: 100px;
                 padding: 5px 8px;
                 font-size: 1rem;
                 font-weight: 800;
                 color: var(--forest-2);
+                text-align: center;
                 background: var(--control);
                 border-radius: 999px;
             }
@@ -12243,6 +12440,41 @@
         </svg>
 
         <main class="app">
+            <section
+                id="correctionBanner"
+                class="correction-banner"
+                aria-label="Saved History correction"
+                hidden
+            >
+                <p
+                    id="correctionBannerStatus"
+                    aria-label="Correction recovery status"
+                    role="status"
+                    aria-live="polite"
+                ></p>
+                <div class="correction-actions">
+                    <button
+                        id="correctionResume"
+                        class="secondary"
+                        type="button"
+                        >Resume correction draft</button
+                    >
+                    <button
+                        id="correctionCheck"
+                        class="secondary"
+                        type="button"
+                        hidden
+                        >Check correction status</button
+                    >
+                    <button
+                        id="correctionRetry"
+                        class="primary"
+                        type="button"
+                        hidden
+                        >Retry correction</button
+                    >
+                </div>
+            </section>
             <div class="app-shell">
                 <aside class="sidebar">
                     <header class="hero">
@@ -12384,6 +12616,28 @@
                         >
                     </div>
 
+                    <div class="workflow-refresh">
+                        <span
+                            id="dataFreshness"
+                            class="hint"
+                            role="status"
+                        ></span>
+                        <button
+                            id="refreshDataButton"
+                            type="button"
+                            class="photo-visibility-toggle"
+                            aria-label="Refresh plant summaries and History"
+                        >
+                            <svg
+                                viewBox="0 0 64 64"
+                                class="app-icon app-icon--small"
+                                aria-hidden="true"
+                            >
+                                <use href="#app-icon-refresh"></use>
+                            </svg>
+                            Refresh
+                        </button>
+                    </div>
                     <form
                         id="entryForm"
                         method="post"
@@ -12466,6 +12720,28 @@
                                 aria-live="polite"
                                 >Choose a plant to see its name.</p
                             >
+                            <label class="round-filter">
+                                <input
+                                    id="notWeighedToday"
+                                    type="checkbox"
+                                />
+                                Not weighed today
+                            </label>
+                            <p
+                                id="roundProgress"
+                                class="hint"
+                                role="status"
+                                aria-live="polite"
+                                >Saved today unavailable until Google
+                                responds.</p
+                            >
+                            <p
+                                id="plantFilterStatus"
+                                class="hint"
+                                role="status"
+                                aria-live="polite"
+                                hidden
+                            ></p>
                             <div
                                 id="listPicker"
                                 class="list-picker"
@@ -12549,7 +12825,15 @@
                                         min="0.1"
                                         step="0.1"
                                         placeholder="e.g. 432.1"
+                                        aria-describedby="weightFeedback"
                                     />
+                                    <p
+                                        id="weightFeedback"
+                                        class="hint"
+                                        role="status"
+                                        aria-live="polite"
+                                        hidden
+                                    ></p>
                                     <input
                                         id="potSetup"
                                         type="hidden"
@@ -13675,6 +13959,23 @@
                                 aria-live="polite"
                                 hidden
                             ></div>
+                            <div class="history-filters">
+                                <label
+                                    >Plants<select id="recentScope"
+                                        ><option value="all">All plants</option
+                                        ><option value="plant"
+                                            >This plant</option
+                                        ></select
+                                    ></label
+                                >
+                                <label
+                                    >Event<select id="recentEvent"
+                                        ><option value=""
+                                            >All events</option
+                                        ></select
+                                    ></label
+                                >
+                            </div>
                             <div
                                 id="recentList"
                                 class="recent-list"
@@ -13684,6 +13985,93 @@
                 </div>
             </div>
         </main>
+
+        <dialog
+            id="correctionDialog"
+            class="correction-dialog"
+            aria-labelledby="correctionTitle"
+            aria-describedby="correctionStatus"
+        >
+            <h2 id="correctionTitle">Correct saved entry</h2>
+            <p
+                id="correctionIdentity"
+                aria-label="Saved entry identity"
+            ></p>
+            <p
+                id="correctionStatus"
+                aria-label="Correction editor status"
+                role="status"
+                aria-live="polite"
+            ></p>
+            <form
+                id="correctionForm"
+                method="dialog"
+                novalidate
+            >
+                <fieldset
+                    id="correctionEditor"
+                    hidden
+                >
+                    <legend>Replacement values</legend>
+                    <p class="hint"
+                        >Only changed fields are sent. Clear an optional field
+                        to remove its value. Plant, event, setup and historical
+                        label stay as saved.</p
+                    >
+                    <div id="correctionFields"></div>
+                    <label for="correctionReason"
+                        >Reason for correction (required)</label
+                    >
+                    <textarea
+                        id="correctionReason"
+                        required
+                        rows="3"
+                    ></textarea>
+                    <div class="correction-actions">
+                        <button
+                            id="correctionReviewButton"
+                            class="primary"
+                            type="submit"
+                            >Review changes</button
+                        >
+                    </div>
+                </fieldset>
+            </form>
+            <section
+                id="correctionReview"
+                aria-label="Correction review"
+                hidden
+            ></section>
+            <div class="correction-actions">
+                <button
+                    id="correctionConfirm"
+                    class="primary"
+                    type="button"
+                    hidden
+                    >Confirm correction</button
+                >
+                <button
+                    id="correctionEdit"
+                    class="secondary"
+                    type="button"
+                    hidden
+                    >Edit replacement</button
+                >
+                <button
+                    id="correctionReload"
+                    class="secondary"
+                    type="button"
+                    hidden
+                    >Reload saved entry (replaces edits)</button
+                >
+                <button
+                    id="correctionClose"
+                    class="secondary"
+                    type="button"
+                    >Close correction</button
+                >
+            </div>
+        </dialog>
 
         <div
             id="toast"
@@ -13732,6 +14120,10 @@
                 bootstrapReady: false,
                 bootstrapRefreshTimer: null,
                 bootstrapRefreshAttempt: 0,
+                summaryPlantId: "",
+                recentDataKey: "",
+                workflowDay: "",
+                workflowTimer: null,
             };
 
             const PENDING_SAVE_KEY = "gardenLoggerPendingSaveV1";
@@ -14505,6 +14897,178 @@
                 );
             }
 
+            function workbookDay() {
+                if (!state.bootstrap?.timeZone) return "";
+                try {
+                    const parts = new Intl.DateTimeFormat("en-US", {
+                        timeZone: state.bootstrap.timeZone,
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                    }).formatToParts(new Date());
+                    return ["year", "month", "day"]
+                        .map(
+                            (type) =>
+                                parts.find((part) => part.type === type).value
+                        )
+                        .join("-");
+                } catch (error) {
+                    return "";
+                }
+            }
+
+            function savedTodayPlantIds() {
+                const bootstrap = state.bootstrap;
+                return bootstrap?.dayKey &&
+                    bootstrap.dayKey === workbookDay() &&
+                    Array.isArray(bootstrap.weighedTodayPlantIds)
+                    ? new Set(bootstrap.weighedTodayPlantIds)
+                    : null;
+            }
+
+            function plantProgressText(
+                plantId,
+                queued = queuedWeighedPlantIds()
+            ) {
+                return [
+                    queued.has(plantId) ? "Queued" : "",
+                    savedTodayPlantIds()?.has(plantId) ? "Saved today" : "",
+                ]
+                    .filter(Boolean)
+                    .join(" · ");
+            }
+
+            function renderRoundProgress() {
+                if (!state.bootstrap) return;
+                const saved = savedTodayPlantIds();
+                const queued = queuedWeighedPlantIds();
+                const plants = state.bootstrap.plants;
+                const remaining = plants.filter(
+                    (plant) => !saved?.has(plant.id) && !queued.has(plant.id)
+                );
+                $("roundProgress").textContent = [
+                    saved
+                        ? `${plants.filter((plant) => saved.has(plant.id)).length} of ${plants.length} Saved today`
+                        : "Saved today unavailable · refresh Google",
+                    `${plants.filter((plant) => queued.has(plant.id)).length} Queued on this device`,
+                    "Not weighed today excludes saved weights and queued weights.",
+                ].join(" · ");
+                const status = $("plantFilterStatus");
+                status.hidden = !$("notWeighedToday").checked;
+                if (!remaining.length) {
+                    status.textContent =
+                        "No remaining plants to weigh. The current plant stays available.";
+                } else if (
+                    !remaining.some((plant) =>
+                        [
+                            plant.id,
+                            plant.name,
+                            plant.scientificName,
+                            plant.label,
+                        ]
+                            .join(" ")
+                            .toLowerCase()
+                            .includes(
+                                $("plantSearch").value.trim().toLowerCase()
+                            )
+                    )
+                ) {
+                    status.textContent =
+                        "No remaining plants match this search. Clear the search or filter; the current plant stays available.";
+                } else {
+                    status.textContent = `${remaining.length} plants remaining${saved ? "" : " · saved-today status is unknown"}. The current plant stays available.`;
+                }
+            }
+
+            function formattedTimestamp(value) {
+                if (!value || !Number.isFinite(Date.parse(value))) return "";
+                return new Date(value).toLocaleString([], {
+                    ...(state.bootstrap?.timeZone
+                        ? { timeZone: state.bootstrap.timeZone }
+                        : {}),
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                    timeZoneName: "short",
+                });
+            }
+
+            function elapsedTime(milliseconds) {
+                const minutes = Math.max(0, Math.floor(milliseconds / 60000));
+                if (minutes < 1) return "less than a minute";
+                if (minutes < 60) return `${minutes} min`;
+                const hours = Math.floor(minutes / 60);
+                if (hours < 24) return `${hours} h ${minutes % 60} min`;
+                return `${Math.floor(hours / 24)} d ${hours % 24} h`;
+            }
+
+            function renderFreshness() {
+                const timestamp = state.bootstrap?.serverTime;
+                const elapsed = Date.now() - Date.parse(timestamp);
+                $("dataFreshness").textContent =
+                    Number.isFinite(elapsed) && elapsed >= 0
+                        ? `Updated from Google ${elapsedTime(elapsed)} ago`
+                        : "Updated from Google: time unavailable";
+                $("dataFreshness").title = formattedTimestamp(timestamp);
+            }
+
+            function updateWorkflowClock() {
+                clearTimeout(state.workflowTimer);
+                if (!state.bootstrap) return;
+                const day = workbookDay();
+                const dayChanged = day !== state.workflowDay;
+                if (dayChanged) {
+                    state.workflowDay = day;
+                    renderPlantOptions(
+                        $("plantSearch").value,
+                        $("plantSelect").value
+                    );
+                    renderQueuedPlantIndicators();
+                }
+                renderFreshness();
+                renderRoundProgress();
+                state.workflowTimer = window.setTimeout(
+                    updateWorkflowClock,
+                    60000
+                );
+                if (dayChanged && browserIsOnline())
+                    refreshCachedBootstrap({ updateHistory: false });
+            }
+
+            function renderWeightFeedback() {
+                const feedback = $("weightFeedback");
+                const plant = selectedPlant();
+                const weight = Number($("weight").value);
+                const latest = Number(plant?.latestWeight);
+                const observedAt = Date.parse($("observedAt").value);
+                const latestAt = Date.parse(plant?.latestWeightAt);
+                feedback.textContent = "";
+                feedback.hidden = true;
+                if (
+                    !Number.isFinite(weight) ||
+                    weight <= 0 ||
+                    !Number.isFinite(latest) ||
+                    latest <= 0
+                )
+                    return;
+                if (String($("potSetup").value) !== String(plant.potSetup)) {
+                    feedback.textContent =
+                        "Different pot setup · no comparable latest weight.";
+                } else {
+                    const delta = Math.round((weight - latest) * 10) / 10;
+                    const timing =
+                        Number.isFinite(latestAt) && Number.isFinite(observedAt)
+                            ? observedAt >= latestAt
+                                ? `${elapsedTime(observedAt - latestAt)} since latest reading`
+                                : `Entry is ${elapsedTime(latestAt - observedAt)} before latest reading`
+                            : "Latest reading time unavailable";
+                    feedback.textContent = `${delta > 0 ? "+" : ""}${delta} g vs latest ${latest} g · ${timing}. Whole-pot mass comparison.`;
+                }
+                feedback.hidden = false;
+            }
+
             function validateQueuedPayload(payload) {
                 const events = inferredPayloadEvents(payload);
                 if (!payload.plantId)
@@ -14719,12 +15283,33 @@
                         );
                         button.classList.toggle("queued-weighed", weighed);
                         button.dataset.queuedWeighed = String(weighed);
+                        button.classList.toggle(
+                            "saved-today",
+                            Boolean(
+                                savedTodayPlantIds()?.has(
+                                    button.dataset.plantId
+                                )
+                            )
+                        );
+                        button.dataset.savedToday = String(
+                            Boolean(
+                                savedTodayPlantIds()?.has(
+                                    button.dataset.plantId
+                                )
+                            )
+                        );
                         const plant = state.bootstrap.plants.find(
                             (candidate) =>
                                 candidate.id === button.dataset.plantId
                         );
                         if (!plant) return;
-                        const status = weighed ? ", weight safely queued" : "";
+                        const progress = plantProgressText(
+                            plant.id,
+                            weighedPlantIds
+                        );
+                        const status = progress
+                            ? `, ${progress}${weighed ? ", weight safely queued" : ""}`
+                            : "";
                         button.title = `${plant.name} · ${plant.id}${status}`;
                         button.setAttribute(
                             "aria-label",
@@ -14739,7 +15324,11 @@
                             (candidate) => candidate.id === option.value
                         );
                         if (!plant) return;
-                        option.textContent = `${weighedPlantIds.has(plant.id) ? "Queued · " : ""}${plant.name} · ${plant.id}${plant.label ? ` · label ${plant.label}` : ""}`;
+                        const progress = plantProgressText(
+                            plant.id,
+                            weighedPlantIds
+                        );
+                        option.textContent = `${progress ? `${progress} · ` : ""}${plant.name} · ${plant.id}${plant.label ? ` · label ${plant.label}` : ""}`;
                     });
                 renderPlantChoiceList(state.filteredPlants, weighedPlantIds);
 
@@ -14751,18 +15340,27 @@
                 );
                 const badge = summary.querySelector(".plant-id");
                 if (badge && selected) {
-                    const weighed = weighedPlantIds.has(selected.id);
-                    if (weighed) {
+                    const progress = plantProgressText(
+                        selected.id,
+                        weighedPlantIds
+                    );
+                    if (progress) {
                         setIconLabel(
                             badge,
                             "check",
-                            `${selected.id} queued`,
+                            `${selected.id} · ${progress}`,
                             "app-icon app-icon--small"
                         );
                     } else {
                         badge.textContent = selected.id;
                     }
                 }
+                renderRoundProgress();
+                if ($("notWeighedToday").checked)
+                    renderPlantOptions(
+                        $("plantSearch").value,
+                        $("plantSelect").value
+                    );
             }
 
             function addCurrentEntryToQueue() {
@@ -15045,7 +15643,11 @@
                 const text = document.createElement("span");
                 text.className = "plant-choice-text";
                 const name = document.createElement("strong");
-                name.textContent = `${weighed ? "Queued · " : ""}${plant.name}`;
+                const progress = plantProgressText(
+                    plant.id,
+                    weighed ? new Set([plant.id]) : new Set()
+                );
+                name.textContent = `${progress ? `${progress} · ` : ""}${plant.name}`;
                 const details = document.createElement("small");
                 details.textContent = `${plant.id}${plant.label ? ` · label ${plant.label}` : ""}`;
                 text.append(name, details);
@@ -15154,6 +15756,7 @@
                         "aria-selected",
                         String(plant.id === selected.id)
                     );
+                    button.disabled = state.saving;
                     if (list.children[index] !== button)
                         list.insertBefore(button, list.children[index] || null);
                 });
@@ -15166,24 +15769,40 @@
             function renderPlantOptions(query = "", preferredId = "") {
                 const normalized = query.trim().toLowerCase();
                 const weighedPlantIds = queuedWeighedPlantIds();
-                const plants = state.bootstrap.plants.filter((plant) =>
-                    [plant.id, plant.name, plant.scientificName, plant.label]
-                        .join(" ")
-                        .toLowerCase()
-                        .includes(normalized)
-                );
-                state.filteredPlants = plants;
                 const select = $("plantSelect");
                 const currentId =
                     preferredId ||
                     select.value ||
                     safeStorageGet(localStorage, "gardenPlantId", "") ||
                     "";
+                const saved = savedTodayPlantIds();
+                const notWeighed = $("notWeighedToday").checked;
+                const plants = state.bootstrap.plants.filter(
+                    (plant) =>
+                        (notWeighed && plant.id === currentId) ||
+                        ((!notWeighed ||
+                            (!saved?.has(plant.id) &&
+                                !weighedPlantIds.has(plant.id))) &&
+                            [
+                                plant.id,
+                                plant.name,
+                                plant.scientificName,
+                                plant.label,
+                            ]
+                                .join(" ")
+                                .toLowerCase()
+                                .includes(normalized))
+                );
+                state.filteredPlants = plants;
                 select.replaceChildren();
                 plants.forEach((plant) => {
                     const option = document.createElement("option");
                     option.value = plant.id;
-                    option.textContent = `${weighedPlantIds.has(plant.id) ? "Queued · " : ""}${plant.name} · ${plant.id}${plant.label ? ` · label ${plant.label}` : ""}`;
+                    const progress = plantProgressText(
+                        plant.id,
+                        weighedPlantIds
+                    );
+                    option.textContent = `${progress ? `${progress} · ` : ""}${plant.name} · ${plant.id}${plant.label ? ` · label ${plant.label}` : ""}`;
                     select.append(option);
                 });
                 select.value = plants.some((plant) => plant.id === currentId)
@@ -15191,6 +15810,7 @@
                     : plants[0]?.id || "";
                 renderPlantChoiceList(plants, weighedPlantIds);
                 renderPlantSummary();
+                renderRoundProgress();
             }
 
             const LABEL_GROUP_ORDER = Object.freeze([
@@ -15287,7 +15907,26 @@
                         const weighed = weighedPlantIds.has(plant.id);
                         button.classList.toggle("queued-weighed", weighed);
                         button.dataset.queuedWeighed = String(weighed);
-                        const status = weighed ? ", weight safely queued" : "";
+                        button.classList.toggle(
+                            "saved-today",
+                            Boolean(savedTodayPlantIds()?.has(plant.id))
+                        );
+                        button.dataset.savedToday = String(
+                            Boolean(savedTodayPlantIds()?.has(plant.id))
+                        );
+                        button.hidden =
+                            $("notWeighedToday").checked &&
+                            !state.filteredPlants.some(
+                                (candidate) => candidate.id === plant.id
+                            );
+                        button.disabled = state.saving;
+                        const progress = plantProgressText(
+                            plant.id,
+                            weighedPlantIds
+                        );
+                        const status = progress
+                            ? `, ${progress}${weighed ? ", weight safely queued" : ""}`
+                            : "";
                         button.title = `${plant.name} · ${plant.id}${status}`;
                         button.setAttribute(
                             "aria-label",
@@ -15375,6 +16014,10 @@
             function renderPlantSummary() {
                 closeHelpPanels();
                 const plant = selectedPlant();
+                const plantChanged = state.summaryPlantId !== (plant?.id || "");
+                state.summaryPlantId = plant?.id || "";
+                if (plantChanged && $("recentScope").value === "plant")
+                    refreshRecent();
                 const summary = $("plantSummary");
                 const displayTools = $("plantDisplayTools");
                 const restorePhotoFocus =
@@ -15390,6 +16033,7 @@
                 displayTools.hidden = !plant;
                 showPickerName(plant);
                 if (!plant) {
+                    renderWeightFeedback();
                     const empty = document.createElement("div");
                     empty.textContent = "No plants match that search.";
                     summary.append(empty, displayTools);
@@ -15397,7 +16041,8 @@
                 }
                 safeStorageSet(localStorage, "gardenPlantId", plant.id);
                 if (state.plantPickerMode === "labels") renderLabelPicker();
-                $("potSetup").value = plant.potSetup || 1;
+                if (plantChanged) $("potSetup").value = plant.potSetup || 1;
+                renderWeightFeedback();
                 $("currentPotSize").textContent =
                     `Current pot: ${plant.currentPotSize || "not logged"}`;
 
@@ -15424,11 +16069,12 @@
 
                 const badge = document.createElement("div");
                 badge.className = "plant-id";
-                if (queuedWeighedPlantIds().has(plant.id)) {
+                const progress = plantProgressText(plant.id);
+                if (progress) {
                     setIconLabel(
                         badge,
                         "check",
-                        `${plant.id} queued`,
+                        `${plant.id} · ${progress}`,
                         "app-icon app-icon--small"
                     );
                 } else {
@@ -15480,7 +16126,8 @@
                         plant.latestWeight === ""
                             ? "—"
                             : `${plant.latestWeight} g`,
-                        "Whole-pot reading",
+                        formattedTimestamp(plant.latestWeightAt) ||
+                            "Reading time unavailable",
                     ],
                     [
                         "dry",
@@ -15582,7 +16229,8 @@
                     heading,
                     metrics,
                     createActivityCounts(activity),
-                    createWateringPlan(plant)
+                    createWateringPlan(plant),
+                    createWeightChart(plant)
                 );
                 left.append(plantLinks);
                 summary.append(left);
@@ -15650,6 +16298,262 @@
                 const difference =
                     Math.round((latestWeight - dryOrLowestWeight) * 10) / 10;
                 return `${difference > 0 ? "+" : ""}${difference} g vs last dry`;
+            }
+
+            function chartElement(tag, attributes = {}, text = "") {
+                const node = document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    tag
+                );
+                Object.entries(attributes).forEach(([name, value]) =>
+                    node.setAttribute(name, String(value))
+                );
+                if (text) node.textContent = text;
+                return node;
+            }
+
+            function createWeightChart(plant) {
+                const section = document.createElement("section");
+                section.className = "weight-chart";
+                const heading = document.createElement("h3");
+                heading.textContent = "Current-cycle weights";
+                const caption = document.createElement("p");
+                caption.className = "hint";
+                section.append(heading, caption);
+                const series = plant.weightSeries;
+                if (
+                    !series ||
+                    String(series.potSetup) !== String(plant.potSetup)
+                ) {
+                    caption.textContent = `Setup ${plant.potSetup || 1} · chart data unavailable. Refresh Google to check for measured readings.`;
+                    return section;
+                }
+                const fullCaption = [
+                    `Setup ${series.potSetup}`,
+                    series.setupStartedAt
+                        ? `setup started ${formattedTimestamp(series.setupStartedAt)}`
+                        : "setup start not recorded",
+                    series.startedAt
+                        ? `${series.startKind || "Cycle"} · ${formattedTimestamp(series.startedAt)}`
+                        : "cycle start not recorded",
+                ].join(" · ");
+                caption.textContent = `Setup ${series.potSetup} · ${series.startKind || "Cycle"}${series.startedAt ? ` · ${new Date(series.startedAt).toLocaleDateString([], { timeZone: state.bootstrap?.timeZone, month: "short", day: "numeric" })}` : " start not recorded"}`;
+                const points = (series.points || []).filter(
+                    (point) =>
+                        Number.isFinite(point.weight) &&
+                        point.weight > 0 &&
+                        Number.isFinite(Date.parse(point.observedAt))
+                );
+                const previousDry =
+                    series.previousDry &&
+                    Number.isFinite(series.previousDry.weight) &&
+                    series.previousDry.weight > 0
+                        ? series.previousDry
+                        : null;
+                const reference = document.createElement("p");
+                reference.className = "hint";
+                reference.textContent = previousDry
+                    ? `Last completed dry reference: ${previousDry.weight} g · ${formattedTimestamp(previousDry.observedAt)}`
+                    : "No completed dry reference in this setup.";
+                const waterings = (series.waterings || []).filter((watering) =>
+                    Number.isFinite(Date.parse(watering.observedAt))
+                );
+                const hasGaps = points.some(
+                    (point, index) =>
+                        point.breakBefore ||
+                        (index > 0 &&
+                            Date.parse(point.observedAt) -
+                                Date.parse(points[index - 1].observedAt) >
+                                48 * 3600000)
+                );
+                const status = document.createElement("p");
+                status.className = "hint";
+                status.textContent =
+                    points.length === 0
+                        ? "No measured weights in this cycle yet. Watering does not imply a measured weight."
+                        : points.length === 1
+                          ? "One measured point · no trend line yet."
+                          : "Dots are measured whole-pot weights; lines only connect nearby readings.";
+                if (hasGaps || series.excludedCount > 0)
+                    status.textContent += ` Gaps are left across excluded readings or more than 48 hours without a reading.${series.excludedCount > 0 ? ` ${series.excludedCount} ${series.excludedCount === 1 ? "reading" : "readings"} excluded.` : ""}`;
+                if (points.length && waterings.length)
+                    status.textContent += " W marks watering.";
+                if (points.length && previousDry)
+                    status.textContent +=
+                        " The dash-dot line is the last completed dry reference.";
+                if (!points.length) {
+                    const empty = document.createElement("p");
+                    empty.className = "hint";
+                    empty.textContent =
+                        "No measured weights in this cycle yet.";
+                    section.append(empty);
+                }
+                if (points.length) {
+                    const svg = chartElement("svg", {
+                        viewBox: "0 0 360 210",
+                        role: "img",
+                        "aria-label": `Current cycle, setup ${series.potSetup}: ${points.length} measured weights in grams. Full readings below.`,
+                    });
+                    const weights = points.map((point) => point.weight);
+                    if (previousDry) weights.push(previousDry.weight);
+                    const low = Math.max(
+                        0,
+                        Math.floor(Math.min(...weights) / 10) * 10 - 10
+                    );
+                    const high = Math.ceil(Math.max(...weights) / 10) * 10 + 10;
+                    const times = [...points, ...waterings].map((point) =>
+                        Date.parse(point.observedAt)
+                    );
+                    if (Number.isFinite(Date.parse(series.startedAt)))
+                        times.push(Date.parse(series.startedAt));
+                    const start = Math.min(...times);
+                    const end = Math.max(...times);
+                    const x = (time) =>
+                        start === end
+                            ? 200
+                            : 52 +
+                              ((Date.parse(time) - start) / (end - start)) *
+                                  288;
+                    const y = (weight) =>
+                        170 - ((weight - low) / (high - low)) * 144;
+                    svg.append(chartElement("text", { x: 12, y: 14 }, "g"));
+                    [low, (low + high) / 2, high].forEach((weight) => {
+                        svg.append(
+                            chartElement("line", {
+                                x1: 52,
+                                x2: 340,
+                                y1: y(weight),
+                                y2: y(weight),
+                                class: "chart-grid",
+                            }),
+                            chartElement(
+                                "text",
+                                {
+                                    x: 46,
+                                    y: y(weight) + 4,
+                                    "text-anchor": "end",
+                                },
+                                String(Math.round(weight * 10) / 10)
+                            )
+                        );
+                    });
+                    waterings.forEach((watering) => {
+                        const marker = chartElement("line", {
+                            x1: x(watering.observedAt),
+                            x2: x(watering.observedAt),
+                            y1: 20,
+                            y2: 174,
+                            class: "chart-watering",
+                        });
+                        marker.append(
+                            chartElement(
+                                "title",
+                                {},
+                                `Water · ${formattedTimestamp(watering.observedAt)} · ${watering.application || "Application not recorded"}`
+                            )
+                        );
+                        svg.append(
+                            marker,
+                            chartElement(
+                                "text",
+                                {
+                                    x: x(watering.observedAt),
+                                    y: 16,
+                                    "text-anchor": "middle",
+                                },
+                                "W"
+                            )
+                        );
+                    });
+                    if (previousDry)
+                        svg.append(
+                            chartElement("line", {
+                                x1: 52,
+                                x2: 340,
+                                y1: y(previousDry.weight),
+                                y2: y(previousDry.weight),
+                                class: "chart-dry",
+                            })
+                        );
+                    points.forEach((point, index) => {
+                        const previous = points[index - 1];
+                        if (
+                            previous &&
+                            !point.breakBefore &&
+                            Date.parse(point.observedAt) -
+                                Date.parse(previous.observedAt) <=
+                                48 * 3600000
+                        )
+                            svg.append(
+                                chartElement("line", {
+                                    x1: x(previous.observedAt),
+                                    y1: y(previous.weight),
+                                    x2: x(point.observedAt),
+                                    y2: y(point.weight),
+                                    class: "chart-segment",
+                                })
+                            );
+                        const dot = chartElement("circle", {
+                            cx: x(point.observedAt),
+                            cy: y(point.weight),
+                            r: 4,
+                            class: "chart-point",
+                            "data-observation-id": point.observationId || "",
+                        });
+                        dot.append(
+                            chartElement(
+                                "title",
+                                {},
+                                `${point.weight} g · ${formattedTimestamp(point.observedAt)}`
+                            )
+                        );
+                        svg.append(dot);
+                    });
+                    [start, end].forEach((time, index) =>
+                        svg.append(
+                            chartElement(
+                                "text",
+                                {
+                                    x: index ? 340 : 52,
+                                    y: 196,
+                                    "text-anchor": index ? "end" : "start",
+                                },
+                                new Date(time).toLocaleDateString([], {
+                                    ...(state.bootstrap?.timeZone
+                                        ? { timeZone: state.bootstrap.timeZone }
+                                        : {}),
+                                    month: "short",
+                                    day: "numeric",
+                                })
+                            )
+                        )
+                    );
+                    section.append(svg);
+                }
+                const details = document.createElement("details");
+                details.className = "chart-readings";
+                const summary = document.createElement("summary");
+                summary.textContent = "Readings and watering markers";
+                const fullStart = document.createElement("p");
+                fullStart.textContent = fullCaption;
+                const legend = document.createElement("p");
+                legend.className = "hint";
+                legend.textContent = `${points.length === 1 ? "One measured point" : "Dots: grams"} · W: water · dash-dot: previous dry`;
+                section.append(legend);
+                const list = document.createElement("ul");
+                points.forEach((point) => {
+                    const item = document.createElement("li");
+                    item.textContent = `${formattedTimestamp(point.observedAt)} · ${point.weight} g${point.breakBefore ? " · gap before this reading" : ""}`;
+                    list.append(item);
+                });
+                waterings.forEach((watering) => {
+                    const item = document.createElement("li");
+                    item.textContent = `Water (W) · ${formattedTimestamp(watering.observedAt)} · ${watering.application || "Application not recorded"}`;
+                    list.append(item);
+                });
+                details.append(summary, fullStart, reference, status, list);
+                section.append(details);
+                return section;
             }
 
             function positiveMetric(value, unit) {
@@ -16038,20 +16942,23 @@
                 state.recentAttempt += 1;
                 setRecentStatus("");
                 clearPlantPortraits(list);
+                state.recentDataKey = recentFilterKey();
+                card.hidden = false;
                 if (!entries || !entries.length) {
-                    card.hidden = true;
+                    setRecentStatus(recentEmptyMessage());
                     return;
                 }
                 entries.forEach((entry) => {
                     const item = document.createElement("div");
                     item.className = "recent-item";
                     item.dataset.event = entry.event || "Other";
+                    item.dataset.observationId = entry.observationId || "";
                     const left = document.createElement("div");
                     left.className = "recent-plant";
                     const text = document.createElement("div");
                     const main = document.createElement("div");
                     main.className = "recent-main";
-                    main.textContent = `${entry.name || entry.plantId}${entry.weight !== "" ? ` · ${entry.weight} g` : ""}`;
+                    main.textContent = `${entry.name || entry.plantId}${entry.weight !== "" && entry.weight != null ? ` · ${entry.weight} g` : ""}`;
                     const sub = document.createElement("div");
                     sub.className = "recent-sub";
                     sub.textContent = `${entry.observedAt}${entry.weightState ? ` · ${entry.weightState}` : ""}`;
@@ -16074,9 +16981,1031 @@
                         text
                     );
                     item.append(left, badge);
+                    item.append(createHistoryDetails(entry));
+                    if (item.dataset.observationId) {
+                        const correct = document.createElement("button");
+                        correct.type = "button";
+                        correct.className = "correct-entry secondary";
+                        setIconLabel(correct, "edit", "Correct entry");
+                        correct.setAttribute(
+                            "aria-label",
+                            `Correct ${entry.event || "saved"} entry for ${entry.name || entry.plantId} · ${entry.observedAt}`
+                        );
+                        correct.addEventListener("click", () =>
+                            openCorrection(item.dataset.observationId, correct)
+                        );
+                        item.append(correct);
+                    }
                     list.append(item);
                 });
                 card.hidden = false;
+            }
+
+            const CORRECTION_DRAFT_KEY = "gardenLoggerCorrectionDraftV1";
+            const CORRECTION_PENDING_KEY = "gardenLoggerCorrectionPendingV1";
+            const correction = {
+                context: null,
+                preview: null,
+                reviewedPayload: null,
+                draft: null,
+                pending: null,
+                blocked: false,
+                busy: false,
+                stale: false,
+                attempt: 0,
+                timer: null,
+                trigger: null,
+                observationId: "",
+                inputs: new Map(),
+            };
+
+            function correctionMessage(message) {
+                $("correctionStatus").textContent = message;
+            }
+
+            function retainCorrection(key, value) {
+                const serialized = JSON.stringify(value);
+                localStorage.setItem(key, serialized);
+                if (localStorage.getItem(key) !== serialized)
+                    throw new Error(
+                        "This phone could not verify stored correction data."
+                    );
+            }
+
+            function correctionBanner(message = "") {
+                const pending = correction.pending || correction.blocked;
+                $("correctionBanner").hidden =
+                    !pending && !correction.draft && !message;
+                $("correctionBannerStatus").textContent =
+                    message ||
+                    (pending
+                        ? "Correction pending. Keep this request until Google confirms the outcome."
+                        : "A separate saved History correction draft is available on this phone.");
+                $("correctionResume").hidden = !!pending || !correction.draft;
+                $("correctionCheck").hidden = !correction.pending;
+                $("correctionRetry").hidden = !correction.pending;
+                ["correctionCheck", "correctionRetry"].forEach((id) => {
+                    $(id).disabled = correction.busy;
+                    $(id).setAttribute("aria-busy", String(correction.busy));
+                });
+            }
+
+            function correctionBusy(busy) {
+                correction.busy = busy;
+                $("correctionEditor").disabled =
+                    busy || !!correction.pending || correction.stale;
+                [
+                    "correctionReviewButton",
+                    "correctionConfirm",
+                    "correctionEdit",
+                    "correctionReload",
+                ].forEach((id) => {
+                    $(id).disabled = busy;
+                    $(id).setAttribute("aria-busy", String(busy));
+                });
+                correctionBanner();
+            }
+
+            function invalidateCorrectionRead() {
+                correction.attempt += 1;
+                clearTimeout(correction.timer);
+                correctionBusy(false);
+            }
+
+            function closeCorrection() {
+                if (!correction.pending) invalidateCorrectionRead();
+                $("correctionDialog").close();
+                const target = correction.trigger?.isConnected
+                    ? correction.trigger
+                    : $("correctionResume").hidden
+                      ? $("recentScope")
+                      : $("correctionResume");
+                target?.focus({ preventScroll: true });
+            }
+
+            function correctionRead(method, payload, accept) {
+                invalidateCorrectionRead();
+                const attempt = correction.attempt;
+                correctionBusy(true);
+                const fail = (error) => {
+                    if (attempt !== correction.attempt) return;
+                    invalidateCorrectionRead();
+                    const message = error?.message || String(error);
+                    correction.stale =
+                        /STALE_PREVIEW|REMOVED_ORIGINAL|NOT_FOUND/.test(
+                            message
+                        );
+                    $("correctionReload").hidden = false;
+                    correctionBusy(false);
+                    correctionMessage(
+                        `${message}${correction.stale ? " Fetch the saved entry again and review fresh values before confirming. Your editor is retained until you reload." : " Your correction editor is retained."}`
+                    );
+                };
+                correction.timer = window.setTimeout(
+                    () =>
+                        fail(
+                            new Error(
+                                "Correction request timed out. Try again when connected."
+                            )
+                        ),
+                    SAVE_WATCHDOG_MS
+                );
+                try {
+                    google.script.run
+                        .withSuccessHandler((result) => {
+                            if (attempt !== correction.attempt) return;
+                            invalidateCorrectionRead();
+                            accept(result);
+                        })
+                        .withFailureHandler(fail)
+                        [method](payload);
+                } catch (error) {
+                    fail(error);
+                }
+            }
+
+            function correctionLocalDate(value) {
+                const date = new Date(value);
+                if (!Number.isFinite(date.getTime())) return "";
+                const part = (number) => String(number).padStart(2, "0");
+                return `${date.getFullYear()}-${part(date.getMonth() + 1)}-${part(date.getDate())}T${part(date.getHours())}:${part(date.getMinutes())}:${part(date.getSeconds())}`;
+            }
+
+            function correctionValue(value, field, timeZone) {
+                if (value === "" || value == null) return "(blank)";
+                if (field.type === "datetime") {
+                    const date = new Date(value);
+                    return Number.isFinite(date.getTime())
+                        ? `${date.toLocaleString([], { timeZone, year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit", fractionalSecondDigits: 3, timeZoneName: "short" })} (${timeZone})`
+                        : String(value);
+                }
+                return `${value}${field.unit ? ` ${field.unit}` : ""}`;
+            }
+
+            function correctionIdentity(entry) {
+                return `${entry.plantId} · ${entry.event} · Setup ${entry.potSetup} · Historical label ${entry.label || "(blank)"} · Observation ${entry.observationId}`;
+            }
+
+            function captureCorrectionDraft() {
+                if (
+                    !correction.context ||
+                    correction.pending ||
+                    correction.blocked
+                )
+                    return false;
+                correction.draft = {
+                    context: correction.context,
+                    inputs: Object.fromEntries(
+                        [...correction.inputs].map(([key, input]) => [
+                            key,
+                            input.value,
+                        ])
+                    ),
+                    reason: $("correctionReason").value,
+                };
+                try {
+                    retainCorrection(CORRECTION_DRAFT_KEY, correction.draft);
+                    correctionBanner();
+                    return true;
+                } catch {
+                    correctionMessage(
+                        "This phone cannot retain the correction draft. Keep this editor open and free storage before confirming."
+                    );
+                    return false;
+                }
+            }
+
+            function renderCorrectionEditor(context, draft = null) {
+                correction.context = context;
+                correction.stale = false;
+                correction.preview = null;
+                correction.reviewedPayload = null;
+                correction.inputs.clear();
+                $("correctionFields").replaceChildren();
+                $("correctionIdentity").textContent = correctionIdentity(
+                    context.original
+                );
+                context.fields.forEach((field) => {
+                    const wrapper = document.createElement("div");
+                    wrapper.className = "field";
+                    const label = document.createElement("label");
+                    label.htmlFor = `correctionField-${field.key}`;
+                    const deviceZone =
+                        Intl.DateTimeFormat().resolvedOptions().timeZone;
+                    label.textContent = `${field.label}${field.unit ? ` (${field.unit})` : ""}${field.type === "datetime" ? ` — device time (${deviceZone})` : ""}${field.required ? " (required)" : ""}`;
+                    const input = document.createElement(
+                        field.type === "select"
+                            ? "select"
+                            : field.type === "text"
+                              ? "textarea"
+                              : "input"
+                    );
+                    input.id = label.htmlFor;
+                    input.required = field.required;
+                    const original = context.original.values[field.key] ?? "";
+                    if (field.type === "select") {
+                        [
+                            ...new Set([
+                                "",
+                                ...field.options,
+                                String(original),
+                            ]),
+                        ].forEach((value) => {
+                            const option = document.createElement("option");
+                            option.value = value;
+                            option.textContent = value || "(blank)";
+                            input.append(option);
+                        });
+                    } else if (field.type === "text") input.rows = 3;
+                    else {
+                        input.type =
+                            field.type === "datetime"
+                                ? "datetime-local"
+                                : field.type;
+                        if (["number", "datetime"].includes(field.type))
+                            input.step = "any";
+                    }
+                    input.value =
+                        field.type === "datetime"
+                            ? correctionLocalDate(original)
+                            : String(original);
+                    input.dataset.originalDisplay = input.value;
+                    if (draft && typeof draft.inputs[field.key] === "string")
+                        input.value = draft.inputs[field.key];
+                    correction.inputs.set(field.key, input);
+                    wrapper.append(label, input);
+                    if (field.key === "measurementUnit") {
+                        const hint = document.createElement("p");
+                        hint.className = "hint";
+                        hint.textContent =
+                            "Saved measurement unit is provenance only. Height and width above are exact canonical centimetres (cm); changing this unit does not convert or rewrite them. To correct an inch measurement, multiply the changed value by 2.54 and enter cm.";
+                        wrapper.append(hint);
+                    }
+                    $("correctionFields").append(wrapper);
+                });
+                $("correctionReason").value = draft?.reason || "";
+                $("correctionEditor").hidden = false;
+                $("correctionReview").hidden = true;
+                $("correctionConfirm").hidden = true;
+                $("correctionEdit").hidden = true;
+                $("correctionReload").hidden = true;
+                correctionBusy(false);
+                correctionMessage(
+                    "Edit the saved entry, add a reason, then review the server's proposed replacement."
+                );
+                captureCorrectionDraft();
+            }
+
+            function openCorrection(
+                observationId,
+                trigger,
+                draft = correction.draft?.context.original.observationId ===
+                observationId
+                    ? correction.draft
+                    : null
+            ) {
+                if (correction.pending || correction.blocked) {
+                    correctionBanner(
+                        "Correction pending. Check its status or retry the same request before starting another correction."
+                    );
+                    $("correctionCheck").focus();
+                    return;
+                }
+                invalidateCorrectionRead();
+                correction.trigger = trigger;
+                correction.observationId = observationId;
+                correction.context = null;
+                correction.preview = null;
+                correction.stale = false;
+                $("correctionIdentity").textContent =
+                    `Observation ${observationId}`;
+                [
+                    "correctionEditor",
+                    "correctionReview",
+                    "correctionConfirm",
+                    "correctionEdit",
+                    "correctionReload",
+                ].forEach((id) => {
+                    $(id).hidden = true;
+                });
+                if (!$("correctionDialog").open)
+                    $("correctionDialog").showModal();
+                correctionMessage("Loading the full saved entry…");
+                correctionRead(
+                    "getWebCorrectionEntry",
+                    { observationId },
+                    (context) => {
+                        if (
+                            !context?.original ||
+                            context.original.observationId !== observationId ||
+                            !Array.isArray(context.fields) ||
+                            !context.baseRevision
+                        ) {
+                            correctionMessage(
+                                "Google returned a different or incomplete entry. Reload the saved entry to continue."
+                            );
+                            $("correctionReload").hidden = false;
+                            return;
+                        }
+                        if (
+                            draft &&
+                            draft.context.baseRevision !== context.baseRevision
+                        ) {
+                            renderCorrectionEditor(draft.context, draft);
+                            correction.stale = true;
+                            correctionBusy(false);
+                            $("correctionReload").hidden = false;
+                            correctionMessage(
+                                "STALE_PREVIEW: The saved entry changed while this draft was closed. Your edits are retained below. Reload saved entry to replace them with the current values, then review again."
+                            );
+                        } else renderCorrectionEditor(context, draft);
+                    }
+                );
+                $("correctionClose").focus();
+            }
+
+            function correctionPatch() {
+                const changes = {};
+                correction.context.fields.forEach((field) => {
+                    const input = correction.inputs.get(field.key);
+                    if (input.value === input.dataset.originalDisplay) return;
+                    const value = input.value;
+                    if (field.type === "datetime") {
+                        const date = new Date(value);
+                        if (!value || !Number.isFinite(date.getTime()))
+                            throw new Error(
+                                "Enter a complete observation date and time in the labelled device timezone."
+                            );
+                        if (
+                            date.getTime() !==
+                            Date.parse(
+                                correction.context.original.values[field.key]
+                            )
+                        )
+                            changes[field.key] = date.toISOString();
+                    } else if (field.type === "number" && value !== "") {
+                        const number = Number(value);
+                        if (!Number.isFinite(number))
+                            throw new Error(
+                                `${field.label} must be a finite number.`
+                            );
+                        if (
+                            number !==
+                                Number(
+                                    correction.context.original.values[
+                                        field.key
+                                    ]
+                                ) ||
+                            correction.context.original.values[field.key] === ""
+                        )
+                            changes[field.key] = number;
+                    } else changes[field.key] = value;
+                });
+                return changes;
+            }
+
+            function correctionEntryReview(title, entry, fields, timeZone) {
+                const section = document.createElement("section");
+                section.className = "correction-review-entry";
+                const heading = document.createElement("h3");
+                heading.textContent = title;
+                const identity = document.createElement("p");
+                identity.textContent = correctionIdentity(entry);
+                const list = document.createElement("dl");
+                fields.forEach((field) => {
+                    const term = document.createElement("dt");
+                    term.textContent = field.label;
+                    const value = document.createElement("dd");
+                    value.textContent = correctionValue(
+                        entry.values[field.key],
+                        field,
+                        timeZone
+                    );
+                    list.append(term, value);
+                });
+                section.append(heading, identity, list);
+                return section;
+            }
+
+            function renderCorrectionReview(preview) {
+                const review = $("correctionReview");
+                review.replaceChildren();
+                review.append(
+                    correctionEntryReview(
+                        "Original",
+                        preview.original,
+                        preview.fields,
+                        preview.timeZone
+                    ),
+                    correctionEntryReview(
+                        "Replacement",
+                        preview.replacement,
+                        preview.fields,
+                        preview.timeZone
+                    )
+                );
+                const heading = document.createElement("h3");
+                heading.textContent = "Changes to confirm";
+                const changes = document.createElement("ul");
+                preview.differences.forEach((difference) => {
+                    const field = preview.fields.find(
+                        (candidate) => candidate.key === difference.key
+                    ) || { type: "text", unit: "" };
+                    const item = document.createElement("li");
+                    item.textContent = `${difference.label}: ${correctionValue(difference.before, field, preview.timeZone)} → ${correctionValue(difference.after, field, preview.timeZone)}`;
+                    changes.append(item);
+                });
+                const reason = document.createElement("p");
+                reason.textContent = `Reason: ${correction.reviewedPayload.reason}`;
+                review.append(heading, changes, reason);
+                preview.notices.forEach((notice) => {
+                    const paragraph = document.createElement("p");
+                    paragraph.textContent = notice;
+                    review.append(paragraph);
+                });
+                const siblings = document.createElement("details");
+                const summary = document.createElement("summary");
+                summary.textContent = `Other entries from this save (${preview.siblings.length}) — unchanged`;
+                siblings.append(summary);
+                preview.siblings.forEach((entry) => {
+                    const fields = Object.keys(entry.values).map(
+                        (key) =>
+                            preview.fields.find(
+                                (field) => field.key === key
+                            ) || {
+                                key,
+                                label: key,
+                                type:
+                                    key === "observationDate"
+                                        ? "datetime"
+                                        : "text",
+                                unit: "",
+                            }
+                    );
+                    siblings.append(
+                        correctionEntryReview(
+                            `${entry.event} · ${entry.recordStatus}`,
+                            entry,
+                            fields,
+                            preview.timeZone
+                        )
+                    );
+                });
+                review.append(siblings);
+                review.hidden = false;
+                $("correctionEditor").hidden = true;
+                $("correctionConfirm").hidden = false;
+                $("correctionEdit").hidden = false;
+                correctionMessage(
+                    "Review the stacked original and replacement. Only explicit confirmation saves this correction."
+                );
+                $("correctionConfirm").focus();
+            }
+
+            function reviewCorrection(event) {
+                event.preventDefault();
+                if (
+                    correction.busy ||
+                    correction.pending ||
+                    correction.stale ||
+                    !correction.context
+                )
+                    return;
+                try {
+                    const reason = $("correctionReason").value.trim();
+                    if (!reason)
+                        throw new Error("A reason for correction is required.");
+                    const changes = correctionPatch();
+                    if (!Object.keys(changes).length)
+                        throw new Error(
+                            "Change at least one saved value before reviewing."
+                        );
+                    // Historical blanks/options/URLs stay valid when omitted
+                    // from the patch. Validate only controls actually changed.
+                    for (const key of Object.keys(changes)) {
+                        if (!correction.inputs.get(key).reportValidity())
+                            return;
+                    }
+                    captureCorrectionDraft();
+                    const payload = {
+                        observationId: correction.observationId,
+                        baseRevision: correction.context.baseRevision,
+                        changes,
+                        reason,
+                    };
+                    correctionMessage("Reviewing changes with Google…");
+                    correctionRead(
+                        "previewWebObservationCorrection",
+                        payload,
+                        (preview) => {
+                            if (
+                                !preview?.original ||
+                                preview.original.observationId !==
+                                    payload.observationId ||
+                                preview.baseRevision !== payload.baseRevision ||
+                                !/^[a-f0-9]{64}$/i.test(
+                                    preview.payloadDigest || ""
+                                ) ||
+                                !preview.previewToken ||
+                                !preview.replacement ||
+                                !Array.isArray(preview.differences)
+                            ) {
+                                correctionMessage(
+                                    "Google returned an incomplete or mismatched review. Review changes again before confirming."
+                                );
+                                return;
+                            }
+                            correction.preview = preview;
+                            correction.reviewedPayload = payload;
+                            renderCorrectionReview(preview);
+                        }
+                    );
+                } catch (error) {
+                    correctionMessage(error.message);
+                }
+            }
+
+            function correctionReceiptMatches(result, pending) {
+                if (
+                    !result ||
+                    result.requestId !== pending.payload.requestId ||
+                    result.observationId !== pending.payload.observationId ||
+                    result.payloadDigest !== pending.payloadDigest ||
+                    !/^[a-f0-9]{64}$/i.test(result.operationDigest || "") ||
+                    (pending.operationDigest &&
+                        pending.operationDigest !== result.operationDigest)
+                )
+                    return false;
+                return (
+                    result.status === "missing" ||
+                    (result.status === "saved" &&
+                        result.originalObservationId ===
+                            pending.payload.observationId &&
+                        result.replacementObservationId ===
+                            `correction:${pending.payload.requestId}:${result.operationDigest}`)
+                );
+            }
+
+            function correctionStorageMatches(serialized, pending) {
+                const stored = JSON.parse(serialized || "null");
+                return (
+                    stored?.payloadDigest === pending.payloadDigest &&
+                    JSON.stringify(stored.payload) ===
+                        JSON.stringify(pending.payload)
+                );
+            }
+
+            function finishCorrection(result, pending) {
+                if (correction.pending !== pending) return;
+                if (
+                    !correctionReceiptMatches(result, pending) ||
+                    result.status !== "saved"
+                ) {
+                    correctionBanner(
+                        "Correction receipt did not match this request. The pending payload is retained; check status before continuing."
+                    );
+                    return;
+                }
+                clearTimeout(correction.timer);
+                correction.attempt += 1;
+                correction.busy = false;
+                // Remove the draft first. A failed removal must leave the durable
+                // pending request available for another matching status check.
+                try {
+                    const retained = localStorage.getItem(
+                        CORRECTION_PENDING_KEY
+                    );
+                    if (
+                        retained !== null &&
+                        !correctionStorageMatches(retained, pending)
+                    )
+                        throw new Error(
+                            "Another pending correction is stored. Reload to recover it."
+                        );
+                    localStorage.removeItem(CORRECTION_DRAFT_KEY);
+                    localStorage.removeItem(CORRECTION_PENDING_KEY);
+                    if (localStorage.getItem(CORRECTION_PENDING_KEY) !== null)
+                        throw new Error("Pending receipt cleanup failed.");
+                } catch {
+                    correctionBusy(false);
+                    correctionBanner(
+                        "Google confirmed the correction, but this phone could not clear its pending receipt. Check status again to finish local recovery."
+                    );
+                    return;
+                }
+                correction.pending = null;
+                correction.draft = null;
+                correction.context = null;
+                correction.preview = null;
+                correctionBusy(false);
+                closeCorrection();
+                correctionBanner("Correction saved and confirmed by Google.");
+                refreshSavedPlantData();
+            }
+
+            async function finishRejectedCorrection(result, pending) {
+                if (
+                    correction.pending !== pending ||
+                    result?.status !== "rejected" ||
+                    result.requestId !== pending.payload.requestId ||
+                    result.observationId !== pending.payload.observationId ||
+                    result.payloadDigest !== pending.payloadDigest ||
+                    (pending.operationDigest &&
+                        result.operationDigest !== pending.operationDigest) ||
+                    ![
+                        "STALE_PREVIEW",
+                        "NOT_FOUND",
+                        "REMOVED_ORIGINAL",
+                        "HISTORY_SCHEMA",
+                        "INVALID_CORRECTION",
+                        "SETUP_BOUNDARY",
+                        "HISTORY_CAPACITY",
+                    ].includes(result.code) ||
+                    typeof result.message !== "string" ||
+                    !result.message
+                ) {
+                    correctionBanner(
+                        "Correction rejection did not match this request. Its pending payload is retained."
+                    );
+                    return;
+                }
+                correctionBusy(true);
+                try {
+                    // Independently bind even the first status reply to the
+                    // exact preview token, rather than trusting an unpinned digest.
+                    const digest = await crypto.subtle.digest(
+                        "SHA-256",
+                        new TextEncoder().encode(
+                            JSON.stringify({
+                                payloadDigest: pending.payloadDigest,
+                                previewToken: pending.payload.previewToken,
+                                requestId: pending.payload.requestId,
+                            })
+                        )
+                    );
+                    const expected = Array.from(
+                        new Uint8Array(digest),
+                        (byte) => byte.toString(16).padStart(2, "0")
+                    ).join("");
+                    if (correction.pending !== pending) return;
+                    if (result.operationDigest !== expected)
+                        throw new Error(
+                            "The rejection operation digest did not match."
+                        );
+                    const draft = JSON.parse(
+                        localStorage.getItem(CORRECTION_DRAFT_KEY) || "null"
+                    );
+                    if (
+                        !draft?.context?.original?.observationId ||
+                        !draft.inputs ||
+                        typeof draft.reason !== "string" ||
+                        draft.context.original.observationId !==
+                            pending.payload.observationId
+                    )
+                        throw new Error(
+                            "The retained correction draft could not be verified."
+                        );
+                    if (
+                        !correctionStorageMatches(
+                            localStorage.getItem(CORRECTION_PENDING_KEY),
+                            pending
+                        )
+                    )
+                        throw new Error(
+                            "Another pending correction is stored."
+                        );
+                    localStorage.removeItem(CORRECTION_PENDING_KEY);
+                    if (localStorage.getItem(CORRECTION_PENDING_KEY) !== null)
+                        throw new Error("Pending rejection cleanup failed.");
+                    correction.draft = draft;
+                } catch {
+                    if (correction.pending !== pending) return;
+                    // A read-back error can occur after removal. Restore only
+                    // an absent key; never overwrite another tab's request.
+                    try {
+                        if (
+                            localStorage.getItem(CORRECTION_PENDING_KEY) ===
+                            null
+                        )
+                            retainCorrection(CORRECTION_PENDING_KEY, pending);
+                    } catch {
+                        // In-memory pending protection remains if storage is unavailable.
+                    }
+                    correctionBusy(false);
+                    correctionBanner(
+                        "The rejection or local cleanup could not be verified. The pending correction and draft are retained. Restore storage access and check status again."
+                    );
+                    return;
+                }
+                correction.pending = null;
+                correction.blocked = false;
+                correction.context = null;
+                correction.preview = null;
+                correction.reviewedPayload = null;
+                correction.stale = false;
+                invalidateCorrectionRead();
+                [
+                    "correctionReview",
+                    "correctionConfirm",
+                    "correctionEdit",
+                    "correctionReload",
+                ].forEach((id) => {
+                    $(id).hidden = true;
+                });
+                closeCorrection();
+                correctionBanner(
+                    `Google rejected this correction before saving: ${result.message} Your draft is retained. Resume correction to fetch the saved entry and review again.`
+                );
+            }
+
+            function runPendingCorrection(method) {
+                const pending = correction.pending;
+                if (!pending || correction.busy) return;
+                // Read back the immutable payload before each save or retry.
+                // Read-only status checks remain available if storage fails.
+                try {
+                    if (
+                        method === "saveWebObservationCorrection" &&
+                        !correctionStorageMatches(
+                            localStorage.getItem(CORRECTION_PENDING_KEY),
+                            pending
+                        )
+                    )
+                        throw new Error("Pending storage changed.");
+                } catch {
+                    correctionBanner(
+                        "Cannot verify the retained pending correction. No request sent. Restore storage access before checking or retrying."
+                    );
+                    return;
+                }
+                const attempt = ++correction.attempt;
+                correctionBusy(true);
+                correctionBanner(
+                    method === "saveWebObservationCorrection"
+                        ? "Saving correction… This exact request is retained on this phone."
+                        : "Checking correction status with Google…"
+                );
+                let settled = false;
+                const fail = (error) => {
+                    if (
+                        settled ||
+                        correction.pending !== pending ||
+                        attempt !== correction.attempt
+                    )
+                        return;
+                    settled = true;
+                    clearTimeout(correction.timer);
+                    correctionBusy(false);
+                    if (method === "saveWebObservationCorrection")
+                        runPendingCorrection("getWebCorrectionStatus");
+                    else
+                        correctionBanner(
+                            `Correction outcome is still unknown. ${error?.message || error} The same pending request is retained. Check status or retry correction.`
+                        );
+                };
+                correction.timer = window.setTimeout(
+                    () => fail(new Error("No response received.")),
+                    SAVE_WATCHDOG_MS
+                );
+                try {
+                    google.script.run
+                        .withSuccessHandler((result) => {
+                            if (correction.pending !== pending) return;
+                            // A late terminal receipt remains authoritative for this
+                            // immutable request, even after a status check started.
+                            if (
+                                result?.status === "saved" &&
+                                correctionReceiptMatches(result, pending)
+                            ) {
+                                finishCorrection(result, pending);
+                                return;
+                            }
+                            if (settled || attempt !== correction.attempt)
+                                return;
+                            settled = true;
+                            clearTimeout(correction.timer);
+                            correctionBusy(false);
+                            if (method === "saveWebObservationCorrection") {
+                                runPendingCorrection("getWebCorrectionStatus");
+                            } else if (result?.status === "rejected") {
+                                void finishRejectedCorrection(result, pending);
+                            } else if (
+                                result?.status === "missing" &&
+                                correctionReceiptMatches(result, pending)
+                            ) {
+                                // Status supplies the operation digest before a
+                                // terminal receipt arrives. Pin it while keeping
+                                // every field of the save payload unchanged.
+                                try {
+                                    const retained = localStorage.getItem(
+                                        CORRECTION_PENDING_KEY
+                                    );
+                                    if (
+                                        retained !== null &&
+                                        !correctionStorageMatches(
+                                            retained,
+                                            pending
+                                        )
+                                    )
+                                        throw new Error(
+                                            "Another pending correction is stored."
+                                        );
+                                    pending.operationDigest =
+                                        result.operationDigest;
+                                    retainCorrection(
+                                        CORRECTION_PENDING_KEY,
+                                        pending
+                                    );
+                                } catch {
+                                    correctionBanner(
+                                        "The pending request is retained, but its status metadata could not be verified in storage. Restore storage access and check status again."
+                                    );
+                                    return;
+                                }
+                                correctionBanner(
+                                    "Google has no saved receipt yet. Retry correction sends the same request ID and unchanged reviewed payload. Do not create a new correction for this entry."
+                                );
+                            } else
+                                correctionBanner(
+                                    "Correction status or receipt did not match this request. Its pending payload is retained. Check status or retry correction."
+                                );
+                        })
+                        .withFailureHandler(fail)
+                        [method](pending.payload);
+                } catch (error) {
+                    fail(error);
+                }
+            }
+
+            function confirmCorrection() {
+                if (
+                    correction.busy ||
+                    correction.pending ||
+                    correction.blocked ||
+                    !correction.preview ||
+                    !correction.reviewedPayload
+                )
+                    return;
+                if (!captureCorrectionDraft()) return;
+                const pending = {
+                    payload: {
+                        ...correction.reviewedPayload,
+                        changes: { ...correction.reviewedPayload.changes },
+                        requestId: createRequestId(),
+                        previewToken: correction.preview.previewToken,
+                    },
+                    payloadDigest: correction.preview.payloadDigest,
+                    operationDigest: "",
+                };
+                Object.freeze(pending.payload.changes);
+                Object.freeze(pending.payload);
+                try {
+                    if (localStorage.getItem(CORRECTION_PENDING_KEY))
+                        throw new Error(
+                            "Another pending correction is already stored. Reload to recover it."
+                        );
+                    retainCorrection(CORRECTION_PENDING_KEY, pending);
+                } catch (error) {
+                    correctionMessage(
+                        `Correction was not sent: ${error.message} Keep this review open; storage must retain the exact pending request before saving.`
+                    );
+                    return;
+                }
+                correction.pending = pending;
+                $("correctionConfirm").hidden = true;
+                $("correctionEdit").hidden = true;
+                $("correctionReload").hidden = true;
+                closeCorrection();
+                runPendingCorrection("saveWebObservationCorrection");
+            }
+
+            function restoreCorrection() {
+                try {
+                    const stored = localStorage.getItem(CORRECTION_PENDING_KEY);
+                    if (stored) {
+                        const pending = JSON.parse(stored);
+                        if (
+                            !pending?.payload?.requestId ||
+                            !pending.payload.observationId ||
+                            !pending.payload.baseRevision ||
+                            !pending.payload.previewToken ||
+                            !pending.payload.changes ||
+                            !pending.payload.reason ||
+                            !/^[a-f0-9]{64}$/i.test(pending.payloadDigest || "")
+                        )
+                            throw new Error("Stored correction is incomplete.");
+                        Object.freeze(pending.payload.changes);
+                        Object.freeze(pending.payload);
+                        correction.pending = pending;
+                        correctionBanner();
+                        runPendingCorrection("getWebCorrectionStatus");
+                        return;
+                    }
+                    const draft = JSON.parse(
+                        localStorage.getItem(CORRECTION_DRAFT_KEY) || "null"
+                    );
+                    if (
+                        draft?.context?.original?.observationId &&
+                        draft.inputs &&
+                        typeof draft.reason === "string"
+                    )
+                        correction.draft = draft;
+                    correctionBanner();
+                } catch {
+                    correction.blocked = true;
+                    correctionBanner(
+                        "Correction storage cannot be read safely. Existing correction data is preserved. Restore storage access and reload before starting a correction."
+                    );
+                }
+            }
+
+            function createHistoryDetails(entry) {
+                const disclosure = document.createElement("details");
+                disclosure.className = "history-details";
+                const summary = document.createElement("summary");
+                summary.textContent = `${entry.event || "Entry"} details`;
+                const list = document.createElement("dl");
+                const details = entry.details || {};
+                const labels = {
+                    observedAtIso: "Observed",
+                    potSetup: "Pot setup",
+                    potSize: "Pot size",
+                    measurementUnit: "Original measurement unit",
+                    measurementQuality: "Measurement quality",
+                    measurementMethod: "Measurement method",
+                    height: "Height",
+                    width: "Width",
+                    heightCm: "Height (cm)",
+                    widthCm: "Width (cm)",
+                    heightIn: "Height (in)",
+                    widthIn: "Width (in)",
+                    waterAmount: "Water amount (mL)",
+                    waterAmountMl: "Water amount (mL)",
+                    rotationDegrees: "Rotation (°)",
+                    photoUrl: "Photo URL",
+                };
+                const fields = {
+                    observedAtIso: formattedTimestamp(entry.observedAtIso),
+                    ...details,
+                };
+                Object.entries(fields).forEach(([key, value]) => {
+                    if (
+                        value == null ||
+                        value === "" ||
+                        !["string", "number", "boolean"].includes(typeof value)
+                    )
+                        return;
+                    const term = document.createElement("dt");
+                    term.textContent =
+                        labels[key] ||
+                        key
+                            .replaceAll(/([A-Z])/g, " $1")
+                            .replace(/^./, (letter) => letter.toUpperCase());
+                    const description = document.createElement("dd");
+                    description.textContent = String(value);
+                    if (
+                        ["height", "width"].includes(key) &&
+                        details.measurementUnit
+                    )
+                        description.textContent += ` ${details.measurementUnit}`;
+                    list.append(term, description);
+                });
+                if (!list.children.length) {
+                    const empty = document.createElement("p");
+                    empty.textContent =
+                        "No additional details available for this entry.";
+                    disclosure.append(summary, empty);
+                } else disclosure.append(summary, list);
+                return disclosure;
+            }
+
+            function recentFilters() {
+                return {
+                    plantId:
+                        $("recentScope").value === "plant"
+                            ? $("plantSelect").value
+                            : "",
+                    event: $("recentEvent").value,
+                };
+            }
+
+            function recentFilterKey() {
+                return JSON.stringify([
+                    $("recentScope").value,
+                    recentFilters(),
+                ]);
+            }
+
+            function recentEmptyMessage() {
+                if (
+                    $("recentScope").value === "plant" &&
+                    !$("plantSelect").value
+                )
+                    return "Choose a plant to view its History.";
+                return $("recentScope").value === "plant" ||
+                    $("recentEvent").value
+                    ? "No History entries match these filters."
+                    : "No recent entries.";
             }
 
             function setEntryMode(mode) {
@@ -16244,6 +18173,7 @@
                     checkbox.type = "checkbox";
                     checkbox.value = plant.id;
                     checkbox.checked = state.bulkSelected.has(plant.id);
+                    checkbox.disabled = state.saving;
                     label.classList.toggle("is-selected", checkbox.checked);
                     checkbox.addEventListener("change", () => {
                         setBulkPlantSelected(plant.id, checkbox.checked);
@@ -16651,10 +18581,22 @@
                 $("observedAt").value = localDateTimeValue();
                 persistRoundState();
                 renderEventChips();
+                renderWeightFeedback();
             }
 
             function advancePlant() {
-                const plants = state.bootstrap.plants;
+                const queued = queuedWeighedPlantIds();
+                const saved = savedTodayPlantIds();
+                const plants = $("notWeighedToday").checked
+                    ? state.bootstrap.plants.filter(
+                          (plant) =>
+                              !queued.has(plant.id) && !saved?.has(plant.id)
+                      )
+                    : state.bootstrap.plants;
+                if (!plants.length) {
+                    renderRoundProgress();
+                    return;
+                }
                 const currentIndex = plants.findIndex(
                     (plant) => plant.id === $("plantSelect").value
                 );
@@ -16662,7 +18604,7 @@
                     plants[(currentIndex + 1 + plants.length) % plants.length];
                 $("plantSearch").value = "";
                 renderPlantOptions("", next.id);
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                window.scrollTo({ top: 0, behavior: "instant" });
             }
 
             function payloadFromForm() {
@@ -17231,12 +19173,32 @@
                 refreshCachedBootstrap({ updateHistory: false });
             }
 
+            function setRecentUnavailable(message, offline = false) {
+                const retained = $("recentList").childElementCount
+                    ? offline
+                        ? "keeping previous History entries"
+                        : "keeping previous entries"
+                    : "no entries loaded for these filters";
+                setRecentStatus(
+                    `${message} · ${retained}. Use Refresh to retry${offline ? " after reconnecting" : ""}.`
+                );
+            }
+
             function refreshRecent() {
                 const attempt = ++state.recentAttempt;
+                if (state.recentDataKey !== recentFilterKey()) {
+                    clearPlantPortraits($("recentList"));
+                    state.recentDataKey = recentFilterKey();
+                }
+                if (
+                    $("recentScope").value === "plant" &&
+                    !$("plantSelect").value
+                ) {
+                    setRecentStatus(recentEmptyMessage());
+                    return;
+                }
                 if (!browserIsOnline()) {
-                    setRecentStatus(
-                        "Offline · keeping previous History entries. Reconnect and change Show to retry."
-                    );
+                    setRecentUnavailable("Offline", true);
                     return;
                 }
                 setRecentStatus(
@@ -17246,16 +19208,15 @@
                 state.recentTimer = setTimeout(() => {
                     if (attempt !== state.recentAttempt) return;
                     state.recentAttempt += 1;
-                    setRecentStatus(
-                        "History refresh timed out · keeping previous entries. Change Show to retry."
-                    );
+                    setRecentUnavailable("History refresh timed out");
                 }, 20000);
                 google.script.run
                     .withSuccessHandler((entries) => {
                         if (attempt !== state.recentAttempt) return;
                         if (!Array.isArray(entries)) {
-                            setRecentStatus(
-                                "History response was unavailable · keeping previous entries. Change Show to retry."
+                            state.recentAttempt += 1;
+                            setRecentUnavailable(
+                                "History response was unavailable"
                             );
                             return;
                         }
@@ -17263,16 +19224,18 @@
                         setRecentStatus(
                             entries.length
                                 ? `Showing ${entries.length} recent ${entries.length === 1 ? "entry" : "entries"}.`
-                                : "No recent entries."
+                                : recentEmptyMessage()
                         );
                     })
                     .withFailureHandler(() => {
                         if (attempt !== state.recentAttempt) return;
-                        setRecentStatus(
-                            "Could not refresh History · keeping previous entries. Change Show to retry."
-                        );
+                        state.recentAttempt += 1;
+                        setRecentUnavailable("Could not refresh History");
                     })
-                    .getRecentWebObservations(state.recentLimit);
+                    .getRecentWebObservations(
+                        state.recentLimit,
+                        recentFilters()
+                    );
             }
 
             function setRecentStatus(message, loading = false) {
@@ -17496,6 +19459,7 @@
 
             function resumeInterruptedWork() {
                 if (!state.bootstrap) return;
+                updateWorkflowClock();
                 if (!browserIsOnline()) {
                     if (!state.saving)
                         $("connectionStatus").textContent =
@@ -17613,15 +19577,22 @@
                 cacheBootstrap(bootstrap);
                 renderGlobalLinks();
                 renderPlantOptions($("plantSearch").value, selectedPlantId);
+                renderQueuedPlantIndicators();
+                updateWorkflowClock();
                 if (updateHistory && recentAttempt === state.recentAttempt) {
-                    if (state.recentLimit === 10)
+                    if (
+                        state.recentLimit === 10 &&
+                        $("recentScope").value === "all" &&
+                        !$("recentEvent").value
+                    )
                         renderRecent(bootstrap.recent);
                     else refreshRecent();
                 }
                 if (state.entryMode === "bulk")
                     renderBulkPlants($("bulkSearch").value);
-                $("connectionStatus").textContent =
-                    `Connected · logger ${bootstrap.version}`;
+                if (!state.saving)
+                    $("connectionStatus").textContent =
+                        `Connected · logger ${bootstrap.version}`;
                 return true;
             }
 
@@ -17633,10 +19604,13 @@
                 }
                 clearBootstrapRefreshTimer();
                 const attemptId = ++state.bootstrapRefreshAttempt;
+                $("refreshDataButton").setAttribute("aria-busy", "true");
                 const recentAttempt = state.recentAttempt;
                 state.bootstrapRefreshTimer = window.setTimeout(() => {
                     if (attemptId !== state.bootstrapRefreshAttempt) return;
                     state.bootstrapRefreshTimer = null;
+                    state.bootstrapRefreshAttempt += 1;
+                    $("refreshDataButton").setAttribute("aria-busy", "false");
                     $("connectionStatus").textContent =
                         "Using saved plant list · Google refresh delayed";
                 }, BOOTSTRAP_TIMEOUT_MS);
@@ -17644,6 +19618,11 @@
                     .withSuccessHandler((bootstrap) => {
                         if (attemptId !== state.bootstrapRefreshAttempt) return;
                         clearBootstrapRefreshTimer();
+                        state.bootstrapRefreshAttempt += 1;
+                        $("refreshDataButton").setAttribute(
+                            "aria-busy",
+                            "false"
+                        );
                         if (
                             !applyBootstrapRefresh(
                                 bootstrap,
@@ -17657,6 +19636,11 @@
                     .withFailureHandler(() => {
                         if (attemptId !== state.bootstrapRefreshAttempt) return;
                         clearBootstrapRefreshTimer();
+                        state.bootstrapRefreshAttempt += 1;
+                        $("refreshDataButton").setAttribute(
+                            "aria-busy",
+                            "false"
+                        );
                         $("connectionStatus").textContent =
                             "Using saved plant list · Google refresh unavailable";
                     })
@@ -17759,6 +19743,7 @@
                             "Google returned incomplete garden data."
                         );
                     state.bootstrap = bootstrap;
+                    state.workflowDay = workbookDay();
                     $("connectionStatus").textContent = fromCache
                         ? "Using saved plant list · refreshing Google…"
                         : `Connected · logger ${bootstrap.version}`;
@@ -17793,6 +19778,12 @@
                     step = "building event controls";
                     renderEventChips();
                     step = "building recent history";
+                    bootstrap.events.forEach((eventName) => {
+                        const option = document.createElement("option");
+                        option.value = eventName;
+                        option.textContent = eventName;
+                        $("recentEvent").append(option);
+                    });
                     const storedRecentLimit = Number(
                         safeStorageGet(localStorage, RECENT_LIMIT_KEY)
                     );
@@ -17823,6 +19814,8 @@
                         });
                     state.bootstrapReady = true;
                     state.bootstrapRetries = 0;
+                    renderWeightFeedback();
+                    updateWorkflowClock();
                     if (!fromCache) cacheBootstrap(bootstrap);
                     $("loading").setAttribute("aria-busy", "false");
                     $("loading").hidden = true;
@@ -17834,6 +19827,22 @@
 
             $("plantSearch").addEventListener("input", (event) =>
                 renderPlantOptions(event.target.value)
+            );
+            $("notWeighedToday").addEventListener("change", () =>
+                renderPlantOptions(
+                    $("plantSearch").value,
+                    $("plantSelect").value
+                )
+            );
+            $("refreshDataButton").addEventListener(
+                "click",
+                refreshSavedPlantData
+            );
+            ["recentScope", "recentEvent"].forEach((id) =>
+                $(id).addEventListener("change", refreshRecent)
+            );
+            ["observedAt", "potSetup"].forEach((id) =>
+                $(id).addEventListener("input", renderWeightFeedback)
             );
             $("plantSelect").addEventListener("change", renderPlantSummary);
             $("plantChoiceList").addEventListener("click", (event) => {
@@ -17905,6 +19914,7 @@
             $("weight").addEventListener("input", () => {
                 if ($("weight").value) toggleEvent("Weigh", true);
                 updateConditionalFields();
+                renderWeightFeedback();
             });
             ["height", "width"].forEach((id) => {
                 $(id).addEventListener("input", () => {
@@ -18052,9 +20062,7 @@
             window.addEventListener("offline", () => {
                 if (state.recentTimer !== null) {
                     state.recentAttempt += 1;
-                    setRecentStatus(
-                        "Offline · keeping previous History entries. Reconnect and change Show to retry."
-                    );
+                    setRecentUnavailable("Offline", true);
                 }
                 if (!state.saving)
                     $("connectionStatus").textContent =
@@ -18066,6 +20074,73 @@
                 );
             });
 
+            [
+                ["correctionResume", "edit"],
+                ["correctionCheck", "refresh"],
+                ["correctionRetry", "save"],
+                ["correctionReviewButton", "edit"],
+                ["correctionConfirm", "check"],
+                ["correctionEdit", "edit"],
+                ["correctionReload", "refresh"],
+                ["correctionClose", "close"],
+            ].forEach(([id, icon]) => {
+                const button = $(id);
+                setIconLabel(button, icon, button.textContent.trim());
+            });
+            $("correctionForm").addEventListener("submit", reviewCorrection);
+            $("correctionForm").addEventListener("input", () => {
+                if (correction.pending) return;
+                correction.preview = null;
+                correction.reviewedPayload = null;
+                $("correctionConfirm").hidden = true;
+                captureCorrectionDraft();
+            });
+            $("correctionForm").addEventListener(
+                "change",
+                captureCorrectionDraft
+            );
+            $("correctionConfirm").addEventListener("click", confirmCorrection);
+            $("correctionCheck").addEventListener("click", () =>
+                runPendingCorrection("getWebCorrectionStatus")
+            );
+            $("correctionRetry").addEventListener("click", () =>
+                runPendingCorrection("saveWebObservationCorrection")
+            );
+            $("correctionClose").addEventListener("click", closeCorrection);
+            $("correctionDialog").addEventListener("cancel", (event) => {
+                event.preventDefault();
+                closeCorrection();
+            });
+            $("correctionEdit").addEventListener("click", () => {
+                if (correction.pending || correction.busy) return;
+                correction.preview = null;
+                correction.reviewedPayload = null;
+                $("correctionReview").hidden = true;
+                $("correctionConfirm").hidden = true;
+                $("correctionEdit").hidden = true;
+                $("correctionEditor").hidden = false;
+                correctionMessage(
+                    "Edit replacement values and review changes again before confirming."
+                );
+                $("correctionReason").focus();
+            });
+            $("correctionReload").addEventListener("click", () => {
+                if (!correction.pending)
+                    openCorrection(
+                        correction.observationId,
+                        correction.trigger,
+                        null
+                    );
+            });
+            $("correctionResume").addEventListener("click", () => {
+                if (correction.draft)
+                    openCorrection(
+                        correction.draft.context.original.observationId,
+                        $("correctionResume"),
+                        correction.draft
+                    );
+            });
+
             applyTheme(preferredTheme());
             const cachedBootstrap = readCachedBootstrap();
             if (cachedBootstrap) {
@@ -18075,6 +20150,7 @@
             } else {
                 requestBootstrap();
             }
+            restoreCorrection();
         </script>
     </body>
 </html>

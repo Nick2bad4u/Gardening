@@ -1,8 +1,17 @@
+import type { DailyApi } from "./daily-dashboard-fixtures.js";
 import type {
     Bootstrap,
     CellValue,
     ObservationPayload,
 } from "./logger-fixtures.js";
+import type {
+    HistoryDetailValue,
+    WebHistoryDetails,
+    WebHistoryFilters,
+    WebPlantWeightReadModel,
+    WebRecentObservation,
+    WebWeightReadModels,
+} from "./logger-workflow-fixtures.js";
 
 export interface ActivitySummary {
     averageDryDownGramsPerDay: "" | number;
@@ -223,12 +232,19 @@ export interface AppsScriptTestApi {
         timeZone: unknown,
         limit: unknown,
         plantNames?: Map<unknown, unknown>
-    ) => RecentObservation[];
-    getRecentWebObservations: (limit: unknown) => RecentObservation[];
+    ) => WebRecentObservation[];
+    getRecentWebObservations: (
+        limit: unknown,
+        filters?: unknown
+    ) => WebRecentObservation[];
     getWebAppBootstrap: () => Omit<Bootstrap, "plants"> & {
-        plants: (Bootstrap["plants"][number] & {
-            activitySummary: ActivitySummary;
-        })[];
+        dayKey: string;
+        plants: (Bootstrap["plants"][number] &
+            WebPlantWeightReadModel & {
+                activitySummary: ActivitySummary;
+            })[];
+        timeZone: string;
+        weighedTodayPlantIds: string[];
     };
     getWebBatchSaveStatus: (requests: unknown) => SaveStatus[];
     getWebSaveStatus: (payload: unknown) => SaveStatus;
@@ -271,6 +287,7 @@ export interface AppsScriptTestApi {
         removedDuplicateCount: number;
         removedTriggerCount: unknown;
     };
+    installDailyCareDashboard: DailyApi["installDailyCareDashboard"];
     installDashboardWeightCounts: () => {
         plants: number;
         range: string;
@@ -321,6 +338,10 @@ export interface AppsScriptTestApi {
     normalizeRecentLimit_: (value: unknown) => number;
     normalizeRequestId_: (value: unknown, isRequired?: boolean) => string;
     normalizeWebEntrySource_: (value: unknown) => string;
+    normalizeWebHistoryFilters_: (
+        filters: unknown,
+        plantNames: Map<string, string>
+    ) => WebHistoryFilters;
     normalizeWeightState_: (value: unknown, weight: unknown) => "" | "Routine";
     onEdit: (event?: unknown) => void;
     onOpen: () => void;
@@ -401,8 +422,9 @@ export interface AppsScriptTestApi {
         historyRows: unknown,
         timeZone: unknown,
         limit: unknown,
-        plantNames: unknown
-    ) => RecentObservation[];
+        plantNames: unknown,
+        filters?: unknown
+    ) => WebRecentObservation[];
     refreshBaselineView_: (spreadsheet: unknown, plants: unknown) => void;
     refreshDashboardView_: (spreadsheet: unknown, plants: unknown) => void;
     refreshDryDownModels_: (spreadsheet: unknown) => void;
@@ -499,6 +521,21 @@ export interface AppsScriptTestApi {
     ) =>
         | { date: number; guidance: string }
         | { date: string; guidance: unknown };
+    webHistoryDetails_: (row: unknown) => WebHistoryDetails;
+    webHistoryDetailValue_: (value: unknown) => HistoryDetailValue;
+    webHistoryTimestamp_: (value: unknown) => number;
+    webPlantWeightReadModel_: (
+        records: unknown,
+        potSetup: number,
+        nowMs: number,
+        previousDry: unknown
+    ) => WebPlantWeightReadModel;
+    webWeightReadModelsFromRows_: (
+        historyRows: unknown,
+        baselineSetups: Map<string, number>,
+        now: Date,
+        timeZone: string
+    ) => WebWeightReadModels;
     workbookPlantRecords_: (spreadsheet: unknown) => PlantRecord[];
     writeStoredObservationRows_: (
         history: unknown,

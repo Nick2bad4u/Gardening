@@ -1,12 +1,22 @@
 import type { Window } from "happy-dom";
 
+import type { LoggerCorrectionApi } from "./logger-correction-fixtures.js";
+import type {
+    WebHistoryFilters,
+    WebRecentObservation,
+    WebWeightSeries,
+} from "./logger-workflow-fixtures.js";
+
 export interface Bootstrap {
+    dayKey?: string;
     events: string[];
     links: Record<string, string>;
     plants: PlantSummary[];
-    recent: Record<string, number | string>[];
+    recent: (Record<string, number | string> | WebRecentObservation)[];
     serverTime: string;
+    timeZone?: string;
     version: string;
+    weighedTodayPlantIds?: string[];
 }
 
 export type CellValue =
@@ -86,6 +96,7 @@ export interface PlantSummary {
     label: string;
     lastWatered: string;
     latestWeight: number | string;
+    latestWeightAt?: string;
     name: string;
     nextDryCheck?: string;
     nurseryLabelImageUrl?: string;
@@ -93,6 +104,7 @@ export interface PlantSummary {
     recommendedWaterDate?: string;
     scientificName: string;
     wateringGuidance?: string;
+    weightSeries?: WebWeightSeries;
 }
 
 export interface QueuedObservation {
@@ -104,13 +116,25 @@ export interface QueuedObservation {
 }
 
 export interface ScriptArguments {
-    getRecentWebObservations: [limit: number];
+    getRecentWebObservations: [limit: number, filters?: WebHistoryFilters];
     getWebAppBootstrap: [];
     getWebBatchSaveStatus: [requests: ObservationPayload[]];
+    getWebCorrectionEntry: Parameters<
+        LoggerCorrectionApi["getWebCorrectionEntry"]
+    >;
+    getWebCorrectionStatus: Parameters<
+        LoggerCorrectionApi["getWebCorrectionStatus"]
+    >;
     getWebSaveStatus: [request: ObservationPayload];
+    previewWebObservationCorrection: Parameters<
+        LoggerCorrectionApi["previewWebObservationCorrection"]
+    >;
     saveBulkCareObservation: [payload: ObservationPayload];
     saveWebObservation: [payload: ObservationPayload];
     saveWebObservationBatch: [payloads: ObservationPayload[]];
+    saveWebObservationCorrection: Parameters<
+        LoggerCorrectionApi["saveWebObservationCorrection"]
+    >;
 }
 
 export type ScriptBehaviors = {

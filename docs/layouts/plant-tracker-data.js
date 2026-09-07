@@ -518,10 +518,11 @@ function wateringDetails(events) {
 const WET_WEIGHT_WINDOW_MS = 5 * 24 * 60 * 60 * 1000;
 
 /**
- * @param {HistoryEvent[]} events
+ * @param {HistoryEvent[]} sourceEvents
  * @param {string} [plantId]
  */
-export function calculateSummary(events, plantId = "") {
+export function calculateSummary(sourceEvents, plantId = "") {
+    const events = historyCorrectionOrder(sourceEvents);
     const currentEvents = events.filter((entry) => isActiveHistoryEvent(entry));
     const activePotSetup = Math.max(
         1,
@@ -770,6 +771,53 @@ export async function loadCollectionData() {
 /** @param {PlantLabelRecord} plant */
 export function plantLabel(plant) {
     return (plant["Current pot label"] ?? "") || (plant["Plant ID"] ?? "");
+}
+
+/**
+ * Keep an appended correction in its original observation's order when dates
+ * tie. Removed originals remain in the feed as lineage evidence. Broken,
+ * duplicated, or cyclic identities retain their physical feed order.
+ *
+ * @param {HistoryEvent[]} events
+ *
+ * @returns {HistoryEvent[]}
+ */
+function historyCorrectionOrder(events) {
+    /** @type {Map<string, HistoryEvent | null>} */
+    const byId = new Map();
+    for (const event of events) {
+        const id = String(event["Observation ID"] ?? "").trim();
+        if (id) byId.set(id, byId.has(id) ? null : event);
+    }
+    return events.map((event) => {
+        let original = event;
+        const visited = new Set([event]);
+        for (;;) {
+            const id = String(original["Corrects observation ID"] ?? "").trim();
+            const { _index: originalIndex } = original;
+            if (!id)
+                return original === event
+                    ? event
+                    : { ...event, _index: originalIndex };
+            const previous = byId.get(id);
+            if (
+                !previous ||
+                isActiveHistoryEvent(previous) ||
+                visited.has(previous) ||
+                [
+                    "Plant ID",
+                    "Event",
+                    "Pot setup",
+                ].some(
+                    (key) =>
+                        String(previous[key] ?? "") !== String(event[key] ?? "")
+                )
+            )
+                return event;
+            visited.add(previous);
+            original = previous;
+        }
+    });
 }
 
 /**

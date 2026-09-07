@@ -2127,11 +2127,14 @@ describe("garden logger workbook refresh and navigation", () => {
         overrideAppsScript(context, "organizeWorkbookSheets_", (...args) => {
             calls.push(["organize", ...args]);
         });
+        overrideAppsScript(context, "installDailyCareDashboard", () => {
+            calls.push(["daily"]);
+        });
 
         expect(structuredClone(context.refreshGardenWorkbook())).toStrictEqual({
             baselineColumns: 36,
             dashboardColumns: 24,
-            loggerVersion: "5.18.5",
+            loggerVersion: "5.19.0",
             plantPages: 2,
         });
         expect(calls.filter(([name]) => name === "plant")).toHaveLength(2);
@@ -2141,6 +2144,7 @@ describe("garden logger workbook refresh and navigation", () => {
             "plant",
             "plant",
             "organize",
+            "daily",
             "toast",
         ]);
         expect(structuredClone(flushes)).toStrictEqual(["flush"]);
@@ -2190,7 +2194,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P01",
             lastPlant: "P10",
-            loggerVersion: "5.18.5",
+            loggerVersion: "5.19.0",
             plantPages: 10,
         });
         expect(
@@ -2198,7 +2202,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P11",
             lastPlant: "P20",
-            loggerVersion: "5.18.5",
+            loggerVersion: "5.19.0",
             plantPages: 10,
         });
         expect(
@@ -2206,7 +2210,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P21",
             lastPlant: "P30",
-            loggerVersion: "5.18.5",
+            loggerVersion: "5.19.0",
             plantPages: 10,
         });
 
@@ -2822,7 +2826,7 @@ describe("scoped Dashboard weight count installer", () => {
             ).toStrictEqual({
                 plants: 30,
                 range: "Dashboard!X6:X36",
-                version: "5.18.5",
+                version: "5.19.0",
             });
 
             const after = structuredClone(rows);
@@ -3544,7 +3548,7 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.18.5");
+        expect(bootstrap.version).toBe("5.19.0");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             activitySummary: {
@@ -3566,7 +3570,8 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
             fieldGuideUrl: "https://example.test/p01",
             id: "P01",
             label: "A1",
-            latestWeight: 412,
+            latestWeight: 405,
+            latestWeightAt: "2026-08-16T12:00:00.000Z",
             potSetup: 2,
         });
         expect(Array.from(bootstrap.recent)).toHaveLength(5);
@@ -7125,17 +7130,31 @@ describe("garden logger History snapshots and request status", () => {
 
         expect(structuredClone(structuredClone(recent))).toStrictEqual([
             {
+                details: {
+                    height: 8,
+                    heightCm: 8,
+                    heightIn: 8 / 2.54,
+                    measurementUnit: "cm",
+                    recordedAtIso: "2026-08-16T16:02:00.000Z",
+                },
                 event: "Measure",
                 name: "Feather cactus",
+                observationId: "",
                 observedAt: "2026-08-16T16:00:00.000Z",
+                observedAtIso: "2026-08-16T16:00:00.000Z",
                 plantId: "P02",
                 weight: "",
                 weightState: "",
             },
             {
+                details: {
+                    recordedAtIso: "2026-08-16T14:01:00.000Z",
+                },
                 event: "Weigh",
                 name: "Moon cactus",
+                observationId: "",
                 observedAt: "2026-08-16T14:00:00.000Z",
+                observedAtIso: "2026-08-16T14:00:00.000Z",
                 plantId: "P01",
                 weight: 410,
                 weightState: "Routine",
@@ -8086,10 +8105,10 @@ describe("garden logger workbook installation and History headers", () => {
         context.installGardenLogger();
 
         expect(required(calls.properties)["gardenLoggerVersion"]).toBe(
-            "5.18.5"
+            "5.19.0"
         );
         expect(required(calls.toast)[1]).toBe("Garden logger verified");
-        expect(required(calls.toast)[0]).toMatch(/Logger 5\.18\.5 is ready/v);
+        expect(required(calls.toast)[0]).toMatch(/Logger 5\.19\.0 is ready/v);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(
@@ -8505,7 +8524,7 @@ describe("garden logger workbook installation and History headers", () => {
         expect(
             structuredClone(sortedHistory.map((row) => row.plantId))
         ).toStrictEqual(["P02", "P01"]);
-        expect(required(sortedHistory[1])["weight"]).toBe("");
+        expect(required(sortedHistory[1]).weight).toBe("");
     });
 
     it("covers History helper initialization and row identity fallbacks", () => {
@@ -8552,170 +8571,6 @@ describe("garden logger workbook installation and History headers", () => {
         expect(required(emptyHeaders.__rows[0])[16]).toBe("Nutrients used");
         expect(required(emptyHeaders.__rows[0])[26]).toBe("Observation ID");
         expect(required(emptyHeaders.__rows[0])[36]).toBe("Measurement unit");
-    });
-});
-
-describe("garden logger History removal and audit safeguards", () => {
-    it("excludes selected History observations without destroying their audit trail", () => {
-        expect.hasAssertions();
-
-        const history = createHistorySheet([
-            {
-                requestId: "garden-remove-12345",
-                values: [
-                    new Date("2026-08-12T12:00:00Z"),
-                    "P20",
-                    "Weigh",
-                    "Routine",
-                    1450,
-                ],
-            },
-        ]);
-        required(history.__rows[1])[12] = "helper-name";
-        required(history.__rows[1])[13] = "helper-cycle";
-        required(history.__rows[1])[16] = "detail";
-        const selection = {
-            getLastRow: () => 2,
-            getRow: () => 2,
-        };
-        const activeSpreadsheet = {
-            getActiveRange: () => selection,
-            getActiveSheet: () => history,
-            getSheetByName: (/** @type {string} */ name) =>
-                name === "History" ? history : null,
-            getSpreadsheetTimeZone: () => "America/New_York",
-            toast: () => {},
-        };
-        const ui = {
-            alert: () => "YES",
-            Button: { YES: "YES" },
-            ButtonSet: { YES_NO: "YES_NO" },
-        };
-        const context = loadAppsScript(history, {
-            SpreadsheetApp: {
-                getActive: () => activeSpreadsheet,
-                getUi: () => ui,
-            },
-        });
-
-        context.removeSelectedHistoryObservations();
-
-        expect(
-            structuredClone(required(history.__rows[1]).slice(0, 5))
-        ).toStrictEqual([
-            new Date("2026-08-12T12:00:00Z"),
-            "P20",
-            "Weigh",
-            "Routine",
-            1450,
-        ]);
-        expect(
-            structuredClone(required(history.__rows[1]).slice(12, 15))
-        ).toStrictEqual([
-            "helper-name",
-            "helper-cycle",
-            "",
-        ]);
-        expect(required(history.__rows[1])[15]).toBe("garden-remove-12345");
-        expect(required(history.__rows[1])[16]).toBe("detail");
-        expect(required(history.__rows[1])[31]).toMatch(
-            /Excluded from active analysis/v
-        );
-        expect(required(history.__rows[1])[35]).toBe("Removed");
-    });
-
-    it("covers History removal guards, large previews, and cancellation", () => {
-        expect.hasAssertions();
-
-        const observations = Array.from({ length: 9 }, (_, index) => ({
-            requestId: `garden-remove-${String(index).padStart(6, "0")}`,
-            values: [
-                `8/${index + 1}/2026`,
-                "P01",
-                "Weigh",
-                "Routine",
-                400 + index,
-            ],
-        }));
-        const history = createHistorySheet(observations);
-        /**
-         * @type {{
-         *     getLastRow:
-         *         | (() => number)
-         *         | (() => number)
-         *         | (() => number)
-         *         | (() => number);
-         *     getRow:
-         *         | (() => number)
-         *         | (() => number)
-         *         | (() => number)
-         *         | (() => number);
-         * } | null}
-         */
-        let selection = null;
-        /**
-         * @type {import("../sheet-fixtures.d.ts").HistorySheet
-         *     | import("../sheet-fixtures.d.ts").DataSheet}
-         */
-        let activeSheet = history;
-        const spreadsheet = {
-            getActiveRange: () => selection,
-            getActiveSheet: () => activeSheet,
-            getSheetByName: (/** @type {string} */ name) =>
-                name === "History" ? history : null,
-            toast: () => {},
-        };
-        const ui = {
-            alert: () => "NO",
-            Button: { NO: "NO", YES: "YES" },
-            ButtonSet: { YES_NO: "YES_NO" },
-        };
-        const context = loadAppsScript(history, {
-            SpreadsheetApp: {
-                flush: () => {},
-                getActive: () => spreadsheet,
-                getUi: () => ui,
-                openById: () => spreadsheet,
-            },
-        });
-
-        context.removeSelectedHistoryObservations();
-        activeSheet = createDataSheet("Other", [[]]);
-        selection = { getLastRow: () => 2, getRow: () => 2 };
-        context.removeSelectedHistoryObservations();
-
-        activeSheet = history;
-        selection = { getLastRow: () => 1, getRow: () => 1 };
-        context.removeSelectedHistoryObservations();
-
-        selection = { getLastRow: () => 102, getRow: () => 2 };
-
-        expect(() => {
-            context.removeSelectedHistoryObservations();
-        }).toThrow(/no more than 100/iv);
-
-        selection = { getLastRow: () => 10, getRow: () => 2 };
-        context.removeSelectedHistoryObservations();
-
-        expect(required(history.__rows[1])[0]).toBe("8/1/2026");
-
-        const emptyHistory = createHistorySheet([{ values: [] }]);
-        const emptySpreadsheet = {
-            getActiveRange: () => ({ getLastRow: () => 2, getRow: () => 2 }),
-            getActiveSheet: () => emptyHistory,
-            getSheetByName: (/** @type {string} */ name) =>
-                name === "History" ? emptyHistory : null,
-            toast: () => {},
-        };
-        const emptyContext = loadAppsScript(emptyHistory, {
-            SpreadsheetApp: {
-                flush: () => {},
-                getActive: () => emptySpreadsheet,
-                getUi: () => ui,
-                openById: () => emptySpreadsheet,
-            },
-        });
-        emptyContext.removeSelectedHistoryObservations();
     });
 });
 

@@ -305,6 +305,126 @@ five-minute schedule. Its first scheduled run at 17:35:30 EDT completed
 successfully, as did the version-71 web-app executions. No synthetic
 observations were submitted.
 
+## Daily workflow (5.19.0)
+
+The plant picker distinguishes **Queued** weights on this device from **Saved
+today** readings confirmed in History. The **Not weighed today** filter uses
+the workbook's timezone and excludes Removed, estimated, invalid, and future
+readings. Sending the queue does not erase saved progress. A fresh read restores
+that progress on another device; cached data retains its last refresh time.
+
+Recent History offers **All plants / This plant**, event filters, and expandable
+notes, measurements, and event details. The server filters before applying the
+requested limit. Its loading indicator stays inside History, and responses for
+an older selection cannot overwrite the current result.
+
+Plant info separates the latest weight's observation time from **Updated from
+Google**, which describes when the displayed data was fetched. Refresh updates
+the summaries and History while preserving the current plant, selected events,
+typed values, setup edits, bulk selection, queue, and pending saves. Beside the
+weight input, the logger compares the entered grams with the previous measured
+reading in the current setup and shows the elapsed time. It never changes the
+entered number automatically.
+
+The compact current-cycle chart uses measured grams, watering markers, and the
+previous completed Dry reference. It starts at the latest watering or setup
+boundary. Invalid or excluded readings and gaps longer than 48 hours interrupt
+the line. A corrected reading replaces its ancestor in the plotted evidence;
+its retained audit row does not create a false gap. The chart describes observed
+whole-pot mass, without converting its slope into a watering instruction.
+
+### Daily care and Integrity
+
+`installDailyCareDashboard()` preserves Dashboard's 24-column table and freezes
+A:C (Page, Plant ID, and current label). It splits only the title and KPI merges
+that cross that freeze boundary. Dashboard U2:X3 gains two linked indicators:
+**Data issues** counts failed Integrity checks; **Observations still needed**
+counts checks requiring new evidence. These are check categories, not unique
+plants or observations. Missing check results display **Checks unavailable**.
+
+The installer creates a protected, formula-driven **Daily care** sheet with
+native plant-page links, identity, latest measured weight, its observation time,
+signed difference from the current setup's completed Dry, reweigh window, and
+follow-up. Weight and timestamp always come from the same eligible record.
+Correction chains retain their original position when observation times tie;
+future, Removed, estimated, invalid, and other-setup readings are excluded.
+Baselines' latest-weight and observation-time formulas use the same selection,
+keeping Dashboard and existing summaries aligned after a correction.
+The full Integrity check list is visible below the plant table, while the
+underlying Integrity sheet stays hidden. Follow-up rows link to the affected
+plant pages through the main table.
+
+For 30 plants, the table occupies `Daily care!A6:H36` and checks occupy
+`Daily care!A39:H56`. Inventory and helper bounds are discovered on each install.
+Reruns preserve the sheet ID, filter criteria, and protection, and avoid duplicate
+format rules. The installer refuses unexpected destination content or schemas.
+It changes `Integrity!B12` only to exclude Dashboard U2:X3 from the formula-error
+scan, preventing the indicators from depending on their own error check. When
+the existing scan includes reserved columns Y:Z, that coverage is preserved.
+Those columns currently lie outside the 24-column grid; the reserved range
+contributes zero until it exists, while actual cell errors still count.
+History, staging data, and the other Dashboard cells remain intact.
+
+### Saved-entry corrections
+
+**Correct entry** opens one saved History event. Review the original, edit the
+supported fields, provide a reason, preview the exact differences, and confirm.
+Other events from the same save remain separate and unchanged. Plant ID, event
+type, label provenance, and pot-setup identity are fixed. A date change that
+crosses a Repot boundary or invalidates dependent setup observations is refused
+with an explanation; coordinated setup migrations require a separate reviewed
+workbook operation. Measurement units, quality, and method remain explicit.
+
+The four RPCs are `getWebCorrectionEntry`,
+`previewWebObservationCorrection`, `saveWebObservationCorrection`, and
+`getWebCorrectionStatus`. A preview binds the original revision and relevant
+History context. A commit re-reads that context under the shared script lock.
+Stale previews, changed headers, duplicate identities, unsupported fields, and
+insufficient History capacity fail before any write.
+
+The manifest enables Advanced Sheets v4. The commit uses one atomic
+`Sheets.Spreadsheets.batchUpdate`: append a replacement A:AP row and mark only
+the original AJ as `Removed`. The original values, formulas, reason, and
+formatting are retained. The replacement receives a new Recorded time and
+Request ID, the original save group, the immediate ancestor's Observation ID in
+AE, and the correction reason in AF. Its M:O and AL:AM helper formulas are
+generated for its new row. No correction increments the pot setup or writes
+Baselines. The Apps Script menu's exclusion flow also locks and rechecks IDs
+after its confirmation alert, then changes only AF and AJ.
+
+Before calling Google, the client durably stores the immutable correction
+payload and retry ID. A lost callback, reload, or retry checks that same payload.
+History's replacement Observation ID embeds the request ID and operation digest,
+so the original receipt remains discoverable even after a later correction or
+exclusion. A matching receipt clears the pending operation; a missing receipt
+permits retrying that exact request. A different payload cannot reuse its ID.
+The preview never mutates History. Status checks cannot claim a different
+correction as this request's success.
+
+Before entering the atomic Sheets operation, the server stores and reads back
+an operation marker in Script Properties. A deterministic validation rejection
+before any attempted write stores a matching terminal result instead. The
+client verifies that result's request and payload digests, clears only the
+rejected pending request, and retains the correction draft for a fresh review.
+An attempted write, transient failure, or missing receipt never becomes a
+terminal rejection merely because a response was lost. A matching History
+receipt remains authoritative. These operation markers are retained so delayed
+retries cannot reuse a rejected request or misclassify an uncertain write.
+
+For rollout, authorize Advanced Sheets in the disposable bound script and prove
+the actual installer, correction, retry, and recalculation paths there first.
+Then create a fresh native production backup and capture the canonical ranges,
+deployment, and triggers. Publish an immutable version through the existing
+deployment; run the existing logger/intake installers, the scoped Daily care
+installer, and the queue-trigger installer. Refresh the `Dry-down models!A2`
+formula from `dryDownModelFormula_()` so its input includes AA and AE; this adds
+correction ordering without changing its 16 output columns. Refresh only
+`Baselines!C2:C31` and `E2:E31` from `latestMeasuredWeightFormula_()` for the
+paired latest reading and date; preserve the other Baselines cells. Verify all History
+records and staging schemas, the allowlisted presentation/formula changes,
+successful executions, and exactly one five-minute queue trigger before calling
+the rollout complete.
+
 ## Plant portrait caching
 
 Logger 5.18.2 uses the shared 83-icon UI/category redraw from the canonical
@@ -439,9 +559,10 @@ box performs the same queue action; **Save now** remains available as the
 secondary direct-to-Google path. The optional **Advance to the next plant after
 queueing** setting restores sequential entry and remembers that preference. The
 queue is not cleared until Google confirms each request ID in History. A colored
-queued marker identifies every plant with a weight in the queue, the progress line counts
-weighed plants, and the queue card turns green when every tracked plant has a
-weight safely queued. Weight-state controls stay collapsed unless the Weigh
+queued marker identifies every plant with a weight in the queue. Separate
+History-backed markers show weights saved today in the workbook's timezone;
+the progress line and **Not weighed today** filter distinguish that saved
+progress from local queued work. Weight-state controls stay collapsed unless the Weigh
 event is active or a weight value is present.
 
 Queued measurements are shown beside weight as `height × width unit` (or as a

@@ -6,7 +6,7 @@
  */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.18.5",
+    version: "5.19.0",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -658,6 +658,7 @@ function onOpen() {
         .addItem("Verify logger", "installGardenLogger")
         .addItem("Verify AppSheet intake", "installAppSheetIntake")
         .addItem("Refresh workbook views", "refreshGardenWorkbook")
+        .addItem("Refresh daily care view", "installDailyCareDashboard")
         .addSeparator()
         .addItem("Open Quick log", "openQuickLog")
         .addItem("Open History", "openHistory")
@@ -689,6 +690,7 @@ function doGet() {
 }
 
 function getWebAppBootstrap() {
+    const refreshedAt = new Date();
     const spreadsheet = getGardenSpreadsheet_();
     const tracker = requireSheet_(spreadsheet, GARDEN_LOGGER.plantTrackerSheet);
     const baselines = requireSheet_(spreadsheet, GARDEN_LOGGER.baselinesSheet);
@@ -715,8 +717,13 @@ function getWebAppBootstrap() {
         ])
     );
     const potSizeByPlant = latestPotSizesFromRows_(historyRows);
-    const dryOrLowestWeightByPlant = dryOrLowestWeightsFromRows_(historyRows);
     const timeZone = spreadsheet.getSpreadsheetTimeZone();
+    const weightReads = webWeightReadModelsFromRows_(
+        historyRows,
+        potSetupByPlant,
+        refreshedAt,
+        timeZone
+    );
     const forecasts = dryDownModelsFromHistory_(
         historyRows,
         trackerValues.map(([id]) => [id]),
@@ -732,15 +739,14 @@ function getWebAppBootstrap() {
                 scientificName,
                 lastWatered,
                 daysSinceWater,
-                ,
-                latestWeight,
             ] = row;
             const label = row[GARDEN_LOGGER.currentLabelColumn - 1];
             const fieldGuideUrl = fieldGuideUrlForRow_(trackerFormulas[index]);
             const imageUrls = WEB_PLANT_IMAGE_URLS[cleanText_(plantId)] || {};
-            const dryOrLowestWeight = dryOrLowestWeightByPlant.get(
-                cleanText_(plantId)
-            );
+            const weightRead =
+                weightReads.byPlant.get(cleanText_(plantId)) ||
+                webPlantWeightReadModel_([], 1, refreshedAt.getTime(), null);
+            const dryOrLowestWeight = weightRead.weightSeries.previousDry;
             return {
                 id: cleanText_(plantId),
                 name: cleanText_(commonName),
@@ -748,10 +754,7 @@ function getWebAppBootstrap() {
                 label: cleanText_(label),
                 currentImageUrl: imageUrls.currentImageUrl || "",
                 nurseryLabelImageUrl: imageUrls.nurseryLabelImageUrl || "",
-                potSetup: positiveInteger_(
-                    potSetupByPlant.get(cleanText_(plantId)) || 1,
-                    "Pot setup"
-                ),
+                potSetup: weightRead.weightSeries.potSetup,
                 currentPotSize:
                     cleanText_(row[currentPotSizeColumn - 1]) ||
                     potSizeByPlant.get(cleanText_(plantId)) ||
@@ -765,19 +768,18 @@ function getWebAppBootstrap() {
                     daysSinceWater === "" || daysSinceWater === null
                         ? ""
                         : Number(daysSinceWater),
-                latestWeight:
-                    latestWeight === "" || latestWeight === null
-                        ? ""
-                        : Number(latestWeight),
+                latestWeight: weightRead.latestWeight,
+                latestWeightAt: weightRead.latestWeightAt,
+                weightSeries: weightRead.weightSeries,
                 dryOrLowestWeight: dryOrLowestWeight
                     ? dryOrLowestWeight.weight
                     : "",
                 dryOrLowestWeightBasis: dryOrLowestWeight
-                    ? dryOrLowestWeight.basis
+                    ? "Completed cycle"
                     : "",
                 dryOrLowestWeightDate: dryOrLowestWeight
                     ? formatClientDate_(
-                          dryOrLowestWeight.observedAt,
+                          new Date(dryOrLowestWeight.observedAt),
                           timeZone,
                           "MMM d, yyyy"
                       )
@@ -808,7 +810,11 @@ function getWebAppBootstrap() {
     return {
         version: GARDEN_LOGGER.version,
         timeZone,
-        serverTime: new Date().toISOString(),
+        serverTime: refreshedAt.toISOString(),
+        dayKey: weightReads.dayKey,
+        weighedTodayPlantIds: weightReads.weighedTodayPlantIds.filter((id) =>
+            plantNames.has(id)
+        ),
         events: [...WEB_EVENT_OPTIONS],
         links: {
             spreadsheet: GARDEN_LOGGER.spreadsheetUrl,
@@ -2516,12 +2522,16 @@ function saveBulkWaterObservation(payload) {
     });
 }
 
-function getRecentWebObservations(limit) {
+function getRecentWebObservations(limit, filters = {}) {
     const spreadsheet = getGardenSpreadsheet_();
-    return getRecentObservations_(
-        spreadsheet,
+    const plantNames = plantNamesById_(spreadsheet);
+    const normalizedFilters = normalizeWebHistoryFilters_(filters, plantNames);
+    return recentObservationsFromRows_(
+        readHistorySnapshot_(spreadsheet),
         spreadsheet.getSpreadsheetTimeZone(),
-        normalizeRecentLimit_(limit)
+        normalizeRecentLimit_(limit),
+        plantNames,
+        normalizedFilters
     );
 }
 
@@ -2866,6 +2876,7 @@ function refreshGardenWorkbook() {
         refreshPlantPage_(spreadsheet, plants, index, plant)
     );
     organizeWorkbookSheets_(spreadsheet);
+    installDailyCareDashboard();
     SpreadsheetApp.flush();
     spreadsheet.toast(
         `Dashboard, Baselines, and ${plants.length} plant pages were refreshed for logger ${GARDEN_LOGGER.version}.`,
@@ -2979,7 +2990,8 @@ const DRY_DOWN_MODEL_HEADERS = Object.freeze([
 /**
  * One range calculation for the entire collection, not one server call per cell.
  * Input columns: serial date, plant, event, recorded state, grams, setup,
- * request ID, batch ID, record status, watering application, quality, method.
+ * request ID, batch ID, record status, watering application, quality, method,
+ * observation ID, and corrected observation ID. Older 12-column calls remain valid.
  * Dates are numeric Sheets serials so the workbook timezone survives round trips.
  * No services, volatile inputs, stored state, or writes to History are involved.
  * @customfunction
@@ -2988,6 +3000,17 @@ function GARDEN_DRY_DOWN(history, plantIds) {
     // Sheets supplies a scalar for a one-cell range, even when written A1:A1.
     const ids = Array.isArray(plantIds) ? plantIds : [[plantIds]];
     const grouped = new Map();
+    const correctionOrder = correctionRecordContext_(
+        history.map((row, index) => ({
+            index,
+            id: cleanText_(row[12]),
+            corrects: cleanText_(row[13]),
+            plant: cleanText_(row[1]),
+            event: cleanText_(row[2]),
+            setup: positiveIntegerOrDefault_(row[5], 1),
+            active: row[8] !== "Removed",
+        }))
+    ).order;
     history.forEach((row, index) => {
         const id = cleanText_(row[1]);
         if (!id || row[8] === "Removed") return;
@@ -2996,7 +3019,7 @@ function GARDEN_DRY_DOWN(history, plantIds) {
         const setup = positiveIntegerOrDefault_(row[5], 1);
         // Retain setup markers even when the event has no usable weight/date.
         records.push({
-            index,
+            index: correctionOrder[index],
             date,
             setup,
             event: cleanText_(row[2]),
@@ -3497,6 +3520,8 @@ function dryDownModelsFromHistory_(historyRows, plantIds, timeZone) {
         row[40],
         row[28],
         row[34],
+        row[26],
+        row[30],
     ]);
     const today = dryDownSerialDate_(new Date(), timeZone);
     const day = (value) =>
@@ -3530,7 +3555,7 @@ function dryDownModelsFromHistory_(historyRows, plantIds, timeZone) {
 }
 
 function dryDownModelFormula_() {
-    return "=GARDEN_DRY_DOWN({ARRAYFORMULA(N(History!A2:A5000)),History!B2:E5000,History!K2:K5000,History!P2:P5000,History!AD2:AD5000,History!AJ2:AJ5000,History!AO2:AO5000,History!AC2:AC5000,History!AI2:AI5000},'Plant tracker'!A2:A31)";
+    return "=GARDEN_DRY_DOWN({ARRAYFORMULA(N(History!A2:A5000)),History!B2:E5000,History!K2:K5000,History!P2:P5000,History!AD2:AD5000,History!AJ2:AJ5000,History!AO2:AO5000,History!AC2:AC5000,History!AI2:AI5000,History!AA2:AA5000,History!AE2:AE5000},'Plant tracker'!A2:A31)";
 }
 
 function dryDownLookupFormula_(row, column) {
@@ -3742,14 +3767,24 @@ function predictedDryDateFormula_(row) {
     return "=" + dryDownLookupFormula_(row, "H");
 }
 
+/** Reuse the measured pair so legacy summaries respect correction ordering. */
+function latestMeasuredWeightFormula_(row, valueColumn) {
+    const pair = dailyCareWeightFormula_(
+        row,
+        { history: 5000, baseline: 1000 },
+        "A"
+    );
+    return `=INDEX(${pair.slice(1)},1,${valueColumn})`;
+}
+
 function baselineViewRow_(rowNumber, plant) {
     const row = rowNumber;
     return [
         plant.id,
         plant.name,
-        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$5000,History!$J$2:$J$5000,History!$E$2:$E$5000},History!$B$2:$B$5000=$A${row},History!$E$2:$E$5000<>"",History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE,2,FALSE),1,3),"")`,
+        latestMeasuredWeightFormula_(row, 1),
         `=IF(C${row}="","",C${row}/453.59237)`,
-        `=IFNA(INDEX(SORT(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$E$2:$E$5000<>"",History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),1),"")`,
+        latestMeasuredWeightFormula_(row, 2),
         `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AB:$AB,"Not recorded")`,
         `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$O:$O,"")`,
         `=IFS(V${row}<1,"Collecting weights",Y${row}="","Need a wet weight",W${row}="","Need a completed dry cycle",Z${row}="","Recheck weights",TRUE,"Calibrated")`,
@@ -3918,6 +3953,583 @@ function installDashboardWeightCounts() {
     };
 }
 
+/** Preflight every source before the scoped presentation installer writes. */
+function dailyCareSources_(spreadsheet) {
+    const dashboard = requireSheet_(spreadsheet, "Dashboard");
+    const tracker = requireSheet_(spreadsheet, "Plant tracker");
+    const baselines = requireSheet_(spreadsheet, "Baselines");
+    const integrity = requireSheet_(spreadsheet, "Integrity");
+    const history = requireSheet_(spreadsheet, "History");
+    assertHeaders_(dashboard, DASHBOARD_VIEW_HEADERS, 6);
+    assertHeaders_(baselines, BASELINE_VIEW_HEADERS, 1);
+    assertHeaders_(tracker, ["Plant ID", "Plant / planter"], 1);
+    if (tracker.getRange(1, 15).getDisplayValue() !== "Current pot label") {
+        throw new Error("Plant tracker O1 must be Current pot label.");
+    }
+    assertHeaders_(integrity, ["Check", "Count", "Status", "What it means"], 4);
+    assertHeaders_(
+        integrity,
+        [
+            "Plant ID",
+            "Plant",
+            "Quality summary",
+            "Priority",
+            "Evidence",
+            "Recommended action",
+        ],
+        23
+    );
+    if (history.getMaxColumns() < GARDEN_LOGGER.historyStoredColumns) {
+        throw new Error(
+            "Daily care requires the existing 42-column History schema."
+        );
+    }
+    const historyHeaders = history.getRange(1, 1, 1, 42).getDisplayValues()[0];
+    [
+        [0, "Date"],
+        [1, "Plant ID"],
+        [2, "Event"],
+        [4, "Weight (g)"],
+        [9, "Recorded"],
+        [10, "Pot setup"],
+        [28, "Observation quality"],
+        [34, "Measurement method"],
+        [35, "Record status"],
+        [41, "Water amount (mL)"],
+    ].forEach(([index, header]) => {
+        if (historyHeaders[index] !== header)
+            throw new Error(`Unexpected History header: ${header}.`);
+    });
+    const bounds = {
+        tracker: Math.max(2, tracker.getLastRow()),
+        baseline: Math.max(2, baselines.getLastRow()),
+        integrity: Math.max(24, integrity.getLastRow()),
+        history: Math.min(
+            history.getMaxRows(),
+            GARDEN_LOGGER.historyCapacityRows
+        ),
+    };
+    if (bounds.history < 2)
+        throw new Error(
+            "History needs room for the maintained observation range."
+        );
+    const plants = tracker
+        .getRange(2, 1, bounds.tracker - 1, 2)
+        .getDisplayValues()
+        .map(([id, name]) => ({ id, name }))
+        .filter((plant) => plant.id);
+    if (
+        !plants.length ||
+        plants.some(
+            (plant) => !/^P\d{2}$/u.test(plant.id) || !plant.name.trim()
+        )
+    ) {
+        throw new Error("Daily care needs a valid current plant inventory.");
+    }
+    assertUniquePlantIds_(plants);
+    const baselineIds = baselines
+        .getRange(2, 1, bounds.baseline - 1, 1)
+        .getDisplayValues()
+        .flat();
+    const integrityIds = integrity
+        .getRange(24, 1, bounds.integrity - 23, 1)
+        .getDisplayValues()
+        .flat();
+    plants.forEach((plant) => {
+        if (
+            baselineIds.filter((id) => id === plant.id).length !== 1 ||
+            integrityIds.filter((id) => id === plant.id).length !== 1
+        ) {
+            throw new Error(
+                `Daily care needs one maintained Baselines and Integrity row for ${plant.id}.`
+            );
+        }
+        plant.pageId = plantPageSheet_(spreadsheet, plant.id).getSheetId();
+    });
+    const checks = integrity.getRange(5, 1, 17, 4).getValues();
+    const checkFormulas = integrity.getRange(5, 2, 17, 2).getFormulas();
+    if (
+        checks.some(
+            ([name, count, status], index) =>
+                !name ||
+                typeof count !== "number" ||
+                !Number.isFinite(count) ||
+                count < 0 ||
+                !["Pass", "Fail", "Action", "Info"].includes(status) ||
+                checkFormulas[index].some((formula) => !formula)
+        )
+    ) {
+        throw new Error(
+            "Integrity needs its maintained numeric checks and Pass/Fail/Action/Info formulas in A5:D21."
+        );
+    }
+    const errorFormula = dailyCareErrorScanFormula_(
+        integrity.getRange(12, 2).getFormula()
+    );
+    return {
+        dashboard,
+        tracker,
+        baselines,
+        integrity,
+        plants,
+        bounds,
+        errorFormula,
+    };
+}
+
+/** Exclude only the new KPI cells from the existing scan to avoid a cycle. */
+function dailyCareErrorScanFormula_(formula) {
+    const scan =
+        /ARRAYFORMULA\(N\(ISERROR\((?:'Dashboard'|Dashboard)!\$?A\$?1:\$?(X|Z)\$?(\d+)\)\)\)/gu;
+    const matches = [...formula.matchAll(scan)];
+    const dashboardReferences = (formula.match(/Dashboard/gu) || []).length;
+    if (
+        matches.length === 1 &&
+        dashboardReferences === 1 &&
+        Number(matches[0][2]) >= 6
+    ) {
+        const end = matches[0][2];
+        // The installed audit also names Y:Z, outside the 24-column grid.
+        // A standalone out-of-grid range needs a zero fallback. ISERROR
+        // still counts actual cell errors if those columns are later added.
+        const tail =
+            matches[0][1] === "Z"
+                ? `,ARRAYFORMULA(IFERROR(N(ISERROR(Dashboard!Y1:Z${end})),0))`
+                : "";
+        return formula.replace(
+            scan,
+            `ARRAYFORMULA(N(ISERROR(Dashboard!A1:T${end}))),ARRAYFORMULA(N(ISERROR(Dashboard!U1:X1))),ARRAYFORMULA(N(ISERROR(Dashboard!U4:X${end})))${tail}`
+        );
+    }
+    const installed =
+        /ARRAYFORMULA\(N\(ISERROR\(Dashboard!A1:T(\d+)\)\)\),ARRAYFORMULA\(N\(ISERROR\(Dashboard!U1:X1\)\)\),ARRAYFORMULA\(N\(ISERROR\(Dashboard!U4:X\1\)\)\)(,ARRAYFORMULA\(IFERROR\(N\(ISERROR\(Dashboard!Y1:Z\1\)\),0\)\))?/u.exec(
+            formula
+        );
+    if (
+        installed &&
+        Number(installed[1]) >= 6 &&
+        matches.length === 0 &&
+        dashboardReferences === (installed[2] ? 4 : 3)
+    )
+        return formula;
+    throw new Error(
+        "Unexpected Integrity formula-error scan; review its Dashboard dependency before installing Daily care."
+    );
+}
+
+/**
+ * Pair the weight and time using the original observation's position for ties.
+ * Resolve only this plant/setup's Weigh correction chains. Unresolved, cyclic,
+ * duplicate, or active-parent references fall back to their physical row.
+ */
+function dailyCareWeightFormula_(row, bounds, plantColumn = "B") {
+    const h = (column) => `History!$${column}$2:$${column}$${bounds.history}`;
+    const plantId = `$${plantColumn}${row}`;
+    const records = `FILTER({${h("E")},${h("A")},ROW(${h("A")}),${h("AA")},${h("AE")},${h("AJ")},${h("AC")},${h("AI")}},EXACT(TRIM(${h("B")}),${plantId}),EXACT(TRIM(${h("C")}),"Weigh"),${h("K")}=setup,${h("K")}<>"")`;
+    return [
+        `=IFNA(LET(setup,XLOOKUP(${plantId},Baselines!$A$2:$A$${bounds.baseline},Baselines!$T$2:$T$${bounds.baseline},""),records,${records},`,
+        "physical,INDEX(records,0,3),identities,INDEX(records,0,4),parents,INDEX(records,0,5),states,INDEX(records,0,6),",
+        'validParents,ARRAYFORMULA((parents<>"")*(COUNTIF(identities,parents)=1)*(COUNTIF(identities,identities)=1)*(IFNA(XLOOKUP(parents,identities,states),"")="Removed")),',
+        'anchors,REDUCE(ARRAYFORMULA(IF(parents="",physical,0)),SEQUENCE(MAX(1,SUM(ARRAYFORMULA(N(parents<>""))))),LAMBDA(previous,step,ARRAYFORMULA(IF(parents="",physical,IF(validParents,IFNA(XLOOKUP(parents,identities,previous),0),0))))),',
+        'readings,SORT(FILTER({INDEX(records,0,1),INDEX(records,0,2),ARRAYFORMULA(IF(anchors=0,physical,anchors)),physical},EXACT(TRIM(states),"Removed")=FALSE,ISNUMBER(INDEX(records,0,1)),INDEX(records,0,1)>0,ISNUMBER(INDEX(records,0,2)),INDEX(records,0,2)>0,INDEX(records,0,2)<=NOW(),REGEXMATCH(INDEX(records,0,7)&" "&INDEX(records,0,8),"(?i)estimat")=FALSE),2,FALSE,3,FALSE,4,FALSE),',
+        'HSTACK(INDEX(readings,1,1),INDEX(readings,1,2))),{"",""})',
+    ].join("");
+}
+
+function dailyCareRow_(plant, row, bounds) {
+    const trackerIds = `'Plant tracker'!$A$2:$A$${bounds.tracker}`;
+    const labels = `'Plant tracker'!$O$2:$O$${bounds.tracker}`;
+    const lookup = (column) =>
+        `XLOOKUP($B${row},Baselines!$A$2:$A$${bounds.baseline},Baselines!$${column}$2:$${column}$${bounds.baseline},"")`;
+    const action = (column) =>
+        `XLOOKUP($B${row},Integrity!$A$24:$A$${bounds.integrity},Integrity!$${column}$24:$${column}$${bounds.integrity},"")`;
+    return [
+        `=IF($B${row}="","",HYPERLINK("#gid=${plant.pageId}","View"))`,
+        `=XLOOKUP("${formulaString_(plant.id)}",${trackerIds},${trackerIds},"")`,
+        `=IF($B${row}="","",LET(name,XLOOKUP($B${row},${trackerIds},'Plant tracker'!$B$2:$B$${bounds.tracker},""),label,XLOOKUP($B${row},${trackerIds},ARRAYFORMULA(IF(${labels}="","",${labels})),""),name&IF(label="",""," · label "&label)))`,
+        dailyCareWeightFormula_(row, bounds),
+        "",
+        `=LET(dry,${lookup("W")},IF(AND(ISNUMBER(D${row}),D${row}>0,ISNUMBER(dry),dry>0),D${row}-dry,""))`,
+        `=IF($B${row}="","",LET(window,${lookup("L")},IF(OR(window="",window=0),"No reweigh window yet",window)))`,
+        `=IF($B${row}="","",LET(priority,${action("D")},action,${action("F")},IF(OR(priority="OK",priority="Info",priority="No current flags"),"No follow-up recorded",IF(OR(action="",action=0),"Review plant checks",action))))`,
+    ];
+}
+
+/** Count failed/action CHECKS, not raw counts (some passing checks expect 1). */
+function dailyCareIndicatorFormula_(status, sheetId, range) {
+    const empty = status === "Fail" ? "0 · Healthy" : "0 · None outstanding";
+    const label = status === "Fail" ? " failed check" : " follow-up check";
+    const available = dailyCareChecksAvailableFormula_("Integrity!$C$5:$C$21");
+    return `=HYPERLINK("#gid=${sheetId}&range=${range}",IFERROR(IF(${available},IF(COUNTIF(Integrity!$C$5:$C$21,"${status}")=0,"${empty}",COUNTIF(Integrity!$C$5:$C$21,"${status}")&"${label}"&IF(COUNTIF(Integrity!$C$5:$C$21,"${status}")=1,"","s")),"Checks unavailable"),"Checks unavailable"))`;
+}
+
+function dailyCareChecksAvailableFormula_(range) {
+    return `SUM(${["Pass", "Fail", "Action", "Info"].map((status) => `COUNTIF(${range},"${status}")`).join(",")})=ROWS(${range})`;
+}
+
+function dailyCareDashboardMerges_(dashboard) {
+    return dashboard
+        .getRange(1, 1, dashboard.getMaxRows(), 24)
+        .getMergedRanges()
+        .filter((range) => {
+            if (range.getColumn() > 3 || range.getLastColumn() <= 3)
+                return false;
+            const title =
+                range.getRow() === 1 &&
+                range.getNumRows() === 1 &&
+                range.getColumn() === 1;
+            const kpi =
+                [2, 3].includes(range.getRow()) &&
+                range.getNumRows() === 1 &&
+                range.getColumn() === 3 &&
+                range.getLastColumn() === 4;
+            if (!title && !kpi)
+                throw new Error(
+                    "Unexpected Dashboard merge crosses column C; review before freezing."
+                );
+            return true;
+        });
+}
+
+function dailyCareDestination_(spreadsheet, dashboard) {
+    const marker = "Garden logger managed Daily care v1";
+    const daily = spreadsheet.getSheetByName("Daily care");
+    if (
+        daily &&
+        (daily.getRange(1, 1).getNote() !== marker ||
+            daily.getRange(1, 1).getDisplayValue() !==
+                "Daily care · read-only") &&
+        (daily.getLastRow() > 0 ||
+            daily.getRange(1, 1).getNote() ||
+            daily.getCharts().length)
+    ) {
+        throw new Error(
+            "Daily care is occupied by unrelated content; nothing was changed."
+        );
+    }
+    if (daily && daily.getLastColumn() > 8)
+        throw new Error("Daily care has content outside its managed A:H area.");
+    const protections = daily
+        ? daily.getProtections(SpreadsheetApp.ProtectionType.SHEET)
+        : [];
+    if (
+        protections.some(
+            (protection) =>
+                protection.getDescription() !== marker || !protection.canEdit()
+        )
+    )
+        throw new Error(
+            "Daily care has an unrelated or inaccessible sheet protection."
+        );
+    const slots = dashboard.getRange(2, 21, 2, 4);
+    const values = slots.getDisplayValues();
+    const formulas = slots.getFormulas();
+    const owned = daily && daily.getRange(1, 1).getNote() === marker;
+    const expected = [
+        ["Data issues", "", "Observations still needed", ""],
+        [
+            owned
+                ? dailyCareIndicatorFormula_(
+                      "Fail",
+                      daily.getSheetId(),
+                      `A${dailyCareChecksRow_(daily)}`
+                  )
+                : "",
+            "",
+            owned
+                ? dailyCareIndicatorFormula_(
+                      "Action",
+                      daily.getSheetId(),
+                      `A${dailyCareChecksRow_(daily)}`
+                  )
+                : "",
+            "",
+        ],
+    ];
+    values.forEach((cells, row) =>
+        cells.forEach((value, column) => {
+            const entered = formulas[row][column] || value;
+            if (entered && (!owned || entered !== expected[row][column]))
+                throw new Error(
+                    "Dashboard U2:X3 is occupied; nothing was changed."
+                );
+        })
+    );
+    const merges = slots.getMergedRanges();
+    if (
+        merges.some(
+            (range) =>
+                ![2, 3].includes(range.getRow()) ||
+                range.getNumRows() !== 1 ||
+                ![21, 23].includes(range.getColumn()) ||
+                range.getNumColumns() !== 2
+        )
+    )
+        throw new Error("Unexpected Dashboard KPI merge.");
+    return { daily, marker, protection: protections[0] };
+}
+
+/** The saved detail anchor keeps a rerun safe after inventory size changes. */
+function dailyCareChecksRow_(sheet) {
+    const row = Number(sheet.getRange(2, 1).getNote());
+    if (!Number.isInteger(row) || row < 9)
+        throw new Error("Daily care is missing its managed checks anchor.");
+    return row;
+}
+
+/** Install only presentation; never rebuild Dashboard or write observations. */
+function installDailyCareDashboard() {
+    const spreadsheet = getGardenSpreadsheet_();
+    const source = dailyCareSources_(spreadsheet);
+    const crossingMerges = dailyCareDashboardMerges_(source.dashboard);
+    const destination = dailyCareDestination_(spreadsheet, source.dashboard);
+    const sheet = destination.daily || spreadsheet.insertSheet("Daily care");
+    const checksRow = source.plants.length + 9;
+    const lastRow = checksRow + 17;
+    ensureSheetColumnCapacity_(sheet, 8);
+    ensureSheetRowCapacity_(sheet, lastRow);
+    const filter = sheet.getFilter();
+    const criteria = filter
+        ? Array.from({ length: 8 }, (_, index) =>
+              filter.getColumnFilterCriteria(index + 1)
+          )
+        : [];
+    if (filter) filter.remove();
+    sheet
+        .getRange(1, 1, Math.max(lastRow, sheet.getLastRow()), 8)
+        .breakApart()
+        .clearContent()
+        .clearFormat();
+    sheet
+        .getRange(1, 1)
+        .setValue("Daily care · read-only")
+        .setNote(destination.marker);
+    sheet.getRange(1, 1, 1, 3).merge();
+    sheet.getRange(2, 1).setValue("Data issues").setNote(String(checksRow));
+    sheet.getRange(2, 4).setValue("Observations still needed");
+    sheet
+        .getRange(3, 1)
+        .setFormula(
+            dailyCareIndicatorFormula_(
+                "Fail",
+                sheet.getSheetId(),
+                `A${checksRow}`
+            )
+        );
+    sheet
+        .getRange(3, 4)
+        .setFormula(
+            dailyCareIndicatorFormula_(
+                "Action",
+                sheet.getSheetId(),
+                `A${checksRow}`
+            )
+        );
+    sheet
+        .getRange(4, 1)
+        .setValue(
+            "Live projection · log observations in Quick log / logger. Counts are check categories, not unique plants."
+        );
+    sheet.getRange(4, 1, 1, 3).merge();
+    sheet
+        .getRange(4, 4)
+        .setValue(
+            "Reweigh windows and whole-pot mass differences are observation prompts, not watering deadlines."
+        );
+    sheet.getRange(4, 4, 1, 5).merge();
+    sheet
+        .getRange(5, 1)
+        .setFormula(
+            `=HYPERLINK("#gid=${source.dashboard.getSheetId()}&range=A6:X6","Dashboard · all statistics")`
+        );
+    sheet
+        .getRange(5, 4)
+        .setFormula(
+            `=HYPERLINK("#gid=${sheet.getSheetId()}&range=A6:H${source.plants.length + 6}","Filter daily plants ↓")`
+        );
+    [2, 3, 5].forEach((row) => {
+        sheet.getRange(row, 1, 1, 3).merge();
+        sheet.getRange(row, 4, 1, 5).merge();
+    });
+    const headers = [
+        "Page",
+        "Plant ID",
+        "Plant / current label",
+        "Latest measured weight (g)",
+        "Last weighed",
+        "Difference vs last completed dry (g)",
+        "Reweigh window",
+        "Follow-up",
+    ];
+    sheet.getRange(6, 1, 1, 8).setValues([headers]);
+    sheet
+        .getRange(7, 1, source.plants.length, 8)
+        .setValues(
+            source.plants.map((plant, index) =>
+                dailyCareRow_(plant, index + 7, source.bounds)
+            )
+        );
+    sheet
+        .getRange(checksRow, 1, 18, 8)
+        .setValues(
+            Array.from({ length: 18 }, (_, index) =>
+                ["A", "", "", "B", "C", "D", "", ""].map((column) =>
+                    column
+                        ? `=IF(Integrity!${column}${index + 4}="","",Integrity!${column}${index + 4})`
+                        : ""
+                )
+            )
+        );
+    for (let row = checksRow; row <= lastRow; row++) {
+        sheet.getRange(row, 1, 1, 3).merge();
+        sheet.getRange(row, 6, 1, 3).merge();
+    }
+    sheet
+        .getRange(checksRow - 1, 4)
+        .setValue(
+            "Existing Integrity results · Fail = data issue; Action = observations needed; Info is informational. Use each plant's View link and Follow-up above."
+        );
+    sheet.getRange(checksRow - 1, 4, 1, 5).merge();
+    sheet
+        .getRange(1, 1, lastRow, 8)
+        .setVerticalAlignment("middle")
+        .setWrap(true);
+    [1, 6, checksRow].forEach((row) =>
+        sheet
+            .getRange(row, 1, 1, 8)
+            .setBackground("#24533f")
+            .setFontColor("#ffffff")
+            .setFontWeight("bold")
+    );
+    sheet.getRange(7, 4, source.plants.length, 1).setNumberFormat("0.0");
+    sheet
+        .getRange(7, 5, source.plants.length, 1)
+        .setNumberFormat("mmm d, yyyy h:mm am/pm");
+    sheet
+        .getRange(7, 6, source.plants.length, 1)
+        .setNumberFormat("+0.0;-0.0;0.0");
+    sheet.getRange(checksRow + 1, 4, 17, 1).setNumberFormat("0");
+    [70, 80, 260, 160, 175, 170, 240, 340].forEach((width, index) =>
+        sheet.setColumnWidth(index + 1, width)
+    );
+    sheet.setFrozenRows(6);
+    sheet.setFrozenColumns(3);
+    sheet.setHiddenGridlines(true);
+    sheet.showSheet();
+    sheet.autoResizeRows(1, lastRow);
+    const newFilter = sheet
+        .getRange(6, 1, source.plants.length + 1, 8)
+        .createFilter();
+    criteria.forEach((criterion, index) => {
+        if (criterion) newFilter.setColumnFilterCriteria(index + 1, criterion);
+    });
+    const protection =
+        destination.protection ||
+        sheet.protect().setDescription(destination.marker);
+    protection.setWarningOnly(false).setUnprotectedRanges([]);
+    protection.addEditor(Session.getEffectiveUser());
+    protection.removeEditors(protection.getEditors());
+    if (protection.canDomainEdit()) protection.setDomainEdit(false);
+    // The error scan must stop depending on the KPI cells before they depend on it.
+    if (source.integrity.getRange(12, 2).getFormula() !== source.errorFormula)
+        source.integrity.getRange(12, 2).setFormula(source.errorFormula);
+    crossingMerges.forEach((range) => {
+        const title = range.getRow() === 1;
+        range.breakApart();
+        if (title) {
+            source.dashboard.getRange(1, 1, 1, 3).merge().setWrap(true);
+        }
+    });
+    source.dashboard.getRange(1, 1, 1, 3).setWrap(true);
+    source.dashboard.autoResizeRows(1, 1);
+    source.dashboard.setFrozenColumns(3);
+    source.dashboard
+        .getRange(2, 21, 2, 4)
+        .breakApart()
+        .setBackground("#edf4ee")
+        .setFontColor("#173c2b")
+        .setFontWeight("bold");
+    [
+        [21, "Data issues", "Fail"],
+        [23, "Observations still needed", "Action"],
+    ].forEach(([column, label, status]) => {
+        source.dashboard
+            .getRange(2, column, 1, 2)
+            .merge()
+            .setValue(label)
+            .setWrap(true);
+        source.dashboard
+            .getRange(3, column, 1, 2)
+            .merge()
+            .setFormula(
+                dailyCareIndicatorFormula_(
+                    status,
+                    sheet.getSheetId(),
+                    `A${checksRow}`
+                )
+            );
+    });
+    dailyCareIndicatorStyles_(source.dashboard, [
+        ["U3:V3", "Fail"],
+        ["W3:X3", "Action"],
+    ]);
+    dailyCareIndicatorStyles_(sheet, [
+        ["A3", "Fail"],
+        ["D3", "Action"],
+    ]);
+    SpreadsheetApp.flush();
+    return {
+        sheet: "Daily care",
+        sheetId: sheet.getSheetId(),
+        plants: source.plants.length,
+        mainRange: `Daily care!A6:H${source.plants.length + 6}`,
+        checksRange: `Daily care!A${checksRow}:H${lastRow}`,
+        dashboardRange: "Dashboard!U2:X3",
+        dashboardFrozenColumns: 3,
+        integrityRange: "Integrity!B12",
+        historyChanged: false,
+    };
+}
+
+/** Preserve unrelated Dashboard rules; replace only rules on our own KPI cells. */
+function dailyCareIndicatorStyles_(sheet, indicators) {
+    const owned = indicators.map(([range]) => range);
+    const rules = sheet
+        .getConditionalFormatRules()
+        .filter(
+            (rule) =>
+                !rule
+                    .getRanges()
+                    .every((range) => owned.includes(range.getA1Notation()))
+        );
+    indicators.forEach(([range, status]) => {
+        [true, false].forEach((healthy) =>
+            rules.push(
+                SpreadsheetApp.newConditionalFormatRule()
+                    .whenFormulaSatisfied(
+                        `=AND(${dailyCareChecksAvailableFormula_('INDIRECT("Integrity!C5:C21")')},COUNTIF(INDIRECT("Integrity!C5:C21"),"${status}")${healthy ? "=0" : ">0"})`
+                    )
+                    .setBackground(
+                        healthy
+                            ? "#edf4ee"
+                            : status === "Fail"
+                              ? "#f8d4d4"
+                              : "#fff0c7"
+                    )
+                    .setFontColor(
+                        healthy
+                            ? "#173c2b"
+                            : status === "Fail"
+                              ? "#7a1d1d"
+                              : "#684b00"
+                    )
+                    .setRanges([sheet.getRange(range)])
+                    .build()
+            )
+        );
+    });
+    sheet.setConditionalFormatRules(rules);
+}
 function dashboardViewRow_(spreadsheet, plant, index) {
     const dashboardRow = index + 7;
     const trackerRow = plant.trackerRow;
@@ -3966,7 +4578,7 @@ function refreshDashboardView_(spreadsheet, plants) {
     // merge causes Sheets to retain only the row's top-left cell. Make the
     // rebuild independent of whichever historical layout preceded it.
     rebuildRange.breakApart().clearContent();
-    sheet.getRange(1, 1, 1, DASHBOARD_VIEW_HEADERS.length).merge();
+    sheet.getRange(1, 1, 1, 3).merge();
     sheet
         .getRange(1, 1)
         .setValue(
@@ -4015,8 +4627,15 @@ function refreshDashboardView_(spreadsheet, plants) {
     ];
     summary.forEach(([label, formula], index) => {
         const column = index * 2 + 1;
-        sheet.getRange(2, column, 1, 2).merge().setValue(label);
-        sheet.getRange(3, column, 1, 2).merge().setFormula(formula);
+        const width = column === 3 ? 1 : 2;
+        const labelRange = sheet.getRange(2, column, 1, width);
+        const valueRange = sheet.getRange(3, column, 1, width);
+        if (width > 1) {
+            labelRange.merge();
+            valueRange.merge();
+        }
+        labelRange.setValue(label);
+        valueRange.setFormula(formula);
     });
     sheet
         .getRange(2, 1, 2, 20)
@@ -4049,9 +4668,7 @@ function refreshDashboardView_(spreadsheet, plants) {
     sheet.getRange(7, 24, plants.length, 1).setNumberFormat("0");
     sheet.getRange(7, 15, plants.length, 1).setNumberFormat('0.0 "days"');
     sheet.setFrozenRows(6);
-    // The full-width title in row 1 spans every Dashboard column, so freezing
-    // any proper subset of columns would bisect that merged range in Sheets.
-    sheet.setFrozenColumns(0);
+    sheet.setFrozenColumns(3);
     sheet.setHiddenGridlines(true);
     sheet.setColumnWidths(1, DASHBOARD_VIEW_HEADERS.length, 115);
     sheet.setColumnWidth(3, 260);
@@ -4341,6 +4958,1100 @@ function openHistory() {
 }
 
 /**
+ * Read a saved observation for an individual correction. RPC DTOs contain ISO
+ * strings and exact canonical cm, never Date objects or client row addresses.
+ * See README.md, Saved-entry corrections, for the operator and retry contract.
+ */
+function getWebCorrectionEntry(request) {
+    correctionObject_(request, ["observationId"]);
+    const observationId = correctionIdentity_(request.observationId);
+    return withCorrectionLock_(() => {
+        const snapshot = correctionSnapshot_(getGardenSpreadsheet_());
+        const original = correctionOriginal_(snapshot, observationId);
+        return correctionEntryContext_(snapshot, original, false);
+    });
+}
+
+/** Preview a sparse patch without writing or reserving any History rows. */
+function previewWebObservationCorrection(request) {
+    const payload = correctionPayload_(request, false);
+    return withCorrectionLock_(() => {
+        const snapshot = correctionSnapshot_(getGardenSpreadsheet_());
+        return correctionPreview_(snapshot, payload);
+    });
+}
+
+/**
+ * Commit one atomic replacement/retirement. Persist this entire immutable RPC
+ * payload on the phone before calling; an exception may be a lost success reply.
+ */
+function saveWebObservationCorrection(request) {
+    const payload = correctionPayload_(request, true);
+    return withCorrectionLock_(() => {
+        const snapshot = correctionSnapshot_(getGardenSpreadsheet_());
+        const receipt = correctionReceipt_(snapshot, payload);
+        if (receipt.status === "saved") return receipt;
+        const operation = correctionStoredOperation_(payload);
+        if (operation?.status === "rejected")
+            throw new Error(`${operation.code}: ${operation.message}`);
+        const { original, targetRow } = correctionCommitValidation_(
+            snapshot,
+            payload,
+            operation
+        );
+        const replacement = correctionPatchedRow_(
+            original.values,
+            payload.changes
+        );
+        replacement[9] = new Date();
+        replacement[15] = payload.requestId;
+        replacement[26] = correctionReplacementId_(payload);
+        replacement[27] = "Mobile correction";
+        replacement[29] = original.values[29] || original.values[15];
+        replacement[30] = payload.observationId;
+        replacement[31] = payload.reason;
+        replacement[35] = "Active";
+        const requests = [];
+        if (targetRow > snapshot.history.getMaxRows()) {
+            requests.push({
+                appendDimension: {
+                    sheetId: snapshot.history.getSheetId(),
+                    dimension: "ROWS",
+                    length: targetRow - snapshot.history.getMaxRows(),
+                },
+            });
+        }
+        const cells = replacement.map((value) =>
+            correctionCell_(value, snapshot.timeZone)
+        );
+        historyHelperFormulas_(targetRow).forEach((formula, index) => {
+            cells[index + 12] = { userEnteredValue: { formulaValue: formula } };
+        });
+        cells[37] = {
+            userEnteredValue: {
+                formulaValue: `=IF(F${targetRow}="","",F${targetRow}/2.54)`,
+            },
+        };
+        cells[38] = {
+            userEnteredValue: {
+                formulaValue: `=IF(G${targetRow}="","",G${targetRow}/2.54)`,
+            },
+        };
+        requests.push(
+            correctionCellsRequest_(snapshot.history, targetRow, 1, cells)
+        );
+        // Formats/obsolete inch validations are changed only on the new row.
+        for (const column of [1, 10]) {
+            requests.push(
+                correctionCellsRequest_(
+                    snapshot.history,
+                    targetRow,
+                    column,
+                    [
+                        {
+                            userEnteredFormat: {
+                                numberFormat: {
+                                    type: "DATE_TIME",
+                                    pattern: "M/d/yyyy h:mm:ss am/pm",
+                                },
+                            },
+                        },
+                    ],
+                    "userEnteredFormat.numberFormat"
+                )
+            );
+        }
+        requests.push(
+            correctionCellsRequest_(
+                snapshot.history,
+                targetRow,
+                38,
+                [{}, {}],
+                "dataValidation"
+            )
+        );
+        requests.push(
+            correctionCellsRequest_(snapshot.history, original.rowNumber, 36, [
+                { userEnteredValue: { stringValue: "Removed" } },
+            ])
+        );
+        // Persist before entering the batch: even a thrown batch error can be
+        // a lost success reply. Such a request must never become rejected later.
+        if (!operation)
+            correctionStoreOperation_({ ...receipt, status: "attempted" });
+        correctionBatchUpdate_(snapshot.spreadsheet, requests);
+        // The digest-bearing row is the receipt. Do not add fallible derived
+        // writes here: formulas already consume the new active History pair.
+        return correctionSavedReceipt_(payload);
+    });
+}
+
+/**
+ * A locked receipt lookup, including after later corrections or exclusion.
+ * Missing means retry the SAME immutable payload; it never means mint a key.
+ */
+function getWebCorrectionStatus(request) {
+    const payload = correctionPayload_(request, true);
+    return withCorrectionLock_(() => {
+        const receipt = correctionReceipt_(
+            correctionSnapshot_(getGardenSpreadsheet_()),
+            payload
+        );
+        if (receipt.status === "saved") return receipt;
+        const operation = correctionStoredOperation_(payload);
+        return operation?.status === "rejected" ? operation : receipt;
+    });
+}
+
+function correctionValidationError_(message) {
+    const error = new Error(message);
+    error.correctionValidationCode = message.split(":", 1)[0];
+    return error;
+}
+
+function correctionCommitValidation_(snapshot, payload, operation) {
+    try {
+        const preview = correctionPreview_(snapshot, payload);
+        if (preview.previewToken !== payload.previewToken)
+            throw correctionValidationError_(
+                "STALE_PREVIEW: Related History changed. Reload the entry and review again."
+            );
+        const original = correctionOriginal_(snapshot, payload.observationId);
+        const targetRow = snapshot.lastReservedRow + 1;
+        if (targetRow > GARDEN_LOGGER.historyCapacityRows)
+            throw correctionValidationError_(
+                "HISTORY_CAPACITY: History is full. Extend the supported capacity before correcting."
+            );
+        return { original, targetRow };
+    } catch (error) {
+        // Only our deterministic validation errors, before any possible batch
+        // attempt for this request, can release a phone's immutable retry.
+        if (!operation && error.correctionValidationCode)
+            correctionStoreOperation_({
+                status: "rejected",
+                requestId: payload.requestId,
+                observationId: payload.observationId,
+                payloadDigest: payload.payloadDigest,
+                operationDigest: payload.operationDigest,
+                code: error.correctionValidationCode,
+                message: error.message.slice(
+                    error.correctionValidationCode.length + 2
+                ),
+            });
+        throw error;
+    }
+}
+
+function correctionOperationKey_(requestId) {
+    return `gardenLoggerCorrectionOperationV1:${requestId}`;
+}
+
+function correctionStoredOperation_(payload) {
+    const stored = PropertiesService.getScriptProperties().getProperty(
+        correctionOperationKey_(payload.requestId)
+    );
+    if (stored === null) return null;
+    const operation = JSON.parse(stored);
+    if (
+        !operation ||
+        !["attempted", "rejected"].includes(operation.status) ||
+        ["requestId", "observationId", "payloadDigest", "operationDigest"].some(
+            (key) => operation[key] !== payload[key]
+        ) ||
+        (operation.status === "rejected" &&
+            (!correctionTerminalCodes_().includes(operation.code) ||
+                typeof operation.message !== "string" ||
+                !operation.message))
+    )
+        throw new Error(
+            "REQUEST_CONFLICT: This retry ID belongs to a different or damaged correction operation. Retain the pending payload."
+        );
+    return operation;
+}
+
+function correctionTerminalCodes_() {
+    return [
+        "STALE_PREVIEW",
+        "NOT_FOUND",
+        "REMOVED_ORIGINAL",
+        "HISTORY_SCHEMA",
+        "INVALID_CORRECTION",
+        "SETUP_BOUNDARY",
+        "HISTORY_CAPACITY",
+    ];
+}
+
+function correctionStoreOperation_(operation) {
+    const properties = PropertiesService.getScriptProperties();
+    const key = correctionOperationKey_(operation.requestId);
+    const serialized = JSON.stringify(operation);
+    properties.setProperty(key, serialized);
+    if (properties.getProperty(key) !== serialized)
+        throw new Error(
+            "CORRECTION_STORAGE: Could not verify the durable correction operation. Retain this exact request and check status."
+        );
+    // Never expire, prune, or replace this binding, even if History is restored.
+}
+
+function withCorrectionLock_(operation) {
+    const lock = LockService.getScriptLock();
+    if (!lock.tryLock(GARDEN_LOGGER.lockTimeoutMs)) {
+        throw new Error(
+            "CORRECTION_BUSY: Another save is running. Retain this request and try again."
+        );
+    }
+    try {
+        return operation();
+    } finally {
+        lock.releaseLock();
+    }
+}
+
+function correctionObject_(value, keys) {
+    if (
+        !value ||
+        typeof value !== "object" ||
+        Array.isArray(value) ||
+        ![Object.prototype, null].includes(Object.getPrototypeOf(value)) ||
+        Object.keys(value).some((key) => !keys.includes(key))
+    ) {
+        throw new Error("INVALID_CORRECTION: Unsupported payload or field.");
+    }
+}
+
+function correctionIdentity_(value) {
+    if (
+        typeof value !== "string" ||
+        !value ||
+        value.length > 300 ||
+        !/^[A-Za-z0-9_:-]+$/.test(value)
+    ) {
+        throw new Error(
+            "INVALID_CORRECTION: A saved Observation ID is required."
+        );
+    }
+    return value;
+}
+
+function correctionDigest_(value) {
+    const canonical = (item) => {
+        if (Array.isArray(item)) return item.map(canonical);
+        if (item && typeof item === "object") {
+            return Object.fromEntries(
+                Object.keys(item)
+                    .sort()
+                    .map((key) => [key, canonical(item[key])])
+            );
+        }
+        return item;
+    };
+    return Utilities.computeDigest(
+        Utilities.DigestAlgorithm.SHA_256,
+        JSON.stringify(canonical(value)),
+        Utilities.Charset.UTF_8
+    )
+        .map((byte) => (byte & 255).toString(16).padStart(2, "0"))
+        .join("");
+}
+
+function correctionPayload_(request, saving) {
+    correctionObject_(request, [
+        "observationId",
+        "baseRevision",
+        "changes",
+        "reason",
+        ...(saving ? ["requestId", "previewToken"] : []),
+    ]);
+    correctionObject_(
+        request.changes,
+        correctionFieldDefinitions_().map((field) => field.key)
+    );
+    if (
+        typeof request.baseRevision !== "string" ||
+        !/^[a-f0-9]{64}$/.test(request.baseRevision) ||
+        typeof request.reason !== "string" ||
+        !request.reason.trim() ||
+        request.reason.length > 2000 ||
+        Object.keys(request.changes).length === 0 ||
+        Object.values(request.changes).some(
+            (value) =>
+                !(typeof value === "string" && value.length <= 10000) &&
+                !(typeof value === "number" && Number.isFinite(value))
+        )
+    ) {
+        throw new Error(
+            "INVALID_CORRECTION: Supply a revision, a nonempty patch, and a reason (up to 2000 characters)."
+        );
+    }
+    const payload = {
+        observationId: correctionIdentity_(request.observationId),
+        baseRevision: request.baseRevision,
+        changes: { ...request.changes },
+        reason: request.reason,
+    };
+    const payloadDigest = correctionDigest_(payload);
+    if (!saving) return { ...payload, payloadDigest };
+    if (
+        typeof request.requestId !== "string" ||
+        !/^[A-Za-z0-9_-]{12,100}$/.test(request.requestId) ||
+        typeof request.previewToken !== "string" ||
+        !/^[a-f0-9]{64}$/.test(request.previewToken)
+    ) {
+        throw new Error(
+            "INVALID_CORRECTION: Supply the saved retry ID and preview token."
+        );
+    }
+    const operationDigest = correctionDigest_({
+        requestId: request.requestId,
+        payloadDigest,
+        previewToken: request.previewToken,
+    });
+    return {
+        ...payload,
+        payloadDigest,
+        requestId: request.requestId,
+        previewToken: request.previewToken,
+        operationDigest,
+    };
+}
+
+function correctionSnapshot_(spreadsheet) {
+    const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
+    if (
+        GARDEN_LOGGER.historyStoredColumns !== 42 ||
+        history.getMaxColumns() < 42
+    ) {
+        throw new Error(
+            "HISTORY_SCHEMA: Expected the installed 42-column History schema."
+        );
+    }
+    const expected = [
+        ...HISTORY_HEADERS,
+        "Plant / planter",
+        "Trend anchor",
+        "Days after anchor",
+        GARDEN_LOGGER.requestIdHeader,
+        ...HISTORY_DETAIL_HEADERS,
+        ...HISTORY_PROVENANCE_HEADERS,
+        ...HISTORY_MEASUREMENT_HEADERS,
+        ...HISTORY_ROTATION_HEADERS,
+        ...HISTORY_WATER_HEADERS,
+    ];
+    const headers = history.getRange(1, 1, 1, 42).getValues()[0];
+    const headerFormulas = history.getRange(1, 1, 1, 42).getFormulas()[0];
+    if (
+        expected.some(
+            (header, index) =>
+                headers[index] !== header || headerFormulas[index]
+        )
+    ) {
+        throw new Error(
+            "HISTORY_SCHEMA: History headers changed. Verify the installed schema before correcting."
+        );
+    }
+    const rowCount = Math.max(0, history.getLastRow() - 1);
+    const range = rowCount ? history.getRange(2, 1, rowCount, 42) : null;
+    const values = range ? range.getValues() : [];
+    const formulas = range ? range.getFormulas() : [];
+    const rows = values
+        .map((row, index) => ({
+            values: row,
+            formulas: formulas[index],
+            rowNumber: index + 2,
+        }))
+        .filter(
+            (row) =>
+                row.values.some(
+                    (value, index) =>
+                        !correctionFormulaColumn_(index) && value !== ""
+                ) ||
+                row.formulas.some(
+                    (formula, index) =>
+                        !correctionFormulaColumn_(index) && formula
+                )
+        );
+    const ids = new Set();
+    rows.forEach(({ values: row }) => {
+        if (!row[26]) return;
+        if (ids.has(row[26]))
+            throw new Error(
+                "DUPLICATE_IDENTITY: Duplicate History Observation ID. Repair the duplicate first."
+            );
+        ids.add(row[26]);
+    });
+    return {
+        spreadsheet,
+        history,
+        rows,
+        timeZone: spreadsheet.getSpreadsheetTimeZone(),
+        lastReservedRow: rows.length ? rows[rows.length - 1].rowNumber : 1,
+    };
+}
+
+function correctionFormulaColumn_(index) {
+    return [12, 13, 14, 37, 38].includes(index);
+}
+
+function correctionRevision_(row, timeZone) {
+    const canonical = row.values.map((value, index) => {
+        if (correctionFormulaColumn_(index)) return null;
+        if (row.formulas[index])
+            throw correctionValidationError_(
+                "HISTORY_SCHEMA: Canonical observation cells must contain values, not formulas."
+            );
+        if (value instanceof Date) {
+            if (!Number.isFinite(value.getTime()))
+                throw correctionValidationError_(
+                    "HISTORY_SCHEMA: Invalid saved date."
+                );
+            return ["date", value.toISOString()];
+        }
+        if (
+            typeof value !== "string" &&
+            !(typeof value === "number" && Number.isFinite(value))
+        ) {
+            throw correctionValidationError_(
+                "HISTORY_SCHEMA: Unsupported canonical cell type."
+            );
+        }
+        return [typeof value, value];
+    });
+    return correctionDigest_({ canonical, timeZone });
+}
+
+function correctionOriginal_(snapshot, observationId) {
+    const original = snapshot.rows.find(
+        (row) => row.values[26] === observationId
+    );
+    if (!original)
+        throw correctionValidationError_(
+            "NOT_FOUND: This saved observation no longer exists."
+        );
+    correctionRevision_(original, snapshot.timeZone);
+    const row = original.values;
+    if (row[35] === "Removed")
+        throw correctionValidationError_(
+            "REMOVED_ORIGINAL: This observation was already corrected or excluded. Open its active replacement."
+        );
+    if (
+        !(row[0] instanceof Date) ||
+        !row[1] ||
+        !correctionEvents_().includes(row[2]) ||
+        (row[9] !== "" && !(row[9] instanceof Date)) ||
+        !["", "Active"].includes(row[35]) ||
+        [4, 5, 6, 10, 21, 39, 41].some(
+            (index) => row[index] !== "" && typeof row[index] !== "number"
+        ) ||
+        (row[10] !== "" && (!Number.isInteger(row[10]) || row[10] < 1)) ||
+        row.some(
+            (value, index) =>
+                !correctionFormulaColumn_(index) &&
+                ![0, 4, 5, 6, 9, 10, 21, 39, 41].includes(index) &&
+                typeof value !== "string"
+        )
+    ) {
+        throw correctionValidationError_(
+            "HISTORY_SCHEMA: The saved observation has invalid canonical types, event, setup or status."
+        );
+    }
+    return original;
+}
+
+function correctionEvents_() {
+    return [
+        "Weigh",
+        "Measure",
+        "Check",
+        "Water",
+        "Repot",
+        "Flower",
+        "Photo",
+        "Pest",
+        "Rotation",
+        "Note",
+        "Other",
+        "Prune",
+        "Clean",
+    ];
+}
+
+function correctionFieldDefinitions_(event) {
+    const field = (
+        key,
+        column,
+        label,
+        type = "text",
+        options = [],
+        required = false,
+        unit = "",
+        events = []
+    ) => ({
+        key,
+        column,
+        label,
+        type,
+        options: [...options],
+        required,
+        unit,
+        events,
+    });
+    return [
+        field("observationDate", 0, "Saved date", "datetime", [], true),
+        field("notes", 8, "Notes"),
+        field("weight", 4, "Weight", "number", [], true, "g", ["Weigh"]),
+        field("heightCm", 5, "Height", "number", [], false, "cm", ["Measure"]),
+        field("widthCm", 6, "Width", "number", [], false, "cm", ["Measure"]),
+        field(
+            "measurementUnit",
+            36,
+            "Original measurement unit",
+            "select",
+            MEASUREMENT_UNIT_OPTIONS,
+            true,
+            "",
+            ["Measure"]
+        ),
+        field(
+            "measurementQuality",
+            28,
+            "Measurement quality",
+            "select",
+            MEASUREMENT_QUALITY_OPTIONS,
+            true,
+            "",
+            ["Weigh", "Measure"]
+        ),
+        field(
+            "measurementMethod",
+            34,
+            "Measurement method",
+            "select",
+            event === "Weigh"
+                ? [
+                      "Scale",
+                      "Estimated visually",
+                      "Estimated from photo",
+                      "Other",
+                      "Unspecified",
+                  ]
+                : MEASUREMENT_METHOD_OPTIONS,
+            true,
+            "",
+            ["Weigh", "Measure"]
+        ),
+        field("condition", 7, "Plant condition", "text", [], false, "", [
+            "Check",
+        ]),
+        field(
+            "soilMoisture",
+            32,
+            "Soil moisture",
+            "select",
+            SOIL_MOISTURE_OPTIONS,
+            false,
+            "",
+            ["Check"]
+        ),
+        field(
+            "nutrientsUsed",
+            16,
+            "Nutrients used",
+            "select",
+            NUTRIENT_OPTIONS,
+            true,
+            "",
+            ["Water"]
+        ),
+        field(
+            "nutrientProduct",
+            17,
+            "Nutrient product",
+            "text",
+            NUTRIENT_PRODUCT_OPTIONS,
+            false,
+            "",
+            ["Water"]
+        ),
+        field("nutrientAmount", 18, "Nutrient amount", "text", [], false, "", [
+            "Water",
+        ]),
+        field(
+            "wateringApplication",
+            40,
+            "Watering application",
+            "select",
+            WATERING_APPLICATION_OPTIONS,
+            true,
+            "",
+            ["Water"]
+        ),
+        field("waterAmount", 41, "Water amount", "number", [], false, "mL", [
+            "Water",
+        ]),
+        field(
+            "previousPotSize",
+            19,
+            "Previous pot size",
+            "text",
+            [],
+            false,
+            "",
+            ["Repot"]
+        ),
+        field("potSize", 20, "Pot size", "text", [], true, "", ["Repot"]),
+        field("medium", 33, "Medium / substrate", "text", [], false, "", [
+            "Repot",
+        ]),
+        field("flowerCount", 21, "Flower count", "number", [], false, "", [
+            "Flower",
+        ]),
+        field("flowerDetails", 22, "Flower details", "text", [], false, "", [
+            "Flower",
+        ]),
+        field("photoUrl", 23, "Google Photos share URL", "url", [], true, "", [
+            "Photo",
+        ]),
+        field("pestIssue", 24, "Pest / issue", "text", [], true, "", ["Pest"]),
+        field("pestTreatment", 25, "Treatment / action", "text", [], true, "", [
+            "Pest",
+        ]),
+        field("rotationDegrees", 39, "Rotation", "number", [], true, "°", [
+            "Rotation",
+        ]),
+    ].filter(
+        (definition) =>
+            !event ||
+            !definition.events.length ||
+            definition.events.includes(event)
+    );
+}
+
+function correctionDto_(row) {
+    const values = Object.fromEntries(
+        correctionFieldDefinitions_(row[2]).map(({ key, column }) => [
+            key,
+            row[column] instanceof Date
+                ? row[column].toISOString()
+                : row[column],
+        ])
+    );
+    return {
+        observationId: row[26],
+        plantId: row[1],
+        event: row[2],
+        potSetup: row[10],
+        label: row[11],
+        observationDate: row[0] instanceof Date ? row[0].toISOString() : "",
+        recordedAt: row[9] instanceof Date ? row[9].toISOString() : "",
+        requestId: row[15],
+        saveGroupId: row[29] || row[15],
+        correctsObservationId: row[30],
+        correctionReason: row[31],
+        recordStatus: row[35],
+        values,
+    };
+}
+
+function correctionEntryContext_(snapshot, original, dateChanged) {
+    const row = original.values;
+    const group = row[29] || row[15];
+    const siblings = snapshot.rows.filter(
+        (candidate) =>
+            candidate !== original &&
+            candidate.values[1] === row[1] &&
+            group &&
+            (candidate.values[29] || candidate.values[15]) === group
+    );
+    const related = snapshot.rows.filter(
+        (candidate) =>
+            candidate !== original &&
+            candidate.values[1] === row[1] &&
+            candidate.values[35] !== "Removed" &&
+            (dateChanged || candidate.values[2] === "Repot")
+    );
+    const context = [...new Set([...siblings, ...related])]
+        .map((candidate) => [
+            candidate.values[26],
+            correctionRevision_(candidate, snapshot.timeZone),
+        ])
+        .sort((left, right) =>
+            JSON.stringify(left).localeCompare(JSON.stringify(right))
+        );
+    const notices = [
+        "This corrects one saved event. Plant, event, setup and historical label stay fixed.",
+    ];
+    if (siblings.length)
+        notices.push(
+            "Same-save siblings keep their own values and dates. The replacement retains the original save group; review Water/Weigh timing together."
+        );
+    if (dateChanged && siblings.length)
+        notices.push(
+            "Changing this date does not change sibling dates. Grouped events with different times can affect watering-cycle interpretation."
+        );
+    if (row[2] === "Repot")
+        notices.push(
+            "This is a correction to an existing Repot, not a new setup. Baselines will not be reset to this historical setup."
+        );
+    return {
+        original: correctionDto_(row),
+        baseRevision: correctionRevision_(original, snapshot.timeZone),
+        contextDigest: correctionDigest_({
+            context,
+            timeZone: snapshot.timeZone,
+        }),
+        timeZone: snapshot.timeZone,
+        siblings: siblings
+            .map((candidate) => correctionDto_(candidate.values))
+            .sort((left, right) =>
+                left.observationId.localeCompare(right.observationId)
+            ),
+        fields: correctionFieldDefinitions_(row[2]).map(
+            ({ column, events, ...definition }) => definition
+        ),
+        notices,
+    };
+}
+
+function correctionPreview_(snapshot, payload) {
+    const original = correctionOriginal_(snapshot, payload.observationId);
+    const context = correctionEntryContext_(
+        snapshot,
+        original,
+        Object.hasOwn(payload.changes, "observationDate")
+    );
+    if (context.baseRevision !== payload.baseRevision) {
+        throw correctionValidationError_(
+            "STALE_PREVIEW: The original changed. Reload the entry and review again."
+        );
+    }
+    const row = correctionPatchedRow_(original.values, payload.changes);
+    correctionDateBoundary_(snapshot, original, row);
+    const replacement = correctionDto_(row);
+    replacement.correctsObservationId = payload.observationId;
+    replacement.correctionReason = payload.reason;
+    const differences = context.fields
+        .filter(
+            ({ key }) =>
+                context.original.values[key] !== replacement.values[key]
+        )
+        .map(({ key, label }) => ({
+            key,
+            label,
+            before: context.original.values[key],
+            after: replacement.values[key],
+        }));
+    if (!differences.length)
+        throw correctionValidationError_(
+            "INVALID_CORRECTION: Change at least one saved value before reviewing."
+        );
+    return {
+        ...context,
+        replacement,
+        differences,
+        payloadDigest: payload.payloadDigest,
+        previewToken: correctionDigest_({
+            payloadDigest: payload.payloadDigest,
+            contextDigest: context.contextDigest,
+        }),
+    };
+}
+
+function correctionPatchedRow_(original, changes) {
+    const row = [...original];
+    const definitions = correctionFieldDefinitions_(row[2]);
+    for (const [key, input] of Object.entries(changes)) {
+        const definition = definitions.find((field) => field.key === key);
+        if (!definition)
+            throw correctionValidationError_(
+                `INVALID_CORRECTION: ${key} cannot be changed for ${row[2]}.`
+            );
+        let value = input;
+        if (definition.type === "number") {
+            if (
+                typeof value === "string" &&
+                value !== "" &&
+                !/^\d+(?:\.\d+)?$/.test(value)
+            ) {
+                throw correctionValidationError_(
+                    `INVALID_CORRECTION: ${definition.label} must be a positive number or blank.`
+                );
+            }
+            if (value !== "") value = Number(value);
+            if (
+                (value !== "" && (!Number.isFinite(value) || value <= 0)) ||
+                (key === "flowerCount" &&
+                    value !== "" &&
+                    !Number.isInteger(value)) ||
+                (key === "rotationDegrees" && value > 360)
+            ) {
+                throw correctionValidationError_(
+                    `INVALID_CORRECTION: ${definition.label} is outside its supported range.`
+                );
+            }
+        } else {
+            if (typeof value !== "string")
+                throw correctionValidationError_(
+                    `INVALID_CORRECTION: ${definition.label} must be text.`
+                );
+            if (
+                definition.type === "select" &&
+                value !== "" &&
+                !definition.options.includes(value)
+            ) {
+                throw correctionValidationError_(
+                    `INVALID_CORRECTION: Choose a listed ${definition.label.toLowerCase()}.`
+                );
+            }
+            if (definition.type === "datetime") value = correctionDate_(value);
+            if (
+                definition.type === "url" &&
+                !/^https:\/\/(?:photos\.google\.com|photos\.app\.goo\.gl)\/[^\s]+$/i.test(
+                    value
+                )
+            ) {
+                throw correctionValidationError_(
+                    "INVALID_CORRECTION: Photo needs a valid HTTPS Google Photos share URL."
+                );
+            }
+        }
+        if (
+            definition.required &&
+            (value === "" || (typeof value === "string" && !value.trim()))
+        ) {
+            throw correctionValidationError_(
+                `INVALID_CORRECTION: ${definition.label} cannot be cleared.`
+            );
+        }
+        row[definition.column] = value;
+    }
+    const changed = (...keys) =>
+        keys.some((key) => Object.hasOwn(changes, key));
+    if (
+        row[2] === "Measure" &&
+        changed("heightCm", "widthCm") &&
+        row[5] === "" &&
+        row[6] === ""
+    ) {
+        throw correctionValidationError_(
+            "INVALID_CORRECTION: Keep at least one dimension for Measure."
+        );
+    }
+    if (changed("measurementQuality", "measurementMethod")) {
+        const quality = row[28];
+        const method = row[34];
+        if (
+            (/Estimated/i.test(method) && quality !== "Estimated") ||
+            (["Scale", "Ruler"].includes(method) &&
+                !["Measured", "Corrected"].includes(quality)) ||
+            (quality === "Measured" && !["Scale", "Ruler"].includes(method))
+        ) {
+            throw correctionValidationError_(
+                "INVALID_CORRECTION: Measurement quality and method must describe the same evidence."
+            );
+        }
+    }
+    if (
+        row[2] === "Water" &&
+        changed("nutrientsUsed", "nutrientProduct", "nutrientAmount")
+    ) {
+        if (
+            (row[16] === "Yes" && (!row[17].trim() || !row[18].trim())) ||
+            (row[16] === "No" && (row[17] || row[18])) ||
+            !NUTRIENT_OPTIONS.includes(row[16])
+        ) {
+            throw correctionValidationError_(
+                "INVALID_CORRECTION: Nutrients Yes needs product and amount; No needs both explicitly cleared."
+            );
+        }
+    }
+    if (
+        row[2] === "Flower" &&
+        changed("flowerCount", "flowerDetails") &&
+        row[21] === "" &&
+        !row[22].trim()
+    ) {
+        throw correctionValidationError_(
+            "INVALID_CORRECTION: Keep a flower count or details."
+        );
+    }
+    return row;
+}
+
+function correctionDate_(value) {
+    const match =
+        /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})(\.\d{1,3})?(Z|[+-]\d{2}:\d{2})$/.exec(
+            value
+        );
+    const date = new Date(value);
+    if (!match || !Number.isFinite(date.getTime()))
+        throw correctionValidationError_(
+            "INVALID_CORRECTION: Date needs a complete ISO timestamp with timezone."
+        );
+    const local = new Date(`${match[1]}T${match[2]}${match[3] || ""}Z`);
+    if (local.toISOString().slice(0, 19) !== `${match[1]}T${match[2]}`) {
+        throw correctionValidationError_(
+            "INVALID_CORRECTION: Date contains an invalid calendar day or time."
+        );
+    }
+    return date;
+}
+
+function correctionDateBoundary_(snapshot, original, replacement) {
+    const oldDate = original.values[0].getTime();
+    const newDate = replacement[0].getTime();
+    if (oldDate === newDate) return;
+    const setup = replacement[10] || 1;
+    const crossed = snapshot.rows.some((candidate) => {
+        const row = candidate.values;
+        if (
+            candidate === original ||
+            row[1] !== replacement[1] ||
+            row[35] === "Removed"
+        )
+            return false;
+        if (!(row[0] instanceof Date) || !Number.isFinite(row[0].getTime())) {
+            throw correctionValidationError_(
+                "HISTORY_SCHEMA: A related observation has an invalid date. Repair it before moving dates."
+            );
+        }
+        const date = row[0].getTime();
+        const candidateSetup = row[10] || 1;
+        if (candidateSetup < setup && newDate <= date) return true;
+        if (candidateSetup > setup && newDate >= date) return true;
+        if (candidateSetup === setup && row[2] === "Repot" && newDate < date)
+            return true;
+        // A Repot is the start of its setup; moving it cannot move across a
+        // reading (including a same-time sibling) or another Repot boundary.
+        return (
+            replacement[2] === "Repot" &&
+            candidateSetup === setup &&
+            ((oldDate <= date && newDate > date) ||
+                (oldDate >= date && newDate < date))
+        );
+    });
+    if (crossed)
+        throw correctionValidationError_(
+            "SETUP_BOUNDARY: This date move crosses a setup boundary or a Repot-dependent reading. Keep the date within this setup, or coordinate corrections to the dependent observations."
+        );
+}
+
+function correctionReplacementId_(payload) {
+    return `correction:${payload.requestId}:${payload.operationDigest}`;
+}
+
+function correctionSavedReceipt_(payload) {
+    return {
+        status: "saved",
+        requestId: payload.requestId,
+        observationId: payload.observationId,
+        originalObservationId: payload.observationId,
+        replacementObservationId: correctionReplacementId_(payload),
+        payloadDigest: payload.payloadDigest,
+        operationDigest: payload.operationDigest,
+    };
+}
+
+function correctionReceipt_(snapshot, payload) {
+    const matches = snapshot.rows.filter(
+        (row) => row.values[15] === payload.requestId
+    );
+    const replacementId = correctionReplacementId_(payload);
+    if (!matches.length) {
+        if (snapshot.rows.some((row) => row.values[26] === replacementId)) {
+            throw new Error(
+                "CORRECTION_RECEIPT_INVALID: The stored receipt has a changed retry identity."
+            );
+        }
+        return {
+            status: "missing",
+            requestId: payload.requestId,
+            observationId: payload.observationId,
+            payloadDigest: payload.payloadDigest,
+            operationDigest: payload.operationDigest,
+        };
+    }
+    if (
+        matches.length !== 1 ||
+        matches[0].values[26] !== replacementId ||
+        matches[0].values[30] !== payload.observationId
+    ) {
+        throw new Error(
+            "REQUEST_CONFLICT: This retry ID already belongs to a different payload or namespace. Retain the pending payload and inspect its receipt."
+        );
+    }
+    const original = snapshot.rows.find(
+        (row) => row.values[26] === payload.observationId
+    );
+    if (!original || original.values[35] !== "Removed") {
+        throw new Error(
+            "CORRECTION_RECEIPT_INVALID: The original retirement is missing. Inspect History before retrying."
+        );
+    }
+    // AF may gain a menu exclusion timestamp later, and AJ may be Removed.
+    // Neither changes this already completed operation's durable identity.
+    correctionRevision_(matches[0], snapshot.timeZone);
+    return correctionSavedReceipt_(payload);
+}
+
+function correctionCell_(value, timeZone) {
+    // Omit the value to clear a native cell. A stored empty string still
+    // counts as populated in Sheets COUNTIFS and is not a genuine blank.
+    if (value === "") return {};
+    if (value instanceof Date) {
+        // Sheets serials are local wall-clock days, not UTC days. Formatting in
+        // the workbook zone handles both sides of DST and non-whole-hour zones.
+        const wallClock = Utilities.formatDate(
+            value,
+            timeZone,
+            "yyyy-MM-dd'T'HH:mm:ss.SSS"
+        );
+        return {
+            userEnteredValue: {
+                numberValue: Date.parse(`${wallClock}Z`) / 86400000 + 25569,
+            },
+        };
+    }
+    return {
+        userEnteredValue:
+            typeof value === "number"
+                ? { numberValue: value }
+                : { stringValue: value },
+    };
+}
+
+function correctionCellsRequest_(
+    history,
+    row,
+    column,
+    values,
+    fields = "userEnteredValue"
+) {
+    return {
+        updateCells: {
+            start: {
+                sheetId: history.getSheetId(),
+                rowIndex: row - 1,
+                columnIndex: column - 1,
+            },
+            rows: [{ values }],
+            fields,
+        },
+    };
+}
+
+function correctionBatchUpdate_(spreadsheet, requests) {
+    if (
+        typeof Sheets === "undefined" ||
+        typeof Sheets.Spreadsheets?.batchUpdate !== "function"
+    ) {
+        throw new Error(
+            "CORRECTION_API_UNAVAILABLE: Enable the Advanced Sheets v4 service and verify its API grant before correcting."
+        );
+    }
+    Sheets.Spreadsheets.batchUpdate({ requests }, spreadsheet.getId());
+}
+
+/**
  * Excludes selected observations from analysis without destroying their audit
  * trail. The source values, retry key, event details, and formulas stay intact.
  */
@@ -4374,19 +6085,20 @@ function removeSelectedHistoryObservations() {
         throw new Error("Remove no more than 100 History rows at once.");
     }
 
-    const values = history
-        .getRange(
-            firstRow,
-            1,
-            lastRow - firstRow + 1,
-            GARDEN_LOGGER.historyColumns
+    const initialSnapshot = correctionSnapshot_(spreadsheet);
+    const observations = initialSnapshot.rows
+        .filter(
+            (row) =>
+                row.rowNumber >= firstRow &&
+                row.rowNumber <= lastRow &&
+                row.values[35] !== "Removed" &&
+                row.values.slice(0, 12).some(cleanText_)
         )
-        .getDisplayValues();
-    const observations = values
-        .map((row, index) => ({ rowNumber: firstRow + index, values: row }))
-        .filter(({ values: row }) =>
-            row.slice(0, GARDEN_LOGGER.historyColumns).some(cleanText_)
-        );
+        .map((row) => ({
+            ...row,
+            observationId: correctionIdentity_(row.values[26]),
+            revision: correctionRevision_(row, initialSnapshot.timeZone),
+        }));
     if (!observations.length) {
         spreadsheet.toast(
             "The selected History rows do not contain observations.",
@@ -4424,36 +6136,47 @@ function removeSelectedHistoryObservations() {
     /* istanbul ignore else */
     if (response !== ui.Button.YES) return;
 
-    ensureHistoryProvenanceColumns_(history);
-    const provenance = history
-        .getRange(
-            firstRow,
-            GARDEN_LOGGER.historyProvenanceStartColumn,
-            lastRow - firstRow + 1,
-            GARDEN_LOGGER.historyProvenanceColumns
-        )
-        .getValues();
-    const removedAt = Utilities.formatDate(
-        new Date(),
-        spreadsheet.getSpreadsheetTimeZone(),
-        "yyyy-MM-dd HH:mm:ss z"
-    );
-    const observationRows = new Set(
-        observations.map(({ rowNumber }) => rowNumber)
-    );
-    provenance.forEach((row, index) => {
-        if (!observationRows.has(firstRow + index)) return;
-        row[5] = `Excluded from active analysis through the Garden logger menu on ${removedAt}.`;
-        row[9] = "Removed";
+    // Apps Script releases locks during UI alerts. Capture identity/revision
+    // first and acquire the shared writer lock only after confirmation.
+    withCorrectionLock_(() => {
+        const snapshot = correctionSnapshot_(spreadsheet);
+        const current = observations.map((observation) => {
+            const row = snapshot.rows.find(
+                (candidate) =>
+                    candidate.values[26] === observation.observationId
+            );
+            if (
+                !row ||
+                correctionRevision_(row, snapshot.timeZone) !==
+                    observation.revision
+            ) {
+                throw new Error(
+                    "STALE_PREVIEW: A selected observation changed while confirmation was open. Select it again and review."
+                );
+            }
+            return row;
+        });
+        const removedAt = Utilities.formatDate(
+            new Date(),
+            snapshot.timeZone,
+            "yyyy-MM-dd HH:mm:ss z"
+        );
+        const requests = current.flatMap((row) => {
+            const addedReason = `Excluded from active analysis through the Garden logger menu on ${removedAt}.`;
+            const reason = row.values[31]
+                ? `${row.values[31]}\n${addedReason}`
+                : addedReason;
+            return [
+                correctionCellsRequest_(history, row.rowNumber, 32, [
+                    { userEnteredValue: { stringValue: reason } },
+                ]),
+                correctionCellsRequest_(history, row.rowNumber, 36, [
+                    { userEnteredValue: { stringValue: "Removed" } },
+                ]),
+            ];
+        });
+        correctionBatchUpdate_(spreadsheet, requests);
     });
-    history
-        .getRange(
-            firstRow,
-            GARDEN_LOGGER.historyProvenanceStartColumn,
-            provenance.length,
-            GARDEN_LOGGER.historyProvenanceColumns
-        )
-        .setValues(provenance);
     spreadsheet.toast(
         `${observations.length} observation${observations.length === 1 ? "" : "s"} excluded with its audit trail preserved. Derived views will recalculate.`,
         "History corrected",
@@ -5279,6 +7002,10 @@ function measuredHistoryWeight_(row) {
  * of forecast training. Elapsed days use actual timestamps (including DST).
  */
 function plantActivitySummary_(historyRows, plantId, potSetup) {
+    const correctionOrder = historyCorrectionContext_(historyRows).order;
+    const orderByRow = new Map(
+        historyRows.map((row, index) => [row, correctionOrder[index]])
+    );
     const rows = historyRows.filter(
         (row) => activeHistoryRow_(row) && cleanText_(row[1]) === plantId
     );
@@ -5308,7 +7035,7 @@ function plantActivitySummary_(historyRows, plantId, potSetup) {
                 ? dateSortValue_(row[0])
                 : 0;
         return {
-            index,
+            index: orderByRow.get(row) ?? index,
             date: timestamp > 0 ? timestamp / 86400000 + 25569 : 0,
             setup: positiveIntegerOrDefault_(row[10], 1),
             event: cleanText_(row[2]),
@@ -5424,6 +7151,7 @@ function currentPotSetupsFromRows_(historyRows) {
 
 function currentSetupWeightRecordsByPlant_(historyRows) {
     const currentSetupByPlant = currentPotSetupsFromRows_(historyRows);
+    const correctionOrder = historyCorrectionContext_(historyRows).order;
 
     const recordsByPlant = new Map();
     historyRows.forEach((row, rowIndex) => {
@@ -5448,6 +7176,7 @@ function currentSetupWeightRecordsByPlant_(historyRows) {
             observedAt: row[0],
             timestamp,
             rowIndex,
+            orderIndex: correctionOrder[rowIndex],
             saveGroup: cleanText_(row[29]),
         });
         recordsByPlant.set(plantId, records);
@@ -5457,6 +7186,7 @@ function currentSetupWeightRecordsByPlant_(historyRows) {
 
 function currentSetupWaterRecordsByPlant_(historyRows) {
     const currentSetupByPlant = currentPotSetupsFromRows_(historyRows);
+    const correctionOrder = historyCorrectionContext_(historyRows).order;
     const recordsByPlant = new Map();
     historyRows.forEach((row, rowIndex) => {
         if (!activeHistoryRow_(row) || cleanText_(row[2]) !== "Water") return;
@@ -5470,6 +7200,7 @@ function currentSetupWaterRecordsByPlant_(historyRows) {
             observedAt: row[0],
             timestamp: dateSortValue_(row[0]),
             rowIndex,
+            orderIndex: correctionOrder[rowIndex],
             saveGroup: cleanText_(row[29]),
         });
         recordsByPlant.set(plantId, records);
@@ -5541,7 +7272,62 @@ function inferredWeightStatesByRow_(historyRows) {
 }
 
 function compareHistoryRecords_(left, right) {
-    return left.timestamp - right.timestamp || left.rowIndex - right.rowIndex;
+    return (
+        left.timestamp - right.timestamp ||
+        (left.orderIndex ?? left.rowIndex) -
+            (right.orderIndex ?? right.rowIndex) ||
+        left.rowIndex - right.rowIndex
+    );
+}
+
+/**
+ * Corrections keep the original observation's equal-time order. An active
+ * replacement also explains its removed ancestors, which are audit evidence
+ * rather than missing chart measurements. Invalid lineage keeps physical order.
+ */
+function historyCorrectionContext_(historyRows) {
+    return correctionRecordContext_(
+        historyRows.map((row, index) => ({
+            index,
+            id: cleanText_(row[26]),
+            corrects: cleanText_(row[30]),
+            plant: cleanText_(row[1]),
+            event: cleanText_(row[2]),
+            setup: positiveIntegerOrDefault_(row[10], 1),
+            active: activeHistoryRow_(row),
+        }))
+    );
+}
+
+function correctionRecordContext_(records) {
+    const byId = new Map();
+    records.forEach((record) => {
+        if (record.id) byId.set(record.id, byId.has(record.id) ? null : record);
+    });
+    const superseded = new Set();
+    const order = records.map((record) => {
+        const ancestors = [];
+        const visited = new Set([record]);
+        let original = record;
+        while (original.corrects) {
+            const previous = byId.get(original.corrects);
+            if (
+                !previous ||
+                visited.has(previous) ||
+                previous.active ||
+                previous.plant !== record.plant ||
+                previous.event !== record.event ||
+                previous.setup !== record.setup
+            )
+                return record.index;
+            ancestors.push(previous.index);
+            visited.add(previous);
+            original = previous;
+        }
+        if (record.active) ancestors.forEach((index) => superseded.add(index));
+        return original.index;
+    });
+    return { order, superseded };
 }
 
 function historyRecordsShareSave_(left, right) {
@@ -5646,7 +7432,323 @@ function getRecentObservations_(
     );
 }
 
-function recentObservationsFromRows_(historyRows, timeZone, limit, plantNames) {
+/** Only dated observations can support a current read model. */
+function webHistoryTimestamp_(value) {
+    if (
+        !(value instanceof Date) &&
+        (typeof value !== "string" ||
+            !value.trim() ||
+            Number.isFinite(Number(value)))
+    )
+        return 0;
+    const timestamp = dateSortValue_(value);
+    return timestamp > 0 ? timestamp : 0;
+}
+
+/** Derive all plant reads from the bootstrap's one History snapshot. */
+function webWeightReadModelsFromRows_(
+    historyRows,
+    baselineSetups,
+    now,
+    timeZone
+) {
+    const nowMs = now.getTime();
+    const dayKey = Utilities.formatDate(now, timeZone, "yyyy-MM-dd");
+    const weighedToday = new Set();
+    const recordsByPlant = new Map();
+    const correctionContext = historyCorrectionContext_(historyRows);
+    // Preserve row indexes for inferred Dry ordering while withholding invalid
+    // and future evidence. Request ID supplies same-save identity on old rows.
+    const eligibleRows = historyRows.map((row, rowIndex) => {
+        const plantId = cleanText_(row[1]);
+        const timestamp = webHistoryTimestamp_(row[0]);
+        const measured = measuredHistoryWeight_(row);
+        const active = activeHistoryRow_(row);
+        const saveGroup = cleanText_(row[29]) || cleanText_(row[15]);
+        if (plantId) {
+            const records = recordsByPlant.get(plantId) || [];
+            records.push({
+                row,
+                rowIndex,
+                orderIndex: correctionContext.order[rowIndex],
+                superseded: correctionContext.superseded.has(rowIndex),
+                timestamp,
+                measured,
+                active,
+                saveGroup,
+                observedAt: row[0],
+                potSetup: positiveIntegerOrDefault_(row[10], 1),
+                event: cleanText_(row[2]),
+            });
+            recordsByPlant.set(plantId, records);
+        }
+        if (!active || !timestamp || timestamp > nowMs) {
+            const excluded = [...row];
+            excluded[35] = "Removed";
+            return excluded;
+        }
+        if (
+            measured &&
+            plantId &&
+            Utilities.formatDate(
+                new Date(timestamp),
+                timeZone,
+                "yyyy-MM-dd"
+            ) === dayKey
+        ) {
+            weighedToday.add(plantId);
+        }
+        const eligible = [...row];
+        if (cleanText_(row[2]) === "Weigh" && !measured) eligible[4] = "";
+        eligible[29] = saveGroup;
+        return eligible;
+    });
+    const setups = currentPotSetupsFromRows_(eligibleRows);
+    const historySetups = new Map(setups);
+    baselineSetups.forEach((setup, plantId) => {
+        setups.set(
+            plantId,
+            Math.max(
+                setups.get(plantId) || 1,
+                positiveInteger_(setup || 1, "Pot setup")
+            )
+        );
+    });
+    const dryByPlant = dryOrLowestWeightsFromRows_(eligibleRows);
+    const byPlant = new Map();
+    setups.forEach((potSetup, plantId) => {
+        const records = (recordsByPlant.get(plantId) || []).filter(
+            (record) => record.potSetup === potSetup
+        );
+        // The dry helper chooses History's newest setup; Baselines can already
+        // be ahead of it, in which case that old reference must stay absent.
+        byPlant.set(
+            plantId,
+            webPlantWeightReadModel_(
+                records,
+                potSetup,
+                nowMs,
+                historySetups.get(plantId) === potSetup
+                    ? dryByPlant.get(plantId) || null
+                    : null
+            )
+        );
+    });
+    return { dayKey, weighedTodayPlantIds: [...weighedToday].sort(), byPlant };
+}
+
+/** A chart is measured history, independent of the watering forecast model. */
+function webPlantWeightReadModel_(records, potSetup, nowMs, previousDry) {
+    const dated = records
+        .filter((record) => record.timestamp && record.timestamp <= nowMs)
+        .sort(compareHistoryRecords_);
+    const repot = dated.findLast(
+        (record) => record.active && record.event === "Repot"
+    );
+    const afterBoundary = (record, boundary) =>
+        !boundary ||
+        compareHistoryRecords_(record, boundary) >= 0 ||
+        (record.timestamp === boundary.timestamp &&
+            historyRecordsShareSave_(record, boundary));
+    const inSetup = dated.filter((record) => afterBoundary(record, repot));
+    const measured = inSetup.filter(
+        (record) => record.active && record.measured
+    );
+    const latest = measured.at(-1);
+    const water = inSetup.findLast(
+        (record) => record.active && record.event === "Water"
+    );
+    const start = water || repot || measured[0];
+    const iso = (record) =>
+        record ? new Date(record.timestamp).toISOString() : "";
+    const span = inSetup.filter((record) => afterBoundary(record, start));
+    const undated = records.filter(
+        (record) =>
+            record.event === "Weigh" && !record.timestamp && !record.superseded
+    );
+    const future = records.filter(
+        (record) =>
+            record.event === "Weigh" &&
+            record.timestamp > nowMs &&
+            !record.superseded
+    );
+    let excludedCount = undated.length + future.length;
+    let interrupted = undated.length > 0;
+    const points = [];
+    span.forEach((record) => {
+        if (record.event !== "Weigh" || record.superseded) return;
+        if (!record.active || !record.measured) {
+            excludedCount += 1;
+            interrupted = true;
+            return;
+        }
+        const previous = points.at(-1);
+        points.push({
+            observedAt: iso(record),
+            weight: record.row[4],
+            observationId: cleanText_(record.row[26]),
+            breakBefore: Boolean(
+                previous &&
+                (interrupted ||
+                    record.timestamp -
+                        webHistoryTimestamp_(previous.observedAt) >
+                        48 * 60 * 60 * 1000)
+            ),
+        });
+        // An undated exclusion cannot be located on either side of a point.
+        interrupted = undated.length > 0;
+    });
+    const dryAt = previousDry
+        ? webHistoryTimestamp_(previousDry.observedAt)
+        : 0;
+    return {
+        latestWeight: latest ? latest.row[4] : "",
+        latestWeightAt: iso(latest),
+        weightSeries: {
+            potSetup,
+            setupStartedAt: iso(repot),
+            startedAt: iso(start),
+            startKind: water
+                ? "Water"
+                : repot
+                  ? "Repot"
+                  : start
+                    ? "First reading"
+                    : "",
+            points,
+            waterings: span
+                .filter((record) => record.active && record.event === "Water")
+                .map((record) => ({
+                    observedAt: iso(record),
+                    application: cleanText_(record.row[40]),
+                })),
+            previousDry:
+                dryAt && (!repot || dryAt >= repot.timestamp)
+                    ? {
+                          observedAt: new Date(dryAt).toISOString(),
+                          weight: previousDry.weight,
+                      }
+                    : null,
+            excludedCount,
+        },
+    };
+}
+
+function normalizeWebHistoryFilters_(filters, plantNames) {
+    if (
+        !filters ||
+        typeof filters !== "object" ||
+        Array.isArray(filters) ||
+        Object.prototype.toString.call(filters) !== "[object Object]" ||
+        Object.keys(filters).some((key) => !["plantId", "event"].includes(key))
+    ) {
+        throw new Error("History filters must contain only plantId and event.");
+    }
+    for (const key of ["plantId", "event"]) {
+        if (filters[key] !== undefined && typeof filters[key] !== "string") {
+            throw new Error(`History ${key} filter must be text.`);
+        }
+    }
+    const plantId = cleanText_(filters.plantId);
+    const event = cleanText_(filters.event);
+    if (plantId && !plantNames.has(plantId))
+        throw new Error("Unknown History plant ID.");
+    if (event && !WEB_EVENT_OPTIONS.includes(event))
+        throw new Error("Unknown History event.");
+    return { plantId, event };
+}
+
+/** Whitelist scalar cell values; never return objects or non-finite numbers. */
+function webHistoryDetailValue_(value) {
+    if (value instanceof Date) {
+        return Number.isNaN(value.getTime()) ? "" : value.toISOString();
+    }
+    if (typeof value === "number") return Number.isFinite(value) ? value : "";
+    if (typeof value === "string" || typeof value === "boolean") return value;
+    return "";
+}
+
+function webHistoryDetails_(row) {
+    const event = cleanText_(row[2]);
+    const fields = {
+        notes: 8,
+        potSetup: 10,
+        potLabel: 11,
+        recordedAtIso: 9,
+        entrySource: 27,
+        observationQuality: 28,
+        saveGroup: 29,
+        correctsObservationId: 30,
+        correctionReason: 31,
+        recordStatus: 35,
+    };
+    const eventFields = {
+        Water: {
+            nutrientsUsed: 16,
+            nutrientProduct: 17,
+            nutrientAmount: 18,
+            wateringApplication: 40,
+            waterAmount: 41,
+        },
+        Weigh: { measurementMethod: 34 },
+        Measure: {
+            heightCm: 5,
+            widthCm: 6,
+            measurementMethod: 34,
+            measurementUnit: 36,
+        },
+        Check: { condition: 7, soilMoisture: 32 },
+        Repot: { previousPotSize: 19, potSize: 20, medium: 33 },
+        Flower: { flowerCount: 21, flowerDetails: 22 },
+        Photo: { photoUrl: 23 },
+        Pest: { pestIssue: 24, pestTreatment: 25 },
+        Rotation: { rotationDegrees: 39 },
+    };
+    const details = {};
+    Object.entries({ ...fields, ...eventFields[event] }).forEach(
+        ([key, index]) => {
+            const value =
+                key === "recordedAtIso"
+                    ? webHistoryTimestamp_(row[index])
+                        ? new Date(
+                              webHistoryTimestamp_(row[index])
+                          ).toISOString()
+                        : ""
+                    : webHistoryDetailValue_(row[index]);
+            if (value !== "") details[key] = value;
+        }
+    );
+    if (event === "Measure") {
+        const unit = cleanText_(row[36]) || "cm";
+        details.measurementUnit = unit;
+        for (const [key, index] of [
+            ["height", 5],
+            ["width", 6],
+        ]) {
+            const value = row[index];
+            if (
+                typeof value !== "number" ||
+                !Number.isFinite(value) ||
+                value <= 0
+            )
+                continue;
+            details[`${key}In`] = value / 2.54;
+            if (unit === "in" || unit === "cm")
+                details[key] = unit === "in" ? value / 2.54 : value;
+        }
+    }
+    return details;
+}
+
+function recentObservationsFromRows_(
+    historyRows,
+    timeZone,
+    limit,
+    plantNames,
+    filters = {}
+) {
+    const { plantId: selectedPlant, event: selectedEvent } =
+        normalizeWebHistoryFilters_(filters, plantNames);
     const inferredWeightStates = inferredWeightStatesByRow_(historyRows);
     return historyRows
         .map((row, index) => ({ row, index }))
@@ -5654,6 +7756,8 @@ function recentObservationsFromRows_(historyRows, timeZone, limit, plantNames) {
             ({ row }) =>
                 cleanText_(row[1]) &&
                 cleanText_(row[2]) &&
+                (!selectedPlant || cleanText_(row[1]) === selectedPlant) &&
+                (!selectedEvent || cleanText_(row[2]) === selectedEvent) &&
                 cleanText_(
                     row[
                         GARDEN_LOGGER.historyProvenanceStartColumn +
@@ -5674,6 +7778,11 @@ function recentObservationsFromRows_(historyRows, timeZone, limit, plantNames) {
         .map(({ row, index }) => {
             const plantId = cleanText_(row[1]);
             return {
+                observationId: cleanText_(row[26]),
+                observedAtIso: webHistoryTimestamp_(row[0])
+                    ? new Date(webHistoryTimestamp_(row[0])).toISOString()
+                    : "",
+                details: webHistoryDetails_(row),
                 observedAt: formatClientDate_(
                     row[0],
                     timeZone,
@@ -5685,7 +7794,13 @@ function recentObservationsFromRows_(historyRows, timeZone, limit, plantNames) {
                     cleanText_(row[2]) === "Weigh"
                         ? inferredWeightStates.get(index) || "Routine"
                         : "",
-                weight: row[4] === "" || row[4] === null ? "" : Number(row[4]),
+                weight:
+                    row[4] === "" ||
+                    row[4] === null ||
+                    row[4] === undefined ||
+                    !Number.isFinite(Number(row[4]))
+                        ? ""
+                        : Number(row[4]),
                 name: plantNames.get(plantId) || plantId,
             };
         });

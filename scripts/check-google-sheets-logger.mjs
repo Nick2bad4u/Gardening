@@ -36,7 +36,23 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.18.5");
+assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.19.0");
+for (const name of [
+    "getWebCorrectionEntry",
+    "previewWebObservationCorrection",
+    "saveWebObservationCorrection",
+    "getWebCorrectionStatus",
+    "installDailyCareDashboard",
+]) {
+    assert.equal(typeof loggerFunction(name), "function");
+}
+const manifest = await readFile(
+    new URL("google-sheets/appsscript.json", import.meta.url),
+    "utf8"
+);
+assert.match(manifest, /"serviceId":\s*"sheets"/v);
+assert.match(manifest, /"userSymbol":\s*"Sheets"/v);
+assert.match(manifest, /"version":\s*"v4"/v);
 const webPlantImageUrls = evaluateLogger("WEB_PLANT_IMAGE_URLS");
 assert.ok(
     isImageUrls(webPlantImageUrls),
@@ -656,6 +672,13 @@ assert.match(html, /id="labelPickerMode"/v);
 assert.match(html, /gardenLoggerPlantPickerModeV1/v);
 assert.match(html, /id="recentLimit"/v);
 assert.match(html, /gardenLoggerRecentLimitV1/v);
+assert.match(html, /id="recentScope"/v);
+assert.match(html, /id="recentEvent"/v);
+assert.match(html, /id="refreshDataButton"/v);
+assert.match(html, /id="weightFeedback"/v);
+assert.match(html, /id="correctionDialog"/v);
+assert.match(html, /gardenLoggerCorrectionPendingV1/v);
+assert.match(html, /gardenLoggerCorrectionDraftV1/v);
 assert.match(html, /gardenLoggerObservationQueueV1/v);
 assert.match(html, /saveWebObservationBatch/v);
 assert.match(html, /function sendObservationQueueBatch\(retryIds = null\)/v);
