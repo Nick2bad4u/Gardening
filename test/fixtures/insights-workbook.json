@@ -1,0 +1,1199 @@
+{
+    "cells": [
+        {
+            "sheet": "Dry-down models",
+            "row": 0,
+            "column": 0,
+            "value": {
+                "stringValue": "Plant ID"
+            }
+        },
+        {
+            "sheet": "Dry-down models",
+            "row": 0,
+            "column": 1,
+            "value": {
+                "stringValue": "Pot setup"
+            }
+        },
+        {
+            "sheet": "Dry-down models",
+            "row": 0,
+            "column": 2,
+            "value": {
+                "stringValue": "Completed dry (g)"
+            }
+        },
+        {
+            "sheet": "Dry-down models",
+            "row": 0,
+            "column": 3,
+            "value": {
+                "stringValue": "Current wet (g)"
+            }
+        },
+        {
+            "sheet": "Dry-down models",
+            "row": 0,
+            "column": 4,
+            "value": {
+                "stringValue": "Current-cycle points"
+            }
+        },
+        {
+            "sheet": "Dry-down models",
+            "row": 0,
+            "column": 5,
+            "value": {
+                "stringValue": "Learned cycles"
+            }
+        },
+        {
+            "sheet": "Dry-down models",
+            "row": 0,
+            "column": 6,
+            "value": {
+                "stringValue": "Modeled loss (g/day)"
+            }
+        },
+        {
+            "sheet": "Dry-down models",
+            "row": 0,
+            "column": 7,
+            "value": {
+                "stringValue": "Forecast date"
+            }
+        },
+        {
+            "sheet": "Dry-down models",
+            "row": 0,
+            "column": 8,
+            "value": {
+                "stringValue": "Window start"
+            }
+        },
+        {
+            "sheet": "Dry-down models",
+            "row": 0,
+            "column": 9,
+            "value": {
+                "stringValue": "Window end"
+            }
+        },
+        {
+            "sheet": "Dry-down models",
+            "row": 0,
+            "column": 10,
+            "value": {
+                "stringValue": "Forecast basis"
+            }
+        },
+        {
+            "sheet": "Dry-down models",
+            "row": 0,
+            "column": 11,
+            "value": {
+                "stringValue": "Trend readiness"
+            }
+        },
+        {
+            "sheet": "Dry-down models",
+            "row": 0,
+            "column": 12,
+            "value": {
+                "stringValue": "Trend review"
+            }
+        },
+        {
+            "sheet": "Dry-down models",
+            "row": 0,
+            "column": 13,
+            "value": {
+                "stringValue": "Current fit"
+            }
+        },
+        {
+            "sheet": "Dry-down models",
+            "row": 0,
+            "column": 14,
+            "value": {
+                "stringValue": "Recommended water date"
+            }
+        },
+        {
+            "sheet": "Dry-down models",
+            "row": 0,
+            "column": 15,
+            "value": {
+                "stringValue": "Watering guidance"
+            }
+        },
+        {
+            "sheet": "Insights",
+            "row": 0,
+            "column": 0,
+            "value": {
+                "stringValue": "Garden Insights"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 0,
+            "value": {
+                "stringValue": "Plant ID"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 1,
+            "value": {
+                "stringValue": "Plant"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 2,
+            "value": {
+                "stringValue": "Latest weight (g)"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 3,
+            "value": {
+                "stringValue": "Latest weight (lb)"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 4,
+            "value": {
+                "stringValue": "Last weighed"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 5,
+            "value": {
+                "stringValue": "Current pot size"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 6,
+            "value": {
+                "stringValue": "Current pot label"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 7,
+            "value": {
+                "stringValue": "Calibration status"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 8,
+            "value": {
+                "stringValue": "Trend readiness"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 9,
+            "value": {
+                "stringValue": "Trend review"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 10,
+            "value": {
+                "stringValue": "Remeasure status"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 11,
+            "value": {
+                "stringValue": "Next dry check"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 12,
+            "value": {
+                "stringValue": "Recent loss / day"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 13,
+            "value": {
+                "stringValue": "Trend anchor"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 14,
+            "value": {
+                "stringValue": "Last water"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 15,
+            "value": {
+                "stringValue": "Plant condition"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 16,
+            "value": {
+                "stringValue": "Last condition check"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 17,
+            "value": {
+                "stringValue": "Medium / substrate"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 18,
+            "value": {
+                "stringValue": "Data quality summary"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 19,
+            "value": {
+                "stringValue": "Pot setup"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 20,
+            "value": {
+                "stringValue": "Current-cycle points"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 21,
+            "value": {
+                "stringValue": "Current-setup weights"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 22,
+            "value": {
+                "stringValue": "Dry weight (g)"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 23,
+            "value": {
+                "stringValue": "Current-setup waterings"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 24,
+            "value": {
+                "stringValue": "Wet weight (g)"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 25,
+            "value": {
+                "stringValue": "Capacity (g)"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 26,
+            "value": {
+                "stringValue": "Last setup change"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 27,
+            "value": {
+                "stringValue": "Latest measure quality"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 28,
+            "value": {
+                "stringValue": "Latest dimensions"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 29,
+            "value": {
+                "stringValue": "Measurement unit"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 30,
+            "value": {
+                "stringValue": "Drying rate (g/day)"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 31,
+            "value": {
+                "stringValue": "Predicted dry date"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 32,
+            "value": {
+                "stringValue": "Forecast confidence"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 33,
+            "value": {
+                "stringValue": "Forecast sort date"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 34,
+            "value": {
+                "stringValue": "Recommended water date"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 0,
+            "column": 35,
+            "value": {
+                "stringValue": "Watering guidance"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 1,
+            "column": 0,
+            "value": {
+                "stringValue": "P01"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 2,
+            "column": 0,
+            "value": {
+                "stringValue": "P02"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 3,
+            "column": 0,
+            "value": {
+                "stringValue": "P03"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 4,
+            "column": 0,
+            "value": {
+                "stringValue": "P04"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 5,
+            "column": 0,
+            "value": {
+                "stringValue": "P05"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 6,
+            "column": 0,
+            "value": {
+                "stringValue": "P06"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 7,
+            "column": 0,
+            "value": {
+                "stringValue": "P07"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 8,
+            "column": 0,
+            "value": {
+                "stringValue": "P08"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 9,
+            "column": 0,
+            "value": {
+                "stringValue": "P09"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 10,
+            "column": 0,
+            "value": {
+                "stringValue": "P10"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 11,
+            "column": 0,
+            "value": {
+                "stringValue": "P11"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 12,
+            "column": 0,
+            "value": {
+                "stringValue": "P12"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 13,
+            "column": 0,
+            "value": {
+                "stringValue": "P13"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 14,
+            "column": 0,
+            "value": {
+                "stringValue": "P14"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 15,
+            "column": 0,
+            "value": {
+                "stringValue": "P15"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 16,
+            "column": 0,
+            "value": {
+                "stringValue": "P16"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 17,
+            "column": 0,
+            "value": {
+                "stringValue": "P17"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 18,
+            "column": 0,
+            "value": {
+                "stringValue": "P18"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 19,
+            "column": 0,
+            "value": {
+                "stringValue": "P19"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 20,
+            "column": 0,
+            "value": {
+                "stringValue": "P20"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 21,
+            "column": 0,
+            "value": {
+                "stringValue": "P21"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 22,
+            "column": 0,
+            "value": {
+                "stringValue": "P22"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 23,
+            "column": 0,
+            "value": {
+                "stringValue": "P23"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 24,
+            "column": 0,
+            "value": {
+                "stringValue": "P24"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 25,
+            "column": 0,
+            "value": {
+                "stringValue": "P25"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 26,
+            "column": 0,
+            "value": {
+                "stringValue": "P26"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 27,
+            "column": 0,
+            "value": {
+                "stringValue": "P27"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 28,
+            "column": 0,
+            "value": {
+                "stringValue": "P28"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 29,
+            "column": 0,
+            "value": {
+                "stringValue": "P29"
+            }
+        },
+        {
+            "sheet": "Baselines",
+            "row": 30,
+            "column": 0,
+            "value": {
+                "stringValue": "P30"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 0,
+            "value": {
+                "stringValue": "Date"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 1,
+            "value": {
+                "stringValue": "Plant ID"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 2,
+            "value": {
+                "stringValue": "Event"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 3,
+            "value": {
+                "stringValue": "Weight state"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 4,
+            "value": {
+                "stringValue": "Weight (g)"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 5,
+            "value": {
+                "stringValue": "Height (cm)"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 6,
+            "value": {
+                "stringValue": "Width (cm)"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 7,
+            "value": {
+                "stringValue": "Plant condition"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 8,
+            "value": {
+                "stringValue": "Notes"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 9,
+            "value": {
+                "stringValue": "Recorded"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 10,
+            "value": {
+                "stringValue": "Pot setup"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 11,
+            "value": {
+                "stringValue": "Pot label at entry"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 12,
+            "value": {
+                "stringValue": "Plant / planter"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 13,
+            "value": {
+                "stringValue": "Trend anchor"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 14,
+            "value": {
+                "stringValue": "Days after anchor"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 15,
+            "value": {
+                "stringValue": "Request ID"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 16,
+            "value": {
+                "stringValue": "Nutrients used"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 17,
+            "value": {
+                "stringValue": "Nutrient product"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 18,
+            "value": {
+                "stringValue": "Nutrient amount"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 19,
+            "value": {
+                "stringValue": "Previous pot size"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 20,
+            "value": {
+                "stringValue": "Pot size"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 21,
+            "value": {
+                "stringValue": "Flower count"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 22,
+            "value": {
+                "stringValue": "Flower details"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 23,
+            "value": {
+                "stringValue": "Photo URL"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 24,
+            "value": {
+                "stringValue": "Pest / issue"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 25,
+            "value": {
+                "stringValue": "Treatment / action"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 26,
+            "value": {
+                "stringValue": "Observation ID"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 27,
+            "value": {
+                "stringValue": "Entry source"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 28,
+            "value": {
+                "stringValue": "Observation quality"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 29,
+            "value": {
+                "stringValue": "Save group / batch ID"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 30,
+            "value": {
+                "stringValue": "Corrects observation ID"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 31,
+            "value": {
+                "stringValue": "Correction reason"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 32,
+            "value": {
+                "stringValue": "Soil moisture"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 33,
+            "value": {
+                "stringValue": "Medium / substrate"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 34,
+            "value": {
+                "stringValue": "Measurement method"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 35,
+            "value": {
+                "stringValue": "Record status"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 36,
+            "value": {
+                "stringValue": "Measurement unit"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 37,
+            "value": {
+                "stringValue": "Height (in)"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 38,
+            "value": {
+                "stringValue": "Width (in)"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 39,
+            "value": {
+                "stringValue": "Rotation (\u00b0)"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 40,
+            "value": {
+                "stringValue": "Watering application"
+            }
+        },
+        {
+            "sheet": "History",
+            "row": 0,
+            "column": 41,
+            "value": {
+                "stringValue": "Water amount (mL)"
+            }
+        }
+    ],
+    "metadata": {
+        "sheets": [
+            {
+                "properties": {
+                    "sheetId": 2124648850,
+                    "title": "Dry-down models",
+                    "index": 2,
+                    "sheetType": "GRID",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 26
+                    },
+                    "hidden": true
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 203040506,
+                    "title": "Insights",
+                    "index": 4,
+                    "sheetType": "GRID",
+                    "gridProperties": {
+                        "rowCount": 239,
+                        "columnCount": 18,
+                        "frozenRowCount": 2,
+                        "hideGridlines": true
+                    },
+                    "tabColor": {
+                        "red": 0.70980394,
+                        "green": 0.5411765,
+                        "blue": 0.16470589
+                    },
+                    "tabColorStyle": {
+                        "rgbColor": {
+                            "red": 0.70980394,
+                            "green": 0.5411765,
+                            "blue": 0.16470589
+                        }
+                    }
+                },
+                "charts": [
+                    {
+                        "chartId": 88491986,
+                        "spec": {
+                            "title": "Recent drying rate by plant",
+                            "basicChart": {
+                                "chartType": "BAR",
+                                "legendPosition": "NO_LEGEND",
+                                "axis": [
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Plant ID",
+                                        "format": {
+                                            "fontFamily": "Roboto",
+                                            "fontSize": 11
+                                        },
+                                        "viewWindowOptions": {}
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 1087321540,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 31,
+                                                        "startColumnIndex": 0,
+                                                        "endColumnIndex": 1
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1,
+                                "compareMode": "CATEGORY",
+                                "series": []
+                            },
+                            "hiddenDimensionStrategy": "SKIP_HIDDEN_ROWS_AND_COLUMNS",
+                            "titleTextFormat": {
+                                "foregroundColor": {
+                                    "red": 0.08235294,
+                                    "green": 0.30980393,
+                                    "blue": 0.1764706
+                                },
+                                "fontFamily": "Roboto",
+                                "fontSize": 18,
+                                "bold": true,
+                                "foregroundColorStyle": {
+                                    "rgbColor": {
+                                        "red": 0.08235294,
+                                        "green": 0.30980393,
+                                        "blue": 0.1764706
+                                    }
+                                }
+                            },
+                            "fontName": "Roboto",
+                            "titleTextPosition": {
+                                "horizontalAlignment": "CENTER"
+                            },
+                            "subtitle": "Recent same-cycle loss \u2022 not a constant rate or a watering deadline",
+                            "subtitleTextFormat": {
+                                "foregroundColor": {
+                                    "red": 0.32156864,
+                                    "green": 0.3882353,
+                                    "blue": 0.35686275
+                                },
+                                "fontFamily": "Roboto",
+                                "fontSize": 11,
+                                "foregroundColorStyle": {
+                                    "rgbColor": {
+                                        "red": 0.32156864,
+                                        "green": 0.3882353,
+                                        "blue": 0.35686275
+                                    }
+                                }
+                            },
+                            "subtitleTextPosition": {
+                                "horizontalAlignment": "CENTER"
+                            }
+                        },
+                        "position": {
+                            "overlayPosition": {
+                                "anchorCell": {
+                                    "sheetId": 203040506,
+                                    "rowIndex": 29,
+                                    "columnIndex": 0
+                                },
+                                "offsetXPixels": 10,
+                                "offsetYPixels": 13,
+                                "widthPixels": 1155,
+                                "heightPixels": 625
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "properties": {
+                    "sheetId": 1465181080,
+                    "title": "History",
+                    "index": 6,
+                    "sheetType": "GRID",
+                    "gridProperties": {
+                        "rowCount": 5000,
+                        "columnCount": 42,
+                        "frozenRowCount": 1,
+                        "frozenColumnCount": 2,
+                        "hideGridlines": true
+                    },
+                    "tabColor": {
+                        "red": 0.41568628,
+                        "green": 0.52156866,
+                        "blue": 0.45882353
+                    },
+                    "tabColorStyle": {
+                        "rgbColor": {
+                            "red": 0.41568628,
+                            "green": 0.52156866,
+                            "blue": 0.45882353
+                        }
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1087321540,
+                    "title": "Baselines",
+                    "index": 8,
+                    "sheetType": "GRID",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 36,
+                        "frozenRowCount": 1,
+                        "frozenColumnCount": 2,
+                        "hideGridlines": true
+                    },
+                    "tabColor": {
+                        "red": 0.8392157,
+                        "green": 0.6509804,
+                        "blue": 0.24313726
+                    },
+                    "tabColorStyle": {
+                        "rgbColor": {
+                            "red": 0.8392157,
+                            "green": 0.6509804,
+                            "blue": 0.24313726
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

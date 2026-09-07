@@ -10,6 +10,10 @@ input row, while every saved event becomes a new append-only row on `History`.
 The Dashboard, Insights, Baselines, individual plant tabs, and public website
 all read from that shared history.
 
+The [Insights chart guide](INSIGHTS-CHARTS.md) covers the dry-down explorer at
+**Insights A240**, its plant selector in **B242**, and the collection comparisons
+for retained water, measured loss, forecast windows, and model evidence.
+
 For phone entry, open the
 [mobile entry app](https://script.google.com/macros/s/AKfycbytpdMto4ZAqOf49igDNoGYr-J6fmSRDNJOKP4-dKDFRmM2YkTCKJp3kmhrD4gOJShF/exec).
 It writes to the same workbook and may ask you to sign in to the Google account
