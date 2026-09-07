@@ -8553,12 +8553,10 @@ function normalizeWebHistoryFilters_(filters, plantNames) {
  * @returns {string | number | boolean} A valid scalar, or an empty string.
  */
 function webHistoryDetailValue_(value) {
-    const scalar =
-        value instanceof Date
-            ? Number.isNaN(value.getTime())
-                ? ""
-                : value.toISOString()
-            : value;
+    let scalar = value;
+    if (value instanceof Date) {
+        scalar = Number.isNaN(value.getTime()) ? "" : value.toISOString();
+    }
     return typeof scalar === "string" ||
         typeof scalar === "boolean" ||
         (typeof scalar === "number" && Number.isFinite(scalar))
