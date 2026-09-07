@@ -376,7 +376,7 @@ describe("dry-down formulas and workbook installation", () => {
                 structuredClone(context.installWateringRecommendations())
             ).toStrictEqual({
                 historyChanged: false,
-                loggerVersion: "5.19.3",
+                loggerVersion: "5.19.4",
                 plants: 2,
             });
 
@@ -523,7 +523,7 @@ describe("dry-down formulas and workbook installation", () => {
         expect(context.installDryDownLearning()).toMatchObject({
             baselineColumns: 36,
             historyChanged: false,
-            loggerVersion: "5.19.3",
+            loggerVersion: "5.19.4",
             plants: 1,
         });
         expect(

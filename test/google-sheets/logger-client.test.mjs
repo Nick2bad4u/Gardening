@@ -248,9 +248,12 @@ describe("garden logger daily progress, filtered History and measured charts", (
             "Queued · Saved today"
         );
         expect(
-            queryElement(window.document, "#roundProgress", HTMLElement)
-                .textContent
-        ).toContain("1 of 2 Saved today · 2 Queued");
+            queryElements(
+                window.document,
+                ".round-progress-stat",
+                HTMLElement
+            ).map((stat) => stat.textContent)
+        ).toStrictEqual(["1 of 2 Saved today", "2 Queued on this device"]);
 
         queryElement(
             window.document,
@@ -423,9 +426,12 @@ describe("garden logger daily progress, filtered History and measured charts", (
             confirmSummarySave(window, mode);
 
             expect(
-                queryElement(window.document, "#roundProgress", HTMLElement)
-                    .textContent
-            ).toContain("1 of 2 Saved today · 0 Queued");
+                queryElements(
+                    window.document,
+                    ".round-progress-stat",
+                    HTMLElement
+                ).map((stat) => stat.textContent)
+            ).toStrictEqual(["1 of 2 Saved today", "0 Queued on this device"]);
 
             const reload = createLoggerWindow({
                 online: false,
@@ -668,7 +674,9 @@ describe("garden logger daily progress, filtered History and measured charts", (
                 .join(" ")
         ).not.toMatch(/48 hours|readings excluded|setup started/v);
         expect(
-            queryElement(chart, "svg", Element).getAttribute("aria-label")
+            queryElement(chart, 'svg[role="img"]', Element).getAttribute(
+                "aria-label"
+            )
         ).toContain("4 measured weights in grams");
         expect(
             chart.querySelectorAll(":scope .chart-readings li")
@@ -1392,6 +1400,221 @@ function submitCorrectionReview(window) {
         new window.Event("submit", { bubbles: true, cancelable: true })
     );
 }
+
+describe("correction draft retention and discard", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("does not retain an untouched editor or reopen it on reload", () => {
+        expect.hasAssertions();
+
+        const { window } = createCorrectionLogger();
+        openFirstCorrection(window);
+
+        expect(window.localStorage.getItem(correctionDraftKey)).toBeNull();
+        expect(
+            queryElement(window.document, "#correctionBanner", HTMLElement)
+                .hidden
+        ).toBe(true);
+
+        clickCorrection(window, "correctionClose");
+
+        expect(
+            queryElement(
+                window.document,
+                "#correctionDialog",
+                HTMLDialogElement
+            ).open
+        ).toBe(false);
+
+        const reloaded = createLoggerWindow();
+
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#correctionDialog",
+                HTMLDialogElement
+            ).open
+        ).toBe(false);
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#correctionBanner",
+                HTMLElement
+            ).hidden
+        ).toBe(true);
+    });
+
+    it("cleans up an untouched legacy draft while retaining actual edits and keeping the dialog closed", () => {
+        expect.hasAssertions();
+
+        const { window } = createCorrectionLogger();
+        openFirstCorrection(window);
+        editCorrection(window, "reason", "Retain this edit");
+        const saved = required(window.localStorage.getItem(correctionDraftKey));
+        const edited = createLoggerWindow({
+            storage: { [correctionDraftKey]: saved },
+        });
+
+        expect(edited.window.localStorage.getItem(correctionDraftKey)).toBe(
+            saved
+        );
+        expect(
+            queryElement(
+                edited.window.document,
+                "#correctionDialog",
+                HTMLDialogElement
+            ).open
+        ).toBe(false);
+        expect(
+            queryElement(
+                edited.window.document,
+                "#correctionResume",
+                HTMLButtonElement
+            ).hidden
+        ).toBe(false);
+
+        const legacy = createLoggerWindow({
+            storage: {
+                [correctionDraftKey]: saved.replace("Retain this edit", ""),
+            },
+        });
+
+        expect(
+            legacy.window.localStorage.getItem(correctionDraftKey)
+        ).toBeNull();
+        expect(
+            queryElement(
+                legacy.window.document,
+                "#correctionBanner",
+                HTMLElement
+            ).hidden
+        ).toBe(true);
+
+        editCorrection(window, "reason", "");
+
+        expect(window.localStorage.getItem(correctionDraftKey)).toBeNull();
+    });
+
+    it.each(["correctionDiscard", "correctionDiscardEditor"])(
+        "discards only the unsent correction through %s",
+        (button) => {
+            expect.hasAssertions();
+
+            const { calls, window } = createCorrectionLogger();
+            openFirstCorrection(window);
+            editCorrection(window, "weight", "432.5");
+            const ordinaryNotes = queryElement(
+                window.document,
+                "#notes",
+                HTMLTextAreaElement
+            );
+            const queueKey = "gardenLoggerObservationQueueV1";
+            ordinaryNotes.value = "ordinary draft retained";
+            window.localStorage.setItem(queueKey, "queue retained");
+            clickCorrection(window, button);
+
+            expect(window.localStorage.getItem(correctionDraftKey)).toBeNull();
+            expect(ordinaryNotes.value).toBe("ordinary draft retained");
+            expect(window.localStorage.getItem(queueKey)).toBe(
+                "queue retained"
+            );
+            expect(
+                queryElement(
+                    window.document,
+                    "#correctionDialog",
+                    HTMLDialogElement
+                ).open
+            ).toBe(false);
+            expect(
+                queryElement(window.document, "#correctionBanner", HTMLElement)
+                    .hidden
+            ).toBe(true);
+            expect(
+                calls.some(
+                    (call) => call.method === "saveWebObservationCorrection"
+                )
+            ).toBe(false);
+        }
+    );
+
+    it("preserves a draft if browser storage refuses to remove it", () => {
+        expect.hasAssertions();
+
+        const { window } = createCorrectionLogger();
+        openFirstCorrection(window);
+        editCorrection(window, "reason", "Keep until discarded");
+        const stored = window.localStorage.getItem(correctionDraftKey);
+        vi.spyOn(window.localStorage, "removeItem").mockReturnValue(undefined);
+        clickCorrection(window, "correctionDiscardEditor");
+
+        expect(window.localStorage.getItem(correctionDraftKey)).toBe(stored);
+        expect(
+            queryElement(
+                window.document,
+                "#correctionBannerStatus",
+                HTMLElement
+            ).textContent
+        ).toContain("could not be removed");
+        expect(
+            queryElement(
+                window.document,
+                "#correctionDialog",
+                HTMLDialogElement
+            ).open
+        ).toBe(true);
+    });
+
+    it("retains the draft when another tab has stored a pending correction", () => {
+        expect.hasAssertions();
+
+        const { window } = createCorrectionLogger();
+        openFirstCorrection(window);
+        editCorrection(window, "reason", "Recovery draft");
+        const draft = window.localStorage.getItem(correctionDraftKey);
+        window.localStorage.setItem(
+            correctionPendingKey,
+            "pending in another tab"
+        );
+        clickCorrection(window, "correctionDiscardEditor");
+
+        expect(window.localStorage.getItem(correctionDraftKey)).toBe(draft);
+        expect(window.localStorage.getItem(correctionPendingKey)).toBe(
+            "pending in another tab"
+        );
+        expect(
+            queryElement(
+                window.document,
+                "#correctionDialog",
+                HTMLDialogElement
+            ).open
+        ).toBe(true);
+    });
+
+    it("cannot discard a correction awaiting a server outcome", () => {
+        expect.hasAssertions();
+
+        const { behaviors, window } = createCorrectionLogger();
+        prepareWeightCorrection(window);
+        behaviors.saveWebObservationCorrection = () => undefined;
+        clickCorrection(window, "correctionConfirm");
+        const pending = window.localStorage.getItem(correctionPendingKey);
+        const draft = window.localStorage.getItem(correctionDraftKey);
+
+        expect(pending).toContain("saved-observation-1");
+
+        for (const id of ["correctionDiscard", "correctionDiscardEditor"]) {
+            expect(
+                queryElement(window.document, `#${id}`, HTMLButtonElement)
+                    .hidden
+            ).toBe(true);
+
+            clickCorrection(window, id);
+        }
+
+        expect(window.localStorage.getItem(correctionPendingKey)).toBe(pending);
+        expect(window.localStorage.getItem(correctionDraftKey)).toBe(draft);
+    });
+});
 
 describe("saved History correction editor and durable recovery", () => {
     afterEach(restoreLoggerMocks);

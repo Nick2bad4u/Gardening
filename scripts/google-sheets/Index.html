@@ -619,6 +619,34 @@
                 }
             }
 
+            .round-progress {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-block: 10px 16px;
+            }
+
+            .round-progress-stat {
+                display: inline-flex;
+                gap: 8px;
+                align-items: center;
+                min-block-size: 44px;
+                padding: 8px 12px;
+                font-weight: 700;
+                background: var(--control);
+                border: 1px solid var(--line);
+                border-radius: 12px;
+            }
+
+            .round-progress-note {
+                display: flex;
+                flex-basis: 100%;
+                gap: 8px;
+                align-items: center;
+                margin: 2px 0 0;
+                line-height: 1.5;
+            }
+
             .weight-feedback {
                 white-space: pre-line;
             }
@@ -648,19 +676,23 @@
 
             .weight-chart {
                 min-inline-size: 0;
-                padding-block: 12px;
+                padding: 16px;
                 margin-block: 16px;
-                border-block: 1px solid var(--line);
+                background: var(--control);
+                border: 1px solid var(--line);
+                border-radius: 14px;
 
                 & h3,
                 & > p {
-                    margin-block: 0 4px;
+                    margin-block: 0 8px;
                 }
 
-                & svg {
+                & > svg {
                     display: block;
                     inline-size: 100%;
-                    block-size: 170px;
+                    block-size: auto;
+                    max-block-size: 340px;
+                    margin-block: 12px;
                     overflow: visible;
                     color: var(--forest-2);
                 }
@@ -668,6 +700,107 @@
                 & text {
                     font-size: 16px;
                     fill: currentcolor;
+                }
+            }
+
+            .chart-heading,
+            .chart-legend {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px 16px;
+                align-items: center;
+            }
+
+            .chart-legend {
+                padding: 0;
+                margin-block: 12px 16px;
+                font-size: 0.875rem;
+                list-style: "";
+
+                & li {
+                    display: flex;
+                    gap: 8px;
+                    align-items: center;
+                }
+            }
+
+            .chart-swatch {
+                inline-size: 24px;
+                border-block-start: 2px solid var(--forest-2);
+
+                &.chart-swatch-water {
+                    border-color: var(--blue);
+                    border-block-start-style: dashed;
+                }
+
+                &.chart-swatch-dry {
+                    border-color: var(--amber);
+                    border-block-start-style: dashed;
+                }
+            }
+
+            .chart-facts {
+                display: grid;
+                gap: 6px;
+                margin-block: 12px;
+                line-height: 1.5;
+
+                & dt {
+                    font-weight: 700;
+                }
+
+                & dd {
+                    margin: 0 0 8px;
+                    color: var(--muted);
+                }
+            }
+
+            .chart-readings {
+                border-block-start: 1px solid var(--line);
+
+                & summary {
+                    font-weight: 700;
+                }
+
+                & .hint {
+                    line-height: 1.625;
+                }
+            }
+
+            .chart-reading-list {
+                display: grid;
+                gap: 8px;
+                padding: 0;
+                margin-block: 16px 0;
+                list-style: "";
+
+                & li {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 6px 12px;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 10px 12px;
+                    line-height: 1.5;
+                    background: var(--card-soft);
+                    border-radius: 10px;
+                }
+
+                & time {
+                    flex: 1 1 180px;
+                    color: var(--muted);
+                }
+
+                & strong {
+                    display: inline-flex;
+                    gap: 8px;
+                    align-items: center;
+                    white-space: nowrap;
+                }
+
+                & small {
+                    flex-basis: 100%;
+                    color: var(--muted);
                 }
             }
 
@@ -692,6 +825,21 @@
                     padding: 0;
                     margin: 0;
                     border: 0;
+                }
+
+                & label {
+                    display: block;
+                    margin-block: 12px 6px;
+                    font-weight: 700;
+                    line-height: 1.5;
+                }
+
+                & legend {
+                    font-weight: 800;
+                }
+
+                & p {
+                    line-height: 1.5;
                 }
 
                 & input,
@@ -764,7 +912,12 @@
                 stroke-dasharray: 4 4;
             }
 
+            .chart-watering {
+                stroke: var(--blue);
+            }
+
             .chart-dry {
+                stroke: var(--amber);
                 stroke-dasharray: 8 3 2 3;
             }
 
@@ -795,12 +948,13 @@
                 gap: 5px;
                 align-items: center;
                 align-self: start;
-                max-inline-size: 100px;
+                justify-content: center;
                 padding: 5px 8px;
                 font-size: 1rem;
                 font-weight: 800;
                 color: var(--forest-2);
                 text-align: center;
+                white-space: nowrap;
                 background: var(--control);
                 border-radius: 999px;
             }
@@ -820,13 +974,13 @@
                 display: grid;
                 flex: none;
                 gap: 6px;
-                justify-items: center;
+                place-items: center center;
             }
             .summary-portrait {
                 display: block;
                 inline-size: 64px;
                 block-size: 64px;
-                padding: 3px;
+                padding: 0 6px 12px;
                 object-fit: contain;
                 background: var(--control);
                 border: 1px solid var(--line);
@@ -1115,10 +1269,18 @@
             }
 
             .picker-name {
-                min-block-size: 2.5em;
-                margin: 8px 0;
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                min-block-size: 64px;
+                padding: 12px;
+                margin: 12px 0 0;
+                line-height: 1.5;
                 color: var(--forest-2);
                 overflow-wrap: anywhere;
+                background: var(--control);
+                border: 1px solid var(--line);
+                border-radius: 12px;
             }
 
             :root[data-theme="dark"] .metric-icon {
@@ -2004,6 +2166,27 @@
             }
 
             @media (width <= 520px) {
+                .plant-summary-heading {
+                    display: grid;
+                    grid-template-columns:
+                        [identity-start] minmax(0, 1fr)
+                        [identity-end portrait-start] 64px [portrait-end];
+                    align-items: center;
+                }
+
+                .plant-summary-portrait {
+                    display: contents;
+                }
+
+                .plant-id {
+                    grid-column: 1 / -1;
+                    justify-self: end;
+                }
+
+                .weight-chart {
+                    padding: 12px;
+                }
+
                 .app {
                     padding: 10px 10px 34px;
                 }
@@ -12468,6 +12651,13 @@
                         >Resume correction draft</button
                     >
                     <button
+                        id="correctionDiscard"
+                        class="secondary"
+                        type="button"
+                        hidden
+                        >Discard draft</button
+                    >
+                    <button
                         id="correctionCheck"
                         class="secondary"
                         type="button"
@@ -12735,13 +12925,13 @@
                                 </svg>
                                 <span>Not weighed today</span>
                             </label>
-                            <p
+                            <div
                                 id="roundProgress"
-                                class="hint"
+                                class="round-progress"
                                 role="status"
                                 aria-live="polite"
                                 >Saved today unavailable until Google
-                                responds.</p
+                                responds.</div
                             >
                             <p
                                 id="plantFilterStatus"
@@ -14080,6 +14270,13 @@
                     >Reload saved entry (replaces edits)</button
                 >
                 <button
+                    id="correctionDiscardEditor"
+                    class="secondary"
+                    type="button"
+                    hidden
+                    >Discard draft</button
+                >
+                <button
                     id="correctionClose"
                     class="secondary"
                     type="button"
@@ -14961,13 +15158,34 @@
                 const remaining = plants.filter(
                     (plant) => !saved?.has(plant.id) && !queued.has(plant.id)
                 );
-                $("roundProgress").textContent = [
-                    saved
-                        ? `${plants.filter((plant) => saved.has(plant.id)).length} of ${plants.length} Saved today`
-                        : "Saved today unavailable · refresh Google",
-                    `${plants.filter((plant) => queued.has(plant.id)).length} Queued on this device`,
+                const progress = $("roundProgress");
+                progress.replaceChildren();
+                [
+                    [
+                        "check",
+                        saved
+                            ? `${plants.filter((plant) => saved.has(plant.id)).length} of ${plants.length} Saved today`
+                            : "Saved today unavailable · refresh Google",
+                    ],
+                    [
+                        "queue",
+                        `${plants.filter((plant) => queued.has(plant.id)).length} Queued on this device`,
+                    ],
+                ].forEach(([icon, text]) => {
+                    const stat = document.createElement("span");
+                    stat.className = "round-progress-stat";
+                    setIconLabel(stat, icon, text, "app-icon app-icon--small");
+                    progress.append(stat);
+                });
+                const note = document.createElement("p");
+                note.className = "hint round-progress-note";
+                setIconLabel(
+                    note,
+                    "weight",
                     "Not weighed today excludes saved weights and queued weights.",
-                ].join(" · ");
+                    "app-icon app-icon--small"
+                );
+                progress.append(note);
                 const status = $("plantFilterStatus");
                 status.hidden = !$("notWeighedToday").checked;
                 if (!remaining.length) {
@@ -16022,9 +16240,14 @@
             }
 
             function showPickerName(plant = selectedPlant(), selected = true) {
-                $("plantPickerName").textContent = plant
-                    ? `${selected ? "Selected: " : ""}${plant.name} · ${plant.label || plant.id}`
-                    : "No matching plant";
+                setIconLabel(
+                    $("plantPickerName"),
+                    selected ? "check" : "label",
+                    plant
+                        ? `${selected ? "Selected: " : ""}${plant.name} · ${plant.label || plant.id}`
+                        : "No matching plant",
+                    "app-icon"
+                );
             }
 
             function previewPickerName(event) {
@@ -16345,7 +16568,8 @@
                 const section = document.createElement("section");
                 section.className = "weight-chart";
                 const heading = document.createElement("h3");
-                heading.textContent = "Current-cycle weights";
+                heading.className = "chart-heading";
+                setIconLabel(heading, "history", "Current-cycle weights");
                 const caption = document.createElement("p");
                 caption.className = "hint";
                 section.append(heading, caption);
@@ -16357,15 +16581,6 @@
                     caption.textContent = `Setup ${plant.potSetup || 1} · chart data unavailable. Refresh Google to check for measured readings.`;
                     return section;
                 }
-                const fullCaption = [
-                    `Setup ${series.potSetup}`,
-                    series.setupStartedAt
-                        ? `setup started ${formattedTimestamp(series.setupStartedAt)}`
-                        : "setup start not recorded",
-                    series.startedAt
-                        ? `${series.startKind || "Cycle"} · ${formattedTimestamp(series.startedAt)}`
-                        : "cycle start not recorded",
-                ].join(" · ");
                 caption.textContent = `Setup ${series.potSetup} · ${series.startKind || "Cycle"}${series.startedAt ? ` · ${new Date(series.startedAt).toLocaleDateString([], { timeZone: state.bootstrap?.timeZone, month: "short", day: "numeric" })}` : " start not recorded"}`;
                 const points = (series.points || []).filter(
                     (point) =>
@@ -16379,11 +16594,6 @@
                     series.previousDry.weight > 0
                         ? series.previousDry
                         : null;
-                const reference = document.createElement("p");
-                reference.className = "hint";
-                reference.textContent = previousDry
-                    ? `Last completed dry reference: ${previousDry.weight} g · ${formattedTimestamp(previousDry.observedAt)}`
-                    : "No completed dry reference in this setup.";
                 const waterings = (series.waterings || []).filter((watering) =>
                     Number.isFinite(Date.parse(watering.observedAt))
                 );
@@ -16562,25 +16772,104 @@
                 const details = document.createElement("details");
                 details.className = "chart-readings";
                 const summary = document.createElement("summary");
-                summary.textContent = "Readings and watering markers";
-                const fullStart = document.createElement("p");
-                fullStart.textContent = fullCaption;
-                const legend = document.createElement("p");
-                legend.className = "hint";
-                legend.textContent = `${points.length === 1 ? "One measured point" : "Dots: grams"} · W: water · dash-dot: previous dry`;
-                section.append(legend);
+                summary.textContent = `Readings and watering markers · ${points.length} ${points.length === 1 ? "weight" : "weights"}`;
+                const facts = document.createElement("dl");
+                facts.className = "chart-facts";
+                [
+                    [
+                        `Setup ${series.potSetup} started`,
+                        series.setupStartedAt
+                            ? formattedTimestamp(series.setupStartedAt)
+                            : "Not recorded",
+                    ],
+                    [
+                        `${series.startKind || "Cycle"} started`,
+                        series.startedAt
+                            ? formattedTimestamp(series.startedAt)
+                            : "Not recorded",
+                    ],
+                    [
+                        "Last completed dry reference",
+                        previousDry
+                            ? `${previousDry.weight} g · ${formattedTimestamp(previousDry.observedAt)}`
+                            : "No completed dry reference in this setup.",
+                    ],
+                ].forEach(([label, value]) => {
+                    const term = document.createElement("dt");
+                    const description = document.createElement("dd");
+                    term.textContent = label;
+                    description.textContent = value;
+                    facts.append(term, description);
+                });
+                if (points.length) {
+                    const legend = document.createElement("ul");
+                    legend.className = "chart-legend";
+                    legend.setAttribute("aria-label", "Chart legend");
+                    [
+                        [
+                            "",
+                            points.length === 1
+                                ? "One measured point"
+                                : "Measured weight (g)",
+                        ],
+                        ...(waterings.length
+                            ? [["water", "Watering (W)"]]
+                            : []),
+                        ...(previousDry
+                            ? [["dry", "Previous dry · dash-dot"]]
+                            : []),
+                    ].forEach(([kind, label]) => {
+                        const item = document.createElement("li");
+                        const swatch = document.createElement("span");
+                        swatch.className = `chart-swatch${kind ? ` chart-swatch-${kind}` : ""}`;
+                        swatch.setAttribute("aria-hidden", "true");
+                        item.append(swatch, document.createTextNode(label));
+                        legend.append(item);
+                    });
+                    section.append(legend);
+                }
                 const list = document.createElement("ul");
-                points.forEach((point) => {
+                list.className = "chart-reading-list";
+                points.forEach((point, index) => {
                     const item = document.createElement("li");
-                    item.textContent = `${formattedTimestamp(point.observedAt)} · ${point.weight} g${point.breakBefore ? " · gap before this reading" : ""}`;
+                    const time = document.createElement("time");
+                    time.dateTime = point.observedAt;
+                    time.textContent = formattedTimestamp(point.observedAt);
+                    const weight = document.createElement("strong");
+                    weight.textContent = `${point.weight} g`;
+                    item.append(time, weight);
+                    if (
+                        point.breakBefore ||
+                        (index > 0 &&
+                            Date.parse(point.observedAt) -
+                                Date.parse(points[index - 1].observedAt) >
+                                48 * 3600000)
+                    ) {
+                        const gap = document.createElement("small");
+                        gap.textContent = "Gap before this reading";
+                        item.append(gap);
+                    }
                     list.append(item);
                 });
                 waterings.forEach((watering) => {
                     const item = document.createElement("li");
-                    item.textContent = `Water (W) · ${formattedTimestamp(watering.observedAt)} · ${watering.application || "Application not recorded"}`;
+                    const time = document.createElement("time");
+                    time.dateTime = watering.observedAt;
+                    time.textContent = formattedTimestamp(watering.observedAt);
+                    const label = document.createElement("strong");
+                    setIconLabel(
+                        label,
+                        "water",
+                        "Water (W)",
+                        "app-icon app-icon--small"
+                    );
+                    const application = document.createElement("small");
+                    application.textContent =
+                        watering.application || "Application not recorded";
+                    item.append(time, label, application);
                     list.append(item);
                 });
-                details.append(summary, fullStart, reference, status, list);
+                details.append(summary, facts, status, list);
                 section.append(details);
                 return section;
             }
@@ -17069,8 +17358,14 @@
                     message ||
                     (pending
                         ? "Correction pending. Keep this request until Google confirms the outcome."
-                        : "A separate saved History correction draft is available on this phone.");
+                        : "An unsent correction draft is saved in this browser. Resume editing or discard the draft; History has not changed.");
                 $("correctionResume").hidden = !!pending || !correction.draft;
+                ["correctionDiscard", "correctionDiscardEditor"].forEach(
+                    (id) => {
+                        $(id).hidden = !!pending || !correction.draft;
+                        $(id).disabled = correction.busy;
+                    }
+                );
                 $("correctionCheck").hidden = !correction.pending;
                 $("correctionRetry").hidden = !correction.pending;
                 ["correctionCheck", "correctionRetry"].forEach((id) => {
@@ -17175,6 +17470,53 @@
                 return `${entry.plantId} · ${entry.event} · Setup ${entry.potSetup} · Historical label ${entry.label || "(blank)"} · Observation ${entry.observationId}`;
             }
 
+            function correctionDraftHasEdits(draft) {
+                if (draft.reason.trim()) return true;
+                return Object.entries(draft.inputs).some(([key, value]) => {
+                    const field = draft.context.fields?.find(
+                        (candidate) => candidate.key === key
+                    );
+                    if (!field) return true;
+                    const original = draft.context.original.values[key] ?? "";
+                    const display =
+                        field.type === "datetime"
+                            ? correctionLocalDate(original)
+                            : String(original);
+                    return value !== display;
+                });
+            }
+
+            function clearStoredCorrectionDraft() {
+                if (localStorage.getItem(CORRECTION_PENDING_KEY))
+                    throw new Error(
+                        "A pending correction still needs its recovery draft."
+                    );
+                localStorage.removeItem(CORRECTION_DRAFT_KEY);
+                if (localStorage.getItem(CORRECTION_DRAFT_KEY) !== null)
+                    throw new Error(
+                        "This phone could not remove the correction draft."
+                    );
+            }
+
+            function discardCorrectionDraft() {
+                if (correction.pending || correction.blocked || correction.busy)
+                    return;
+                try {
+                    clearStoredCorrectionDraft();
+                } catch {
+                    correctionBanner(
+                        "The draft could not be removed from this browser. It is still available to resume."
+                    );
+                    return;
+                }
+                correction.draft = null;
+                correction.context = null;
+                correction.preview = null;
+                correction.reviewedPayload = null;
+                correctionBanner();
+                closeCorrection();
+            }
+
             function captureCorrectionDraft() {
                 if (
                     !correction.context ||
@@ -17182,7 +17524,7 @@
                     correction.blocked
                 )
                     return false;
-                correction.draft = {
+                const draft = {
                     context: correction.context,
                     inputs: Object.fromEntries(
                         [...correction.inputs].map(([key, input]) => [
@@ -17193,7 +17535,13 @@
                     reason: $("correctionReason").value,
                 };
                 try {
-                    retainCorrection(CORRECTION_DRAFT_KEY, correction.draft);
+                    if (correctionDraftHasEdits(draft)) {
+                        correction.draft = draft;
+                        retainCorrection(CORRECTION_DRAFT_KEY, draft);
+                    } else {
+                        clearStoredCorrectionDraft();
+                        correction.draft = null;
+                    }
                     correctionBanner();
                     return true;
                 } catch {
@@ -17937,8 +18285,11 @@
                         draft?.context?.original?.observationId &&
                         draft.inputs &&
                         typeof draft.reason === "string"
-                    )
-                        correction.draft = draft;
+                    ) {
+                        if (correctionDraftHasEdits(draft))
+                            correction.draft = draft;
+                        else clearStoredCorrectionDraft();
+                    }
                     correctionBanner();
                 } catch {
                     correction.blocked = true;
@@ -20105,6 +20456,8 @@
 
             [
                 ["correctionResume", "edit"],
+                ["correctionDiscard", "close"],
+                ["correctionDiscardEditor", "close"],
                 ["correctionCheck", "refresh"],
                 ["correctionRetry", "save"],
                 ["correctionReviewButton", "edit"],
@@ -20136,6 +20489,14 @@
                 runPendingCorrection("saveWebObservationCorrection")
             );
             $("correctionClose").addEventListener("click", closeCorrection);
+            $("correctionDiscard").addEventListener(
+                "click",
+                discardCorrectionDraft
+            );
+            $("correctionDiscardEditor").addEventListener(
+                "click",
+                discardCorrectionDraft
+            );
             $("correctionDialog").addEventListener("cancel", (event) => {
                 event.preventDefault();
                 closeCorrection();

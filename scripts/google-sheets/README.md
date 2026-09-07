@@ -429,6 +429,13 @@ crosses a Repot boundary or invalidates dependent setup observations is refused
 with an explanation; coordinated setup migrations require a separate reviewed
 workbook operation. Measurement units, quality, and method remain explicit.
 
+Opening an entry without changing it does not create a recovery draft. Real
+edits stay in this browser when the editor closes, and the banner offers
+**Resume correction draft** or **Discard draft**. Discard removes only the unsent
+correction; ordinary entry fields, queued observations, and History remain
+unchanged. Pending requests keep their recovery draft until Google confirms the
+outcome. Untouched drafts retained by older logger versions are cleared on load.
+
 The four RPCs are `getWebCorrectionEntry`,
 `previewWebObservationCorrection`, `saveWebObservationCorrection`, and
 `getWebCorrectionStatus`. A preview binds the original revision and relevant
