@@ -1,0 +1,89 @@
+import { Meta, Subtitle } from "@storybook/addon-docs/blocks";
+
+<Meta title="Get started" />
+
+# Gardening website workbench
+
+<Subtitle> Explore the notebook's browser tools and check their behavior. </Subtitle>
+
+This Storybook brings the static gardening website into one place for layout
+review, interaction testing, and examples of loading, empty, and unavailable
+data. Open **Website** in the sidebar to explore the pages, or **UI icons**
+to browse the SVG icon archive.
+
+## Explore the website
+
+- **Field guide:** search the contents, open a plant profile, and use keyboard
+  navigation.
+- **Plant tracker:** search, filter, sort, retry failed data, and maximize the
+  table.
+- **Plant history:** review measurements, change chart filters, and open empty
+  or unknown plants.
+- **Photo album:** search plant collections and clear the results.
+- **Grow spot:** switch layout tabs and adjust riser measurements.
+- **Calendar:** complete a task and toggle the visible days.
+
+Each group has a **Docs** page with examples, source snippets, and a controls
+table. The website uses ordinary HTML, CSS, and JavaScript; these tables describe
+the Storybook preview wrapper. They are not a separate component API for the
+production website.
+
+Use **theme** for the initial light or dark appearance, and **width** for the
+preview width. Mobile stories start at **390 px**. In the tracker and history
+groups, **scenario** selects synthetic spreadsheet responses. Open an individual
+story to inspect its automated steps in the **Interactions** panel.
+
+## Understand the preview data
+
+The pages use copies of the maintained website files. Spreadsheet responses and
+observations are synthetic, and every frame has temporary, isolated preferences.
+Remote photo previews use a labeled placeholder. This workbench does not submit
+observations to Google Sheets; follow the actual website and logger for collection
+records and care decisions.
+
+Restart Storybook after editing the copied website HTML, CSS, or JavaScript.
+Editing a story itself uses the usual live reload.
+
+## Run locally
+
+Use Node.js 26.7 or later and npm 12 or later:
+
+```sh
+npm ci
+npm run storybook
+```
+
+On Linux or macOS, install the browser once with
+`npx playwright install chromium`. Windows uses installed Microsoft Edge.
+
+## Run the checks
+
+```sh
+npm run test:storybook
+npm run test:storybook:coverage
+```
+
+The local test widget runs the same stories and can collect coverage. Run the
+widget and CLI separately because they share Storybook's dependency cache.
+Coverage reports are written to `coverage/storybook/index.html`. Coverage measures
+external website JavaScript; interaction tests also exercise the calendar, layout,
+and photo album's inline scripts.
+
+Pull requests and pushes to `main` run the browser tests and coverage gate in
+GitHub Actions. CI also checks the built introduction, documentation, icon assets,
+and website frames at the `/storybook/` subpath before a deployment can proceed.
+
+## Build and share
+
+```sh
+npx storybook build
+```
+
+This creates `storybook-static/` for an independent static host.
+`npm run build:pages` builds the main website and adds the workbench at
+`.pages-site/storybook/`. After a successful deployment from `main`, it is available
+under `/Gardening/storybook/` on the repository's GitHub Pages site.
+
+The published workbench supports browsing, controls, and story interactions.
+The local Vitest test widget requires the development server; use CI or the local
+commands to run the test suite and collect coverage.

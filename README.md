@@ -84,6 +84,10 @@ The public browser tools are available from the
 and [photo album entry](https://nick2bad4u.github.io/Gardening/layouts/photo-album.html)
 cross-link to one another.
 
-For local builds, strict checks, the icon workbench, and browser tests, see
+The Pages build also includes the website's Storybook workbench at
+`/Gardening/storybook/`, with an [introduction](test/stories/introduction.mdx),
+documented previews, and synthetic data scenarios.
+
+For local builds, strict checks, the Storybook workbench, and browser tests, see
 [Maintaining the browser tools](docs/development.md). The Apps Script production
 procedure remains in the [logger runbook](scripts/google-sheets/README.md).

@@ -23,10 +23,12 @@
         ".*.mjs",
         "*.ts",
         ".storybook/**/*.ts",
+        ".storybook/**/*.mjs",
         "scripts/**/*.mjs",
         "docs/**/*.js",
         "test/**/*.mjs",
         "test/**/*.ts",
+        "test/stories/**/*.js",
         "types/**/*.d.ts"
     ]
 }

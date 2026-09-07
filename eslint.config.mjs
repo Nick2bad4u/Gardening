@@ -44,6 +44,13 @@ const sharedConfig = createConfig({
         if (entry.name === "🧪 Test Signal: All") {
             return [{ ...entry, files: ["test/**/*.test.mjs"] }];
         }
+        if (
+            Object.keys(entry.rules ?? {}).some((rule) =>
+                rule.startsWith("storybook/")
+            )
+        ) {
+            return [{ ...entry, files: ["test/stories/**/*.stories.ts"] }];
+        }
         if (entry.name?.startsWith("🎭 Playwright E2E Tests:") === true) {
             return [{ ...entry, files: ["test/e2e/**/*.spec.ts"] }];
         }
@@ -76,6 +83,59 @@ const config = [
         )?.languageOptions?.["parser"]
     ),
     {
+        files: ["test/stories/website-frame.ts"],
+        name: "Gardening: bundled axe in Storybook preview frames",
+        // The personal workbench injects the installed axe-core dependency into
+        // its own frames so accessibility checks can inspect their contents.
+        rules: {
+            "import-x/extensions": [
+                "error",
+                "ignorePackages",
+                { js: "always" },
+            ],
+            "sdl/no-script-text": "off",
+        },
+    },
+    {
+        files: [".storybook/preview.ts"],
+        name: "Gardening: Storybook documentation styles",
+        rules: {
+            "import-x/no-unassigned-import": [
+                "error",
+                { allow: [".storybook/preview.css"] },
+            ],
+        },
+    },
+    {
+        files: ["test/stories/**/*.stories.ts"],
+        name: "Gardening: named website story groups",
+        // These are full public pages, grouped separately from the icon workbench.
+        rules: { "storybook/no-title-property-in-meta": "off" },
+    },
+    {
+        files: [".storybook/main.ts"],
+        name: "Gardening: Storybook native configuration imports",
+        rules: {
+            "import-x/extensions": [
+                "error",
+                "ignorePackages",
+                { mjs: "always" },
+            ],
+        },
+    },
+    {
+        files: [".storybook/prepare-pages.mjs"],
+        name: "Gardening: allowlisted local Storybook copies",
+        // All input paths are literal repository assets; writes stay in .cache.
+        rules: { "security/detect-non-literal-fs-filename": "off" },
+    },
+    {
+        files: ["test/stories/fixtures/page-bootstrap.js"],
+        languageOptions: { sourceType: "script" },
+        name: "Gardening: classic isolated story bootstrap",
+        rules: { "import-x/unambiguous": "off" },
+    },
+    {
         files: ["**/*.{yaml,yml}"],
         name: "Gardening: YAML and shared formatter agreement",
         rules: {
@@ -98,6 +158,7 @@ const config = [
     {
         files: [
             ".github/workflows/logger-coverage.yml",
+            ".github/workflows/pages.yml",
             ".github/workflows/sonarqube-cloud.yml",
         ],
         name: "Gardening: direct pull requests without a merge queue",

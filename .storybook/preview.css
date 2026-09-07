@@ -1,0 +1,6 @@
+/* Keep wide API tables inside the documentation canvas on phones. */
+.sbdocs .docblock-argstable {
+    display: block;
+    max-inline-size: 100%;
+    overflow: auto;
+}

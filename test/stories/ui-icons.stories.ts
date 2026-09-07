@@ -33,7 +33,7 @@ function renderIconPreview({
         createElement("img", {
             alt: `${name} icon`,
             height: size,
-            src: `/ui-icons/${name}.svg`,
+            src: `${import.meta.env.BASE_URL}assets/ui-icons/${name}.svg`,
             width: size,
         })
     );
@@ -42,13 +42,29 @@ function renderIconPreview({
 const meta = {
     args: { background: "#f2eee4", name: "cactus", size: 64 },
     argTypes: {
-        background: { control: "color" },
-        name: { control: "select", options: icons },
-        size: { control: { max: 128, min: 16, step: 8, type: "range" } },
+        background: { control: "color", description: "Preview surface color." },
+        name: {
+            control: "select",
+            description: "SVG from the maintained UI icon archive.",
+            options: icons,
+        },
+        size: {
+            control: { max: 128, min: 16, step: 8, type: "range" },
+            description: "Icon width and height in pixels.",
+        },
     },
     component: renderIconPreview,
-    parameters: { layout: "centered" },
+    parameters: {
+        docs: {
+            description: {
+                component:
+                    "Browse the website's SVG icons on light and dark surfaces. These controls preview the actual archived SVG files.",
+            },
+        },
+        layout: "centered",
+    },
     render: renderIconPreview,
+    title: "UI icons",
 } satisfies Meta<IconPreviewProps>;
 
 export default meta;

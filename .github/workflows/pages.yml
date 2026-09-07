@@ -1,9 +1,10 @@
 ---
-name: "Deploy Gardening Site"
+name: "Website Checks and Pages"
 
-run-name: "Deploy Gardening Site: ${{ github.ref_name }}"
+run-name: "Website Checks and Pages: ${{ github.ref_name }}"
 
 on:
+    pull_request:
     push:
         branches:
             - "main"
@@ -13,8 +14,8 @@ permissions:
     contents: "read"
 
 concurrency:
-    group: "pages"
-    cancel-in-progress: false
+    group: "pages-${{ github.event.pull_request.number || github.ref }}"
+    cancel-in-progress: "${{ github.event_name == 'pull_request' }}"
 
 defaults:
     run:
@@ -22,9 +23,9 @@ defaults:
 
 jobs:
     build:
-        name: "Build Pages artifact"
+        name: "Test website and build Pages artifact"
         runs-on: "ubuntu-latest"
-        timeout-minutes: 15
+        timeout-minutes: 20
         steps:
             - name: "Check out repository"
               uses: "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1" # v7.0.1
@@ -61,6 +62,21 @@ jobs:
             - name: "Verify generated field guide"
               run: "npm run check:booklet"
 
+            - name: "Install Chromium and system dependencies"
+              run: "npx playwright install --with-deps chromium"
+
+            - name: "Run Storybook browser tests with coverage"
+              run: "npm run test:storybook:coverage"
+
+            - name: "Upload Storybook coverage"
+              if: "${{ !cancelled() }}"
+              uses: "actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a" # v7.0.1
+              with:
+                  name: "storybook-coverage"
+                  path: "coverage/storybook"
+                  retention-days: 7
+                  if-no-files-found: "ignore"
+
             - name: "Cache collection thumbnails"
               uses: "actions/cache@caa296126883cff596d87d8935842f9db880ef25" # v5
               with:
@@ -71,16 +87,22 @@ jobs:
             - name: "Build Pages site"
               run: "npm run build:pages"
 
+            - name: "Check the static Storybook at its published subpath"
+              run: "npm run test:storybook:static"
+
             - name: "Configure GitHub Pages"
+              if: "${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}"
               uses: "actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d" # v6.0.0
 
             - name: "Upload Pages artifact"
+              if: "${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}"
               uses: "actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9" # v5.0.0
               with:
                   path: ".pages-site"
 
     deploy:
         name: "Deploy GitHub Pages"
+        if: "${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}"
         needs: "build"
         runs-on: "ubuntu-latest"
         timeout-minutes: 10
