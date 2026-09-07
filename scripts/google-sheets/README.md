@@ -28,8 +28,8 @@ overwritten. The bound Apps Script in
 ## Current production baseline
 
 As of September 7, 2026, the stable production deployment identifies the logger
-as **5.19.2** on immutable Apps Script version **74**, matching source commit
-`3b9f35`. Native Apps Script now has strict type and lint gates, checked domain
+as **5.19.3** on immutable Apps Script version **75**, matching source commit
+`da6c73a`. Native Apps Script now has strict type and lint gates, checked domain
 contracts, and validated input and sheet-read boundaries.
 The selected plant name appears below the pot labels, entered weights
 show independent comparisons with the latest reading and the last completed Dry,
@@ -43,6 +43,17 @@ The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
 `clasp deployments`, and the authenticated live page before a future release.
+
+The September 7 patch resolved the remaining Sonar findings. All three immutable
+deployment files match the committed source, the authenticated page reports
+`Connected · logger 5.19.3`, and the logger/intake installers completed successfully.
+The queue trigger was replaced in place: exactly one five-minute
+`processQueuedAppSheetEntries` trigger remains and has run successfully.
+The native backup is named **Garden Plant Tracker — before logger 5.19.3 —
+2026-09-07**. The post-install comparison preserved all 726 History observations,
+their 726 unique Observation IDs, and the 659 distinct Request IDs with their
+event-row grouping. Baselines, dry-down model formulas, and AppSheet staging
+values were unchanged; the new Insights helper calculated without errors.
 
 - `History` and `History view` contain 42 physical columns, A:AP. AN stores
   `Rotation (°)`; AO stores `Watering application`; and AP stores the optional
