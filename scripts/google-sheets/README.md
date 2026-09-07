@@ -13,6 +13,10 @@ all read from that shared history.
 The [Insights chart guide](INSIGHTS-CHARTS.md) covers the dry-down explorer at
 **Insights A226**, its plant selector in **B228**, and the collection comparisons
 for retained water, measured loss, forecast windows, and model evidence.
+The **Plant colors** sheet at the end of the workbook maps all 30 plants to
+consistent chart colors, with full names, swatches, and links to their charts.
+Comparison charts keep P01–P30 order so colors stay attached to the same plant;
+the cycle explorer changes color automatically with its selected plant.
 
 For phone entry, open the
 [mobile entry app](https://script.google.com/macros/s/AKfycbytpdMto4ZAqOf49igDNoGYr-J6fmSRDNJOKP4-dKDFRmM2YkTCKJp3kmhrD4gOJShF/exec).

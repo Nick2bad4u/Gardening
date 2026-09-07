@@ -1,0 +1,2689 @@
+{
+    "cells": [
+        {
+            "sheet": "Insights",
+            "row": 225,
+            "column": 0,
+            "value": {
+                "stringValue": "Dry-down explorer & collection comparisons"
+            }
+        },
+        {
+            "sheet": "Insights",
+            "row": 226,
+            "column": 0,
+            "value": {
+                "stringValue": "Choose a plant below. Forecasts suggest when to inspect/reweigh; follow each plant’s care guidance."
+            }
+        },
+        {
+            "sheet": "Insights",
+            "row": 227,
+            "column": 0,
+            "value": {
+                "stringValue": "Plant ID"
+            }
+        },
+        {
+            "sheet": "Insights",
+            "row": 227,
+            "column": 1,
+            "value": {
+                "stringValue": "P01"
+            }
+        },
+        {
+            "sheet": "Insights",
+            "row": 228,
+            "column": 0,
+            "value": {
+                "stringValue": "Weight references describe the whole pot. Percentages are relative to wet/dry weights, not measured soil moisture."
+            }
+        },
+        {
+            "sheet": "Insights",
+            "row": 229,
+            "column": 0,
+            "value": {
+                "stringValue": "Money tree: inspect the upper soil; never use a whole-pot dry forecast as a watering deadline. Royal flush: follow seasonal guidance."
+            }
+        },
+        {
+            "sheet": "Insights",
+            "row": 230,
+            "column": 0,
+            "value": {
+                "formulaValue": "=IFNA(INDEX('Dry-down models'!P2:P31,MATCH(B228,'Dry-down models'!A2:A31,0)),\"Collecting evidence\")"
+            }
+        },
+        {
+            "sheet": "Insights",
+            "row": 231,
+            "column": 0,
+            "value": {
+                "formulaValue": "=LET(idx,MATCH(B228,'Dry-down models'!A2:A31,0),forecast,INDEX('Dry-down models'!H2:H31,idx),IF(forecast=\"\",\"Predicted dry check: collecting evidence\",\"Predicted dry check: \"&TEXT(forecast,\"mmm d\")&\" · Window: \"&TEXT(INDEX('Dry-down models'!I2:I31,idx),\"mmm d\")&\" – \"&TEXT(INDEX('Dry-down models'!J2:J31,idx),\"mmm d\")&\" · \"&INDEX('Dry-down models'!K2:K31,idx)))"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 0,
+            "column": 0,
+            "value": {
+                "stringValue": "Plant ID"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 0,
+            "column": 1,
+            "value": {
+                "stringValue": "Plant / planter"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 1,
+            "column": 0,
+            "value": {
+                "stringValue": "P01"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 1,
+            "column": 1,
+            "value": {
+                "stringValue": "Variegated moon cactus"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 2,
+            "column": 0,
+            "value": {
+                "stringValue": "P02"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 2,
+            "column": 1,
+            "value": {
+                "stringValue": "Feather cactus"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 3,
+            "column": 0,
+            "value": {
+                "stringValue": "P03"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 3,
+            "column": 1,
+            "value": {
+                "stringValue": "Serpent cactus"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 4,
+            "column": 0,
+            "value": {
+                "stringValue": "P04"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 4,
+            "column": 1,
+            "value": {
+                "stringValue": "Grass-blade cactus"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 5,
+            "column": 0,
+            "value": {
+                "stringValue": "P05"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 5,
+            "column": 1,
+            "value": {
+                "stringValue": "Old Man of the Andes"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 6,
+            "column": 0,
+            "value": {
+                "stringValue": "P06"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 6,
+            "column": 1,
+            "value": {
+                "stringValue": "Indigo Wave"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 7,
+            "column": 0,
+            "value": {
+                "stringValue": "P07"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 7,
+            "column": 1,
+            "value": {
+                "stringValue": "Giant chin cactus"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 8,
+            "column": 0,
+            "value": {
+                "stringValue": "P08"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 8,
+            "column": 1,
+            "value": {
+                "stringValue": "Rainbow hedgehog cactus"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 9,
+            "column": 0,
+            "value": {
+                "stringValue": "P09"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 9,
+            "column": 1,
+            "value": {
+                "stringValue": "Monk's hood cactus"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 10,
+            "column": 0,
+            "value": {
+                "stringValue": "P10"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 10,
+            "column": 1,
+            "value": {
+                "stringValue": "Dragon's Egg"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 11,
+            "column": 0,
+            "value": {
+                "stringValue": "P11"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 11,
+            "column": 1,
+            "value": {
+                "stringValue": "Domino cactus"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 12,
+            "column": 0,
+            "value": {
+                "stringValue": "P12"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 12,
+            "column": 1,
+            "value": {
+                "stringValue": "Ming Thing"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 13,
+            "column": 0,
+            "value": {
+                "stringValue": "P13"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 13,
+            "column": 1,
+            "value": {
+                "stringValue": "Dwarf old man cactus"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 14,
+            "column": 0,
+            "value": {
+                "stringValue": "P14"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 14,
+            "column": 1,
+            "value": {
+                "stringValue": "Chamaelobivia / peanut cactus hybrid"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 15,
+            "column": 0,
+            "value": {
+                "stringValue": "P15"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 15,
+            "column": 1,
+            "value": {
+                "stringValue": "Woolly nipple cactus"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 16,
+            "column": 0,
+            "value": {
+                "stringValue": "P16"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 16,
+            "column": 1,
+            "value": {
+                "stringValue": "Hook-spined pincushion cactus"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 17,
+            "column": 0,
+            "value": {
+                "stringValue": "P17"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 17,
+            "column": 1,
+            "value": {
+                "stringValue": "Boobie cactus"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 18,
+            "column": 0,
+            "value": {
+                "stringValue": "P18"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 18,
+            "column": 1,
+            "value": {
+                "stringValue": "Yellow tower cactus"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 19,
+            "column": 0,
+            "value": {
+                "stringValue": "P19"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 19,
+            "column": 1,
+            "value": {
+                "stringValue": "Shared rehab cactus planter"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 20,
+            "column": 0,
+            "value": {
+                "stringValue": "P20"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 20,
+            "column": 1,
+            "value": {
+                "stringValue": "Shared succulent planter"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 21,
+            "column": 0,
+            "value": {
+                "stringValue": "P21"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 21,
+            "column": 1,
+            "value": {
+                "stringValue": "Money tree"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 22,
+            "column": 0,
+            "value": {
+                "stringValue": "P22"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 22,
+            "column": 1,
+            "value": {
+                "stringValue": "Kiwi aeonium"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 23,
+            "column": 0,
+            "value": {
+                "stringValue": "P23"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 23,
+            "column": 1,
+            "value": {
+                "stringValue": "Paper spine"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 24,
+            "column": 0,
+            "value": {
+                "stringValue": "P24"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 24,
+            "column": 1,
+            "value": {
+                "stringValue": "Coconut Crystal"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 25,
+            "column": 0,
+            "value": {
+                "stringValue": "P25"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 25,
+            "column": 1,
+            "value": {
+                "stringValue": "Raindrops"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 26,
+            "column": 0,
+            "value": {
+                "stringValue": "P26"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 26,
+            "column": 1,
+            "value": {
+                "stringValue": "Eve's needle"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 27,
+            "column": 0,
+            "value": {
+                "stringValue": "P27"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 27,
+            "column": 1,
+            "value": {
+                "stringValue": "Black Widow"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 28,
+            "column": 0,
+            "value": {
+                "stringValue": "P28"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 28,
+            "column": 1,
+            "value": {
+                "stringValue": "Royal Flush"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 29,
+            "column": 0,
+            "value": {
+                "stringValue": "P29"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 29,
+            "column": 1,
+            "value": {
+                "stringValue": "Tuberculate tiger jaws"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 30,
+            "column": 0,
+            "value": {
+                "stringValue": "P30"
+            }
+        },
+        {
+            "sheet": "Plant tracker",
+            "row": 30,
+            "column": 1,
+            "value": {
+                "stringValue": "Tiny mixed succulent planter"
+            }
+        }
+    ],
+    "metadata": {
+        "sheets": [
+            {
+                "properties": {
+                    "sheetId": 2015971861,
+                    "title": "Quick log",
+                    "gridProperties": {
+                        "rowCount": 103,
+                        "columnCount": 15
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 783684077,
+                    "title": "Daily care",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 26
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 2124648850,
+                    "title": "Dry-down models",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 26
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1875598047,
+                    "title": "Dashboard",
+                    "gridProperties": {
+                        "rowCount": 254,
+                        "columnCount": 24
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 203040506,
+                    "title": "Insights",
+                    "gridProperties": {
+                        "rowCount": 585,
+                        "columnCount": 18
+                    }
+                },
+                "charts": [
+                    {
+                        "chartId": 1267143509,
+                        "spec": {
+                            "title": "Watering recency by plant",
+                            "basicChart": {
+                                "chartType": "COLUMN",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Plant ID"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Days"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 1875598047,
+                                                        "startRowIndex": 5,
+                                                        "endRowIndex": 36,
+                                                        "startColumnIndex": 1,
+                                                        "endColumnIndex": 2
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 1875598047,
+                                                        "startRowIndex": 5,
+                                                        "endRowIndex": 36,
+                                                        "startColumnIndex": 4,
+                                                        "endColumnIndex": 5
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "LEFT_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.18039216,
+                                                "green": 0.49019608,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 1697370956,
+                        "spec": {
+                            "title": "Plant dimensions • latest measured snapshot",
+                            "basicChart": {
+                                "chartType": "BAR",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Plant ID"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 31,
+                                                        "startColumnIndex": 27,
+                                                        "endColumnIndex": 28
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 31,
+                                                        "startColumnIndex": 28,
+                                                        "endColumnIndex": 29
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.18039216,
+                                                "green": 0.49019608,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 31,
+                                                        "startColumnIndex": 29,
+                                                        "endColumnIndex": 30
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.30980393,
+                                                "green": 0.5411765,
+                                                "blue": 0.70980394
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 88491986,
+                        "spec": {
+                            "title": "Modeled drying rate by plant",
+                            "basicChart": {
+                                "chartType": "BAR",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Modeled loss (g/day)"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Plant ID"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 1087321540,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 31,
+                                                        "startColumnIndex": 0,
+                                                        "endColumnIndex": 1
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 1087321540,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 31,
+                                                        "startColumnIndex": 30,
+                                                        "endColumnIndex": 31
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.08235294,
+                                                "green": 0.30980393,
+                                                "blue": 0.1764706
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 142245659,
+                        "spec": {
+                            "title": "Plant shape map • latest measured",
+                            "basicChart": {
+                                "chartType": "SCATTER",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Width (cm)"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 31,
+                                                        "startColumnIndex": 29,
+                                                        "endColumnIndex": 30
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 31,
+                                                        "startColumnIndex": 28,
+                                                        "endColumnIndex": 29
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "LEFT_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.18039216,
+                                                "green": 0.49019608,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 644668554,
+                        "spec": {
+                            "title": "Care activity timeline",
+                            "basicChart": {
+                                "chartType": "COLUMN",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Date"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Logged events"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 5000,
+                                                        "startColumnIndex": 0,
+                                                        "endColumnIndex": 1
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 5000,
+                                                        "startColumnIndex": 1,
+                                                        "endColumnIndex": 2
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "LEFT_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.18039216,
+                                                "green": 0.49019608,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 5000,
+                                                        "startColumnIndex": 2,
+                                                        "endColumnIndex": 3
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "LEFT_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.30980393,
+                                                "green": 0.5411765,
+                                                "blue": 0.70980394
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 5000,
+                                                        "startColumnIndex": 3,
+                                                        "endColumnIndex": 4
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "LEFT_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.8392157,
+                                                "green": 0.6509804,
+                                                "blue": 0.24313726
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 1042050202,
+                        "spec": {
+                            "title": "Calibration status",
+                            "basicChart": {
+                                "chartType": "BAR",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Plants"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Calibration status"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 8,
+                                                        "startColumnIndex": 13,
+                                                        "endColumnIndex": 14
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 8,
+                                                        "startColumnIndex": 14,
+                                                        "endColumnIndex": 15
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.18039216,
+                                                "green": 0.49019608,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 1075919061,
+                        "spec": {
+                            "title": "Tracking coverage by plant",
+                            "basicChart": {
+                                "chartType": "BAR",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Logged events"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Plant ID"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 250,
+                                                        "startColumnIndex": 7,
+                                                        "endColumnIndex": 8
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 250,
+                                                        "startColumnIndex": 8,
+                                                        "endColumnIndex": 9
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.18039216,
+                                                "green": 0.49019608,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 250,
+                                                        "startColumnIndex": 9,
+                                                        "endColumnIndex": 10
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.30980393,
+                                                "green": 0.5411765,
+                                                "blue": 0.70980394
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 250,
+                                                        "startColumnIndex": 10,
+                                                        "endColumnIndex": 11
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.8392157,
+                                                "green": 0.6509804,
+                                                "blue": 0.24313726
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 1399636457,
+                        "spec": {
+                            "title": "Data-quality follow-ups by plant",
+                            "basicChart": {
+                                "chartType": "BAR",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Plant ID"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 31,
+                                                        "startColumnIndex": 21,
+                                                        "endColumnIndex": 22
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 31,
+                                                        "startColumnIndex": 22,
+                                                        "endColumnIndex": 23
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.18039216,
+                                                "green": 0.49019608,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 31,
+                                                        "startColumnIndex": 23,
+                                                        "endColumnIndex": 24
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.30980393,
+                                                "green": 0.5411765,
+                                                "blue": 0.70980394
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 359458121,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 31,
+                                                        "startColumnIndex": 24,
+                                                        "endColumnIndex": 25
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.8392157,
+                                                "green": 0.6509804,
+                                                "blue": 0.24313726
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 1091061876,
+                        "spec": {
+                            "title": "Current dry-down cycle • measured weights",
+                            "basicChart": {
+                                "chartType": "SCATTER",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Days after latest Water / Repot"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Whole-pot weight (g)"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 5000,
+                                                        "startColumnIndex": 30,
+                                                        "endColumnIndex": 31
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 5000,
+                                                        "startColumnIndex": 26,
+                                                        "endColumnIndex": 27
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "LEFT_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.1764706,
+                                                "green": 0.4862745,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 5000,
+                                                        "startColumnIndex": 27,
+                                                        "endColumnIndex": 28
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "LEFT_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.8392157,
+                                                "green": 0.64705884,
+                                                "blue": 0.23921569
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 5000,
+                                                        "startColumnIndex": 28,
+                                                        "endColumnIndex": 29
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "LEFT_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.30980393,
+                                                "green": 0.5372549,
+                                                "blue": 0.70980394
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 1028541077,
+                        "spec": {
+                            "title": "Current dry-down cycle • interval loss",
+                            "basicChart": {
+                                "chartType": "SCATTER",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Days after latest Water / Repot"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Measured interval loss (g/day)"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 5000,
+                                                        "startColumnIndex": 30,
+                                                        "endColumnIndex": 31
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 0,
+                                                        "endRowIndex": 5000,
+                                                        "startColumnIndex": 29,
+                                                        "endColumnIndex": 30
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "LEFT_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.1764706,
+                                                "green": 0.4862745,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 1900424681,
+                        "spec": {
+                            "title": "Relative water remaining by plant",
+                            "basicChart": {
+                                "chartType": "BAR",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Fraction of wet-to-dry capacity"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Plant ID"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 40,
+                                                        "endRowIndex": 71,
+                                                        "startColumnIndex": 0,
+                                                        "endColumnIndex": 1
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 40,
+                                                        "endRowIndex": 71,
+                                                        "startColumnIndex": 1,
+                                                        "endColumnIndex": 2
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.1764706,
+                                                "green": 0.4862745,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 949372848,
+                        "spec": {
+                            "title": "Mass lost since the current wet reference",
+                            "basicChart": {
+                                "chartType": "BAR",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Mass lost (g)"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Plant ID"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 80,
+                                                        "endRowIndex": 111,
+                                                        "startColumnIndex": 0,
+                                                        "endColumnIndex": 1
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 80,
+                                                        "endRowIndex": 111,
+                                                        "startColumnIndex": 1,
+                                                        "endColumnIndex": 2
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.1764706,
+                                                "green": 0.4862745,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 1120660375,
+                        "spec": {
+                            "title": "Predicted dry-check timing",
+                            "basicChart": {
+                                "chartType": "BAR",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Days from today"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Plant ID"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 120,
+                                                        "endRowIndex": 151,
+                                                        "startColumnIndex": 0,
+                                                        "endColumnIndex": 1
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 120,
+                                                        "endRowIndex": 151,
+                                                        "startColumnIndex": 1,
+                                                        "endColumnIndex": 2
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.1764706,
+                                                "green": 0.4862745,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 120,
+                                                        "endRowIndex": 151,
+                                                        "startColumnIndex": 2,
+                                                        "endColumnIndex": 3
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.8392157,
+                                                "green": 0.64705884,
+                                                "blue": 0.23921569
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 120,
+                                                        "endRowIndex": 151,
+                                                        "startColumnIndex": 3,
+                                                        "endColumnIndex": 4
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.30980393,
+                                                "green": 0.5372549,
+                                                "blue": 0.70980394
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 1925398746,
+                        "spec": {
+                            "title": "Forecast uncertainty by plant",
+                            "basicChart": {
+                                "chartType": "BAR",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Window width (days)"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Plant ID"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 160,
+                                                        "endRowIndex": 191,
+                                                        "startColumnIndex": 0,
+                                                        "endColumnIndex": 1
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 160,
+                                                        "endRowIndex": 191,
+                                                        "startColumnIndex": 1,
+                                                        "endColumnIndex": 2
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.1764706,
+                                                "green": 0.4862745,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 1532415709,
+                        "spec": {
+                            "title": "Drying speed relative to pot capacity",
+                            "basicChart": {
+                                "chartType": "BAR",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Fraction of capacity / day"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Plant ID"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 200,
+                                                        "endRowIndex": 231,
+                                                        "startColumnIndex": 0,
+                                                        "endColumnIndex": 1
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 200,
+                                                        "endRowIndex": 231,
+                                                        "startColumnIndex": 1,
+                                                        "endColumnIndex": 2
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.1764706,
+                                                "green": 0.4862745,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 1569228061,
+                        "spec": {
+                            "title": "Evidence behind the dry-down models",
+                            "basicChart": {
+                                "chartType": "BAR",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Evidence count"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Plant ID"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 240,
+                                                        "endRowIndex": 271,
+                                                        "startColumnIndex": 0,
+                                                        "endColumnIndex": 1
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 240,
+                                                        "endRowIndex": 271,
+                                                        "startColumnIndex": 1,
+                                                        "endColumnIndex": 2
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.1764706,
+                                                "green": 0.4862745,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 240,
+                                                        "endRowIndex": 271,
+                                                        "startColumnIndex": 2,
+                                                        "endColumnIndex": 3
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.8392157,
+                                                "green": 0.64705884,
+                                                "blue": 0.23921569
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 1137563673,
+                        "spec": {
+                            "title": "Wet-to-dry reference capacity",
+                            "basicChart": {
+                                "chartType": "BAR",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Reference capacity (g)"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Plant ID"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 280,
+                                                        "endRowIndex": 311,
+                                                        "startColumnIndex": 0,
+                                                        "endColumnIndex": 1
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 280,
+                                                        "endRowIndex": 311,
+                                                        "startColumnIndex": 1,
+                                                        "endColumnIndex": 2
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.1764706,
+                                                "green": 0.4862745,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 2045460250,
+                        "spec": {
+                            "title": "Time since the latest weighing",
+                            "basicChart": {
+                                "chartType": "BAR",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Days since weighing"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Plant ID"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 320,
+                                                        "endRowIndex": 351,
+                                                        "startColumnIndex": 0,
+                                                        "endColumnIndex": 1
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 320,
+                                                        "endRowIndex": 351,
+                                                        "startColumnIndex": 1,
+                                                        "endColumnIndex": 2
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.1764706,
+                                                "green": 0.4862745,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 1821105326,
+                        "spec": {
+                            "title": "Forecast basis across the collection",
+                            "basicChart": {
+                                "chartType": "BAR",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Plants"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Plant ID"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 360,
+                                                        "endRowIndex": 391,
+                                                        "startColumnIndex": 0,
+                                                        "endColumnIndex": 1
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 907202601,
+                                                        "startRowIndex": 360,
+                                                        "endRowIndex": 391,
+                                                        "startColumnIndex": 1,
+                                                        "endColumnIndex": 2
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "BOTTOM_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.1764706,
+                                                "green": 0.4862745,
+                                                "blue": 0.32941177
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "properties": {
+                    "sheetId": 0,
+                    "title": "Plant tracker",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 36
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1465181080,
+                    "title": "History",
+                    "gridProperties": {
+                        "rowCount": 5000,
+                        "columnCount": 42
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 34539984,
+                    "title": "History view",
+                    "gridProperties": {
+                        "rowCount": 5000,
+                        "columnCount": 42
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1087321540,
+                    "title": "Baselines",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 36
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 261928558,
+                    "title": "P01 Moon cactus",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                },
+                "charts": [
+                    {
+                        "chartId": 985262780,
+                        "spec": {
+                            "title": "Plant dimensions • measurement history",
+                            "basicChart": {
+                                "chartType": "LINE",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Date"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 261928558,
+                                                        "startRowIndex": 11,
+                                                        "endRowIndex": 1000,
+                                                        "startColumnIndex": 18,
+                                                        "endColumnIndex": 19
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 261928558,
+                                                        "startRowIndex": 11,
+                                                        "endRowIndex": 1000,
+                                                        "startColumnIndex": 20,
+                                                        "endColumnIndex": 21
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "LEFT_AXIS"
+                                    },
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 261928558,
+                                                        "startRowIndex": 11,
+                                                        "endRowIndex": 1000,
+                                                        "startColumnIndex": 21,
+                                                        "endColumnIndex": 22
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "LEFT_AXIS"
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 249399044,
+                        "spec": {
+                            "title": "Weight trend after latest Water / Repot anchor",
+                            "basicChart": {
+                                "chartType": "SCATTER",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Days after anchor"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS",
+                                        "title": "Weight (g)"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 261928558,
+                                                        "startRowIndex": 11,
+                                                        "endRowIndex": 1000,
+                                                        "startColumnIndex": 16,
+                                                        "endColumnIndex": 17
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 261928558,
+                                                        "startRowIndex": 11,
+                                                        "endRowIndex": 1000,
+                                                        "startColumnIndex": 17,
+                                                        "endColumnIndex": 18
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "LEFT_AXIS",
+                                        "colorStyle": {
+                                            "rgbColor": {
+                                                "red": 0.8392157,
+                                                "green": 0.6509804,
+                                                "blue": 0.24313726
+                                            }
+                                        }
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    },
+                    {
+                        "chartId": 198418581,
+                        "spec": {
+                            "title": "Weight history • calendar time",
+                            "basicChart": {
+                                "chartType": "LINE",
+                                "axis": [
+                                    {
+                                        "position": "BOTTOM_AXIS",
+                                        "title": "Date"
+                                    },
+                                    {
+                                        "position": "LEFT_AXIS"
+                                    }
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 261928558,
+                                                        "startRowIndex": 11,
+                                                        "endRowIndex": 1000,
+                                                        "startColumnIndex": 18,
+                                                        "endColumnIndex": 19
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": 261928558,
+                                                        "startRowIndex": 11,
+                                                        "endRowIndex": 1000,
+                                                        "startColumnIndex": 19,
+                                                        "endColumnIndex": 20
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "LEFT_AXIS"
+                                    }
+                                ],
+                                "headerCount": 1
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "properties": {
+                    "sheetId": 1627085799,
+                    "title": "P02 Feather cactus",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 699310456,
+                    "title": "P03 Serpent cactus",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1703121353,
+                    "title": "P04 Grass-blade cactus",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1287025541,
+                    "title": "P05 Old Man Andes",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 722739406,
+                    "title": "P06 Indigo Wave",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1943607307,
+                    "title": "P07 Giant chin cactus",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1123704267,
+                    "title": "P08 Rainbow hedgehog",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 2108858075,
+                    "title": "P09 Monk's hood cactus",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 563120069,
+                    "title": "P10 Dragon's Egg",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1651412842,
+                    "title": "P11 Domino cactus",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1062910759,
+                    "title": "P12 Ming Thing",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1910672724,
+                    "title": "P13 Dwarf old man",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1338146977,
+                    "title": "P14 Peanut cactus hybrid",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 539263221,
+                    "title": "P15 Woolly nipple",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 219034748,
+                    "title": "P16 Hook-spined cactus",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1255045536,
+                    "title": "P17 Boobie cactus",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1489646395,
+                    "title": "P18 Yellow tower",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 2124393020,
+                    "title": "P19 Rehab cactus planter",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1902575014,
+                    "title": "P20 Succulent planter",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 763232184,
+                    "title": "P21 Money tree",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 294692157,
+                    "title": "P22 Kiwi aeonium",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 202608230,
+                    "title": "P23 Paper spine",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 202608240,
+                    "title": "P24 Coconut Crystal",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 202608250,
+                    "title": "P25 Raindrops",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 202608260,
+                    "title": "P26 Eve's needle",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 202608270,
+                    "title": "P27 Black Widow",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 202608280,
+                    "title": "P28 Royal Flush",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 202609290,
+                    "title": "P29 Tiger jaws",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 202609300,
+                    "title": "P30 Mixed succulent",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 22
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 987654321,
+                    "title": "Integrity",
+                    "gridProperties": {
+                        "rowCount": 408,
+                        "columnCount": 10
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 135791357,
+                    "title": "App entries",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 34
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1515017170,
+                    "title": "App bulk",
+                    "gridProperties": {
+                        "rowCount": 1000,
+                        "columnCount": 54
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 359458121,
+                    "title": "Insights data",
+                    "gridProperties": {
+                        "rowCount": 5000,
+                        "columnCount": 30
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1183347745,
+                    "title": "App insight activity",
+                    "gridProperties": {
+                        "rowCount": 5000,
+                        "columnCount": 4
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 30353954,
+                    "title": "App insight calibration",
+                    "gridProperties": {
+                        "rowCount": 250,
+                        "columnCount": 2
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1298622355,
+                    "title": "App insight followups",
+                    "gridProperties": {
+                        "rowCount": 250,
+                        "columnCount": 5
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 1330012232,
+                    "title": "App plant charts",
+                    "gridProperties": {
+                        "rowCount": 5000,
+                        "columnCount": 8
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "sheetId": 907202601,
+                    "title": "Dry-down insights",
+                    "gridProperties": {
+                        "rowCount": 5000,
+                        "columnCount": 31
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -21,11 +21,27 @@ appear above the graphs.
 
 The existing drying-rate chart reads **Baselines AE** and is labeled as a modeled
 rate. All 19 Insights charts share Roboto text, 18-point green titles, and
-11-point subtitles and axis titles. Missing series colors use the
-existing green, blue, and gold palette; established series colors retain their
-meaning. Chart data, scales, labels, legends, and heights remain as configured.
+11-point subtitles and axis titles. Each plant has a permanent, distinct color
+defined in [`plant-colors.json`](plant-colors.json). The visible **Plant colors**
+sheet lists all 30 IDs, full plant names, color names, hex values, swatches, and
+links to their individual charts. These are arbitrary identity colors, unrelated
+to the appearance of the plants. Keep the names and IDs alongside color because
+similar hues can still be difficult to distinguish.
+
+All 90 charts on the individual plant sheets use that plant's color. The 14
+plant comparison charts use the same colors for each plant's bars or points, in
+consistent P01–P30 order. This fixed order prevents point colors from moving to
+another plant when a sorted source recalculates. Source values still update
+automatically. The two cycle-explorer charts change to the selected plant's
+color automatically. Measured weights use solid lines and circles, dry references
+use dotted lines and diamonds, and wet references use dashed lines and squares.
+Height and width on individual plant pages use solid/circle and dashed/diamond
+styles respectively. The three aggregate charts (care activity, calibration
+status, and forecast basis) retain their category colors.
+
+Chart scales and heights remain as configured.
 The first chart shares the 1,155-pixel width and 10-pixel left inset used by the
-other Insights charts. Individual plant charts retain their existing styling.
+other Insights charts. Individual plant charts retain their existing layout.
 
 ## Reading the graphs
 
@@ -79,7 +95,7 @@ here. Charts intentionally use `SHOW_ALL` so the hidden helper remains usable.
 Run the migration regression tests with:
 
 ```sh
-npx vitest run --project=unit test/google-sheets/insights-charts.test.mjs
+npx vitest run --project=unit test/google-sheets/insights-charts.test.mjs test/google-sheets/plant-chart-colors.test.mjs
 npm run typecheck
 npm run lint
 ```
@@ -96,3 +112,42 @@ The production readback preserved all 726 observations and their 726 unique
 Observation IDs. The 659 distinct Request IDs and their event-row grouping were
 unchanged. All new helper formulas calculated without errors, and the other 97
 existing chart specifications and positions matched the pre-migration snapshot.
+
+## Maintaining plant colors
+
+[`plant-chart-colors.mjs`](plant-chart-colors.mjs) provides the separate color
+migration: `buildPlantColorKeyRequests(snapshot)` creates the visible key and
+recolors the 90 plant-page charts; `buildPlantInsightColorRequests(snapshot)`
+creates the hidden **Plant color data** helper and updates 16 Insights charts.
+Supply native chart specifications, the Plant tracker ID/name roster, and the
+Insights selector label. Both planners reject replay into an existing color
+sheet. They leave canonical observations and source metric formulas untouched.
+
+Prepare both new sheets and their formulas before applying the 106
+`updateChartSpec` requests. Read calculated values back before updating charts.
+The comparison helper looks up metrics by permanent ID and keeps missing values
+blank while preserving numeric zero. Selected-cycle helpers expose data only in
+the chosen plant's series. A final numeric sentinel with a blank x-coordinate
+keeps Sheets from deleting inactive series. It repeats an existing metric value
+so it does not extend the measured range, and has no plotted coordinate. This
+retains 90 weight/reference series and 30 interval-loss series across selector
+changes without adding an edit trigger or deploying Apps Script.
+
+The helper is protected with an editing warning and is not an AppSheet table.
+Do not sort its comparison blocks: native point overrides are indexed by row.
+To change a color later, update the JSON palette and the matching native key,
+point overrides, plant-page series, selector series, and selector-cell rule
+together; editing only a swatch does not recolor charts. Rehearse on a native
+copy and preserve complete chart specifications and positions on every update.
+
+The September 7 color rehearsal compared all 690 comparison values with their
+source metrics by plant ID, including 58 missing values, and exercised the P01,
+P17, and P02 cycle selections. The native backup is named **Garden Plant Tracker
+— before plant chart colors — 2026-09-07**.
+
+Production readback verified all 900 series and point-color assignments, all
+109 original chart IDs and positions, and the retained 90/30 selector series.
+The new formulas calculated without errors. History, Plant tracker, Baselines,
+Dashboard formulas, dry-down models, and AppSheet staging values and validations
+matched the immediately preceding snapshot exactly. The logger deployment was
+unchanged.
