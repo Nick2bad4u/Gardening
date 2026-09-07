@@ -23,9 +23,12 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-As of September 6, 2026, the stable production deployment identifies the logger
-as **5.19.0** on immutable Apps Script version **72**, matching source commit
-`065b5d2`. History-backed daily progress, filtered History, refreshable summaries,
+As of September 7, 2026, the stable production deployment identifies the logger
+as **5.19.1** on immutable Apps Script version **73**, matching source commit
+`a314f15`. The selected plant name appears below the pot labels, entered weights
+show independent comparisons with the latest reading and the last completed Dry,
+and the compact Not weighed today control includes the weight icon.
+History-backed daily progress, filtered History, refreshable summaries,
 current-cycle weight charts, input comparisons, and recoverable saved-entry
 corrections are live. The protected Daily care sheet and linked Dashboard
 Integrity indicators are installed, and Dashboard freezes its three identity
@@ -513,9 +516,33 @@ Install exactly from the lockfile and run the logger suite:
 
 ```powershell
 npm ci
+npm run lint:apps-script
+npm run typecheck:apps-script
 npm run test:logger
 npm run test:logger:coverage
 ```
+
+The `.gs` files are checked directly by ESLint as classic scripts with read-only
+Apps Script service globals. Actual trigger, menu, web-app, and operator entry
+points are listed in `/* exported ... */` comments; private helpers still receive
+unused-function checks. Node and browser globals are unavailable in this scope.
+
+`tsconfig.apps-script.json` uses the shared strict TypeScript configuration,
+`checkJs`, and `@types/google-apps-script`, with JSDoc and the domain declarations
+in `types/apps-script*.d.ts`. Optional properties, unchecked indexed access, and
+the declaration files themselves are checked. Apps Script files share a global
+scope, so this project uses classic-script detection without isolated modules.
+The checker discovers every `.gs` input and presents its exact contents to the
+compiler through in-memory JavaScript filenames. It emits no build files and
+reports diagnostics at the original `.gs` path and line. Simply adding `.gs`
+to an ordinary `tsconfig` include would not check those files.
+
+`npm run typecheck` includes this Apps Script check. The logger CI also runs
+the dedicated lint, type, and checker regression gates before coverage.
+VS Code associates `.gs` with JavaScript for ESLint and formatting, and its
+**Run Task → Check Apps Script types** task links compiler errors to the source.
+The existing Prettier JavaScript-parser override formats `.gs` files. These
+development declarations and tools stay outside the three-file clasp push set.
 
 The tests cover combined event inference, formula-safe text, request-ID
 validation, single and bulk History reconciliation, lost callbacks, late stale

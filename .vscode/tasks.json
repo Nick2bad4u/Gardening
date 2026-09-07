@@ -1,0 +1,19 @@
+{
+    "tasks": [
+        {
+            "group": "test",
+            "label": "Check Apps Script types",
+            "problemMatcher": "$tsc",
+            "script": "typecheck:apps-script",
+            "type": "npm"
+        },
+        {
+            "group": "test",
+            "label": "Lint Apps Script",
+            "problemMatcher": "$eslint-stylish",
+            "script": "lint:apps-script",
+            "type": "npm"
+        }
+    ],
+    "version": "2.0.0"
+}

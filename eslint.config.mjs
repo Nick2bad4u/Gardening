@@ -1,5 +1,8 @@
 import { createConfig } from "eslint-config-nick2bad4u";
 
+import appsScriptConfig, {
+    createAppsScriptDeclarationConfig,
+} from "./scripts/eslint-apps-script-config.mjs";
 import parser from "./scripts/html-eslint-parser.mjs";
 
 /** @type {import("eslint").Linter.Config[]} */
@@ -50,7 +53,28 @@ const sharedConfig = createConfig({
 
 /** @type {import("eslint").Linter.Config[]} */
 const config = [
-    ...sharedConfig,
+    // The shared preset targets Node, modules, browsers and markup. Keep every
+    // existing file's rules intact while giving .gs its own classic-script
+    // environment. These are per-config exclusions, never global .gs ignores.
+    ...sharedConfig.map((entry) =>
+        entry.rules !== undefined ||
+        entry.languageOptions !== undefined ||
+        entry.processor !== undefined
+            ? {
+                  ...entry,
+                  ignores: [
+                      ...(entry.ignores ?? []),
+                      "scripts/google-sheets/*.gs",
+                  ],
+              }
+            : entry
+    ),
+    appsScriptConfig,
+    createAppsScriptDeclarationConfig(
+        sharedConfig.find(
+            (entry) => entry.name === "🗄️ Type Declarations: TypeScript Parser"
+        )?.languageOptions?.["parser"]
+    ),
     {
         files: ["**/*.{yaml,yml}"],
         name: "Gardening: YAML and shared formatter agreement",

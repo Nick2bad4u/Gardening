@@ -1,0 +1,5 @@
+{
+    "extends": "../../../tsconfig.apps-script.json",
+    "files": ["./domain.d.ts"],
+    "include": ["./valid/*.gs"]
+}

@@ -1,0 +1,4 @@
+{
+    "extends": "./tsconfig.valid.json",
+    "files": ["./domain.d.ts", "./ambient.d.ts"]
+}

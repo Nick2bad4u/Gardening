@@ -1,0 +1,24 @@
+{
+    "$schema": "https://www.schemastore.org/tsconfig.json",
+    "compilerOptions": {
+        "allowJs": true,
+        "checkJs": true,
+        "forceConsistentCasingInFileNames": true,
+        "isolatedModules": false,
+        "lib": ["ES2023"],
+        "module": "Preserve",
+        "moduleDetection": "legacy",
+        "moduleResolution": "Bundler",
+        "noEmit": true,
+        "skipLibCheck": false,
+        "strict": true,
+        "target": "ES2023",
+        "types": ["google-apps-script"]
+    },
+    "extends": [
+        "tsconfig-nick2bad4u/tsconfig.json",
+        "tsconfig-nick2bad4u/tsconfig.js.json"
+    ],
+    "files": ["types/apps-script-domain.d.ts"],
+    "include": ["scripts/google-sheets/*.gs", "types/apps-script*.d.ts"]
+}

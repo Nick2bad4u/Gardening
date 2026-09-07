@@ -51,6 +51,15 @@ jobs:
             - name: "Install dependencies"
               run: "npm ci --ignore-scripts"
 
+            - name: "Lint Apps Script sources"
+              run: "npm run lint:apps-script"
+
+            - name: "Check Apps Script types"
+              run: "npm run typecheck:apps-script"
+
+            - name: "Verify Apps Script checker regressions"
+              run: "npx vitest run test/apps-script-checker.test.mjs"
+
             - name: "Run logger tests with coverage"
               run: "npm run test:logger:coverage"
 
