@@ -2225,7 +2225,7 @@ describe("garden logger workbook refresh and navigation", () => {
         expect(structuredClone(context.refreshGardenWorkbook())).toStrictEqual({
             baselineColumns: 36,
             dashboardColumns: 24,
-            loggerVersion: "5.19.0",
+            loggerVersion: "5.19.1",
             plantPages: 2,
         });
         expect(calls.filter(([name]) => name === "plant")).toHaveLength(2);
@@ -2285,7 +2285,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P01",
             lastPlant: "P10",
-            loggerVersion: "5.19.0",
+            loggerVersion: "5.19.1",
             plantPages: 10,
         });
         expect(
@@ -2293,7 +2293,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P11",
             lastPlant: "P20",
-            loggerVersion: "5.19.0",
+            loggerVersion: "5.19.1",
             plantPages: 10,
         });
         expect(
@@ -2301,7 +2301,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P21",
             lastPlant: "P30",
-            loggerVersion: "5.19.0",
+            loggerVersion: "5.19.1",
             plantPages: 10,
         });
 
@@ -2917,7 +2917,7 @@ describe("scoped Dashboard weight count installer", () => {
             ).toStrictEqual({
                 plants: 30,
                 range: "Dashboard!X6:X36",
-                version: "5.19.0",
+                version: "5.19.1",
             });
 
             const after = structuredClone(rows);
@@ -3639,7 +3639,7 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.19.0");
+        expect(bootstrap.version).toBe("5.19.1");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             activitySummary: {
@@ -8263,10 +8263,10 @@ describe("garden logger workbook installation and History headers", () => {
         context.installGardenLogger();
 
         expect(required(calls.properties)["gardenLoggerVersion"]).toBe(
-            "5.19.0"
+            "5.19.1"
         );
         expect(required(calls.toast)[1]).toBe("Garden logger verified");
-        expect(required(calls.toast)[0]).toMatch(/Logger 5\.19\.0 is ready/v);
+        expect(required(calls.toast)[0]).toMatch(/Logger 5\.19\.1 is ready/v);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(

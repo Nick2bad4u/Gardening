@@ -1010,6 +1010,10 @@ describe("garden logger daily progress, filtered History and measured charts", (
             ).getAttribute("aria-busy")
         ).toBe("false");
     });
+});
+
+describe("garden logger input weight comparisons", () => {
+    afterEach(restoreLoggerMocks);
 
     it("shows signed input changes and elapsed observation time, clears invalid input, and never changes the entered value", () => {
         expect.hasAssertions();
@@ -1027,6 +1031,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         expect(feedback.textContent).toContain(
             "+5.5 g vs latest 420 g · 1 d 0 h since latest reading"
         );
+        expect(feedback.textContent).toContain("+27.5 g vs last dry 398 g");
 
         enterWorkflowValue(window, "weight", "400");
 
@@ -1039,6 +1044,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         enterWorkflowValue(window, "potSetup", "3");
 
         expect(feedback.textContent).toContain("Different pot setup");
+        expect(feedback.textContent).not.toContain("vs last dry");
         expect(
             queryElement(window.document, "#weight", HTMLInputElement).value
         ).toBe("420");
@@ -1051,6 +1057,49 @@ describe("garden logger daily progress, filtered History and measured charts", (
 
         expect(feedback.textContent).toBe("");
     });
+
+    it.each([
+        { dry: 398, expected: "+2 g vs last dry 398 g", latest: "" },
+        { dry: 400, expected: "0 g vs last dry 400 g", latest: "" },
+        { dry: 420.1, expected: "-20.1 g vs last dry 420.1 g", latest: "" },
+        { dry: "", expected: "-20 g vs latest 420 g", latest: 420 },
+        { dry: 0, expected: "-20 g vs latest 420 g", latest: 420 },
+        { dry: -1, expected: "-20 g vs latest 420 g", latest: 420 },
+        { dry: "invalid", expected: "-20 g vs latest 420 g", latest: 420 },
+        { dry: "", expected: "", latest: "" },
+    ])(
+        "compares a measured entry only with available positive anchors: $latest / $dry",
+        ({ dry, expected, latest }) => {
+            expect.hasAssertions();
+
+            const data = workflowBootstrap();
+            const { window } = createLoggerWindow({
+                bootstrapData: {
+                    ...data,
+                    plants: data.plants.map((plant) => ({
+                        ...plant,
+                        dryOrLowestWeight: dry,
+                        latestWeight: latest,
+                    })),
+                },
+            });
+            enterWorkflowValue(window, "weight", "400");
+            const feedback = queryElement(
+                window.document,
+                "#weightFeedback",
+                HTMLElement
+            );
+
+            expect(feedback.textContent).toContain(expected);
+            expect(feedback.hidden).toBe(!expected);
+            expect(feedback.textContent?.includes("vs last dry")).toBe(
+                expected.includes("vs last dry")
+            );
+            expect(feedback.textContent?.includes("vs latest")).toBe(
+                latest !== ""
+            );
+        }
+    );
 });
 
 /** @param {Window} window @param {string} value */
