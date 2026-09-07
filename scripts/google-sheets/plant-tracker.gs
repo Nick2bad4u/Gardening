@@ -14,7 +14,7 @@
    refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30 */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.19.2",
+    version: "5.19.3",
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
     historySheet: "History",
@@ -5575,7 +5575,9 @@ function correctionStoredOperationMatches_(operation, payload) {
 
 /** @param {unknown} value @returns {value is GardenCorrectionRejectionCode} */
 function correctionTerminalCode_(value) {
-    return correctionTerminalCodes_().some((code) => code === value);
+    /** @type {readonly unknown[]} */
+    const codes = correctionTerminalCodes_();
+    return codes.includes(value);
 }
 
 /** @returns {GardenCorrectionRejectionCode[]} */
@@ -5626,14 +5628,14 @@ function withCorrectionLock_(operation) {
  * @returns {asserts value is Partial<Record<K, unknown>>}
  */
 function correctionObject_(value, keys) {
+    /** @type {readonly string[]} */
+    const allowedKeys = keys;
     if (
         !value ||
         typeof value !== "object" ||
         Array.isArray(value) ||
         ![Object.prototype, null].includes(Object.getPrototypeOf(value)) ||
-        Object.keys(value).some(
-            (key) => !keys.some((allowed) => allowed === key)
-        )
+        Object.keys(value).some((key) => !allowedKeys.includes(key))
     ) {
         throw new Error("INVALID_CORRECTION: Unsupported payload or field.");
     }
@@ -5909,11 +5911,13 @@ function correctionCanonicalSnapshot_(row) {
  * @returns {asserts row is GardenCorrectionDisplayRow}
  */
 function correctionCanonicalRow_(row) {
+    /** @type {readonly unknown[]} */
+    const events = correctionEvents_();
     if (
         row.length !== GARDEN_LOGGER.historyStoredColumns ||
         (row[0] !== "" && !(row[0] instanceof Date)) ||
         !row[1] ||
-        !correctionEvents_().some((event) => event === row[2]) ||
+        !events.includes(row[2]) ||
         (row[9] !== "" && !(row[9] instanceof Date)) ||
         (row[35] !== "" && row[35] !== "Active" && row[35] !== "Removed") ||
         [4, 5, 6, 10, 21, 39, 41].some(
@@ -6594,8 +6598,7 @@ function correctionReceipt_(snapshot, payload) {
     const match = matches[0];
     if (
         matches.length !== 1 ||
-        !match ||
-        match.values[26] !== replacementId ||
+        match?.values[26] !== replacementId ||
         match.values[30] !== payload.observationId
     ) {
         throw new Error(
@@ -8546,18 +8549,21 @@ function normalizeWebHistoryFilters_(filters, plantNames) {
 
 /**
  * Whitelist JSON scalar cell values; retain numbers and booleans for the DTO.
+ * @param {unknown} value
  * @returns {string | number | boolean} A valid scalar, or an empty string.
  */
-/**
- * @param {unknown} value
- */
 function webHistoryDetailValue_(value) {
-    if (value instanceof Date) {
-        return Number.isNaN(value.getTime()) ? "" : value.toISOString();
-    }
-    if (typeof value === "number") return Number.isFinite(value) ? value : "";
-    if (typeof value === "string" || typeof value === "boolean") return value;
-    return "";
+    const scalar =
+        value instanceof Date
+            ? Number.isNaN(value.getTime())
+                ? ""
+                : value.toISOString()
+            : value;
+    return typeof scalar === "string" ||
+        typeof scalar === "boolean" ||
+        (typeof scalar === "number" && Number.isFinite(scalar))
+        ? scalar
+        : "";
 }
 
 /**
@@ -9431,13 +9437,13 @@ function applyBulkEvent_(quickLog) {
  * @param {number} columnNumber
  */
 function updateInferredEvent_(quickLog, rowNumber, columnNumber) {
-    if (
-        ![
-            GARDEN_LOGGER.weightColumn,
-            GARDEN_LOGGER.heightColumn,
-            GARDEN_LOGGER.widthColumn,
-        ].some((column) => column === columnNumber)
-    ) {
+    /** @type {readonly number[]} */
+    const measurementColumns = [
+        GARDEN_LOGGER.weightColumn,
+        GARDEN_LOGGER.heightColumn,
+        GARDEN_LOGGER.widthColumn,
+    ];
+    if (!measurementColumns.includes(columnNumber)) {
         return;
     }
 
