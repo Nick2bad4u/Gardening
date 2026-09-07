@@ -28,12 +28,15 @@ overwritten. The bound Apps Script in
 ## Current production baseline
 
 As of September 7, 2026, the stable production deployment identifies the logger
-as **5.19.3** on immutable Apps Script version **75**, matching source commit
-`da6c73a`. Native Apps Script now has strict type and lint gates, checked domain
+as **5.19.4** on immutable Apps Script version **76**, matching source commit
+`c122d2a`. Native Apps Script now has strict type and lint gates, checked domain
 contracts, and validated input and sheet-read boundaries.
-The selected plant name appears below the pot labels, entered weights
-show independent comparisons with the latest reading and the last completed Dry,
-and the compact Not weighed today control includes the weight icon.
+The selected plant name has an SVG icon and a vertically centered row below the
+pot labels. Daily progress has separate saved and queued badges, the plant status
+stays on one line, and current-cycle charts have a larger plot, a visual legend,
+and structured dates and readings. Entered weights show independent comparisons
+with the latest reading and the last completed Dry, and the compact Not weighed
+today control includes the weight icon.
 History-backed daily progress, filtered History, refreshable summaries,
 current-cycle weight charts, input comparisons, and recoverable saved-entry
 corrections are live. The protected Daily care sheet and linked Dashboard
@@ -44,12 +47,15 @@ above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
 `clasp deployments`, and the authenticated live page before a future release.
 
-The September 7 patch resolved the remaining Sonar findings. All three immutable
-deployment files match the committed source, the authenticated page reports
-`Connected · logger 5.19.3`, and the logger/intake installers completed successfully.
+The September 7 UI patch preserves only correction drafts with actual edits;
+opening and closing an unchanged correction no longer creates a recovery banner.
+Edited drafts offer Resume and Discard, with submitted corrections still protected.
+All three immutable deployment files match the committed source, the authenticated
+page reports `Connected · logger 5.19.4`, and the logger/intake installers completed
+successfully. The source commit passed CI and the Sonar quality gate with no issues.
 The queue trigger was replaced in place: exactly one five-minute
 `processQueuedAppSheetEntries` trigger remains and has run successfully.
-The native backup is named **Garden Plant Tracker — before logger 5.19.3 —
+The native backup is named **Garden Plant Tracker — before logger 5.19.4 —
 2026-09-07**. The post-install comparison preserved all 726 History observations,
 their 726 unique Observation IDs, and the 659 distinct Request IDs with their
 event-row grouping. Baselines, dry-down model formulas, and AppSheet staging
