@@ -24,10 +24,12 @@ overwritten. The bound Apps Script in
 ## Current production baseline
 
 As of September 6, 2026, the stable production deployment identifies the logger
-as **5.18.5** on immutable Apps Script version **71**. The summary portrait,
-centered metrics, signed dry-weight comparison, photo footer control, and
-dismissible help panels are live and verified, alongside plant activity
-summaries, History feedback, and Dashboard weight totals.
+as **5.19.0** on immutable Apps Script version **72**, matching source commit
+`065b5d2`. History-backed daily progress, filtered History, refreshable summaries,
+current-cycle weight charts, input comparisons, and recoverable saved-entry
+corrections are live. The protected Daily care sheet and linked Dashboard
+Integrity indicators are installed, and Dashboard freezes its three identity
+columns.
 The existing production deployment was updated in place, so the production URL
 above remains unchanged. Treat these values as a handoff baseline, not a
 substitute for checking `GARDEN_LOGGER.version`, `clasp versions`,
@@ -306,6 +308,38 @@ successfully, as did the version-71 web-app executions. No synthetic
 observations were submitted.
 
 ## Daily workflow (5.19.0)
+
+The September 6 rollout published immutable version 72 at the existing phone
+URL. All three immutable files match commit `065b5d2`; the public history helper
+also matches the committed source. The authenticated live logger reports
+`Connected · logger 5.19.0` and restores nine plants' saved weights for the
+workbook's September 6 day. These counts describe that verification snapshot.
+
+A native Drive backup named `Garden Plant Tracker — backup before logger 5.19.0
+daily workflow — 2026-09-06` preceded the structural changes. The final comparison
+preserved all **700 canonical History records**, their values, formulas, formats,
+and checked validations, with 700 unique observation IDs and no duplicate active
+request/plant/event keys. All **17,447 formula cells across 47 sheets** were
+error-free. Every Daily care weight/date pair matched an independent History
+selection and Baselines, and all thirty dry-weight differences matched their
+current-setup references. The only additional native formatting changes were
+copies of the former merged title's format after splitting Dashboard at the
+freeze boundary; its values and validations stayed unchanged.
+
+The logger, AppSheet intake, Daily care, and queue installers completed
+successfully. Existing canonical and staging column counts remain unchanged;
+the App bulk installer needed no migration. The single replacement Head queue
+trigger is scheduled every five minutes, and its 21:15:54 EDT scheduled execution
+completed successfully. Version-72 bootstrap and filtered History executions
+also completed successfully. No synthetic production observations were submitted.
+
+Validation passed 740 repository tests, including 639 logger tests. Logger
+coverage reached 100% of executable lines and 99.39% of branches without changing
+the gates. Types, lint, formatting, browser checks, and GitHub checks passed;
+SonarCloud reported zero open issues or hotspots, and Codecov reported 99.63%
+project coverage. Native disposable-copy rehearsals exercised atomic corrections,
+exact retries, durable rejection recovery, correction chains, true blank cells,
+canonical units, and native formula edge cases before production deployment.
 
 The plant picker distinguishes **Queued** weights on this device from **Saved
 today** readings confirmed in History. The **Not weighed today** filter uses
