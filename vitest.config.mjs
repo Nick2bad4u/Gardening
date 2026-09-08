@@ -1,11 +1,13 @@
 import { defineConfig } from "vitest/config";
 
+import { storybookViteConfig } from "./.storybook/vite-config.mjs";
 import {
     storybookCoverage,
     storybookProject,
 } from "./vitest.storybook.config.mjs";
 
 export default defineConfig({
+    ...storybookViteConfig,
     test: {
         coverage:
             process.env["VITEST_STORYBOOK"] === "true"

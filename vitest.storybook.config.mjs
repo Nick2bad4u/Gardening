@@ -2,6 +2,8 @@ import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 import { playwright } from "@vitest/browser-playwright";
 import { defineConfig } from "vitest/config";
 
+import { storybookViteConfig } from "./.storybook/vite-config.mjs";
+
 /** @type {import("vitest/node").CoverageOptions} */
 export const storybookCoverage = {
     include: ["docs/plant-booklet/booklet.js", "docs/layouts/*.js"],
@@ -18,6 +20,7 @@ export const storybookCoverage = {
 
 /** @type {import("vitest/config").UserWorkspaceConfig} */
 export const storybookProject = {
+    ...storybookViteConfig,
     // The interactive runner must prebundle the assertion libraries and their
     // CommonJS dependencies before serving them to Chromium.
     optimizeDeps: { include: ["storybook/test", "vitest"] },
@@ -38,5 +41,6 @@ export const storybookProject = {
 };
 
 export default defineConfig({
+    ...storybookViteConfig,
     test: { coverage: storybookCoverage, projects: [storybookProject] },
 });
