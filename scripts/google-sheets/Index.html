@@ -19,6 +19,7 @@
                 --line: #d8e2d7;
                 --amber: #e7ad2e;
                 --blue: #397fb5;
+                --info-ink: #245f8b;
                 --danger: #a63c36;
                 --shadow: 0 10px 30px rgb(24 61 38 / 0.12);
                 --card: rgb(255 255 255 / 0.96);
@@ -37,6 +38,7 @@
 
                     --forest: #d2ebd3;
                     --forest-2: #75c58c;
+                    --info-ink: #9bd2f5;
                     --leaf-soft: #243d2d;
                     --cream: #101712;
                     --paper: #172019;
@@ -632,7 +634,44 @@
             }
 
             .weight-feedback {
+                display: grid;
+                gap: 8px;
                 white-space: pre-line;
+
+                & > span {
+                    display: flex;
+                    gap: 8px;
+                    align-items: center;
+                    padding: 8px 10px;
+                    color: var(--forest-2);
+                    background: var(--leaf-soft);
+                    border-radius: 10px;
+                }
+            }
+
+            .recent-weight {
+                display: inline-flex;
+                gap: 6px;
+                align-items: center;
+                padding: 4px 8px;
+                font-variant-numeric: tabular-nums;
+                color: var(--forest-2);
+                background: var(--leaf-soft);
+                border: 1px solid var(--line);
+                border-radius: 8px;
+            }
+
+            .picker-mode--unweighed[aria-pressed="true"] {
+                color: #593600;
+                background: #ffe3a3;
+                border-color: #aa6b0a;
+                box-shadow: inset 0 0 0 1px #aa6b0a;
+
+                :root[data-theme="dark"] & {
+                    color: #ffe1a0;
+                    background: #503916;
+                    border-color: #e9b756;
+                }
             }
 
             .history-details {
@@ -717,6 +756,10 @@
                     border-block-start-style: dashed;
                 }
 
+                &.chart-swatch-gap {
+                    border-block-start-style: dotted;
+                }
+
                 &.chart-swatch-dry {
                     border-color: var(--amber);
                     border-block-start-style: dashed;
@@ -725,17 +768,32 @@
 
             .chart-facts {
                 display: grid;
-                gap: 6px;
+                gap: 8px;
                 margin-block: 12px;
                 line-height: 1.5;
 
                 & dt {
+                    display: flex;
+                    gap: 8px;
+                    align-items: center;
                     font-weight: 700;
                 }
 
                 & dd {
-                    margin: 0 0 8px;
-                    color: var(--muted);
+                    margin: 0;
+                    font-variant-numeric: tabular-nums;
+                    color: var(--forest-2);
+                }
+
+                & > div {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 6px 12px;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 10px 12px;
+                    background: var(--card-soft);
+                    border-radius: 10px;
                 }
             }
 
@@ -744,6 +802,11 @@
 
                 & summary {
                     font-weight: 700;
+
+                    & .chart-summary-icon {
+                        margin-inline: 6px;
+                        vertical-align: middle;
+                    }
                 }
 
                 & .hint {
@@ -771,7 +834,10 @@
                 }
 
                 & time {
+                    display: inline-flex;
                     flex: 1 1 180px;
+                    gap: 8px;
+                    align-items: center;
                     color: var(--muted);
                 }
 
@@ -779,7 +845,12 @@
                     display: inline-flex;
                     gap: 8px;
                     align-items: center;
+                    padding: 4px 8px;
+                    font-variant-numeric: tabular-nums;
+                    color: var(--forest-2);
                     white-space: nowrap;
+                    background: var(--leaf-soft);
+                    border-radius: 8px;
                 }
 
                 & small {
@@ -885,6 +956,13 @@
                 stroke-width: 2;
             }
 
+            .chart-gap {
+                stroke: currentcolor;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-dasharray: 1 5;
+            }
+
             .chart-point {
                 fill: currentcolor;
             }
@@ -943,22 +1021,30 @@
                 border-radius: 999px;
             }
             .plant-summary-heading {
-                display: flex;
-                gap: 10px;
-                align-items: flex-start;
+                display: grid;
+                grid-template-columns:
+                    [name-start] minmax(0, 1fr)
+                    [name-end badge-start] auto [badge-end];
+                gap: 6px 10px;
+                align-items: center;
                 & > :first-child {
-                    flex: 1;
-                    min-inline-size: 0;
+                    display: contents;
                 }
                 & .plant-id {
                     flex: none;
                 }
             }
             .plant-summary-portrait {
-                display: grid;
-                flex: none;
+                display: flex;
+                grid-row: 1;
+                grid-column: 2;
                 gap: 6px;
-                place-items: center center;
+                align-items: center;
+                justify-content: end;
+
+                & .plant-id {
+                    align-self: center;
+                }
             }
             .summary-portrait {
                 display: block;
@@ -972,20 +1058,31 @@
             }
             .plant-label-badge {
                 display: inline-flex;
+                grid-row: 2;
+                grid-column: 2;
                 gap: 5px;
                 align-items: center;
-                margin-block-start: 7px;
+                justify-self: end;
+                padding: 4px 8px;
                 font-weight: 700;
-                color: var(--ink);
+                color: var(--info-ink);
+                background: var(--control);
+                border-radius: 999px;
             }
 
             .plant-name {
-                font-size: 18px;
+                grid-row: 1;
+                grid-column: 1;
+                font-size: clamp(1.125rem, 2.5vi, 1.5rem);
                 font-weight: 800;
+                line-height: 1.25;
+                color: var(--forest-2);
             }
             .plant-meta {
-                margin-block-start: 4px;
+                grid-row: 2;
+                grid-column: 1;
                 font-size: 1rem;
+                font-style: italic;
                 line-height: 1.375;
                 color: #506153;
                 :root[data-theme="dark"] & {
@@ -1077,7 +1174,7 @@
                 justify-self: center;
                 inline-size: 1.75rem;
                 block-size: 1.75rem;
-                margin-block-end: 0;
+                margin-block-end: 5px;
                 margin-inline-end: 0;
                 vertical-align: middle;
                 background: color-mix(in srgb, var(--leaf-soft) 75%, #ffffff);
@@ -1099,6 +1196,12 @@
                 color: var(--forest-2);
             }
             .plant-forecast {
+                display: grid;
+                grid-template-columns:
+                    [water-start] minmax(0, 1.35fr)
+                    [water-end reweigh-start] minmax(0, 1.15fr)
+                    [reweigh-end basis-start] minmax(0, 1fr) [basis-end];
+                gap: 10px;
                 padding: 13px;
                 margin-block-start: 10px;
                 background: var(--control);
@@ -1107,26 +1210,69 @@
                 border-radius: 11px;
             }
             .forecast-heading {
-                margin: 0 0 9px;
-                font-size: 1rem;
+                margin: 0;
+                font-size: 0.875rem;
                 line-height: 1.375;
                 color: var(--muted);
             }
             .forecast-date {
+                display: inline-flex;
+                gap: 6px;
+                align-items: center;
+                padding: 5px 8px;
                 font-size: 16px;
                 font-weight: 800;
                 line-height: 1.25;
+                color: var(--info-ink);
+                background: var(--card-soft);
+                border-radius: 8px;
             }
             .forecast-reweigh {
-                padding-block-start: 9px;
-                font-size: 1rem;
+                font-size: 0.875rem;
                 line-height: 1.5;
-                border-block-start: 1px solid var(--line);
             }
             .forecast-basis {
-                margin: 7px 0 0;
-                font-size: 1rem;
+                margin: 0;
+                font-size: 0.875rem;
                 line-height: 1.5;
+                color: var(--muted);
+            }
+
+            .forecast-item {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px 8px;
+                place-content: start space-between;
+                align-items: center;
+                min-inline-size: 0;
+            }
+
+            .forecast-window {
+                padding: 5px 8px;
+                font-size: 0.875rem;
+                font-weight: 700;
+                color: var(--forest-2);
+                background: var(--leaf-soft);
+                border: 1px solid var(--line);
+                border-radius: 8px;
+            }
+
+            @media (860px < width <= 1200px), (width <= 760px) {
+                .plant-forecast {
+                    grid-template-columns:
+                        [content-start] minmax(0, 1fr)
+                        [content-end];
+                }
+
+                .forecast-item + .forecast-item {
+                    padding-block-start: 8px;
+                    border-block-start: 1px solid var(--line);
+                }
+            }
+
+            .forecast-caption,
+            .picker-selection-prefix {
+                font-size: 0.875rem;
                 color: var(--muted);
             }
 
@@ -1254,6 +1400,7 @@
 
             .picker-name {
                 display: flex;
+                flex-wrap: wrap;
                 gap: 10px;
                 align-items: center;
                 min-block-size: 64px;
@@ -1265,6 +1412,19 @@
                 background: var(--control);
                 border: 1px solid var(--line);
                 border-radius: 12px;
+            }
+
+            .picker-selection-name {
+                color: var(--forest-2);
+            }
+
+            .picker-selection-label {
+                padding: 3px 9px;
+                font-weight: 800;
+                color: var(--info-ink);
+                background: var(--card-soft);
+                border: 1px solid var(--line);
+                border-radius: 999px;
             }
 
             :root[data-theme="dark"] .metric-icon {
@@ -1970,6 +2130,10 @@
             }
 
             .recent-main {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px 10px;
+                align-items: center;
                 font-size: 1rem;
                 font-weight: 800;
             }
@@ -2135,7 +2299,13 @@
                 }
 
                 .plant-summary-portrait {
-                    max-inline-size: 7rem;
+                    max-inline-size: 8rem;
+                }
+
+                .summary-portrait {
+                    inline-size: 48px;
+                    block-size: 48px;
+                    padding: 4px;
                 }
 
                 .plant-id {
@@ -12870,6 +13040,14 @@
                                         aria-pressed="true"
                                         >Hide photos</button
                                     >
+                                    <button
+                                        id="chartVisibilityToggle"
+                                        class="photo-visibility-toggle"
+                                        type="button"
+                                        aria-pressed="true"
+                                        aria-controls="currentCycleChart"
+                                        >Hide charts</button
+                                    >
                                 </div>
                             </div>
                             <div class="picker-toolbar">
@@ -12910,7 +13088,7 @@
                                     >
                                     <button
                                         id="notWeighedToday"
-                                        class="picker-mode"
+                                        class="picker-mode picker-mode--unweighed"
                                         type="button"
                                         aria-pressed="false"
                                     >
@@ -14307,6 +14485,7 @@
                 plantPickerMode: "list",
                 bulkPickerMode: "list",
                 photosVisible: true,
+                chartsVisible: true,
                 recentLimit: 10,
                 recentAttempt: 0,
                 recentTimer: null,
@@ -14336,6 +14515,7 @@
             const PLANT_PICKER_MODE_KEY = "gardenLoggerPlantPickerModeV1";
             const BULK_PICKER_MODE_KEY = "gardenLoggerBulkPickerModeV1";
             const PHOTO_VISIBILITY_KEY = "gardenLoggerPhotosVisibleV1";
+            const CHART_VISIBILITY_KEY = "gardenLoggerChartsVisibleV1";
             const RECENT_LIMIT_KEY = "gardenLoggerRecentLimitV1";
             const PUBLIC_SITE_ORIGIN = [
                 "https:",
@@ -15215,7 +15395,8 @@
                     status.textContent =
                         "No remaining plants match this search. Clear the search or filter; the current plant stays available.";
                 } else {
-                    status.textContent = `${remaining.length} plants remaining${saved ? "" : " · saved-today status is unknown"}. The current plant stays available.`;
+                    status.textContent = "";
+                    status.hidden = true;
                 }
             }
 
@@ -15317,7 +15498,16 @@
                             `${delta > 0 ? "+" : ""}${delta} g vs last dry ${dry} g`
                         );
                     }
-                    feedback.textContent = comparisons.join("\n");
+                    comparisons.forEach((text) => {
+                        const row = document.createElement("span");
+                        setIconLabel(
+                            row,
+                            "weight",
+                            text,
+                            "app-icon app-icon--small"
+                        );
+                        feedback.append(row);
+                    });
                 }
                 feedback.hidden = false;
             }
@@ -16246,13 +16436,30 @@
             }
 
             function showPickerName(plant = selectedPlant(), selected = true) {
-                setIconLabel(
-                    $("plantPickerName"),
-                    selected ? "check" : "label",
-                    plant
-                        ? `${selected ? "Selected: " : ""}${plant.name} · ${plant.label || plant.id}`
-                        : "No matching plant",
-                    "app-icon"
+                const container = $("plantPickerName");
+                container.replaceChildren(
+                    createIcon(selected ? "check" : "label", "app-icon")
+                );
+                if (!plant) {
+                    container.append(
+                        document.createTextNode("No matching plant")
+                    );
+                    return;
+                }
+                const prefix = document.createElement("span");
+                prefix.className = "picker-selection-prefix";
+                prefix.textContent = selected ? "Selected: " : "";
+                const name = document.createElement("strong");
+                name.className = "picker-selection-name";
+                name.textContent = plant.name;
+                const label = document.createElement("span");
+                label.className = "picker-selection-label";
+                label.textContent = plant.label || plant.id;
+                container.append(
+                    prefix,
+                    name,
+                    document.createTextNode(" · "),
+                    label
                 );
             }
 
@@ -16278,8 +16485,11 @@
                     refreshRecent();
                 const summary = $("plantSummary");
                 const displayTools = $("plantDisplayTools");
-                const restorePhotoFocus =
-                    document.activeElement === $("photoVisibilityToggle");
+                const restoreDisplayFocus = displayTools.contains(
+                    document.activeElement
+                )
+                    ? document.activeElement
+                    : null;
                 const previousPortrait =
                     summary.querySelector(".summary-portrait");
                 const portrait =
@@ -16312,7 +16522,7 @@
                 const name = document.createElement("div");
                 name.className = "plant-name";
                 name.textContent = plant.name;
-                const meta = document.createElement("div");
+                const meta = document.createElement("em");
                 meta.className = "plant-meta";
                 meta.textContent = plant.scientificName || "";
                 const label = document.createElement("div");
@@ -16538,8 +16748,7 @@
                     summary.append(photos);
                 }
                 plantLinks.append(displayTools);
-                if (restorePhotoFocus)
-                    $("photoVisibilityToggle").focus({ preventScroll: true });
+                restoreDisplayFocus?.focus({ preventScroll: true });
             }
 
             function latestWeightComparison(plant) {
@@ -16573,6 +16782,8 @@
             function createWeightChart(plant) {
                 const section = document.createElement("section");
                 section.className = "weight-chart";
+                section.id = "currentCycleChart";
+                section.hidden = !state.chartsVisible;
                 const heading = document.createElement("h3");
                 heading.className = "chart-heading";
                 setIconLabel(heading, "history", "Current-cycle weights");
@@ -16618,9 +16829,9 @@
                         ? "No measured weights in this cycle yet. Watering does not imply a measured weight."
                         : points.length === 1
                           ? "One measured point · no trend line yet."
-                          : "Dots are measured whole-pot weights; lines only connect nearby readings.";
+                          : "Dots are measured whole-pot weights; solid lines connect nearby readings.";
                 if (hasGaps || series.excludedCount > 0)
-                    status.textContent += ` Gaps are left across excluded readings or more than 48 hours without a reading.${series.excludedCount > 0 ? ` ${series.excludedCount} ${series.excludedCount === 1 ? "reading" : "readings"} excluded.` : ""}`;
+                    status.textContent += ` Dotted connectors span excluded readings or more than 48 hours without a reading; they do not represent measured weights in between.${series.excludedCount > 0 ? ` ${series.excludedCount} ${series.excludedCount === 1 ? "reading" : "readings"} excluded.` : ""}`;
                 if (points.length && waterings.length)
                     status.textContent += " W marks watering.";
                 if (points.length && previousDry)
@@ -16722,20 +16933,20 @@
                         );
                     points.forEach((point, index) => {
                         const previous = points[index - 1];
-                        if (
-                            previous &&
-                            !point.breakBefore &&
-                            Date.parse(point.observedAt) -
-                                Date.parse(previous.observedAt) <=
-                                48 * 3600000
-                        )
+                        if (previous)
                             svg.append(
                                 chartElement("line", {
                                     x1: x(previous.observedAt),
                                     y1: y(previous.weight),
                                     x2: x(point.observedAt),
                                     y2: y(point.weight),
-                                    class: "chart-segment",
+                                    class:
+                                        point.breakBefore ||
+                                        Date.parse(point.observedAt) -
+                                            Date.parse(previous.observedAt) >
+                                            48 * 3600000
+                                            ? "chart-gap"
+                                            : "chart-segment",
                                 })
                             );
                         const dot = chartElement("circle", {
@@ -16778,34 +16989,49 @@
                 const details = document.createElement("details");
                 details.className = "chart-readings";
                 const summary = document.createElement("summary");
-                summary.textContent = `Readings and watering markers · ${points.length} ${points.length === 1 ? "weight" : "weights"}`;
+                summary.append(
+                    createIcon(
+                        "history",
+                        "app-icon app-icon--small chart-summary-icon"
+                    ),
+                    document.createTextNode("Readings and watering markers ")
+                );
+                const readingCount = document.createElement("span");
+                readingCount.className = "picker-selection-label";
+                readingCount.textContent = `${points.length} ${points.length === 1 ? "weight" : "weights"}`;
+                summary.append(readingCount);
                 const facts = document.createElement("dl");
                 facts.className = "chart-facts";
                 [
                     [
+                        "planter",
                         `Setup ${series.potSetup} started`,
                         series.setupStartedAt
                             ? formattedTimestamp(series.setupStartedAt)
                             : "Not recorded",
                     ],
                     [
+                        "water",
                         `${series.startKind || "Cycle"} started`,
                         series.startedAt
                             ? formattedTimestamp(series.startedAt)
                             : "Not recorded",
                     ],
                     [
+                        "dry",
                         "Last completed dry reference",
                         previousDry
                             ? `${previousDry.weight} g · ${formattedTimestamp(previousDry.observedAt)}`
                             : "No completed dry reference in this setup.",
                     ],
-                ].forEach(([label, value]) => {
+                ].forEach(([icon, label, value]) => {
+                    const row = document.createElement("div");
                     const term = document.createElement("dt");
                     const description = document.createElement("dd");
-                    term.textContent = label;
+                    setIconLabel(term, icon, label, "app-icon app-icon--small");
                     description.textContent = value;
-                    facts.append(term, description);
+                    row.append(term, description);
+                    facts.append(row);
                 });
                 if (points.length) {
                     const legend = document.createElement("ul");
@@ -16818,6 +17044,7 @@
                                 ? "One measured point"
                                 : "Measured weight (g)",
                         ],
+                        ...(hasGaps ? [["gap", "Gap · dotted connector"]] : []),
                         ...(waterings.length
                             ? [["water", "Watering (W)"]]
                             : []),
@@ -16840,9 +17067,19 @@
                     const item = document.createElement("li");
                     const time = document.createElement("time");
                     time.dateTime = point.observedAt;
-                    time.textContent = formattedTimestamp(point.observedAt);
+                    setIconLabel(
+                        time,
+                        "calendar",
+                        formattedTimestamp(point.observedAt),
+                        "app-icon app-icon--small"
+                    );
                     const weight = document.createElement("strong");
-                    weight.textContent = `${point.weight} g`;
+                    setIconLabel(
+                        weight,
+                        "weight",
+                        `${point.weight} g`,
+                        "app-icon app-icon--small"
+                    );
                     item.append(time, weight);
                     if (
                         point.breakBefore ||
@@ -16852,7 +17089,8 @@
                                 48 * 3600000)
                     ) {
                         const gap = document.createElement("small");
-                        gap.textContent = "Gap before this reading";
+                        gap.textContent =
+                            "Gap before this reading · dotted connector";
                         item.append(gap);
                     }
                     list.append(item);
@@ -16861,7 +17099,12 @@
                     const item = document.createElement("li");
                     const time = document.createElement("time");
                     time.dateTime = watering.observedAt;
-                    time.textContent = formattedTimestamp(watering.observedAt);
+                    setIconLabel(
+                        time,
+                        "calendar",
+                        formattedTimestamp(watering.observedAt),
+                        "app-icon app-icon--small"
+                    );
                     const label = document.createElement("strong");
                     setIconLabel(
                         label,
@@ -17102,12 +17345,12 @@
                 panel.className = "plant-forecast";
                 panel.setAttribute("aria-label", "Watering plan");
                 const heading = document.createElement("div");
-                heading.className = "forecast-heading";
+                heading.className = "forecast-heading forecast-item";
                 const waterHelp = createHelp(
                     "Water date · if ready",
                     plant.wateringGuidance ||
                         "Confirm actual dryness and plant condition. The forecast is not a watering instruction.",
-                    "calendar"
+                    "water"
                 );
                 waterHelp
                     .querySelector(".help-text")
@@ -17118,14 +17361,26 @@
                 heading.append(waterHelp);
                 const date = document.createElement("div");
                 date.className = "forecast-date";
-                date.textContent =
-                    plant.recommendedWaterDate || "Inspect before scheduling";
+                setIconLabel(
+                    date,
+                    "calendar",
+                    plant.recommendedWaterDate || "Inspect before scheduling",
+                    "app-icon app-icon--small"
+                );
+                heading.append(date);
                 const reweigh = createHelp(
-                    `Reweigh: ${plant.dryForecastWindow || "Not enough evidence yet"}`,
+                    "Reweigh",
                     "This is a window to take another whole-pot weight and inspect dryness, not an instruction to water. New measurements can move the forecast; keep using the same pot setup.",
                     "weight"
                 );
                 reweigh.classList.add("forecast-reweigh");
+                const reweighRow = document.createElement("div");
+                reweighRow.className = "forecast-item";
+                const forecastWindow = document.createElement("span");
+                forecastWindow.className = "forecast-window";
+                forecastWindow.textContent =
+                    plant.dryForecastWindow || "Not enough evidence yet";
+                reweighRow.append(reweigh, forecastWindow);
                 const basisLabel =
                     plant.dryForecastBasis || "Needs watering-cycle data";
                 const [basisIcon, basisExplanation] =
@@ -17136,8 +17391,41 @@
                     basisIcon
                 );
                 basis.classList.add("forecast-basis");
-                panel.append(heading, date, reweigh, basis);
+                const basisRow = document.createElement("div");
+                basisRow.className = "forecast-item";
+                const basisCaption = document.createElement("span");
+                basisCaption.className = "forecast-caption";
+                basisCaption.textContent = "Forecast basis";
+                basisRow.append(basis, basisCaption);
+                panel.append(heading, reweighRow, basisRow);
                 return panel;
+            }
+
+            function updateChartVisibilityToggle() {
+                const button = $("chartVisibilityToggle");
+                button.setAttribute(
+                    "aria-pressed",
+                    String(state.chartsVisible)
+                );
+                setIconLabel(
+                    button,
+                    "history",
+                    state.chartsVisible ? "Hide charts" : "Show charts",
+                    "app-icon app-icon--small"
+                );
+            }
+
+            function setChartsVisible(visible, persist = true) {
+                state.chartsVisible = visible;
+                if (persist)
+                    safeStorageSet(
+                        localStorage,
+                        CHART_VISIBILITY_KEY,
+                        visible ? "shown" : "hidden"
+                    );
+                updateChartVisibilityToggle();
+                const chart = $("currentCycleChart");
+                if (chart) chart.hidden = !visible;
             }
 
             function updatePhotoVisibilityToggle() {
@@ -17282,7 +17570,20 @@
                     const text = document.createElement("div");
                     const main = document.createElement("div");
                     main.className = "recent-main";
-                    main.textContent = `${entry.name || entry.plantId}${entry.weight !== "" && entry.weight != null ? ` · ${entry.weight} g` : ""}`;
+                    const plantName = document.createElement("strong");
+                    plantName.textContent = entry.name || entry.plantId;
+                    main.append(plantName);
+                    if (entry.weight !== "" && entry.weight != null) {
+                        const weight = document.createElement("span");
+                        weight.className = "recent-weight";
+                        setIconLabel(
+                            weight,
+                            "weight",
+                            `${entry.weight} g`,
+                            "app-icon app-icon--small"
+                        );
+                        main.append(document.createTextNode(" · "), weight);
+                    }
                     const sub = document.createElement("div");
                     sub.className = "recent-sub";
                     sub.textContent = `${entry.observedAt}${entry.weightState ? ` · ${entry.weightState}` : ""}`;
@@ -20152,6 +20453,14 @@
                             "shown"
                         ) !== "hidden";
                     updatePhotoVisibilityToggle();
+                    setChartsVisible(
+                        safeStorageGet(
+                            localStorage,
+                            CHART_VISIBILITY_KEY,
+                            "shown"
+                        ) !== "hidden",
+                        false
+                    );
                     renderPlantOptions();
                     setPlantPickerMode(
                         safeStorageGet(localStorage, PLANT_PICKER_MODE_KEY),
@@ -20268,6 +20577,9 @@
             });
             $("photoVisibilityToggle").addEventListener("click", () =>
                 setPhotosVisible(!state.photosVisible)
+            );
+            $("chartVisibilityToggle").addEventListener("click", () =>
+                setChartsVisible(!state.chartsVisible)
             );
             $("retryBootstrapButton").addEventListener("click", () =>
                 requestBootstrap({ resetRetries: true })

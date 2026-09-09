@@ -31,6 +31,31 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
+### Logger 5.20.1 interface update
+
+The 5.20.1 interface adds a remembered **Hide charts / Show charts** control
+beside the photo toggle. It hides the complete current-cycle chart and its
+readings without changing photo visibility or the selected plant. Dotted
+connectors now span excluded readings and intervals longer than 48 hours;
+measured points, nearby solid segments, watering markers, and the previous dry
+reference keep their distinct meanings. The chart legend and expanded readings
+explain that dotted connectors do not add measured observations.
+
+Plant names have stronger visual emphasis, scientific names are italic, and
+the portrait and inventory ID share the top row. The label badge sits at the
+right of the scientific-name row. The water date, reweigh window, and forecast
+basis share a row where space permits and become compact rows on phones.
+Dates, weights, chart facts, selected plant names, and label badges have distinct
+formatting and icons. The active **Not weighed today** filter is amber, and
+its ordinary remaining-count helper is removed. Empty-search guidance remains
+available. Metric icons have slightly more space above their labels.
+
+The release changes client presentation and the logger version only; History,
+AppSheet staging schemas, weighing-day boundaries, and save/queue behavior
+retain their existing contracts.
+
+### Previous 5.20.0 baseline
+
 As of September 9, 2026, production runs **logger 5.20.0** on immutable Apps
 Script **version 80**, preserving the existing deployment and phone URL.
 All three immutable files match the checked-in sources, and the authenticated

@@ -726,7 +726,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         expect(details.textContent).toContain("Ruler");
     });
 
-    it("uses measured dots, gram labels, water markers and a dry reference without bridging excluded or long gaps", () => {
+    it("connects excluded and long gaps with dotted lines while keeping measured points and nearby segments", () => {
         expect.hasAssertions();
 
         const { window } = createLoggerWindow({
@@ -740,6 +740,8 @@ describe("garden logger daily progress, filtered History and measured charts", (
 
         expect(chart.querySelectorAll(".chart-point")).toHaveLength(4);
         expect(chart.querySelectorAll(".chart-segment")).toHaveLength(1);
+        expect(chart.querySelectorAll(".chart-gap")).toHaveLength(2);
+        expect(chart.textContent).toContain("Gap · dotted connector");
         expect(chart.querySelectorAll(".chart-watering")).toHaveLength(1);
         expect(chart.querySelectorAll(".chart-dry")).toHaveLength(1);
         expect(chart.textContent).toContain("Setup 2");
@@ -805,6 +807,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
             );
             expect(chart.querySelectorAll(".chart-point")).toHaveLength(count);
             expect(chart.querySelectorAll(".chart-segment")).toHaveLength(0);
+            expect(chart.querySelectorAll(".chart-gap")).toHaveLength(0);
             expect(chart.textContent).toContain("No completed dry reference");
             expect(chart.textContent).toContain("Water (W)");
         }
@@ -5499,6 +5502,99 @@ describe("garden logger plant photos and portrait rendering", () => {
         ).toHaveLength(0);
     });
 
+    it("keeps chart visibility independent of photos across plant changes and reloads", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow({
+            bootstrapData: workflowBootstrap(),
+        });
+        const toggle = queryElement(
+            window.document,
+            "#chartVisibilityToggle",
+            HTMLButtonElement
+        );
+        const chart = queryElement(
+            window.document,
+            "#currentCycleChart",
+            HTMLElement
+        );
+        const photoToggle = queryElement(
+            window.document,
+            "#photoVisibilityToggle",
+            HTMLButtonElement
+        );
+        const photoState = photoToggle.getAttribute("aria-pressed");
+        const callCount = calls.length;
+        toggle.focus();
+        toggle.click();
+
+        expect(chart.hidden).toBe(true);
+        expect(toggle.textContent).toContain("Show charts");
+        expect(toggle.getAttribute("aria-pressed")).toBe("false");
+        expect(photoToggle.getAttribute("aria-pressed")).toBe(photoState);
+        expect(window.document.activeElement).toBe(toggle);
+        expect(calls).toHaveLength(callCount);
+        expect(window.localStorage.getItem("gardenLoggerChartsVisibleV1")).toBe(
+            "hidden"
+        );
+
+        changeWorkflowSelect(window, "plantSelect", "P02");
+
+        expect(
+            queryElement(window.document, "#currentCycleChart", HTMLElement)
+                .hidden
+        ).toBe(true);
+
+        toggle.click();
+
+        expect(
+            queryElement(window.document, "#currentCycleChart", HTMLElement)
+                .hidden
+        ).toBe(false);
+        expect(toggle.textContent).toContain("Hide charts");
+        expect(window.localStorage.getItem("gardenLoggerChartsVisibleV1")).toBe(
+            "shown"
+        );
+
+        const restored = createLoggerWindow({
+            bootstrapData: workflowBootstrap(),
+            storage: { gardenLoggerChartsVisibleV1: "hidden" },
+        }).window;
+
+        expect(
+            queryElement(restored.document, "#currentCycleChart", HTMLElement)
+                .hidden
+        ).toBe(true);
+        expect(
+            queryElement(
+                restored.document,
+                "#photoVisibilityToggle",
+                HTMLButtonElement
+            ).getAttribute("aria-pressed")
+        ).toBe("true");
+    });
+
+    it("hides the ordinary remaining-count helper when the weighing filter is active", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: workflowBootstrap(),
+        });
+        queryElement(
+            window.document,
+            "#notWeighedToday",
+            HTMLButtonElement
+        ).click();
+        const status = queryElement(
+            window.document,
+            "#plantFilterStatus",
+            HTMLElement
+        );
+
+        expect(status.hidden).toBe(true);
+        expect(status.textContent).toBe("");
+    });
+
     it("persists the photo preference and does not create hidden image requests", () => {
         expect.hasAssertions();
 
@@ -6208,7 +6304,7 @@ describe("garden logger watering forecasts and recent History", () => {
             ).textContent
         ).toBe("Confirm dry roots first.");
         expect(
-            queryElement(summary, ".forecast-reweigh", HTMLElement).textContent
+            queryElement(summary, ".forecast-window", HTMLElement).textContent
         ).toContain("Sep 10–Sep 16");
         expect(
             queryElement(summary, ".forecast-basis", HTMLElement).textContent
@@ -6281,7 +6377,9 @@ describe("garden logger watering forecasts and recent History", () => {
             HTMLElement
         );
 
-        expect(summary.textContent).toContain("Reweigh: Sep 10–Sep 25");
+        expect(
+            queryElement(summary, ".forecast-window", HTMLElement).textContent
+        ).toBe("Sep 10–Sep 25");
         expect(summary.textContent).toContain(
             "Historical estimate · 1 learned cycle(s)"
         );
@@ -6294,9 +6392,9 @@ describe("garden logger watering forecasts and recent History", () => {
         select.value = "P02";
         select.dispatchEvent(new window.Event("change", { bubbles: true }));
 
-        expect(summary.textContent).toContain(
-            "Reweigh: Not enough evidence yet"
-        );
+        expect(
+            queryElement(summary, ".forecast-window", HTMLElement).textContent
+        ).toBe("Not enough evidence yet");
         expect(summary.textContent).toContain("Needs watering-cycle data");
         expect(
             queryElements(
