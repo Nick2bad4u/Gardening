@@ -31,6 +31,23 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
+### Logger 5.20.2 interface update
+
+The forecast card puts each value below its label: **Water date***, **Reweigh**,
+and **Forecast basis**. The basis is the estimate's method, such as
+**Current-cycle curve**, rather than an additional date. A short asterisk note
+keeps the water date conditional on actual dryness and plant condition.
+
+Chart points and watering markers use the same styled help panels as the other
+logger controls, with hover, tap, keyboard, and close-button support. Readings
+and watering markers share one list sorted newest first. Every measured point
+shows the signed gram change from the preceding measured reading in the same
+cycle, in both its popover and list row; the first point has no earlier-cycle
+comparison. This comparison uses chronological measurements even when the list
+is displayed in reverse order. Chart explanations are separate list items.
+
+### Verified 5.20.1 baseline
+
 As of September 9, 2026, production runs **logger 5.20.1** on immutable Apps
 Script **version 81**, from source commit `8e8e820`. The existing deployment
 and phone URL are preserved. All three immutable files and Head sources match

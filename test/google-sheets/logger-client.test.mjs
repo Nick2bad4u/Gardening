@@ -303,6 +303,199 @@ describe("garden logger 4 a.m. weighing day", () => {
     });
 });
 
+describe("garden logger chart reading details", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("excludes invalid measurements from the previous-reading comparison", () => {
+        expect.hasAssertions();
+
+        const data = workflowBootstrap();
+        const series = required(required(data.plants[0]).weightSeries);
+        required(series.points[2]).weight = NaN;
+        series.points.push({
+            breakBefore: false,
+            observationId: "invalid-time",
+            observedAt: "invalid",
+            weight: 900,
+        });
+        const { window } = createLoggerWindow({ bootstrapData: data });
+        const chart = queryElement(
+            window.document,
+            ".weight-chart",
+            HTMLElement
+        );
+
+        expect(chart.querySelectorAll(":scope .chart-point")).toHaveLength(3);
+        expect(chart.textContent).not.toContain("NaN");
+        expect(
+            queryElement(
+                chart,
+                ".chart-reading-list .chart-change",
+                HTMLElement
+            ).textContent
+        ).toBe("-40 g vs previous reading");
+    });
+
+    it("lists readings and watering markers newest first while comparing the preceding measured weight", () => {
+        expect.hasAssertions();
+
+        const data = workflowBootstrap();
+        const series = required(required(data.plants[0]).weightSeries);
+        series.points = series.points.toReversed();
+        series.waterings.push({
+            application: "Spot",
+            observedAt: "2026-09-04T16:00:00.000Z",
+        });
+        const { window } = createLoggerWindow({ bootstrapData: data });
+        const items = queryElements(
+            window.document,
+            ".chart-reading-list > li",
+            HTMLElement
+        );
+
+        expect(
+            items.map((item) =>
+                queryElement(item, "time", HTMLElement).getAttribute("datetime")
+            )
+        ).toStrictEqual([
+            "2026-09-05T17:00:00.000Z",
+            "2026-09-04T16:00:00.000Z",
+            "2026-09-03T16:00:00.000Z",
+            "2026-09-02T16:00:00.000Z",
+            "2026-09-01T16:00:00.000Z",
+            "2026-09-01T16:00:00.000Z",
+        ]);
+        expect(
+            items.map(
+                (item) => item.querySelector(".chart-change")?.textContent
+            )
+        ).toStrictEqual([
+            "-25 g vs previous reading",
+            undefined,
+            "-15 g vs previous reading",
+            "-20 g vs previous reading",
+            "First reading in this cycle",
+            undefined,
+        ]);
+        expect(required(items[1]).textContent).toContain("Water (W)Spot");
+        expect(required(items[0]).textContent).toContain(
+            "Gap before this reading"
+        );
+        expect(
+            queryElements(window.document, ".chart-notes > li", HTMLElement)
+                .length
+        ).toBeGreaterThan(3);
+        expect(series.points[0]?.observationId).toBe("fourth");
+    });
+
+    it.each([
+        [420, "0 g"],
+        [420.15, "+0.2 g"],
+        [419.84, "-0.2 g"],
+    ])(
+        "shows a signed measured weight change for %s g in both the chart popover and readings",
+        (weight, difference) => {
+            expect.hasAssertions();
+
+            const data = workflowBootstrap();
+            const series = required(required(data.plants[0]).weightSeries);
+            series.points.push({
+                breakBefore: false,
+                observationId: "newest",
+                observedAt: "2026-09-06T16:00:00.000Z",
+                weight,
+            });
+            const { window } = createLoggerWindow({ bootstrapData: data });
+            const dot = queryElement(
+                window.document,
+                '[data-observation-id="newest"]',
+                Element
+            );
+            const panel = queryElement(
+                window.document,
+                `#${required(dot.getAttribute("aria-controls"))}`,
+                HTMLElement
+            );
+
+            expect(panel.textContent).toContain(
+                `${difference} vs previous reading`
+            );
+            expect(panel.textContent).toContain("Previous reading420 g");
+            expect(
+                queryElement(
+                    window.document,
+                    ".chart-reading-list .chart-change",
+                    HTMLElement
+                ).textContent
+            ).toBe(`${difference} vs previous reading`);
+            expect(dot.querySelector("title")).toBeNull();
+        }
+    );
+
+    it("uses formatted chart popovers with hover, keyboard pinning, close focus and outside dismissal", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: workflowBootstrap(),
+        });
+        const dot = queryElement(
+            window.document,
+            '[data-observation-id="fourth"]',
+            Element
+        );
+        const panel = queryElement(
+            window.document,
+            `#${required(dot.getAttribute("aria-controls"))}`,
+            HTMLElement
+        );
+        const help = queryElement(
+            window.document,
+            `details:has(> #${panel.id})`,
+            HTMLDetailsElement
+        );
+        dot.dispatchEvent(
+            new window.PointerEvent("pointerenter", { pointerType: "mouse" })
+        );
+
+        expect(help.open).toBe(true);
+        expect(dot.getAttribute("aria-expanded")).toBe("true");
+        expect(
+            panel.querySelectorAll(":scope .chart-facts > div")
+        ).toHaveLength(4);
+        expect(panel.textContent).toContain("-25 g vs previous reading");
+
+        dot.dispatchEvent(
+            new window.KeyboardEvent("keydown", { bubbles: true, key: "Enter" })
+        );
+
+        expect(help.dataset["pinned"]).toBe("true");
+
+        dot.dispatchEvent(
+            new window.KeyboardEvent("keydown", { bubbles: true, key: " " })
+        );
+
+        expect(help.open).toBe(false);
+
+        dot.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+        const close = queryElement(panel, ".help-close", HTMLButtonElement);
+        close.focus();
+        close.click();
+
+        expect(help.open).toBe(false);
+        expect(window.document.activeElement).toBe(dot);
+        expect(dot.getAttribute("aria-expanded")).toBe("false");
+
+        dot.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        ).dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+
+        expect(help.open).toBe(false);
+    });
+});
+
 describe("garden logger daily progress, filtered History and measured charts", () => {
     afterEach(restoreLoggerMocks);
 
@@ -765,19 +958,19 @@ describe("garden logger daily progress, filtered History and measured charts", (
                 .join(" ")
         ).not.toMatch(/48 hours|readings excluded|setup started/v);
         expect(
-            queryElement(chart, 'svg[role="img"]', Element).getAttribute(
+            queryElement(chart, 'svg[role="group"]', Element).getAttribute(
                 "aria-label"
             )
         ).toContain("4 measured weights in grams");
         expect(
-            chart.querySelectorAll(":scope .chart-readings li")
+            chart.querySelectorAll(":scope .chart-reading-list > li")
         ).toHaveLength(5);
         expect(
             queryElement(
                 chart,
                 '.chart-point[data-observation-id="fourth"]',
                 Element
-            ).querySelector("title")?.textContent
+            ).getAttribute("aria-label")
         ).toContain("420 g");
     });
 
@@ -6307,7 +6500,7 @@ describe("garden logger watering forecasts and recent History", () => {
             queryElement(summary, ".forecast-window", HTMLElement).textContent
         ).toContain("Sep 10–Sep 16");
         expect(
-            queryElement(summary, ".forecast-basis", HTMLElement).textContent
+            queryElement(summary, ".forecast-method", HTMLElement).textContent
         ).toContain("2 learned cycles");
         expect(
             queryElement(
@@ -7221,7 +7414,7 @@ describe("garden logger help disclosures", () => {
         );
         const trigger = queryElement(help, "summary", HTMLElement);
 
-        expect(trigger.textContent).toBe("Water date · if ready");
+        expect(trigger.textContent).toBe("Water date*");
         expect(help.open).toBe(false);
 
         help.dispatchEvent(
@@ -7357,8 +7550,12 @@ describe("garden logger activity metrics and guidance", () => {
         );
 
         expect(queryElement(help, "summary", HTMLElement).textContent).toBe(
-            basis
+            "Forecast basis"
         );
+        expect(
+            queryElement(window.document, ".forecast-method", HTMLElement)
+                .textContent
+        ).toBe(basis);
         expect(queryElement(help, "use", Element).getAttribute("href")).toBe(
             `#app-icon-${icon}`
         );

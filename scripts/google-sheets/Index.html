@@ -859,6 +859,40 @@
                 }
             }
 
+            .chart-notes {
+                display: grid;
+                gap: 6px;
+                padding-inline-start: 22px;
+                margin-block: 14px;
+            }
+
+            .chart-change {
+                display: inline-flex;
+                gap: 6px;
+                align-items: center;
+                font-variant-numeric: tabular-nums;
+                color: var(--info-ink);
+            }
+
+            .chart-help {
+                & > summary {
+                    display: none;
+                }
+
+                & .chart-facts {
+                    font-size: 0.875rem;
+                }
+            }
+
+            .chart-help-trigger {
+                cursor: pointer;
+
+                &:focus-visible {
+                    outline: 2px solid var(--info-ink);
+                    outline-offset: 4px;
+                }
+            }
+
             .correction-dialog {
                 box-sizing: border-box;
                 inline-size: min(600px, calc(100% - 24px));
@@ -965,6 +999,8 @@
 
             .chart-point {
                 fill: currentcolor;
+                stroke: transparent;
+                stroke-width: 14;
             }
 
             .chart-watering,
@@ -1198,8 +1234,8 @@
             .plant-forecast {
                 display: grid;
                 grid-template-columns:
-                    [water-start] minmax(0, 1.35fr)
-                    [water-end reweigh-start] minmax(0, 1.15fr)
+                    [water-start] minmax(0, 1fr)
+                    [water-end reweigh-start] minmax(0, 1fr)
                     [reweigh-end basis-start] minmax(0, 1fr) [basis-end];
                 gap: 10px;
                 padding: 13px;
@@ -1240,14 +1276,16 @@
 
             .forecast-item {
                 display: flex;
-                flex-wrap: wrap;
-                gap: 4px 8px;
-                place-content: start space-between;
-                align-items: center;
+                flex-direction: column;
+                gap: 5px;
+                align-items: flex-start;
                 min-inline-size: 0;
             }
 
             .forecast-window {
+                display: inline-flex;
+                gap: 6px;
+                align-items: center;
                 padding: 5px 8px;
                 font-size: 0.875rem;
                 font-weight: 700;
@@ -1255,6 +1293,23 @@
                 background: var(--leaf-soft);
                 border: 1px solid var(--line);
                 border-radius: 8px;
+            }
+
+            .forecast-method {
+                padding: 5px 8px;
+                font-size: 0.875rem;
+                font-weight: 700;
+                line-height: 1.5;
+                color: var(--info-ink);
+                background: var(--card-soft);
+                border-radius: 8px;
+            }
+
+            .forecast-footnote {
+                grid-column: 1 / -1;
+                margin: 2px 0 0;
+                font-size: 0.875rem;
+                color: var(--muted);
             }
 
             @media (860px < width <= 1200px), (width <= 760px) {
@@ -16779,6 +16834,28 @@
                 return node;
             }
 
+            function createChartFacts(rows) {
+                const facts = document.createElement("dl");
+                facts.className = "chart-facts";
+                rows.forEach(([icon, label, value]) => {
+                    const row = document.createElement("div");
+                    const term = document.createElement("dt");
+                    const description = document.createElement("dd");
+                    setIconLabel(term, icon, label, "app-icon app-icon--small");
+                    description.textContent = value;
+                    row.append(term, description);
+                    facts.append(row);
+                });
+                return facts;
+            }
+
+            function readingWeightChange(point, previous) {
+                if (!previous) return "First reading in this cycle";
+                const difference =
+                    Math.round(point.weight * 10 - previous.weight * 10) / 10;
+                return `${difference > 0 ? "+" : ""}${difference} g vs previous reading`;
+            }
+
             function createWeightChart(plant) {
                 const section = document.createElement("section");
                 section.className = "weight-chart";
@@ -16799,12 +16876,18 @@
                     return section;
                 }
                 caption.textContent = `Setup ${series.potSetup} · ${series.startKind || "Cycle"}${series.startedAt ? ` · ${new Date(series.startedAt).toLocaleDateString([], { timeZone: state.bootstrap?.timeZone, month: "short", day: "numeric" })}` : " start not recorded"}`;
-                const points = (series.points || []).filter(
-                    (point) =>
-                        Number.isFinite(point.weight) &&
-                        point.weight > 0 &&
-                        Number.isFinite(Date.parse(point.observedAt))
-                );
+                const points = (series.points || [])
+                    .filter(
+                        (point) =>
+                            Number.isFinite(point.weight) &&
+                            point.weight > 0 &&
+                            Number.isFinite(Date.parse(point.observedAt))
+                    )
+                    .sort(
+                        (left, right) =>
+                            Date.parse(left.observedAt) -
+                            Date.parse(right.observedAt)
+                    );
                 const previousDry =
                     series.previousDry &&
                     Number.isFinite(series.previousDry.weight) &&
@@ -16822,21 +16905,38 @@
                                 Date.parse(points[index - 1].observedAt) >
                                 48 * 3600000)
                 );
-                const status = document.createElement("p");
-                status.className = "hint";
-                status.textContent =
+                const status = document.createElement("ul");
+                status.className = "hint chart-notes";
+                const notes = [
                     points.length === 0
                         ? "No measured weights in this cycle yet. Watering does not imply a measured weight."
                         : points.length === 1
                           ? "One measured point · no trend line yet."
-                          : "Dots are measured whole-pot weights; solid lines connect nearby readings.";
+                          : "Dots are measured whole-pot weights; solid lines connect nearby readings.",
+                ];
                 if (hasGaps || series.excludedCount > 0)
-                    status.textContent += ` Dotted connectors span excluded readings or more than 48 hours without a reading; they do not represent measured weights in between.${series.excludedCount > 0 ? ` ${series.excludedCount} ${series.excludedCount === 1 ? "reading" : "readings"} excluded.` : ""}`;
+                    notes.push(
+                        "Dotted connectors span excluded readings or more than 48 hours without a reading; they do not represent measured weights in between."
+                    );
+                if (series.excludedCount > 0)
+                    notes.push(
+                        `${series.excludedCount} ${series.excludedCount === 1 ? "reading" : "readings"} excluded.`
+                    );
                 if (points.length && waterings.length)
-                    status.textContent += " W marks watering.";
+                    notes.push("W marks watering.");
                 if (points.length && previousDry)
-                    status.textContent +=
-                        " The dash-dot line is the last completed dry reference.";
+                    notes.push(
+                        "The dash-dot line is the last completed dry reference."
+                    );
+                if (points.length > 1)
+                    notes.push(
+                        "Weight changes compare consecutive measured readings in this cycle, including across dotted gaps."
+                    );
+                notes.forEach((note) => {
+                    const item = document.createElement("li");
+                    item.textContent = note;
+                    status.append(item);
+                });
                 if (!points.length) {
                     const empty = document.createElement("p");
                     empty.className = "hint";
@@ -16847,7 +16947,7 @@
                 if (points.length) {
                     const svg = chartElement("svg", {
                         viewBox: "0 0 360 210",
-                        role: "img",
+                        role: "group",
                         "aria-label": `Current cycle, setup ${series.potSetup}: ${points.length} measured weights in grams. Full readings below.`,
                     });
                     const weights = points.map((point) => point.weight);
@@ -16894,6 +16994,7 @@
                         );
                     });
                     waterings.forEach((watering) => {
+                        const control = chartElement("g");
                         const marker = chartElement("line", {
                             x1: x(watering.observedAt),
                             x2: x(watering.observedAt),
@@ -16901,14 +17002,14 @@
                             y2: 174,
                             class: "chart-watering",
                         });
-                        marker.append(
-                            chartElement(
-                                "title",
-                                {},
-                                `Water · ${formattedTimestamp(watering.observedAt)} · ${watering.application || "Application not recorded"}`
-                            )
-                        );
-                        svg.append(
+                        control.append(
+                            chartElement("rect", {
+                                x: x(watering.observedAt) - 8,
+                                y: 0,
+                                width: 16,
+                                height: 174,
+                                fill: "transparent",
+                            }),
                             marker,
                             chartElement(
                                 "text",
@@ -16918,6 +17019,27 @@
                                     "text-anchor": "middle",
                                 },
                                 "W"
+                            )
+                        );
+                        svg.append(control);
+                        section.append(
+                            createHelp(
+                                "Watering marker",
+                                createChartFacts([
+                                    [
+                                        "calendar",
+                                        "Recorded",
+                                        formattedTimestamp(watering.observedAt),
+                                    ],
+                                    [
+                                        "water",
+                                        "Application",
+                                        watering.application ||
+                                            "Application not recorded",
+                                    ],
+                                ]),
+                                "water",
+                                control
                             )
                         );
                     });
@@ -16931,6 +17053,7 @@
                                 class: "chart-dry",
                             })
                         );
+                    const pointMarkers = [];
                     points.forEach((point, index) => {
                         const previous = points[index - 1];
                         if (previous)
@@ -16956,15 +17079,38 @@
                             class: "chart-point",
                             "data-observation-id": point.observationId || "",
                         });
-                        dot.append(
-                            chartElement(
-                                "title",
-                                {},
-                                `${point.weight} g · ${formattedTimestamp(point.observedAt)}`
+                        section.append(
+                            createHelp(
+                                `${point.weight} g · ${formattedTimestamp(point.observedAt)}`,
+                                createChartFacts([
+                                    [
+                                        "calendar",
+                                        "Recorded",
+                                        formattedTimestamp(point.observedAt),
+                                    ],
+                                    ["weight", "Weight", `${point.weight} g`],
+                                    [
+                                        "history",
+                                        "Change",
+                                        readingWeightChange(point, previous),
+                                    ],
+                                    ...(previous
+                                        ? [
+                                              [
+                                                  "calendar",
+                                                  "Previous reading",
+                                                  `${previous.weight} g · ${formattedTimestamp(previous.observedAt)}`,
+                                              ],
+                                          ]
+                                        : []),
+                                ]),
+                                "weight",
+                                dot
                             )
                         );
-                        svg.append(dot);
+                        pointMarkers.push(dot);
                     });
+                    svg.append(...pointMarkers);
                     [start, end].forEach((time, index) =>
                         svg.append(
                             chartElement(
@@ -17000,9 +17146,7 @@
                 readingCount.className = "picker-selection-label";
                 readingCount.textContent = `${points.length} ${points.length === 1 ? "weight" : "weights"}`;
                 summary.append(readingCount);
-                const facts = document.createElement("dl");
-                facts.className = "chart-facts";
-                [
+                const facts = createChartFacts([
                     [
                         "planter",
                         `Setup ${series.potSetup} started`,
@@ -17024,15 +17168,7 @@
                             ? `${previousDry.weight} g · ${formattedTimestamp(previousDry.observedAt)}`
                             : "No completed dry reference in this setup.",
                     ],
-                ].forEach(([icon, label, value]) => {
-                    const row = document.createElement("div");
-                    const term = document.createElement("dt");
-                    const description = document.createElement("dd");
-                    setIconLabel(term, icon, label, "app-icon app-icon--small");
-                    description.textContent = value;
-                    row.append(term, description);
-                    facts.append(row);
-                });
+                ]);
                 if (points.length) {
                     const legend = document.createElement("ul");
                     legend.className = "chart-legend";
@@ -17081,6 +17217,15 @@
                         "app-icon app-icon--small"
                     );
                     item.append(time, weight);
+                    const change = document.createElement("span");
+                    change.className = "chart-change";
+                    setIconLabel(
+                        change,
+                        "history",
+                        readingWeightChange(point, points[index - 1]),
+                        "app-icon app-icon--small"
+                    );
+                    item.append(change);
                     if (
                         point.breakBefore ||
                         (index > 0 &&
@@ -17118,6 +17263,13 @@
                     item.append(time, label, application);
                     list.append(item);
                 });
+                [...list.children]
+                    .sort(
+                        (left, right) =>
+                            Date.parse(right.querySelector("time").dateTime) -
+                            Date.parse(left.querySelector("time").dateTime)
+                    )
+                    .forEach((item) => list.append(item));
                 details.append(summary, facts, status, list);
                 section.append(details);
                 return section;
@@ -17176,14 +17328,31 @@
             }
 
             let helpCloseTimer;
+            let chartHelpSequence = 0;
+
+            function helpTrigger(help) {
+                return help.dataset.triggerId
+                    ? document.getElementById(help.dataset.triggerId)
+                    : help.querySelector("summary");
+            }
+
+            function helpContains(help, target) {
+                return (
+                    help.contains(target) || helpTrigger(help).contains(target)
+                );
+            }
 
             function closeHelp(help, restoreFocus = false) {
                 clearTimeout(helpCloseTimer);
                 help.dataset.pinned = "false";
                 help.open = false;
-                if (restoreFocus && help.contains(document.activeElement)) {
+                helpTrigger(help).setAttribute("aria-expanded", "false");
+                if (
+                    restoreFocus &&
+                    helpContains(help, document.activeElement)
+                ) {
                     help.dataset.restoringFocus = "true";
-                    help.querySelector("summary").focus({
+                    helpTrigger(help).focus({
                         preventScroll: true,
                     });
                     delete help.dataset.restoringFocus;
@@ -17201,9 +17370,7 @@
 
             function positionHelp(help) {
                 const panel = help.querySelector(".help-text");
-                const trigger = help
-                    .querySelector("summary")
-                    .getBoundingClientRect();
+                const trigger = helpTrigger(help).getBoundingClientRect();
                 const viewport = window.visualViewport;
                 const startX = viewport?.offsetLeft || 0;
                 const startY = viewport?.offsetTop || 0;
@@ -17228,27 +17395,58 @@
                     pinned || help.dataset.pinned === "true"
                 );
                 help.open = true;
+                helpTrigger(help).setAttribute("aria-expanded", "true");
                 positionHelp(help);
             }
 
             function dismissOutsideHelp(event) {
-                if (!event.target.closest?.(".help-disclosure"))
+                if (
+                    !event.target.closest?.(
+                        ".help-disclosure, .chart-help-trigger"
+                    )
+                )
                     closeHelpPanels();
             }
 
-            function createHelp(label, explanation, iconName = "info") {
+            function createHelp(
+                label,
+                explanation,
+                iconName = "info",
+                chartTrigger = null
+            ) {
                 const help = document.createElement("details");
                 help.className = "help-disclosure";
-                const trigger = document.createElement("summary");
-                trigger.className = "help-trigger";
+                const summary = document.createElement("summary");
+                summary.className = "help-trigger";
                 setIconLabel(
-                    trigger,
+                    summary,
                     iconName,
                     label,
                     "app-icon app-icon--small"
                 );
                 const text = document.createElement("div");
                 text.className = "help-text";
+                const trigger = chartTrigger || summary;
+                if (chartTrigger) {
+                    help.classList.add("chart-help");
+                    chartHelpSequence += 1;
+                    help.dataset.triggerId = `chart-help-trigger-${chartHelpSequence}`;
+                    chartTrigger.id = help.dataset.triggerId;
+                    chartTrigger.classList.add("chart-help-trigger");
+                    chartTrigger.setAttribute("role", "button");
+                    chartTrigger.setAttribute("tabindex", "0");
+                    chartTrigger.setAttribute("aria-label", label);
+                    text.id = `chart-help-content-${chartHelpSequence}`;
+                    chartTrigger.setAttribute("aria-controls", text.id);
+                    chartTrigger.setAttribute("aria-expanded", "false");
+                    chartTrigger.addEventListener("keydown", (event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault();
+                            if (help.dataset.pinned === "true") closeHelp(help);
+                            else openHelp(help, true);
+                        }
+                    });
+                }
                 const heading = document.createElement("div");
                 heading.className = "help-heading";
                 const title = document.createElement("strong");
@@ -17261,9 +17459,14 @@
                 close.addEventListener("click", () => closeHelp(help, true));
                 heading.append(createIcon(iconName, "app-icon"), title, close);
                 text.append(heading);
-                const paragraphs = Array.isArray(explanation)
-                    ? explanation
-                    : [explanation];
+                const paragraphs =
+                    explanation instanceof HTMLElement
+                        ? []
+                        : Array.isArray(explanation)
+                          ? explanation
+                          : [explanation];
+                if (explanation instanceof HTMLElement)
+                    text.append(explanation);
                 paragraphs.forEach((paragraph, index) => {
                     const body = document.createElement("p");
                     body.className = "help-paragraph";
@@ -17275,32 +17478,35 @@
                     body.textContent = paragraph;
                     text.append(body);
                 });
-                help.append(trigger, text);
+                help.append(summary, text);
                 trigger.addEventListener("click", (event) => {
                     event.preventDefault();
                     if (help.dataset.pinned === "true") closeHelp(help);
                     else openHelp(help, true);
                 });
-                help.addEventListener("pointerenter", (event) => {
-                    if (event.pointerType === "mouse") openHelp(help);
-                });
-                help.addEventListener("pointerleave", () => {
-                    clearTimeout(helpCloseTimer);
-                    helpCloseTimer = setTimeout(() => {
-                        if (
-                            help.dataset.pinned !== "true" &&
-                            !help.contains(document.activeElement)
-                        )
-                            closeHelp(help);
-                    }, 160);
-                });
+                [help, ...(chartTrigger ? [chartTrigger] : [])].forEach(
+                    (surface) => {
+                        surface.addEventListener("pointerenter", (event) => {
+                            if (event.pointerType === "mouse") openHelp(help);
+                        });
+                        surface.addEventListener("pointerleave", () => {
+                            clearTimeout(helpCloseTimer);
+                            helpCloseTimer = setTimeout(() => {
+                                if (
+                                    help.dataset.pinned !== "true" &&
+                                    !helpContains(help, document.activeElement)
+                                )
+                                    closeHelp(help);
+                            }, 160);
+                        });
+                        surface.addEventListener("focusout", (event) => {
+                            if (!helpContains(help, event.relatedTarget))
+                                closeHelp(help);
+                        });
+                    }
+                );
                 trigger.addEventListener("focus", () => {
                     if (help.dataset.restoringFocus !== "true") openHelp(help);
-                });
-                help.addEventListener("focusout", (event) => {
-                    if (!help.contains(event.relatedTarget)) {
-                        closeHelp(help);
-                    }
                 });
                 return help;
             }
@@ -17347,7 +17553,7 @@
                 const heading = document.createElement("div");
                 heading.className = "forecast-heading forecast-item";
                 const waterHelp = createHelp(
-                    "Water date · if ready",
+                    "Water date*",
                     plant.wateringGuidance ||
                         "Confirm actual dryness and plant condition. The forecast is not a watering instruction.",
                     "water"
@@ -17378,15 +17584,19 @@
                 reweighRow.className = "forecast-item";
                 const forecastWindow = document.createElement("span");
                 forecastWindow.className = "forecast-window";
-                forecastWindow.textContent =
-                    plant.dryForecastWindow || "Not enough evidence yet";
+                setIconLabel(
+                    forecastWindow,
+                    "calendar",
+                    plant.dryForecastWindow || "Not enough evidence yet",
+                    "app-icon app-icon--small"
+                );
                 reweighRow.append(reweigh, forecastWindow);
                 const basisLabel =
                     plant.dryForecastBasis || "Needs watering-cycle data";
                 const [basisIcon, basisExplanation] =
                     forecastBasisHelp(basisLabel);
                 const basis = createHelp(
-                    basisLabel,
+                    "Forecast basis",
                     basisExplanation,
                     basisIcon
                 );
@@ -17394,10 +17604,14 @@
                 const basisRow = document.createElement("div");
                 basisRow.className = "forecast-item";
                 const basisCaption = document.createElement("span");
-                basisCaption.className = "forecast-caption";
-                basisCaption.textContent = "Forecast basis";
+                basisCaption.className = "forecast-method";
+                basisCaption.textContent = basisLabel;
                 basisRow.append(basis, basisCaption);
-                panel.append(heading, reweighRow, basisRow);
+                const footnote = document.createElement("p");
+                footnote.className = "forecast-footnote";
+                footnote.textContent =
+                    "* Water only if actual dryness and plant condition are ready.";
+                panel.append(heading, reweighRow, basisRow, footnote);
                 return panel;
             }
 
