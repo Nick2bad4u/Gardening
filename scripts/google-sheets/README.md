@@ -31,6 +31,28 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
+As of September 9, 2026, production runs **logger 5.20.1** on immutable Apps
+Script **version 81**, from source commit `8e8e820`. The existing deployment
+and phone URL are preserved. All three immutable files and Head sources match
+the committed logger, and the authenticated page reports
+`Connected · logger 5.20.1`. The live P01 chart retains ten measured points,
+with seven solid segments and two dotted gap connectors.
+
+The native backup is named **Garden Plant Tracker — before logger 5.20.1 —
+2026-09-09**. Exact before/after comparisons preserve all **755 History
+observations**, **755 unique Observation IDs**, and **688 distinct Request IDs**.
+The checked Baselines, Dry-down models, Daily care, Integrity, and AppSheet
+staging ranges retain their entered values, formulas, and validations, with
+no formula errors. No synthetic observation was submitted.
+
+The logger and AppSheet intake installers completed without a schema migration.
+The queue-trigger installer created the five-minute Head trigger and removed
+its predecessor. Local validation passed 711 logger tests with 99.86% line
+coverage, strict type checks, source-contract checks, lint, formatting, and
+secret scans. Desktop and 390 px browser checks passed in light and dark themes.
+The source commit passed Pages, Sonar's quality gate, Codecov, Socket, Gitleaks,
+and TruffleHog checks before the Apps Script deployment.
+
 ### Logger 5.20.1 interface update
 
 The 5.20.1 interface adds a remembered **Hide charts / Show charts** control
@@ -56,7 +78,7 @@ retain their existing contracts.
 
 ### Previous 5.20.0 baseline
 
-As of September 9, 2026, production runs **logger 5.20.0** on immutable Apps
+Earlier on September 9, 2026, production ran **logger 5.20.0** on immutable Apps
 Script **version 80**, preserving the existing deployment and phone URL.
 All three immutable files match the checked-in sources, and the authenticated
 page reports `Connected · logger 5.20.0`.
