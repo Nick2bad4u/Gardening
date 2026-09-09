@@ -31,6 +31,31 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
+As of September 9, 2026, production runs **logger 5.19.6** on immutable Apps
+Script **version 78**, from source commit `9f43791`. The existing deployment
+was updated in place, preserving the phone URL. All three immutable files and
+the Head source match the committed logger, and the authenticated page reports
+`Connected · logger 5.19.6`.
+
+The logger, AppSheet intake, and queue-trigger installers completed successfully.
+No schema migration was needed. Exactly one Head / Time-driven / Minutes timer /
+Every 5 minutes trigger remains for `processQueuedAppSheetEntries`, and its
+September 9, 12:14:45 a.m. EDT execution completed successfully. Version-78
+`doGet` and `getWebAppBootstrap` executions also completed successfully.
+
+The native backup is named **Garden Plant Tracker — before logger 5.19.6 —
+2026-09-09**. The backup and post-install comparison preserve all 738 History
+observations, their 738 unique Observation IDs, and 671 distinct Request IDs with
+their event-row grouping. Baselines, Dry-down models, Daily care, Integrity,
+and both AppSheet staging tables retain their entered values and formulas;
+the checked derived ranges have no formula errors. No synthetic observation
+was submitted.
+
+The source commit passed logger coverage, website and Storybook checks, Pages
+deployment, Sonar's quality gate, Codecov, Socket, Gitleaks, and TruffleHog.
+The published booklet CSS and JavaScript match the committed sources, and
+the public Storybook index includes its introduction and 31 story/doc entries.
+
 ### Compact phone controls in 5.19.6
 
 The 5.19.6 interface keeps List, Labels, and the Not weighed today toggle on
@@ -42,10 +67,10 @@ helper text is removed. Mobile cards use tighter spacing, the portrait and plant
 ID stay together, photo visibility sits with the plant links, and Recent History
 has one heading row with its entry-count selector.
 
-### Last verified deployment
+### September 7 baseline
 
-As of September 7, 2026, the stable production deployment identifies the logger
-as **5.19.5** on immutable Apps Script version **77**, matching source commit
+The September 7, 2026 deployment identified the logger as **5.19.5** on immutable
+Apps Script version **77**, matching source commit
 `9eac2be`. Native Apps Script now has strict type and lint gates, checked domain
 contracts, and validated input and sheet-read boundaries.
 The selected plant name has an SVG icon and a vertically centered row below the
