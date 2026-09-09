@@ -32,7 +32,7 @@ overwritten. The bound Apps Script in
 ## Current production baseline
 
 As of September 9, 2026, production runs **logger 5.20.0** on immutable Apps
-Script **version 79**, preserving the existing deployment and phone URL.
+Script **version 80**, preserving the existing deployment and phone URL.
 All three immutable files match the checked-in sources, and the authenticated
 page reports `Connected · logger 5.20.0`.
 
@@ -53,8 +53,8 @@ errors. No synthetic observation was submitted to production.
 The Daily care, logger, AppSheet intake, and queue-trigger installers completed
 successfully. The queue installer replaced the existing trigger without adding
 duplicates. Exactly one Head / Time-driven / Minutes timer / Every 5 minutes
-trigger remains; its September 9, 1:17:23 a.m. EDT execution completed successfully.
-Version-79 `doGet` and `getWebAppBootstrap` executions also completed successfully.
+trigger remains. Scheduled queue runs and versioned `doGet` and
+`getWebAppBootstrap` executions completed successfully.
 No History or AppSheet schema change was needed. A native workbook
 copy passed 21 scheduling cases, including midnight and the exact 4:00 a.m.
 boundary, and two consecutive installer runs. Local validation passed 709 logger

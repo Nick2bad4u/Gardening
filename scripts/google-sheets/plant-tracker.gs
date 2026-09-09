@@ -4549,11 +4549,11 @@ function dailyCareDashboardMerges_(dashboard) {
  */
 function dailyCareDestination_(spreadsheet, dashboard) {
     const marker = "Garden logger managed Daily care v2";
-    const markers = [marker, "Garden logger managed Daily care v1"];
+    const markers = new Set([marker, "Garden logger managed Daily care v1"]);
     const daily = spreadsheet.getSheetByName("Daily care");
     if (
         daily &&
-        (!markers.includes(daily.getRange(1, 1).getNote()) ||
+        (!markers.has(daily.getRange(1, 1).getNote()) ||
             daily.getRange(1, 1).getDisplayValue() !==
                 "Daily care · read-only") &&
         (daily.getLastRow() > 0 ||
@@ -4572,7 +4572,7 @@ function dailyCareDestination_(spreadsheet, dashboard) {
     if (
         protections.some(
             (protection) =>
-                !markers.includes(protection.getDescription()) ||
+                !markers.has(protection.getDescription()) ||
                 !protection.canEdit()
         )
     )
@@ -4582,7 +4582,7 @@ function dailyCareDestination_(spreadsheet, dashboard) {
     const slots = dashboard.getRange(2, 21, 2, 4);
     const values = slots.getDisplayValues();
     const formulas = slots.getFormulas();
-    const owned = daily && markers.includes(daily.getRange(1, 1).getNote());
+    const owned = daily && markers.has(daily.getRange(1, 1).getNote());
     const expected = [
         ["Data issues", "", "Observations still needed", ""],
         [
