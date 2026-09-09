@@ -31,6 +31,36 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
+### Verified 5.20.2 baseline
+
+As of September 9, 2026, production runs **logger 5.20.2** on immutable Apps
+Script **version 82**, from source commit `cff580b`. The existing deployment
+and phone URL are preserved. All three immutable files and Head sources match
+the committed logger, and the authenticated page reports
+`Connected · logger 5.20.2`. The live P01 chart shows its newest reading as
+**364.5 g**, with **−1.5 g** compared with the preceding **366 g** reading.
+
+The native backup is named **Garden Plant Tracker — before logger 5.20.2 —
+2026-09-09**, stored in **My Drive → Archive → Garden Plant Tracker Backups**.
+Exact before/after comparisons preserve all **755 History observations**,
+**755 unique Observation IDs**, and **688 distinct Request IDs**. The checked
+Baselines, Dry-down models, Daily care, Integrity, and AppSheet staging ranges
+retain their entered values, formulas, and validations, with no formula errors.
+No synthetic observation was submitted.
+
+The logger and AppSheet intake installers completed without a schema migration.
+Exactly one Head / Time-driven / Minutes timer / Every 5 minutes trigger remains
+for `processQueuedAppSheetEntries`. Its September 9, 7:29:02 p.m. EDT scheduled
+execution completed successfully, as did the version-82 `doGet` and
+`getWebAppBootstrap` executions.
+
+Local validation passed **717 logger tests**, coverage, strict type checks,
+source-contract checks, lint, formatting, and secret scans. Desktop and 390 px
+browser checks passed in light and dark themes, including chart popovers,
+keyboard dismissal, focus return, and overflow checks. The source commit passed
+the website and Pages, logger, Sonar, Socket, Gitleaks, and TruffleHog checks
+before the Apps Script deployment.
+
 ### Logger 5.20.2 interface update
 
 The forecast card puts each value below its label: **Water date***, **Reweigh**,
@@ -46,9 +76,9 @@ cycle, in both its popover and list row; the first point has no earlier-cycle
 comparison. This comparison uses chronological measurements even when the list
 is displayed in reverse order. Chart explanations are separate list items.
 
-### Verified 5.20.1 baseline
+### Previous 5.20.1 baseline
 
-As of September 9, 2026, production runs **logger 5.20.1** on immutable Apps
+Earlier on September 9, 2026, production ran **logger 5.20.1** on immutable Apps
 Script **version 81**, from source commit `8e8e820`. The existing deployment
 and phone URL are preserved. All three immutable files and Head sources match
 the committed logger, and the authenticated page reports
