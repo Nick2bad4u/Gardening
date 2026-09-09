@@ -197,6 +197,11 @@ export function dailySheet(name, id) {
                 return rows;
             },
             merge: () => {
+                if (
+                    start.column <= state.frozenColumns &&
+                    end.column > state.frozenColumns
+                )
+                    throw new Error("Native merge bisects frozen columns");
                 merges.push(range);
                 writes.push(`merge:${notation}`);
                 return range;
@@ -207,6 +212,8 @@ export function dailySheet(name, id) {
             setFontWeight: (value) =>
                 rangeStyle(range, styles, "weight", value),
             setFormula: (value) => range.setValue(value),
+            setHorizontalAlignment: (value) =>
+                rangeStyle(range, styles, "alignment", value),
             setNote: (value) => {
                 notes.set(a1, value);
                 return range;

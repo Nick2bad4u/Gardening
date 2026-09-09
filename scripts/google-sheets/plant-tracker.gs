@@ -14,7 +14,7 @@
    refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30 */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.19.6",
+    version: "5.20.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -4224,6 +4224,8 @@ function dailyCareSources_(spreadsheet) {
     const baselines = requireSheet_(spreadsheet, "Baselines");
     const integrity = requireSheet_(spreadsheet, "Integrity");
     const history = requireSheet_(spreadsheet, "History");
+    const models = requireSheet_(spreadsheet, "Dry-down models");
+    assertHeaders_(models, DRY_DOWN_MODEL_HEADERS, 1);
     assertHeaders_(dashboard, DASHBOARD_VIEW_HEADERS, 6);
     assertHeaders_(baselines, BASELINE_VIEW_HEADERS, 1);
     assertHeaders_(tracker, ["Plant ID", "Plant / planter"], 1);
@@ -4270,6 +4272,7 @@ function dailyCareSources_(spreadsheet) {
         tracker: Math.max(2, tracker.getLastRow()),
         baseline: Math.max(2, baselines.getLastRow()),
         integrity: Math.max(24, integrity.getLastRow()),
+        model: Math.max(2, models.getLastRow()),
         history: Math.min(
             history.getMaxRows(),
             GARDEN_LOGGER.historyCapacityRows
@@ -4293,6 +4296,18 @@ function dailyCareSources_(spreadsheet) {
         throw new Error("Daily care needs a valid current plant inventory.");
     }
     assertUniquePlantIds_(plants);
+    const modelIds = models
+        .getRange(2, 1, bounds.model - 1, 1)
+        .getDisplayValues()
+        .flat();
+    if (
+        plants.some(
+            (plant) => modelIds.filter((id) => id === plant.id).length !== 1
+        )
+    )
+        throw new Error(
+            "Daily care needs one Dry-down models row for every plant."
+        );
     const baselineIds = baselines
         .getRange(2, 1, bounds.baseline - 1, 1)
         .getDisplayValues()
@@ -4445,6 +4460,41 @@ function dailyCareRow_(plant, row, bounds) {
     ];
 }
 
+/**
+ * A native formula keeps the rolling care day live without volatile arguments
+ * to a custom function. Every other day is a measurement cadence, not a water
+ * interval. Near-dry and unsupported curves get daily observations instead.
+ * @param {number} detailRow
+ * @param {string} column
+ * @param {GardenDailyCareBounds} bounds
+ * @returns {string}
+ */
+function dailyCareWeekFormula_(detailRow, column, bounds) {
+    /** @param {string} field @returns {string} */
+    const baseline = (field) =>
+        `XLOOKUP(plant,Baselines!$A$2:$A$${bounds.baseline},Baselines!$${field}$2:$${field}$${bounds.baseline},"")`;
+    /** @param {string} field @returns {string} */
+    const model = (field) =>
+        `XLOOKUP(plant,'Dry-down models'!$A$2:$A$${bounds.model},'Dry-down models'!$${field}$2:$${field}$${bounds.model},"")`;
+    const offset = `${GARDEN_LOGGER.dayStartHour}/24`;
+    return [
+        `=IF($B${detailRow}="","",IFERROR(LET(plant,$B${detailRow},day,${column}$6,today,$B$6,weight,$D${detailRow},weighed,$E${detailRow},`,
+        `watered,${baseline("O")},dry,${model("C")},wet,${model("D")},early,${model("I")},planned,${model("O")},review,${model("M")},points,${model("E")},`,
+        `lastDay,IF(AND(ISNUMBER(weighed),weighed>0),INT(ROUND(weighed-${offset},8)),today-2),waterDay,IF(AND(ISNUMBER(watered),watered>0),INT(ROUND(watered-${offset},8)),0),`,
+        'special,OR(plant="P21",plant="P28"),hasForecast,AND(ISNUMBER(early),early>0),',
+        'reviewNeeded,AND(review<>"",review<>"OK",review<>"No trend",review<>"No current-cycle alert",review<>"Owner-confirmed normal"),',
+        "nearMass,AND(ISNUMBER(weight),weight>0,weighed>=watered,ISNUMBER(dry),dry>0,ISNUMBER(wet),wet>dry,weight<=dry+MAX(2,0.05*(wet-dry))),",
+        `nearDay,AND(hasForecast,day>=INT(early-${offset})),waterCheck,AND(NOT(special),NOT(reviewNeeded),OR(nearDay,nearMass,AND(ISNUMBER(planned),planned>0,day>=planned))),`,
+        "daily,OR(NOT(hasForecast),points<4,reviewNeeded,nearDay,nearMass),cadence,IF(daily,1,2),",
+        "afterWater,AND(ISNUMBER(watered),watered>0,OR(NOT(ISNUMBER(weighed)),watered>weighed)),",
+        "nextDay,MAX(today,IF(afterWater,waterDay,lastDay+cadence)),due,AND(day>=nextDay,MOD(day-nextDay,cadence)=0),",
+        "saved,AND(day=today,lastDay=today,NOT(afterWater)),waterSaved,AND(day=today,waterDay=today),",
+        'inspection,IF(plant="P21","Check top 2 in",IF(plant="P28",IF(OR(due,saved),"Inspect inner leaves",""),IF(waterCheck,"Water check",""))),',
+        'task,IF(saved,"✓ Weighed",IF(due,IF(reviewNeeded,"Reweigh / review",IF(AND(afterWater,day=waterDay),"Weigh after draining","Weigh")),"")),',
+        'TEXTJOIN(CHAR(10),TRUE,IF(waterSaved,"✓ Water logged",""),task,IF(waterSaved,"",inspection),IF(AND(task="",inspection="",NOT(waterSaved)),"—",""))),"Review source data"))',
+    ].join("");
+}
+
 /** Count failed/action CHECKS, not raw counts (some passing checks expect 1). */
 /**
  * @param {GardenDailyCareStatus} status
@@ -4498,11 +4548,12 @@ function dailyCareDashboardMerges_(dashboard) {
  * @returns {GardenDailyCareDestination}
  */
 function dailyCareDestination_(spreadsheet, dashboard) {
-    const marker = "Garden logger managed Daily care v1";
+    const marker = "Garden logger managed Daily care v2";
+    const markers = [marker, "Garden logger managed Daily care v1"];
     const daily = spreadsheet.getSheetByName("Daily care");
     if (
         daily &&
-        (daily.getRange(1, 1).getNote() !== marker ||
+        (!markers.includes(daily.getRange(1, 1).getNote()) ||
             daily.getRange(1, 1).getDisplayValue() !==
                 "Daily care · read-only") &&
         (daily.getLastRow() > 0 ||
@@ -4521,7 +4572,8 @@ function dailyCareDestination_(spreadsheet, dashboard) {
     if (
         protections.some(
             (protection) =>
-                protection.getDescription() !== marker || !protection.canEdit()
+                !markers.includes(protection.getDescription()) ||
+                !protection.canEdit()
         )
     )
         throw new Error(
@@ -4530,7 +4582,7 @@ function dailyCareDestination_(spreadsheet, dashboard) {
     const slots = dashboard.getRange(2, 21, 2, 4);
     const values = slots.getDisplayValues();
     const formulas = slots.getFormulas();
-    const owned = daily?.getRange(1, 1).getNote() === marker;
+    const owned = daily && markers.includes(daily.getRange(1, 1).getNote());
     const expected = [
         ["Data issues", "", "Observations still needed", ""],
         [
@@ -4587,7 +4639,7 @@ function dailyCareChecksRow_(sheet) {
 /**
  * Install only presentation; never rebuild Dashboard or write observations.
  * @returns {{sheet: string, sheetId: number, plants: number, mainRange: string,
- * checksRange: string, dashboardRange: string, dashboardFrozenColumns: number,
+ * checksRange: string, weekRange: string, dashboardRange: string, dashboardFrozenColumns: number,
  * integrityRange: string, historyChanged: boolean}}
  */
 function installDailyCareDashboard() {
@@ -4596,7 +4648,9 @@ function installDailyCareDashboard() {
     const crossingMerges = dailyCareDashboardMerges_(source.dashboard);
     const destination = dailyCareDestination_(spreadsheet, source.dashboard);
     const sheet = destination.daily || spreadsheet.insertSheet("Daily care");
-    const checksRow = source.plants.length + 9;
+    const detailHeader = source.plants.length + 10;
+    const detailStart = detailHeader + 1;
+    const checksRow = detailHeader + source.plants.length + 3;
     const lastRow = checksRow + 17;
     ensureSheetColumnCapacity_(sheet, 8);
     ensureSheetRowCapacity_(sheet, lastRow);
@@ -4612,11 +4666,16 @@ function installDailyCareDashboard() {
         .breakApart()
         .clearContent()
         .clearFormat();
+    // Move the old A:C freeze before creating the new B:H legend merge.
+    sheet.setFrozenColumns(1);
     sheet
         .getRange(1, 1)
         .setValue("Daily care · read-only")
         .setNote(destination.marker);
-    sheet.getRange(1, 1, 1, 3).merge();
+    sheet
+        .getRange(1, 4, 1, 5)
+        .merge()
+        .setValue("Next 7 days · weigh & inspect");
     sheet.getRange(2, 1).setValue("Data issues").setNote(String(checksRow));
     sheet.getRange(2, 4).setValue("Observations still needed");
     sheet
@@ -4640,13 +4699,12 @@ function installDailyCareDashboard() {
     sheet
         .getRange(4, 1)
         .setValue(
-            "Live projection · log observations in Quick log / logger. Counts are check categories, not unique plants."
+            "Rolling care days start at 4 a.m. · save observations in the logger."
         );
-    sheet.getRange(4, 1, 1, 3).merge();
     sheet
         .getRange(4, 4)
         .setValue(
-            "Reweigh windows and whole-pot mass differences are observation prompts, not watering deadlines."
+            "Water only after checking the root zone and plant. Future tasks update with each saved reading."
         );
     sheet.getRange(4, 4, 1, 5).merge();
     sheet
@@ -4657,10 +4715,9 @@ function installDailyCareDashboard() {
     sheet
         .getRange(5, 4)
         .setFormula(
-            `=HYPERLINK("#gid=${sheet.getSheetId()}&range=A6:H${source.plants.length + 6}","Filter daily plants ↓")`
+            `=HYPERLINK("#gid=${sheet.getSheetId()}&range=A${detailHeader}:H${detailHeader + source.plants.length}","Weights, forecast windows & follow-ups ↓")`
         );
     [2, 3, 5].forEach((row) => {
-        sheet.getRange(row, 1, 1, 3).merge();
         sheet.getRange(row, 4, 1, 5).merge();
     });
     const headers = [
@@ -4673,13 +4730,41 @@ function installDailyCareDashboard() {
         "Reweigh window",
         "Follow-up",
     ];
-    sheet.getRange(6, 1, 1, 8).setValues([headers]);
+    sheet.getRange(detailHeader, 1, 1, 8).setValues([headers]);
     sheet
-        .getRange(7, 1, source.plants.length, 8)
+        .getRange(detailStart, 1, source.plants.length, 8)
         .setValues(
             source.plants.map((plant, index) =>
-                dailyCareRow_(plant, index + 7, source.bounds)
+                dailyCareRow_(plant, index + detailStart, source.bounds)
             )
+        );
+    sheet.getRange(6, 1).setValue("Plant · pot label");
+    sheet
+        .getRange(6, 2, 1, 7)
+        .setValues([
+            Array.from(
+                { length: 7 },
+                (_, index) =>
+                    `=INT(ROUND(NOW()-${GARDEN_LOGGER.dayStartHour}/24,8))+${index}`
+            ),
+        ])
+        .setNumberFormat("ddd, mmm d");
+    sheet.getRange(7, 1, source.plants.length, 8).setValues(
+        source.plants.map((plant, index) => {
+            const detail = detailStart + index;
+            return [
+                `=HYPERLINK("#gid=${plant.pageId}",$B${detail}&" · "&$C${detail})`,
+                ...["B", "C", "D", "E", "F", "G", "H"].map((column) =>
+                    dailyCareWeekFormula_(detail, column, source.bounds)
+                ),
+            ];
+        })
+    );
+    sheet
+        .getRange(detailHeader - 2, 2, 1, 7)
+        .merge()
+        .setValue(
+            "Weigh: every other day away from the dry window; daily near it or while learning. ✓ = saved this care day. — = no planned weighing. Water check: inspect readiness first; no automatic watering. Money tree: upper 2 in. Split rock: inner leaves / leaf replacement."
         );
     sheet
         .getRange(checksRow, 1, 18, 8)
@@ -4693,7 +4778,6 @@ function installDailyCareDashboard() {
             )
         );
     for (let row = checksRow; row <= lastRow; row++) {
-        sheet.getRange(row, 1, 1, 3).merge();
         sheet.getRange(row, 6, 1, 3).merge();
     }
     sheet
@@ -4706,31 +4790,32 @@ function installDailyCareDashboard() {
         .getRange(1, 1, lastRow, 8)
         .setVerticalAlignment("middle")
         .setWrap(true);
-    [1, 6, checksRow].forEach((row) =>
+    [1, 6, detailHeader, checksRow].forEach((row) =>
         sheet
             .getRange(row, 1, 1, 8)
             .setBackground("#24533f")
             .setFontColor("#ffffff")
             .setFontWeight("bold")
     );
-    sheet.getRange(7, 4, source.plants.length, 1).setNumberFormat("0.0");
     sheet
-        .getRange(7, 5, source.plants.length, 1)
+        .getRange(detailStart, 4, source.plants.length, 1)
+        .setNumberFormat("0.0");
+    sheet
+        .getRange(detailStart, 5, source.plants.length, 1)
         .setNumberFormat("mmm d, yyyy h:mm am/pm");
     sheet
-        .getRange(7, 6, source.plants.length, 1)
+        .getRange(detailStart, 6, source.plants.length, 1)
         .setNumberFormat("+0.0;-0.0;0.0");
     sheet.getRange(checksRow + 1, 4, 17, 1).setNumberFormat("0");
-    [70, 80, 260, 160, 175, 170, 240, 340].forEach((width, index) =>
+    [280, 145, 180, 155, 165, 160, 170, 210].forEach((width, index) =>
         sheet.setColumnWidth(index + 1, width)
     );
     sheet.setFrozenRows(6);
-    sheet.setFrozenColumns(3);
     sheet.setHiddenGridlines(true);
     sheet.showSheet();
     sheet.autoResizeRows(1, lastRow);
     const newFilter = sheet
-        .getRange(6, 1, source.plants.length + 1, 8)
+        .getRange(detailHeader, 1, source.plants.length + 1, 8)
         .createFilter();
     criteria.forEach((criterion, index) => {
         if (criterion) newFilter.setColumnFilterCriteria(index + 1, criterion);
@@ -4738,6 +4823,7 @@ function installDailyCareDashboard() {
     const protection =
         destination.protection ||
         sheet.protect().setDescription(destination.marker);
+    protection.setDescription(destination.marker);
     protection.setWarningOnly(false).setUnprotectedRanges([]);
     protection.addEditor(Session.getEffectiveUser());
     protection.removeEditors(protection.getEditors());
@@ -4791,18 +4877,63 @@ function installDailyCareDashboard() {
         ["A3", "Fail"],
         ["D3", "Action"],
     ]);
+    dailyCareWeekStyles_(sheet, source.plants.length);
+    spreadsheet.setRecalculationInterval(
+        SpreadsheetApp.RecalculationInterval.MINUTE
+    );
     SpreadsheetApp.flush();
     return {
         sheet: "Daily care",
         sheetId: sheet.getSheetId(),
         plants: source.plants.length,
-        mainRange: `Daily care!A6:H${source.plants.length + 6}`,
+        mainRange: `Daily care!A${detailHeader}:H${detailHeader + source.plants.length}`,
+        weekRange: `Daily care!A6:H${source.plants.length + 6}`,
         checksRange: `Daily care!A${checksRow}:H${lastRow}`,
         dashboardRange: "Dashboard!U2:X3",
         dashboardFrozenColumns: 3,
         integrityRange: "Integrity!B12",
         historyChanged: false,
     };
+}
+
+/** @param {GardenSheet} sheet @param {number} count @returns {void} */
+function dailyCareWeekStyles_(sheet, count) {
+    const range = sheet.getRange(7, 2, count, 7);
+    range.setHorizontalAlignment("center");
+    // This entire projection is installer-owned; replace its previous rules.
+    const rules = sheet
+        .getConditionalFormatRules()
+        .filter(
+            (rule) =>
+                !rule
+                    .getRanges()
+                    .some((item) => item.getA1Notation().startsWith("B7:"))
+        );
+    const styles = [
+        [
+            '=REGEXMATCH(B7,"Review source|Reweigh / review")',
+            "#f8d4d4",
+            "#7a1d1d",
+        ],
+        [
+            '=REGEXMATCH(B7,"Water check|Check top|Inspect inner")',
+            "#fff0c7",
+            "#684b00",
+        ],
+        ['=REGEXMATCH(B7,"✓")', "#d8eadc", "#173c2b"],
+        ['=REGEXMATCH(B7,"Weigh")', "#d9eaf6", "#173f5f"],
+    ];
+    styles.forEach(([formula = "", background = "", color = ""]) => {
+        rules.push(
+            SpreadsheetApp.newConditionalFormatRule()
+                .whenFormulaSatisfied(formula)
+                .setBackground(background)
+                .setFontColor(color)
+                .setRanges([range])
+                .build()
+        );
+    });
+    sheet.setConditionalFormatRules(rules);
 }
 
 /** Preserve unrelated Dashboard rules; replace only rules on our own KPI cells. */

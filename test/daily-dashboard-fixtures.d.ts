@@ -10,7 +10,16 @@ export interface DailyApi {
         row: number,
         bounds: DailyBounds
     ) => string[];
-    dailyCareTestHeaders_: () => { baseline: string[]; dashboard: string[] };
+    dailyCareTestHeaders_: () => {
+        baseline: string[];
+        dashboard: string[];
+        model: string[];
+    };
+    dailyCareWeekFormula_: (
+        row: number,
+        column: string,
+        bounds: DailyBounds
+    ) => string;
     dailyCareWeightFormula_: (row: number, bounds: DailyBounds) => string;
     installDailyCareDashboard: () => DailyResult;
 }
@@ -19,6 +28,7 @@ export interface DailyBounds {
     baseline: number;
     history: number;
     integrity: number;
+    model: number;
     tracker: number;
 }
 
@@ -58,6 +68,7 @@ export interface DailyRange {
     setFontColor: (value: string) => DailyRange;
     setFontWeight: (value: string) => DailyRange;
     setFormula: (value: string) => DailyRange;
+    setHorizontalAlignment: (value: string) => DailyRange;
     setNote: (value: string) => DailyRange;
     setNumberFormat: (value: string) => DailyRange;
     setValue: (value: DailyCell) => DailyRange;
@@ -76,6 +87,7 @@ export interface DailyResult {
     plants: number;
     sheet: string;
     sheetId: number;
+    weekRange: string;
 }
 
 export interface DailyRule {

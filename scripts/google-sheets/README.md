@@ -31,7 +31,40 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-As of September 9, 2026, production runs **logger 5.19.6** on immutable Apps
+As of September 9, 2026, production runs **logger 5.20.0** on immutable Apps
+Script **version 79**, preserving the existing deployment and phone URL.
+All three immutable files match the checked-in sources, and the authenticated
+page reports `Connected · logger 5.20.0`.
+
+The protected **Daily care** tab now has a rolling seven-day weighing and
+inspection calendar at **A6:H36**, supporting weights and forecast windows at
+**A40:H70**, and integrity checks at **A73:H90**. It keeps the existing sheet ID,
+protection, and supporting-table filter criteria. Care days roll at 4:00 a.m.
+in `America/New_York`, with minute recalculation. Water checks remain conditional;
+neither a forecast date nor a 1–2 g/day loss rate automatically authorizes water.
+
+The native backup is named **Garden Plant Tracker — before rolling Daily care —
+2026-09-09**. Exact before/after comparisons preserve all **755 History
+observations**, **755 unique Observation IDs**, and **688 distinct Request IDs**.
+Baselines, Dry-down models, Integrity, and both AppSheet staging tables retain
+their entered values, formulas, and validations. The live calendar has no formula
+errors. No synthetic observation was submitted to production.
+
+The Daily care, logger, AppSheet intake, and queue-trigger installers completed
+successfully. The queue installer replaced the existing trigger without adding
+duplicates. Exactly one Head / Time-driven / Minutes timer / Every 5 minutes
+trigger remains; its September 9, 1:17:23 a.m. EDT execution completed successfully.
+Version-79 `doGet` and `getWebAppBootstrap` executions also completed successfully.
+No History or AppSheet schema change was needed. A native workbook
+copy passed 21 scheduling cases, including midnight and the exact 4:00 a.m.
+boundary, and two consecutive installer runs. Local validation passed 709 logger
+tests with 99.86% line coverage, strict type checks, source-contract checks,
+ESLint, Remark, Prettier, and secret scans. The full external link check encountered
+Wiley's HTTP 403 on the verified root-study DOI; the citation remains intact.
+
+### Previous 5.19.6 baseline
+
+Earlier on September 9, 2026, production ran **logger 5.19.6** on immutable Apps
 Script **version 78**, from source commit `9f43791`. The existing deployment
 was updated in place, preserving the phone URL. All three immutable files and
 the Head source match the committed logger, and the authenticated page reports
@@ -454,8 +487,32 @@ that cross that freeze boundary. Dashboard U2:X3 gains two linked indicators:
 counts checks requiring new evidence. These are check categories, not unique
 plants or observations. Missing check results display **Checks unavailable**.
 
-The installer creates a protected, formula-driven **Daily care** sheet with
-native plant-page links, identity, latest measured weight, its observation time,
+The installer creates a protected, formula-driven **Daily care** sheet. Its
+first table is a rolling seven-day plan: one plant per row and one care day per
+column, beginning with today in the workbook's America/New_York timezone. Care
+days roll over at 4 a.m.; date arithmetic is rounded before taking the day to
+avoid a floating-point boundary error at exactly 4 a.m. Minute recalculation
+keeps the calendar current even when no new observation is entered.
+
+- **Weigh** is scheduled every other day outside a forecast window, and daily
+  near the window, near the completed dry reference, during an unsupported or
+  sparse curve, or when readings need review. This is a measurement cadence,
+  not a watering interval. Missed weigh-ins roll into today.
+- **Water check** starts at the early edge of the existing
+  near-dry window or when a measured weight enters the existing dry band. It
+  requires root-zone and plant inspection; it never marks watering as due
+  solely because a date or a daily loss threshold was reached.
+- **Money tree** keeps its upper-2-inch moisture check. **Split rock** keeps its
+  inner-leaf and leaf-replacement check. Neither receives weight-only watering
+  instructions. Other plant-specific guidance remains in Baselines AJ.
+- **✓ Weighed / ✓ Water logged** reflects observations saved for this care day.
+  Watering without a matching later weight requests a post-drain weight on the
+  watering day. Future tasks are provisional and recalculate after each save.
+- **—** means no scheduled weighing; it is not a claim that the plant needs no
+  attention. Normal visual checks and existing follow-ups still apply.
+
+The supporting table below retains native plant-page links, identity, latest
+measured weight, its observation time,
 signed difference from the current setup's completed Dry, reweigh window, and
 follow-up. Weight and timestamp always come from the same eligible record.
 Correction chains retain their original position when observation times tie;
@@ -466,8 +523,10 @@ The full Integrity check list is visible below the plant table, while the
 underlying Integrity sheet stays hidden. Follow-up rows link to the affected
 plant pages through the main table.
 
-For 30 plants, the table occupies `Daily care!A6:H36` and checks occupy
-`Daily care!A39:H56`. Inventory and helper bounds are discovered on each install.
+For 30 plants, the week occupies `Daily care!A6:H36`, supporting measurements
+occupy `Daily care!A40:H70`, and checks occupy `Daily care!A73:H90`. The first
+column and six header rows stay frozen. Inventory and helper bounds are
+discovered on each install. The managed v1 table upgrades in place to v2.
 Reruns preserve the sheet ID, filter criteria, and protection, and avoid duplicate
 format rules. The installer refuses unexpected destination content or schemas.
 It changes `Integrity!B12` only to exclude Dashboard U2:X3 from the formula-error

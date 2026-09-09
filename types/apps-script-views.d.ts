@@ -2,6 +2,7 @@ interface GardenDailyCareBounds {
     baseline: number;
     history: number;
     integrity: number;
+    model: number;
     tracker: number;
 }
 

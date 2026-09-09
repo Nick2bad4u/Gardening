@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-09-02
+Last updated: 2026-09-09
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
@@ -22,6 +22,41 @@ need a separate spreadsheet of rules for every species.
 This is deliberately not a fixed watering calendar. Four-inch pots under a
 strong lamp and fan may dry quickly, but season, roots, plant size, and room
 conditions can change that speed.
+
+### Using weights without chasing zero daily loss
+
+Use the rolling **Daily care** sheet to schedule weighing and inspection. The
+calendar uses the latest actual readings and the current setup's forecast;
+future checks move when new weights or watering observations are saved. Its
+water checks are conditional on plant readiness, not appointments to water.
+
+Do not deliberately extend a dry-down until the scale stops moving. Equally,
+1–2 g/day is not a universal watering threshold: a daily whole-pot difference
+combines evaporation and plant water loss, and depends on pot size, substrate,
+weather, weighing interval, and measurement noise. Compare readings at similar
+times, divide a multi-day change by its actual elapsed days, and use the
+current setup's prior dry weights together with a root-zone and plant check.
+The prior dry weight is a previous pre-watering observation, not a laboratory
+measurement of a water-free plant and pot.
+
+There is evidence for drought damage to small roots, but not a universal
+grams-per-day cutoff. An _Opuntia ficus-indica_ experiment found root-apex
+mortality during rapid drying in shallow vermiculite, while gradual drying
+produced much lower mortality. That supports avoiding unnecessary severe
+drought; it does not establish when this collection's pots should be watered.
+See [Dubrovsky, North, and Nobel's root-drying study](https://doi.org/10.1046/j.1469-8137.1998.00884.x).
+For routine cactus care, [University of Minnesota Extension](https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents)
+supports thorough watering, drying between waterings, and reduced watering
+during low-light rest. Keep the money-tree and split-rock exceptions below.
+
+The documented P01–P18 mix is 60% Molly's Succulent Mix and 40% perlite by
+volume. [Molly's lists akadama, pine bark, lava rock, Hyuga, and pumice](https://veryplants.com/products/mollys-succulent-mix-premium-gritty-soil-mix)
+and describes a porous mix that still retains moisture. Water held in and on
+porous particles should not be confused with every rock swelling enough to
+damage roots. [The Perlite Institute describes perlite's porous structure](https://www.perlite.org/horticulture/)
+as a product of heating during manufacture; its pores subsequently hold air
+and water. Root-damaging swelling of this particular mixture has not been
+established, so do not use that claim to decide when to water.
 
 ## Starting the AW200SE
 

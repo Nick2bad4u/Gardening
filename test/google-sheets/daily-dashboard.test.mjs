@@ -31,6 +31,7 @@ function dailyApi(value) {
         "dailyCareRow_",
         "dailyCareTestHeaders_",
         "dailyCareWeightFormula_",
+        "dailyCareWeekFormula_",
         "installDailyCareDashboard",
     ]) {
         if (typeof Reflect.get(value, name) !== "function")
@@ -60,6 +61,7 @@ function fixture(
             "Integrity",
             "History",
             ...ids,
+            "Dry-down models",
         ].map((name, index) => [name, dailySheet(name, index + 1)])
     );
     /** @param {string} name */
@@ -80,6 +82,10 @@ function fixture(
             sheets.set(name, item);
             return item.api;
         },
+        setRecalculationInterval: (/** @type {string} */ interval) => {
+            if (interval !== "MINUTE")
+                throw new Error("Expected live care-day recalculation");
+        },
     };
     const context = vm.createContext({
         Session: { getEffectiveUser: () => "owner" },
@@ -88,15 +94,19 @@ function fixture(
             newConditionalFormatRule: dailyRuleBuilder,
             openById: () => spreadsheet,
             ProtectionType: { SHEET: "SHEET" },
+            RecalculationInterval: { MINUTE: "MINUTE" },
         },
     });
     vm.runInContext(source, context, { filename: fileURLToPath(sourceUrl) });
     vm.runInContext(
-        "function dailyCareTestHeaders_() { return { baseline: [...BASELINE_VIEW_HEADERS], dashboard: [...DASHBOARD_VIEW_HEADERS] }; }",
+        "function dailyCareTestHeaders_() { return { baseline: [...BASELINE_VIEW_HEADERS], dashboard: [...DASHBOARD_VIEW_HEADERS], model: [...DRY_DOWN_MODEL_HEADERS] }; }",
         context
     );
     const api = dailyApi(context);
     const headers = api.dailyCareTestHeaders_();
+    sheet("Dry-down models")
+        .api.getRange(1, 1, 1, 16)
+        .setValues([headers.model]);
     const dashboard = sheet("Dashboard");
     dashboard.api.getRange(6, 1, 1, 24).setValues([headers.dashboard]);
     dashboard.api.getRange(1, 1).setValue("Garden Dashboard · existing title");
@@ -176,6 +186,9 @@ function fixture(
             .setValues([[id, `Plant ${id}`]]);
         tracker.api.getRange(index + 2, 15).setValue(`#${index}`);
         baseline.api.getRange(index + 2, 1).setValue(id);
+        sheet("Dry-down models")
+            .api.getRange(index + 2, 1)
+            .setValue(id);
         integrity.api.getRange(index + 24, 1, 1, 6).setValues([
             [
                 id,
@@ -289,9 +302,10 @@ describe("scoped daily Dashboard presentation", () => {
         expect(result).toMatchObject({
             dashboardFrozenColumns: 3,
             historyChanged: false,
-            mainRange: "Daily care!A6:H10",
+            mainRange: "Daily care!A14:H18",
             plants: 4,
             sheet: "Daily care",
+            weekRange: "Daily care!A6:H10",
         });
 
         for (const [key, value] of cells)
@@ -313,7 +327,7 @@ describe("scoped daily Dashboard presentation", () => {
 
         expect(daily.state).toMatchObject({
             columns: 8,
-            frozenColumns: 3,
+            frozenColumns: 1,
             frozenRows: 6,
             gridlinesHidden: true,
             hidden: false,
@@ -321,18 +335,82 @@ describe("scoped daily Dashboard presentation", () => {
             protectionEditors: ["owner"],
             protectionWarning: false,
         });
-        expect(daily.state.filter?.range).toBe("A6:H10");
-        expect(daily.state.styles.get("D7:D10:format")).toBe("0.0");
-        expect(daily.state.styles.get("E7:E10:format")).toBe(
+        expect(daily.state.filter?.range).toBe("A14:H18");
+        expect(daily.state.styles.get("D15:D18:format")).toBe("0.0");
+        expect(daily.state.styles.get("E15:E18:format")).toBe(
             "mmm d, yyyy h:mm am/pm"
         );
-        expect(daily.state.styles.get("F7:F10:format")).toBe("+0.0;-0.0;0.0");
-        expect(daily.state.cells.get("B10")).toContain('XLOOKUP("P31",');
-        expect(daily.state.cells.get("C10")).toContain(
-            "XLOOKUP($B10,'Plant tracker'!$A$2:$A$5,'Plant tracker'!$B$2:$B$5"
+        expect(daily.state.styles.get("F15:F18:format")).toBe("+0.0;-0.0;0.0");
+        expect(daily.state.cells.get("B18")).toContain('XLOOKUP("P31",');
+        expect(daily.state.cells.get("C18")).toContain(
+            "XLOOKUP($B18,'Plant tracker'!$A$2:$A$5,'Plant tracker'!$B$2:$B$5"
         );
-        expect(daily.state.cells.get("D10")).toContain("$B10");
+        expect(daily.state.cells.get("D18")).toContain("$B18");
     });
+
+    it("uses seven live care days and each plant's paired supporting record", () => {
+        expect.hasAssertions();
+
+        const { api, sheet } = fixture();
+        api.installDailyCareDashboard();
+        const daily = sheet("Daily care");
+
+        expect(daily.state.cells.get("B6")).toBe("=INT(ROUND(NOW()-4/24,8))+0");
+        expect(daily.state.cells.get("H6")).toBe("=INT(ROUND(NOW()-4/24,8))+6");
+        expect(daily.state.cells.get("H10")).toContain("day,H$6");
+        expect(daily.state.cells.get("H10")).toContain("plant,$B18");
+        expect(daily.state.cells.get("H10")).toContain(
+            "weight,$D18,weighed,$E18"
+        );
+        expect(daily.state.cells.get("H10")).toContain(
+            "INT(ROUND(weighed-4/24,8))"
+        );
+        expect(daily.state.cells.get("H10")).toContain(
+            'special,OR(plant="P21",plant="P28")'
+        );
+    });
+
+    it("upgrades the owned v1 table without losing protection or its filter", () => {
+        expect.hasAssertions();
+
+        const { api, sheet } = fixture();
+        api.installDailyCareDashboard();
+        const daily = sheet("Daily care");
+        daily.state.notes.set("A1", "Garden logger managed Daily care v1");
+        daily.state.protectionDescription =
+            "Garden logger managed Daily care v1";
+        daily.state.frozenColumns = 3;
+        daily.state.filter?.setColumnFilterCriteria(8, "follow-ups only");
+        api.installDailyCareDashboard();
+
+        expect(daily.state.notes.get("A1")).toBe(
+            "Garden logger managed Daily care v2"
+        );
+        expect(daily.state.protectionDescription).toBe(
+            "Garden logger managed Daily care v2"
+        );
+        expect(daily.state.filter?.criteria.get(8)).toBe("follow-ups only");
+        expect(daily.state.protected).toBe(true);
+        expect(daily.state.frozenColumns).toBe(1);
+    });
+
+    it.each(["missing", "duplicate"])(
+        "refuses %s forecast rows before touching presentation",
+        (kind) => {
+            expect.hasAssertions();
+
+            const { api, sheet } = fixture();
+            sheet("Dry-down models")
+                .api.getRange(3, 1)
+                .setValue(kind === "missing" ? "" : "P01");
+
+            expect(() => api.installDailyCareDashboard()).toThrow(
+                "one Dry-down models row"
+            );
+            expect(sheet("Dashboard").state.writes).toStrictEqual([]);
+            expect(sheet("History").state.writes).toStrictEqual([]);
+        }
+    );
 
     it("is idempotent and retains daily filter criteria without duplicate rules or protection", () => {
         expect.hasAssertions();
@@ -345,10 +423,10 @@ describe("scoped daily Dashboard presentation", () => {
         const scan = sheet("Integrity").state.cells.get("B12");
 
         expect(api.installDailyCareDashboard()).toStrictEqual(first);
-        expect(sheets.size).toBe(10);
+        expect(sheets.size).toBe(11);
         expect(daily.state.cells).toStrictEqual(cells);
         expect(daily.state.filter?.criteria.get(8)).toBe("follow-ups only");
-        expect(daily.state.rules).toHaveLength(4);
+        expect(daily.state.rules).toHaveLength(8);
         expect(sheet("Dashboard").state.rules).toHaveLength(5);
         expect(sheet("Integrity").state.cells.get("B12")).toBe(scan);
     });
@@ -362,19 +440,21 @@ describe("scoped daily Dashboard presentation", () => {
             .api.getRange(3, 1, 1, 2)
             .setValues([["P42", "New plant"]]);
         sheet("Baselines").api.getRange(3, 1).setValue("P42");
+        sheet("Dry-down models").api.getRange(3, 1).setValue("P42");
         sheet("Integrity").api.getRange(25, 1).setValue("P42");
         sheets.set("P42", dailySheet("P42", 42));
 
         expect(api.installDailyCareDashboard()).toMatchObject({
-            checksRange: "Daily care!A11:H28",
-            mainRange: "Daily care!A6:H8",
+            checksRange: "Daily care!A17:H34",
+            mainRange: "Daily care!A12:H14",
             plants: 2,
+            weekRange: "Daily care!A6:H8",
         });
         expect(sheet("Daily care").state.cells.get("A8")).toContain("#gid=42");
-        expect(sheet("Daily care").state.cells.get("H8")).toContain(
+        expect(sheet("Daily care").state.cells.get("H14")).toContain(
             "Integrity!$A$24:$A$25"
         );
-        expect(sheet("Dashboard").state.cells.get("U3")).toContain("range=A11");
+        expect(sheet("Dashboard").state.cells.get("U3")).toContain("range=A17");
     });
 
     it.each([
@@ -383,6 +463,7 @@ describe("scoped daily Dashboard presentation", () => {
         "Integrity",
         "Baselines",
         "Plant tracker",
+        "Dry-down models",
     ])("refuses a missing %s source before writes", (missing) => {
         expect.hasAssertions();
 
@@ -390,7 +471,7 @@ describe("scoped daily Dashboard presentation", () => {
         sheets.delete(missing);
 
         expect(() => api.installDailyCareDashboard()).toThrow(
-            /(?:Baselines|Daily care|Dashboard|History|Integrity|Plant tracker|Sheet|plant ID)/v
+            /(?:Baselines|Daily care|Dashboard|Dry-down models|History|Integrity|Plant tracker|Sheet|plant ID)/v
         );
         expect(
             sheets
@@ -533,7 +614,7 @@ describe("scoped daily Dashboard presentation", () => {
         expect(observations).toContain("0 · None outstanding");
         expect(data).toContain("Checks unavailable");
         expect(data).toContain("=ROWS(Integrity!$C$5:$C$21)");
-        expect(sheet("Daily care").state.cells.get("A14")).toBe(
+        expect(sheet("Daily care").state.cells.get("A22")).toBe(
             '=IF(Integrity!A5="","",Integrity!A5)'
         );
     });
@@ -546,6 +627,7 @@ describe("scoped daily Dashboard presentation", () => {
             baseline: 42,
             history: 5000,
             integrity: 64,
+            model: 42,
             tracker: 42,
         };
         const formula = api.dailyCareWeightFormula_(7, bounds);
@@ -643,6 +725,10 @@ describe("scoped daily Dashboard presentation", () => {
             "#f8d4d4",
             "#edf4ee",
             "#fff0c7",
+            "#f8d4d4",
+            "#fff0c7",
+            "#d8eadc",
+            "#d9eaf6",
         ]);
         expect(rules[0]?.formula).toContain(
             '=ROWS(INDIRECT("Integrity!C5:C21"))'
@@ -705,8 +791,8 @@ describe("scoped daily Dashboard presentation", () => {
             sheetId: 100,
         });
         expect(daily.state.columns).toBe(8);
-        expect(daily.state.rows).toBe(27);
-        expect(daily.api.getRange("D7").getFormula()).toContain('{"",""}');
+        expect(daily.state.rows).toBe(32);
+        expect(daily.api.getRange("D12").getFormula()).toContain('{"",""}');
     });
 
     it("refuses a scan with any additional Dashboard dependency", () => {
