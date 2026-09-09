@@ -243,11 +243,11 @@ describe("garden logger 4 a.m. weighing day", () => {
         expect(
             queryElement(window.document, "#roundProgress", HTMLElement)
                 .textContent
-        ).toContain("1 of 2 Saved today");
+        ).toContain("1 Saved today");
         expect(
             queryElement(window.document, "#roundProgress", HTMLElement)
                 .textContent
-        ).toContain("Day starts at 4:00 a.m. (America/New_York)");
+        ).not.toContain("Day starts");
         expect(
             queryElement(
                 window.document,
@@ -276,7 +276,7 @@ describe("garden logger 4 a.m. weighing day", () => {
         expect(
             queryElement(window.document, "#roundProgress", HTMLElement)
                 .textContent
-        ).toContain("1 of 2 Saved today");
+        ).toContain("1 Saved today");
     });
 
     it("withholds midnight-based cached progress until a fresh read confirms the new cutoff", () => {
@@ -342,12 +342,12 @@ describe("garden logger daily progress, filtered History and measured charts", (
                 ".round-progress-stat",
                 HTMLElement
             ).map((stat) => stat.textContent)
-        ).toStrictEqual(["1 of 2 Saved today", "2 Queued on this device"]);
+        ).toStrictEqual(["1 Saved today", "2 Queued"]);
 
         queryElement(
             window.document,
             "#notWeighedToday",
-            HTMLInputElement
+            HTMLButtonElement
         ).click();
 
         expect(
@@ -370,7 +370,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         queryElement(
             window.document,
             "#notWeighedToday",
-            HTMLInputElement
+            HTMLButtonElement
         ).click();
 
         expect(first.querySelector(".plant-choice-icon")).toBe(portrait);
@@ -403,7 +403,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         queryElement(
             window.document,
             "#notWeighedToday",
-            HTMLInputElement
+            HTMLButtonElement
         ).click();
         vi.advanceTimersByTime(60_000);
 
@@ -446,7 +446,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         expect(
             queryElement(current.window.document, "#roundProgress", HTMLElement)
                 .textContent
-        ).toContain("1 of 2 Saved today");
+        ).toContain("1 Saved today");
 
         const old = { ...bootstrap, serverTime: "" };
         const legacy = createLoggerWindow({
@@ -520,7 +520,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
                     ".round-progress-stat",
                     HTMLElement
                 ).map((stat) => stat.textContent)
-            ).toStrictEqual(["1 of 2 Saved today", "0 Queued on this device"]);
+            ).toStrictEqual(["1 Saved today", "0 Queued"]);
 
             const reload = createLoggerWindow({
                 online: false,
@@ -537,7 +537,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
                     "#roundProgress",
                     HTMLElement
                 ).textContent
-            ).toContain("1 of 2 Saved today");
+            ).toContain("1 Saved today");
         }
     );
 
@@ -560,7 +560,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         expect(
             queryElement(window.document, "#roundProgress", HTMLElement)
                 .textContent
-        ).toContain("0 of 2 Saved today");
+        ).toContain("0 Saved today");
         expect(
             queryElement(window.document, "#dataFreshness", HTMLElement)
                 .textContent
@@ -1072,7 +1072,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         expect(
             queryElement(window.document, "#roundProgress", HTMLElement)
                 .textContent
-        ).toContain("2 of 2 Saved today");
+        ).toContain("2 Saved today");
         expect(
             queryElement(window.document, "#recentList", HTMLElement)
                 .textContent
@@ -1094,7 +1094,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         expect(
             queryElement(window.document, "#roundProgress", HTMLElement)
                 .textContent
-        ).toContain("2 of 2 Saved today");
+        ).toContain("2 Saved today");
         expect(
             queryElement(window.document, "#recentList", HTMLElement)
                 .textContent
@@ -5528,7 +5528,9 @@ describe("garden logger plant photos and portrait rendering", () => {
             HTMLImageElement
         );
 
-        expect(summary.lastElementChild).toBe(tools);
+        expect(tools.parentElement).toBe(
+            queryElement(summary, ".plant-links", HTMLElement)
+        );
 
         for (const url of Object.values(p23ImageUrls)) {
             expect(sourceWrites.mock.calls.flat()).not.toContain(url);
@@ -5578,7 +5580,9 @@ describe("garden logger plant photos and portrait rendering", () => {
         expect(
             queryElement(summary, ".summary-portrait", HTMLImageElement)
         ).toBe(portrait);
-        expect(summary.lastElementChild).toBe(tools);
+        expect(tools.parentElement).toBe(
+            queryElement(summary, ".plant-links", HTMLElement)
+        );
 
         for (const url of Object.values(p23ImageUrls)) {
             expect(sourceWrites.mock.calls.flat()).not.toContain(url);
@@ -5655,7 +5659,9 @@ describe("garden logger plant photos and portrait rendering", () => {
         expect(
             queryElement(summary, "#photoVisibilityToggle", HTMLButtonElement)
         ).toBe(toggle);
-        expect(summary.lastElementChild).toBe(tools);
+        expect(tools.parentElement).toBe(
+            queryElement(summary, ".plant-links", HTMLElement)
+        );
         expect(tools.hidden).toBe(false);
         expect(
             queryElements(summary, ".plant-photo-card img", HTMLImageElement)

@@ -375,6 +375,21 @@
                 }
             }
 
+            .picker-modes--plant {
+                grid-template-columns:
+                    [list-start] auto [list-end labels-start] auto
+                    [labels-end filter-start] minmax(0, 1fr) [filter-end];
+                gap: 2px;
+                inline-size: fit-content;
+                max-inline-size: 100%;
+
+                & .picker-mode {
+                    min-inline-size: 0;
+                    min-block-size: 44px;
+                    padding-inline: 8px;
+                }
+            }
+
             .label-picker {
                 display: grid;
                 grid-template-columns: repeat(
@@ -515,11 +530,7 @@
             }
 
             .plant-display-tools {
-                display: flex;
-                grid-column: 1 / -1;
-                justify-content: flex-end;
-                padding-block-start: 8px;
-                border-block-start: 1px solid var(--line);
+                display: contents;
             }
 
             .photo-visibility-toggle {
@@ -602,49 +613,22 @@
                 }
             }
 
-            .round-filter {
-                display: inline-flex;
-                gap: 8px;
-                align-items: center;
-                min-block-size: 44px;
-                cursor: pointer;
-
-                & input {
-                    flex: 0 0 20px;
-                    inline-size: 20px;
-                    block-size: 20px;
-                    min-block-size: 20px;
-                    padding: 0;
-                    margin: 0;
-                }
-            }
-
             .round-progress {
                 display: flex;
                 flex-wrap: wrap;
                 gap: 8px;
-                margin-block: 10px 16px;
+                margin-block: 8px 12px;
             }
 
             .round-progress-stat {
                 display: inline-flex;
                 gap: 8px;
                 align-items: center;
-                min-block-size: 44px;
-                padding: 8px 12px;
+                padding: 6px 10px;
                 font-weight: 700;
                 background: var(--control);
                 border: 1px solid var(--line);
                 border-radius: 12px;
-            }
-
-            .round-progress-note {
-                display: flex;
-                flex-basis: 100%;
-                gap: 8px;
-                align-items: center;
-                margin: 2px 0 0;
-                line-height: 1.5;
             }
 
             .weight-feedback {
@@ -980,7 +964,7 @@
                 display: block;
                 inline-size: 64px;
                 block-size: 64px;
-                padding: 0 6px 12px;
+                padding: 6px;
                 object-fit: contain;
                 background: var(--control);
                 border: 1px solid var(--line);
@@ -1624,10 +1608,6 @@
                 min-block-size: 0;
                 max-block-size: 520px;
                 overflow: auto;
-
-                & > summary {
-                    display: none;
-                }
             }
 
             .control-row {
@@ -2146,41 +2126,65 @@
                 }
                 .recent-card {
                     max-block-size: 420px;
-                    & > summary {
-                        display: block;
-                        padding: 14px 16px;
-                        font-weight: 800;
-                        color: var(--forest-2);
-                        cursor: pointer;
-                    }
-                    & > .recent-inner {
-                        padding-block-start: 0;
-                    }
-                    & > .recent-inner > .card-title {
-                        justify-content: flex-end;
-                    }
-                    & > .recent-inner > .card-title h2 {
-                        display: none;
-                    }
                 }
             }
 
             @media (width <= 520px) {
                 .plant-summary-heading {
-                    display: grid;
-                    grid-template-columns:
-                        [identity-start] minmax(0, 1fr)
-                        [identity-end portrait-start] 64px [portrait-end];
                     align-items: center;
                 }
 
                 .plant-summary-portrait {
-                    display: contents;
+                    max-inline-size: 7rem;
                 }
 
                 .plant-id {
-                    grid-column: 1 / -1;
-                    justify-self: end;
+                    flex-wrap: wrap;
+                    font-size: 0.875rem;
+                    white-space: normal;
+                }
+
+                .picker-modes--plant {
+                    inline-size: 100%;
+
+                    & .picker-mode {
+                        gap: 4px;
+                        padding-inline: 5px;
+                        font-size: 0.875rem;
+                    }
+                }
+
+                .round-progress-stat {
+                    gap: 6px;
+                    font-size: 0.875rem;
+                }
+
+                .plant-summary {
+                    gap: 10px;
+                    padding: 12px;
+                }
+
+                .plant-links {
+                    gap: 6px;
+                }
+
+                .plant-links a,
+                .photo-visibility-toggle {
+                    padding-inline: 8px;
+                    font-size: 0.875rem;
+                }
+
+                .history-limit {
+                    gap: 5px;
+                    font-size: 0.875rem;
+                }
+
+                .recent-inner > .card-title {
+                    gap: 8px;
+
+                    & h2 {
+                        font-size: 1rem;
+                    }
                 }
 
                 .weight-chart {
@@ -2195,7 +2199,7 @@
                     border-radius: 19px;
                 }
                 .card {
-                    padding: 15px;
+                    padding: 12px;
                     border-radius: 17px;
                 }
                 .chips {
@@ -2233,8 +2237,7 @@
                         [content-end];
                 }
                 .picker-toolbar {
-                    flex-direction: column;
-                    align-items: flex-start;
+                    gap: 6px;
                 }
                 .field.full {
                     grid-column: auto;
@@ -12870,14 +12873,10 @@
                                 </div>
                             </div>
                             <div class="picker-toolbar">
-                                <span class="hint"
-                                    >Use the searchable list or tap a pot
-                                    label.</span
-                                >
                                 <div
-                                    class="picker-modes"
+                                    class="picker-modes picker-modes--plant"
                                     role="group"
-                                    aria-label="Plant selector style"
+                                    aria-label="Plant picker controls"
                                 >
                                     <button
                                         id="listPickerMode"
@@ -12909,22 +12908,23 @@
                                             ></use></svg
                                         >Labels</button
                                     >
+                                    <button
+                                        id="notWeighedToday"
+                                        class="picker-mode"
+                                        type="button"
+                                        aria-pressed="false"
+                                    >
+                                        <svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon app-icon--small"
+                                            aria-hidden="true"
+                                        >
+                                            <use href="#app-icon-weight"></use>
+                                        </svg>
+                                        <span>Not weighed today</span>
+                                    </button>
                                 </div>
                             </div>
-                            <label class="round-filter">
-                                <input
-                                    id="notWeighedToday"
-                                    type="checkbox"
-                                />
-                                <svg
-                                    viewBox="0 0 64 64"
-                                    class="app-icon app-icon--small"
-                                    aria-hidden="true"
-                                >
-                                    <use href="#app-icon-weight"></use>
-                                </svg>
-                                <span>Not weighed today</span>
-                            </label>
                             <div
                                 id="roundProgress"
                                 class="round-progress"
@@ -13586,8 +13586,7 @@
                                     checked
                                 />
                                 <label for="keepEvents"
-                                    >Keep selected event buttons after saving
-                                    (useful during repeated care rounds)</label
+                                    >Keep selected events after saving</label
                                 >
                             </div>
                             <div class="control-row">
@@ -14117,21 +14116,12 @@
                         </div>
                     </section>
 
-                    <details
+                    <section
                         id="recentCard"
                         class="card recent-card"
-                        open
+                        aria-label="Recent History"
                         hidden
                     >
-                        <summary
-                            ><svg
-                                viewBox="0 0 64 64"
-                                class="app-icon"
-                                aria-hidden="true"
-                            >
-                                <use href="#app-icon-history"></use></svg
-                            >Recent History</summary
-                        >
                         <div class="recent-inner">
                             <div class="card-title"
                                 ><h2
@@ -14186,7 +14176,7 @@
                                 class="recent-list"
                             ></div>
                         </div>
-                    </details>
+                    </section>
                 </div>
             </div>
         </main>
@@ -15148,6 +15138,12 @@
                 }
             }
 
+            function isNotWeighedFilterActive() {
+                return (
+                    $("notWeighedToday").getAttribute("aria-pressed") === "true"
+                );
+            }
+
             function savedTodayPlantIds() {
                 const bootstrap = state.bootstrap;
                 return bootstrap?.dayKey &&
@@ -15183,12 +15179,12 @@
                     [
                         "check",
                         saved
-                            ? `${plants.filter((plant) => saved.has(plant.id)).length} of ${plants.length} Saved today`
+                            ? `${plants.filter((plant) => saved.has(plant.id)).length} Saved today`
                             : "Saved today unavailable · refresh Google",
                     ],
                     [
                         "queue",
-                        `${plants.filter((plant) => queued.has(plant.id)).length} Queued on this device`,
+                        `${plants.filter((plant) => queued.has(plant.id)).length} Queued`,
                     ],
                 ].forEach(([icon, text]) => {
                     const stat = document.createElement("span");
@@ -15196,17 +15192,8 @@
                     setIconLabel(stat, icon, text, "app-icon app-icon--small");
                     progress.append(stat);
                 });
-                const note = document.createElement("p");
-                note.className = "hint round-progress-note";
-                setIconLabel(
-                    note,
-                    "weight",
-                    `Day starts at 4:00 a.m. (${state.bootstrap.timeZone || "workbook time"}). Not weighed today excludes saved weights and queued weights.`,
-                    "app-icon app-icon--small"
-                );
-                progress.append(note);
                 const status = $("plantFilterStatus");
-                status.hidden = !$("notWeighedToday").checked;
+                status.hidden = !isNotWeighedFilterActive();
                 if (!remaining.length) {
                     status.textContent =
                         "No remaining plants to weigh. The current plant stays available.";
@@ -15622,7 +15609,7 @@
                     }
                 }
                 renderRoundProgress();
-                if ($("notWeighedToday").checked)
+                if (isNotWeighedFilterActive())
                     renderPlantOptions(
                         $("plantSearch").value,
                         $("plantSelect").value
@@ -16042,7 +16029,7 @@
                     safeStorageGet(localStorage, "gardenPlantId", "") ||
                     "";
                 const saved = savedTodayPlantIds();
-                const notWeighed = $("notWeighedToday").checked;
+                const notWeighed = isNotWeighedFilterActive();
                 const plants = state.bootstrap.plants.filter(
                     (plant) =>
                         (notWeighed && plant.id === currentId) ||
@@ -16181,7 +16168,7 @@
                             Boolean(savedTodayPlantIds()?.has(plant.id))
                         );
                         button.hidden =
-                            $("notWeighedToday").checked &&
+                            isNotWeighedFilterActive() &&
                             !state.filteredPlants.some(
                                 (candidate) => candidate.id === plant.id
                             );
@@ -16550,7 +16537,7 @@
                     });
                     summary.append(photos);
                 }
-                summary.append(displayTools);
+                plantLinks.append(displayTools);
                 if (restorePhotoFocus)
                     $("photoVisibilityToggle").focus({ preventScroll: true });
             }
@@ -18986,7 +18973,7 @@
             function advancePlant() {
                 const queued = queuedWeighedPlantIds();
                 const saved = savedTodayPlantIds();
-                const plants = $("notWeighedToday").checked
+                const plants = isNotWeighedFilterActive()
                     ? state.bootstrap.plants.filter(
                           (plant) =>
                               !queued.has(plant.id) && !saved?.has(plant.id)
@@ -20227,12 +20214,16 @@
             $("plantSearch").addEventListener("input", (event) =>
                 renderPlantOptions(event.target.value)
             );
-            $("notWeighedToday").addEventListener("change", () =>
+            $("notWeighedToday").addEventListener("click", () => {
+                $("notWeighedToday").setAttribute(
+                    "aria-pressed",
+                    String(!isNotWeighedFilterActive())
+                );
                 renderPlantOptions(
                     $("plantSearch").value,
                     $("plantSelect").value
-                )
-            );
+                );
+            });
             $("refreshDataButton").addEventListener(
                 "click",
                 refreshSavedPlantData

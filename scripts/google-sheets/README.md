@@ -31,6 +31,19 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
+### Compact phone controls in 5.19.6
+
+The 5.19.6 interface keeps List, Labels, and the Not weighed today toggle on
+one row. The filter is a keyboard-accessible toggle button and keeps the
+current plant available while excluding other saved or queued weights.
+Progress reads `X Saved today` and `X Queued`; the 4:00 a.m. weighing-day
+cutoff and daylight-saving handling are unchanged. Extra chooser and repeated-care
+helper text is removed. Mobile cards use tighter spacing, the portrait and plant
+ID stay together, photo visibility sits with the plant links, and Recent History
+has one heading row with its entry-count selector.
+
+### Last verified deployment
+
 As of September 7, 2026, the stable production deployment identifies the logger
 as **5.19.5** on immutable Apps Script version **77**, matching source commit
 `9eac2be`. Native Apps Script now has strict type and lint gates, checked domain
