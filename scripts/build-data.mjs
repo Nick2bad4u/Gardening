@@ -1,5 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 
+import { sheetUrls } from "../docs/layouts/plant-tracker-data.js";
+
 /**
  * Shared shapes for the checked-in photo archives and build records. JSON is
  * validated at the read boundary; the publication checker retains the more
@@ -287,6 +289,16 @@ export function parseJson(source, validate, context) {
     if (!validate(value))
         throw new TypeError(`Invalid data structure in ${context}.`);
     return value;
+}
+
+/** @param {string | undefined} trackerId */
+export function plantSheetUrl(trackerId) {
+    if (!isNonemptyString(trackerId)) return undefined;
+    const url = sheetUrls.plantPage(trackerId);
+    if (url === sheetUrls.edit) {
+        throw new Error(`No Google Sheets tab is configured for ${trackerId}.`);
+    }
+    return url;
 }
 
 /** @param {string} directory */

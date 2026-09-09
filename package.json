@@ -33,8 +33,9 @@
         "clean:cache:temp": "npx -y del-cli .temp/**",
         "clean:cache:typescript": "npx -y del-cli .cache/**/*.tsbuildinfo .cache/builds",
         "clean:cache:vite": "npx -y del-cli .cache/vite .cache/vitest .cache/vitest-zero-coverage .cache/vite-zero-coverage",
+        "dev": "vite --config vite.website.config.mjs",
         "lint": "npx cross-env NODE_OPTIONS=--max_old_space_size=8192 npx eslint . --cache --cache-strategy content --cache-location .cache/.eslintcache",
-        "lint:actions": "actionlint -config-file ActionLintConfig.yaml",
+        "lint:actions": "actionlint",
         "lint:all": "npm run lint && npm run typecheck && npm run test && npm run lint:prettier && npm run lint:package && npm run lint:gitleaks && npm run lint:secretlint",
         "lint:all:fix": "npm run lint:fix && npm run lint:prettier:fix && npm run lint:package:fix && npm run typecheck && npm run test && npm run lint:secretlint",
         "lint:all:nocache": "npm run lint:nocache && npm run typecheck && npm run test && npm run lint:prettier && npm run lint:package && npm run lint:secretlint",
@@ -65,7 +66,7 @@
         "lint:tsdoc": "node --input-type=module -e \"import { TSDocConfigFile } from '@microsoft/tsdoc-config'; const config = TSDocConfigFile.loadFile('./tsdoc.json'); if (config.hasErrors) throw new Error(config.getErrorSummary());\"",
         "lint:yaml": "npx eslint --cache --cache-strategy content --cache-location .cache/.eslintcache \"**/*.{yml,yaml}\"",
         "lint:yaml:fix": "npm run lint:yaml -- --fix",
-        "lint:yamllint": "yamllint -c .yamllint .",
+        "lint:yamllint": "npm run lint:yaml",
         "storybook": "storybook dev --port 6006 --no-open",
         "sync:node-version-files": "node scripts/sync-node-version-files.mjs",
         "sync:npm-version": "node scripts/sync-npm-version.mjs",
@@ -141,7 +142,7 @@
         "storybook-addon-tag-badges": "^3.1.0",
         "storybook-config-nick2bad4u": "^1.0.0",
         "stylelint": "^17.15.0",
-        "stylelint-config-nick2bad4u": "^3.0.0",
+        "stylelint-config-nick2bad4u": "^4.0.0",
         "tsconfig-nick2bad4u": "^1.0.0",
         "tsdoc-config-nick2bad4u": "^1.0.6",
         "typescript": "^6.0.3",
@@ -168,7 +169,9 @@
     },
     "allowScripts": {
         "core-js": false,
+        "core-js@3.50.0": true,
         "esbuild@0.27.7 || 0.28.1 || 0.28.2": true,
+        "esbuild@0.28.2": true,
         "fsevents@2.3.3": true,
         "unrs-resolver@1.12.2": true
     }

@@ -88,6 +88,8 @@ The Pages build also includes the website's Storybook workbench at
 `/Gardening/storybook/`, with an [introduction](test/stories/introduction.mdx),
 documented previews, and synthetic data scenarios.
 
-For local builds, strict checks, the Storybook workbench, and browser tests, see
+Run `npm run dev` to edit the website with live CSS updates and automatic page
+reloads at `http://127.0.0.1:5173`. For local builds, strict checks, the Storybook
+workbench, and browser tests, see
 [Maintaining the browser tools](docs/development.md). The Apps Script production
 procedure remains in the [logger runbook](scripts/google-sheets/README.md).

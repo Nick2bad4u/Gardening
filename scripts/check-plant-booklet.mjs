@@ -936,8 +936,12 @@ function validateContentsNavigation(html, profiles) {
             )
             .reduce((count) => count + 1, 0);
         assert.ok(
-            portraitUseCount === 4,
-            `${profile.slug} must use its portrait in the contents, drawer, hero fallback, and Photo scope metadata; found ${portraitUseCount} uses.`
+            portraitUseCount === 5,
+            `${profile.slug} must use its portrait in the contents, drawer, hero fallback, scientific-name header, and Photo scope metadata; found ${portraitUseCount} uses.`
+        );
+        assert.ok(
+            html.includes(`data-icon="plant-${profile.slug}"`),
+            `${profile.slug} must expose its destination portrait before its profile is mounted.`
         );
     }
 }

@@ -13,6 +13,7 @@ import {
     isNonemptyString,
     isPhotoManifest,
     isProfileData,
+    plantSheetUrl,
     readJson,
     readTextIfPresent,
     required,
@@ -65,12 +66,6 @@ const collectionPhotoManifestPath = path.join(
     "assets",
     "collection-photos",
     "photo-manifest.json"
-);
-const plantTrackerDataPath = path.join(
-    repositoryRoot,
-    "docs",
-    "layouts",
-    "plant-tracker-data.js"
 );
 const plantProfileDataPath = path.join(
     repositoryRoot,
@@ -359,9 +354,7 @@ const inaturalistBySlug = new Map([
     ],
 ]);
 
-const markdownProcessor = remark().use(remarkGfm).use(remarkHtml, {
-    sanitize: false,
-});
+const markdownProcessor = remark().use(remarkGfm).use(remarkHtml);
 
 /**
  * @param {ParsedProfile} left
@@ -557,35 +550,6 @@ function findSellerProductLink(markdown) {
 }
 
 /**
- * @param {string} source
- */
-function parsePlantSheetGids(source) {
-    const block =
-        /const plantSheetGids = Object\.freeze\(\{(?<body>[\s\S]*?)\}\);/v.exec(
-            source
-        )?.groups?.["body"];
-    if (!isNonemptyString(block)) {
-        throw new Error(
-            "Could not read plantSheetGids from docs/layouts/plant-tracker-data.js."
-        );
-    }
-
-    return new Map(
-        block.matchAll(/\b(?<trackerId>P\d{2}):\s*(?<gid>[\d_]+)\s*,/gv).map(
-            /** @returns {[string, number]} */ (match) => [
-                required(match.groups?.["trackerId"], "tracker ID"),
-                Number(
-                    required(match.groups?.["gid"], "worksheet ID").replaceAll(
-                        "_",
-                        ""
-                    )
-                ),
-            ]
-        )
-    );
-}
-
-/**
  * @param {string} markdown
  * @param {ProfileGroup} group
  * @param {string} sourceDirectory
@@ -682,19 +646,6 @@ function photoScore(photo, desiredSubject, isHero = false) {
     const desiredBonus = photo.subject === desiredSubject ? 200 : 0;
     const sourceBonus = photo.source === "Wikimedia Commons" ? 3 : 0;
     return desiredBonus + (subjectScores[photo.subject] ?? 10) + sourceBonus;
-}
-
-/**
- * @param {string | undefined} trackerId
- * @param {Map<string, number>} plantSheetGids
- */
-function plantSheetUrl(trackerId, plantSheetGids) {
-    if (!isNonemptyString(trackerId)) return undefined;
-    const gid = plantSheetGids.get(trackerId);
-    if (gid === undefined || gid === 0 || Number.isNaN(gid)) {
-        throw new Error(`No Google Sheets tab is configured for ${trackerId}.`);
-    }
-    return `https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=${gid}#gid=${gid}`;
 }
 
 /**
@@ -855,7 +806,7 @@ function choosePhotos(photos, slug) {
     const choices = [];
     const heroFile = heroPhotoFiles.get(slug);
 
-    if (heroFile ?? "") {
+    if (isNonemptyString(heroFile)) {
         const heroIndex = remaining.findIndex(
             (photo) => photo.file.replaceAll("\\", "/") === heroFile
         );
@@ -1251,16 +1202,10 @@ const plantNavigationIconByGroup = {
  * @returns {Promise<Profile[]>}
  */
 async function loadProfiles() {
-    const [
-        manifest,
-        collectionManifest,
-        trackerDataSource,
-    ] = await Promise.all([
+    const [manifest, collectionManifest] = await Promise.all([
         readJson(photoManifestPath, isPhotoManifest),
         readJson(collectionPhotoManifestPath, isCollectionManifest),
-        readFile(plantTrackerDataPath, "utf8"),
     ]);
-    const plantSheetGids = parsePlantSheetGids(trackerDataSource);
     // eslint-disable-next-line canonical/no-use-extend-native -- Map.groupBy is a native API in the required Node 26 runtime.
     const photosBySlug = Map.groupBy(
         manifest.photos,
@@ -1368,7 +1313,7 @@ async function loadProfiles() {
                         photos[0]?.scope_note ??
                         "Reference photography is not archived yet; this page currently uses the collection record and linked research sources.",
                     selectedPhotos,
-                    sheetUrl: plantSheetUrl(profile.trackerId, plantSheetGids),
+                    sheetUrl: plantSheetUrl(profile.trackerId),
                     statusHtml,
                     visualDescriptionHtml,
                 };
@@ -1594,7 +1539,7 @@ function renderBooklet(profiles) {
   <main id="book" tabindex="-1">
     ${renderCover(profiles)}
 
-    <section class="book-page contents-page" id="contents" data-page="contents" data-title="Contents" hidden>
+    <section class="book-page contents-page" id="contents" data-page="contents" data-title="Contents" data-icon="menu" hidden>
       <header class="contents-heading">
         <p>The Fenton Collection · ${presentCount} current profiles · ${orderSummary}${historicalCount} historical record${historicalCount === 1 ? "" : "s"}</p>
         <h1>A field guide to the collection.</h1>
@@ -1699,7 +1644,7 @@ function renderCover(profiles) {
         )
         .filter((profile) => profile !== undefined);
 
-    return `<section class="book-page cover-page" id="cover" data-page="cover" data-title="Cover" hidden>
+    return `<section class="book-page cover-page" id="cover" data-page="cover" data-title="Cover" data-icon="story" hidden>
     <div class="cover-collage" aria-hidden="true">
       ${coverProfiles
           .map(
@@ -2124,7 +2069,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         ? `<a href="${escapeHtml(archivePath)}"><span>${renderSiteIcon("photos", recordLinkIconClass)} Open all ${profile.photoCount} archived photos and credits</span>${renderSiteIcon(forwardIcon, linkEndIconClass)}</a>`
         : `<p class="archive-pending"><strong>Licensed reference gallery pending.</strong> The research profile is complete; no local photo archive is being implied.</p>`;
 
-    return `<article class="book-page profile-page" id="${escapeHtml(profile.slug)}" data-page="${escapeHtml(profile.slug)}" data-group="${escapeHtml(profile.group)}" data-title="${escapeHtml(profile.title)}" data-search="${escapeSearchAttribute(searchText)}" hidden></article>
+    return `<article class="book-page profile-page" id="${escapeHtml(profile.slug)}" data-page="${escapeHtml(profile.slug)}" data-group="${escapeHtml(profile.group)}" data-title="${escapeHtml(profile.title)}" data-icon="plant-${escapeHtml(profile.slug)}" data-search="${escapeSearchAttribute(searchText)}" hidden></article>
   <template data-profile-template="${escapeHtml(profile.slug)}">
     <header class="profile-hero">
       ${heroMedia}
@@ -2142,7 +2087,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
           ${profile.historical ? `<span class="history-badge">${renderSiteIcon("history", heroBadgeIconClass)} Historical record</span>` : ""}
           ${profile.receiptUnverified ? `<span class="order-badge">${renderSiteIcon("seller", heroBadgeIconClass)} Ordered · receipt unverified</span>` : ""}
         </div>
-        <p>${profile.scientificHtml}</p>
+        <p class="hero-scientific">${renderSiteIcon(`plant-${profile.slug}`, "hero-plant-icon")}<span>${profile.scientificHtml}</span></p>
         <h1>${escapeHtml(profile.title)}</h1>
       </div>
       ${heroPhoto ? `<figcaption class="hero-credit">${renderCredit(heroPhoto, true)}</figcaption>` : ""}
@@ -2226,7 +2171,7 @@ if (
     await main();
 }
 
-export { groups, loadProfiles, stripHtml, stripMarkdown };
+export { groups, loadProfiles, renderInline, stripHtml, stripMarkdown };
 
 /** @param {string} normalized */
 function identityTableCategory(normalized) {

@@ -15,7 +15,7 @@ import {
     rewriteCollectionPreviews,
 } from "./collection-previews.mjs";
 
-/** @typedef {{ bytes?: number; path: string; width: number }} PlantImageVariant */
+/** @typedef {{ bytes: number; path: string; width: number }} PlantImageVariant */
 /** @typedef {{ relativePath: string; variants: PlantImageVariant[] }} PlantImage */
 /** @typedef {Map<string, PlantImage>} PlantImages */
 
@@ -46,10 +46,16 @@ const layoutFileNames = [
  * @param {string} url
  */
 function addCanonical(html, url) {
-    return html.replace(
-        "</title>",
-        () => `</title>\n        <link rel="canonical" href="${url}">`
+    const output = html.replace(
+        /<\/title\s*>/iv,
+        (closingTag) =>
+            `${closingTag}\n        <link rel="canonical" href="${url}">`
     );
+    if (output === html)
+        throw new Error(
+            "Could not insert the canonical URL after the page title."
+        );
+    return output;
 }
 
 /**
@@ -75,7 +81,13 @@ function assertPublishedAnalytics(html, context) {
 /** @param {string} directory @param {string} relativePath */
 function containedPath(directory, relativePath) {
     const resolved = path.resolve(directory, relativePath);
-    if (!resolved.startsWith(`${directory}${path.sep}`)) {
+    const relative = path.relative(directory, resolved);
+    if (
+        relative === "" ||
+        relative === ".." ||
+        relative.startsWith(`..${path.sep}`) ||
+        path.isAbsolute(relative)
+    ) {
         throw new Error(`Asset path leaves its directory: ${relativePath}`);
     }
     return resolved;
@@ -96,6 +108,28 @@ async function copyRelativeFile(relativePath) {
     await mkdir(path.dirname(destination), { recursive: true });
     await copyFile(source, destination);
     return sourceStats.size;
+}
+
+/** @param {string} source @param {string} [siteBase] */
+function findLoggerAssetReferences(source, siteBase = pagesUrl) {
+    // Keep historical URL casing compatible while deriving the prefix from
+    // the same canonical base used by the published pages.
+    // eslint-disable-next-line canonical/no-use-extend-native -- RegExp.escape is native in the required Node 26 runtime.
+    const escapedBase = RegExp.escape(siteBase);
+    // eslint-disable-next-line security/detect-non-literal-regexp -- The only variable pattern fragment is escaped as literal URL text.
+    const pattern = new RegExp(
+        String.raw`${escapedBase}(?<reference>assets/(?:collection-photos|nursery-labels)/[^"#?]+\.(?:jpe?g|png|webp))`,
+        "giv"
+    );
+    return source
+        .matchAll(pattern)
+        .map((match) => {
+            const reference = match.groups?.["reference"];
+            if (reference === undefined)
+                throw new Error("Incomplete logger asset reference.");
+            return reference;
+        })
+        .toArray();
 }
 
 /**
@@ -144,17 +178,18 @@ function injectGoogleTagManager(html) {
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${googleTagManagerId}" title="Google Tag Manager" height="0" width="0" style="display: none; visibility: hidden" aria-hidden="true" tabindex="-1"></iframe></noscript>
         <!-- End Google Tag Manager (noscript) -->`;
     const withHead = html.replace(
-        "<head>",
-        () => `<head>\n        ${headSnippet}`
+        /<head\b[^>]*>/iv,
+        (openingTag) => `${openingTag}\n        ${headSnippet}`
     );
     const withBody = withHead.replace(
-        /<body[^>]*>/v,
+        /<body\b[^>]*>/iv,
         (/** @type {string} */ openingTag) =>
             `${openingTag}\n        ${bodySnippet}`
     );
 
     if (
-        withBody === html ||
+        withHead === html ||
+        withBody === withHead ||
         !withBody.includes(`ns.html?id=${googleTagManagerId}`)
     ) {
         throw new Error("Could not inject both Google Tag Manager snippets.");
@@ -185,8 +220,8 @@ function injectPageNotFoundEvent(html) {
             });
         </script>`;
     const withEvent = html.replace(
-        "</head>",
-        () => `        ${eventSnippet}\n    </head>`
+        /<\/head\s*>/iv,
+        (closingTag) => `        ${eventSnippet}\n    ${closingTag}`
     );
 
     if (withEvent === html) {
@@ -229,17 +264,7 @@ async function main() {
                 throw new Error("Incomplete plant asset reference.");
             return reference;
         });
-    const loggerAssetReferences = loggerSource
-        .matchAll(
-            /https:\/\/nick2bad4u\.github\.io\/gardening\/(?<reference>assets\/(?:collection-photos|nursery-labels)\/[^"#?]+\.(?:jpe?g|png|webp))/giv
-        )
-        .map((match) => {
-            const reference = match.groups?.["reference"];
-            if (reference === undefined)
-                throw new Error("Incomplete logger asset reference.");
-            return reference;
-        })
-        .toArray();
+    const loggerAssetReferences = findLoggerAssetReferences(loggerSource);
     const plantImageReferences = new Set(
         pageAssetReferences.filter((reference) =>
             reference.startsWith("assets/plants/")
@@ -324,8 +349,8 @@ async function main() {
     publishedHtml = injectGoogleTagManager(publishedHtml);
     assertPublishedAnalytics(publishedHtml, "field-guide index");
     const notFoundHtml = injectPageNotFoundEvent(publishedHtml).replace(
-        "<head>",
-        () => `<head>\n        <base href="${pagesUrl}">`
+        /<head\b[^>]*>/iv,
+        (openingTag) => `${openingTag}\n        <base href="${pagesUrl}">`
     );
     assertPublishedAnalytics(notFoundHtml, "field-guide 404");
 
@@ -488,14 +513,8 @@ function optimizedPlantImagePath(relativePath, width) {
 async function optimizePlantImage(relativePath) {
     const sourcePath = containedPath(repositoryRoot, relativePath);
     const metadata = await sharp(sourcePath).metadata();
-    const isRotated = [
-        5,
-        6,
-        7,
-        8,
-    ].includes(metadata.orientation ?? 1);
-    const sourceWidth = isRotated ? metadata.height : metadata.width;
-    if (sourceWidth === 0) {
+    const sourceWidth = metadata.autoOrient.width;
+    if (!Number.isSafeInteger(sourceWidth) || sourceWidth <= 0) {
         throw new Error(`Could not read image width: ${relativePath}`);
     }
     const maximumOptimizedWidth =
@@ -707,6 +726,9 @@ const isDirectRun =
 if (isDirectRun) await main();
 
 export {
+    addCanonical,
+    containedPath,
+    findLoggerAssetReferences,
     injectGoogleTagManager,
     injectPageNotFoundEvent,
     rewritePublishedPlantImages,

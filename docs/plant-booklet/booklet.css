@@ -21,6 +21,7 @@
     --control: #fffaf0;
     --card-shadow: 0 12px 34px rgb(41 35 25 / 9%);
     --shadow: 0 22px 70px rgb(41 35 25 / 14%);
+    --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
     --sans:
         inter, ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont,
         "Segoe UI", sans-serif;
@@ -242,7 +243,6 @@ button,
 .close-button:focus {
     background: var(--page-soft);
     border-color: var(--line);
-    transform: translateY(-1px);
 }
 
 .menu-button {
@@ -562,6 +562,11 @@ main {
     list-style: "";
 }
 
+.contents-group li {
+    display: grid;
+    min-inline-size: 0;
+}
+
 .contents-group a {
     display: grid;
     grid-template-columns:
@@ -611,14 +616,15 @@ main {
 
     & strong {
         font-family: var(--serif), system-ui;
+        line-height: 1.375;
     }
 
     & em {
-        overflow: hidden;
-        text-overflow: ellipsis;
+        margin-block-start: 0.2rem;
         font-size: 0.75rem;
+        line-height: 1.375;
         color: var(--muted-ink);
-        white-space: nowrap;
+        text-wrap: pretty;
     }
 }
 
@@ -805,6 +811,21 @@ main {
     text-wrap: balance;
 }
 
+.hero-scientific {
+    display: flex;
+    gap: 0.65rem;
+    align-items: center;
+
+    & > span {
+        min-inline-size: 0;
+    }
+}
+
+.hero-plant-icon {
+    inline-size: clamp(2.75rem, 6vi, 3.5rem);
+    block-size: clamp(2.75rem, 6vi, 3.5rem);
+}
+
 .hero-credit {
     position: relative;
     display: flex;
@@ -834,12 +855,10 @@ main {
     border-block-end: 1px solid var(--line);
 
     & dl {
-        display: grid;
-        grid-template-columns: repeat(
-            4,
-            [item-start] minmax(0, 1fr) [item-end]
-        );
+        display: flex;
+        flex-wrap: wrap;
         gap: 0.72rem;
+        align-items: flex-start;
         inline-size: 100%;
         margin: 0;
     }
@@ -849,14 +868,17 @@ main {
     --meta-accent: var(--moss);
 
     display: grid;
+    flex: 1 1 10rem;
     grid-template-rows:
-        [label-start] auto [label-end value-start] minmax(0, 1fr)
+        [label-start] auto [label-end value-start] auto
         [value-end];
     grid-template-columns:
         [icon-start] 2rem [icon-end detail-start] minmax(0, 1fr)
         [detail-end];
     gap: 0.08rem 0.65rem;
+    align-content: start;
     min-inline-size: 0;
+    max-inline-size: 100%;
     padding: 0.72rem;
     background: color-mix(in srgb, var(--meta-accent) 8%, var(--page));
     border: 1px solid color-mix(in srgb, var(--meta-accent) 28%, var(--line));
@@ -891,10 +913,14 @@ main {
 
 .profile-meta--identity {
     --meta-accent: #8065a8;
+
+    flex: 2 1 24rem;
 }
 
 .profile-meta--source {
     --meta-accent: #a85f32;
+
+    flex: 2 1 18rem;
 }
 
 .profile-meta--inventory {
@@ -912,6 +938,8 @@ main {
 .profile-intro dd {
     margin: 0.2rem 0 0;
     font-size: 0.875rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
 }
 
 .profile-intro > p {
@@ -945,7 +973,6 @@ main {
     & > div:hover,
     & > div:focus {
         box-shadow: 0 12px 28px rgb(32 45 35 / 9%);
-        transform: translateY(-2px);
     }
 
     & h2,
@@ -1082,11 +1109,6 @@ main {
     &[data-photo-kind="nursery-label"] :where(img) {
         aspect-ratio: 4 / 3;
         object-fit: contain;
-    }
-
-    & > a:hover img,
-    & > a:focus img {
-        transform: scale(1.02);
     }
 
     & :where(figcaption) {
@@ -1407,11 +1429,6 @@ main {
         aspect-ratio: 4 / 3;
     }
 
-    & a:hover img,
-    & a:focus img {
-        transform: scale(1.025);
-    }
-
     & figcaption {
         display: grid;
         gap: 0.2rem;
@@ -1586,11 +1603,6 @@ main {
         }
     }
 
-    & > a:hover img,
-    & > a:focus img {
-        transform: scale(1.025);
-    }
-
     & figcaption {
         display: grid;
         gap: 0.2rem;
@@ -1652,8 +1664,8 @@ main {
 }
 
 .page-control-icon {
-    inline-size: 1.75rem;
-    block-size: 1.75rem;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
 }
 
 .page-controls small,
@@ -1868,12 +1880,6 @@ main {
     .record-links {
         grid-column: 1 / -1;
     }
-    .profile-intro dl {
-        grid-template-columns: repeat(
-            2,
-            [item-start] minmax(0, 1fr) [item-end]
-        );
-    }
 
     .profile-at-a-glance {
         grid-template-columns: [content-start] minmax(0, 1fr) [content-end];
@@ -2021,12 +2027,6 @@ main {
 
     .profile-intro {
         padding-inline: 1.2rem;
-
-        & dl {
-            grid-template-columns:
-                [primary-start] minmax(0, 1fr)
-                [primary-end secondary-start] minmax(0, 1fr) [secondary-end];
-        }
     }
 
     .profile-layout {
@@ -2144,18 +2144,13 @@ main {
     grid-template-columns: repeat(2, [item-start] minmax(0, 1fr) [item-end]);
 }
 
-.contents-group:is([data-group="cacti"], .contents-group--wide)
-    :where(li:nth-child(even)) {
-    border-inline-start: 1px solid var(--line);
-}
-
 .contents-group :where(li:last-child) a {
     border-block-end: 1px solid var(--line);
 }
 
 .contents-group :where(a):has(.plant-nav-icon--contents) {
     grid-template-columns:
-        [portrait-start] 3.25rem [portrait-end id-start] 4.6rem [id-end name-start] minmax(
+        [portrait-start] 3.25rem [portrait-end id-start] 2.8rem [id-end name-start] minmax(
             0,
             1fr
         )
@@ -2217,11 +2212,6 @@ main {
     background: var(--moss-soft);
     border: 1px solid color-mix(in srgb, var(--moss) 28%, var(--line));
     border-radius: 50%;
-}
-
-:is(a, button):hover :is(.plant-avatar, .plant-nav-icon),
-:is(a, button):focus :is(.plant-avatar, .plant-nav-icon) {
-    transform: scale(1.035);
 }
 
 .plant-nav-icon {
@@ -2743,11 +2733,6 @@ main {
         grid-template-columns: [content-start] minmax(0, 1fr) [content-end];
     }
 
-    .contents-group:is([data-group="cacti"], .contents-group--wide)
-        li:nth-child(even) {
-        border-inline-start: 0;
-    }
-
     .contents-group header {
         min-block-size: 0;
     }
@@ -2775,7 +2760,7 @@ main {
 
     .contents-group a:has(.plant-nav-icon--contents) {
         grid-template-columns:
-            [portrait-start] 2.7rem [portrait-end id-start] 3.7rem [id-end name-start] minmax(
+            [portrait-start] 2.7rem [portrait-end id-start] 2.3rem [id-end name-start] minmax(
                 0,
                 1fr
             )
@@ -2820,10 +2805,6 @@ main {
 
     .profile-meta {
         padding: 0.62rem;
-    }
-
-    .profile-intro dl {
-        grid-template-columns: [content-start] minmax(0, 1fr) [content-end];
     }
 
     .contents-name em {
@@ -2921,14 +2902,11 @@ main {
 
 @media (width >= 350px) and (width <= 430px) {
     .profile-intro dl {
-        grid-template-columns: repeat(
-            2,
-            [item-start] minmax(0, 1fr) [item-end]
-        );
         gap: 0.6rem;
     }
 
     .profile-meta {
+        flex-basis: 8rem;
         grid-template-columns:
             [icon-start] 1.7rem [icon-end detail-start] minmax(0, 1fr)
             [detail-end];
@@ -2951,16 +2929,189 @@ main {
     }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    :where([data-reader-ready="true"]) .book-page:not([hidden]) {
-        animation: page-reveal 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+/* Shared hover treatment keeps static cards readable and interactive links clear. */
+@media screen {
+    .contents-group a:is(:hover, :focus-visible),
+    .drawer-link:is(:hover, :focus-visible),
+    .profile-meta:is(:hover, :focus-within) {
+        border-color: color-mix(
+            in srgb,
+            var(--meta-accent, var(--moss)) 65%,
+            var(--line)
+        );
+        box-shadow: var(--card-shadow);
+    }
+
+    .profile-meta:is(:hover, :focus-within) {
+        background: color-mix(in srgb, var(--meta-accent) 13%, var(--page));
+    }
+
+    :is(.collection-photo, .reference-photo, .gallery-photo)
+        > a:is(:hover, :focus-visible) {
+        box-shadow: var(--shadow);
+    }
+
+    .record-links > a:is(:hover, :focus-visible),
+    .drawer-sheet-link:is(:hover, :focus-visible),
+    .collection-photo .photo-evidence-link:is(:hover, :focus-visible) {
+        color: var(--moss-dark);
+        background: var(--moss-soft);
+    }
+
+    .prose a:is(:hover, :focus-visible),
+    .profile-intro a:is(:hover, :focus-visible),
+    .site-footer a:is(:hover, :focus-visible),
+    figcaption a:is(:hover, :focus-visible) {
+        text-decoration-thickness: 0.12em;
+        text-decoration-color: currentcolor;
+        text-underline-offset: 0.3em;
+    }
+
+    .semantic-table tbody tr:is(:hover, :focus-within) {
+        background: color-mix(in srgb, var(--moss-soft) 65%, var(--page));
+    }
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+    :where([data-reader-ready="true"]) .profile-hero > img {
+        animation: hero-photo-reveal 720ms var(--motion-ease) both;
         @media (prefers-reduced-motion: reduce) {
             animation: none;
         }
     }
 
-    :where([data-reader-ready="true"]) .profile-hero > img {
-        animation: hero-photo-reveal 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    .contents-group a,
+    :is(.drawer-link, .drawer-sheet-link),
+    .profile-meta,
+    .profile-at-a-glance > div,
+    .record-links > a,
+    .cover-start,
+    :is(.icon-button, .close-button, .page-controls button),
+    .collection-photo .photo-evidence-link {
+        transition:
+            translate 240ms var(--motion-ease),
+            scale 240ms var(--motion-ease),
+            border-color 180ms ease,
+            box-shadow 240ms ease;
+    }
+
+    .plant-nav-icon,
+    .plant-avatar,
+    .hero-plant-icon,
+    .profile-meta-icon,
+    .profile-section-icon,
+    .page-control-icon,
+    .icon-button .site-icon,
+    :is(.link-end-icon, .caption-link-end-icon) {
+        transition:
+            translate 280ms var(--motion-ease),
+            scale 280ms var(--motion-ease),
+            rotate 280ms var(--motion-ease);
+    }
+
+    :is(.collection-photo, .reference-photo, .gallery-photo) img {
+        transition: scale 480ms var(--motion-ease);
+    }
+
+    :is(.collection-photo, .reference-photo, .gallery-photo) > a {
+        transition: box-shadow 240ms ease;
+    }
+
+    :is(.prose, .profile-intro, .site-footer, figcaption) a {
+        transition: text-underline-offset 180ms ease;
+    }
+
+    .contents-group a:focus-visible,
+    .drawer-link:focus-visible,
+    .record-links > a:focus-visible {
+        translate: 0 -2px;
+    }
+
+    :is(a, button):focus-visible
+        :is(.plant-nav-icon, .page-control-icon, .link-end-icon) {
+        scale: 1.07;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        .contents-group a:is(:hover, :focus-visible),
+        .profile-meta:is(:hover, :focus-within),
+        .profile-at-a-glance > div:is(:hover, :focus-within),
+        .cover-start:is(:hover, :focus-visible),
+        .icon-button:is(:hover, :focus-visible),
+        .close-button:is(:hover, :focus-visible),
+        .drawer-sheet-link:is(:hover, :focus-visible),
+        .collection-photo .photo-evidence-link:is(:hover, :focus-visible) {
+            translate: 0 -3px;
+        }
+
+        .page-controls button:not(:disabled):hover,
+        .page-controls button:not(:disabled):focus {
+            box-shadow: var(--card-shadow);
+            translate: 0 -3px;
+        }
+
+        :is(.drawer-link, .record-links > a):hover,
+        :is(.drawer-link, .record-links > a):focus {
+            translate: 3px 0;
+        }
+
+        :is(a, button):hover
+            :is(.plant-nav-icon, .plant-avatar, .page-control-icon),
+        :is(a, button):focus
+            :is(.plant-nav-icon, .plant-avatar, .page-control-icon) {
+            rotate: -4deg;
+            scale: 1.08;
+        }
+
+        .profile-meta:is(:hover, :focus-within) .profile-meta-icon,
+        .profile-section-heading:is(:hover, :focus-within)
+            .profile-section-icon,
+        .hero-scientific:is(:hover, :focus-within) .hero-plant-icon,
+        .icon-button:is(:hover, :focus-visible) .site-icon {
+            rotate: -6deg;
+            scale: 1.1;
+        }
+
+        a:hover :is(.link-end-icon, .caption-link-end-icon),
+        a:focus :is(.link-end-icon, .caption-link-end-icon) {
+            translate: 3px -1px;
+        }
+
+        :is(.collection-photo, .reference-photo, .gallery-photo) > a:hover img,
+        :is(.collection-photo, .reference-photo, .gallery-photo) > a:focus img {
+            scale: 1.045;
+        }
+    }
+
+    :is(.collection-photo, .reference-photo, .gallery-photo)
+        > a:focus-visible
+        img {
+        scale: 1.045;
+    }
+
+    .contents-group a:active,
+    .cover-start:active,
+    .icon-button:active,
+    .close-button:active,
+    .page-controls button:not(:disabled):active {
+        scale: 0.98;
+        translate: 0 1px;
+    }
+
+    :where([data-reader-ready="true"]) .contents-group li {
+        animation: detail-card-reveal 440ms var(--motion-ease) backwards;
+
+        &:nth-child(2n) {
+            animation-delay: 100ms;
+        }
+
+        &:nth-child(3n) {
+            animation-delay: 160ms;
+        }
+    }
+
+    :where([data-reader-ready="true"]) .book-page:not([hidden]) {
+        animation: page-reveal 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
         @media (prefers-reduced-motion: reduce) {
             animation: none;
         }
@@ -3124,7 +3275,6 @@ main {
         justify-content: flex-end;
         justify-self: end;
         text-align: end;
-        border-inline-start: 0;
         border-radius: 0.7rem;
     }
 
@@ -3511,7 +3661,7 @@ html::-webkit-scrollbar-thumb:focus {
 }
 
 .profile-meta--scope {
-    grid-column: span 2;
+    flex-basis: 100%;
 }
 
 .collection-gallery h2 > .site-icon,
@@ -3612,8 +3762,11 @@ html::-webkit-scrollbar-thumb:focus {
 }
 
 @media (width <= 680px) {
+    .profile-meta--identity,
+    .profile-meta--source,
+    .profile-meta--photos,
     .profile-meta--scope {
-        grid-column: 1 / -1;
+        flex-basis: 100%;
     }
 
     .site-footer {
@@ -3644,8 +3797,8 @@ html::-webkit-scrollbar-thumb:focus {
     }
 
     .page-control-icon {
-        inline-size: 1.35rem;
-        block-size: 1.35rem;
+        inline-size: 2rem;
+        block-size: 2rem;
     }
 
     .page-controls .page-controls-toggle {

@@ -8,6 +8,50 @@ Use Node.js 26.7 or later and npm 12 or later, then install the checked-in lockf
 npm ci
 ```
 
+## Live website development
+
+```powershell
+npm run dev
+```
+
+This starts Vite at `http://127.0.0.1:5173` and opens the field guide. Keep the
+terminal running and save edits in your editor: CSS updates in place, preserving
+your current page and scroll position. HTML and JavaScript changes reload the
+page. SVG sprites, images, and fetched local JSON also trigger a reload.
+
+The terminal prints links to all six pages:
+
+| Page             | Local path                                       |
+| ---------------- | ------------------------------------------------ |
+| Field guide      | `/docs/plant-booklet/`                           |
+| Plant tracker    | `/docs/layouts/plant-tracker.html`               |
+| Plant history    | `/docs/layouts/plant-history.html`               |
+| Photo album      | `/docs/layouts/photo-album.html`                 |
+| Grow-spot layout | `/docs/layouts/grow-spot-layout.html`            |
+| Calendar         | `/docs/layouts/indoor-acclimation-calendar.html` |
+
+Edit `docs/plant-booklet/booklet.css` and `booklet.js` for the field guide.
+The tracker and history share `docs/layouts/plant-tracker.css`; their scripts
+are beside the HTML files. The layout and calendar keep their styles and
+scripts inside their HTML files. No Pages or Storybook rebuild is needed for
+these presentation edits.
+
+Generated content still uses its existing build command. After editing plant
+Markdown or photo metadata, run `npm run build:booklet` in another terminal;
+the preview reloads when the generated HTML changes. Do not edit generated
+profile text directly in `docs/plant-booklet/index.html`.
+
+This preview serves repository sources, including their original image paths
+and live read-only spreadsheet data. Use Storybook for isolated fixture data,
+or `npm run build:pages` for the publication output and optimized photo assets.
+The local server is separate from the deployed Apps Script logger.
+Its dedicated `vite.website.config.mjs` also keeps the website preview settings
+out of Storybook and Vitest.
+
+Press **Ctrl+C** in the terminal to stop it. If port 5173 is occupied, stop the
+other preview or use `npm run dev -- --port 5174`. Vite uses the existing
+development dependency and listens only on this computer by default.
+
 ## Shared configuration
 
 The repository uses the shared ESLint, Stylelint, TypeScript, Playwright,
@@ -19,8 +63,17 @@ files and runtimes in this notebook:
   Browser code retains an ES2024 API baseline.
 - Vitest rules apply to `test/**/*.test.mjs`; Playwright rules apply to
   `test/e2e/**/*.spec.ts`. The local browser test server is ordinary Node code.
+- `lint:actions` discovers `.github/actionlint.yaml`. `lint:yamllint` uses the
+  existing YAML ESLint checks, including the yamllint rule configured through
+  `yaml-policy.config.mjs`, so both YAML commands share one policy.
 - Browser module imports retain their `.js` extensions because Pages serves
   them directly. The booklet entry point remains a classic script.
+- The booklet build uses `remark-html`'s default sanitization for Markdown and
+  shares the browser's worksheet URL mapping through `scripts/build-data.mjs`.
+  Raw HTML and unsafe Markdown links do not pass through to profile content.
+- Booklet hover effects respect reduced motion and reserve pointer-driven
+  movement for devices with a fine pointer. Keyboard focus retains a visible
+  outline, and print output excludes the screen entrance animations.
 - Document listeners remain active for the life of each page, including browser
   back-cache restoration.
 - Stylelint checks maintained stylesheets and inline styles, including the

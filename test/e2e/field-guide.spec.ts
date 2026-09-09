@@ -32,8 +32,211 @@ async function openGuide(
     await page.goto(`/#${hash}`);
 }
 
+function readGuidePortraits() {
+    const heading = document.querySelector(
+        ".profile-page:not([hidden]) .hero-scientific"
+    );
+    const icon = heading?.querySelector("svg");
+    const name = heading?.querySelector("span");
+    if (!icon || !name) throw new Error("Missing scientific name or portrait.");
+    const portrait = icon.getBoundingClientRect();
+    const text = name.getBoundingClientRect();
+    return {
+        header: icon.querySelector("use")?.getAttribute("href"),
+        isAligned:
+            portrait.right <= text.left &&
+            Math.abs(
+                portrait.top + portrait.height / 2 - text.top - text.height / 2
+            ) < 1,
+        isWithinViewport: document.documentElement.scrollWidth <= innerWidth,
+        next: document.querySelector("#next-page use")?.getAttribute("href"),
+        previous: document
+            .querySelector("#previous-page use")
+            ?.getAttribute("href"),
+    };
+}
+
 for (const theme of ["dark", "light"] as const) {
     test.describe(`${theme} field guide`, () => {
+        test(
+            "keeps contents cards aligned when plant names wrap",
+            { tag: "@layout" },
+            async ({ page }) => {
+                await openGuide(page, theme, "contents");
+                const layout = await page.evaluate(() => {
+                    const rows = [
+                        ...document.querySelectorAll(
+                            '.contents-group[data-group="cacti"] li'
+                        ),
+                    ];
+                    return {
+                        count: rows.length,
+                        gaps: rows.map((row) => {
+                            const link = row.querySelector("a");
+                            if (link === null)
+                                throw new Error("Missing contents link.");
+                            return (
+                                row.getBoundingClientRect().height -
+                                link.getBoundingClientRect().height
+                            );
+                        }),
+                        hasOverflow:
+                            document.documentElement.scrollWidth > innerWidth,
+                    };
+                });
+                expect.soft(layout.count).toBe(21);
+                expect.soft(Math.max(...layout.gaps)).toBeLessThan(1);
+                expect.soft(layout.hasOverflow).toBe(false);
+            }
+        );
+
+        test(
+            "gives long identification notes room without stretching short metadata",
+            { tag: "@layout" },
+            async ({ page }) => {
+                await openGuide(page, theme, "aeonium-haworthii-dream-color");
+                const layout = await page.evaluate(() => {
+                    const profile = document.querySelector(
+                        ".profile-page:not([hidden])"
+                    );
+                    const compact = [
+                        "inventory",
+                        "sheet",
+                        "label",
+                    ].map((kind) => {
+                        const card = profile?.querySelector(
+                            `.profile-meta--${kind}`
+                        );
+                        if (!card)
+                            throw new Error("Missing compact metadata card.");
+                        return card.getBoundingClientRect().height;
+                    });
+                    const notes = profile?.querySelector(
+                        ".profile-meta--identity"
+                    );
+                    const list = profile?.querySelector(
+                        ":scope .profile-intro dl"
+                    );
+                    if (!notes || !list)
+                        throw new Error("Missing identification notes.");
+                    return {
+                        compact,
+                        hasOverflow:
+                            document.documentElement.scrollWidth > innerWidth,
+                        isWide:
+                            notes.getBoundingClientRect().width >
+                            list.getBoundingClientRect().width *
+                                (innerWidth > 680 ? 0.35 : 0.95),
+                    };
+                });
+                expect.soft(Math.max(...layout.compact)).toBeLessThan(110);
+                expect.soft(layout.isWide).toBe(true);
+                expect.soft(layout.hasOverflow).toBe(false);
+                await page.emulateMedia({
+                    media: "print",
+                    reducedMotion: "no-preference",
+                });
+                const printed = await page.evaluate(() => {
+                    const profile = document.querySelector(
+                        ".profile-page:not([hidden])"
+                    );
+                    if (!profile) throw new Error("Missing printed profile.");
+                    return {
+                        animation: getComputedStyle(profile).animationName,
+                        hasClippedMetadata: [
+                            ...profile.querySelectorAll(".profile-meta"),
+                        ].some(
+                            (card) => card.scrollWidth > card.clientWidth + 1
+                        ),
+                    };
+                });
+                expect.soft(printed).toStrictEqual({
+                    animation: "none",
+                    hasClippedMetadata: false,
+                });
+            }
+        );
+
+        test(
+            "animates hover and keyboard focus while respecting reduced motion",
+            { tag: "@layout" },
+            async ({ isMobile, page }) => {
+                await openGuide(page, theme, "contents");
+                const plant = page.getByRole("link", {
+                    name: /^P01 A1 Variegated moon cactus/v,
+                });
+                await page.emulateMedia({ reducedMotion: "no-preference" });
+                await plant.scrollIntoViewIfNeeded();
+                // Finish the page/row entrance before putting the pointer on it.
+                await page.evaluate(async () => {
+                    await Promise.allSettled(
+                        document
+                            .getAnimations()
+                            .map((animation) => animation.finished)
+                    );
+                });
+                await plant.hover();
+                await expect
+                    .soft(plant)
+                    .toHaveCSS("translate", isMobile ? "none" : "0px -3px");
+                await plant.focus();
+                await expect.soft(plant).toHaveCSS("outline-style", "solid");
+                await page.emulateMedia({ reducedMotion: "reduce" });
+                await expect.soft(plant).toHaveCSS("translate", "none");
+                await expect
+                    .poll(() =>
+                        plant.evaluate((link) => {
+                            const portrait =
+                                link.querySelector(".plant-nav-icon");
+                            if (portrait === null)
+                                throw new Error("Missing plant portrait.");
+                            return getComputedStyle(portrait).rotate;
+                        })
+                    )
+                    .toBe("none");
+            }
+        );
+
+        test(
+            "shows destination portraits and a portrait beside the scientific name",
+            { tag: "@navigation" },
+            async ({ page }) => {
+                await openGuide(page, theme, "oreocereus-trollii");
+                await expect
+                    .poll(() => page.evaluate(readGuidePortraits))
+                    .toMatchObject({
+                        header: "./plant-icons.svg#icon-plant-oreocereus-trollii",
+                        isAligned: true,
+                        isWithinViewport: true,
+                        next: "./plant-icons.svg#icon-plant-myrtillocactus-geometrizans-indigo-wave",
+                        previous:
+                            "./plant-icons.svg#icon-plant-stenocactus-phyllacanthus",
+                    });
+
+                await page.mouse.wheel(0, -1000);
+                await page.getByRole("button", { name: /^Next /v }).click();
+                await expect
+                    .poll(() => page.evaluate(readGuidePortraits))
+                    .toMatchObject({
+                        header: "./plant-icons.svg#icon-plant-myrtillocactus-geometrizans-indigo-wave",
+                        isAligned: true,
+                        isWithinViewport: true,
+                        previous:
+                            "./plant-icons.svg#icon-plant-oreocereus-trollii",
+                    });
+                await page.getByRole("main").focus();
+                await page.keyboard.press("ArrowLeft");
+                await expect
+                    .poll(() => page.evaluate(readGuidePortraits))
+                    .toMatchObject({
+                        header: "./plant-icons.svg#icon-plant-oreocereus-trollii",
+                        next: "./plant-icons.svg#icon-plant-myrtillocactus-geometrizans-indigo-wave",
+                        previous:
+                            "./plant-icons.svg#icon-plant-stenocactus-phyllacanthus",
+                    });
+            }
+        );
+
         test(
             "keeps a wrapping photo credit below the plant title",
             { tag: "@layout" },

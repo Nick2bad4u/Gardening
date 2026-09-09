@@ -2,6 +2,7 @@ import {
     HTMLButtonElement,
     HTMLElement,
     HTMLImageElement,
+    SVGElement,
     Window,
 } from "happy-dom";
 import * as fs from "node:fs";
@@ -49,16 +50,16 @@ function createReader(hash = "#plant-b-photo-history", { dataLayer } = {}) {
             </section>
         </dialog>
         <main id="book">
-            <section class="book-page cover-page" id="cover" data-page="cover" data-title="Cover" hidden>
+            <section class="book-page cover-page" id="cover" data-page="cover" data-title="Cover" data-icon="story" hidden>
                 <div class="cover-collage"><img src="cover-a.jpg" loading="lazy"><img src="cover-b.jpg" loading="lazy"></div>
             </section>
-            <section class="book-page contents-page" id="contents" data-page="contents" data-title="Contents" hidden></section>
-            <article class="book-page profile-page" id="plant-a" data-page="plant-a" data-title="Plant A" data-search="plant a" hidden></article>
+            <section class="book-page contents-page" id="contents" data-page="contents" data-title="Contents" data-icon="menu" hidden></section>
+            <article class="book-page profile-page" id="plant-a" data-page="plant-a" data-title="Plant A" data-icon="plant-plant-a" data-search="plant a" hidden></article>
             <template data-profile-template="plant-a">
                 <header class="profile-hero"><img src="plant-a.jpg" loading="lazy"></header>
                 <section id="plant-a-photo-history">A history</section>
             </template>
-            <article class="book-page profile-page" id="plant-b" data-page="plant-b" data-title="Plant B" data-search="plant b" hidden></article>
+            <article class="book-page profile-page" id="plant-b" data-page="plant-b" data-title="Plant B" data-icon="plant-plant-b" data-search="plant b" hidden></article>
             <template data-profile-template="plant-b">
                 <header class="profile-hero"><img src="plant-b.jpg" loading="lazy"></header>
                 <a class="external-image-link" href="https://example.test/capture">
@@ -69,11 +70,11 @@ function createReader(hash = "#plant-b-photo-history", { dataLayer } = {}) {
             </template>
         </main>
         <nav id="page-controls-navigation">
-            <button id="previous-page" type="button"><strong id="previous-label"></strong></button>
+            <button id="previous-page" type="button"><svg class="page-control-icon" aria-hidden="true"><use href="./plant-icons.svg#icon-arrow-left"></use></svg><strong id="previous-label"></strong></button>
             <button id="page-controls-toggle" type="button" aria-pressed="false" aria-label="Pin page navigation">
                 <span class="page-controls-pin-label">Pin</span>
             </button>
-            <button id="next-page" type="button"><strong id="next-label"></strong></button>
+            <button id="next-page" type="button"><strong id="next-label"></strong><svg class="page-control-icon" aria-hidden="true"><use href="./plant-icons.svg#icon-arrow-right"></use></svg></button>
         </nav>
         <p id="page-announcer"></p>
     `;
@@ -84,6 +85,75 @@ function createReader(hash = "#plant-b-photo-history", { dataLayer } = {}) {
 }
 
 describe("field-guide profile mounting", () => {
+    it("updates destination portraits across profiles, introductory pages, and disabled ends", () => {
+        expect.hasAssertions();
+
+        const window = createReader();
+        const previousIcon = queryElement(
+            window.document,
+            "#previous-page use",
+            SVGElement
+        );
+        const nextIcon = queryElement(
+            window.document,
+            "#next-page use",
+            SVGElement
+        );
+        /** @type {[string, string, string][]} */
+        const destinations = [
+            [
+                "#cover",
+                "arrow-left",
+                "menu",
+            ],
+            [
+                "#contents",
+                "story",
+                "plant-plant-a",
+            ],
+            [
+                "#plant-a",
+                "menu",
+                "plant-plant-b",
+            ],
+            [
+                "#plant-b-photo-history",
+                "plant-plant-a",
+                "arrow-right",
+            ],
+            [
+                "#contents",
+                "story",
+                "plant-plant-a",
+            ],
+        ];
+
+        for (const [
+            hash,
+            previous,
+            next,
+        ] of destinations) {
+            window.location.hash = hash;
+            window.dispatchEvent(new window.HashChangeEvent("hashchange"));
+
+            expect(previousIcon.getAttribute("href")).toBe(
+                `./plant-icons.svg#icon-${previous}`
+            );
+            expect(nextIcon.getAttribute("href")).toBe(
+                `./plant-icons.svg#icon-${next}`
+            );
+        }
+
+        expect(
+            queryElement(window.document, "#plant-a", HTMLElement)
+                .childElementCount
+        ).toBe(0);
+        expect(
+            queryElement(window.document, "#plant-b", HTMLElement)
+                .childElementCount
+        ).toBe(0);
+    });
+
     it("mounts a nested deep link without materializing every profile", () => {
         expect.hasAssertions();
 

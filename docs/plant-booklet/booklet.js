@@ -60,6 +60,14 @@
     const nextButton = requiredElement("#next-page", HTMLButtonElement);
     const previousLabel = requiredElement("#previous-label", HTMLElement);
     const nextLabel = requiredElement("#next-label", HTMLElement);
+    const previousIcon = requiredElement(
+        "#previous-page .page-control-icon use",
+        SVGElement
+    );
+    const nextIcon = requiredElement(
+        "#next-page .page-control-icon use",
+        SVGElement
+    );
     const pageControls = requiredElement(
         "#page-controls-navigation",
         HTMLElement
@@ -221,6 +229,14 @@
         nextButton.disabled = !next;
         previousLabel.textContent = previous ? pageName(previous) : "Beginning";
         nextLabel.textContent = next ? pageName(next) : "End of guide";
+        previousIcon.setAttribute(
+            "href",
+            `./plant-icons.svg#icon-${previous?.dataset["icon"] ?? "arrow-left"}`
+        );
+        nextIcon.setAttribute(
+            "href",
+            `./plant-icons.svg#icon-${next?.dataset["icon"] ?? "arrow-right"}`
+        );
         readerTitle.textContent = pageName(page);
 
         if (profileIndex === -1) {
