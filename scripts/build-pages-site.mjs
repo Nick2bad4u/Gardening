@@ -584,7 +584,7 @@ async function publishLayout(fileName, optimizedImages, collectionPreviews) {
     )
         .replaceAll("../plant-booklet/", "../")
         .replaceAll(
-            /\b(?<attribute>href|src)="\.\.\/\.\.\/(?<relativePath>assets\/collection-photos\/[^"#?]+)"/gv,
+            /\b(?<attribute>href|src)="\.\.\/\.\.\/(?<relativePath>assets\/(?:collection-photos|layouts)\/[^"#?]+)"/gv,
             '$<attribute>="../$<relativePath>"'
         )
         .replaceAll(
@@ -611,9 +611,12 @@ async function publishLayout(fileName, optimizedImages, collectionPreviews) {
     publishedHtml = injectGoogleTagManager(publishedHtml);
     assertPublishedAnalytics(publishedHtml, fileName);
 
-    if (publishedHtml.includes("../plant-booklet/")) {
+    if (
+        publishedHtml.includes("../plant-booklet/") ||
+        publishedHtml.includes("../../assets/layouts/")
+    ) {
         throw new Error(
-            `${fileName} still contains an unpublished booklet path.`
+            `${fileName} still contains an unpublished booklet or layout-asset path.`
         );
     }
 
