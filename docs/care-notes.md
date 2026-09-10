@@ -1,9 +1,15 @@
 # Practical care notes
 
-Last updated: 2026-09-09
+Last updated: 2026-09-10
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
+
+The [incoming AW400SE setup](./equipment/vivosun-aw400se.md) keeps the room
+end open and aims for wider light coverage. Arrival, intensity, and clearance
+are unrecorded; the previous AW200 program is not a measured new-light baseline.
+Use the [final placement guide](./layouts/table-placement-research.md) for each
+pot's light need. Continue judging watering by the plants and pots after the swap.
 
 ## Baseline routine
 
@@ -58,7 +64,12 @@ as a product of heating during manufacture; its pores subsequently hold air
 and water. Root-damaging swelling of this particular mixture has not been
 established, so do not use that claim to decide when to water.
 
-## Starting the AW200SE
+## Earlier AW200SE Starting Plan
+
+The dated ramp below records earlier planning and observations. The
+September 9 AW200 correction and September 10 AW400SE order supersede it.
+Use the [incoming-light record](./equipment/vivosun-aw400se.md) for the current
+plan; do not apply the old September percentages or timer to the replacement.
 
 The complete [AW200SE/E25 guide](./equipment/vivosun-aw200se.md) has the
 manufacturer's PPFD maps, DLI and lux math, and working ranges for every current
@@ -85,10 +96,10 @@ exposure is working.
 | Sept. 14      | Try 55% only if every lit surface remains healthy; 50% is already a successful steady setting.                                                    |
 | Sept. 21      | Begin the Fenton sunrise/sunset timer in the full schedule.                                                                                       |
 
-Do not jump directly from the current exposure to 100% power at 12 inches. The
-AW200SE is powerful enough that acclimation still matters. Keep a normal dark
-period. Use 12 hours on and 12 hours off through September 20, then use the
-seasonal Fenton timer in the full schedule.
+The earlier plan avoided an immediate jump to 100% at 12 inches and retained
+a normal dark period. It proposed 12 hours on and 12 hours off through
+September 20, then a seasonal timer. That timer is historical planning;
+the last owner-reported AW200 program was 13.25 hours.
 
 The installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and
 supports every whole-percent setting from 25% through 100%. If E25/app control
@@ -105,7 +116,7 @@ summer sun and high grow-light intensity at the same time.
 
 ### Paired AeroWave airflow
 
-Use the AW200SE's integrated fan at its lowest gentle Natural Wind setting. Two
+Use gentle integrated-fan airflow and check it again with the wider fixture. Two
 pole-mounted circulation fans now approach the canopy from opposing directions.
 Both are VIVOSUN AeroWave E6 Gen2 units with independent E25 controllers. The
 second is clipped high on the opposite end of the black divider and aimed

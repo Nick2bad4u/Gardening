@@ -25,8 +25,9 @@ The six Mountain Crest mappings were owner-corrected after receipt on
 Flush split rock (`P28`), `H1` Coconut Crystal (`P24`), `H2` Raindrops (`P25`),
 and `H3` Eve's needle (`P26`).
 
-The ID-to-plant mapping comes from the
-[AW200SE and paired-fan operating schedule](../equipment/aw200se-operating-schedule.md#final-pot-layout).
+The current ID-to-plant mapping and proposed positions are in the
+[Table Placement Guide](../layouts/table-placement-research.md). Label IDs stay
+with the plant when a pot moves.
 
 The compact adhesive strips still use the short two-strip format below. The
 visual description, interesting fact, and acquisition details are the expanded

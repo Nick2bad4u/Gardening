@@ -50,7 +50,7 @@ Lau. Nigel Taylor published the subspecies combination accepted by Kew in 1997.
 | Mix                 | Favor a very open mineral fraction around the roots. Never let the tray act as a reservoir.                                          |
 | Flowering support   | Strong seasonal light and a cool, dry winter rest are more useful than heavy fertilizer.                                             |
 
-The target range is a starting point, not a demand to run the AW200SE at full
+The target range is a starting point, not a demand to run the grow light at full
 power. The best signal is dense, even, colorful new spination on a stem that
 keeps its diameter. Pale corky patches on the lamp-facing side are a reason to
 back off.

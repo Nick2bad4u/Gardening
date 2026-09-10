@@ -4,7 +4,8 @@
 
 This is my low-pressure garden notebook. The current focus is my cactus,
 succulent, and small houseplant collection, especially learning how to use the
-VIVOSUN AW200SE grow light without turning the hobby into a science project.
+indoor grow-light setup without turning the hobby into a science project.
+The next setup uses an ordered AW400SE and restores the open room-side view.
 
 ## Current notes
 
@@ -31,11 +32,17 @@ VIVOSUN AW200SE grow light without turning the hobby into a science project.
 - [Plant profiles](docs/plants/) — names, origins, history, flowers, care,
   propagation, risks, sources, and photo-archive status for all 36 collection
   records (35 physically present and one historical)
-- [AW200SE and E25 deep guide](docs/equipment/vivosun-aw200se.md) — PPFD maps,
+- [Incoming AW400SE and open-end setup](docs/equipment/vivosun-aw400se.md) —
+  verified fixed-spectrum fixture specs, order status, and a wider light plan
+  with the two-foot return reflector removed
+- [Final table placement guide](docs/layouts/table-placement-research.md) —
+  three AW400SE illustrations and all 30 pots grouped by light need; also
+  [after the online booklet contents](https://nick2bad4u.github.io/Gardening/#placement)
+- [Earlier AW200SE and E25 deep guide](docs/equipment/vivosun-aw200se.md) — PPFD maps,
   DLI/lux conversions, distances, dimming, placement, and a simple starting
   program
 - [Fenton AW200SE and paired-fan operating schedule](docs/equipment/aw200se-operating-schedule.md) —
-  dated move-in plan, three independent E25 controller paths, revised
+  historical move-in plan, three independent E25 controller paths, revised
   18-inch/45% light phase, paired E6 Gen2 airflow, August 14 setup-2 medium
   reset and measured dry-down trial,
   pot layout, rotations, local daylight, and outdoor-day overrides

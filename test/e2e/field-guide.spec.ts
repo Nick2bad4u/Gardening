@@ -139,9 +139,9 @@ for (const theme of ["dark", "light"] as const) {
                     imagesLinkToPublishedAssets: true,
                     labels: [
                         [
-                            "A1",
-                            "A2",
                             "D3",
+                            "A2",
+                            "A1",
                             "G1",
                         ],
                         [

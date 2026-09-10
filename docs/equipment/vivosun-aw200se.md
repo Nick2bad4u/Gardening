@@ -1,5 +1,10 @@
 # VIVOSUN AeroLight Wing AW200SE and GrowHub E25
 
+**September 10 replacement:** the owner has ordered the
+[AW400SE fixed full-spectrum light](./vivosun-aw400se.md) and is removing the
+two-foot room-end return panel. That linked page is the current replacement
+plan; this page retains the earlier AW200SE research.
+
 **Equipment correction, September 9, 2026:** the owner identifies the installed
 fixture as **AW200 with tunable spectrum**, currently at **60%** with a reported
 **13.25-hour daily program** and quarter-hour sunrise/sunset transitions.

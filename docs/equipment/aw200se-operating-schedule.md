@@ -1,19 +1,34 @@
 # Fenton AW200SE, paired-fan, GrowCam, and air-treatment operating schedule
 
-Last updated: 2026-09-09
+Last updated: 2026-09-10
 
-## September 9 current-state correction
+## September 10 Incoming AW400SE and Open Room End
 
-The owner identifies the installed light as the **AW200 with tunable
-spectrum**, currently at **60%** for a reported **13.25 hours daily**, with
+The owner has ordered the **AW400SE fixed full-spectrum 400 W fixture**,
+approximately **26 × 26.4 inches**, to replace the tunable AW200. Delivery is
+expected Sunday; installation is pending. The **two-foot Mylar return panel
+is removed from the plan** to restore the room-facing view. Divider Mylar stays.
+
+Use the [AW400SE equipment record](./vivosun-aw400se.md) and
+[final placement guide](../layouts/table-placement-research.md) for the new
+all-wood/near-half-glass coverage plan. The existing 13.25-hour day is only a
+planning reference for the replacement. Its intensity, clearance, and transferred
+program are unrecorded; do not carry the AW200's 60% over as equivalent exposure.
+The owner will handle acclimation; no new ramp or controller program was applied.
+
+## September 9 AW200 Record — Before the Replacement Order
+
+On September 9, the owner identified the installed light as the **AW200 with tunable
+spectrum**, at **60%** for a reported **13.25 hours daily**, with
 quarter-hour sunrise/sunset transitions. Exact clock times, the division of
 ramp and steady-output time, and current spectrum mode were not supplied.
 The last recorded 18-inch clearance remains a baseline to remeasure, not a
 fresh September measurement. No controller program was changed in this update.
 
-The new Diamond Mylar foam-board return closes an approximately two-foot gap
-toward the room. In the latest bird's-eye view, the window is right, white wall
-bottom, divider Mylar top, and return panel left. The
+At that time, a Diamond Mylar foam-board return closed an approximately two-foot
+gap toward the room. The September 10 decision above removes it. That earlier
+bird's-eye view put the window right, white wall bottom, divider Mylar top,
+and return panel left. The
 [September placement proposal](../layouts/table-placement-research.md) covers
 all 30 pots and marks unmeasured exposure and table-fit assumptions.
 

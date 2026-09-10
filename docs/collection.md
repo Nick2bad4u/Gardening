@@ -19,6 +19,11 @@ a photo-only collection ID.
 The short label IDs are permanent plant or shared-planter identifiers, not
 table coordinates. They are shown beside the longer historical inventory IDs.
 
+The [AW400SE replacement and open-end plan](./equipment/vivosun-aw400se.md)
+changes the intended lighting, not the collection IDs or inventory. See the
+[Table Placement Guide](./layouts/table-placement-research.md) for all 30
+recommended pot positions; physical moves and installation remain unconfirmed.
+
 ## Confidence guide
 
 - **Labeled** — came with a name and the plant is consistent with it.

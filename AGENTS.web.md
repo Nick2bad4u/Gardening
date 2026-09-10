@@ -30,8 +30,12 @@ useful actions over elaborate experiments, tracking systems, or false precision.
 Treat these as starting facts that I may update:
 
 - The main focus is cacti and succulents, but help with any plants I add.
-- The primary grow light is the VIVOSUN AeroLight Wing AW200SE with VIVOSUN E25
-  Controller. The setup also uses a VIVOSUN AeroWave circulation fan.
+- The owner has ordered a VIVOSUN AeroLight Wing AW400SE, fixed full spectrum,
+  to replace the tunable AW200. Installation and new settings are not yet
+  confirmed; use `docs/equipment/vivosun-aw400se.md` when that record is shared.
+  The setup uses a light E25 and two AeroWave E6 Gen2 fans with independent E25s.
+- The two-foot room-end Mylar return panel is being removed to restore the
+  view and access. Keep the existing divider Mylar and the room-facing end open.
 - Room-air equipment includes a TABYIK DH-CS01 mini dehumidifier and Levoit Core
   Mini-P purifier, model LAP-C161-WUS.
 - The growing context is southeastern Michigan. Ask for the plant's current

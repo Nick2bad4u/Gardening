@@ -53,7 +53,7 @@ may spend years simply building its column and wool.
 | Temperature         | It experiences cold in habitat, but a small watered pot is less forgiving. Keep it dry during cool spells and protect it from hard freezes.                                     |
 | Feeding             | A dilute, low-nitrogen cactus fertilizer a few times during active growth is plenty; the included fertilizer in fresh mix reduces urgency.                                      |
 
-The AW200SE can provide far more light than this small plant needs at close
+A powerful grow light can provide far more light than this small plant needs at close
 range. Compact new growth with strong spines is the goal. Fresh bleached or tan
 areas mean the increase was too fast; a narrowing tip with weak spines suggests
 too little light.

@@ -10,7 +10,7 @@ photographed, repotted, and assigned `P29`/`#5` and `P30`/`#6` on 2026-09-02.
 Their photographed Smart Planet Home / Altman Plants labels are retained as
 seller evidence.
 They combine botanical background with practical notes for the current pots,
-observed substrate condition, rain avoidance, and AW200SE indoor setup. They
+observed substrate condition, rain avoidance, and indoor grow-light setup. They
 are reference guides, not fixed watering schedules.
 
 The collection-level [setup record](../setup.md#august-14-substrate-airflow-and-light-reset)
@@ -20,9 +20,11 @@ Succulent Mix to two parts perlite by volume. Their setup-1 weights remain
 historical. The two shared planters, money tree, and Kiwi aeonium
 (`P19`–`P22`) were not part of that repot.
 
-The [AW200SE/E25 guide](../equipment/vivosun-aw200se.md) explains the PPFD,
-DLI, lux, distance, and placement ranges behind the lighting advice. The same
-research is published as the
+The [incoming AW400SE guide](../equipment/vivosun-aw400se.md) records the new
+fixed-spectrum light and open room end. The [placement guide](../layouts/table-placement-research.md)
+groups all pots by light need. The [earlier AW200SE/E25 guide](../equipment/vivosun-aw200se.md)
+retains historical light maps and conversions; these do not measure the new setup.
+The same research is published as the
 [Fenton Collection browser field guide](../plant-booklet/), with searchable
 contents, one reading page per record, keyboard navigation, dark mode, and
 print styling. Profiles have licensed reference galleries where reusable

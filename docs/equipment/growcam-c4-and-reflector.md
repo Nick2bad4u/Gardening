@@ -1,10 +1,18 @@
 # GrowCam C4 time-lapse and reflector plan
 
-Last updated: 2026-08-14
+Last updated: 2026-09-10
 
-This guide places the GrowCam C4 and Mylar around the open AW200SE table without
-turning the area into an enclosed grow tent. The camera is for a stable
-collection-wide time-lapse, not close-up diagnosis of one plant.
+The owner is replacing the tunable AW200 with an ordered
+[AW400SE fixed full-spectrum light](./vivosun-aw400se.md). The approximately
+two-foot room-end return panel is removed from the plan to restore the view.
+**Keep the existing divider Mylar and leave the room-facing end open.**
+In the current bird's-eye view, that means divider top, open room left, white
+wall bottom, and north-facing window right. The wider light's installation
+and final camera clearance remain unconfirmed.
+
+This guide keeps the GrowCam C4 and divider Mylar around an open plant display.
+The camera is for a stable collection-wide time-lapse, not close-up diagnosis
+of one plant.
 
 ## Confirmed equipment
 
@@ -42,9 +50,8 @@ recording is active.
 - The lower-right power and controller area is close to the watering zone; keep
   it raised, secured, and below-protected by cable drip loops.
 
-The [browser grow-spot diagrams](../layouts/grow-spot-layout.html) show the
-measured geometry and riser assignments. A post-Mylar light grid remains the
-useful missing measurement.
+The [browser grow-spot page](../layouts/grow-spot-layout.html) puts the current
+AW400SE proposal above these historical measured diagrams and riser assignments.
 
 ## Recommended physical layout
 
@@ -63,10 +70,9 @@ broad, diffuse reflection.
 5. Install it before the final baseline lux or PAR grid. Record readings with
    the film in place because it changes edge intensity.
 
-Do not add Mylar to the white wall automatically. Add a right-side panel only
-if the final grid still shows a meaningful dark edge that cannot be corrected
-with wing position, pot placement, or a small riser. Changing both reflectors
-and lamp power at once would make plant response harder to interpret.
+Keep the white wall uncovered and the room-facing end open. The broader light
+replaces the return-panel approach; enjoying and reaching the plants takes
+priority over enclosing more sides. No additional reflector is proposed.
 
 ### GrowCam
 
@@ -87,7 +93,7 @@ Use the following starting geometry, then frame with the live view:
   several inches of growth space above the tallest plant;
 - the light itself and the brightest Mylar reflection kept near or outside the
   image edge; and
-- enough clearance from the AW200SE to follow VIVOSUN's instruction to install
+- enough clearance from the incoming AW400SE to follow VIVOSUN's instruction to install
   the camera away from grow lights to avoid overheating.
 
 Aim tightly enough that the couch, clothing area, and normal room traffic are

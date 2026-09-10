@@ -15,52 +15,53 @@ starting points, but plant response matters more than chasing an exact number.
 
 ## Controlled indoor setup
 
-**September 9 owner correction:** the installed light is the **AW200 with
-tunable spectrum**, running at **60%** for a reported **13.25 hours daily**
-with quarter-hour sunrise/sunset transitions. The last recorded 18-inch
-LED-to-tallest-cactus clearance has not been remeasured. The AW200SE figures
-below belong to the earlier equipment identification and cannot establish
-the installed AW200's PPFD or spectrum. Exact program clock times and current
-spectrum mode remain to be recorded.
+**September 10 replacement plan:** the owner has ordered the
+**[VIVOSUN AW400SE](./equipment/vivosun-aw400se.md), fixed full spectrum**, to
+replace the tunable AW200. The manufacturer lists a **26 × 26.4-inch, 400 W**
+fixture. Delivery is expected Sunday according to the owner; installation is
+not yet confirmed. The last reported installed AW200 remains **60%** on a
+**13.25-hour daily program** with quarter-hour sunrise/sunset transitions.
+Those settings and the last 18-inch clearance are not new AW400SE measurements.
 
-The latest bird's-eye orientation is **north-facing window right, white wall bottom,
-Diamond Mylar divider top, and an approximately two-foot Mylar foam-board
-return panel left**. The owner reports little useful daylight from this window;
-the AW200 is the main light source for both the wooden and glass tables.
-The corrected wooden grid has **four columns across and six rows down**, with
-the AW200 wings fully flat and running left to right over the middle rows
-and left/central glass. High-light plants use that horizontal overlap; bright
-filtered and indirect plants use the perimeter and shoulders. These are final
-growing positions, with light needs and exact spots broken down in the guide. The shared
-succulent planter `#2` is a **square wooden box**. See the
-[Table Placement Guide](./layouts/table-placement-research.md) for all 30 pots,
-verified container shapes, recorded sizes, and species-by-species reasoning.
-It also appears [after the booklet contents](https://nick2bad4u.github.io/Gardening/#placement).
-Proposed plant moves have not been recorded as completed moves.
+The **approximately two-foot Mylar return panel comes out** to restore the
+room-side view and access. In the bird's-eye plan: **open room left,
+Diamond Mylar divider top, white wall bottom, north-facing window right**.
+The divider lining stays, and the owner reports little useful window light.
 
-The [earlier AW200SE/E25 guide](./equipment/vivosun-aw200se.md) retains the
-manufacturer PPFD grids, DLI/lux conversions, and earlier placement targets
-for that equipment identification. Those figures do not verify the installed
-AW200. Dated timer and acclimation history is in the
-[AW200SE and paired-fan operating schedule](./equipment/aw200se-operating-schedule.md).
+The wider lamp is intended to cover **all 24 pots on wood and roughly the
+nearer half of glass**. Wood remains **four columns across and six rows down**;
+the round glass table remains 24 inches across and holds six containers.
+The shared succulent planter `#2` is a **square wooden box**. The
+[Table Placement Guide](./layouts/table-placement-research.md) records all
+30 final recommended spots, light needs, container evidence, and the three
+revised illustrations. It appears
+[after the booklet contents](https://nick2bad4u.github.io/Gardening/#placement).
+The outline is a planned growing area, not proof of uniform PPFD. Physical
+plant moves have not been recorded as completed.
+
+The [new equipment note](./equipment/vivosun-aw400se.md) separates AW400SE
+specifications from the earlier model assumptions. The
+[AW200SE guide](./equipment/vivosun-aw200se.md) and
+[dated operating schedule](./equipment/aw200se-operating-schedule.md) retain
+historical light maps, controller details, and the move indoors. Their old
+45%/60% settings and 12-hour conversions do not specify the incoming light.
 
 | Item                     | Current equipment                                                                                                                                                                                                                                                                                                                                                                        |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Earlier light reference  | [VIVOSUN AeroLight Wing AW200SE](https://vivosun.com/en-US/vivosun-smart-grow-system-aerolight-a200se-compatible-with-growhub-e25-controller-p142504424325359396-v142527788947495192)                                                                                                                                                                                                    |
-| Controllers              | Three confirmed VIVOSUN GrowHub E25 Controllers: one for the AW200SE and one for each AeroWave E6 Gen2; the original fan was paired in the VIVOSUN app on 2026-07-28 and the opposing fan has its own independent E25 path                                                                                                                                                               |
+| Light transition         | [Incoming VIVOSUN AeroLight Wing AW400SE](./equipment/vivosun-aw400se.md); ordered, replacing the installed tunable AW200                                                                                                                                                                                                                                                                |
+| Controllers              | Three confirmed GrowHub E25 paths: one for the light and one for each AeroWave E6 Gen2. AW400SE supports E25 via Type-C; transfer and pairing have not been recorded                                                                                                                                                                                                                     |
 | Location                 | Fenton, Michigan                                                                                                                                                                                                                                                                                                                                                                         |
-| Mount                    | Adjustable ceiling mount; the approximately 26 in AW200SE wing span is centered in the 36 in divider-to-wall bay over all three plant surfaces                                                                                                                                                                                                                                           |
-| Tables                   | A 24 in round glass table at the window end followed by two identical 16 × 13 in wooden tables toward the room; all are 18 in high and aligned end to end beneath the window-to-room long axis of the fixture                                                                                                                                                                            |
-| Rated power              | 200 W                                                                                                                                                                                                                                                                                                                                                                                    |
-| Advertised coverage      | 2 × 4 ft                                                                                                                                                                                                                                                                                                                                                                                 |
-| Manufacturer efficacy    | 2.75 µmol/J                                                                                                                                                                                                                                                                                                                                                                              |
-| Manufacturer PPFD figure | 691 µmol/m²/s at 12 in                                                                                                                                                                                                                                                                                                                                                                   |
-| Dimming                  | VIVOSUN publishes 25%, 50%, 75%, 100%, and off as Manual Mode/Grow Hub presets and advertises a 25–100% app range; the installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and accepts 1% increments throughout that range                                                                                                                                            |
+| Mount                    | Adjustable ceiling mount; check it for the incoming fixture's 12.5 lb load and 26 × 26.4-inch body. Final suspension position and canopy clearance remain unrecorded                                                                                                                                                                                                                     |
+| Tables                   | Two 16 × 13-inch wooden tops in the four-column/six-row plan, beside a 24-inch round glass table; all 18 inches high                                                                                                                                                                                                                                                                     |
+| Rated power              | Incoming AW400SE: 400 W; not an actual dimmed-power measurement                                                                                                                                                                                                                                                                                                                          |
+| Advertised coverage      | AW400SE manufacturer application table: 4 × 4 ft tent. Planned open-room coverage: all wood and the near half of glass; actual distribution unmeasured                                                                                                                                                                                                                                   |
+| Manufacturer PPFD figure | No AW400SE plant-height readings recorded here. Earlier AW200SE maps remain in the historical equipment guide                                                                                                                                                                                                                                                                            |
+| Dimming                  | AW400SE manual: app 25–100% and off, controller presets 25/50/75/100% and off. New setting unrecorded; the old fixture's tested 1% increments are not a fresh AW400SE test                                                                                                                                                                                                               |
 | Cross-canopy fans        | Two [VIVOSUN AeroWave E6 Gen2](https://vivosun.com/en-US/vivosun-aerowave-e6-6-inch-clip-on-fan-compatible-with-growhub-e42-e25-p140926625940348007-v140926625940348006) units, each with its own E25, aimed from opposite ends of the black divider. The second is clipped high and aimed slightly downward. Each fan is rated 12 W and up to 320 CFM, with 90° horizontal oscillation. |
-| Air movement             | AW200SE integrated fan at its lowest gentle Natural Wind setting plus both E6 Gen2 pole fans on gentle Level 1–2, offset oscillating sweeps; confirm slight intermittent tissue movement without rocking plants, flattening hairs, or moving top dressing                                                                                                                                |
-| Current light setting    | AW200: 60% power, reported 13.25-hour daily program with quarter-hour sunrise/sunset transitions; owner update 2026-09-09. Last recorded clearance 18 in; current clock times and spectrum mode unrecorded                                                                                                                                                                               |
+| Air movement             | Last reported fixture fan on gentle Natural Wind plus both E6 Gen2 fans at gentle Level 1–2 with offset sweeps. Recheck the wider fixture's fan paths when installed                                                                                                                                                                                                                     |
+| Current light setting    | Last installed AW200: 60%, reported 13.25-hour program with quarter-hour sunrise/sunset transitions. AW400SE intensity, clearance, and transferred timer not yet recorded                                                                                                                                                                                                                |
 | Camera                   | [VIVOSUN GrowCam C4](https://vivosun.com/en-GB/vivosun-growcam-smart-camera-p161215462517181360-v161215462517181359), 2K, 117° field of view, 2.4 GHz Wi-Fi, wall-mounted above the plants with a tested 256 GB microSD card for time-lapse                                                                                                                                              |
-| Reflector                | [VIVOSUN 6 mil diamond Mylar, 4 × 25 ft](https://www.amazon.com/dp/B01MZ72PAH?th=1), installed top-to-bottom on the black divider with a separate loose sheet protecting the carpet; the white wall remains uncovered                                                                                                                                                                    |
+| Reflector                | [VIVOSUN 6 mil diamond Mylar, 4 × 25 ft](https://www.amazon.com/dp/B01MZ72PAH?th=1) retained on the black divider, plus the existing loose floor-protection sheet. White wall uncovered; two-foot room-end return panel removed from the plan                                                                                                                                            |
 | Room sensor              | Unspecified manual temperature/RH display with current, rolling 24-hour minimum/maximum, and all-time minimum/maximum readings                                                                                                                                                                                                                                                           |
 | Dehumidifier             | [TABYIK DH-CS01](https://www.amazon.com/dp/B0CMTP3GH8?th=1), a 1,000 mL single-speed Peltier unit used only when the manual sensor shows sustained excess humidity                                                                                                                                                                                                                       |
 | Air purifier             | [Levoit Core Mini-P](https://levoit.com/products/core-mini-p-air-purifier), model LAP-C161-WUS, 7 W and 34 CFM CADR, run on low for background dust/pollen removal                                                                                                                                                                                                                       |
@@ -68,7 +69,7 @@ AW200. Dated timer and acclimation history is in the
 | Fertilizer               | [Tezula/Greencare MSU 13-3-15 Tap/Rain/RO formula](https://tezulaplants.com/products/msu-fertilizer-13-3-15-for-tap-water-ro-rain-water), measured by mass with the [collection-specific schedule](./equipment/msu-fertilizer-schedule.md); it already contains calcium, magnesium, and micronutrients                                                                                   |
 | Label printer            | [SUPVAN E11](https://www.amazon.com/dp/B0DKS89T75?th=1), 203 dpi monochrome thermal printer with 15 mm maximum media width; see the [pot-label print reference](./plants/labels.md)                                                                                                                                                                                                      |
 
-The three confirmed E25s are independent control paths. The AW200SE's RJ45
+The three confirmed E25s are independent control paths. The AeroLight's RJ45
 connector is only for compatible AeroLight daisy chains; it is not an Ethernet
 connection for either canopy fan. AeroWave fans do not directly daisy-chain
 fan-to-fan. With E25 controllers, each independently controlled fan needs its
@@ -87,7 +88,9 @@ high on the room-end divider pole and points slightly downward; exact hub
 heights and plant clearances remain measurements to record. See the
 [paired-fan program and placement rules](./equipment/aw200se-operating-schedule.md#paired-canopy-fan-program).
 
-The earlier July 31 measurement set established a 36 in wide by approximately 60 in
+The historical July 31/August layout below predates the corrected September
+grid and incoming AW400SE plan. It is retained as a measurement record.
+That earlier measurement set established a 36 in wide by approximately 60 in
 long bay, and the August expansion adds a second identical wooden table. All
 three surfaces are 18 in high. The 24 in round glass table occupies the window
 end; the two 16 × 13 in wooden tables follow it toward the room. Their
@@ -100,8 +103,9 @@ That earlier layout kept A1–D3 in a measured three-column by four-row grid.
 The second wooden table provisionally held the six August cacti, `#4` Kiwi
 aeonium, and `#3` money tree. The corrected September proposal above replaces
 that placement reference with 24 pots on wood and six on glass. The
-[GrowCam and reflector plan](./equipment/growcam-c4-and-reflector.md) uses that
-geometry: line the black divider first, leave the white wall uncovered, and
+[GrowCam and reflector plan](./equipment/growcam-c4-and-reflector.md)
+retains the dated camera geometry and now keeps the room end open: line the
+black divider first, leave the white wall uncovered, and
 mount the camera rigidly on the right wall so it looks diagonally toward the
 divider instead of directly into the window.
 
@@ -118,7 +122,8 @@ receive. Distance, dimming, position under the wing, plant height, and reflected
 light all change the actual canopy level. Light distance should be measured from
 the tallest plant tip, not from the shelf or pot rim.
 
-The manufacturer also publishes a 5 × 5 reflective-tent map whose 12-inch
+For the earlier AW200SE identification, the manufacturer published a 5 × 5
+reflective-tent map whose 12-inch
 center reads 1,214 µmol/m²/s and whose calculated mean is about 870. That does
 not agree with the 691 figure in the product table. Both are retained and
 explained in the deep guide rather than forcing them into a false single answer.

@@ -4,8 +4,12 @@ Last updated: 2026-08-29
 
 This is the working nutrient plan for the collection's Tezula/Greencare **MSU
 13-3-15 Tap/Rain/RO formula**. It is a low-dose starting plan for these actual
-pots, the 60/40 Molly's-and-perlite cactus mix, RO water, the AW200SE, and the
+pots, the 60/40 Molly's-and-perlite cactus mix, RO water, indoor grow lights, and the
 indoor dry-down trial. It is not a fixed command to water on a calendar date.
+
+The [AW400SE replacement plan](./vivosun-aw400se.md) changes the light and
+removes the end reflector. It does not, by itself, change fertilizer doses or
+make a pot ready to water.
 
 ## Short answer
 
@@ -80,7 +84,7 @@ calcium, and 5 mg/L magnesium. More fertilizer is not a growth goal.
 
 When growth slows with the shorter seasonal light program or cooler room
 conditions, use plain RO and stop feeding. If the cacti continue producing
-clearly healthy, compact new growth through winter under the AW200SE, a
+clearly healthy, compact new growth through winter under the grow light, a
 conservative exception is **0.50-0.75 g/gal no more often than every third
 ready watering**. Never fertilize a cool, resting cactus merely because the
 calendar says a feeding is due.

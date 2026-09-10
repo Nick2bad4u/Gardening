@@ -6,10 +6,11 @@ The [Table Placement Guide](./table-placement-research.md) reviews all 30 pots
 against their light needs and current container evidence. It uses the corrected
 **four-column by six-row** wooden grid, a **square wooden shared succulent box**,
 and the weak **north-facing window on the right**. It includes separate wooden,
-glass, and combined illustrations with the **horizontal AW200 wings fully flat**,
-final positions grouped by ongoing light need, and the limits of unmeasured
-container sizes. High-light plants follow the middle rows and left/central glass
-overlap rather than a two-column brightness assumption.
+glass, and combined illustrations for the **ordered AW400SE fixed-spectrum
+light**, with broad coverage planned over all wood and the near half of glass.
+The **two-foot return panel comes out**, leaving the room end open; divider
+Mylar stays. Final positions remain grouped by ongoing light need, and the
+plan distinguishes intended coverage from unmeasured actual exposure.
 Read it [immediately after the online booklet contents](https://nick2bad4u.github.io/Gardening/#placement)
 or open the [placement illustrations](https://nick2bad4u.github.io/Gardening/layouts/grow-spot-layout.html#researched-placement).
 
@@ -65,7 +66,7 @@ temperature/RH readings, natural daylight context, and September seasonal
 timer.
 
 Open [grow-spot-layout.html](./grow-spot-layout.html) in a browser for the
-current room, table, plant-position, height, paired-fan, camera, and riser diagrams.
+current placement proposal and historical room, height, fan, camera, and riser diagrams.
 Its views are tabbed and its theme choice is shared with the calendar. Hover,
 tap, or keyboard-focus any plant marker to reveal its common and botanical
 names, inventory record, label status, origin, placement, identification
@@ -89,7 +90,7 @@ earlier working arrangement for reference:
 - two AeroWave E6 Gen2 fans, each with its own E25, provide opposing, offset
   sweeps across all three surfaces; the second is clipped high at the opposite
   divider end and aimed slightly downward;
-- the current AW200SE phase is 45% at 18 in, effective 2026-08-14;
+- the earlier AW200SE phase was 45% at 18 in, effective 2026-08-14;
 - the GrowCam stays on the right wall and frames all three surfaces; and
 - the purifier and dehumidifier start beyond the nominal bay on the open-room
   side, outside the fixture footprint and watering area.
