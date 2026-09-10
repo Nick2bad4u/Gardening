@@ -1597,7 +1597,7 @@ function renderBooklet(profiles, placementHtml) {
         <h1>A field guide to the collection.</h1>
         <span>Each profile combines identity, care, seller and nursery evidence, licensed references, live records, and a newest-first photo history. Two current views stay visible; each complete history opens in its own Gyazo Collection.</span>
       </header>
-      <a class="placement-contents-link" href="#placement" data-page-link="placement">${renderSiteIcon("layout")}<span><strong>Table Placement Guide</strong><small>Next page · Corrected layouts, container sizes, and light needs for all 30 pots</small></span>${renderSiteIcon("arrow-right")}</a>
+      <a class="placement-contents-link" href="#placement" data-page-link="placement">${renderSiteIcon("layout")}<span><strong>Table Placement Guide</strong><small>Next page · Final positions, horizontal lamp layout, and light needs for all 30 pots</small></span>${renderSiteIcon("arrow-right")}</a>
       <div class="contents-columns">${contents}</div>
       <aside class="contents-note">
         <strong>Three IDs, three jobs</strong>
@@ -1609,7 +1609,7 @@ function renderBooklet(profiles, placementHtml) {
       <header class="contents-heading placement-heading">
         <p>The Fenton Collection · 30 Pots · Placement and Light</p>
         <h1 id="placement-title">Table Placement Guide</h1>
-        <span>Four columns across, six rows down. A researched arrangement for the wooden tables and round glass table.</span>
+        <span>Final growing positions for the horizontal AW200, with every pot grouped by light need. Four columns across, six rows down on wood; six pots on round glass.</span>
       </header>
       <div class="placement-copy prose">${placementHtml}</div>
     </section>
@@ -2069,7 +2069,7 @@ async function renderPlacementGuide() {
         )
         .replaceAll(
             /<p><img src="(?<source>[^"<>]+)" alt="(?<alt>[^"<>]+)"><\/p>/gv,
-            '<figure class="placement-figure"><a href="$<source>" target="_blank" rel="noreferrer"><img src="$<source>" alt="$<alt>" loading="lazy" decoding="async"></a><figcaption>Illustrated proposal · Select to open full size</figcaption></figure>'
+            '<figure class="placement-figure"><a href="$<source>" target="_blank" rel="noreferrer"><img src="$<source>" alt="$<alt>" loading="lazy" decoding="async"></a><figcaption>Final placement illustration · Select to open full size</figcaption></figure>'
         );
 }
 

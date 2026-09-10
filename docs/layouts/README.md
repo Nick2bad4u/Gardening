@@ -6,7 +6,10 @@ The [Table Placement Guide](./table-placement-research.md) reviews all 30 pots
 against their light needs and current container evidence. It uses the corrected
 **four-column by six-row** wooden grid, a **square wooden shared succulent box**,
 and the weak **north-facing window on the right**. It includes separate wooden,
-glass, and combined illustrations, plus the limits of unmeasured container sizes.
+glass, and combined illustrations with the **horizontal AW200 wings fully flat**,
+final positions grouped by ongoing light need, and the limits of unmeasured
+container sizes. High-light plants follow the middle rows and left/central glass
+overlap rather than a two-column brightness assumption.
 Read it [immediately after the online booklet contents](https://nick2bad4u.github.io/Gardening/#placement)
 or open the [placement illustrations](https://nick2bad4u.github.io/Gardening/layouts/grow-spot-layout.html#researched-placement).
 
@@ -68,7 +71,7 @@ tap, or keyboard-focus any plant marker to reveal its common and botanical
 names, inventory record, label status, origin, placement, identification
 status, and field-guide link.
 
-Below the revised placement proposal, the older measured diagrams retain this
+Below the final placement recommendations, the older measured diagrams retain this
 earlier working arrangement for reference:
 
 - the occupied bay is 36 in wide by about 60 in long;

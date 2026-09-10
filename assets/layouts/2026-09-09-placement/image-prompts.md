@@ -1,145 +1,91 @@
-# Placement Illustration Prompts
+# Final Placement Illustration Prompts
 
-Revised September 10, 2026. These replace the earlier six-column drawings.
-The maintained evidence, plant names, and exact placement table live in
+Revised September 10, 2026, after the owner supplied a red rectangle showing the
+AW200's overhead position with both wings fully flat. The maintained evidence,
+plant identities, final positions, and need categories are in the
 [Table Placement Guide](../../../docs/layouts/table-placement-research.md).
 
-## Required Geometry and Evidence
+## Shared Geometry and Meaning
 
-- Wooden tables: **four columns across and six rows down**, join after row 3.
-  Draw a tall rectangle with the same grid in the wooden and combined images.
-- Round glass tabletop: **24-inch diameter**. All six container bases stay
-  inside its rim. The drawings illustrate a proposal, not a measured fit.
-- Orientation: **north-facing window right**, white wall bottom, Diamond Mylar
-  divider top, and approximately two-foot Mylar return panel left.
-- The north window adds little daylight. The **AW200 at 60% with a reported
-  13.25-hour program** is the main light. Do not invent PPFD values.
-- Higher-light priorities occupy the middle columns; softer starting positions
-  are at the edges. Preserve H, B, and G badges from the guide.
-- Glass containers: #1 round dark patterned planter; #2 **square wooden box**;
-  `#3` white round 6-inch class pot; `#4` white round approximately 5-inch pot;
-  `#5` tan ribbed round pot; `#6` 5-inch class terracotta dish. Current outside
-  widths and heights for #1, #2, and #5 remain unmeasured.
-- Planter `#1` contains three living cactus records. Do not restore the removed historical
-  woolly pincushion. #2 contains Echeveria, Portulacaria, silver teaspoons, and
-  **copper spoons**, not a purple Crassula.
-- Generated plant drawings are visual guides. Qualified species identities remain
-  in the accompanying document and profiles.
+- Keep **four columns across and six rows down**, join after row 3, on the two
+  wooden tables. Preserve all 24 labels once, and the same grid in both images.
+- The AW200 runs **horizontally left to right**, covering approximately wooden
+  rows 2–5 across all four columns and continuing over left/central glass.
+  Draw a thin dashed amber outline with nearly transparent fill behind plants.
+  Label it **Approximate fixture outline · not measured brightness**. No opaque
+  box, central-column heatmap, numerical PPFD, hard beam edge, or sunbeams.
+- Show the **final recommended growing positions**. Remove every old G badge
+  and all temporary/start/acclimation-stage labels. The color key is **H = High
+  light** (gold), **B = Bright filtered light** (teal), **I = Bright indirect
+  light** (green), **H/B = Mixed needs in one shared pot** (split gold/teal).
+- Preserve **north-facing weak-daylight window right, white wall bottom,
+  Diamond Mylar divider top, approximately two-foot Mylar return left**.
+- The AW200 is owner-reported **60%**, **13.25 hours**, tunable spectrum; both
+  wings are flat. The rectangle is approximate fixture placement, not a light map.
+- Keep ivory/forest-green botanical illustration styling and readable serif
+  text. Footer: **Final positions · Not to scale**. No invented measurements.
 
-## Wooden-Table Base Grid
+## Wooden Image
 
-Use a portrait botanical field-guide illustration with an ivory background,
-dark forest-green serif lettering, gravel-topped round pots, and legible labels.
-Title: “Wooden Tables · 24 Pots”. Subtitle:
-“4 columns × 6 rows · AW200 60% · 13.25 hours”.
+Portrait 1024 × 1536. Title **Wooden Tables · Final Placement**; subtitle
+**4 columns × 6 rows · AW200 60% · 13.25 hours**. Draw the horizontal middle-row
+outline across all four columns. Number rows and columns, with names and need
+badges attached to the correct plants. Exact grid:
 
 | Row | Column 1 | Column 2 | Column 3 | Column 4 |
 | --- | -------- | -------- | -------- | -------- |
-| 1   | D1 G     | F3 B     | F2 B     | D3 G     |
-| 2   | A3 B     | B2 H     | E1 H     | A2 B     |
-| 3   | B1 B     | C2 H     | H1 H     | E3 B     |
-| 4   | E2 B     | G2 H     | H2 H     | F1 B     |
-| 5   | D2 B     | H3 H     | B3 H     | C1 B     |
-| 6   | A1 G     | C3 B     | G3 H     | G1 G     |
+| 1   | A1 B     | A2 B     | D3 I     | G1 B     |
+| 2   | A3 B     | B2 H     | E1 H     | B1 B     |
+| 3   | C2 H     | H1 H     | H2 H     | G2 H     |
+| 4   | B3 H     | G3 H     | D1 H     | H3 H     |
+| 5   | E3 B     | C3 B     | F2 B     | F3 B     |
+| 6   | E2 B     | D2 B     | C1 B     | F1 B     |
 
-Use the common names and botanical forms from the guide. Keep all 24 labels once.
-Caption the middle columns “Brighter middle” and the outer columns “Softer edges”.
-Use H = higher light after acclimation, B = bright light, G = gentler starting
-exposure. Add “Proposed placement · Check light at plant height · Not to scale”.
+Botanical forms must move with their IDs: B3 is a blue crested fan; F2 a blue-green
+breast-lobed column; B1 a deeply rippled many-ribbed globe with broad flat tan
+spines; D1 an obesa-type striped mostly spineless ball. G2 has three-dimensional
+egg-shaped joints and long curling white paper ribbons, never flat Opuntia pads.
+G3 has thick opposing purple split-rock leaves and a deep cleft, never four equal
+Lithops blocks. H1 is a pointed Sempervivum rosette; H2 a pale-blue Echeveria rosette
+with leaf bumps. E3 is mostly green with modest spines and crown wool, not a white
+hairball. A1 retains green tissue and yellow/burgundy variegation, not a red graft.
 
-## Wooden-Table Refinement
+## Glass Image
 
-This edit used the corrected four-column base illustration:
+Square 1254 × 1254. Title **Glass Table · Final Placement**; subtitle
+**24-inch round table · AW200 60% · 13.25 hours**. All bases remain inside the
+round glass rim with visible clearance. The dashed fixture outline enters from
+the left across the middle vertical band and ends around two-thirds across the
+circle. Six unique numbered containers:
 
-```text
-Edit this illustration into its final publication version. Preserve the attractive botanical
-illustration, restrained serif typography, exact text and color key unless explicitly corrected.
-Preserve north-facing window on RIGHT with little supplemental daylight, Mylar divider TOP, white
-wall BOTTOM, and approximately 2 ft Diamond Mylar return on LEFT. No direct sunbeams. No decorative
-marketing slogans. This is an illustrative proposed arrangement, not measured light or a scale
-drawing. Keep the wooden grid EXACTLY four columns across and six rows down, no transposition, with
-the join after row 3. Keep every one of the 24 plants, positions, labels, and H/B/G badges exactly
-as in this image. Correct these botanical forms wherever visible: G2 Paper Spine is Tephrocactus
-articulatus with stacked oval egg-shaped joints and conspicuous long, flat, curling white paper-like
-spines; it must not have flat Opuntia pads. G3 Royal Flush is Pleiospilos nelii, a pair of thick
-opposite rounded PURPLE leaves opening along a deep central cleft, occasionally a smaller inner
-pair; do not draw four equal Lithops blocks. F2 Boobie cactus is a blue-green column with prominent
-rounded breast-like lobes. B1 Grass-Blade cactus is a deeply rippled ribbed globe with conspicuous
-broad flat tan grass-blade spines. Keep each exact ID and light badge attached to its current pot.
-Do not move or duplicate IDs.
-```
+- **#1 H/B — upper-left:** round dark patterned pot, size unmeasured; exactly
+  two columnar cacti plus trailing furry monkey tail. Pale variegated column
+  B; green column and monkey tail H. No fourth historical globular cactus.
+- **#2 H/B — lower-left:** square gray-brown wooden box, equal sides, no legs,
+  size unmeasured. Echeveria and green/yellow-green Portulacaria H toward the
+  clearer lamp-facing side; branching felted silver Kalanchoe bracteata and
+  copper-brown oval Kalanchoe orgyalis spoons B toward the less exposed side.
+  Copper spoons is not a purple rosette or Crassula.
+- **#3 I — lower-right:** white round 6-inch-class pot, single thick money-tree trunk.
+- **#4 B — upper-right:** white round approximately 5-inch pot, branched Kiwi aeonium.
+- **#5 H — center:** tan round horizontally ribbed pot, current size unmeasured;
+  knobbly triangular tiger-jaws leaves with teeth.
+- **#6 H — left-center between #1 and #2:** small round terracotta 5-inch-class
+  dish with tiny Echeveria, Sedum, and paddle Kalanchoe. This pot must be inside
+  the horizontal lamp band rather than at the bottom rim.
 
-## Glass-Table Refinement
+Keep component notes readable; #1 and #2 retain split H/B badges in both images.
 
-This edit used the six-container illustration with a round glass table,
-wooden box, and three living cactus records in #1:
+## Combined Image
 
-```text
-Make a precise localized correction to this otherwise finished botanical infographic. The shared
-square wooden box #2 has exactly these FOUR plants, matching the collection's records: a blue-green
-pointed Echeveria rosette with red margins; small rounded GREEN to YELLOW-GREEN Portulacaria leaves
-on reddish stems (cultivar unconfirmed, no cream variegation required); a branching Kalanchoe with
-SILVER FELTED OVAL SPOON leaves; and a branching Kalanchoe orgyalis with broad COPPER-BROWN FELTED
-OVAL SPOON leaves in opposite pairs. Draw copper spoons as upright branching stems with broad oval
-leaves, not a purple rosette and not pointed purple Crassula. The box has a square top, equal length
-and width, no legs, and its entire footprint lies inside the round glass rim. For #1 keep exactly
-two upright columns (probable variegated Pilosocereus pachycladus and probable Echinopsis spachiana)
-plus the trailing furry monkey-tail cactus. There must be NO small globular cactus in #1: that
-historical plant was removed. Keep all text, six numbered container positions, colors, other plants,
-and north-window/right orientation. Nudge #2 slightly inward so there is visible glass beyond ALL
-four wooden corners. Keep #2 visually square from this overhead perspective. Preserve 1254 by 1254
-square composition. Do not add plants, decorative objects, new text, or measurements.
-```
-
-## Combined-Plan Prompt
-
-The references were the corrected wooden-table illustration and the
-six-container glass-table illustration:
-
-```text
-Create a NEW combined botanical field-guide infographic by bringing together these two corrected
-reference layouts. The first reference supplies all 24 wooden-table plants and their positions; the
-second supplies the six glass containers. Overall canvas 1536×1024 LANDSCAPE. Title 'The Garden ·
-Placement Plan', subtitle '30 pots · AW200 tunable spectrum · 60% · 13.25 hours'. True overhead
-tabletop drawing, round pots stay round. Essential visual geometry: on LEFT draw a TALL NARROW
-wooden rectangle approximately x120–620, y160–920. It is substantially taller than wide, with FOUR
-equal-width columns across and SIX equal-height rows down, joined horizontally after row 3. Its four
-columns each have six pots. Pot centers approximately x180,300,420,540 and y220,345,470,595,720,845.
-All 24 wooden pots have similarly sized circular top views and small ID badges below. On RIGHT draw
-the round glass table approximately diameter650 at center1100,535. The glass circle is wider than
-the entire wooden block. Fit all six glass containers completely within it with visible clearances.
-Do not distort a square box into a rectangle. Surround the scene with 'Diamond Mylar divider (TOP)',
-'White wall (BOTTOM)', '2 ft Diamond Mylar return (LEFT), toward room', and on RIGHT 'North-facing
-window · weak daylight'. No direct sunbeams. EXACT wooden grid, top to bottom rows, each left to
-right: [D1 G, F3 B, F2 B, D3 G]; [A3 B, B2 H, E1 H, A2 B]; [B1 B, C2 H, H1 H, E3 B]; [E2 B, G2 H, H2
-H, F1 B]; [D2 B, H3 H, B3 H, C1 B]; [A1 G, C3 B, G3 H, G1 G]. Keep realistic forms from the FIRST
-reference, especially A3 narrow serpent stems rather than a globe, B3 a blue crest rather than a
-rosette, G2 oval cylindrical egg-shaped joints with long flat curling white paper spines rather than
-flat paddles, and G3 a pair of thick purple opposing split-rock leaves, not Lithops blocks. Label
-the wood pots only with IDs and H/B/G badges. Glass positions: #1 B upper left, #4 G upper right, #3
-G right edge, #2 B lower left toward middle, #5 B center, #6 H lower middle. #1 dark round patterned
-pot; #2 square weathered wooden box; #3 white round pot and one thick money-tree trunk; #4 white
-round pot and branched Kiwi aeonium rosettes; #5 tan ribbed round pot and tiger jaws; #6 orange
-terracotta round dish and mixed succulents. The shared square wooden box #2 has exactly these FOUR
-plants, matching the collection's records: a blue-green pointed Echeveria rosette with red margins;
-small rounded GREEN to YELLOW-GREEN Portulacaria leaves on reddish stems (cultivar unconfirmed, no
-cream variegation required); a branching Kalanchoe with SILVER FELTED OVAL SPOON leaves; and a
-branching Kalanchoe orgyalis with broad COPPER-BROWN FELTED OVAL SPOON leaves in opposite pairs.
-Draw copper spoons as upright branching stems with broad oval leaves, not a purple rosette and not
-pointed purple Crassula. The box has a square top, equal length and width, no legs, and its entire
-footprint lies inside the round glass rim. For #1 keep exactly two upright columns (probable
-variegated Pilosocereus pachycladus and probable Echinopsis spachiana) plus the trailing furry
-monkey-tail cactus. There must be NO small globular cactus in #1: that historical plant was removed.
-Footer legend gold H 'Higher light after acclimation', teal B 'Bright light', green G 'Gentler
-light'. Small footnote 'Proposed placement · Check light at plant height · Not to scale'. Avoid all
-marketing slogans. Count all 30 pot labels once. Use generous spacing and dark-green readable serif
-lettering on ivory.
-```
-
-## Final Shape Check
-
-A final localized edit makes the box's overhead footprint square and leaves
-glass visible beyond every corner. Keep all other labels and plants intact.
-The standalone glass illustration uses an approximately 260 × 260-pixel box;
-the combined illustration uses an approximately 200 × 200-pixel box.
-These pixel dimensions are illustration instructions, not container measurements.
+Landscape 1536 × 1024. Title **The Garden · Final Placement**; subtitle **30 pots ·
+AW200 tunable spectrum · 60% · 13.25 hours**. Combine the corrected wooden and
+glass reference images with the exact grid and six pot positions above. The
+wood is a tall narrow rectangle at left, the glass a wider round circle at right.
+Continue ONE horizontal dashed amber fixture outline from the wooden left edge,
+across wooden middle rows 2–5, to left/central glass. The wide outline is fully
+transparent except for a very pale warm fill so all 30 plants and IDs are visible.
+Never enclose only the two middle wood columns. Preserve the square box and
+current component species. Use only IDs and H/B/I badges under wooden pots, and
+six numbered glass labels with their badges. Include the complete light-need
+legend and the approximate-fixture/not-measured-brightness note.

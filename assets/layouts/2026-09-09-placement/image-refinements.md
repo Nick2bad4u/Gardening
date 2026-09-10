@@ -2,7 +2,9 @@
 
 These historical prompts corrected the first generated botanical drawings,
 which still used the superseded six-column orientation. The current PNG files
-use the corrected four-column by six-row arrangement and square wooden box.
+use the final four-column by six-row arrangement, square wooden box, and
+horizontal fixture outline. Their H/B/I labels describe ongoing light needs;
+the H/B/G acclimation labels quoted below are historical only.
 See [the current prompts and geometry](./image-prompts.md) for regeneration.
 
 ## Wooden table correction

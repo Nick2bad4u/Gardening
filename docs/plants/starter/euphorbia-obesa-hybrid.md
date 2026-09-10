@@ -47,13 +47,13 @@ from the parent. Flowering from seed may take five to eight years.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                        |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | Bright middle or edge zone: initially about 8–15 mol/m²/day DLI, around 185–350 µmol/m²/s over 12 hours.                                  |
-| Water               | During warm growth, soak and drain after the pot is fully dry. Keep much drier during cool or stalled growth.                             |
-| Light               | Strong light helps maintain a compact ball, but exposed skin can scar from an abrupt jump.                                                |
-| Pot and mix         | Keep the drained 4-inch pot only as wet as the small root system can use. A mineral, airy mix is safer than rich moisture-retentive soil. |
-| Feeding             | Sparse dilute feeding in active growth; slow is normal.                                                                                   |
+| Topic               | Practical approach                                                                                                                                                                                                                               |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Grow-light position | High light at R4C3 in the [final horizontal-lamp layout](../../layouts/table-placement-research.md). SANBI recommends a sunny position for E. obesa; this plant's probable hybrid identity remains qualified. No PPFD is measured for this spot. |
+| Water               | During warm growth, soak and drain after the pot is fully dry. Keep much drier during cool or stalled growth.                                                                                                                                    |
+| Light               | Strong light helps maintain a compact ball, but exposed skin can scar from an abrupt jump.                                                                                                                                                       |
+| Pot and mix         | Keep the drained 4-inch pot only as wet as the small root system can use. A mineral, airy mix is safer than rich moisture-retentive soil.                                                                                                        |
+| Feeding             | Sparse dilute feeding in active growth; slow is normal.                                                                                                                                                                                          |
 
 Hybrid behavior can differ from the wild reference species, so plant response
 outranks a rigid seasonal recipe.

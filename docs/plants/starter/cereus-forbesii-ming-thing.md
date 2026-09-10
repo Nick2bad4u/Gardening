@@ -55,13 +55,13 @@ compact new growth than by symmetry.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                       |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | Bright indirect light at a gentler edge. NC State's cultivar guidance supports protection from harsh sun; the [revised placement guide](../../layouts/table-placement-research.md) uses an outer corner. |
-| Water               | Soak and drain, then wait until the full pot is dry. Deep folds and slow growth give overwatering more downside than slight delay.                                                                       |
-| Light acclimation   | Increase gradually; high ridges can bleach while shaded valleys still look dark green.                                                                                                                   |
-| Pot and mix         | A small breathable root volume and fast drainage are useful. Keep grit out of crevices at the body base.                                                                                                 |
-| Feeding             | Dilute feed during obvious warm-season growth only.                                                                                                                                                      |
+| Topic               | Practical approach                                                                                                                                                                                                                      |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | Bright indirect light. NC State's cultivar guidance supports protection from harsh sun; the [final placement guide](../../layouts/table-placement-research.md) assigns R1C3 on the top perimeter beyond the horizontal fixture overlap. |
+| Water               | Soak and drain, then wait until the full pot is dry. Deep folds and slow growth give overwatering more downside than slight delay.                                                                                                      |
+| Light acclimation   | Increase gradually; high ridges can bleach while shaded valleys still look dark green.                                                                                                                                                  |
+| Pot and mix         | A small breathable root volume and fast drainage are useful. Keep grit out of crevices at the body base.                                                                                                                                |
+| Feeding             | Dilute feed during obvious warm-season growth only.                                                                                                                                                                                     |
 
 This plant does not need maximum output just because the normal species grows
 in sun. The irregular surface and nursery-grown epidermis make a conservative

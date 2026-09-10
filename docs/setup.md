@@ -28,7 +28,10 @@ Diamond Mylar divider top, and an approximately two-foot Mylar foam-board
 return panel left**. The owner reports little useful daylight from this window;
 the AW200 is the main light source for both the wooden and glass tables.
 The corrected wooden grid has **four columns across and six rows down**, with
-higher-light plants in the middle and gentler starts at the edges. The shared
+the AW200 wings fully flat and running left to right over the middle rows
+and left/central glass. High-light plants use that horizontal overlap; bright
+filtered and indirect plants use the perimeter and shoulders. These are final
+growing positions, with light needs and exact spots broken down in the guide. The shared
 succulent planter `#2` is a **square wooden box**. See the
 [Table Placement Guide](./layouts/table-placement-research.md) for all 30 pots,
 verified container shapes, recorded sizes, and species-by-species reasoning.
