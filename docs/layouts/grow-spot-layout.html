@@ -412,6 +412,40 @@
                 gap: 18px;
             }
 
+            .placement-gallery {
+                display: grid;
+                grid-template-columns: repeat(
+                    2,
+                    [figure-start] minmax(0, 1fr) [figure-end]
+                );
+                gap: 18px;
+                align-items: start;
+
+                & figure {
+                    margin: 0;
+                }
+
+                & figure:last-child {
+                    grid-column: 1 / -1;
+                }
+
+                & img {
+                    display: block;
+                    inline-size: 100%;
+                    block-size: auto;
+                }
+
+                & figcaption {
+                    padding: 12px 16px;
+                }
+
+                @media (width <= 680px) {
+                    grid-template-columns:
+                        [figure-start] minmax(0, 1fr)
+                        [figure-end];
+                }
+            }
+
             .plant-interaction-note {
                 display: flex;
                 gap: 10px;
@@ -1241,21 +1275,17 @@
         >
             <header class="hero">
                 <div>
-                    <p class="eyebrow">Indoor grow spot · installed layout</p>
-                    <h1
-                        >Round table at the window. Two wooden tables toward the
-                        room.</h1
-                    >
+                    <p class="eyebrow">Indoor grow spot · September 9 update</p>
+                    <h1>Current light, new reflector, and plant placement.</h1>
                     <p class="lede">
-                        The three 18-inch-high surfaces run end to end along the
-                        bay: the round shared-planter table at the window end,
-                        the original A1–D3 table, and the new-plant table toward
-                        the room. Their centerlines follow the fixture’s long
-                        axis; they do not sit side by side across the 36-inch
-                        width. Two pole-mounted fans now provide opposing,
-                        offset sweeps from the divider side. The new air
-                        purifier and dehumidifier start beyond the second wooden
-                        table, outside the nominal bay at the open-room end.
+                        The owner reports an AW200 with tunable spectrum at 60%,
+                        running a 13.25-hour daily program with quarter-hour
+                        sunrise/sunset transitions. The latest bird's-eye view
+                        puts the window right, white wall bottom, Mylar divider
+                        top, and the new two-foot Mylar return panel left. The
+                        proposed illustrations account for all 30 pots. Earlier
+                        measured room drawings and riser tools remain below as
+                        dated references.
                     </p>
                 </div>
                 <div class="hero-actions">
@@ -1373,11 +1403,211 @@
                 </div>
             </header>
 
+            <section
+                class="section"
+                id="researched-placement"
+                aria-labelledby="placement-heading"
+            >
+                <div class="section-heading">
+                    <h2 id="placement-heading">Proposed table placement</h2>
+                    <p
+                        >24 pots on wood · 6 pots on glass · Select an image to
+                        open the full-size illustration.</p
+                    >
+                </div>
+                <p class="plant-interaction-note">
+                    H = higher light after acclimation; B = bright light; G =
+                    gentler starting exposure. These are plant placement
+                    priorities, not measured PPFD zones. Check exposure at each
+                    canopy with the new reflector installed. Plant drawings are
+                    illustrative and do not establish an identification.
+                </p>
+                <div class="placement-gallery">
+                    <figure class="table-panel">
+                        <a
+                            href="../../assets/layouts/2026-09-09-placement/wooden-tables.png"
+                        >
+                            <img
+                                src="../../assets/layouts/2026-09-09-placement/wooden-tables.png"
+                                alt="Proposed four-row, six-column placement of the 24 wooden-table pots, with permanent labels and desired exposure groups"
+                                loading="lazy"
+                                decoding="async"
+                                width="1536"
+                                height="1024"
+                            />
+                        </a>
+                        <figcaption
+                            ><strong>Wooden tables.</strong> Keep tall stems on
+                            open flanks. A1, G1, and D1 use wall-side starting
+                            positions; verify the reflected light.</figcaption
+                        >
+                    </figure>
+                    <figure class="table-panel">
+                        <a
+                            href="../../assets/layouts/2026-09-09-placement/glass-table.png"
+                        >
+                            <img
+                                src="../../assets/layouts/2026-09-09-placement/glass-table.png"
+                                alt="Glass table with shared cactus planter number 1, shared succulent planter number 2, money tree number 3, Kiwi aeonium number 4, tiger jaws number 5, and tiny mixed planter number 6"
+                                loading="lazy"
+                                decoding="async"
+                                width="1254"
+                                height="1254"
+                            />
+                        </a>
+                        <figcaption
+                            ><strong>Glass table.</strong> Keep shared planters
+                            intact, face low rosettes toward the clearer light,
+                            and keep the money tree out of the direct lamp
+                            hotspot.</figcaption
+                        >
+                    </figure>
+                    <figure class="table-panel">
+                        <a
+                            href="../../assets/layouts/2026-09-09-placement/combined-plan.png"
+                        >
+                            <img
+                                src="../../assets/layouts/2026-09-09-placement/combined-plan.png"
+                                alt="Combined proposed placement of all 30 pots with wooden tables left, round glass table right, window right, white wall bottom, and Mylar top and left"
+                                loading="lazy"
+                                decoding="async"
+                                width="1536"
+                                height="1024"
+                            />
+                        </a>
+                        <figcaption
+                            ><strong>Whole collection.</strong> The new return
+                            panel can brighten outer positions. The color badges
+                            describe desired exposure, not measured brightness
+                            or a watering schedule.</figcaption
+                        >
+                    </figure>
+                </div>
+                <details class="layout-note">
+                    <summary>Exact positions, fit checks, and research</summary>
+                    <p
+                        >Rows run from the top/Mylar side to the
+                        bottom/white-wall side. Columns run from the left/return
+                        panel toward the right/glass table.</p
+                    >
+                    <div class="riser-table-wrap">
+                        <table>
+                            <caption>Proposed wooden-table pot labels</caption>
+                            <thead
+                                ><tr
+                                    ><th scope="col">Row</th
+                                    ><th scope="col">1</th><th scope="col">2</th
+                                    ><th scope="col">3</th><th scope="col">4</th
+                                    ><th scope="col">5</th
+                                    ><th scope="col">6</th></tr
+                                ></thead
+                            >
+                            <tbody>
+                                <tr
+                                    ><th scope="row">1 · Mylar</th><td>A3</td
+                                    ><td>E1</td><td>B2</td><td>G2</td><td>H3</td
+                                    ><td>F3</td></tr
+                                >
+                                <tr
+                                    ><th scope="row">2</th><td>B1</td><td>B3</td
+                                    ><td>C2</td><td>H1</td><td>C3</td
+                                    ><td>E3</td></tr
+                                >
+                                <tr
+                                    ><th scope="row">3</th><td>D3</td><td>E2</td
+                                    ><td>H2</td><td>G3</td><td>F1</td
+                                    ><td>D2</td></tr
+                                >
+                                <tr
+                                    ><th scope="row">4 · White wall</th
+                                    ><td>F2</td><td>D1</td><td>A1</td><td>G1</td
+                                    ><td>A2</td><td>C1</td></tr
+                                >
+                            </tbody>
+                        </table>
+                    </div>
+                    <p
+                        >On glass: #1 upper-left, #4 upper-right, #3 far-right,
+                        #2 lower-left, #6 lower-middle, and #5 in the open
+                        center. The low rosettes need light without taller
+                        leaves shading them.</p
+                    >
+                    <p
+                        >The four-by-six arrangement is a proposal to dry-fit.
+                        Two 16 × 13-inch tops can form a nominal 26 × 16-inch
+                        surface in one rotation, while the older measured layout
+                        uses 13 × 32 inches. The illustrations do not establish
+                        the current rotation or guarantee clearance for pot rims
+                        and foliage. No new risers are prescribed.</p
+                    >
+                    <ul>
+                        <li
+                            >RHS gives
+                            <a
+                                href="https://www.rhs.org.uk/plants/115504/echinocereus-rigidissimus/details"
+                                >rainbow hedgehog</a
+                            >
+                            full sun; NParks gives
+                            <a
+                                href="https://www.nparks.gov.sg/florafaunaweb/flora/6/1/6142"
+                                >Old Man of the Andes</a
+                            >
+                            the same preference. These support brighter
+                            positions after acclimation.</li
+                        >
+                        <li
+                            ><a
+                                href="https://plants.ces.ncsu.edu/plants/sempervivum/"
+                                >Sempervivum</a
+                            >
+                            needs sun with attention to heat and cool-season
+                            conditions;
+                            <a
+                                href="https://plants.ces.ncsu.edu/plants/echeveria/"
+                                >Echeveria</a
+                            >
+                            benefits from a sunny position. Keep H1 and H2 open
+                            to light.</li
+                        >
+                        <li
+                            ><a href="https://pza.sanbi.org/pleiospilos-nelii"
+                                >Split rock</a
+                            >
+                            belongs in bright light. Leaf replacement and
+                            watering remain separate decisions.</li
+                        >
+                        <li
+                            >The gentler starting slots are an inference for
+                            this collection.
+                            <a
+                                href="https://plants.ces.ncsu.edu/plants/gymnocalycium-mihanovichii/"
+                                >Moon-cactus guidance</a
+                            >
+                            often describes grafts; A1 and G1 must retain their
+                            own collection evidence.
+                            <a
+                                href="https://plants.ces.ncsu.edu/plants/pachira-aquatica/"
+                                >Money-tree guidance</a
+                            >
+                            supports filtered light but does not prove the
+                            tentative species ID.</li
+                        >
+                    </ul>
+                    <p
+                        >The AW200 correction and reported program supersede the
+                        earlier AW200SE/45% reference. The last recorded 18-inch
+                        canopy clearance has not been remeasured, and the
+                        current spectrum mode and exact program clock times
+                        remain unrecorded.</p
+                    >
+                </details>
+            </section>
+
             <aside
                 class="viewpoint"
                 aria-label="Diagram viewpoint"
             >
-                <strong>Orientation used everywhere</strong>
+                <strong>Earlier measured diagrams below</strong>
                 <span>Looking from the room toward the window.</span>
                 <span
                     >LEFT = divider and paired fans · RIGHT = white wall and
@@ -1491,17 +1721,18 @@
                 class="assumption"
                 aria-label="Confirmed dimensions and remaining measurements"
             >
-                <strong>Confirmed from the installed setup:</strong>
+                <strong>Earlier measurement baseline:</strong>
                 <span>
                     the bay is 36 inches wide by about 60 inches long; all three
                     tabletops are 18 inches high; the round glass table is 24
                     inches across; both wooden tables are 16 × 13 inches; and
                     the AW200SE is about 26 inches across the wing tips. The
-                    current light phase is 45% at 18 inches, effective August
-                    14. Two E6 Gen2 fans with independent E25 controllers are
-                    installed at opposite ends of the divider; fan 2 is clipped
-                    high and aimed slightly downward. Exact hub heights remain
-                    to be measured. Tape-photo plant heights now seed the riser
+                    August 14 light phase was 45% at 18 inches. The September 9
+                    owner update above supersedes that model and program. Two E6
+                    Gen2 fans with independent E25 controllers are installed at
+                    opposite ends of the divider; fan 2 is clipped high and
+                    aimed slightly downward. Exact hub heights remain to be
+                    measured. Tape-photo plant heights now seed the riser
                     calculator.
                 </span>
             </aside>

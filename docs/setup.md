@@ -1,6 +1,6 @@
 # Setup and equipment
 
-Last updated: 2026-09-02
+Last updated: 2026-09-09
 
 ## Current routine
 
@@ -15,15 +15,29 @@ starting points, but plant response matters more than chasing an exact number.
 
 ## Controlled indoor setup
 
-See the [AW200SE/E25 deep guide](./equipment/vivosun-aw200se.md) for the raw
-manufacturer PPFD grids, the unresolved difference between its published PPFD
-figures, DLI/lux conversions, plant-by-plant targets, placement, and the simple
-starting schedule. The concrete timer and acclimation steps are in the
+**September 9 owner correction:** the installed light is the **AW200 with
+tunable spectrum**, running at **60%** for a reported **13.25 hours daily**
+with quarter-hour sunrise/sunset transitions. The last recorded 18-inch
+LED-to-tallest-cactus clearance has not been remeasured. The AW200SE figures
+below belong to the earlier equipment identification and cannot establish
+the installed AW200's PPFD or spectrum. Exact program clock times and current
+spectrum mode remain to be recorded.
+
+The latest bird's-eye orientation is **window right, white wall bottom,
+Diamond Mylar divider top, and an approximately two-foot Mylar foam-board
+return panel left**. See the [researched table placement proposal](./layouts/table-placement-research.md)
+for all 30 pots, the new illustrations, and the remaining table-fit and canopy
+light checks. Proposed plant moves have not been recorded as completed moves.
+
+The [earlier AW200SE/E25 guide](./equipment/vivosun-aw200se.md) retains the
+manufacturer PPFD grids, DLI/lux conversions, and earlier placement targets
+for that equipment identification. Those figures do not verify the installed
+AW200. Dated timer and acclimation history is in the
 [AW200SE and paired-fan operating schedule](./equipment/aw200se-operating-schedule.md).
 
 | Item                     | Current equipment                                                                                                                                                                                                                                                                                                                                                                        |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Light                    | [VIVOSUN AeroLight Wing AW200SE](https://vivosun.com/en-US/vivosun-smart-grow-system-aerolight-a200se-compatible-with-growhub-e25-controller-p142504424325359396-v142527788947495192)                                                                                                                                                                                                    |
+| Earlier light reference  | [VIVOSUN AeroLight Wing AW200SE](https://vivosun.com/en-US/vivosun-smart-grow-system-aerolight-a200se-compatible-with-growhub-e25-controller-p142504424325359396-v142527788947495192)                                                                                                                                                                                                    |
 | Controllers              | Three confirmed VIVOSUN GrowHub E25 Controllers: one for the AW200SE and one for each AeroWave E6 Gen2; the original fan was paired in the VIVOSUN app on 2026-07-28 and the opposing fan has its own independent E25 path                                                                                                                                                               |
 | Location                 | Fenton, Michigan                                                                                                                                                                                                                                                                                                                                                                         |
 | Mount                    | Adjustable ceiling mount; the approximately 26 in AW200SE wing span is centered in the 36 in divider-to-wall bay over all three plant surfaces                                                                                                                                                                                                                                           |
@@ -35,7 +49,7 @@ starting schedule. The concrete timer and acclimation steps are in the
 | Dimming                  | VIVOSUN publishes 25%, 50%, 75%, 100%, and off as Manual Mode/Grow Hub presets and advertises a 25–100% app range; the installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and accepts 1% increments throughout that range                                                                                                                                            |
 | Cross-canopy fans        | Two [VIVOSUN AeroWave E6 Gen2](https://vivosun.com/en-US/vivosun-aerowave-e6-6-inch-clip-on-fan-compatible-with-growhub-e42-e25-p140926625940348007-v140926625940348006) units, each with its own E25, aimed from opposite ends of the black divider. The second is clipped high and aimed slightly downward. Each fan is rated 12 W and up to 320 CFM, with 90° horizontal oscillation. |
 | Air movement             | AW200SE integrated fan at its lowest gentle Natural Wind setting plus both E6 Gen2 pole fans on gentle Level 1–2, offset oscillating sweeps; confirm slight intermittent tissue movement without rocking plants, flattening hairs, or moving top dressing                                                                                                                                |
-| Current light setting    | 18 in from the LEDs to the tallest cactus or succulent tip in the direct footprint, 45% power, 8:00 a.m.–8:00 p.m.; reported active on 2026-08-14                                                                                                                                                                                                                                        |
+| Current light setting    | AW200: 60% power, reported 13.25-hour daily program with quarter-hour sunrise/sunset transitions; owner update 2026-09-09. Last recorded clearance 18 in; current clock times and spectrum mode unrecorded                                                                                                                                                                               |
 | Camera                   | [VIVOSUN GrowCam C4](https://vivosun.com/en-GB/vivosun-growcam-smart-camera-p161215462517181360-v161215462517181359), 2K, 117° field of view, 2.4 GHz Wi-Fi, wall-mounted above the plants with a tested 256 GB microSD card for time-lapse                                                                                                                                              |
 | Reflector                | [VIVOSUN 6 mil diamond Mylar, 4 × 25 ft](https://www.amazon.com/dp/B01MZ72PAH?th=1), installed top-to-bottom on the black divider with a separate loose sheet protecting the carpet; the white wall remains uncovered                                                                                                                                                                    |
 | Room sensor              | Unspecified manual temperature/RH display with current, rolling 24-hour minimum/maximum, and all-time minimum/maximum readings                                                                                                                                                                                                                                                           |

@@ -1,5 +1,14 @@
 # VIVOSUN AeroLight Wing AW200SE and GrowHub E25
 
+**Equipment correction, September 9, 2026:** the owner identifies the installed
+fixture as **AW200 with tunable spectrum**, currently at **60%** with a reported
+**13.25-hour daily program** and quarter-hour sunrise/sunset transitions.
+This page retains the earlier AW200SE research for provenance. Its product
+specifications, spectral assumptions, PPFD maps, and 12-hour conversions are
+not a verified specification or light survey for the AW200. See the current
+[setup correction](../setup.md#controlled-indoor-setup) and
+[table placement research](../layouts/table-placement-research.md).
+
 Last updated: 2026-08-29
 
 This guide converts the manufacturer's cannabis-oriented data into a practical

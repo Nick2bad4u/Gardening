@@ -1,6 +1,28 @@
 # Fenton AW200SE, paired-fan, GrowCam, and air-treatment operating schedule
 
-Last updated: 2026-08-29
+Last updated: 2026-09-09
+
+## September 9 current-state correction
+
+The owner identifies the installed light as the **AW200 with tunable
+spectrum**, currently at **60%** for a reported **13.25 hours daily**, with
+quarter-hour sunrise/sunset transitions. Exact clock times, the division of
+ramp and steady-output time, and current spectrum mode were not supplied.
+The last recorded 18-inch clearance remains a baseline to remeasure, not a
+fresh September measurement. No controller program was changed in this update.
+
+The new Diamond Mylar foam-board return closes an approximately two-foot gap
+toward the room. In the latest bird's-eye view, the window is right, white wall
+bottom, divider Mylar top, and return panel left. The
+[September placement proposal](../layouts/table-placement-research.md) covers
+all 30 pots and marks unmeasured exposure and table-fit assumptions.
+
+The dated AW200SE identification, 45% setting, and 8:00 a.m.–8:00 p.m.
+instructions below are retained as earlier planning/history. They do not
+override the owner's September 9 settings. No new timed ramp is prescribed
+without the current program's clock times and plant response.
+
+## Earlier schedule and operating history
 
 This is the canonical dated schedule for the VIVOSUN AW200SE, two AeroWave E6
 Gen2 pole fans, GrowCam C4, reflector placement, the three confirmed GrowHub

@@ -254,7 +254,7 @@ async function main() {
         .flatMap((html) =>
             html
                 .matchAll(
-                    /\bsrc="\.\.\/\.\.\/(?<reference>assets\/(?:collection-photos|plants)\/[^"#?]+)"/gv
+                    /\bsrc="\.\.\/\.\.\/(?<reference>assets\/(?:collection-photos|layouts|plants)\/[^"#?]+)"/gv
                 )
                 .toArray()
         )
