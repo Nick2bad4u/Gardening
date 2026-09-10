@@ -981,10 +981,11 @@ function choosePlantAvatar(collectionRecord, heroPhoto) {
 
 /**
  * @param {string} date
+ * @param {"long" | "medium"} [dateStyle]
  */
-function formatCollectionDate(date) {
+function formatCollectionDate(date, dateStyle = "long") {
     return Temporal.PlainDate.from(date).toLocaleString("en-US", {
-        dateStyle: "long",
+        dateStyle,
     });
 }
 
@@ -1184,9 +1185,9 @@ function renderPlantAvatar(profile, variant) {
         ? renderGyazoImage(profile.avatar, {
               alt: profile.avatar.alt,
               className: `plant-avatar plant-avatar--${variant}`,
-              sizes: variant === "hero" ? "5.5rem" : "3.25rem",
+              sizes: variant === "hero" ? "11rem" : "3.25rem",
           })
-        : `<img class="plant-avatar plant-avatar--${escapeHtml(variant)}" src="${escapeHtml(profile.avatar.src)}" alt="${escapeHtml(profile.avatar.alt)}" sizes="${variant === "hero" ? "5.5rem" : "3.25rem"}" loading="lazy" decoding="async">`;
+        : `<img class="plant-avatar plant-avatar--${escapeHtml(variant)}" src="${escapeHtml(profile.avatar.src)}" alt="${escapeHtml(profile.avatar.alt)}" sizes="${variant === "hero" ? "11rem" : "3.25rem"}" loading="lazy" decoding="async">`;
 
     return `<span class="plant-avatar-slot">${image}<span class="plant-avatar-fallback" aria-hidden="true" hidden>${portrait}</span></span>`;
 }
@@ -1197,6 +1198,25 @@ const plantNavigationIconByGroup = {
     rehab: "rehab",
     succulents: "succulent",
 };
+
+/** @param {string | undefined} markdown */
+function identificationLabel(markdown) {
+    const value = stripMarkdown(markdown ?? "").toLowerCase();
+    /** @type {[RegExp, string][]} */
+    const labels = [
+        [/seller-labeled.*but probable/v, "Likely Revised ID"],
+        [/^seller-labeled/v, "Seller Label"],
+        [/^labeled/v, "Nursery Label"],
+        [/^very high/v, "Very Strong Match"],
+        [/^high/v, "Strong Match"],
+        [/^probable cultivar/v, "Likely Cultivar"],
+        [/hybrid-group level/v, "Likely Hybrid Group"],
+        [/^probable/v, "Likely Match"],
+        [/^retail tag confirms genus/v, "Genus Known; Species Tentative"],
+        [/component-level.*provisional/v, "Tentative Component IDs"],
+    ];
+    return labels.find(([pattern]) => pattern.test(value))?.[1] ?? "Working ID";
+}
 
 /**
  * @returns {Promise<Profile[]>}
@@ -1262,10 +1282,22 @@ async function loadProfiles() {
                     profile.scientificMarkdown
                 );
                 const labelHtml = await renderInline(profile.labelMarkdown);
-                const identificationHtml = await renderInline(
-                    profile.identificationMarkdown
+                const identificationHtml = renderMetadataDetails(
+                    identificationLabel(profile.identificationMarkdown),
+                    await renderInline(profile.identificationMarkdown)
                 );
-                const statusHtml = await renderInline(profile.statusMarkdown);
+                const statusLabel = profile.historical
+                    ? "Archived"
+                    : profile.receiptUnverified
+                      ? "Awaiting Arrival"
+                      : "In Collection";
+                const statusHtml =
+                    profile.statusMarkdown === "Current collection record"
+                        ? `<span class="meta-value">${statusLabel}</span>`
+                        : renderMetadataDetails(
+                              statusLabel,
+                              await renderInline(profile.statusMarkdown)
+                          );
                 const acquiredFromHtml = profile.acquiredFromMarkdown
                     ? await renderInline(profile.acquiredFromMarkdown)
                     : "";
@@ -1756,6 +1788,14 @@ function renderLifecycleGallery(profile) {
 }
 
 /**
+ * @param {string} label
+ * @param {string} evidenceHtml
+ */
+function renderMetadataDetails(label, evidenceHtml) {
+    return `<details class="meta-details"><summary>${escapeHtml(label)}</summary><div class="meta-evidence">${evidenceHtml}</div></details>`;
+}
+
+/**
  * @param {ProfileGroup} group
  * @param {Profile[]} profiles
  */
@@ -2008,7 +2048,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
         .toSorted(compareCollectionPhotosNewestFirst);
     const newestGrowthPhoto = growthPhotos[0];
     const photoHistorySummary = newestGrowthPhoto
-        ? `<a href="#${escapeHtml(profile.slug)}-photo-history">${growthPhotos.length} ${growthPhotos.length === 1 ? "capture" : "captures"} · newest <time datetime="${escapeHtml(collectionPhotoDate(newestGrowthPhoto))}">${escapeHtml(formatCollectionDate(collectionPhotoDate(newestGrowthPhoto)))}</time> ${renderSiteIcon("arrow-down", "inline-link-icon")}</a>`
+        ? `<a href="#${escapeHtml(profile.slug)}-photo-history"><strong>${growthPhotos.length} ${growthPhotos.length === 1 ? "Capture" : "Captures"}</strong><span>· Latest <time datetime="${escapeHtml(collectionPhotoDate(newestGrowthPhoto))}">${escapeHtml(formatCollectionDate(collectionPhotoDate(newestGrowthPhoto), "medium"))}</time></span>${renderSiteIcon("arrow-down", "inline-link-icon")}</a>`
         : `<span>Collection photograph pending</span>`;
     const inaturalist = inaturalistBySlug.get(profile.slug);
     if (!inaturalist) {
@@ -2035,7 +2075,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
             ? renderProfileMeta(
                   "source",
                   "source",
-                  "Acquired from",
+                  "Acquired From",
                   profile.acquiredFromHtml
               )
             : "",
@@ -2043,7 +2083,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
             ? renderProfileMeta(
                   "date",
                   "calendar",
-                  "Acquired on",
+                  "Acquired On",
                   `<time datetime="${escapeHtml(stripMarkdown(profile.acquiredOnMarkdown))}">${profile.acquiredOnHtml}</time>`
               )
             : "",
@@ -2051,7 +2091,7 @@ function renderProfile(profile, pageNumber, totalProfiles) {
             ? renderProfileMeta(
                   "source",
                   "source",
-                  "Ordered from",
+                  "Ordered From",
                   profile.orderedFromHtml
               )
             : "",
@@ -2095,14 +2135,14 @@ function renderProfile(profile, pageNumber, totalProfiles) {
 
     <div class="profile-intro">
       <dl>
-        ${renderProfileMeta("inventory", "inventory", "Collection record", escapeHtml(profile.inventoryId))}
+        ${renderProfileMeta("inventory", "inventory", "Collection Record", escapeHtml(profile.inventoryId))}
         ${isNonemptyString(trackerId) ? renderProfileMeta("sheet", "sheets", "Google Sheets ID", `<a href="${escapeHtml(profile.sheetUrl)}" target="_blank" rel="noreferrer">${escapeHtml(trackerId)} ${renderSiteIcon("external", "inline-link-icon")}</a>`) : ""}
-        ${renderProfileMeta("label", "label", "Permanent label", profile.labelHtml)}
+        ${renderProfileMeta("label", "label", "Permanent Label", profile.labelHtml)}
         ${renderProfileMeta("identity", "identity", "Identification", profile.identificationHtml)}
         ${renderProfileMeta("status", "status", "Status", profile.statusHtml)}
         ${acquisitionDetails}
-        ${renderProfileMeta("photos", "camera", "Photo history", photoHistorySummary)}
-        ${renderProfileMeta("scope", `plant-${profile.slug}`, "Photo scope", escapeHtml(profile.scopeNote))}
+        ${renderProfileMeta("photos", "camera", "Photo History", photoHistorySummary)}
+        ${renderProfileMeta("scope", `plant-${profile.slug}`, "Photo Scope", escapeHtml(profile.scopeNote))}
       </dl>
     </div>
 
@@ -2171,7 +2211,14 @@ if (
     await main();
 }
 
-export { groups, loadProfiles, renderInline, stripHtml, stripMarkdown };
+export {
+    groups,
+    identificationLabel,
+    loadProfiles,
+    renderInline,
+    stripHtml,
+    stripMarkdown,
+};
 
 /** @param {string} normalized */
 function identityTableCategory(normalized) {

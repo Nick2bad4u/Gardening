@@ -91,7 +91,7 @@ for (const theme of ["dark", "light"] as const) {
         );
 
         test(
-            "gives long identification notes room without stretching short metadata",
+            "keeps metadata compact and exposes the full identification evidence",
             { tag: "@layout" },
             async ({ page }) => {
                 await openGuide(page, theme, "aeonium-haworthii-dream-color");
@@ -111,27 +111,45 @@ for (const theme of ["dark", "light"] as const) {
                             throw new Error("Missing compact metadata card.");
                         return card.getBoundingClientRect().height;
                     });
-                    const notes = profile?.querySelector(
-                        ".profile-meta--identity"
+                    const acquiredFrom = profile?.querySelector(
+                        ".profile-meta--source"
                     );
-                    const list = profile?.querySelector(
-                        ":scope .profile-intro dl"
+                    const acquiredOn = profile?.querySelector(
+                        ".profile-meta--date"
                     );
-                    if (!notes || !list)
-                        throw new Error("Missing identification notes.");
+                    if (!acquiredFrom || !acquiredOn)
+                        throw new Error("Missing acquisition metadata.");
                     return {
+                        acquisitionWidthDifference: Math.abs(
+                            acquiredFrom.getBoundingClientRect().width -
+                                acquiredOn.getBoundingClientRect().width
+                        ),
                         compact,
                         hasOverflow:
                             document.documentElement.scrollWidth > innerWidth,
-                        isWide:
-                            notes.getBoundingClientRect().width >
-                            list.getBoundingClientRect().width *
-                                (innerWidth > 680 ? 0.35 : 0.95),
                     };
                 });
-                expect.soft(Math.max(...layout.compact)).toBeLessThan(110);
-                expect.soft(layout.isWide).toBe(true);
-                expect.soft(layout.hasOverflow).toBe(false);
+                expect
+                    .soft({
+                        compact: Math.max(...layout.compact) < 110,
+                        equalAcquisitionWidths:
+                            layout.acquisitionWidthDifference < 1,
+                        hasOverflow: layout.hasOverflow,
+                    })
+                    .toStrictEqual({
+                        compact: true,
+                        equalAcquisitionWidths: true,
+                        hasOverflow: false,
+                    });
+                const evidence = page.getByText(
+                    "probable cultivar; appearance is consistent, but no nursery label or seller provenance is archived",
+                    { exact: true }
+                );
+                await expect.soft(evidence).toBeHidden();
+                await page
+                    .getByText("Likely Cultivar", { exact: true })
+                    .click();
+                await expect.soft(evidence).toBeVisible();
                 await page.emulateMedia({
                     media: "print",
                     reducedMotion: "no-preference",
@@ -154,6 +172,35 @@ for (const theme of ["dark", "light"] as const) {
                     animation: "none",
                     hasClippedMetadata: false,
                 });
+            }
+        );
+
+        test(
+            "enlarges the hero portrait on hover and honors reduced motion",
+            { tag: "@layout" },
+            async ({ isMobile, page }) => {
+                await openGuide(page, theme, "nyctocereus-serpentinus");
+                await page.emulateMedia({ reducedMotion: "no-preference" });
+                // The hero and photo-history image share alt text; target the visible hero presentation.
+                // eslint-disable-next-line playwright/no-raw-locators -- This visual variant has no distinct accessible name.
+                const portraits = page.locator(".plant-avatar--hero:visible");
+                await expect.soft(portraits).toHaveCount(isMobile ? 0 : 1);
+                const visiblePortraits = await portraits.all();
+                await Promise.all(
+                    visiblePortraits.map(async (portrait) => {
+                        await portrait.hover();
+                        await expect
+                            .soft(portrait)
+                            .toHaveCSS(
+                                "transform",
+                                "matrix(1.2, 0, 0, 1.2, 0, 0)"
+                            );
+                        await page.emulateMedia({ reducedMotion: "reduce" });
+                        await expect
+                            .soft(portrait)
+                            .toHaveCSS("transform", "none");
+                    })
+                );
             }
         );
 

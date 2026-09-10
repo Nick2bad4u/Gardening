@@ -517,6 +517,7 @@ main {
 
     & :where(header) {
         & p {
+            grid-column: 2;
             margin: 0;
             font-size: 0.625rem;
             font-weight: 700;
@@ -526,7 +527,10 @@ main {
         }
 
         & h2 {
-            margin: 0.15rem 0 0.35rem;
+            grid-row: 2;
+            grid-column: 2;
+            align-self: center;
+            margin: 0;
             font-family: var(--serif), system-ui;
             font-size: clamp(1.5rem, 2.5vi, 2rem);
             font-weight: 600;
@@ -534,8 +538,13 @@ main {
             letter-spacing: -0.025em;
         }
         position: relative;
+        display: grid;
+        grid-template-columns:
+            [icon-start] 2.75rem [icon-end title-start] minmax(0, 1fr)
+            [title-end];
+        gap: 0.2rem 0.75rem;
         min-block-size: 8.2rem;
-        padding: 1.25rem 1.25rem 1rem 4.75rem;
+        padding: 1.25rem 1.25rem 1rem;
         margin-block-end: 0;
         background: linear-gradient(
             135deg,
@@ -548,6 +557,7 @@ main {
 
 .contents-group-description {
     display: block;
+    grid-column: 2;
     font-size: 0.875rem;
     line-height: 1.5;
     color: var(--muted-ink);
@@ -751,6 +761,17 @@ main {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.13em;
+    text-shadow:
+        0 2px 4px #000000,
+        0 0 12px rgb(0 0 0 / 85%);
+
+    & > span {
+        padding: 0.3rem 0.6rem;
+        color: #fffdf7;
+        background: rgb(5 13 9 / 58%);
+        border: 1px solid rgb(255 255 255 / 24%);
+        border-radius: 0.5rem;
+    }
 }
 
 .hero-title {
@@ -758,7 +779,7 @@ main {
     max-inline-size: 54rem;
 
     @media (width >= 761px) {
-        padding-inline-end: clamp(5rem, 8vi, 6.5rem);
+        padding-inline-end: clamp(9.5rem, 16vi, 12.5rem);
     }
 }
 
@@ -795,7 +816,7 @@ main {
 
 .hero-title p {
     margin: 0 0 0.35rem;
-    font-family: var(--serif), system-ui;
+    font-family: "Segoe UI", "Trebuchet MS", sans-serif;
     font-size: clamp(1rem, 2.4vi, 1.5rem);
     font-style: italic;
 }
@@ -815,6 +836,9 @@ main {
     display: flex;
     gap: 0.65rem;
     align-items: center;
+    font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+    color: #c5e9db;
+    text-shadow: 0 2px 5px rgb(0 0 0 / 80%);
 
     & > span {
         min-inline-size: 0;
@@ -855,10 +879,12 @@ main {
     border-block-end: 1px solid var(--line);
 
     & dl {
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns:
+            repeat(3, [meta-start] minmax(0, 1fr) [meta-end])
+            [wide-start] minmax(0, 1.65fr) [wide-end];
         gap: 0.72rem;
-        align-items: flex-start;
+        align-items: stretch;
         inline-size: 100%;
         margin: 0;
     }
@@ -868,7 +894,6 @@ main {
     --meta-accent: var(--moss);
 
     display: grid;
-    flex: 1 1 10rem;
     grid-template-rows:
         [label-start] auto [label-end value-start] auto
         [value-end];
@@ -913,14 +938,10 @@ main {
 
 .profile-meta--identity {
     --meta-accent: #8065a8;
-
-    flex: 2 1 24rem;
 }
 
 .profile-meta--source {
     --meta-accent: #a85f32;
-
-    flex: 2 1 18rem;
 }
 
 .profile-meta--inventory {
@@ -928,11 +949,10 @@ main {
 }
 
 .profile-intro dt {
-    font-size: 0.625rem;
+    font-size: 0.75rem;
     font-weight: 700;
     color: var(--muted-ink);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.015em;
 }
 
 .profile-intro dd {
@@ -2110,11 +2130,12 @@ main {
 }
 
 .contents-group-icon {
-    position: absolute;
-    inset-block-start: 1.3rem;
-    inset-inline-start: 1.25rem;
+    position: static;
     display: grid;
+    grid-row: 2;
+    grid-column: 1;
     place-items: center;
+    align-self: center;
     inline-size: 2.75rem;
     block-size: 2.75rem;
     background: var(--moss-soft);
@@ -2198,8 +2219,8 @@ main {
     place-items: center;
 
     &:has(.plant-avatar--hero) {
-        inline-size: clamp(4rem, 8vi, 5.5rem);
-        block-size: clamp(4rem, 8vi, 5.5rem);
+        inline-size: clamp(8rem, 16vi, 11rem);
+        block-size: clamp(8rem, 16vi, 11rem);
         margin-block-end: 1rem;
     }
 }
@@ -2289,11 +2310,23 @@ main {
 }
 
 .plant-avatar--hero {
-    inline-size: clamp(4rem, 8vi, 5.5rem);
-    block-size: clamp(4rem, 8vi, 5.5rem);
+    inline-size: clamp(8rem, 16vi, 11rem);
+    block-size: clamp(8rem, 16vi, 11rem);
     margin-block-end: 1rem;
     border-color: rgb(255 255 255 / 68%);
     box-shadow: 0 12px 32px rgb(0 0 0 / 28%);
+
+    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+        transition:
+            transform 300ms var(--motion-ease),
+            box-shadow 300ms ease;
+
+        &:hover,
+        &:focus {
+            box-shadow: 0 18px 44px rgb(0 0 0 / 45%);
+            transform: scale(1.2);
+        }
+    }
 }
 
 :is(.tracker-badge, .label-badge, .inventory-badge) {
@@ -2748,12 +2781,13 @@ main {
     }
 
     .contents-group header {
-        padding: 1rem 0.9rem 0.9rem 4rem;
+        grid-template-columns:
+            [icon-start] 2.5rem [icon-end title-start] minmax(0, 1fr)
+            [title-end];
+        padding: 1rem 0.9rem 0.9rem;
     }
 
     .contents-group-icon {
-        inset-block-start: 1rem;
-        inset-inline-start: 0.85rem;
         inline-size: 2.5rem;
         block-size: 2.5rem;
     }
@@ -2906,7 +2940,6 @@ main {
     }
 
     .profile-meta {
-        flex-basis: 8rem;
         grid-template-columns:
             [icon-start] 1.7rem [icon-end detail-start] minmax(0, 1fr)
             [detail-end];
@@ -3396,14 +3429,13 @@ main {
         break-inside: avoid;
 
         & header {
+            grid-template-columns: [icon] 0.32in [text] minmax(0, 1fr) [end];
             min-block-size: 0;
-            padding: 0.12in 0.12in 0.1in 0.55in;
+            padding: 0.12in 0.12in 0.1in;
         }
     }
 
     .contents-group-icon {
-        inset-block-start: 0.12in;
-        inset-inline-start: 0.12in;
         inline-size: 0.32in;
         block-size: 0.32in;
     }
@@ -3661,7 +3693,38 @@ html::-webkit-scrollbar-thumb:focus {
 }
 
 .profile-meta--scope {
-    flex-basis: 100%;
+    grid-column: 1 / -1;
+}
+
+.meta-details summary,
+.meta-value {
+    font-weight: 700;
+    color: color-mix(in srgb, var(--meta-accent) 80%, var(--ink));
+}
+
+.meta-details summary {
+    min-block-size: 2.75rem;
+    padding-block: 0.55rem;
+    cursor: pointer;
+}
+
+.meta-evidence {
+    padding-block-start: 0.5rem;
+    margin-block-start: 0.25rem;
+    border-block-start: 1px solid var(--line);
+
+    & strong {
+        font-weight: 400;
+    }
+}
+
+@media (width <= 1000px) {
+    .profile-intro dl {
+        grid-template-columns: repeat(
+            2,
+            [meta-start] minmax(0, 1fr) [meta-end]
+        );
+    }
 }
 
 .collection-gallery h2 > .site-icon,

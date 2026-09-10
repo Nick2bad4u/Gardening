@@ -91,6 +91,8 @@
     ];
     const pageAnnouncer = requiredElement("#page-announcer", HTMLElement);
     const boundExternalImages = new WeakSet();
+    /** @type {Set<HTMLDetailsElement>} */
+    const metadataOpenedForPrint = new Set();
     let currentIndex = 0;
     /** @type {string | null} */
     let lastTrackedProfilePageId = null;
@@ -508,13 +510,52 @@
     pageControls.addEventListener("focusin", () => {
         setPageControlsVisible(true);
     });
+    addEventListener(
+        "pointermove",
+        (event) => {
+            if (
+                event.pointerType !== "mouse" ||
+                !pageControls.classList.contains("is-scroll-hidden") ||
+                event.clientY <
+                    window.innerHeight -
+                        pageControls.offsetHeight -
+                        pageControlsToggle.offsetHeight -
+                        24
+            ) {
+                return;
+            }
+            const isOverControl = [
+                ...pageControls.querySelectorAll("button"),
+            ].some((button) => {
+                const bounds = button.getBoundingClientRect();
+                return (
+                    event.clientX >= bounds.left &&
+                    event.clientX <= bounds.right
+                );
+            });
+            if (isOverControl) setPageControlsVisible(true);
+        },
+        { passive: true }
+    );
     function prepareForPrint() {
         if (isPrintPrepared) return;
         isPrintPrepared = true;
         for (const profile of profilePages) mountProfile(profile);
+        for (const details of document.querySelectorAll(
+            ".meta-details:not([open])"
+        )) {
+            if (!(details instanceof HTMLDetailsElement)) {
+                continue;
+            }
+
+            metadataOpenedForPrint.add(details);
+            details.open = true;
+        }
     }
 
     function restoreAfterPrint() {
+        for (const details of metadataOpenedForPrint) details.open = false;
+        metadataOpenedForPrint.clear();
         isPrintPrepared = false;
         showCurrentHash({ scroll: false });
     }

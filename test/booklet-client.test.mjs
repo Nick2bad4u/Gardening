@@ -85,6 +85,32 @@ function createReader(hash = "#plant-b-photo-history", { dataLayer } = {}) {
 }
 
 describe("field-guide profile mounting", () => {
+    it("prints full metadata evidence and restores previously closed summaries", () => {
+        expect.hasAssertions();
+
+        const window = createReader("#plant-a");
+        const closedEvidence = window.document.createElement("details");
+        closedEvidence.className = "meta-details";
+        closedEvidence.innerHTML =
+            "<summary>Likely Match</summary><p>Exact parentage unknown</p>";
+        const openEvidence = window.document.createElement("details");
+        openEvidence.className = "meta-details";
+        openEvidence.innerHTML =
+            "<summary>Likely Match</summary><p>Exact parentage unknown</p>";
+        openEvidence.open = true;
+        window.document.body.append(closedEvidence, openEvidence);
+
+        window.dispatchEvent(new window.Event("beforeprint"));
+
+        expect(closedEvidence.open).toBe(true);
+        expect(openEvidence.open).toBe(true);
+
+        window.dispatchEvent(new window.Event("afterprint"));
+
+        expect(closedEvidence.open).toBe(false);
+        expect(openEvidence.open).toBe(true);
+    });
+
     it("updates destination portraits across profiles, introductory pages, and disabled ends", () => {
         expect.hasAssertions();
 
@@ -299,6 +325,66 @@ describe("field-guide profile mounting", () => {
             queryElement(toggle, ".page-controls-pin-label", HTMLElement)
                 .textContent
         ).toBe("Pin");
+    });
+
+    it("reveals hidden navigation over a mouse control area without intercepting the rest of the bottom edge", () => {
+        expect.hasAssertions();
+
+        const window = createReader("#plant-a");
+        const navigation = queryElement(
+            window.document,
+            "#page-controls-navigation",
+            HTMLElement
+        );
+        const previous = queryElement(
+            window.document,
+            "#previous-page",
+            HTMLButtonElement
+        );
+        navigation.classList.add("is-scroll-hidden");
+        vi.spyOn(previous, "getBoundingClientRect").mockReturnValue(
+            new window.DOMRect(20, 900, 220, 60)
+        );
+
+        window.dispatchEvent(
+            new window.PointerEvent("pointermove", {
+                clientX: 400,
+                clientY: window.innerHeight - 1,
+                pointerType: "mouse",
+            })
+        );
+
+        expect(navigation.classList.contains("is-scroll-hidden")).toBe(true);
+
+        window.dispatchEvent(
+            new window.PointerEvent("pointermove", {
+                clientX: 50,
+                clientY: window.innerHeight - 1,
+                pointerType: "touch",
+            })
+        );
+
+        expect(navigation.classList.contains("is-scroll-hidden")).toBe(true);
+
+        window.dispatchEvent(
+            new window.PointerEvent("pointermove", {
+                clientX: 50,
+                clientY: window.innerHeight - 150,
+                pointerType: "mouse",
+            })
+        );
+
+        expect(navigation.classList.contains("is-scroll-hidden")).toBe(true);
+
+        window.dispatchEvent(
+            new window.PointerEvent("pointermove", {
+                clientX: 50,
+                clientY: window.innerHeight - 1,
+                pointerType: "mouse",
+            })
+        );
+
+        expect(navigation.classList.contains("is-scroll-hidden")).toBe(false);
     });
 
     it("tracks reading progress and reveals navigation when scrolling up", () => {

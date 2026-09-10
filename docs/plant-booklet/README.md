@@ -3,7 +3,7 @@
 [`index.html`](./index.html) is the magazine-style browser guide for the full
 collection. It has a cover, searchable contents, keyboard and button
 navigation, a random-profile jump, light and dark themes, print styling, and
-one deep-linkable reading page for each of the 34 plant records. The printed
+one deep-linkable reading page for each of the 36 plant records. The printed
 contents and drawer use a current-plant thumbnail and show the permanent
 Google Sheets P-ID separately from the physical pot label and repository
 Inventory ID. The starter and newer cactus directories remain separate source
@@ -15,7 +15,7 @@ tab. Every profile also has a deliberately scoped iNaturalist observation search
 species where the record supports it, the underlying species for horticultural
 cultivars, and a genus or clearly qualified working ID where greater precision
 would overstate the evidence.
-Thirty-three profiles are physically documented as present, including the six
+Thirty-five profiles are physically documented as present, including the six
 Mountain Crest plants received on 2026-08-28. Rehab-04 is retained as a clearly
 marked historical record.
 
@@ -89,6 +89,46 @@ The small cactus cursor is limited to devices with a fine pointing device;
 touch screens retain their normal behavior. Page, photograph, and detail-card
 motion is decorative, short, and disabled by the operating system's reduced
 motion preference.
+
+## Profile summaries
+
+The metadata labels use title case. Acquired From and Acquired On share an
+equal-width column pair; Photo History has more room for its capture count and
+latest date. Narrow screens use two equal columns, with Photo Scope spanning
+the row. Section icons align with their titles. Desktop hero portraits are twice
+their earlier size and enlarge on hover when reduced motion is not requested.
+The scientific name uses an italic sans-serif face and pale mint color beside
+the serif common name. Both hero corner labels have a dark backing and shadow.
+
+Identification remains evidence, not a botanical guarantee. The original
+Markdown field is free text; the booklet now presents these concise summaries.
+Opening a summary reveals the complete original evidence, including rejected
+labels, alternative species, uncertain cultivars, and unconfirmed parentage.
+
+| Earlier wording or evidence                                    | Booklet summary                |
+| -------------------------------------------------------------- | ------------------------------ |
+| Labeled; labeled horticultural name or trade selection         | Nursery Label                  |
+| Seller-labeled species, form, or cultivar                      | Seller Label                   |
+| High; high confidence                                          | Strong Match                   |
+| Very high confidence                                           | Very Strong Match              |
+| Probable, including photo-based identifications                | Likely Match                   |
+| Probable cultivar without archived provenance                  | Likely Cultivar                |
+| Probable hybrid group; cultivar unknown                        | Likely Hybrid Group            |
+| Seller label disagrees with a probable photographic correction | Likely Revised ID              |
+| Retail tag confirms genus; species is a working candidate      | Genus Known; Species Tentative |
+| Mixed planter with provisional component identifications       | Tentative Component IDs        |
+| An unfamiliar future evidence description                      | Working ID                     |
+
+Status uses **In Collection** for present plants and received orders,
+**Awaiting Arrival** when receipt is explicitly pending or unverified, and
+**Archived** for historical records. Existing receipt dates, inspection notes,
+and removal dates remain in the expandable detail. Currently no profile is
+awaiting arrival. These display summaries do not modify the source evidence or
+the live tracker.
+
+The bottom page controls reappear when a mouse enters the area where a hidden
+control sits. Scrolling up, keyboard focus, and pinning also reveal them. The
+hover behavior does not add an invisible overlay that blocks page links.
 
 ## Publish one of your own photographs
 

@@ -2,9 +2,67 @@ import { describe, expect, it } from "vitest";
 
 import { sheetUrls } from "../docs/layouts/plant-tracker-data.js";
 import { plantSheetUrl } from "../scripts/build-data.mjs";
-import { renderInline } from "../scripts/build-plant-booklet.mjs";
+import {
+    identificationLabel,
+    loadProfiles,
+    renderInline,
+} from "../scripts/build-plant-booklet.mjs";
 
 describe("field guide source rendering", () => {
+    it("keeps qualified corrections and hybrid uncertainty ahead of broad label matches", () => {
+        expect.hasAssertions();
+
+        expect(
+            identificationLabel(
+                "**seller-labeled _Faucaria tigrina_, but probable _F. tuberculosa_ from photographs**"
+            )
+        ).toBe("Likely Revised ID");
+        expect(
+            identificationLabel(
+                "**probable at the Chamaelobivia hybrid-group level; cultivar unknown**"
+            )
+        ).toBe("Likely Hybrid Group");
+        expect(identificationLabel("**very high confidence**")).toBe(
+            "Very Strong Match"
+        );
+        expect(identificationLabel("unresolved identification")).toBe(
+            "Working ID"
+        );
+    });
+
+    it("retains every profile's identification evidence and historical status behind its summary", async () => {
+        expect.hasAssertions();
+
+        const profiles = await loadProfiles();
+        for (const profile of profiles) {
+            expect(profile.identificationHtml).toContain(
+                await renderInline(profile.identificationMarkdown)
+            );
+            expect(
+                identificationLabel(profile.identificationMarkdown)
+            ).not.toBe("Working ID");
+        }
+
+        const historicalProfiles = profiles.filter(
+            (profile) => profile.historical
+        );
+
+        expect(historicalProfiles).toHaveLength(1);
+
+        for (const profile of historicalProfiles) {
+            expect(profile.statusHtml).toContain("<summary>Archived</summary>");
+            expect(profile.statusHtml).toContain(
+                await renderInline(profile.statusMarkdown)
+            );
+        }
+
+        const currentProfiles = profiles.filter((entry) => !entry.historical);
+
+        for (const profile of currentProfiles) {
+            expect(profile.statusHtml).toContain("In Collection");
+        }
+    });
+
     it("sanitizes raw HTML and unsafe URLs while retaining Markdown formatting", async () => {
         expect.hasAssertions();
 
