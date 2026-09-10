@@ -6,7 +6,7 @@ The [Table Placement Guide](./table-placement-research.md) reviews all 30 pots
 against their light needs and current container evidence. It uses the corrected
 **four-column by six-row** wooden grid, a **square wooden shared succulent box**,
 and the weak **north-facing window on the right**. It includes separate wooden,
-glass, and combined illustrations for the **ordered AW400SE fixed-spectrum
+glass, and combined illustrations for the **selected AW400 tunable-spectrum
 light**, with broad coverage planned over all wood and the near half of glass.
 The **two-foot return panel comes out**, leaving the room end open; divider
 Mylar stays. Final positions remain grouped by ongoing light need, and the

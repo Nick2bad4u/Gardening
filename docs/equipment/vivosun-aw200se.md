@@ -1,7 +1,7 @@
 # VIVOSUN AeroLight Wing AW200SE and GrowHub E25
 
-**September 10 replacement:** the owner has ordered the
-[AW400SE fixed full-spectrum light](./vivosun-aw400se.md) and is removing the
+**September 10 replacement:** the owner canceled the AW400SE order and selected the
+[AW400 tunable full-spectrum light](./vivosun-aw400.md) and is removing the
 two-foot room-end return panel. That linked page is the current replacement
 plan; this page retains the earlier AW200SE research.
 

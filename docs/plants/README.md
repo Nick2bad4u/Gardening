@@ -20,8 +20,8 @@ Succulent Mix to two parts perlite by volume. Their setup-1 weights remain
 historical. The two shared planters, money tree, and Kiwi aeonium
 (`P19`–`P22`) were not part of that repot.
 
-The [incoming AW400SE guide](../equipment/vivosun-aw400se.md) records the new
-fixed-spectrum light and open room end. The [placement guide](../layouts/table-placement-research.md)
+The [incoming AW400 guide](../equipment/vivosun-aw400.md) records the new
+tunable-spectrum light and open room end. The [placement guide](../layouts/table-placement-research.md)
 groups all pots by light need. The [earlier AW200SE/E25 guide](../equipment/vivosun-aw200se.md)
 retains historical light maps and conversions; these do not measure the new setup.
 The same research is published as the

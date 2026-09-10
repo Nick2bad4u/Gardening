@@ -2,14 +2,16 @@
 
 Last updated: 2026-09-10
 
-## September 10 Incoming AW400SE and Open Room End
+## September 10 Incoming AW400 and Open Room End
 
-The owner has ordered the **AW400SE fixed full-spectrum 400 W fixture**,
-approximately **26 × 26.4 inches**, to replace the tunable AW200. Delivery is
-expected Sunday; installation is pending. The **two-foot Mylar return panel
+The owner canceled the Amazon AW400SE order and selected the **AW400 tunable
+full-spectrum 400 W fixture** from LED Grow Lights Depot, whose listing specifies
+Samsung 301H EVO diodes, UVA, and far-red. It is approximately **26 × 26.4 inches**
+and replaces the tunable AW200 in the plan. Replacement delivery and installation
+are unconfirmed. The **two-foot Mylar return panel
 is removed from the plan** to restore the room-facing view. Divider Mylar stays.
 
-Use the [AW400SE equipment record](./vivosun-aw400se.md) and
+Use the [AW400 equipment record](./vivosun-aw400.md) and
 [final placement guide](../layouts/table-placement-research.md) for the new
 all-wood/near-half-glass coverage plan. The existing 13.25-hour day is only a
 planning reference for the replacement. Its intensity, clearance, and transferred

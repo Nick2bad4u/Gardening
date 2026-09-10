@@ -5,7 +5,7 @@
 This is my low-pressure garden notebook. The current focus is my cactus,
 succulent, and small houseplant collection, especially learning how to use the
 indoor grow-light setup without turning the hobby into a science project.
-The next setup uses an ordered AW400SE and restores the open room-side view.
+The next setup uses the selected AW400 with tunable spectrum and restores the open room-side view.
 
 ## Current notes
 
@@ -32,11 +32,11 @@ The next setup uses an ordered AW400SE and restores the open room-side view.
 - [Plant profiles](docs/plants/) — names, origins, history, flowers, care,
   propagation, risks, sources, and photo-archive status for all 36 collection
   records (35 physically present and one historical)
-- [Incoming AW400SE and open-end setup](docs/equipment/vivosun-aw400se.md) —
-  verified fixed-spectrum fixture specs, order status, and a wider light plan
+- [Incoming AW400 and open-end setup](docs/equipment/vivosun-aw400.md) —
+  verified tunable-spectrum fixture specs, replacement status, and a wider light plan
   with the two-foot return reflector removed
 - [Final table placement guide](docs/layouts/table-placement-research.md) —
-  three AW400SE illustrations and all 30 pots grouped by light need; also
+  three AW400 illustrations and all 30 pots grouped by light need; also
   [after the online booklet contents](https://nick2bad4u.github.io/Gardening/#placement)
 - [Earlier AW200SE and E25 deep guide](docs/equipment/vivosun-aw200se.md) — PPFD maps,
   DLI/lux conversions, distances, dimming, placement, and a simple starting

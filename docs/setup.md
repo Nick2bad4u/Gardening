@@ -15,13 +15,14 @@ starting points, but plant response matters more than chasing an exact number.
 
 ## Controlled indoor setup
 
-**September 10 replacement plan:** the owner has ordered the
-**[VIVOSUN AW400SE](./equipment/vivosun-aw400se.md), fixed full spectrum**, to
-replace the tunable AW200. The manufacturer lists a **26 × 26.4-inch, 400 W**
-fixture. Delivery is expected Sunday according to the owner; installation is
-not yet confirmed. The last reported installed AW200 remains **60%** on a
+**September 10 replacement correction:** the owner canceled the Amazon AW400SE
+order and selected the **[VIVOSUN AW400](./equipment/vivosun-aw400.md)** from
+LED Grow Lights Depot. Its listing specifies **Samsung 301H EVO diodes**, with
+**tunable full spectrum, UVA, and far-red**. The manufacturer lists a
+**26 × 26.4-inch, 400 W** fixture. The replacement's delivery date and installation
+are unconfirmed. The last reported installed AW200 remains **60%** on a
 **13.25-hour daily program** with quarter-hour sunrise/sunset transitions.
-Those settings and the last 18-inch clearance are not new AW400SE measurements.
+Those settings and the last 18-inch clearance are not new AW400 measurements.
 
 The **approximately two-foot Mylar return panel comes out** to restore the
 room-side view and access. In the bird's-eye plan: **open room left,
@@ -39,7 +40,7 @@ revised illustrations. It appears
 The outline is a planned growing area, not proof of uniform PPFD. Physical
 plant moves have not been recorded as completed.
 
-The [new equipment note](./equipment/vivosun-aw400se.md) separates AW400SE
+The [new equipment note](./equipment/vivosun-aw400.md) separates AW400
 specifications from the earlier model assumptions. The
 [AW200SE guide](./equipment/vivosun-aw200se.md) and
 [dated operating schedule](./equipment/aw200se-operating-schedule.md) retain
@@ -48,18 +49,18 @@ historical light maps, controller details, and the move indoors. Their old
 
 | Item                     | Current equipment                                                                                                                                                                                                                                                                                                                                                                        |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Light transition         | [Incoming VIVOSUN AeroLight Wing AW400SE](./equipment/vivosun-aw400se.md); ordered, replacing the installed tunable AW200                                                                                                                                                                                                                                                                |
-| Controllers              | Three confirmed GrowHub E25 paths: one for the light and one for each AeroWave E6 Gen2. AW400SE supports E25 via Type-C; transfer and pairing have not been recorded                                                                                                                                                                                                                     |
+| Light transition         | [Incoming VIVOSUN AeroLight Wing AW400](./equipment/vivosun-aw400.md); selected after canceling the Amazon AW400SE order, replacing the installed tunable AW200                                                                                                                                                                                                                          |
+| Controllers              | Three confirmed GrowHub E25 paths: one for the light and one for each AeroWave E6 Gen2. AW400 supports E25 via Type-C; transfer and pairing have not been recorded                                                                                                                                                                                                                       |
 | Location                 | Fenton, Michigan                                                                                                                                                                                                                                                                                                                                                                         |
-| Mount                    | Adjustable ceiling mount; check it for the incoming fixture's 12.5 lb load and 26 × 26.4-inch body. Final suspension position and canopy clearance remain unrecorded                                                                                                                                                                                                                     |
+| Mount                    | Adjustable ceiling mount; check it for the incoming fixture's 16.82 lb published load and 26 × 26.4-inch body. Final suspension position and canopy clearance remain unrecorded                                                                                                                                                                                                          |
 | Tables                   | Two 16 × 13-inch wooden tops in the four-column/six-row plan, beside a 24-inch round glass table; all 18 inches high                                                                                                                                                                                                                                                                     |
-| Rated power              | Incoming AW400SE: 400 W; not an actual dimmed-power measurement                                                                                                                                                                                                                                                                                                                          |
-| Advertised coverage      | AW400SE manufacturer application table: 4 × 4 ft tent. Planned open-room coverage: all wood and the near half of glass; actual distribution unmeasured                                                                                                                                                                                                                                   |
-| Manufacturer PPFD figure | No AW400SE plant-height readings recorded here. Earlier AW200SE maps remain in the historical equipment guide                                                                                                                                                                                                                                                                            |
-| Dimming                  | AW400SE manual: app 25–100% and off, controller presets 25/50/75/100% and off. New setting unrecorded; the old fixture's tested 1% increments are not a fresh AW400SE test                                                                                                                                                                                                               |
+| Rated power              | Incoming AW400: 400 W; not an actual dimmed-power measurement                                                                                                                                                                                                                                                                                                                            |
+| Advertised coverage      | AW400 manufacturer application table: 4 × 4 ft tent. Planned open-room coverage: all wood and the near half of glass; actual distribution unmeasured                                                                                                                                                                                                                                     |
+| Manufacturer PPFD figure | No AW400 plant-height readings recorded here. Earlier AW200SE maps remain in the historical equipment guide                                                                                                                                                                                                                                                                              |
+| Dimming                  | AW400 manual: app 25–100% and off, controller presets 25/50/75/100% and off. New setting unrecorded; the old fixture's tested 1% increments are not a fresh AW400 test                                                                                                                                                                                                                   |
 | Cross-canopy fans        | Two [VIVOSUN AeroWave E6 Gen2](https://vivosun.com/en-US/vivosun-aerowave-e6-6-inch-clip-on-fan-compatible-with-growhub-e42-e25-p140926625940348007-v140926625940348006) units, each with its own E25, aimed from opposite ends of the black divider. The second is clipped high and aimed slightly downward. Each fan is rated 12 W and up to 320 CFM, with 90° horizontal oscillation. |
 | Air movement             | Last reported fixture fan on gentle Natural Wind plus both E6 Gen2 fans at gentle Level 1–2 with offset sweeps. Recheck the wider fixture's fan paths when installed                                                                                                                                                                                                                     |
-| Current light setting    | Last installed AW200: 60%, reported 13.25-hour program with quarter-hour sunrise/sunset transitions. AW400SE intensity, clearance, and transferred timer not yet recorded                                                                                                                                                                                                                |
+| Current light setting    | Last installed AW200: 60%, reported 13.25-hour program with quarter-hour sunrise/sunset transitions. AW400 intensity, clearance, and transferred timer not yet recorded                                                                                                                                                                                                                  |
 | Camera                   | [VIVOSUN GrowCam C4](https://vivosun.com/en-GB/vivosun-growcam-smart-camera-p161215462517181360-v161215462517181359), 2K, 117° field of view, 2.4 GHz Wi-Fi, wall-mounted above the plants with a tested 256 GB microSD card for time-lapse                                                                                                                                              |
 | Reflector                | [VIVOSUN 6 mil diamond Mylar, 4 × 25 ft](https://www.amazon.com/dp/B01MZ72PAH?th=1) retained on the black divider, plus the existing loose floor-protection sheet. White wall uncovered; two-foot room-end return panel removed from the plan                                                                                                                                            |
 | Room sensor              | Unspecified manual temperature/RH display with current, rolling 24-hour minimum/maximum, and all-time minimum/maximum readings                                                                                                                                                                                                                                                           |
@@ -89,7 +90,7 @@ heights and plant clearances remain measurements to record. See the
 [paired-fan program and placement rules](./equipment/aw200se-operating-schedule.md#paired-canopy-fan-program).
 
 The historical July 31/August layout below predates the corrected September
-grid and incoming AW400SE plan. It is retained as a measurement record.
+grid and incoming AW400 plan. It is retained as a measurement record.
 That earlier measurement set established a 36 in wide by approximately 60 in
 long bay, and the August expansion adds a second identical wooden table. All
 three surfaces are 18 in high. The 24 in round glass table occupies the window

@@ -2,8 +2,8 @@
 
 Last updated: 2026-09-10
 
-The owner is replacing the tunable AW200 with an ordered
-[AW400SE fixed full-spectrum light](./vivosun-aw400se.md). The approximately
+The owner is replacing the tunable AW200 with the selected
+[AW400 tunable full-spectrum light](./vivosun-aw400.md). The approximately
 two-foot room-end return panel is removed from the plan to restore the view.
 **Keep the existing divider Mylar and leave the room-facing end open.**
 In the current bird's-eye view, that means divider top, open room left, white
@@ -51,7 +51,7 @@ recording is active.
   it raised, secured, and below-protected by cable drip loops.
 
 The [browser grow-spot page](../layouts/grow-spot-layout.html) puts the current
-AW400SE proposal above these historical measured diagrams and riser assignments.
+AW400 proposal above these historical measured diagrams and riser assignments.
 
 ## Recommended physical layout
 
@@ -93,7 +93,7 @@ Use the following starting geometry, then frame with the live view:
   several inches of growth space above the tallest plant;
 - the light itself and the brightest Mylar reflection kept near or outside the
   image edge; and
-- enough clearance from the incoming AW400SE to follow VIVOSUN's instruction to install
+- enough clearance from the incoming AW400 to follow VIVOSUN's instruction to install
   the camera away from grow lights to avoid overheating.
 
 Aim tightly enough that the couch, clothing area, and normal room traffic are

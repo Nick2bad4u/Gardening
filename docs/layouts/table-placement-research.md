@@ -1,21 +1,28 @@
 # Table Placement Guide
 
-Revised September 10, 2026, for the **ordered AW400SE fixed full-spectrum light**
+Revised September 10, 2026, for the **selected AW400 tunable full-spectrum light**
 and an **open room-facing end**. The approximately two-foot return reflector
 comes out; the existing divider Mylar stays. These are final recommended growing
 positions for **30 tracked pots: 24 on wood and six on glass**, ready for the
-replacement light. Delivery is expected Sunday according to the owner;
-installation and physical plant moves have not been confirmed.
+replacement light. The owner canceled the Amazon AW400SE order and chose the
+AW400 from LED Grow Lights Depot; its listing specifies **Samsung 301H EVO
+diodes**, UVA, and far-red. The replacement's delivery date, installation, and
+physical plant moves have not been confirmed.
 
 ## The Final Arrangement at a Glance
 
-![AW400SE plan with four columns and six rows on wood, six pots on round glass, broad planned coverage over all wood and the near half of glass, and an open room-facing end](../../assets/layouts/2026-09-09-placement/combined-plan.png)
+![AW400 plan with four columns and six rows on wood, six pots on round glass, broad planned coverage over all wood and the near half of glass, and an open room-facing end](../../assets/layouts/2026-09-09-placement/combined-plan.png)
 
-- **Wider light:** the AW400SE is a **400 W, fixed full-spectrum fixture**,
+- **Wider light:** the AW400 is a **400 W, tunable full-spectrum fixture**,
   listed at **26 × 26.4 inches**. The intended growing area now includes all
   six wooden rows and roughly the nearer half of glass. See the
-  [exact-model equipment note](../equipment/vivosun-aw400se.md) and
-  [manufacturer manual][aw400se].
+  [exact-model equipment note](../equipment/vivosun-aw400.md) and
+  [manufacturer manual][aw400].
+- **Updated model:** the AW400 keeps the canceled AW400SE's listed footprint,
+  so the final pot positions remain the same. Its Seedling, Veg, and Flower
+  spectrum modes are selectable; the chosen mode is not yet recorded. The
+  [selected seller listing][aw400-listing] confirms the advertised 301H EVO
+  configuration. Far-red is listed for both models.
 - **Open view:** remove the left two-foot return panel. Keep the top Diamond
   Mylar divider and bottom white wall. Viewing the plants and reaching them
   comfortably are part of the plan.
@@ -63,7 +70,7 @@ The nominal 16-inch wood width plus half the 24-inch glass diameter spans
 **28 inches before gaps**, slightly wider than the fixture itself. Useful
 light spreads beyond the panels; the owner's intended coverage is plausible,
 but neither the drawing nor the manufacturer's 4 × 4 ft tent guidance proves
-uniform PPFD here. The old AW200 **60%** is not an AW400SE setting. Intensity,
+uniform PPFD here. The old AW200 **60%** is not an AW400 setting. Intensity,
 clearance, and the transferred timer will be recorded after installation.
 
 ## Plants by Light Need and Recommended Spot
@@ -131,30 +138,30 @@ probable, cf., hybrid, and unconfirmed-cultivar identifications.
 
 ## Current Room and Incoming Light
 
-| Item                        | Recorded Setup or Plan                                                                                                                              |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Incoming light              | **VIVOSUN AW400SE**, fixed full spectrum, **400 W**; ordered, installation pending                                                                  |
-| Fixture size and position   | Manufacturer: **26 × 26.4 × 2.2 inches**; planned with wings fully flat over all wood and the near half of glass                                    |
-| Last installed light        | Owner-reported **AW200 with tunable spectrum**, **60%**; September 9 record                                                                         |
-| Daily program               | Last reported **13.25 hours**, including quarter-hour sunrise/sunset transitions; retained as a planning reference, transfer to AW400SE unconfirmed |
-| Right                       | **North-facing window**, beyond glass; weak supplementary daylight                                                                                  |
-| Top                         | Existing Diamond Mylar divider retained                                                                                                             |
-| Bottom                      | White wall retained                                                                                                                                 |
-| Left                        | **Open room-facing end**; approximately two-foot Mylar return panel removed from the plan                                                           |
-| Wooden tables               | Two **16 × 13-inch** tops, each **18 inches high**; four columns and six rows, join after row 3                                                     |
-| Glass table                 | **24-inch diameter**, round, **18 inches high**                                                                                                     |
-| New intensity and clearance | **Not yet set or measured**; the old 60% and last 18-inch clearance do not describe the incoming light                                              |
+| Item                        | Recorded Setup or Plan                                                                                                                            |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Incoming light              | **VIVOSUN AW400**, tunable full spectrum, **400 W**; selected after canceling AW400SE, installation pending                                       |
+| Fixture size and position   | Manufacturer: **26 × 26.4 × 2.2 inches**; planned with wings fully flat over all wood and the near half of glass                                  |
+| Last installed light        | Owner-reported **AW200 with tunable spectrum**, **60%**; September 9 record                                                                       |
+| Daily program               | Last reported **13.25 hours**, including quarter-hour sunrise/sunset transitions; retained as a planning reference, transfer to AW400 unconfirmed |
+| Right                       | **North-facing window**, beyond glass; weak supplementary daylight                                                                                |
+| Top                         | Existing Diamond Mylar divider retained                                                                                                           |
+| Bottom                      | White wall retained                                                                                                                               |
+| Left                        | **Open room-facing end**; approximately two-foot Mylar return panel removed from the plan                                                         |
+| Wooden tables               | Two **16 × 13-inch** tops, each **18 inches high**; four columns and six rows, join after row 3                                                   |
+| Glass table                 | **24-inch diameter**, round, **18 inches high**                                                                                                   |
+| New intensity and clearance | **Not yet set or measured**; the old 60% and last 18-inch clearance do not describe the incoming light                                            |
 
 Two 13-inch depths joined give a nominal **16-inch-wide × 26-inch-long** wooden
 rectangle. This is not a fresh usable-surface measurement. Four 4-inch rims
 already span 16 inches, so verify rims, rails, and foliage when placing pots.
-The [AW400SE equipment note](../equipment/vivosun-aw400se.md) separates its
+The [AW400 equipment note](../equipment/vivosun-aw400.md) separates its
 manufacturer specifications from the earlier AW200/AW200SE records. Old light
 maps and dimming percentages are not measurements of the new open-end setup.
 
 ## Wooden Tables: Final Four-Column, Six-Row Layout
 
-![Final four-column six-row wooden arrangement with full-grid AW400SE coverage planned, Ming Thing at the open-left corner, and each plant labeled by light need](../../assets/layouts/2026-09-09-placement/wooden-tables.png)
+![Final four-column six-row wooden arrangement with full-grid AW400 coverage planned, Ming Thing at the open-left corner, and each plant labeled by light need](../../assets/layouts/2026-09-09-placement/wooden-tables.png)
 
 Rows run **top/Mylar to bottom/white wall**. Columns run **left/open room end
 to right/glass table**. R3C2 means row 3, column 2; every row below is one
@@ -211,7 +218,7 @@ turn it into a confirmed species-specific requirement.
 
 ## Glass Table: Final Positions, Shapes, and Sizes
 
-![Final six-container glass arrangement with a square wooden box, shared-pot light needs, an AW400SE plan covering the near half, and money tree on the outer side](../../assets/layouts/2026-09-09-placement/glass-table.png)
+![Final six-container glass arrangement with a square wooden box, shared-pot light needs, an AW400 plan covering the near half, and money tree on the outer side](../../assets/layouts/2026-09-09-placement/glass-table.png)
 
 The **table** is 24 inches across, not the largest planter. Shapes come from the
 owner's August 29 and September 1–2 photographs in the
@@ -272,11 +279,13 @@ profiles. Rim widths are not canopy widths; the illustration does not certify fi
 
 ## Sources
 
-- **New equipment:** [VIVOSUN AeroLight SE manual][aw400se] for the exact
-  AW400SE dimensions, rated power, fixed spectrum, and 4 × 4 ft tent guidance;
-  the [equipment note](../equipment/vivosun-aw400se.md) records the order and open-end plan.
+- **New equipment:** [VIVOSUN AeroLight manual][aw400] for the exact
+  AW400 dimensions, rated power, tunable spectrum, and 4 × 4 ft tent guidance;
+  the [selected seller listing][aw400-listing] identifies Samsung 301H EVO
+  diodes. The [equipment note](../equipment/vivosun-aw400.md) records the
+  replacement selection, canceled AW400SE order, and open-end plan.
 
-The AW400SE order, intended coverage, reflector removal, room orientation, and
+The AW400 selection, intended coverage, reflector removal, room orientation, and
 container shapes are owner evidence. The guidance
 distinguishes species evidence, genus comparisons, grower claims, and placement
 inference. Reviewed September 9–10, 2026.
@@ -330,4 +339,5 @@ inference. Reviewed September 9–10, 2026.
 [serpent]: https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/7251/Nyctocereus_serpentinus
 [giant-chin]: https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/12116/Gymnocalycium_saglionis
 [black-widow]: https://mountaincrestgardens.com/gymnocalycium-mihanovichii-f-variegata-black-widow-wfzy/
-[aw400se]: https://vivosun.com/support/guide/aerolightse
+[aw400]: https://vivosun.com/support/guide/aerolight
+[aw400-listing]: https://www.ledgrowlightsdepot.com/products/aerolight-wing-aw400-tunable-spectrum-led-grow-light-400w-with-integrated-circulation-fan-compatible-with-app-4-x-4-ft-coverage

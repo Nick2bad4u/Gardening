@@ -5,7 +5,7 @@ Last updated: 2026-09-10
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
 
-The [incoming AW400SE setup](./equipment/vivosun-aw400se.md) keeps the room
+The [incoming AW400 setup](./equipment/vivosun-aw400.md) keeps the room
 end open and aims for wider light coverage. Arrival, intensity, and clearance
 are unrecorded; the previous AW200 program is not a measured new-light baseline.
 Use the [final placement guide](./layouts/table-placement-research.md) for each
@@ -67,8 +67,8 @@ established, so do not use that claim to decide when to water.
 ## Earlier AW200SE Starting Plan
 
 The dated ramp below records earlier planning and observations. The
-September 9 AW200 correction and September 10 AW400SE order supersede it.
-Use the [incoming-light record](./equipment/vivosun-aw400se.md) for the current
+September 9 AW200 correction and September 10 AW400 selection supersede it.
+Use the [incoming-light record](./equipment/vivosun-aw400.md) for the current
 plan; do not apply the old September percentages or timer to the replacement.
 
 The complete [AW200SE/E25 guide](./equipment/vivosun-aw200se.md) has the
