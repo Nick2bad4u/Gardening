@@ -1,6 +1,14 @@
 # Grow-spot diagrams
 
-Last updated: 2026-09-02
+Last updated: 2026-09-10
+
+The [Table Placement Guide](./table-placement-research.md) reviews all 30 pots
+against their light needs and current container evidence. It uses the corrected
+**four-column by six-row** wooden grid, a **square wooden shared succulent box**,
+and the weak **north-facing window on the right**. It includes separate wooden,
+glass, and combined illustrations, plus the limits of unmeasured container sizes.
+Read it [immediately after the online booklet contents](https://nick2bad4u.github.io/Gardening/#placement)
+or open the [placement illustrations](https://nick2bad4u.github.io/Gardening/layouts/grow-spot-layout.html#researched-placement).
 
 Open [plant-tracker.html](./plant-tracker.html) for the live collection
 dashboard backed by Google Sheets. The finished workbook includes Dashboard,
@@ -60,7 +68,8 @@ tap, or keyboard-focus any plant marker to reveal its common and botanical
 names, inventory record, label status, origin, placement, identification
 status, and field-guide link.
 
-The page reflects the current working arrangement:
+Below the revised placement proposal, the older measured diagrams retain this
+earlier working arrangement for reference:
 
 - the occupied bay is 36 in wide by about 60 in long;
 - the round glass table and two identical wooden tables are all 18 in high;

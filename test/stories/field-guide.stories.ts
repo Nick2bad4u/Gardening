@@ -49,6 +49,43 @@ export const Contents: Story = {
     },
 };
 
+export const PlacementGuide: Story = {
+    play: async ({ canvasElement }) => {
+        const { canvas, document, userEvent } =
+            await websiteCanvas(canvasElement);
+        await userEvent.click(
+            canvas.getByRole("button", { name: "Next Table Placement Guide" })
+        );
+        await waitFor(() =>
+            expect(
+                canvas.getByRole("heading", {
+                    name: "Table Placement Guide",
+                })
+            ).toBeVisible()
+        );
+        await expect(
+            document.querySelectorAll("#placement .placement-figure")
+        ).toHaveLength(3);
+        await expectNoOverflow(document);
+        await userEvent.click(
+            within(
+                document.querySelector<HTMLElement>("#placement") ??
+                    document.body
+            ).getByRole("link", { name: "Ming Thing" })
+        );
+        await waitFor(() =>
+            expect(
+                canvas.getByRole("heading", { name: "Ming Thing" })
+            ).toBeVisible()
+        );
+    },
+};
+
+export const PlacementGuideMobile: Story = {
+    ...PlacementGuide,
+    args: { theme: "dark", width: 390 },
+};
+
 export const SearchAndOpenPlant: Story = {
     play: async ({ canvasElement }) => {
         const { canvas, document, userEvent } =

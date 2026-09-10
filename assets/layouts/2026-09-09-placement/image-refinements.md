@@ -1,8 +1,9 @@
 # Illustration corrections
 
-These follow-up prompts corrected the first generated botanical drawings.
-The final combined image uses the corrected wooden and glass illustrations
-as references. The three checked-in PNG files are the selected final outputs.
+These historical prompts corrected the first generated botanical drawings,
+which still used the superseded six-column orientation. The current PNG files
+use the corrected four-column by six-row arrangement and square wooden box.
+See [the current prompts and geometry](./image-prompts.md) for regeneration.
 
 ## Wooden table correction
 

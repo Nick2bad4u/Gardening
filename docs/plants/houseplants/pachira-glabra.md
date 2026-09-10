@@ -49,13 +49,13 @@ dry-down schedule.
 
 ## Care in this collection
 
-| Topic       | Practical approach                                                                                                                     |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Light       | Bright window light outside the strongest cactus beam. Two or three symptom-free days are encouraging but not a full acclimation test. |
-| Shade cloth | Leave it off while foliage remains normally colored; add it if the window-facing leaves bleach or develop crisp tan patches.           |
-| Water       | Water when the upper portion of the mix has dried, then drain. Do not wait for the entire 6-inch root ball to become cactus-dry.       |
-| Pot         | Keep the current 6-inch pot until roots justify the purchased 8-inch pot; moving up again immediately would retain unnecessary water.  |
-| Temperature | Keep warm and away from cold window glass or drafts; this tropical tree is less cold-tolerant than the cacti.                          |
+| Topic       | Practical approach                                                                                                                                                                          |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Light       | Bright indirect grow light outside the strongest cactus beam; the north-facing window adds little daylight. Two or three symptom-free days are encouraging but not a full acclimation test. |
+| Shade cloth | Leave it off while foliage remains normally colored; add it if the window-facing leaves bleach or develop crisp tan patches.                                                                |
+| Water       | Water when the upper portion of the mix has dried, then drain. Do not wait for the entire 6-inch root ball to become cactus-dry.                                                            |
+| Pot         | Keep the current 6-inch pot until roots justify the purchased 8-inch pot; moving up again immediately would retain unnecessary water.                                                       |
+| Temperature | Keep warm and away from cold window glass or drafts; this tropical tree is less cold-tolerant than the cacti.                                                                               |
 
 The current 6-inch [Amazon Basics pot](https://www.amazon.com/dp/B0F4QBMJMN?th=1)
 is lightweight polypropylene with drainage. The stored

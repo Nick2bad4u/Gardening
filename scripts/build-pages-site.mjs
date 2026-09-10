@@ -320,7 +320,7 @@ async function main() {
             '$<attribute>="./$<relativePath>"'
         )
         .replaceAll(
-            /\b(?<attribute>href|src)="\.\.\/\.\.\/(?<relativePath>assets\/plants\/[^"#?]+)"/gv,
+            /\b(?<attribute>href|src)="\.\.\/\.\.\/(?<relativePath>assets\/(?:layouts|plants)\/[^"#?]+)"/gv,
             '$<attribute>="./$<relativePath>"'
         );
 

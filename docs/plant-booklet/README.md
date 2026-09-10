@@ -1,7 +1,9 @@
 # Browser plant booklet
 
 [`index.html`](./index.html) is the magazine-style browser guide for the full
-collection. It has a cover, searchable contents, keyboard and button
+collection. It has a cover, searchable contents, a
+[Table Placement Guide](https://nick2bad4u.github.io/Gardening/#placement) immediately after the contents,
+keyboard and button
 navigation, a random-profile jump, light and dark themes, print styling, and
 one deep-linkable reading page for each of the 36 plant records. The printed
 contents and drawer use a current-plant thumbnail and show the permanent
@@ -18,6 +20,14 @@ would overstate the evidence.
 Thirty-five profiles are physically documented as present, including the six
 Mountain Crest plants received on 2026-08-28. Rehab-04 is retained as a clearly
 marked historical record.
+
+The placement page is generated from
+[`docs/layouts/table-placement-research.md`](../layouts/table-placement-research.md).
+Edit that document to update the four-column by six-row grid, six glass-table
+containers, current light setup, or cited species reasoning, then run
+`npm run build:booklet`. Its three illustrated layouts open at full size, and
+plant links navigate to the corresponding booklet profiles. The source
+document also remains readable in the repository.
 
 Each plant profile ends with its own newest-first photo history. The latest two
 collection photographs stay visible, while a prominent action opens the

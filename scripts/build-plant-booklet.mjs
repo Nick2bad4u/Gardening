@@ -513,6 +513,10 @@ function externalizeLinks(html) {
     return html
         .replaceAll('href="../../../assets/', 'href="../../assets/')
         .replaceAll(
+            'href="../../layouts/table-placement-research.md"',
+            'href="#placement" data-page-link="placement"'
+        )
+        .replaceAll(
             /<a href="(?<href>https?:\/\/[^"]+)">/gv,
             '<a href="$<href>" target="_blank" rel="noreferrer">'
         );
@@ -905,10 +909,11 @@ function photoPath(photo) {
  * Read each archived reference once, without changing the evidence or manifest.
  *
  * @param {Profile[]} profiles
+ * @param {string} placementHtml
  *
  * @returns {Promise<Map<string, { width: number; height: number }>>}
  */
-async function readReferenceImageDimensions(profiles) {
+async function readReferenceImageDimensions(profiles, placementHtml) {
     const pathsBySource = new Map(
         profiles.flatMap((profile) =>
             profile.allPhotos.map((photo) => [
@@ -917,6 +922,15 @@ async function readReferenceImageDimensions(profiles) {
             ])
         )
     );
+    for (const match of placementHtml.matchAll(
+        /src="(?<source>\.\.\/\.\.\/assets\/layouts\/[^"<>]+)"/gv
+    )) {
+        const source = required(match.groups?.["source"], "placement image");
+        pathsBySource.set(
+            source,
+            path.resolve(path.dirname(outputPath), source)
+        );
+    }
     const entries = await Promise.all(
         [...pathsBySource].map(
             /** @returns {Promise<[string, { width: number; height: number }]>} */
@@ -1419,9 +1433,13 @@ async function main() {
         }
     }
 
-    const dimensionsBySource = await readReferenceImageDimensions(profiles);
+    const placementHtml = await renderPlacementGuide();
+    const dimensionsBySource = await readReferenceImageDimensions(
+        profiles,
+        placementHtml
+    );
     const renderedBooklet = addReferenceImageDimensions(
-        renderBooklet(profiles),
+        renderBooklet(profiles, placementHtml),
         dimensionsBySource
     );
     const renderedPhotoAlbum = addReferenceImageDimensions(
@@ -1471,8 +1489,9 @@ async function main() {
 
 /**
  * @param {Profile[]} profiles
+ * @param {string} placementHtml
  */
-function renderBooklet(profiles) {
+function renderBooklet(profiles, placementHtml) {
     const presentCount = profiles.filter(
         (profile) => !profile.historical && !profile.receiptUnverified
     ).length;
@@ -1559,6 +1578,7 @@ function renderBooklet(profiles) {
     <nav class="drawer-nav" aria-label="Plant profiles">
       <a class="drawer-special" href="#cover" data-page-link="cover"><span>${renderSiteIcon("cactus")} Cover</span><small>Start of the guide</small></a>
       <a class="drawer-special" href="#contents" data-page-link="contents"><span>${renderSiteIcon("field-guide")} Printed contents</span><small>All profiles at a glance</small></a>
+      <a class="drawer-special" href="#placement" data-page-link="placement"><span>${renderSiteIcon("layout")} Table Placement Guide</span><small>Four columns, six rows · All 30 pots</small></a>
       <a class="drawer-special" href="../layouts/plant-tracker.html"><span>${renderSiteIcon("tracker")} Plant tracker</span><small>Live weights, watering, and measurements</small></a>
       <a class="drawer-special" href="../layouts/grow-spot-layout.html"><span>${renderSiteIcon("layout")} Grow-spot layout</span><small>Tables, risers, light, fan, and camera</small></a>
       <a class="drawer-special" href="../layouts/indoor-acclimation-calendar.html"><span>${renderSiteIcon("calendar")} Acclimation calendar</span><small>Dated light and airflow schedule</small></a>
@@ -1577,11 +1597,21 @@ function renderBooklet(profiles) {
         <h1>A field guide to the collection.</h1>
         <span>Each profile combines identity, care, seller and nursery evidence, licensed references, live records, and a newest-first photo history. Two current views stay visible; each complete history opens in its own Gyazo Collection.</span>
       </header>
+      <a class="placement-contents-link" href="#placement" data-page-link="placement">${renderSiteIcon("layout")}<span><strong>Table Placement Guide</strong><small>Next page · Corrected layouts, container sizes, and light needs for all 30 pots</small></span>${renderSiteIcon("arrow-right")}</a>
       <div class="contents-columns">${contents}</div>
       <aside class="contents-note">
         <strong>Three IDs, three jobs</strong>
         <p><strong>P01–P30</strong> opens the live Google Sheets plant record, the short pot label identifies the physical plant or shared planter, and the Inventory ID preserves the repository record. Repeated P19 and P20 values are intentional shared-planter records; Rehab-04 remains as an untracked historical page.</p>
       </aside>
+    </section>
+
+    <section class="book-page placement-page" id="placement" data-page="placement" data-title="Table Placement Guide" data-icon="layout" aria-labelledby="placement-title" hidden>
+      <header class="contents-heading placement-heading">
+        <p>The Fenton Collection · 30 Pots · Placement and Light</p>
+        <h1 id="placement-title">Table Placement Guide</h1>
+        <span>Four columns across, six rows down. A researched arrangement for the wooden tables and round glass table.</span>
+      </header>
+      <div class="placement-copy prose">${placementHtml}</div>
     </section>
 
     ${profilePages}
@@ -2012,6 +2042,35 @@ function renderPhotoCollectionCard(profile) {
         <a class="button primary" href="${escapeHtml(required(collection, "Gyazo collection").url)}" target="_blank" rel="noreferrer">${renderLayoutIcon("photos")} Open Gyazo Collection ${renderLayoutIcon("external", linkEndIconClass)}</a>
       </div>
     </article>`;
+}
+
+/** Render the maintained placement document as a front-of-book reference page. */
+async function renderPlacementGuide() {
+    const markdown = await readFile(
+        path.join(repositoryRoot, "docs/layouts/table-placement-research.md"),
+        "utf8"
+    );
+    const rendered = String(
+        await markdownProcessor.process(markdown.replace(/^# [^\n]+\n+/v, ""))
+    );
+    return externalizeLinks(rendered)
+        .replaceAll(
+            /href="\.\.\/plants\/(?:cacti|houseplants|rehab|starter|succulents)\/(?<slug>[^".\/]+)\.md"/gv,
+            'href="#$<slug>" data-page-link="$<slug>"'
+        )
+        .replaceAll(
+            /href="(?<reference>\.\.[^"]+)"/gv,
+            (/** @type {string} */ _match, /** @type {string} */ reference) => {
+                const repositoryPath = path.posix.normalize(
+                    `docs/layouts/${reference}`
+                );
+                return `href="https://github.com/Nick2bad4u/Gardening/blob/main/${repositoryPath}" target="_blank" rel="noreferrer"`;
+            }
+        )
+        .replaceAll(
+            /<p><img src="(?<source>[^"<>]+)" alt="(?<alt>[^"<>]+)"><\/p>/gv,
+            '<figure class="placement-figure"><a href="$<source>" target="_blank" rel="noreferrer"><img src="$<source>" alt="$<alt>" loading="lazy" decoding="async"></a><figcaption>Illustrated proposal · Select to open full size</figcaption></figure>'
+        );
 }
 
 /**

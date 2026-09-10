@@ -21,7 +21,7 @@ directional controls are custom filled arrows with restrained highlights rather
 than font glyphs. The two additional portraits depict the whole shared planters:
 physical **#1 / P19** combines the variegated column, golden torch, and trailing
 monkey tails in their dark patterned pot; **#2 / P20** combines elephant bush,
-silver spoons, copper spoons, and the front rosette in their rectangular planter.
+silver spoons, copper spoons, and the front rosette in their square wooden planter.
 Their shapes follow the owner's Gyazo collection photographs, without replacing
 the individual component profiles or asserting a new identification.
 

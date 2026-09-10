@@ -1,6 +1,6 @@
 # Setup and equipment
 
-Last updated: 2026-09-09
+Last updated: 2026-09-10
 
 ## Current routine
 
@@ -23,11 +23,17 @@ below belong to the earlier equipment identification and cannot establish
 the installed AW200's PPFD or spectrum. Exact program clock times and current
 spectrum mode remain to be recorded.
 
-The latest bird's-eye orientation is **window right, white wall bottom,
+The latest bird's-eye orientation is **north-facing window right, white wall bottom,
 Diamond Mylar divider top, and an approximately two-foot Mylar foam-board
-return panel left**. See the [researched table placement proposal](./layouts/table-placement-research.md)
-for all 30 pots, the new illustrations, and the remaining table-fit and canopy
-light checks. Proposed plant moves have not been recorded as completed moves.
+return panel left**. The owner reports little useful daylight from this window;
+the AW200 is the main light source for both the wooden and glass tables.
+The corrected wooden grid has **four columns across and six rows down**, with
+higher-light plants in the middle and gentler starts at the edges. The shared
+succulent planter `#2` is a **square wooden box**. See the
+[Table Placement Guide](./layouts/table-placement-research.md) for all 30 pots,
+verified container shapes, recorded sizes, and species-by-species reasoning.
+It also appears [after the booklet contents](https://nick2bad4u.github.io/Gardening/#placement).
+Proposed plant moves have not been recorded as completed moves.
 
 The [earlier AW200SE/E25 guide](./equipment/vivosun-aw200se.md) retains the
 manufacturer PPFD grids, DLI/lux conversions, and earlier placement targets
@@ -78,7 +84,7 @@ high on the room-end divider pole and points slightly downward; exact hub
 heights and plant clearances remain measurements to record. See the
 [paired-fan program and placement rules](./equipment/aw200se-operating-schedule.md#paired-canopy-fan-program).
 
-The July 31 measurement set established a 36 in wide by approximately 60 in
+The earlier July 31 measurement set established a 36 in wide by approximately 60 in
 long bay, and the August expansion adds a second identical wooden table. All
 three surfaces are 18 in high. The 24 in round glass table occupies the window
 end; the two 16 × 13 in wooden tables follow it toward the room. Their
@@ -87,9 +93,10 @@ across the 36 in width. The nominal 24 + 16 + 16 in footprint uses about 56 in
 of the approximately 60 in length, leaving only about 4 in before real gaps
 and leg interference. Treat that as access clearance, not an appliance bay.
 
-The original wooden table keeps A1–D3 in its measured three-column by four-row
-grid. The second wooden table provisionally holds the six August cacti, `#4`
-Kiwi aeonium, and `#3` money tree until their exact heights are recorded. The
+That earlier layout kept A1–D3 in a measured three-column by four-row grid.
+The second wooden table provisionally held the six August cacti, `#4` Kiwi
+aeonium, and `#3` money tree. The corrected September proposal above replaces
+that placement reference with 24 pots on wood and six on glass. The
 [GrowCam and reflector plan](./equipment/growcam-c4-and-reflector.md) uses that
 geometry: line the black divider first, leave the white wall uncovered, and
 mount the camera rigidly on the right wall so it looks diagonally toward the

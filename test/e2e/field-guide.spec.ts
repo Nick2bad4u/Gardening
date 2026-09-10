@@ -59,6 +59,127 @@ function readGuidePortraits() {
 for (const theme of ["dark", "light"] as const) {
     test.describe(`${theme} field guide`, () => {
         test(
+            "opens the placement guide after contents and links to the reviewed plants",
+            { tag: "@layout" },
+            async ({ page }) => {
+                await openGuide(page, theme, "contents");
+                await page.keyboard.press("ArrowRight");
+                await expect.soft(page).toHaveURL(/#placement$/v);
+                const guide = page.getByRole("region", {
+                    exact: true,
+                    name: "Table Placement Guide",
+                });
+                await expect.soft(guide).toBeVisible();
+                await guide
+                    .getByRole("link", { exact: true, name: "Ming Thing" })
+                    .click();
+                await expect
+                    .soft(
+                        page.getByRole("heading", {
+                            exact: true,
+                            name: "Ming Thing",
+                        })
+                    )
+                    .toBeVisible();
+                await page.goBack();
+                await expect.soft(guide).toBeVisible();
+                await page.keyboard.press("ArrowLeft");
+                await expect.soft(page).toHaveURL(/#contents$/v);
+            }
+        );
+
+        test(
+            "keeps the four-column six-row placement and full-size image links within the viewport",
+            { tag: "@layout" },
+            async ({ page }) => {
+                await openGuide(page, theme, "placement");
+                const layout = await page.evaluate(() => {
+                    const grid = [
+                        ...document.querySelectorAll("#placement table"),
+                    ].find(
+                        (table) =>
+                            table.querySelector("th")?.textContent === "Row"
+                    );
+                    if (!grid) throw new Error("Missing placement grid.");
+                    const labels = [
+                        ...grid.querySelectorAll(":scope tbody tr"),
+                    ].map((row) =>
+                        [...row.querySelectorAll("td")]
+                            .slice(1)
+                            .map(
+                                (cell) =>
+                                    cell.textContent.trim().split(" · ", 1)[0]
+                            )
+                    );
+                    const images = [
+                        ...document.querySelectorAll<HTMLImageElement>(
+                            "#placement .placement-figure img"
+                        ),
+                    ];
+                    return {
+                        hasOverflow:
+                            document.documentElement.scrollWidth > innerWidth,
+                        imageCount: images.length,
+                        imagesLinkToPublishedAssets: images.every(
+                            (img) =>
+                                img
+                                    .getAttribute("src")
+                                    ?.startsWith("./assets/layouts/") ===
+                                    true &&
+                                img.closest("a")?.href === img.src &&
+                                img.width > 0 &&
+                                img.height > 0
+                        ),
+                        labels,
+                    };
+                });
+                expect.soft(layout).toStrictEqual({
+                    hasOverflow: false,
+                    imageCount: 3,
+                    imagesLinkToPublishedAssets: true,
+                    labels: [
+                        [
+                            "D1",
+                            "F3",
+                            "F2",
+                            "D3",
+                        ],
+                        [
+                            "A3",
+                            "B2",
+                            "E1",
+                            "A2",
+                        ],
+                        [
+                            "B1",
+                            "C2",
+                            "H1",
+                            "E3",
+                        ],
+                        [
+                            "E2",
+                            "G2",
+                            "H2",
+                            "F1",
+                        ],
+                        [
+                            "D2",
+                            "H3",
+                            "B3",
+                            "C1",
+                        ],
+                        [
+                            "A1",
+                            "C3",
+                            "G3",
+                            "G1",
+                        ],
+                    ],
+                });
+            }
+        );
+
+        test(
             "keeps contents cards aligned when plant names wrap",
             { tag: "@layout" },
             async ({ page }) => {

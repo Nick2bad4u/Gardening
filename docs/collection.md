@@ -117,7 +117,11 @@ evidence; the working identification is still _Cereus forbesii_ 'Ming Thing'.
 
 ## Mixed succulent planter
 
-These four plants share the rectangular planter. The species-level IDs are
+These four plants share a **square wooden box** with weathered gray-brown sides,
+confirmed by the owner and collection photographs. Its outside side length and
+height remain unmeasured. The [Table Placement Guide](./layouts/table-placement-research.md)
+shows its proposed position on the 24-inch round glass table.
+The species-level IDs are
 strong working matches, but cultivar names should stay provisional without
 labels or flowers. The complete planter was acquired from Gerych's Greenhouse
 on 2026-07-27.

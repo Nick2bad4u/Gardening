@@ -3,6 +3,7 @@
 - Inventory: Succulent-03 — probable _Kalanchoe bracteata_
 - Label ID: `#2` — shared succulent planter; formerly `C4-D4`
 - Tracker ID: `P20`
+- Current pot: **square wooden shared planter; outside dimensions unmeasured**
 - Visual description: A branching succulent with thick spoon-shaped leaves muted by a dense silver felt, making the foliage look almost white beside the greener plants in the shared planter.
 - Interesting fact: The silver is created by reflective leaf hairs rather than pigment alone; that felt reduces the intensity of sunlight reaching the living leaf surface beneath it.
 - Acquired from: Gerych's Greenhouse, as part of the mixed succulent planter

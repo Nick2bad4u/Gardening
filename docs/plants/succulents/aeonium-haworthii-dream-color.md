@@ -34,12 +34,12 @@ a desert cactus.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                 |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| Grow-light position | Outer or room-side portion of the second wooden table; stronger than dim houseplant light but below cactus center. |
-| Water               | Let much of the pot dry, then water and drain. Do not force it through cactus-level drought during active growth.  |
-| Pot and mix         | Keep the current 5-inch pot while drainage and drying are satisfactory.                                            |
-| Seasonal behavior   | Aeoniums often slow in summer heat and grow more actively in cooler bright conditions.                             |
+| Topic               | Practical approach                                                                                                                                                                                            |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | Bright outer grow-light zone; the [revised placement guide](../../layouts/table-placement-research.md) proposes a glass-table edge. Keep enough light for compact rosettes while avoiding an abrupt increase. |
+| Water               | Let much of the pot dry, then water and drain. Do not force it through cactus-level drought during active growth.                                                                                             |
+| Pot and mix         | Keep the current 5-inch pot while drainage and drying are satisfactory.                                                                                                                                       |
+| Seasonal behavior   | Aeoniums often slow in summer heat and grow more actively in cooler bright conditions.                                                                                                                        |
 
 ## Rotation, propagation, and watch points
 

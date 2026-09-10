@@ -388,7 +388,9 @@ async function main() {
             "Generated photo UI must not contain an expandable archive or history-summary icon."
         );
         assert.ok(
-            !/assets[\/\\]collection-photos[\/\\]/iv.test(generatedHtml),
+            !/assets[\/\\]collection-photos[\/\\](?!photo-manifest\.json(?:["#?]|$))/iv.test(
+                generatedHtml
+            ),
             "Generated HTML must not reference assets/collection-photos binaries."
         );
     }
@@ -1812,6 +1814,26 @@ function validateProfileInventory(profiles, fieldGuideProfiles) {
  * @param {string[]} profileSlugs
  */
 function validateProfilePages(html, profileSlugs) {
+    const readingOrder = html
+        .matchAll(
+            /<(?:article|section)\b[^>]+data-page="(?<slug>[^"]+)"[^>]*>/gv
+        )
+        .map((match) => required(match.groups?.["slug"], captureContext))
+        .toArray();
+    assert.deepEqual(
+        readingOrder.slice(0, 3),
+        [
+            "cover",
+            "contents",
+            "placement",
+        ],
+        "The placement guide must follow the contents before the plant profiles."
+    );
+    assert.equal(
+        readingOrder.filter((slug) => slug === "placement").length,
+        1,
+        "The booklet must contain exactly one placement guide."
+    );
     const pageSlugs = html
         .matchAll(/<article\b[^>]*>/gv)
         .map((match) => required(match[0], captureContext))
