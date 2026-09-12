@@ -208,7 +208,7 @@ describe("dry-down formulas and workbook installation", () => {
         const plants = [{ id: "P22" }, { id: "P19" }];
         const sheets = new Map(
             ["Baselines", "Dashboard"].map((name) => {
-                const firstColumn = name === "Baselines" ? 35 : 22;
+                const firstColumn = name === "Baselines" ? 35 : 23;
                 let columns =
                     existingColumns === "first"
                         ? firstColumn
@@ -376,7 +376,7 @@ describe("dry-down formulas and workbook installation", () => {
                 structuredClone(context.installWateringRecommendations())
             ).toStrictEqual({
                 historyChanged: false,
-                loggerVersion: "5.20.2",
+                loggerVersion: "5.21.1",
                 plants: 2,
             });
 
@@ -407,7 +407,7 @@ describe("dry-down formulas and workbook installation", () => {
                     "Dashboard",
                     [
                         6,
-                        22,
+                        23,
                         1,
                         2,
                     ],
@@ -416,7 +416,7 @@ describe("dry-down formulas and workbook installation", () => {
                     "Dashboard",
                     [
                         7,
-                        22,
+                        23,
                         2,
                         2,
                     ],
@@ -455,7 +455,7 @@ describe("dry-down formulas and workbook installation", () => {
             });
 
             expect(() => context.installWateringRecommendations()).toThrow(
-                "Unexpected Dashboard column 22"
+                "Unexpected Dashboard column 23"
             );
             expect(structuredClone(calls)).toStrictEqual([]);
         }
@@ -523,7 +523,7 @@ describe("dry-down formulas and workbook installation", () => {
         expect(context.installDryDownLearning()).toMatchObject({
             baselineColumns: 36,
             historyChanged: false,
-            loggerVersion: "5.20.2",
+            loggerVersion: "5.21.1",
             plants: 1,
         });
         expect(

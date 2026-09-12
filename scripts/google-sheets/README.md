@@ -12,7 +12,8 @@ all read from that shared history.
 
 The [Insights chart guide](INSIGHTS-CHARTS.md) covers the dry-down explorer at
 **Insights A226**, its plant selector in **B228**, and the collection comparisons
-for retained water, measured loss, forecast windows, and model evidence.
+for retained water, measured loss, forecast windows, and model evidence. The
+**Current weight difference** comparison starts at **Insights A586**.
 The **Plant colors** sheet at the end of the workbook maps all 30 plants to
 consistent chart colors, with full names, swatches, and links to their charts.
 Comparison charts keep P01–P30 order so colors stay attached to the same plant;
@@ -31,7 +32,99 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-### Verified 5.20.2 baseline
+### Days Since Water Headers (5.21.1)
+
+The Dashboard's existing **E6:E36** count is labeled **Days since water**.
+It continues to read **Plant tracker E2:E31**, which counts calendar days since
+the latest recorded, non-removed Water event in the workbook's time zone.
+Watering today displays **0**; no watering record stays blank. This is elapsed
+time, not a watering interval or a readiness instruction.
+
+All **P01–P30 Care Forecast** headers put the count in **E6:F6**, immediately
+below Last watered. Predicted dry date moves to **E7:F7**, Forecast confidence
+to **E8:F8**, Condition to **E9:F9**, and Medium to **E10:F10**. The six-row
+header retains its gold styling, numeric day count, date formatting, and
+existing history boundary at row 11. No History or AppSheet schema changes
+are required. The maintained page builder reproduces this layout on refresh.
+
+Apply only the Dashboard label and the existing **D6:F10** forecast cells on
+the plant tabs, after a native backup and rehearsal. Preserve the surrounding
+headers and charts; do not run a full workbook refresh for this change.
+
+The native workbook update was verified on September 11, 2026, after creating
+**Garden Plant Tracker — before days since water — 2026-09-11** in **My Drive →
+Archive → Garden Plant Tracker Backups** and rehearsing the changes on a copy.
+All 30 plant counts match the tracker; the rehearsal also verified numeric zero
+and a blank value when no watering date exists. Exact before/after comparisons
+preserved **809 History observations**, **809 unique Observation IDs**, **742
+distinct Request IDs**, all **110 charts**, and the checked formulas and
+validations in Baselines, Dry-down models, and AppSheet staging. Integrity
+reports **0 formula errors**. No synthetic observation was submitted.
+
+### Verified 5.21.0 baseline
+
+On September 10, 2026, the original workbook received the current-weight
+comparison and all 30 formatted plant headers. The logger runs **5.21.0** on
+immutable Apps Script **version 83**, preserving the existing deployment and
+phone URL. All three immutable files match the local repository source, and
+the authenticated page reports **Connected · logger 5.21.0**. Its version-83
+`doGet` and `getWebAppBootstrap` executions completed successfully.
+Exactly one five-minute `processQueuedAppSheetEntries` trigger remains. Its
+September 10, **8:39:02 p.m. EDT** execution completed successfully on the
+updated Head source.
+
+The native backup **Garden Plant Tracker — before current weight difference —
+2026-09-10** is stored in **My Drive → Archive → Garden Plant Tracker Backups**.
+The migration was rehearsed on a native copy before production. Exact live
+before/after comparisons preserved all **779 History observations**, **779 unique
+Observation IDs**, and **712 distinct Request IDs**, plus the entered values,
+formulas, and validations in Baselines, Dry-down models, and AppSheet staging.
+All 109 original chart IDs and positions remain; the new comparison brings the
+workbook to **110 charts**, including **20 in Insights**. All 30 differences
+agree across Dashboard, Daily care, and the chart helper. Integrity reports
+**0 formula errors**. No synthetic observation was submitted.
+
+Local validation passed **726 logger tests**, coverage (**99.86% lines, 99%
+branches, 100% functions**), strict type checks, source-contract checks, lint,
+formatting, documentation checks, and secret scans. Native browser review
+checked the chart labels, Dashboard column, selected-plant value, and plant
+headers. At that verification, the repository changes were still local and
+uncommitted; the record describes the live workbook and Apps Script deployment
+at that point.
+
+### Current weight difference and plant headers
+
+**Current weight difference (g)** means **latest measured whole-pot weight minus
+the last completed dry reference for the current pot setup**. For example,
+364 g latest minus 349 g dry displays **+15.0 g**. Negative differences remain
+visible; zero displays **0.0**. Missing or invalid readings and dry references
+stay blank. This differs from the change since the preceding reading already
+shown in logger chart tooltips. It is a weight comparison, not a soil-moisture
+reading or an instruction to water.
+
+- **Dashboard I6:I36** follows Latest weight and Dry weight. The table now spans
+  **A:Y**. Predicted dry date moves to **J**, recommended water date to **W**,
+  watering guidance to **X**, and Weight measurements to **Y**.
+- **P01–P30 headers** show the signed difference in **B8:C8**, Last weighed in
+  **B9:C9**, and Pot / setup in **B10:C10**. History still begins at row 11.
+  Green title bars and blue Weight, gold Care Forecast, and purple Data Quality
+  sections distinguish labels and values; the scientific name remains italic.
+- **Daily care F40:F70** uses the same label and signed gram formatting.
+- **Insights N228:R228** shows the selected plant's difference. The new
+  comparison at **A586** shows the collection in fixed P01–P30 order with plant
+  colors and numeric labels, retaining zero, negative, and missing values.
+
+[`weight-difference.mjs`](weight-difference.mjs) builds the scoped native
+requests from a fresh workbook snapshot. It rejects changed headers, occupied
+helper cells, changed plant order, and repeat installation. Rehearse on a
+native copy after making a Drive backup. Apply the data and formatting requests
+first, read the calculated values, then apply the separate `addChart` request;
+Sheets can discard series formatting before formula sources finish calculating.
+The migration preserves the KPI positions, existing charts, canonical History,
+and AppSheet staging schemas. The maintained logger source also includes the
+column and header formatting for future deliberate workbook refreshes.
+
+### Previous 5.20.2 baseline
 
 As of September 9, 2026, production runs **logger 5.20.2** on immutable Apps
 Script **version 82**, from source commit `cff580b`. The existing deployment
@@ -435,8 +528,8 @@ totals and current-cycle figures without reloading the page or clearing a new
 entry already being typed.
 
 `installDashboardWeightCounts()` adds **Weight measurements** at
-`Dashboard!X6:X36`. Its count uses the same measured-weight criteria as the
-mobile summary. It preserves the existing A:W columns and all canonical and
+`Dashboard!Y6:Y36`. Its count uses the same measured-weight criteria as the
+mobile summary. It preserves the existing A:X columns and all canonical and
 staging schemas; `refreshGardenWorkbook()` also includes the new column when
 the complete generated Dashboard is deliberately rebuilt. Dashboard is not an
 AppSheet source table, so this addition requires no AppSheet regeneration.
@@ -574,7 +667,7 @@ whole-pot mass, without converting its slope into a watering instruction.
 
 ### Daily care and Integrity
 
-`installDailyCareDashboard()` preserves Dashboard's 24-column table and freezes
+`installDailyCareDashboard()` preserves Dashboard's 25-column table and freezes
 A:C (Page, Plant ID, and current label). It splits only the title and KPI merges
 that cross that freeze boundary. Dashboard U2:X3 gains two linked indicators:
 **Data issues** counts failed Integrity checks; **Observations still needed**
@@ -1375,7 +1468,7 @@ The verified live derived schema is:
 | Sheet                    | Recommended water date | Watering guidance | Total derived fields |
 | ------------------------ | ---------------------- | ----------------- | -------------------- |
 | Baselines                | AI                     | AJ                | 36                   |
-| Dashboard                | V                      | W                 | 24                   |
+| Dashboard                | W                      | X                 | 25                   |
 | Dry-down models (hidden) | O                      | P                 | 16                   |
 
 After a native Drive backup and fresh preflight, `installWateringRecommendations()`

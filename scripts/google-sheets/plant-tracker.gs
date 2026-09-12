@@ -14,7 +14,7 @@
    refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30 */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.20.2",
+    version: "5.21.1",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -613,10 +613,11 @@ const DASHBOARD_VIEW_HEADERS = Object.freeze([
     "Plant ID",
     "Plant / current label",
     "Last watered",
-    "Days since",
+    "Days since water",
     "Latest weight (lb)",
     "Latest weight (g)",
     "Dry weight (g)",
+    "Current weight difference (g)",
     "Predicted dry date",
     "Forecast",
     "Height (cm)",
@@ -634,6 +635,97 @@ const DASHBOARD_VIEW_HEADERS = Object.freeze([
     "Watering guidance",
     "Weight measurements",
 ]);
+
+const WEIGHT_DIFFERENCE_NOTE =
+    "Latest measured whole-pot weight minus the completed-cycle dry reference for the current pot setup. Positive = above the reference; negative = below it. Blank means a reading or dry reference is unavailable. This is not a soil-moisture measurement or an automatic watering instruction.";
+
+const PLANT_HEADER_SECTIONS = Object.freeze([
+    {
+        column: 1,
+        width: 3,
+        title: "⚖ Current Weight",
+        dark: "#174a68",
+        light: "#edf5fb",
+        label: "#dcecf7",
+    },
+    {
+        column: 4,
+        width: 3,
+        title: "💧 Care Forecast",
+        dark: "#725316",
+        light: "#fff9eb",
+        label: "#f6eacb",
+    },
+    {
+        column: 7,
+        width: 4,
+        title: "🔎 Data Quality",
+        dark: "#574372",
+        light: "#f5f0fa",
+        label: "#e9def4",
+    },
+]);
+
+/** @param {string} latest @param {string} dry @returns {string} */
+function currentWeightDifferenceFormula_(latest, dry) {
+    return `=IF(AND(ISNUMBER(${latest}),${latest}>0,ISNUMBER(${dry}),${dry}>0),${latest}-${dry},"")`;
+}
+
+/** Style only the plant-page title, navigation, and six metric rows. */
+/** @param {GardenSheet} sheet @returns {void} */
+function formatPlantPageHeader_(sheet) {
+    sheet.getRange(1, 1, 10, 10).setVerticalAlignment("middle").setWrap(true);
+    sheet
+        .getRange(1, 1, 1, 10)
+        .setBackground("#173c2b")
+        .setFontColor("#ffffff")
+        .setFontSize(18)
+        .setFontWeight("bold");
+    sheet
+        .getRange(2, 1, 1, 10)
+        .setBackground("#e8f1ea")
+        .setFontColor("#24533f")
+        .setFontStyle("italic")
+        .setFontSize(12);
+    sheet
+        .getRange(3, 1, 1, 10)
+        .setBackground("#f6f7f3")
+        .setFontColor("#24533f")
+        .setFontWeight("bold");
+    PLANT_HEADER_SECTIONS.forEach(
+        ({ column, width, title, dark, light, label }) => {
+            sheet
+                .getRange(4, column, 1, width)
+                .setValue(title)
+                .setBackground(dark)
+                .setFontColor("#ffffff")
+                .setFontWeight("bold")
+                .setFontSize(12);
+            sheet
+                .getRange(5, column, 6, width)
+                .setBackground(light)
+                .setFontColor(dark)
+                .setFontSize(11);
+            sheet
+                .getRange(5, column, 6, 1)
+                .setBackground(label)
+                .setFontWeight("bold")
+                .setFontSize(10);
+        }
+    );
+    sheet.getRange(5, 2, 4, 2).setFontWeight("bold").setFontSize(13);
+    sheet
+        .getRange(8, 1, 1, 3)
+        .setBackground("#d4e9f7")
+        .setFontColor("#174a68")
+        .setNote(WEIGHT_DIFFERENCE_NOTE);
+    sheet.getRange(8, 2, 1, 2).setNumberFormat("+0.0;-0.0;0.0");
+    sheet.setRowHeight(1, 44);
+    sheet.setRowHeight(2, 30);
+    sheet.setRowHeights(3, 2, 32);
+    sheet.setRowHeights(5, 6, 44);
+    sheet.autoResizeRows(5, 6);
+}
 
 const WORKBOOK_HELPER_SHEETS = Object.freeze([
     "Integrity",
@@ -3872,7 +3964,7 @@ function installWateringRecommendations() {
     /** @type {[string, number, number, string][]} */
     const targets = [
         [GARDEN_LOGGER.baselinesSheet, 1, 35, "A"],
-        ["Dashboard", 6, 22, "B"],
+        ["Dashboard", 6, 23, "B"],
     ];
     // Preflight both destinations before changing either one.
     targets.forEach(([name, headerRow, column]) => {
@@ -4161,7 +4253,7 @@ function dashboardWeightCountFormula_(row) {
 }
 
 /**
- * Install only Dashboard X6:X36; preserve every other cell and sheet.
+ * Install only Dashboard Y6:Y36; preserve every other cell and sheet.
  * @returns {{version: string, range: string, plants: number}}
  */
 function installDashboardWeightCounts() {
@@ -4170,11 +4262,11 @@ function installDashboardWeightCounts() {
     if (sheet.getMaxRows() < 36) {
         throw new Error("Dashboard needs existing plant rows through row 36.");
     }
-    if (sheet.getMaxColumns() >= 24) {
-        const destination = sheet.getRange(6, 24, 31, 1);
+    if (sheet.getMaxColumns() >= 25) {
+        const destination = sheet.getRange(6, 25, 31, 1);
         if (destination.isPartOfMerge()) {
             throw new Error(
-                "Dashboard X6:X36 contains merged cells; review before installing."
+                "Dashboard Y6:Y36 contains merged cells; review before installing."
             );
         }
         /** @type {GardenHistoryRow[]} */
@@ -4189,20 +4281,20 @@ function installDashboardWeightCounts() {
                 ))
         ) {
             throw new Error(
-                "Unexpected Dashboard column X; review before installing."
+                "Unexpected Dashboard column Y; review before installing."
             );
         }
     }
-    ensureSheetColumnCapacity_(sheet, 24);
+    ensureSheetColumnCapacity_(sheet, 25);
     sheet
-        .getRange(6, 24)
+        .getRange(6, 25)
         .setValue("Weight measurements")
         .setBackground("#24533f")
         .setFontColor("#ffffff")
         .setFontWeight("bold")
         .setWrap(true);
     sheet
-        .getRange(7, 24, 30, 1)
+        .getRange(7, 25, 30, 1)
         .setValues(
             Array.from({ length: 30 }, (_, index) => [
                 dashboardWeightCountFormula_(index + 7),
@@ -4211,7 +4303,7 @@ function installDashboardWeightCounts() {
         .setNumberFormat("0");
     return {
         version: GARDEN_LOGGER.version,
-        range: "Dashboard!X6:X36",
+        range: "Dashboard!Y6:Y36",
         plants: 30,
     };
 }
@@ -4520,7 +4612,7 @@ function dailyCareChecksAvailableFormula_(range) {
 /** @param {GardenSheet} dashboard @returns {GardenRange[]} */
 function dailyCareDashboardMerges_(dashboard) {
     return dashboard
-        .getRange(1, 1, dashboard.getMaxRows(), 24)
+        .getRange(1, 1, dashboard.getMaxRows(), DASHBOARD_VIEW_HEADERS.length)
         .getMergedRanges()
         .filter((range) => {
             if (range.getColumn() > 3 || range.getLastColumn() <= 3)
@@ -4710,7 +4802,7 @@ function installDailyCareDashboard() {
     sheet
         .getRange(5, 1)
         .setFormula(
-            `=HYPERLINK("#gid=${source.dashboard.getSheetId()}&range=A6:X6","Dashboard · all statistics")`
+            `=HYPERLINK("#gid=${source.dashboard.getSheetId()}&range=A6:Y6","Dashboard · all statistics")`
         );
     sheet
         .getRange(5, 4)
@@ -4726,11 +4818,12 @@ function installDailyCareDashboard() {
         "Plant / current label",
         "Latest measured weight (g)",
         "Last weighed",
-        "Difference vs last completed dry (g)",
+        "Current weight difference (g)",
         "Reweigh window",
         "Follow-up",
     ];
     sheet.getRange(detailHeader, 1, 1, 8).setValues([headers]);
+    sheet.getRange(detailHeader, 6).setNote(WEIGHT_DIFFERENCE_NOTE);
     sheet
         .getRange(detailStart, 1, source.plants.length, 8)
         .setValues(
@@ -4990,13 +5083,14 @@ function dashboardViewRow_(spreadsheet, plant, index) {
         `=Baselines!D${baselineRow}`,
         `=Baselines!C${baselineRow}`,
         `=Baselines!W${baselineRow}`,
+        currentWeightDifferenceFormula_(`G${dashboardRow}`, `H${dashboardRow}`),
         `=Baselines!AF${baselineRow}`,
         `=Baselines!AG${baselineRow}`,
         `='Plant tracker'!I${trackerRow}`,
         `='Plant tracker'!K${trackerRow}`,
         `=COUNTIFS(History!$B$2:$B$5000,$B${dashboardRow},History!$C$2:$C$5000,"Water",History!$AJ$2:$AJ$5000,"<>Removed")`,
         `=COUNTIFS(History!$B$2:$B$5000,$B${dashboardRow},History!$C$2:$C$5000,"Measure",History!$AJ$2:$AJ$5000,"<>Removed")`,
-        `=IF(M${dashboardRow}<2,"—",(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$B${dashboardRow},History!$C$2:$C$5000="Water",History!$AJ$2:$AJ$5000<>"Removed"))-MIN(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$B${dashboardRow},History!$C$2:$C$5000="Water",History!$AJ$2:$AJ$5000<>"Removed")))/(M${dashboardRow}-1))`,
+        `=IF(N${dashboardRow}<2,"—",(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$B${dashboardRow},History!$C$2:$C$5000="Water",History!$AJ$2:$AJ$5000<>"Removed"))-MIN(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$B${dashboardRow},History!$C$2:$C$5000="Water",History!$AJ$2:$AJ$5000<>"Removed")))/(N${dashboardRow}-1))`,
         `=Baselines!H${baselineRow}`,
         `=Baselines!I${baselineRow}`,
         `=Baselines!J${baselineRow}`,
@@ -5114,21 +5208,32 @@ function refreshDashboardView_(spreadsheet, plants) {
     sheet.getRange(7, 4, plants.length, 1).setNumberFormat("mmm d, yyyy");
     sheet.getRange(7, 6, plants.length, 1).setNumberFormat("0.000");
     sheet.getRange(7, 7, plants.length, 2).setNumberFormat("0.0");
-    sheet.getRange(7, 9, plants.length, 1).setNumberFormat("mmm d, yyyy");
-    sheet.getRange(7, 11, plants.length, 2).setNumberFormat("0.0#");
-    sheet.getRange(7, 13, plants.length, 2).setNumberFormat("0");
-    sheet.getRange(7, 24, plants.length, 1).setNumberFormat("0");
-    sheet.getRange(7, 15, plants.length, 1).setNumberFormat('0.0 "days"');
+    sheet
+        .getRange(6, 9)
+        .setBackground("#174a68")
+        .setNote(WEIGHT_DIFFERENCE_NOTE);
+    sheet
+        .getRange(7, 9, plants.length, 1)
+        .setNumberFormat("+0.0;-0.0;0.0")
+        .setBackground("#edf5fb")
+        .setFontColor("#174a68")
+        .setFontWeight("bold");
+    sheet.getRange(7, 10, plants.length, 1).setNumberFormat("mmm d, yyyy");
+    sheet.getRange(7, 12, plants.length, 2).setNumberFormat("0.0#");
+    sheet.getRange(7, 14, plants.length, 2).setNumberFormat("0");
+    sheet.getRange(7, 25, plants.length, 1).setNumberFormat("0");
+    sheet.getRange(7, 16, plants.length, 1).setNumberFormat('0.0 "days"');
     sheet.setFrozenRows(6);
     sheet.setFrozenColumns(3);
     sheet.setHiddenGridlines(true);
     sheet.setColumnWidths(1, DASHBOARD_VIEW_HEADERS.length, 115);
     sheet.setColumnWidth(3, 260);
-    sheet.setColumnWidth(10, 200);
-    sheet.setColumnWidth(18, 180);
-    sheet.setColumnWidth(20, 210);
-    sheet.setColumnWidth(21, 240);
-    formatWateringRecommendationColumns_(sheet, 6, 22, plants.length);
+    sheet.setColumnWidth(9, 165);
+    sheet.setColumnWidth(11, 200);
+    sheet.setColumnWidth(19, 180);
+    sheet.setColumnWidth(21, 210);
+    sheet.setColumnWidth(22, 240);
+    formatWateringRecommendationColumns_(sheet, 6, 23, plants.length);
 }
 
 /** @param {string} plantId @returns {string} */
@@ -5250,34 +5355,42 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
         [
             "Latest weight (g)",
             `=Baselines!C${baselineRow}`,
-            "Predicted dry date",
-            `=Baselines!AF${baselineRow}`,
+            "Days since water",
+            `=IF('Plant tracker'!E${plant.trackerRow}="","",'Plant tracker'!E${plant.trackerRow})`,
             "Trend readiness",
             `=Baselines!I${baselineRow}`,
         ],
         [
             "Dry weight (g)",
             `=Baselines!W${baselineRow}`,
-            "Forecast confidence",
-            `=Baselines!AG${baselineRow}`,
+            "Predicted dry date",
+            `=Baselines!AF${baselineRow}`,
             "Trend review",
             `=Baselines!J${baselineRow}`,
+        ],
+        [
+            "Current weight difference (g)",
+            currentWeightDifferenceFormula_("B6", "B7"),
+            "Forecast confidence",
+            `=Baselines!AG${baselineRow}`,
+            "Remeasure",
+            `=Baselines!K${baselineRow}`,
         ],
         [
             "Last weighed",
             `=Baselines!E${baselineRow}`,
             "Condition",
             `=Baselines!P${baselineRow}`,
-            "Remeasure",
-            `=Baselines!K${baselineRow}`,
+            "Next dry check",
+            `=Baselines!L${baselineRow}`,
         ],
         [
             "Pot / setup",
             `=Baselines!F${baselineRow}&" · setup "&Baselines!T${baselineRow}`,
             "Medium",
             `=Baselines!R${baselineRow}`,
-            "Next dry check",
-            `=Baselines!L${baselineRow}`,
+            "",
+            "",
         ],
     ];
     metricRows.forEach((values, metricIndex) => {
@@ -5303,8 +5416,10 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
     });
     sheet.getRange(5, 2, 1, 2).setNumberFormat("0.000");
     sheet.getRange(6, 2, 2, 2).setNumberFormat("0.0");
-    sheet.getRange(8, 2, 1, 2).setNumberFormat("mmm d, yyyy h:mm am/pm");
-    sheet.getRange(5, 5, 2, 2).setNumberFormat("mmm d, yyyy");
+    sheet.getRange(9, 2, 1, 2).setNumberFormat("mmm d, yyyy h:mm am/pm");
+    sheet.getRange(5, 5, 1, 2).setNumberFormat("mmm d, yyyy");
+    sheet.getRange(6, 5, 1, 2).setNumberFormat("0").setFontWeight("bold");
+    sheet.getRange(7, 5, 1, 2).setNumberFormat("mmm d, yyyy");
     sheet.getRange(11, 1, 1, 10).merge();
     sheet
         .getRange(11, 1)
@@ -5349,7 +5464,7 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
     sheet.setColumnWidth(9, 300);
     sheet.setColumnWidth(10, 190);
     sheet.setColumnWidth(11, 120);
-    sheet.setRowHeights(5, 5, 38);
+    formatPlantPageHeader_(sheet);
     sheet.setRowHeight(12, 40);
     /** @type {GoogleAppsScript.Spreadsheet.ConditionalFormatRule[]} */
     const rules = [];

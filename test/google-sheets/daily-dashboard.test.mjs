@@ -108,7 +108,9 @@ function fixture(
         .api.getRange(1, 1, 1, 16)
         .setValues([headers.model]);
     const dashboard = sheet("Dashboard");
-    dashboard.api.getRange(6, 1, 1, 24).setValues([headers.dashboard]);
+    dashboard.api
+        .getRange(6, 1, 1, headers.dashboard.length)
+        .setValues([headers.dashboard]);
     dashboard.api.getRange(1, 1).setValue("Garden Dashboard · existing title");
     dashboard.api.getRange(1, 1, 1, 24).merge();
     dashboard.api.getRange(2, 3, 1, 2).merge().setValue("Logs this month");

@@ -1,14 +1,16 @@
 # Insights dry-down charts
 
-The native **Insights** sheet has 19 charts. Its dry-down explorer starts at
+The native **Insights** sheet has 20 charts. Its dry-down explorer starts at
 **A226**; choose **P01–P30 in B228** in the current native layout. The selected
 plant's care guidance, predicted dry-check date, and earliest/latest window
-appear above the graphs.
+appear above the graphs. The selected plant's **Current weight difference (g)**
+appears in **N228:R228**, and its collection comparison starts at **A586**.
 
 | View                              | What it helps answer                                                              |
 | --------------------------------- | --------------------------------------------------------------------------------- |
 | Current cycle: measured weights   | How has this pot's weight changed since its latest Water or Repot?                |
 | Current cycle: interval loss      | Is measured loss slowing down, or did the pot gain weight?                        |
+| Current weight difference         | How many grams above or below its completed dry reference is each pot now?        |
 | Relative water remaining          | Where is the latest weight between the wet and completed-dry references?          |
 | Mass lost since wet               | How many grams below its current wet reference is this pot?                       |
 | Predicted dry-check timing        | Which supported forecasts have earlier inspection windows?                        |
@@ -20,7 +22,7 @@ appear above the graphs.
 | Forecast basis                    | How much of the collection has current-cycle, historical, or incomplete evidence? |
 
 The existing drying-rate chart reads **Baselines AE** and is labeled as a modeled
-rate. All 19 Insights charts share Roboto text, 18-point green titles, and
+rate. All 20 Insights charts share Roboto text, 18-point green titles, and
 11-point subtitles and axis titles. Each plant has a permanent, distinct color
 defined in [`plant-colors.json`](plant-colors.json). The visible **Plant colors**
 sheet lists all 30 IDs, full plant names, color names, hex values, swatches, and
@@ -28,7 +30,7 @@ links to their individual charts. These are arbitrary identity colors, unrelated
 to the appearance of the plants. Keep the names and IDs alongside color because
 similar hues can still be difficult to distinguish.
 
-All 90 charts on the individual plant sheets use that plant's color. The 14
+All 90 charts on the individual plant sheets use that plant's color. The 15
 plant comparison charts use the same colors for each plant's bars or points, in
 consistent P01–P30 order. This fixed order prevents point colors from moving to
 another plant when a sorted source recalculates. Source values still update
@@ -53,6 +55,11 @@ other Insights charts. Individual plant charts retain their existing layout.
 - Relative water remaining is `(latest − dry) / (wet − dry)`. It is a whole-pot
   weight comparison, not a soil-moisture sensor reading. Values below 0% or above
   100% remain visible so questionable references can be reviewed.
+- Current weight difference is `latest − dry`, in grams, using the current pot
+  setup's completed dry reference. Positive means above that reference; negative
+  means below it. The chart retains numeric zero and leaves missing readings or
+  references blank. Numeric labels make the small pots' differences readable
+  alongside the larger shared planters. This does not rank watering urgency.
 - Mass loss is a weight difference, not a measured watering dose. Interval rates
   use the elapsed time between consecutive scale readings; a negative rate means
   the pot gained weight. They are descriptive, not a constant drying forecast.
@@ -98,10 +105,18 @@ here. Charts intentionally use `SHOW_ALL` so the hidden helper remains usable.
 Run the migration regression tests with:
 
 ```sh
-npx vitest run --project=unit test/google-sheets/insights-charts.test.mjs test/google-sheets/plant-chart-colors.test.mjs
+npx vitest run --project=unit test/google-sheets/insights-charts.test.mjs test/google-sheets/plant-chart-colors.test.mjs test/google-sheets/weight-difference.test.mjs
 npm run typecheck
 npm run lint
 ```
+
+The current-weight comparison is maintained separately in
+[`weight-difference.mjs`](weight-difference.mjs). Its helper uses
+**Dry-down insights W1:X31**, looking up **Dashboard I7:I36** by permanent plant
+ID. Keep that helper in P01–P30 order so its point colors retain their meaning.
+The same migration adds the Dashboard column and formats the plant headers;
+follow its [workbook runbook](README.md#current-weight-difference-and-plant-headers)
+instead of replaying the original Insights or color migrations.
 
 The September 7 rehearsal checked every helper formula for native calculation
 errors, compared P01's nine plotted readings with History, and exercised P09,

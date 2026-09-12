@@ -36,7 +36,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.20.2");
+assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.21.1");
 for (const name of [
     "getWebCorrectionEntry",
     "previewWebObservationCorrection",
@@ -415,7 +415,8 @@ assert.match(html, /plant\.recommendedWaterDate/v);
 assert.match(html, /plant\.wateringGuidance/v);
 assert.match(source, /function installWateringRecommendations\(\)/v);
 assert.equal(vm.runInContext("BASELINE_VIEW_HEADERS.length", context), 36);
-assert.equal(vm.runInContext("DASHBOARD_VIEW_HEADERS.length", context), 24);
+assert.equal(vm.runInContext("DASHBOARD_VIEW_HEADERS.length", context), 25);
+assert.equal(evaluateLogger("DASHBOARD_VIEW_HEADERS[4]"), "Days since water");
 assert.equal(
     evaluateLogger("DASHBOARD_VIEW_HEADERS.at(-1)"),
     "Weight measurements"

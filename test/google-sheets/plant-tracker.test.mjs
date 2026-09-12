@@ -2284,8 +2284,8 @@ describe("garden logger workbook refresh and navigation", () => {
 
         expect(structuredClone(context.refreshGardenWorkbook())).toStrictEqual({
             baselineColumns: 36,
-            dashboardColumns: 24,
-            loggerVersion: "5.20.2",
+            dashboardColumns: 25,
+            loggerVersion: "5.21.1",
             plantPages: 2,
         });
         expect(calls.filter(([name]) => name === "plant")).toHaveLength(2);
@@ -2345,7 +2345,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P01",
             lastPlant: "P10",
-            loggerVersion: "5.20.2",
+            loggerVersion: "5.21.1",
             plantPages: 10,
         });
         expect(
@@ -2353,7 +2353,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P11",
             lastPlant: "P20",
-            loggerVersion: "5.20.2",
+            loggerVersion: "5.21.1",
             plantPages: 10,
         });
         expect(
@@ -2361,7 +2361,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P21",
             lastPlant: "P30",
-            loggerVersion: "5.20.2",
+            loggerVersion: "5.21.1",
             plantPages: 10,
         });
 
@@ -2455,12 +2455,15 @@ describe("garden logger workbook refresh and navigation", () => {
             0
         );
 
-        expect(row).toHaveLength(24);
+        expect(row).toHaveLength(25);
         expect(row[0]).toBe('=HYPERLINK("#gid=12345","View")');
         expect(row[5]).toBe("=Baselines!D2");
         expect(row[6]).toBe("=Baselines!C2");
         expect(row[7]).toBe("=Baselines!W2");
-        expect(row[8]).toBe("=Baselines!AF2");
+        expect(row[8]).toBe(
+            '=IF(AND(ISNUMBER(G7),G7>0,ISNUMBER(H7),H7>0),G7-H7,"")'
+        );
+        expect(row[9]).toBe("=Baselines!AF2");
 
         /** @type {number[][]} */
         const inserts = [];
@@ -2614,6 +2617,7 @@ describe("garden logger workbook refresh and navigation", () => {
                     "setFontWeight",
                     "setHorizontalAlignment",
                     "setNumberFormat",
+                    "setNote",
                     "setNotes",
                     "setVerticalAlignment",
                     "setWrap",
@@ -2653,9 +2657,10 @@ describe("garden logger workbook refresh and navigation", () => {
         expect(cells.get("36:2")).toBe("P30");
         expect(cells.get("36:3")).toContain("'Plant tracker'!B31");
         expect(cells.get("36:3")).toContain("'Plant tracker'!O31");
-        expect(cells.get("36:18")).toBe("=Baselines!J31");
-        expect(cells.get("6:24")).toBe("Weight measurements");
-        expect(cells.get("36:24")).toBe(
+        expect(cells.get("36:19")).toBe("=Baselines!J31");
+        expect(cells.get("6:5")).toBe("Days since water");
+        expect(cells.get("6:25")).toBe("Weight measurements");
+        expect(cells.get("36:25")).toBe(
             context.dashboardWeightCountFormula_(36)
         );
         expect(mergedRanges.some((range) => range.row >= 6)).toBe(false);
@@ -2664,6 +2669,7 @@ describe("garden logger workbook refresh and navigation", () => {
     it("formats baseline, dashboard, and plant-page workbook views", () => {
         expect.hasAssertions();
 
+        const headerWrites = new Map();
         const conditionalRule = {};
         const ruleBuilder = {
             build: () => conditionalRule,
@@ -2679,30 +2685,46 @@ describe("garden logger workbook refresh and navigation", () => {
             /** @type {string} */ name,
             { hasFilter = false, id = 1 } = {}
         ) => {
-            const range = {};
-            for (const method of [
-                "breakApart",
-                "clearContent",
-                "clearFormat",
-                "merge",
-                "setBackground",
-                "setFontColor",
-                "setFontSize",
-                "setFontStyle",
-                "setFontWeight",
-                "setFormula",
-                "setHorizontalAlignment",
-                "setNote",
-                "setNotes",
-                "setNumberFormat",
-                "setRowHeights",
-                "setValue",
-                "setValues",
-                "setVerticalAlignment",
-                "setWrap",
-            ]) {
-                Reflect.set(range, method, () => range);
-            }
+            const getRange = (
+                /** @type {number} */ row,
+                /** @type {number} */ column
+            ) => {
+                const range = {};
+                for (const method of [
+                    "breakApart",
+                    "clearContent",
+                    "clearFormat",
+                    "merge",
+                    "setBackground",
+                    "setFontColor",
+                    "setFontSize",
+                    "setFontStyle",
+                    "setFontWeight",
+                    "setFormula",
+                    "setHorizontalAlignment",
+                    "setNote",
+                    "setNotes",
+                    "setNumberFormat",
+                    "setRowHeights",
+                    "setValue",
+                    "setValues",
+                    "setVerticalAlignment",
+                    "setWrap",
+                ]) {
+                    Reflect.set(
+                        range,
+                        method,
+                        (/** @type {unknown[]} */ ...args) => {
+                            headerWrites.set(
+                                `${name}:${row}:${column}:${method}`,
+                                args[0]
+                            );
+                            return range;
+                        }
+                    );
+                }
+                return range;
+            };
             return {
                 autoResizeRows: () => {},
                 getFilter: () =>
@@ -2716,7 +2738,7 @@ describe("garden logger workbook refresh and navigation", () => {
                 getMaxColumns: () => 5,
                 getMaxRows: () => 20,
                 getName: () => name,
-                getRange: () => range,
+                getRange,
                 getSheetId: () => id,
                 hideSheet: () => {},
                 insertColumnsAfter: () => {},
@@ -2774,6 +2796,35 @@ describe("garden logger workbook refresh and navigation", () => {
         context.refreshPlantPage_(spreadsheet, plants, 1, plants[1]);
 
         expect(structuredClone(removedFilters)).toStrictEqual(["P01"]);
+
+        for (const [index, plant] of plants.entries()) {
+            const baselineRow = index + 2;
+
+            expect(headerWrites.get(`${plant.id}:6:4:setValue`)).toBe(
+                "Days since water"
+            );
+            expect(headerWrites.get(`${plant.id}:6:5:setFormula`)).toBe(
+                `=IF('Plant tracker'!E${plant.trackerRow}="","",'Plant tracker'!E${plant.trackerRow})`
+            );
+            expect(headerWrites.get(`${plant.id}:6:5:setNumberFormat`)).toBe(
+                "0"
+            );
+            expect(headerWrites.get(`${plant.id}:7:5:setFormula`)).toBe(
+                `=Baselines!AF${baselineRow}`
+            );
+            expect(headerWrites.get(`${plant.id}:7:5:setNumberFormat`)).toBe(
+                "mmm d, yyyy"
+            );
+            expect(headerWrites.get(`${plant.id}:8:5:setFormula`)).toBe(
+                `=Baselines!AG${baselineRow}`
+            );
+            expect(headerWrites.get(`${plant.id}:9:5:setFormula`)).toBe(
+                `=Baselines!P${baselineRow}`
+            );
+            expect(headerWrites.get(`${plant.id}:10:5:setFormula`)).toBe(
+                `=Baselines!R${baselineRow}`
+            );
+        }
     });
 
     it("moves and hides workbook helper sheets while preserving user sheets", () => {
@@ -2896,14 +2947,14 @@ describe("scoped Dashboard weight count installer", () => {
     function dashboardFixture(columns = 26) {
         const rows = Array.from({ length: 40 }, (_, index) =>
             Array.from({ length: columns }, (_, column) =>
-                column === 23 && index >= 5 && index <= 35
+                column === 24 && index >= 5 && index <= 35
                     ? ""
                     : `owner ${index + 1}:${column + 1}`
             )
         );
         const formulas = Array.from({ length: 40 }, (_, index) =>
             Array.from({ length: columns }, (_, column) =>
-                column === 23 && index >= 5 && index <= 35
+                column === 24 && index >= 5 && index <= 35
                     ? ""
                     : `="formula ${index + 1}:${column + 1}"`
             )
@@ -2956,8 +3007,8 @@ describe("scoped Dashboard weight count installer", () => {
         };
     }
 
-    it.each([23, 26])(
-        "installs and reruns idempotently with %i existing columns while preserving everything outside X6:X36",
+    it.each([24, 26])(
+        "installs and reruns idempotently with %i existing columns while preserving everything outside Y6:Y36",
         (columns) => {
             expect.hasAssertions();
 
@@ -2976,14 +3027,14 @@ describe("scoped Dashboard weight count installer", () => {
                 structuredClone(context.installDashboardWeightCounts())
             ).toStrictEqual({
                 plants: 30,
-                range: "Dashboard!X6:X36",
-                version: "5.20.2",
+                range: "Dashboard!Y6:Y36",
+                version: "5.21.1",
             });
 
             const after = structuredClone(rows);
 
             expect(context.installDashboardWeightCounts().range).toBe(
-                "Dashboard!X6:X36"
+                "Dashboard!Y6:Y36"
             );
             expect(rows).toStrictEqual(after);
             expect(
@@ -2996,16 +3047,16 @@ describe("scoped Dashboard weight count installer", () => {
                 )
                 .filter(
                     ({ column, index }) =>
-                        column !== 23 || index < 5 || index > 35
+                        column !== 24 || index < 5 || index > 35
                 );
             for (const { column, index, value } of untouched) {
                 expect(required(rows[index])[column]).toBe(value);
             }
 
-            expect(required(rows[5])[23]).toBe("Weight measurements");
+            expect(required(rows[5])[24]).toBe("Weight measurements");
 
             for (let row = 7; row <= 36; row += 1) {
-                expect(required(rows[row - 1])[23]).toBe(
+                expect(required(rows[row - 1])[24]).toBe(
                     context.dashboardWeightCountFormula_(row)
                 );
             }
@@ -3018,13 +3069,13 @@ describe("scoped Dashboard weight count installer", () => {
                         height,
                         width,
                     ]) =>
-                        required(column) === 24 &&
+                        required(column) === 25 &&
                         required(row) >= 6 &&
                         required(row) + required(height) - 1 <= 36 &&
                         width === 1
                 )
             ).toBe(true);
-            expect(insertions).toStrictEqual(columns === 23 ? [[23, 1]] : []);
+            expect(insertions).toStrictEqual(columns === 24 ? [[24, 1]] : []);
         }
     );
 
@@ -3054,12 +3105,12 @@ describe("scoped Dashboard weight count installer", () => {
 
             const { context, insertions, originalRange, rows } =
                 dashboardFixture();
-            originalRange(row, 24).setValue(value).setFormula(formula);
+            originalRange(row, 25).setValue(value).setFormula(formula);
             const before = structuredClone(rows);
             const formulas = originalRange(1, 1, 40, 26).getFormulas();
 
             expect(() => context.installDashboardWeightCounts()).toThrow(
-                "Unexpected Dashboard column X"
+                "Unexpected Dashboard column Y"
             );
             expect(rows).toStrictEqual(before);
             expect(originalRange(1, 1, 40, 26).getFormulas()).toStrictEqual(
@@ -3069,7 +3120,7 @@ describe("scoped Dashboard weight count installer", () => {
         }
     );
 
-    it("refuses merged destination cells before writing through a merge outside X", () => {
+    it("refuses merged destination cells before writing through a merge outside Y", () => {
         expect.hasAssertions();
 
         const { context, insertions, markMerged, rows } = dashboardFixture();
@@ -3096,7 +3147,7 @@ describe("scoped Dashboard weight count installer", () => {
         expect(insertions).toHaveLength(0);
     });
 
-    it("generates numeric measured-only counts at X while preserving M/N and V/W positions", () => {
+    it("generates numeric measured-only counts at Y while preserving shifted N/O and W/X positions", () => {
         expect.hasAssertions();
 
         const context = loadAppsScript(createHistorySheet([]));
@@ -3108,12 +3159,12 @@ describe("scoped Dashboard weight count installer", () => {
             0
         );
 
-        expect(row).toHaveLength(24);
-        expect(row[12]).toContain('"Water"');
-        expect(row[13]).toContain('"Measure"');
-        expect(row[21]).toBe("=Baselines!AI2");
-        expect(row[22]).toBe("=Baselines!AJ2");
-        expect(row[23]).toBe(context.dashboardWeightCountFormula_(7));
+        expect(row).toHaveLength(25);
+        expect(row[13]).toContain('"Water"');
+        expect(row[14]).toContain('"Measure"');
+        expect(row[22]).toBe("=Baselines!AI2");
+        expect(row[23]).toBe("=Baselines!AJ2");
+        expect(row[24]).toBe(context.dashboardWeightCountFormula_(7));
 
         const formula = context.dashboardWeightCountFormula_(7);
 
@@ -3699,7 +3750,7 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.20.2");
+        expect(bootstrap.version).toBe("5.21.1");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             activitySummary: {
@@ -8323,10 +8374,10 @@ describe("garden logger workbook installation and History headers", () => {
         context.installGardenLogger();
 
         expect(required(calls.properties)["gardenLoggerVersion"]).toBe(
-            "5.20.2"
+            "5.21.1"
         );
         expect(required(calls.toast)[1]).toBe("Garden logger verified");
-        expect(required(calls.toast)[0]).toMatch(/Logger 5\.20\.2 is ready/v);
+        expect(required(calls.toast)[0]).toMatch(/Logger 5\.21\.1 is ready/v);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(
