@@ -32,7 +32,37 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
-### Verified 5.21.1 baseline
+### Verified 5.21.2 baseline
+
+On September 12, 2026, **logger 5.21.2** was published as immutable Apps Script
+**version 85**, preserving the existing deployment and phone URL. All three
+immutable files and Head sources match commit `46298cf`. The authenticated app
+reports **Connected · logger 5.21.2**; its version-85 `doGet` and
+`getWebAppBootstrap` executions completed successfully.
+
+The logger and AppSheet intake installers completed without a schema migration.
+The queue installer replaced one predecessor; exactly one Head / Time-driven /
+Minutes timer / Every 5 minutes trigger remains for `processQueuedAppSheetEntries`.
+Its September 12, **5:13:26 p.m. EDT** scheduled execution completed successfully.
+The native backup **Garden Plant Tracker — before logger 5.21.2 — 2026-09-12**
+is in **My Drive → Archive → Garden Plant Tracker Backups**. Exact comparisons
+preserve **809 History observations**, **809 unique Observation IDs**, **742
+distinct Request IDs**, all **110 charts**, and the checked values, formulas,
+formatting, and validations in the canonical ledger, staging sheets, summaries,
+and all 30 plant headers. Integrity reports **0 formula errors**. No synthetic
+observation was submitted.
+
+Validation passed **730 logger tests**, the required coverage and source-contract
+checks, type checks, lint, formatting, HTML checks, the Pages build, and secret
+scans. Desktop and 390-pixel browser checks passed in light and dark modes,
+including chart tooltips, disclosure keyboard controls, visibility preferences,
+and zero label-grid movement across changing summary heights. The real embedded
+app also keeps the full P01 name and A1 badge aligned at phone width and preserves
+the grid position when switching to a plant with a different summary height.
+The source commit passed the website and Pages, logger, Sonar quality gate,
+Codecov, Socket, Gitleaks, and TruffleHog checks before the Apps Script release.
+
+### Previous 5.21.1 baseline
 
 On September 12, 2026, **logger 5.21.1** was published as immutable Apps Script
 **version 84**, using the existing deployment and phone URL. All three immutable
