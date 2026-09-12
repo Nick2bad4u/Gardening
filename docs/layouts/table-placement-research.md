@@ -1,77 +1,74 @@
 # Table Placement Guide
 
-Revised September 10, 2026, for the **selected AW400 tunable full-spectrum light**
-and an **open room-facing end**. The approximately two-foot return reflector
-comes out; the existing divider Mylar stays. These are final recommended growing
-positions for **30 tracked pots: 24 on wood and six on glass**, ready for the
-replacement light. The owner canceled the Amazon AW400SE order and chose the
-AW400 from LED Grow Lights Depot; its listing specifies **Samsung 301H EVO
-diodes**, UVA, and far-red. The replacement's delivery date, installation, and
-physical plant moves have not been confirmed.
+Revised September 11, 2026, for the **retained AW200 beside a new AeroLight
+240 W**, with separate controls and an **open room-facing end**. The AW400 is
+sold out. The new light and another E25 are expected **Sunday, September 13**;
+installation, settings, and physical plant moves remain unconfirmed.
+These are final recommended growing positions for **30 tracked pots: 24 on wood
+and six on glass**. The owner handles acclimation.
 
 ## The Final Arrangement at a Glance
 
-![AW400 plan with four columns and six rows on wood, six pots on round glass, broad planned coverage over all wood and the near half of glass, and an open room-facing end](../../assets/layouts/2026-09-09-placement/combined-plan.png)
+![Two-light proposal with four columns and six rows on wood, six containers on round glass, separate AW200 and AeroLight 240 W outlines, and an open room-facing end](../../assets/layouts/2026-09-11-dual-light/combined-plan.png)
 
-- **Wider light:** the AW400 is a **400 W, tunable full-spectrum fixture**,
-  listed at **26 × 26.4 inches**. The intended growing area now includes all
-  six wooden rows and roughly the nearer half of glass. See the
-  [exact-model equipment note](../equipment/vivosun-aw400.md) and
-  [manufacturer manual][aw400].
-- **Updated model:** the AW400 keeps the canceled AW400SE's listed footprint,
-  so the final pot positions remain the same. Its Seedling, Veg, and Flower
-  spectrum modes are selectable; the chosen mode is not yet recorded. The
-  [selected seller listing][aw400-listing] confirms the advertised 301H EVO
-  configuration. Far-red is listed for both models.
-- **Open view:** remove the left two-foot return panel. Keep the top Diamond
-  Mylar divider and bottom white wall. Viewing the plants and reaching them
-  comfortably are part of the plan.
-- **Light needs stay individual:** high-light plants use clear central
-  exposure; softer-light plants use the perimeter. Ming Thing moves to the
-  open-left corner, and the money tree stays on the outer glass side.
-- **Existing furniture:** wood stays four columns by six rows; glass stays
-  round, 24 inches across. The shared succulent planter is a square wooden
-  box. The weak north-facing window remains on the right.
+- **Two fixtures:** keep the AW200 and add the new **VSL-AL240** AeroLight.
+  Their bodies are nearly the same size: about **26 × 13 inches each**.
+  Combined rated input is **440 W**, not measured dimmed consumption. See the
+  [exact equipment and mounting record](../equipment/aw200-and-aerolight-240w.md).
+- **Separate adjustment:** one E25 per light allows separate brightness and
+  schedules. Independent hangers allow different clearances for taller cacti
+  eventually. Three E25s are already in use; the new one makes four planned
+  paths including both canopy fans.
+- **Open view:** keep the left two-foot return panel out. Retain the top Diamond
+  Mylar divider and bottom white wall. The weak north window stays on the right.
+- **Final plant needs:** high-light plants keep clear central exposure;
+  softer-light plants use the perimeter. Ming Thing remains at R1C1 and the
+  money tree on outer glass, subject to checking their gentler exposure.
+- **Furniture:** four columns by six rows on wood, beside the 24-inch round
+  glass table. Shared succulent planter #2 remains a **square wooden box**.
 
-The image badges describe **ongoing light needs**, not move stages:
-**H = High light**, **B = Bright filtered light**, **I = Bright indirect light**,
-and **H/B = Mixed needs in one shared pot**. Each letter has a text legend and
-its own color. These horticultural categories describe exposure goals; they
-do not claim that an LED-lit edge is physically filtered, shaded, or at a
-measured PPFD. The owner will handle acclimation.
+The badges describe ongoing light needs: **H = High light**, **B = Bright
+filtered light**, **I = Bright indirect light**, and **H/B = Mixed needs in one
+shared pot**. They describe exposure goals, not a measured brightness map.
+An LED-lit corner is not automatically filtered or indirect light.
 
-## How the Wider Light Changes the Recommended Spots
+## Two Lights, Coverage, and Mounting
 
-The previous horizontal AW200 band covered the middle wooden rows. The new
-illustrations show a broad, approximately square **planned growing area** over
-the whole wooden grid and the nearer glass half. The amber outline is schematic,
-not the fixture's measured position or a brightness contour. Wider panels should
-help spread light, but plant height, neighboring foliage, and the remaining
-divider still affect exposure.
+The proposed drawing runs both fixtures' long axes **top-to-bottom**, from
+Mylar toward the white wall, with the AW200 toward wood and the new 240 W
+toward glass. This changes the old horizontal single-AW200 band. The two dashed
+outlines indicate a proposed orientation only; centers, rotation, and spacing
+are unmeasured. Their approximate combined short dimensions are **25.9 inches
+before a fixture gap**. Wood plus the nearer glass half spans **28 inches before
+furniture gaps**. The target remains all wood and the near half of glass, but
+physical panel dimensions do not prove equal exposure across that area.
 
-- **Wood, rows 3–4:** keep the low high-light plants clear of taller stems.
-  Coconut Crystal, Raindrops, Royal Flush, and Paper Spine retain their central
-  positions. All four columns have planned lamp exposure.
+- **Wood, rows 3–4:** prioritize the low high-light plants and keep taller
+  stems from shading them. Coconut Crystal, Raindrops, Royal Flush, and Paper
+  Spine keep their final central positions.
 - **Wood, rows 2 and 5:** retain the tall high-light cacti in row 2 and the
-  bright filtered group in row 5; these rows are no longer the edge of a
-  narrow horizontal band.
-- **Wood, rows 1 and 6:** both rows now fall within the broad planned area.
-  They are perimeter positions, not unlit rows. Ming Thing uses **R1C1**, the
-  open-left corner, as a candidate for gentler exposure; Variegated Moon moves
-  to **R1C3**. A corner under the light is not automatically bright indirect.
-- **Glass, near half:** prioritize the tiny dish, tiger jaws just left of
-  center, and the light-demanding parts of the two shared planters. Keep their
-  growing tips clear of the taller shared cacti.
+  bright filtered group in row 5. Separate fixture heights can improve
+  clearance, but their neighboring plants still share that light.
+- **Wood, rows 1 and 6:** perimeter rows remain part of the intended coverage.
+  Ming Thing uses R1C1 and Variegated Moon R1C3; verify gentler exposure at the
+  open-left corner instead of assuming shade from its position.
+- **Glass, near half:** prioritize tiger jaws, the tiny dish, and the
+  light-demanding parts of both shared planters. Keep their growing tips clear
+  of the taller shared cacti.
 - **Glass, outer/right half:** Kiwi aeonium uses bright spill at upper-right;
-  the money tree uses gentler indirect exposure at lower-right. The weak
-  north window alone is not assumed to supply either plant's needs.
+  the money tree uses gentler useful light at lower-right. The north window
+  alone is not assumed to meet either plant's needs.
 
-The nominal 16-inch wood width plus half the 24-inch glass diameter spans
-**28 inches before gaps**, slightly wider than the fixture itself. Useful
-light spreads beyond the panels; the owner's intended coverage is plausible,
-but neither the drawing nor the manufacturer's 4 × 4 ft tent guidance proves
-uniform PPFD here. The old AW200 **60%** is not an AW400 setting. Intensity,
-clearance, and the transferred timer will be recorded after installation.
+The combined overlap can be stronger than the outer edges. Record both lamp
+settings and clearances after installation; the AW200's last **60%, 13.25-hour**
+program is not an equivalent setting for the new light. No new ramp or fixed
+watering schedule is introduced.
+
+The owner's revised plan uses **four ceiling hooks, two per light**. Each
+fixture hangs independently and can be leveled and adjusted in height on its
+own. Installation and final clearances remain unrecorded; the
+[mounting record](../equipment/aw200-and-aerolight-240w.md#independent-ceiling-hooks)
+documents the September 11 correction to the ceiling framing orientation.
 
 ## Plants by Light Need and Recommended Spot
 
@@ -138,30 +135,30 @@ probable, cf., hybrid, and unconfirmed-cultivar identifications.
 
 ## Current Room and Incoming Light
 
-| Item                        | Recorded Setup or Plan                                                                                                                            |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Incoming light              | **VIVOSUN AW400**, tunable full spectrum, **400 W**; selected after canceling AW400SE, installation pending                                       |
-| Fixture size and position   | Manufacturer: **26 × 26.4 × 2.2 inches**; planned with wings fully flat over all wood and the near half of glass                                  |
-| Last installed light        | Owner-reported **AW200 with tunable spectrum**, **60%**; September 9 record                                                                       |
-| Daily program               | Last reported **13.25 hours**, including quarter-hour sunrise/sunset transitions; retained as a planning reference, transfer to AW400 unconfirmed |
-| Right                       | **North-facing window**, beyond glass; weak supplementary daylight                                                                                |
-| Top                         | Existing Diamond Mylar divider retained                                                                                                           |
-| Bottom                      | White wall retained                                                                                                                               |
-| Left                        | **Open room-facing end**; approximately two-foot Mylar return panel removed from the plan                                                         |
-| Wooden tables               | Two **16 × 13-inch** tops, each **18 inches high**; four columns and six rows, join after row 3                                                   |
-| Glass table                 | **24-inch diameter**, round, **18 inches high**                                                                                                   |
-| New intensity and clearance | **Not yet set or measured**; the old 60% and last 18-inch clearance do not describe the incoming light                                            |
+| Item                        | Recorded Setup or Plan                                                                                                       |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Incoming light              | **AeroLight 240 W (VSL-AL240)** plus new E25, expected **September 13**; AW400 unavailable                                   |
+| Fixture size and position   | AW200 **26 × 13 × 2.1 in**; new 240 W **25.9 × 12.9 × 2.1 in**. Side by side; final centers, orientation, and gap unmeasured |
+| Last installed light        | **AW200 with tunable spectrum**, retained beside the new fixture; last reported **60%**                                      |
+| Daily program               | Last AW200 report **13.25 hours**, including quarter-hour sunrise/sunset transitions; new light program unrecorded           |
+| Right                       | **North-facing window**, beyond glass; weak supplementary daylight                                                           |
+| Top                         | Existing Diamond Mylar divider retained                                                                                      |
+| Bottom                      | White wall retained                                                                                                          |
+| Left                        | **Open room-facing end**; approximately two-foot Mylar return panel removed from the plan                                    |
+| Wooden tables               | Two **16 × 13-inch** tops, each **18 inches high**; four columns and six rows, join after row 3                              |
+| Glass table                 | **24-inch diameter**, round, **18 inches high**                                                                              |
+| New intensity and clearance | **Unrecorded**; earlier 18-inch clearance needs remeasurement for both fixtures                                              |
 
 Two 13-inch depths joined give a nominal **16-inch-wide × 26-inch-long** wooden
 rectangle. This is not a fresh usable-surface measurement. Four 4-inch rims
 already span 16 inches, so verify rims, rails, and foliage when placing pots.
-The [AW400 equipment note](../equipment/vivosun-aw400.md) separates its
-manufacturer specifications from the earlier AW200/AW200SE records. Old light
+The [two-light equipment note](../equipment/aw200-and-aerolight-240w.md) separates
+manufacturer specifications from the earlier AW200SE and superseded AW400 records. Old light
 maps and dimming percentages are not measurements of the new open-end setup.
 
 ## Wooden Tables: Final Four-Column, Six-Row Layout
 
-![Final four-column six-row wooden arrangement with full-grid AW400 coverage planned, Ming Thing at the open-left corner, and each plant labeled by light need](../../assets/layouts/2026-09-09-placement/wooden-tables.png)
+![Final four-column six-row wooden arrangement for AW200 plus AeroLight 240 W, with Ming Thing at the open-left corner and every plant labeled by light need](../../assets/layouts/2026-09-11-dual-light/wooden-tables.png)
 
 Rows run **top/Mylar to bottom/white wall**. Columns run **left/open room end
 to right/glass table**. R3C2 means row 3, column 2; every row below is one
@@ -177,11 +174,11 @@ horizontal row in the image. The column names carry no brightness ranking.
 | 6 · White wall | E2 · Peanut Hybrid · B    | D2 · Domino · B               | C1 · Giant Chin · B      | F1 · Hook-Spined Pincushion · B |
 
 The central high-light assignments remain suitable priorities under the broader
-plan. D3 swaps with A1 to use the open-left perimeter; all other wooden positions
-stay the same. The edge is a candidate for lower exposure, not guaranteed shade.
+plan. D3 retains the open-left perimeter at R1C1 and A1 retains R1C3; all wooden
+positions stay the same as the September 10 final proposal. The edge is a candidate for lower exposure, not guaranteed shade.
 F2 remains B because guidance distinguishes young growth from mature growth,
 not because this plan stages a move. No pot's light need changes merely because
-the lamp is wider.
+a second lamp is added.
 
 ## Every Wooden-Table Plant Reviewed
 
@@ -218,7 +215,7 @@ turn it into a confirmed species-specific requirement.
 
 ## Glass Table: Final Positions, Shapes, and Sizes
 
-![Final six-container glass arrangement with a square wooden box, shared-pot light needs, an AW400 plan covering the near half, and money tree on the outer side](../../assets/layouts/2026-09-09-placement/glass-table.png)
+![Final six-container glass arrangement with a square wooden box, shared-pot light needs, the AW200 plus AeroLight 240 W plan, and money tree on the outer side](../../assets/layouts/2026-09-11-dual-light/glass-table.png)
 
 The **table** is 24 inches across, not the largest planter. Shapes come from the
 owner's August 29 and September 1–2 photographs in the
@@ -279,16 +276,15 @@ profiles. Rim widths are not canopy widths; the illustration does not certify fi
 
 ## Sources
 
-- **New equipment:** [VIVOSUN AeroLight manual][aw400] for the exact
-  AW400 dimensions, rated power, tunable spectrum, and 4 × 4 ft tent guidance;
-  the [selected seller listing][aw400-listing] identifies Samsung 301H EVO
-  diodes. The [equipment note](../equipment/vivosun-aw400.md) records the
-  replacement selection, canceled AW400SE order, and open-end plan.
+- **Equipment:** [AW200 manual][aw200], [new AeroLight manual][aerolight-240],
+  and [240 W product page][aerolight-product] for model-specific dimensions,
+  weights, power, and controls. The [equipment note](../equipment/aw200-and-aerolight-240w.md)
+  records the four-hook mounting plan and open room-facing end.
 
-The AW400 selection, intended coverage, reflector removal, room orientation, and
+The two-light order, expected Sunday delivery, four-hook mounting plan, intended coverage, reflector removal, room orientation, and
 container shapes are owner evidence. The guidance
 distinguishes species evidence, genus comparisons, grower claims, and placement
-inference. Reviewed September 9–10, 2026.
+inference. Species guidance reviewed September 9–10; equipment updated September 11, 2026.
 
 - **Primary cactus guidance:** [RHS general care][general],
   [RHS rainbow hedgehog][rainbow], [NParks Old Man of the Andes][oreocereus],
@@ -310,7 +306,7 @@ inference. Reviewed September 9–10, 2026.
   Product sizes are nominal; a listing does not prove a mixed planter's identities.
 - **Collection evidence:** [measurement photographs](../../assets/measurements/README.md),
   [plant and pot inventory](../collection.md), [individual profiles](../plants/),
-  and the [image prompts](../../assets/layouts/2026-09-09-placement/image-prompts.md).
+  and the [image prompts](../../assets/layouts/2026-09-11-dual-light/image-prompts.md).
 
 [general]: https://www.rhs.org.uk/plants/types/cacti-succulents/houseplants/growing-guide
 [rainbow]: https://www.rhs.org.uk/plants/115504/echinocereus-rigidissimus/details
@@ -339,5 +335,6 @@ inference. Reviewed September 9–10, 2026.
 [serpent]: https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/7251/Nyctocereus_serpentinus
 [giant-chin]: https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/12116/Gymnocalycium_saglionis
 [black-widow]: https://mountaincrestgardens.com/gymnocalycium-mihanovichii-f-variegata-black-widow-wfzy/
-[aw400]: https://vivosun.com/support/guide/aerolight
-[aw400-listing]: https://www.ledgrowlightsdepot.com/products/aerolight-wing-aw400-tunable-spectrum-led-grow-light-400w-with-integrated-circulation-fan-compatible-with-app-4-x-4-ft-coverage
+[aw200]: https://vivosun.com/support/guide/aerolight
+[aerolight-240]: https://vivosun.com/support/guide/aerolight-gen2
+[aerolight-product]: https://vivosun.com/vivosun-aerolight-240W-p169014979523194244-v169014979523194351

@@ -1,6 +1,6 @@
 # Setup and equipment
 
-Last updated: 2026-09-10
+Last updated: 2026-09-11
 
 ## Current routine
 
@@ -15,52 +15,55 @@ starting points, but plant response matters more than chasing an exact number.
 
 ## Controlled indoor setup
 
-**September 10 replacement correction:** the owner canceled the Amazon AW400SE
-order and selected the **[VIVOSUN AW400](./equipment/vivosun-aw400.md)** from
-LED Grow Lights Depot. Its listing specifies **Samsung 301H EVO diodes**, with
-**tunable full spectrum, UVA, and far-red**. The manufacturer lists a
-**26 × 26.4-inch, 400 W** fixture. The replacement's delivery date and installation
-are unconfirmed. The last reported installed AW200 remains **60%** on a
-**13.25-hour daily program** with quarter-hour sunrise/sunset transitions.
-Those settings and the last 18-inch clearance are not new AW400 measurements.
+**September 11 two-light plan:** the AW400 is sold out. The owner is keeping
+the existing **AW200** and has ordered the new **[AeroLight 240 W
+(VSL-AL240)](./equipment/aw200-and-aerolight-240w.md)** with another **E25**,
+expected **Sunday, September 13, 2026**. They will hang side by side, with
+independent height adjustment for taller plants eventually. Installation is
+pending. The AW400 selection and canceled AW400SE order remain equipment history.
 
-The **approximately two-foot Mylar return panel comes out** to restore the
-room-side view and access. In the bird's-eye plan: **open room left,
-Diamond Mylar divider top, white wall bottom, north-facing window right**.
-The divider lining stays, and the owner reports little useful window light.
+The AW200's last reported program is **60%, 13.25 hours daily**, including
+quarter-hour sunrise/sunset transitions. The incoming light's intensity, mode,
+and timer are unrecorded; the earlier 18-inch clearance needs remeasurement.
 
-The wider lamp is intended to cover **all 24 pots on wood and roughly the
-nearer half of glass**. Wood remains **four columns across and six rows down**;
-the round glass table remains 24 inches across and holds six containers.
-The shared succulent planter `#2` is a **square wooden box**. The
-[Table Placement Guide](./layouts/table-placement-research.md) records all
-30 final recommended spots, light needs, container evidence, and the three
-revised illustrations. It appears
-[after the booklet contents](https://nick2bad4u.github.io/Gardening/#placement).
-The outline is a planned growing area, not proof of uniform PPFD. Physical
-plant moves have not been recorded as completed.
+The [new 240 W manual](https://vivosun.com/support/guide/aerolight-gen2) requires
+the growing space to stay **below 86°F (30°C)** during operation. Check room
+temperature with both fixtures running after installation.
 
-The [new equipment note](./equipment/vivosun-aw400.md) separates AW400
-specifications from the earlier model assumptions. The
-[AW200SE guide](./equipment/vivosun-aw200se.md) and
-[dated operating schedule](./equipment/aw200se-operating-schedule.md) retain
-historical light maps, controller details, and the move indoors. Their old
-45%/60% settings and 12-hour conversions do not specify the incoming light.
+The **approximately two-foot Mylar return panel stays out of the plan** to keep
+the room-side view open. In the bird's-eye view: **open room left, Diamond
+Mylar divider top, white wall bottom, weak north-facing window right**.
+
+The target remains **all 24 pots on wood and roughly the nearer half of glass**.
+Wood stays **four columns across and six rows down**; the round glass table
+is 24 inches across and holds six containers. Shared succulent planter `#2`
+is a **square wooden box**. The [Table Placement Guide](./layouts/table-placement-research.md)
+records all 30 final recommended spots and light needs, with three updated
+illustrations [after the booklet contents](https://nick2bad4u.github.io/Gardening/#placement).
+The two fixture outlines are schematic; actual spacing, exposure, and physical
+plant moves are not yet recorded.
+
+The [two-light equipment note](./equipment/aw200-and-aerolight-240w.md) records
+manufacturer specifications and the revised mounting plan: **four ceiling
+hooks, two per light**, with each fixture suspended independently. Installation
+and final clearances are not yet recorded. The [AW200SE guide](./equipment/vivosun-aw200se.md)
+and [dated operating schedule](./equipment/aw200se-operating-schedule.md) retain
+the earlier light maps and move-in history.
 
 | Item                     | Current equipment                                                                                                                                                                                                                                                                                                                                                                        |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Light transition         | [Incoming VIVOSUN AeroLight Wing AW400](./equipment/vivosun-aw400.md); selected after canceling the Amazon AW400SE order, replacing the installed tunable AW200                                                                                                                                                                                                                          |
-| Controllers              | Three confirmed GrowHub E25 paths: one for the light and one for each AeroWave E6 Gen2. AW400 supports E25 via Type-C; transfer and pairing have not been recorded                                                                                                                                                                                                                       |
+| Light transition         | [Existing AW200 + incoming AeroLight 240 W](./equipment/aw200-and-aerolight-240w.md), side by side; 240 W and new E25 expected September 13                                                                                                                                                                                                                                              |
+| Controllers              | Four planned independent E25 paths: existing AW200, incoming 240 W, and two existing AeroWave E6 Gen2 fans. Three are installed; the new light controller is pending                                                                                                                                                                                                                     |
 | Location                 | Fenton, Michigan                                                                                                                                                                                                                                                                                                                                                                         |
-| Mount                    | Adjustable ceiling mount; check it for the incoming fixture's 16.82 lb published load and 26 × 26.4-inch body. Final suspension position and canopy clearance remain unrecorded                                                                                                                                                                                                          |
+| Mount                    | Four ceiling hooks, two per fixture; each light suspended independently with separate adjustable hangers. Installation and final clearances pending                                                                                                                                                                                                                                      |
 | Tables                   | Two 16 × 13-inch wooden tops in the four-column/six-row plan, beside a 24-inch round glass table; all 18 inches high                                                                                                                                                                                                                                                                     |
-| Rated power              | Incoming AW400: 400 W; not an actual dimmed-power measurement                                                                                                                                                                                                                                                                                                                            |
-| Advertised coverage      | AW400 manufacturer application table: 4 × 4 ft tent. Planned open-room coverage: all wood and the near half of glass; actual distribution unmeasured                                                                                                                                                                                                                                     |
-| Manufacturer PPFD figure | No AW400 plant-height readings recorded here. Earlier AW200SE maps remain in the historical equipment guide                                                                                                                                                                                                                                                                              |
-| Dimming                  | AW400 manual: app 25–100% and off, controller presets 25/50/75/100% and off. New setting unrecorded; the old fixture's tested 1% increments are not a fresh AW400 test                                                                                                                                                                                                                   |
+| Rated power              | AW200 200 W + AeroLight 240 W = 440 W rated total; actual dimmed consumption unmeasured                                                                                                                                                                                                                                                                                                  |
+| Advertised coverage      | 240 W manufacturer claim: 4 × 2 ft. Combined open-room target: all wood and near half of glass; actual distribution unmeasured                                                                                                                                                                                                                                                           |
+| Manufacturer PPFD figure | No plant-height readings for the two-light arrangement. Earlier AW200SE maps remain historical                                                                                                                                                                                                                                                                                           |
+| Dimming                  | Both manuals list app 25–100% and off. Separate E25s allow separate settings; incoming light not yet tested                                                                                                                                                                                                                                                                              |
 | Cross-canopy fans        | Two [VIVOSUN AeroWave E6 Gen2](https://vivosun.com/en-US/vivosun-aerowave-e6-6-inch-clip-on-fan-compatible-with-growhub-e42-e25-p140926625940348007-v140926625940348006) units, each with its own E25, aimed from opposite ends of the black divider. The second is clipped high and aimed slightly downward. Each fan is rated 12 W and up to 320 CFM, with 90° horizontal oscillation. |
-| Air movement             | Last reported fixture fan on gentle Natural Wind plus both E6 Gen2 fans at gentle Level 1–2 with offset sweeps. Recheck the wider fixture's fan paths when installed                                                                                                                                                                                                                     |
-| Current light setting    | Last installed AW200: 60%, reported 13.25-hour program with quarter-hour sunrise/sunset transitions. AW400 intensity, clearance, and transferred timer not yet recorded                                                                                                                                                                                                                  |
+| Air movement             | Last reported AW200 fan on gentle Natural Wind, plus both E6 Gen2 fans at Level 1–2 with offset sweeps. Recheck both light fans and canopy airflow after mounting                                                                                                                                                                                                                        |
+| Current light setting    | Last AW200 report: 60%, 13.25 hours including quarter-hour sunrise/sunset transitions. Incoming 240 W setting and both final clearances remain unrecorded                                                                                                                                                                                                                                |
 | Camera                   | [VIVOSUN GrowCam C4](https://vivosun.com/en-GB/vivosun-growcam-smart-camera-p161215462517181360-v161215462517181359), 2K, 117° field of view, 2.4 GHz Wi-Fi, wall-mounted above the plants with a tested 256 GB microSD card for time-lapse                                                                                                                                              |
 | Reflector                | [VIVOSUN 6 mil diamond Mylar, 4 × 25 ft](https://www.amazon.com/dp/B01MZ72PAH?th=1) retained on the black divider, plus the existing loose floor-protection sheet. White wall uncovered; two-foot room-end return panel removed from the plan                                                                                                                                            |
 | Room sensor              | Unspecified manual temperature/RH display with current, rolling 24-hour minimum/maximum, and all-time minimum/maximum readings                                                                                                                                                                                                                                                           |
@@ -70,14 +73,15 @@ historical light maps, controller details, and the move indoors. Their old
 | Fertilizer               | [Tezula/Greencare MSU 13-3-15 Tap/Rain/RO formula](https://tezulaplants.com/products/msu-fertilizer-13-3-15-for-tap-water-ro-rain-water), measured by mass with the [collection-specific schedule](./equipment/msu-fertilizer-schedule.md); it already contains calcium, magnesium, and micronutrients                                                                                   |
 | Label printer            | [SUPVAN E11](https://www.amazon.com/dp/B0DKS89T75?th=1), 203 dpi monochrome thermal printer with 15 mm maximum media width; see the [pot-label print reference](./plants/labels.md)                                                                                                                                                                                                      |
 
-The three confirmed E25s are independent control paths. The AeroLight's RJ45
+The three installed E25s and incoming fourth E25 form independent control paths. The AeroLight's RJ45
 connector is only for compatible AeroLight daisy chains; it is not an Ethernet
 connection for either canopy fan. AeroWave fans do not directly daisy-chain
 fan-to-fan. With E25 controllers, each independently controlled fan needs its
 own controller path; VIVOSUN's supported multi-fan splitter arrangement belongs
 to E42/E42A-class hardware, not the light's RJ45 socket. The installed setup
 uses one E25 for the light and one E25 for each fan; no light-to-fan or
-fan-to-fan cable chain is used.
+fan-to-fan cable chain is used. The new light gets its own E25 for independent
+brightness and schedule control.
 
 Both canopy fans are now mounted on the black divider pole and approach the
 plant run from opposing directions. Offset their vertical angles and
@@ -90,7 +94,7 @@ heights and plant clearances remain measurements to record. See the
 [paired-fan program and placement rules](./equipment/aw200se-operating-schedule.md#paired-canopy-fan-program).
 
 The historical July 31/August layout below predates the corrected September
-grid and incoming AW400 plan. It is retained as a measurement record.
+grid and September 11 two-light plan. It is retained as a measurement record.
 That earlier measurement set established a 36 in wide by approximately 60 in
 long bay, and the August expansion adds a second identical wooden table. All
 three surfaces are 18 in high. The 24 in round glass table occupies the window

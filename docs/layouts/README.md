@@ -1,13 +1,16 @@
 # Grow-spot diagrams
 
-Last updated: 2026-09-10
+Last updated: 2026-09-11
 
 The [Table Placement Guide](./table-placement-research.md) reviews all 30 pots
 against their light needs and current container evidence. It uses the corrected
 **four-column by six-row** wooden grid, a **square wooden shared succulent box**,
 and the weak **north-facing window on the right**. It includes separate wooden,
-glass, and combined illustrations for the **selected AW400 tunable-spectrum
-light**, with broad coverage planned over all wood and the near half of glass.
+glass, and combined illustrations for the **retained AW200 beside the new
+AeroLight 240 W**, with coverage intended over all wood and the near half of glass.
+The [new light and its E25](../equipment/aw200-and-aerolight-240w.md) are expected
+September 13. Each fixture will use two ceiling hooks, four total; installation
+and final exposure remain unverified.
 The **two-foot return panel comes out**, leaving the room end open; divider
 Mylar stays. Final positions remain grouped by ongoing light need, and the
 plan distinguishes intended coverage from unmeasured actual exposure.

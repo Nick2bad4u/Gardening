@@ -7,8 +7,8 @@ This is the working nutrient plan for the collection's Tezula/Greencare **MSU
 pots, the 60/40 Molly's-and-perlite cactus mix, RO water, indoor grow lights, and the
 indoor dry-down trial. It is not a fixed command to water on a calendar date.
 
-The [AW400 replacement plan](./vivosun-aw400.md) changes the light and
-removes the end reflector. It does not, by itself, change fertilizer doses or
+The [AW200 + AeroLight 240 W plan](./aw200-and-aerolight-240w.md) adds a second
+light while keeping the room end open. It does not, by itself, change fertilizer doses or
 make a pot ready to water.
 
 ## Short answer

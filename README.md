@@ -5,7 +5,9 @@
 This is my low-pressure garden notebook. The current focus is my cactus,
 succulent, and small houseplant collection, especially learning how to use the
 indoor grow-light setup without turning the hobby into a science project.
-The next setup uses the selected AW400 with tunable spectrum and restores the open room-side view.
+The next setup keeps the AW200 beside a new AeroLight 240 W, with separate
+controls and an open room-side view. The new light and E25 are expected Sunday,
+September 13.
 
 ## Current notes
 
@@ -32,11 +34,11 @@ The next setup uses the selected AW400 with tunable spectrum and restores the op
 - [Plant profiles](docs/plants/) — names, origins, history, flowers, care,
   propagation, risks, sources, and photo-archive status for all 36 collection
   records (35 physically present and one historical)
-- [Incoming AW400 and open-end setup](docs/equipment/vivosun-aw400.md) —
-  verified tunable-spectrum fixture specs, replacement status, and a wider light plan
-  with the two-foot return reflector removed
+- [AW200 + AeroLight 240 W setup](docs/equipment/aw200-and-aerolight-240w.md) —
+  verified fixture dimensions and weights, Sunday arrival, independent E25
+  controls, and four ceiling hooks for independent suspension
 - [Final table placement guide](docs/layouts/table-placement-research.md) —
-  three AW400 illustrations and all 30 pots grouped by light need; also
+  three two-light illustrations and all 30 pots grouped by light need; also
   [after the online booklet contents](https://nick2bad4u.github.io/Gardening/#placement)
 - [Earlier AW200SE and E25 deep guide](docs/equipment/vivosun-aw200se.md) — PPFD maps,
   DLI/lux conversions, distances, dimming, placement, and a simple starting

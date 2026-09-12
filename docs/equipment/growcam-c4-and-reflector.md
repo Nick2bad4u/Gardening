@@ -1,14 +1,16 @@
 # GrowCam C4 time-lapse and reflector plan
 
-Last updated: 2026-09-10
+Last updated: 2026-09-11
 
-The owner is replacing the tunable AW200 with the selected
-[AW400 tunable full-spectrum light](./vivosun-aw400.md). The approximately
-two-foot room-end return panel is removed from the plan to restore the view.
+The owner is keeping the **AW200** beside the incoming
+[AeroLight 240 W](./aw200-and-aerolight-240w.md), with its E25 expected
+September 13. The AW400 selection is superseded after it was reported sold out.
 **Keep the existing divider Mylar and leave the room-facing end open.**
-In the current bird's-eye view, that means divider top, open room left, white
-wall bottom, and north-facing window right. The wider light's installation
-and final camera clearance remain unconfirmed.
+The two-foot return panel stays out of the plan. In the bird's-eye view:
+divider top, open room left, white wall bottom, weak north window right.
+Recheck camera sightlines around both fixtures and their separate hangers.
+Final mounting, independent light heights, and camera clearance
+remain unconfirmed.
 
 This guide keeps the GrowCam C4 and divider Mylar around an open plant display.
 The camera is for a stable collection-wide time-lapse, not close-up diagnosis

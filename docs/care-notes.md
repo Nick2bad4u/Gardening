@@ -1,15 +1,20 @@
 # Practical care notes
 
-Last updated: 2026-09-10
+Last updated: 2026-09-11
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
 
-The [incoming AW400 setup](./equipment/vivosun-aw400.md) keeps the room
-end open and aims for wider light coverage. Arrival, intensity, and clearance
-are unrecorded; the previous AW200 program is not a measured new-light baseline.
-Use the [final placement guide](./layouts/table-placement-research.md) for each
-pot's light need. Continue judging watering by the plants and pots after the swap.
+The [AW200 + AeroLight 240 W plan](./equipment/aw200-and-aerolight-240w.md)
+keeps the existing light and open room end. The new light and E25 are expected
+September 13; mounting and new settings remain unrecorded. Observe the combined
+exposure and dry-down after installation. Use the
+[final placement guide](./layouts/table-placement-research.md) for each pot's
+ongoing light need; adding a light does not by itself make a pot ready to water.
+
+For the incoming 240 W fixture, the [manufacturer's operating limit](https://vivosun.com/support/guide/aerolight-gen2)
+requires the growing space below **86°F (30°C)**. The older outdoor weather
+triggers below do not replace that equipment limit.
 
 ## Baseline routine
 
@@ -67,9 +72,9 @@ established, so do not use that claim to decide when to water.
 ## Earlier AW200SE Starting Plan
 
 The dated ramp below records earlier planning and observations. The
-September 9 AW200 correction and September 10 AW400 selection supersede it.
-Use the [incoming-light record](./equipment/vivosun-aw400.md) for the current
-plan; do not apply the old September percentages or timer to the replacement.
+September 9 AW200 correction and September 11 two-light plan supersede it.
+Use the [two-light record](./equipment/aw200-and-aerolight-240w.md) for the current
+plan; earlier percentages and timers are not new combined-exposure measurements.
 
 The complete [AW200SE/E25 guide](./equipment/vivosun-aw200se.md) has the
 manufacturer's PPFD maps, DLI and lux math, and working ranges for every current

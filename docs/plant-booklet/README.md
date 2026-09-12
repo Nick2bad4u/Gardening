@@ -24,7 +24,7 @@ marked historical record.
 The placement page is generated from
 [`docs/layouts/table-placement-research.md`](../layouts/table-placement-research.md).
 Edit that document to update the four-column by six-row grid, six glass-table
-containers, the AW400 coverage plan and open room end, final positions grouped by
+containers, the AW200 + AeroLight 240 W plan and open room end, final positions grouped by
 ongoing light need, or cited species reasoning, then run
 `npm run build:booklet`. Its three illustrated layouts open at full size, and
 plant links navigate to the corresponding booklet profiles. The source

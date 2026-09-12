@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-09-02
+Last updated: 2026-09-11
 
 This is the current working inventory plus historical records for plants
 removed from the collection. A label is useful evidence, but not a guarantee;
@@ -19,7 +19,7 @@ a photo-only collection ID.
 The short label IDs are permanent plant or shared-planter identifiers, not
 table coordinates. They are shown beside the longer historical inventory IDs.
 
-The [AW400 replacement and open-end plan](./equipment/vivosun-aw400.md)
+The [AW200 + AeroLight 240 W and open-end plan](./equipment/aw200-and-aerolight-240w.md)
 changes the intended lighting, not the collection IDs or inventory. See the
 [Table Placement Guide](./layouts/table-placement-research.md) for all 30
 recommended pot positions; physical moves and installation remain unconfirmed.

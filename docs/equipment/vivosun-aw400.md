@@ -1,16 +1,16 @@
-# VIVOSUN AeroLight Wing AW400
+# VIVOSUN AeroLight Wing AW400 — Unavailable Selection
 
-Updated September 10, 2026. The owner **canceled the Amazon AW400SE order and
-selected the AW400 with tunable full spectrum** from LED Grow Lights Depot,
-whose [exact listing][listing] specifies **Samsung 301H EVO diodes**,
-UVA, and far-red. The owner reports an approximately **$70 premium**. This is the replacement plan
-for the installed tunable AW200. The replacement's delivery date and installation
-are unconfirmed; the canceled order's Sunday estimate does not carry forward.
+**Superseded September 11, 2026:** the owner reports the AW400 is sold out and
+has ordered the new **[AeroLight 240 W to use beside the existing AW200](./aw200-and-aerolight-240w.md)**,
+with another E25 expected September 13. The AW400 was not recorded as received
+or installed. Use that linked record for the current equipment and mounting plan.
 
-The aim is a brighter, more even display that remains enjoyable to look at.
-**Remove the approximately two-foot Mylar return panel at the room-facing end.**
-Keep the existing Mylar on the divider, the white wall, and the current tables.
-The new plan leaves the view and access from the room open.
+The remaining sections preserve the **September 10 AW400 proposal**, after
+the Amazon AW400SE cancellation. The [seller listing][listing] specifies
+Samsung 301H EVO diodes, UVA, and far-red; the owner reported about $70 extra.
+Those specifications belong to the unavailable AW400, not the incoming 240 W.
+The open room end and removal of the two-foot return reflector remain current;
+the single-fixture coverage and installation plan below are historical.
 
 ## Exact Model and Manufacturer Specifications
 
@@ -35,7 +35,7 @@ AW200, and matches the canceled AW400SE's listed dimensions. The model swap
 therefore retains the existing broad placement plan. Equal dimensions do not
 establish equal intensity or distribution at each plant.
 
-## What the Upgrade Changes
+## What the Proposed Upgrade Changed
 
 - **Tunable spectrum and UVA:** the AW400 manual documents both, including
   UVA in its Flower-mode description. The manual does not establish an
@@ -55,7 +55,7 @@ need UVA or will grow better because it is present. Keep the species' light
 needs and actual exposure as the basis for placement. The roughly $70 premium
 is owner-reported, not a current retail-price comparison.
 
-## Placement With the Room End Open
+## September 10 Placement Proposal
 
 Use the [Table Placement Guide](../layouts/table-placement-research.md) for
 the 30 final recommended pot positions and the illustrated light-need groups.
@@ -86,7 +86,7 @@ the wooden grid's open-left corner, **R1C1**, as the candidate for gentler
 exposure. That corner is still under the broader light; its position alone
 does not establish bright indirect conditions. The plant's ongoing need stays I.
 
-## Program and Installation Record
+## September 10 Program and Installation Record
 
 | Record                          | Status                                                                                                                        |
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |

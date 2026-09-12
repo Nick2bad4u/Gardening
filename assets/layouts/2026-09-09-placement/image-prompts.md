@@ -1,4 +1,9 @@
-# AW400 Placement Illustration Prompts
+# Historical AW400 Placement Illustration Prompts
+
+**Superseded September 11, 2026:** the AW400 is unavailable. Current images and
+prompts are in [the AW200 + AeroLight 240 W set](../2026-09-11-dual-light/image-prompts.md).
+These PNGs preserve the earlier single-fixture proposal and are no longer the
+active booklet illustrations.
 
 Revised September 10, 2026, after the owner canceled the Amazon AW400SE order
 and selected the AW400 with tunable full spectrum. The selected seller listing

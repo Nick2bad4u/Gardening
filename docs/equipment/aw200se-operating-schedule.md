@@ -1,22 +1,22 @@
 # Fenton AW200SE, paired-fan, GrowCam, and air-treatment operating schedule
 
-Last updated: 2026-09-10
+Last updated: 2026-09-11
 
-## September 10 Incoming AW400 and Open Room End
+## September 11 AW200 + AeroLight 240 W Plan
 
-The owner canceled the Amazon AW400SE order and selected the **AW400 tunable
-full-spectrum 400 W fixture** from LED Grow Lights Depot, whose listing specifies
-Samsung 301H EVO diodes, UVA, and far-red. It is approximately **26 × 26.4 inches**
-and replaces the tunable AW200 in the plan. Replacement delivery and installation
-are unconfirmed. The **two-foot Mylar return panel
-is removed from the plan** to restore the room-facing view. Divider Mylar stays.
+The AW400 is sold out. The owner has ordered the **new AeroLight 240 W
+(VSL-AL240)** and **another E25**, expected **Sunday, September 13**, and is
+keeping the **AW200**. The fixtures will hang side by side with independent
+height adjustment, allowing different clearances for taller plants eventually.
+The **two-foot return panel stays out**; the divider Mylar stays.
 
-Use the [AW400 equipment record](./vivosun-aw400.md) and
-[final placement guide](../layouts/table-placement-research.md) for the new
-all-wood/near-half-glass coverage plan. The existing 13.25-hour day is only a
-planning reference for the replacement. Its intensity, clearance, and transferred
-program are unrecorded; do not carry the AW200's 60% over as equivalent exposure.
-The owner will handle acclimation; no new ramp or controller program was applied.
+Use the [two-light equipment record](./aw200-and-aerolight-240w.md) for exact
+dimensions, masses, and independent suspension from four ceiling hooks, and the
+[final placement guide](../layouts/table-placement-research.md) for the intended
+all-wood/near-half-glass exposure. Four E25 paths are planned: three existing
+and the incoming light controller. The last AW200 report remains 60% and a
+13.25-hour day; the new light's settings and both final clearances are unrecorded.
+The owner handles acclimation; no new ramp or controller program was applied.
 
 ## September 9 AW200 Record — Before the Replacement Order
 
@@ -28,7 +28,7 @@ The last recorded 18-inch clearance remains a baseline to remeasure, not a
 fresh September measurement. No controller program was changed in this update.
 
 At that time, a Diamond Mylar foam-board return closed an approximately two-foot
-gap toward the room. The September 10 decision above removes it. That earlier
+gap toward the room. The September 10 decision removed it from the plan; the September 11 plan keeps that end open. That earlier
 bird's-eye view put the window right, white wall bottom, divider Mylar top,
 and return panel left. The
 [September placement proposal](../layouts/table-placement-research.md) covers

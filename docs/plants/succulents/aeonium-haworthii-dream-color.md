@@ -34,12 +34,12 @@ a desert cactus.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                         |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | Bright filtered light at the outer upper-right glass side of the planned AW400 coverage in the [final placement guide](../../layouts/table-placement-research.md). Keep useful lamp exposure for compact rosettes; the weak north window is supplementary. |
-| Water               | Let much of the pot dry, then water and drain. Do not force it through cactus-level drought during active growth.                                                                                                                                          |
-| Pot and mix         | Keep the current 5-inch pot while drainage and drying are satisfactory.                                                                                                                                                                                    |
-| Seasonal behavior   | Aeoniums often slow in summer heat and grow more actively in cooler bright conditions.                                                                                                                                                                     |
+| Topic               | Practical approach                                                                                                                                                                                                                                                           |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | Bright filtered light at the outer upper-right glass side of the planned AW200 + AeroLight 240 W coverage in the [final placement guide](../../layouts/table-placement-research.md). Keep useful lamp exposure for compact rosettes; the weak north window is supplementary. |
+| Water               | Let much of the pot dry, then water and drain. Do not force it through cactus-level drought during active growth.                                                                                                                                                            |
+| Pot and mix         | Keep the current 5-inch pot while drainage and drying are satisfactory.                                                                                                                                                                                                      |
+| Seasonal behavior   | Aeoniums often slow in summer heat and grow more actively in cooler bright conditions.                                                                                                                                                                                       |
 
 ## Rotation, propagation, and watch points
 

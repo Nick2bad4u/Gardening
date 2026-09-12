@@ -1,14 +1,16 @@
 # Equipment research
 
-- [Incoming VIVOSUN AeroLight Wing AW400](./vivosun-aw400.md) — tunable full
-  spectrum, listed Samsung 301H EVO diodes and UVA, verified dimensions, all-wood/near-half-glass plan, and removal of
-  the room-end return reflector; installation and new settings pending
-- [Canceled AW400SE order](./vivosun-aw400se.md) — earlier selection and the
-  specification differences retained for equipment history
+- [AW200 + new AeroLight 240 W](./aw200-and-aerolight-240w.md) — side-by-side
+  fixtures, independent E25 controls and heights, September 13 expected arrival,
+  exact dimensions and weights, and four ceiling hooks (two per fixture)
+- [Unavailable AW400 selection](./vivosun-aw400.md) — September 10 research
+  retained after the owner reported it sold out on September 11
+- [Canceled AW400SE order](./vivosun-aw400se.md) — earlier selection retained
+  for equipment history
 
 - [VIVOSUN AeroLight Wing AW200SE and GrowHub E25](./vivosun-aw200se.md) —
   earlier-model research and manufacturer PPFD maps retained for provenance;
-  these are not measurements of the installed AW200 or incoming AW400
+  these are not measurements of the installed AW200 or incoming AeroLight 240 W
 - [Fenton AW200SE and paired-fan operating schedule](./aw200se-operating-schedule.md) —
   the dated move indoors and earlier settings, three confirmed independent E25 controller paths, revised
   18-inch/45% light phase, paired airflow, August 14 medium reset and dry-down
