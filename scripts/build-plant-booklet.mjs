@@ -1577,7 +1577,7 @@ function renderBooklet(profiles, placementHtml) {
     <p class="search-status" id="search-status" aria-live="polite">Showing all ${profiles.length} profiles</p>
     <nav class="drawer-nav" aria-label="Plant profiles">
       <a class="drawer-special" href="#cover" data-page-link="cover"><span>${renderSiteIcon("cactus")} Cover</span><small>Start of the guide</small></a>
-      <a class="drawer-special" href="#contents" data-page-link="contents"><span>${renderSiteIcon("field-guide")} Printed contents</span><small>All profiles at a glance</small></a>
+      <a class="drawer-special" href="#contents" data-page-link="contents"><span>${renderSiteIcon("field-guide")} Table of Contents</span><small>All profiles at a glance</small></a>
       <a class="drawer-special" href="#placement" data-page-link="placement"><span>${renderSiteIcon("layout")} Table Placement Guide</span><small>Four columns, six rows · All 30 pots</small></a>
       <a class="drawer-special" href="../layouts/plant-tracker.html"><span>${renderSiteIcon("tracker")} Plant tracker</span><small>Live weights, watering, and measurements</small></a>
       <a class="drawer-special" href="../layouts/grow-spot-layout.html"><span>${renderSiteIcon("layout")} Grow-spot layout</span><small>Tables, risers, light, fan, and camera</small></a>
@@ -1725,7 +1725,7 @@ function renderCover(profiles) {
       <div><strong>${presentCount}</strong><span>plants present</span></div>
       <div><strong>${profiles.length}</strong><span>deep profiles</span></div>
       <div><strong>${profiles.reduce((sum, profile) => sum + profile.photoCount, 0)}</strong><span>licensed reference photos</span></div>
-      <a class="cover-start" href="#${escapeHtml(required(profiles[0], "first profile").slug)}" data-page-link="${escapeHtml(required(profiles[0], "first profile").slug)}">Start reading ${renderSiteIcon(forwardIcon, linkEndIconClass)}</a>
+      <a class="cover-start" href="#contents" data-page-link="contents">Start reading ${renderSiteIcon(forwardIcon, linkEndIconClass)}</a>
     </div>
     <p class="cover-credit">Summer 2026 edition · Working identifications stay honest about uncertainty</p>
   </section>`;

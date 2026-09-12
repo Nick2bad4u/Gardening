@@ -59,10 +59,11 @@ function readGuidePortraits() {
 for (const theme of ["dark", "light"] as const) {
     test.describe(`${theme} field guide`, () => {
         test(
-            "opens the placement guide after contents and links to the reviewed plants",
+            "starts at contents, opens placement next, and links to the reviewed plants",
             { tag: "@layout" },
             async ({ page }) => {
-                await openGuide(page, theme, "contents");
+                await openGuide(page, theme, "cover");
+                await page.getByRole("link", { name: "Start reading" }).click();
                 await page.keyboard.press("ArrowRight");
                 await expect.soft(page).toHaveURL(/#placement$/v);
                 const guide = page.getByRole("region", {

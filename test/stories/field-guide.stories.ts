@@ -36,8 +36,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Contents: Story = {
+    args: { path: "plant-booklet/index.html#cover" },
     play: async ({ canvasElement }) => {
-        const { canvas, document } = await websiteCanvas(canvasElement);
+        const { canvas, document, userEvent } =
+            await websiteCanvas(canvasElement);
+        await userEvent.click(
+            canvas.getByRole("link", { name: "Start reading" })
+        );
         await waitFor(() =>
             expect(
                 canvas.getByRole("heading", {

@@ -480,6 +480,17 @@
 
     bindExternalImages(document);
 
+    requiredElement(".skip-link", HTMLAnchorElement).addEventListener(
+        "click",
+        (event) => {
+            event.preventDefault();
+            requiredElement("#book", HTMLElement).focus({
+                preventScroll: true,
+            });
+            window.scrollTo({ behavior: "auto", top: 0 });
+        }
+    );
+
     openContents.addEventListener("click", () => {
         if (!contentsDialog.open) contentsDialog.showModal();
         setTimeout(() => {

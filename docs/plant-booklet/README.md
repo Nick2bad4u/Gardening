@@ -5,7 +5,7 @@ collection. It has a cover, searchable contents, a
 [Table Placement Guide](https://nick2bad4u.github.io/Gardening/#placement) immediately after the contents,
 keyboard and button
 navigation, a random-profile jump, light and dark themes, print styling, and
-one deep-linkable reading page for each of the 36 plant records. The printed
+one deep-linkable reading page for each of the 36 plant records. The table of
 contents and drawer use a current-plant thumbnail and show the permanent
 Google Sheets P-ID separately from the physical pot label and repository
 Inventory ID. The starter and newer cactus directories remain separate source
@@ -20,6 +20,11 @@ would overstate the evidence.
 Thirty-five profiles are physically documented as present, including the six
 Mountain Crest plants received on 2026-08-28. Rehab-04 is retained as a clearly
 marked historical record.
+
+The cover's **Start reading** button opens the **Table of Contents**. The next
+page is the placement guide, followed by the plant profiles. The keyboard
+**Skip to the current page** link focuses the current reading area without
+changing the selected page or its bookmark.
 
 The placement page is generated from
 [`docs/layouts/table-placement-research.md`](../layouts/table-placement-research.md).
@@ -47,11 +52,12 @@ proof.
 
 The GitHub Pages build publishes the booklet at the repository's Pages URL,
 along with the plant tracker, individual history view, grow-spot layout, indoor
-acclimation calendar, and photo Collections index. It contains only those
-browser tools, their licensed reference photographs, preserved local evidence,
-and remote Gyazo image URLs. It does not republish the complete collection-photo
-binary archive or the rest of the repository. GitHub Pages must be enabled for
-the repository before the deployment workflow can complete.
+acclimation calendar, and photo Collections index. The build also includes the
+Storybook component workbench, licensed reference photographs, preserved local
+evidence, and selected collection-photo previews. It does not republish the
+complete collection-photo original archive or the rest of the repository.
+GitHub Pages must be enabled for the repository before the deployment workflow
+can complete.
 
 The production build installs Google Tag Manager container `GTM-T8J6HPLF` on
 every published HTML entry point. The source pages opened locally do not load
@@ -67,14 +73,16 @@ digits `404`.
 For publication performance, the build creates ignored 480, 960, and 1440 px
 WebP variants of every displayed licensed reference photograph. The repository
 keeps its credited source files unchanged, while Pages serves an appropriate
-responsive derivative. User-owned Gyazo captures follow the same principle:
-the manifest retains the source-quality direct URL, displayed previews use
-Gyazo's responsive thumbnail service, and the capture or Collection link opens
-the full-resolution hosted record.
+responsive derivative. For user-owned Gyazo captures, the manifest retains the
+source-quality direct URL. The Pages build caches the selected thumbnails and
+publishes 320, 640, and 960 px WebP previews on the site's own origin, so viewing
+a plant does not depend on the phone reaching Gyazo's thumbnail host. The
+capture or Collection link still opens the full-resolution hosted record.
+Repository-source previews continue to use Gyazo's thumbnail service.
 
 The reader links to the local
 [photo album entry page](../layouts/photo-album.html), which provides a
-searchable index of all 33 plant-specific Gyazo Collections and the overview
+searchable index of all 35 plant-specific Gyazo Collections and the overview
 Collection. Google Photos remains the private original archive rather than a
 public site dependency.
 

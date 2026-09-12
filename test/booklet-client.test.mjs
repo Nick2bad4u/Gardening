@@ -1,4 +1,5 @@
 import {
+    HTMLAnchorElement,
     HTMLButtonElement,
     HTMLElement,
     HTMLImageElement,
@@ -29,6 +30,7 @@ function createReader(hash = "#plant-b-photo-history", { dataLayer } = {}) {
         return setImmediate(() => {});
     };
     window.document.body.innerHTML = `
+        <a class="skip-link" href="#book">Skip to the current page</a>
         <header>
             <button id="open-contents" type="button">Contents</button>
             <strong id="reader-title"></strong>
@@ -49,7 +51,7 @@ function createReader(hash = "#plant-b-photo-history", { dataLayer } = {}) {
                 </ol>
             </section>
         </dialog>
-        <main id="book">
+        <main id="book" tabindex="-1">
             <section class="book-page cover-page" id="cover" data-page="cover" data-title="Cover" data-icon="story" hidden>
                 <div class="cover-collage"><img src="cover-a.jpg" loading="lazy"><img src="cover-b.jpg" loading="lazy"></div>
             </section>
@@ -85,6 +87,34 @@ function createReader(hash = "#plant-b-photo-history", { dataLayer } = {}) {
 }
 
 describe("field-guide profile mounting", () => {
+    it.each([
+        "#cover",
+        "#contents",
+        "#plant-b",
+        "#plant-b-photo-history",
+    ])("skips navigation without leaving %s", (hash) => {
+        expect.hasAssertions();
+
+        const window = createReader(hash);
+        const activePage = window.document.querySelector(
+            "[data-page]:not([hidden])"
+        );
+        const scroll = vi.spyOn(window, "scrollTo");
+        queryElement(window.document, ".skip-link", HTMLAnchorElement).click();
+
+        expect(window.location.hash).toBe(hash);
+        expect(window.document.activeElement).toBe(
+            window.document.querySelector("#book")
+        );
+        expect(window.document.querySelector("[data-page]:not([hidden])")).toBe(
+            activePage
+        );
+        expect(scroll).toHaveBeenCalledExactlyOnceWith({
+            behavior: "auto",
+            top: 0,
+        });
+    });
+
     it("prints full metadata evidence and restores previously closed summaries", () => {
         expect.hasAssertions();
 
