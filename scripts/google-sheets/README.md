@@ -32,6 +32,41 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
+### Verified 5.21.1 baseline
+
+On September 12, 2026, **logger 5.21.1** was published as immutable Apps Script
+**version 84**, using the existing deployment and phone URL. All three immutable
+files and Head sources match the committed logger. The authenticated app reports
+**Connected · logger 5.21.1**; its version-84 `doGet` and `getWebAppBootstrap`
+executions completed successfully.
+
+The logger and AppSheet intake installers completed without a schema migration.
+The queue installer replaced its one predecessor; exactly one Head / Time-driven /
+Minutes timer / Every 5 minutes trigger remains for `processQueuedAppSheetEntries`.
+Its September 12, **12:40:44 p.m. EDT** scheduled execution completed successfully.
+The native backup **Garden Plant Tracker — before logger 5.21.1 — 2026-09-12**
+is in **My Drive → Archive → Garden Plant Tracker Backups**. Exact pre/post
+comparisons preserve **809 History observations**, **809 unique Observation IDs**,
+**742 distinct Request IDs**, all **110 charts**, and the checked values,
+formulas, and validations in Quick log, History view, Baselines, Dry-down models,
+AppSheet staging, Dashboard, Plant tracker, and all 30 plant headers. Integrity
+reports **0 formula errors**; no synthetic observation was submitted.
+
+The logger source from `42f43c0` was deployed after main commit `fd9146f` passed
+the website and Pages, logger, Sonar quality gate, Codecov, Socket, Gitleaks,
+and TruffleHog checks. The pending weight-comparison, two-light, four-hook,
+placement-image, booklet, and dependency updates are published. The live guide
+and all three placement PNGs match the repository. A reproduced booklet hover
+regression was also fixed: navigation stays visible while the mouse remains
+over its controls, even when a layout shift causes another scroll event.
+
+Local validation passed **850 unit tests**, **726 logger tests with coverage**,
+**27 Chromium Storybook tests with coverage**, and **56 desktop/mobile page
+checks**, plus type, lint, build, formatting, and secret checks. Dependency
+audits report no vulnerabilities. The full external-link check has one known
+publisher-side **403** for the existing Wiley DOI source; the newly published
+documentation links resolve successfully.
+
 ### Days Since Water Headers (5.21.1)
 
 The Dashboard's existing **E6:E36** count is labeled **Days since water**.
@@ -61,10 +96,10 @@ distinct Request IDs**, all **110 charts**, and the checked formulas and
 validations in Baselines, Dry-down models, and AppSheet staging. Integrity
 reports **0 formula errors**. No synthetic observation was submitted.
 
-### Verified 5.21.0 baseline
+### Previous 5.21.0 baseline
 
 On September 10, 2026, the original workbook received the current-weight
-comparison and all 30 formatted plant headers. The logger runs **5.21.0** on
+comparison and all 30 formatted plant headers. The logger ran **5.21.0** on
 immutable Apps Script **version 83**, preserving the existing deployment and
 phone URL. All three immutable files match the local repository source, and
 the authenticated page reports **Connected · logger 5.21.0**. Its version-83
