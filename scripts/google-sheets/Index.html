@@ -801,12 +801,28 @@
                 border-block-start: 1px solid var(--line);
 
                 & summary {
+                    display: grid;
+                    grid-template-columns:
+                        [arrow-start] auto [arrow-end icon-start] auto
+                        [icon-end title-start] minmax(0, 1fr)
+                        [title-end count-start] auto [count-end];
+                    gap: 8px;
+                    align-items: center;
                     font-weight: 700;
+                    line-height: 1.375;
+                    list-style: "";
 
-                    & .chart-summary-icon {
-                        margin-inline: 6px;
-                        vertical-align: middle;
+                    &::before {
+                        content: "▸";
                     }
+                }
+
+                &[open] > summary::before {
+                    transform: rotate(90deg);
+                }
+
+                & summary::-webkit-details-marker {
+                    display: none;
                 }
 
                 & .hint {
@@ -1040,6 +1056,17 @@
                 margin-block-start: 12px;
                 background: var(--leaf-soft);
                 border-radius: 15px;
+            }
+
+            .plant-details {
+                display: grid;
+                gap: 12px;
+
+                & .activity-counts,
+                & .weight-chart,
+                & .plant-links {
+                    margin-block: 0;
+                }
             }
             .plant-id {
                 display: inline-flex;
@@ -1467,16 +1494,44 @@
                 background: var(--control);
                 border: 1px solid var(--line);
                 border-radius: 12px;
+
+                &.picker-name--selection {
+                    display: grid;
+                    grid-template-columns:
+                        [icon-start] auto [icon-end content-start] minmax(
+                            0,
+                            1fr
+                        )
+                        [content-end];
+                }
+            }
+
+            .picker-selection-text {
+                display: grid;
+                gap: 2px;
+                min-inline-size: 0;
+            }
+
+            .picker-selection-identity {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                min-inline-size: 0;
             }
 
             .picker-selection-name {
+                overflow: hidden;
+                text-overflow: ellipsis;
                 color: var(--forest-2);
+                white-space: nowrap;
             }
 
             .picker-selection-label {
+                flex: none;
                 padding: 3px 9px;
                 font-weight: 800;
                 color: var(--info-ink);
+                white-space: nowrap;
                 background: var(--card-soft);
                 border: 1px solid var(--line);
                 border-radius: 999px;
@@ -2414,6 +2469,21 @@
 
                 .weight-chart {
                     padding: 12px;
+                }
+
+                .chart-readings summary {
+                    gap: 6px;
+                    font-size: 0.875rem;
+                }
+
+                .picker-toolbar--bulk {
+                    display: grid;
+                    align-items: start;
+                    justify-content: stretch;
+
+                    & .picker-mode {
+                        min-block-size: 44px;
+                    }
                 }
 
                 .app {
@@ -13219,7 +13289,7 @@
                             ></div>
                             <p
                                 id="plantPickerName"
-                                class="picker-name"
+                                class="picker-name picker-name--selection"
                                 role="status"
                                 aria-live="polite"
                                 >Choose a plant to see its name.</p
@@ -13860,6 +13930,12 @@
                                 >Save now</button
                             >
                         </div>
+                        <section
+                            id="plantDetails"
+                            class="card plant-details"
+                            aria-labelledby="plantDetailsTitle"
+                            hidden
+                        ></section>
                     </form>
 
                     <form
@@ -13896,7 +13972,7 @@
                                 class="chips"
                                 aria-label="Bulk care actions"
                             ></div>
-                            <div class="picker-toolbar">
+                            <div class="picker-toolbar picker-toolbar--bulk">
                                 <span class="hint"
                                     >Select multiple plants in either
                                     view.</span
@@ -16477,9 +16553,23 @@
                     )
                 )
                     return;
+                const picker = $("labelPicker");
+                const pickerBounds = picker.getBoundingClientRect();
+                const keepPickerPosition =
+                    !picker.hidden &&
+                    pickerBounds.bottom > 0 &&
+                    pickerBounds.top < window.innerHeight;
                 $("plantSearch").value = "";
                 renderPlantOptions("", plantId);
                 $("plantChoiceMenu").open = false;
+                if (keepPickerPosition) {
+                    // Different summary heights must not move labels away
+                    // from the finger or keyboard focus that selected them.
+                    const shift =
+                        picker.getBoundingClientRect().top - pickerBounds.top;
+                    if (shift)
+                        window.scrollBy({ top: shift, behavior: "instant" });
+                }
             }
 
             function selectedPlant() {
@@ -16503,19 +16593,21 @@
                 }
                 const prefix = document.createElement("span");
                 prefix.className = "picker-selection-prefix";
-                prefix.textContent = selected ? "Selected: " : "";
+                prefix.textContent = selected ? "Selected: " : "Plant: ";
                 const name = document.createElement("strong");
                 name.className = "picker-selection-name";
                 name.textContent = plant.name;
+                name.title = plant.name;
                 const label = document.createElement("span");
                 label.className = "picker-selection-label";
                 label.textContent = plant.label || plant.id;
-                container.append(
-                    prefix,
-                    name,
-                    document.createTextNode(" · "),
-                    label
-                );
+                const identity = document.createElement("span");
+                identity.className = "picker-selection-identity";
+                identity.append(name, document.createTextNode(" "), label);
+                const text = document.createElement("span");
+                text.className = "picker-selection-text";
+                text.append(prefix, identity);
+                container.append(text);
             }
 
             function previewPickerName(event) {
@@ -16528,7 +16620,8 @@
                 const plant = state.bootstrap?.plants.find(
                     (candidate) => candidate.id === button?.dataset.plantId
                 );
-                if (plant) showPickerName(plant, false);
+                if (plant)
+                    showPickerName(plant, plant.id === selectedPlant()?.id);
             }
 
             function renderPlantSummary() {
@@ -16539,6 +16632,7 @@
                 if (plantChanged && $("recentScope").value === "plant")
                     refreshRecent();
                 const summary = $("plantSummary");
+                const details = $("plantDetails");
                 const displayTools = $("plantDisplayTools");
                 const restoreDisplayFocus = displayTools.contains(
                     document.activeElement
@@ -16553,6 +16647,8 @@
                         : null;
                 portrait?.remove();
                 clearPlantPortraits(summary);
+                clearPlantPortraits(details);
+                details.hidden = !plant;
                 displayTools.hidden = !plant;
                 showPickerName(plant);
                 if (!plant) {
@@ -16748,15 +16844,22 @@
                 summaryPortrait.dataset.plantId = plant.id;
                 portraitGroup.append(summaryPortrait, badge);
                 heading.append(identity, portraitGroup);
-                left.append(
-                    heading,
-                    metrics,
+                left.append(heading, metrics);
+                summary.append(left);
+                const detailsTitle = document.createElement("h2");
+                detailsTitle.id = "plantDetailsTitle";
+                setIconLabel(detailsTitle, "history", "Plant details");
+                const detailsName = document.createElement("p");
+                detailsName.className = "hint";
+                detailsName.textContent = `${plant.name} · ${plant.label || plant.id}`;
+                details.append(
+                    detailsTitle,
+                    detailsName,
                     createActivityCounts(activity),
                     createWateringPlan(plant),
-                    createWeightChart(plant)
+                    createWeightChart(plant),
+                    plantLinks
                 );
-                left.append(plantLinks);
-                summary.append(left);
 
                 const photoData = [
                     {
@@ -16800,7 +16903,7 @@
                         figure.append(image, fallback, label);
                         photos.append(figure);
                     });
-                    summary.append(photos);
+                    details.append(photos);
                 }
                 plantLinks.append(displayTools);
                 restoreDisplayFocus?.focus({ preventScroll: true });
@@ -17135,12 +17238,14 @@
                 const details = document.createElement("details");
                 details.className = "chart-readings";
                 const summary = document.createElement("summary");
+                const title = document.createElement("span");
+                title.textContent = "Readings and watering markers";
                 summary.append(
                     createIcon(
                         "history",
                         "app-icon app-icon--small chart-summary-icon"
                     ),
-                    document.createTextNode("Readings and watering markers ")
+                    title
                 );
                 const readingCount = document.createElement("span");
                 readingCount.className = "picker-selection-label";

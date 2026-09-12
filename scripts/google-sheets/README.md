@@ -67,6 +67,25 @@ audits report no vulnerabilities. The full external-link check has one known
 publisher-side **403** for the existing Wiley DOI source; the newly published
 documentation links resolve successfully.
 
+### Mobile Summary and Plant Details (5.21.2)
+
+The selected plant's identity and six summary metrics stay above the picker:
+Last water, Latest weight, Last completed dry, Current pot, Avg water interval,
+and Cycle avg loss. Activity totals, the watering forecast, current-cycle chart,
+photos, reference links, and visibility controls now appear in **Plant details**,
+after **Add to queue / Save now** and before the queue and Recent History.
+Both sections update together when the selected plant changes; an empty search
+hides the detailed section until a plant is selected again.
+
+On phones, the selected name and label share one row below the smaller selection
+caption. The label stays visible beside long names, and a name that exceeds the
+available width uses an ellipsis; the full name remains in the plant heading.
+The chart's readings disclosure aligns its arrow, icon, title, and unbroken count
+badge. Bulk care puts its view controls below the help text at phone widths.
+Selecting a visible label preserves the grid's screen position when the summary
+height changes, without scrolling a picker that is hidden or outside the view.
+This is a client layout update; History and AppSheet schemas are unchanged.
+
 ### Days Since Water Headers (5.21.1)
 
 The Dashboard's existing **E6:E36** count is labeled **Days since water**.

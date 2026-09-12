@@ -5646,17 +5646,9 @@ describe("garden logger plant photos and portrait rendering", () => {
             bootstrapData: canonicalBootstrap(),
             storage: { gardenPlantId: "P23" },
         });
-        const summary = queryElement(
-            window.document,
-            "#plantSummary",
-            HTMLElement
-        );
+        const entry = queryElement(window.document, "#entryForm", HTMLElement);
         const images = [
-            ...queryElements(
-                summary,
-                ".plant-photo-card img",
-                HTMLImageElement
-            ),
+            ...queryElements(entry, ".plant-photo-card img", HTMLImageElement),
         ];
 
         expect(structuredClone(images.map(({ src }) => src))).toStrictEqual([
@@ -5671,7 +5663,7 @@ describe("garden logger plant photos and portrait rendering", () => {
             structuredClone(
                 [
                     ...queryElements(
-                        summary,
+                        entry,
                         ".plant-photo-card figcaption",
                         HTMLElement
                     ),
@@ -5691,7 +5683,7 @@ describe("garden logger plant photos and portrait rendering", () => {
         select.dispatchEvent(new window.Event("change", { bubbles: true }));
 
         expect(
-            queryElements(summary, ".plant-photo-card", HTMLElement)
+            queryElements(entry, ".plant-photo-card", HTMLElement)
         ).toHaveLength(0);
     });
 
@@ -5802,23 +5794,19 @@ describe("garden logger plant photos and portrait rendering", () => {
         }).window;
         const toggle = queryElement(
             hidden.document,
-            "#plantSummary #plantDisplayTools #photoVisibilityToggle",
+            "#entryForm #plantDisplayTools #photoVisibilityToggle",
             HTMLButtonElement
         );
-        const summary = queryElement(
-            hidden.document,
-            "#plantSummary",
-            HTMLElement
-        );
-        const tools = queryElement(summary, "#plantDisplayTools", HTMLElement);
+        const entry = queryElement(hidden.document, "#entryForm", HTMLElement);
+        const tools = queryElement(entry, "#plantDisplayTools", HTMLElement);
         const portrait = queryElement(
-            summary,
+            entry,
             ".summary-portrait",
             HTMLImageElement
         );
 
         expect(tools.parentElement).toBe(
-            queryElement(summary, ".plant-links", HTMLElement)
+            queryElement(entry, ".plant-links", HTMLElement)
         );
 
         for (const url of Object.values(p23ImageUrls)) {
@@ -5828,7 +5816,7 @@ describe("garden logger plant photos and portrait rendering", () => {
         expect(
             queryElements(
                 hidden.document,
-                "#plantSummary .plant-photo-card img",
+                "#entryForm .plant-photo-card img",
                 HTMLImageElement
             )
         ).toHaveLength(0);
@@ -5839,16 +5827,16 @@ describe("garden logger plant photos and portrait rendering", () => {
         toggle.click();
 
         expect(
-            queryElement(summary, "#photoVisibilityToggle", HTMLButtonElement)
+            queryElement(entry, "#photoVisibilityToggle", HTMLButtonElement)
         ).toBe(toggle);
         expect(hidden.document.activeElement).toBe(toggle);
-        expect(
-            queryElement(summary, ".summary-portrait", HTMLImageElement)
-        ).toBe(portrait);
+        expect(queryElement(entry, ".summary-portrait", HTMLImageElement)).toBe(
+            portrait
+        );
         expect(
             queryElements(
                 hidden.document,
-                "#plantSummary .plant-photo-card img",
+                "#entryForm .plant-photo-card img",
                 HTMLImageElement
             )
         ).toHaveLength(2);
@@ -5863,14 +5851,14 @@ describe("garden logger plant photos and portrait rendering", () => {
         toggle.click();
 
         expect(
-            queryElement(summary, "#photoVisibilityToggle", HTMLButtonElement)
+            queryElement(entry, "#photoVisibilityToggle", HTMLButtonElement)
         ).toBe(toggle);
         expect(hidden.document.activeElement).toBe(toggle);
-        expect(
-            queryElement(summary, ".summary-portrait", HTMLImageElement)
-        ).toBe(portrait);
+        expect(queryElement(entry, ".summary-portrait", HTMLImageElement)).toBe(
+            portrait
+        );
         expect(tools.parentElement).toBe(
-            queryElement(summary, ".plant-links", HTMLElement)
+            queryElement(entry, ".plant-links", HTMLElement)
         );
 
         for (const url of Object.values(p23ImageUrls)) {
@@ -5880,7 +5868,7 @@ describe("garden logger plant photos and portrait rendering", () => {
         expect(
             queryElements(
                 hidden.document,
-                "#plantSummary .plant-photo-card img",
+                "#entryForm .plant-photo-card img",
                 HTMLImageElement
             )
         ).toHaveLength(0);
@@ -5899,7 +5887,7 @@ describe("garden logger plant photos and portrait rendering", () => {
         expect(
             queryElements(
                 restored.document,
-                "#plantSummary .plant-photo-card img",
+                "#entryForm .plant-photo-card img",
                 HTMLImageElement
             )
         ).toHaveLength(0);
@@ -5919,12 +5907,8 @@ describe("garden logger plant photos and portrait rendering", () => {
             bootstrapData: canonicalBootstrap(),
             storage: { gardenPlantId: "P23" },
         });
-        const summary = queryElement(
-            window.document,
-            "#plantSummary",
-            HTMLElement
-        );
-        const tools = queryElement(summary, "#plantDisplayTools", HTMLElement);
+        const entry = queryElement(window.document, "#entryForm", HTMLElement);
+        const tools = queryElement(entry, "#plantDisplayTools", HTMLElement);
         const toggle = queryElement(
             tools,
             "#photoVisibilityToggle",
@@ -5938,7 +5922,7 @@ describe("garden logger plant photos and portrait rendering", () => {
         search.value = "no such plant";
         search.dispatchEvent(new window.Event("input", { bubbles: true }));
 
-        expect(summary.textContent).toContain("No plants match that search.");
+        expect(entry.textContent).toContain("No plants match that search.");
         expect(tools.hidden).toBe(true);
         expect(toggle.isConnected).toBe(true);
 
@@ -5946,14 +5930,14 @@ describe("garden logger plant photos and portrait rendering", () => {
         search.dispatchEvent(new window.Event("input", { bubbles: true }));
 
         expect(
-            queryElement(summary, "#photoVisibilityToggle", HTMLButtonElement)
+            queryElement(entry, "#photoVisibilityToggle", HTMLButtonElement)
         ).toBe(toggle);
         expect(tools.parentElement).toBe(
-            queryElement(summary, ".plant-links", HTMLElement)
+            queryElement(entry, ".plant-links", HTMLElement)
         );
         expect(tools.hidden).toBe(false);
         expect(
-            queryElements(summary, ".plant-photo-card img", HTMLImageElement)
+            queryElements(entry, ".plant-photo-card img", HTMLImageElement)
         ).toHaveLength(2);
 
         toggle.focus();
@@ -5961,10 +5945,10 @@ describe("garden logger plant photos and portrait rendering", () => {
 
         expect(window.document.activeElement).toBe(toggle);
         expect(
-            queryElements(summary, ".plant-photo-card img", HTMLImageElement)
+            queryElements(entry, ".plant-photo-card img", HTMLImageElement)
         ).toHaveLength(0);
         expect(
-            queryElement(summary, ".summary-portrait", HTMLImageElement)
+            queryElement(entry, ".summary-portrait", HTMLImageElement)
                 .isConnected
         ).toBe(true);
     });
@@ -5975,13 +5959,9 @@ describe("garden logger plant photos and portrait rendering", () => {
         const { window } = createLoggerWindow({
             storage: { gardenLoggerPlantPickerModeV1: "labels" },
         });
-        const summary = queryElement(
-            window.document,
-            "#plantSummary",
-            HTMLElement
-        );
+        const entry = queryElement(window.document, "#entryForm", HTMLElement);
         const portrait = queryElement(
-            summary,
+            entry,
             ".plant-summary-heading .summary-portrait",
             HTMLImageElement
         );
@@ -6001,20 +5981,20 @@ describe("garden logger plant photos and portrait rendering", () => {
             HTMLButtonElement
         ).click();
 
-        expect(
-            queryElement(summary, ".summary-portrait", HTMLImageElement)
-        ).toBe(portrait);
+        expect(queryElement(entry, ".summary-portrait", HTMLImageElement)).toBe(
+            portrait
+        );
         expect(portrait.isConnected).toBe(true);
 
         queryElement(
-            summary,
+            entry,
             "#photoVisibilityToggle",
             HTMLButtonElement
         ).click();
 
-        expect(
-            queryElement(summary, ".summary-portrait", HTMLImageElement)
-        ).toBe(portrait);
+        expect(queryElement(entry, ".summary-portrait", HTMLImageElement)).toBe(
+            portrait
+        );
 
         queryElement(
             picker,
@@ -6023,7 +6003,7 @@ describe("garden logger plant photos and portrait rendering", () => {
         ).click();
 
         expect(
-            queryElement(summary, ".summary-portrait", HTMLImageElement).src
+            queryElement(entry, ".summary-portrait", HTMLImageElement).src
         ).toBe(
             `https://nick2bad4u.github.io/Gardening/assets/plant-icons/parodia-leninghausii.svg?v=${portraitRevision}`
         );
@@ -6471,40 +6451,36 @@ describe("garden logger watering forecasts and recent History", () => {
                 ],
             },
         });
-        const summary = queryElement(
-            window.document,
-            "#plantSummary",
-            HTMLElement
-        );
+        const entry = queryElement(window.document, "#entryForm", HTMLElement);
 
-        expect(queryElements(summary, ".metric", HTMLElement)).toHaveLength(6);
+        expect(queryElements(entry, ".metric", HTMLElement)).toHaveLength(6);
         expect(
-            required(queryElements(summary, ".metric-value", HTMLElement)[2])
+            required(queryElements(entry, ".metric-value", HTMLElement)[2])
                 .textContent
         ).toBe("398 g");
         expect(
-            required(queryElements(summary, ".metric-detail", HTMLElement)[2])
+            required(queryElements(entry, ".metric-detail", HTMLElement)[2])
                 .textContent
         ).toBe("Aug 10, 2026");
         expect(
-            queryElement(summary, ".forecast-date", HTMLElement).textContent
+            queryElement(entry, ".forecast-date", HTMLElement).textContent
         ).toBe("Sep 12");
         expect(
             queryElement(
-                summary,
+                entry,
                 ".forecast-guidance .help-paragraph",
                 HTMLElement
             ).textContent
         ).toBe("Confirm dry roots first.");
         expect(
-            queryElement(summary, ".forecast-window", HTMLElement).textContent
+            queryElement(entry, ".forecast-window", HTMLElement).textContent
         ).toContain("Sep 10–Sep 16");
         expect(
-            queryElement(summary, ".forecast-method", HTMLElement).textContent
+            queryElement(entry, ".forecast-method", HTMLElement).textContent
         ).toContain("2 learned cycles");
         expect(
             queryElement(
-                summary,
+                entry,
                 ":scope .plant-summary-heading .plant-id",
                 HTMLElement
             ).textContent
@@ -6515,13 +6491,9 @@ describe("garden logger watering forecasts and recent History", () => {
         expect.hasAssertions();
 
         const { window } = createLoggerWindow();
-        const summary = queryElement(
-            window.document,
-            "#plantSummary",
-            HTMLElement
-        );
+        const entry = queryElement(window.document, "#entryForm", HTMLElement);
         const dryMetric = () =>
-            required(queryElements(summary, ".metric", HTMLElement)[2]);
+            required(queryElements(entry, ".metric", HTMLElement)[2]);
 
         expect(
             queryElement(dryMetric(), ".metric-value", HTMLElement).textContent
@@ -6564,16 +6536,12 @@ describe("garden logger watering forecasts and recent History", () => {
                 ),
             },
         });
-        const summary = queryElement(
-            window.document,
-            "#plantSummary",
-            HTMLElement
-        );
+        const entry = queryElement(window.document, "#entryForm", HTMLElement);
 
         expect(
-            queryElement(summary, ".forecast-window", HTMLElement).textContent
+            queryElement(entry, ".forecast-window", HTMLElement).textContent
         ).toBe("Sep 10–Sep 25");
-        expect(summary.textContent).toContain(
+        expect(entry.textContent).toContain(
             "Historical estimate · 1 learned cycle(s)"
         );
 
@@ -6586,12 +6554,12 @@ describe("garden logger watering forecasts and recent History", () => {
         select.dispatchEvent(new window.Event("change", { bubbles: true }));
 
         expect(
-            queryElement(summary, ".forecast-window", HTMLElement).textContent
+            queryElement(entry, ".forecast-window", HTMLElement).textContent
         ).toBe("Not enough evidence yet");
-        expect(summary.textContent).toContain("Needs watering-cycle data");
+        expect(entry.textContent).toContain("Needs watering-cycle data");
         expect(
             queryElements(
-                summary,
+                entry,
                 ".metric > .metric-icon svg, .metric > .help-disclosure > summary > svg",
                 Element
             )
@@ -6925,6 +6893,149 @@ describe("garden logger local History loading and portraits", () => {
 describe("garden logger selection and portrait stability", () => {
     afterEach(restoreLoggerMocks);
 
+    it("keeps six summary metrics above the picker and updates details below the save controls", () => {
+        expect.hasAssertions();
+
+        const data = workflowBootstrap();
+        const second = required(data.plants[1]);
+        second.weightSeries = {
+            ...required(second.weightSeries),
+            points: [
+                {
+                    breakBefore: false,
+                    observationId: "second-plant-reading",
+                    observedAt: "2026-09-05T17:00:00.000Z",
+                    weight: 510,
+                },
+            ],
+        };
+        const { window } = createLoggerWindow({
+            bootstrapData: data,
+            storage: { gardenLoggerPlantPickerModeV1: "labels" },
+        });
+        const summary = queryElement(
+            window.document,
+            "#plantSummary",
+            HTMLElement
+        );
+        const details = queryElement(
+            window.document,
+            "#plantDetails",
+            HTMLElement
+        );
+        const metrics = queryElements(summary, ".metric", HTMLElement);
+
+        expect(metrics).toHaveLength(6);
+        expect(required(metrics[0]).textContent).toContain("Last water");
+        expect(required(metrics[5]).textContent).toContain("Cycle avg loss");
+        expect(
+            summary.querySelector(
+                ".activity-counts, .plant-forecast, .weight-chart, .plant-links, .plant-photos"
+            )
+        ).toBeNull();
+        expect(details.previousElementSibling).toBe(
+            queryElement(window.document, "#entryForm > .actions", HTMLElement)
+        );
+        expect(
+            details.compareDocumentPosition(
+                queryElement(window.document, "#recentCard", HTMLElement)
+            )
+        ).toBe(4);
+        expect(details.querySelectorAll(".chart-point")).toHaveLength(4);
+        expect(
+            details.querySelectorAll(
+                ".activity-counts, .plant-forecast, .plant-links"
+            )
+        ).toHaveLength(3);
+
+        queryElement(
+            window.document,
+            '#labelPicker [data-plant-id="P02"]',
+            HTMLButtonElement
+        ).click();
+
+        expect(summary.textContent).toContain("Yellow tower cactus");
+        expect(summary.textContent).toContain("510 g");
+        expect(details.textContent).toContain("Yellow tower cactus · F3");
+        expect(details.textContent).not.toContain("Moon cactus");
+        expect(details.querySelectorAll(".chart-point")).toHaveLength(1);
+        expect(details.querySelectorAll(".plant-display-tools")).toHaveLength(
+            1
+        );
+
+        const search = queryElement(
+            window.document,
+            "#plantSearch",
+            HTMLInputElement
+        );
+        search.value = "no matching plant";
+        search.dispatchEvent(new window.Event("input", { bubbles: true }));
+
+        expect(details.hidden).toBe(true);
+        expect(details.childElementCount).toBe(0);
+        expect(summary.textContent).toContain("No plants match that search.");
+
+        search.value = "P01";
+        search.dispatchEvent(new window.Event("input", { bubbles: true }));
+
+        expect(details.hidden).toBe(false);
+        expect(details.querySelectorAll(".chart-point")).toHaveLength(4);
+    });
+
+    it.each([
+        {
+            expectedScroll: [[{ behavior: "instant", top: 29 }]],
+            mode: "visible",
+            pickerMode: "labels",
+            top: 120,
+        },
+        {
+            expectedScroll: [],
+            mode: "outside",
+            pickerMode: "labels",
+            top: -500,
+        },
+        { expectedScroll: [], mode: "list", pickerMode: "list", top: 120 },
+    ])(
+        "preserves the label grid position only when the picker is visible ($mode)",
+        ({ expectedScroll, pickerMode, top }) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow({
+                storage: {
+                    gardenLoggerPlantPickerModeV1: pickerMode,
+                },
+            });
+            const picker = queryElement(
+                window.document,
+                "#labelPicker",
+                HTMLElement
+            );
+            vi.spyOn(picker, "getBoundingClientRect")
+                .mockReturnValueOnce(new DOMRect(20, top, 300, 400))
+                .mockReturnValue(new DOMRect(20, top + 29, 300, 400));
+            const scroll = vi
+                .spyOn(window, "scrollBy")
+                .mockImplementation(() => {});
+            const target =
+                pickerMode === "list" ? "#plantChoiceList" : "#labelPicker";
+
+            queryElement(
+                window.document,
+                `${target} [data-plant-id="P02"]`,
+                HTMLButtonElement
+            ).click();
+
+            expect(
+                queryElement(window.document, "#plantSelect", HTMLSelectElement)
+                    .value
+            ).toBe("P02");
+            expect(structuredClone(scroll.mock.calls)).toStrictEqual(
+                expectedScroll
+            );
+        }
+    );
+
     it("puts the summary above both pickers and immediately names tapped labels without replacing portraits", () => {
         expect.hasAssertions();
 
@@ -6971,7 +7082,7 @@ describe("garden logger selection and portrait stability", () => {
             })
         );
 
-        expect(name.textContent).toBe("Yellow tower cactus · F3");
+        expect(name.textContent).toBe("Plant: Yellow tower cactus F3");
         expect(
             queryElement(window.document, "#plantSelect", HTMLSelectElement)
                 .value
@@ -6983,7 +7094,11 @@ describe("garden logger selection and portrait stability", () => {
 
         button.click();
 
-        expect(name.textContent).toBe("Selected: Yellow tower cactus · F3");
+        expect(name.textContent).toBe("Selected: Yellow tower cactus F3");
+
+        button.dispatchEvent(new window.Event("focusin", { bubbles: true }));
+
+        expect(name.textContent).toBe("Selected: Yellow tower cactus F3");
         expect(queryElement(button, "img", HTMLImageElement)).toBe(portrait);
         expect(button.getAttribute("aria-label")).toContain(
             "Yellow tower cactus"
