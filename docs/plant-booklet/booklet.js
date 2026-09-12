@@ -98,6 +98,7 @@
     let lastTrackedProfilePageId = null;
     let isPrintPrepared = false;
     let isPageControlsPinned = false;
+    let isPointerOverPageControls = false;
     let lastScrollY = Math.max(0, window.scrollY);
     let isScrollTicking = false;
 
@@ -163,7 +164,12 @@
 
             updateScrollProgress();
             if (!isPageControlsPinned) {
-                if (isNearTop || isNearEnd || scrollY < lastScrollY - 8) {
+                if (
+                    isNearTop ||
+                    isNearEnd ||
+                    isPointerOverPageControls ||
+                    scrollY < lastScrollY - 8
+                ) {
                     setPageControlsVisible(true);
                 } else if (scrollY > lastScrollY + 8) {
                     setPageControlsVisible(false);
@@ -515,16 +521,16 @@
         (event) => {
             if (
                 event.pointerType !== "mouse" ||
-                !pageControls.classList.contains("is-scroll-hidden") ||
                 event.clientY <
                     window.innerHeight -
                         pageControls.offsetHeight -
                         pageControlsToggle.offsetHeight -
                         24
             ) {
+                isPointerOverPageControls = false;
                 return;
             }
-            const isOverControl = [
+            isPointerOverPageControls = [
                 ...pageControls.querySelectorAll("button"),
             ].some((button) => {
                 const bounds = button.getBoundingClientRect();
@@ -533,10 +539,13 @@
                     event.clientX <= bounds.right
                 );
             });
-            if (isOverControl) setPageControlsVisible(true);
+            if (isPointerOverPageControls) setPageControlsVisible(true);
         },
         { passive: true }
     );
+    addEventListener("pointerout", (event) => {
+        if (event.relatedTarget === null) isPointerOverPageControls = false;
+    });
     function prepareForPrint() {
         if (isPrintPrepared) return;
         isPrintPrepared = true;

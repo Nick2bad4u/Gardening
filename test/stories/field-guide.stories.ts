@@ -193,7 +193,9 @@ export const HoverPageControls: Story = {
             },
             target: document.body,
         });
-        await expect(controls).not.toHaveClass("is-scroll-hidden");
+        await waitFor(() =>
+            expect(controls).not.toHaveClass("is-scroll-hidden")
+        );
         await userEvent.click(
             canvas.getByRole("button", { name: "Next Grass-blade cactus" })
         );

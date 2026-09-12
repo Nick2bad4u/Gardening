@@ -387,6 +387,77 @@ describe("field-guide profile mounting", () => {
         expect(navigation.classList.contains("is-scroll-hidden")).toBe(false);
     });
 
+    it.each([
+        "outside controls",
+        "outside window",
+        "touch",
+    ])(
+        "keeps hovered controls visible through layout scrolling until the pointer moves %s",
+        (exit) => {
+            expect.hasAssertions();
+
+            const window = createReader("#plant-a");
+            const navigation = queryElement(
+                window.document,
+                "#page-controls-navigation",
+                HTMLElement
+            );
+            const previous = queryElement(
+                window.document,
+                "#previous-page",
+                HTMLButtonElement
+            );
+            let scrollY = 600;
+            Object.defineProperty(window, "scrollY", { get: () => scrollY });
+            Object.defineProperty(
+                window.document.documentElement,
+                "scrollHeight",
+                {
+                    value: 4000,
+                }
+            );
+            vi.spyOn(previous, "getBoundingClientRect").mockReturnValue(
+                new window.DOMRect(20, 900, 220, 60)
+            );
+            window.dispatchEvent(new window.Event("scroll"));
+
+            expect(navigation.classList.contains("is-scroll-hidden")).toBe(
+                true
+            );
+
+            window.dispatchEvent(
+                new window.PointerEvent("pointermove", {
+                    clientX: 50,
+                    clientY: window.innerHeight - 1,
+                    pointerType: "mouse",
+                })
+            );
+            scrollY += 20;
+            window.dispatchEvent(new window.Event("scroll"));
+
+            expect(navigation.classList.contains("is-scroll-hidden")).toBe(
+                false
+            );
+
+            window.dispatchEvent(
+                new window.PointerEvent(
+                    exit === "outside window" ? "pointerout" : "pointermove",
+                    {
+                        clientX: exit === "outside controls" ? 400 : 50,
+                        clientY: window.innerHeight - 1,
+                        pointerType: exit === "touch" ? "touch" : "mouse",
+                    }
+                )
+            );
+            scrollY += 20;
+            window.dispatchEvent(new window.Event("scroll"));
+
+            expect(navigation.classList.contains("is-scroll-hidden")).toBe(
+                true
+            );
+        }
+    );
+
     it("tracks reading progress and reveals navigation when scrolling up", () => {
         expect.hasAssertions();
 
