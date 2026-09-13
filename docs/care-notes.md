@@ -6,10 +6,12 @@ The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
 
 The [AW200 + AeroLight 240 W pair](./equipment/aw200-and-aerolight-240w.md)
-was hung September 13 with reported settings of **45% / 38%** and the room
-end open. The owner has applied the latest layout. Percentage assignment,
-current clearances, and programs still need confirmation. Observe the new
-combined exposure and dry-down. Use the
+was hung September 13 with **AW200 at 45% and AeroLight 240 W at 38%** and the room
+end open. The owner has applied the latest layout and confirms an **18-inch
+plant-tip reference**. Both lights use the same **13 h 15 m total cycle**,
+including **15-minute sunrise and sunset transitions** at the start and end.
+Observe the new combined exposure
+and dry-down. Use the
 [final placement guide](./layouts/table-placement-research.md) for each pot's
 ongoing light need; adding a light does not by itself make a pot ready to water.
 
@@ -180,7 +182,8 @@ exposure is working.
 The earlier plan avoided an immediate jump to 100% at 12 inches and retained
 a normal dark period. It proposed 12 hours on and 12 hours off through
 September 20, then a seasonal timer. That timer is historical planning;
-the last owner-reported AW200 program was 13.25 hours.
+both installed lights now share the owner-confirmed 13 h 15 m total cycle,
+including 15-minute sunrise and sunset transitions at the start and end.
 
 The installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and
 supports every whole-percent setting from 25% through 100%. If E25/app control

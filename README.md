@@ -6,9 +6,11 @@ This is my low-pressure garden notebook. The current focus is my cactus,
 succulent, and small houseplant collection, especially learning how to use the
 indoor grow-light setup without turning the hobby into a science project.
 The AW200 and new AeroLight 240 W were hung side by side on September 13,
-with separate settings of 45% and 38% and an open room-side view. The owner
-has applied the latest plant layout. See the [installed setup record](docs/equipment/aw200-and-aerolight-240w.md)
-for the remaining height and exposure checks.
+with AW200 at 45%, AeroLight 240 W at 38%, and an open room-side view. The owner
+has applied the latest plant layout and confirms an 18-inch plant-tip reference.
+Both lights share a 13 h 15 m total cycle, including 15-minute sunrise and sunset
+transitions at the start and end. See the [installed setup record](docs/equipment/aw200-and-aerolight-240w.md)
+for the confirmed program and plant-level exposure checks.
 
 ## Current notes
 

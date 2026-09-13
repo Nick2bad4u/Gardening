@@ -9,9 +9,11 @@ and the weak **north-facing window on the right**. It includes separate wooden,
 glass, and combined illustrations for the **retained AW200 beside the new
 AeroLight 240 W**, with coverage intended over all wood and the near half of glass.
 The [two lights](../equipment/aw200-and-aerolight-240w.md) were hung September 13,
-with settings of 45% / 38%, and the owner reports applying this layout.
-Keep the arrangement while checking plant-height exposure. Percentage assignment,
-final clearances, and the new daily program remain unconfirmed.
+with AW200 at 45% and AeroLight 240 W at 38%, and the owner reports applying
+this layout.
+The owner confirms an 18-inch plant-tip reference and the same 13 h 15 m total
+cycle for both lights, including 15-minute sunrise and sunset transitions at
+the start and end. Keep the arrangement while checking plant-height exposure.
 The **two-foot return panel comes out**, leaving the room end open; divider
 Mylar stays. Final positions remain grouped by ongoing light need, and the
 plan distinguishes intended coverage from unmeasured actual exposure.

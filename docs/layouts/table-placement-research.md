@@ -1,10 +1,11 @@
 # Table Placement Guide
 
 Revised September 13, 2026. The **AW200 and new AeroLight 240 W are now hung
-side by side**, with separate reported settings of **45% and 38%**, and the
-owner has applied this plant layout. The room-facing end stays open. Which
-percentage belongs to which fixture, final clearances, and the new light's
-program are not yet recorded.
+side by side**, with **AW200 at 45% and AeroLight 240 W at 38%**, and the
+owner has applied this plant layout. The room-facing end stays open. The owner confirms
+an **18-inch plant-tip reference** and the same **13 h 15 m total daily
+cycle** for both lights, including **15-minute sunrise and sunset transitions**
+at the start and end.
 Keep these growing positions for **30 tracked pots: 24 on wood and six on
 glass** while checking actual exposure. The owner handles acclimation.
 
@@ -16,8 +17,8 @@ keep D3 at R1C1, A1 toward the perimeter, and #3 on outer glass. Check the
 tallest cactus tips and low rosettes separately: equal tabletop positions do
 not give equal LED-to-plant distance. Move only a shaded or overexposed plant.
 
-Hold the reported **45% / 38%** as a provisional starting point while confirming
-heights. Two lower dimmer percentages do not mean less total light than the
+Hold **AW200 at 45% and AeroLight 240 W at 38%** at the confirmed **18-inch plant-tip
+reference**, with both lights on the same **13 h 15 m cycle**, while checking exposure. Two lower dimmer percentages do not mean less total light than the
 old single lamp. The [installed-light note](../equipment/aw200-and-aerolight-240w.md#recommended-starting-decision)
 explains the rough power comparison and the small set of useful measurement
 spots. The weaker north window remains supplementary.
@@ -80,14 +81,17 @@ physical panel dimensions do not prove equal exposure across that area.
   alone is not assumed to meet either plant's needs.
 
 The combined overlap can be stronger than the outer edges. The owner reports
-**45% / 38%** after hanging and leveling the lights. Record their assignment
-and both clearances; the earlier **60%, 13.25-hour** single-AW200 program is
-historical context. Confirm the current schedules instead of assuming them.
+**AW200 at 45% and AeroLight 240 W at 38%** after hanging and leveling the
+lights, with an **18-inch
+plant-tip reference**. Both use the same **13 h 15 m total cycle**, including
+**15 minutes of sunrise and 15 minutes of sunset**. Exact clock times remain
+unrecorded; the earlier single-AW200 60% setting
+is historical context.
 No new ramp or fixed watering schedule is introduced.
 
 The owner's revised plan uses **four ceiling hooks, two per light**. Each
 fixture hangs independently and can be leveled and adjusted in height on its
-own. Installation is confirmed; final clearances remain unmeasured. The
+own. Installation and an 18-inch plant-tip reference are confirmed. The
 [mounting record](../equipment/aw200-and-aerolight-240w.md#independent-ceiling-hooks)
 documents the September 11 correction to the ceiling framing orientation.
 
@@ -156,19 +160,19 @@ probable, cf., hybrid, and unconfirmed-cultivar identifications.
 
 ## Current Room and Installed Lights
 
-| Item                        | Recorded Setup or Plan                                                                                                       |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Installed pair              | **AW200 + AeroLight 240 W (VSL-AL240)**, hung and further leveled **September 13**                                           |
-| Fixture size and position   | AW200 **26 × 13 × 2.1 in**; new 240 W **25.9 × 12.9 × 2.1 in**. Side by side; final centers, orientation, and gap unmeasured |
-| Reported settings           | **45% / 38%**, fixture assignment unconfirmed                                                                                |
-| Daily program               | Last confirmed AW200 day **13.25 hours**; confirm both current schedules and fade division                                   |
-| Right                       | **North-facing window**, beyond glass; weak supplementary daylight                                                           |
-| Top                         | Existing Diamond Mylar divider retained                                                                                      |
-| Bottom                      | White wall retained                                                                                                          |
-| Left                        | **Open room-facing end**; approximately two-foot Mylar return panel removed from the plan                                    |
-| Wooden tables               | Two **16 × 13-inch** tops, each **18 inches high**; four columns and six rows, join after row 3                              |
-| Glass table                 | **24-inch diameter**, round, **18 inches high**                                                                              |
-| New intensity and clearance | **Unrecorded**; earlier 18-inch clearance needs remeasurement for both fixtures                                              |
+| Item                      | Recorded Setup or Plan                                                                                                       |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Installed pair            | **AW200 + AeroLight 240 W (VSL-AL240)**, hung and further leveled **September 13**                                           |
+| Fixture size and position | AW200 **26 × 13 × 2.1 in**; new 240 W **25.9 × 12.9 × 2.1 in**. Side by side; final centers, orientation, and gap unmeasured |
+| Reported settings         | **AW200 45% · AeroLight 240 W 38%**                                                                                          |
+| Daily program             | Both share **13 h 15 m total**, including **15 m sunrise + 15 m sunset**                                                     |
+| Right                     | **North-facing window**, beyond glass; weak supplementary daylight                                                           |
+| Top                       | Existing Diamond Mylar divider retained                                                                                      |
+| Bottom                    | White wall retained                                                                                                          |
+| Left                      | **Open room-facing end**; approximately two-foot Mylar return panel removed from the plan                                    |
+| Wooden tables             | Two **16 × 13-inch** tops, each **18 inches high**; four columns and six rows, join after row 3                              |
+| Glass table               | **24-inch diameter**, round, **18 inches high**                                                                              |
+| Plant-tip reference       | Owner-reported **18 inches (45.7 cm)**; individual tip distances and light levels are not mapped                             |
 
 Two 13-inch depths joined give a nominal **16-inch-wide × 26-inch-long** wooden
 rectangle. This is not a fresh usable-surface measurement. Four 4-inch rims
@@ -303,8 +307,11 @@ profiles. Rim widths are not canopy widths; the illustration does not certify fi
   records the four-hook mounting plan and open room-facing end.
 
 The September 13 installation, further leveling after the photographs,
-45% / 38% settings, and applied plant layout are owner evidence, as are the
-four-hook plan, reflector removal, room orientation, and container shapes. The guidance
+AW200 45% and AeroLight 240 W 38% settings, applied plant layout, 18-inch
+plant-tip reference, and shared 13 h 15 m cycle including 15-minute sunrise
+and sunset transitions are
+owner evidence, as are the four-hook plan, reflector removal, room orientation,
+and container shapes. The guidance
 distinguishes species evidence, genus comparisons, grower claims, and placement
 inference. Species guidance reviewed September 9–10 and the key sun/indirect
 groups rechecked September 13; installation updated September 13, 2026.

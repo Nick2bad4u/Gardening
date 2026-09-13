@@ -7,8 +7,10 @@ images are the current assets for the placement document, layout page, and
 generated booklet.
 
 **September 13 use note:** both lights are now hung and the owner has applied
-these plant positions. The reported settings are 45% / 38%, with assignment
-and final clearances still unconfirmed. The images' “incoming” label belongs
+these plant positions. The confirmed settings are AW200 at 45% and
+AeroLight 240 W at 38%. The owner confirms an 18-inch plant-tip reference and the same
+13 h 15 m total cycle for both lights, including 15-minute sunrise and sunset
+transitions at the start and end. The images' “incoming” label belongs
 to their September 11 creation date; the fixture outlines remain schematic.
 
 The AW400 is unavailable. The owner retained the AW200 and installed the new

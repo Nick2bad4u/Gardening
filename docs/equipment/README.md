@@ -1,8 +1,10 @@
 # Equipment research
 
 - [AW200 + new AeroLight 240 W](./aw200-and-aerolight-240w.md) — side-by-side
-  fixtures installed September 13, independent controls, reported 45% / 38% settings,
-  exact dimensions and weights, and four ceiling hooks (two per fixture)
+  fixtures installed September 13, independent controls, AW200 at 45% and AL240 at 38%,
+  an 18-inch plant-tip reference, matching 13 h 15 m total cycles including
+  15-minute sunrise and sunset transitions, exact dimensions and weights,
+  and four ceiling hooks (two per fixture)
 - [Unavailable AW400 selection](./vivosun-aw400.md) — September 10 research
   retained after the owner reported it sold out on September 11
 - [Canceled AW400SE order](./vivosun-aw400se.md) — earlier selection retained

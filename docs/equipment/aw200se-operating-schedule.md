@@ -7,16 +7,18 @@ Last updated: 2026-09-13
 The owner has hung the **AW200 and new AeroLight 240 W (VSL-AL240)** side by
 side, leveled them further after the photographs, and applied the latest
 plant layout. Independent suspension allows different clearances for taller
-plants. Reported intensities are **45% / 38%**, with assignment unconfirmed.
+plants. Confirmed intensities are **AW200 at 45% and AeroLight 240 W at 38%**.
 The **two-foot return panel stays out**; the divider Mylar stays.
 
 Use the [two-light equipment record](./aw200-and-aerolight-240w.md) for exact
 dimensions, masses, and independent suspension from four ceiling hooks, and the
 [final placement guide](../layouts/table-placement-research.md) for the intended
 all-wood/near-half-glass exposure. Four E25 paths are planned including both
-canopy fans. The last confirmed AW200 day is 13.25 hours; both current programs
-and final clearances still need confirmation. Keep the reported percentages
-and current positions provisionally while checking actual plant exposure.
+canopy fans. The owner confirms an **18-inch plant-tip reference** and the
+same **13 h 15 m total cycle** for both lights, including **15-minute sunrise
+and sunset transitions** at the start and end. Exact clock times remain
+unrecorded. Keep the reported percentages and current
+positions provisionally while checking actual plant exposure.
 The owner handles acclimation; no new ramp or controller program was applied.
 
 ## September 9 AW200 Record — Before the Replacement Order

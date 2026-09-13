@@ -2,8 +2,10 @@
 
 **September 13 update:** the owner has hung the AW200 beside the
 [new AeroLight 240 W](./aw200-and-aerolight-240w.md) and applied the latest
-layout, with reported settings of 45% / 38% (assignment unconfirmed). The room end remains open without the two-foot
-return reflector. This page preserves the earlier AW200SE research.
+layout, with AW200 at 45% and AeroLight 240 W at 38%. The room end remains open without the two-foot
+return reflector. The owner confirms an 18-inch plant-tip reference and the
+same 13 h 15 m total cycle for both lights, including 15-minute sunrise and
+sunset transitions at the start and end. This page preserves the earlier AW200SE research.
 
 **Equipment correction, September 9, 2026:** the owner identifies the installed
 fixture as **AW200 with tunable spectrum**, then at **60%** with a reported
