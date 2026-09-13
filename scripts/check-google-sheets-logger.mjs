@@ -36,7 +36,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.21.2");
+assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.22.0");
 for (const name of [
     "getWebCorrectionEntry",
     "previewWebObservationCorrection",
@@ -415,14 +415,14 @@ assert.match(html, /plant\.recommendedWaterDate/v);
 assert.match(html, /plant\.wateringGuidance/v);
 assert.match(source, /function installWateringRecommendations\(\)/v);
 assert.equal(vm.runInContext("BASELINE_VIEW_HEADERS.length", context), 36);
-assert.equal(vm.runInContext("DASHBOARD_VIEW_HEADERS.length", context), 25);
+assert.equal(vm.runInContext("DASHBOARD_VIEW_HEADERS.length", context), 31);
 assert.equal(evaluateLogger("DASHBOARD_VIEW_HEADERS[4]"), "Days since water");
 assert.equal(
-    evaluateLogger("DASHBOARD_VIEW_HEADERS.at(-1)"),
+    evaluateLogger("DASHBOARD_VIEW_HEADERS[24]"),
     "Weight measurements"
 );
 assert.match(source, /function installDashboardWeightCounts\(\)/v);
-assert.equal(vm.runInContext("DRY_DOWN_MODEL_HEADERS.length", context), 16);
+assert.equal(vm.runInContext("DRY_DOWN_MODEL_HEADERS.length", context), 22);
 assert.deepEqual(strings(evaluateLogger("BASELINE_VIEW_HEADERS.slice(-2)")), [
     "Recommended water date",
     "Watering guidance",

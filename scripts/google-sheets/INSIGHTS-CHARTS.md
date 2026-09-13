@@ -1,6 +1,6 @@
 # Insights dry-down charts
 
-The native **Insights** sheet has 20 charts. Its dry-down explorer starts at
+The native **Insights** sheet has 23 charts. Its dry-down explorer starts at
 **A226**; choose **P01–P30 in B228** in the current native layout. The selected
 plant's care guidance, predicted dry-check date, and earliest/latest window
 appear above the graphs. The selected plant's **Current weight difference (g)**
@@ -22,7 +22,7 @@ appears in **N228:R228**, and its collection comparison starts at **A586**.
 | Forecast basis                    | How much of the collection has current-cycle, historical, or incomplete evidence? |
 
 The existing drying-rate chart reads **Baselines AE** and is labeled as a modeled
-rate. All 20 Insights charts share Roboto text, 18-point green titles, and
+rate. The existing 20 Insights charts share Roboto text, 18-point green titles, and
 11-point subtitles and axis titles. Each plant has a permanent, distinct color
 defined in [`plant-colors.json`](plant-colors.json). The visible **Plant colors**
 sheet lists all 30 IDs, full plant names, color names, hex values, swatches, and
@@ -47,6 +47,33 @@ status, and forecast basis) retain their category colors.
 Chart scales and heights remain as configured.
 The first chart shares the 1,155-pixel width and 10-pixel left inset used by the
 other Insights charts. Individual plant charts retain their existing layout.
+
+## Recent weight comparisons
+
+The recent-weight additions use current-cycle measured readings and actual
+elapsed time. **Dashboard Z:AE** and **Daily care I:N** show the same five metrics
+and the curve's inspection prompt.
+
+| Location      | Comparison                                                      |
+| ------------- | --------------------------------------------------------------- |
+| Dashboard A41 | Last-interval and last-three-reading loss, in g/day             |
+| Insights A635 | Last signed weight change and mean change across three readings |
+| Insights A685 | Last-interval and last-three-reading loss, in g/day             |
+| Insights A735 | Mean of the latest three scale weights, in grams                |
+
+Negative **change** means weight lost; positive **loss per day** means drying.
+The mean of three weights is distinct from the mean of the two changes between
+them. The three-reading daily rate divides total loss by total elapsed time,
+including unequal intervals. Missing evidence stays blank and numeric zero stays
+visible. A heavy pot's larger rate does not establish greater watering urgency.
+
+The helper at **Plant color data DX:EC** looks up permanent IDs in fixed P01–P30
+order. Sorting Dashboard therefore preserves the plants' colors. The second
+series uses a lighter shade and the legend identifies each metric. Maintain the
+four chart specifications with [`recent-weights.mjs`](recent-weights.mjs);
+do not replay an older chart migration. See the
+[forecast rules](README.md#recent-weights-and-curve-inspection-5220) for the
+plateau heuristic and species exceptions.
 
 ## Reading the graphs
 

@@ -32,6 +32,57 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
+### Recent weights and curve inspection (5.22.0)
+
+The current-cycle measurements now feed five recent-weight metrics and a
+**Curve inspection** result in **Dashboard Z:AE** and **Daily care I:N** (the
+details table at row 40). The hidden model extends from 16 to 22 derived fields;
+History, Baselines, and AppSheet staging keep their existing schemas.
+
+- **Last weight change:** latest minus previous weight, in grams; loss is negative.
+- **Last interval loss:** previous minus latest, divided by actual elapsed days;
+  loss is positive and a gain is negative.
+- **Average of last 3 weights:** the arithmetic mean of three scale readings.
+  This is a weight, so dividing it by days would not describe drying.
+- **Average change across last 3 weights:** the mean of the two signed changes
+  between those three readings, in grams per interval.
+- **Last 3 readings loss:** oldest minus latest, divided by their total elapsed
+  days. This handles uneven weighing intervals without giving a short interval
+  the same influence as a long one.
+
+These use distinct measured timestamps in the current watering cycle and pot
+setup; the final correction-ordered record wins a timestamp tie. Estimates and
+removed rows are excluded. Missing two- or three-reading evidence stays blank.
+They describe scale observations, not water content or an automatic watering dose.
+
+A crossed completed-dry reference now advances a moisture inspection. A plateau
+can also advance that check even above an older reference. The plateau heuristic
+requires four readings spanning 3–10 days, a cycle at least seven days old,
+at least 10 g of observed loss, and an earlier decline spanning at least two days
+after excluding the first 48 hours. The recent loss rate must be at most 20% of
+that earlier rate, with a four-reading range within 5% of total observed loss
+(a minimum 2 g allowance). A gain above 2 g prompts a setup/measurement review.
+These are adjustable starting criteria, not a validated moisture classifier.
+
+Neither signal rewrites dry/wet references or learns a fixed watering interval.
+The resulting date means **inspect moisture now**, conditional on the plant's
+care guidance. Missing references and partial watering withhold automatic dates.
+P21 retains its upper-2-inch check; P28 retains its leaf-replacement decision.
+Calendar dates use the date containing the forecast timestamp, avoiding an
+extra next-day shift from rounding a time upward.
+
+[`recent-weights.mjs`](recent-weights.mjs) builds the scoped native migration.
+Back up, read fresh metadata and bounded destinations, rehearse on a native copy,
+then deploy the matching script before recalculating `Dry-down models!A2`.
+Apply layout/formulas before charts and verify calculated sources first.
+The four new charts use fixed P-ID rows in **Plant color data DX:EC**, so sorting
+Dashboard does not move plant colors. Existing charts and observations are
+preserved. Daily care's managed layout marker becomes **v3** to include I:N.
+
+The [chart guide](INSIGHTS-CHARTS.md#recent-weight-comparisons) lists the locations;
+[practical care notes](../../docs/care-notes.md#checking-dryness-in-small-pots)
+explain the physical check and why 1 g/day is not a collection-wide threshold.
+
 ### Verified 5.21.2 baseline
 
 On September 12, 2026, **logger 5.21.2** was published as immutable Apps Script
@@ -1525,7 +1576,7 @@ includes the helper when deliberately rebuilding the full presentation.
 
 `Recommended water date` is a **planning estimate, conditional on inspection**,
 not an instruction to water on a deadline. It uses the supported near-dry date
-from the same learned curve, rounded up to a calendar day. New measurements and
+from the same learned curve, using its calendar date. New measurements and
 reliable completed cycles update it automatically. Repots, unsupported curves,
 and partial watering retain the existing forecast safeguards.
 
@@ -1552,8 +1603,8 @@ The verified live derived schema is:
 | Sheet                    | Recommended water date | Watering guidance | Total derived fields |
 | ------------------------ | ---------------------- | ----------------- | -------------------- |
 | Baselines                | AI                     | AJ                | 36                   |
-| Dashboard                | W                      | X                 | 25                   |
-| Dry-down models (hidden) | O                      | P                 | 16                   |
+| Dashboard                | W                      | X                 | 31                   |
+| Dry-down models (hidden) | O                      | P                 | 22                   |
 
 After a native Drive backup and fresh preflight, `installWateringRecommendations()`
 installs the model/forecast formulas and appends only these two visible columns.

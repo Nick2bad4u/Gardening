@@ -40,10 +40,12 @@ interface GardenDryDownModel {
     dry: GardenOptionalNumber;
     early: GardenOptionalNumber;
     fit: GardenOptionalNumber;
+    inspection: string;
     late: GardenOptionalNumber;
     learned: number;
     loss: GardenOptionalNumber;
     readiness: string;
+    recent: GardenRecentWeightMetrics;
     review: string;
     setup: number;
     wet: GardenOptionalNumber;
@@ -66,6 +68,8 @@ type GardenDryDownRow = [
     fit: GardenOptionalNumber,
     waterDate: GardenOptionalNumber,
     waterGuidance: string,
+    ...recent: GardenRecentWeightMetrics,
+    inspection: string,
 ];
 
 interface GardenDryDownSummary {
@@ -78,6 +82,14 @@ interface GardenDryDownSummary {
 interface GardenLearnedDryDownCurve extends GardenDryDownCurve {
     ended: number;
 }
+
+type GardenRecentWeightMetrics = [
+    lastChange: GardenOptionalNumber,
+    lastLossPerDay: GardenOptionalNumber,
+    meanWeight: GardenOptionalNumber,
+    meanChange: GardenOptionalNumber,
+    recentLossPerDay: GardenOptionalNumber,
+];
 
 interface GardenWateringRecommendation {
     date: GardenOptionalNumber;

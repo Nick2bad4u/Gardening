@@ -580,6 +580,12 @@ export type DryDownRow = [
     fit: "" | number,
     waterDate: "" | number,
     waterGuidance: string,
+    lastChange: "" | number,
+    lastLossPerDay: "" | number,
+    meanWeight: "" | number,
+    meanChange: "" | number,
+    recentLossPerDay: "" | number,
+    inspection: string,
 ];
 export interface PlantRecord {
     currentPotSize?: string;

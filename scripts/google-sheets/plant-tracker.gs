@@ -14,7 +14,7 @@
    refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30 */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.21.2",
+    version: "5.22.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -634,6 +634,12 @@ const DASHBOARD_VIEW_HEADERS = Object.freeze([
     "Recommended water date",
     "Watering guidance",
     "Weight measurements",
+    "Last weight change (g)",
+    "Last interval loss (g/day)",
+    "Average of last 3 weights (g)",
+    "Average change across last 3 weights (g)",
+    "Last 3 readings loss (g/day)",
+    "Curve inspection",
 ]);
 
 const WEIGHT_DIFFERENCE_NOTE =
@@ -3212,6 +3218,12 @@ const DRY_DOWN_MODEL_HEADERS = Object.freeze([
     "Current fit",
     "Recommended water date",
     "Watering guidance",
+    "Last weight change (g)",
+    "Last interval loss (g/day)",
+    "Average of last 3 weights (g)",
+    "Average change across last 3 weights (g)",
+    "Last 3 readings loss (g/day)",
+    "Curve inspection",
 ]);
 
 /**
@@ -3286,6 +3298,12 @@ function GARDEN_DRY_DOWN(history, plantIds) {
                     model.fit,
                     watering.date,
                     watering.guidance,
+                    ...model.recent,
+                    cleanText_(id) === "P28"
+                        ? "Leaf-cycle check only"
+                        : cleanText_(id) === "P21"
+                          ? "Check upper 2 in of mix"
+                          : model.inspection,
                 ];
             }
         );
@@ -3329,8 +3347,11 @@ function wateringRecommendation_(plantId, model) {
         return { date: "", guidance: model.basis + ". " + guidance };
     }
     return {
-        date: Math.ceil(model.date),
-        guidance: "Estimated; confirm readiness first. " + guidance,
+        date: Math.floor(model.date),
+        guidance:
+            (model.inspection?.startsWith("Inspect now")
+                ? "Inspect moisture now; this is not proof of dryness. "
+                : "Estimated; confirm readiness first. ") + guidance,
     };
 }
 
@@ -3562,12 +3583,21 @@ function dryDownModelForPlant_(records) {
         readiness: "Need 4 post-water weights",
         review: "No trend",
         fit: "",
+        recent: recentWeightMetrics_(current?.points || []),
+        inspection: "Collecting current-cycle readings",
     };
     if (!current) return model;
     const completedDry = cycles.map((c) => c.beforeDry).findLast(Boolean);
     model.dry = completedDry ? completedDry.weight : "";
     model.wet = current.wet ? current.wet.weight : "";
     model.count = new Set(current.points.map((p) => p.date)).size;
+    model.inspection = cycleInspection_(current.points, model.dry);
+    if (model.inspection.startsWith("Unexpected gain"))
+        return {
+            ...model,
+            basis: "Current cycle differs — reweigh",
+            review: model.inspection,
+        };
     if (!current.wet)
         return { ...model, basis: "Need a wet weight within 5 days" };
     if (!fullWateringForForecast_(current.water)) {
@@ -3593,6 +3623,26 @@ function dryDownModelForPlant_(records) {
     model.learned = learned.length;
     const supported = usableDryDownCurve_(curve);
     model.readiness = dryDownCurrentReadiness_(curve, supported);
+    // A demonstrably low tail or a crossed reference can warrant inspection
+    // even when the old-reference exponential fit has become unusable.
+    // Neither is a root-zone moisture measurement or a new dry baseline.
+    const inspect = model.inspection.startsWith("Inspect now");
+    if (inspect && !curve.gain) {
+        const latest = current.points.at(-1);
+        if (latest) {
+            return {
+                ...model,
+                date: latest.date,
+                early: latest.date,
+                late: latest.date + 1,
+                basis: model.inspection.includes("plateau")
+                    ? "Observed plateau — inspect moisture"
+                    : "Previous weight reference reached — inspect moisture",
+                readiness: "Inspection supported by current weights",
+                review: "OK",
+            };
+        }
+    }
     if (dryDownCurveContradicts_(curve)) {
         return {
             ...model,
@@ -3617,6 +3667,100 @@ function dryDownModelForPlant_(records) {
         tolerance,
         supported
     );
+}
+
+/**
+ * Observed metrics use distinct timestamps in the current watering cycle only.
+ * Changes are signed (new minus old); loss rates are positive for drying.
+ * Three-point daily loss is elapsed-time weighted, never a mean of unequal
+ * interval rates. A weight mean has no meaningful grams-per-day equivalent.
+ * @param {DryDownRecord[]} points
+ * @returns {GardenRecentWeightMetrics}
+ */
+function recentWeightMetrics_(points) {
+    const recent = [...new Map(points.map((p) => [p.date, p])).values()]
+        .sort((a, b) => a.date - b.date)
+        .slice(-3);
+    const latest = recent.at(-1);
+    const previous = recent.at(-2);
+    const first = recent[0];
+    if (!latest || !previous) return ["", "", "", "", ""];
+    const change = latest.weight - previous.weight;
+    const loss = -change / (latest.date - previous.date);
+    if (recent.length < 3 || !first) return [change, loss, "", "", ""];
+    return [
+        change,
+        loss,
+        recent.reduce((sum, p) => sum + p.weight, 0) / 3,
+        (latest.weight - first.weight) / 2,
+        (first.weight - latest.weight) / (latest.date - first.date),
+    ];
+}
+
+/**
+ * Practical inspection heuristic, not a validated soil-moisture classifier.
+ * A plateau needs four readings over 3-10 days, a cycle at least 7 days old,
+ * substantial measured loss, and <=20% of the earlier post-drainage loss rate.
+ * Its four-reading range must fit within 5% of the observed cycle loss (2 g
+ * minimum noise allowance). Ignore the first 48 hours for the earlier rate.
+ * No single grams/day cutoff and no automatic changes to dry/wet anchors.
+ * @param {DryDownRecord[]} points
+ * @param {GardenOptionalNumber} dry
+ * @returns {string}
+ */
+function cycleInspection_(points, dry) {
+    const unique = [...new Map(points.map((p) => [p.date, p])).values()].sort(
+        (a, b) => a.date - b.date
+    );
+    const first = unique[0];
+    const latest = unique.at(-1);
+    if (!first || !latest || unique.length < 3)
+        return "Collecting current-cycle readings";
+    const gained = unique.some((p, index) => {
+        const previous = unique[index - 1];
+        return previous && p.weight - previous.weight > 2;
+    });
+    if (gained) return "Unexpected gain — check setup";
+    if (typeof dry === "number" && latest.weight <= dry)
+        return "Inspect now — previous reference reached";
+    const tail = unique.slice(-4);
+    const tailFirst = tail[0];
+    if (!tailFirst) return "Collecting current-cycle readings";
+    const span = latest.date - tailFirst.date;
+    const early = unique.filter(
+        (p) => p.date >= first.date + 2 && p.date <= tailFirst.date
+    );
+    const earlyFirst = early[0];
+    const earlyLast = early.at(-1);
+    const totalLoss = first.weight - latest.weight;
+    if (
+        tail.length < 4 ||
+        span < 3 ||
+        span > 10 ||
+        latest.date - first.date < 7 ||
+        totalLoss < 10 ||
+        !earlyFirst ||
+        !earlyLast ||
+        earlyLast.date - earlyFirst.date < 2
+    )
+        return "Drying — follow weight and moisture";
+    const earlyRate =
+        (earlyFirst.weight - earlyLast.weight) /
+        (earlyLast.date - earlyFirst.date);
+    const tailRate = (tailFirst.weight - latest.weight) / span;
+    const spread =
+        Math.max(...tail.map((p) => p.weight)) -
+        Math.min(...tail.map((p) => p.weight));
+    if (
+        earlyRate > 0 &&
+        tailRate >= 0 &&
+        tailRate <= earlyRate * 0.2 &&
+        spread <= Math.max(2, totalLoss * 0.05)
+    )
+        return typeof dry === "number"
+            ? "Inspect now — sustained plateau"
+            : "Plateau — inspect; dry reference unavailable";
+    return "Drying — follow weight and moisture";
 }
 
 /** @param {GardenDryDownCurve} curve @param {boolean} supported @returns {string} */
@@ -4484,7 +4628,7 @@ function dailyCareErrorScanFormula_(formula) {
         );
     }
     const installed =
-        /ARRAYFORMULA\(N\(ISERROR\(Dashboard!A1:T(\d+)\)\)\),ARRAYFORMULA\(N\(ISERROR\(Dashboard!U1:X1\)\)\),ARRAYFORMULA\(N\(ISERROR\(Dashboard!U4:X\1\)\)\)(,ARRAYFORMULA\(IFERROR\(N\(ISERROR\(Dashboard!Y1:Z\1\)\),0\)\))?/u.exec(
+        /ARRAYFORMULA\(N\(ISERROR\(Dashboard!A1:T(\d+)\)\)\),ARRAYFORMULA\(N\(ISERROR\(Dashboard!U1:X1\)\)\),ARRAYFORMULA\(N\(ISERROR\(Dashboard!U4:X\1\)\)\)(,ARRAYFORMULA\(IFERROR\(N\(ISERROR\(Dashboard!Y1:(?:Z|AE)\1\)\),0\)\))?/u.exec(
             formula
         );
     if (
@@ -4640,8 +4784,12 @@ function dailyCareDashboardMerges_(dashboard) {
  * @returns {GardenDailyCareDestination}
  */
 function dailyCareDestination_(spreadsheet, dashboard) {
-    const marker = "Garden logger managed Daily care v2";
-    const markers = new Set([marker, "Garden logger managed Daily care v1"]);
+    const marker = "Garden logger managed Daily care v3";
+    const markers = new Set([
+        marker,
+        "Garden logger managed Daily care v2",
+        "Garden logger managed Daily care v1",
+    ]);
     const daily = spreadsheet.getSheetByName("Daily care");
     if (
         daily &&
@@ -4656,8 +4804,30 @@ function dailyCareDestination_(spreadsheet, dashboard) {
             "Daily care is occupied by unrelated content; nothing was changed."
         );
     }
-    if (daily && daily.getLastColumn() > 8)
+    if (
+        daily &&
+        daily.getLastColumn() >
+            (daily.getRange(1, 1).getNote() === marker ? 14 : 8)
+    )
         throw new Error("Daily care has content outside its managed A:H area.");
+    if (daily && daily.getLastColumn() > 8) {
+        if (daily.getMaxColumns() < 14)
+            throw new Error("Daily care recent-weight columns are incomplete.");
+        const checks = dailyCareChecksRow_(daily);
+        const first = (checks + 7) / 2;
+        const outside = daily
+            .getRange(1, 9, daily.getLastRow(), 6)
+            .getValues()
+            .some(
+                (row, index) =>
+                    (index + 1 < first || index + 1 > checks - 3) &&
+                    row.some((value) => value !== "")
+            );
+        if (outside)
+            throw new Error(
+                "Daily care has content outside its managed recent-weight area."
+            );
+    }
     const protections = daily
         ? daily.getProtections(SpreadsheetApp.ProtectionType.SHEET)
         : [];
@@ -4744,17 +4914,17 @@ function installDailyCareDashboard() {
     const detailStart = detailHeader + 1;
     const checksRow = detailHeader + source.plants.length + 3;
     const lastRow = checksRow + 17;
-    ensureSheetColumnCapacity_(sheet, 8);
+    ensureSheetColumnCapacity_(sheet, 14);
     ensureSheetRowCapacity_(sheet, lastRow);
     const filter = sheet.getFilter();
     const criteria = filter
-        ? Array.from({ length: 8 }, (_, index) =>
+        ? Array.from({ length: 14 }, (_, index) =>
               filter.getColumnFilterCriteria(index + 1)
           )
         : [];
     if (filter) filter.remove();
     sheet
-        .getRange(1, 1, Math.max(lastRow, sheet.getLastRow()), 8)
+        .getRange(1, 1, Math.max(lastRow, sheet.getLastRow()), 14)
         .breakApart()
         .clearContent()
         .clearFormat();
@@ -4824,6 +4994,13 @@ function installDailyCareDashboard() {
     ];
     sheet.getRange(detailHeader, 1, 1, 8).setValues([headers]);
     sheet.getRange(detailHeader, 6).setNote(WEIGHT_DIFFERENCE_NOTE);
+    refreshRecentWeightColumns_(
+        sheet,
+        detailHeader,
+        9,
+        "B",
+        source.plants.length
+    );
     sheet
         .getRange(detailStart, 1, source.plants.length, 8)
         .setValues(
@@ -4908,7 +5085,7 @@ function installDailyCareDashboard() {
     sheet.showSheet();
     sheet.autoResizeRows(1, lastRow);
     const newFilter = sheet
-        .getRange(detailHeader, 1, source.plants.length + 1, 8)
+        .getRange(detailHeader, 1, source.plants.length + 1, 14)
         .createFilter();
     criteria.forEach((criterion, index) => {
         if (criterion) newFilter.setColumnFilterCriteria(index + 1, criterion);
@@ -5100,6 +5277,10 @@ function dashboardViewRow_(spreadsheet, plant, index) {
         `=Baselines!AI${baselineRow}`,
         `=Baselines!AJ${baselineRow}`,
         dashboardWeightCountFormula_(dashboardRow),
+        ...["Q", "R", "S", "T", "U", "V"].map(
+            (column) =>
+                `=IFNA(INDEX('Dry-down models'!${column}$2:${column}$31,MATCH($B${dashboardRow},'Dry-down models'!$A$2:$A$31,0)),"")`
+        ),
     ];
 }
 
@@ -5234,6 +5415,57 @@ function refreshDashboardView_(spreadsheet, plants) {
     sheet.setColumnWidth(21, 210);
     sheet.setColumnWidth(22, 240);
     formatWateringRecommendationColumns_(sheet, 6, 23, plants.length);
+    refreshRecentWeightColumns_(sheet, 6, 26, "B", plants.length);
+}
+
+/**
+ * Preserve the existing dashboard columns and use keyed model lookups.
+ * @param {GardenSheet} sheet @param {number} header @param {number} column
+ * @param {string} plantColumn @param {number} count
+ */
+function refreshRecentWeightColumns_(
+    sheet,
+    header,
+    column,
+    plantColumn,
+    count
+) {
+    ensureSheetColumnCapacity_(sheet, column + 5);
+    const headings = DRY_DOWN_MODEL_HEADERS.slice(16);
+    sheet
+        .getRange(header, column, 1, 6)
+        .setValues([headings])
+        .setBackground("#174a68")
+        .setFontColor("#ffffff")
+        .setFontWeight("bold")
+        .setWrap(true);
+    sheet
+        .getRange(header + 1, column, count, 6)
+        .setValues(
+            Array.from({ length: count }, (_, index) =>
+                ["Q", "R", "S", "T", "U", "V"].map(
+                    (source) =>
+                        `=IFNA(INDEX('Dry-down models'!${source}$2:${source}$31,MATCH($${plantColumn}${header + 1 + index},'Dry-down models'!$A$2:$A$31,0)),"")`
+                )
+            )
+        )
+        .setBackground("#edf5fb")
+        .setFontColor("#174a68")
+        .setWrap(true);
+    [0, 3].forEach((offset) =>
+        sheet
+            .getRange(header + 1, column + offset, count, 1)
+            .setNumberFormat("+0.0;-0.0;0.0")
+    );
+    [1, 2, 4].forEach((offset) =>
+        sheet
+            .getRange(header + 1, column + offset, count, 1)
+            .setNumberFormat("0.00")
+    );
+    [0, 1, 2, 3, 4].forEach((offset) =>
+        sheet.setColumnWidth(column + offset, 145)
+    );
+    sheet.setColumnWidth(column + 5, 230);
 }
 
 /** @param {string} plantId @returns {string} */

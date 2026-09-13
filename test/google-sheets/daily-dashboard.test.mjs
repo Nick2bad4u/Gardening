@@ -105,7 +105,7 @@ function fixture(
     const api = dailyApi(context);
     const headers = api.dailyCareTestHeaders_();
     sheet("Dry-down models")
-        .api.getRange(1, 1, 1, 16)
+        .api.getRange(1, 1, 1, headers.model.length)
         .setValues([headers.model]);
     const dashboard = sheet("Dashboard");
     dashboard.api
@@ -328,7 +328,7 @@ describe("scoped daily Dashboard presentation", () => {
         const daily = sheet("Daily care");
 
         expect(daily.state).toMatchObject({
-            columns: 8,
+            columns: 14,
             frozenColumns: 1,
             frozenRows: 6,
             gridlinesHidden: true,
@@ -337,7 +337,7 @@ describe("scoped daily Dashboard presentation", () => {
             protectionEditors: ["owner"],
             protectionWarning: false,
         });
-        expect(daily.state.filter?.range).toBe("A14:H18");
+        expect(daily.state.filter?.range).toBe("A14:N18");
         expect(daily.state.styles.get("D15:D18:format")).toBe("0.0");
         expect(daily.state.styles.get("E15:E18:format")).toBe(
             "mmm d, yyyy h:mm am/pm"
@@ -379,6 +379,7 @@ describe("scoped daily Dashboard presentation", () => {
         api.installDailyCareDashboard();
         const daily = sheet("Daily care");
         daily.state.notes.set("A1", "Garden logger managed Daily care v1");
+        daily.api.getRange("I1:N32").clearContent();
         daily.state.protectionDescription =
             "Garden logger managed Daily care v1";
         daily.state.frozenColumns = 3;
@@ -386,10 +387,10 @@ describe("scoped daily Dashboard presentation", () => {
         api.installDailyCareDashboard();
 
         expect(daily.state.notes.get("A1")).toBe(
-            "Garden logger managed Daily care v2"
+            "Garden logger managed Daily care v3"
         );
         expect(daily.state.protectionDescription).toBe(
-            "Garden logger managed Daily care v2"
+            "Garden logger managed Daily care v3"
         );
         expect(daily.state.filter?.criteria.get(8)).toBe("follow-ups only");
         expect(daily.state.protected).toBe(true);
@@ -792,7 +793,7 @@ describe("scoped daily Dashboard presentation", () => {
             plants: 1,
             sheetId: 100,
         });
-        expect(daily.state.columns).toBe(8);
+        expect(daily.state.columns).toBe(14);
         expect(daily.state.rows).toBe(32);
         expect(daily.api.getRange("D12").getFormula()).toContain('{"",""}');
     });

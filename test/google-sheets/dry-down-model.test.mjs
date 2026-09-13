@@ -376,7 +376,7 @@ describe("dry-down formulas and workbook installation", () => {
                 structuredClone(context.installWateringRecommendations())
             ).toStrictEqual({
                 historyChanged: false,
-                loggerVersion: "5.21.2",
+                loggerVersion: "5.22.0",
                 plants: 2,
             });
 
@@ -523,7 +523,7 @@ describe("dry-down formulas and workbook installation", () => {
         expect(context.installDryDownLearning()).toMatchObject({
             baselineColumns: 36,
             historyChanged: false,
-            loggerVersion: "5.21.2",
+            loggerVersion: "5.22.0",
             plants: 1,
         });
         expect(
@@ -672,7 +672,7 @@ describe("same-setup cycle learning", () => {
         const before = structuredClone(history);
         const first = required(context.GARDEN_DRY_DOWN(history, "P01")[0]);
 
-        expect(first[14]).toBe(Math.ceil(finiteNumber(first[7])));
+        expect(first[14]).toBe(Math.floor(finiteNumber(first[7])));
         expect(first[15]).toContain("confirm readiness first");
         expect(first[15]).toContain("No fixed extra dry days");
 
@@ -698,7 +698,7 @@ describe("same-setup cycle learning", () => {
         );
 
         expect(updated[14]).toBeLessThan(finiteNumber(first[14]));
-        expect(updated[14]).toBe(Math.ceil(finiteNumber(updated[7])));
+        expect(updated[14]).toBe(Math.floor(finiteNumber(updated[7])));
         expect(structuredClone(history)).toStrictEqual(before);
     });
 

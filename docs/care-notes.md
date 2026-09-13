@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-09-11
+Last updated: 2026-09-13
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
@@ -33,6 +33,29 @@ triggers below do not replace that equipment limit.
 This is deliberately not a fixed watering calendar. Four-inch pots under a
 strong lamp and fan may dry quickly, but season, roots, plant size, and room
 conditions can change that speed.
+
+### Checking dryness in small pots
+
+A thin, clean, untreated wooden skewer is a practical cross-check when a finger
+will not fit. Gently insert it into the root-zone mix away from the stem, using
+one easy path rather than repeatedly probing. Stop at resistance; do not force
+it through roots or stones. Leave it a few minutes, remove it, and feel for
+moisture. Damp wood or moist material clinging to it supports waiting.
+
+This is an informal observation, not a calibrated moisture test. A gritty mix
+can leave little residue even when moisture remains, and stained wood alone
+does not prove wetness. Check below the dry surface where access permits;
+use the skewer together with the pot's weight trend and plant condition.
+Remove it after checking and use a clean, dry skewer next time. Do not keep
+digging or unpot the plant just to establish an exact dry weight.
+
+The tracker now uses a sustained plateau or a crossed old weight reference to
+bring an **inspection** forward. A plateau alone does not mean water: poor root
+uptake, changed conditions, and scale noise can also produce a slow curve.
+The [recent-weight guide](../scripts/google-sheets/README.md#recent-weights-and-curve-inspection-5220)
+documents the starting criteria. P21 still uses its upper-2-inch check, and P28
+still requires a leaf-cycle decision. SANBI describes how new split-rock leaves
+use water from the older pair in its [Pleiospilos nelii account](https://pza.sanbi.org/pleiospilos-nelii).
 
 ### Using weights without chasing zero daily loss
 
