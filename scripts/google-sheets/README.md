@@ -34,6 +34,28 @@ overwritten. The bound Apps Script in
 
 ### Recent weights and curve inspection (5.22.0)
 
+Published September 13, 2026 as immutable Apps Script **version 86**, with the
+existing phone URL preserved. All three immutable files match the logger source
+in commit `0f3928d`; the authenticated app reports **Connected · logger 5.22.0**.
+The logger and intake installers completed, and the queue installer replaced
+its one predecessor with one Head trigger scheduled **every five minutes**.
+
+The native backup **Garden Plant Tracker — before recent weights and plateau
+forecasts — 2026-09-13** is in **Archive → Garden Plant Tracker Backups**.
+The rehearsal and production readback matched all 30 plants' derived results,
+preserved **839 observations**, **839 unique Observation IDs**, **772 distinct
+Request IDs**, and the checked History and AppSheet values and validations.
+All **110 existing chart specifications and positions** are unchanged; the four
+additions bring the workbook to **114 charts**. Integrity reports **0 formula
+errors**. No synthetic observation was submitted to production.
+
+Validation passed **744 logger tests**, coverage (99.46% of lines and 97.89% of
+branches), type and source-contract checks, lint, formatting, HTML, the Pages
+build, and secret scans. GitHub logger, website/Pages, and security checks passed.
+Sonar's two analysis attempts stopped before scanning with a service-side **503**
+from `api/settings/values.protobuf`; its quality gate could not be evaluated.
+The full link check retains the existing Wiley DOI **403**; the added links pass.
+
 The current-cycle measurements now feed five recent-weight metrics and a
 **Curve inspection** result in **Dashboard Z:AE** and **Daily care I:N** (the
 details table at row 40). The hidden model extends from 16 to 22 derived fields;
@@ -83,7 +105,7 @@ The [chart guide](INSIGHTS-CHARTS.md#recent-weight-comparisons) lists the locati
 [practical care notes](../../docs/care-notes.md#checking-dryness-in-small-pots)
 explain the physical check and why 1 g/day is not a collection-wide threshold.
 
-### Verified 5.21.2 baseline
+### Previous 5.21.2 baseline
 
 On September 12, 2026, **logger 5.21.2** was published as immutable Apps Script
 **version 85**, preserving the existing deployment and phone URL. All three
