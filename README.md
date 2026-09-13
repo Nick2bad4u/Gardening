@@ -5,9 +5,10 @@
 This is my low-pressure garden notebook. The current focus is my cactus,
 succulent, and small houseplant collection, especially learning how to use the
 indoor grow-light setup without turning the hobby into a science project.
-The next setup keeps the AW200 beside a new AeroLight 240 W, with separate
-controls and an open room-side view. The new light and E25 are expected Sunday,
-September 13.
+The AW200 and new AeroLight 240 W were hung side by side on September 13,
+with separate settings of 45% and 38% and an open room-side view. The owner
+has applied the latest plant layout. See the [installed setup record](docs/equipment/aw200-and-aerolight-240w.md)
+for the remaining height and exposure checks.
 
 ## Current notes
 

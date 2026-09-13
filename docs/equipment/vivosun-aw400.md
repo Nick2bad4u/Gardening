@@ -2,13 +2,13 @@
 
 **Superseded September 11, 2026:** the owner reports the AW400 is sold out and
 has ordered the new **[AeroLight 240 W to use beside the existing AW200](./aw200-and-aerolight-240w.md)**,
-with another E25 expected September 13. The AW400 was not recorded as received
-or installed. Use that linked record for the current equipment and mounting plan.
+with another E25. The two-light pair was installed September 13. The AW400
+was not recorded as received or installed. Use that linked record for the current equipment and mounting plan.
 
 The remaining sections preserve the **September 10 AW400 proposal**, after
 the Amazon AW400SE cancellation. The [seller listing][listing] specifies
 Samsung 301H EVO diodes, UVA, and far-red; the owner reported about $70 extra.
-Those specifications belong to the unavailable AW400, not the incoming 240 W.
+Those specifications belong to the unavailable AW400, not the installed 240 W.
 The open room end and removal of the two-foot return reflector remain current;
 the single-fixture coverage and installation plan below are historical.
 

@@ -14,7 +14,7 @@
    refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30 */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.22.0",
+    version: "5.22.1",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -3258,7 +3258,7 @@ function GARDEN_DRY_DOWN(history, plantIds) {
         const id = cleanText_(row[1]);
         if (!id || row[8] === "Removed") return;
         const records = grouped.get(id) || [];
-        const date = Number(row[0]);
+        const date = typeof row[0] === "number" ? row[0] : 0;
         const setup = positiveIntegerOrDefault_(row[5], 1);
         // Retain setup markers even when the event has no usable weight/date.
         records.push({
@@ -3266,7 +3266,7 @@ function GARDEN_DRY_DOWN(history, plantIds) {
             date,
             setup,
             event: cleanText_(row[2]),
-            weight: Number(row[4]),
+            weight: typeof row[4] === "number" ? row[4] : 0,
             save: cleanText_(row[7] || row[6]),
             application: cleanText_(row[9]),
             estimated: /estimat/i.test(String(row[10]) + " " + String(row[11])),
@@ -3360,8 +3360,8 @@ function wateringReadinessGuidance_(plantId) {
     if (plantId === "P22") {
         return "During active growth, let much of the mix dry; no extra drought delay. If resting, inspect before watering.";
     }
-    if (["P20", "P30"].includes(plantId)) {
-        return "Confirm the shared root zone is dry and inspect every component; no fixed extra dry days.";
+    if (["P19", "P20", "P30"].includes(plantId)) {
+        return "Confirm the shared root zone is dry, inspect every component, and verify drainage before a thorough watering; no fixed extra dry days.";
     }
     return "Confirm the root zone is dry and the plant is ready; reduce watering during rest. No fixed extra dry days.";
 }
@@ -3566,7 +3566,8 @@ function learnedDryDownCurves_(cycles, current) {
 /** @param {DryDownRecord[]} records @returns {GardenDryDownModel} */
 function dryDownModelForPlant_(records) {
     const setup = Math.max(1, ...records.map((r) => r.setup));
-    const cycles = dryDownCycles_(records.filter((r) => r.setup === setup));
+    const setupRecords = records.filter((r) => r.setup === setup);
+    const cycles = dryDownCycles_(setupRecords);
     const current = cycles.at(-1);
     /** @type {GardenDryDownModel} */
     const model = {
@@ -3586,6 +3587,23 @@ function dryDownModelForPlant_(records) {
         recent: recentWeightMetrics_(current?.points || []),
         inspection: "Collecting current-cycle readings",
     };
+    // An undated boundary cannot be placed before or after the visible curve.
+    // Match the descriptive activity summary: do not silently reuse old data.
+    if (
+        setupRecords.some(
+            (r) =>
+                ["Water", "Repot"].includes(r.event) &&
+                (!Number.isFinite(r.date) || r.date <= 0)
+        )
+    )
+        return {
+            ...model,
+            recent: ["", "", "", "", ""],
+            basis: "Undated watering / repot — check records",
+            readiness: "Resolve the cycle boundary",
+            review: "Invalid cycle boundary",
+            inspection: "Check watering / repot dates",
+        };
     if (!current) return model;
     const completedDry = cycles.map((c) => c.beforeDry).findLast(Boolean);
     model.dry = completedDry ? completedDry.weight : "";
@@ -3596,10 +3614,15 @@ function dryDownModelForPlant_(records) {
         return {
             ...model,
             basis: "Current cycle differs — reweigh",
+            readiness: "Reweigh current cycle",
             review: model.inspection,
         };
     if (!current.wet)
-        return { ...model, basis: "Need a wet weight within 5 days" };
+        return {
+            ...model,
+            basis: "Need a wet weight within 5 days",
+            readiness: "Need a wet weight within 5 days",
+        };
     if (!fullWateringForForecast_(current.water)) {
         return {
             ...model,
@@ -3607,10 +3630,19 @@ function dryDownModelForPlant_(records) {
             readiness: "Full-cycle forecast not applicable",
         };
     }
-    if (!completedDry) return { ...model, basis: "Need a completed dry cycle" };
+    if (!completedDry)
+        return {
+            ...model,
+            basis: "Need a completed dry cycle",
+            readiness: "Need a completed dry cycle",
+        };
     const capacity = current.wet.weight - completedDry.weight;
     if (capacity <= Math.max(5, current.wet.weight * 0.01)) {
-        return { ...model, basis: "Recheck wet / dry anchors" };
+        return {
+            ...model,
+            basis: "Recheck wet / dry anchors",
+            readiness: "Recheck wet / dry anchors",
+        };
     }
     const tolerance = Math.max(2, capacity * 0.05);
     const curve = fitDryDownCurve_(

@@ -19,10 +19,11 @@ a photo-only collection ID.
 The short label IDs are permanent plant or shared-planter identifiers, not
 table coordinates. They are shown beside the longer historical inventory IDs.
 
-The [AW200 + AeroLight 240 W and open-end plan](./equipment/aw200-and-aerolight-240w.md)
-changes the intended lighting, not the collection IDs or inventory. See the
-[Table Placement Guide](./layouts/table-placement-research.md) for all 30
-recommended pot positions; physical moves and installation remain unconfirmed.
+The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md)
+was installed September 13, and the owner reports applying the latest
+[Table Placement Guide](./layouts/table-placement-research.md). Keep its 30
+pot positions as the working arrangement while checking light at plant height.
+The collection IDs and inventory remain the same.
 
 ## Confidence guide
 

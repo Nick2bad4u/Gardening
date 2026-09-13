@@ -376,7 +376,7 @@ describe("dry-down formulas and workbook installation", () => {
                 structuredClone(context.installWateringRecommendations())
             ).toStrictEqual({
                 historyChanged: false,
-                loggerVersion: "5.22.0",
+                loggerVersion: "5.22.1",
                 plants: 2,
             });
 
@@ -523,7 +523,7 @@ describe("dry-down formulas and workbook installation", () => {
         expect(context.installDryDownLearning()).toMatchObject({
             baselineColumns: 36,
             historyChanged: false,
-            loggerVersion: "5.22.0",
+            loggerVersion: "5.22.1",
             plants: 1,
         });
         expect(
@@ -725,9 +725,16 @@ describe("same-setup cycle learning", () => {
             "active growth"
         );
 
-        for (const id of ["P20", "P30"]) {
+        for (const id of [
+            "P19",
+            "P20",
+            "P30",
+        ]) {
             expect(context.wateringReadinessGuidance_(id)).toContain(
                 "every component"
+            );
+            expect(context.wateringReadinessGuidance_(id)).toContain(
+                "verify drainage"
             );
         }
     });
@@ -1086,6 +1093,143 @@ describe("same-setup cycle learning", () => {
 });
 
 describe("dry-down numeric and calendar safeguards", () => {
+    it.each([
+        "90",
+        true,
+        false,
+    ])(
+        "does not turn a nonnumeric weight cell (%s) into a crossed dry reference",
+        (invalidWeight) => {
+            expect.hasAssertions();
+
+            const history = [
+                weight(-1, 100),
+                row(0, "Water"),
+                weight(0, 200),
+                weight(2, 170),
+                weight(4, 140),
+                weight(6, 110),
+            ];
+            const malformed = [
+                epoch + 8,
+                "P01",
+                "Weigh",
+                "Routine",
+                invalidWeight,
+                1,
+                "",
+                "",
+                "Active",
+                "",
+                "Measured",
+                "Scale",
+            ];
+
+            expect(model([...history, malformed])).toStrictEqual(
+                model(history)
+            );
+        }
+    );
+
+    it.each(["Water", "Repot"])(
+        "withholds dates and recent metrics when an undated %s could split the current cycle",
+        (event) => {
+            expect.hasAssertions();
+
+            const history = [
+                weight(-1, 100),
+                ...current(
+                    0,
+                    [
+                        0,
+                        2,
+                        4,
+                        6,
+                    ]
+                ),
+                [
+                    "",
+                    "P01",
+                    event,
+                    "Routine",
+                    "",
+                    1,
+                    "",
+                    "",
+                    "Active",
+                ],
+            ];
+            const result = required(
+                runtime().GARDEN_DRY_DOWN(history, "P01")[0]
+            );
+
+            expect(result[7]).toBe("");
+            expect(result[14]).toBe("");
+            expect(result[10]).toContain("Undated watering / repot");
+            expect(result[12]).toBe("Invalid cycle boundary");
+            expect(structuredClone(result.slice(16, 21))).toStrictEqual([
+                "",
+                "",
+                "",
+                "",
+                "",
+            ]);
+        }
+    );
+
+    it("ignores removed and older-setup undated boundaries", () => {
+        expect.hasAssertions();
+
+        const history = [
+            weight(-1, 100, { setup: 2 }),
+            ...current(
+                0,
+                [
+                    0,
+                    2,
+                    4,
+                    6,
+                ],
+                0.2,
+                { setup: 2 }
+            ),
+        ];
+        const removed = row(0, "Water", "", { removed: true, setup: 2 });
+        const old = row(0, "Repot", "", { setup: 1 });
+        removed[0] = "";
+        old[0] = "";
+
+        expect(
+            model([
+                ...history,
+                removed,
+                old,
+            ])
+        ).toStrictEqual(model(history));
+    });
+
+    it("identifies the missing reference instead of asking for four weights already present", () => {
+        expect.hasAssertions();
+
+        expect(
+            model(
+                current(
+                    0,
+                    [
+                        0,
+                        2,
+                        4,
+                        6,
+                    ]
+                )
+            )
+        ).toMatchObject({
+            count: 4,
+            date: "",
+            readiness: "Need a completed dry cycle",
+        });
+    });
+
     it.each([
         undefined,
         "46270",

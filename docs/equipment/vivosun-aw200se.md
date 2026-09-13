@@ -1,12 +1,12 @@
 # VIVOSUN AeroLight Wing AW200SE and GrowHub E25
 
-**September 11 update:** the AW400 is sold out. The owner is retaining the
-AW200 beside a [new AeroLight 240 W](./aw200-and-aerolight-240w.md), with another
-E25 expected September 13. The room end remains open without the two-foot
+**September 13 update:** the owner has hung the AW200 beside the
+[new AeroLight 240 W](./aw200-and-aerolight-240w.md) and applied the latest
+layout, with reported settings of 45% / 38% (assignment unconfirmed). The room end remains open without the two-foot
 return reflector. This page preserves the earlier AW200SE research.
 
 **Equipment correction, September 9, 2026:** the owner identifies the installed
-fixture as **AW200 with tunable spectrum**, currently at **60%** with a reported
+fixture as **AW200 with tunable spectrum**, then at **60%** with a reported
 **13.25-hour daily program** and quarter-hour sunrise/sunset transitions.
 This page retains the earlier AW200SE research for provenance. Its product
 specifications, spectral assumptions, PPFD maps, and 12-hour conversions are

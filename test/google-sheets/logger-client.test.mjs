@@ -7600,6 +7600,26 @@ describe("garden logger activity metrics and guidance", () => {
 
     it.each([
         [
+            "Observed plateau — inspect moisture",
+            "care",
+            "sustained slowdown",
+        ],
+        [
+            "Previous weight reference reached — inspect moisture",
+            "weight",
+            "previous pre-watering weight",
+        ],
+        [
+            "Undated watering / repot — check records",
+            "caution",
+            "no usable date",
+        ],
+        [
+            "Need a completed dry cycle",
+            "info",
+            "do not water just to create a reference",
+        ],
+        [
             "Current-cycle curve · 4 readings",
             "growth",
             "current watering cycle",

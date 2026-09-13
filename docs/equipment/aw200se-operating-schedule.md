@@ -1,21 +1,22 @@
 # Fenton AW200SE, paired-fan, GrowCam, and air-treatment operating schedule
 
-Last updated: 2026-09-11
+Last updated: 2026-09-13
 
-## September 11 AW200 + AeroLight 240 W Plan
+## September 13 AW200 + AeroLight 240 W Installation
 
-The AW400 is sold out. The owner has ordered the **new AeroLight 240 W
-(VSL-AL240)** and **another E25**, expected **Sunday, September 13**, and is
-keeping the **AW200**. The fixtures will hang side by side with independent
-height adjustment, allowing different clearances for taller plants eventually.
+The owner has hung the **AW200 and new AeroLight 240 W (VSL-AL240)** side by
+side, leveled them further after the photographs, and applied the latest
+plant layout. Independent suspension allows different clearances for taller
+plants. Reported intensities are **45% / 38%**, with assignment unconfirmed.
 The **two-foot return panel stays out**; the divider Mylar stays.
 
 Use the [two-light equipment record](./aw200-and-aerolight-240w.md) for exact
 dimensions, masses, and independent suspension from four ceiling hooks, and the
 [final placement guide](../layouts/table-placement-research.md) for the intended
-all-wood/near-half-glass exposure. Four E25 paths are planned: three existing
-and the incoming light controller. The last AW200 report remains 60% and a
-13.25-hour day; the new light's settings and both final clearances are unrecorded.
+all-wood/near-half-glass exposure. Four E25 paths are planned including both
+canopy fans. The last confirmed AW200 day is 13.25 hours; both current programs
+and final clearances still need confirmation. Keep the reported percentages
+and current positions provisionally while checking actual plant exposure.
 The owner handles acclimation; no new ramp or controller program was applied.
 
 ## September 9 AW200 Record — Before the Replacement Order

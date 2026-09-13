@@ -1,24 +1,44 @@
 # Table Placement Guide
 
-Revised September 11, 2026, for the **retained AW200 beside a new AeroLight
-240 W**, with separate controls and an **open room-facing end**. The AW400 is
-sold out. The new light and another E25 are expected **Sunday, September 13**;
-installation, settings, and physical plant moves remain unconfirmed.
-These are final recommended growing positions for **30 tracked pots: 24 on wood
-and six on glass**. The owner handles acclimation.
+Revised September 13, 2026. The **AW200 and new AeroLight 240 W are now hung
+side by side**, with separate reported settings of **45% and 38%**, and the
+owner has applied this plant layout. The room-facing end stays open. Which
+percentage belongs to which fixture, final clearances, and the new light's
+program are not yet recorded.
+Keep these growing positions for **30 tracked pots: 24 on wood and six on
+glass** while checking actual exposure. The owner handles acclimation.
+
+## September 13 Decision: Keep the Layout
+
+The additional fixture does not require another wholesale rearrangement.
+Keep H1, H2, G3, and the other high-light plants in clear central exposure;
+keep D3 at R1C1, A1 toward the perimeter, and #3 on outer glass. Check the
+tallest cactus tips and low rosettes separately: equal tabletop positions do
+not give equal LED-to-plant distance. Move only a shaded or overexposed plant.
+
+Hold the reported **45% / 38%** as a provisional starting point while confirming
+heights. Two lower dimmer percentages do not mean less total light than the
+old single lamp. The [installed-light note](../equipment/aw200-and-aerolight-240w.md#recommended-starting-decision)
+explains the rough power comparison and the small set of useful measurement
+spots. The weaker north window remains supplementary.
+
+The illustrations below were made September 11. Their “incoming” fixture
+label records that earlier proposal; **both lights are installed now**. Plant
+positions remain current, while the dashed fixture outlines are schematic
+and do not claim to reproduce the final centers or a measured brightness map.
 
 ## The Final Arrangement at a Glance
 
 ![Two-light proposal with four columns and six rows on wood, six containers on round glass, separate AW200 and AeroLight 240 W outlines, and an open room-facing end](../../assets/layouts/2026-09-11-dual-light/combined-plan.png)
 
-- **Two fixtures:** keep the AW200 and add the new **VSL-AL240** AeroLight.
+- **Two installed fixtures:** AW200 and the new **VSL-AL240** AeroLight.
   Their bodies are nearly the same size: about **26 × 13 inches each**.
   Combined rated input is **440 W**, not measured dimmed consumption. See the
   [exact equipment and mounting record](../equipment/aw200-and-aerolight-240w.md).
 - **Separate adjustment:** one E25 per light allows separate brightness and
   schedules. Independent hangers allow different clearances for taller cacti
-  eventually. Three E25s are already in use; the new one makes four planned
-  paths including both canopy fans.
+  independently. The equipment plan has four E25 paths including both canopy
+  fans; the controller configuration has not been inspected.
 - **Open view:** keep the left two-foot return panel out. Retain the top Diamond
   Mylar divider and bottom white wall. The weak north window stays on the right.
 - **Final plant needs:** high-light plants keep clear central exposure;
@@ -34,7 +54,7 @@ An LED-lit corner is not automatically filtered or indirect light.
 
 ## Two Lights, Coverage, and Mounting
 
-The proposed drawing runs both fixtures' long axes **top-to-bottom**, from
+The schematic drawing runs both fixtures' long axes **top-to-bottom**, from
 Mylar toward the white wall, with the AW200 toward wood and the new 240 W
 toward glass. This changes the old horizontal single-AW200 band. The two dashed
 outlines indicate a proposed orientation only; centers, rotation, and spacing
@@ -59,14 +79,15 @@ physical panel dimensions do not prove equal exposure across that area.
   the money tree uses gentler useful light at lower-right. The north window
   alone is not assumed to meet either plant's needs.
 
-The combined overlap can be stronger than the outer edges. Record both lamp
-settings and clearances after installation; the AW200's last **60%, 13.25-hour**
-program is not an equivalent setting for the new light. No new ramp or fixed
-watering schedule is introduced.
+The combined overlap can be stronger than the outer edges. The owner reports
+**45% / 38%** after hanging and leveling the lights. Record their assignment
+and both clearances; the earlier **60%, 13.25-hour** single-AW200 program is
+historical context. Confirm the current schedules instead of assuming them.
+No new ramp or fixed watering schedule is introduced.
 
 The owner's revised plan uses **four ceiling hooks, two per light**. Each
 fixture hangs independently and can be leveled and adjusted in height on its
-own. Installation and final clearances remain unrecorded; the
+own. Installation is confirmed; final clearances remain unmeasured. The
 [mounting record](../equipment/aw200-and-aerolight-240w.md#independent-ceiling-hooks)
 documents the September 11 correction to the ceiling framing orientation.
 
@@ -133,14 +154,14 @@ These two pots remain intact. Their split badges describe their component plants
 not a new single-species requirement. The detailed evidence below preserves all
 probable, cf., hybrid, and unconfirmed-cultivar identifications.
 
-## Current Room and Incoming Light
+## Current Room and Installed Lights
 
 | Item                        | Recorded Setup or Plan                                                                                                       |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Incoming light              | **AeroLight 240 W (VSL-AL240)** plus new E25, expected **September 13**; AW400 unavailable                                   |
+| Installed pair              | **AW200 + AeroLight 240 W (VSL-AL240)**, hung and further leveled **September 13**                                           |
 | Fixture size and position   | AW200 **26 × 13 × 2.1 in**; new 240 W **25.9 × 12.9 × 2.1 in**. Side by side; final centers, orientation, and gap unmeasured |
-| Last installed light        | **AW200 with tunable spectrum**, retained beside the new fixture; last reported **60%**                                      |
-| Daily program               | Last AW200 report **13.25 hours**, including quarter-hour sunrise/sunset transitions; new light program unrecorded           |
+| Reported settings           | **45% / 38%**, fixture assignment unconfirmed                                                                                |
+| Daily program               | Last confirmed AW200 day **13.25 hours**; confirm both current schedules and fade division                                   |
 | Right                       | **North-facing window**, beyond glass; weak supplementary daylight                                                           |
 | Top                         | Existing Diamond Mylar divider retained                                                                                      |
 | Bottom                      | White wall retained                                                                                                          |
@@ -272,7 +293,7 @@ profiles. Rim widths are not canopy widths; the illustration does not certify fi
 4. Use compact healthy growth and, when available, plant-height light readings
    to check that each final spot supplies its stated need. Lamp overlap alone
    does not establish adequate intensity.
-5. Photograph the completed arrangement and record actual moves separately.
+5. Keep the September 13 owner report as the installation/layout record; record later moves and measured heights separately.
 
 ## Sources
 
@@ -281,10 +302,12 @@ profiles. Rim widths are not canopy widths; the illustration does not certify fi
   weights, power, and controls. The [equipment note](../equipment/aw200-and-aerolight-240w.md)
   records the four-hook mounting plan and open room-facing end.
 
-The two-light order, expected Sunday delivery, four-hook mounting plan, intended coverage, reflector removal, room orientation, and
-container shapes are owner evidence. The guidance
+The September 13 installation, further leveling after the photographs,
+45% / 38% settings, and applied plant layout are owner evidence, as are the
+four-hook plan, reflector removal, room orientation, and container shapes. The guidance
 distinguishes species evidence, genus comparisons, grower claims, and placement
-inference. Species guidance reviewed September 9–10; equipment updated September 11, 2026.
+inference. Species guidance reviewed September 9–10 and the key sun/indirect
+groups rechecked September 13; installation updated September 13, 2026.
 
 - **Primary cactus guidance:** [RHS general care][general],
   [RHS rainbow hedgehog][rainbow], [NParks Old Man of the Andes][oreocereus],

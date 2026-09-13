@@ -32,6 +32,37 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
+### Forecast input and guidance audit (5.22.1)
+
+The September 13 audit prepares these focused fixes for publication:
+
+- Only actual numeric cells can enter weight calculations. Numeric-looking
+  text and booleans no longer become apparent scale readings or a crossed
+  old reference.
+- An undated Water or Repot in the current setup withholds the forecast and
+  recent-cycle metrics, because its position relative to the curve is unknown.
+  Removed records and older setups do not block a valid current cycle.
+- Readiness identifies a missing wet reference, completed cycle, or invalid
+  anchors instead of asking for four readings when they already exist.
+- Plateau and crossed-reference tooltips explain the inspection evidence.
+  A missing-reference tooltip explicitly avoids watering to create data.
+- The logger calls the modeled range **Dry-check window**, replacing
+  **Reweigh**: that range predicts proximity to an old weight reference and
+  is not the next weighing appointment. Daily care retains its separate
+  daily/every-other-day measurement cadence.
+- All three shared containers, P19/P20/P30, require component and drainage
+  checks. Money tree and Royal Flush retain manual watering decisions.
+
+The live-data rehearsal uses all **839 current observations**. The audit does
+not introduce a fixed gram-per-day watering cutoff, rewrite dry/wet anchors,
+reset setups for a lighting change, or shorten dates merely because two lights
+are now installed. The model cannot infer current root-zone moisture or a
+changed light field from the scale alone. See the
+[care audit](../../docs/care-notes.md#september-13-forecast-review) and
+[installed-light decision](../../docs/equipment/aw200-and-aerolight-240w.md#recommended-starting-decision).
+
+The verified deployment immediately before this patch is recorded below.
+
 ### Recent weights and curve inspection (5.22.0)
 
 Published September 13, 2026 as immutable Apps Script **version 86**, with the

@@ -17617,6 +17617,26 @@
             }
 
             function forecastBasisHelp(basis) {
+                if (basis.startsWith("Observed plateau"))
+                    return [
+                        "care",
+                        "Several measured weights show a sustained slowdown after an earlier decline. This brings a moisture inspection forward; it does not prove the root zone is dry or replace the previous weight reference.",
+                    ];
+                if (basis.startsWith("Previous weight reference reached"))
+                    return [
+                        "weight",
+                        "The latest measured weight has reached or passed a previous pre-watering weight. Inspect moisture and plant condition now. That historical weight is a comparison, not a measurement of completely dry soil.",
+                    ];
+                if (basis.startsWith("Undated watering / repot"))
+                    return [
+                        "caution",
+                        "A watering or repot in this pot setup has no usable date, so the logger cannot determine which readings belong to the current cycle. Check that record before using a forecast.",
+                    ];
+                if (basis.startsWith("Need a completed dry cycle"))
+                    return [
+                        "info",
+                        "The current setup has no completed pre-watering weight reference. Continue moisture and plant-condition checks; do not water just to create a reference or wait indefinitely for a forecast.",
+                    ];
                 if (/conflict|upward|invalid|differs|recheck/i.test(basis))
                     return [
                         "caution",
@@ -17680,8 +17700,8 @@
                 );
                 heading.append(date);
                 const reweigh = createHelp(
-                    "Reweigh",
-                    "This is a window to take another whole-pot weight and inspect dryness, not an instruction to water. New measurements can move the forecast; keep using the same pot setup.",
+                    "Dry-check window",
+                    "This estimates when the pot may approach its previous weight reference; it is not the next weighing appointment. Continue the Daily care weighing cadence and check moisture sooner when needed. For the money tree, check the upper 2 inches of mix; for Royal Flush, inspect the inner leaves and leaf replacement. After a lighting, airflow, or temperature change, reweigh sooner because the old curve may no longer describe drying.",
                     "weight"
                 );
                 reweigh.classList.add("forecast-reweigh");
@@ -17715,7 +17735,7 @@
                 const footnote = document.createElement("p");
                 footnote.className = "forecast-footnote";
                 footnote.textContent =
-                    "* Water only if actual dryness and plant condition are ready.";
+                    "* Water only after the plant’s moisture and condition checks. Reweigh sooner after lighting or airflow changes.";
                 panel.append(heading, reweighRow, basisRow, footnote);
                 return panel;
             }

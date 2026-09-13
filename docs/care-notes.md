@@ -5,14 +5,15 @@ Last updated: 2026-09-13
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
 
-The [AW200 + AeroLight 240 W plan](./equipment/aw200-and-aerolight-240w.md)
-keeps the existing light and open room end. The new light and E25 are expected
-September 13; mounting and new settings remain unrecorded. Observe the combined
-exposure and dry-down after installation. Use the
+The [AW200 + AeroLight 240 W pair](./equipment/aw200-and-aerolight-240w.md)
+was hung September 13 with reported settings of **45% / 38%** and the room
+end open. The owner has applied the latest layout. Percentage assignment,
+current clearances, and programs still need confirmation. Observe the new
+combined exposure and dry-down. Use the
 [final placement guide](./layouts/table-placement-research.md) for each pot's
 ongoing light need; adding a light does not by itself make a pot ready to water.
 
-For the incoming 240 W fixture, the [manufacturer's operating limit](https://vivosun.com/support/guide/aerolight-gen2)
+For the installed 240 W fixture, the [manufacturer's operating limit](https://vivosun.com/support/guide/aerolight-gen2)
 requires the growing space below **86°F (30°C)**. The older outdoor weather
 triggers below do not replace that equipment limit.
 
@@ -20,11 +21,13 @@ triggers below do not replace that equipment limit.
 
 1. Give the plants strong light, but increase intensity gradually after a
    low-light period or a major move.
-2. Water thoroughly enough to wet the root ball, let the pot drain, and empty
-   the tray.
-3. For cacti and succulents, wait until the mix is dry through and the pot
-   feels light before watering again. The money tree uses the separate tropical
-   rule below.
+2. In a container with working drainage, water thoroughly enough to wet the
+   root ball, let it drain, and empty the tray. Verify drainage in a shared
+   planter, especially the square wooden box, before using soak-through watering.
+3. For the usual cactus and succulent group, check that the root-zone mix is
+   dry and the plant is ready before watering again. Money tree, Royal Flush,
+   active/resting Kiwi aeonium, and shared containers need the specific checks
+   below; one whole-pot rule does not cover the collection.
 4. Keep gentle air movement across the group without aiming a harsh, constant
    blast at one plant.
 5. Inspect new growth and plant bases. Old scars and stretched growth will not
@@ -59,6 +62,19 @@ use water from the older pair in its [Pleiospilos nelii account](https://pza.san
 
 ### Using weights without chasing zero daily loss
 
+The September 13 lighting change does **not** reset a pot setup: the pot,
+plant, and medium still weigh together in the same configuration. It does
+change the conditions behind an extrapolated curve. Keep the old observations,
+but collect another weight about a day after installation and follow the
+new trend before relying on a distant predicted date. This is a measurement
+check, not a new daily watering schedule or a reason to delay a needed water.
+
+An actual moisture check takes priority over the model. If the skewer is damp,
+wait even when an inspection date has arrived. If the accessible root zone is
+dry and the plant is ready earlier, do not keep it dry until an estimated date.
+The logger does not automatically ingest a lighting change or use a skewer
+observation to prove that every part of a shared root ball is dry.
+
 Use the rolling **Daily care** sheet to schedule weighing and inspection. The
 calendar uses the latest actual readings and the current setup's forecast;
 future checks move when new weights or watering observations are saved. Its
@@ -91,6 +107,43 @@ damage roots. [The Perlite Institute describes perlite's porous structure](https
 as a product of heating during manufacture; its pores subsequently hold air
 and water. Root-damaging swelling of this particular mixture has not been
 established, so do not use that claim to decide when to water.
+
+### September 13 Forecast Review
+
+The audit checked all 30 plants against the current 839-row observation ledger.
+The last readings were taken early September 13, before the new lights were
+reported installed, so those curves contain no measured response to the pair.
+
+- **Dates are prompts to inspect.** A crossed old reference or a sustained
+  plateau can bring a check forward, but neither measures soil moisture.
+  The displayed dry-check window is not permission to postpone ordinary
+  weighing or a needed moisture check for weeks.
+- **Keep measured evidence comparable.** Use the same pot, tray, labels, and
+  accessories on the scale. A new light changes drying conditions; a changed
+  weighing assembly or spilled/replaced medium can change the mass reference.
+  B3's earlier medium-spill note still limits confidence in its old reference.
+- **No single daily-loss cutoff.** Zero or one gram per day is not a universal
+  dry threshold. The plateau compares a sustained tail with that pot's earlier
+  decline and only suggests inspection. Poor uptake or changed conditions
+  can also flatten a curve.
+- **Keep the exceptions.** Money tree uses its upper-2-inch check; Royal Flush
+  needs the inner-leaf and replacement check; Kiwi aeonium uses observed growth
+  or rest, not an assumed calendar season. Shared pots need every component
+  inspected and drainage verified before a thorough watering.
+- **Input failures must stop a date.** The patch rejects text/boolean weights
+  and withholds the forecast around an undated watering or repot. It also
+  corrects missing-reference messages and the plateau/reference tooltips.
+
+The numeric plateau thresholds and exponential fit are practical starting
+heuristics, not validated species-specific moisture models. A good curve fit
+does not establish an optimal watering interval. Use the
+[logger runbook](../scripts/google-sheets/README.md#forecast-input-and-guidance-audit-5221)
+for the implementation and release record. The money-tree retail label and
+species qualifications remain in its [profile](./plants/houseplants/pachira-glabra.md),
+while [SANBI's split-rock account](https://pza.sanbi.org/pleiospilos-nelii) supports
+the leaf-replacement distinction. [Wisconsin Extension's Aeonium guidance](https://hort.extension.wisc.edu/articles/aeonium/)
+also distinguishes active growth from rest and explains that growth timing
+can change with the growing environment.
 
 ## Earlier AW200SE Starting Plan
 

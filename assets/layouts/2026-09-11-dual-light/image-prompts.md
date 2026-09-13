@@ -6,14 +6,20 @@ The older PNGs remain in that directory as historical proposals. These three
 images are the current assets for the placement document, layout page, and
 generated booklet.
 
-The AW400 is unavailable. The owner will keep the AW200 and add the new
-**VSL-AL240 AeroLight 240 W**, with another E25 expected September 13. The
+**September 13 use note:** both lights are now hung and the owner has applied
+these plant positions. The reported settings are 45% / 38%, with assignment
+and final clearances still unconfirmed. The images' “incoming” label belongs
+to their September 11 creation date; the fixture outlines remain schematic.
+
+The AW400 is unavailable. The owner retained the AW200 and installed the new
+**VSL-AL240 AeroLight 240 W**. The
 [equipment note](../../../docs/equipment/aw200-and-aerolight-240w.md) records exact
 dimensions, weights, source distinctions, and the planned independent suspension
 from four ceiling hooks (two per light). The illustrations do not show mounting
 hardware, so the revised hook plan does not change these images.
 The light silhouettes indicate a proposed orientation; they do not establish
-fixture centers, measured light levels, or a completed installation.
+fixture centers or measured light levels. The owner's September 13 report,
+rather than the illustration, establishes installation.
 
 ## Shared Edit Requirements
 

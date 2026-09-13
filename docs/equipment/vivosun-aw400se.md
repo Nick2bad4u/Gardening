@@ -1,9 +1,10 @@
 # VIVOSUN AeroLight Wing AW400SE — Canceled Order
 
-Updated September 11, 2026. The owner canceled the Amazon AW400SE order,
+Updated September 13, 2026. The owner canceled the Amazon AW400SE order,
 then selected the [AW400](./vivosun-aw400.md), which was subsequently reported
 sold out. The active plan is now **[the retained AW200 beside a new AeroLight
-240 W](./aw200-and-aerolight-240w.md)** with another E25, expected September 13.
+240 W](./aw200-and-aerolight-240w.md)**, installed September 13 with separate
+reported settings of 45% / 38%.
 Neither 400 W model was recorded as received or installed.
 
 Use the [current setup](../setup.md) and
