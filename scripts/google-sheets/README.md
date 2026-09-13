@@ -34,7 +34,10 @@ overwritten. The bound Apps Script in
 
 ### Forecast input and guidance audit (5.22.1)
 
-The September 13 audit prepares these focused fixes for publication:
+Published September 13, 2026 as immutable Apps Script **version 87**, preserving
+the existing phone URL. All three immutable files match commit `895e728`; the
+authenticated app reports **Connected · logger 5.22.1**. The audit adds these
+focused fixes:
 
 - Only actual numeric cells can enter weight calculations. Numeric-looking
   text and booleans no longer become apparent scale readings or a crossed
@@ -53,7 +56,9 @@ The September 13 audit prepares these focused fixes for publication:
 - All three shared containers, P19/P20/P30, require component and drainage
   checks. Money tree and Royal Flush retain manual watering decisions.
 
-The live-data rehearsal uses all **839 current observations**. The audit does
+The live-data rehearsal and production readback use all **839 current
+observations**, with **no numeric forecast changes** for the current records.
+The audit does
 not introduce a fixed gram-per-day watering cutoff, rewrite dry/wet anchors,
 reset setups for a lighting change, or shorten dates merely because two lights
 are now installed. The model cannot infer current root-zone moisture or a
@@ -61,7 +66,27 @@ changed light field from the scale alone. See the
 [care audit](../../docs/care-notes.md#september-13-forecast-review) and
 [installed-light decision](../../docs/equipment/aw200-and-aerolight-240w.md#recommended-starting-decision).
 
-The verified deployment immediately before this patch is recorded below.
+The native backup **Garden Plant Tracker — before lighting and forecast audit —
+2026-09-13** is in **Archive → Garden Plant Tracker Backups**. The logger and
+AppSheet intake installers completed successfully; intake required no schema
+migration. The queue installer replaced one predecessor with one Head trigger
+scheduled **every five minutes**.
+
+Production retains **839 unique Observation IDs**, **772 distinct Request IDs**,
+and the checked History, Baselines, Plant tracker, and AppSheet staging values
+and validations. All **114 chart IDs and titles** are unchanged; no chart write
+was needed. Integrity reports **0 formula errors**. The only workbook write
+outside the installers reapplied the existing `Dry-down models!A2` formula to
+recalculate with the new source. No synthetic observations were submitted.
+
+Validation passed **755 logger tests**, coverage (99.42% of lines and 97.9% of
+branches), type and source-contract checks, lint, formatting, HTML, the Pages
+build, and secret scans. Authenticated desktop and 390 px checks passed in both
+themes, including tooltip dismissal and horizontal fit. GitHub logger,
+website/Pages, security checks, and the **Sonar quality gate passed** for the
+source commit. The full link check retains the existing Wiley DOI **403**;
+the added links pass. The preceding release's service-side Sonar failure below
+is historical and did not recur for this audit.
 
 ### Recent weights and curve inspection (5.22.0)
 
