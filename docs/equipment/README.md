@@ -1,7 +1,8 @@
 # Equipment research
 
-- [AW200 + new AeroLight 240 W](./aw200-and-aerolight-240w.md) — side-by-side
-  fixtures installed September 13, independent controls, AW200 at 45% and AL240 at 38%,
+- [AW200 + new AeroLight 240 W](./aw200-and-aerolight-240w.md) — two horizontal
+  fixtures installed September 13, one above the other in the bird's-eye plan,
+  independent controls, AW200 at 45% and AL240 at 38%,
   an 18-inch plant-tip reference, matching 13 h 15 m total cycles including
   15-minute sunrise and sunset transitions, exact dimensions and weights,
   and four ceiling hooks (two per fixture)

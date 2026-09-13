@@ -43,7 +43,8 @@ is 24 inches across and holds six containers. Shared succulent planter `#2`
 is a **square wooden box**. The [Table Placement Guide](./layouts/table-placement-research.md)
 records all 30 final recommended spots and light needs, with three updated
 illustrations [after the booklet contents](https://nick2bad4u.github.io/Gardening/#placement).
-The two fixture outlines are schematic; actual spacing and exposure remain
+Both fixture long axes run left/open room to right/glass, one above the other
+in the bird's-eye plan. The outlines are schematic; spacing and exposure remain
 unmeasured. The owner confirms the illustrated plant arrangement is applied.
 
 The [two-light equipment note](./equipment/aw200-and-aerolight-240w.md) records
@@ -55,7 +56,7 @@ the earlier light maps and move-in history.
 
 | Item                     | Current equipment                                                                                                                                                                                                                                                                                                                                                                        |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Light transition         | [Installed AW200 + AeroLight 240 W](./equipment/aw200-and-aerolight-240w.md), hung side by side September 13; independent suspension                                                                                                                                                                                                                                                     |
+| Light transition         | [Installed AW200 + AeroLight 240 W](./equipment/aw200-and-aerolight-240w.md), hung September 13; two horizontal fixtures, one above the other, long axes from wood toward glass; independent suspension                                                                                                                                                                                  |
 | Controllers              | Four planned independent E25 paths: AW200, AeroLight 240 W, and two AeroWave E6 Gen2 fans. Separate light percentages are reported; the new controller configuration has not been inspected                                                                                                                                                                                              |
 | Location                 | Fenton, Michigan                                                                                                                                                                                                                                                                                                                                                                         |
 | Mount                    | Four ceiling hooks, two per fixture; each light suspended independently with separate adjustable hangers. Installed September 13; owner-reported 18-inch plant-tip reference                                                                                                                                                                                                             |

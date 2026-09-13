@@ -3,8 +3,10 @@
 Created September 11, 2026, using the built-in image-generation tool to edit the
 [September 10 AW400 illustrations](../2026-09-09-placement/image-prompts.md).
 The older PNGs remain in that directory as historical proposals. These three
-images are the current assets for the placement document, layout page, and
-generated booklet.
+September 11 images are also historical: the owner corrected their fixture
+orientation on September 13. Use the
+[horizontal-light illustrations](../2026-09-13-horizontal-lights/image-prompts.md)
+for the current placement document, layout page, and generated booklet.
 
 **September 13 use note:** both lights are now hung and the owner has applied
 these plant positions. The confirmed settings are AW200 at 45% and
@@ -19,9 +21,9 @@ The AW400 is unavailable. The owner retained the AW200 and installed the new
 dimensions, weights, source distinctions, and the planned independent suspension
 from four ceiling hooks (two per light). The illustrations do not show mounting
 hardware, so the revised hook plan does not change these images.
-The light silhouettes indicate a proposed orientation; they do not establish
-fixture centers or measured light levels. The owner's September 13 report,
-rather than the illustration, establishes installation.
+The vertical light silhouettes were incorrect. The owner's September 13 markup
+places both long axes left-to-right, one above the other. The original edit
+prompts below are retained as generation history, not current placement guidance.
 
 ## Shared Edit Requirements
 

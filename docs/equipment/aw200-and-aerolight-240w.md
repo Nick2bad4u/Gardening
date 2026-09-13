@@ -1,7 +1,7 @@
-# AW200 + AeroLight 240 W — Installed Side by Side
+# AW200 + AeroLight 240 W — Installed Horizontal Pair
 
 Updated September 13, 2026. The owner has hung the **AW200 and new AeroLight
-240 W** side by side, leveled them further after the supplied photographs,
+240 W** as two horizontal fixtures, leveled them further after the supplied photographs,
 and applied the latest plant arrangement. The confirmed settings are
 **AW200 at 45%** and **AeroLight 240 W at 38%**.
 The owner confirms an **18-inch (45.7 cm) LED-to-plant-tip reference** and the
@@ -93,19 +93,24 @@ on the 24-inch round glass table**. The shared succulent planter remains a
 square wooden box. The [Table Placement Guide](../layouts/table-placement-research.md)
 retains every final recommended position and its individual light need.
 
-The placement illustration runs both lights' approximately 26-inch long axes
-from **top/Mylar to bottom/white wall**, side by side across wood and toward
-glass. Their combined short dimensions are about **25.9 inches before a gap**.
-Wood plus the near half of glass spans about **28 inches before furniture gaps**.
-Those dimensions help plan placement; they do not prove full or even illumination.
-The owner has now hung and leveled the fixtures; their final centers, rotation,
-and spacing have not been measured. The September 11 image's “incoming” label
-is historical; its plant positions remain the current working layout.
+The owner's September 13 markup corrects the fixture orientation: both lights'
+approximately **26-inch long axes run left/open room to right/glass**, one above
+the other in the bird's-eye view. The upper fixture reaches across the upper
+wooden half toward glass; the lower fixture does the same below it. The owner
+has not specified which model is upper versus lower.
+
+Each 26-inch length runs across a target of about **28 inches of wood plus the
+near half of glass before furniture gaps**. The two short dimensions together
+span about **25.9 inches top-to-bottom before a fixture gap**, beside the nominal
+26-inch wooden depth. Those dimensions do not prove full or even illumination.
+The owner has hung and leveled the fixtures; exact centers, gap, and exposure
+remain unmeasured. The corrected September 13 illustrations retain all plant slots.
 
 Prioritize clear exposure for the high-light plants in the middle wooden rows
 and near glass half. Keep Ming Thing at the open-left corner and the money tree
 on outer glass, then check that those spots receive gentler useful light.
-The overlap between fixtures can be stronger than either edge. Different heights
+The seam near the join after wooden row 3 may receive overlap or a dip; the
+central rows are not automatically the brightest. Different heights
 can improve clearance for tall cacti while changing exposure for their neighbors.
 Keep the separate hangers adjustable and the fans unobstructed.
 
@@ -135,6 +140,10 @@ Final hook positions and individual plant-tip distances are not mapped.
   sunrise and sunset transitions at the start and end. Exact clock times and
   spectrum modes remain unrecorded. The
   percentage-times-rated-power comparison above is explicitly a planning inference.
+- **Owner's marked-up plan, September 13, 2026:** two horizontal fixture bodies,
+  one above the other, both extending from the open room side across wood toward
+  glass. This corrects the earlier vertical drawing; upper/lower model assignment
+  and exact positions are not supplied.
 - **Owner report, September 11, 2026:** AW400 unavailable; new 240 W and E25
   ordered for Sunday; AW200 retained; side-by-side mounting and later different
   heights intended. The later correction replaces the shared hardware proposal

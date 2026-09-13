@@ -1,7 +1,7 @@
 # Table Placement Guide
 
 Revised September 13, 2026. The **AW200 and new AeroLight 240 W are now hung
-side by side**, with **AW200 at 45% and AeroLight 240 W at 38%**, and the
+as two horizontal fixtures**, with **AW200 at 45% and AeroLight 240 W at 38%**, and the
 owner has applied this plant layout. The room-facing end stays open. The owner confirms
 an **18-inch plant-tip reference** and the same **13 h 15 m total daily
 cycle** for both lights, including **15-minute sunrise and sunset transitions**
@@ -23,14 +23,15 @@ old single lamp. The [installed-light note](../equipment/aw200-and-aerolight-240
 explains the rough power comparison and the small set of useful measurement
 spots. The weaker north window remains supplementary.
 
-The illustrations below were made September 11. Their “incoming” fixture
-label records that earlier proposal; **both lights are installed now**. Plant
-positions remain current, while the dashed fixture outlines are schematic
-and do not claim to reproduce the final centers or a measured brightness map.
+The September 13 illustrations incorporate the owner's marked-up correction:
+both long axes run **left/open room to right/glass**, one across the upper
+half of the arrangement and one across the lower half. **Both lights are
+installed.** Plant positions remain current. The transparent outlines show
+orientation; their exact centers, gap, and light distribution are unmeasured.
 
 ## The Final Arrangement at a Glance
 
-![Two-light proposal with four columns and six rows on wood, six containers on round glass, separate AW200 and AeroLight 240 W outlines, and an open room-facing end](../../assets/layouts/2026-09-11-dual-light/combined-plan.png)
+![Two horizontal fixture outlines, one above the other, extend across the four-column six-row wooden grid toward the near half of the round glass table](../../assets/layouts/2026-09-13-horizontal-lights/combined-plan.png)
 
 - **Two installed fixtures:** AW200 and the new **VSL-AL240** AeroLight.
   Their bodies are nearly the same size: about **26 × 13 inches each**.
@@ -55,14 +56,25 @@ An LED-lit corner is not automatically filtered or indirect light.
 
 ## Two Lights, Coverage, and Mounting
 
-The schematic drawing runs both fixtures' long axes **top-to-bottom**, from
-Mylar toward the white wall, with the AW200 toward wood and the new 240 W
-toward glass. This changes the old horizontal single-AW200 band. The two dashed
-outlines indicate a proposed orientation only; centers, rotation, and spacing
-are unmeasured. Their approximate combined short dimensions are **25.9 inches
-before a fixture gap**. Wood plus the nearer glass half spans **28 inches before
-furniture gaps**. The target remains all wood and the near half of glass, but
-physical panel dimensions do not prove equal exposure across that area.
+The owner's correction puts both approximately **26-inch long axes left-to-right**,
+from the open room end toward glass and the north window. One fixture spans
+the upper half of the wooden grid and reaches toward glass; the other spans
+the lower half in the same direction. This replaces the September 11 drawing's
+incorrect vertical orientation. The owner has not assigned a model to the upper
+versus lower outline, so the image uses the same outline color for both.
+
+Across the arrangement, each body is about **26 inches long**, compared with
+**28 inches of wood plus the near glass half before furniture gaps**. In the
+top-to-bottom direction, the two short dimensions total about **25.9 inches
+before a fixture gap**, beside the nominal **26-inch wooden depth**. These are
+physical dimensions, not measurements of the illuminated area. The target
+remains all wood and the near half of glass; light spill and overlap are unmeasured.
+
+The fixture centers now sit in the upper and lower halves, with a seam between
+them near the join after row 3. Rows 3–4 are not proven to be the brightest
+rows. Retain the accepted plant positions while comparing actual exposure under
+each fixture and at that seam; a plant's H/B/I badge describes its need, not the
+brightness of its slot.
 
 - **Wood, rows 3–4:** prioritize the low high-light plants and keep taller
   stems from shading them. Coconut Crystal, Raindrops, Royal Flush, and Paper
@@ -160,19 +172,19 @@ probable, cf., hybrid, and unconfirmed-cultivar identifications.
 
 ## Current Room and Installed Lights
 
-| Item                      | Recorded Setup or Plan                                                                                                       |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Installed pair            | **AW200 + AeroLight 240 W (VSL-AL240)**, hung and further leveled **September 13**                                           |
-| Fixture size and position | AW200 **26 × 13 × 2.1 in**; new 240 W **25.9 × 12.9 × 2.1 in**. Side by side; final centers, orientation, and gap unmeasured |
-| Reported settings         | **AW200 45% · AeroLight 240 W 38%**                                                                                          |
-| Daily program             | Both share **13 h 15 m total**, including **15 m sunrise + 15 m sunset**                                                     |
-| Right                     | **North-facing window**, beyond glass; weak supplementary daylight                                                           |
-| Top                       | Existing Diamond Mylar divider retained                                                                                      |
-| Bottom                    | White wall retained                                                                                                          |
-| Left                      | **Open room-facing end**; approximately two-foot Mylar return panel removed from the plan                                    |
-| Wooden tables             | Two **16 × 13-inch** tops, each **18 inches high**; four columns and six rows, join after row 3                              |
-| Glass table               | **24-inch diameter**, round, **18 inches high**                                                                              |
-| Plant-tip reference       | Owner-reported **18 inches (45.7 cm)**; individual tip distances and light levels are not mapped                             |
+| Item                      | Recorded Setup or Plan                                                                                                                   |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Installed pair            | **AW200 + AeroLight 240 W (VSL-AL240)**, hung and further leveled **September 13**                                                       |
+| Fixture size and position | AW200 **26 × 13 × 2.1 in**; new 240 W **25.9 × 12.9 × 2.1 in**. Long axes left-to-right, one above the other; centers and gap unmeasured |
+| Reported settings         | **AW200 45% · AeroLight 240 W 38%**                                                                                                      |
+| Daily program             | Both share **13 h 15 m total**, including **15 m sunrise + 15 m sunset**                                                                 |
+| Right                     | **North-facing window**, beyond glass; weak supplementary daylight                                                                       |
+| Top                       | Existing Diamond Mylar divider retained                                                                                                  |
+| Bottom                    | White wall retained                                                                                                                      |
+| Left                      | **Open room-facing end**; approximately two-foot Mylar return panel removed from the plan                                                |
+| Wooden tables             | Two **16 × 13-inch** tops, each **18 inches high**; four columns and six rows, join after row 3                                          |
+| Glass table               | **24-inch diameter**, round, **18 inches high**                                                                                          |
+| Plant-tip reference       | Owner-reported **18 inches (45.7 cm)**; individual tip distances and light levels are not mapped                                         |
 
 Two 13-inch depths joined give a nominal **16-inch-wide × 26-inch-long** wooden
 rectangle. This is not a fresh usable-surface measurement. Four 4-inch rims
@@ -183,7 +195,7 @@ maps and dimming percentages are not measurements of the new open-end setup.
 
 ## Wooden Tables: Final Four-Column, Six-Row Layout
 
-![Final four-column six-row wooden arrangement for AW200 plus AeroLight 240 W, with Ming Thing at the open-left corner and every plant labeled by light need](../../assets/layouts/2026-09-11-dual-light/wooden-tables.png)
+![Final four-column six-row wooden arrangement for two horizontal lights, with Ming Thing at the open-left corner and every plant labeled by light need](../../assets/layouts/2026-09-13-horizontal-lights/wooden-tables.png)
 
 Rows run **top/Mylar to bottom/white wall**. Columns run **left/open room end
 to right/glass table**. R3C2 means row 3, column 2; every row below is one
@@ -240,7 +252,7 @@ turn it into a confirmed species-specific requirement.
 
 ## Glass Table: Final Positions, Shapes, and Sizes
 
-![Final six-container glass arrangement with a square wooden box, shared-pot light needs, the AW200 plus AeroLight 240 W plan, and money tree on the outer side](../../assets/layouts/2026-09-11-dual-light/glass-table.png)
+![Final six-container glass arrangement with a square wooden box, horizontal fixtures extending from wood, shared-pot light needs, and money tree on the outer side](../../assets/layouts/2026-09-13-horizontal-lights/glass-table.png)
 
 The **table** is 24 inches across, not the largest planter. Shapes come from the
 owner's August 29 and September 1–2 photographs in the
@@ -310,8 +322,9 @@ The September 13 installation, further leveling after the photographs,
 AW200 45% and AeroLight 240 W 38% settings, applied plant layout, 18-inch
 plant-tip reference, and shared 13 h 15 m cycle including 15-minute sunrise
 and sunset transitions are
-owner evidence, as are the four-hook plan, reflector removal, room orientation,
-and container shapes. The guidance
+owner evidence. The later marked-up plan corrects both fixture long axes to
+left-to-right, one above the other. The four-hook plan, reflector removal, room
+orientation, and container shapes are also owner evidence. The guidance
 distinguishes species evidence, genus comparisons, grower claims, and placement
 inference. Species guidance reviewed September 9–10 and the key sun/indirect
 groups rechecked September 13; installation updated September 13, 2026.
@@ -336,7 +349,7 @@ groups rechecked September 13; installation updated September 13, 2026.
   Product sizes are nominal; a listing does not prove a mixed planter's identities.
 - **Collection evidence:** [measurement photographs](../../assets/measurements/README.md),
   [plant and pot inventory](../collection.md), [individual profiles](../plants/),
-  and the [image prompts](../../assets/layouts/2026-09-11-dual-light/image-prompts.md).
+  and the [September 13 image prompts](../../assets/layouts/2026-09-13-horizontal-lights/image-prompts.md).
 
 [general]: https://www.rhs.org.uk/plants/types/cacti-succulents/houseplants/growing-guide
 [rainbow]: https://www.rhs.org.uk/plants/115504/echinocereus-rigidissimus/details
