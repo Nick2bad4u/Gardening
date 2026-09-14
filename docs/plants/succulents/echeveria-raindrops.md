@@ -41,8 +41,7 @@ confirmed pot label is `H2`, and the permanent tracker ID is
 Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
 slightly moist substrate. The live 2026-08-29 Measurement record is **344 g**
 by Scale and **1.35 in high × 2.75 in wide** by Ruler. These are measured
-records, not watering or fertilizer events. Exact maintained placement and the
-replacement-medium composition remain unrecorded.
+records, not watering or fertilizer events. The proposed maintained position is documented below; physical completion of that move and the replacement-medium composition remain unrecorded.
 
 The owner chose not to quarantine this shipment after hand inspection, owner-
 reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
@@ -87,13 +86,13 @@ broad genus range must not be printed as this cultivar's origin.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                                                                               |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. An individual arrival crop is archived; add top, side, base, and complete all-side diagnostic views when available. |
-| Grow-light position | Bright succulent zone outside the harshest cactus center; increase exposure only if the rosette stays compact. Exact maintained placement remains unrecorded.                                                                             |
-| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use medium dryness, plant response, and pot-weight trend as evidence.                                                                                      |
-| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape and replacement-medium composition are unrecorded; keep the crown above the medium.                                                                                   |
-| Surface             | Avoid touching or wiping the powdery farina; fingerprints and rubbed patches do not grow back on the same leaf.                                                                                                                           |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                                                              |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. An individual arrival crop is archived; add top, side, base, and complete all-side diagnostic views when available.                                                                |
+| Grow-light position | **Proposed R3C2 · Bright.** Move one column left to a bright inner shoulder. Exact grower guidance supports useful bright light without claiming the strongest slot. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use medium dryness, plant response, and pot-weight trend as evidence.                                                                                                                                                     |
+| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape and replacement-medium composition are unrecorded; keep the crown above the medium.                                                                                                                                                  |
+| Surface             | Avoid touching or wiping the powdery farina; fingerprints and rubbed patches do not grow back on the same leaf.                                                                                                                                                                                          |
 
 ## Rotation, propagation, and watch points
 

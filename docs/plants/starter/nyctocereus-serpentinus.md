@@ -44,13 +44,13 @@ introductions beyond Mexico, including parts of Australia and South Africa.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                            |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | Bright middle zone rather than the hottest center at first: about 10–18 mol/m²/day DLI, or 230–420 µmol/m²/s over 12 hours.                                   |
-| Growth habit        | Give it a stake, trellis, or eventual hanging route. A horizontal stem is not automatically unhealthy; unsupported scrambling is normal.                      |
-| Water               | During warm active growth it can use water more regularly than the small globular cacti, but still wait for the pot to dry. Reduce sharply when growth slows. |
-| Mix and pot         | Fast drainage remains essential. An established tuberous root system may eventually justify a deeper pot, but do not overpot a small specimen.                |
-| Temperature         | Favor warmth during growth and protect from frost. Keep a cool plant dry.                                                                                     |
+| Topic               | Practical approach                                                                                                                                                                                                                                                      |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Proposed R2C1 · Bright.** Retain the open-left shoulder. Columnar form alone is not a reason to force it into the strongest area. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Growth habit        | Give it a stake, trellis, or eventual hanging route. A horizontal stem is not automatically unhealthy; unsupported scrambling is normal.                                                                                                                                |
+| Water               | During warm active growth it can use water more regularly than the small globular cacti, but still wait for the pot to dry. Reduce sharply when growth slows.                                                                                                           |
+| Mix and pot         | Fast drainage remains essential. An established tuberous root system may eventually justify a deeper pot, but do not overpot a small specimen.                                                                                                                          |
+| Temperature         | Favor warmth during growth and protect from frost. Keep a cool plant dry.                                                                                                                                                                                               |
 
 Judge light by the new stem: it should emerge with a useful diameter, regular
 ribs, and normal spine spacing. A thin pale extension means it wants more light;

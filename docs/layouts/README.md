@@ -13,7 +13,7 @@ with AW200 at 45% and AeroLight 240 W at 38%, and the owner reports applying
 this layout.
 The owner confirms an 18-inch plant-tip reference and the same 13 h 15 m total
 cycle for both lights, including 15-minute sunrise and sunset transitions at
-the start and end. The September 14 refinement places F2 Boobie at R5C1 and E3 Woolly Nipple at R5C3; every other slot is retained. The [complete placement review](../two-light-placement-review.md) explains the exposure priorities and remaining measurement limits.
+the start and end. The September 14 relative-light revision adds an estimated map, a proposed grid with D3 and F2 at the two left corners, clearer interior positions for stronger-light priorities, and an inward Kiwi position. The owner reports nearly full wooden coverage and only a ½–1-inch fixture gap. Use the [phone comparison and blank reading sheet](./table-placement-research.md#compare-the-plan-with-a-phone-meter) to test the pattern; differences across wood may be modest. The [complete placement review](../two-light-placement-review.md) preserves the evidence and uncertainty for every pot.
 The **two-foot return panel stays out**, leaving the room end open; divider
 Mylar stays. Final positions remain grouped by ongoing light need, and the
 plan distinguishes intended coverage from unmeasured actual exposure.

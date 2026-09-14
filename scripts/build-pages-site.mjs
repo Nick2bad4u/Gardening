@@ -278,6 +278,16 @@ async function main() {
             loggerAssetReferences
         )
     );
+    for (const html of [sourceHtml, ...layoutSources]) {
+        for (const match of html.matchAll(
+            /\bhref="\.\.\/\.\.\/(?<reference>assets\/layouts\/[^"#?]+\.csv)"/gv
+        )) {
+            const reference = match.groups?.["reference"];
+            if (reference === undefined)
+                throw new Error("Incomplete placement download reference.");
+            assetReferences.add(reference);
+        }
+    }
 
     let publishedHtml = addCanonical(sourceHtml, pagesUrl)
         .replaceAll('href="../layouts/', 'href="./layouts/')

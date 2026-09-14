@@ -26,7 +26,7 @@ The owner confirms an **18-inch LED-to-plant-tip reference**
 and the same **13 h 15 m total daily cycle** for both lights, including
 **15 minutes of sunrise and 15 minutes of sunset** at the start and end.
 Exact clock times and individual plant-tip distances are not mapped.
-Keep the present settings while evaluating the September 14 placement refinement: F2 Boobie at R5C1 and E3 Woolly Nipple at R5C3. All other slots remain as in the September 13 arrangement; the optional A1/C2 swap is not adopted.
+Keep the present settings for the first phone-meter comparison. The September 14 relative-light revision proposes gentler left corners for D3 and F2, clearer interior positions for stronger-light priorities, and an inward shoulder for Kiwi. It supersedes the earlier F2/E3-only refinement; the proposed coordinates are not a record of completed moves.
 
 The [new 240 W manual](https://vivosun.com/support/guide/aerolight-gen2) requires
 the growing space to stay **below 86°F (30°C)** during operation. Check room
@@ -36,16 +36,16 @@ The **approximately two-foot Mylar return panel stays out of the plan** to keep
 the room-side view open. In the bird's-eye view: **open room left, Diamond
 Mylar divider top, white wall bottom, weak north-facing window right**.
 
-The owner reports applying the latest layout. The target remains **all 24 pots
+The owner reported applying the September 13 layout. The target remains **all 24 pots
 on wood and roughly the nearer half of glass**.
 Wood stays **four columns across and six rows down**; the round glass table
 is 24 inches across and holds six containers. Shared succulent planter `#2`
 is a **square wooden box**. The [Table Placement Guide](./layouts/table-placement-research.md)
-records all 30 final recommended spots and light needs, with three updated
+records all 30 proposed spots and light needs, with an estimated light map and three arrangement
 illustrations [after the booklet contents](https://nick2bad4u.github.io/Gardening/#placement).
 Both fixture long axes run left/open room to right/glass, one above the other
 in the bird's-eye plan. The outlines are schematic; spacing and exposure remain
-unmeasured. The September 13 arrangement was owner-confirmed as applied; the September 14 illustrations show the newly adopted F2/E3 refinement without asserting a fresh physical measurement.
+unmeasured. The owner's latest sketch places the fixtures over nearly all the wood, with about an inch at the outer top/bottom ends and a ½–1-inch inter-fixture gap. These are approximate observations, not a measured scale plan. The September 14 illustrations show proposed changes pending a relative-light comparison.
 
 The [two-light equipment note](./equipment/aw200-and-aerolight-240w.md) records
 manufacturer specifications and the revised mounting plan: **four ceiling

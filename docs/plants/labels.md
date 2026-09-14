@@ -229,8 +229,7 @@ The six permanent labels were corrected from the physical plants after receipt:
 Crystal, `H2` Raindrops, and `H3` Eve's needle. Their tracker IDs are
 `P27`, `P23`, `P28`, `P24`, `P25`, and `P26`, respectively. The owner-entered
 live tracker records 4-inch current pots, and the 2026-08-29 Scale weights and Ruler
-dimensions are recorded. Received nursery-pot shape, exact maintained
-placement, and replacement-medium composition remain unrecorded.
+dimensions are recorded. Received nursery-pot shape and replacement-medium composition remain unrecorded. The [relative-light guide](../layouts/table-placement-research.md) supplies proposed positions; physical completion of those moves has not been recorded.
 
 The exact product pages were inspected on 2026-08-26. All six list a 2.0-inch
 pot; that seller size and SKU belong in the collection record, not necessarily

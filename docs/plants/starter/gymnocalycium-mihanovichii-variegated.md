@@ -47,14 +47,14 @@ Kew accepts _G. mihanovichii_ and traces the combination to Britton and Rose in 
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                         |
-| ------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Grow-light position | Gentler edge or raised side zone. Start around 6–12 mol/m²/day DLI, about 140–280 µmol/m²/s over 12 hours. |
-| Why gentler         | Reduced-green tissue has less photosynthetic capacity and often burns before fully green high-light cacti. |
-| Water               | Soak, drain, and allow a full dry-down. Do not keep it wet to compensate for slow growth.                  |
-| Pot and mix         | The current small drained pot is appropriate. Keep the colored lower body visible above the top dressing.  |
-| Temperature         | Warm growing conditions and a bright, drier winter suit it better than cold wet treatment.                 |
-| Feeding             | Very dilute feeding during active growth; variegation makes slower growth normal.                          |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                                      |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Proposed R3C1 · Bright.** Move to the bright open-left middle shoulder. This rooted, chlorophyll-bearing selection needs useful light; the move is not grafted-moon shade advice. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Why gentler         | Reduced-green tissue has less photosynthetic capacity and often burns before fully green high-light cacti.                                                                                                                                                                                                              |
+| Water               | Soak, drain, and allow a full dry-down. Do not keep it wet to compensate for slow growth.                                                                                                                                                                                                                               |
+| Pot and mix         | The current small drained pot is appropriate. Keep the colored lower body visible above the top dressing.                                                                                                                                                                                                               |
+| Temperature         | Warm growing conditions and a bright, drier winter suit it better than cold wet treatment.                                                                                                                                                                                                                              |
+| Feeding             | Very dilute feeding during active growth; variegation makes slower growth normal.                                                                                                                                                                                                                                       |
 
 Use the green portions as the best health indicator. Stable colored panels with
 firm tissue are normal. A newly bleached, papery patch on the lamp-facing side

@@ -46,8 +46,7 @@ corrected pot label is `H1`, and the permanent tracker ID is `P24`.
 Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
 slightly moist substrate. The live 2026-08-29 Measurement record is **361.5 g**
 by Scale and **1.0 in high × 2.55 in wide** by Ruler. These are measured
-records, not watering or fertilizer events. Exact maintained placement and the
-replacement-medium composition remain unrecorded.
+records, not watering or fertilizer events. The proposed maintained position is documented below; physical completion of that move and the replacement-medium composition remain unrecorded.
 
 The owner chose not to quarantine this shipment after hand inspection, owner-
 reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
@@ -94,14 +93,14 @@ coolest available succulent position with steady airflow.
 
 ## Care in this collection
 
-| Topic             | Practical starting approach                                                                                                                                                                                                       |
-| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival           | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual top and side views are archived; add base and complete all-side diagnostic views when available. |
-| Primary placement | Indoor-only: use the brightest and coolest practical succulent position with good airflow. Exact maintained placement remains unrecorded.                                                                                         |
-| Water             | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use drainage, rosette firmness, and pot-weight trend; never leave water standing in the crown or saucer.                                           |
-| Heat              | Move toward a cooler edge or add distance if leaves bleach, the rosette opens, or sustained canopy heat becomes excessive.                                                                                                        |
-| Winter            | Keep indoors; favor cooler nights and seasonal temperature variation without exposing it to freezing drafts.                                                                                                                      |
-| Pot               | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape and replacement-medium composition are unrecorded; monitor the larger mix volume indoors.                                                                     |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                                                          |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual top and side views are archived; add base and complete all-side diagnostic views when available.                                                                                                                    |
+| Grow-light position | **Proposed R3C3 · High.** Move one column inward to give the low rosette priority for clear stronger exposure. Check shadows from E1 above, B3 below, and G2 beside it; strong light does not mean maximum heat. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use drainage, rosette firmness, and pot-weight trend; never leave water standing in the crown or saucer.                                                                                                                                                              |
+| Heat                | Move toward a cooler edge or add distance if leaves bleach, the rosette opens, or sustained canopy heat becomes excessive.                                                                                                                                                                                                                           |
+| Winter              | Keep indoors; favor cooler nights and seasonal temperature variation without exposing it to freezing drafts.                                                                                                                                                                                                                                         |
+| Pot                 | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape and replacement-medium composition are unrecorded; monitor the larger mix volume indoors.                                                                                                                                                                                        |
 
 ## Rotation, propagation, and watch points
 

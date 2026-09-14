@@ -42,13 +42,13 @@ Lau. Nigel Taylor published the subspecies combination accepted by Kew in 1997.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                   |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| Grow-light position | One of the higher-light plants. After a gradual ramp, try roughly 14–24 mol/m²/day DLI, or 325–555 µmol/m²/s averaged over 12 hours. |
-| Outdoor light       | Increasing direct sun is useful, but a greenhouse-grown stem can burn before its spine cover and epidermis adapt.                    |
-| Water               | Thorough watering followed by a complete dry-down in warm growth. Keep dry or nearly dry during cool winter rest.                    |
-| Mix                 | Favor a very open mineral fraction around the roots. Never let the tray act as a reservoir.                                          |
-| Flowering support   | Strong seasonal light and a cool, dry winter rest are more useful than heavy fertilizer.                                             |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                                                     |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Proposed R2C4 · High.** Move inward to the upper-right interior, away from the central join. Its sun-loving evidence makes it a stronger-light priority; the left edge is not proven inadequate. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Outdoor light       | Increasing direct sun is useful, but a greenhouse-grown stem can burn before its spine cover and epidermis adapt.                                                                                                                                                                                                                      |
+| Water               | Thorough watering followed by a complete dry-down in warm growth. Keep dry or nearly dry during cool winter rest.                                                                                                                                                                                                                      |
+| Mix                 | Favor a very open mineral fraction around the roots. Never let the tray act as a reservoir.                                                                                                                                                                                                                                            |
+| Flowering support   | Strong seasonal light and a cool, dry winter rest are more useful than heavy fertilizer.                                                                                                                                                                                                                                               |
 
 The target range is a starting point, not a demand to run the grow light at full
 power. The best signal is dense, even, colorful new spination on a stem that

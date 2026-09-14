@@ -34,12 +34,12 @@ group has no single defensible discovery or publication year.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                          |
-| ------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Grow-light position | Bright middle zone on the second wooden table after a short edge-position acclimation.                      |
-| Water               | Soak and drain, then let the small pot dry. Active clumps may use water sooner than woolly columnar cacti.  |
-| Pot and mix         | The small 4-inch pot is fine until offsets pack the rim or water stops penetrating evenly.                  |
-| Flowers             | Strong light, active growth, and a cooler dry winter rest can support flowering; cultivar color is unknown. |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                           |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Grow-light position | **Proposed R5C1 · Bright.** Move one row up along the bright left shoulder, releasing the bottom-left corner for F2. Unknown hybrid parentage limits exact light claims. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Water               | Soak and drain, then let the small pot dry. Active clumps may use water sooner than woolly columnar cacti.                                                                                                                                                                                                   |
+| Pot and mix         | The small 4-inch pot is fine until offsets pack the rim or water stops penetrating evenly.                                                                                                                                                                                                                   |
+| Flowers             | Strong light, active growth, and a cooler dry winter rest can support flowering; cultivar color is unknown.                                                                                                                                                                                                  |
 
 ## Rotation, propagation, and watch points
 

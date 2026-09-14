@@ -8,7 +8,7 @@ indoor grow-light setup without turning the hobby into a science project.
 The AW200 and new AeroLight 240 W were hung on September 13 as two horizontal
 fixtures, one above the other in the bird's-eye plan, running from wood toward glass,
 with AW200 at 45%, AeroLight 240 W at 38%, and an open room-side view. The owner
-applied the September 13 layout and confirms an 18-inch plant-tip reference. The September 14 plan adopts only the F2/E3 swap within row 5.
+applied the September 13 layout and confirms an 18-inch plant-tip reference. The September 14 relative-light plan proposes revised positions and a phone-meter comparison; completed moves are not assumed.
 Both lights share a 13 h 15 m total cycle, including 15-minute sunrise and sunset
 transitions at the start and end. See the [installed setup record](docs/equipment/aw200-and-aerolight-240w.md)
 for the confirmed program and plant-level exposure checks.
@@ -47,10 +47,10 @@ for the confirmed program and plant-level exposure checks.
 - [AW200 + AeroLight 240 W setup](docs/equipment/aw200-and-aerolight-240w.md) —
   verified fixture dimensions and weights, installed settings, independent E25
   controls, and four ceiling hooks for independent suspension
-- [Final table placement guide](docs/layouts/table-placement-research.md) —
-  three two-light illustrations and all 30 pots grouped by light need; also
+- [Table placement guide](docs/layouts/table-placement-research.md) —
+  an estimated light map, three arrangement illustrations, a blank phone-reading sheet, and all 30 pots grouped by light need; also
   [after the online booklet contents](https://nick2bad4u.github.io/Gardening/#placement)
-- [Two-light placement review](docs/two-light-placement-review.md) — a complete pot-by-pot review, the adopted F2/E3 swap, shared-planter guidance, and the limits of the illustrated light zones
+- [Two-light placement review](docs/two-light-placement-review.md) — a complete pot-by-pot review, the revised coordinates, shared-planter guidance, and the limits of the estimated light map
 - [Earlier AW200SE and E25 deep guide](docs/equipment/vivosun-aw200se.md) — PPFD maps,
   DLI/lux conversions, distances, dimming, placement, and a simple starting
   program

@@ -42,14 +42,14 @@ nursery-documented plants.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                          |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | High-light zone after acclimation: roughly 12–22 mol/m²/day DLI, or 280–510 µmol/m²/s averaged over 12 hours.                                               |
-| Outdoor light       | Gradually increase direct sun. Flecking provides some shade but does not make a nursery plant burn-proof.                                                   |
-| Water               | Thorough soak followed by a complete dry-down during warm growth; keep cool winter roots nearly dry.                                                        |
-| Mix                 | Very free-draining and mineral. A slightly alkaline component is compatible with its limestone habitat, but drainage matters more than chasing an exact pH. |
-| Pot                 | It develops a substantial root system; use enough depth without surrounding a small root ball with a huge wet volume.                                       |
-| Feeding             | Low-strength cactus fertilizer during active growth only.                                                                                                   |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                          |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Proposed R5C2 · Bright.** Retain a bright lower shoulder. Its neighbors are now E2 and E3; RHS under-glass guidance does not require the highest available intensity. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Outdoor light       | Gradually increase direct sun. Flecking provides some shade but does not make a nursery plant burn-proof.                                                                                                                                                                                                   |
+| Water               | Thorough soak followed by a complete dry-down during warm growth; keep cool winter roots nearly dry.                                                                                                                                                                                                        |
+| Mix                 | Very free-draining and mineral. A slightly alkaline component is compatible with its limestone habitat, but drainage matters more than chasing an exact pH.                                                                                                                                                 |
+| Pot                 | It develops a substantial root system; use enough depth without surrounding a small root ball with a huge wet volume.                                                                                                                                                                                       |
+| Feeding             | Low-strength cactus fertilizer during active growth only.                                                                                                                                                                                                                                                   |
 
 Compact growth keeps the gaps between areoles short and the crown well armed.
 Elongation cannot be reversed, so tune the lamp based on the next band of

@@ -49,14 +49,14 @@ collection label.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                             |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Grow-light position | Bright middle-to-high zone: a working 12–22 mol/m²/day DLI, about 280–510 µmol/m²/s averaged over 12 hours.                    |
-| Outdoor light       | Acclimate toward substantial sun. Preserve the natural blue wax by handling the body as little as possible.                    |
-| Water               | Deep soak followed by a full dry-down. It may use water a little faster than the tiny globular species while actively growing. |
-| Temperature         | Favor warmth; protect from frost and especially from cold wet soil.                                                            |
-| Pot and mix         | Free drainage and a stable pot. Increase pot size gradually as the branched top gains leverage.                                |
-| Feeding             | Light feeding in the warm growing season; excessive nitrogen encourages vulnerable soft growth.                                |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                                                     |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Proposed R4C3 · High.** Move inward to the lower interior. Stronger-light guidance for established Myrtillocactus supports this priority, but this small crest is not a mature landscape column. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Outdoor light       | Acclimate toward substantial sun. Preserve the natural blue wax by handling the body as little as possible.                                                                                                                                                                                                                            |
+| Water               | Deep soak followed by a full dry-down. It may use water a little faster than the tiny globular species while actively growing.                                                                                                                                                                                                         |
+| Temperature         | Favor warmth; protect from frost and especially from cold wet soil.                                                                                                                                                                                                                                                                    |
+| Pot and mix         | Free drainage and a stable pot. Increase pot size gradually as the branched top gains leverage.                                                                                                                                                                                                                                        |
+| Feeding             | Light feeding in the warm growing season; excessive nitrogen encourages vulnerable soft growth.                                                                                                                                                                                                                                        |
 
 Uneven surfaces receive uneven light. Watch the highest pale ridges for the
 first hint of bleaching, and check deep shaded folds for pests or retained

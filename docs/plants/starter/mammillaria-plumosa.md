@@ -43,13 +43,13 @@ preferable to plants without provenance.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                               |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Grow-light position | Bright but not an abrupt close-center blast. Start around 10–17 mol/m²/day DLI, approximately 230–395 µmol/m²/s over 12 hours.                   |
-| Water               | Wet the mix thoroughly and let it drain; then wait for a full dry-down. Keep water out of a cool crown and reduce strongly in winter.            |
-| Pot and mix         | A wide, shallow pot can suit an expanding clump. The current individual pot is fine until heads reach its rim. Favor excellent mineral drainage. |
-| Temperature         | A dry plant handles cool nights better than a damp one. Protect from hard frost and cold rain.                                                   |
-| Feeding             | Dilute cactus feed during active growth only; soft fast growth is not an improvement.                                                            |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                     |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Proposed R1C2 · Bright.** Retain the upper shoulder with useful bright light. Its white covering does not establish a need for maximum exposure. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Water               | Wet the mix thoroughly and let it drain; then wait for a full dry-down. Keep water out of a cool crown and reduce strongly in winter.                                                                                                                                                  |
+| Pot and mix         | A wide, shallow pot can suit an expanding clump. The current individual pot is fine until heads reach its rim. Favor excellent mineral drainage.                                                                                                                                       |
+| Temperature         | A dry plant handles cool nights better than a damp one. Protect from hard frost and cold rain.                                                                                                                                                                                         |
+| Feeding             | Dilute cactus feed during active growth only; soft fast growth is not an improvement.                                                                                                                                                                                                  |
 
 Water the soil, not the wool. If the feathers get wet, airflow and warmth should
 let them dry quickly. Persistent mineral spotting is cosmetic; persistent damp

@@ -38,8 +38,7 @@ is `G3`, and the permanent tracker ID is `P28`.
 Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
 slightly moist substrate. The live 2026-08-29 Measurement record is **353.5 g**
 by Scale and **1.3 in high × 1.7 in wide** by Ruler. These are measured records,
-not watering or fertilizer events. Exact maintained placement and the
-replacement-medium composition remain unrecorded.
+not watering or fertilizer events. The proposed maintained position is documented below; physical completion of that move and the replacement-medium composition remain unrecorded.
 
 The owner chose not to quarantine this shipment after hand inspection, owner-
 reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
@@ -81,13 +80,13 @@ horticultural color selection rather than a separate wild population.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                                                                                    |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual top, overview, and detail views are archived; add base and complete all-side diagnostic views when available. |
-| Grow-light position | Bright succulent zone after gradual acclimation; keep it out of the highest cactus hotspot during the first week. Exact maintained placement remains unrecorded.                                                                               |
-| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use the active leaf cycle, firmness, medium dryness, and pot-weight trend as evidence.                                                                          |
-| Leaf replacement    | Let the old pair be consumed while a new inner pair develops; wrinkling old leaves alone is not an automatic water signal.                                                                                                                     |
-| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape and replacement-medium composition are unrecorded; depth still matters.                                                                                                    |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                                     |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual top, overview, and detail views are archived; add base and complete all-side diagnostic views when available.                                                                                  |
+| Grow-light position | **Proposed R4C2 · Bright.** Retain a clear lower-interior shoulder at its low growing surface. Preserve Royal Flush watering exceptions; brighter placement does not permit extra watering. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use the active leaf cycle, firmness, medium dryness, and pot-weight trend as evidence.                                                                                                                                                           |
+| Leaf replacement    | Let the old pair be consumed while a new inner pair develops; wrinkling old leaves alone is not an automatic water signal.                                                                                                                                                                                                      |
+| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape and replacement-medium composition are unrecorded; depth still matters.                                                                                                                                                                                     |
 
 ## Rotation, propagation, and watch points
 

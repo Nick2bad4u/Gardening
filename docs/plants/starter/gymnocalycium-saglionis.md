@@ -42,13 +42,13 @@ name refers to the smooth, hairless flower tube.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                      |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | Bright middle-to-high zone after acclimation: about 10–18 mol/m²/day DLI, or 230–420 µmol/m²/s over 12 hours.                           |
-| Outdoor light       | Bright light with gradual direct-sun exposure. Young nursery plants appreciate acclimation more than massive habitat specimens suggest. |
-| Water               | Full soak, complete drainage, then dry through. Reduce water sharply during cool slow growth.                                           |
-| Pot                 | Do not jump straight to a mature-size container. Move up one practical size when roots or body genuinely crowd the current pot.         |
-| Mix                 | Open, fast draining, and not excessively rich. Keep the body-to-soil line visible.                                                      |
+| Topic               | Practical approach                                                                                                                                                                                                                                            |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Proposed R6C3 · Bright.** Retain a bright lower position. Gymnocalycium species do not all share one shade requirement. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Outdoor light       | Bright light with gradual direct-sun exposure. Young nursery plants appreciate acclimation more than massive habitat specimens suggest.                                                                                                                       |
+| Water               | Full soak, complete drainage, then dry through. Reduce water sharply during cool slow growth.                                                                                                                                                                 |
+| Pot                 | Do not jump straight to a mature-size container. Move up one practical size when roots or body genuinely crowd the current pot.                                                                                                                               |
+| Mix                 | Open, fast draining, and not excessively rich. Keep the body-to-soil line visible.                                                                                                                                                                            |
 
 The plant may flatten or contract modestly in a dry rest. That is safer than
 trying to maintain maximum summer plumpness in cool indoor conditions. Active

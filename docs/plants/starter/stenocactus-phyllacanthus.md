@@ -46,13 +46,13 @@ estimate—not that the plant was proved secure.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | Bright middle-to-high zone. Start near 10–18 mol/m²/day DLI, about 230–420 µmol/m²/s averaged over 12 hours, after acclimation.   |
-| Water               | Water deeply during active warm growth, then allow the whole pot to dry. Keep appreciably drier when cool or dormant.             |
-| Pot and mix         | A modest pot is preferable to a large wet soil volume. Keep the wrinkled crown above the top dressing and the drainage path open. |
-| Temperature         | Cool, dry winter conditions can support normal dormancy and spring flowering, but protect a nursery plant from hard frost.        |
-| Fertilizer          | Light feeding during active growth only. Excess nitrogen can make soft, unnatural growth.                                         |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                   |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Proposed R1C4 · Bright.** Move one row up into the upper-right shoulder. Keep clear bright exposure; the wood-to-glass boundary is still beneath the fixtures. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Water               | Water deeply during active warm growth, then allow the whole pot to dry. Keep appreciably drier when cool or dormant.                                                                                                                                                                                |
+| Pot and mix         | A modest pot is preferable to a large wet soil volume. Keep the wrinkled crown above the top dressing and the drainage path open.                                                                                                                                                                    |
+| Temperature         | Cool, dry winter conditions can support normal dormancy and spring flowering, but protect a nursery plant from hard frost.                                                                                                                                                                           |
+| Fertilizer          | Light feeding during active growth only. Excess nitrogen can make soft, unnatural growth.                                                                                                                                                                                                            |
 
 Its folded ribs make visual thirst checks unreliable: they are supposed to look
 creased. Use pot weight, soil dryness, and unusual loss of firmness rather than

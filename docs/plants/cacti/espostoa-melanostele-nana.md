@@ -34,12 +34,12 @@ accepted subspecies combination in 2002.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                             |
-| ------------------- | -------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | Bright cactus zone, but begin on the outer half of the second wooden table while the new acquisition settles.  |
-| Water               | Soak the root ball, drain fully, and wait for a complete dry-down. Keep the wool and crown dry when practical. |
-| Pot and mix         | The current 4-inch pot is suitable while the base remains uncrowded; keep the neck visible above top dressing. |
-| Airflow             | Gentle moving air helps wet wool dry; do not aim either pole fan hard enough to flatten it.                    |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                  |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Proposed R2C3 · High.** Retain the upper interior. Preserve the qualified Espostoa identification and keep its actual height from shading the low H1 rosette. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Water               | Soak the root ball, drain fully, and wait for a complete dry-down. Keep the wool and crown dry when practical.                                                                                                                                                                                      |
+| Pot and mix         | The current 4-inch pot is suitable while the base remains uncrowded; keep the neck visible above top dressing.                                                                                                                                                                                      |
+| Airflow             | Gentle moving air helps wet wool dry; do not aim either pole fan hard enough to flatten it.                                                                                                                                                                                                         |
 
 ## Rotation, propagation, and watch points
 

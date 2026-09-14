@@ -51,7 +51,7 @@ No controller program was remotely changed for this update.
 
 ## Recommended Starting Decision
 
-**Keep AW200 at 45% and AeroLight 240 W at 38%.** The September 14 placement plan adopts only the F2/E3 swap: Boobie at R5C1 and Woolly Nipple at R5C3. The optional A1/C2 swap is not adopted. These settings and positions are provisional exposure choices, not confirmation of adequate light at every tip.
+**Keep AW200 at 45% and AeroLight 240 W at 38% for the first comparison.** The September 14 relative-light revision proposes gentler left corners for D3 and F2, clearer interior positions for stronger-light priorities, and an inward shoulder for Kiwi. It supersedes the earlier F2/E3-only refinement; the proposed coordinates are not a record of completed moves.
 The confirmed 18-inch reference supports retaining this starting setup while
 checking actual plant exposure; the photograph cannot provide PPFD.
 
@@ -74,7 +74,7 @@ leaves. Use both lights at their normal settings. A suitable quantum meter
 can measure PPFD; a consistent lux reading can reveal relative bright and dim
 spots, but do not apply an old AW200SE lux conversion to these mixed spectra.
 
-Keep low rosettes and split rock clearly lit without assigning the strongest exposure to all of them. Raindrops uses bright light rather than a maximum-intensity priority. The [placement review](../two-light-placement-review.md) explains the adopted F2/E3 swap and the limits of edge, seam, and height assumptions. Any future fixture-height adjustment affects neighboring plants as well as the tallest tip.
+Keep low rosettes and split rock clearly lit without assigning the strongest exposure to all of them. Raindrops uses bright light rather than a maximum-intensity priority. The [placement review](../two-light-placement-review.md) explains the revised proposed grid and phone-meter comparison and the limits of edge, seam, and height assumptions. Any future fixture-height adjustment affects neighboring plants as well as the tallest tip.
 
 The [new-model manual][new-manual] requires the growing space to stay **below
 86°F (30°C)** during operation. Recheck room temperature with both fixtures
@@ -97,12 +97,10 @@ Each 26-inch length runs across a target of about **28 inches of wood plus the
 near half of glass before furniture gaps**. The two short dimensions together
 span about **25.9 inches top-to-bottom before a fixture gap**, beside the nominal
 26-inch wooden depth. Those dimensions do not prove full or even illumination.
-The owner has hung and leveled the fixtures; exact centers, gap, and exposure
-remain unmeasured. The September 14 illustrations retain that orientation and exchange only F2 and E3 within row 5.
+The owner has hung and leveled the fixtures. The September 14 clarification describes nearly full wooden coverage, approximately one-inch outer top/bottom margins in the marked-up view, and only a **½–1-inch gap** between fixtures. These are approximate owner observations; exact centers and plant-level exposure remain unmeasured. The dimension arithmetic above and the sketch should not be combined into a falsely precise scale drawing.
 
-Prioritize clear exposure at each plant's growing surface, including the low rosettes and near-glass plants. Keep Ming Thing at the open-left corner, the small Boobie at R5C1, and the money tree on outer glass, while treating gentler exposure there as an inference to check.
-The seam near the join after wooden row 3 may receive overlap or a dip; the
-central rows are not automatically the brightest. Different heights
+Prioritize clear exposure at each plant's growing surface, including the low rosettes and near-glass plants. Keep Ming Thing at the open-left corner, the small Boobie at proposed R6C1, and the money tree on outer glass, while treating gentler exposure there as an inference to check.
+At the reported height, spill from the two panels is expected to fill across their small gap. Compare any local peak or dip, but do not depict a dark seam or presume the central rows are brightest. Different heights
 can improve clearance for tall cacti while changing exposure for their neighbors.
 Keep the separate hangers adjustable and the fans unobstructed.
 

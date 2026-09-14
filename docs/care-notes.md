@@ -17,7 +17,7 @@ and dry-down. Use the
 [final placement guide](./layouts/table-placement-research.md) for each pot's
 ongoing light need; adding a light does not by itself make a pot ready to water.
 
-The September 14 plan exchanges F2 Boobie and E3 Woolly Nipple within row 5, with every glass position retained. This placement adjustment does not reset a pot setup, wet/dry reference, or learned watering cycle. Keep the existing observations and respond to any new drying behavior with useful measurements; a moved pot is not automatically due for watering or daily weighing.
+The September 14 relative-light plan proposes revised wooden positions and an inward Kiwi position on glass; the [placement guide](./layouts/table-placement-research.md) separates these recommendations from completed moves. This placement adjustment does not reset a pot setup, wet/dry reference, or learned watering cycle. Keep the existing observations and respond to any new drying behavior with useful measurements; a moved pot is not automatically due for watering or daily weighing.
 
 For the installed 240 W fixture, the [manufacturer's operating limit](https://vivosun.com/support/guide/aerolight-gen2)
 requires the growing space below **86°F (30°C)**. The older outdoor weather
@@ -319,8 +319,7 @@ the next several weeks.
 
 The 2026-08-28 Check/Clean bulk round records slightly moist substrate for all
 six. This does not establish a watering or fertilizer event. Their deliberate
-2026-08-28 repots and 4-inch current pots establish pot setup 1. Exact
-maintained placement and replacement-medium composition remain unrecorded.
+2026-08-28 repots and 4-inch current pots establish pot setup 1. The [relative-light guide](./layouts/table-placement-research.md) now supplies proposed positions; completed moves and the replacement-medium composition remain unrecorded.
 
 | Tracker ID | Scale weight | Ruler height | Ruler width |
 | ---------- | ------------ | ------------ | ----------- |

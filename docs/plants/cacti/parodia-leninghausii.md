@@ -38,12 +38,12 @@ in 1982. The earlier 1895 date is the one used on the collection label.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                               |
-| ------------------- | ------------------------------------------------------------------------------------------------ |
-| Grow-light position | Bright cactus zone after acclimation; watch the crown for bleaching during fixture changes.      |
-| Water               | Soak and drain, then let the 4-inch pot dry. Reduce watering when cool or growth slows.          |
-| Pot and mix         | A stable, mineral-heavy pot becomes important as the body changes from globe to column.          |
-| Flowers             | Flowering normally requires maturity; absence of flowers on a young plant is not a care failure. |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                       |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Proposed R5C4 · Bright.** Retain the bright lower-right position. A taller tip may receive more light than nearby low plants despite the same row. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Water               | Soak and drain, then let the 4-inch pot dry. Reduce watering when cool or growth slows.                                                                                                                                                                                                  |
+| Pot and mix         | A stable, mineral-heavy pot becomes important as the body changes from globe to column.                                                                                                                                                                                                  |
+| Flowers             | Flowering normally requires maturity; absence of flowers on a young plant is not a care failure.                                                                                                                                                                                         |
 
 ## Rotation, propagation, and watch points
 

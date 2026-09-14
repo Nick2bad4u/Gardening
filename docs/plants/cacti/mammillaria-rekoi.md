@@ -46,12 +46,12 @@ describes the proposed species.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                       |
-| ------------------- | -------------------------------------------------------------------------------------------------------- |
-| Grow-light position | Bright middle zone after acclimation; use compact new growth and flower development as response signals. |
-| Water               | Soak, drain, and allow a complete dry-down. Avoid leaving a cool crown wet.                              |
-| Pot and mix         | The 4-inch pot is suitable until offsets or roots crowd it; keep the body above the top dressing.        |
-| ID evidence         | Do not change care in response to a species guess; photograph flowers, fruit, and mature areoles.        |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                 |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Proposed R6C4 · Bright.** Retain clear bright exposure at the lower-right position. Keep the cf. rekoi and alternative crinita-complex or hybrid qualifiers. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Water               | Soak, drain, and allow a complete dry-down. Avoid leaving a cool crown wet.                                                                                                                                                                                                                        |
+| Pot and mix         | The 4-inch pot is suitable until offsets or roots crowd it; keep the body above the top dressing.                                                                                                                                                                                                  |
+| ID evidence         | Do not change care in response to a species guess; photograph flowers, fruit, and mature areoles.                                                                                                                                                                                                  |
 
 ## Rotation, propagation, and watch points
 

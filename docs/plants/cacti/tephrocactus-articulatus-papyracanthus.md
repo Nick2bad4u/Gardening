@@ -39,8 +39,7 @@ confirmed pot label is `G2`, and the permanent tracker ID is
 Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
 slightly moist substrate. The live 2026-08-29 Measurement record is **375.5 g**
 by Scale and **1.25 in high × 1.15 in wide** by Ruler. These are measured
-records, not watering or fertilizer events. Exact maintained placement and the
-replacement-medium composition remain unrecorded.
+records, not watering or fertilizer events. The proposed maintained position is documented below; physical completion of that move and the replacement-medium composition remain unrecorded.
 
 The owner chose not to quarantine this shipment after hand inspection, owner-
 reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
@@ -83,13 +82,13 @@ seller record.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                                                                       |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual top and side views are archived; add base and complete all-side diagnostic views when available. |
-| Grow-light position | Use a bright cactus zone after acclimation, but begin outside the hottest center until the shipped surface adjusts. Exact maintained placement remains unrecorded.                                                                |
-| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use medium dryness, plant response, and pot-weight trend as evidence.                                                                              |
-| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape and replacement-medium composition are unrecorded; keep the setup stable.                                                                                     |
-| Handling            | Support the lowest segment instead of grabbing the paper spines or upper joints.                                                                                                                                                  |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                                         |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual top and side views are archived; add base and complete all-side diagnostic views when available.                                                   |
+| Grow-light position | **Proposed R3C4 · High.** Retain clear inner-right exposure. Compare the narrow fixture join and avoid shadows from the tall shared cactus pot. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use medium dryness, plant response, and pot-weight trend as evidence.                                                                                                                                |
+| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape and replacement-medium composition are unrecorded; keep the setup stable.                                                                                                                                       |
+| Handling            | Support the lowest segment instead of grabbing the paper spines or upper joints.                                                                                                                                                                                                    |
 
 ## Rotation, propagation, and watch points
 

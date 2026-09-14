@@ -1609,7 +1609,7 @@ function renderBooklet(profiles, placementHtml) {
       <header class="contents-heading placement-heading">
         <p>The Fenton Collection · 30 Pots · Placement and Light</p>
         <h1 id="placement-title">Table Placement Guide</h1>
-        <span>Final growing positions for the AW200 + AeroLight 240 W plan, with the room end open and every pot grouped by light need. Four columns across, six rows down on wood; six pots on round glass.</span>
+        <span>Estimated relative light and proposed positions for the AW200 + AeroLight 240 W setup, with a phone-meter comparison and every pot grouped by light need. Four columns across, six rows down on wood; six pots on round glass.</span>
       </header>
       <div class="placement-copy prose">${placementHtml}</div>
     </section>
@@ -2064,12 +2064,19 @@ async function renderPlacementGuide() {
                 const repositoryPath = path.posix.normalize(
                     `docs/layouts/${reference}`
                 );
+                if (
+                    repositoryPath.startsWith("assets/") &&
+                    repositoryPath.endsWith(".csv")
+                ) {
+                    const assetPath = `../../${repositoryPath}`;
+                    return `href="${escapeHtml(assetPath)}" download`;
+                }
                 return `href="https://github.com/Nick2bad4u/Gardening/blob/main/${repositoryPath}" target="_blank" rel="noreferrer"`;
             }
         )
         .replaceAll(
             /<p><img src="(?<source>[^"<>]+)" alt="(?<alt>[^"<>]+)"><\/p>/gv,
-            '<figure class="placement-figure"><a href="$<source>" target="_blank" rel="noreferrer"><img src="$<source>" alt="$<alt>" loading="lazy" decoding="async"></a><figcaption>Final placement illustration · Select to open full size</figcaption></figure>'
+            '<figure class="placement-figure"><a href="$<source>" target="_blank" rel="noreferrer"><img src="$<source>" alt="$<alt>" loading="lazy" decoding="async"></a><figcaption>Planning illustration · Select to open full size</figcaption></figure>'
         );
 }
 

@@ -44,14 +44,14 @@ may spend years simply building its column and wool.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                              |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | High-light zone after acclimation. A working target is about 12–20 mol/m²/day DLI, equivalent to an average 280–460 µmol/m²/s over 12 hours.                                    |
-| Outdoor light       | Bright light and increasing direct sun; acclimate because hairs do not prevent sunburn after a dim period.                                                                      |
-| Water               | Soak the root ball, drain completely, then wait until it is dry and the pot is light. Water more readily during warm active growth and much less in a cool, slow winter period. |
-| Mix and pot         | The current drained 4-inch pot and gritty mix are reasonable. Do not bury the woolly base or let the tray hold water.                                                           |
-| Temperature         | It experiences cold in habitat, but a small watered pot is less forgiving. Keep it dry during cool spells and protect it from hard freezes.                                     |
-| Feeding             | A dilute, low-nitrogen cactus fertilizer a few times during active growth is plenty; the included fertilizer in fresh mix reduces urgency.                                      |
+| Topic               | Practical approach                                                                                                                                                                                                                                            |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Proposed R2C2 · High.** Retain clear upper-interior exposure. Compare the real growing tip, not just the table surface. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Outdoor light       | Bright light and increasing direct sun; acclimate because hairs do not prevent sunburn after a dim period.                                                                                                                                                    |
+| Water               | Soak the root ball, drain completely, then wait until it is dry and the pot is light. Water more readily during warm active growth and much less in a cool, slow winter period.                                                                               |
+| Mix and pot         | The current drained 4-inch pot and gritty mix are reasonable. Do not bury the woolly base or let the tray hold water.                                                                                                                                         |
+| Temperature         | It experiences cold in habitat, but a small watered pot is less forgiving. Keep it dry during cool spells and protect it from hard freezes.                                                                                                                   |
+| Feeding             | A dilute, low-nitrogen cactus fertilizer a few times during active growth is plenty; the included fertilizer in fresh mix reduces urgency.                                                                                                                    |
 
 A powerful grow light can provide far more light than this small plant needs at close
 range. Compact new growth with strong spines is the goal. Fresh bleached or tan

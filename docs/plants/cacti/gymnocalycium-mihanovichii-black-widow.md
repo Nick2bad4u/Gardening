@@ -38,8 +38,7 @@ label is `G1`, and the permanent tracker ID is `P27`.
 Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
 slightly moist substrate. The live 2026-08-29 Measurement record is **388 g**
 by Scale and **0.5 in high × 1.2 in wide** by Ruler. These are measured records,
-not watering or fertilizer events. Exact maintained placement and the
-replacement-medium composition remain unrecorded.
+not watering or fertilizer events. The proposed maintained position is documented below; physical completion of that move and the replacement-medium composition remain unrecorded.
 
 The owner chose not to quarantine this shipment after hand inspection, owner-
 reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
@@ -80,13 +79,13 @@ variegated form as a separate botanical taxon.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                                                                       |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual top and side views are archived; add base and complete all-side diagnostic views when available. |
-| Grow-light position | Start at the same gentler edge used for the existing variegated moon cactus, not in the center hotspot. Exact maintained placement remains unrecorded.                                                                            |
-| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use medium dryness, plant response, and pot-weight trend as evidence.                                                                              |
-| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape and replacement-medium composition are unrecorded; monitor the larger mix volume closely.                                                                     |
-| Color               | Judge new scars, bleaching, or translucence separately from stable dark purple and green variegation.                                                                                                                             |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                                                   |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual top and side views are archived; add base and complete all-side diagnostic views when available.                                                             |
+| Grow-light position | **Proposed R1C3 · Bright.** Move one column left along the upper shoulder. Keep substantial bright light; variegation does not automatically imply shade. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use medium dryness, plant response, and pot-weight trend as evidence.                                                                                                                                          |
+| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape and replacement-medium composition are unrecorded; monitor the larger mix volume closely.                                                                                                                                 |
+| Color               | Judge new scars, bleaching, or translucence separately from stable dark purple and green variegation.                                                                                                                                                                                         |
 
 ## Rotation, propagation, and watch points
 

@@ -42,13 +42,13 @@ pollinators rather than relying on a colorful daytime display.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                  |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | Bright middle zone: roughly 10–18 mol/m²/day DLI, or 230–420 µmol/m²/s over a 12-hour day, after acclimation.                       |
-| Water               | Deep soak and full drainage after the pot dries. A plant in active growth or carrying buds may use water sooner than a dormant one. |
-| Winter              | Cooler, bright, and dry conditions encourage a clean rest; do not force growth with warmth, water, and weak light.                  |
-| Pot and mix         | The current drained pot works. Repot when pups crowd the rim or roots have replaced much of the mix.                                |
-| Feeding             | Modest dilute fertilizer during warm growth can support flowering; avoid high-nitrogen feeding.                                     |
+| Topic               | Practical approach                                                                                                                                                                                                                                                   |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Proposed R6C2 · Bright.** Retain a bright lower shoulder. Comparative semi-shade guidance supports avoiding an excessive peak. See the [relative-light placement guide](../../layouts/table-placement-research.md). Placement and intensity remain to be verified. |
+| Water               | Deep soak and full drainage after the pot dries. A plant in active growth or carrying buds may use water sooner than a dormant one.                                                                                                                                  |
+| Winter              | Cooler, bright, and dry conditions encourage a clean rest; do not force growth with warmth, water, and weak light.                                                                                                                                                   |
+| Pot and mix         | The current drained pot works. Repot when pups crowd the rim or roots have replaced much of the mix.                                                                                                                                                                 |
+| Feeding             | Modest dilute fertilizer during warm growth can support flowering; avoid high-nitrogen feeding.                                                                                                                                                                      |
 
 Do not rotate a swelling bud into a completely different light environment every
 day. Routine minor rotation is fine, but stable conditions reduce avoidable bud
