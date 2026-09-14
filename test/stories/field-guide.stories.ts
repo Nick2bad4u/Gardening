@@ -70,7 +70,13 @@ export const PlacementGuide: Story = {
         );
         await expect(
             document.querySelectorAll("#placement .placement-figure")
-        ).toHaveLength(3);
+        ).toHaveLength(4);
+        await expect(
+            canvas.getByRole("img", { name: /^Estimated relative-light map/v })
+        ).toHaveAttribute(
+            "src",
+            "../../assets/layouts/2026-09-14-relative-light/estimated-light-map.png"
+        );
         await expectNoOverflow(document);
         await userEvent.click(
             within(
