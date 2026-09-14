@@ -438,6 +438,21 @@ const config = [
             ],
         },
     },
+    {
+        files: ["scripts/daily-report-model.mjs"],
+        name: "Gardening: report metrics are not ESLint rule factories",
+        // The plugin mistakes the exported metrics function's object return
+        // for a legacy rule and its autofix produces invalid JavaScript.
+        rules: {
+            "eslint-plugin/prefer-object-rule": "off",
+            "eslint-plugin/require-meta-docs-description": "off",
+            "eslint-plugin/require-meta-docs-recommended": "off",
+            "eslint-plugin/require-meta-docs-url": "off",
+            "eslint-plugin/require-meta-languages": "off",
+            "eslint-plugin/require-meta-schema": "off",
+            "eslint-plugin/require-meta-type": "off",
+        },
+    },
 ];
 
 export default config;

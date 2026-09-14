@@ -20,6 +20,10 @@ plan distinguishes intended coverage from unmeasured actual exposure.
 Read it [immediately after the online booklet contents](https://nick2bad4u.github.io/Gardening/#placement)
 or open the [placement illustrations](https://nick2bad4u.github.io/Gardening/layouts/grow-spot-layout.html#researched-placement).
 
+Open the [daily report](./daily-report.html) for the latest published watering
+mixes, quick list, and per-pot evidence. The [daily report guide](../daily-reports/README.md)
+explains its dated input, generator, and daily publication.
+
 Open [plant-tracker.html](./plant-tracker.html) for the live collection
 dashboard backed by Google Sheets. The finished workbook includes Dashboard,
 Insights, Baselines, a combined History, and one native sheet page for each

@@ -1583,6 +1583,7 @@ function renderBooklet(profiles, placementHtml) {
       <a class="drawer-special" href="../layouts/grow-spot-layout.html"><span>${renderSiteIcon("layout")} Grow-spot layout</span><small>Tables, risers, light, fan, and camera</small></a>
       <a class="drawer-special" href="../layouts/indoor-acclimation-calendar.html"><span>${renderSiteIcon("calendar")} Acclimation calendar</span><small>Dated light and airflow schedule</small></a>
       <a class="drawer-special" href="../layouts/photo-album.html"><span>${renderSiteIcon("photos")} Plant photo Collections</span><small>Search every plant's Gyazo history</small></a>
+      <a class="drawer-special" href="../layouts/daily-report.html"><span>📋 Daily report</span><small>Watering mixes, weigh-ins, and plant evidence</small></a>
       <a class="drawer-special" id="surprise-plant" href="#${escapeHtml(required(profiles[0], "first profile").slug)}" data-surprise-plant><span>${renderSiteIcon("cactus")} Surprise me</span><small>Explore a random plant profile</small></a>
       ${navigation}
     </nav>
@@ -1626,6 +1627,7 @@ function renderBooklet(profiles, placementHtml) {
       <a href="#contents" data-page-link="contents">${renderSiteIcon("field-guide")} Contents</a>
       <a href="../layouts/plant-tracker.html">${renderSiteIcon("tracker")} Live tracker</a>
       <a href="../layouts/photo-album.html">${renderSiteIcon("photos")} Photo Collections</a>
+      <a href="../layouts/daily-report.html">📋 Daily report</a>
       <a href="https://github.com/Nick2bad4u/Gardening" target="_blank" rel="noreferrer">${renderSiteIcon("external")} Source repository</a>
     </nav>
     <p>Collection notes and user photographs © 2026 Nick, all rights reserved. Credited reference photographs retain their stated licenses.</p>
@@ -1919,6 +1921,7 @@ function renderPhotoAlbum(profiles, collectionManifest) {
       <a href="./grow-spot-layout.html">${renderLayoutIcon("layout")} Grow-spot layout</a>
       <a href="./indoor-acclimation-calendar.html">${renderLayoutIcon("calendar")} Calendar</a>
       <a href="#album" aria-current="page">${renderLayoutIcon("photos")} Photos</a>
+      <a href="./daily-report.html">📋 Daily report</a>
       <button id="theme-toggle" type="button" aria-pressed="false">${renderLayoutIcon("theme")} <span id="theme-label">Dark mode</span></button>
     </div>
   </nav>

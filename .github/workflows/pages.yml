@@ -59,8 +59,11 @@ jobs:
                   npm run lint
                   npm run lint:style
 
-            - name: "Verify generated field guide"
-              run: "npm run check:booklet"
+            - name: "Verify generated pages and daily report"
+              run: |
+                  npm run check:booklet
+                  npm run check:daily-report
+                  npm run test:unit -- test/daily-report.test.mjs
 
             - name: "Install Chromium and system dependencies"
               run: "npx playwright install --with-deps chromium"

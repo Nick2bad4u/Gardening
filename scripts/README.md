@@ -46,12 +46,24 @@ keeps source-quality Gyazo URLs behind capture links while rendering cached
 Gyazo thumbnails inline.
 It publishes the reader files and licensed/local evidence images used by the
 booklet plus the plant tracker, individual plant history, grow-spot layout,
-acclimation calendar, and searchable photo Collections index. Collection-photo
+acclimation calendar, searchable photo Collections index, and daily garden report. Collection-photo
 publication binaries remain on Gyazo. Source-profile, source-evidence, and
 equipment-note links point back to the GitHub repository.
 
 ```powershell
 npm run build:pages
+```
+
+## Daily report
+
+`build-daily-report.mjs` validates the newest dated JSON in `docs/daily-reports/`
+and renders `docs/layouts/daily-report.html` through its maintained HTML template.
+`npm run build:pages` runs it automatically. See the
+[input and publication guide](../docs/daily-reports/README.md).
+
+```powershell
+npm run build:daily-report
+npm run check:daily-report
 ```
 
 ## `fetch-plant-images.ps1`

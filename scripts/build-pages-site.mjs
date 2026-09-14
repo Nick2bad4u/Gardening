@@ -39,6 +39,7 @@ const layoutFileNames = [
     "plant-tracker.html",
     "plant-history.html",
     "photo-album.html",
+    "daily-report.html",
 ];
 
 /**
@@ -469,6 +470,12 @@ async function main() {
             path.join(layoutsDirectory, "plant-tracker.js"),
             path.join(outputDirectory, "layouts", "plant-tracker.js")
         ),
+        ...["daily-report.css", "daily-report.js"].map((fileName) =>
+            copyFile(
+                path.join(layoutsDirectory, fileName),
+                path.join(outputDirectory, "layouts", fileName)
+            )
+        ),
         publishPlantHistoryClient(),
         copyFile(
             path.join(layoutsDirectory, "plant-charts.js"),
@@ -481,7 +488,7 @@ async function main() {
     ]);
 
     console.log(
-        `Built GitHub Pages artifact with GTM ${googleTagManagerId}, the field guide, five collection tools, ${optimizedImages.size} responsive plant-image sets, ${plantIconRelativePaths.length} standalone plant portraits, and ${assetReferences.size} copied evidence images (${(assetBytes / 1024 / 1024).toFixed(1)} MiB total).`
+        `Built GitHub Pages artifact with GTM ${googleTagManagerId}, the field guide, six collection tools, ${optimizedImages.size} responsive plant-image sets, ${plantIconRelativePaths.length} standalone plant portraits, and ${assetReferences.size} copied evidence images (${(assetBytes / 1024 / 1024).toFixed(1)} MiB total).`
     );
 }
 
@@ -594,7 +601,7 @@ async function publishLayout(fileName, optimizedImages, collectionPreviews) {
     )
         .replaceAll("../plant-booklet/", "../")
         .replaceAll(
-            /\b(?<attribute>href|src)="\.\.\/\.\.\/(?<relativePath>assets\/(?:collection-photos|layouts)\/[^"#?]+)"/gv,
+            /\b(?<attribute>href|src)="\.\.\/\.\.\/(?<relativePath>assets\/(?:collection-photos|layouts|plant-icons)\/[^"#?]+)"/gv,
             '$<attribute>="../$<relativePath>"'
         )
         .replaceAll(

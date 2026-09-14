@@ -19,8 +19,10 @@ for the confirmed program and plant-level exposure checks.
 - [Weighing strategy](docs/weighing-strategy.md) — how learned cycles reduce routine weigh-ins, with no daily quota or cap
 - [Spreadsheet and logger actions](docs/logger-actions.md) — all action types, structured fields, bulk entry, queues, and corrections
 - [Daily weighing and watering prompt](docs/daily-weighing-watering-prompt.md) —
-  copyable instructions for a 9 a.m. review of the live tracker, limited to
-  weighing and supported watering recommendations
+  copyable instructions for the 9:45 a.m. Eastern review and daily report publication
+- [Daily garden report](https://nick2bad4u.github.io/Gardening/layouts/daily-report.html) —
+  a phone-friendly quick list, watering recipes, and expandable weight/plateau evidence,
+  generated from each day's reviewed data; [generator and publishing guide](docs/daily-reports/README.md)
 - [Live plant tracker](docs/layouts/plant-tracker.html) — a mobile-friendly view
   of the Google Sheets log with current status, search and filters, stable
   per-plant history URLs, dry/wet baselines, calculations, charts, and direct
