@@ -1,174 +1,46 @@
 # Table Placement Guide
 
-Revised September 13, 2026. The **AW200 and new AeroLight 240 W are now hung
-as two horizontal fixtures**, with **AW200 at 45% and AeroLight 240 W at 38%**, and the
-owner has applied this plant layout. The room-facing end stays open. The owner confirms
-an **18-inch plant-tip reference** and the same **13 h 15 m total daily
-cycle** for both lights, including **15-minute sunrise and sunset transitions**
-at the start and end.
-Keep these growing positions for **30 tracked pots: 24 on wood and six on
-glass** while checking actual exposure. The owner handles acclimation.
+Revised September 14, 2026. The current plan adopts **F2 Boobie Cactus at R5C1** and **E3 Woolly Nipple at R5C3**. This is the only positional change from the September 13 arrangement. The optional A1/C2 swap remains a future option; A1 stays R1C3 and C2 stays R3C1. All six glass containers retain their positions.
 
-## September 13 Decision: Keep the Layout
+The **AW200 at 45%** and **AeroLight 240 W at 38%** are installed as two horizontal fixtures. Both long axes run left/open room to right/glass, one over the upper wooden half and the other over the lower half. The owner-reported **18-inch plant-tip reference** and shared **13 h 15 m total cycle**, including **15 m sunrise and 15 m sunset**, remain the operating record. The room-facing end stays open.
 
-The additional fixture does not require another wholesale rearrangement.
-Keep H1, H2, G3, and the other high-light plants in clear central exposure;
-keep D3 at R1C1, A1 toward the perimeter, and #3 on outer glass. Check the
-tallest cactus tips and low rosettes separately: equal tabletop positions do
-not give equal LED-to-plant distance. Move only a shaded or overexposed plant.
+## September 14 Placement Audit
 
-Hold **AW200 at 45% and AeroLight 240 W at 38%** at the confirmed **18-inch plant-tip
-reference**, with both lights on the same **13 h 15 m cycle**, while checking exposure. Two lower dimmer percentages do not mean less total light than the
-old single lamp. The [installed-light note](../equipment/aw200-and-aerolight-240w.md#recommended-starting-decision)
-explains the rough power comparison and the small set of useful measurement
-spots. The weaker north window remains supplementary.
+The [complete two-light review](../two-light-placement-review.md) checks all 30 pots and the living components of shared containers. The adopted swap gives the small Boobie a bright open-left position and moves Woolly Nipple into clearer interior exposure. This uses the room's likely relative exposure; neither a pot's position nor a fixture outline measures its light.
 
-The September 13 illustrations incorporate the owner's marked-up correction:
-both long axes run **left/open room to right/glass**, one across the upper
-half of the arrangement and one across the lower half. **Both lights are
-installed.** Plant positions remain current. The transparent outlines show
-orientation; their exact centers, gap, and light distribution are unmeasured.
+- **Geometry:** wood remains four columns by six rows, with the join after row 3. The swap stays within row 5 under the same broad lower-fixture area.
+- **Space:** F2's recorded 3-inch pot trades places with E3's 4-inch pot. The set of pots in row 5 is unchanged, so nominal total rim width does not increase. Real rim, rail, and canopy clearance still need to fit; neither pot should overhang.
+- **Neighbors:** E3 moves between C3 and F3 and next to the row-4/row-6 plants D1 and C1. Keep its growing surface and those neighbors clear of shading. F2's new left position is beside C3, with B3 and E2 in the adjacent rows. No riser is added.
+- **Height:** individual LED-to-tip distances remain unmeasured. Moving pots within one row does not establish equal exposure or require a new fixture height.
+- **Other sensitive plants:** D3 remains R1C1; A2, A3, C3, and D2 keep bright positions away from any demonstrated excessive peak. The top/Mylar and bottom/white-wall edges are not automatically gentle.
+- **Low plants:** H1, H2, G3, #5, #6, and the Echeveria in #2 need an unobstructed light path. Rows 3–4 are not proven to be the brightest; the seam may have overlap or a dip.
+- **Glass and equipment:** the round table, square wooden box, pale column in #1, money tree's gentler outer position, fixture direction, dimmers, schedule, four hooks, and removed end reflector remain as recorded. North-window daylight is supplementary.
+- **Care data:** a placement move is not a repot or a new pot setup. It does not reset wet/dry references or prescribe a shorter watering cycle. New drying behavior should be learned from actual observations.
 
-## The Final Arrangement at a Glance
+## The Current Arrangement at a Glance
 
-![Two horizontal fixture outlines, one above the other, extend across the four-column six-row wooden grid toward the near half of the round glass table](../../assets/layouts/2026-09-13-horizontal-lights/combined-plan.png)
+![Current 30-pot plan with F2 at row 5 column 1, E3 at row 5 column 3, and two horizontal fixture outlines reaching toward near glass](../../assets/layouts/2026-09-14-edge-placement/combined-plan.png)
 
-- **Two installed fixtures:** AW200 and the new **VSL-AL240** AeroLight.
-  Their bodies are nearly the same size: about **26 × 13 inches each**.
-  Combined rated input is **440 W**, not measured dimmed consumption. See the
-  [exact equipment and mounting record](../equipment/aw200-and-aerolight-240w.md).
-- **Separate adjustment:** one E25 per light allows separate brightness and
-  schedules. Independent hangers allow different clearances for taller cacti
-  independently. The equipment plan has four E25 paths including both canopy
-  fans; the controller configuration has not been inspected.
-- **Open view:** keep the left two-foot return panel out. Retain the top Diamond
-  Mylar divider and bottom white wall. The weak north window stays on the right.
-- **Final plant needs:** high-light plants keep clear central exposure;
-  softer-light plants use the perimeter. Ming Thing remains at R1C1 and the
-  money tree on outer glass, subject to checking their gentler exposure.
-- **Furniture:** four columns by six rows on wood, beside the 24-inch round
-  glass table. Shared succulent planter #2 remains a **square wooden box**.
+The illustrations use plain-language **exposure priorities**, not measured intensity bands. “High” means preserve clear strong light; “Bright” means useful light while avoiding excessive peaks; “Gentler” means a bright outer position; “Mixed” means consider the components of one shared pot. These priorities overlap: a Bright plant may tolerate sun, and a High plant can still be overexposed. A directly lit edge is not literally filtered or indirect light.
 
-The badges describe ongoing light needs: **H = High light**, **B = Bright
-filtered light**, **I = Bright indirect light**, and **H/B = Mixed needs in one
-shared pot**. They describe exposure goals, not a measured brightness map.
-An LED-lit corner is not automatically filtered or indirect light.
+## Light Priorities and Recommended Spots
+
+| Priority             | Pots                                                                   | Practical Placement                                                                                                                                                                                                                                 |
+| -------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **High — 7 pots**    | B2, B3, C2, E1, G2, H1, H3                                             | Keep growing surfaces clearly lit. Use actual exposure rather than assuming every center or seam is brightest. E1's identity and exact light response remain qualified; small B3 needs care despite stronger-light tolerance in established growth. |
+| **Bright — 18 pots** | A1, A2, A3, B1, C1, C3, D1, D2, E2, E3, F1, F3, G1, G3, H2; #4, #5, #6 | Preserve useful light. Raindrops, Royal Flush, Dragon's Egg, and the low glass plants do not need a maximum-intensity slot. A1 and Black Widow are not automatically shade plants because they are variegated.                                      |
+| **Gentler — 3 pots** | D3 Ming Thing, F2 Boobie, #3 Money Tree                                | D3 at R1C1, F2 at R5C1, and #3 on outer/lower-right glass. The likely gentler exposure remains unmeasured; small F2's priority is a prudent collection choice, not a lifetime shade requirement.                                                    |
+| **Mixed — 2 pots**   | #1 Shared Cacti; #2 Square Wooden Succulent Box                        | Preserve useful light for each component, protect the pale column from excessive exposure, and keep low rosettes out of taller foliage shadows. The Kalanchoes can share bright light with the rest of #2.                                          |
+
+These counts cover the 24 wooden pots and six glass containers exactly once. Shared components do not become separate pots or weigh-ins. See the [watering strategy](../watering-strategy.md) and [weighing strategy](../weighing-strategy.md) for how environmental changes affect interpretation of observations.
 
 ## Two Lights, Coverage, and Mounting
 
-The owner's correction puts both approximately **26-inch long axes left-to-right**,
-from the open room end toward glass and the north window. One fixture spans
-the upper half of the wooden grid and reaches toward glass; the other spans
-the lower half in the same direction. This replaces the September 11 drawing's
-incorrect vertical orientation. The owner has not assigned a model to the upper
-versus lower outline, so the image uses the same outline color for both.
+Each approximately **26-inch long fixture axis runs left-to-right** across the wood toward the near half of glass. The model assigned to the upper versus lower position has not been confirmed. The outlines show direction and intended reach, not a measured beam boundary or exact fixture centers.
 
-Across the arrangement, each body is about **26 inches long**, compared with
-**28 inches of wood plus the near glass half before furniture gaps**. In the
-top-to-bottom direction, the two short dimensions total about **25.9 inches
-before a fixture gap**, beside the nominal **26-inch wooden depth**. These are
-physical dimensions, not measurements of the illuminated area. The target
-remains all wood and the near half of glass; light spill and overlap are unmeasured.
+Across the arrangement, about 26 inches of fixture length compares with 16 inches of wood plus 12 inches of near glass before furniture gaps. The two short fixture dimensions total about 25.9 inches before the fixture gap, alongside about 26 inches of wooden depth. These physical dimensions do not establish uniform coverage. A tall shared cactus tip and a low rosette can receive quite different exposure.
 
-The fixture centers now sit in the upper and lower halves, with a seam between
-them near the join after row 3. Rows 3–4 are not proven to be the brightest
-rows. Retain the accepted plant positions while comparing actual exposure under
-each fixture and at that seam; a plant's H/B/I badge describes its need, not the
-brightness of its slot.
-
-- **Wood, rows 3–4:** prioritize the low high-light plants and keep taller
-  stems from shading them. Coconut Crystal, Raindrops, Royal Flush, and Paper
-  Spine keep their final central positions.
-- **Wood, rows 2 and 5:** retain the tall high-light cacti in row 2 and the
-  bright filtered group in row 5. Separate fixture heights can improve
-  clearance, but their neighboring plants still share that light.
-- **Wood, rows 1 and 6:** perimeter rows remain part of the intended coverage.
-  Ming Thing uses R1C1 and Variegated Moon R1C3; verify gentler exposure at the
-  open-left corner instead of assuming shade from its position.
-- **Glass, near half:** prioritize tiger jaws, the tiny dish, and the
-  light-demanding parts of both shared planters. Keep their growing tips clear
-  of the taller shared cacti.
-- **Glass, outer/right half:** Kiwi aeonium uses bright spill at upper-right;
-  the money tree uses gentler useful light at lower-right. The north window
-  alone is not assumed to meet either plant's needs.
-
-The combined overlap can be stronger than the outer edges. The owner reports
-**AW200 at 45% and AeroLight 240 W at 38%** after hanging and leveling the
-lights, with an **18-inch
-plant-tip reference**. Both use the same **13 h 15 m total cycle**, including
-**15 minutes of sunrise and 15 minutes of sunset**. Exact clock times remain
-unrecorded; the earlier single-AW200 60% setting
-is historical context.
-No new ramp or fixed watering schedule is introduced.
-
-The owner's revised plan uses **four ceiling hooks, two per light**. Each
-fixture hangs independently and can be leveled and adjusted in height on its
-own. Installation and an 18-inch plant-tip reference are confirmed. The
-[mounting record](../equipment/aw200-and-aerolight-240w.md#independent-ceiling-hooks)
-documents the September 11 correction to the ceiling framing orientation.
-
-## Plants by Light Need and Recommended Spot
-
-R3C2 means row 3, column 2 on wood. Count rows from top/Mylar to bottom/white
-wall, and columns from left/open room end to right/glass.
-
-### H · High Light — 12 Pots
-
-Use the clearer directly overlapped growing area; avoid shading a low plant
-with a taller neighbor. On wood the final spots are:
-
-- **B2 · Old Man of the Andes** — R2C2.
-- **E1 · Dwarf Old Man** — R2C3.
-- **C2 · Rainbow Hedgehog** — R3C1.
-- **H1 · Coconut Crystal** — R3C2.
-- **H2 · Raindrops** — R3C3.
-- **G2 · Paper Spine** — R3C4.
-- **B3 · Indigo Wave** — R4C1.
-- **G3 · Royal Flush** — R4C2.
-- **D1 · Dragon's Egg** — R4C3.
-- **H3 · Eve's Needle** — R4C4.
-- **#5 · Tiger Jaws** — glass just left of center, within the planned near-half coverage.
-- **#6 · Tiny Mixed Planter** — glass left-center, in the clear gap between the two shared containers.
-
-### B · Bright Filtered Light — 14 Pots
-
-Use bright perimeter or shoulder positions with useful lamp spill. This category
-includes plants that tolerate some sun; it does not mean low light.
-
-- **A1 · Variegated Moon** — R1C3.
-- **A2 · Feather Cactus** — R1C2.
-- **G1 · Black Widow** — R1C4.
-- **A3 · Serpent** — R2C1.
-- **B1 · Grass-Blade** — R2C4.
-- **E3 · Woolly Nipple** — R5C1.
-- **C3 · Monk's Hood** — R5C2.
-- **F2 · Boobie Cactus** — R5C3.
-- **F3 · Yellow Tower** — R5C4.
-- **E2 · Peanut Hybrid** — R6C1.
-- **D2 · Domino** — R6C2.
-- **C1 · Giant Chin** — R6C3.
-- **F1 · Hook-Spined Pincushion** — R6C4.
-- **#4 · Kiwi Aeonium** — glass upper-right, near the outer shoulder of the lamp.
-
-### I · Bright Indirect Light — 2 Pots
-
-- **D3 · Ming Thing — R1C1**, at the open-left wooden corner; confirm gentler exposure after installation.
-- **#3 · Money Tree — glass lower-right**, outside the stronger cactus overlap.
-
-These plants still need a bright position. Deep shade and a weak window are not
-substitutes for useful indirect grow light.
-
-### H/B · Mixed Needs in Shared Pots — 2 Pots
-
-- **#1 · Shared Cacti — glass upper-left.** The green columnar cactus and monkey
-  tail get high light; the pale variegated column uses the less exposed side.
-- **#2 · Square Wooden Succulent Box — glass lower-left.** Aim the Echeveria and
-  Portulacaria toward the clearer high-light path; keep the silver and copper
-  spoon Kalanchoes toward the bright filtered side of the same box.
-
-These two pots remain intact. Their split badges describe their component plants,
-not a new single-species requirement. The detailed evidence below preserves all
-probable, cf., hybrid, and unconfirmed-cultivar identifications.
+Keep **AW200 45% and AeroLight 240 W 38%** while evaluating this modest placement adjustment. Both retain the same **13 h 15 m total cycle**, with the two 15-minute transitions included. Each light has independent suspension from two ceiling hooks. The left two-foot return reflector remains removed; top Mylar and bottom white wall remain. The [equipment record](../equipment/aw200-and-aerolight-240w.md) distinguishes manufacturer specifications from owner observations.
 
 ## Current Room and Installed Lights
 
@@ -195,27 +67,22 @@ maps and dimming percentages are not measurements of the new open-end setup.
 
 ## Wooden Tables: Final Four-Column, Six-Row Layout
 
-![Final four-column six-row wooden arrangement for two horizontal lights, with Ming Thing at the open-left corner and every plant labeled by light need](../../assets/layouts/2026-09-13-horizontal-lights/wooden-tables.png)
+![Current four-column six-row wooden plan with F2 Boobie at R5C1 and E3 Woolly Nipple at R5C3](../../assets/layouts/2026-09-14-edge-placement/wooden-tables.png)
 
 Rows run **top/Mylar to bottom/white wall**. Columns run **left/open room end
 to right/glass table**. R3C2 means row 3, column 2; every row below is one
 horizontal row in the image. The column names carry no brightness ranking.
 
-| Row            | Column 1 · Left           | Column 2                      | Column 3                 | Column 4 · Right                |
-| -------------- | ------------------------- | ----------------------------- | ------------------------ | ------------------------------- |
-| 1 · Mylar      | D3 · Ming Thing · I       | A2 · Feather Cactus · B       | A1 · Variegated Moon · B | G1 · Black Widow · B            |
-| 2              | A3 · Serpent · B          | B2 · Old Man of the Andes · H | E1 · Dwarf Old Man · H   | B1 · Grass-Blade · B            |
-| 3              | C2 · Rainbow Hedgehog · H | H1 · Coconut Crystal · H      | H2 · Raindrops · H       | G2 · Paper Spine · H            |
-| 4              | B3 · Indigo Wave · H      | G3 · Royal Flush · H          | D1 · Dragon's Egg · H    | H3 · Eve's Needle · H           |
-| 5              | E3 · Woolly Nipple · B    | C3 · Monk's Hood · B          | F2 · Boobie Cactus · B   | F3 · Yellow Tower · B           |
-| 6 · White wall | E2 · Peanut Hybrid · B    | D2 · Domino · B               | C1 · Giant Chin · B      | F1 · Hook-Spined Pincushion · B |
+| Row            | Column 1 · Left              | Column 2                         | Column 3                      | Column 4 · Right                     |
+| -------------- | ---------------------------- | -------------------------------- | ----------------------------- | ------------------------------------ |
+| 1 · Mylar      | D3 · Ming Thing · Gentler    | A2 · Feather Cactus · Bright     | A1 · Variegated Moon · Bright | G1 · Black Widow · Bright            |
+| 2              | A3 · Serpent · Bright        | B2 · Old Man of the Andes · High | E1 · Dwarf Old Man · High     | B1 · Grass-Blade · Bright            |
+| 3              | C2 · Rainbow Hedgehog · High | H1 · Coconut Crystal · High      | H2 · Raindrops · Bright       | G2 · Paper Spine · High              |
+| 4              | B3 · Indigo Wave · High      | G3 · Royal Flush · Bright        | D1 · Dragon's Egg · Bright    | H3 · Eve's Needle · High             |
+| 5              | F2 · Boobie Cactus · Gentler | C3 · Monk's Hood · Bright        | E3 · Woolly Nipple · Bright   | F3 · Yellow Tower · Bright           |
+| 6 · White wall | E2 · Peanut Hybrid · Bright  | D2 · Domino · Bright             | C1 · Giant Chin · Bright      | F1 · Hook-Spined Pincushion · Bright |
 
-The central high-light assignments remain suitable priorities under the broader
-plan. D3 retains the open-left perimeter at R1C1 and A1 retains R1C3; all wooden
-positions stay the same as the September 10 final proposal. The edge is a candidate for lower exposure, not guaranteed shade.
-F2 remains B because guidance distinguishes young growth from mature growth,
-not because this plan stages a move. No pot's light need changes merely because
-a second lamp is added.
+The adopted September 14 plan changes only F2 and E3 within row 5. D3 remains at the open-left corner, A1 remains R1C3, and the six glass containers do not move. Moving a plant to an edge does not change its botanical requirements or prove the exposure there is suitable. Small size alone does not establish F2's developmental age.
 
 ## Every Wooden-Table Plant Reviewed
 
@@ -223,93 +90,69 @@ These are the best-supported ongoing needs for the current plants. A genus
 comparison or an uncertain identification is marked as such; a badge does not
 turn it into a confirmed species-specific requirement.
 
-| Label | Plant and Retained Identification                                                                                                       | Light Need · Final Spot · Evidence                                                                                                                                                                                                                       |
-| ----- | --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| A1    | [Variegated moon cactus](../plants/starter/gymnocalycium-mihanovichii-variegated.md) · _Gymnocalycium mihanovichii_                     | **B · R1C3.** Bright filtered light for the rooted variegated plant. [NC State][moon] discusses bright indirect light mainly for grafts and also lists sun/partial shade; it does not establish this specimen as grafted or define a cultivar threshold. |
-| A2    | [Feather cactus](../plants/starter/mammillaria-plumosa.md) · _Mammillaria plumosa_                                                      | **B · R1C2.** [RHS][feather] specifies bright filtered light under glass. The hairy surface does not make the strongest beam a requirement.                                                                                                              |
-| A3    | [Serpent cactus](../plants/starter/nyctocereus-serpentinus.md) · _Nyctocereus serpentinus_                                              | **B · R2C1.** [LLIFLE][serpent] describes bright shade to partial sun. Its taller stems use the upper perimeter of the growing area.                                                                                                                     |
-| B1    | [Grass-blade cactus](../plants/starter/stenocactus-phyllacanthus.md) · _Stenocactus phyllacanthus_                                      | **B · R2C4.** Bright exposure is supported by the existing profile and [general cactus guidance][general]; a species-specific threshold remains unverified.                                                                                              |
-| B2    | [Old Man of the Andes](../plants/starter/oreocereus-trollii.md) · _Oreocereus trollii_                                                  | **H · R2C2.** [NParks][oreocereus] lists full sun. The tall hairy column uses the upper part of the directly overlapped rows.                                                                                                                            |
-| B3    | [Indigo Wave](../plants/starter/myrtillocactus-geometrizans-indigo-wave.md) · _Myrtillocactus geometrizans_ 'Indigo Wave'               | **H · R4C1.** Species-level [Myrtillocactus guidance][myrtillocactus] supports strong light in established growth. An exact requirement for this crest is not known.                                                                                     |
-| C1    | [Giant chin](../plants/starter/gymnocalycium-saglionis.md) · _Gymnocalycium saglionis_                                                  | **B · R6C3.** [LLIFLE][giant-chin] describes strong-light tolerance with protection from excessive exposure; use the bright lower perimeter.                                                                                                             |
-| C2    | [Rainbow hedgehog](../plants/starter/echinocereus-rigidissimus-rubispinus.md) · _Echinocereus rigidissimus_ subsp. _rubispinus_         | **H · R3C1.** [RHS species guidance][rainbow] specifies full sun under glass. Give the low crown a clear central light path.                                                                                                                             |
-| C3    | [Monk's hood](../plants/starter/astrophytum-ornatum.md) · _Astrophytum ornatum_                                                         | **B · R5C2.** [RHS][monks-hood] distinguishes outdoor full sun from bright filtered light under glass. The lower perimeter is the proposed position for that goal.                                                                                       |
-| D1    | [Dragon's Egg](../plants/starter/euphorbia-obesa-hybrid.md) · probable _Euphorbia obesa_-type hybrid or selection                       | **H · R4C3.** [SANBI][obesa] recommends a sunny position for E. obesa. Its probable hybrid identity stays qualified; the final recommendation is high light, not a low-light corner.                                                                     |
-| D2    | [Domino](../plants/starter/echinopsis-subdenudata.md) · _Echinopsis subdenudata_                                                        | **B · R6C2.** [NParks][domino] lists full sun and semi-shade. Bright filtered light at the lower perimeter is within that range.                                                                                                                         |
-| D3    | [Ming Thing](../plants/starter/cereus-forbesii-ming-thing.md) · _Cereus forbesii_ 'Ming Thing'                                          | **I · R1C1.** [NC State's cultivar article][ming] calls for bright indirect light. Use the open-left corner as a candidate for gentler exposure; it is still within the broad planned coverage, so the location alone does not prove this need is met.   |
-| E1    | [Dwarf old man](../plants/cacti/espostoa-melanostele-nana.md) · _Espostoa_ sp., likely _E. melanostele_ subsp. _nana_                   | **H · R2C3.** High-light placement follows the bright-cactus profile and [general guidance][general]. The exact Espostoa identification and subspecies response remain unverified.                                                                       |
-| E2    | [Peanut hybrid](../plants/cacti/chamaelobivia-hybrid.md) · _Echinopsis_ hybrid, Chamaelobivia Group                                     | **B · R6C1.** Bright filtered light retains the profile-based recommendation for an unknown-parentage Echinopsis hybrid. [General guidance][general] does not establish an exact hybrid requirement.                                                     |
-| E3    | [Woolly nipple](../plants/cacti/mammillaria-mammillaris.md) · _Mammillaria mammillaris_                                                 | **B · R5C1.** Bright filtered exposure follows [NC State Mammillaria guidance][mammillaria] and the profile; this is a genus comparison.                                                                                                                 |
-| F1    | [Hook-spined pincushion](../plants/cacti/mammillaria-rekoi.md) · _Mammillaria_ cf. _rekoi_                                              | **B · R6C4.** Bright filtered exposure uses the same [Mammillaria comparison][mammillaria]. Retain the identification qualifier cf. rekoi.                                                                                                               |
-| F2    | [Boobie cactus](../plants/cacti/myrtillocactus-geometrizans-fukurokuryuzinboku.md) · _Myrtillocactus geometrizans_ 'Fukurokuryuzinboku' | **B · R5C3.** [Cultivar guidance][boobie] gives light shade when young and more sun with maturity. B describes this small current plant, not an acclimation stage; mature growth may justify reassessment.                                               |
-| F3    | [Yellow tower](../plants/cacti/parodia-leninghausii.md) · _Parodia leninghausii_                                                        | **B · R5C4.** Bright exposure follows the collection profile and [general guidance][general]. Direct species-specific light evidence was not independently verified; B is the working category.                                                          |
-| G1    | [Black Widow](../plants/cacti/gymnocalycium-mihanovichii-black-widow.md) · _Gymnocalycium mihanovichii_ f. variegata 'Black Widow'      | **B · R1C4.** Bright filtered light is the final collection recommendation. Its [grower lists sun][black-widow], so this badge does not claim that all Black Widow plants require shade.                                                                 |
-| G2    | [Paper spine](../plants/cacti/tephrocactus-articulatus-papyracanthus.md) · _Tephrocactus articulatus_ var. _papyracanthus_              | **H · R3C4.** [LLIFLE][paper-spine] describes full sun and thin growth in inadequate light. Give the egg-shaped segments a clear path under the lamp.                                                                                                    |
-| G3    | [Royal Flush split rock](../plants/succulents/pleiospilos-nelii-royal-flush.md) · _Pleiospilos nelii_ 'Royal Flush'                     | **H · R4C2.** [SANBI species guidance][split-rock] recommends a sunny position. This low plant moves from the bottom row into the central overlap.                                                                                                       |
-| H1    | [Coconut Crystal](../plants/succulents/sempervivum-coconut-crystal.md) · _Sempervivum_ Colorockz® 'Coconut Crystal'                     | **H · R3C2.** [NC State][sempervivum] supports sun. Keep the rosette open to the lamp; seasonal cold dormancy remains a separate need.                                                                                                                   |
-| H2    | [Raindrops](../plants/succulents/echeveria-raindrops.md) · _Echeveria_ 'Raindrops'                                                      | **H · R3C3.** [NC State genus guidance][echeveria] supports sunny conditions for compact rosettes. Keep taller stems out of its light path.                                                                                                              |
-| H3    | [Eve's needle](../plants/cacti/austrocylindropuntia-subulata.md) · _Austrocylindropuntia subulata_                                      | **H · R4C4.** [NC State][eves-needle] specifies full sun or bright indoor light. Its taller stems occupy a flank of the central rows.                                                                                                                    |
+| Label | Plant and Retained Identification                                                                                                       | Light Need · Final Spot · Evidence                                                                                                                                                                                                                              |
+| ----- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A1    | [Variegated moon cactus](../plants/starter/gymnocalycium-mihanovichii-variegated.md) · _Gymnocalycium mihanovichii_                     | **Bright · R1C3.** [Costa Farms' exact rooted selection][rooted-moon] contains chlorophyll and needs substantial bright light, including some direct sun. Do not apply grafted-moon shade advice without this distinction. The optional C2 swap is not adopted. |
+| A2    | [Feather cactus](../plants/starter/mammillaria-plumosa.md) · _Mammillaria plumosa_                                                      | **Bright · R1C2.** [RHS][feather] recommends bright filtered light under glass. Keep useful light without prioritizing an intensity peak.                                                                                                                       |
+| A3    | [Serpent cactus](../plants/starter/nyctocereus-serpentinus.md) · _Nyctocereus serpentinus_                                              | **Bright · R2C1.** [LLIFLE][serpent] supports bright shade to partial sun. Retain its open-left position and keep taller stems clear of low neighbors.                                                                                                          |
+| B1    | [Grass-blade cactus](../plants/starter/stenocactus-phyllacanthus.md) · _Stenocactus phyllacanthus_                                      | **Bright · R2C4.** Bright sunlight is supported by specialist guidance in the [complete review](../two-light-placement-review.md). No exact LED threshold is established.                                                                                       |
+| B2    | [Old Man of the Andes](../plants/starter/oreocereus-trollii.md) · _Oreocereus trollii_                                                  | **High · R2C2.** [NParks][oreocereus] supports full sun. Keep the tip clearly lit with suitable clearance; its row number does not establish the intensity.                                                                                                     |
+| B3    | [Indigo Wave](../plants/starter/myrtillocactus-geometrizans-indigo-wave.md) · _Myrtillocactus geometrizans_ 'Indigo Wave'               | **High · R4C1.** [Myrtillocactus guidance][myrtillocactus] supports stronger light in established growth. This small crest's exact response remains unmeasured; avoid assuming it behaves like a mature landscape cactus.                                       |
+| C1    | [Giant chin](../plants/starter/gymnocalycium-saglionis.md) · _Gymnocalycium saglionis_                                                  | **Bright · R6C3.** [LLIFLE][giant-chin] allows very bright conditions while recognizing excessive exposure. Retain a useful bright position.                                                                                                                    |
+| C2    | [Rainbow hedgehog](../plants/starter/echinocereus-rigidissimus-rubispinus.md) · _Echinocereus rigidissimus_ subsp. _rubispinus_         | **High · R3C1.** [RHS][rainbow] specifies full sun under glass. Preserve a clear path to its crown; this open-left slot is not proven to have the same light as the interior.                                                                                   |
+| C3    | [Monk's hood](../plants/starter/astrophytum-ornatum.md) · _Astrophytum ornatum_                                                         | **Bright · R5C2.** [RHS][monks-hood] distinguishes bright filtered light under glass from outdoor full sun. Its new neighbors are F2 on the left and E3 on the right.                                                                                           |
+| D1    | [Dragon's Egg](../plants/starter/euphorbia-obesa-hybrid.md) · probable _Euphorbia obesa_-type hybrid or selection                       | **Bright · R4C3.** [SANBI][obesa] describes sun and partial shrub shade for E. obesa. This probable hybrid does not have a verified maximum-light requirement; keep useful bright exposure.                                                                     |
+| D2    | [Domino](../plants/starter/echinopsis-subdenudata.md) · _Echinopsis subdenudata_                                                        | **Bright · R6C2.** [NParks][domino] recommends semi-shade and notes yellowing under full sun in its growing context. Retain a bright shoulder rather than forcing a peak.                                                                                       |
+| D3    | [Ming Thing](../plants/starter/cereus-forbesii-ming-thing.md) · _Cereus forbesii_ 'Ming Thing'                                          | **Gentler · R1C1.** [NC State][ming] supports bright indirect or filtered conditions. The open-left corner is a sensible candidate, with its actual intensity still unmeasured.                                                                                 |
+| E1    | [Dwarf old man](../plants/cacti/espostoa-melanostele-nana.md) · _Espostoa_ sp., likely _E. melanostele_ subsp. _nana_                   | **High · R2C3.** Keep the bright-cactus placement from its qualified profile. Exact Espostoa identity and plant-specific tolerance remain unverified; the badge is a working exposure priority.                                                                 |
+| E2    | [Peanut hybrid](../plants/cacti/chamaelobivia-hybrid.md) · _Echinopsis_ hybrid, Chamaelobivia Group                                     | **Bright · R6C1.** Retain the open-left bright position for this unknown-parentage hybrid. Do not infer an exact requirement from a different Echinopsis species.                                                                                               |
+| E3    | [Woolly nipple](../plants/cacti/mammillaria-mammillaris.md) · probable _Mammillaria mammillaris_                                        | **Bright · R5C3.** Adopted inward move from R5C1. [NC State Mammillaria guidance][mammillaria] supports bright direct light with protection from excessive hot exposure. The probable species identification remains qualified.                                 |
+| F1    | [Hook-spined pincushion](../plants/cacti/mammillaria-rekoi.md) · _Mammillaria_ cf. _rekoi_                                              | **Bright · R6C4.** [Mammillaria guidance][mammillaria] is a genus comparison. Preserve cf. rekoi and the alternative crinita-complex/hybrid possibilities.                                                                                                      |
+| F2    | [Boobie cactus](../plants/cacti/myrtillocactus-geometrizans-fukurokuryuzinboku.md) · _Myrtillocactus geometrizans_ 'Fukurokuryuzinboku' | **Gentler · R5C1.** Adopted open-left move from R5C3. [Cultivar guidance][boobie] distinguishes young plants from later full-sun growth. This is a prudent position for the small current plant, not proof of its age or a permanent shade requirement.         |
+| F3    | [Yellow tower](../plants/cacti/parodia-leninghausii.md) · _Parodia leninghausii_                                                        | **Bright · R5C4.** Retain useful bright exposure. Parodia genus guidance allows sun to partial shade; see the [review](../two-light-placement-review.md) for the evidence limit.                                                                                |
+| G1    | [Black Widow](../plants/cacti/gymnocalycium-mihanovichii-black-widow.md) · _Gymnocalycium mihanovichii_ f. variegata 'Black Widow'      | **Bright · R1C4.** Its [exact grower][black-widow] lists bright indoor light and full sun. Dark color or variegation does not by itself justify a move into shade.                                                                                              |
+| G2    | [Paper spine](../plants/cacti/tephrocactus-articulatus-papyracanthus.md) · _Tephrocactus articulatus_ var. _papyracanthus_              | **High · R3C4.** [Paper-spine guidance][paper-spine] supports strong light. Keep the shared cactus planter from shading its small segments.                                                                                                                     |
+| G3    | [Royal Flush split rock](../plants/succulents/pleiospilos-nelii-royal-flush.md) · _Pleiospilos nelii_ 'Royal Flush'                     | **Bright · R4C2.** [SANBI][split-rock] supports a sunny position for the species. Keep this low plant clearly lit without claiming a Royal Flush-specific need for the strongest overlap.                                                                       |
+| H1    | [Coconut Crystal](../plants/succulents/sempervivum-coconut-crystal.md) · _Sempervivum_ Colorockz® 'Coconut Crystal'                     | **High · R3C2.** [Sempervivum guidance][sempervivum] supports sunny conditions and cautions about heat. Preserve clear exposure at the low rosette; do not seek maximum heat.                                                                                   |
+| H2    | [Raindrops](../plants/succulents/echeveria-raindrops.md) · _Echeveria_ 'Raindrops'                                                      | **Bright · R3C3.** [The exact Raindrops grower][raindrops] recommends bright indoor light and filtered/partial sun. This replaces the earlier blanket High classification.                                                                                      |
+| H3    | [Eve's needle](../plants/cacti/austrocylindropuntia-subulata.md) · _Austrocylindropuntia subulata_                                      | **High · R4C4.** [NC State][eves-needle] supports full sun or bright indoor light. Keep growing stems from shading the lower plants nearby.                                                                                                                     |
 
 ## Glass Table: Final Positions, Shapes, and Sizes
 
-![Final six-container glass arrangement with a square wooden box, horizontal fixtures extending from wood, shared-pot light needs, and money tree on the outer side](../../assets/layouts/2026-09-13-horizontal-lights/glass-table.png)
+![Final six-container glass arrangement with a square wooden box, horizontal fixtures extending from wood, shared-pot light needs, and money tree on the outer side](../../assets/layouts/2026-09-14-edge-placement/glass-table.png)
 
 The **table** is 24 inches across, not the largest planter. Shapes come from the
 owner's August 29 and September 1–2 photographs in the
 [photo manifest](../../assets/collection-photos/photo-manifest.json), plus current
 profiles. Rim widths are not canopy widths; the illustration does not certify fit.
 
-| Label / Tracker | Container and Recorded Size                                                                                                                                         | Final Spot and Light Need                                                                                 |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| #1 / P19        | **Round dark planter with a pale leaf pattern**; diameter and height unmeasured. The old 12.5–13-inch record is plant tip **above the tabletop**, not pot diameter. | **H/B · upper-left**; green stems toward the clear lamp path, pale tissue toward the less exposed side.   |
-| #2 / P20        | **Square wooden box**, weathered gray-brown sides; side length, height, and liner/drainage details unmeasured.                                                      | **H/B · lower-left**; the Echeveria side faces the clearer lamp path on the near half.                    |
-| #3 / P21        | **White round plastic pot**, single thick money-tree trunk; current **6-inch class** Amazon Basics pot. The stored 8-inch pot is not installed.                     | **I · lower-right**; bright indirect spill outside the stronger cactus overlap.                           |
-| #4 / P22        | **White round pot**, branched Kiwi aeonium; approximately **5-inch pot** in the acquisition record, current rim/canopy dimensions unmeasured.                       | **B · upper-right**; bright outer shoulder of the lamp.                                                   |
-| #5 / P29        | **Tan round pot with horizontal ribs** after repotting; current dimensions unmeasured. The **2.5-inch retail label is the old arrival container**.                  | **H · just left of center**; inside the planned near-half coverage, with open light above the low leaves. |
-| #6 / P30        | **Small round terracotta deep dish**; **five-inch class** seller record, not a fresh rim or height measurement.                                                     | **H · left-center gap** between #1 and #2, moved inward from the bottom rim.                              |
+| Label / Tracker | Container and Recorded Size                                                                                                                                         | Final Spot and Light Need                                                                                      |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| #1 / P19        | **Round dark planter with a pale leaf pattern**; diameter and height unmeasured. The old 12.5–13-inch record is plant tip **above the tabletop**, not pot diameter. | **Mixed · upper-left**; green stems toward the clear lamp path, pale tissue toward the less exposed side.      |
+| #2 / P20        | **Square wooden box**, weathered gray-brown sides; side length, height, and liner/drainage details unmeasured.                                                      | **Mixed · lower-left**; the Echeveria side faces the clearer lamp path on the near half.                       |
+| #3 / P21        | **White round plastic pot**, single thick money-tree trunk; current **6-inch class** Amazon Basics pot. The stored 8-inch pot is not installed.                     | **Gentler · lower-right**; bright indirect spill outside the stronger cactus overlap.                          |
+| #4 / P22        | **White round pot**, branched Kiwi aeonium; approximately **5-inch pot** in the acquisition record, current rim/canopy dimensions unmeasured.                       | **Bright · upper-right**; bright outer shoulder of the lamp.                                                   |
+| #5 / P29        | **Tan round pot with horizontal ribs** after repotting; current dimensions unmeasured. The **2.5-inch retail label is the old arrival container**.                  | **Bright · just left of center**; inside the planned near-half coverage, with open light above the low leaves. |
+| #6 / P30        | **Small round terracotta deep dish**; **five-inch class** seller record, not a fresh rim or height measurement.                                                     | **Bright · left-center gap** between #1 and #2, retained from September 13.                                    |
 
 ### Component Plants and Their Light Needs
 
-- **#1 · Shared cactus planter:** [probable variegated Pilosocereus pachycladus](../plants/rehab/pilosocereus-pachycladus-variegated.md)
-  uses **B on its pale tissue**; [Cleistocactus colademononis](../plants/rehab/cleistocactus-colademononis.md)
-  and [probable Echinopsis spachiana](../plants/rehab/echinopsis-spachiana.md)
-  receive **H**. [RHS monkey-tail guidance][monkey-tail] specifies full light
-  under glass. The two probable columnar IDs and their exact thresholds remain
-  qualified. The historical removed probable Mammillaria bombycina is not drawn.
-- **#2 · Square wooden succulent box:** [probable Echeveria pulidonis or close hybrid](../plants/succulents/echeveria-pulidonis.md)
-  and [Portulacaria afra](../plants/succulents/portulacaria-afra.md) receive **H**
-  on the clearer lamp-facing side. The Portulacaria's possible golden cultivar
-  remains unconfirmed. [Probable Kalanchoe bracteata](../plants/succulents/kalanchoe-bracteata.md)
-  and [Kalanchoe orgyalis](../plants/succulents/kalanchoe-orgyalis.md) receive **B**
-  on the less exposed side. [RHS Echeveria][pulidonis], [Wisconsin elephant bush][elephant-bush],
-  [NC State silver teaspoons][silver-spoons], and [Port St. Lucie copper spoons][copper-spoons]
-  support these sunny-to-filtered comparisons. Keep taller branches clear of the rosette.
-- **#3 · Money tree — I:** [Pachira cf. glabra](../plants/houseplants/pachira-glabra.md)
-  retains bright indirect light supported by its retail tag. [NC State P. aquatica][money-tree]
-  is a care comparison, not species proof.
-- **#4 · Kiwi aeonium — B:** the [probable Aeonium haworthii 'Dream Color'](../plants/succulents/aeonium-haworthii-dream-color.md)
-  uses bright filtered exposure for compact rosettes. This is a profile-based
-  ongoing recommendation, not a verified cultivar-specific threshold.
-- **#5 · Tiger jaws — H:** [probable Faucaria tuberculosa](../plants/succulents/faucaria-tuberculosa.md)
-  is seller-labeled F. tigrina. [SANBI F. tigrina][tiger-jaws] supports a sunny
-  position as a genus comparison, without changing the working identification.
-- **[#6 · Tiny mixed planter](../plants/succulents/tiny-mixed-succulent-planter.md) — H:**
-  unresolved Echeveria rosettes, probable Sedum adolphi / S. nussbaumerianum
-  complex, and Kalanchoe luciae / K. thyrsiflora complex need clear bright
-  exposure. [Echeveria guidance][echeveria] supports the low rosettes' priority.
-  These remain provisional foliage groups in one tracked pot.
+- **#1 · Shared Cacti — Mixed:** [probable variegated Pilosocereus pachycladus](../plants/rehab/pilosocereus-pachycladus-variegated.md), [Cleistocactus colademononis](../plants/rehab/cleistocactus-colademononis.md), and [probable Echinopsis spachiana](../plants/rehab/echinopsis-spachiana.md) remain together. Give the green stems clear light and avoid excessive exposure on the pale column. Its tallest tip may need a different clearance from low plants; rotating a uniformly overhead-lit pot does not automatically protect the pale tissue. The historical removed probable Mammillaria bombycina remains excluded.
+- **#2 · Square Wooden Succulent Box — Mixed:** retain [probable Echeveria pulidonis or close hybrid](../plants/succulents/echeveria-pulidonis.md), [Portulacaria afra](../plants/succulents/portulacaria-afra.md), [probable Kalanchoe bracteata](../plants/succulents/kalanchoe-bracteata.md), and [Kalanchoe orgyalis](../plants/succulents/kalanchoe-orgyalis.md). Keep the low Echeveria out of taller foliage shadows. The Kalanchoes tolerate a range from sun to partial shade; their presence does not require a dark half of the box. The possible golden Portulacaria cultivar remains unconfirmed.
+- **#3 · Money Tree — Gentler:** the working [Pachira glabra](../plants/houseplants/pachira-glabra.md) retains useful gentler lamp spill on outer glass. [P. aquatica guidance][money-tree] is a care comparison, not identification proof.
+- **#4 · Kiwi Aeonium — Bright:** retain [Aeonium haworthii 'Dream Color'](../plants/succulents/aeonium-haworthii-dream-color.md) in useful bright spill. A weak north window alone is not assumed sufficient; a slight inward shift is an option only if this position is underlit.
+- **#5 · Tiger Jaws — Bright:** [probable Faucaria tuberculosa](../plants/succulents/faucaria-tuberculosa.md) remains seller-labeled F. tigrina. [SANBI][tiger-jaws] is a comparison, not proof of species or a need for the strongest intensity.
+- **#6 · Tiny Mixed Planter — Bright:** keep the [small terracotta dish](../plants/succulents/tiny-mixed-succulent-planter.md) clear of shadows. The provisional Echeveria rosettes, Sedum adolphi/nussbaumerianum complex, and Kalanchoe luciae/thyrsiflora complex remain one tracked pot with unconfirmed component identities.
 
-## Apply the Final Plan
+The [complete review](../two-light-placement-review.md) gives the source-by-source reasoning for each component. Glass positions are retained; the updated illustrations do not claim new pot dimensions or completion of a move.
 
-1. Keep each permanent label with its plant and shared containers intact.
-2. Place the high-light low plants in clear central lamp exposure first;
-   arrange taller neighbors so they do not shade those plants.
-3. Fit all bases completely on the existing tabletops. Keep glass visible around
-   the square box's corners; the unmeasured container sizes still limit fit certainty.
-4. Use compact healthy growth and, when available, plant-height light readings
-   to check that each final spot supplies its stated need. Lamp overlap alone
-   does not establish adequate intensity.
-5. Keep the September 13 owner report as the installation/layout record; record later moves and measured heights separately.
+## Apply the Current Plan
+
+1. Move each pot with its permanent label. F2 and E3 exchange row-5 positions; the optional A1/C2 swap is not part of this plan.
+2. Fit every base fully on the tabletop. Keep the same pots, medium, and risers unless separately recorded.
+3. Preserve clear light at low rosettes and compare the moved plants with their new neighbors. Neither a central row nor a fixture outline proves adequate exposure.
+4. Keep the reported dimmers and schedule while evaluating the modest adjustment. Record a physical move as a care note if useful, not as a completed repot or a new dry-down setup.
+5. Retain the September 13 installation record. The September 14 illustrations show the newly adopted plan, rather than a new measurement of the room.
 
 ## Sources
 
@@ -326,8 +169,7 @@ owner evidence. The later marked-up plan corrects both fixture long axes to
 left-to-right, one above the other. The four-hook plan, reflector removal, room
 orientation, and container shapes are also owner evidence. The guidance
 distinguishes species evidence, genus comparisons, grower claims, and placement
-inference. Species guidance reviewed September 9–10 and the key sun/indirect
-groups rechecked September 13; installation updated September 13, 2026.
+inference. The September 14 review corrects the old light categories and adopts only the F2/E3 swap. Installation remains dated September 13.
 
 - **Primary cactus guidance:** [RHS general care][general],
   [RHS rainbow hedgehog][rainbow], [NParks Old Man of the Andes][oreocereus],
@@ -344,12 +186,12 @@ groups rechecked September 13; installation updated September 13, 2026.
 - **Supplementary specialist cultivation sources:** [LLIFLE Myrtillocactus][myrtillocactus],
   [LLIFLE Boobie cactus][boobie], [LLIFLE paper spine][paper-spine],
   [LLIFLE serpent cactus][serpent], and [LLIFLE giant chin][giant-chin].
-- **Seller evidence:** [Mountain Crest Gardens Black Widow][black-widow] and
+- **Seller evidence:** [Costa Farms rooted Variegated Moon][rooted-moon], [Mountain Crest Gardens Raindrops][raindrops], [Mountain Crest Gardens Black Widow][black-widow], and
   [Home Depot five-inch terracotta garden](https://www.homedepot.com/p/SMART-PLANET-5-in-Succulent-Garden-in-Deep-Dish-Terra-Cotta-Clay-Planter-0872523/320207970).
   Product sizes are nominal; a listing does not prove a mixed planter's identities.
 - **Collection evidence:** [measurement photographs](../../assets/measurements/README.md),
   [plant and pot inventory](../collection.md), [individual profiles](../plants/),
-  and the [September 13 image prompts](../../assets/layouts/2026-09-13-horizontal-lights/image-prompts.md).
+  and the [September 14 image prompts](../../assets/layouts/2026-09-14-edge-placement/image-prompts.md).
 
 [general]: https://www.rhs.org.uk/plants/types/cacti-succulents/houseplants/growing-guide
 [rainbow]: https://www.rhs.org.uk/plants/115504/echinocereus-rigidissimus/details
@@ -381,3 +223,5 @@ groups rechecked September 13; installation updated September 13, 2026.
 [aw200]: https://vivosun.com/support/guide/aerolight
 [aerolight-240]: https://vivosun.com/support/guide/aerolight-gen2
 [aerolight-product]: https://vivosun.com/vivosun-aerolight-240W-p169014979523194244-v169014979523194351
+[raindrops]: https://mountaincrestgardens.com/echeveria-raindrops/
+[rooted-moon]: https://costafarms.com/products/small-variegated-moon-cactus-parent

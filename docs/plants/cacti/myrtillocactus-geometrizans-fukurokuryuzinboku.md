@@ -37,12 +37,12 @@ history.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                        |
-| ------------------- | --------------------------------------------------------------------------------------------------------- |
-| Grow-light position | Bright zone after gradual acclimation; preserve the blue wax and watch raised lobes for one-sided scorch. |
-| Water               | Soak and drain, then let the small 3-inch pot dry fully. Keep water from sitting in deep folds.           |
-| Pot and mix         | The small pot dries quickly but should not be upsized until roots justify it; use a stable draining mix.  |
-| Handling            | Hold the pot, not the lobes; rubbing removes the protective wax and leaves permanent marks.               |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | Current plan: **R5C1**, the bright open-left wooden edge, adopted September 14 swap with E3. Gentler exposure is a prudent choice for the small plant, not a measured light level or proof of juvenile age. See the [placement guide](../../layouts/table-placement-research.md). |
+| Water               | Soak and drain, then let the small 3-inch pot dry fully. Keep water from sitting in deep folds.                                                                                                                                                                                   |
+| Pot and mix         | The small pot dries quickly but should not be upsized until roots justify it; use a stable draining mix.                                                                                                                                                                          |
+| Handling            | Hold the pot, not the lobes; rubbing removes the protective wax and leaves permanent marks.                                                                                                                                                                                       |
 
 ## Rotation, propagation, and watch points
 

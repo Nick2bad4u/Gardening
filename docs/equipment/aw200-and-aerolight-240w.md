@@ -51,9 +51,7 @@ No controller program was remotely changed for this update.
 
 ## Recommended Starting Decision
 
-**Keep AW200 at 45%, AeroLight 240 W at 38%, and the current plant positions;
-do not raise either light just because the controls are below half power.** This is a provisional
-starting decision, not confirmation of adequate or safe exposure at every tip.
+**Keep AW200 at 45% and AeroLight 240 W at 38%.** The September 14 placement plan adopts only the F2/E3 swap: Boobie at R5C1 and Woolly Nipple at R5C3. The optional A1/C2 swap is not adopted. These settings and positions are provisional exposure choices, not confirmation of adequate light at every tip.
 The confirmed 18-inch reference supports retaining this starting setup while
 checking actual plant exposure; the photograph cannot provide PPFD.
 
@@ -76,11 +74,7 @@ leaves. Use both lights at their normal settings. A suitable quantum meter
 can measure PPFD; a consistent lux reading can reveal relative bright and dim
 spots, but do not apply an old AW200SE lux conversion to these mixed spectra.
 
-Leave the high-light rosettes and split rock in clear central exposure. Shift
-only a plant that is shaded or receiving excessive exposure. Raise the fixture
-over taller cacti if their tips are much closer than the low plants, then
-recheck the nearby low plants. Do not dim the whole group merely to protect
-one tall tip, or assume an outer corner is automatically gentle.
+Keep low rosettes and split rock clearly lit without assigning the strongest exposure to all of them. Raindrops uses bright light rather than a maximum-intensity priority. The [placement review](../two-light-placement-review.md) explains the adopted F2/E3 swap and the limits of edge, seam, and height assumptions. Any future fixture-height adjustment affects neighboring plants as well as the tallest tip.
 
 The [new-model manual][new-manual] requires the growing space to stay **below
 86°F (30°C)** during operation. Recheck room temperature with both fixtures
@@ -91,7 +85,7 @@ running; circulation fans do not establish that the room stays below this limit.
 Keep the **24 pots on wood in four columns by six rows**, and the **six containers
 on the 24-inch round glass table**. The shared succulent planter remains a
 square wooden box. The [Table Placement Guide](../layouts/table-placement-research.md)
-retains every final recommended position and its individual light need.
+records every current recommended position and its exposure priority.
 
 The owner's September 13 markup corrects the fixture orientation: both lights'
 approximately **26-inch long axes run left/open room to right/glass**, one above
@@ -104,11 +98,9 @@ near half of glass before furniture gaps**. The two short dimensions together
 span about **25.9 inches top-to-bottom before a fixture gap**, beside the nominal
 26-inch wooden depth. Those dimensions do not prove full or even illumination.
 The owner has hung and leveled the fixtures; exact centers, gap, and exposure
-remain unmeasured. The corrected September 13 illustrations retain all plant slots.
+remain unmeasured. The September 14 illustrations retain that orientation and exchange only F2 and E3 within row 5.
 
-Prioritize clear exposure for the high-light plants in the middle wooden rows
-and near glass half. Keep Ming Thing at the open-left corner and the money tree
-on outer glass, then check that those spots receive gentler useful light.
+Prioritize clear exposure at each plant's growing surface, including the low rosettes and near-glass plants. Keep Ming Thing at the open-left corner, the small Boobie at R5C1, and the money tree on outer glass, while treating gentler exposure there as an inference to check.
 The seam near the join after wooden row 3 may receive overlap or a dip; the
 central rows are not automatically the brightest. Different heights
 can improve clearance for tall cacti while changing exposure for their neighbors.

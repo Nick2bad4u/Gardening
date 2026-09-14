@@ -1,6 +1,6 @@
 # Setup and equipment
 
-Last updated: 2026-09-13
+Last updated: 2026-09-14
 
 ## Current routine
 
@@ -26,7 +26,7 @@ The owner confirms an **18-inch LED-to-plant-tip reference**
 and the same **13 h 15 m total daily cycle** for both lights, including
 **15 minutes of sunrise and 15 minutes of sunset** at the start and end.
 Exact clock times and individual plant-tip distances are not mapped.
-Keep the present settings and plant layout provisionally while checking exposure.
+Keep the present settings while evaluating the September 14 placement refinement: F2 Boobie at R5C1 and E3 Woolly Nipple at R5C3. All other slots remain as in the September 13 arrangement; the optional A1/C2 swap is not adopted.
 
 The [new 240 W manual](https://vivosun.com/support/guide/aerolight-gen2) requires
 the growing space to stay **below 86°F (30°C)** during operation. Check room
@@ -45,7 +45,7 @@ records all 30 final recommended spots and light needs, with three updated
 illustrations [after the booklet contents](https://nick2bad4u.github.io/Gardening/#placement).
 Both fixture long axes run left/open room to right/glass, one above the other
 in the bird's-eye plan. The outlines are schematic; spacing and exposure remain
-unmeasured. The owner confirms the illustrated plant arrangement is applied.
+unmeasured. The September 13 arrangement was owner-confirmed as applied; the September 14 illustrations show the newly adopted F2/E3 refinement without asserting a fresh physical measurement.
 
 The [two-light equipment note](./equipment/aw200-and-aerolight-240w.md) records
 manufacturer specifications and the revised mounting plan: **four ceiling

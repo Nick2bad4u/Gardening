@@ -49,12 +49,12 @@ club-shaped fruit.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | Bright middle cactus zone after acclimation; move outward if the green body develops persistent red stress color. |
-| Water               | Soak, drain, and allow the 4-inch pot to dry completely; keep the crown dry when the room is cool.                |
-| Pot and mix         | Keep the current pot until the body or roots crowd it; do not bury the lower tubercles.                           |
-| Fruit               | Leave attached fruit until it loosens naturally unless rot or pests appear around it.                             |
+| Topic               | Practical approach                                                                                                                                                                                                                     |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | Current plan: **R5C3**, adopted September 14 swap with F2. Preserve clear bright exposure between C3 and F3; check real crown clearance and neighboring shadows. See the [placement guide](../../layouts/table-placement-research.md). |
+| Water               | Soak, drain, and allow the 4-inch pot to dry completely; keep the crown dry when the room is cool.                                                                                                                                     |
+| Pot and mix         | Keep the current pot until the body or roots crowd it; do not bury the lower tubercles.                                                                                                                                                |
+| Fruit               | Leave attached fruit until it loosens naturally unless rot or pests appear around it.                                                                                                                                                  |
 
 ## Rotation, propagation, and watch points
 

@@ -1,19 +1,23 @@
 # Practical care notes
 
-Last updated: 2026-09-13
+Last updated: 2026-09-14
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
 
+For detailed tracker guidance, read the [watering strategy](./watering-strategy.md), [weighing strategy](./weighing-strategy.md), and [spreadsheet/logger action guide](./logger-actions.md). The [daily task prompt](./daily-weighing-watering-prompt.md) applies the requested adaptive weighing policy while keeping its report limited to watering and weighing.
+
 The [AW200 + AeroLight 240 W pair](./equipment/aw200-and-aerolight-240w.md)
 was hung September 13 with **AW200 at 45% and AeroLight 240 W at 38%** and the room
-end open. The owner has applied the latest layout and confirms an **18-inch
+end open. The owner applied the September 13 layout and confirms an **18-inch
 plant-tip reference**. Both lights use the same **13 h 15 m total cycle**,
 including **15-minute sunrise and sunset transitions** at the start and end.
 Observe the new combined exposure
 and dry-down. Use the
 [final placement guide](./layouts/table-placement-research.md) for each pot's
 ongoing light need; adding a light does not by itself make a pot ready to water.
+
+The September 14 plan exchanges F2 Boobie and E3 Woolly Nipple within row 5, with every glass position retained. This placement adjustment does not reset a pot setup, wet/dry reference, or learned watering cycle. Keep the existing observations and respond to any new drying behavior with useful measurements; a moved pot is not automatically due for watering or daily weighing.
 
 For the installed 240 W fixture, the [manufacturer's operating limit](https://vivosun.com/support/guide/aerolight-gen2)
 requires the growing space below **86°F (30°C)**. The older outdoor weather

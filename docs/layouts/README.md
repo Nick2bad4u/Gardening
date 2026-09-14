@@ -1,6 +1,6 @@
 # Grow-spot diagrams
 
-Last updated: 2026-09-13
+Last updated: 2026-09-14
 
 The [Table Placement Guide](./table-placement-research.md) reviews all 30 pots
 against their light needs and current container evidence. It uses the corrected
@@ -13,8 +13,8 @@ with AW200 at 45% and AeroLight 240 W at 38%, and the owner reports applying
 this layout.
 The owner confirms an 18-inch plant-tip reference and the same 13 h 15 m total
 cycle for both lights, including 15-minute sunrise and sunset transitions at
-the start and end. Keep the arrangement while checking plant-height exposure.
-The **two-foot return panel comes out**, leaving the room end open; divider
+the start and end. The September 14 refinement places F2 Boobie at R5C1 and E3 Woolly Nipple at R5C3; every other slot is retained. The [complete placement review](../two-light-placement-review.md) explains the exposure priorities and remaining measurement limits.
+The **two-foot return panel stays out**, leaving the room end open; divider
 Mylar stays. Final positions remain grouped by ongoing light need, and the
 plan distinguishes intended coverage from unmeasured actual exposure.
 Read it [immediately after the online booklet contents](https://nick2bad4u.github.io/Gardening/#placement)

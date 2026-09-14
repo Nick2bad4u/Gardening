@@ -10,6 +10,8 @@ input row, while every saved event becomes a new append-only row on `History`.
 The Dashboard, Insights, Baselines, individual plant tabs, and public website
 all read from that shared history.
 
+For everyday use, see the [watering strategy](../../docs/watering-strategy.md), [weighing strategy](../../docs/weighing-strategy.md), and [complete action guide](../../docs/logger-actions.md). The adaptive daily-task policy is documented separately from the workbook's fixed Daily care cadence; these guides do not migrate workbook formulas.
+
 The [Insights chart guide](INSIGHTS-CHARTS.md) covers the dry-down explorer at
 **Insights A226**, its plant selector in **B228**, and the collection comparisons
 for retained water, measured loss, forecast windows, and model evidence. The
