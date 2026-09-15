@@ -7600,6 +7600,11 @@ describe("garden logger activity metrics and guidance", () => {
 
     it.each([
         [
+            "Reference reached + observed plateau — inspect moisture",
+            "care",
+            "independent",
+        ],
+        [
             "Observed plateau — inspect moisture",
             "care",
             "sustained slowdown",
@@ -7652,7 +7657,7 @@ describe("garden logger activity metrics and guidance", () => {
         [
             "Recheck wet / dry anchors",
             "caution",
-            "Readings conflict",
+            "before or after watering",
         ],
         [
             "Blended historical estimate",

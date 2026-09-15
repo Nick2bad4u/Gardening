@@ -114,6 +114,27 @@ as a product of heating during manufacture; its pores subsequently hold air
 and water. Root-damaging swelling of this particular mixture has not been
 established, so do not use that claim to decide when to water.
 
+### September 14 Detector Review
+
+The detector now keeps **reference reached** and **sustained plateau** as separate
+observations, including when both agree. An observed reason to inspect does not
+need a calibrated forecast. A pot can still be drying after reaching its old
+reference; a flat curve alone cannot establish dry soil.
+
+The old seven-day minimum has been removed. Four time-spaced readings over
+2–10 days must show a sustained slowdown relative to an earlier measured
+decline after the first 24 hours. Small scale fluctuations are tolerated, while
+renewed rapid loss, unexplained gains, partial watering, and incompatible
+weighing setups retain their review rules. The numerical criteria are practical
+starting heuristics, not plant watering thresholds.
+
+For this collection, combine those signals with the usual moisture and plant
+checks. Do not wait for zero daily loss or deliberately add extra dry days.
+New watering starts a fresh cycle. A supposed wet weight already below the
+preceding pre-water reference calls for checking timing or setup, not another
+watering. The [current detector runbook](../scripts/google-sheets/README.md#improved-drying-detector-5230)
+documents the criteria and shared daily-report analyzer.
+
 ### September 13 Forecast Review
 
 The audit checked all 30 plants against the current 839-row observation ledger.

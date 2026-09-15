@@ -1,983 +1,627 @@
 {
     "coverage": "complete",
     "date": "2026-09-14",
-    "generatedAt": "2026-09-14T23:46:22Z",
+    "generatedAt": "2026-09-15T02:15:36.762Z",
     "mixes": [
         {
-            "condition": "Only with healthy roots and visible compact growth. Otherwise use plain RO.",
-            "gramsPerGallon": 0.75,
-            "id": "msu",
-            "name": "MSU · 0.75 g/gal",
-            "product": "Tezula MSU 13-3-15 + Ca/Mg, mixed in RO water",
-            "rationale": "These established starter and cactus pots last received plain RO. This is a conditional feeding opportunity at the next necessary watering, not a reason to water early."
-        },
-        {
-            "condition": "Continue the new-arrival establishment hold.",
-            "gramsPerGallon": null,
             "id": "plain-ro",
             "name": "Plain RO",
             "product": "Reverse-osmosis water · no nutrients",
-            "rationale": "G1, G2, H1, H2, and H3 remain on plain RO while establishing. H1's later occasional 0.50 g/gal rule does not apply to this session."
+            "gramsPerGallon": null,
+            "condition": "Only if the pot has not already been watered and your usual readiness check confirms it needs water.",
+            "rationale": "H1, H2 and H3 have no September 14 Water entry in the reviewed ledger. Continue plain RO while establishment and healthy active growth are unconfirmed; H1’s later lighter-feeding rule does not apply tonight."
         }
     ],
     "notes": [
-        "This page reformats the September 14 report already reviewed. The workbook snapshot was read at 6:16 p.m. Eastern; most weights were taken early September 13. The page is not a live view of changes made after that read.",
-        "Dry reference reached and sustained plateau are independent reasons to check readiness. A plateau above an old reference still belongs in the watering shortlist; condition and moisture determine whether you actually water.",
-        "All 30 active pots are accounted for. The source review found 841 History records: 840 active and one removed-pot record, with no integrity errors in the reviewed checks.",
-        "D3, #1, and #2 are flexible samples after the light change. They do not need to become permanent daily weigh-ins.",
-        "Mix nutrients only for the watering session and keep stored RO plain. Do not add Cal-Mag, sulfur, or Foliage Pro to the MSU mix.",
-        "After a watering, record the actual mix and the drained wet weight. #3 was already watered and fed on September 13; its priority is the missing wet reference."
+        "Fresh evening review using detector 5.23.0. All 30 pots are accounted for across 886 History rows (883 active and 3 removed), with unique Observation IDs. Watering and scale readings are kept separate.",
+        "Water is logged tonight for A1–F3, plus G1 and G2: A1–F3 received MSU at 0.75 g/gal, and G1/G2 received plain RO. These pots no longer inherit their previous cycle’s watering recommendation. Do not water them again for a missing or questionable weight.",
+        "Nineteen new readings timestamped after Water are slightly below the preceding pre-water references. Verify whether they were actually taken before watering; if so, record a real drained weight with the correct time. The report does not change your History or invent a wet reference. D3 has no post-water reading, and #3 still lacks one after its September 13 watering.",
+        "The larger weigh list reflects a shared timing issue, not a permanent daily weighing schedule. If the recorded readings already are comparable post-drain weights, resolve the reference/setup mismatch instead of repeatedly collecting the same measurement.",
+        "A dry-reference hit and a sustained plateau are independent reasons to inspect. The detector has no seven-day lockout and never requires zero daily loss. Root-zone moisture and plant condition still determine whether to water.",
+        "H1, H2 and H3 remain in the combined Check / Water group only because no newer Water record is present. If they were part of tonight’s completed session, log the actual watering and mix; do not repeat it. G3 remains a leaf-cycle check only.",
+        "#1 and #2 can stay in place tonight: neither has a supported plateau or a reached reference. Their next useful routine sample is September 15, sooner if plant condition changes."
     ],
     "pots": [
         {
-            "action": "water",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 349,
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 362.5,
             "id": "P01",
             "label": "A1",
             "latest": {
-                "at": "2026-09-13T01:16:00-04:00",
-                "grams": 362.5
+                "at": "2026-09-14T23:43:00Z",
+                "grams": 361.5
             },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "msu",
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
             "name": "Variegated moon cactus",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-09T00:15:00-04:00",
-                    "grams": 364.5
-                },
-                {
-                    "at": "2026-09-10T01:50:00-04:00",
-                    "grams": 364
-                },
-                {
-                    "at": "2026-09-10T23:21:00-04:00",
-                    "grams": 363
-                },
-                {
-                    "at": "2026-09-13T01:16:00-04:00",
-                    "grams": 362.5
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:21:00-04:00",
-                "grams": 363
-            },
-            "reason": "plateau",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
         },
         {
-            "action": "water",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 321,
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 348.5,
             "id": "P02",
             "label": "A2",
             "latest": {
-                "at": "2026-09-13T01:16:00-04:00",
-                "grams": 348.5
+                "at": "2026-09-14T23:42:00Z",
+                "grams": 347.5
             },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "msu",
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
             "name": "Feather cactus",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-09T00:12:00-04:00",
-                    "grams": 350
-                },
-                {
-                    "at": "2026-09-10T01:49:00-04:00",
-                    "grams": 349.5
-                },
-                {
-                    "at": "2026-09-10T23:22:00-04:00",
-                    "grams": 349
-                },
-                {
-                    "at": "2026-09-13T01:16:00-04:00",
-                    "grams": 348.5
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:22:00-04:00",
-                "grams": 349
-            },
-            "reason": "plateau",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
         },
         {
-            "action": "water",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 324,
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 322.5,
             "id": "P03",
             "label": "A3",
             "latest": {
-                "at": "2026-09-13T01:17:00-04:00",
-                "grams": 322.5
+                "at": "2026-09-14T23:42:00Z",
+                "grams": 321.5
             },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "msu",
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
             "name": "Serpent cactus",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-09T00:13:00-04:00",
-                    "grams": 324.5
-                },
-                {
-                    "at": "2026-09-10T01:50:00-04:00",
-                    "grams": 323.5
-                },
-                {
-                    "at": "2026-09-10T23:23:00-04:00",
-                    "grams": 323
-                },
-                {
-                    "at": "2026-09-13T01:17:00-04:00",
-                    "grams": 322.5
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:23:00-04:00",
-                "grams": 323
-            },
-            "reason": "both",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
         },
         {
-            "action": "water",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 308,
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 319,
             "id": "P04",
             "label": "B1",
             "latest": {
-                "at": "2026-09-13T01:18:00-04:00",
-                "grams": 319
+                "at": "2026-09-14T23:46:00Z",
+                "grams": 317.5
             },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "msu",
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
             "name": "Grass-blade cactus",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-09T00:14:00-04:00",
-                    "grams": 321.5
-                },
-                {
-                    "at": "2026-09-10T01:50:00-04:00",
-                    "grams": 320.5
-                },
-                {
-                    "at": "2026-09-10T23:24:00-04:00",
-                    "grams": 320
-                },
-                {
-                    "at": "2026-09-13T01:18:00-04:00",
-                    "grams": 319
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:24:00-04:00",
-                "grams": 320
-            },
-            "reason": "plateau",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
         },
         {
-            "action": "water",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 360,
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 382,
             "id": "P05",
             "label": "B2",
             "latest": {
-                "at": "2026-09-13T01:17:00-04:00",
-                "grams": 382
+                "at": "2026-09-14T23:44:00Z",
+                "grams": 380.5
             },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "msu",
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
             "name": "Old Man of the Andes",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-07T00:14:00-04:00",
-                    "grams": 387.5
-                },
-                {
-                    "at": "2026-09-10T01:56:00-04:00",
-                    "grams": 384.5
-                },
-                {
-                    "at": "2026-09-10T23:23:00-04:00",
-                    "grams": 383.5
-                },
-                {
-                    "at": "2026-09-13T01:17:00-04:00",
-                    "grams": 382
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:23:00-04:00",
-                "grams": 383.5
-            },
-            "reason": "plateau",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
         },
         {
             "action": "weigh",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 333,
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 345.5,
             "id": "P06",
             "label": "B3",
             "latest": {
-                "at": "2026-09-13T01:21:00-04:00",
-                "grams": 345.5
+                "at": "2026-09-14T23:46:00Z",
+                "grams": 343.5
             },
-            "metricsNote": "Medium was replaced after the August 31 knock-over; treat the older dry reference as a qualified comparison.",
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
             "mixId": null,
             "name": "Indigo Wave",
-            "plateau": "not-supported",
+            "plateau": "unavailable",
             "plateauPoints": [],
-            "previous": {
-                "at": "2026-09-10T23:27:00-04:00",
-                "grams": 348.5
-            },
+            "previous": null,
             "reason": "priority",
-            "recommendation": "Weigh to refine the September 14–17 window. The curve has not formed a sustained plateau."
-        },
-        {
-            "action": "water",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 353,
-            "id": "P07",
-            "label": "C1",
-            "latest": {
-                "at": "2026-09-13T01:26:00-04:00",
-                "grams": 362.5
-            },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "msu",
-            "name": "Giant chin cactus",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-09T00:12:00-04:00",
-                    "grams": 366
-                },
-                {
-                    "at": "2026-09-10T01:52:00-04:00",
-                    "grams": 365
-                },
-                {
-                    "at": "2026-09-10T23:33:00-04:00",
-                    "grams": 364.5
-                },
-                {
-                    "at": "2026-09-13T01:26:00-04:00",
-                    "grams": 362.5
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:33:00-04:00",
-                "grams": 364.5
-            },
-            "reason": "plateau",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
-        },
-        {
-            "action": "water",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 388.5,
-            "id": "P08",
-            "label": "C2",
-            "latest": {
-                "at": "2026-09-13T01:19:00-04:00",
-                "grams": 382.5
-            },
-            "metricsNote": "The dry reference supports a readiness check even though a sustained plateau is not supported.",
-            "mixId": "msu",
-            "name": "Rainbow hedgehog cactus",
-            "plateau": "not-supported",
-            "plateauPoints": [],
-            "previous": {
-                "at": "2026-09-10T23:24:00-04:00",
-                "grams": 385
-            },
-            "reason": "reference",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
-        },
-        {
-            "action": "water",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 346,
-            "id": "P09",
-            "label": "C3",
-            "latest": {
-                "at": "2026-09-13T01:24:00-04:00",
-                "grams": 342
-            },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "msu",
-            "name": "Monk's hood cactus",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-07T00:04:00-04:00",
-                    "grams": 345.5
-                },
-                {
-                    "at": "2026-09-10T01:56:00-04:00",
-                    "grams": 344
-                },
-                {
-                    "at": "2026-09-10T23:31:00-04:00",
-                    "grams": 343
-                },
-                {
-                    "at": "2026-09-13T01:24:00-04:00",
-                    "grams": 342
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:31:00-04:00",
-                "grams": 343
-            },
-            "reason": "both",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
-        },
-        {
-            "action": "water",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 344.5,
-            "id": "P10",
-            "label": "D1",
-            "latest": {
-                "at": "2026-09-13T01:27:00-04:00",
-                "grams": 364
-            },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "msu",
-            "name": "Dragon's Egg",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-09T00:15:00-04:00",
-                    "grams": 365.5
-                },
-                {
-                    "at": "2026-09-10T01:51:00-04:00",
-                    "grams": 365
-                },
-                {
-                    "at": "2026-09-10T23:29:00-04:00",
-                    "grams": 364.5
-                },
-                {
-                    "at": "2026-09-13T01:27:00-04:00",
-                    "grams": 364
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:29:00-04:00",
-                "grams": 364.5
-            },
-            "reason": "plateau",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
-        },
-        {
-            "action": "water",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 351.5,
-            "id": "P11",
-            "label": "D2",
-            "latest": {
-                "at": "2026-09-13T01:25:00-04:00",
-                "grams": 370.5
-            },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "msu",
-            "name": "Domino cactus",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-09T00:15:00-04:00",
-                    "grams": 374
-                },
-                {
-                    "at": "2026-09-10T01:56:00-04:00",
-                    "grams": 373
-                },
-                {
-                    "at": "2026-09-10T23:33:00-04:00",
-                    "grams": 371.5
-                },
-                {
-                    "at": "2026-09-13T01:25:00-04:00",
-                    "grams": 370.5
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:33:00-04:00",
-                "grams": 371.5
-            },
-            "reason": "plateau",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
         },
         {
             "action": "weigh",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 301,
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 362.5,
+            "id": "P07",
+            "label": "C1",
+            "latest": {
+                "at": "2026-09-15T00:22:00Z",
+                "grams": 361
+            },
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
+            "name": "Giant chin cactus",
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
+        },
+        {
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 382.5,
+            "id": "P08",
+            "label": "C2",
+            "latest": {
+                "at": "2026-09-14T23:45:00Z",
+                "grams": 380.5
+            },
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
+            "name": "Rainbow hedgehog cactus",
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
+        },
+        {
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 342,
+            "id": "P09",
+            "label": "C3",
+            "latest": {
+                "at": "2026-09-15T00:19:00Z",
+                "grams": 340.5
+            },
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
+            "name": "Monk's hood cactus",
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
+        },
+        {
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 364,
+            "id": "P10",
+            "label": "D1",
+            "latest": {
+                "at": "2026-09-14T23:48:00Z",
+                "grams": 363
+            },
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
+            "name": "Dragon's Egg",
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
+        },
+        {
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 370.5,
+            "id": "P11",
+            "label": "D2",
+            "latest": {
+                "at": "2026-09-15T00:21:00Z",
+                "grams": 369
+            },
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
+            "name": "Domino cactus",
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
+        },
+        {
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 317.5,
             "id": "P12",
             "label": "D3",
             "latest": {
-                "at": "2026-09-13T01:15:00-04:00",
-                "grams": 319
+                "at": "2026-09-14T23:41:00Z",
+                "grams": 317.5
             },
-            "metricsNote": "",
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
             "mixId": null,
             "name": "Ming Thing",
-            "plateau": "not-supported",
+            "plateau": "unavailable",
             "plateauPoints": [],
-            "previous": {
-                "at": "2026-09-10T23:22:00-04:00",
-                "grams": 321.5
-            },
-            "reason": "flexible",
-            "recommendation": "A flexible sample after the lighting change. The earlier planning window was September 16–20; this is not a watering deadline."
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Record a comparable drained weight after tonight’s watering. No post-water reading is present; no additional water or feed is needed to create one."
         },
         {
-            "action": "water",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 360,
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 367.5,
             "id": "P13",
             "label": "E1",
             "latest": {
-                "at": "2026-09-13T01:18:00-04:00",
-                "grams": 367.5
+                "at": "2026-09-14T23:45:00Z",
+                "grams": 366
             },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "msu",
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
             "name": "Dwarf old man cactus",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-07T00:15:00-04:00",
-                    "grams": 370.5
-                },
-                {
-                    "at": "2026-09-10T01:55:00-04:00",
-                    "grams": 368.5
-                },
-                {
-                    "at": "2026-09-10T23:23:00-04:00",
-                    "grams": 368
-                },
-                {
-                    "at": "2026-09-13T01:18:00-04:00",
-                    "grams": 367.5
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:23:00-04:00",
-                "grams": 368
-            },
-            "reason": "plateau",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
         },
         {
-            "action": "water",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
             "dryReferenceGrams": 327.5,
             "id": "P14",
             "label": "E2",
             "latest": {
-                "at": "2026-09-13T01:25:00-04:00",
-                "grams": 327.5
+                "at": "2026-09-15T00:21:00Z",
+                "grams": 325
             },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "msu",
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
             "name": "Chamaelobivia / peanut cactus hybrid",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-09T00:11:00-04:00",
-                    "grams": 333
-                },
-                {
-                    "at": "2026-09-10T01:51:00-04:00",
-                    "grams": 331
-                },
-                {
-                    "at": "2026-09-10T23:32:00-04:00",
-                    "grams": 329.5
-                },
-                {
-                    "at": "2026-09-13T01:25:00-04:00",
-                    "grams": 327.5
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:32:00-04:00",
-                "grams": 329.5
-            },
-            "reason": "both",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
-        },
-        {
-            "action": "water",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 315,
-            "id": "P15",
-            "label": "E3",
-            "latest": {
-                "at": "2026-09-13T01:22:00-04:00",
-                "grams": 320.5
-            },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "msu",
-            "name": "Woolly nipple cactus",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-09T00:12:00-04:00",
-                    "grams": 322
-                },
-                {
-                    "at": "2026-09-10T01:54:00-04:00",
-                    "grams": 321.5
-                },
-                {
-                    "at": "2026-09-10T23:29:00-04:00",
-                    "grams": 321
-                },
-                {
-                    "at": "2026-09-13T01:22:00-04:00",
-                    "grams": 320.5
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:29:00-04:00",
-                "grams": 321
-            },
-            "reason": "plateau",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
-        },
-        {
-            "action": "water",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 338.5,
-            "id": "P16",
-            "label": "F1",
-            "latest": {
-                "at": "2026-09-13T01:27:00-04:00",
-                "grams": 340.5
-            },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "msu",
-            "name": "Hook-spined pincushion cactus",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-09T00:16:00-04:00",
-                    "grams": 341.5
-                },
-                {
-                    "at": "2026-09-10T01:57:00-04:00",
-                    "grams": 341
-                },
-                {
-                    "at": "2026-09-10T23:33:00-04:00",
-                    "grams": 340.5
-                },
-                {
-                    "at": "2026-09-13T01:27:00-04:00",
-                    "grams": 340.5
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:33:00-04:00",
-                "grams": 340.5
-            },
-            "reason": "plateau",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
-        },
-        {
-            "action": "water",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 339,
-            "id": "P17",
-            "label": "F2",
-            "latest": {
-                "at": "2026-09-13T01:24:00-04:00",
-                "grams": 341
-            },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "msu",
-            "name": "Boobie cactus",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-07T00:06:00-04:00",
-                    "grams": 347
-                },
-                {
-                    "at": "2026-09-10T01:52:00-04:00",
-                    "grams": 343
-                },
-                {
-                    "at": "2026-09-10T23:31:00-04:00",
-                    "grams": 342
-                },
-                {
-                    "at": "2026-09-13T01:24:00-04:00",
-                    "grams": 341
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:31:00-04:00",
-                "grams": 342
-            },
-            "reason": "plateau",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
-        },
-        {
-            "action": "water",
-            "cycleStartedAt": "2026-08-26T16:22:00-04:00",
-            "dryReferenceGrams": 343.5,
-            "id": "P18",
-            "label": "F3",
-            "latest": {
-                "at": "2026-09-13T01:24:00-04:00",
-                "grams": 341
-            },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "msu",
-            "name": "Yellow tower cactus",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-09T00:13:00-04:00",
-                    "grams": 345
-                },
-                {
-                    "at": "2026-09-10T01:55:00-04:00",
-                    "grams": 343.5
-                },
-                {
-                    "at": "2026-09-10T23:31:00-04:00",
-                    "grams": 342.5
-                },
-                {
-                    "at": "2026-09-13T01:24:00-04:00",
-                    "grams": 341
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:31:00-04:00",
-                "grams": 342.5
-            },
-            "reason": "both",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
         },
         {
             "action": "weigh",
-            "cycleStartedAt": "2026-09-04T00:45:00-04:00",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 320.5,
+            "id": "P15",
+            "label": "E3",
+            "latest": {
+                "at": "2026-09-14T23:48:00Z",
+                "grams": 319
+            },
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
+            "name": "Woolly nipple cactus",
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
+        },
+        {
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 340.5,
+            "id": "P16",
+            "label": "F1",
+            "latest": {
+                "at": "2026-09-15T00:23:00Z",
+                "grams": 340
+            },
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
+            "name": "Hook-spined pincushion cactus",
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
+        },
+        {
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 341,
+            "id": "P17",
+            "label": "F2",
+            "latest": {
+                "at": "2026-09-15T00:21:00Z",
+                "grams": 339
+            },
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
+            "name": "Boobie cactus",
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
+        },
+        {
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 341,
+            "id": "P18",
+            "label": "F3",
+            "latest": {
+                "at": "2026-09-15T00:22:00Z",
+                "grams": 339
+            },
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
+            "name": "Yellow tower cactus",
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-04T04:45:00Z",
             "dryReferenceGrams": 3692,
             "id": "P19",
             "label": "#1",
             "latest": {
-                "at": "2026-09-13T01:32:00-04:00",
+                "at": "2026-09-13T05:32:00Z",
                 "grams": 4418
             },
-            "metricsNote": "",
+            "metricsNote": "Daily change uses the last two actual timestamps in this setup and watering cycle. A low rate by itself does not establish a plateau.",
             "mixId": null,
             "name": "Shared rehab cactus planter",
             "plateau": "not-supported",
             "plateauPoints": [],
             "previous": {
-                "at": "2026-09-10T23:39:00-04:00",
+                "at": "2026-09-11T03:39:00Z",
                 "grams": 4535
             },
-            "reason": "flexible",
-            "recommendation": "A flexible sample for the large shared rehab planter after the light change. Weight is still falling well above its old reference."
+            "reason": "deferred",
+            "recommendation": "Leave in place tonight. Weight remains above the old reference with no sustained plateau. Take the next routine sample September 15; inspect sooner if any component changes."
         },
         {
-            "action": "weigh",
-            "cycleStartedAt": "2026-09-02T15:40:00-04:00",
+            "action": "none",
+            "cycleStartedAt": "2026-09-02T19:40:00Z",
             "dryReferenceGrams": 1524,
             "id": "P20",
             "label": "#2",
             "latest": {
-                "at": "2026-09-13T01:31:00-04:00",
+                "at": "2026-09-13T05:31:00Z",
                 "grams": 1959
             },
-            "metricsNote": "",
+            "metricsNote": "Daily change uses the last two actual timestamps in this setup and watering cycle. A low rate by itself does not establish a plateau.",
             "mixId": null,
             "name": "Shared succulent planter",
             "plateau": "not-supported",
             "plateauPoints": [],
             "previous": {
-                "at": "2026-09-10T23:38:00-04:00",
+                "at": "2026-09-11T03:38:00Z",
                 "grams": 2100
             },
-            "reason": "flexible",
-            "recommendation": "A flexible sample after the light change. This mixed planter is still losing substantial weight above its old reference."
+            "reason": "deferred",
+            "recommendation": "Leave in place tonight. Weight remains above the old reference with no sustained plateau. Take the next routine sample September 15; inspect sooner if any component changes."
         },
         {
             "action": "weigh",
-            "cycleStartedAt": "2026-09-13T19:14:00-04:00",
+            "cycleStartedAt": "2026-09-13T23:14:00Z",
             "dryReferenceGrams": 1529,
             "id": "P21",
             "label": "#3",
             "latest": {
-                "at": "2026-09-13T19:13:00-04:00",
+                "at": "2026-09-13T23:13:00Z",
                 "grams": 1529
             },
-            "metricsNote": "The 1,529 g reading at approximately 7:13 p.m. was before the 7:14 p.m. watering. There are no eligible weights in the new cycle, so a last-two change and plateau cannot be calculated.",
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
             "mixId": null,
             "name": "Money tree",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
             "reason": "priority",
-            "recommendation": "Weigh to establish the missing wet reference after the September 13 watering. It already received Foliage Pro; no additional water or feed is recommended."
+            "recommendation": "Record the missing post-water weight after the September 13 watering. Do not repeat that watering or feed. Later readiness still uses the upper 2 inches of mix."
         },
         {
             "action": "weigh",
-            "cycleStartedAt": "2026-09-02T15:40:00-04:00",
+            "cycleStartedAt": "2026-09-02T19:40:00Z",
             "dryReferenceGrams": 841,
             "id": "P22",
             "label": "#4",
             "latest": {
-                "at": "2026-09-13T01:32:00-04:00",
+                "at": "2026-09-13T05:32:00Z",
                 "grams": 864
             },
-            "metricsNote": "",
+            "metricsNote": "Daily change uses the last two actual timestamps in this setup and watering cycle. A low rate by itself does not establish a plateau.",
             "mixId": null,
             "name": "Kiwi aeonium",
             "plateau": "not-supported",
             "plateauPoints": [],
             "previous": {
-                "at": "2026-09-10T23:34:00-04:00",
+                "at": "2026-09-11T03:34:00Z",
                 "grams": 876.5
             },
             "reason": "priority",
-            "recommendation": "Weigh to refine the September 14–18 window, beginning this evening. Check whether the Aeonium is actively growing or resting."
+            "recommendation": "A fresh weight will refine the approaching dry-check window. The last reading remains above the old reference; check active growth versus rest when assessing moisture."
         },
         {
-            "action": "water",
-            "cycleStartedAt": "2026-09-04T00:44:00-04:00",
-            "dryReferenceGrams": 355,
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 350.5,
             "id": "P23",
             "label": "G2",
             "latest": {
-                "at": "2026-09-13T01:20:00-04:00",
-                "grams": 350.5
+                "at": "2026-09-14T23:46:00Z",
+                "grams": 350
             },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "plain-ro",
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
             "name": "Paper spine",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-09T00:11:00-04:00",
-                    "grams": 352
-                },
-                {
-                    "at": "2026-09-10T01:53:00-04:00",
-                    "grams": 351
-                },
-                {
-                    "at": "2026-09-10T23:27:00-04:00",
-                    "grams": 351
-                },
-                {
-                    "at": "2026-09-13T01:20:00-04:00",
-                    "grams": 350.5
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:27:00-04:00",
-                "grams": 351
-            },
-            "reason": "both",
-            "recommendation": "Check moisture as usual, then water if ready with plain RO. Keep the new-arrival establishment feeding hold in place."
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
         },
         {
             "action": "water",
-            "cycleStartedAt": "2026-09-04T00:44:00-04:00",
+            "cycleStartedAt": "2026-09-04T04:44:00Z",
             "dryReferenceGrams": 331.5,
             "id": "P24",
             "label": "H1",
             "latest": {
-                "at": "2026-09-13T01:20:00-04:00",
+                "at": "2026-09-13T05:20:00Z",
                 "grams": 329
             },
-            "metricsNote": "The dry reference supports a readiness check even though a sustained plateau is not supported.",
+            "metricsNote": "Daily change uses the last two actual timestamps in this setup and watering cycle. A low rate by itself does not establish a plateau.",
             "mixId": "plain-ro",
             "name": "Coconut Crystal",
             "plateau": "not-supported",
             "plateauPoints": [],
             "previous": {
-                "at": "2026-09-10T23:26:00-04:00",
+                "at": "2026-09-11T03:26:00Z",
                 "grams": 337.5
             },
             "reason": "reference",
-            "recommendation": "Check moisture as usual, then water if ready with plain RO. Keep the new-arrival establishment feeding hold in place."
+            "recommendation": "If not already watered tonight, check readiness and use plain RO if ready. If it was watered, record that event and actual mix instead; do not water twice."
         },
         {
             "action": "water",
-            "cycleStartedAt": "2026-09-04T00:44:00-04:00",
+            "cycleStartedAt": "2026-09-04T04:44:00Z",
             "dryReferenceGrams": 319,
             "id": "P25",
             "label": "H2",
             "latest": {
-                "at": "2026-09-13T01:20:00-04:00",
-                "grams": 318.5
+                "at": "2026-09-14T23:45:00Z",
+                "grams": 317
             },
-            "metricsNote": "The dry reference supports a readiness check even though a sustained plateau is not supported.",
+            "metricsNote": "Daily change uses the last two actual timestamps in this setup and watering cycle. A low rate by itself does not establish a plateau.",
             "mixId": "plain-ro",
             "name": "Raindrops",
             "plateau": "not-supported",
             "plateauPoints": [],
             "previous": {
-                "at": "2026-09-10T23:27:00-04:00",
-                "grams": 324.5
+                "at": "2026-09-13T05:20:00Z",
+                "grams": 318.5
             },
             "reason": "reference",
-            "recommendation": "Check moisture as usual, then water if ready with plain RO. Keep the new-arrival establishment feeding hold in place."
+            "recommendation": "If not already watered tonight, check readiness and use plain RO if ready. If it was watered, record that event and actual mix instead; do not water twice."
         },
         {
             "action": "water",
-            "cycleStartedAt": "2026-09-04T00:44:00-04:00",
+            "cycleStartedAt": "2026-09-04T04:44:00Z",
             "dryReferenceGrams": 331,
             "id": "P26",
             "label": "H3",
             "latest": {
-                "at": "2026-09-13T01:22:00-04:00",
-                "grams": 329.5
+                "at": "2026-09-14T23:48:00Z",
+                "grams": 327.5
             },
-            "metricsNote": "The dry reference supports a readiness check even though a sustained plateau is not supported.",
+            "metricsNote": "Daily change uses the last two actual timestamps in this setup and watering cycle. A low rate by itself does not establish a plateau.",
             "mixId": "plain-ro",
             "name": "Eve's needle",
             "plateau": "not-supported",
             "plateauPoints": [],
             "previous": {
-                "at": "2026-09-10T23:29:00-04:00",
-                "grams": 339
+                "at": "2026-09-13T05:22:00Z",
+                "grams": 329.5
             },
             "reason": "reference",
-            "recommendation": "Check moisture as usual, then water if ready with plain RO. Keep the new-arrival establishment feeding hold in place."
+            "recommendation": "If not already watered tonight, check readiness and use plain RO if ready. If it was watered, record that event and actual mix instead; do not water twice."
         },
         {
-            "action": "water",
-            "cycleStartedAt": "2026-09-04T00:44:00-04:00",
-            "dryReferenceGrams": 353.5,
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-14T23:41:00Z",
+            "dryReferenceGrams": 350,
             "id": "P27",
             "label": "G1",
             "latest": {
-                "at": "2026-09-13T01:16:00-04:00",
-                "grams": 350
+                "at": "2026-09-14T23:44:00Z",
+                "grams": 349.5
             },
-            "metricsNote": "The plateau is based on the current-cycle tail, independently of the historical dry reference.",
-            "mixId": "plain-ro",
+            "metricsNote": "Fewer than two comparable readings in the new watering cycle; the change and daily rate are unavailable.",
+            "mixId": null,
             "name": "Black Widow",
-            "plateau": "confirmed",
-            "plateauPoints": [
-                {
-                    "at": "2026-09-09T00:12:00-04:00",
-                    "grams": 353
-                },
-                {
-                    "at": "2026-09-10T01:54:00-04:00",
-                    "grams": 351
-                },
-                {
-                    "at": "2026-09-10T23:22:00-04:00",
-                    "grams": 350.5
-                },
-                {
-                    "at": "2026-09-13T01:16:00-04:00",
-                    "grams": 350
-                }
-            ],
-            "previous": {
-                "at": "2026-09-10T23:22:00-04:00",
-                "grams": 350.5
-            },
-            "reason": "both",
-            "recommendation": "Check moisture as usual, then water if ready with plain RO. Keep the new-arrival establishment feeding hold in place."
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Water is logged tonight. Resolve the weight timing; if this was a pre-water reading, record the actual drained weight. No additional watering or feeding."
         },
         {
             "action": "check",
-            "cycleStartedAt": "2026-09-04T00:44:00-04:00",
+            "cycleStartedAt": "2026-09-04T04:44:00Z",
             "dryReferenceGrams": 336,
             "id": "P28",
             "label": "G3",
             "latest": {
-                "at": "2026-09-13T01:22:00-04:00",
-                "grams": 342
+                "at": "2026-09-14T23:47:00Z",
+                "grams": 334.5
             },
-            "metricsNote": "",
+            "metricsNote": "Daily change uses the last two actual timestamps in this setup and watering cycle. A low rate by itself does not establish a plateau.",
             "mixId": null,
             "name": "Royal Flush",
             "plateau": "not-supported",
             "plateauPoints": [],
             "previous": {
-                "at": "2026-09-10T23:28:00-04:00",
-                "grams": 351
+                "at": "2026-09-13T05:22:00Z",
+                "grams": 342
             },
             "reason": "special",
             "recommendation": "Check the inner leaves and leaf-replacement stage. Wrinkling outer leaves alone is not a reason to water or feed this split rock."
         },
         {
             "action": "weigh",
-            "cycleStartedAt": "2026-09-03T00:23:00-04:00",
+            "cycleStartedAt": "2026-09-03T04:23:00Z",
             "dryReferenceGrams": null,
             "id": "P29",
             "label": "#5",
             "latest": {
-                "at": "2026-09-13T01:32:00-04:00",
+                "at": "2026-09-13T05:32:00Z",
                 "grams": 1062
             },
-            "metricsNote": "",
+            "metricsNote": "Daily change uses the last two actual timestamps in this setup and watering cycle. A low rate by itself does not establish a plateau.",
             "mixId": null,
             "name": "Tuberculate tiger jaws",
             "plateau": "not-supported",
             "plateauPoints": [],
             "previous": {
-                "at": "2026-09-10T23:37:00-04:00",
+                "at": "2026-09-11T03:37:00Z",
                 "grams": 1078
             },
             "reason": "priority",
-            "recommendation": "Weigh to build the current setup's curve. A comparable completed dry reference is still unavailable."
+            "recommendation": "Take the next current-setup sample to assess the decline; the old dry reference is unavailable and the current curve does not support a plateau."
         },
         {
             "action": "weigh",
-            "cycleStartedAt": "2026-09-03T00:18:00-04:00",
+            "cycleStartedAt": "2026-09-03T04:18:00Z",
             "dryReferenceGrams": null,
             "id": "P30",
             "label": "#6",
             "latest": {
-                "at": "2026-09-13T01:33:00-04:00",
+                "at": "2026-09-13T05:33:00Z",
                 "grams": 406
             },
-            "metricsNote": "",
+            "metricsNote": "Daily change uses the last two actual timestamps in this setup and watering cycle. A low rate by itself does not establish a plateau.",
             "mixId": null,
             "name": "Tiny mixed succulent planter",
             "plateau": "not-supported",
             "plateauPoints": [],
             "previous": {
-                "at": "2026-09-10T23:38:00-04:00",
+                "at": "2026-09-11T03:38:00Z",
                 "grams": 408.5
             },
             "reason": "priority",
-            "recommendation": "Weigh to see whether the curve is continuing to slow. A comparable completed dry reference is still unavailable."
+            "recommendation": "Reweigh to see whether the decline has become sustained slowing. No plateau is supported yet; inspect all components and drainage before any later watering."
         }
     ],
-    "sourceReadAt": "2026-09-14T22:16:19Z",
-    "summary": "21 pots to check and water when ready. Five priority weigh-ins, three flexible samples, and one plant to check only.",
+    "sourceReadAt": "2026-09-15T02:09:40.420Z",
+    "summary": "Evening update after watering: 20 Water entries reset the old-cycle signals. H1, H2 and H3 remain eligible in the ledger; if you watered them too, record it instead of watering again. Most follow-ups now concern post-water weight timing.",
     "timeZone": "America/New_York",
     "totalPots": 30,
     "version": 1

@@ -319,6 +319,7 @@ const config = [
             "scripts/check-google-sheets-logger.mjs",
             "scripts/check-plant-booklet.mjs",
             "scripts/google-sheets/workbook-audit.mjs",
+            "scripts/analyze-drying.mjs",
             "test/booklet-client.test.mjs",
             "test/google-sheets/*.test.mjs",
         ],

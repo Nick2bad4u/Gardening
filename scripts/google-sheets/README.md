@@ -34,6 +34,62 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
+### Improved drying detector (5.23.0)
+
+Published September 14, 2026 as immutable Apps Script **version 88** at the
+existing phone URL. All three immutable source files match this release, and
+the authenticated app reports **Connected · logger 5.23.0**. Logger and AppSheet
+intake installation succeeded; intake needed no schema migration. The queue
+installer replaced one predecessor with exactly one Head trigger scheduled
+**every five minutes**, followed by a successful scheduled execution.
+
+The native backup **Garden Plant Tracker — before improved drying detector
+5.23.0 — 2026-09-14** is in **Archive → Garden Plant Tracker Backups**. A separate
+native copy rehearsed the detector formula and matched all **660 model output
+cells** for all 30 pots. Production matched the same calculations and preserved
+all **886 observations**, **886 unique Observation IDs**, **819 distinct Request
+IDs**, the checked History/AppSheet values and validations, and all **115 chart
+IDs and titles**. Integrity reports **0 formula errors**. The only direct
+workbook write reapplied the existing `Dry-down models!A2` formula; History was
+not corrected or populated with test records.
+
+Validation passed **909 unit tests**, including **765 logger tests**, and **30
+Storybook browser tests**. Logger coverage is **99.7% of lines** and **98.17% of
+branches**. Source-contract checks, types, lint, formatting, HTML, the Pages
+build, and secret scans passed. The build reused the existing validated image
+cache after a Gyazo thumbnail request returned HTTP 503.
+
+The detector evaluates a reached previous pre-water reference and a sustained
+plateau independently. Either can advance a moisture inspection; when both
+agree, the workbook and logger say so. These remain observation prompts, with
+the usual moisture and plant checks assumed before watering.
+
+- A reference crossing can qualify after two distinct current-cycle readings.
+  The starting wet weight must be meaningfully above the reference; a supposed
+  wet weight already below it instead gets a timing/reference warning.
+- Plateau evidence needs four readings at least 12 hours apart, spanning
+  2–10 days. Frequent same-day reweighs no longer displace this useful tail.
+  There is no seven-day minimum or requirement to reach zero daily loss.
+- The earlier decline must span at least a day, start at least 24 hours after
+  Water, and exceed 4 g; total measured loss must be at least 10 g. Least-squares
+  rates use all selected timestamps. Tail loss must be at most 20% of the earlier
+  rate, and its spread at most 5% of total loss, with a minimum 2 g allowance.
+  A net tail gain of up to 2 g is treated as scale noise. Renewed loss exceeding
+  2 g and 40% of the earlier rate invalidates the plateau.
+- Missing old dry or timely wet references still prevent a calibrated future
+  forecast, but do not hide a supported observed plateau. Late measured weights
+  remain available for recent-weight metrics without inventing a wet anchor.
+- A nearly unchanged pot with no demonstrated earlier decline is explicitly
+  uncertain. Unexpected gains, partial watering, invalid boundaries, estimates,
+  removed records, and setup changes retain their guards. P21 and P28 retain
+  manual decisions, and shared planters retain component/drainage checks.
+
+These thresholds are adjustable heuristics, not validated moisture cutoffs.
+History, inferred weight-state rules, and the 22-column model schema are
+unchanged. The daily task runs the same source through
+[`analyze-drying.mjs`](../analyze-drying.mjs); see its
+[snapshot contract](../../docs/daily-reports/README.md#shared-detector-analysis).
+
 ### Forecast input and guidance audit (5.22.1)
 
 Published September 13, 2026 as immutable Apps Script **version 87**, preserving
@@ -135,9 +191,9 @@ setup; the final correction-ordered record wins a timestamp tie. Estimates and
 removed rows are excluded. Missing two- or three-reading evidence stays blank.
 They describe scale observations, not water content or an automatic watering dose.
 
-A crossed completed-dry reference now advances a moisture inspection. A plateau
+In the original 5.22.0 release, a crossed completed-dry reference advanced a moisture inspection. A plateau
 can also advance that check even above an older reference. The plateau heuristic
-requires four readings spanning 3–10 days, a cycle at least seven days old,
+required four readings spanning 3–10 days, a cycle at least seven days old,
 at least 10 g of observed loss, and an earlier decline spanning at least two days
 after excluding the first 48 hours. The recent loss rate must be at most 20% of
 that earlier rate, with a four-reading range within 5% of total observed loss
@@ -146,7 +202,9 @@ These are adjustable starting criteria, not a validated moisture classifier.
 
 Neither signal rewrites dry/wet references or learns a fixed watering interval.
 The resulting date means **inspect moisture now**, conditional on the plant's
-care guidance. Missing references and partial watering withhold automatic dates.
+care guidance. That release withheld automatic dates for missing references
+and partial watering; 5.23.0 now permits supported observed plateaus without
+forecast anchors while retaining the partial-watering restriction.
 P21 retains its upper-2-inch check; P28 retains its leaf-replacement decision.
 Calendar dates use the date containing the forecast timestamp, avoiding an
 extra next-day shift from rounding a time upward.

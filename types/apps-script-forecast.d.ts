@@ -79,6 +79,15 @@ interface GardenDryDownSummary {
     window: string;
 }
 
+interface GardenInspectionEvidence {
+    earlierRate: GardenOptionalNumber;
+    inspection: string;
+    plateau: boolean;
+    referenceReached: boolean;
+    tail: DryDownRecord[];
+    tailRate: GardenOptionalNumber;
+}
+
 interface GardenLearnedDryDownCurve extends GardenDryDownCurve {
     ended: number;
 }

@@ -17617,10 +17617,20 @@
             }
 
             function forecastBasisHelp(basis) {
+                if (basis.startsWith("Reference reached + observed plateau"))
+                    return [
+                        "care",
+                        "The previous pre-watering weight has been reached and the recent readings also show a sustained slowdown. These are independent inspection clues at the latest weighing; neither proves root-zone dryness. Confirm moisture and plant readiness before watering.",
+                    ];
+                if (basis.startsWith("Recheck wet / dry anchors"))
+                    return [
+                        "caution",
+                        "The recorded post-water weight is too close to or below the previous pre-watering reference. Check whether the weights were taken before or after watering, and whether the reference still fits this setup. Record an actual drained weight when available; do not add water just to create an anchor.",
+                    ];
                 if (basis.startsWith("Observed plateau"))
                     return [
                         "care",
-                        "Several measured weights show a sustained slowdown after an earlier decline. This brings a moisture inspection forward; it does not prove the root zone is dry or replace the previous weight reference.",
+                        "Time-spaced readings show a sustained slowdown after an earlier measured decline. This can be detected before day seven and without an old dry reference. It is evidence at the latest weighing, not proof of root-zone dryness. Check moisture and plant readiness; do not wait for zero daily weight loss.",
                     ];
                 if (basis.startsWith("Previous weight reference reached"))
                     return [

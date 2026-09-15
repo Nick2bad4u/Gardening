@@ -14,7 +14,7 @@
    refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30 */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.22.1",
+    version: "5.23.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -3241,6 +3241,16 @@ const DRY_DOWN_MODEL_HEADERS = Object.freeze([
 function GARDEN_DRY_DOWN(history, plantIds) {
     // Sheets supplies a scalar for a one-cell range, even when written A1:A1.
     const ids = Array.isArray(plantIds) ? plantIds : [[plantIds]];
+    const grouped = dryDownRecordsByPlant_(history);
+    return ids
+        .filter(([id]) => cleanText_(id))
+        .map(([id]) =>
+            dryDownOutputRow_(cleanText_(id), grouped.get(cleanText_(id)) || [])
+        );
+}
+
+/** @param {GardenHistoryRow[]} history @returns {Map<string, DryDownRecord[]>} */
+function dryDownRecordsByPlant_(history) {
     /** @type {Map<string, DryDownRecord[]>} */
     const grouped = new Map();
     const correctionOrder = correctionRecordContext_(
@@ -3273,40 +3283,37 @@ function GARDEN_DRY_DOWN(history, plantIds) {
         });
         grouped.set(id, records);
     });
-    return ids
-        .filter(([id]) => cleanText_(id))
-        .map(
-            /** @returns {GardenDryDownRow} */ ([id]) => {
-                const model = dryDownModelForPlant_(
-                    grouped.get(cleanText_(id)) || []
-                );
-                const watering = wateringRecommendation_(cleanText_(id), model);
-                return [
-                    cleanText_(id),
-                    model.setup,
-                    model.dry,
-                    model.wet,
-                    model.count,
-                    model.learned,
-                    model.loss,
-                    model.date,
-                    model.early,
-                    model.late,
-                    model.basis,
-                    model.readiness,
-                    model.review,
-                    model.fit,
-                    watering.date,
-                    watering.guidance,
-                    ...model.recent,
-                    cleanText_(id) === "P28"
-                        ? "Leaf-cycle check only"
-                        : cleanText_(id) === "P21"
-                          ? "Check upper 2 in of mix"
-                          : model.inspection,
-                ];
-            }
-        );
+    return grouped;
+}
+
+/** @param {string} id @param {DryDownRecord[]} records @returns {GardenDryDownRow} */
+function dryDownOutputRow_(id, records) {
+    const model = dryDownModelForPlant_(records);
+    const watering = wateringRecommendation_(cleanText_(id), model);
+    return [
+        cleanText_(id),
+        model.setup,
+        model.dry,
+        model.wet,
+        model.count,
+        model.learned,
+        model.loss,
+        model.date,
+        model.early,
+        model.late,
+        model.basis,
+        model.readiness,
+        model.review,
+        model.fit,
+        watering.date,
+        watering.guidance,
+        ...model.recent,
+        cleanText_(id) === "P28"
+            ? "Leaf-cycle check only"
+            : cleanText_(id) === "P21"
+              ? "Check upper 2 in of mix"
+              : model.inspection,
+    ];
 }
 
 // Menu actions, scoped installers, and formula builders called by workbook-audit.mjs.
@@ -3419,7 +3426,12 @@ function dryDownCycles_(records) {
                           (r.date === wet.date && r.index >= wet.index)) &&
                       within(r)
               )
-            : [];
+            : weights.filter(
+                  (r) =>
+                      (r.date > water.date ||
+                          (r.date === water.date && r.index > water.index)) &&
+                      within(r)
+              );
         return { water, next, wet, points, dry: null, beforeDry: undefined };
     });
     const wetIndices = new Set(
@@ -3609,7 +3621,19 @@ function dryDownModelForPlant_(records) {
     model.dry = completedDry ? completedDry.weight : "";
     model.wet = current.wet ? current.wet.weight : "";
     model.count = new Set(current.points.map((p) => p.date)).size;
-    model.inspection = cycleInspection_(current.points, model.dry);
+    model.inspection = cycleInspection_(
+        current.points,
+        current.wet ? model.dry : "",
+        current.water.date
+    );
+    if (!fullWateringForForecast_(current.water)) {
+        return {
+            ...model,
+            basis: "Partial / spot watering — reweigh",
+            readiness: "Full-cycle forecast not applicable",
+            inspection: "Partial watering — inspect moisture directly",
+        };
+    }
     if (model.inspection.startsWith("Unexpected gain"))
         return {
             ...model,
@@ -3618,31 +3642,32 @@ function dryDownModelForPlant_(records) {
             review: model.inspection,
         };
     if (!current.wet)
-        return {
-            ...model,
-            basis: "Need a wet weight within 5 days",
-            readiness: "Need a wet weight within 5 days",
-        };
-    if (!fullWateringForForecast_(current.water)) {
-        return {
-            ...model,
-            basis: "Partial / spot watering — reweigh",
-            readiness: "Full-cycle forecast not applicable",
-        };
-    }
+        return (
+            observedInspectionModel_(model, current) || {
+                ...model,
+                basis: "Need a wet weight within 5 days",
+                readiness: "Need a wet weight within 5 days",
+            }
+        );
     if (!completedDry)
-        return {
-            ...model,
-            basis: "Need a completed dry cycle",
-            readiness: "Need a completed dry cycle",
-        };
+        return (
+            observedInspectionModel_(model, current) || {
+                ...model,
+                basis: "Need a completed dry cycle",
+                readiness: "Need a completed dry cycle",
+            }
+        );
     const capacity = current.wet.weight - completedDry.weight;
     if (capacity <= Math.max(5, current.wet.weight * 0.01)) {
-        return {
-            ...model,
-            basis: "Recheck wet / dry anchors",
-            readiness: "Recheck wet / dry anchors",
-        };
+        return (
+            observedInspectionModel_(model, current) || {
+                ...model,
+                basis: "Recheck wet / dry anchors",
+                readiness: "Recheck wet / dry anchors",
+                inspection:
+                    "Check wet-weight timing / reference; no reliable moisture conclusion",
+            }
+        );
     }
     const tolerance = Math.max(2, capacity * 0.05);
     const curve = fitDryDownCurve_(
@@ -3655,26 +3680,8 @@ function dryDownModelForPlant_(records) {
     model.learned = learned.length;
     const supported = usableDryDownCurve_(curve);
     model.readiness = dryDownCurrentReadiness_(curve, supported);
-    // A demonstrably low tail or a crossed reference can warrant inspection
-    // even when the old-reference exponential fit has become unusable.
-    // Neither is a root-zone moisture measurement or a new dry baseline.
-    const inspect = model.inspection.startsWith("Inspect now");
-    if (inspect && !curve.gain) {
-        const latest = current.points.at(-1);
-        if (latest) {
-            return {
-                ...model,
-                date: latest.date,
-                early: latest.date,
-                late: latest.date + 1,
-                basis: model.inspection.includes("plateau")
-                    ? "Observed plateau — inspect moisture"
-                    : "Previous weight reference reached — inspect moisture",
-                readiness: "Inspection supported by current weights",
-                review: "OK",
-            };
-        }
-    }
+    const inspection = observedInspectionModel_(model, current);
+    if (inspection) return inspection;
     if (dryDownCurveContradicts_(curve)) {
         return {
             ...model,
@@ -3699,6 +3706,33 @@ function dryDownModelForPlant_(records) {
         tolerance,
         supported
     );
+}
+
+/**
+ * Observation-based inspection can stand without a calibrated future forecast.
+ * All callers have already rejected partial waterings and unexpected gains.
+ * @param {GardenDryDownModel} model
+ * @param {GardenDryDownCycle} current
+ * @returns {GardenDryDownModel | null}
+ */
+function observedInspectionModel_(model, current) {
+    const latest = current.points.at(-1);
+    if (!latest || !model.inspection.startsWith("Inspect now")) return null;
+    const both = model.inspection.includes("reference +");
+    const plateau = model.inspection.includes("plateau");
+    return {
+        ...model,
+        date: latest.date,
+        early: latest.date,
+        late: latest.date + 1,
+        basis: both
+            ? "Reference reached + observed plateau — inspect moisture"
+            : plateau
+              ? "Observed plateau — inspect moisture"
+              : "Previous weight reference reached — inspect moisture",
+        readiness: "Inspection supported by current weights",
+        review: "OK",
+    };
 }
 
 /**
@@ -3731,68 +3765,154 @@ function recentWeightMetrics_(points) {
 
 /**
  * Practical inspection heuristic, not a validated soil-moisture classifier.
- * A plateau needs four readings over 3-10 days, a cycle at least 7 days old,
- * substantial measured loss, and <=20% of the earlier post-drainage loss rate.
- * Its four-reading range must fit within 5% of the observed cycle loss (2 g
- * minimum noise allowance). Ignore the first 48 hours for the earlier rate.
- * No single grams/day cutoff and no automatic changes to dry/wet anchors.
+ * Independent reference and plateau evidence at the latest observation.
+ * Four time-spaced tail readings span 2-10 days, after a measured earlier
+ * decline of at least a day beginning 24 hours after watering. There is no
+ * seven-day lockout. The 2 g allowance is measurement noise, not a dry cutoff.
  * @param {DryDownRecord[]} points
  * @param {GardenOptionalNumber} dry
+ * @param {number} [waterDate]
  * @returns {string}
  */
-function cycleInspection_(points, dry) {
-    const unique = [...new Map(points.map((p) => [p.date, p])).values()].sort(
-        (a, b) => a.date - b.date
-    );
+function cycleInspection_(points, dry, waterDate) {
+    return cycleInspectionEvidence_(points, dry, waterDate).inspection;
+}
+
+/**
+ * @param {DryDownRecord[]} points
+ * @param {GardenOptionalNumber} dry
+ * @param {number} [waterDate]
+ * @returns {GardenInspectionEvidence}
+ */
+function cycleInspectionEvidence_(points, dry, waterDate) {
+    const unique = [
+        ...new Map(
+            points
+                .filter(
+                    (p) =>
+                        Number.isFinite(p.date) &&
+                        p.date > 0 &&
+                        Number.isFinite(p.weight) &&
+                        p.weight > 0 &&
+                        !p.estimated
+                )
+                .map((p) => [p.date, p])
+        ).values(),
+    ].sort((a, b) => a.date - b.date);
     const first = unique[0];
     const latest = unique.at(-1);
-    if (!first || !latest || unique.length < 3)
-        return "Collecting current-cycle readings";
+    /** @type {GardenInspectionEvidence} */
+    const evidence = {
+        referenceReached: false,
+        plateau: false,
+        earlierRate: "",
+        tailRate: "",
+        tail: [],
+        inspection: "Collecting current-cycle readings",
+    };
+    if (!first || !latest || unique.length < 2) return evidence;
+    const noise = 2;
     const gained = unique.some((p, index) => {
         const previous = unique[index - 1];
-        return previous && p.weight - previous.weight > 2;
+        return previous && p.weight - previous.weight > noise;
     });
-    if (gained) return "Unexpected gain — check setup";
-    if (typeof dry === "number" && latest.weight <= dry)
-        return "Inspect now — previous reference reached";
-    const tail = unique.slice(-4);
+    if (gained)
+        return { ...evidence, inspection: "Unexpected gain — check setup" };
+    // A reference already above the first post-water reading cannot establish
+    // a current-cycle crossing. It may be stale or the wet weight mistimed.
+    evidence.referenceReached =
+        typeof dry === "number" &&
+        Number.isFinite(dry) &&
+        dry > 0 &&
+        first.weight - dry > Math.max(5, first.weight * 0.01) &&
+        latest.weight <= dry;
+    // Frequent same-day reweighs must not displace the useful multi-day tail.
+    /** @type {DryDownRecord[]} */
+    const tail = [];
+    for (const point of unique.slice().reverse()) {
+        const newer = tail[0];
+        if (!newer || newer.date - point.date >= 0.5) tail.unshift(point);
+        if (tail.length === 4) break;
+    }
+    evidence.tail = tail;
     const tailFirst = tail[0];
-    if (!tailFirst) return "Collecting current-cycle readings";
+    if (!tailFirst) return evidence;
     const span = latest.date - tailFirst.date;
     const early = unique.filter(
-        (p) => p.date >= first.date + 2 && p.date <= tailFirst.date
+        (p) =>
+            p.date >= (waterDate ?? first.date) + 1 && p.date <= tailFirst.date
     );
     const earlyFirst = early[0];
     const earlyLast = early.at(-1);
     const totalLoss = first.weight - latest.weight;
     if (
-        tail.length < 4 ||
-        span < 3 ||
-        span > 10 ||
-        latest.date - first.date < 7 ||
-        totalLoss < 10 ||
-        !earlyFirst ||
-        !earlyLast ||
-        earlyLast.date - earlyFirst.date < 2
-    )
-        return "Drying — follow weight and moisture";
-    const earlyRate =
-        (earlyFirst.weight - earlyLast.weight) /
-        (earlyLast.date - earlyFirst.date);
-    const tailRate = (tailFirst.weight - latest.weight) / span;
-    const spread =
-        Math.max(...tail.map((p) => p.weight)) -
-        Math.min(...tail.map((p) => p.weight));
-    if (
-        earlyRate > 0 &&
-        tailRate >= 0 &&
-        tailRate <= earlyRate * 0.2 &&
-        spread <= Math.max(2, totalLoss * 0.05)
-    )
-        return typeof dry === "number"
-            ? "Inspect now — sustained plateau"
-            : "Plateau — inspect; dry reference unavailable";
-    return "Drying — follow weight and moisture";
+        tail.length === 4 &&
+        span >= 2 &&
+        span <= 10 &&
+        totalLoss >= noise * 5 &&
+        earlyFirst &&
+        earlyLast &&
+        earlyLast.date - earlyFirst.date >= 1 &&
+        earlyFirst.weight - earlyLast.weight > noise * 2
+    ) {
+        const earlyRate = measuredLossRate_(early);
+        const tailRate = measuredLossRate_(tail);
+        evidence.earlierRate = earlyRate;
+        evidence.tailRate = tailRate;
+        const spread =
+            Math.max(...tail.map((p) => p.weight)) -
+            Math.min(...tail.map((p) => p.weight));
+        const previous = unique.findLast((p) => latest.date - p.date >= 0.5);
+        const renewedLoss =
+            previous &&
+            previous.weight - latest.weight > noise &&
+            (previous.weight - latest.weight) / (latest.date - previous.date) >
+                earlyRate * 0.4;
+        evidence.plateau =
+            earlyRate > 0 &&
+            !renewedLoss &&
+            tailFirst.weight - latest.weight >= -noise &&
+            Math.max(0, tailRate) <= earlyRate * 0.2 &&
+            spread <= Math.max(noise, totalLoss * 0.05);
+    }
+    evidence.inspection =
+        evidence.referenceReached && evidence.plateau
+            ? "Inspect now — previous reference + sustained plateau"
+            : evidence.referenceReached
+              ? "Inspect now — previous reference reached"
+              : evidence.plateau
+                ? "Inspect now — sustained plateau"
+                : totalLoss <= noise
+                  ? "Little measured change — inspect moisture; dryness unconfirmed"
+                  : "No sustained plateau yet — follow weight and moisture";
+    return evidence;
+}
+
+/**
+ * Least-squares loss rate uses every timestamp and its actual elapsed time.
+ * @param {DryDownRecord[]} points
+ * @returns {number}
+ */
+function measuredLossRate_(points) {
+    const first = points[0];
+    if (!first || points.length < 2) return 0;
+    const meanTime =
+        points.reduce((sum, p) => sum + p.date - first.date, 0) / points.length;
+    const meanWeight =
+        points.reduce((sum, p) => sum + p.weight, 0) / points.length;
+    const variance = points.reduce(
+        (sum, p) => sum + (p.date - first.date - meanTime) ** 2,
+        0
+    );
+    if (variance === 0) return 0;
+    return (
+        -points.reduce(
+            (sum, p) =>
+                sum +
+                (p.date - first.date - meanTime) * (p.weight - meanWeight),
+            0
+        ) / variance
+    );
 }
 
 /** @param {GardenDryDownCurve} curve @param {boolean} supported @returns {string} */

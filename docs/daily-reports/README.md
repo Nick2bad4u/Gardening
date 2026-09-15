@@ -36,6 +36,33 @@ recalculate the workbook's plateau predicate, infer plant readiness from one
 weight, or decide which pots need fertilizer. The daily task must review fresh
 sources first and preserve the current model's eligibility and setup rules.
 
+## Shared detector analysis
+
+Run the current Apps Script detector locally before authoring a fresh report:
+
+```powershell
+node scripts/analyze-drying.mjs .cache/current-history.json > .cache/current-drying.json
+```
+
+The input contains `readAt` (the actual source-read instant with a timezone),
+`plantIds` (the freshly verified active P-ID list), and `history` (the bounded
+canonical History values, including headers, read with `UNFORMATTED_VALUE`).
+Keep this private snapshot in `.cache`; do not publish the ledger or its IDs.
+Columns are matched by their unique names, not guessed positions.
+
+The output includes the detector version, the unchanged 22-field model row,
+current-cycle points, independent reference/plateau evidence, selected tail,
+and `inspectionSupported`. Numeric dates remain Sheets serials in the workbook
+timezone. Use `inspectionSupported` and the model's validity/manual guards
+before turning raw evidence into a recommendation. P21/P28, partial watering,
+newer Water records, setup changes, and moisture/condition exceptions still
+control the final action. Nutrient decisions remain a separate source review.
+
+This analyzer evaluates only the checked-in Apps Script; imported cells are
+data. It preserves the workbook's correction ordering, estimates/removed-row
+rules, cycle boundaries, and numerical predicate so the daily task does not
+maintain a second plateau algorithm. It does not access or write live services.
+
 ## Input contract
 
 Use the checked-in dated input as a **shape example**, never as fresh evidence.
