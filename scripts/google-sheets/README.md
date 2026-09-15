@@ -47,7 +47,8 @@ The native backup **Garden Plant Tracker — before current-time logger fix
 Production verification preserved all **886 observations**, **886 unique
 Observation IDs**, **819 distinct Request IDs**, all **115 chart IDs and
 titles**, and the checked History, model, and AppSheet cells. Integrity still
-reports **0 formula errors**. Historical Water times remain unchanged.
+reports **0 formula errors**. That deployment left historical Water times
+unchanged; the separate owner-confirmed correction below followed afterward.
 
 Validation passed **923 unit tests**, including **779 logger tests** and 14 new
 timing regressions. Logger server coverage remains **99.7% of lines** and
@@ -70,6 +71,22 @@ saved the observation.
 This interface fix does not rewrite historical event times or change the
 drying detector. Correct an affected Water event using its actual care time;
 retain valid pre-water measurements in their original sequence.
+
+### September 14 watering-time correction
+
+On September 15, the owner confirmed that the September 14 watering followed
+the weigh-ins and occurred at approximately **8:30 p.m. Eastern**. The native
+backup **Garden Plant Tracker — before September 14 watering-time correction
+to 8:30 PM — 2026-09-15** is in **Archive → Garden Plant Tracker Backups**.
+
+Only `History!A866:A883` and `A886:A887` changed: the 20 active Water events for
+P01–P18, P23 and P27 moved from 7:41 p.m. to 8:30 p.m. The earlier scale readings,
+Recorded times, nutrients, provenance, removed originals, formulas, date formats
+and validations matched the backup. All 886 observations, 886 unique Observation
+IDs, 819 distinct Request IDs and 115 charts remain present, with zero formula
+errors. The model now correctly awaits a drained weight for each of these pots;
+none of their pre-water readings acts as the new wet reference. The September 14
+report records the correction and preserves its original report date.
 
 ### Improved drying detector (5.23.0)
 
