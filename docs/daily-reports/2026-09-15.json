@@ -1,26 +1,18 @@
 {
     "coverage": "complete",
     "date": "2026-09-15",
-    "generatedAt": "2026-09-15T20:54:14.314Z",
-    "mixes": [
-        {
-            "condition": "Plain RO — no nutrients. Water only when the usual moisture and plant-readiness check confirms readiness.",
-            "gramsPerGallon": null,
-            "id": "plain-ro",
-            "name": "Plain RO",
-            "product": "Plain reverse-osmosis water; no fertilizer or additives",
-            "rationale": "H1, H2 and H3 last received plain RO on September 4 and have no newer Water record. Their replacement medium and healthy active establishment remain unconfirmed, so feeding is not supported yet. Coconut Crystal retains its later occasional lighter-feeding rule; no fertilizer is recommended for it today."
-        }
-    ],
+    "generatedAt": "2026-09-15T22:36:51.240Z",
+    "mixes": [],
     "notes": [
         "Afternoon refresh: all 30 pots were reviewed against the live workbook read at 4:49 p.m. Eastern on September 15. Twenty-five new measured weights were saved from approximately 4:20 to 4:37 p.m.; no new Water events were present.",
         "All 20 pots watered September 14 now have their first post-water weights: A1–F3, G1 and G2. Their missing-baseline follow-ups are complete. No repeat weighing or watering is requested for them tonight.",
         "The new baselines were taken about 20 hours after the September 14 watering at approximately 8:30 p.m. They are the first observed weights in this cycle, not immediate after-soak measurements. Retain that elapsed time when comparing wet references between cycles.",
         "Five weigh-ins remain for tonight: #1, #2, #3, #5 and #6. #3 needs its first post-water weight; #5 and #6 need fresh curve evidence. #1 and #2 are lower-priority flexible samples that were already due today.",
-        "H1, H2 and H3 remain Check / Water candidates through reached dry references. No current curve meets the sustained-plateau criteria. H3 has one unchanged interval; that alone does not establish a plateau.",
+        "H1, H2 and H3 have reached their historical dry references, but their plateaus are not yet supported. They are excluded from Water. H3 has one unchanged interval; that alone does not establish a sustained plateau. Reweigh these three tomorrow afternoon, September 16, to extend their time-spaced curves; no additional weight is requested for them tonight.",
         "G3 was weighed today and remains Check only because its leaf cycle controls watering. #4 was also weighed: 851 g is 10 g above its dry reference. No repeat weight is needed tonight; reweigh September 16 within its September 15–17 observation window.",
-        "Watering candidates use plain RO without nutrients. Record a comparable post-drain weight only for pots actually watered. These conditional measurements are separate from the five unfinished weigh-ins.",
-        "All live model cells match the shared detector. No active trend-review flags, duplicate Observation IDs or formula errors were found. The three remaining calibration gaps are #3 without a wet reference and #5/#6 without completed dry references."
+        "No watering recipe is needed from this review. If a pot is actually watered after a separate readiness decision, record its Water event and a comparable post-drain weight so later reports use the new cycle.",
+        "All live model cells match the shared detector. No active trend-review flags, duplicate Observation IDs or formula errors were found. The three remaining calibration gaps are #3 without a wet reference and #5/#6 without completed dry references.",
+        "Classification updated September 15 to require confirmed plateau evidence for Water. Measurements and source-read time remain the September 15, 4:49 p.m. Eastern snapshot; this policy update is not a new workbook review."
     ],
     "pots": [
         {
@@ -470,7 +462,7 @@
             "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "water",
+            "action": "reference",
             "cycleStartedAt": "2026-09-04T04:44:00Z",
             "dryReferenceGrams": 331.5,
             "id": "P24",
@@ -479,8 +471,8 @@
                 "at": "2026-09-15T20:33:37.342Z",
                 "grams": 326
             },
-            "metricsNote": "Last recorded Water: September 4, plain RO. Replacement medium and healthy active establishment remain unconfirmed. Its later occasional 0.50 g/US gal MSU rule does not apply to this session.",
-            "mixId": "plain-ro",
+            "metricsNote": "Last recorded Water: September 4, plain RO. Replacement medium and healthy active establishment remain unconfirmed. Its later occasional lighter-feeding rule is unchanged; no watering or nutrient session is recommended today.",
+            "mixId": null,
             "name": "Coconut Crystal (seller-labeled Sempervivum 'Coconut Crystal')",
             "plateau": "not-supported",
             "plateauPoints": [],
@@ -489,10 +481,10 @@
                 "grams": 329
             },
             "reason": "reference",
-            "recommendation": "Check readiness and water with plain RO if ready. The new reading remains below the dry reference. Record a comparable post-drain weight if watered; another pre-water reading is not needed tonight."
+            "recommendation": "Hold watering: the historical dry reference is reached, but a sustained plateau is not confirmed. Reweigh tomorrow afternoon, September 16, to extend the curve. No repeat weighing is needed tonight."
         },
         {
-            "action": "water",
+            "action": "reference",
             "cycleStartedAt": "2026-09-04T04:44:00Z",
             "dryReferenceGrams": 319,
             "id": "P25",
@@ -501,8 +493,8 @@
                 "at": "2026-09-15T20:33:49.738Z",
                 "grams": 316.5
             },
-            "metricsNote": "Last recorded Water: September 4, plain RO. Replacement medium and healthy active establishment remain unconfirmed, so this session stays plain RO. The low latest loss rate does not by itself establish a sustained plateau.",
-            "mixId": "plain-ro",
+            "metricsNote": "Last recorded Water: September 4, plain RO. Replacement medium and healthy active establishment remain unconfirmed. The low latest loss rate does not by itself establish a sustained plateau.",
+            "mixId": null,
             "name": "Raindrops (seller-labeled Echeveria 'Raindrops')",
             "plateau": "not-supported",
             "plateauPoints": [],
@@ -511,10 +503,10 @@
                 "grams": 317
             },
             "reason": "reference",
-            "recommendation": "Check readiness and water with plain RO if ready. The new reading remains below the dry reference. Record a comparable post-drain weight if watered; another pre-water reading is not needed tonight."
+            "recommendation": "Hold watering: the historical dry reference is reached, but a sustained plateau is not confirmed. Reweigh tomorrow afternoon, September 16, to extend the curve. No repeat weighing is needed tonight."
         },
         {
-            "action": "water",
+            "action": "reference",
             "cycleStartedAt": "2026-09-04T04:44:00Z",
             "dryReferenceGrams": 331,
             "id": "P26",
@@ -523,8 +515,8 @@
                 "at": "2026-09-15T20:20:37.174Z",
                 "grams": 327.5
             },
-            "metricsNote": "The last two readings are unchanged over about 0.86 days, but the longer curve does not yet support a sustained plateau. Last recorded Water: September 4, plain RO. Establishment and replacement medium remain unconfirmed, so use plain RO.",
-            "mixId": "plain-ro",
+            "metricsNote": "The last two readings are unchanged over about 0.86 days, but the longer curve does not yet support a sustained plateau. Last recorded Water: September 4, plain RO. Establishment and replacement medium remain unconfirmed.",
+            "mixId": null,
             "name": "Eve's needle",
             "plateau": "not-supported",
             "plateauPoints": [],
@@ -533,7 +525,7 @@
                 "grams": 327.5
             },
             "reason": "reference",
-            "recommendation": "Check readiness and water with plain RO if ready. The new reading remains below the dry reference. Record a comparable post-drain weight if watered; another pre-water reading is not needed tonight."
+            "recommendation": "Hold watering: the historical dry reference is reached, but a sustained plateau is not confirmed. Reweigh tomorrow afternoon, September 16, to extend the curve. No repeat weighing is needed tonight."
         },
         {
             "action": "none",
@@ -622,8 +614,8 @@
         }
     ],
     "sourceReadAt": "2026-09-15T20:49:52.824Z",
-    "summary": "Afternoon update: 25 new weights recorded. All 20 missing baselines from last night are complete. Five weigh-ins remain for tonight; H1, H2 and H3 still qualify for Check / Water with plain RO, and G3 remains Check only.",
+    "summary": "No Water candidates: no sustained plateau is confirmed. H1, H2 and H3 have reached their historical dry references and now wait in a separate monitoring group. Five weigh-ins remain for tonight; 20 post-water baselines are complete.",
     "timeZone": "America/New_York",
     "totalPots": 30,
-    "version": 1
+    "version": 2
 }

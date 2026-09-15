@@ -29,11 +29,6 @@ const outputPath = path.join(
 /** @type {[string, string, string][]} */
 const reasonGroups = [
     [
-        "reference",
-        "Dry reference reached",
-        "The reference has been reached while the curve continues declining.",
-    ],
-    [
         "both",
         "Reference reached + plateau",
         "Two independent signals support a readiness check.",
@@ -42,6 +37,11 @@ const reasonGroups = [
         "plateau",
         "A sustained plateau",
         "The recent curve has flattened, even above an older reference.",
+    ],
+    [
+        "reference",
+        "Dry reference reached — waiting for plateau",
+        "The historical reference is reached, but a sustained plateau is not confirmed. Hold watering; these pots are separate from the Water list.",
     ],
     [
         "priority",
@@ -83,9 +83,7 @@ function chips(pots) {
 /** @param {ReportPot} pot */
 function groupFor(pot) {
     if (pot.action === "water")
-        return ["both", "reference"].includes(pot.reason)
-            ? pot.reason
-            : "plateau";
+        return pot.reason === "both" ? "both" : "plateau";
     if (pot.action === "weigh")
         return pot.reason === "flexible" ? "flexible" : "priority";
     if (pot.action === "check") return "special";
@@ -262,12 +260,22 @@ function quickList(report, pots, isCompact = false) {
     if (pots.every((pot) => pot.action !== "water"))
         rows.push(
             row(
-                "Check / water",
+                "Water",
                 "💧",
                 [],
                 report.coverage === "complete"
-                    ? "No watering candidates today."
+                    ? "No watering candidates with a confirmed plateau today."
                     : "No watering decision established for the unresolved pots."
+            )
+        );
+    const reference = pots.filter((pot) => pot.action === "reference");
+    if (reference.length > 0)
+        rows.push(
+            row(
+                "Dry reference only",
+                "⏳",
+                reference,
+                "Reference reached; plateau unconfirmed. Hold watering."
             )
         );
     rows.push(
@@ -297,6 +305,7 @@ function quickList(report, pots, isCompact = false) {
     const actionCount = pots.filter((pot) =>
         [
             "check",
+            "reference",
             "water",
             "weigh",
         ].includes(pot.action)

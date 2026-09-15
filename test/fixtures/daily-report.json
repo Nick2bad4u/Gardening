@@ -10,14 +10,6 @@
             "gramsPerGallon": 0.75,
             "condition": "Only with healthy roots and visible compact growth. Otherwise use plain RO.",
             "rationale": "These established starter and cactus pots last received plain RO. This is a conditional feeding opportunity at the next necessary watering, not a reason to water early."
-        },
-        {
-            "id": "plain-ro",
-            "name": "Plain RO",
-            "product": "Reverse-osmosis water · no nutrients",
-            "gramsPerGallon": null,
-            "condition": "Continue the new-arrival establishment hold.",
-            "rationale": "G1, G2, H1, H2, and H3 remain on plain RO while establishing. H1's later occasional 0.50 g/gal rule does not apply to this session."
         }
     ],
     "notes": [
@@ -125,7 +117,7 @@
             "recommendation": "No action in this test fixture."
         },
         {
-            "action": "water",
+            "action": "reference",
             "cycleStartedAt": "2026-08-26T16:22:00-04:00",
             "dryReferenceGrams": 388.5,
             "id": "P08",
@@ -135,7 +127,7 @@
                 "grams": 382.5
             },
             "metricsNote": "The dry reference supports a readiness check even though a sustained plateau is not supported.",
-            "mixId": "msu",
+            "mixId": null,
             "name": "Rainbow hedgehog cactus",
             "plateau": "not-supported",
             "plateauPoints": [],
@@ -144,7 +136,7 @@
                 "grams": 385
             },
             "reason": "reference",
-            "recommendation": "Check moisture as usual, then water if ready. Use dilute MSU only with healthy roots and visible compact growth; otherwise use plain RO."
+            "recommendation": "Hold watering: the reference is reached but a sustained plateau is unconfirmed. Follow the next useful weighing window."
         },
         {
             "action": "weigh",
@@ -192,5 +184,5 @@
     "summary": "Generator test fixture; not a care report.",
     "timeZone": "America/New_York",
     "totalPots": 6,
-    "version": 1
+    "version": 2
 }

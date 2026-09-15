@@ -177,8 +177,9 @@
                     ></div
                 >
                 <p class="readiness"
-                    >Water these if your usual moisture/readiness check confirms
-                    they are ready.</p
+                    >Water candidates have a confirmed plateau; water only if
+                    your usual moisture/readiness check confirms they are ready.
+                    Dry-reference-only pots stay out of the Water list.</p
                 >
                 {{QUICK_LIST}}
                 <p class="after-water"
@@ -260,6 +261,12 @@
                         >
                         <button
                             type="button"
+                            data-filter="reference"
+                            aria-pressed="false"
+                            >⏳ Dry reference only</button
+                        >
+                        <button
+                            type="button"
                             data-filter="weigh"
                             aria-pressed="false"
                             >⚖️ Weigh</button
@@ -323,8 +330,10 @@
                 ><h2 id="pocket-heading">Your pocket list</h2
                 ><div class="pocket-conditions"
                     ><p
-                        >Water only when your usual readiness check confirms it.
-                        Weigh pots you actually water after draining.</p
+                        >⏳ Dry reference only means hold watering while plateau
+                        evidence is unconfirmed. Water candidates still need
+                        your usual readiness check. Weigh pots you actually
+                        water after draining.</p
                     >{{POCKET_MIXES}}</div
                 >{{POCKET_LIST}}</section
             >

@@ -599,6 +599,10 @@ h1 {
     color: var(--blue);
     background: var(--blue-soft);
 }
+.pot-card[data-action="reference"] .reason-badge {
+    color: var(--amber);
+    background: var(--amber-soft);
+}
 .card-rate {
     flex: 0 0 48px;
     align-self: start;

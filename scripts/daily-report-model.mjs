@@ -6,6 +6,7 @@ const millisecondsPerDay = 86_400_000;
 const actions = new Set([
     "check",
     "none",
+    "reference",
     "unresolved",
     "water",
     "weigh",
@@ -109,6 +110,15 @@ function validateAction(pot, mixIds) {
     const reason = textValue(pot["reason"], "reason");
     if (!actions.has(action) || !plateauStates.has(String(pot["plateau"])))
         throw new TypeError("Invalid action or plateau status.");
+    if (action === "water" && pot["plateau"] !== "confirmed")
+        throw new TypeError("Watering requires a confirmed plateau.");
+    if (action === "reference") {
+        if (reason !== "reference" || pot["plateau"] === "confirmed")
+            throw new TypeError(
+                "Reference-only actions need a reached reference without a confirmed plateau."
+            );
+        validateReachedReference(pot);
+    }
     if (action !== "water") {
         if (pot["mixId"] !== null)
             throw new TypeError("Only watering actions may prescribe a mix.");
@@ -118,31 +128,9 @@ function validateAction(pot, mixIds) {
     }
     if (!mixIds.has(pot["mixId"]))
         throw new TypeError("Every watering pot needs one mix.");
-    if (
-        ![
-            "both",
-            "plateau",
-            "reference",
-        ].includes(reason)
-    )
-        throw new TypeError("Watering needs a reference or plateau reason.");
-    if (["both", "plateau"].includes(reason) && pot["plateau"] !== "confirmed")
-        throw new TypeError("A plateau reason requires confirmed evidence.");
-    const latest = weight(pot["latest"], "latest");
-    if (
-        (latest === null ||
-            pot["dryReferenceGrams"] === null ||
-            latest.grams >
-                finiteNumber(pot["dryReferenceGrams"], "dryReferenceGrams")) &&
-        ["both", "reference"].includes(reason)
-    )
-        throw new TypeError(
-            "A reference reason requires reaching the dry reference."
-        );
-    if (reason === "reference" && pot["plateau"] === "confirmed")
-        throw new TypeError(
-            "Use both when both independent signals are confirmed."
-        );
+    if (!["both", "plateau"].includes(reason))
+        throw new TypeError("Watering needs a plateau or both reason.");
+    if (reason === "both") validateReachedReference(pot);
 }
 /**
  * @param {unknown} coverage @param {number | null} total @param {number} count
@@ -189,11 +177,11 @@ function validateMeasurements(pot, readAt) {
         );
     validatePlateau(pot, start, latest);
     if (
-        pot["action"] === "water" &&
+        ["reference", "water"].includes(String(pot["action"])) &&
         (latest === null || start === null || instant(latest.at) < start)
     )
         throw new TypeError(
-            "Watering evidence must belong to the current cycle."
+            "Watering and reference evidence must belong to the current cycle."
         );
 }
 /** @param {unknown} input */
@@ -283,6 +271,19 @@ function validatePots(input, mixIds, readAt) {
     }
     return pots;
 }
+/** @param {Record<string, unknown>} pot */
+function validateReachedReference(pot) {
+    const latest = weight(pot["latest"], "latest");
+    if (
+        latest === null ||
+        pot["dryReferenceGrams"] === null ||
+        latest.grams >
+            finiteNumber(pot["dryReferenceGrams"], "dryReferenceGrams")
+    )
+        throw new TypeError(
+            "A reference reason requires reaching the dry reference."
+        );
+}
 
 /** @param {unknown} input @returns {DailyReport} */
 function validateReport(input) {
@@ -293,7 +294,7 @@ function validateReport(input) {
         Temporal.PlainDate.from(date).toString() !== date
     )
         throw new TypeError("Report date must be a real YYYY-MM-DD date.");
-    if (report["version"] !== 1 || report["timeZone"] !== "America/New_York")
+    if (report["version"] !== 2 || report["timeZone"] !== "America/New_York")
         throw new TypeError("Unsupported daily-report version or time zone.");
     const generated = instant(report["generatedAt"], "generatedAt");
     const coverage = report["coverage"];

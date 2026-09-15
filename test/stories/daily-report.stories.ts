@@ -45,7 +45,15 @@ export const SearchFiltersAndEvidence: Story = {
         await userEvent.click(canvas.getByRole("button", { name: "💧 Water" }));
         await expect(
             document.querySelectorAll(visibleCardsSelector)
-        ).toHaveLength(3);
+        ).toHaveLength(2);
+        await userEvent.click(
+            canvas.getByRole("button", { name: "⏳ Dry reference only" })
+        );
+        await expect(document.querySelector("#pot-P08 summary")).toBeVisible();
+        await expect(
+            document.querySelectorAll(visibleCardsSelector)
+        ).toHaveLength(1);
+        await userEvent.click(canvas.getByRole("button", { name: "💧 Water" }));
         const search = canvas.getByRole("searchbox");
         await userEvent.type(search, "A1");
         await expect(
@@ -157,7 +165,9 @@ export const CopyAndPrint: Story = {
                 "Quick list copied."
             )
         );
-        await expect(copied).toContain("A1, A3, C2");
+        await expect(copied).toContain("A1, A3");
+        await expect(copied).not.toContain("A1, A3, C2");
+        await expect(copied).toContain("Dry reference only: C2");
         await expect(copied).toContain("Nothing today: B3");
         Object.defineProperty(view.navigator, "clipboard", {
             configurable: true,

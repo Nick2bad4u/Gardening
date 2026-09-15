@@ -19,7 +19,7 @@ be available for the local task to complete.
 
 - `YYYY-MM-DD.json` holds the reviewed public report for that Eastern date.
   Historical inputs stay in this directory; Git also records same-day revisions.
-- [Report types](../../types/daily-report.d.ts) define the version 1 input.
+- [Report types](../../types/daily-report.d.ts) define the version 2 input.
 - [Validation and calculations](../../scripts/daily-report-model.mjs) check
   coverage, identifiers, timestamps, current-cycle intervals, plateau tails,
   and watering-reason/mix consistency. They calculate the last-two change per
@@ -35,6 +35,18 @@ The generator formats reviewed decisions. It does not access private accounts,
 recalculate the workbook's plateau predicate, infer plant readiness from one
 weight, or decide which pots need fertilizer. The daily task must review fresh
 sources first and preserve the current model's eligibility and setup rules.
+
+Since September 15, **Water requires a confirmed sustained plateau** as well as
+the existing validity and plant-specific guards. A dry-reference hit without a
+confirmed plateau belongs in **⏳ Dry reference reached — waiting for plateau**,
+with no watering recipe. The quick list, filter, and amber card badge keep these
+pots separate from Water and Nothing today. The usual moisture/readiness check
+still applies to Water candidates. Plateau evidence does not prove dry soil.
+
+Version 2 enforces this distinction during validation. Archived version 1 inputs
+retain the decisions made under the previous policy; they are not valid inputs
+for the current generator without a reviewed policy migration. Do not rewrite
+historical observations or label a policy-only revision as a fresh workbook read.
 
 ## Shared detector analysis
 
@@ -73,7 +85,7 @@ private notes, or raw ledger dumps.
 
 | Field                         | Meaning                                                                                          |
 | ----------------------------- | ------------------------------------------------------------------------------------------------ |
-| `version`, `timeZone`         | `1`, `America/New_York`                                                                          |
+| `version`, `timeZone`         | `2`, `America/New_York`                                                                          |
 | `date`                        | Report's Eastern date, matching its filename                                                     |
 | `generatedAt`, `sourceReadAt` | Actual ISO timestamps with explicit offsets; source time is `null` when unavailable              |
 | `coverage`, `totalPots`       | `complete`, `partial`, or `unavailable`; current inventory total, or `null` if unknown           |
@@ -88,17 +100,17 @@ the type and generator before supporting a different dosing unit.
 
 Each pot has these additional fields:
 
-| Field                           | Meaning                                                                                                            |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `action`                        | `water`, `weigh`, `check`, `none`, or `unresolved`                                                                 |
-| `reason`                        | Water: `reference`, `plateau`, or `both`; weigh: `priority` or `flexible`; other actions: their descriptive reason |
-| `mixId`                         | A defined mix for a watering candidate; `null` for every other action                                              |
-| `recommendation`, `metricsNote` | Practical action and any evidence limitation                                                                       |
-| `latest`, `previous`            | `{ "at": "ISO timestamp with offset", "grams": 123.5 }`, or `null` when unavailable                                |
-| `cycleStartedAt`                | Actual current watering/setup boundary, or `null` if unknown                                                       |
-| `dryReferenceGrams`             | Comparable completed reference, or `null`; never substitute zero for missing                                       |
-| `plateau`                       | `confirmed`, `not-supported`, or `unavailable`                                                                     |
-| `plateauPoints`                 | Four chronological, eligible current-cycle measurements for a confirmed plateau; the last must equal `latest`      |
+| Field                           | Meaning                                                                                                                           |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `action`                        | `water`, `reference`, `weigh`, `check`, `none`, or `unresolved`                                                                   |
+| `reason`                        | Water: `plateau` or `both`; reference-only: `reference`; weigh: `priority` or `flexible`; other actions: their descriptive reason |
+| `mixId`                         | A defined mix for a watering candidate; `null` for every other action                                                             |
+| `recommendation`, `metricsNote` | Practical action and any evidence limitation                                                                                      |
+| `latest`, `previous`            | `{ "at": "ISO timestamp with offset", "grams": 123.5 }`, or `null` when unavailable                                               |
+| `cycleStartedAt`                | Actual current watering/setup boundary, or `null` if unknown                                                                      |
+| `dryReferenceGrams`             | Comparable completed reference, or `null`; never substitute zero for missing                                                      |
+| `plateau`                       | `confirmed`, `not-supported`, or `unavailable`                                                                                    |
+| `plateauPoints`                 | Four chronological, eligible current-cycle measurements for a confirmed plateau; the last must equal `latest`                     |
 
 If the latest observed weight predates a new watering, it may be shown as
 context with a clear `metricsNote`, but `previous` must be `null`. It cannot

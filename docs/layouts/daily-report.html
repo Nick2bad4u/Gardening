@@ -111,11 +111,11 @@
                     <h1>Your garden,<br /><span>one good round.</span></h1>
                     <p class="report-date">Tuesday, Sep 15, 2026</p>
                     <p class="hero-summary"
-                        >Afternoon update: 25 new weights recorded. All 20
-                        missing baselines from last night are complete. Five
-                        weigh-ins remain for tonight; H1, H2 and H3 still
-                        qualify for Check / Water with plain RO, and G3 remains
-                        Check only.</p
+                        >No Water candidates: no sustained plateau is confirmed.
+                        H1, H2 and H3 have reached their historical dry
+                        references and now wait in a separate monitoring group.
+                        Five weigh-ins remain for tonight; 20 post-water
+                        baselines are complete.</p
                     >
                     <p class="read-time"
                         >Workbook read Sep 15, 4:49 PM Eastern · a recorded
@@ -188,18 +188,28 @@
                     ></div
                 >
                 <p class="readiness"
-                    >Water these if your usual moisture/readiness check confirms
-                    they are ready.</p
+                    >Water candidates have a confirmed plateau; water only if
+                    your usual moisture/readiness check confirms they are ready.
+                    Dry-reference-only pots stay out of the Water list.</p
                 >
                 <div class="quick-row"
                     ><div class="quick-label"
-                        ><span aria-hidden="true">💧</span
-                        ><strong>Plain RO</strong
+                        ><span aria-hidden="true">💧</span><strong>Water</strong
+                        ><span class="count">0</span></div
+                    ><p class="quick-description"
+                        >No watering candidates with a confirmed plateau
+                        today.</p
+                    ><div class="pot-chips"
+                        ><span class="empty-category">None</span></div
+                    ></div
+                ><div class="quick-row"
+                    ><div class="quick-label"
+                        ><span aria-hidden="true">⏳</span
+                        ><strong>Dry reference only</strong
                         ><span class="count">3</span></div
                     ><p class="quick-description"
-                        >Plain RO — no nutrients. Water only when the usual
-                        moisture and plant-readiness check confirms
-                        readiness.</p
+                        >Reference reached; plateau unconfirmed. Hold
+                        watering.</p
                     ><div class="pot-chips"
                         ><a
                             class="pot-chip"
@@ -418,48 +428,8 @@
                     ></div
                 >
                 <div class="mix-grid"
-                    ><article class="mix-card plain-mix"
-                        ><span
-                            class="mix-symbol"
-                            aria-hidden="true"
-                            >💧</span
-                        ><p class="eyebrow">3 pots · Plain RO</p
-                        ><h3>No nutrients</h3
-                        ><p class="mix-product"
-                            >Plain reverse-osmosis water; no fertilizer or
-                            additives</p
-                        ><p class="mix-condition"
-                            >Plain RO — no nutrients. Water only when the usual
-                            moisture and plant-readiness check confirms
-                            readiness.</p
-                        ><p
-                            >H1, H2 and H3 last received plain RO on September 4
-                            and have no newer Water record. Their replacement
-                            medium and healthy active establishment remain
-                            unconfirmed, so feeding is not supported yet.
-                            Coconut Crystal retains its later occasional
-                            lighter-feeding rule; no fertilizer is recommended
-                            for it today.</p
-                        ><p class="recipe"
-                            >Keep these pots on plain RO for this session.</p
-                        ><div class="pot-chips"
-                            ><a
-                                class="pot-chip"
-                                href="#pot-P24"
-                                aria-label="H1: Coconut Crystal (seller-labeled Sempervivum &#39;Coconut Crystal&#39;)"
-                                >H1</a
-                            ><a
-                                class="pot-chip"
-                                href="#pot-P25"
-                                aria-label="H2: Raindrops (seller-labeled Echeveria &#39;Raindrops&#39;)"
-                                >H2</a
-                            ><a
-                                class="pot-chip"
-                                href="#pot-P26"
-                                aria-label="H3: Eve&#39;s needle"
-                                >H3</a
-                            ></div
-                        ></article
+                    ><p class="empty-category"
+                        >No watering mix to prepare from this review.</p
                     ></div
                 >
             </section>
@@ -511,6 +481,12 @@
                         >
                         <button
                             type="button"
+                            data-filter="reference"
+                            aria-pressed="false"
+                            >⏳ Dry reference only</button
+                        >
+                        <button
+                            type="button"
                             data-filter="weigh"
                             aria-pressed="false"
                             >⚖️ Weigh</button
@@ -539,16 +515,18 @@
                     aria-labelledby="group-reference"
                     ><div class="group-heading"
                         ><h3 id="group-reference"
-                            >Dry reference reached <span>3</span></h3
+                            >Dry reference reached — waiting for plateau
+                            <span>3</span></h3
                         ><p
-                            >The reference has been reached while the curve
-                            continues declining.</p
+                            >The historical reference is reached, but a
+                            sustained plateau is not confirmed. Hold watering;
+                            these pots are separate from the Water list.</p
                         ></div
                     ><div class="pot-grid"
                         ><details
                             class="pot-card"
                             id="pot-P24"
-                            data-action="water"
+                            data-action="reference"
                             data-search="H1 P24 Coconut Crystal (seller-labeled Sempervivum &#39;Coconut Crystal&#39;)"
                             ><summary
                                 ><img
@@ -568,9 +546,8 @@
                                         Crystal&#39;)</span
                                     ><span class="card-badges"
                                         ><span class="reason-badge"
-                                            >Dry reference reached</span
-                                        ><span class="mix-badge"
-                                            >🧪 Plain RO</span
+                                            >Dry reference reached — waiting for
+                                            plateau</span
                                         ></span
                                     ></span
                                 ><span class="card-rate"
@@ -582,21 +559,13 @@
                                 ></summary
                             ><div class="pot-detail"
                                 ><p class="pot-recommendation"
-                                    ><span aria-hidden="true">📌</span> Check
-                                    readiness and water with plain RO if ready.
-                                    The new reading remains below the dry
-                                    reference. Record a comparable post-drain
-                                    weight if watered; another pre-water reading
-                                    is not needed tonight.</p
+                                    ><span aria-hidden="true">📌</span> Hold
+                                    watering: the historical dry reference is
+                                    reached, but a sustained plateau is not
+                                    confirmed. Reweigh tomorrow afternoon,
+                                    September 16, to extend the curve. No repeat
+                                    weighing is needed tonight.</p
                                 ><dl
-                                    ><div
-                                        ><dt>🧪 Watering mix</dt
-                                        ><dd
-                                            >Plain RO. Plain RO — no nutrients.
-                                            Water only when the usual moisture
-                                            and plant-readiness check confirms
-                                            readiness.</dd
-                                        ></div
                                     ><div
                                         ><dt>🕒 Last reading</dt
                                         ><dd
@@ -625,8 +594,9 @@
                                     >Last recorded Water: September 4, plain RO.
                                     Replacement medium and healthy active
                                     establishment remain unconfirmed. Its later
-                                    occasional 0.50 g/US gal MSU rule does not
-                                    apply to this session.</p
+                                    occasional lighter-feeding rule is
+                                    unchanged; no watering or nutrient session
+                                    is recommended today.</p
                                 ><div class="pot-links"
                                     ><a href="./plant-history.html?id=P24"
                                         >Weight history ↗</a
@@ -639,7 +609,7 @@
                         ><details
                             class="pot-card"
                             id="pot-P25"
-                            data-action="water"
+                            data-action="reference"
                             data-search="H2 P25 Raindrops (seller-labeled Echeveria &#39;Raindrops&#39;)"
                             ><summary
                                 ><img
@@ -658,9 +628,8 @@
                                         &#39;Raindrops&#39;)</span
                                     ><span class="card-badges"
                                         ><span class="reason-badge"
-                                            >Dry reference reached</span
-                                        ><span class="mix-badge"
-                                            >🧪 Plain RO</span
+                                            >Dry reference reached — waiting for
+                                            plateau</span
                                         ></span
                                     ></span
                                 ><span class="card-rate"
@@ -672,21 +641,13 @@
                                 ></summary
                             ><div class="pot-detail"
                                 ><p class="pot-recommendation"
-                                    ><span aria-hidden="true">📌</span> Check
-                                    readiness and water with plain RO if ready.
-                                    The new reading remains below the dry
-                                    reference. Record a comparable post-drain
-                                    weight if watered; another pre-water reading
-                                    is not needed tonight.</p
+                                    ><span aria-hidden="true">📌</span> Hold
+                                    watering: the historical dry reference is
+                                    reached, but a sustained plateau is not
+                                    confirmed. Reweigh tomorrow afternoon,
+                                    September 16, to extend the curve. No repeat
+                                    weighing is needed tonight.</p
                                 ><dl
-                                    ><div
-                                        ><dt>🧪 Watering mix</dt
-                                        ><dd
-                                            >Plain RO. Plain RO — no nutrients.
-                                            Water only when the usual moisture
-                                            and plant-readiness check confirms
-                                            readiness.</dd
-                                        ></div
                                     ><div
                                         ><dt>🕒 Last reading</dt
                                         ><dd
@@ -714,10 +675,9 @@
                                 ><p class="metric-note"
                                     >Last recorded Water: September 4, plain RO.
                                     Replacement medium and healthy active
-                                    establishment remain unconfirmed, so this
-                                    session stays plain RO. The low latest loss
-                                    rate does not by itself establish a
-                                    sustained plateau.</p
+                                    establishment remain unconfirmed. The low
+                                    latest loss rate does not by itself
+                                    establish a sustained plateau.</p
                                 ><div class="pot-links"
                                     ><a href="./plant-history.html?id=P25"
                                         >Weight history ↗</a
@@ -730,7 +690,7 @@
                         ><details
                             class="pot-card"
                             id="pot-P26"
-                            data-action="water"
+                            data-action="reference"
                             data-search="H3 P26 Eve&#39;s needle"
                             ><summary
                                 ><img
@@ -748,9 +708,8 @@
                                         >Eve&#39;s needle</span
                                     ><span class="card-badges"
                                         ><span class="reason-badge"
-                                            >Dry reference reached</span
-                                        ><span class="mix-badge"
-                                            >🧪 Plain RO</span
+                                            >Dry reference reached — waiting for
+                                            plateau</span
                                         ></span
                                     ></span
                                 ><span class="card-rate"
@@ -762,21 +721,13 @@
                                 ></summary
                             ><div class="pot-detail"
                                 ><p class="pot-recommendation"
-                                    ><span aria-hidden="true">📌</span> Check
-                                    readiness and water with plain RO if ready.
-                                    The new reading remains below the dry
-                                    reference. Record a comparable post-drain
-                                    weight if watered; another pre-water reading
-                                    is not needed tonight.</p
+                                    ><span aria-hidden="true">📌</span> Hold
+                                    watering: the historical dry reference is
+                                    reached, but a sustained plateau is not
+                                    confirmed. Reweigh tomorrow afternoon,
+                                    September 16, to extend the curve. No repeat
+                                    weighing is needed tonight.</p
                                 ><dl
-                                    ><div
-                                        ><dt>🧪 Watering mix</dt
-                                        ><dd
-                                            >Plain RO. Plain RO — no nutrients.
-                                            Water only when the usual moisture
-                                            and plant-readiness check confirms
-                                            readiness.</dd
-                                        ></div
                                     ><div
                                         ><dt>🕒 Last reading</dt
                                         ><dd
@@ -807,7 +758,7 @@
                                     not yet support a sustained plateau. Last
                                     recorded Water: September 4, plain RO.
                                     Establishment and replacement medium remain
-                                    unconfirmed, so use plain RO.</p
+                                    unconfirmed.</p
                                 ><div class="pot-links"
                                     ><a href="./plant-history.html?id=P26"
                                         >Weight history ↗</a
@@ -2956,10 +2907,13 @@
                         fresh curve evidence. #1 and #2 are lower-priority
                         flexible samples that were already due today.</li
                     ><li
-                        >H1, H2 and H3 remain Check / Water candidates through
-                        reached dry references. No current curve meets the
-                        sustained-plateau criteria. H3 has one unchanged
-                        interval; that alone does not establish a plateau.</li
+                        >H1, H2 and H3 have reached their historical dry
+                        references, but their plateaus are not yet supported.
+                        They are excluded from Water. H3 has one unchanged
+                        interval; that alone does not establish a sustained
+                        plateau. Reweigh these three tomorrow afternoon,
+                        September 16, to extend their time-spaced curves; no
+                        additional weight is requested for them tonight.</li
                     ><li
                         >G3 was weighed today and remains Check only because its
                         leaf cycle controls watering. #4 was also weighed: 851 g
@@ -2967,16 +2921,22 @@
                         needed tonight; reweigh September 16 within its
                         September 15–17 observation window.</li
                     ><li
-                        >Watering candidates use plain RO without nutrients.
-                        Record a comparable post-drain weight only for pots
-                        actually watered. These conditional measurements are
-                        separate from the five unfinished weigh-ins.</li
+                        >No watering recipe is needed from this review. If a pot
+                        is actually watered after a separate readiness decision,
+                        record its Water event and a comparable post-drain
+                        weight so later reports use the new cycle.</li
                     ><li
                         >All live model cells match the shared detector. No
                         active trend-review flags, duplicate Observation IDs or
                         formula errors were found. The three remaining
                         calibration gaps are #3 without a wet reference and
                         #5/#6 without completed dry references.</li
+                    ><li
+                        >Classification updated September 15 to require
+                        confirmed plateau evidence for Water. Measurements and
+                        source-read time remain the September 15, 4:49 p.m.
+                        Eastern snapshot; this policy update is not a new
+                        workbook review.</li
                     ></ul
                 >
                 <p
@@ -3003,15 +2963,14 @@
                 ><h2 id="pocket-heading">Your pocket list</h2
                 ><div class="pocket-conditions"
                     ><p
-                        >Water only when your usual readiness check confirms it.
-                        Weigh pots you actually water after draining.</p
-                    ><p
-                        ><strong>Plain RO.</strong> Plain RO — no nutrients.
-                        Water only when the usual moisture and plant-readiness
-                        check confirms readiness.</p
+                        >⏳ Dry reference only means hold watering while plateau
+                        evidence is unconfirmed. Water candidates still need
+                        your usual readiness check. Weigh pots you actually
+                        water after draining.</p
                     ></div
+                ><p class="pocket-row"><strong>💧 Water:</strong> None</p
                 ><p class="pocket-row"
-                    ><strong>💧 Plain RO:</strong> H1, H2, H3</p
+                    ><strong>⏳ Dry reference only:</strong> H1, H2, H3</p
                 ><p class="pocket-row"
                     ><strong>⚖️ Weigh · priority:</strong> #3, #5, #6</p
                 ><p class="pocket-row"

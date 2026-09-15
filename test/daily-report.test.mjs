@@ -41,17 +41,17 @@ function pot(report, id) {
 }
 
 describe("daily report evidence", () => {
-    it("retains the reviewed union of reference and plateau signals", () => {
+    it("separates reference-only pots from plateau-confirmed watering", () => {
         expect.hasAssertions();
 
         const watering = sample.pots.filter(
             (entry) => entry.action === "water"
         );
 
-        expect(watering).toHaveLength(3);
+        expect(watering).toHaveLength(2);
         expect(
             watering.filter((entry) => groupFor(entry) === "reference")
-        ).toHaveLength(1);
+        ).toHaveLength(0);
         expect(
             watering.filter((entry) => groupFor(entry) === "both")
         ).toHaveLength(1);
@@ -61,6 +61,56 @@ describe("daily report evidence", () => {
         expect(pot(sample, "P21").action).toBe("weigh");
         expect(weightChange(pot(sample, "P21"))).toBeNull();
         expect(pot(sample, "P28").action).toBe("check");
+        expect(pot(sample, "P08").action).toBe("reference");
+        expect(pot(sample, "P08").mixId).toBeNull();
+        expect(groupFor(pot(sample, "P08"))).toBe("reference");
+    });
+
+    it.each(["not-supported", "unavailable"])(
+        "rejects watering when plateau evidence is %s",
+        (plateau) => {
+            expect.hasAssertions();
+
+            const report = structuredClone(sample);
+            const candidate = pot(report, "P08");
+            candidate.action = "water";
+            candidate.mixId = "msu";
+            candidate.plateau = /** @type {ReportPot["plateau"]} */ (plateau);
+
+            expect(() => validateReport(report)).toThrow(
+                "Watering requires a confirmed plateau"
+            );
+        }
+    );
+
+    it("requires a current-cycle reference hit without a mix for reference-only pots", () => {
+        expect.hasAssertions();
+
+        const report = structuredClone(sample);
+        const candidate = pot(report, "P08");
+        candidate.mixId = "msu";
+
+        expect(() => validateReport(report)).toThrow("Only watering actions");
+
+        candidate.mixId = null;
+        candidate.dryReferenceGrams = null;
+
+        expect(() => validateReport(report)).toThrow(
+            "reaching the dry reference"
+        );
+
+        candidate.dryReferenceGrams = 1000;
+        candidate.previous = null;
+        candidate.cycleStartedAt = "2026-09-14T22:00:00Z";
+
+        expect(() => validateReport(report)).toThrow("current cycle");
+
+        candidate.cycleStartedAt = "2026-08-26T16:22:00-04:00";
+        candidate.plateau = "confirmed";
+
+        expect(() => validateReport(report)).toThrow(
+            "without a confirmed plateau"
+        );
     });
 
     it("normalizes actual elapsed time across the daylight-saving transition", () => {
@@ -163,6 +213,9 @@ describe("daily report publication", () => {
         expect(html).toContain("MSU · 0.75 g/gal");
         expect(html).toContain("For 2 US gallons: 1.5 g");
         expect(html).toContain("Nothing today:</strong> B3");
+        expect(html).toContain("Dry reference only:</strong> C2");
+        expect(html).toContain("MSU · 0.75 g/gal:</strong> A1, A3");
+        expect(html).not.toContain("A1, A3, C2");
         expect(html).toContain("before the 7:14 p.m. watering");
         expect(html).not.toContain("{{");
         expect(html).not.toContain('type="checkbox"');
@@ -196,7 +249,9 @@ describe("daily report publication", () => {
 
         expect(html).toContain("Review unavailable");
         expect(html).toContain("Not determined — incomplete review");
-        expect(html).not.toContain("No watering candidates today");
+        expect(html).not.toContain(
+            "No watering candidates with a confirmed plateau today"
+        );
         expect(html).not.toContain('class="empty-category">None');
     });
 
@@ -215,5 +270,21 @@ describe("daily report publication", () => {
         expect(() =>
             validateReport({ ...report, coverage: "complete" })
         ).toThrow("every pot");
+    });
+
+    it("keeps a reference-only report out of Water, mixes, and Nothing today", () => {
+        expect.hasAssertions();
+
+        const report = structuredClone(sample);
+        report.pots = [structuredClone(pot(sample, "P08"))];
+        report.totalPots = 1;
+        report.mixes = [];
+        const html = renderReport(validateReport(report), template, profiles);
+
+        expect(html).toContain("Water:</strong> None");
+        expect(html).toContain("Dry reference only:</strong> C2");
+        expect(html).toContain("No watering mix to prepare");
+        expect(html).not.toContain("Nothing today:</strong> C2");
+        expect(html).not.toContain("Watering mix</dt>");
     });
 });

@@ -12,7 +12,7 @@ export interface DailyReport {
     summary: string;
     timeZone: "America/New_York";
     totalPots: null | number;
-    version: 1;
+    version: 2;
 }
 
 export interface ReportMix {
@@ -28,6 +28,7 @@ export interface ReportPot {
     action:
         | "check"
         | "none"
+        | "reference"
         | "unresolved"
         | "water"
         | "weigh";
