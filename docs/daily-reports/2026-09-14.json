@@ -4,11 +4,11 @@
     "generatedAt": "2026-09-15T02:15:36.762Z",
     "mixes": [
         {
+            "condition": "Only if the pot has not already been watered and your usual readiness check confirms it needs water.",
+            "gramsPerGallon": null,
             "id": "plain-ro",
             "name": "Plain RO",
             "product": "Reverse-osmosis water · no nutrients",
-            "gramsPerGallon": null,
-            "condition": "Only if the pot has not already been watered and your usual readiness check confirms it needs water.",
             "rationale": "H1, H2 and H3 have no September 14 Water entry in the reviewed ledger. Continue plain RO while establishment and healthy active growth are unconfirmed; H1’s later lighter-feeding rule does not apply tonight."
         }
     ],
