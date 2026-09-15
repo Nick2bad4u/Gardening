@@ -1,5 +1,8 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 
+import { renderReport } from "../scripts/build-daily-report.mjs";
+import { validateReport } from "../scripts/daily-report-model.mjs";
+
 // Copy only the public browser surfaces. Production sources remain untouched.
 export async function preparePages() {
     const root = new URL("../", import.meta.url);
@@ -14,6 +17,7 @@ export async function preparePages() {
         "layouts/photo-album.html",
         "layouts/grow-spot-layout.html",
         "layouts/indoor-acclimation-calendar.html",
+        "layouts/daily-report.html",
     ];
     const assets = [
         "plant-booklet/booklet.js",
@@ -27,6 +31,8 @@ export async function preparePages() {
         "layouts/plant-charts.js",
         "layouts/plant-tracker.css",
         "layouts/plant-profile-data.json",
+        "layouts/daily-report.css",
+        "layouts/daily-report.js",
     ];
     await Promise.all(
         ["plant-booklet/", "layouts/"].map(async (directory) => {
@@ -41,10 +47,11 @@ export async function preparePages() {
     );
     await Promise.all(
         pages.map(async (page) => {
-            const source = await readFile(
-                new URL(`docs/${page}`, root),
-                "utf8"
-            );
+            // Report scenarios use a fixed fixture, independent of daily care changes.
+            const source =
+                page === "layouts/daily-report.html"
+                    ? await reportPreview(root)
+                    : await readFile(new URL(`docs/${page}`, root), "utf8");
             const html = source
                 .replaceAll(
                     /srcset="[^"]*https:\/\/thumb\.gyazo\.com\/[^"]*"/gv,
@@ -97,4 +104,22 @@ export async function writeChangedFile(destination, content) {
             throw error;
     }
     await writeFile(destination, next);
+}
+
+/** @param {URL} root */
+async function reportPreview(root) {
+    const [
+        data,
+        template,
+        profileData,
+    ] = await Promise.all([
+        readFile(new URL("test/fixtures/daily-report.json", root), "utf8"),
+        readFile(new URL("scripts/templates/daily-report.html", root), "utf8"),
+        readFile(new URL("docs/layouts/plant-profile-data.json", root), "utf8"),
+    ]);
+    const parsedProfiles = /** @type {unknown} */ (JSON.parse(profileData));
+    const profiles = /** @type {Record<string, [string, string][]>} */ (
+        parsedProfiles
+    );
+    return renderReport(validateReport(JSON.parse(data)), template, profiles);
 }
