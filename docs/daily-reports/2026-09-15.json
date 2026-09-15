@@ -1,7 +1,7 @@
 {
     "coverage": "complete",
     "date": "2026-09-15",
-    "generatedAt": "2026-09-15T13:59:52.300Z",
+    "generatedAt": "2026-09-15T20:54:14.314Z",
     "mixes": [
         {
             "condition": "Plain RO — no nutrients. Water only when the usual moisture and plant-readiness check confirms readiness.",
@@ -9,361 +9,361 @@
             "id": "plain-ro",
             "name": "Plain RO",
             "product": "Plain reverse-osmosis water; no fertilizer or additives",
-            "rationale": "H1, H2 and H3 last received plain RO on September 4. Their replacement medium and healthy active establishment remain unconfirmed, so feeding is not supported yet. Coconut Crystal retains its later occasional lighter-feeding rule; no fertilizer is recommended for it today."
+            "rationale": "H1, H2 and H3 last received plain RO on September 4 and have no newer Water record. Their replacement medium and healthy active establishment remain unconfirmed, so feeding is not supported yet. Coconut Crystal retains its later occasional lighter-feeding rule; no fertilizer is recommended for it today."
         }
     ],
     "notes": [
-        "All 30 active pots were reviewed against fresh workbook data read at 9:47 a.m. Eastern on September 15. No weights after the September 14 watering were present at that read.",
-        "The 26 separate weigh-ins include 21 missing wet baselines and five current-curve follow-ups. This larger session does not establish a permanent daily weighing schedule. #1 and #2 are flexible samples; the other requests address missing baselines, a nearby window or an uncertain curve.",
-        "A1–F3, G1 and G2 were watered after weighing on September 14, at approximately 8:30 p.m. Their previous low weights are valid pre-water context and cannot trigger repeat watering. A1–F3 received MSU at 0.75 g/US gal; G1 and G2 received plain RO.",
-        "#3 was watered on September 13 at 7:14 p.m., after its 7:13 p.m. scale reading. Its first post-water weight is also missing. Its recorded Foliage-Pro feeding is part of that completed watering, not a new task.",
-        "The five remaining curve samples were last weighed before the September 13 light installation. A fresh point will test for a change in drying pace. #4 is already inside its observation window; #5 and #6 still lack completed dry references.",
-        "No supported sustained plateau was found in the current cycles. H1, H2 and H3 qualify through their dry references. G3 also reaches its reference but remains Check only because its leaf cycle controls the watering decision.",
-        "For H1, H2 or H3 actually watered today, record a comparable post-drain weight. Those conditional measurements are separate from the 26 other weigh-ins. If a watering occurred after the source read, record the actual event instead of repeating it.",
-        "The shared detector matches the live model. No active trend-review warnings, duplicate Observation IDs or formula errors were found. Readiness signals describe measured mass, not proof of a dry root zone; the usual plant-specific check still determines watering."
+        "Afternoon refresh: all 30 pots were reviewed against the live workbook read at 4:49 p.m. Eastern on September 15. Twenty-five new measured weights were saved from approximately 4:20 to 4:37 p.m.; no new Water events were present.",
+        "All 20 pots watered September 14 now have their first post-water weights: A1–F3, G1 and G2. Their missing-baseline follow-ups are complete. No repeat weighing or watering is requested for them tonight.",
+        "The new baselines were taken about 20 hours after the September 14 watering at approximately 8:30 p.m. They are the first observed weights in this cycle, not immediate after-soak measurements. Retain that elapsed time when comparing wet references between cycles.",
+        "Five weigh-ins remain for tonight: #1, #2, #3, #5 and #6. #3 needs its first post-water weight; #5 and #6 need fresh curve evidence. #1 and #2 are lower-priority flexible samples that were already due today.",
+        "H1, H2 and H3 remain Check / Water candidates through reached dry references. No current curve meets the sustained-plateau criteria. H3 has one unchanged interval; that alone does not establish a plateau.",
+        "G3 was weighed today and remains Check only because its leaf cycle controls watering. #4 was also weighed: 851 g is 10 g above its dry reference. No repeat weight is needed tonight; reweigh September 16 within its September 15–17 observation window.",
+        "Watering candidates use plain RO without nutrients. Record a comparable post-drain weight only for pots actually watered. These conditional measurements are separate from the five unfinished weigh-ins.",
+        "All live model cells match the shared detector. No active trend-review flags, duplicate Observation IDs or formula errors were found. The three remaining calibration gaps are #3 without a wet reference and #5/#6 without completed dry references."
     ],
     "pots": [
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 361.5,
             "id": "P01",
             "label": "A1",
             "latest": {
-                "at": "2026-09-14T23:43:00Z",
-                "grams": 361.5
+                "at": "2026-09-15T20:34:52.312Z",
+                "grams": 436
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Variegated moon cactus",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 347.5,
             "id": "P02",
             "label": "A2",
             "latest": {
-                "at": "2026-09-14T23:42:00Z",
-                "grams": 347.5
+                "at": "2026-09-15T20:30:44.618Z",
+                "grams": 444
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Feather cactus",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 321.5,
             "id": "P03",
             "label": "A3",
             "latest": {
-                "at": "2026-09-14T23:42:00Z",
-                "grams": 321.5
+                "at": "2026-09-15T20:36:29.18Z",
+                "grams": 414
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Serpent cactus",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 317.5,
             "id": "P04",
             "label": "B1",
             "latest": {
-                "at": "2026-09-14T23:46:00Z",
-                "grams": 317.5
+                "at": "2026-09-15T20:30:55.245Z",
+                "grams": 404
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Grass-blade cactus",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 380.5,
             "id": "P05",
             "label": "B2",
             "latest": {
-                "at": "2026-09-14T23:44:00Z",
-                "grams": 380.5
+                "at": "2026-09-15T20:34:41.518Z",
+                "grams": 490
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Old Man of the Andes",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 343.5,
             "id": "P06",
             "label": "B3",
             "latest": {
-                "at": "2026-09-14T23:46:00Z",
-                "grams": 343.5
+                "at": "2026-09-15T20:27:16.112Z",
+                "grams": 449.5
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Indigo Wave",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 361,
             "id": "P07",
             "label": "C1",
             "latest": {
-                "at": "2026-09-15T00:22:00Z",
-                "grams": 361
+                "at": "2026-09-15T20:22:45.45Z",
+                "grams": 463.5
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Giant chin cactus",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 380.5,
             "id": "P08",
             "label": "C2",
             "latest": {
-                "at": "2026-09-14T23:45:00Z",
-                "grams": 380.5
+                "at": "2026-09-15T20:32:29.474Z",
+                "grams": 473.5
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Rainbow hedgehog cactus",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 340.5,
             "id": "P09",
             "label": "C3",
             "latest": {
-                "at": "2026-09-15T00:19:00Z",
-                "grams": 340.5
+                "at": "2026-09-15T20:26:33.982Z",
+                "grams": 429.5
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Monk's hood cactus",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 363,
             "id": "P10",
             "label": "D1",
             "latest": {
-                "at": "2026-09-14T23:48:00Z",
-                "grams": 363
+                "at": "2026-09-15T20:28:38.866Z",
+                "grams": 448.5
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Dragon's Egg (probable Euphorbia obesa-type hybrid or selection)",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 369,
             "id": "P11",
             "label": "D2",
             "latest": {
-                "at": "2026-09-15T00:21:00Z",
-                "grams": 369
+                "at": "2026-09-15T20:23:21.044Z",
+                "grams": 473
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Domino cactus",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 317.5,
             "id": "P12",
             "label": "D3",
             "latest": {
-                "at": "2026-09-14T23:41:00Z",
-                "grams": 317.5
+                "at": "2026-09-15T20:36:17.15Z",
+                "grams": 437.5
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Ming Thing",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 366,
             "id": "P13",
             "label": "E1",
             "latest": {
-                "at": "2026-09-14T23:45:00Z",
-                "grams": 366
+                "at": "2026-09-15T20:32:43.678Z",
+                "grams": 439.5
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Dwarf old man cactus (Espostoa sp., likely E. melanostele subsp. nana)",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 325,
             "id": "P14",
             "label": "E2",
             "latest": {
-                "at": "2026-09-15T00:21:00Z",
-                "grams": 325
+                "at": "2026-09-15T20:22:06.245Z",
+                "grams": 434
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Chamaelobivia / peanut cactus hybrid",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 319,
             "id": "P15",
             "label": "E3",
             "latest": {
-                "at": "2026-09-14T23:48:00Z",
-                "grams": 319
+                "at": "2026-09-15T20:25:58.679Z",
+                "grams": 404
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Woolly nipple cactus",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 340,
             "id": "P16",
             "label": "F1",
             "latest": {
-                "at": "2026-09-15T00:23:00Z",
-                "grams": 340
+                "at": "2026-09-15T20:24:02.646Z",
+                "grams": 424.5
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Hook-spined pincushion cactus (Mammillaria cf. rekoi)",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 339,
             "id": "P17",
             "label": "F2",
             "latest": {
-                "at": "2026-09-15T00:21:00Z",
-                "grams": 339
+                "at": "2026-09-15T20:24:54.437Z",
+                "grams": 411.5
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Boobie cactus",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 339,
             "id": "P18",
             "label": "F3",
             "latest": {
-                "at": "2026-09-15T00:22:00Z",
-                "grams": 339
+                "at": "2026-09-15T20:21:14.694Z",
+                "grams": 422.5
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Yellow tower cactus",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
             "action": "weigh",
@@ -375,7 +375,7 @@
                 "at": "2026-09-13T05:32:00Z",
                 "grams": 4418
             },
-            "metricsNote": "No learned completed cycle supports this setup yet. Its October 2–November 6 forecast window is broad and provisional. A consistent new point can support a longer gap before the next sample.",
+            "metricsNote": "No new weight was recorded this afternoon. The last reading is 726 g above the reference; no learned completed cycle supports this setup yet. Its October 2–November 6 forecast remains broad and provisional.",
             "mixId": null,
             "name": "Shared rehab cactus planter",
             "plateau": "not-supported",
@@ -385,7 +385,7 @@
                 "grams": 4535
             },
             "reason": "flexible",
-            "recommendation": "Flexible weigh-in today: take the follow-up sample due September 15 to check the curve after the new lights. The last reading is well above the dry reference; this is a useful drift check with lower urgency."
+            "recommendation": "Flexible weigh-in tonight: finish the September 15 follow-up and check the curve after the light installation. This is lower priority than the missing baseline and uncertain-curve pots."
         },
         {
             "action": "weigh",
@@ -397,7 +397,7 @@
                 "at": "2026-09-13T05:31:00Z",
                 "grams": 1959
             },
-            "metricsNote": "The September 25–October 4 forecast has one compatible learned cycle. The last actual reading predates the light installation; a new sample can show whether its drying pace has changed. Shared-planter readiness later depends on all components and drainage.",
+            "metricsNote": "No new weight was recorded this afternoon. The last reading is 435 g above the reference and shows continuing loss. The September 25–October 4 window has one compatible learned cycle. Future readiness also depends on all components and drainage.",
             "mixId": null,
             "name": "Shared succulent planter",
             "plateau": "not-supported",
@@ -407,7 +407,7 @@
                 "grams": 2100
             },
             "reason": "flexible",
-            "recommendation": "Flexible weigh-in today: take the follow-up sample due September 15 to check the curve after the new lights. The last reading remains above the dry reference and shows continuing loss."
+            "recommendation": "Flexible weigh-in tonight: finish the September 15 follow-up and check the curve after the light installation. This is lower priority than the missing baseline and uncertain-curve pots."
         },
         {
             "action": "weigh",
@@ -419,55 +419,55 @@
                 "at": "2026-09-13T23:13:00Z",
                 "grams": 1529
             },
-            "metricsNote": "The latest scale reading is from September 13 at 7:13 p.m., before watering at 7:14 p.m. No current-cycle weights exist, so last-two change, daily rate and plateau are unavailable. Future readiness uses the upper approximately 2 inches of mix, not cactus-level dryness.",
+            "metricsNote": "The latest reading was September 13 at 7:13 p.m., before watering at 7:14 p.m. No current-cycle pair exists, so change, daily rate and plateau are unavailable. Future watering readiness uses the upper approximately 2 inches of mix.",
             "mixId": null,
             "name": "Money tree (working identification: Pachira glabra)",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
             "reason": "priority",
-            "recommendation": "Record the first comparable drained weight after the September 13 watering. This establishes the wet baseline for the new cycle."
+            "recommendation": "Weigh tonight as planned to obtain the first post-water reference after the September 13 watering."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-02T19:40:00Z",
             "dryReferenceGrams": 841,
             "id": "P22",
             "label": "#4",
             "latest": {
-                "at": "2026-09-13T05:32:00Z",
-                "grams": 864
+                "at": "2026-09-15T20:37:24.112Z",
+                "grams": 851
             },
-            "metricsNote": "The last reading predates the September 13 light installation. One learned cycle supports the forecast, but the window is an observation trigger, not a watering deadline.",
+            "metricsNote": "The current curve continues declining and supports neither a reached reference nor a sustained plateau. Keep active growth versus resting behavior in view. The forecast window prompts another observation; it is not a watering deadline.",
             "mixId": null,
             "name": "Kiwi aeonium",
             "plateau": "not-supported",
             "plateauPoints": [],
             "previous": {
-                "at": "2026-09-11T03:34:00Z",
-                "grams": 876.5
+                "at": "2026-09-13T05:32:00Z",
+                "grams": 864
             },
-            "reason": "priority",
-            "recommendation": "Weigh today: the current forecast window is September 14–18 and the last reading remains 23 g above the dry reference. Use the new point to judge approach to readiness, keeping active growth versus resting behavior in view."
+            "reason": "none",
+            "recommendation": "Today's 851 g reading completes this follow-up. No repeat weigh-in is needed tonight. Reweigh September 16 because the current observation window is September 15–17 and only 10 g remains above the dry reference."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 350,
             "id": "P23",
             "label": "G2",
             "latest": {
-                "at": "2026-09-14T23:46:00Z",
-                "grams": 350
+                "at": "2026-09-15T20:29:16.448Z",
+                "grams": 406.5
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Paper spine",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
             "action": "water",
@@ -476,8 +476,8 @@
             "id": "P24",
             "label": "H1",
             "latest": {
-                "at": "2026-09-13T05:20:00Z",
-                "grams": 329
+                "at": "2026-09-15T20:33:37.342Z",
+                "grams": 326
             },
             "metricsNote": "Last recorded Water: September 4, plain RO. Replacement medium and healthy active establishment remain unconfirmed. Its later occasional 0.50 g/US gal MSU rule does not apply to this session.",
             "mixId": "plain-ro",
@@ -485,11 +485,11 @@
             "plateau": "not-supported",
             "plateauPoints": [],
             "previous": {
-                "at": "2026-09-11T03:26:00Z",
-                "grams": 337.5
+                "at": "2026-09-13T05:20:00Z",
+                "grams": 329
             },
             "reason": "reference",
-            "recommendation": "Check readiness and water with plain RO if ready. The dry reference is reached; a plateau is not required. Let the pot drain and record its post-water weight."
+            "recommendation": "Check readiness and water with plain RO if ready. The new reading remains below the dry reference. Record a comparable post-drain weight if watered; another pre-water reading is not needed tonight."
         },
         {
             "action": "water",
@@ -498,20 +498,20 @@
             "id": "P25",
             "label": "H2",
             "latest": {
-                "at": "2026-09-14T23:45:00Z",
-                "grams": 317
+                "at": "2026-09-15T20:33:49.738Z",
+                "grams": 316.5
             },
-            "metricsNote": "Last recorded Water: September 4, plain RO. Replacement medium and healthy active establishment remain unconfirmed, so this session stays plain RO.",
+            "metricsNote": "Last recorded Water: September 4, plain RO. Replacement medium and healthy active establishment remain unconfirmed, so this session stays plain RO. The low latest loss rate does not by itself establish a sustained plateau.",
             "mixId": "plain-ro",
             "name": "Raindrops (seller-labeled Echeveria 'Raindrops')",
             "plateau": "not-supported",
             "plateauPoints": [],
             "previous": {
-                "at": "2026-09-13T05:20:00Z",
-                "grams": 318.5
+                "at": "2026-09-14T23:45:00Z",
+                "grams": 317
             },
             "reason": "reference",
-            "recommendation": "Check readiness and water with plain RO if ready. The dry reference is reached while the curve continues declining. Let the pot drain and record its post-water weight."
+            "recommendation": "Check readiness and water with plain RO if ready. The new reading remains below the dry reference. Record a comparable post-drain weight if watered; another pre-water reading is not needed tonight."
         },
         {
             "action": "water",
@@ -520,39 +520,39 @@
             "id": "P26",
             "label": "H3",
             "latest": {
-                "at": "2026-09-14T23:48:00Z",
+                "at": "2026-09-15T20:20:37.174Z",
                 "grams": 327.5
             },
-            "metricsNote": "Last recorded Water: September 4, plain RO. Replacement medium and healthy active establishment remain unconfirmed, so this session stays plain RO.",
+            "metricsNote": "The last two readings are unchanged over about 0.86 days, but the longer curve does not yet support a sustained plateau. Last recorded Water: September 4, plain RO. Establishment and replacement medium remain unconfirmed, so use plain RO.",
             "mixId": "plain-ro",
             "name": "Eve's needle",
             "plateau": "not-supported",
             "plateauPoints": [],
             "previous": {
-                "at": "2026-09-13T05:22:00Z",
-                "grams": 329.5
+                "at": "2026-09-14T23:48:00Z",
+                "grams": 327.5
             },
             "reason": "reference",
-            "recommendation": "Check readiness and water with plain RO if ready. The dry reference is reached while the curve continues declining. Let the pot drain and record its post-water weight."
+            "recommendation": "Check readiness and water with plain RO if ready. The new reading remains below the dry reference. Record a comparable post-drain weight if watered; another pre-water reading is not needed tonight."
         },
         {
-            "action": "weigh",
+            "action": "none",
             "cycleStartedAt": "2026-09-15T00:30:00Z",
             "dryReferenceGrams": 349.5,
             "id": "P27",
             "label": "G1",
             "latest": {
-                "at": "2026-09-14T23:44:00Z",
-                "grams": 349.5
+                "at": "2026-09-15T20:29:27.876Z",
+                "grams": 411
             },
-            "metricsNote": "The displayed latest weight is valid pre-water context. No post-water weight is recorded, so current-cycle change, daily rate and plateau are unavailable. The reference comparison describes the old pre-water reading, not present moisture.",
+            "metricsNote": "This is the first measured weight in the cycle that began September 14 at approximately 8:30 p.m. It was recorded about 20 hours after watering. A current-cycle change, daily rate and plateau are unavailable with one point; the pre-water reading cannot be used as its comparison.",
             "mixId": null,
             "name": "Black Widow",
             "plateau": "unavailable",
             "plateauPoints": [],
             "previous": null,
-            "reason": "priority",
-            "recommendation": "Record one comparable drained weight after the September 14 watering at approximately 8:30 p.m. This supplies the missing wet baseline for the new cycle."
+            "reason": "none",
+            "recommendation": "Today's post-water baseline is recorded. No additional weighing or watering is recommended tonight."
         },
         {
             "action": "check",
@@ -561,20 +561,20 @@
             "id": "P28",
             "label": "G3",
             "latest": {
-                "at": "2026-09-14T23:47:00Z",
-                "grams": 334.5
+                "at": "2026-09-15T20:28:03.971Z",
+                "grams": 334
             },
-            "metricsNote": "The September 14 weight already supplies a recent point. Leaf-cycle evidence is the missing decision input, so there is no additional routine weigh-in or nutrient recommendation today.",
+            "metricsNote": "Today's weight is recorded, so no additional weighing is requested tonight. Leaf-cycle evidence remains the missing input for a watering decision. No nutrient mix is prescribed for this Check-only pot.",
             "mixId": null,
             "name": "Royal Flush",
             "plateau": "not-supported",
             "plateauPoints": [],
             "previous": {
-                "at": "2026-09-13T05:22:00Z",
-                "grams": 342
+                "at": "2026-09-14T23:47:00Z",
+                "grams": 334.5
             },
             "reason": "special",
-            "recommendation": "Check only: assess leaf replacement and inner-leaf firmness. The reached weight reference does not authorize watering during an incompatible leaf stage; wrinkling of an old leaf pair alone is insufficient."
+            "recommendation": "Check only: assess leaf replacement and inner-leaf firmness. The reached weight reference does not override an incompatible leaf stage; wrinkling of an old leaf pair alone is insufficient."
         },
         {
             "action": "weigh",
@@ -586,7 +586,7 @@
                 "at": "2026-09-13T05:32:00Z",
                 "grams": 1062
             },
-            "metricsNote": "Setup 2 has a wet reference but no completed dry reference. The current medium is recorded as 80% Molly's Succulent Mix / 20% perlite with top dressing. The last reading predates the September 13 light installation.",
+            "metricsNote": "No new weight was recorded this afternoon. The current medium is 80% Molly's Succulent Mix / 20% perlite with top dressing. Its last reading predates the September 13 light installation.",
             "mixId": null,
             "name": "Tuberculate tiger jaws (probable Faucaria tuberculosa)",
             "plateau": "not-supported",
@@ -596,7 +596,7 @@
                 "grams": 1078
             },
             "reason": "priority",
-            "recommendation": "Weigh today to see whether the current decline is slowing in this setup. A completed dry reference is still missing, so another time-spaced point is useful before extending the weighing interval."
+            "recommendation": "Weigh tonight as planned to see whether the current decline is slowing. Setup 2 still lacks a completed dry reference, so the new point will help resolve its drying curve."
         },
         {
             "action": "weigh",
@@ -608,7 +608,7 @@
                 "at": "2026-09-13T05:33:00Z",
                 "grams": 406
             },
-            "metricsNote": "The last reading predates the September 13 light installation. For a later watering decision, check the shared root zone, drainage and all components together; their taxa remain unresolved.",
+            "metricsNote": "No new weight was recorded this afternoon. A later watering decision must consider all components, shared root-zone moisture and drainage; the component taxa remain unresolved.",
             "mixId": null,
             "name": "Tiny mixed succulent planter (component taxa unresolved)",
             "plateau": "not-supported",
@@ -618,11 +618,11 @@
                 "grams": 408.5
             },
             "reason": "priority",
-            "recommendation": "Weigh today to test whether the recent slowing persists. The last-two loss rate alone does not establish a sustained plateau, and setup 2 has no completed dry reference."
+            "recommendation": "Weigh tonight as planned to test whether the recent slowing persists. The low last-two loss rate alone is insufficient for a plateau, and setup 2 still lacks a completed dry reference."
         }
     ],
-    "sourceReadAt": "2026-09-15T13:47:25.946Z",
-    "summary": "September 15: 3 Check / Water candidates with plain RO, 26 separate weigh-ins and 1 Check-only pot. Most weighing is to capture missing baselines after watering; no supported sustained plateau is present today.",
+    "sourceReadAt": "2026-09-15T20:49:52.824Z",
+    "summary": "Afternoon update: 25 new weights recorded. All 20 missing baselines from last night are complete. Five weigh-ins remain for tonight; H1, H2 and H3 still qualify for Check / Water with plain RO, and G3 remains Check only.",
     "timeZone": "America/New_York",
     "totalPots": 30,
     "version": 1
