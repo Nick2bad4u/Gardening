@@ -73,14 +73,14 @@ species identity.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Treat the September 2 photographs and future measured readings as the baseline. Record any softening, translucent tissue, or root instability during establishment.        |
-| Grow-light position | Begin in a bright succulent zone with gradual acclimation. Increase light only while new growth stays compact and the leaf surfaces show no bleaching or scorched patches. |
-| Water               | Soak only after the mix has dried through and the pot-weight trend supports it, then drain completely. Do not use a fixed calendar or misting routine.                     |
-| Pot and mix         | Exact size and composition are unrecorded. Preserve a free-draining root zone and keep the paired-leaf crown above wet top dressing.                                       |
-| Temperature         | Favor warm active-growth conditions, airflow, and protection from cold wet roots. Indoor seasonal behavior should be observed rather than assumed from a retail calendar.  |
-| Feeding             | If established growth is visible, use only the collection's dilute succulent feeding approach during a normal watering; do not feed a stressed or still-wet plant.         |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                                         |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival             | Treat the September 2 photographs and future measured readings as the baseline. Record any softening, translucent tissue, or root instability during establishment.                                                                                                                                                                 |
+| Grow-light position | **Photo-matched rear right, in front of the square box · Bright.** September 15 rear wooden tables, facing the window. Retain probable Faucaria tuberculosa / seller F. tigrina qualifier; compare at leaf height. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Water               | Soak only after the mix has dried through and the pot-weight trend supports it, then drain completely. Do not use a fixed calendar or misting routine.                                                                                                                                                                              |
+| Pot and mix         | Exact size and composition are unrecorded. Preserve a free-draining root zone and keep the paired-leaf crown above wet top dressing.                                                                                                                                                                                                |
+| Temperature         | Favor warm active-growth conditions, airflow, and protection from cold wet roots. Indoor seasonal behavior should be observed rather than assumed from a retail calendar.                                                                                                                                                           |
+| Feeding             | If established growth is visible, use only the collection's dilute succulent feeding approach during a normal watering; do not feed a stressed or still-wet plant.                                                                                                                                                                  |
 
 ## Rotation, propagation, and watch points
 

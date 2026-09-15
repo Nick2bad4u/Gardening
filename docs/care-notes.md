@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-09-14
+Last updated: 2026-09-15
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
@@ -17,7 +17,7 @@ and dry-down. Use the
 [final placement guide](./layouts/table-placement-research.md) for each pot's
 ongoing light need; adding a light does not by itself make a pot ready to water.
 
-The September 14 relative-light plan proposes revised wooden positions and an inward Kiwi position on glass; the [placement guide](./layouts/table-placement-research.md) separates these recommendations from completed moves. This placement adjustment does not reset a pot setup, wet/dry reference, or learned watering cycle. Keep the existing observations and respond to any new drying behavior with useful measurements; a moved pot is not automatically due for watering or daily weighing.
+The September 15 photographs replace the old placement plan with four wooden tables: 24 small pots in a six-column/four-row front grid and six larger/shared containers behind them. The [current guide](./layouts/table-placement-research.md) records photo-matched positions and the inferred footprint. A new location does not reset a pot setup, wet/dry reference or learned watering cycle. Keep existing observations and use useful measurements to detect changed drying; moving a pot is not automatically a reason to water or weigh daily.
 
 For the installed 240 W fixture, the [manufacturer's operating limit](https://vivosun.com/support/guide/aerolight-gen2)
 requires the growing space below **86°F (30°C)**. The older outdoor weather

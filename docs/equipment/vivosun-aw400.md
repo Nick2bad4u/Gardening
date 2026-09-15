@@ -1,5 +1,7 @@
 # VIVOSUN AeroLight Wing AW400 — Unavailable Selection
 
+> Historical equipment/arrangement record. The September 15 display uses [four wooden tables with the installed AW200 + AeroLight 240 W](../layouts/table-placement-research.md). Table placement and coverage drawings below do not describe that current arrangement.
+
 **Superseded September 11, 2026:** the owner reports the AW400 is sold out and
 has ordered the new **[AeroLight 240 W to use beside the existing AW200](./aw200-and-aerolight-240w.md)**,
 with another E25. The two-light pair was installed September 13. The AW400

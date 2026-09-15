@@ -71,14 +71,14 @@ for a low-priority mixed planter.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                           |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Use the September 2 views as the visual baseline. Watch each component for collapse, translucence, pests, or poor rooting even though observations are saved against one planter.     |
-| Grow-light position | Start in a bright succulent zone after gradual acclimation. Use stretching, loss of compact form, bleaching, and red-edge change as observations—not as automatic light commands.     |
-| Water               | Judge the shared root volume by full dry-down and whole-pot weight. Water thoroughly and drain, but do not repeatedly wet the pot for one component while the others remain firm.     |
-| Pot and mix         | Exact size and composition are unrecorded. Maintain an open, rapidly draining mix; a decorative shared pot is not evidence that its drainage is adequate.                             |
-| Mixed growth        | Prune or separate only if one component begins shading, crowding, or demanding a materially different watering rhythm. Keep any future split linked back to this original P30 record. |
-| Feeding             | Use the collection's dilute succulent product only during an ordinary active-growth watering. A cheap retail mix does not need compensatory feeding during establishment.             |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                        |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Arrival             | Use the September 2 views as the visual baseline. Watch each component for collapse, translucence, pests, or poor rooting even though observations are saved against one planter.                                                                                                                                  |
+| Grow-light position | **Photo-matched front of rear zone, between #1 and #5 · Bright.** September 15 rear wooden tables, facing the window. Compare the low rosettes and paddle leaves for shadows from the large pots. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Water               | Judge the shared root volume by full dry-down and whole-pot weight. Water thoroughly and drain, but do not repeatedly wet the pot for one component while the others remain firm.                                                                                                                                  |
+| Pot and mix         | Exact size and composition are unrecorded. Maintain an open, rapidly draining mix; a decorative shared pot is not evidence that its drainage is adequate.                                                                                                                                                          |
+| Mixed growth        | Prune or separate only if one component begins shading, crowding, or demanding a materially different watering rhythm. Keep any future split linked back to this original P30 record.                                                                                                                              |
+| Feeding             | Use the collection's dilute succulent product only during an ordinary active-growth watering. A cheap retail mix does not need compensatory feeding during establishment.                                                                                                                                          |
 
 ## Rotation and watch points
 

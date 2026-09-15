@@ -1578,7 +1578,7 @@ function renderBooklet(profiles, placementHtml) {
     <nav class="drawer-nav" aria-label="Plant profiles">
       <a class="drawer-special" href="#cover" data-page-link="cover"><span>${renderSiteIcon("cactus")} Cover</span><small>Start of the guide</small></a>
       <a class="drawer-special" href="#contents" data-page-link="contents"><span>${renderSiteIcon("field-guide")} Table of Contents</span><small>All profiles at a glance</small></a>
-      <a class="drawer-special" href="#placement" data-page-link="placement"><span>${renderSiteIcon("layout")} Table Placement Guide</span><small>Four columns, six rows · All 30 pots</small></a>
+      <a class="drawer-special" href="#placement" data-page-link="placement"><span>${renderSiteIcon("layout")} Table Placement Guide</span><small>Four tables · All 30 pots</small></a>
       <a class="drawer-special" href="../layouts/plant-tracker.html"><span>${renderSiteIcon("tracker")} Plant tracker</span><small>Live weights, watering, and measurements</small></a>
       <a class="drawer-special" href="../layouts/grow-spot-layout.html"><span>${renderSiteIcon("layout")} Grow-spot layout</span><small>Tables, risers, light, fan, and camera</small></a>
       <a class="drawer-special" href="../layouts/indoor-acclimation-calendar.html"><span>${renderSiteIcon("calendar")} Acclimation calendar</span><small>Dated light and airflow schedule</small></a>
@@ -1610,7 +1610,7 @@ function renderBooklet(profiles, placementHtml) {
       <header class="contents-heading placement-heading">
         <p>The Fenton Collection · 30 Pots · Placement and Light</p>
         <h1 id="placement-title">Table Placement Guide</h1>
-        <span>Estimated relative light and proposed positions for the AW200 + AeroLight 240 W setup, with a phone-meter comparison and every pot grouped by light need. Four columns across, six rows down on wood; six pots on round glass.</span>
+        <span>September 15 four-table setup, photo-matched positions, estimated relative light and a phone-meter comparison. Six columns × four rows of small pots at the front; six larger/shared containers behind them.</span>
       </header>
       <div class="placement-copy prose">${placementHtml}</div>
     </section>

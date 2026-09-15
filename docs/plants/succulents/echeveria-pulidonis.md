@@ -43,13 +43,13 @@ pot or lowest leaves rather than polishing the rosette.
 
 ## Care in the shared planter
 
-| Topic                     | Practical approach                                                                                                                                                            |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position       | Brightest part of the succulent planter. Start around 10–18 mol/m²/day DLI, about 230–420 µmol/m²/s over 12 hours.                                                            |
-| Evidence behind the range | A 2026 study on other _Echeveria_ cultivars found 12.8 mol/m²/day produced more compact, better-performing plants than 4.8; it is guidance, not a species-specific threshold. |
-| Water                     | Soak the shared root zone only after it has dried. Keep water out of the rosette in cool, still conditions.                                                                   |
-| Competition               | Prevent the elephant bush and kalanchoes from shading or physically crowding the rosette.                                                                                     |
-| Feeding                   | Light dilute feeding in active growth. Excess fertilizer plus weak light opens the rosette.                                                                                   |
+| Topic                     | Practical approach                                                                                                                                                                                                                                                                                              |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position       | **Photo-matched rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Evidence behind the range | A 2026 study on other _Echeveria_ cultivars found 12.8 mol/m²/day produced more compact, better-performing plants than 4.8; it is guidance, not a species-specific threshold.                                                                                                                                   |
+| Water                     | Soak the shared root zone only after it has dried. Keep water out of the rosette in cool, still conditions.                                                                                                                                                                                                     |
+| Competition               | Prevent the elephant bush and kalanchoes from shading or physically crowding the rosette.                                                                                                                                                                                                                       |
+| Feeding                   | Light dilute feeding in active growth. Excess fertilizer plus weak light opens the rosette.                                                                                                                                                                                                                     |
 
 Red margins can intensify with useful light and normal mild stress. That is not
 the same as a bleached tan patch, translucent tissue, or a sharply scorched leaf

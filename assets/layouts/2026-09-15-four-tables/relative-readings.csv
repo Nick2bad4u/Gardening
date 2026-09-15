@@ -1,0 +1,31 @@
+Point,Label,Plant,Reading,Unit,Height above table (in),Time,Fixture settings / spectrum,Notes
+R1C1,D3,Ming Thing,,,,,,
+R1C2,E2,Peanut Hybrid,,,,,,
+R1C3,G1,Black Widow,,,,,,
+R1C4,D1,Dragon’s Egg,,,,,,
+R1C5,B3,Indigo Wave,,,,,,
+R1C6,F2,Boobie,,,,,,
+R2C1,A2,Feather Cactus,,,,,,
+R2C2,B2,Old Man of the Andes,,,,,,
+R2C3,H2,Raindrops,,,,,,
+R2C4,G3,Royal Flush,,,,,,
+R2C5,C3,Monk’s Hood,,,,,,
+R2C6,D2,Domino,,,,,,
+R3C1,A1,Variegated Moon,,,,,,
+R3C2,E1,Dwarf Old Man,,,,,,
+R3C3,H1,Coconut Crystal,,,,,,
+R3C4,A3,Serpent,,,,,,
+R3C5,C2,Rainbow Hedgehog,,,,,,
+R3C6,C1,Giant Chin,,,,,,
+R4C1,B1,Grass-Blade,,,,,,
+R4C2,E3,Woolly Nipple,,,,,,
+R4C3,G2,Paper Spine,,,,,,
+R4C4,H3,Eve’s Needle,,,,,,
+R4C5,F3,Yellow Tower,,,,,,
+R4C6,F1,Hook-Spined Pincushion,,,,,,
+Rear #1,#1,Shared Cacti,,,,,,Rear center
+Rear #2,#2,Shared Succulents,,,,,,"Rear right, toward window"
+Rear #3,#3,Money Tree,,,,,,"Back-left, closest to window"
+Rear #4,#4,Kiwi Aeonium,,,,,,"Rear left, in front of money tree"
+Rear #5,#5,Tiger Jaws,,,,,,"Rear right, in front of the square box"
+Rear #6,#6,Tiny Mixed Planter,,,,,,"Front of rear zone, between #1 and #5"

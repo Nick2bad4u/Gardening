@@ -43,13 +43,13 @@ retain scale.
 
 ## Care in the shared planter
 
-| Topic               | Practical approach                                                                                                       |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Grow-light position | Bright middle zone, about 8–16 mol/m²/day DLI or 185–370 µmol/m²/s averaged over 12 hours.                               |
-| Water               | Let the shared planter dry, then soak and drain. Hairy leaves do not benefit from frequent misting.                      |
-| Light response      | Healthy light produces sturdy stems and well-spaced, densely silver leaves. Abrupt hot sun can scorch despite the hairs. |
-| Pruning             | Cut above a leaf node to branch the plant and keep it from shading the echeveria.                                        |
-| Feeding             | Light fertilizer during warm active growth only.                                                                         |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                              |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Photo-matched rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Water               | Let the shared planter dry, then soak and drain. Hairy leaves do not benefit from frequent misting.                                                                                                                                                                                                             |
+| Light response      | Healthy light produces sturdy stems and well-spaced, densely silver leaves. Abrupt hot sun can scorch despite the hairs.                                                                                                                                                                                        |
+| Pruning             | Cut above a leaf node to branch the plant and keep it from shading the echeveria.                                                                                                                                                                                                                               |
+| Feeding             | Light fertilizer during warm active growth only.                                                                                                                                                                                                                                                                |
 
 A controlled study of six other _Kalanchoe_ species found better dry mass and
 flowering at 8.6–17.2 mol/m²/day than at 4.3. It supports a bright starting

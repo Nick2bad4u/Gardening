@@ -1,12 +1,8 @@
 # AW200 + AeroLight 240 W — Installed Horizontal Pair
 
-Updated September 13, 2026. The owner has hung the **AW200 and new AeroLight
-240 W** as two horizontal fixtures, leveled them further after the supplied photographs,
-and applied the latest plant arrangement. The confirmed settings are
-**AW200 at 45%** and **AeroLight 240 W at 38%**.
-The owner confirms an **18-inch (45.7 cm) LED-to-plant-tip reference** and the
-same **13 h 15 m total daily cycle** for both lights, including **15 minutes
-of sunrise at the start and 15 minutes of sunset at the end**.
+Updated September 15, 2026. The owner installed the **AW200 + AeroLight 240 W** pair on September 13 and subsequently leveled the lights. On September 15 the owner added two tables and rearranged the pots; current positions are photo-matched in the placement guide.
+
+The last reported settings are **AW200 45%** and **AeroLight 240 W 38%**, an **18-inch (45.7 cm) LED-to-plant-tip reference**, and **13 h 15 m total daily cycle** including **15 minutes of sunrise and 15 minutes of sunset**. The new photos do not remeasure controller settings, fixture centers or current individual clearances.
 
 This supersedes the [unavailable AW400 selection](./vivosun-aw400.md) and
 [canceled AW400SE order](./vivosun-aw400se.md). Reusing the AW200 costs the owner
@@ -51,7 +47,7 @@ No controller program was remotely changed for this update.
 
 ## Recommended Starting Decision
 
-**Keep AW200 at 45% and AeroLight 240 W at 38% for the first comparison.** The September 14 relative-light revision proposes gentler left corners for D3 and F2, clearer interior positions for stronger-light priorities, and an inward shoulder for Kiwi. It supersedes the earlier F2/E3-only refinement; the proposed coordinates are not a record of completed moves.
+**Keep AW200 at 45% and AeroLight 240 W at 38% for the first comparison of the four-table arrangement.** The September 15 photo-matched positions replace the old proposed swaps; do not carry the glass-spill gradient into the current plan.
 The confirmed 18-inch reference supports retaining this starting setup while
 checking actual plant exposure; the photograph cannot provide PPFD.
 
@@ -80,33 +76,15 @@ The [new-model manual][new-manual] requires the growing space to stay **below
 86°F (30°C)** during operation. Recheck room temperature with both fixtures
 running; circulation fans do not establish that the room stays below this limit.
 
-## Coverage and Final Plant Positions
+## Coverage and Current Plant Positions
 
-Keep the **24 pots on wood in four columns by six rows**, and the **six containers
-on the 24-inch round glass table**. The shared succulent planter remains a
-square wooden box. The [Table Placement Guide](../layouts/table-placement-research.md)
-records every current recommended position and its exposure priority.
+Four **16 × 13-inch wooden tables** now support the photographed collection. The working footprint is **26 inches across × 32 inches toward the window**, inferred as a 2 × 2 block before gaps. The front pair holds the 24 small pots in six columns × four rows; the rear pair holds the six larger/shared containers. The square shared succulent box remains square, and the glass table is no longer part of the pictured placement.
 
-The owner's September 13 markup corrects the fixture orientation: both lights'
-approximately **26-inch long axes run left/open room to right/glass**, one above
-the other in the bird's-eye view. The upper fixture reaches across the upper
-wooden half toward glass; the lower fixture does the same below it. The owner
-has not specified which model is upper versus lower.
+The [placement guide](../layouts/table-placement-research.md) faces the window: **window top, open room bottom, Mylar left, white wall right**. The current photographs crop the fixtures, so exact centers and which model occupies each position remain unverified. Do not transfer the old one-inch end margins, ½–1-inch gap, wood/glass boundary or relative-light gradient to this larger block as confirmed facts.
 
-Each 26-inch length runs across a target of about **28 inches of wood plus the
-near half of glass before furniture gaps**. The two short dimensions together
-span about **25.9 inches top-to-bottom before a fixture gap**, beside the nominal
-26-inch wooden depth. Those dimensions do not prove full or even illumination.
-The owner has hung and leveled the fixtures. The September 14 clarification describes nearly full wooden coverage, approximately one-inch outer top/bottom margins in the marked-up view, and only a **½–1-inch gap** between fixtures. These are approximate owner observations; exact centers and plant-level exposure remain unmeasured. The dimension arithmetic above and the sketch should not be combined into a falsely precise scale drawing.
+Each fixture is about 26 × 13 inches. Adjacent bodies would occupy roughly 26 × 26 inches before their gap, compared with the inferred 26 × 32-inch furniture block. Light spreads beyond a fixture outline, but body dimensions do not prove adequate or uniform illumination. Preserve adjustable independent suspension and unobstructed fans. Recheck the tallest #1 tips, money-tree leaves and low rosettes if furniture or fixture positions changed; the earlier 18-inch reference is not a measurement at every plant.
 
-Prioritize clear exposure at each plant's growing surface, including the low rosettes and near-glass plants. Keep Ming Thing at the open-left corner, the small Boobie at proposed R6C1, and the money tree on outer glass, while treating gentler exposure there as an inference to check.
-At the reported height, spill from the two panels is expected to fill across their small gap. Compare any local peak or dip, but do not depict a dark seam or presume the central rows are brightest. Different heights
-can improve clearance for tall cacti while changing exposure for their neighbors.
-Keep the separate hangers adjustable and the fans unobstructed.
-
-The **two-foot room-end return reflector stays out of the plan**. The open view
-is part of the setup: **open room left, Diamond Mylar divider top, white wall
-bottom, weak north-facing window right**. Window light remains supplementary.
+The photo-matched D3 and F2 front corners are plausible gentler positions; Mylar and the wall can keep either side bright. Compare B3 at the front against stronger interior exposure, and compare low H1 against shadows from nearby tall plants. The rear group requires leaf- and tip-height comparisons rather than a universal weaker-glass assumption. The two-foot return reflector stays out of the display.
 
 ## Independent Ceiling Hooks
 

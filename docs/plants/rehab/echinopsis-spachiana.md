@@ -40,13 +40,13 @@ it is also used as grafting stock for slower or chlorophyll-deficient cacti.
 
 ## Rehabilitation and grow-light care
 
-| Topic               | Practical approach                                                                                                         |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| Current status      | The tip is green and alive. Existing lean and narrow low-light growth are permanent history; evaluate only new growth.     |
-| Grow-light position | Bright high-light zone after acclimation: about 12–22 mol/m²/day DLI, or 280–510 µmol/m²/s over 12 hours.                  |
-| Outdoor light       | Increase direct sun gradually. A month of bright outdoor shade provides a head start but is not equivalent to all-day sun. |
-| Water               | Soak and drain after the planter dries in warm growth. Keep cool roots dry.                                                |
-| Support             | A weak old section may need a loose stake while stronger new growth develops; do not cinch wire against the skin.          |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                                       |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Current status      | The tip is green and alive. Existing lean and narrow low-light growth are permanent history; evaluate only new growth.                                                                                                                                                                                                   |
+| Grow-light position | **Photo-matched rear center · Mixed.** September 15 rear wooden tables, facing the window. Compare both tall columns and trailing monkey tail; pale tissue and short neighbors need separate attention. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Outdoor light       | Increase direct sun gradually. A month of bright outdoor shade provides a head start but is not equivalent to all-day sun.                                                                                                                                                                                               |
+| Water               | Soak and drain after the planter dries in warm growth. Keep cool roots dry.                                                                                                                                                                                                                                              |
+| Support             | A weak old section may need a loose stake while stronger new growth develops; do not cinch wire against the skin.                                                                                                                                                                                                        |
 
 A healthy new column should maintain or increase diameter and develop stronger,
 more compact spine rows. Rotating the planter occasionally can balance indoor

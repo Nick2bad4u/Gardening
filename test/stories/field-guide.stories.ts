@@ -75,7 +75,7 @@ export const PlacementGuide: Story = {
             canvas.getByRole("img", { name: /^Estimated relative-light map/v })
         ).toHaveAttribute(
             "src",
-            "../../assets/layouts/2026-09-14-relative-light/estimated-light-map.png"
+            "../../assets/layouts/2026-09-15-four-tables/estimated-light-map.png"
         );
         await expectNoOverflow(document);
         await userEvent.click(

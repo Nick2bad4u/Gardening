@@ -47,13 +47,13 @@ visual match.
 
 ## Rehabilitation and grow-light care
 
-| Topic               | Practical approach                                                                                                                                                        |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | Bright middle-to-high zone, but keep the pale side away from the absolute hotspot at first. Work toward roughly 12–22 mol/m²/day DLI, or 280–510 µmol/m²/s over 12 hours. |
-| Current status      | Living green tip and ribs are visible. Old scars, lean, and color boundaries will not disappear; judge the next band of growth.                                           |
-| Water               | During warm active growth, soak and drain after the mixed planter dries. Keep much drier in cool slow conditions.                                                         |
-| Temperature         | A warm-growing Brazilian cactus; protect from frost and cold wet roots.                                                                                                   |
-| Space               | A healthy column eventually needs its own stable, deeper pot rather than permanent competition in a shallow mixed bowl.                                                   |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                                       |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Grow-light position | **Photo-matched rear center · Mixed.** September 15 rear wooden tables, facing the window. Compare both tall columns and trailing monkey tail; pale tissue and short neighbors need separate attention. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Current status      | Living green tip and ribs are visible. Old scars, lean, and color boundaries will not disappear; judge the next band of growth.                                                                                                                                                                                          |
+| Water               | During warm active growth, soak and drain after the mixed planter dries. Keep much drier in cool slow conditions.                                                                                                                                                                                                        |
+| Temperature         | A warm-growing Brazilian cactus; protect from frost and cold wet roots.                                                                                                                                                                                                                                                  |
+| Space               | A healthy column eventually needs its own stable, deeper pot rather than permanent competition in a shallow mixed bowl.                                                                                                                                                                                                  |
 
 Variegated tissue has less chlorophyll. The green sectors must carry more of the
 photosynthetic load, while the pale sectors can burn sooner. A bright setting

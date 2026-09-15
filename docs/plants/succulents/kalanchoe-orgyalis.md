@@ -44,13 +44,13 @@ felt on that old leaf.
 
 ## Care in the shared planter
 
-| Topic               | Practical approach                                                                                         |
-| ------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Grow-light position | Bright middle zone, roughly 8–17 mol/m²/day DLI or 185–395 µmol/m²/s over 12 hours.                        |
-| Outdoor light       | Full sun to partial shade is possible after acclimation; very hot abrupt sun can still burn felted leaves. |
-| Water               | Soak the dry shared planter and drain. Reduce water when growth slows, especially in cool conditions.      |
-| Pruning             | Head back tall stems above a node to create branches and keep the mixed planting balanced.                 |
-| Feeding             | Dilute balanced fertilizer in active growth; avoid forcing weak winter stems.                              |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                              |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Photo-matched rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Outdoor light       | Full sun to partial shade is possible after acclimation; very hot abrupt sun can still burn felted leaves.                                                                                                                                                                                                      |
+| Water               | Soak the dry shared planter and drain. Reduce water when growth slows, especially in cool conditions.                                                                                                                                                                                                           |
+| Pruning             | Head back tall stems above a node to create branches and keep the mixed planting balanced.                                                                                                                                                                                                                      |
+| Feeding             | Dilute balanced fertilizer in active growth; avoid forcing weak winter stems.                                                                                                                                                                                                                                   |
 
 More light often deepens copper color and keeps internodes short. Color alone is
 not a meter, however: genetics, leaf age, temperature, and water status all

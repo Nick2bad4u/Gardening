@@ -1,24 +1,14 @@
 # Grow-spot diagrams
 
-Last updated: 2026-09-14
+Last updated: 2026-09-15
 
-The [Table Placement Guide](./table-placement-research.md) reviews all 30 pots
-against their light needs and current container evidence. It uses the corrected
-**four-column by six-row** wooden grid, a **square wooden shared succulent box**,
-and the weak **north-facing window on the right**. It includes separate wooden,
-glass, and combined illustrations for the **retained AW200 beside the new
-AeroLight 240 W**, with coverage intended over all wood and the near half of glass.
-The [two lights](../equipment/aw200-and-aerolight-240w.md) were hung September 13,
-with AW200 at 45% and AeroLight 240 W at 38%, and the owner reports applying
-this layout.
-The owner confirms an 18-inch plant-tip reference and the same 13 h 15 m total
-cycle for both lights, including 15-minute sunrise and sunset transitions at
-the start and end. The September 14 relative-light revision adds an estimated map, a proposed grid with D3 and F2 at the two left corners, clearer interior positions for stronger-light priorities, and an inward Kiwi position. The owner reports nearly full wooden coverage and only a ½–1-inch fixture gap. Use the [phone comparison and blank reading sheet](./table-placement-research.md#compare-the-plan-with-a-phone-meter) to test the pattern; differences across wood may be modest. The [complete placement review](../two-light-placement-review.md) preserves the evidence and uncertainty for every pot.
-The **two-foot return panel stays out**, leaving the room end open; divider
-Mylar stays. Final positions remain grouped by ongoing light need, and the
-plan distinguishes intended coverage from unmeasured actual exposure.
-Read it [immediately after the online booklet contents](https://nick2bad4u.github.io/Gardening/#placement)
-or open the [placement illustrations](https://nick2bad4u.github.io/Gardening/layouts/grow-spot-layout.html#researched-placement).
+The [Table Placement Guide](./table-placement-research.md) records the new **four wooden tables**: **six columns × four rows** of small pots at the front, with six larger/shared containers behind them. The working 26 × 32-inch block is inferred from the photos before gaps. The current view puts **north window top, room bottom, Mylar left and white wall right**. The former round-glass placement is historical.
+
+The guide includes an estimated relative-light map, front and rear diagrams, a combined view, all 30 photo-matched positions, and a [blank phone-reading sheet](./table-placement-research.md#compare-the-plan-with-a-phone-meter). Labels and current intensity remain to be checked. The [full review](../two-light-placement-review.md) preserves species evidence and explains why front corners, low rosettes and rear shadows should be compared.
+
+The [installed AW200 + AeroLight 240 W](../equipment/aw200-and-aerolight-240w.md) retain their last reported 45% / 38%, shared 13 h 15 m total cycle including 15 m sunrise and 15 m sunset, and 18-inch tip reference. The new photos do not remeasure fixture centers or clearances. The room-facing end stays open without the two-foot reflector.
+
+Read the guide [immediately after the booklet contents](https://nick2bad4u.github.io/Gardening/#placement), or open the [placement gallery](https://nick2bad4u.github.io/Gardening/layouts/grow-spot-layout.html#researched-placement).
 
 Open the [daily report](./daily-report.html) for the latest published watering
 mixes, quick list, and per-pot evidence. The [daily report guide](../daily-reports/README.md)
@@ -76,13 +66,15 @@ temperature/RH readings, natural daylight context, and September seasonal
 timer.
 
 Open [grow-spot-layout.html](./grow-spot-layout.html) in a browser for the
-current placement proposal and historical room, height, fan, camera, and riser diagrams.
+September 15 four-table placement and historical room, height, fan, camera, and riser diagrams.
 Its views are tabbed and its theme choice is shared with the calendar. Hover,
 tap, or keyboard-focus any plant marker to reveal its common and botanical
 names, inventory record, label status, origin, placement, identification
 status, and field-guide link.
 
-Below the final placement recommendations, the older measured diagrams retain this
+The current guide uses a six-column/four-row front grid, six rear containers on wood, and a new relative-light comparison sheet. Its 26 × 32-inch footprint is photo-inferred. The old 4-column/6-row and round-glass coordinates are superseded.
+
+Below the current placement section, the older measured diagrams retain this
 earlier working arrangement for reference:
 
 - the occupied bay is 36 in wide by about 60 in long;

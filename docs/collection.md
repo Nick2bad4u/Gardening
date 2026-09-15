@@ -45,6 +45,8 @@ The collection IDs and inventory remain the same.
 
 ## Collection setup history
 
+On **2026-09-15**, the owner added two 16 × 13-inch tables and rearranged the collection onto four wooden tables. The [current guide](./layouts/table-placement-research.md) records a photo-matched six-column/four-row small-pot grid at the front and six containers behind it. The working 26 × 32-inch footprint is inferred before gaps; exact table height and fixture centers remain unmeasured. This furniture and placement change does not alter inventory IDs, shared-container membership, pot setups, or watering references.
+
 The plant inventory and the care configuration are separate records. On
 2026-08-14 the owner reported three changes to the cactus setup:
 
@@ -126,7 +128,7 @@ evidence; the working identification is still _Cereus forbesii_ 'Ming Thing'.
 These four plants share a **square wooden box** with weathered gray-brown sides,
 confirmed by the owner and collection photographs. Its outside side length and
 height remain unmeasured. The [Table Placement Guide](./layouts/table-placement-research.md)
-shows its proposed position on the 24-inch round glass table.
+shows its photo-matched rear-right position on the September 15 wooden tables; it remains a square wooden box.
 The species-level IDs are
 strong working matches, but cultivar names should stay provisional without
 labels or flowers. The complete planter was acquired from Gerych's Greenhouse

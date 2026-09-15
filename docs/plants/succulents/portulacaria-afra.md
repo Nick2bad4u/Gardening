@@ -55,13 +55,13 @@ top-dressing exposure.
 
 ## Care in the shared planter
 
-| Topic               | Practical approach                                                                                                                                      |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | Bright middle zone, roughly 8–17 mol/m²/day DLI or 185–395 µmol/m²/s over 12 hours. A golden form may prefer the lower half.                            |
-| Water               | Water thoroughly once the shared planter dries. During warm active growth it may use water sooner than the cacti, but its leaves store a useful buffer. |
-| Pruning             | Pinch or cut long stems above a leaf pair to keep the echeveria unshaded and encourage branching.                                                       |
-| Temperature         | Warm growth is fastest; protect this African succulent from frost.                                                                                      |
-| Feeding             | Sparse balanced fertilizer during active growth. Too much produces long, fragile internodes.                                                            |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                              |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Photo-matched rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Water               | Water thoroughly once the shared planter dries. During warm active growth it may use water sooner than the cacti, but its leaves store a useful buffer.                                                                                                                                                         |
+| Pruning             | Pinch or cut long stems above a leaf pair to keep the echeveria unshaded and encourage branching.                                                                                                                                                                                                               |
+| Temperature         | Warm growth is fastest; protect this African succulent from frost.                                                                                                                                                                                                                                              |
+| Feeding             | Sparse balanced fertilizer during active growth. Too much produces long, fragile internodes.                                                                                                                                                                                                                    |
 
 Strong compact growth has short gaps between leaf pairs. Long bare reaches and
 small widely spaced leaves point to inadequate light. A little red edging or

@@ -90,7 +90,7 @@ for (const theme of ["dark", "light"] as const) {
         );
 
         test(
-            "keeps the four-column six-row placement and full-size image links within the viewport",
+            "keeps the six-column four-row placement and full-size image links within the viewport",
             { tag: "@layout" },
             async ({ page }) => {
                 await openGuide(page, theme, "placement");
@@ -141,38 +141,34 @@ for (const theme of ["dark", "light"] as const) {
                     labels: [
                         [
                             "D3",
-                            "A2",
+                            "E2",
                             "G1",
-                            "B1",
+                            "D1",
+                            "B3",
+                            "F2",
                         ],
                         [
-                            "A3",
+                            "A2",
                             "B2",
-                            "E1",
-                            "C2",
+                            "H2",
+                            "G3",
+                            "C3",
+                            "D2",
                         ],
                         [
                             "A1",
-                            "H2",
+                            "E1",
                             "H1",
-                            "G2",
-                        ],
-                        [
-                            "D1",
-                            "G3",
-                            "B3",
-                            "H3",
-                        ],
-                        [
-                            "E2",
-                            "C3",
-                            "E3",
-                            "F3",
-                        ],
-                        [
-                            "F2",
-                            "D2",
+                            "A3",
+                            "C2",
                             "C1",
+                        ],
+                        [
+                            "B1",
+                            "E3",
+                            "G2",
+                            "H3",
+                            "F3",
                             "F1",
                         ],
                     ],

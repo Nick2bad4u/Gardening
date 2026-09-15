@@ -1,16 +1,8 @@
 # GrowCam C4 time-lapse and reflector plan
 
-Last updated: 2026-09-11
+Last updated: 2026-09-15
 
-The owner is keeping the **AW200** beside the incoming
-[AeroLight 240 W](./aw200-and-aerolight-240w.md), with its E25 expected
-September 13. The AW400 selection is superseded after it was reported sold out.
-**Keep the existing divider Mylar and leave the room-facing end open.**
-The two-foot return panel stays out of the plan. In the bird's-eye view:
-divider top, open room left, white wall bottom, weak north window right.
-Recheck camera sightlines around both fixtures and their separate hangers.
-Final mounting, independent light heights, and camera clearance
-remain unconfirmed.
+The **AW200 + AeroLight 240 W** pair was installed September 13. The owner added two more 16 × 13-inch tables and rearranged the display September 15; see the [current four-table guide](../layouts/table-placement-research.md). Its diagram faces the window: Mylar left, white wall right, window top, open room bottom. The two-foot return panel remains absent. Keep the camera view clear of both fixtures and hangers; the old room framing and riser geometry below are a dated reference, not measurements of the new furniture.
 
 This guide keeps the GrowCam C4 and divider Mylar around an open plant display.
 The camera is for a stable collection-wide time-lapse, not close-up diagnosis

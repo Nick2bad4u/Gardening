@@ -1,5 +1,7 @@
 # Fenton AW200SE, paired-fan, GrowCam, and air-treatment operating schedule
 
+> Historical equipment/arrangement record. The September 15 display uses [four wooden tables with the installed AW200 + AeroLight 240 W](../layouts/table-placement-research.md). Table placement and coverage drawings below do not describe that current arrangement.
+
 Last updated: 2026-09-13
 
 ## September 13 AW200 + AeroLight 240 W Installation

@@ -5,13 +5,9 @@
 This is my low-pressure garden notebook. The current focus is my cactus,
 succulent, and small houseplant collection, especially learning how to use the
 indoor grow-light setup without turning the hobby into a science project.
-The AW200 and new AeroLight 240 W were hung on September 13 as two horizontal
-fixtures, one above the other in the bird's-eye plan, running from wood toward glass,
-with AW200 at 45%, AeroLight 240 W at 38%, and an open room-side view. The owner
-applied the September 13 layout and confirms an 18-inch plant-tip reference. The September 14 relative-light plan proposes revised positions and a phone-meter comparison; completed moves are not assumed.
-Both lights share a 13 h 15 m total cycle, including 15-minute sunrise and sunset
-transitions at the start and end. See the [installed setup record](docs/equipment/aw200-and-aerolight-240w.md)
-for the confirmed program and plant-level exposure checks.
+The owner added two more 16 × 13-inch tables on September 15. The [current four-table guide](docs/layouts/table-placement-research.md) records 24 small pots in a six-column/four-row front grid, six larger/shared containers behind them, and an inferred 26 × 32-inch wooden footprint. Its new relative-light map is a hypothesis to compare with phone readings; the former round-glass layout is historical.
+
+The installed AW200 and AeroLight 240 W remain at their last reported 45% and 38%, with an 18-inch tip reference and a shared 13 h 15 m total cycle including 15-minute sunrise and sunset transitions. Current fixture centers and clearances over the new tables are unmeasured. See the [equipment record](docs/equipment/aw200-and-aerolight-240w.md).
 
 ## Current notes
 

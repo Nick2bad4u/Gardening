@@ -1,6 +1,6 @@
 # Setup and equipment
 
-Last updated: 2026-09-14
+Last updated: 2026-09-15
 
 ## Current routine
 
@@ -15,54 +15,23 @@ starting points, but plant response matters more than chasing an exact number.
 
 ## Controlled indoor setup
 
-**September 13 installed setup:** the owner has hung the existing **AW200**
-beside the new **[AeroLight 240 W
-(VSL-AL240)](./equipment/aw200-and-aerolight-240w.md)**, with independent
-suspension, and leveled them further after the photographs. The AW400 selection
-and canceled AW400SE order remain equipment history.
+**September 15 table update:** the owner added two more **16 × 13-inch tables** and rearranged all 30 tracked pots onto the wooden display shown in the new photos. The working interpretation is four tables in a **2 × 2 block, nominally 26 inches across × 32 inches toward the window**, with **24 small pots in six columns × four rows at the room end** and the six larger/shared containers behind them. Table orientation and gaps have not been tape-checked; the new tables' height is unmeasured. The glass table no longer supports the photographed collection; its other use is unrecorded.
 
-The confirmed settings are **AW200 at 45%** and **AeroLight 240 W at 38%**.
-The owner confirms an **18-inch LED-to-plant-tip reference**
-and the same **13 h 15 m total daily cycle** for both lights, including
-**15 minutes of sunrise and 15 minutes of sunset** at the start and end.
-Exact clock times and individual plant-tip distances are not mapped.
-Keep the present settings for the first phone-meter comparison. The September 14 relative-light revision proposes gentler left corners for D3 and F2, clearer interior positions for stronger-light priorities, and an inward shoulder for Kiwi. It supersedes the earlier F2/E3-only refinement; the proposed coordinates are not a record of completed moves.
+The current diagram faces the window: **north window top, open room bottom, Mylar left, white wall right**. This rotates the old schematic view without changing the room. The two-foot end reflector remains absent. See the [current placement guide](./layouts/table-placement-research.md) for all photo-matched slots, the estimated relative-light map and the phone comparison. Old proposed swaps and the glass-spill gradient are historical.
 
-The [new 240 W manual](https://vivosun.com/support/guide/aerolight-gen2) requires
-the growing space to stay **below 86°F (30°C)** during operation. Check room
-temperature with both fixtures running after installation.
+The **AW200 at 45%** and **AeroLight 240 W at 38%**, shared **13 h 15 m total cycle** including **15 m sunrise and 15 m sunset**, **18-inch plant-tip reference** and four independent ceiling hooks remain the last reported operating record. The September 15 photos do not remeasure controller settings, exact fixture centers or individual clearances. The previous one-inch table margins and ½–1-inch fixture gap must not be transferred to the new footprint as verified geometry.
 
-The **approximately two-foot Mylar return panel stays out of the plan** to keep
-the room-side view open. In the bird's-eye view: **open room left, Diamond
-Mylar divider top, white wall bottom, weak north-facing window right**.
-
-The owner reported applying the September 13 layout. The target remains **all 24 pots
-on wood and roughly the nearer half of glass**.
-Wood stays **four columns across and six rows down**; the round glass table
-is 24 inches across and holds six containers. Shared succulent planter `#2`
-is a **square wooden box**. The [Table Placement Guide](./layouts/table-placement-research.md)
-records all 30 proposed spots and light needs, with an estimated light map and three arrangement
-illustrations [after the booklet contents](https://nick2bad4u.github.io/Gardening/#placement).
-Both fixture long axes run left/open room to right/glass, one above the other
-in the bird's-eye plan. The outlines are schematic; spacing and exposure remain
-unmeasured. The owner's latest sketch places the fixtures over nearly all the wood, with about an inch at the outer top/bottom ends and a ½–1-inch inter-fixture gap. These are approximate observations, not a measured scale plan. The September 14 illustrations show proposed changes pending a relative-light comparison.
-
-The [two-light equipment note](./equipment/aw200-and-aerolight-240w.md) records
-manufacturer specifications and the revised mounting plan: **four ceiling
-hooks, two per light**, with each fixture suspended independently. Installation
-and an 18-inch plant-tip reference are confirmed. The [AW200SE guide](./equipment/vivosun-aw200se.md)
-and [dated operating schedule](./equipment/aw200se-operating-schedule.md) retain
-the earlier light maps and move-in history.
+The [new 240 W manual](https://vivosun.com/support/guide/aerolight-gen2) requires the growing space below **86°F (30°C)** during operation. Keep the existing settings for the first comparison; furniture dimensions alone do not justify increasing output. The [equipment record](./equipment/aw200-and-aerolight-240w.md) separates the installed pair from canceled AW400/AW400SE choices.
 
 | Item                     | Current equipment                                                                                                                                                                                                                                                                                                                                                                        |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Light transition         | [Installed AW200 + AeroLight 240 W](./equipment/aw200-and-aerolight-240w.md), hung September 13; two horizontal fixtures, one above the other, long axes from wood toward glass; independent suspension                                                                                                                                                                                  |
+| Light transition         | [AW200 + AeroLight 240 W](./equipment/aw200-and-aerolight-240w.md), installed September 13; new four-table arrangement September 15; exact current fixture centers unmeasured                                                                                                                                                                                                            |
 | Controllers              | Four planned independent E25 paths: AW200, AeroLight 240 W, and two AeroWave E6 Gen2 fans. Separate light percentages are reported; the new controller configuration has not been inspected                                                                                                                                                                                              |
 | Location                 | Fenton, Michigan                                                                                                                                                                                                                                                                                                                                                                         |
 | Mount                    | Four ceiling hooks, two per fixture; each light suspended independently with separate adjustable hangers. Installed September 13; owner-reported 18-inch plant-tip reference                                                                                                                                                                                                             |
-| Tables                   | Two 16 × 13-inch wooden tops in the four-column/six-row plan, beside a 24-inch round glass table; all 18 inches high                                                                                                                                                                                                                                                                     |
+| Tables                   | Four 16 × 13-inch wooden tops, inferred 2 × 2 block / nominal 26 × 32-inch footprint before gaps. Earlier tops were 18 inches high; new-table height unmeasured. All 30 photographed pots are on wood.                                                                                                                                                                                   |
 | Rated power              | AW200 200 W + AeroLight 240 W = 440 W rated total; actual dimmed consumption unmeasured                                                                                                                                                                                                                                                                                                  |
-| Advertised coverage      | 240 W manufacturer claim: 4 × 2 ft. Combined open-room target: all wood and near half of glass; actual distribution unmeasured                                                                                                                                                                                                                                                           |
+| Advertised coverage      | 240 W manufacturer claim: 4 × 2 ft. Current target: four wooden tables; actual coverage and distribution unmeasured.                                                                                                                                                                                                                                                                     |
 | Manufacturer PPFD figure | No plant-height readings for the two-light arrangement. Earlier AW200SE maps remain historical                                                                                                                                                                                                                                                                                           |
 | Dimming                  | Both manuals list app 25–100% and off. Independent settings confirmed: AW200 45%, AeroLight 240 W 38%                                                                                                                                                                                                                                                                                    |
 | Cross-canopy fans        | Two [VIVOSUN AeroWave E6 Gen2](https://vivosun.com/en-US/vivosun-aerowave-e6-6-inch-clip-on-fan-compatible-with-growhub-e42-e25-p140926625940348007-v140926625940348006) units, each with its own E25, aimed from opposite ends of the black divider. The second is clipped high and aimed slightly downward. Each fan is rated 12 W and up to 320 CFM, with 90° horizontal oscillation. |
@@ -91,14 +60,15 @@ Both canopy fans are now mounted on the black divider pole and approach the
 plant run from opposing directions. Offset their vertical angles and
 oscillation arcs so their moving air crosses the canopy without forming one
 constant wind tunnel or making the fans fight directly into each other. Start
-both E6 units at Level 1–2, use the tissue test across all three surfaces, and
+both E6 units at Level 1–2, check gentle airflow across the new four-table display, and
 keep both daily programs inside the light window. The second fan is clipped
 high on the room-end divider pole and points slightly downward; exact hub
 heights and plant clearances remain measurements to record. See the
 [paired-fan program and placement rules](./equipment/aw200se-operating-schedule.md#paired-canopy-fan-program).
 
-The historical July 31/August layout below predates the corrected September
-grid and September 11 two-light plan. It is retained as a measurement record.
+## Historical Room and Measurement Record
+
+The July 31/August layout below predates the September 15 four-table arrangement. It is retained as a measurement record.
 That earlier measurement set established a 36 in wide by approximately 60 in
 long bay, and the August expansion adds a second identical wooden table. All
 three surfaces are 18 in high. The 24 in round glass table occupies the window
@@ -110,15 +80,14 @@ and leg interference. Treat that as access clearance, not an appliance bay.
 
 That earlier layout kept A1–D3 in a measured three-column by four-row grid.
 The second wooden table provisionally held the six August cacti, `#4` Kiwi
-aeonium, and `#3` money tree. The corrected September proposal above replaces
-that placement reference with 24 pots on wood and six on glass. The
+aeonium, and `#3` money tree. The September 15 four-table arrangement above supersedes both that layout and the later 24-on-wood/six-on-glass plan. The
 [GrowCam and reflector plan](./equipment/growcam-c4-and-reflector.md)
 retains the dated camera geometry and now keeps the room end open: line the
 black divider first, leave the white wall uncovered, and
 mount the camera rigidly on the right wall so it looks diagonally toward the
 divider instead of directly into the window.
 
-The [browser grow-spot diagrams](./layouts/grow-spot-layout.html) show the room,
+The dated lower [browser grow-spot diagrams](./layouts/grow-spot-layout.html) retain the former room,
 all three tabletops, A1–D3, E1–F3, and `#1`–`#4` plant or planter IDs,
 assigned original-table risers, light clearance, fan sweep, camera view,
 provisional open-room air-treatment
