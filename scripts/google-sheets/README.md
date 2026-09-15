@@ -34,6 +34,43 @@ overwritten. The bound Apps Script in
 
 ## Current production baseline
 
+### Current observation times (5.23.1)
+
+Published September 15, 2026 as immutable Apps Script **version 89** at the
+existing phone URL. All three immutable source files match the release, and the
+authenticated app reports **Connected · logger 5.23.1**. Logger and AppSheet
+intake verification succeeded without a schema migration; queue installation
+replaced one predecessor with exactly one five-minute Head trigger.
+
+The native backup **Garden Plant Tracker — before current-time logger fix
+5.23.1 — 2026-09-15** is in **Archive → Garden Plant Tracker Backups**.
+Production verification preserved all **886 observations**, **886 unique
+Observation IDs**, **819 distinct Request IDs**, all **115 chart IDs and
+titles**, and the checked History, model, and AppSheet cells. Integrity still
+reports **0 formula errors**. Historical Water times remain unchanged.
+
+Validation passed **923 unit tests**, including **779 logger tests** and 14 new
+timing regressions. Logger server coverage remains **99.7% of lines** and
+**98.17% of branches**. Types, lint, formatting, HTML, and secret checks passed.
+
+Single-entry and bulk-care **Observed at** fields now follow the current device
+time until the entry is saved or queued. Leaving the page open no longer assigns
+later care to the page-opening time. Editing the date fixes that chosen time;
+**Use current time** returns the field to automatic timing. The hint identifies
+which behavior applies, and automatic fields refresh each minute and when the
+page resumes.
+
+Queuing captures the observation time immediately. Uploading that queue later,
+retrying a save, or recovering a pending entry after a reload preserves the
+original instant and request ID, including seconds hidden by the minute-level
+date control. A local-storage failure does not leave a falsely pending entry
+that prevents a later save. The **Recorded** column still identifies when Google
+saved the observation.
+
+This interface fix does not rewrite historical event times or change the
+drying detector. Correct an affected Water event using its actual care time;
+retain valid pre-water measurements in their original sequence.
+
 ### Improved drying detector (5.23.0)
 
 Published September 14, 2026 as immutable Apps Script **version 88** at the
@@ -1568,7 +1605,7 @@ installable trigger is not required.
 
 ## Logging behavior
 
-- Editing Event, Weight, Height, Width, Plant condition, or Notes stamps
+- In the spreadsheet's Quick log, editing Event, Weight, Height, Width, Plant condition, or Notes stamps
   `Started at` once. You can edit that timestamp before saving a backdated
   observation.
 - One Save can append several event-specific rows. For example, `Water` plus a

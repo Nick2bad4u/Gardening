@@ -1,6 +1,6 @@
 # Spreadsheet and Logger Actions
 
-Updated: 2026-09-14. This guide describes the checked-in logger 5.22.1 entry contract and the documented AppSheet bridge. It explains what can be recorded; it is not a checklist of chores to perform daily.
+Updated: 2026-09-15. This guide describes the checked-in logger 5.23.1 entry contract and the documented AppSheet bridge. It explains what can be recorded; it is not a checklist of chores to perform daily.
 
 Read alongside the [watering strategy](./watering-strategy.md), [weighing strategy](./weighing-strategy.md), and [operator runbook](../scripts/google-sheets/README.md).
 
@@ -21,6 +21,7 @@ Read alongside the [watering strategy](./watering-strategy.md), [weighing strate
 
 - **P-ID** identifies the tracked plant/container over time. **Pot label** is the physical label such as A1 or #2. Saved rows retain the label at entry, so an old label can be correct historical evidence.
 - **Observed at / Started at / Date** means when the action or measurement happened. Backdate an observation to its real time when appropriate; **Recorded** separately stores when it was saved.
+- In the phone logger, **Observed at** uses the current time when you save or queue an entry. Edit it to record earlier care, or choose **Use current time** to resume automatic timing. Queued entries and retries keep their original observation time.
 - **Pot setup** identifies the whole weighed configuration. It is not the pot size in inches.
 - **Notes** hold useful details not covered by structured fields. In a multi-event save, the note is attached to the first generated event rather than copied onto every row.
 - **Plant condition**, **Soil moisture**, and **Medium / substrate** are different fields. Condition and moisture belong to Check; the growing-medium description belongs to Repot.

@@ -147,6 +147,17 @@ function enterWorkflowValue(window, id, value) {
     input.dispatchEvent(new window.Event("input", { bubbles: true }));
 }
 
+/** @param {import("../logger-fixtures.d.ts").ScriptCall[]} calls */
+function lastObservationSave(calls) {
+    return required(
+        calls.findLast(
+            (call) =>
+                call.method === "saveWebObservation" ||
+                call.method === "saveBulkCareObservation"
+        )
+    ).args[0];
+}
+
 /** @param {Window} window */
 function refreshWorkflow(window) {
     queryElement(
@@ -214,6 +225,235 @@ function workflowBootstrap() {
         weighedTodayPlantIds: ["P01"],
     };
 }
+
+describe("garden logger observation times", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("does not pin an unsent automatic timestamp after local storage fails", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date("2026-09-14T23:41:00Z"));
+        const { calls, window } = createLoggerWindow();
+        const originalSet = window.localStorage.setItem.bind(
+            window.localStorage
+        );
+        let isStorageFails = true;
+        vi.spyOn(window.localStorage, "setItem").mockImplementation(
+            (key, value) => {
+                if (key === "gardenLoggerPendingSaveV1" && isStorageFails)
+                    throw new Error("Storage full");
+                originalSet(key, value);
+            }
+        );
+        confirmSummarySave(window, "single");
+
+        expect(calls.map((call) => call.method)).not.toContain(
+            "saveWebObservation"
+        );
+
+        isStorageFails = false;
+        vi.setSystemTime(new Date("2026-09-15T00:58:19.123Z"));
+        confirmSummarySave(window, "single");
+
+        expect(lastObservationSave(calls).observedAt).toBe(
+            "2026-09-15T00:58:19.123Z"
+        );
+    });
+
+    it.each([
+        ["single", false],
+        ["bulk", false],
+        ["single", true],
+        ["bulk", true],
+    ])(
+        "retains the original %s instant and request ID on retry (reload: %s)",
+        (mode, reload) => {
+            expect.hasAssertions();
+
+            vi.useFakeTimers();
+            vi.setSystemTime(new Date("2026-09-14T23:41:00Z"));
+            const original = createLoggerWindow();
+            const method =
+                mode === "bulk"
+                    ? "saveBulkCareObservation"
+                    : "saveWebObservation";
+            original.behaviors[method] = ({ failure }) => {
+                failure({ message: "Temporary connection failure" });
+            };
+            vi.setSystemTime(new Date("2026-09-15T00:58:19.123Z"));
+            confirmSummarySave(original.window, mode);
+            const first = lastObservationSave(original.calls);
+
+            expect(first.observedAt).toBe("2026-09-15T00:58:19.123Z");
+
+            vi.setSystemTime(new Date("2026-09-15T01:45:57Z"));
+            const key =
+                mode === "bulk"
+                    ? "gardenLoggerBulkPendingV1"
+                    : "gardenLoggerPendingSaveV1";
+            const recovered = reload
+                ? createLoggerWindow({
+                      storage: {
+                          [key]: required(
+                              original.window.localStorage.getItem(key)
+                          ),
+                      },
+                  })
+                : original;
+            confirmSummarySave(recovered.window, mode);
+            const retried = lastObservationSave(recovered.calls);
+
+            expect(retried.observedAt).toBe(first.observedAt);
+            expect(retried.requestId).toBe(first.requestId);
+            expect(
+                recovered.calls.filter((call) => call.method === method)
+            ).toHaveLength(reload ? 1 : 2);
+        }
+    );
+
+    it.each(["single", "bulk"])(
+        "keeps edited %s times fixed through clock refreshes and can return to current time",
+        (mode) => {
+            expect.hasAssertions();
+
+            vi.useFakeTimers();
+            vi.setSystemTime(new Date("2026-09-14T23:41:00Z"));
+            const { calls, window } = createLoggerWindow();
+            const id = mode === "bulk" ? "bulkObservedAt" : "observedAt";
+            enterWorkflowValue(window, id, "2026-09-12T19:30");
+            vi.advanceTimersByTime(120_000);
+
+            expect(
+                queryElement(window.document, `#${id}`, HTMLInputElement).value
+            ).toBe("2026-09-12T19:30");
+
+            queryElement(
+                window.document,
+                `#${id}Now`,
+                HTMLButtonElement
+            ).click();
+            vi.advanceTimersByTime(60_000);
+            const shown = queryElement(
+                window.document,
+                `#${id}`,
+                HTMLInputElement
+            ).value;
+            const shownDate = new Date(shown);
+
+            expect(shownDate.toISOString()).toBe("2026-09-14T23:44:00.000Z");
+
+            confirmSummarySave(window, mode);
+
+            expect(lastObservationSave(calls).observedAt).toBe(
+                "2026-09-14T23:44:00.000Z"
+            );
+        }
+    );
+
+    it.each(["single", "bulk"])(
+        "rejects a cleared %s time instead of replacing an intentional edit",
+        (mode) => {
+            expect.hasAssertions();
+
+            const { calls, window } = createLoggerWindow();
+            enterWorkflowValue(
+                window,
+                mode === "bulk" ? "bulkObservedAt" : "observedAt",
+                ""
+            );
+            confirmSummarySave(window, mode);
+            const saves = calls.filter(
+                (call) =>
+                    call.method === "saveBulkCareObservation" ||
+                    call.method === "saveWebObservation"
+            );
+
+            expect(saves).toHaveLength(0);
+            expect(
+                queryElement(window.document, "#toast", HTMLElement).textContent
+            ).toContain("Choose a valid");
+        }
+    );
+
+    it.each(["single", "bulk"])(
+        "uses the current time for a delayed %s save",
+        (mode) => {
+            expect.hasAssertions();
+
+            vi.useFakeTimers();
+            vi.setSystemTime(new Date("2026-09-14T23:41:00Z"));
+            const { calls, window } = createLoggerWindow({
+                bootstrapData: {
+                    ...bootstrap,
+                    serverTime: "2026-09-14T23:41:00Z",
+                },
+            });
+            vi.setSystemTime(new Date("2026-09-15T00:58:19.123Z"));
+            confirmSummarySave(window, mode);
+
+            expect(lastObservationSave(calls).observedAt).toBe(
+                "2026-09-15T00:58:19.123Z"
+            );
+        }
+    );
+
+    it.each(["single", "bulk"])(
+        "preserves an explicitly edited %s time even when it matches the initial display",
+        (mode) => {
+            expect.hasAssertions();
+
+            vi.useFakeTimers();
+            vi.setSystemTime(new Date("2026-09-14T23:41:00Z"));
+            const { calls, window } = createLoggerWindow();
+            const id = mode === "bulk" ? "bulkObservedAt" : "observedAt";
+            const input = queryElement(
+                window.document,
+                `#${id}`,
+                HTMLInputElement
+            );
+            const manualTime = input.value;
+            enterWorkflowValue(window, id, manualTime);
+            vi.setSystemTime(new Date("2026-09-15T00:58:19.123Z"));
+            confirmSummarySave(window, mode);
+            const manualDate = new Date(manualTime);
+
+            expect(lastObservationSave(calls).observedAt).toBe(
+                manualDate.toISOString()
+            );
+        }
+    );
+
+    it("captures queue time and retains it when the phone uploads much later", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date("2026-09-14T23:41:00Z"));
+        const { calls, window } = createLoggerWindow();
+        enterWorkflowValue(window, "weight", "361.5");
+        vi.setSystemTime(new Date("2026-09-14T23:43:27.456Z"));
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).click();
+        const queued = parseStoredQueue(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+
+        expect(required(queued[0]).payload.observedAt).toBe(
+            "2026-09-14T23:43:27.456Z"
+        );
+
+        vi.setSystemTime(new Date("2026-09-15T00:56:55Z"));
+        confirmSummarySave(window, "queue");
+        const batch = required(
+            calls.find((call) => call.method === "saveWebObservationBatch")
+        ).args[0];
+
+        expect(required(batch[0]).observedAt).toBe("2026-09-14T23:43:27.456Z");
+    });
+});
 
 describe("garden logger 4 a.m. weighing day", () => {
     afterEach(restoreLoggerMocks);
@@ -1311,6 +1551,8 @@ describe("garden logger input weight comparisons", () => {
     it("shows signed input changes and elapsed observation time, clears invalid input, and never changes the entered value", () => {
         expect.hasAssertions();
 
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date("2026-09-06T16:00:00Z"));
         const { window } = createLoggerWindow({
             bootstrapData: workflowBootstrap(),
         });

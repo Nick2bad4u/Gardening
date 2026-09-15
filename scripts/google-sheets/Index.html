@@ -13862,12 +13862,23 @@
                                     <label
                                         class="field-label"
                                         for="observedAt"
-                                        >Started at</label
+                                        >Observed at</label
                                     >
                                     <input
                                         id="observedAt"
                                         type="datetime-local"
+                                        aria-describedby="observedAtHint"
                                     />
+                                    <span
+                                        class="hint"
+                                        id="observedAtHint"
+                                    ></span>
+                                    <button
+                                        type="button"
+                                        class="secondary"
+                                        id="observedAtNow"
+                                        >Use current time</button
+                                    >
                                 </div>
                                 <div class="field full">
                                     <label
@@ -14084,11 +14095,23 @@
                                     ><label
                                         class="field-label"
                                         for="bulkObservedAt"
-                                        >Started at</label
+                                        >Observed at</label
                                     ><input
                                         id="bulkObservedAt"
                                         type="datetime-local"
-                                /></div>
+                                        aria-describedby="bulkObservedAtHint"
+                                    />
+                                    <span
+                                        class="hint"
+                                        id="bulkObservedAtHint"
+                                    ></span>
+                                    <button
+                                        type="button"
+                                        class="secondary"
+                                        id="bulkObservedAtNow"
+                                        >Use current time</button
+                                    >
+                                </div>
                                 <div class="field full"
                                     ><label
                                         class="field-label"
@@ -14966,6 +14989,35 @@
                 return shifted.toISOString().slice(0, 16);
             }
 
+            // Automatic fields follow the clock until an observation is queued
+            // or submitted. Fixed instants retain seconds during safe retries,
+            // even though datetime-local only displays minutes.
+            function setObservationTime(id, instant = "") {
+                const input = $(id);
+                input.value = localDateTimeValue(instant);
+                input.dataset.timeMode = instant ? "fixed" : "now";
+                input.dataset.timeValue = input.value;
+                input.dataset.timeInstant = instant;
+                renderObservationTimeHint(id);
+            }
+
+            function renderObservationTimeHint(id) {
+                $(`${id}Hint`).textContent =
+                    $(id).dataset.timeMode === "now"
+                        ? `Uses the current time when you save${id === "observedAt" ? " or queue" : ""}. Edit for an earlier event.`
+                        : "Uses the time above. It stays fixed for this entry.";
+            }
+
+            function observationDate(id) {
+                const input = $(id);
+                if (input.value === input.dataset.timeValue) {
+                    if (input.dataset.timeMode === "now") return new Date();
+                    if (input.dataset.timeInstant)
+                        return new Date(input.dataset.timeInstant);
+                }
+                return new Date(input.value);
+            }
+
             function escapeText(value) {
                 return value === null || value === undefined
                     ? ""
@@ -15148,11 +15200,11 @@
             }
 
             function persistPendingSave(pendingSave) {
-                state.pendingSave = pendingSave;
                 localStorage.setItem(
                     PENDING_SAVE_KEY,
                     JSON.stringify(pendingSave)
                 );
+                state.pendingSave = pendingSave;
             }
 
             function clearPendingSave() {
@@ -15568,6 +15620,15 @@
             function updateWorkflowClock() {
                 clearTimeout(state.workflowTimer);
                 if (!state.bootstrap) return;
+                ["observedAt", "bulkObservedAt"].forEach((id) => {
+                    const input = $(id);
+                    if (
+                        input.dataset.timeMode === "now" &&
+                        input.value === input.dataset.timeValue
+                    )
+                        setObservationTime(id);
+                });
+                renderWeightFeedback();
                 const day = workbookDay();
                 const dayChanged = day !== state.workflowDay;
                 if (dayChanged) {
@@ -19256,7 +19317,7 @@
 
             function bulkPayload() {
                 const observedValue = $("bulkObservedAt").value;
-                const observedDate = new Date(observedValue);
+                const observedDate = observationDate("bulkObservedAt");
                 if (!observedValue || Number.isNaN(observedDate.getTime())) {
                     throw new Error("Choose a valid care date and time.");
                 }
@@ -19357,7 +19418,7 @@
                 $("bulkWateringApplication").value =
                     WATERING_APPLICATION_OPTIONS[0];
                 $("bulkWaterAmount").value = "";
-                $("bulkObservedAt").value = localDateTimeValue();
+                setObservationTime("bulkObservedAt");
                 localStorage.removeItem(BULK_PENDING_KEY);
                 renderBulkPlants($("bulkSearch").value);
                 renderBulkEventChips();
@@ -19405,9 +19466,7 @@
                     payload.entrySource === "Mobile bulk water"
                         ? "Mobile bulk water"
                         : "Mobile bulk care";
-                $("bulkObservedAt").value = localDateTimeValue(
-                    payload.observedAt
-                );
+                setObservationTime("bulkObservedAt", payload.observedAt);
                 applyNutrientState(payload);
                 $("bulkCondition").value = payload.condition || "";
                 $("bulkSoilMoisture").value = payload.soilMoisture || "";
@@ -19479,6 +19538,10 @@
                     return;
                 }
                 const requestId = pending.requestId;
+                setObservationTime(
+                    "bulkObservedAt",
+                    pending.payload.observedAt
+                );
                 const attemptId = beginSaveAttempt();
                 state.saveTimer = setTimeout(() => {
                     const current = readBulkPendingSave();
@@ -19614,7 +19677,7 @@
                 $("measurementQuality").value = state.measurementQuality;
                 $("measurementMethod").value = state.measurementMethod;
                 renderMeasurementControls();
-                $("observedAt").value = localDateTimeValue();
+                setObservationTime("observedAt");
                 persistRoundState();
                 renderEventChips();
                 renderWeightFeedback();
@@ -19645,7 +19708,7 @@
 
             function payloadFromForm() {
                 const observedValue = $("observedAt").value;
-                const observedDate = new Date(observedValue);
+                const observedDate = observationDate("observedAt");
                 if (!observedValue || Number.isNaN(observedDate.getTime()))
                     throw new Error(
                         "Choose a valid observation date and time."
@@ -20294,7 +20357,7 @@
                 state.events = new Set(
                     Array.isArray(payload.events) ? payload.events : []
                 );
-                $("observedAt").value = localDateTimeValue(payload.observedAt);
+                setObservationTime("observedAt", payload.observedAt);
                 $("weight").value = payload.weight || "";
                 $("height").value = payload.height || "";
                 $("width").value = payload.width || "";
@@ -20388,6 +20451,7 @@
                     return;
                 }
                 state.advanceAfterSave = advanceAfterSave;
+                setObservationTime("observedAt", pending.payload.observedAt);
                 const requestId = pending.requestId;
                 const requestPayload = { ...pending.payload, requestId };
                 const attemptId = beginSaveAttempt();
@@ -20783,11 +20847,7 @@
                     $("connectionStatus").textContent = fromCache
                         ? "Using saved plant list · refreshing Google…"
                         : `Connected · logger ${bootstrap.version}`;
-                    const initialObservedAt = fromCache
-                        ? new Date().toISOString()
-                        : bootstrap.serverTime;
-                    $("observedAt").value =
-                        localDateTimeValue(initialObservedAt);
+                    setObservationTime("observedAt");
                     step = "restoring saved round settings";
                     restoreRoundState();
                     restoreNutrientState();
@@ -20840,8 +20900,7 @@
                     renderRecent(bootstrap.recent);
                     if (state.recentLimit !== 10 && !fromCache) refreshRecent();
                     step = "opening the entry workspace";
-                    $("bulkObservedAt").value =
-                        localDateTimeValue(initialObservedAt);
+                    setObservationTime("bulkObservedAt");
                     setEntryMode("single");
                     step = "restoring an unfinished entry";
                     if (restorePendingSave()) {
@@ -20892,6 +20951,20 @@
             ["observedAt", "potSetup"].forEach((id) =>
                 $(id).addEventListener("input", renderWeightFeedback)
             );
+            ["observedAt", "bulkObservedAt"].forEach((id) => {
+                const input = $(id);
+                const keepEditedTime = () => {
+                    input.dataset.timeMode = "fixed";
+                    input.dataset.timeInstant = "";
+                    renderObservationTimeHint(id);
+                };
+                input.addEventListener("input", keepEditedTime);
+                input.addEventListener("change", keepEditedTime);
+                $(`${id}Now`).addEventListener("click", () => {
+                    setObservationTime(id);
+                    renderWeightFeedback();
+                });
+            });
             $("plantSelect").addEventListener("change", renderPlantSummary);
             $("plantChoiceList").addEventListener("click", (event) => {
                 const button = event.target.closest("[data-plant-id]");
