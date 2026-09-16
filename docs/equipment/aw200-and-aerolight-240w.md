@@ -65,8 +65,7 @@ together makes the cause of a response harder to judge.
 
 The useful next check is small: with the reported 18-inch plant-tip reference,
 compare light at the central low rosettes, the tallest
-cactus tip, Ming Thing, Variegated Moon, tiger jaws, and the money tree's upper
-leaves. Use both lights at their normal settings. A suitable quantum meter
+cactus tip, Ming Thing, Variegated Moon and tiger jaws. Assess the money tree's upper leaves separately at its planned north-windowsill position, with daylight conditions recorded. Use both lights at their normal settings. A suitable quantum meter
 can measure PPFD; a consistent lux reading can reveal relative bright and dim
 spots, but do not apply an old AW200SE lux conversion to these mixed spectra.
 
@@ -78,11 +77,11 @@ running; circulation fans do not establish that the room stays below this limit.
 
 ## Coverage and Current Plant Positions
 
-Four **16 × 13-inch wooden tables** now support the photographed collection. The working footprint is **26 inches across × 32 inches toward the window**, inferred as a 2 × 2 block before gaps. The front pair holds the 24 small pots in six columns × four rows; the rear pair holds the six larger/shared containers. The square shared succulent box remains square, and the glass table is no longer part of the pictured placement.
+Four **16 × 13-inch wooden tables** now support the photographed collection. The working footprint is **26 inches across × 32 inches toward the window**, inferred as a 2 × 2 block before gaps. The front pair holds the 24 small pots in six columns × four rows; the revised plan keeps five larger/shared containers on the rear pair and moves #3 / P21 Money Tree separately to the north windowsill. The supplied photographs precede that planned move; #4 Kiwi and the other table positions remain unchanged. The square shared succulent box remains square, and the glass table is no longer part of the pictured placement.
 
 The [placement guide](../layouts/table-placement-research.md) faces the window: **window top, open room bottom, Mylar left, white wall right**. The current photographs crop the fixtures, so exact centers and which model occupies each position remain unverified. Do not transfer the old one-inch end margins, ½–1-inch gap, wood/glass boundary or relative-light gradient to this larger block as confirmed facts.
 
-Each fixture is about 26 × 13 inches. Adjacent bodies would occupy roughly 26 × 26 inches before their gap, compared with the inferred 26 × 32-inch furniture block. Light spreads beyond a fixture outline, but body dimensions do not prove adequate or uniform illumination. Preserve adjustable independent suspension and unobstructed fans. Recheck the tallest #1 tips, money-tree leaves and low rosettes if furniture or fixture positions changed; the earlier 18-inch reference is not a measurement at every plant.
+Each fixture is about 26 × 13 inches. Adjacent bodies would occupy roughly 26 × 26 inches before their gap, compared with the inferred 26 × 32-inch furniture block. Light spreads beyond a fixture outline, but body dimensions do not prove adequate or uniform illumination. Preserve adjustable independent suspension and unobstructed fans. Recheck the tallest #1 tips and low rosettes if furniture or fixture positions changed; compare money-tree leaves separately on the north windowsill, whose daylight and lamp spill remain unmeasured; the earlier 18-inch reference is not a measurement at every plant.
 
 The photo-matched D3 and F2 front corners are plausible gentler positions; Mylar and the wall can keep either side bright. Compare B3 at the front against stronger interior exposure, and compare low H1 against shadows from nearby tall plants. The rear group requires leaf- and tip-height comparisons rather than a universal weaker-glass assumption. The two-foot return reflector stays out of the display.
 

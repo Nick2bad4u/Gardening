@@ -2,6 +2,8 @@
 
 The owner added **two new 16 × 13-inch wooden tables** and rearranged the display on **September 15, 2026**. The supplied photos show **24 small pots in six columns × four rows at the room end**, with the six larger or shared containers behind them toward the window. This replaces the previous two-table and round-glass placement plan.
 
+**North-windowsill update, September 15:** the owner plans to move **#3 / P21 Money Tree** off the rear-left table onto the **north-facing windowsill** after noticing downward-pointing leaves. The revised plan has **29 containers on wood (24 small pots at the front and five larger/shared containers behind them), plus one money tree on the windowsill**. The other positions stay as photographed, including #4 Kiwi Aeonium; the vacated table spot stays open. The supplied photo predates this planned move. Excess light is the owner's suspected cause, not a diagnosis established by leaf posture. Sill dimensions, final placement, daylight, lamp spill and leaf-height clearance remain unmeasured.
+
 The working footprint is **four tables in a 2 × 2 block, nominally 26 inches across × 32 inches toward the window**, excluding gaps and rails. That orientation is inferred from the photographs, not a new tape measurement. The old glass table is no longer shown supporting these pots; its storage or other use is not recorded. The new tables' height has not been measured; the earlier pair was 18 inches high.
 
 For easier comparison with the photographs, this page now faces the window: **window at top, open room at bottom, Mylar divider at left, white wall at right**. This is a 90-degree rotation of the old drawing, not a changed compass direction. The window is still north-facing with weak supplementary daylight, and the two-foot room-end reflector remains absent.
@@ -58,16 +60,16 @@ Rows increase from room to window; columns increase from Mylar to white wall. La
 | **H2 Raindrops — R2C3**; _Echeveria_ 'Raindrops'                                   | Exact nursery guidance lists bright indoor light and filtered/partial sun; it also describes better bumps in outdoor shade.[^08]                                         | Low interior-left rosette. Keep clear bright light, without automatically assigning it the strongest intensity.                               |
 | **H3 Eve's Needle — R4C4**; _Austrocylindropuntia subulata_                        | NC State supports full sun or bright indoor light, while recognizing scorch under excessive exposure.[^27]                                                               | Back row of small pots, near the shared cactus; preserve clear light and separation from trailing stems.                                      |
 
-## Rear Containers and Their Components
+## Rear Tables, Windowsill and Shared Components
 
-| Label / P-ID | Container          | Photo-Matched Position                 | Shape and Size Record                                           | Exposure Priority                                                                                                       |
-| ------------ | ------------------ | -------------------------------------- | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| #1 / P19     | Shared Cacti       | Rear center                            | Dark patterned round pot; current diameter unmeasured           | **Mixed.** Compare both tall columns and trailing monkey tail; pale tissue and short neighbors need separate attention. |
-| #2 / P20     | Shared Succulents  | Rear right, toward window              | Square wooden box; current side lengths and drainage unmeasured | **Mixed.** Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage.                        |
-| #3 / P21     | Money Tree         | Back-left, closest to window           | White round pot, previously recorded 6-inch class               | **Gentler.** Compare upper leaves: a rear location is not automatically protected from the lamps.                       |
-| #4 / P22     | Kiwi Aeonium       | Rear left, in front of money tree      | White round pot, previously recorded about 5-inch class         | **Bright.** Keep substantial lamp contribution without allowing its canopy to shade the small pots.                     |
-| #5 / P29     | Tiger Jaws         | Rear right, in front of the square box | Tan ribbed round pot; current repotted dimensions unmeasured    | **Bright.** Retain probable Faucaria tuberculosa / seller F. tigrina qualifier; compare at leaf height.                 |
-| #6 / P30     | Tiny Mixed Planter | Front of rear zone, between #1 and #5  | Shallow round terracotta dish, nominal 5-inch class             | **Bright.** Compare the low rosettes and paddle leaves for shadows from the large pots.                                 |
+| Label / P-ID | Container          | Position Record                          | Shape and Size Record                                           | Exposure Priority                                                                                                       |
+| ------------ | ------------------ | ---------------------------------------- | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| #1 / P19     | Shared Cacti       | Rear center                              | Dark patterned round pot; current diameter unmeasured           | **Mixed.** Compare both tall columns and trailing monkey tail; pale tissue and short neighbors need separate attention. |
+| #2 / P20     | Shared Succulents  | Rear right, toward window                | Square wooden box; current side lengths and drainage unmeasured | **Mixed.** Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage.                        |
+| #3 / P21     | Money Tree         | **Planned north windowsill, off tables** | White round pot, previously recorded 6-inch class               | **Gentler.** Compare actual leaf exposure on the sill; daylight and lamp spill are unmeasured.                          |
+| #4 / P22     | Kiwi Aeonium       | Rear left; unchanged after #3 moves      | White round pot, previously recorded about 5-inch class         | **Bright.** Keep substantial lamp contribution without allowing its canopy to shade the small pots.                     |
+| #5 / P29     | Tiger Jaws         | Rear right, in front of the square box   | Tan ribbed round pot; current repotted dimensions unmeasured    | **Bright.** Retain probable Faucaria tuberculosa / seller F. tigrina qualifier; compare at leaf height.                 |
+| #6 / P30     | Tiny Mixed Planter | Front of rear zone, between #1 and #5    | Shallow round terracotta dish, nominal 5-inch class             | **Bright.** Compare the low rosettes and paddle leaves for shadows from the large pots.                                 |
 
 ### #1 Shared Cacti — Rear Center
 
@@ -101,9 +103,17 @@ Kiwi's Bright priority uses genus-level Aeonium guidance.[^34] Tiger Jaws retain
 | **Gentler · 3** | D3, F2, #3                                                             | A bright position with less intense exposure when demonstrated; no assumption that an edge is automatically gentle |
 | **Mixed · 2**   | #1, #2                                                                 | Consider each living component at its height while retaining one tracked container                                 |
 
+## Money Tree: Planned North-Windowsill Spot
+
+**#3 / P21 remains the same tracked pot**, with the working identification _Pachira_ cf. _glabra_ and its previously recorded white round 6-inch pot. Its destination is the north-facing windowsill, outside the wooden display. The drawing locates it schematically; it does not establish the sill's size, exact horizontal position, support or clearance. #4 Kiwi stays in its current rear-left spot; no replacement pot is assigned to the space #3 leaves.
+
+The goal is useful indirect light with less direct fixture exposure. North-facing daylight and any remaining LED spill must be assessed at the actual leaves; the table heatmap does not predict the windowsill's light or prove that it will be sufficient. Keep foliage clear of cold glass and drafts, and keep the pot and drainage saucer fully supported.
+
+Downward-pointing leaves are the owner's September 15 observation. Excess light is a possibility, not a confirmed cause. [NC State's money-tree guidance](https://plants.ces.ncsu.edu/plants/pachira-aquatica/) supports indirect light but describes _P. aquatica_, so it is a comparison rather than a new identification. [University of Maryland Extension](https://extension.umd.edu/resource/watering-indoor-plants) notes that both too little and too much water can cause wilting; leaf angle alone cannot distinguish these causes or establish that watering is due. Preserve the existing money-tree watering rules and observation history.
+
 ## Verify the New Pattern
 
-Use the [current phone comparison](./layouts/table-placement-research.md#compare-the-plan-with-a-phone-meter), with four rows of six small-pot readings and six rear points. Compare at one common height, then separately at actual tips and leaves. Check B3 at the front, H1 at its low rosette, and local shadows from #1/#2. Keep the current dimmers as the last reported starting settings; no measurement here establishes either absolute adequacy or a need to raise output.[^01][^11]
+Use the [current phone comparison](./layouts/table-placement-research.md#compare-the-plan-with-a-phone-meter), with four rows of six small-pot readings, five rear points and a separate north-windowsill point for #3. Compare table positions at one common height, then separately at actual tips and leaves. Record #3 at its actual windowsill leaf height with daylight conditions; do not combine it with the common-height table ranking. Check B3 at the front, H1 at its low rosette, and local shadows from #1/#2. Keep the current dimmers as the last reported starting settings; no measurement here establishes either absolute adequacy or a need to raise output.[^01][^11]
 
 Moving furniture or pots does not change pot setup or authorize a watering event. Preserve model references, plant exceptions and adaptive weighing. Do not restart daily weighing for the whole collection solely because the tables changed.
 
@@ -115,7 +125,7 @@ The local [collection inventory](./collection.md), [plant profiles](./plants/REA
 
 [^02]: NC State Extension, [Cereus forbesii 'Ming Thing'](https://plants.ces.ncsu.edu/plants/cereus-forbesii-ming-thing/common-name/ming-thing/). Exact cultivar guidance for bright indirect or filtered exposure.
 
-[^03]: NC State Extension, [Pachira aquatica](https://plants.ces.ncsu.edu/plants/pachira-aquatica/). Comparative retail money-tree guidance; the collection's working ID remains _Pachira glabra_.
+[^03]: NC State Extension, [Pachira aquatica](https://plants.ces.ncsu.edu/plants/pachira-aquatica/). Comparative retail money-tree guidance; the collection's working ID remains _Pachira_ cf. _glabra_.
 
 [^04]: University of Arizona Campus Arboretum, [Myrtillocactus geometrizans](https://apps.cals.arizona.edu/arboretum/taxon.aspx?id=991), and LLIFLE, [Myrtillocactus geometrizans 'Fukurokuryuzinboku'](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/14991/Myrtillocactus_geometrizans_cv._Fukurokuryuzinboku). Both distinguish younger plants from later stronger-light cultivation; the cultivar source is a specialist reference, not a controlled light trial.
 

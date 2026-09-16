@@ -2,9 +2,9 @@
 
 Last updated: 2026-09-15
 
-The [Table Placement Guide](./table-placement-research.md) records the new **four wooden tables**: **six columns × four rows** of small pots at the front, with six larger/shared containers behind them. The working 26 × 32-inch block is inferred from the photos before gaps. The current view puts **north window top, room bottom, Mylar left and white wall right**. The former round-glass placement is historical.
+The [Table Placement Guide](./table-placement-research.md) records the new **four wooden tables**: **six columns × four rows** of small pots at the front, with five larger/shared containers behind them and #3 Money Tree planned separately on the north windowsill. The working 26 × 32-inch block is inferred from the photos before gaps. The current view puts **north window top, room bottom, Mylar left and white wall right**. The former round-glass placement is historical.
 
-The guide includes an estimated relative-light map, front and rear diagrams, a combined view, all 30 photo-matched positions, and a [blank phone-reading sheet](./table-placement-research.md#compare-the-plan-with-a-phone-meter). Labels and current intensity remain to be checked. The [full review](../two-light-placement-review.md) preserves species evidence and explains why front corners, low rosettes and rear shadows should be compared.
+The guide includes an estimated relative-light map, front and rear diagrams, a combined view, 29 photo-matched table positions and the planned #3 windowsill destination, and a [blank phone-reading sheet](./table-placement-research.md#compare-the-plan-with-a-phone-meter). Labels and current intensity remain to be checked. The [full review](../two-light-placement-review.md) preserves species evidence and explains why front corners, low rosettes and rear shadows should be compared.
 
 The [installed AW200 + AeroLight 240 W](../equipment/aw200-and-aerolight-240w.md) retain their last reported 45% / 38%, shared 13 h 15 m total cycle including 15 m sunrise and 15 m sunset, and 18-inch tip reference. The new photos do not remeasure fixture centers or clearances. The room-facing end stays open without the two-foot reflector.
 
@@ -72,7 +72,7 @@ tap, or keyboard-focus any plant marker to reveal its common and botanical
 names, inventory record, label status, origin, placement, identification
 status, and field-guide link.
 
-The current guide uses a six-column/four-row front grid, six rear containers on wood, and a new relative-light comparison sheet. Its 26 × 32-inch footprint is photo-inferred. The old 4-column/6-row and round-glass coordinates are superseded.
+The current guide uses a six-column/four-row front grid, five rear containers on wood plus #3 on the north windowsill, and a new relative-light comparison sheet. Its 26 × 32-inch footprint is photo-inferred. The old 4-column/6-row and round-glass coordinates are superseded.
 
 Below the current placement section, the older measured diagrams retain this
 earlier working arrangement for reference:

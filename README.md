@@ -5,7 +5,7 @@
 This is my low-pressure garden notebook. The current focus is my cactus,
 succulent, and small houseplant collection, especially learning how to use the
 indoor grow-light setup without turning the hobby into a science project.
-The owner added two more 16 × 13-inch tables on September 15. The [current four-table guide](docs/layouts/table-placement-research.md) records 24 small pots in a six-column/four-row front grid, six larger/shared containers behind them, and an inferred 26 × 32-inch wooden footprint. Its new relative-light map is a hypothesis to compare with phone readings; the former round-glass layout is historical.
+The owner added two more 16 × 13-inch tables on September 15. The [current four-table guide](docs/layouts/table-placement-research.md) records 24 small pots in a six-column/four-row front grid, five larger/shared containers behind them plus #3 Money Tree planned on the north windowsill, and an inferred 26 × 32-inch wooden footprint. Its new relative-light map is a hypothesis to compare with phone readings; the former round-glass layout is historical.
 
 The installed AW200 and AeroLight 240 W remain at their last reported 45% and 38%, with an 18-inch tip reference and a shared 13 h 15 m total cycle including 15-minute sunrise and sunset transitions. Current fixture centers and clearances over the new tables are unmeasured. See the [equipment record](docs/equipment/aw200-and-aerolight-240w.md).
 

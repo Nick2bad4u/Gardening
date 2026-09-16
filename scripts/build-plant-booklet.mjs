@@ -1578,7 +1578,7 @@ function renderBooklet(profiles, placementHtml) {
     <nav class="drawer-nav" aria-label="Plant profiles">
       <a class="drawer-special" href="#cover" data-page-link="cover"><span>${renderSiteIcon("cactus")} Cover</span><small>Start of the guide</small></a>
       <a class="drawer-special" href="#contents" data-page-link="contents"><span>${renderSiteIcon("field-guide")} Table of Contents</span><small>All profiles at a glance</small></a>
-      <a class="drawer-special" href="#placement" data-page-link="placement"><span>${renderSiteIcon("layout")} Table Placement Guide</span><small>Four tables · All 30 pots</small></a>
+      <a class="drawer-special" href="#placement" data-page-link="placement"><span>${renderSiteIcon("layout")} Table Placement Guide</span><small>29 on tables · 1 on windowsill</small></a>
       <a class="drawer-special" href="../layouts/plant-tracker.html"><span>${renderSiteIcon("tracker")} Plant tracker</span><small>Live weights, watering, and measurements</small></a>
       <a class="drawer-special" href="../layouts/grow-spot-layout.html"><span>${renderSiteIcon("layout")} Grow-spot layout</span><small>Tables, risers, light, fan, and camera</small></a>
       <a class="drawer-special" href="../layouts/indoor-acclimation-calendar.html"><span>${renderSiteIcon("calendar")} Acclimation calendar</span><small>Dated light and airflow schedule</small></a>
@@ -1598,7 +1598,7 @@ function renderBooklet(profiles, placementHtml) {
         <h1>A field guide to the collection.</h1>
         <span>Each profile combines identity, care, seller and nursery evidence, licensed references, live records, and a newest-first photo history. Two current views stay visible; each complete history opens in its own Gyazo Collection.</span>
       </header>
-      <a class="placement-contents-link" href="#placement" data-page-link="placement">${renderSiteIcon("layout")}<span><strong>Table Placement Guide</strong><small>Next page · AW200 + AeroLight 240 W, open room end, and light needs for all 30 pots</small></span>${renderSiteIcon("arrow-right")}</a>
+      <a class="placement-contents-link" href="#placement" data-page-link="placement">${renderSiteIcon("layout")}<span><strong>Table Placement Guide</strong><small>Next page · AW200 + AeroLight 240 W, north-windowsill move, and light needs for all 30 pots</small></span>${renderSiteIcon("arrow-right")}</a>
       <div class="contents-columns">${contents}</div>
       <aside class="contents-note">
         <strong>Three IDs, three jobs</strong>
@@ -1610,7 +1610,7 @@ function renderBooklet(profiles, placementHtml) {
       <header class="contents-heading placement-heading">
         <p>The Fenton Collection · 30 Pots · Placement and Light</p>
         <h1 id="placement-title">Table Placement Guide</h1>
-        <span>September 15 four-table setup, photo-matched positions, estimated relative light and a phone-meter comparison. Six columns × four rows of small pots at the front; six larger/shared containers behind them.</span>
+        <span>September 15 four-table setup, photo-matched positions, estimated relative light and a phone-meter comparison. Six columns × four rows of small pots at the front; five larger/shared containers behind them, with #3 Money Tree planned separately on the north windowsill.</span>
       </header>
       <div class="placement-copy prose">${placementHtml}</div>
     </section>
