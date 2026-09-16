@@ -15,7 +15,7 @@
    installDailyCareDashboard */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.23.2",
+    version: "5.24.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -6748,7 +6748,7 @@ function correctionFieldDefinitions_(event) {
         [
             "photoUrl",
             23,
-            "Google Photos share URL",
+            "Photo share URL (Google Photos or Gyazo)",
             "url",
             [],
             true,
@@ -7051,14 +7051,9 @@ function correctionTextValue_(definition, input) {
         );
     }
     if (definition.type === "datetime") return correctionDate_(value);
-    if (
-        definition.type === "url" &&
-        !/^https:\/\/(?:photos\.google\.com|photos\.app\.goo\.gl)\/[^\s]+$/i.test(
-            value
-        )
-    ) {
+    if (definition.type === "url" && !isPhotoShareUrl_(value)) {
         throw correctionValidationError_(
-            "INVALID_CORRECTION: Photo needs a valid HTTPS Google Photos share URL."
+            "INVALID_CORRECTION: Photo needs a valid HTTPS Google Photos share link or Gyazo capture link."
         );
     }
 
@@ -8200,9 +8195,9 @@ function addPhotoDetails_(details, payload, eventNames) {
     if (!eventNames.includes("Photo")) return;
 
     const photoUrl = cleanText_(payload?.photoUrl);
-    if (!isGooglePhotosShareUrl_(photoUrl)) {
+    if (!isPhotoShareUrl_(photoUrl)) {
         throw new Error(
-            "Photo needs a Google Photos share link from photos.google.com or photos.app.goo.gl."
+            "Photo needs an HTTPS Google Photos share link or Gyazo capture link."
         );
     }
 
@@ -8228,9 +8223,13 @@ function addPestDetails_(details, payload, eventNames) {
 /**
  * @param {unknown} value
  */
-function isGooglePhotosShareUrl_(value) {
-    return /^https:\/\/(?:photos\.google\.com|photos\.app\.goo\.gl)(?:[/:?#]|$)/i.test(
-        cleanText_(value)
+function isPhotoShareUrl_(value) {
+    const url = cleanText_(value);
+    return (
+        /^https:\/\/gyazo\.com\/[a-f0-9]{32}$/.test(url) ||
+        /^https:\/\/(?:photos\.google\.com|photos\.app\.goo\.gl)\/[^\s\\<>"']+$/i.test(
+            url
+        )
     );
 }
 

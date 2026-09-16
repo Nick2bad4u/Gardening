@@ -305,7 +305,7 @@ export interface AppsScriptTestApi {
         loggerVersion: string;
         plants: number;
     };
-    isGooglePhotosShareUrl_: (value: unknown) => boolean;
+    isPhotoShareUrl_: (value: unknown) => boolean;
     lastHistoryDataRow_: (history: unknown) => number;
     lastHistoryReservedRow_: (history: unknown) => number;
     latestPotSizesByPlant_: (spreadsheet: unknown) => Map<string, string>;

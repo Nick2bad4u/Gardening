@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 import { groupFor, renderReport } from "../scripts/build-daily-report.mjs";
+import { rewriteCollectionPreviews } from "../scripts/collection-previews.mjs";
 import {
     instant,
     signed,
@@ -11,6 +12,7 @@ import {
 
 /** @typedef {import("../types/daily-report.d.ts").DailyReport} DailyReport */
 /** @typedef {import("../types/daily-report.d.ts").ReportPot} ReportPot */
+/** @typedef {import("../types/daily-report.d.ts").ReportPhoto} ReportPhoto */
 
 const sampleText = readFileSync(
     new URL("fixtures/daily-report.json", import.meta.url),
@@ -33,6 +35,20 @@ const profiles = /** @type {Record<string, [string, string][]>} */ (
     profileData
 );
 
+/** @type {ReportPhoto} */
+const photo = {
+    alt: "Synthetic plant with a visible inner leaf pair",
+    caption: "Exact crop; no retouching.",
+    capturedAt: "2026-09-14T15:00:00-04:00",
+    findings: ["An inner leaf pair is visible."],
+    imageUrl: "https://i.gyazo.com/0123456789abcdef0123456789abcdef.png",
+    limitations:
+        "An image cannot establish leaf firmness or root-zone moisture.",
+    pageUrl: "https://gyazo.com/0123456789abcdef0123456789abcdef",
+};
+// eslint-disable-next-line no-script-url -- Deliberately unsafe input verifies that photo links reject executable protocols.
+const unsafeScriptUrl = "javascript:alert(1)";
+
 /** @param {DailyReport} report @param {string} id */
 function pot(report, id) {
     const result = report.pots.find((entry) => entry.id === id);
@@ -41,6 +57,203 @@ function pot(report, id) {
 }
 
 describe("daily report evidence", () => {
+    it("accepts optional photo evidence without changing care categories", () => {
+        expect.hasAssertions();
+
+        const report = structuredClone(sample);
+        pot(report, "P28").photos = [structuredClone(photo)];
+
+        expect(validateReport(report)).toBe(report);
+        expect(pot(report, "P28").action).toBe("check");
+        expect(validateReport(sample)).toBe(sample);
+    });
+
+    it.each([
+        unsafeScriptUrl,
+        // eslint-disable-next-line sdl/no-insecure-url, sonarjs/no-clear-text-protocols, unicorn/prefer-https -- Negative fixture verifies that photo links require HTTPS.
+        "http://i.gyazo.com/0123456789abcdef0123456789abcdef.png",
+        "https://i.gyazo.com.evil.example/0123456789abcdef0123456789abcdef.png",
+        "https://user@i.gyazo.com/0123456789abcdef0123456789abcdef.png",
+        "https://i.gyazo.com:443/0123456789abcdef0123456789abcdef.png",
+        "https://i.gyazo.com/0123456789abcdef0123456789abcdef.svg",
+        "https://i.gyazo.com/0123456789abcdef0123456789abcdef.png?redirect=evil",
+        "https://i.gyazo.com/../0123456789abcdef0123456789abcdef.png",
+        "https://i.gyazo.com/0123456789abcdef0123456789abcdef.png\n",
+    ])("rejects unsafe or noncanonical image URL: %s", (imageUrl) => {
+        expect.hasAssertions();
+
+        const report = structuredClone(sample);
+        pot(report, "P28").photos = [{ ...photo, imageUrl }];
+
+        expect(() => validateReport(report)).toThrow("safe Gyazo capture");
+    });
+
+    it.each([
+        "https://gyazo.com/ffffffffffffffffffffffffffffffff",
+        "https://gyazo.com.evil.example/0123456789abcdef0123456789abcdef",
+        "https://user@gyazo.com/0123456789abcdef0123456789abcdef",
+        "https://gyazo.com:443/0123456789abcdef0123456789abcdef",
+        unsafeScriptUrl,
+    ])("requires the matching safe capture page: %s", (pageUrl) => {
+        expect.hasAssertions();
+
+        const report = structuredClone(sample);
+        pot(report, "P28").photos = [{ ...photo, pageUrl }];
+
+        expect(() => validateReport(report)).toThrow("safe Gyazo capture");
+    });
+
+    it.each([
+        "https://photos.app.goo.gl/Synthetic123",
+        "https://photos.google.com/share/synthetic-id?key=synthetic_key",
+    ])("accepts canonical original share links: %s", (originalUrl) => {
+        expect.hasAssertions();
+
+        const report = structuredClone(sample);
+        pot(report, "P28").photos = [{ ...photo, originalUrl }];
+
+        expect(validateReport(report)).toBe(report);
+    });
+
+    it.each([
+        "https://photos.app.goo.gl.evil.example/Synthetic123",
+        "https://user@photos.app.goo.gl/Synthetic123",
+        "https://photos.app.goo.gl:443/Synthetic123",
+        "https://photos.app.goo.gl/Synthetic123?redirect=evil",
+        "https://photos.google.com/share/synthetic?key=synthetic&redirect=evil",
+        unsafeScriptUrl,
+    ])("rejects unsafe original share links: %s", (originalUrl) => {
+        expect.hasAssertions();
+
+        const report = structuredClone(sample);
+        pot(report, "P28").photos = [{ ...photo, originalUrl }];
+
+        expect(() => validateReport(report)).toThrow("safe Google Photos");
+    });
+
+    it.each([
+        "2026-02-30T12:00:00Z",
+        "2026-09-14T15:00:00",
+        "not a date",
+    ])("rejects ambiguous photo dates: %s", (capturedAt) => {
+        expect.hasAssertions();
+
+        const report = structuredClone(sample);
+        pot(report, "P28").photos = [{ ...photo, capturedAt }];
+
+        expect(() => validateReport(report)).toThrow("photo.capturedAt");
+    });
+
+    it("rejects photo evidence beyond the reviewed source cutoff", () => {
+        expect.hasAssertions();
+
+        const report = structuredClone(sample);
+        pot(report, "P28").photos = [
+            { ...photo, capturedAt: report.generatedAt },
+        ];
+
+        expect(() => validateReport(report)).toThrow(
+            "newer than its source read"
+        );
+    });
+
+    it("requires findings and limitations and avoids duplicate capture evidence", () => {
+        expect.hasAssertions();
+
+        const report = structuredClone(sample);
+        const candidate = pot(report, "P28");
+        candidate.photos = [{ ...photo, findings: [] }];
+
+        expect(() => validateReport(report)).toThrow("findings");
+
+        candidate.photos = [{ ...photo, limitations: " " }];
+
+        expect(() => validateReport(report)).toThrow("limitations");
+
+        candidate.photos = [photo, photo];
+
+        expect(() => validateReport(report)).toThrow("unique within a pot");
+    });
+
+    it("renders accessible photos, dates, findings and limitations as escaped text", () => {
+        expect.hasAssertions();
+
+        const report = structuredClone(sample);
+        const hostile = '<img src="x" onerror="alert(1)">';
+        pot(report, "P28").photos = [
+            {
+                ...photo,
+                alt: hostile,
+                caption: hostile,
+                findings: [hostile],
+                limitations: hostile,
+                originalUrl: "https://photos.app.goo.gl/Synthetic123",
+            },
+        ];
+        const html = renderReport(validateReport(report), template, profiles);
+
+        expect(html).toContain('aria-label="Photo observations for G3"');
+        expect(html).toContain(`href="${photo.imageUrl}"`);
+        expect(html).toContain(
+            'src="https://thumb.gyazo.com/thumb/960/0123456789abcdef0123456789abcdef.png"'
+        );
+        expect(html).toContain(`datetime="${photo.capturedAt}"`);
+        expect(html).toContain(
+            'loading="lazy" decoding="async" referrerpolicy="no-referrer"'
+        );
+        expect(html).toContain("Photo-only limits:");
+        expect(html).toContain("Open full photo ↗");
+        expect(html).toContain("Original photo ↗");
+        expect(html).toContain(
+            "&lt;img src=&quot;x&quot; onerror=&quot;alert(1)&quot;&gt;"
+        );
+        expect(html).not.toContain(hostile);
+        expect(renderReport(sample, template, profiles)).not.toContain(
+            'class="pot-photos"'
+        );
+    });
+
+    it("publishes report photos through local responsive previews without fetching full-resolution images", () => {
+        expect.hasAssertions();
+
+        const report = structuredClone(sample);
+        pot(report, "P28").photos = [photo];
+        const source = renderReport(validateReport(report), template, profiles);
+        const previews = new Map([
+            [
+                "0123456789abcdef0123456789abcdef",
+                [
+                    {
+                        path: "assets/collection-previews/synthetic.w320.webp",
+                        width: 320,
+                    },
+                    {
+                        path: "assets/collection-previews/synthetic.w960.webp",
+                        width: 960,
+                    },
+                ],
+            ],
+        ]);
+        const published = rewriteCollectionPreviews(source, previews, "../");
+
+        expect(published).toContain(
+            'src="../assets/collection-previews/synthetic.w960.webp"'
+        );
+        expect(published).toContain(
+            'srcset="../assets/collection-previews/synthetic.w320.webp 320w, ../assets/collection-previews/synthetic.w960.webp 960w"'
+        );
+        expect(published).toContain(`href="${photo.imageUrl}"`);
+        expect(published).toContain(`href="${photo.pageUrl}"`);
+        expect(published).not.toContain(`src="${photo.imageUrl}"`);
+        expect(published).not.toContain("thumb.gyazo.com");
+        expect(published).toContain(
+            'sizes="(max-width: 760px) calc(100vw - 74px), 480px" loading="lazy"'
+        );
+        expect(() =>
+            rewriteCollectionPreviews(source, new Map(), "../")
+        ).toThrow("Missing published collection preview");
+    });
+
     it.each([
         [],
         [" ".repeat(3)],

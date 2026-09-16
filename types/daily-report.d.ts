@@ -25,6 +25,17 @@ export interface ReportMix {
     rationale: string;
 }
 
+export interface ReportPhoto {
+    alt: string;
+    caption: string;
+    capturedAt: string;
+    findings: string[];
+    imageUrl: string;
+    limitations: string;
+    originalUrl?: string;
+    pageUrl: string;
+}
+
 export interface ReportPot {
     action:
         | "check"
@@ -41,6 +52,7 @@ export interface ReportPot {
     metricsNote: string;
     mixId: null | string;
     name: string;
+    photos?: ReportPhoto[];
     plateau:
         | "confirmed"
         | "not-supported"

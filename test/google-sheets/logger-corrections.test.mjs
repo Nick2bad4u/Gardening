@@ -1108,6 +1108,12 @@ describe("atomic saved History corrections", () => {
             "https://photos.app.goo.gl/share123",
         ],
         [
+            "Photo",
+            { photoUrl: "https://gyazo.com/0123456789abcdef0123456789abcdef" },
+            23,
+            "https://gyazo.com/0123456789abcdef0123456789abcdef",
+        ],
+        [
             "Pest",
             { pestIssue: "Scale", pestTreatment: "Removed by hand" },
             25,
@@ -1463,6 +1469,56 @@ describe("correction validation and durable receipt boundaries", () => {
         ["Photo", { photoUrl: "https://photos.app.goo.gl.evil.example/share" }],
         ["Photo", { photoUrl: "https://photos.app.goo.gl:443/share" }],
         ["Photo", { photoUrl: "https://photos.app.goo.gl/@user share" }],
+        [
+            "Photo",
+            // eslint-disable-next-line sdl/no-insecure-url, sonarjs/no-clear-text-protocols, unicorn/prefer-https -- Deliberate insecure-scheme rejection fixture.
+            { photoUrl: "http://gyazo.com/0123456789abcdef0123456789abcdef" },
+        ],
+        [
+            "Photo",
+            {
+                photoUrl:
+                    "https://gyazo.com.evil.test/0123456789abcdef0123456789abcdef",
+            },
+        ],
+        [
+            "Photo",
+            {
+                photoUrl:
+                    "https://user@gyazo.com/0123456789abcdef0123456789abcdef",
+            },
+        ],
+        [
+            "Photo",
+            {
+                photoUrl:
+                    "https://gyazo.com:443/0123456789abcdef0123456789abcdef",
+            },
+        ],
+        [
+            "Photo",
+            { photoUrl: "https://gyazo.com/0123456789ABCDEF0123456789ABCDEF" },
+        ],
+        [
+            "Photo",
+            { photoUrl: "https://gyazo.com/0123456789abcdef0123456789abcde" },
+        ],
+        [
+            "Photo",
+            {
+                photoUrl:
+                    "https://gyazo.com/0123456789abcdef0123456789abcdef?redirect=evil",
+            },
+        ],
+        [
+            "Photo",
+            {
+                photoUrl:
+                    "https://i.gyazo.com/0123456789abcdef0123456789abcdef.jpg",
+            },
+        ],
+        // eslint-disable-next-line no-script-url -- Deliberate unsafe-scheme rejection fixture.
+        ["Photo", { photoUrl: "javascript:alert(1)" }],
         ["Photo", { photoUrl: "" }],
         ["Pest", { pestIssue: "" }],
         ["Repot", { potSize: " " }],

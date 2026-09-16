@@ -39,6 +39,28 @@ overwritten. The bound Apps Script in
 [`Index.html`](./Index.html) is the mobile entry UI, and
 [`appsscript.json`](./appsscript.json) records the project runtime settings.
 
+## Photo links in logger 5.24.0
+
+The checked-in logger accepts Google Photos share links and exact Gyazo capture
+links (`https://gyazo.com/` followed by a 32-character lowercase hexadecimal
+capture ID). The same validation applies to new Photo events and corrections.
+The form names both providers, and the public history uses a neutral Open photo
+label. Direct image URLs, unexpected ports, credentials, spoofed hosts, and
+malformed capture IDs are rejected. Existing Google Photos share links remain
+supported.
+
+Selecting Check and Photo in one save preserves two event-specific History rows
+with the same save group. The photo URL belongs to the Photo row; condition and
+notes retain the inspection evidence. This needs no schema migration, installer,
+or queue-trigger change.
+
+On **September 16, 2026**, logger **5.24.0** was deployed as immutable Apps Script
+**version 91** at the existing mobile-entry URL. All three deployed project files
+matched the checked-in source and current script head. Verification confirmed
+exactly one five-minute `processQueuedAppSheetEntries` trigger and a zero-percent
+trigger error rate. No photo observations had been written at this verification
+point; photo publication and the real inspection records are separate steps.
+
 ## Current production baseline
 
 ### Workbook presentation and Daily care retirement (September 16, 2026)
@@ -1728,7 +1750,8 @@ installable trigger is not required.
   Other rows for every selected plant with shared details. Use single-plant
   mode for weights, measurements, repots, flowers, and photos because those
   values differ by plant.
-- Photo events accept Google Photos share links. **Open Google Photos** hands
+- Photo events accept Google Photos share links and exact Gyazo capture links.
+  **Open Google Photos** hands
   off to the app when the phone/browser supports Google Photos links, otherwise
   it opens the website. Select the image there, create a share link, return to
   the logger, and paste it. A browser file picker cannot return a durable Google

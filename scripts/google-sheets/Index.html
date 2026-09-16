@@ -13763,7 +13763,9 @@
                                         >Open Google Photos, select the photo,
                                         use Share → Create link, then return
                                         here and paste it. Your phone may open
-                                        the Google Photos app automatically.</p
+                                        the Google Photos app automatically. You
+                                        can also paste an existing Gyazo capture
+                                        link.</p
                                     >
                                     <a
                                         id="openGooglePhotos"
@@ -13784,7 +13786,8 @@
                                     <label
                                         class="field-label"
                                         for="photoUrl"
-                                        >Google Photos link</label
+                                        >Photo link (Google Photos or
+                                        Gyazo)</label
                                     >
                                     <input
                                         id="photoUrl"
@@ -15704,6 +15707,18 @@
                 feedback.hidden = false;
             }
 
+            function validatePhotoUrl(photoUrl) {
+                if (!(
+                    /^https:\/\/gyazo\.com\/[a-f0-9]{32}$/.test(photoUrl) ||
+                    /^https:\/\/(?:photos\.google\.com|photos\.app\.goo\.gl)\/[^\s\\<>"']+$/i.test(
+                        photoUrl
+                    )
+                ))
+                    throw new Error(
+                        "Enter an HTTPS Google Photos share link or Gyazo capture link."
+                    );
+            }
+
             function validateQueuedPayload(payload) {
                 const events = inferredPayloadEvents(payload);
                 if (!payload.plantId)
@@ -15764,13 +15779,8 @@
                     throw new Error(
                         "Enter a flower count, description, or both."
                     );
-                if (
-                    events.includes("Photo") &&
-                    !/^https:\/\/(?:photos\.google\.com|photos\.app\.goo\.gl)(?:[/:?#]|$)/i.test(
-                        payload.photoUrl
-                    )
-                )
-                    throw new Error("Enter a Google Photos share link.");
+                if (events.includes("Photo"))
+                    validatePhotoUrl(payload.photoUrl);
                 if (
                     events.includes("Pest") &&
                     (!payload.pestIssue || !payload.pestTreatment)
@@ -19707,6 +19717,8 @@
             }
 
             function payloadFromForm() {
+                if (state.events.has("Photo"))
+                    validatePhotoUrl($("photoUrl").value.trim());
                 const observedValue = $("observedAt").value;
                 const observedDate = observationDate("observedAt");
                 if (!observedValue || Number.isNaN(observedDate.getTime()))

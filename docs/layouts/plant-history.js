@@ -256,7 +256,7 @@ function eventDetails(event) {
     if (recordStatus && recordStatus.trim().toLowerCase() !== "active")
         parts.push(`Record status: ${recordStatus}`);
     const photoUrl = displayValue(event["Photo URL"]);
-    if (photoUrl) parts.push({ href: photoUrl, label: "Open Google Photos ↗" });
+    if (photoUrl) parts.push({ href: photoUrl, label: "Open photo ↗" });
     return parts;
 }
 

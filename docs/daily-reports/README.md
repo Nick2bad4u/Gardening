@@ -68,6 +68,23 @@ An older report without it shows an explicit not-recorded notice. Do not backfil
 an old snapshot with new advice or change its date/source-read time just to add
 this section.
 
+Each pot can also include dated `photos` evidence: `capturedAt`, a verified
+full-resolution Gyazo `imageUrl` and matching `pageUrl`, `alt`, `caption`,
+nonempty `findings`, and `limitations`. An optional `originalUrl` can point to
+a Google Photos share link when the owner has authorized sharing it. Omit
+private originals. The capture must not postdate the actual source read.
+The generated card displays a small preview, visible capture time, findings,
+and limitations, with links to the exact full-resolution crop and capture page.
+Pages reuses the existing responsive WebP preview pipeline; camera originals
+and full-resolution image binaries stay out of Git and the Pages artifact.
+
+Photo reviews distinguish visible appearances from owner-reported physical
+checks. Preserve uncertainty, botanical qualifiers, and original capture dates;
+one image cannot establish soil moisture, firmness, root condition, or a cause
+for a mark. Future reports review relevant linked photos and unresolved
+follow-ups without recording duplicate observations or treating old photos as
+new evidence. See the task prompt for the complete photo-review policy.
+
 ## Shared detector analysis
 
 Run the current Apps Script detector locally before authoring a fresh report:

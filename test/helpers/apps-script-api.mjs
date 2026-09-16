@@ -83,7 +83,7 @@ export function appsScriptApi(context) {
         installDryDownLearning: null,
         installGardenLogger: null,
         installWateringRecommendations: null,
-        isGooglePhotosShareUrl_: null,
+        isPhotoShareUrl_: null,
         lastHistoryDataRow_: null,
         lastHistoryReservedRow_: null,
         latestPotSizesByPlant_: null,

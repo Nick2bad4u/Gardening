@@ -471,7 +471,9 @@ h1 {
         border: 0;
     }
 }
-.search-label input::placeholder {
+.search-label input::placeholder,
+.photo-captured,
+.photo-limitations {
     color: var(--muted);
 }
 .filter-buttons {
@@ -684,6 +686,55 @@ h1 {
     flex-wrap: wrap;
     gap: 10px;
     margin-block-start: 10px;
+}
+.pot-photos {
+    margin-block-start: 22px;
+    & h4 {
+        font-size: 0.875rem;
+    }
+}
+.photo-evidence {
+    margin: 14px 0 0;
+    overflow-wrap: anywhere;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    & figcaption {
+        padding: 14px;
+        font-size: 0.75rem;
+    }
+}
+.photo-image-link {
+    display: block;
+    min-block-size: 44px;
+    border-radius: 12px 12px 0 0;
+    & img {
+        display: block;
+        inline-size: 100%;
+        block-size: auto;
+        border-radius: inherit;
+    }
+}
+.photo-caption,
+.photo-limitations {
+    margin-block-start: 10px;
+}
+.photo-findings {
+    padding-inline-start: 20px;
+    margin-block: 10px;
+    & :where(li + li) {
+        margin-block-start: 6px;
+    }
+}
+.photo-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    & a {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: 44px;
+        font-weight: 650;
+    }
 }
 .pot-links a,
 .source-links a {

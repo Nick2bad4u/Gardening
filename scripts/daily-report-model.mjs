@@ -211,6 +211,59 @@ function validateMixes(input) {
     }
     return ids;
 }
+/** @param {unknown} input @param {number | null} readAt */
+function validatePhotos(input, readAt) {
+    if (input === undefined) return;
+    const pages = new Set();
+    for (const rawPhoto of list(input, "photos")) {
+        const photo = object(rawPhoto, "Photo");
+        for (const key of [
+            "alt",
+            "caption",
+            "limitations",
+        ])
+            textValue(photo[key], `photo.${key}`);
+        const captured = instant(photo["capturedAt"], "photo.capturedAt");
+        if (readAt === null || captured > readAt)
+            throw new TypeError(
+                "A photo cannot be newer than its source read."
+            );
+        const imageUrl = textValue(photo["imageUrl"], "photo.imageUrl");
+        const pageUrl = textValue(photo["pageUrl"], "photo.pageUrl");
+        const capture =
+            /^https:\/\/i\.gyazo\.com\/(?<id>[0-9a-f]{32})\.(?:jpe?g|png|webp)$/v.exec(
+                imageUrl
+            );
+        if (
+            capture === null ||
+            pageUrl !== `https://gyazo.com/${capture.groups?.["id"] ?? ""}`
+        )
+            throw new TypeError(
+                "Photo URLs must identify the same safe Gyazo capture."
+            );
+        if (pages.has(pageUrl))
+            throw new TypeError("Photo captures must be unique within a pot.");
+        pages.add(pageUrl);
+        const findings = list(photo["findings"], "photo.findings");
+        if (findings.length === 0)
+            throw new TypeError("Photo findings must contain an observation.");
+        for (const finding of findings) textValue(finding, "photo.finding");
+        if (photo["originalUrl"] !== undefined) {
+            const originalUrl = textValue(
+                photo["originalUrl"],
+                "photo.originalUrl"
+            );
+            if (
+                !/^https:\/\/(?:photos\.app\.goo\.gl\/[0-9A-Za-z]+|photos\.google\.com\/share\/[\w\-]+\?key=[\w\-]+)$/v.test(
+                    originalUrl
+                )
+            )
+                throw new TypeError(
+                    "Photo original URL must be a safe Google Photos share link."
+                );
+        }
+    }
+}
 /**
  * @param {Record<string, unknown>} pot @param {number | null} start @param
  *   {ReportWeight | null} latest
@@ -268,6 +321,7 @@ function validatePots(input, mixIds, readAt) {
             textValue(pot[key], `pot.${key}`, key === "metricsNote");
         validateAction(pot, mixIds);
         validateMeasurements(pot, readAt);
+        validatePhotos(pot["photos"], readAt);
     }
     return pots;
 }

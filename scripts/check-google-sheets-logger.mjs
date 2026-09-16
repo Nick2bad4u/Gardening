@@ -36,7 +36,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.23.2");
+assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.24.0");
 for (const name of [
     "getWebCorrectionEntry",
     "previewWebObservationCorrection",
@@ -341,13 +341,11 @@ assert.equal(
     "garden-1234567890"
 );
 assert.equal(
-    loggerFunction("isGooglePhotosShareUrl_")(
-        "https://photos.app.goo.gl/abc123"
-    ),
+    loggerFunction("isPhotoShareUrl_")("https://photos.app.goo.gl/abc123"),
     true
 );
 assert.equal(
-    loggerFunction("isGooglePhotosShareUrl_")("https://example.test/photo"),
+    loggerFunction("isPhotoShareUrl_")("https://example.test/photo"),
     false
 );
 assert.deepEqual(

@@ -158,3 +158,50 @@ describe("corrected public History ordering", () => {
         }
     );
 });
+
+describe("public History photo evidence", () => {
+    it("excludes removed photo records from the latest evidence", () => {
+        expect.hasAssertions();
+
+        const summary = calculateSummary([
+            {
+                ...weightEntry(0, "removed-photo", 0, "", "Removed"),
+                Event: "Photo",
+                "Photo URL":
+                    "https://gyazo.com/0123456789abcdef0123456789abcdef",
+                "Weight (g)": "",
+            },
+        ]);
+
+        expect(summary.latestPhoto).toBeUndefined();
+        expect(summary.weightSeries).toHaveLength(0);
+    });
+
+    it("preserves Gyazo capture evidence alongside a separate Check event", () => {
+        expect.hasAssertions();
+
+        const photoUrl = "https://gyazo.com/0123456789abcdef0123456789abcdef";
+        const photo = {
+            ...weightEntry(1, "photo", 0),
+            Event: "Photo",
+            "Photo URL": photoUrl,
+            "Save group / batch ID": "inspection",
+            "Weight (g)": "",
+        };
+        const check = {
+            ...weightEntry(0, "check", 0),
+            "Condition / soil": "New leaf pair visible",
+            Event: "Check",
+            "Save group / batch ID": "inspection",
+            "Weight (g)": "",
+        };
+        const summary = calculateSummary([check, photo]);
+
+        expect(summary.latestPhoto?.["Photo URL"]).toBe(photoUrl);
+        expect(summary.latestCheck?.["Condition / soil"]).toBe(
+            "New leaf pair visible"
+        );
+        expect(summary.weightSeries).toHaveLength(0);
+        expect(summary.eventCounts.checks).toBe(1);
+    });
+});

@@ -16,6 +16,7 @@ import {
 /** @typedef {import("../types/daily-report.d.ts").DailyReport} DailyReport */
 /** @typedef {import("../types/daily-report.d.ts").ReportPot} ReportPot */
 /** @typedef {import("../types/daily-report.d.ts").ReportMix} ReportMix */
+/** @typedef {import("../types/daily-report.d.ts").ReportPhoto} ReportPhoto */
 /** @typedef {Record<string, [string, string][]>} Profiles */
 
 const repositoryRoot = path.resolve(import.meta.dirname, "..");
@@ -159,6 +160,28 @@ function mixCard(mix, pots) {
 }
 
 /** @param {ReportPot} pot */
+function photoEvidence(pot) {
+    if (pot.photos === undefined || pot.photos.length === 0) return "";
+    return `<section class="pot-photos" aria-label="Photo observations for ${escapeHtml(pot.label)}"><h4>📷 Photo observations</h4>${pot.photos.map((photo) => photoFigure(photo)).join("")}</section>`;
+}
+
+/** @param {ReportPhoto} photo */
+function photoFigure(photo) {
+    const previewUrl = photo.imageUrl.replace(
+        "https://i.gyazo.com/",
+        "https://thumb.gyazo.com/thumb/960/"
+    );
+    const original =
+        photo.originalUrl === undefined
+            ? ""
+            : `<a href="${escapeHtml(photo.originalUrl)}" rel="noreferrer">Original photo ↗</a>`;
+    const findings = photo.findings
+        .map((finding) => `<li>${escapeHtml(finding)}</li>`)
+        .join("");
+    return `<figure class="photo-evidence"><a class="photo-image-link" href="${escapeHtml(photo.imageUrl)}" rel="noreferrer"><img src="${escapeHtml(previewUrl)}" alt="${escapeHtml(photo.alt)}" sizes="(max-width: 760px) calc(100vw - 74px), 480px" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></a><figcaption><p class="photo-captured">📷 Captured <time datetime="${escapeHtml(photo.capturedAt)}">${escapeHtml(localDate(photo.capturedAt, true))} ET</time></p><p class="photo-caption">${escapeHtml(photo.caption)}</p><ul class="photo-findings">${findings}</ul><p class="photo-limitations"><strong>Photo-only limits:</strong> ${escapeHtml(photo.limitations)}</p><div class="photo-links"><a href="${escapeHtml(photo.imageUrl)}" rel="noreferrer">Open full photo ↗</a><a href="${escapeHtml(photo.pageUrl)}" rel="noreferrer">Photo page ↗</a>${original}</div></figcaption></figure>`;
+}
+
+/** @param {ReportPot} pot */
 function plateauTail(pot) {
     const firstPoint = pot.plateauPoints[0];
     const lastPoint = pot.plateauPoints.at(-1);
@@ -231,7 +254,7 @@ function potCard(pot, report, profiles) {
     const note = pot.metricsNote
         ? `<p class="metric-note">${escapeHtml(pot.metricsNote)}</p>`
         : "";
-    return `<details class="pot-card" id="pot-${escapeHtml(pot.id)}" data-action="${escapeHtml(pot.action)}" data-search="${searchText}"><summary><img class="plant-portrait" src="../../assets/plant-icons/${portrait}.svg" alt="" width="64" height="64" loading="lazy" /><span class="pot-identity"><span class="pot-title"><strong>${escapeHtml(pot.label)}</strong><span class="pot-id">${escapeHtml(pot.id)}</span></span><span class="pot-name">${escapeHtml(pot.name)}</span><span class="card-badges"><span class="reason-badge">${escapeHtml(reason)}</span>${mixBadge}</span></span><span class="card-rate">${change === null ? "—" : signed(change.perDay, 2)}<small>g/day</small></span><span class="expand-icon" aria-hidden="true">⌄</span></summary><div class="pot-detail"><p class="pot-recommendation"><span aria-hidden="true">📌</span> ${escapeHtml(pot.recommendation)}</p><dl>${mixDetail}<div><dt>🕒 Last reading</dt><dd>${escapeHtml(latest)}</dd></div><div><dt>⚖️ Weight change</dt><dd>${escapeHtml(changeText)}</dd></div><div><dt>🎯 Dry reference</dt><dd>${escapeHtml(comparison)}</dd></div><div><dt>📊 Plateau</dt><dd><strong>${status}</strong>${plateauDetail}</dd></div></dl>${note}<div class="pot-links"><a href="./plant-history.html?id=${escapeHtml(pot.id)}">Weight history ↗</a><a href="../plant-booklet/#${profile[0]}">Field guide ↗</a></div></div></details>`;
+    return `<details class="pot-card" id="pot-${escapeHtml(pot.id)}" data-action="${escapeHtml(pot.action)}" data-search="${searchText}"><summary><img class="plant-portrait" src="../../assets/plant-icons/${portrait}.svg" alt="" width="64" height="64" loading="lazy" /><span class="pot-identity"><span class="pot-title"><strong>${escapeHtml(pot.label)}</strong><span class="pot-id">${escapeHtml(pot.id)}</span></span><span class="pot-name">${escapeHtml(pot.name)}</span><span class="card-badges"><span class="reason-badge">${escapeHtml(reason)}</span>${mixBadge}</span></span><span class="card-rate">${change === null ? "—" : signed(change.perDay, 2)}<small>g/day</small></span><span class="expand-icon" aria-hidden="true">⌄</span></summary><div class="pot-detail"><p class="pot-recommendation"><span aria-hidden="true">📌</span> ${escapeHtml(pot.recommendation)}</p><dl>${mixDetail}<div><dt>🕒 Last reading</dt><dd>${escapeHtml(latest)}</dd></div><div><dt>⚖️ Weight change</dt><dd>${escapeHtml(changeText)}</dd></div><div><dt>🎯 Dry reference</dt><dd>${escapeHtml(comparison)}</dd></div><div><dt>📊 Plateau</dt><dd><strong>${status}</strong>${plateauDetail}</dd></div></dl>${note}${photoEvidence(pot)}<div class="pot-links"><a href="./plant-history.html?id=${escapeHtml(pot.id)}">Weight history ↗</a><a href="../plant-booklet/#${profile[0]}">Field guide ↗</a></div></div></details>`;
 }
 
 /**

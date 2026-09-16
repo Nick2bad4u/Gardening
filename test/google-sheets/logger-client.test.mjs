@@ -6365,6 +6365,79 @@ describe("garden logger plant photos and portrait rendering", () => {
         expect(portrait.getAttribute("src")).not.toContain("contents.svg");
     });
 
+    it.each([
+        "https://gyazo.com/0123456789abcdef0123456789abcdef",
+        "https://photos.app.goo.gl/example",
+        "https://photos.google.com/share/example?key=abc",
+    ])("accepts Photo URL %s before sending a save", (photoUrl) => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow();
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Photo"]',
+            HTMLElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(window.document, "#photoUrl", HTMLInputElement).value =
+            photoUrl;
+        queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+        const saves = calls.filter(
+            (call) => call.method === "saveWebObservation"
+        );
+
+        expect(saves).toHaveLength(1);
+        expect(required(saves[0]).args[0].photoUrl).toBe(photoUrl);
+    });
+
+    it.each([
+        // eslint-disable-next-line sdl/no-insecure-url, sonarjs/no-clear-text-protocols, unicorn/prefer-https -- Deliberate insecure-scheme rejection fixture.
+        "http://gyazo.com/0123456789abcdef0123456789abcdef",
+        "https://gyazo.com.evil.test/0123456789abcdef0123456789abcdef",
+        "https://user@gyazo.com/0123456789abcdef0123456789abcdef",
+        "https://gyazo.com:443/0123456789abcdef0123456789abcdef",
+        "https://gyazo.com/0123456789ABCDEF0123456789ABCDEF",
+        "https://gyazo.com/0123456789abcdef0123456789abcde",
+        "https://gyazo.com/0123456789abcdef0123456789abcdef?redirect=evil",
+        "https://i.gyazo.com/0123456789abcdef0123456789abcdef.jpg",
+        "https://photos.app.goo.gl.evil.test/share",
+        "https://photos.app.goo.gl:443/share",
+        "https://photos.app.goo.gl/share with spaces",
+        // eslint-disable-next-line no-script-url -- Deliberate unsafe-scheme rejection fixture.
+        "javascript:alert(1)",
+    ])("rejects Photo URL %s before sending a save", (photoUrl) => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow();
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Photo"]',
+            HTMLElement
+        ).dispatchEvent(new window.Event("click", { bubbles: true }));
+        queryElement(window.document, "#photoUrl", HTMLInputElement).value =
+            photoUrl;
+        queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+        const saves = calls.filter(
+            (call) => call.method === "saveWebObservation"
+        );
+
+        expect(saves).toHaveLength(0);
+        expect(window.document.body.textContent).toContain(
+            "Google Photos share link or Gyazo capture link"
+        );
+    });
+
     it("offers an honest Google Photos handoff for photo links", () => {
         expect.hasAssertions();
 

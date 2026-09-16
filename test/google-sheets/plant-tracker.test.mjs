@@ -1405,13 +1405,11 @@ describe("garden logger event inference and structured details", () => {
             wateringApplication: "Thorough",
         });
         expect(
-            context.isGooglePhotosShareUrl_(
-                "https://photos.google.com/share/example"
-            )
+            context.isPhotoShareUrl_("https://photos.google.com/share/example")
         ).toBe(true);
-        expect(
-            context.isGooglePhotosShareUrl_("https://example.com/photo")
-        ).toBe(false);
+        expect(context.isPhotoShareUrl_("https://example.com/photo")).toBe(
+            false
+        );
         expect(() =>
             context.eventDetailsFromPayload_(
                 { nutrientsUsed: "Maybe" },
@@ -2285,7 +2283,7 @@ describe("garden logger workbook refresh and navigation", () => {
         expect(structuredClone(context.refreshGardenWorkbook())).toStrictEqual({
             baselineColumns: 36,
             dashboardColumns: 31,
-            loggerVersion: "5.23.2",
+            loggerVersion: "5.24.0",
             plantPages: 2,
         });
         expect(calls.filter(([name]) => name === "plant")).toHaveLength(2);
@@ -2344,7 +2342,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P01",
             lastPlant: "P10",
-            loggerVersion: "5.23.2",
+            loggerVersion: "5.24.0",
             plantPages: 10,
         });
         expect(
@@ -2352,7 +2350,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P11",
             lastPlant: "P20",
-            loggerVersion: "5.23.2",
+            loggerVersion: "5.24.0",
             plantPages: 10,
         });
         expect(
@@ -2360,7 +2358,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P21",
             lastPlant: "P30",
-            loggerVersion: "5.23.2",
+            loggerVersion: "5.24.0",
             plantPages: 10,
         });
 
@@ -3036,7 +3034,7 @@ describe("scoped Dashboard weight count installer", () => {
             ).toStrictEqual({
                 plants: 30,
                 range: "Dashboard!Y6:Y36",
-                version: "5.23.2",
+                version: "5.24.0",
             });
 
             const after = structuredClone(rows);
@@ -3758,7 +3756,7 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.23.2");
+        expect(bootstrap.version).toBe("5.24.0");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             activitySummary: {
@@ -4329,6 +4327,80 @@ describe("garden logger canonical observation persistence", () => {
         expect(required(history.__rows[3])[28]).toBe("Estimated");
         expect(required(history.__rows[3])[34]).toBe("Unspecified");
         expect(required(history.__rows[3])[36]).toBe("cm");
+    });
+
+    it.each([
+        "https://gyazo.com/0123456789abcdef0123456789abcdef",
+        "https://photos.app.goo.gl/example",
+        "https://photos.google.com/share/example?key=abc",
+    ])("saves Check and Photo as two retry-safe rows for %s", (photoUrl) => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook();
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+        const payload = {
+            condition: "New leaf pair visible",
+            events: ["Check", "Photo"],
+            notes: "Visual inspection only; firmness not checked.",
+            observedAt: "2026-08-16T08:00:00-04:00",
+            photoUrl,
+            plantId: "P01",
+            requestId: "garden-photo-check-12345",
+            soilMoisture: "Not checked",
+        };
+
+        expect(context.saveWebObservation(payload)).toMatchObject({
+            duplicate: false,
+            historyRows: 2,
+            ok: true,
+        });
+        expect(context.saveWebObservation(payload)).toMatchObject({
+            duplicate: true,
+            historyRows: 2,
+        });
+
+        const check = required(workbook.history.__rows[1]);
+        const photo = required(workbook.history.__rows[2]);
+
+        expect(check[2]).toBe("Check");
+        expect(photo[2]).toBe("Photo");
+        expect(check[7]).toBe(payload.condition);
+        expect(check[23]).toBe("");
+        expect(photo[23]).toBe(photoUrl);
+        expect(photo[29]).toBe(check[29]);
+        expect(workbook.history.__rows).toHaveLength(3);
+    });
+
+    it.each([
+        // eslint-disable-next-line sdl/no-insecure-url, sonarjs/no-clear-text-protocols, unicorn/prefer-https -- Deliberate insecure-scheme rejection fixture.
+        "http://gyazo.com/0123456789abcdef0123456789abcdef",
+        "https://gyazo.com.evil.test/0123456789abcdef0123456789abcdef",
+        "https://user@gyazo.com/0123456789abcdef0123456789abcdef",
+        "https://gyazo.com:443/0123456789abcdef0123456789abcdef",
+        "https://gyazo.com/0123456789ABCDEF0123456789ABCDEF",
+        "https://gyazo.com/0123456789abcdef0123456789abcde",
+        "https://gyazo.com/0123456789abcdef0123456789abcdef?redirect=evil",
+        "https://gyazo.com/0123456789abcdef0123456789abcdef#fragment",
+        "https://i.gyazo.com/0123456789abcdef0123456789abcdef.jpg",
+        "https://gyazo.com/0123456789abcdef0123456789abcdef/extra",
+        "https://photos.app.goo.gl.evil.test/share",
+        "https://user@photos.app.goo.gl/share",
+        "https://photos.app.goo.gl:443/share",
+        "https://photos.app.goo.gl/share with spaces",
+        "https://photos.app.goo.gl/<script>",
+        // eslint-disable-next-line no-script-url -- Deliberate unsafe-scheme rejection fixture.
+        "javascript:alert(1)",
+    ])("rejects unsafe or malformed Photo URL %s", (photoUrl) => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet());
+
+        expect(() =>
+            context.eventDetailsFromPayload_({ photoUrl }, ["Photo"], null)
+        ).toThrow(/share link/iv);
     });
 
     it("saves a complete mobile observation and advances a repot setup", () => {
@@ -8382,10 +8454,10 @@ describe("garden logger workbook installation and History headers", () => {
         context.installGardenLogger();
 
         expect(required(calls.properties)["gardenLoggerVersion"]).toBe(
-            "5.23.2"
+            "5.24.0"
         );
         expect(required(calls.toast)[1]).toBe("Garden logger verified");
-        expect(required(calls.toast)[0]).toMatch(/Logger 5\.23\.2 is ready/v);
+        expect(required(calls.toast)[0]).toMatch(/Logger 5\.24\.0 is ready/v);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(

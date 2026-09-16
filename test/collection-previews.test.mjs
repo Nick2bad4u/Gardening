@@ -118,6 +118,10 @@ describe("collection preview publication", () => {
         );
 
         expect(download).toHaveBeenCalledTimes(1);
+        expect(download).toHaveBeenCalledWith(
+            `https://thumb.gyazo.com/thumb/960/${id}.jpg`,
+            expect.objectContaining({ signal: expect.any(AbortSignal) })
+        );
         expect(
             firstBuild.get(id)?.map((variant) => variant.width)
         ).toStrictEqual([160]);
