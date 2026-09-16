@@ -223,6 +223,13 @@ function validatePhotos(input, readAt) {
             "limitations",
         ])
             textValue(photo[key], `photo.${key}`);
+        for (const dimension of ["width", "height"]) {
+            const pixels = finiteNumber(photo[dimension], `photo.${dimension}`);
+            if (pixels === 0 || !Number.isSafeInteger(pixels))
+                throw new TypeError(
+                    `photo.${dimension} must be a positive integer pixel dimension.`
+                );
+        }
         const captured = instant(photo["capturedAt"], "photo.capturedAt");
         if (readAt === null || captured > readAt)
             throw new TypeError(

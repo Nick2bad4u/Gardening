@@ -30,10 +30,12 @@ export interface ReportPhoto {
     caption: string;
     capturedAt: string;
     findings: string[];
+    height: number;
     imageUrl: string;
     limitations: string;
     originalUrl?: string;
     pageUrl: string;
+    width: number;
 }
 
 export interface ReportPot {

@@ -70,7 +70,10 @@ this section.
 
 Each pot can also include dated `photos` evidence: `capturedAt`, a verified
 full-resolution Gyazo `imageUrl` and matching `pageUrl`, `alt`, `caption`,
-nonempty `findings`, and `limitations`. An optional `originalUrl` can point to
+nonempty `findings`, `limitations`, and positive integer `width` and `height`
+in pixels from the verified full-resolution crop. Preserve its actual dimensions;
+the image attributes reserve the correct aspect ratio while previews scale to
+the screen. An optional `originalUrl` can point to
 a Google Photos share link when the owner has authorized sharing it. Omit
 private originals. The capture must not postdate the actual source read.
 The generated card displays a small preview, visible capture time, findings,

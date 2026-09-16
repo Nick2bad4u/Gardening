@@ -41,10 +41,12 @@ const photo = {
     caption: "Exact crop; no retouching.",
     capturedAt: "2026-09-14T15:00:00-04:00",
     findings: ["An inner leaf pair is visible."],
+    height: 720,
     imageUrl: "https://i.gyazo.com/0123456789abcdef0123456789abcdef.png",
     limitations:
         "An image cannot establish leaf firmness or root-zone moisture.",
     pageUrl: "https://gyazo.com/0123456789abcdef0123456789abcdef",
+    width: 360,
 };
 // eslint-disable-next-line no-script-url -- Deliberately unsafe input verifies that photo links reject executable protocols.
 const unsafeScriptUrl = "javascript:alert(1)";
@@ -57,6 +59,41 @@ function pot(report, id) {
 }
 
 describe("daily report evidence", () => {
+    it.each(["width", "height"])(
+        "requires a real positive integer photo %s",
+        (dimension) => {
+            expect.hasAssertions();
+
+            for (const invalid of [
+                undefined,
+                null,
+                0,
+                -1,
+                1.5,
+                Infinity,
+                NaN,
+                "360",
+                Number.MAX_SAFE_INTEGER + 1,
+            ]) {
+                const report = {
+                    ...sample,
+                    pots: sample.pots.map((candidate) =>
+                        candidate.id === "P28"
+                            ? {
+                                  ...candidate,
+                                  photos: [{ ...photo, [dimension]: invalid }],
+                              }
+                            : candidate
+                    ),
+                };
+
+                expect(() => validateReport(report)).toThrow(
+                    `photo.${dimension}`
+                );
+            }
+        }
+    );
+
     it("accepts optional photo evidence without changing care categories", () => {
         expect.hasAssertions();
 
@@ -199,6 +236,9 @@ describe("daily report evidence", () => {
         );
         expect(html).toContain(`datetime="${photo.capturedAt}"`);
         expect(html).toContain(
+            `width="${photo.width}" height="${photo.height}"`
+        );
+        expect(html).toContain(
             'loading="lazy" decoding="async" referrerpolicy="no-referrer"'
         );
         expect(html).toContain("Photo-only limits:");
@@ -246,6 +286,9 @@ describe("daily report evidence", () => {
         expect(published).toContain(`href="${photo.pageUrl}"`);
         expect(published).not.toContain(`src="${photo.imageUrl}"`);
         expect(published).not.toContain("thumb.gyazo.com");
+        expect(published).toContain(
+            `width="${photo.width}" height="${photo.height}"`
+        );
         expect(published).toContain(
             'sizes="(max-width: 760px) calc(100vw - 74px), 480px" loading="lazy"'
         );
