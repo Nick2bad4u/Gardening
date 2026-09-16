@@ -145,11 +145,17 @@ function initializeReport() {
         const conditions = [
             ...document.querySelectorAll(".quick-description"),
         ].map((item) => item.textContent.replaceAll(/\s+/gv, " ").trim());
+        const assessment = [
+            ...document.querySelectorAll(".ai-assessment p"),
+        ].map((item) => item.textContent.replaceAll(/\s+/gv, " ").trim());
         const text = [
             `Garden report · ${document.body.dataset["reportDate"] ?? "date unavailable"}`,
             "Water only when your usual readiness check confirms it.",
             ...conditions,
             ...lines,
+            "",
+            "🤖 AI recommendation — separate assessment",
+            ...assessment,
         ].join("\n");
         try {
             await navigator.clipboard.writeText(text);

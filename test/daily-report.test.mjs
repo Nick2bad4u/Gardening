@@ -41,6 +41,20 @@ function pot(report, id) {
 }
 
 describe("daily report evidence", () => {
+    it.each([
+        [],
+        [" ".repeat(3)],
+        [42],
+        "A plain string instead of paragraphs",
+        null,
+    ])("rejects a malformed AI assessment: %j", (aiRecommendation) => {
+        expect.hasAssertions();
+
+        expect(() => validateReport({ ...sample, aiRecommendation })).toThrow(
+            /ai.?recommendation/iv
+        );
+    });
+
     it("separates reference-only pots from plateau-confirmed watering", () => {
         expect.hasAssertions();
 
@@ -201,6 +215,40 @@ describe("daily report evidence", () => {
 });
 
 describe("daily report publication", () => {
+    it("renders the authored AI assessment last without changing main actions", () => {
+        expect.hasAssertions();
+
+        const report = structuredClone(sample);
+        report.aiRecommendation = [
+            'AI exception to the main list: C2 remains unconfirmed. <script>alert("x")</script>',
+        ];
+        const html = renderReport(validateReport(report), template, profiles);
+
+        expect(html.indexOf('id="ai-recommendation"')).toBeGreaterThan(
+            html.indexOf("Nothing today:</strong> B3")
+        );
+        expect(html).toContain("AI exception to the main list: C2");
+        expect(html).toContain(
+            "&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt;"
+        );
+        expect(html).not.toContain('<script>alert("x")</script>');
+        expect(html).toContain("Dry reference only:</strong> C2");
+        expect(html).toContain("MSU · 0.75 g/gal:</strong> A1, A3");
+    });
+
+    it("shows an honest notice for older inputs without an AI assessment", () => {
+        expect.hasAssertions();
+
+        const report = structuredClone(sample);
+        delete report.aiRecommendation;
+        const html = renderReport(validateReport(report), template, profiles);
+
+        expect(html).toContain(
+            "An AI assessment was not recorded for this saved report."
+        );
+        expect(html).not.toContain("I would water");
+    });
+
     it("renders all pots, a matching pocket list, recipes, and the corrected money-tree gap", () => {
         expect.hasAssertions();
 
@@ -245,6 +293,9 @@ describe("daily report publication", () => {
         report.mixes = [];
         report.summary =
             "Live workbook access failed; today's review is unavailable.";
+        report.aiRecommendation = [
+            "Live review was unavailable; I cannot make an evidence-based care recommendation.",
+        ];
         const html = renderReport(validateReport(report), template, profiles);
 
         expect(html).toContain("Review unavailable");

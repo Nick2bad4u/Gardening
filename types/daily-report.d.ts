@@ -1,4 +1,5 @@
 export interface DailyReport {
+    aiRecommendation?: string[];
     coverage:
         | "complete"
         | "partial"

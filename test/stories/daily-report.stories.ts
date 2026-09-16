@@ -169,6 +169,15 @@ export const CopyAndPrint: Story = {
         await expect(copied).not.toContain("A1, A3, C2");
         await expect(copied).toContain("Dry reference only: C2");
         await expect(copied).toContain("Nothing today: B3");
+        await expect(copied).toContain(
+            "🤖 AI recommendation — separate assessment"
+        );
+        await expect(copied.indexOf("🤖 AI recommendation")).toBeGreaterThan(
+            copied.indexOf("Nothing today: B3")
+        );
+        await expect(copied).toContain(
+            "Prioritize #3's missing post-water weight"
+        );
         Object.defineProperty(view.navigator, "clipboard", {
             configurable: true,
             value: {

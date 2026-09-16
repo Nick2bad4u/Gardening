@@ -323,6 +323,15 @@ function validateReport(input) {
     if (total !== null && !Number.isSafeInteger(total))
         throw new TypeError("Inventory total must be an integer.");
     textValue(report["summary"], "summary");
+    if (report["aiRecommendation"] !== undefined) {
+        const assessment = list(report["aiRecommendation"], "aiRecommendation");
+        if (assessment.length === 0)
+            throw new TypeError(
+                "AI recommendation must contain an assessment."
+            );
+        for (const line of assessment)
+            textValue(line, "AI recommendation line");
+    }
     const notes = list(report["notes"], "notes");
     for (const note of notes) textValue(note, "note");
     const pots = validatePots(

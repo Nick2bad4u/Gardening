@@ -369,6 +369,13 @@ function renderReport(report, template, profiles) {
         )
         .join("");
     const replacements = new Map([
+        [
+            "AI_RECOMMENDATION",
+            report.aiRecommendation
+                ?.map((line) => `<p>${escapeHtml(line)}</p>`)
+                .join("") ??
+                '<p class="empty-category">An AI assessment was not recorded for this saved report.</p>',
+        ],
         ["COVERAGE", coverage],
         [
             "DATE_LABEL",

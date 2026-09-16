@@ -1,4 +1,10 @@
 {
+    "aiRecommendation": [
+        "💧 Water today: A1, A3 if the usual moisture/readiness checks agree; their sustained plateaus support the main list. Use the listed conditional MSU mix or plain-RO fallback.",
+        "⏳ Hold: C2. Its historical reference is reached, but the current curve has not established a sustained plateau; keep the next useful weighing window.",
+        "⚖️ Prioritize #3's missing post-water weight. The earlier reading cannot describe the newly watered cycle.",
+        "👀 Check G3's leaf cycle before considering water. My assessment agrees with the main list in this synthetic fixture."
+    ],
     "coverage": "complete",
     "date": "2026-09-14",
     "generatedAt": "2026-09-14T23:12:00Z",

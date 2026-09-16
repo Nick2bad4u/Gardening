@@ -2,7 +2,8 @@
 
 The [daily report](https://nick2bad4u.github.io/Gardening/layouts/daily-report.html)
 is a static page for the phone: a quick list, watering recipes, searchable
-plant cards, weight changes, plateau evidence, and a compact pocket list.
+plant cards, weight changes, plateau evidence, a compact pocket list, and a
+separate AI recommendation at the bottom.
 It shows the report date and actual workbook-read time. An older report gets
 a visible date warning when opened or revisited. Refresh the page to retrieve
 a newly published report; it does not poll or write to the spreadsheet.
@@ -47,6 +48,21 @@ Version 2 enforces this distinction during validation. Archived version 1 inputs
 retain the decisions made under the previous policy; they are not valid inputs
 for the current generator without a reviewed policy migration. Do not rewrite
 historical observations or label a policy-only revision as a fresh workbook read.
+
+Each new review also includes `aiRecommendation`: a nonempty array of plain-text
+paragraphs authored by the reviewing AI after considering the full evidence.
+The generator displays them in a separate **🤖 AI recommendation** section after
+the pocket list; Copy list includes them after the main recommendations.
+The main Water list remains plateau-gated. If the AI suggests a different action,
+it must label an **AI exception to the main list**, explain the evidence and
+uncertainty, and retain the plant-specific readiness and nutrient conditions.
+See the [task instructions](../daily-weighing-watering-prompt.md) for the full
+assessment policy. The generator does not infer or invent this assessment.
+
+The field is optional only for compatibility with earlier version-2 reports.
+An older report without it shows an explicit not-recorded notice. Do not backfill
+an old snapshot with new advice or change its date/source-read time just to add
+this section.
 
 ## Shared detector analysis
 
