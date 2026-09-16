@@ -136,7 +136,7 @@ for (const theme of ["dark", "light"] as const) {
                 });
                 expect.soft(layout).toStrictEqual({
                     hasOverflow: false,
-                    imageCount: 4,
+                    imageCount: 8,
                     imagesLinkToPublishedAssets: true,
                     labels: [
                         [

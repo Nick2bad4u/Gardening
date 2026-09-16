@@ -10,6 +10,28 @@ For easier comparison with the photographs, this page now faces the window: **wi
 
 **Last reported light settings:** AW200 **45%**, AeroLight 240 W **38%**, both **13 h 15 m total**, including **15 m sunrise and 15 m sunset**. The earlier **18-inch tip reference**, four independent ceiling hooks and separate hangers remain the last operating record; the new photos do not remeasure clearance or fixture centers. Check the new footprint before carrying over the old one-inch margins or ½–1-inch gap as current geometry.
 
+## Illustrated Views
+
+These additional charts use the botanical illustration style requested on September 16 with the current positions and confirmed windowsill move. Plant forms and sizes are illustrative; the written coordinates and retained identity qualifiers below remain the reference. Light-priority badges describe plant needs, not measured intensity. The original diagrams remain in their sections below.
+
+### Illustrated Whole Display
+
+![Illustrated whole display with 24 front pots, five rear containers and Money Tree on the separate north windowsill](../../assets/layouts/2026-09-16-illustrated/combined-plan-illustrated.png)
+
+### Illustrated Front Pots
+
+![Illustrated front-pot chart with six columns and four rows, D3 at R1C1 and F2 at R1C6](../../assets/layouts/2026-09-16-illustrated/front-pots-illustrated.png)
+
+### Illustrated Rear Pots and Windowsill
+
+![Illustrated rear containers with the square wooden shared planter and Money Tree separately on the north windowsill](../../assets/layouts/2026-09-16-illustrated/rear-pots-illustrated.png)
+
+### Illustrated Relative Light
+
+![Illustrated relative-light hypothesis for four wooden tables and a separate unmeasured windowsill](../../assets/layouts/2026-09-16-illustrated/relative-light-illustrated.png)
+
+The [generation prompts and illustration limits](../../assets/layouts/2026-09-16-illustrated/image-prompts.md) record the style references and current-data constraints. A separate [transparent-background copy of the original reference map](../../assets/layouts/2026-09-16-illustrated/estimated-light-map-transparent.png) is available for reuse; the opaque version below keeps its labels readable against both website themes.
+
 ## Estimated Relative Light
 
 ![Estimated relative-light map for 29 table pots and a separate confirmed north-windowsill money tree, with unmeasured exposure](../../assets/layouts/2026-09-15-four-tables/estimated-light-map.png)

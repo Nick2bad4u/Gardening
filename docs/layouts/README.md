@@ -6,6 +6,8 @@ The [Table Placement Guide](./table-placement-research.md) records the new **fou
 
 The guide includes an estimated relative-light map, front and rear diagrams, a combined view, 29 photo-matched table positions and the confirmed #3 windowsill position, and a [blank phone-reading sheet](./table-placement-research.md#compare-the-plan-with-a-phone-meter). Labels and current intensity remain to be checked. The [full review](../two-light-placement-review.md) preserves species evidence and explains why front corners, low rosettes and rear shadows should be compared.
 
+The [illustrated views](./table-placement-research.md#illustrated-views) add four botanical charts in the requested style using the same current data. The original diagrams remain available, along with a transparent-background export of the reference light map. Plant portraits are illustrations, not new identification evidence or measurements.
+
 The [installed AW200 + AeroLight 240 W](../equipment/aw200-and-aerolight-240w.md) retain their last reported 45% / 38%, shared 13 h 15 m total cycle including 15 m sunrise and 15 m sunset, and 18-inch tip reference. The new photos do not remeasure fixture centers or clearances. The room-facing end stays open without the two-foot reflector.
 
 Read the guide [immediately after the booklet contents](https://nick2bad4u.github.io/Gardening/#placement), or open the [placement gallery](https://nick2bad4u.github.io/Gardening/layouts/grow-spot-layout.html#researched-placement).

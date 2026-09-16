@@ -281,7 +281,7 @@ async function main() {
     );
     for (const html of [sourceHtml, ...layoutSources]) {
         for (const match of html.matchAll(
-            /\bhref="\.\.\/\.\.\/(?<reference>assets\/layouts\/[^"#?]+\.csv)"/gv
+            /\bhref="\.\.\/\.\.\/(?<reference>assets\/layouts\/[^"#?]+\.(?:csv|png))"/gv
         )) {
             const reference = match.groups?.["reference"];
             if (reference === undefined)

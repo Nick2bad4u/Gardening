@@ -2069,7 +2069,8 @@ async function renderPlacementGuide() {
                 );
                 if (
                     repositoryPath.startsWith("assets/") &&
-                    repositoryPath.endsWith(".csv")
+                    (repositoryPath.endsWith(".csv") ||
+                        repositoryPath.endsWith(".png"))
                 ) {
                     const assetPath = `../../${repositoryPath}`;
                     return `href="${escapeHtml(assetPath)}" download`;
