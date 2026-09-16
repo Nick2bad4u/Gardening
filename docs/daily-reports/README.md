@@ -16,6 +16,10 @@ it does not authorize recording care, changing workbook formulas, or deploying
 the logger. The computer, Codex app, source connections, and GitHub access must
 be available for the local task to complete.
 
+The Daily care worksheet was retired on September 16, 2026. This report and
+the existing daily chat task are the maintained plan; neither needs that tab.
+Dashboard and Integrity remain live workbook summaries.
+
 ## One layout, dated inputs
 
 - `YYYY-MM-DD.json` holds the reviewed public report for that Eastern date.

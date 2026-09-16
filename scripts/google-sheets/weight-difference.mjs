@@ -400,7 +400,7 @@ export function buildWeightDifferenceRequests({ cells, metadata }) {
                                 },
                             ],
                         },
-                        fontName: "Roboto",
+                        fontName: "JetBrains Mono",
                         hiddenDimensionStrategy: "SHOW_ALL",
                         subtitle:
                             "Positive = above dry reference · negative = below · missing references stay blank · color identifies the plant",

@@ -30,7 +30,8 @@ links to their individual charts. These are arbitrary identity colors, unrelated
 to the appearance of the plants. Keep the names and IDs alongside color because
 similar hues can still be difficult to distinguish.
 
-All 90 charts on the individual plant sheets use that plant's color. The 15
+The 90 weight/dimension charts and populated watering-interval charts on the
+individual plant sheets use that plant's color. The 15
 plant comparison charts use the same colors for each plant's bars or points, in
 consistent P01–P30 order. This fixed order prevents point colors from moving to
 another plant when a sorted source recalculates. Source values still update
@@ -99,6 +100,54 @@ plateau heuristic and species exceptions.
   display separate readings but never produce a divide-by-zero interval rate.
 
 ## Source and maintenance
+
+### Time between waterings
+
+Every **P01–P30** plant page has a fourth chart, **Time between waterings**, at
+**A111**, with its calculation status at **A109**. Each column is a completed
+gap between two recorded watering dates. Its height and label show whole
+calendar days; the date underneath is the later watering. For example,
+P01's July 31 → August 26 and August 26 → September 14 gaps are **26 days** and
+**19 days**.
+
+The chart recalculates from **History** automatically. It excludes Removed
+records, non-Water events, and missing/non-numeric dates; combines multiple
+Water entries on the same calendar date; and sorts dates before subtracting.
+Calendar dates follow the workbook's **America/New_York** time zone. All pot
+setups and watering applications are included, so a partial watering counts as
+a watering date. These bars describe recorded care, not a watering schedule.
+
+The first recorded date has no preceding interval. With fewer than two dates,
+the chart has no bars and the status says it is waiting for a second watering
+date. Once intervals exist, A109 also shows the latest completed gap in days.
+The unfinished gap since the latest watering stays in the existing
+**E6 Days since water** header. It is not a completed chart interval.
+
+[`watering-intervals.mjs`](watering-intervals.mjs) builds a separate additive
+migration. Its **Watering intervals** helper (`sheetId` **907202605**) contains
+three columns per permanent plant ID in P01–P30 order: previous date, later
+date, and days between. It is hidden, warning-protected, and not an AppSheet
+table. Formulas cover **History rows 2–5000**. The migration checks the source
+headers, history capacity, plant roster, existing three-chart layout, and empty
+**A108:K132** destination. It refuses to reinstall an existing helper.
+
+Call `buildWateringIntervalRequests(snapshot)` with the snapshot shape below,
+including full native chart metadata, History headers, and all destination
+cells. Apply `helperRequests`, verify the calculated intervals and status
+labels, then apply `chartRequests`. Preserve existing charts and their colors;
+the additions use `plant-colors.json`. No logger version change, Apps Script
+deployment, or AppSheet regeneration is needed. Do not run the broad page
+refresh to install these charts; it clears the A109 status labels.
+
+Google Sheets omits series styling when a chart has no numeric observations.
+Its range binding survives: a copy-only second-watering test confirmed that
+the bar appears automatically. An initially empty chart may use the workbook's
+default bar color and omit the bar-top label until its planned specification
+is reapplied with `updateChartSpec` after its first interval exists. A109 still
+shows the exact latest gap automatically. Do not seed fake observations or
+add a trigger just to force an empty chart's cosmetic settings.
+
+### Shared migration workflow
 
 [`insights-charts.mjs`](insights-charts.mjs) builds native Sheets batch requests
 without credentials or network access. `buildInsightsRequests(snapshot)` accepts

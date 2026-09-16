@@ -121,7 +121,10 @@ export function buildPlantColorKeyRequests({ cells, metadata }) {
             repeatCell: {
                 cell: {
                     userEnteredFormat: {
-                        textFormat: { fontFamily: "Roboto", fontSize: 11 },
+                        textFormat: {
+                            fontFamily: "JetBrains Mono",
+                            fontSize: 11,
+                        },
                         verticalAlignment: "MIDDLE",
                     },
                 },
@@ -157,7 +160,7 @@ export function buildPlantColorKeyRequests({ cells, metadata }) {
                         },
                         textFormat: {
                             bold: true,
-                            fontFamily: "Roboto",
+                            fontFamily: "JetBrains Mono",
                             fontSize: rowIndex === 0 ? 19 : 11,
                             foregroundColorStyle: {
                                 rgbColor: { blue: 1, green: 1, red: 1 },
@@ -474,7 +477,7 @@ function colorComparisonChart(spec, metadata, comparisonIndex) {
         series.pointStyle = { ...series.pointStyle, size: 8 };
         series.dataLabel = {
             customLabelData: colorData(helperId, row, 0, 31),
-            textFormat: { fontFamily: "Roboto", fontSize: 9 },
+            textFormat: { fontFamily: "JetBrains Mono", fontSize: 9 },
             type: "CUSTOM",
         };
     }

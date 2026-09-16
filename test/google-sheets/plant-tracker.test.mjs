@@ -2285,7 +2285,7 @@ describe("garden logger workbook refresh and navigation", () => {
         expect(structuredClone(context.refreshGardenWorkbook())).toStrictEqual({
             baselineColumns: 36,
             dashboardColumns: 31,
-            loggerVersion: "5.23.1",
+            loggerVersion: "5.23.2",
             plantPages: 2,
         });
         expect(calls.filter(([name]) => name === "plant")).toHaveLength(2);
@@ -2295,7 +2295,6 @@ describe("garden logger workbook refresh and navigation", () => {
             "plant",
             "plant",
             "organize",
-            "daily",
             "toast",
         ]);
         expect(structuredClone(flushes)).toStrictEqual(["flush"]);
@@ -2345,7 +2344,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P01",
             lastPlant: "P10",
-            loggerVersion: "5.23.1",
+            loggerVersion: "5.23.2",
             plantPages: 10,
         });
         expect(
@@ -2353,7 +2352,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P11",
             lastPlant: "P20",
-            loggerVersion: "5.23.1",
+            loggerVersion: "5.23.2",
             plantPages: 10,
         });
         expect(
@@ -2361,7 +2360,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P21",
             lastPlant: "P30",
-            loggerVersion: "5.23.1",
+            loggerVersion: "5.23.2",
             plantPages: 10,
         });
 
@@ -2613,6 +2612,7 @@ describe("garden logger workbook refresh and navigation", () => {
                 for (const method of [
                     "setBackground",
                     "setFontColor",
+                    "setFontFamily",
                     "setFontSize",
                     "setFontWeight",
                     "setHorizontalAlignment",
@@ -2648,13 +2648,19 @@ describe("garden logger workbook refresh and navigation", () => {
         );
         const spreadsheet = {
             getSheetByName: (/** @type {string} */ name) =>
-                name === "Dashboard" ? dashboard : (pages.get(name) ?? null),
+                name === "Dashboard"
+                    ? dashboard
+                    : name === "Integrity"
+                      ? { getSheetId: () => 99 }
+                      : (pages.get(name) ?? null),
             getSheets: () => [dashboard, ...pages.values()],
         };
 
         context.refreshDashboardView_(spreadsheet, plants);
 
         expect(cells.get("36:2")).toBe("P30");
+        expect(cells.get("3:21")).toContain("#gid=99&range=A4:D21");
+        expect(cells.get("3:23")).toContain("#gid=99&range=A4:D21");
         expect(cells.get("36:3")).toContain("'Plant tracker'!B31");
         expect(cells.get("36:3")).toContain("'Plant tracker'!O31");
         expect(cells.get("36:19")).toBe("=Baselines!J31");
@@ -2697,6 +2703,7 @@ describe("garden logger workbook refresh and navigation", () => {
                     "merge",
                     "setBackground",
                     "setFontColor",
+                    "setFontFamily",
                     "setFontSize",
                     "setFontStyle",
                     "setFontWeight",
@@ -2827,7 +2834,7 @@ describe("garden logger workbook refresh and navigation", () => {
         }
     });
 
-    it("moves and hides workbook helper sheets while preserving user sheets", () => {
+    it("preserves the owner tab order and visibility", () => {
         expect.hasAssertions();
 
         const context = loadAppsScript(createHistorySheet([]));
@@ -2877,8 +2884,9 @@ describe("garden logger workbook refresh and navigation", () => {
         expect(events).toContain("Quick log:hide:6");
         expect(events).toContain("History:hide:4");
         expect(events).toContain("History view:hide:4");
-        expect(events).toContain("Integrity:show");
-        expect(events).toContain("Integrity:hide-sheet");
+        expect(events).not.toContain("Integrity:show");
+        expect(events).not.toContain("Integrity:hide-sheet");
+        expect(events.some((event) => event.startsWith("move:"))).toBe(false);
         expect(events).not.toContain("App entries:show");
         expect(events.at(-1)).toBe("active:Dashboard");
     });
@@ -3028,7 +3036,7 @@ describe("scoped Dashboard weight count installer", () => {
             ).toStrictEqual({
                 plants: 30,
                 range: "Dashboard!Y6:Y36",
-                version: "5.23.1",
+                version: "5.23.2",
             });
 
             const after = structuredClone(rows);
@@ -3750,7 +3758,7 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.23.1");
+        expect(bootstrap.version).toBe("5.23.2");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             activitySummary: {
@@ -8374,10 +8382,10 @@ describe("garden logger workbook installation and History headers", () => {
         context.installGardenLogger();
 
         expect(required(calls.properties)["gardenLoggerVersion"]).toBe(
-            "5.23.1"
+            "5.23.2"
         );
         expect(required(calls.toast)[1]).toBe("Garden logger verified");
-        expect(required(calls.toast)[0]).toMatch(/Logger 5\.23\.1 is ready/v);
+        expect(required(calls.toast)[0]).toMatch(/Logger 5\.23\.2 is ready/v);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(

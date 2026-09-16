@@ -1,6 +1,6 @@
 # Weighing Strategy
 
-Updated: 2026-09-14. This guide documents the owner's requested transition from frequent learning measurements to fewer, better-timed weigh-ins. It distinguishes that policy from the checked-in logger 5.22.1 calendar formulas.
+Updated: 2026-09-16. This guide documents the owner's requested transition from frequent learning measurements to fewer, better-timed weigh-ins. The daily chat report and generated report page are the maintained care plan; the Daily care worksheet is retired.
 
 Read alongside the [watering strategy](./watering-strategy.md), [logger action guide](./logger-actions.md), and [daily task prompt](./daily-weighing-watering-prompt.md).
 
@@ -14,15 +14,14 @@ Reviewing every active container's existing data each morning does not require p
 
 ## What Exists Today
 
-| Surface                         | Current role                                                                                                                                                                                                                                                     |
-| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Workbook Daily care             | The checked-in formula generally schedules every other day away from the relevant window, and daily near the window/reference, with sparse or unsupported evidence, or when review is needed. Missed measurements carry forward.                                 |
-| Daily AI task instructions      | The [saved prompt](./daily-weighing-watering-prompt.md) requests an adaptive per-pot schedule that can reduce routine weighing below that fixed cadence when evidence supports it. This is an instruction policy, not a deployed change to the workbook formula. |
-| Logger Not weighed today filter | Shows collection progress within the care day. It is a filter, not a list of plants that must be weighed.                                                                                                                                                        |
-| Dry-check window                | A forecast of approaching a historical mass reference. It is not the next appointment to weigh.                                                                                                                                                                  |
-| Water date*                     | A conditional care-planning date. It does not authorize watering from weight alone.                                                                                                                                                                              |
+| Surface                         | Current role                                                                                                                                                                                                                                                                |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Daily AI task instructions      | The [saved prompt](./daily-weighing-watering-prompt.md) requests an adaptive per-pot schedule that can reduce routine weighing below that fixed cadence when evidence supports it. The daily chat report and generated page apply this policy to freshly reviewed evidence. |
+| Logger Not weighed today filter | Shows collection progress within the care day. It is a filter, not a list of plants that must be weighed.                                                                                                                                                                   |
+| Dry-check window                | A forecast of approaching a historical mass reference. It is not the next appointment to weigh.                                                                                                                                                                             |
+| Water date*                     | A conditional care-planning date. It does not authorize watering from weight alone.                                                                                                                                                                                         |
 
-The saved prompt does not itself create or update a scheduled task. When installed in the daily task, its routine-weighing policy takes precedence over blindly copying Daily care's fixed cadence. The existing validity, correction, watering, and measurement rules still apply.
+The saved prompt does not itself create or update a scheduled task. The existing daily task uses the adaptive policy; do not recreate a second workbook calendar. The existing validity, correction, watering, and measurement rules still apply.
 
 ## What Makes a Weight Comparable
 
@@ -139,7 +138,7 @@ The model does not automatically interpret an Other note about lighting, prune a
 
 - [Daily task prompt](./daily-weighing-watering-prompt.md) — the owner's adaptive workload policy and report restrictions.
 - [Dry-down learning](../scripts/google-sheets/README.md#dry-down-learning) — eligible cycles, forecast basis, and learning limits.
-- [Daily care and Integrity](../scripts/google-sheets/README.md#daily-care-and-integrity) — the workbook's current calendar behavior.
+- [Daily care and Integrity](../scripts/google-sheets/README.md#daily-care-and-integrity) — the retired calendar and maintained integrity checks.
 - [Recent-weight metrics](../scripts/google-sheets/README.md#recent-weights-and-curve-inspection-5220) — signed changes, elapsed-time rates, and the plateau heuristic.
-- [Logger source](../scripts/google-sheets/plant-tracker.gs) — `recentWeightMetrics_`, `learnedDryDownCurves_`, `dailyCareWeekFormula_`, and care-day handling.
+- [Logger source](../scripts/google-sheets/plant-tracker.gs) — `recentWeightMetrics_`, `learnedDryDownCurves_`, and care-day handling.
 - [Practical care notes](./care-notes.md#using-weights-without-chasing-zero-daily-loss) — collection-specific interpretation and the limits of scale evidence.

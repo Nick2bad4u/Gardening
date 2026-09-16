@@ -347,7 +347,7 @@ export function buildInsightsRequests({ cells, metadata }) {
                 cell: {
                     userEnteredFormat: {
                         textFormat: {
-                            fontFamily: "Roboto",
+                            fontFamily: "JetBrains Mono",
                             fontSize: 11,
                             foregroundColorStyle: { rgbColor: green },
                         },
@@ -508,7 +508,7 @@ export function buildInsightsRequests({ cells, metadata }) {
                             axis: [
                                 {
                                     format: {
-                                        fontFamily: "Roboto",
+                                        fontFamily: "JetBrains Mono",
                                         fontSize: 11,
                                     },
                                     position: "BOTTOM_AXIS",
@@ -519,7 +519,7 @@ export function buildInsightsRequests({ cells, metadata }) {
                                 },
                                 {
                                     format: {
-                                        fontFamily: "Roboto",
+                                        fontFamily: "JetBrains Mono",
                                         fontSize: 11,
                                     },
                                     position: "LEFT_AXIS",

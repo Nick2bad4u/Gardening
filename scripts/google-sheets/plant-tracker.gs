@@ -11,10 +11,11 @@
    saveBulkCareObservation, saveBulkWaterObservation, getRecentWebObservations,
    getWebSaveStatus, getWebBatchSaveStatus, installGardenLogger, installAppSheetIntake,
    refreshGardenWorkbook, refreshGardenWorkbookPages01To10,
-   refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30 */
+   refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30,
+   installDailyCareDashboard */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.23.1",
+    version: "5.23.2",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -733,18 +734,6 @@ function formatPlantPageHeader_(sheet) {
     sheet.autoResizeRows(5, 6);
 }
 
-const WORKBOOK_HELPER_SHEETS = Object.freeze([
-    "Integrity",
-    "App entries",
-    "App bulk",
-    "Insights data",
-    "App insight activity",
-    "App insight calibration",
-    "App insight followups",
-    "App plant charts",
-    "Dry-down models",
-]);
-
 /** @type {Readonly<Record<string, readonly [string, string]>>} */
 const WORKBOOK_EVENT_COLORS = Object.freeze({
     Water: Object.freeze(/** @type {const} */ (["#d9eefc", "#174a68"])),
@@ -768,7 +757,6 @@ function onOpen() {
         .addItem("Verify logger", "installGardenLogger")
         .addItem("Verify AppSheet intake", "installAppSheetIntake")
         .addItem("Refresh workbook views", "refreshGardenWorkbook")
-        .addItem("Refresh daily care view", "installDailyCareDashboard")
         .addSeparator()
         .addItem("Open Quick log", "openQuickLog")
         .addItem("Open History", "openHistory")
@@ -3102,7 +3090,6 @@ function refreshGardenWorkbook() {
         refreshPlantPage_(spreadsheet, plants, index, plant)
     );
     organizeWorkbookSheets_(spreadsheet);
-    installDailyCareDashboard();
     SpreadsheetApp.flush();
     spreadsheet.toast(
         `Dashboard, Baselines, and ${plants.length} plant pages were refreshed for logger ${GARDEN_LOGGER.version}.`,
@@ -5051,7 +5038,11 @@ function dailyCareChecksRow_(sheet) {
 }
 
 /**
+ * Legacy installer for pre-retirement workbook copies only. Production retired
+ * Daily care on September 16, 2026 in favor of the generated daily report.
+ * No menu, trigger or workbook refresh calls this compatibility installer.
  * Install only presentation; never rebuild Dashboard or write observations.
+ * @deprecated Do not run against production; it recreates the retired tab.
  * @returns {{sheet: string, sheetId: number, plants: number, mainRange: string,
  * checksRange: string, weekRange: string, dashboardRange: string, dashboardFrozenColumns: number,
  * integrityRange: string, historyChanged: boolean}}
@@ -5455,7 +5446,7 @@ function refreshDashboardView_(spreadsheet, plants) {
     // that former footer row, so clearing values without removing every legacy
     // merge causes Sheets to retain only the row's top-left cell. Make the
     // rebuild independent of whichever historical layout preceded it.
-    rebuildRange.breakApart().clearContent();
+    rebuildRange.breakApart().clearContent().setFontFamily("JetBrains Mono");
     sheet.getRange(1, 1, 1, 3).merge();
     sheet
         .getRange(1, 1)
@@ -5504,6 +5495,27 @@ function refreshDashboardView_(spreadsheet, plants) {
             `=COUNTIF(Baselines!$H$2:$H$31,"Calibrated")&" / "&COUNTA(Baselines!$A$2:$A$31)`,
         ],
     ];
+    const integrity = spreadsheet.getSheetByName("Integrity");
+    if (integrity) {
+        summary.push(
+            [
+                "Data issues",
+                dailyCareIndicatorFormula_(
+                    "Fail",
+                    integrity.getSheetId(),
+                    "A4:D21"
+                ),
+            ],
+            [
+                "Observations still needed",
+                dailyCareIndicatorFormula_(
+                    "Action",
+                    integrity.getSheetId(),
+                    "A4:D21"
+                ),
+            ]
+        );
+    }
     summary.forEach(([label, formula], index) => {
         const column = index * 2 + 1;
         const width = column === 3 ? 1 : 2;
@@ -5517,12 +5529,18 @@ function refreshDashboardView_(spreadsheet, plants) {
         valueRange.setFormula(formula);
     });
     sheet
-        .getRange(2, 1, 2, 20)
+        .getRange(2, 1, 2, summary.length * 2)
         .setBackground("#edf4ee")
         .setFontColor("#173c2b")
         .setVerticalAlignment("middle");
-    sheet.getRange(2, 1, 1, 20).setFontWeight("bold").setFontSize(9);
-    sheet.getRange(3, 1, 1, 20).setFontWeight("bold").setFontSize(14);
+    sheet
+        .getRange(2, 1, 1, summary.length * 2)
+        .setFontWeight("bold")
+        .setFontSize(9);
+    sheet
+        .getRange(3, 1, 1, summary.length * 2)
+        .setFontWeight("bold")
+        .setFontSize(14);
     sheet
         .getRange(6, 1, 1, DASHBOARD_VIEW_HEADERS.length)
         .setValues([[...DASHBOARD_VIEW_HEADERS]])
@@ -5667,7 +5685,11 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
     sheet.getRange(1, 1, 12, 13).breakApart();
     const filter = sheet.getFilter();
     if (filter) filter.remove();
-    sheet.getRange(1, 1, contentRows, 13).clearContent().clearFormat();
+    sheet
+        .getRange(1, 1, contentRows, 13)
+        .clearContent()
+        .clearFormat()
+        .setFontFamily("JetBrains Mono");
     sheet.getRange(1, 1, 1, 10).merge();
     sheet
         .getRange(1, 1)
@@ -5902,15 +5924,7 @@ function organizeWorkbookSheets_(spreadsheet) {
     history.hideColumns(GARDEN_LOGGER.historyWeightStateColumn);
     historyView.hideColumns(GARDEN_LOGGER.historyWeightStateColumn);
     spreadsheet.setActiveSheet(dashboard);
-    WORKBOOK_HELPER_SHEETS.forEach((sheetName) => {
-        const sheet = spreadsheet.getSheetByName(sheetName);
-        if (!sheet) return;
-        if (sheet.isSheetHidden()) sheet.showSheet();
-        spreadsheet.setActiveSheet(sheet);
-        spreadsheet.moveActiveSheet(spreadsheet.getNumSheets());
-        sheet.hideSheet();
-    });
-    spreadsheet.setActiveSheet(dashboard);
+    // The owner maintains tab order and visibility. Preserve those choices.
 }
 
 /** @param {GardenCell} value @returns {string} */

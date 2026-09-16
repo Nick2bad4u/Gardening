@@ -5,12 +5,13 @@ internally and keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-The `Quick log` tab is the input surface. Each plant or shared planter has one
-input row, while every saved event becomes a new append-only row on `History`.
+The mobile logger and AppSheet are the observation input surfaces. The unused
+`Quick log` compatibility tab is hidden. Every saved event becomes a new
+append-only row on `History`.
 The Dashboard, Insights, Baselines, individual plant tabs, and public website
 all read from that shared history.
 
-For everyday use, see the [watering strategy](../../docs/watering-strategy.md), [weighing strategy](../../docs/weighing-strategy.md), and [complete action guide](../../docs/logger-actions.md). The adaptive daily-task policy is documented separately from the workbook's fixed Daily care cadence; these guides do not migrate workbook formulas.
+For everyday use, see the [watering strategy](../../docs/watering-strategy.md), [weighing strategy](../../docs/weighing-strategy.md), and [complete action guide](../../docs/logger-actions.md). The daily chat report and generated report page provide the adaptive care plan. The retired Daily care sheet is no longer a source or a second schedule.
 
 The [Insights chart guide](INSIGHTS-CHARTS.md) covers the dry-down explorer at
 **Insights A226**, its plant selector in **B228**, and the collection comparisons
@@ -22,6 +23,10 @@ The **Plant colors** sheet at the end of the workbook maps all 30 plants to
 consistent chart colors, with full names, swatches, and links to their charts.
 Comparison charts keep P01–P30 order so colors stay attached to the same plant;
 the cycle explorer changes color automatically with its selected plant.
+Each **P01–P30** page also has a **Time between waterings** column chart at
+**A111**, below the three weight/dimension charts, with an automatic status at
+**A109**. The bars show whole days between watering dates, with the later date
+under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
 For phone entry, open the
 [mobile entry app](https://script.google.com/macros/s/AKfycbytpdMto4ZAqOf49igDNoGYr-J6fmSRDNJOKP4-dKDFRmM2YkTCKJp3kmhrD4gOJShF/exec).
@@ -35,6 +40,84 @@ overwritten. The bound Apps Script in
 [`appsscript.json`](./appsscript.json) records the project runtime settings.
 
 ## Current production baseline
+
+### Workbook presentation and Daily care retirement (September 16, 2026)
+
+All **51 remaining sheets** and **145 charts** use **JetBrains Mono** explicitly.
+This sets cell fonts and chart text; the workbook theme's limited font selector
+is not the source of this preference. Existing chart IDs, data ranges, positions,
+colors, sheet order, and owner protections are preserved.
+
+Every sheet has a whole-sheet protection. New protections warn before manual
+edits, including on P01–P30, so automated logger/AppSheet writes continue.
+**RO refills A20:I and K20:M** remain editable for dates, amounts, and notes;
+column J's totals and the headers stay protected. Google still lets an owner
+edit a restricted sheet, so warning protection is the useful accidental-edit
+prompt here. Quick log is hidden for compatibility, with no pending inputs.
+
+**Daily care is removed.** Use the existing 9:45 a.m. Eastern daily chat report
+and [generated report page](../../docs/daily-reports/README.md). Dashboard U3/W3
+now link directly to Integrity A4:D21. Integrity B12 no longer scans the deleted
+tab; it continues to exclude the Dashboard indicators to avoid a dependency
+cycle. History, report policy, and the daily schedule are unchanged.
+
+The guarded [presentation migration](workbook-presentation.mjs) uses a fresh
+native backup and rehearsal copy. It changes only the three dependent formulas,
+cell/chart fonts, protections, Quick log visibility, and the retired sheet.
+Pass the RO chart ID in the native-editor exclusion list: a full Sheets API
+chart rewrite drops its custom axis-title colors. Set its data-label font in
+the chart editor instead, then compare all non-font metadata.
+
+Logger **5.23.2** removes Daily care from the menu and automatic refresh, retains
+the owner's tab order/visibility, and uses JetBrains Mono when rebuilding a
+Dashboard or plant page. Its legacy Daily care installer remains only for old
+workbook copies; **do not run it on production**. No schema or intake change is
+required for this release. Do not run a full view refresh for this migration:
+it would replace owner layouts and chart-adjacent content.
+
+The migration verified **911 observations**, **911 unique Observation IDs**,
+and **844 distinct Request IDs**. History, App entries, App bulk, and RO refill
+values/formulas/validations matched their captured ranges exactly. Integrity
+reports **0 formula errors**; all 145 chart specifications and positions match
+their previous values after excluding the intended font changes. The source
+release is immutable Apps Script **version 90**; update the existing phone
+deployment in place and retain the single five-minute queue trigger.
+
+Validation: **943 Node tests**, including **788 logger/migration tests**, with
+logger coverage at **99.7% lines, 98.16% branches, and 100% functions**; Apps
+Script/build/test typechecks, source-contract checks, changed-source ESLint,
+Markdown, formatting, generated-page checks, and both secret scans passed.
+
+### Per-plant watering intervals (September 16, 2026)
+
+Added **Time between waterings** charts to all **30 plant pages**, with the
+latest completed gap or waiting message at **A109** and the chart at **A111**.
+The formula-based helper updates automatically from active Water dates. The
+current records yield **45 completed intervals**; P24, P25, P26, P28, P29 and
+P30 each await a second watering date. The existing Days since water header
+continues to show the unfinished current gap.
+
+The native backup **Garden Plant Tracker — before watering interval charts —
+2026-09-16** and separate rehearsal copy are in **Archive → Garden Plant
+Tracker Backups**. Post-write readback preserved all **911 observations**,
+**911 unique Observation IDs**, **844 distinct Request IDs**, and the checked
+AppSheet staging schemas, values and validations. All **115 existing chart
+IDs, specifications and positions** remain unchanged; the additions bring the
+workbook to **145 charts**. The Integrity check reports **0 formula errors**.
+Every calculated interval matched an independent calculation from History.
+
+The rehearsal covered out-of-order and same-day entries, Removed records,
+non-Water events, missing/invalid dates, zero/one watering, and automatic
+updates after a second watering. Test observations exist only on the rehearsal
+copy. Google's empty-series styling limitation and repair procedure are in
+the [chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+The logger remains **5.23.1 / immutable version 89**; the production deployment
+assignment and exactly one five-minute Head queue trigger were verified. This
+chart migration needed no Apps Script deployment or AppSheet regeneration.
+Validation passed **779 logger tests** with **99.7% line / 98.17% branch
+coverage**, the source-contract check, build-script type checking, scoped
+JavaScript lint, Markdown lint, formatting, link-input smoke and diff checks.
 
 ### Current observation times (5.23.1)
 
@@ -996,61 +1079,18 @@ whole-pot mass, without converting its slope into a watering instruction.
 
 ### Daily care and Integrity
 
-`installDailyCareDashboard()` preserves Dashboard's 25-column table and freezes
-A:C (Page, Plant ID, and current label). It splits only the title and KPI merges
-that cross that freeze boundary. Dashboard U2:X3 gains two linked indicators:
-**Data issues** counts failed Integrity checks; **Observations still needed**
-counts checks requiring new evidence. These are check categories, not unique
-plants or observations. Missing check results display **Checks unavailable**.
+Daily care was retired on September 16, 2026 at the owner's request. The daily
+chat report and generated report page are the maintained care plan. Do not
+recreate the sheet or run `installDailyCareDashboard()` against production;
+that compatibility installer and its tests document the old workbook layout.
 
-The installer creates a protected, formula-driven **Daily care** sheet. Its
-first table is a rolling seven-day plan: one plant per row and one care day per
-column, beginning with today in the workbook's America/New_York timezone. Care
-days roll over at 4 a.m.; date arithmetic is rounded before taking the day to
-avoid a floating-point boundary error at exactly 4 a.m. Minute recalculation
-keeps the calendar current even when no new observation is entered.
-
-- **Weigh** is scheduled every other day outside a forecast window, and daily
-  near the window, near the completed dry reference, during an unsupported or
-  sparse curve, or when readings need review. This is a measurement cadence,
-  not a watering interval. Missed weigh-ins roll into today.
-- **Water check** starts at the early edge of the existing
-  near-dry window or when a measured weight enters the existing dry band. It
-  requires root-zone and plant inspection; it never marks watering as due
-  solely because a date or a daily loss threshold was reached.
-- **Money tree** keeps its upper-2-inch moisture check. **Split rock** keeps its
-  inner-leaf and leaf-replacement check. Neither receives weight-only watering
-  instructions. Other plant-specific guidance remains in Baselines AJ.
-- **✓ Weighed / ✓ Water logged** reflects observations saved for this care day.
-  Watering without a matching later weight requests a post-drain weight on the
-  watering day. Future tasks are provisional and recalculate after each save.
-- **—** means no scheduled weighing; it is not a claim that the plant needs no
-  attention. Normal visual checks and existing follow-ups still apply.
-
-The supporting table below retains native plant-page links, identity, latest
-measured weight, its observation time,
-signed difference from the current setup's completed Dry, reweigh window, and
-follow-up. Weight and timestamp always come from the same eligible record.
-Correction chains retain their original position when observation times tie;
-future, Removed, estimated, invalid, and other-setup readings are excluded.
-Baselines' latest-weight and observation-time formulas use the same selection,
-keeping Dashboard and existing summaries aligned after a correction.
-The full Integrity check list is visible below the plant table, while the
-underlying Integrity sheet stays hidden. Follow-up rows link to the affected
-plant pages through the main table.
-
-For 30 plants, the week occupies `Daily care!A6:H36`, supporting measurements
-occupy `Daily care!A40:H70`, and checks occupy `Daily care!A73:H90`. The first
-column and six header rows stay frozen. Inventory and helper bounds are
-discovered on each install. The managed v1 table upgrades in place to v2.
-Reruns preserve the sheet ID, filter criteria, and protection, and avoid duplicate
-format rules. The installer refuses unexpected destination content or schemas.
-It changes `Integrity!B12` only to exclude Dashboard U2:X3 from the formula-error
-scan, preventing the indicators from depending on their own error check. When
-the existing scan includes reserved columns Y:Z, that coverage is preserved.
-Those columns currently lie outside the 24-column grid; the reserved range
-contributes zero until it exists, while actual cell errors still count.
-History, staging data, and the other Dashboard cells remain intact.
+Dashboard U2:X3 keeps **Data issues** and **Observations still needed**, now
+linked directly to the visible Integrity sheet. These count check categories,
+not unique plants or observations. Missing results show **Checks unavailable**.
+Integrity's formula-error scan excludes the indicators to avoid a cycle and
+contains no Daily care reference. Latest-weight/time selection, correction
+ordering, recent-weight metrics, and the 4 a.m. care-day boundary remain shared
+logger/report behavior. The signed current-weight difference is in Dashboard I.
 
 ### Saved-entry corrections
 
@@ -1109,8 +1149,8 @@ For rollout, authorize Advanced Sheets in the disposable bound script and prove
 the actual installer, correction, retry, and recalculation paths there first.
 Then create a fresh native production backup and capture the canonical ranges,
 deployment, and triggers. Publish an immutable version through the existing
-deployment; run the existing logger/intake installers, the scoped Daily care
-installer, and the queue-trigger installer. Refresh the `Dry-down models!A2`
+deployment; run the logger/intake and queue-trigger installers when their
+contracts change. Do not run the retired Daily care installer. Refresh the `Dry-down models!A2`
 formula from `dryDownModelFormula_()` so its input includes AA and AE; this adds
 correction ordering without changing its 16 output columns. Refresh only
 `Baselines!C2:C31` and `E2:E31` from `latestMeasuredWeightFormula_()` for the

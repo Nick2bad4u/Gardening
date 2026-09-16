@@ -169,4 +169,4 @@ These examples explain the data contract. They are not instructions to perform t
 - [Mobile form source](../scripts/google-sheets/Index.html) — field controls, queue, progress indicators, and correction interface.
 - [Logging behavior](../scripts/google-sheets/README.md#logging-behavior) — canonical records and event-specific data.
 - [AppSheet companion](./appsheet-companion.md) — staging, round actions, receipts, and read-only views.
-- [Daily care and Integrity](../scripts/google-sheets/README.md#daily-care-and-integrity) — progress and the care-day boundary.
+- [Daily care and Integrity](../scripts/google-sheets/README.md#daily-care-and-integrity) — the retired calendar and maintained check indicators.

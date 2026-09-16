@@ -444,7 +444,7 @@ export function buildRecentWeightRequests({ cells, metadata }) {
                                 targetAxis: "BOTTOM_AXIS",
                             })),
                         },
-                        fontName: "Roboto",
+                        fontName: "JetBrains Mono",
                         hiddenDimensionStrategy: "SHOW_ALL",
                         subtitle: spec.subtitle,
                         subtitleTextFormat: { fontSize: 11 },
