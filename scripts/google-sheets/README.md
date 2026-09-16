@@ -16,6 +16,8 @@ The [Insights chart guide](INSIGHTS-CHARTS.md) covers the dry-down explorer at
 **Insights A226**, its plant selector in **B228**, and the collection comparisons
 for retained water, measured loss, forecast windows, and model evidence. The
 **Current weight difference** comparison starts at **Insights A586**.
+The [RO refill log](RO-REFILLS.md) records water-supply refill dates, amounts
+for the four storage containers, and a chart of gallons refilled per visit.
 The **Plant colors** sheet at the end of the workbook maps all 30 plants to
 consistent chart colors, with full names, swatches, and links to their charts.
 Comparison charts keep P01–P30 order so colors stay attached to the same plant;
