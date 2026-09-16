@@ -12,7 +12,7 @@ For easier comparison with the photographs, this page now faces the window: **wi
 
 ## Illustrated Views
 
-These additional charts use the botanical illustration style requested on September 16 with the current positions and confirmed windowsill move. Plant forms and sizes are illustrative; the written coordinates and retained identity qualifiers below remain the reference. Light-priority badges describe plant needs, not measured intensity. The original diagrams remain in their sections below.
+These additional charts use the botanical illustration style requested on September 16 with the current positions and confirmed windowsill move. Plant forms and sizes are illustrative; the written coordinates and retained identity qualifiers below remain the reference. Light-priority badges describe plant needs, not measured intensity. The original arrangement diagrams remain in their sections below.
 
 ### Illustrated Whole Display
 
@@ -30,11 +30,9 @@ These additional charts use the botanical illustration style requested on Septem
 
 ![Illustrated relative-light hypothesis for four wooden tables and a separate unmeasured windowsill](../../assets/layouts/2026-09-16-illustrated/relative-light-illustrated.png)
 
-The [generation prompts and illustration limits](../../assets/layouts/2026-09-16-illustrated/image-prompts.md) record the style references and current-data constraints. A separate [transparent-background copy of the original reference map](../../assets/layouts/2026-09-16-illustrated/estimated-light-map-transparent.png) is available for reuse; the opaque version below keeps its labels readable against both website themes.
+The [generation prompts and illustration limits](../../assets/layouts/2026-09-16-illustrated/image-prompts.md) record the style references and current-data constraints. The [original reference map](../../assets/layouts/2026-09-15-four-tables/estimated-light-map.png) and its [transparent-background copy](../../assets/layouts/2026-09-16-illustrated/estimated-light-map-transparent.png) remain available as downloads.
 
-## Estimated Relative Light
-
-![Estimated relative-light map for 29 table pots and a separate confirmed north-windowsill money tree, with unmeasured exposure](../../assets/layouts/2026-09-15-four-tables/estimated-light-map.png)
+## Reading the Light Map
 
 The map is a **qualitative comparison hypothesis**, not measured lux, PPFD, a simulation, or proof of adequate coverage. The old glass-spill gradient and old R1C1/R6C1 corner ranking are retired. Two panels can light the new block, but the larger wooden footprint does not create more light. Exact fixture alignment over it is not established by these cropped photographs.
 
