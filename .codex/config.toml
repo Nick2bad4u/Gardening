@@ -1,3 +1,7 @@
+web_search              = "live"
+model_verbosity         = "high"
+model_reasoning_summary = "detailed"
+
 [mcp_servers.playwright]
     enabled             = true
     startup_timeout_sec = 60
