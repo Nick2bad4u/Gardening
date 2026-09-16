@@ -78,12 +78,19 @@ const allowedCollectionKinds = new Set(["collection", nurseryLabelKind]);
 const allowedCollectionViews = new Set([
     "context",
     "detail",
+    "foliage",
     "label-back",
     "label-front",
+    "leaf-detail",
+    "leaf-overview",
     "opposite-side",
     "overview",
+    "plant",
     "receipt-condition",
     "receipt-context",
+    "shared-planter",
+    "shared-planter-left",
+    "shared-planter-right",
     "side",
     "three-quarter",
     "top",
@@ -94,8 +101,8 @@ const expectedPresentProfiles = 35;
 const expectedUnverifiedReceiptProfiles = 0;
 const expectedHistoricalProfiles = 1;
 const expectedCollectionOverviews = 3;
-const expectedCollectionPlacements = 174;
-const expectedUniqueGyazoImages = 128;
+const expectedCollectionPlacements = 213;
+const expectedUniqueGyazoImages = 160;
 const expectedGyazoApplicationName = "Fenton Garden Field Guide";
 const expectedGyazoThumbnailWidths = [
     480,
@@ -252,6 +259,22 @@ async function discoverProfiles() {
 async function fileHash(filePath) {
     const bytes = await readFile(filePath);
     return createHash("sha256").update(bytes).digest("hex");
+}
+
+/**
+ * @param {CollectionPhoto} photo
+ * @param {string} publicationExtension
+ */
+function hasLosslessCropEncoding(photo, publicationExtension) {
+    return (
+        publicationExtension === ".png" ||
+        (publicationExtension === ".webp" &&
+            typeof photo.derivation_note === "string" &&
+            photo.derivation_note.includes("Lossless WebP encoding") &&
+            photo.derivation_note.includes(
+                "decoded pixels match the approved lossless PNG crop"
+            ))
+    );
 }
 
 /**
@@ -1574,12 +1597,12 @@ async function validatePhotoSource(photo, context, publicationExtension) {
     if (Object.hasOwn(photo, "crop_geometry")) {
         assert.ok(
             /^\d+x\d+\+\d+\+\d+$/v.test(photo.crop_geometry ?? "") &&
-                publicationExtension === ".png" &&
+                hasLosslessCropEncoding(photo, publicationExtension) &&
                 typeof photo.derivation_note === "string" &&
                 photo.derivation_note.trim().length > 0 &&
                 (typeof photo.source_file === "string" ||
                     photo.source_note === expectedPrivateSourceNote),
-            `${context} source crop must have valid geometry, a source, a derivation note, and lossless PNG output.`
+            `${context} source crop must have valid geometry, a source, and a derivation note identifying lossless PNG output or lossless WebP encoding with verified decoded pixels.`
         );
     }
     if (photo.kind === nurseryLabelKind) {
