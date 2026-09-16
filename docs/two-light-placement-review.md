@@ -2,7 +2,7 @@
 
 The owner added **two new 16 × 13-inch wooden tables** and rearranged the display on **September 15, 2026**. The supplied photos show **24 small pots in six columns × four rows at the room end**, with the six larger or shared containers behind them toward the window. This replaces the previous two-table and round-glass placement plan.
 
-**North-windowsill update, September 15:** the owner plans to move **#3 / P21 Money Tree** off the rear-left table onto the **north-facing windowsill** after noticing downward-pointing leaves. The revised plan has **29 containers on wood (24 small pots at the front and five larger/shared containers behind them), plus one money tree on the windowsill**. The other positions stay as photographed, including #4 Kiwi Aeonium; the vacated table spot stays open. The supplied photo predates this planned move. Excess light is the owner's suspected cause, not a diagnosis established by leaf posture. Sill dimensions, final placement, daylight, lamp spill and leaf-height clearance remain unmeasured.
+**North-windowsill move confirmed September 16:** the owner confirmed that **#3 / P21 Money Tree is now on the north-facing windowsill**, off the rear-left table. The move was planned on September 15 after the owner noticed downward-pointing leaves; its exact completion time was not supplied. The current arrangement has **29 containers on wood (24 small pots at the front and five larger/shared containers behind them), plus one money tree on the windowsill**. The other positions stay as photographed, including #4 Kiwi Aeonium; the vacated table spot stays open. The supplied photo predates the move. Excess light remains the owner's suspected cause, not a diagnosis established by leaf posture. Sill dimensions, exact position within the sill, daylight, lamp spill and leaf-height clearance remain unmeasured.
 
 The working footprint is **four tables in a 2 × 2 block, nominally 26 inches across × 32 inches toward the window**, excluding gaps and rails. That orientation is inferred from the photographs, not a new tape measurement. The old glass table is no longer shown supporting these pots; its storage or other use is not recorded. The new tables' height has not been measured; the earlier pair was 18 inches high.
 
@@ -62,14 +62,14 @@ Rows increase from room to window; columns increase from Mylar to white wall. La
 
 ## Rear Tables, Windowsill and Shared Components
 
-| Label / P-ID | Container          | Position Record                          | Shape and Size Record                                           | Exposure Priority                                                                                                       |
-| ------------ | ------------------ | ---------------------------------------- | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| #1 / P19     | Shared Cacti       | Rear center                              | Dark patterned round pot; current diameter unmeasured           | **Mixed.** Compare both tall columns and trailing monkey tail; pale tissue and short neighbors need separate attention. |
-| #2 / P20     | Shared Succulents  | Rear right, toward window                | Square wooden box; current side lengths and drainage unmeasured | **Mixed.** Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage.                        |
-| #3 / P21     | Money Tree         | **Planned north windowsill, off tables** | White round pot, previously recorded 6-inch class               | **Gentler.** Compare actual leaf exposure on the sill; daylight and lamp spill are unmeasured.                          |
-| #4 / P22     | Kiwi Aeonium       | Rear left; unchanged after #3 moves      | White round pot, previously recorded about 5-inch class         | **Bright.** Keep substantial lamp contribution without allowing its canopy to shade the small pots.                     |
-| #5 / P29     | Tiger Jaws         | Rear right, in front of the square box   | Tan ribbed round pot; current repotted dimensions unmeasured    | **Bright.** Retain probable Faucaria tuberculosa / seller F. tigrina qualifier; compare at leaf height.                 |
-| #6 / P30     | Tiny Mixed Planter | Front of rear zone, between #1 and #5    | Shallow round terracotta dish, nominal 5-inch class             | **Bright.** Compare the low rosettes and paddle leaves for shadows from the large pots.                                 |
+| Label / P-ID | Container          | Position Record                            | Shape and Size Record                                           | Exposure Priority                                                                                                       |
+| ------------ | ------------------ | ------------------------------------------ | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| #1 / P19     | Shared Cacti       | Rear center                                | Dark patterned round pot; current diameter unmeasured           | **Mixed.** Compare both tall columns and trailing monkey tail; pale tissue and short neighbors need separate attention. |
+| #2 / P20     | Shared Succulents  | Rear right, toward window                  | Square wooden box; current side lengths and drainage unmeasured | **Mixed.** Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage.                        |
+| #3 / P21     | Money Tree         | **Confirmed north windowsill, off tables** | White round pot, previously recorded 6-inch class               | **Gentler.** Compare actual leaf exposure on the sill; daylight and lamp spill are unmeasured.                          |
+| #4 / P22     | Kiwi Aeonium       | Rear left; unchanged after #3's move       | White round pot, previously recorded about 5-inch class         | **Bright.** Keep substantial lamp contribution without allowing its canopy to shade the small pots.                     |
+| #5 / P29     | Tiger Jaws         | Rear right, in front of the square box     | Tan ribbed round pot; current repotted dimensions unmeasured    | **Bright.** Retain probable Faucaria tuberculosa / seller F. tigrina qualifier; compare at leaf height.                 |
+| #6 / P30     | Tiny Mixed Planter | Front of rear zone, between #1 and #5      | Shallow round terracotta dish, nominal 5-inch class             | **Bright.** Compare the low rosettes and paddle leaves for shadows from the large pots.                                 |
 
 ### #1 Shared Cacti — Rear Center
 
@@ -103,9 +103,9 @@ Kiwi's Bright priority uses genus-level Aeonium guidance.[^34] Tiger Jaws retain
 | **Gentler · 3** | D3, F2, #3                                                             | A bright position with less intense exposure when demonstrated; no assumption that an edge is automatically gentle |
 | **Mixed · 2**   | #1, #2                                                                 | Consider each living component at its height while retaining one tracked container                                 |
 
-## Money Tree: Planned North-Windowsill Spot
+## Money Tree: Confirmed North-Windowsill Spot
 
-**#3 / P21 remains the same tracked pot**, with the working identification _Pachira_ cf. _glabra_ and its previously recorded white round 6-inch pot. Its destination is the north-facing windowsill, outside the wooden display. The drawing locates it schematically; it does not establish the sill's size, exact horizontal position, support or clearance. #4 Kiwi stays in its current rear-left spot; no replacement pot is assigned to the space #3 leaves.
+**#3 / P21 remains the same tracked pot**, with the working identification _Pachira_ cf. _glabra_ and its previously recorded white round 6-inch pot. The owner confirmed on September 16 that it is on the north-facing windowsill, outside the wooden display; the exact move time was not supplied. The drawing locates it schematically; it does not establish the sill's size, exact horizontal position, support or clearance. #4 Kiwi stays in its current rear-left spot; no replacement pot is assigned to the space #3 leaves.
 
 The goal is useful indirect light with less direct fixture exposure. North-facing daylight and any remaining LED spill must be assessed at the actual leaves; the table heatmap does not predict the windowsill's light or prove that it will be sufficient. Keep foliage clear of cold glass and drafts, and keep the pot and drainage saucer fully supported.
 

@@ -1610,7 +1610,7 @@ function renderBooklet(profiles, placementHtml) {
       <header class="contents-heading placement-heading">
         <p>The Fenton Collection · 30 Pots · Placement and Light</p>
         <h1 id="placement-title">Table Placement Guide</h1>
-        <span>September 15 four-table setup, photo-matched positions, estimated relative light and a phone-meter comparison. Six columns × four rows of small pots at the front; five larger/shared containers behind them, with #3 Money Tree planned separately on the north windowsill.</span>
+        <span>September 15 four-table setup, photo-matched positions, estimated relative light and a phone-meter comparison. Six columns × four rows of small pots at the front; five larger/shared containers behind them, with #3 Money Tree separately on the north windowsill (move confirmed September 16).</span>
       </header>
       <div class="placement-copy prose">${placementHtml}</div>
     </section>

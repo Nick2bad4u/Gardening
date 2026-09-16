@@ -4,7 +4,7 @@ These current assets replace the September 14 two-table / round-glass placement 
 
 The 2 × 2 block, nominal 26 × 32-inch footprint, removal of glass from the pictured plant support, and label-to-position matching are inferred from the photos. Gaps, new-table height, exact fixture centers and current plant-level light remain unmeasured. The operating settings are carried forward as last reported. The room view is rotated to put the window at top, open room at bottom, Mylar left and white wall right.
 
-The latest revision plans #3 Money Tree on the north-facing windowsill, leaving 29 containers on wood and its old table slot vacant. The north-windowsill prompts at the end supersede the initial six-rear-container version. This is a planned destination; the owner has not confirmed completion or measured its light.
+The current revision shows #3 Money Tree on the north-facing windowsill, leaving 29 containers on wood and its old table slot vacant. The owner confirmed completion on September 16; the exact move time and light levels were not supplied. The latest confirmation prompts supersede the planned-status wording in the earlier image revisions below.
 
 Final deliverables are `estimated-light-map.png`, `combined-plan.png`, `front-pots.png`, `rear-pots.png` and a blank `relative-readings.csv`. The arrangement markers avoid inventing plant morphology. Exposure categories describe overlapping plant priorities, not measured intensity. The map shows a qualitative hypothesis and uncertainty, not a light simulation.
 
@@ -66,9 +66,9 @@ Change ONLY the background and text contrast of this diagram. The dark blue vign
 Create a polished flat top-down container-placement infographic at landscape1536x1024. Cream background navy text, subtle botanical corners. Title "Rear Tables · Six Containers". Subtitle "Photo-matched positions · September 15, 2026". TWO WOODEN tables side by side, nominal total26in wide by16in front-to-back; NO GLASS. Orientation NORTH WINDOW TOP, front small-pot zoneBOTTOM, MYLARLEFT, WHITEWALLRIGHT. Use clean container-shaped tokens with no botanical plant portraits: circles except square for #2. Place #3 Money Tree white ROUND at BACKLEFT, #4 Kiwi Aeonium white ROUND at LEFTFRONT below#3; #1 Shared Cacti large patterned ROUND at center; #2 Shared Succulents WOODEN SQUARE at BACKRIGHT; #5 Tiger Jaws tan ribbed ROUND at FRONTRIGHT; #6 Tiny Mixed Planter shallow terra-cotta ROUND at FRONT between#1and#5. All labels clear and allsix exactlyonce. Priority: #1 Mixed, #2 Mixed, #3 Gentler, #4 Bright,#5 Bright,#6 Bright. Side notes "Shared Cacti: compare tall columns and trailing monkey tail" / "Shared Succulents: keep low rosette clear of taller foliage" / "Money Tree: compare upper leaves; rear does not guarantee shade" / "Tiger Jaws and tiny dish: measure at low leaf height". Footer "Container outlines and spacing are schematic; actual diameters, box size and current table height unmeasured." "Light priorities are not readings." No extra pots or plants, no slogans, no lights, no invented numerical pot dimensions.
 ```
 
-## North-Windowsill Revision
+## September 15 Planned North-Windowsill Revision
 
-The owner subsequently plans to move #3 / P21 Money Tree off the rear-left table to the north-facing windowsill after observing downward-pointing leaves. The cause is unconfirmed and the move has not been confirmed complete. The revised images show **29 on wood plus one on the windowsill**. #4 Kiwi and the other 28 table pots stay in their photographed positions; the vacated table space remains empty. The front image stays unchanged. Sill dimensions, final position and actual light are unmeasured. Three existing planning images were edited with the built-in image-generation tool; original evidence photographs were not changed. The table and CSV remain the coordinate reference.
+At this stage the owner planned to move #3 / P21 Money Tree off the rear-left table to the north-facing windowsill after observing downward-pointing leaves. At generation time, the cause was unconfirmed and completion had not yet been reported. The September 16 revision below records the later completion confirmation. The revised images show **29 on wood plus one on the windowsill**. #4 Kiwi and the other 28 table pots stay in their photographed positions; the vacated table space remains empty. The front image stays unchanged. Sill dimensions, final position and actual light are unmeasured. Three existing planning images were edited with the built-in image-generation tool; original evidence photographs were not changed. The table and CSV remain the coordinate reference.
 
 ### estimated-light-map.png
 
@@ -91,4 +91,26 @@ R1 bottom: D3 Gentler, E2 Bright, G1 Bright, D1 Bright, B3 High, F2 Gentler.
 
 ```text
 Use case: precise-object-edit. Edit this rear-table infographic for ONE move: #3 Money Tree will leave the tables for the NORTH WINDOWSILL. Title "Rear Tables · Five Containers". Subtitle "September 15, 2026 · Planned north-windowsill move for #3". Remove the #3 white round pot from the rear-left wooden surface, leave that wood spot visibly VACANT. Keep #4 Kiwi Aeonium Bright exactly at its present lower-left position; do NOT move it back into the vacated slot. Keep #1 Shared Cacti Mixed centered in dark patterned round pot, #2 Shared Succulents Mixed square wooden box at rear-right, #5 Tiger Jaws Bright tan ribbed round front-right, #6 Tiny Mixed Planter Bright shallow terracotta dish front center-right. Draw a separate clearly labeled white NORTH WINDOWSILL above and beyond the rear table edge, separated from the wood, with the removed #3 white round pot "Money Tree (Gentler)" on the sill. Fit by adjusting top whitespace if needed. Label near it "Planned location · Sill dimensions and light unmeasured". Replace the left money-tree note with "Money Tree: off the tables; daylight and lamp spill unmeasured." Keep all other care-comparison notes, MylarLEFT/whitewallRIGHT/frontBOTTOM/windowTOP orientation, cream/navy style, botanical corner decorations, proportions and container outlines. Five pots on wood, one only on separate sill. No extra pots, no glass table, no invented plant portraits. Footer states container outlines and spacing schematic, actual sizes and current table height unmeasured; light priorities are not readings. High-resolution landscape legible text.
+```
+
+## September 16 Completion Confirmation
+
+The owner confirmed that the move is complete. September 16 is the confirmation date; no exact move timestamp was supplied. These text-only edits replace the three images' planned-status labels while preserving all placements, plant identities, exposure priorities and unmeasured-light caveats. The front-pot image is unchanged. Generated with the built-in image-generation tool.
+
+### Light-map confirmation edit
+
+```text
+Edit this infographic with ONLY one text change. Replace "Planned north-windowsill move" beside #3 with "Money Tree · Move confirmed Sep 16". The owner has confirmed the move is complete; September 16, 2026 is the confirmation date, not a measured exact move time. Preserve every other word, label, point, pot position, gradient, dimension, caveat, font style and 1536x1024 composition. Keep "Daylight + lamp spill: unmeasured". Do not change any botanical, light, or geometry assumption. Do not move any marker.
+```
+
+### Combined-plan confirmation edit
+
+```text
+Edit this infographic with ONLY two text changes. 1. Replace the subtitle "September 15, 2026 · Planned move for #3; other positions photo-matched" with "Move confirmed September 16, 2026 · Other positions photo-matched". 2. Replace "Money Tree · Planned windowsill spot" with "Money Tree · Confirmed windowsill spot". The owner confirmed completion; this is the confirmation date, not an exact move timestamp. Preserve ALL 30 IDs, token positions and light-priority words exactly, including 24 front tokens and five rear pots on wood, #3 on the sill, vacant rear-left wood and Kiwi #4 at its existing spot. Preserve all remaining wording, all colors, dimensions and 1536x1024 composition. No other changes. Windowsill light and clearance remain unmeasured.
+```
+
+### Rear-container confirmation edit
+
+```text
+Edit this infographic with ONLY two text changes. 1. Replace subtitle "September 15, 2026 · Planned north-windowsill move for #3" with "North-windowsill move for #3 · Confirmed September 16, 2026". 2. Replace "Planned location · Sill dimensions and light unmeasured." with "Confirmed location · Sill dimensions and light unmeasured." The owner confirmed completion; September 16 is the confirmation date, not an exact move timestamp. Preserve all six container IDs and positions (five on wood, money tree #3 on separate sill), all shapes and light-priority words, every other annotation, all artwork and 1536x1024 composition. Leave vacated rear-left table space empty and keep Kiwi #4 unchanged. Do not infer measured light or a confirmed diagnosis.
 ```

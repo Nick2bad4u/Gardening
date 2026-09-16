@@ -45,7 +45,7 @@ The collection IDs and inventory remain the same.
 
 ## Collection setup history
 
-On **2026-09-15**, the owner added two 16 × 13-inch tables and rearranged the collection onto four wooden tables. The [current guide](./layouts/table-placement-research.md) records a photo-matched six-column/four-row small-pot grid at the front, five containers behind it, and #3 / P21 Money Tree planned separately on the north windowsill after the supplied photos. The vacated rear-left slot stays open; Kiwi remains in place. The working 26 × 32-inch footprint is inferred before gaps; exact table height and fixture centers remain unmeasured. This furniture and placement change does not alter inventory IDs, shared-container membership, pot setups, or watering references.
+On **2026-09-15**, the owner added two 16 × 13-inch tables and rearranged the collection onto four wooden tables. The [current guide](./layouts/table-placement-research.md) records a photo-matched six-column/four-row small-pot grid at the front, five containers behind it, and #3 / P21 Money Tree separately on the north windowsill after the supplied photos. The owner confirmed the move complete on September 16; the exact move time was not recorded. The vacated rear-left slot stays open; Kiwi remains in place. The working 26 × 32-inch footprint is inferred before gaps; exact table height and fixture centers remain unmeasured. This furniture and placement change does not alter inventory IDs, shared-container membership, pot setups, or watering references.
 
 The plant inventory and the care configuration are separate records. On
 2026-08-14 the owner reported three changes to the cactus setup:

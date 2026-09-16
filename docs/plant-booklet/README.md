@@ -28,7 +28,7 @@ changing the selected page or its bookmark.
 
 The placement page is generated from
 [`docs/layouts/table-placement-research.md`](../layouts/table-placement-research.md).
-Edit that document to update the September 15 four-table arrangement: six columns by four rows of small pots at the front, five larger/shared containers on the rear wooden tables and #3 Money Tree planned separately on the north windowsill, the AW200 + AeroLight 240 W operating record, exposure priorities and evidence. Then run `npm run build:booklet`. The estimated relative-light map and three arrangement diagrams open at full size, and plant links navigate to the corresponding profiles. The blank phone-reading CSV is copied into the published site. Coordinates and nominal footprint are photo-matched or inferred; the source document remains readable in the repository.
+Edit that document to update the September 15 four-table arrangement: six columns by four rows of small pots at the front, five larger/shared containers on the rear wooden tables and #3 Money Tree separately on the north windowsill, confirmed September 16, the AW200 + AeroLight 240 W operating record, exposure priorities and evidence. Then run `npm run build:booklet`. The estimated relative-light map and three arrangement diagrams open at full size, and plant links navigate to the corresponding profiles. The blank phone-reading CSV is copied into the published site. Coordinates and nominal footprint are photo-matched or inferred; the source document remains readable in the repository.
 
 Each plant profile ends with its own newest-first photo history. The latest two
 collection photographs stay visible, while a prominent action opens the

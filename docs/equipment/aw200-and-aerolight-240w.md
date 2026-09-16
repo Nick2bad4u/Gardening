@@ -65,7 +65,7 @@ together makes the cause of a response harder to judge.
 
 The useful next check is small: with the reported 18-inch plant-tip reference,
 compare light at the central low rosettes, the tallest
-cactus tip, Ming Thing, Variegated Moon and tiger jaws. Assess the money tree's upper leaves separately at its planned north-windowsill position, with daylight conditions recorded. Use both lights at their normal settings. A suitable quantum meter
+cactus tip, Ming Thing, Variegated Moon and tiger jaws. Assess the money tree's upper leaves separately at its confirmed north-windowsill position, with daylight conditions recorded. Use both lights at their normal settings. A suitable quantum meter
 can measure PPFD; a consistent lux reading can reveal relative bright and dim
 spots, but do not apply an old AW200SE lux conversion to these mixed spectra.
 
@@ -77,7 +77,7 @@ running; circulation fans do not establish that the room stays below this limit.
 
 ## Coverage and Current Plant Positions
 
-Four **16 × 13-inch wooden tables** now support the photographed collection. The working footprint is **26 inches across × 32 inches toward the window**, inferred as a 2 × 2 block before gaps. The front pair holds the 24 small pots in six columns × four rows; the revised plan keeps five larger/shared containers on the rear pair and moves #3 / P21 Money Tree separately to the north windowsill. The supplied photographs precede that planned move; #4 Kiwi and the other table positions remain unchanged. The square shared succulent box remains square, and the glass table is no longer part of the pictured placement.
+Four **16 × 13-inch wooden tables** now support the photographed collection. The working footprint is **26 inches across × 32 inches toward the window**, inferred as a 2 × 2 block before gaps. The front pair holds the 24 small pots in six columns × four rows; the current arrangement has five larger/shared containers on the rear pair and #3 / P21 Money Tree separately on the north windowsill. The owner confirmed the move complete on September 16; its exact time was not supplied. The photographs precede the move; #4 Kiwi and the other table positions remain unchanged. The square shared succulent box remains square, and the glass table is no longer part of the pictured placement.
 
 The [placement guide](../layouts/table-placement-research.md) faces the window: **window top, open room bottom, Mylar left, white wall right**. The current photographs crop the fixtures, so exact centers and which model occupies each position remain unverified. Do not transfer the old one-inch end margins, ½–1-inch gap, wood/glass boundary or relative-light gradient to this larger block as confirmed facts.
 

@@ -2,7 +2,7 @@
 
 The owner added **two new 16 × 13-inch wooden tables** and rearranged the display on **September 15, 2026**. The supplied photos show **24 small pots in six columns × four rows at the room end**, with the six larger or shared containers behind them toward the window. This replaces the previous two-table and round-glass placement plan.
 
-**North-windowsill update, September 15:** the owner plans to move **#3 / P21 Money Tree** off the rear-left table onto the **north-facing windowsill** after noticing downward-pointing leaves. The revised plan has **29 containers on wood (24 small pots at the front and five larger/shared containers behind them), plus one money tree on the windowsill**. The other positions stay as photographed, including #4 Kiwi Aeonium; the vacated table spot stays open. The supplied photo predates this planned move. Excess light is the owner's suspected cause, not a diagnosis established by leaf posture. Sill dimensions, final placement, daylight, lamp spill and leaf-height clearance remain unmeasured.
+**North-windowsill move confirmed September 16:** the owner confirmed that **#3 / P21 Money Tree is now on the north-facing windowsill**, off the rear-left table. The move was planned on September 15 after the owner noticed downward-pointing leaves; its exact completion time was not supplied. The current arrangement has **29 containers on wood (24 small pots at the front and five larger/shared containers behind them), plus one money tree on the windowsill**. The other positions stay as photographed, including #4 Kiwi Aeonium; the vacated table spot stays open. The supplied photo predates the move. Excess light remains the owner's suspected cause, not a diagnosis established by leaf posture. Sill dimensions, exact position within the sill, daylight, lamp spill and leaf-height clearance remain unmeasured.
 
 The working footprint is **four tables in a 2 × 2 block, nominally 26 inches across × 32 inches toward the window**, excluding gaps and rails. That orientation is inferred from the photographs, not a new tape measurement. The old glass table is no longer shown supporting these pots; its storage or other use is not recorded. The new tables' height has not been measured; the earlier pair was 18 inches high.
 
@@ -12,7 +12,7 @@ For easier comparison with the photographs, this page now faces the window: **wi
 
 ## Estimated Relative Light
 
-![Estimated relative-light map for 29 table pots and a separate planned north-windowsill money tree, with unmeasured exposure](../../assets/layouts/2026-09-15-four-tables/estimated-light-map.png)
+![Estimated relative-light map for 29 table pots and a separate confirmed north-windowsill money tree, with unmeasured exposure](../../assets/layouts/2026-09-15-four-tables/estimated-light-map.png)
 
 The map is a **qualitative comparison hypothesis**, not measured lux, PPFD, a simulation, or proof of adequate coverage. The old glass-spill gradient and old R1C1/R6C1 corner ranking are retired. Two panels can light the new block, but the larger wooden footprint does not create more light. Exact fixture alignment over it is not established by these cropped photographs.
 
@@ -26,15 +26,15 @@ The map is a **qualitative comparison hypothesis**, not measured lux, PPFD, a si
 | North windowsill, #3       | Separate daylight and possible lamp spill; outside the table heatmap                        | Actual upper and lower leaf exposure, time and blinds; no assumed equivalent table height |
 | Fixture join               | Spill may fill a small gap; no dark stripe or hottest stripe is assumed                     | A short comparison across the actual join after locating it                               |
 
-Use the planned windowsill move for #3 and preserve the other photographed positions as the starting record. The strongest placement question is whether **B3 Indigo Wave at the front** has sufficient clear light and whether **H1 Coconut Crystal in the interior** is shaded. Do not automatically exchange them: they have different heights and both need useful exposure. D3 and F2 occupy opposite front corners, rather than the two left corners of the old drawing. Their benefit is an inference to test.
+Use the confirmed windowsill position for #3 and preserve the other photographed positions as the starting record. The strongest placement question is whether **B3 Indigo Wave at the front** has sufficient clear light and whether **H1 Coconut Crystal in the interior** is shaded. Do not automatically exchange them: they have different heights and both need useful exposure. D3 and F2 occupy opposite front corners, rather than the two left corners of the old drawing. Their benefit is an inference to test.
 
 Six nominal 4-inch rims span about 24 inches across the nominal 26-inch front width. Four rows span about 16 inches of nominal front-table depth, leaving little margin for rails, larger rims and foliage. Keep bases fully supported and access possible; a diagram cannot certify the fit. The larger rear pot dimensions are not newly measured.
 
 ## Whole Display
 
-![Planned arrangement with 29 pots on four wooden tables and #3 Money Tree on a separate north windowsill](../../assets/layouts/2026-09-15-four-tables/combined-plan.png)
+![Current arrangement with 29 pots on four wooden tables and #3 Money Tree on a separate north windowsill](../../assets/layouts/2026-09-15-four-tables/combined-plan.png)
 
-Except for the explicitly planned #3 windowsill destination, positions below are **matched visually from the owner's photographs**, not a new botanical identification or a claim that every printed label was legible. The owner confirms rearranging the display; the label-to-slot transcription and nominal table orientation remain to be checked. Existing P-IDs and identity qualifiers are preserved.
+Except for the owner-confirmed #3 windowsill position, positions below are **matched visually from the owner's photographs**, not a new botanical identification or a claim that every printed label was legible. The owner confirms rearranging the display; the label-to-slot transcription and nominal table orientation remain to be checked. Existing P-IDs and identity qualifiers are preserved.
 
 ## Front Tables: Six Columns, Four Rows
 
@@ -91,22 +91,22 @@ These overlapping priorities describe plant needs, not measured intensity bands.
 
 ## Rear Tables and North Windowsill
 
-![Five rear containers on wooden tables, shared succulents in a square wooden box, and #3 Money Tree planned separately on the north windowsill](../../assets/layouts/2026-09-15-four-tables/rear-pots.png)
+![Five rear containers on wooden tables, shared succulents in a square wooden box, and #3 Money Tree separately on the north windowsill](../../assets/layouts/2026-09-15-four-tables/rear-pots.png)
 
-| Label / P-ID | Container          | Position Record                          | Shape and Size Record                                           | Exposure Priority                                                                                                       |
-| ------------ | ------------------ | ---------------------------------------- | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| #1 / P19     | Shared Cacti       | Rear center                              | Dark patterned round pot; current diameter unmeasured           | **Mixed.** Compare both tall columns and trailing monkey tail; pale tissue and short neighbors need separate attention. |
-| #2 / P20     | Shared Succulents  | Rear right, toward window                | Square wooden box; current side lengths and drainage unmeasured | **Mixed.** Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage.                        |
-| #3 / P21     | Money Tree         | **Planned north windowsill, off tables** | White round pot, previously recorded 6-inch class               | **Gentler.** Compare actual leaf exposure on the sill; daylight and lamp spill are unmeasured.                          |
-| #4 / P22     | Kiwi Aeonium       | Rear left; unchanged after #3 moves      | White round pot, previously recorded about 5-inch class         | **Bright.** Keep substantial lamp contribution without allowing its canopy to shade the small pots.                     |
-| #5 / P29     | Tiger Jaws         | Rear right, in front of the square box   | Tan ribbed round pot; current repotted dimensions unmeasured    | **Bright.** Retain probable Faucaria tuberculosa / seller F. tigrina qualifier; compare at leaf height.                 |
-| #6 / P30     | Tiny Mixed Planter | Front of rear zone, between #1 and #5    | Shallow round terracotta dish, nominal 5-inch class             | **Bright.** Compare the low rosettes and paddle leaves for shadows from the large pots.                                 |
+| Label / P-ID | Container          | Position Record                            | Shape and Size Record                                           | Exposure Priority                                                                                                       |
+| ------------ | ------------------ | ------------------------------------------ | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| #1 / P19     | Shared Cacti       | Rear center                                | Dark patterned round pot; current diameter unmeasured           | **Mixed.** Compare both tall columns and trailing monkey tail; pale tissue and short neighbors need separate attention. |
+| #2 / P20     | Shared Succulents  | Rear right, toward window                  | Square wooden box; current side lengths and drainage unmeasured | **Mixed.** Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage.                        |
+| #3 / P21     | Money Tree         | **Confirmed north windowsill, off tables** | White round pot, previously recorded 6-inch class               | **Gentler.** Compare actual leaf exposure on the sill; daylight and lamp spill are unmeasured.                          |
+| #4 / P22     | Kiwi Aeonium       | Rear left; unchanged after #3's move       | White round pot, previously recorded about 5-inch class         | **Bright.** Keep substantial lamp contribution without allowing its canopy to shade the small pots.                     |
+| #5 / P29     | Tiger Jaws         | Rear right, in front of the square box     | Tan ribbed round pot; current repotted dimensions unmeasured    | **Bright.** Retain probable Faucaria tuberculosa / seller F. tigrina qualifier; compare at leaf height.                 |
+| #6 / P30     | Tiny Mixed Planter | Front of rear zone, between #1 and #5      | Shallow round terracotta dish, nominal 5-inch class             | **Bright.** Compare the low rosettes and paddle leaves for shadows from the large pots.                                 |
 
 Shared cactus #1 retains probable variegated Pilosocereus pachycladus, Cleistocactus colademononis and probable Echinopsis spachiana. The removed historical Mammillaria is not a fourth living component. Shared box #2 retains probable Echeveria pulidonis/hybrid, Portulacaria afra (possible 'Aurea' unconfirmed), probable Kalanchoe bracteata and Kalanchoe orgyalis. The tiny mixed dish's Echeveria, Sedum and Kalanchoe identifications remain provisional. Each shared container is one weigh-in.
 
-## Money Tree: Planned North-Windowsill Spot
+## Money Tree: Confirmed North-Windowsill Spot
 
-**#3 / P21 remains the same tracked pot**, with the working identification _Pachira_ cf. _glabra_ and its previously recorded white round 6-inch pot. Its destination is the north-facing windowsill, outside the wooden display. The drawing locates it schematically; it does not establish the sill's size, exact horizontal position, support or clearance. #4 Kiwi stays in its current rear-left spot; no replacement pot is assigned to the space #3 leaves.
+**#3 / P21 remains the same tracked pot**, with the working identification _Pachira_ cf. _glabra_ and its previously recorded white round 6-inch pot. The owner confirmed on September 16 that it is on the north-facing windowsill, outside the wooden display; the exact move time was not supplied. The drawing locates it schematically; it does not establish the sill's size, exact horizontal position, support or clearance. #4 Kiwi stays in its current rear-left spot; no replacement pot is assigned to the space #3 leaves.
 
 The goal is useful indirect light with less direct fixture exposure. North-facing daylight and any remaining LED spill must be assessed at the actual leaves; the table heatmap does not predict the windowsill's light or prove that it will be sufficient. Keep foliage clear of cold glass and drafts, and keep the pot and drainage saucer fully supported.
 
@@ -130,7 +130,7 @@ This is a physical placement change, not a repot or watering event. **Keep the e
 
 ## Sources
 
-- **Move evidence:** September 15 owner report of downward-pointing money-tree leaves and a planned move to the north-facing windowsill. The move has not been confirmed complete; no light measurement or cause diagnosis was supplied. The other 29 pot positions are retained.
+- **Move evidence:** September 15 owner report of downward-pointing money-tree leaves and a planned move to the north-facing windowsill, followed by owner confirmation on September 16 that the move is complete. The exact completion time was not supplied. No light measurement or cause diagnosis was supplied. The other 29 pot positions are retained.
 - **Owner evidence:** September 15 purchase of two additional 16 × 13-inch tables and three supplied setup photographs. The 2 × 2 orientation, nominal 26 × 32-inch block and label matching are photo-based inferences; current gaps, heights, exact fixture centers and light levels are unmeasured.
 - **Operating record:** September 13 installed lights, AW200 45%, AeroLight 240 W 38%, 18-inch tip reference and the shared 13 h 15 m cycle. See the [equipment record](../equipment/aw200-and-aerolight-240w.md), [AW200 manual][aw200] and [AeroLight manual][aerolight-240]. These settings are carried forward as last reported, not reread from the controllers.
 - **Plant evidence:** the [source-by-source review](../two-light-placement-review.md), [plant profiles](../plants/), [inventory](../collection.md), [NC State Ming Thing][ming], [RHS Feather Cactus][feather], [RHS Rainbow Hedgehog][rainbow], [RHS Monk's Hood][monks-hood], [NC State Sempervivum][sempervivum] and [SANBI split rock][split-rock]. No identity or species-specific light requirement was changed from a layout photo.
