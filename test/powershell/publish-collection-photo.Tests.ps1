@@ -237,6 +237,55 @@ BeforeAll {
         }
     }
 
+    function Get-TestPngChunk {
+        param([byte[]] $Bytes)
+
+        $offset = 8
+        while ($offset -lt $Bytes.Length) {
+            $lengthBytes = [byte[]] $Bytes[$offset..($offset + 3)]
+            if ([System.BitConverter]::IsLittleEndian) {
+                [System.Array]::Reverse($lengthBytes)
+            }
+            $length = [System.BitConverter]::ToUInt32( $lengthBytes, 0 )
+            $end = $offset + $length + 12
+            [pscustomobject] @{
+                Type =
+                    [System.Text.Encoding]::ASCII.GetString(
+                        $Bytes,
+                        $offset + 4,
+                        4
+                    )
+                Offset = $offset
+                Bytes = [byte[]] $Bytes[$offset..($end - 1)]
+            }
+            $offset = $end
+        }
+    }
+
+    function Write-TestImageOnlyPng {
+        param([string] $LiteralPath)
+
+        $magick = Get-Command -Name magick -CommandType Application -ErrorAction Stop
+        $nativeOutput = & $magick.Source -size '64x48' 'gradient:#18304d-#e6c05b' -strip -define 'png:compression-level=1' "PNG24:$LiteralPath" 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            throw "ImageMagick failed to create the RGB test fixture: $($nativeOutput | Out-String)"
+        }
+        $bytes = [System.IO.File]::ReadAllBytes($LiteralPath)
+        $output = [System.IO.MemoryStream]::new()
+        try {
+            $output.Write( $bytes, 0, 8 )
+            foreach ($chunk in @(Get-TestPngChunk -Bytes $bytes)) {
+                if ($chunk.Type -cin @( 'IHDR', 'IDAT', 'IEND' )) {
+                    $output.Write( $chunk.Bytes, 0, $chunk.Bytes.Length )
+                }
+            }
+            [System.IO.File]::WriteAllBytes( $LiteralPath, $output.ToArray() )
+        }
+        finally {
+            $output.Dispose()
+        }
+    }
+
     function Initialize-TestRepository {
         param(
             [Parameter(Mandatory)]
@@ -758,6 +807,178 @@ Describe 'publish-collection-photo.ps1' {
 
             $privateSourcePath | Should -Exist
             $publicationPath | Should -Not -Exist
+        }
+    }
+
+    Context 'image-only PNG fast path' {
+        It 'preserves the exact compressed image bytes for an image-only RGB PNG' {
+            $repository = New-TestRepository -Plants @(
+                (New-TestPlant -PlantSlug 'test-plant')
+            )
+            $sourcePath = Join-Path $repository.PrivateDirectory 'image-only.png'
+            Write-TestImageOnlyPng -LiteralPath $sourcePath
+            $sourceBytes = [System.IO.File]::ReadAllBytes($sourcePath)
+            $parameters = Get-SingleParameters -LiteralPath $sourcePath
+
+            $null = & $repository.ScriptPath @parameters
+
+            [System.Linq.Enumerable]::SequenceEqual(
+                $sourceBytes,
+                [GardenPhotoPublisherTestState]::LastUploadedBytes
+            )
+                | Should -BeTrue
+        }
+
+        It 'removes only the fixed TopLeft orientation chunk without recompressing IDAT' {
+            $repository = New-TestRepository -Plants @(
+                (New-TestPlant -PlantSlug 'test-plant')
+            )
+            $sourcePath = Join-Path $repository.PrivateDirectory 'top-left.png'
+            Write-TestImageOnlyPng -LiteralPath $sourcePath
+            $imageOnly = [System.IO.File]::ReadAllBytes($sourcePath)
+            $orientation = [Convert]::FromBase64String('AAAAAW9yTlQBz6J3mg==')
+            [System.IO.File]::WriteAllBytes(
+                $sourcePath,
+                [byte[]](
+                    $imageOnly[0..32] + $orientation + $imageOnly[
+                        33..($imageOnly.Length - 1)
+                    ]
+                )
+            )
+            $parameters = Get-SingleParameters -LiteralPath $sourcePath
+
+            $null = & $repository.ScriptPath @parameters
+
+            [System.Linq.Enumerable]::SequenceEqual(
+                $imageOnly,
+                [GardenPhotoPublisherTestState]::LastUploadedBytes
+            )
+                | Should -BeTrue
+        }
+
+        It 'renders a PNG containing <name> instead of copying its ancillary data' -ForEach @(
+            @{
+                name = 'private text'
+                chunk =
+                    'AAAAHHRFWHRDb21tZW50AFBSSVZBVEUtUE5HLU1FVEFEQVRBOVMupw=='
+            }
+            @{
+                name = 'an unknown chunk'
+                chunk = 'AAAAE2FiQ2RQUklWQVRFLVBORy1VTktOT1dOQDrO+g=='
+            }
+            @{
+                name = 'a non-TopLeft orientation'
+                chunk = 'AAAAAW9yTlQGUcbiOQ=='
+            }
+        ) {
+            $repository = New-TestRepository -Plants @(
+                (New-TestPlant -PlantSlug 'test-plant')
+            )
+            $sourcePath = Join-Path $repository.PrivateDirectory 'ancillary.png'
+            Write-TestImageOnlyPng -LiteralPath $sourcePath
+            $imageOnly = [System.IO.File]::ReadAllBytes($sourcePath)
+            $ancillary = [Convert]::FromBase64String($chunk)
+            [System.IO.File]::WriteAllBytes(
+                $sourcePath,
+                [byte[]](
+                    $imageOnly[0..32] + $ancillary + $imageOnly[
+                        33..($imageOnly.Length - 1)
+                    ]
+                )
+            )
+            $parameters = Get-SingleParameters -LiteralPath $sourcePath
+
+            $null = & $repository.ScriptPath @parameters
+
+            $uploaded = [GardenPhotoPublisherTestState]::LastUploadedBytes
+            [System.Text.Encoding]::ASCII.GetString($uploaded)
+                | Should -Not -Match 'PRIVATE-PNG'
+            [System.Linq.Enumerable]::SequenceEqual( $imageOnly, $uploaded )
+                | Should -BeFalse
+            @(Get-TestPngChunk -Bytes $uploaded).Type
+                | Should -Not -Contain 'tEXt'
+            @(Get-TestPngChunk -Bytes $uploaded).Type
+                | Should -Not -Contain 'abCd'
+        }
+
+        It 'still applies an explicit crop to an otherwise image-only PNG' {
+            $repository = New-TestRepository -Plants @(
+                (New-TestPlant -PlantSlug 'test-plant')
+            )
+            $sourcePath = Join-Path $repository.PrivateDirectory 'crop.png'
+            Write-TestImageOnlyPng -LiteralPath $sourcePath
+            $parameters = Get-SingleParameters -LiteralPath $sourcePath
+            $parameters.CropGeometry = '16x12+4+6'
+
+            $null = & $repository.ScriptPath @parameters
+
+            $uploaded = [GardenPhotoPublisherTestState]::LastUploadedBytes
+            # IHDR width and height are big-endian; this fixture is under 256px.
+            [byte[]] $uploaded[16..23]
+                | Should -Be @( 0, 0, 0, 16, 0, 0, 0, 12 )
+        }
+
+        It 'rejects <damage> before any network call' -ForEach @(
+            @{ damage = 'trailing bytes' }
+            @{ damage = 'an oversized chunk length' }
+            @{ damage = 'a duplicated IHDR' }
+            @{ damage = 'image data before IHDR' }
+            @{ damage = 'a bad IDAT CRC' }
+            @{ damage = 'a bad orientation CRC' }
+        ) {
+            $repository = New-TestRepository -Plants @(
+                (New-TestPlant -PlantSlug 'test-plant')
+            )
+            $sourcePath = Join-Path $repository.PrivateDirectory 'damaged.png'
+            Write-TestImageOnlyPng -LiteralPath $sourcePath
+            $bytes = [System.IO.File]::ReadAllBytes($sourcePath)
+            $chunks = @(Get-TestPngChunk -Bytes $bytes)
+            switch ($damage) {
+                'trailing bytes' {
+                    $bytes = [byte[]]($bytes + [byte[]]( 1, 2, 3 ))
+                }
+                'an oversized chunk length' {
+                    $bytes[8] = 0x7f
+                }
+                'a duplicated IHDR' {
+                    $bytes = [byte[]](
+                        $bytes[0..32] + $chunks[0].Bytes + $bytes[
+                            33..($bytes.Length - 1)
+                        ]
+                    )
+                }
+                'image data before IHDR' {
+                    $bytes = [byte[]](
+                        $bytes[0..7] + $chunks[1].Bytes + $chunks[
+                            0
+                        ].Bytes + $chunks[2].Bytes
+                    )
+                }
+                'a bad IDAT CRC' {
+                    $crcOffset = $chunks[1].Offset + $chunks[1].Bytes.Length - 1
+                    $bytes[$crcOffset] = $bytes[$crcOffset] -bxor 1
+                }
+                'a bad orientation CRC' {
+                    $orientation = [Convert]::FromBase64String(
+                        'AAAAAW9yTlQBz6J3mg=='
+                    )
+                    $orientation[12] = $orientation[12] -bxor 1
+                    $bytes = [byte[]](
+                        $bytes[0..32] + $orientation + $bytes[
+                            33..($bytes.Length - 1)
+                        ]
+                    )
+                }
+            }
+            [System.IO.File]::WriteAllBytes( $sourcePath, $bytes )
+            $parameters = Get-SingleParameters -LiteralPath $sourcePath
+
+            {
+                & $repository.ScriptPath @parameters
+            }
+                | Should -Throw
+            Should -Invoke Invoke-RestMethod -Times 0 -Exactly
+            Should -Invoke Invoke-WebRequest -Times 0 -Exactly
         }
     }
 

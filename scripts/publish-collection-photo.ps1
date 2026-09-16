@@ -26,7 +26,9 @@ trailers are removed without re-encoding the primary image scans; only
 recognized color records and a minimal orientation tag are retained. WebP
 EXIF/XMP and unknown chunks are removed without re-encoding image chunks.
 Crops and PNG inputs are rendered at source resolution in validated temporary
-storage for the upload.
+storage for the upload. Already image-only RGB PNGs retain their compressed
+image chunks after a full decode validates the source; a fixed TopLeft
+orientation chunk is removed without re-encoding.
 
 .PARAMETER PlantSlug
 The exact plant_slug entry that receives a new photo record.
@@ -1260,6 +1262,138 @@ function Get-ImageMagickDimension {
     }
 }
 
+function Get-ImageOnlyPngLayout {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)]
+        [byte[]] $Bytes
+    )
+
+    # This framing check is used only AFTER ImageMagick fully decodes the source.
+    # That decode must also reject CRC warnings; this is not a standalone decoder.
+    $invalidMessage = 'The PNG source has invalid chunk framing or ordering.'
+    if (
+        $Bytes.Length -lt 45 -or
+        -not [System.Linq.Enumerable]::SequenceEqual(
+            [byte[]] $Bytes[0..7],
+            [byte[]]( 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a )
+        )
+    ) {
+        throw (
+            Get-PublishException -Message $invalidMessage -ErrorId 'PublicationImageInvalid'
+        )
+    }
+
+    $offset = 8
+    $orientationOffset = - 1
+    $imageOnly = $true
+    $hasImageData = $false
+    $imageDataEnded = $false
+    $hasEnd = $false
+    $width = 0
+    $height = 0
+    while ($offset -lt $Bytes.Length) {
+        if ([long] $offset + 12L -gt $Bytes.Length) {
+            throw (
+                Get-PublishException -Message $invalidMessage -ErrorId 'PublicationImageInvalid'
+            )
+        }
+        $length = Read-JpegUInt32 -Bytes $Bytes -Offset $offset -LittleEndian $false
+        $end = [long] $offset + 12L + [long] $length
+        if ($end -gt $Bytes.Length) {
+            throw (
+                Get-PublishException -Message $invalidMessage -ErrorId 'PublicationImageInvalid'
+            )
+        }
+        $type = [System.Text.Encoding]::ASCII.GetString(
+            $Bytes,
+            $offset + 4,
+            4
+        )
+        if ($offset -eq 8 -and $type -cne 'IHDR') {
+            throw (
+                Get-PublishException -Message $invalidMessage -ErrorId 'PublicationImageInvalid'
+            )
+        }
+        if ($hasImageData -and $type -cne 'IDAT') {
+            $imageDataEnded = $true
+        }
+        switch -CaseSensitive ($type) {
+            'IHDR' {
+                if ($offset -ne 8 -or $length -ne 13) {
+                    throw (
+                        Get-PublishException -Message $invalidMessage -ErrorId 'PublicationImageInvalid'
+                    )
+                }
+                $width = Read-JpegUInt32 -Bytes $Bytes -Offset (
+                    $offset + 8
+                ) -LittleEndian $false
+                $height = Read-JpegUInt32 -Bytes $Bytes -Offset (
+                    $offset + 12
+                ) -LittleEndian $false
+                if ($width -eq 0 -or $height -eq 0) {
+                    throw (
+                        Get-PublishException -Message $invalidMessage -ErrorId 'PublicationImageInvalid'
+                    )
+                }
+                $imageOnly =
+                $Bytes[$offset + 16] -eq 8 -and
+                $Bytes[$offset + 17] -eq 2 -and
+                $Bytes[$offset + 18] -eq 0 -and
+                $Bytes[$offset + 19] -eq 0 -and
+                $Bytes[$offset + 20] -eq 0
+            }
+            'orNT' {
+                if (
+                    $orientationOffset -ge 0 -or $hasImageData -or
+                    $length -ne 1 -or $Bytes[$offset + 8] -ne 1
+                ) {
+                    $imageOnly = $false
+                }
+                $orientationOffset = $offset
+            }
+            'IDAT' {
+                if ($imageDataEnded) {
+                    throw (
+                        Get-PublishException -Message $invalidMessage -ErrorId 'PublicationImageInvalid'
+                    )
+                }
+                $hasImageData = $true
+                if ($length -eq 0) {
+                    $imageOnly = $false
+                }
+            }
+            'IEND' {
+                if (
+                    -not $hasImageData -or $length -ne 0 -or $end -ne $Bytes.Length
+                ) {
+                    throw (
+                        Get-PublishException -Message $invalidMessage -ErrorId 'PublicationImageInvalid'
+                    )
+                }
+                $hasEnd = $true
+            }
+            default {
+                $imageOnly = $false
+            }
+        }
+        $offset = [int] $end
+    }
+    if (-not $hasEnd) {
+        throw (
+            Get-PublishException -Message $invalidMessage -ErrorId 'PublicationImageInvalid'
+        )
+    }
+    if (-not $imageOnly) {
+        return $null
+    }
+    return [pscustomobject] @{
+        Width = $width
+        Height = $height
+        OrientationOffset = $orientationOffset
+    }
+}
+
 function ConvertTo-LosslessPng {
     [CmdletBinding()]
     param(
@@ -1274,6 +1408,40 @@ function ConvertTo-LosslessPng {
     $sourceDimensions = Get-ImageMagickDimension -LiteralPath $SourcePath -AutoOrient
     $expectedWidth = $sourceDimensions.Width
     $expectedHeight = $sourceDimensions.Height
+    if (
+        [string]::IsNullOrWhiteSpace($CropGeometry) -and
+        [System.IO.Path]::GetExtension($SourcePath) -ieq '.png' -and
+        $sourceDimensions.ColorSpace -ceq 'sRGB'
+    ) {
+        $sourceBytes = [System.IO.File]::ReadAllBytes($SourcePath)
+        $layout = Get-ImageOnlyPngLayout -Bytes $sourceBytes
+        if (
+            $null -ne $layout -and
+            $layout.Width -eq $expectedWidth -and
+            $layout.Height -eq $expectedHeight
+        ) {
+            $output = [System.IO.File]::Create($DestinationPath)
+            try {
+                if ($layout.OrientationOffset -ge 0) {
+                    $output.Write( $sourceBytes, 0, $layout.OrientationOffset )
+                    $remainingOffset = $layout.OrientationOffset + 13
+                    $output.Write(
+                        $sourceBytes,
+                        $remainingOffset,
+                        $sourceBytes.Length - $remainingOffset
+                    )
+                }
+                else {
+                    $output.Write( $sourceBytes, 0, $sourceBytes.Length )
+                }
+            }
+            finally {
+                $output.Dispose()
+            }
+            Assert-PublicationImageFile -LiteralPath $DestinationPath
+            return
+        }
+    }
     if (-not [string]::IsNullOrWhiteSpace($CropGeometry)) {
         $cropMatch = [regex]::Match(
             $CropGeometry,
