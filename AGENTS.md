@@ -10,8 +10,9 @@
 - Keep light, humidity, watering, and care numbers framed as starting ranges or
   observation triggers. Do not turn them into false precision or fixed care
   calendars.
-- Do not add a repository-wide license or imply that the user's notes and photos
-  are reusable unless the user explicitly chooses licensing terms.
+- Preserve the existing `LICENSE` and the separate rights recorded for collection
+  photos, reference images, and artwork. Do not reinterpret the software license
+  as permission to relicense personal evidence or third-party images.
 
 ## Evidence and research
 
@@ -44,15 +45,23 @@
 - `docs/plants/` contains plant profiles and indexes. Follow the closest existing
   profile for metadata and section structure, including `Inventory`, `Label ID`,
   `Identification`, practical care, risks, and a substantive `Sources` section.
+  Follow its nested `AGENTS.md` for parsed metadata and shared-container IDs.
 - Keep plant names, IDs, status, and placement synchronized across the collection
   inventory, plant index, labels, profiles, equipment schedules, and layouts
   whenever a change affects those surfaces.
 - `docs/equipment/` holds exact-model research and operating guidance.
   `docs/layouts/` holds maintained standalone HTML tools and diagrams.
+- `docs/daily-reports/` contains reviewed dated report inputs. Read its nested
+  `AGENTS.md` and `docs/daily-weighing-watering-prompt.md` before preparing a
+  report. Generated report HTML is not a fresh workbook read.
+- `scripts/AGENTS.md` covers build outputs, source/runtime boundaries, and photo
+  publication. `test/AGENTS.md` covers Node, Storybook, Playwright, and PowerShell
+  tests; also read it when changing `.storybook/` or root test configuration.
+  `.github/AGENTS.md` covers CI and Pages deployment.
 - `scripts/google-sheets/` contains the bound Apps Script logger, its
-  self-contained HTML client, tests, and the operator runbook. Follow its
-  nested `AGENTS.md` before changing the workbook schema, logger, AppSheet
-  bridge, or production deployment.
+  self-contained HTML client, and the operator runbook; its regression tests
+  live in `test/google-sheets/`. Follow the logger's nested `AGENTS.md` before
+  changing the workbook schema, logger, AppSheet bridge, or production deployment.
 - `docs/appsheet-companion.md` documents the live AppSheet app. `History` is
   the canonical observation ledger; `History view` is its read-only sorted
   projection, while `App entries` and `App bulk` are writable staging tables.
@@ -64,20 +73,33 @@
 - `assets/plants/` is a licensed reference-photo archive, not proof of a
   collection identification. Preserve source URLs, creators, licenses, hashes,
   attribution, and the distinction between reference photos and user photos.
+- Follow `assets/AGENTS.md` for evidence, public collection-photo metadata, and
+  generated SVG exports. Camera originals and private source mappings stay out
+  of Git and the Pages artifact.
+- `AGENTS.web.md` is the separate phone/cloud Project prompt. Keep its explicit
+  lack of local repository access and its length below 8,000 characters. When
+  changing its starting facts, use current repository evidence and date anything
+  that can become stale; do not copy local execution instructions into it.
 
 ## Generated content and scripts
 
-- Plant-profile text in `docs/plant-booklet/index.html` is generated. Edit the
-  Markdown profile or photo manifest and run `npm run build:booklet`; maintain
-  presentation behavior in `booklet.css` and `booklet.js` directly.
+- `npm run build:booklet` generates `docs/plant-booklet/index.html` and
+  `docs/layouts/photo-album.html` from profiles and photo manifests. It also
+  synchronizes standalone SVGs and generated artwork in the Apps Script client.
+  Follow `docs/plant-booklet/AGENTS.md`; review every generated diff, including
+  changes outside the booklet directory.
 - The booklet generator and checker enumerate `starter`, `cacti`, `succulents`,
-  `rehab`, and `houseplants` and currently enforce 34 profiles: 33 present and
-  one historical. When adding or
-  removing a profile or group, update both `scripts/build-plant-booklet.mjs` and
-  `scripts/check-plant-booklet.mjs`, the expected counts, the collection indexes,
-  and the licensed photo archive together. If a group is intentionally not
-  publication-ready, keep that limitation explicit instead of partially adding
-  it to the generated booklet.
+  `rehab`, and `houseplants`. Read current counts from
+  `scripts/check-plant-booklet.mjs`; profile counts and tracked pot counts differ
+  because some plants share a container. Coordinate membership changes across
+  both build/check scripts, profile mappings, indexes, icons, and photo metadata.
+- `docs/layouts/daily-report.html` is generated from dated report JSON and
+  `scripts/templates/daily-report.html`. Use `npm run build:daily-report`.
+- `npm run build:pages` rebuilds the booklet/report and replaces the ignored
+  `.pages-site/` artifact, then adds Storybook. It can download selected Gyazo
+  previews into `.cache/collection-previews-v1`. Edit maintained sources, never
+  the artifact. Production Google Tag Manager (GTM) is injected only into the
+  Pages output.
 - `scripts/fetch-plant-images.ps1` performs network downloads and regenerates the
   photo manifest, attribution table, and archive indexes. Prefer a scoped
   `-PlantSlug` refresh, inspect licenses and every generated diff, and do not run
@@ -106,7 +128,9 @@
   unstaged, and untracked user work; do not reset, discard, or overwrite it.
 - Keep changes focused and update navigation links when adding or moving a page.
   Do not commit, push, publish, or rewrite history unless the user explicitly
-  asks for that action.
+  authorizes that action. The documented standing daily-report publication
+  permission is limited to that task and its report files; follow its runbook
+  without extending that permission to unrelated changes.
 - Do not place credentials, private tokens, precise home-location data, or other
   unnecessary personal information in documentation, HTML, image metadata, or
   fixtures.
@@ -136,18 +160,28 @@
 
 ## Setup and validation
 
-- Use the checked-in npm lockfile. Run `npm ci` for a clean dependency install;
-  do not use the forceful `npm run update-deps` as a setup or repair command.
-- There is no single umbrella test command. Run the checks that cover the
-  changed surfaces and report anything skipped.
+- Use the Node/npm requirements and `packageManager` in `package.json` (currently
+  Node 26.7+ and npm 12+). Run `npm ci` against the checked-in lockfile and retain
+  the reviewed `allowScripts` entries. Do not use forceful dependency updates as
+  setup or repair, or add package scripts without verifying their target exists.
+- `npm test` runs both Node unit tests and Storybook browser tests. Use
+  `npm run test:unit` for Node-only work and the targeted commands below for the
+  changed surface. `lint:all` is a convenience aggregate, not every check listed
+  here; inspect `package.json` before claiming complete validation.
 - For ordinary Markdown or navigation changes, run:
 
   ```powershell
   npm run lint:remark
-  npx prettier . --check
+  npm run lint:prettier
   npm run lint:lychee:smoke
   git diff --check
   ```
+
+  `lint:lychee:smoke` only discovers README inputs; it does not verify links.
+  Check changed local targets directly and use `lint:lychee` for external URLs.
+  Remark intentionally ignores `AGENTS*.md`; validate instructions with
+  formatting, command/path checks, and a consistency review rather than claiming
+  they passed prose lint.
 
 - For plant profiles or booklet inputs, also run:
 
@@ -160,9 +194,15 @@
   when source profiles covered by the generator change.
 
 - For HTML, CSS, JavaScript, or layout changes, also run `npm run lint:html` and
-  inspect the affected page in a browser at desktop and 390 px widths, in light
-  and dark modes. Check the console, navigation, keyboard behavior, print styles
-  when print CSS or print-oriented layout changed, and horizontal overflow.
+  the applicable ESLint, `lint:style`, and type checks. `npm run typecheck` covers
+  repository TypeScript/checked JavaScript and Apps Script; focused commands are
+  `typecheck:browser`, `typecheck:build`, `typecheck:tests`, and
+  `typecheck:apps-script`. Read `docs/development.md` for runtime-specific details.
+- Use `npm run dev` for the source website preview at `127.0.0.1:5173`; it can
+  read live published Sheet data. Use Storybook for isolated synthetic data.
+  Build Pages before `npm run test:e2e` or `npm run test:storybook:static`.
+  Inspect affected pages at desktop and 390 px widths in both themes: console,
+  navigation, keyboard behavior, horizontal overflow, and existing print modes.
 - For changed external URLs, run `npm run lint:lychee`. Treat intermittent
   network or rate-limit failures as evidence to investigate and report, not as a
   reason to remove a valid source.
@@ -170,7 +210,7 @@
 
   ```powershell
   npm run lint:gitleaks
-  npx secretlint "**/*"
+  npm run lint:secretlint
   ```
 
 ## Review priorities

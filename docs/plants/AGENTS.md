@@ -1,0 +1,40 @@
+# Plant profile instructions
+
+## Identity and parsed metadata
+
+- Keep the existing heading and metadata structure. The build/check scripts
+  parse exact labels such as `Inventory`, `Label ID`, `Tracker ID`, `Status`,
+  `Visual description`, `Interesting fact`, and acquisition fields. Do not
+  rename those labels as a cosmetic edit without updating their consumers.
+- Inventory IDs identify profile records, physical labels identify pots, and
+  `P##` tracker IDs identify weighed containers. Multiple profiles may share
+  one tracker ID; never create independent weigh-ins for their component plants.
+- `P19` / `#1` is the shared rehab cactus container and `P20` / `#2` the shared
+  succulent container. `P30` / `#6` stays one mixed-planter record with unresolved
+  component taxa. Removed Rehab-04 remains historical and has no active pot.
+- Keep seller labels, qualified working IDs, receipt dates, and repot dates
+  distinct. Preserve original label evidence when the probable identification
+  changes. An order is not a confirmed arrival; a retail pot size is not a
+  measured current pot size.
+- Use the relevant care/setup/equipment records for current conditions. Older
+  profile observations remain dated evidence; do not silently apply an old
+  light schedule or placement as the current collection setup.
+
+## Coordinated changes
+
+- Update affected `docs/collection.md`, this directory's `README.md` and
+  `labels.md`, relevant setup/care/layout records, and
+  `docs/layouts/plant-profile-data.json` together when identity, mapping, status,
+  or placement changes. A profile edit does not itself change a live workbook.
+- Adding/removing a profile also affects the booklet build/check inventories,
+  canonical SVG portraits, photo manifests, and relevant tests. Check those
+  contracts before adding only a Markdown file. The current checker expects
+  36 profiles: 35 present and one historical, covering 30 tracked containers.
+  Recalculate these separately when the collection changes.
+- Keep a substantive Sources section with direct evidence for identification,
+  nomenclature, range, and specific care claims. Owner observations need clear
+  attribution/date; do not turn them into externally verified botanical facts.
+- Run `npm run build:booklet`, `npm run check:booklet`, and the root Markdown/
+  link checks. Include all relevant generated changes, including the photo album
+  and icon/logger output when those inputs changed. Do not hand-edit generated
+  plant text to make it differ from its Markdown source.
