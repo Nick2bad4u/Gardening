@@ -77,7 +77,7 @@ is blank; it is not an estimate of available stock. Containers without a
 recorded refill remain unknown. The summary reads the existing records and
 does not create another entry table.
 
-This addition is pending production deployment; see the
+This addition was verified in production on September 17, 2026; see the
 [analytics rollout record](WORKBOOK-ANALYTICS.md#rollout-record). Keep the manual
 entry exceptions **A20:I1000** and **K20:M1000**, calculated totals in J, and the
 existing chart unchanged. The summary formulas are maintained in

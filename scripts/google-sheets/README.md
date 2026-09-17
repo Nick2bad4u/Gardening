@@ -63,7 +63,7 @@ point; photo publication and the real inspection records are separate steps.
 
 ## Current production baseline
 
-### Workbook analytics upgrade (5.25.0, deployment pending)
+### Workbook analytics upgrade (5.25.0, September 17, 2026)
 
 The maintained source and guarded migration add plant history below the charts,
 watering/feeding/photo summaries, shared calculation timestamps, two Insights
@@ -78,12 +78,15 @@ mobile widths, and readable metadata pills with local times. Exact ISO values
 remain in time attributes and titles. These changes preserve time capture,
 save, and retry behavior.
 
-**Production rollout is pending.** The target is **54 tabs and 147 charts**,
-including **25 Insights charts**, after adding three derived sheets and two
-charts. These counts describe the migration target, not a completed live check.
-Record the immutable Apps Script version, source commit, exact preservation
-results, and final live checks in that guide after deployment. Keep the existing
-phone URL and single five-minute queue trigger.
+**Production is deployed as immutable Apps Script version 92** at the existing
+phone URL, from release commit `7cc15d6f23752be44ed0e13fc479656c652f1286`.
+The verified workbook has **54 tabs and 147 charts**, including **25 Insights
+charts**. All 2,973 planned written values/formulas match native readback, and
+Integrity reports **0 formula errors**. Canonical History, staging, and RO entry
+ranges retain their values, notes, and validations exactly. The single
+five-minute queue trigger remains in place. See the
+[full production record](WORKBOOK-ANALYTICS.md#production-verification) for
+chart/protection comparisons, source verification, and checks.
 
 ### September 17 dry top-dressing normalization
 
@@ -93,7 +96,7 @@ The native backup **Garden Plant Tracker — before top-dressing weight normaliz
 
 Readback verified all **1,019 observations**, **1,019 unique Observation IDs**, and **922 distinct Request IDs**, with no changes to timestamps, watering events, setup numbers, status, remaining history cells, staging entries, or baseline formulas. All **660 model output cells** matched the checked-in detector run against the adjusted data. The other 28 pots' models were unchanged; earlier weight differences, wet-to-dry capacities, and eligible learned cycles were preserved. Integrity reports zero formula errors and zero active trend-review flags at this verification.
 
-The post-dressing readings remain **1,746 g for P21** and **992 g for P22**. Derived dry/wet references became **1,637 / 1,746 g** and **991.5 / 1,166.5 g**, respectively. Future readings use actual scale values without another offset. The existing logger remains **5.24.0 / immutable version 91**, with its single five-minute queue trigger; this data correction requires no Apps Script deployment or schema change. See the [weighing strategy](../../docs/weighing-strategy.md#recorded-dry-top-dressing-adjustment).
+The post-dressing readings remain **1,746 g for P21** and **992 g for P22**. Derived dry/wet references became **1,637 / 1,746 g** and **991.5 / 1,166.5 g**, respectively. Future readings use actual scale values without another offset. At this correction's verification, the logger was **5.24.0 / immutable version 91**, with its single five-minute queue trigger; this data correction required no Apps Script deployment or schema change. See the [weighing strategy](../../docs/weighing-strategy.md#recorded-dry-top-dressing-adjustment).
 
 ### Workbook presentation and Daily care retirement (September 16, 2026)
 

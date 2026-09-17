@@ -1,9 +1,9 @@
 # Insights dry-down charts
 
-The analytics upgrade extends the native **Insights** sheet from 23 to **25
-charts**. Deployment is pending; see the
-[analytics rollout record](WORKBOOK-ANALYTICS.md#rollout-record) for verified
-status. Its dry-down explorer starts at
+The native **Insights** sheet has **25 charts** after the September 17, 2026
+analytics upgrade. See the
+[analytics rollout record](WORKBOOK-ANALYTICS.md#rollout-record) for verification.
+Its dry-down explorer starts at
 **A226**; choose **P01–P30 in B228** in the current native layout. The selected
 plant's care guidance, predicted dry-check date, and earliest/latest window
 appear above the graphs. The selected plant's **Current weight difference (g)**
@@ -82,7 +82,7 @@ plateau heuristic and species exceptions.
 
 ## Watering history and cycle comparison
 
-After the analytics migration, the linked index in **Insights A2** jumps to
+The linked index in **Insights A2** jumps to
 Watering history, Current cycle, Collection comparisons, and Model evidence.
 The two additional charts occupy new space below the existing graphs:
 
@@ -187,8 +187,9 @@ repair for existing populated charts. It verifies their IDs, anchors, bindings,
 and real interval evidence supplied in `options.completedIntervalsByPlant`
 before restoring the plant color, data labels, and
 numeric axis settings. Preserve the chart IDs and positions. P24–P26 are the
-identified targets in the analytics rehearsal; record verified production
-results in the [rollout record](WORKBOOK-ANALYTICS.md#rollout-record).
+repaired production charts in the September 17 analytics upgrade. Their IDs
+and positions are unchanged; see the
+[production record](WORKBOOK-ANALYTICS.md#production-verification).
 
 ### Shared migration workflow
 

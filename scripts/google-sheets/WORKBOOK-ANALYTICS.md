@@ -1,10 +1,10 @@
 # Workbook analytics and history upgrade
 
 The 5.25.0 source and migration add derived views while retaining the
-42-column History contract and the daily report's care policy. **Production
-deployment is pending.** The target workbook has 54 tabs and 147 charts,
-including 25 Insights charts. See the [rollout record](#rollout-record) before
-treating these locations as verified production state.
+42-column History contract and the daily report's care policy. **Production was
+verified on September 17, 2026**, with 54 tabs and 147 charts, including 25
+Insights charts. Logger 5.25.0 uses immutable Apps Script version 92 at the
+existing phone URL. See the [rollout record](#rollout-record) for evidence.
 
 ## Finding the information
 
@@ -172,8 +172,8 @@ publishing the three-file clasp upload. Follow [the main runbook](README.md).
 
 ## Rollout record
 
-**September 17, 2026: rehearsal verified; production migration and 5.25.0
-deployment remain pending.** The native backup is named **Garden Plant Tracker —
+**September 17, 2026: rehearsal and production migration verified; logger 5.25.0
+deployed as immutable version 92.** The native backup is named **Garden Plant Tracker —
 before analytics and history layout upgrade — 2026-09-17**; the separate copy is
 **Garden Plant Tracker — analytics upgrade rehearsal — 2026-09-17**.
 
@@ -210,8 +210,9 @@ The native rehearsal passed these checks:
   Integrity still **0**. This confirms that API reads can return cached ages;
   the displayed calculation time must not be presented as the current read time.
 
-Local validation passed **886 logger/migration tests**. Server coverage is
-**99.41% statements, 98.01% branches, 99.70% functions, and 99.64% lines**.
+Local validation passed **886 logger/migration tests** and **1,075 total Node
+unit tests**. Final server coverage is **99.48% statements, 98.18% branches,
+100% functions, and 99.70% lines**.
 The implementation's applicable type, lint, and secret checks also passed.
 
 The actual bound rehearsal script's read-only `getWebAppBootstrap` calls were
@@ -235,15 +236,44 @@ mobile widths, and metadata pills showing local times while preserving exact
 ISO time attributes and titles. Time capture, save, and retry behavior remain
 unchanged.
 
-**Still pending:** production migration, production comparisons, the final
-source commit, and the immutable 5.25.0 deployment version. The latest verified
-production baseline remains **5.24.0 / immutable version 91**. The separate
-5.24.1 client release was canceled before upload; its validated client is
-included in 5.25.0 instead. Re-read the production deployment immediately before
-release.
+### Production verification
 
-Complete this record after verification with the source commit, immutable
-version, live worksheet/chart counts, preserved observation/request groups,
-production comparison results, and live trigger/execution checks. Retain the
-existing deployment URL. Do not mark the rollout complete while those checks
-remain pending.
+Release commit **`7cc15d6f23752be44ed0e13fc479656c652f1286`** contains the
+implementation from `7e50c7a` and the conditional-format regression follow-up.
+All **eight check runs and three Codecov statuses** passed for that exact release
+commit, including Pages and Sonar. Applicable type, lint, formatting, Markdown,
+and secret checks passed.
+
+The production workbook has **54 tabs, 147 charts, and 25 Insights charts**.
+Native readback matches all **2,973 written values/formulas** in the plan after
+accounting for Google's equivalent canonicalization of quoted Insights sheet
+references. Integrity reports **0 formula errors**.
+
+Canonical History, App entries, App bulk, and RO entry ranges have **zero
+entered-value, note, or validation differences**. The ledger retains **1,019
+observations**, **1,019 unique Observation IDs**, **922 Request ID groups**,
+**three Removed rows**, and **1,016 active observations**. No synthetic production
+observations were submitted.
+
+All **145 original chart IDs and positions** remain unchanged. **142 original
+specifications** match exactly; the other three contain the intended P24–P26
+watering-interval style repairs. Existing protection objects, RO edit
+exceptions, and conditional-format conditions, colors, and rule order match.
+Original tabs retain their relative order. The new Dashboard guidance rows
+remain intentionally visible.
+
+Apps Script **HEAD and immutable version 92** contain all three reviewed files,
+with matching SHA-256 hashes after LF normalization. The existing deployment
+now serves **5.25.0** at the same phone URL. Live client checks at **390 px** and
+desktop widths in light and dark themes show **Connected · logger 5.25.0**,
+without horizontal overflow or test saves.
+
+Exactly **one five-minute queue trigger** remains on HEAD, with **0% errors**.
+Native execution records show successful `processQueuedAppSheetEntries` runs
+at **5:38:33 p.m. Eastern** (**4.063 seconds**) and **5:43:33 p.m.**
+(**4.699 seconds**), both after the **5:35:59 p.m.** source push. Version 92's
+`doGet` at **5:39:09 p.m.** completed in **0.834 seconds**, and its
+`getWebAppBootstrap` at **5:39:11 p.m.** completed in **8.224 seconds**.
+The new cycle-comparison and existing dry-down custom functions also completed
+successfully. These checks retain the existing queue configuration and
+AppSheet staging schema; no intake reinstall was needed.
