@@ -322,6 +322,19 @@ describe("garden logger observation times", () => {
             const { calls, window } = createLoggerWindow();
             const id = mode === "bulk" ? "bulkObservedAt" : "observedAt";
             enterWorkflowValue(window, id, "2026-09-12T19:30");
+            const currentTimeButton = queryElement(
+                window.document,
+                `#${id}Now`,
+                HTMLButtonElement
+            );
+
+            expect(currentTimeButton.getAttribute("aria-label")).toBe(
+                "Use current time"
+            );
+            expect(currentTimeButton.getAttribute("aria-pressed")).toBe(
+                "false"
+            );
+
             vi.advanceTimersByTime(120_000);
 
             expect(
@@ -333,6 +346,9 @@ describe("garden logger observation times", () => {
                 `#${id}Now`,
                 HTMLButtonElement
             ).click();
+
+            expect(currentTimeButton.getAttribute("aria-pressed")).toBe("true");
+
             vi.advanceTimersByTime(60_000);
             const shown = queryElement(
                 window.document,
@@ -1108,7 +1124,9 @@ describe("garden logger daily progress, filtered History and measured charts", (
             queryElement(window.document, "#recentCard", HTMLElement).hidden
         ).toBe(false);
     });
+});
 
+describe("garden logger History details and current-cycle charts", () => {
     it("expands escaped event details with original measurement units and preserves the correction observation ID", () => {
         expect.hasAssertions();
 
@@ -1124,6 +1142,9 @@ describe("garden logger daily progress, filtered History and measured charts", (
                 notes: "<img src=x onerror=alert(1)>\nsecond line",
                 observationQuality: "Measured",
                 potSetup: 2,
+                recordedAtIso: "2026-09-05T16:14:50.833Z",
+                recordStatus: "Active",
+                saveGroup: "example-save-group",
                 width: 1.25,
             },
             event: "Measure",
@@ -1151,7 +1172,27 @@ describe("garden logger daily progress, filtered History and measured charts", (
 
         expect(details.open).toBe(true);
         expect(details.textContent).toContain("2.5");
-        expect(details.textContent).toContain("Original measurement unitin");
+        expect(details.textContent).toContain("Original Measurement Unitin");
+
+        const recorded = queryElement(
+            details,
+            '[data-field="recordedAtIso"] time',
+            HTMLElement
+        );
+
+        expect(recorded.getAttribute("datetime")).toBe(
+            "2026-09-05T16:14:50.833Z"
+        );
+        expect(recorded.title).toBe(recorded.getAttribute("datetime"));
+        expect(recorded.textContent).not.toContain("T16:14:50.833Z");
+        expect(
+            queryElement(details, '[data-field="recordStatus"] dd', HTMLElement)
+                .textContent
+        ).toBe("Active");
+        expect(
+            queryElement(details, '[data-field="saveGroup"] dd', HTMLElement)
+                .textContent
+        ).toBe("example-save-group");
         expect(details.textContent).toContain(
             "<img src=x onerror=alert(1)>\nsecond line"
         );

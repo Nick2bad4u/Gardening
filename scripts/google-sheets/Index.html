@@ -687,14 +687,96 @@
                 cursor: pointer;
             }
 
-            .history-details dt {
-                margin-block-start: 8px;
-                font-weight: 800;
+            .history-detail-grid {
+                display: grid;
+                grid-template-columns: repeat(
+                    auto-fit,
+                    [pill-start] minmax(min(100%, 135px), 1fr) [pill-end]
+                );
+                gap: 8px;
+                margin: 0;
             }
 
-            .history-details dd {
-                margin-inline-start: 0;
-                white-space: pre-wrap;
+            .history-detail-pill {
+                min-inline-size: 0;
+                padding: 10px 12px;
+                background: var(--control);
+                border: 1px solid var(--line);
+                border-radius: 12px;
+
+                & dt {
+                    display: flex;
+                    gap: 6px;
+                    align-items: center;
+                    margin: 0 0 6px;
+                    font-size: 0.875rem;
+                    font-weight: 800;
+                    color: var(--muted);
+                }
+
+                & dd {
+                    margin: 0;
+                    font-weight: 650;
+                    font-variant-numeric: tabular-nums;
+                    white-space: pre-wrap;
+                }
+            }
+
+            .history-detail-pill--wide,
+            .field.full {
+                grid-column: 1 / -1;
+            }
+
+            .history-detail-pill--identifier dd {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.875rem;
+            }
+
+            .observation-time-control {
+                display: flex;
+                align-items: stretch;
+                min-inline-size: 0;
+                padding: 3px;
+                background: var(--control);
+                border: 1px solid var(--line);
+                border-radius: 12px;
+
+                & input {
+                    flex: 1;
+                    inline-size: 0;
+                    min-inline-size: 0;
+                    border: 0;
+                }
+            }
+
+            .observation-time-now {
+                display: grid;
+                flex: none;
+                place-items: center;
+                min-inline-size: 44px;
+                min-block-size: 44px;
+                padding: 8px;
+                color: var(--forest-2);
+                background: transparent;
+                border: 1px solid transparent;
+                border-radius: 9px;
+
+                &[aria-pressed="true"] {
+                    background: var(--leaf-soft);
+                    border-color: var(--line);
+                }
+            }
+
+            .visually-hidden {
+                position: absolute;
+                inline-size: 1px;
+                block-size: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                white-space: nowrap;
+                border: 0;
+                opacity: 0;
             }
 
             .weight-chart {
@@ -990,10 +1072,28 @@
             }
 
             .correct-entry {
-                grid-column: 1 / -1;
-                justify-self: start;
+                display: inline-grid;
+                flex: none;
+                place-items: center;
+                min-inline-size: 44px;
                 min-block-size: 44px;
-                padding: 10px 14px;
+                padding: 8px;
+            }
+
+            .recent-actions {
+                display: flex;
+                gap: 6px;
+                align-items: flex-start;
+                align-self: start;
+                justify-content: flex-end;
+            }
+
+            .recent-metrics {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                align-items: center;
+                margin-block: 6px;
             }
 
             .chart-grid {
@@ -1694,10 +1794,6 @@
                     [item-start] minmax(0, 1fr) [item-end]
                 );
                 gap: 13px;
-            }
-
-            .field.full {
-                grid-column: 1 / -1;
             }
 
             .conditional {
@@ -13867,21 +13963,30 @@
                                         for="observedAt"
                                         >Observed at</label
                                     >
-                                    <input
-                                        id="observedAt"
-                                        type="datetime-local"
-                                        aria-describedby="observedAtHint"
-                                    />
+                                    <div class="observation-time-control"
+                                        ><input
+                                            id="observedAt"
+                                            type="datetime-local"
+                                            aria-describedby="observedAtHint" />
+                                        <button
+                                            type="button"
+                                            class="observation-time-now"
+                                            id="observedAtNow"
+                                            aria-label="Use current time"
+                                            aria-pressed="true"
+                                            ><svg
+                                                viewBox="0 0 64 64"
+                                                class="app-icon"
+                                                aria-hidden="true"
+                                            >
+                                                <use
+                                                    href="#app-icon-clock"
+                                                ></use></svg></button
+                                    ></div>
                                     <span
-                                        class="hint"
+                                        class="visually-hidden"
                                         id="observedAtHint"
                                     ></span>
-                                    <button
-                                        type="button"
-                                        class="secondary"
-                                        id="observedAtNow"
-                                        >Use current time</button
-                                    >
                                 </div>
                                 <div class="field full">
                                     <label
@@ -14099,21 +14204,30 @@
                                         class="field-label"
                                         for="bulkObservedAt"
                                         >Observed at</label
-                                    ><input
-                                        id="bulkObservedAt"
-                                        type="datetime-local"
-                                        aria-describedby="bulkObservedAtHint"
-                                    />
+                                    ><div class="observation-time-control"
+                                        ><input
+                                            id="bulkObservedAt"
+                                            type="datetime-local"
+                                            aria-describedby="bulkObservedAtHint" />
+                                        <button
+                                            type="button"
+                                            class="observation-time-now"
+                                            id="bulkObservedAtNow"
+                                            aria-label="Use current time"
+                                            aria-pressed="true"
+                                            ><svg
+                                                viewBox="0 0 64 64"
+                                                class="app-icon"
+                                                aria-hidden="true"
+                                            >
+                                                <use
+                                                    href="#app-icon-clock"
+                                                ></use></svg></button
+                                    ></div>
                                     <span
-                                        class="hint"
+                                        class="visually-hidden"
                                         id="bulkObservedAtHint"
                                     ></span>
-                                    <button
-                                        type="button"
-                                        class="secondary"
-                                        id="bulkObservedAtNow"
-                                        >Use current time</button
-                                    >
                                 </div>
                                 <div class="field full"
                                     ><label
@@ -15005,10 +15119,15 @@
             }
 
             function renderObservationTimeHint(id) {
-                $(`${id}Hint`).textContent =
-                    $(id).dataset.timeMode === "now"
-                        ? `Uses the current time when you save${id === "observedAt" ? " or queue" : ""}. Edit for an earlier event.`
-                        : "Uses the time above. It stays fixed for this entry.";
+                const isCurrent = $(id).dataset.timeMode === "now";
+                const hint = isCurrent
+                    ? `Uses the current time when you save${id === "observedAt" ? " or queue" : ""}. Edit for an earlier event.`
+                    : "Uses the time above. It stays fixed for this entry.";
+                $(`${id}Hint`).textContent = hint;
+                $(`${id}Now`).title = isCurrent
+                    ? hint
+                    : "Use current time instead of the selected time";
+                $(`${id}Now`).setAttribute("aria-pressed", String(isCurrent));
             }
 
             function observationDate(id) {
@@ -17993,6 +18112,8 @@
                     const plantName = document.createElement("strong");
                     plantName.textContent = entry.name || entry.plantId;
                     main.append(plantName);
+                    const metrics = document.createElement("div");
+                    metrics.className = "recent-metrics";
                     if (entry.weight !== "" && entry.weight != null) {
                         const weight = document.createElement("span");
                         weight.className = "recent-weight";
@@ -18002,7 +18123,7 @@
                             `${entry.weight} g`,
                             "app-icon app-icon--small"
                         );
-                        main.append(document.createTextNode(" · "), weight);
+                        metrics.append(weight);
                     }
                     const sub = document.createElement("div");
                     sub.className = "recent-sub";
@@ -18015,7 +18136,8 @@
                         entry.event,
                         "app-icon app-icon--small"
                     );
-                    text.append(main, sub);
+                    metrics.prepend(badge);
+                    text.append(main, metrics, sub);
                     left.append(
                         createPlantPortrait(
                             state.bootstrap?.plants.find(
@@ -18025,13 +18147,16 @@
                         ),
                         text
                     );
-                    item.append(left, badge);
-                    item.append(createHistoryDetails(entry));
+                    const actions = document.createElement("div");
+                    actions.className = "recent-actions";
                     if (item.dataset.observationId) {
                         const correct = document.createElement("button");
                         correct.type = "button";
                         correct.className = "correct-entry secondary";
-                        setIconLabel(correct, "edit", "Correct entry");
+                        correct.append(
+                            createIcon("edit", "app-icon app-icon--small")
+                        );
+                        correct.title = "Correct entry";
                         correct.setAttribute(
                             "aria-label",
                             `Correct ${entry.event || "saved"} entry for ${entry.name || entry.plantId} · ${entry.observedAt}`
@@ -18039,8 +18164,9 @@
                         correct.addEventListener("click", () =>
                             openCorrection(item.dataset.observationId, correct)
                         );
-                        item.append(correct);
+                        actions.append(correct);
                     }
+                    item.append(left, actions, createHistoryDetails(entry));
                     list.append(item);
                 });
                 card.hidden = false;
@@ -19032,14 +19158,23 @@
                 const summary = document.createElement("summary");
                 summary.textContent = `${entry.event || "Entry"} details`;
                 const list = document.createElement("dl");
+                list.className = "history-detail-grid";
                 const details = entry.details || {};
                 const labels = {
                     observedAtIso: "Observed",
-                    potSetup: "Pot setup",
-                    potSize: "Pot size",
-                    measurementUnit: "Original measurement unit",
-                    measurementQuality: "Measurement quality",
-                    measurementMethod: "Measurement method",
+                    recordedAtIso: "Recorded",
+                    potSetup: "Pot Setup",
+                    potSize: "Pot Size",
+                    potLabel: "Pot Label",
+                    recordStatus: "Record Status",
+                    saveGroup: "Save Group",
+                    entrySource: "Entry Source",
+                    observationQuality: "Observation Quality",
+                    correctsObservationId: "Corrects Observation",
+                    correctionReason: "Correction Reason",
+                    measurementUnit: "Original Measurement Unit",
+                    measurementQuality: "Measurement Quality",
+                    measurementMethod: "Measurement Method",
                     height: "Height",
                     width: "Width",
                     heightCm: "Height (cm)",
@@ -19051,8 +19186,35 @@
                     rotationDegrees: "Rotation (°)",
                     photoUrl: "Photo URL",
                 };
+                const icons = {
+                    observedAtIso: "clock",
+                    recordedAtIso: "calendar",
+                    potSetup: "repot",
+                    potSize: "dimensions",
+                    potLabel: "label",
+                    recordStatus: "status",
+                    saveGroup: "history",
+                    entrySource: "edit",
+                    observationQuality: "check",
+                    correctsObservationId: "edit",
+                    correctionReason: "note",
+                    measurementQuality: "check",
+                    measurementUnit: "dimensions",
+                    measurementMethod: "dimensions",
+                    height: "dimensions",
+                    width: "dimensions",
+                    heightCm: "dimensions",
+                    widthCm: "dimensions",
+                    heightIn: "dimensions",
+                    widthIn: "dimensions",
+                    waterAmount: "water",
+                    waterAmountMl: "water",
+                    rotationDegrees: "rotate",
+                    photoUrl: "camera",
+                    notes: "note",
+                };
                 const fields = {
-                    observedAtIso: formattedTimestamp(entry.observedAtIso),
+                    observedAtIso: entry.observedAtIso,
                     ...details,
                 };
                 Object.entries(fields).forEach(([key, value]) => {
@@ -19062,20 +19224,54 @@
                         !["string", "number", "boolean"].includes(typeof value)
                     )
                         return;
+                    const pill = document.createElement("div");
+                    pill.className = "history-detail-pill";
+                    pill.dataset.field = key;
+                    if (
+                        [
+                            "notes",
+                            "photoUrl",
+                            "correctionReason",
+                            "observedAtIso",
+                            "recordedAtIso",
+                        ].includes(key)
+                    )
+                        pill.classList.add("history-detail-pill--wide");
+                    if (["saveGroup", "correctsObservationId"].includes(key))
+                        pill.classList.add("history-detail-pill--identifier");
                     const term = document.createElement("dt");
-                    term.textContent =
+                    const label =
                         labels[key] ||
                         key
                             .replaceAll(/([A-Z])/g, " $1")
-                            .replace(/^./, (letter) => letter.toUpperCase());
+                            .replaceAll(/\b\w/g, (letter) =>
+                                letter.toUpperCase()
+                            );
+                    setIconLabel(
+                        term,
+                        icons[key] || "info",
+                        label,
+                        "app-icon app-icon--small"
+                    );
                     const description = document.createElement("dd");
                     description.textContent = String(value);
+                    if (
+                        ["observedAtIso", "recordedAtIso"].includes(key) &&
+                        formattedTimestamp(value)
+                    ) {
+                        const time = document.createElement("time");
+                        time.dateTime = String(value);
+                        time.title = String(value);
+                        time.textContent = formattedTimestamp(value);
+                        description.replaceChildren(time);
+                    }
                     if (
                         ["height", "width"].includes(key) &&
                         details.measurementUnit
                     )
                         description.textContent += ` ${details.measurementUnit}`;
-                    list.append(term, description);
+                    pill.append(term, description);
+                    list.append(pill);
                 });
                 if (!list.children.length) {
                     const empty = document.createElement("p");
