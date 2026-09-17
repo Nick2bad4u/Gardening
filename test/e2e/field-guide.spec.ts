@@ -115,7 +115,7 @@ for (const theme of ["dark", "light"] as const) {
                     )
                     .toBeVisible();
                 await expect
-                    .soft(page.getByRole("button", { name: /^Next /iv }))
+                    .soft(page.getByRole("button", { name: /^next /iv }))
                     .toBeDisabled();
                 expect
                     .soft(
