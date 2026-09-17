@@ -15,7 +15,7 @@
    installDailyCareDashboard */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.24.0",
+    version: "5.24.1",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
