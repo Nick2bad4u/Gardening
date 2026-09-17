@@ -2757,6 +2757,78 @@ describe("garden logger workbook formatting", () => {
         };
         /** @type {string[]} */
         const removedFilters = [];
+        const existingRule = (/** @type {number[][]} */ coordinates) => ({
+            getRanges: () =>
+                coordinates.map(
+                    ([
+                        row = 1,
+                        column = 1,
+                        lastColumn = 12,
+                    ]) => ({
+                        getColumn: () => column,
+                        getLastColumn: () => lastColumn,
+                        getRow: () => row,
+                    })
+                ),
+        });
+        const headerRule = existingRule([
+            [
+                9,
+                1,
+                12,
+            ],
+        ]);
+        const helperRule = existingRule([
+            [
+                141,
+                14,
+                22,
+            ],
+        ]);
+        const mixedRule = existingRule([
+            [
+                141,
+                1,
+                12,
+            ],
+            [
+                9,
+                1,
+                12,
+            ],
+        ]);
+        const wideRule = existingRule([
+            [
+                141,
+                1,
+                14,
+            ],
+        ]);
+        const retainedRules = [
+            headerRule,
+            helperRule,
+            mixedRule,
+            wideRule,
+        ];
+        const oldRules = [
+            existingRule([
+                [
+                    13,
+                    1,
+                    11,
+                ],
+            ]),
+            existingRule([
+                [
+                    141,
+                    2,
+                    2,
+                ],
+            ]),
+            ...retainedRules,
+        ];
+        /** @type {Map<string, unknown[]>} */
+        const conditionalWrites = new Map();
         const makeSheet = (
             /** @type {string} */ name,
             { hasFilter = false, id = 1 } = {}
@@ -2807,7 +2879,8 @@ describe("garden logger workbook formatting", () => {
             };
             return {
                 autoResizeRows: () => {},
-                getConditionalFormatRules: () => [],
+                getConditionalFormatRules: () =>
+                    name.startsWith("P0") ? oldRules : [],
                 getFilter: () =>
                     hasFilter
                         ? {
@@ -2826,7 +2899,9 @@ describe("garden logger workbook formatting", () => {
                 insertRowsAfter: () => {},
                 setColumnWidth: () => {},
                 setColumnWidths: () => {},
-                setConditionalFormatRules: () => {},
+                setConditionalFormatRules: (/** @type {unknown[]} */ rules) => {
+                    conditionalWrites.set(name, rules);
+                },
                 setFrozenColumns: () => {},
                 setFrozenRows: () => {},
                 setHiddenGridlines: () => {},
@@ -2878,16 +2953,28 @@ describe("garden logger workbook formatting", () => {
         context.refreshPlantPage_(spreadsheet, plants, 0, plants[0]);
         context.refreshPlantPage_(spreadsheet, plants, 1, plants[1]);
 
+        expect(
+            ["P01", "P02"].map((name) =>
+                required(conditionalWrites.get(name)).filter((rule) =>
+                    oldRules.includes(
+                        /** @type {ReturnType<typeof existingRule>} */ (rule)
+                    )
+                )
+            )
+        ).toStrictEqual([retainedRules, retainedRules]);
         expect(structuredClone(removedFilters)).toStrictEqual(["P01"]);
         expect(
             headerWrites.get("Workbook calculations:E2:undefined:setFormula")
         ).toBe("=NOW()");
-        expect(
-            headerWrites.get("Workbook calculations:2:2:setFormula")
-        ).toContain("INDEX(records,0,2)<='Workbook calculations'!$E$2");
-        expect(
-            headerWrites.get("Workbook calculations:2:2:setFormula")
-        ).toContain("2,FALSE,3,FALSE,4,FALSE");
+        expect([
+            headerWrites.get("Workbook calculations:2:2:setFormula"),
+            headerWrites.get("Workbook calculations:2:2:setFormula"),
+        ]).toStrictEqual([
+            expect.stringContaining(
+                "INDEX(records,0,2)<='Workbook calculations'!$E$2"
+            ),
+            expect.stringContaining("2,FALSE,3,FALSE,4,FALSE"),
+        ]);
         expect(headerWrites.has("Workbook calculations:2:3:setFormula")).toBe(
             false
         );
