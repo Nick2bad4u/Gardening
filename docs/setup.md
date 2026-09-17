@@ -1,6 +1,8 @@
 # Setup and equipment
 
-Last updated: 2026-09-16
+Last updated: 2026-09-17
+
+The [equipment and supplies inventory](./equipment/inventory.md) consolidates the documented products and relevant Amazon order links. The owner confirmed all four wooden tables are the [LEJANEOYE two-tier bamboo side-table model](https://www.amazon.com/dp/B0D25H73ZS) on September 17; the new inventory preserves the measured dimensions separately from the listing.
 
 ## Current routine
 
@@ -21,7 +23,7 @@ starting points, but plant response matters more than chasing an exact number.
 
 The current diagram faces the window: **north window top, open room bottom, Mylar left, white wall right**. This rotates the old schematic view without changing the room. The two-foot end reflector remains absent. See the [current placement guide](./layouts/table-placement-research.md) for all photo-matched slots, the estimated relative-light map and the phone comparison. Old proposed swaps and the glass-spill gradient are historical.
 
-The **AW200 at 45%** and **AeroLight 240 W at 38%**, shared **13 h 15 m total cycle** including **15 m sunrise and 15 m sunset**, **18-inch plant-tip reference** and four independent ceiling hooks remain the last reported operating record. The September 15 photos do not remeasure controller settings, exact fixture centers or individual clearances. The previous one-inch table margins and ½–1-inch fixture gap must not be transferred to the new footprint as verified geometry.
+The **AW200 at 45%** and **AeroLight 240 W at 38%**, **Veg mode on both lights**, shared **13 h 15 m total cycle** including **15 m sunrise and 15 m sunset**, **18-inch plant-tip reference** and four independent ceiling hooks remain the last reported operating record. The September 15 photos do not remeasure controller settings, exact fixture centers or individual clearances. The previous one-inch table margins and ½–1-inch fixture gap must not be transferred to the new footprint as verified geometry.
 
 The [new 240 W manual](https://vivosun.com/support/guide/aerolight-gen2) requires the growing space below **86°F (30°C)** during operation. Keep the existing settings for the first comparison; furniture dimensions alone do not justify increasing output. The [equipment record](./equipment/aw200-and-aerolight-240w.md) separates the installed pair from canceled AW400/AW400SE choices.
 

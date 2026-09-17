@@ -1844,18 +1844,34 @@ function validateProfilePages(html, profileSlugs) {
         .map((match) => required(match.groups?.["slug"], captureContext))
         .toArray();
     assert.deepEqual(
-        readingOrder.slice(0, 3),
+        readingOrder.slice(0, 4),
         [
             "cover",
             "contents",
             "placement",
+            "equipment",
         ],
-        "The placement guide must follow the contents before the plant profiles."
+        "The placement and equipment guides must follow the contents before the plant profiles."
     );
     assert.equal(
         readingOrder.filter((slug) => slug === "placement").length,
         1,
         "The booklet must contain exactly one placement guide."
+    );
+    assert.equal(
+        readingOrder.filter((slug) => slug === "equipment").length,
+        1,
+        "The booklet must contain exactly one equipment inventory."
+    );
+    assert.equal(
+        readingOrder.at(-1),
+        "closing",
+        "The booklet must finish with its closing page."
+    );
+    assert.equal(
+        readingOrder.length,
+        profileSlugs.length + 5,
+        "The reading order must contain all profiles and five reference/cover pages."
     );
     const pageSlugs = html
         .matchAll(/<article\b[^>]*>/gv)

@@ -40,7 +40,7 @@ own controllers; no light-to-fan RJ45 chain is part of this plan.
 The pair totals **440 W of rated input**, not measured consumption at the
 chosen dimming settings. Both lights use the confirmed 13 h 15 m cycle. The
 15-minute transitions are included in that total, leaving **12 h 45 m between
-transitions**. Exact clock times and current spectrum modes remain unrecorded.
+transitions**. The owner subsequently confirmed **Veg mode on both fixtures**; exact clock times remain unrecorded.
 The 18-inch plant-tip reference is owner-reported;
 individual plant-tip distances and the light field have not been mapped.
 No controller program was remotely changed for this update.

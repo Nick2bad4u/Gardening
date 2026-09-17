@@ -99,6 +99,80 @@ export const PlacementGuideMobile: Story = {
     args: { theme: "dark", width: 390 },
 };
 
+export const EquipmentGuide: Story = {
+    args: { path: "plant-booklet/index.html#placement" },
+    play: async ({ canvasElement }) => {
+        const { canvas, document, userEvent } =
+            await websiteCanvas(canvasElement);
+        await userEvent.click(
+            canvas.getByRole("button", { name: "Next Equipment and Supplies" })
+        );
+        await waitFor(() =>
+            expect(document.querySelector("#equipment")).toBeVisible()
+        );
+        await expect(
+            canvas.getByRole("heading", { name: "Equipment and Supplies" })
+        ).toBeVisible();
+        await expect(
+            document.querySelector(
+                '#equipment a[href="https://www.amazon.com/dp/B0D25H73ZS"]'
+            )
+        ).toHaveTextContent("LEJANEOYE");
+        await expectNoOverflow(document);
+        await userEvent.click(
+            document.querySelector<HTMLButtonElement>("#next-page") ??
+                canvas.getByRole("button", { name: /^Next /v })
+        );
+        await waitFor(() =>
+            expect(
+                document.querySelector(".profile-page:not([hidden])")
+            ).toBeVisible()
+        );
+    },
+};
+
+export const EquipmentGuideMobile: Story = {
+    ...EquipmentGuide,
+    args: {
+        path: "plant-booklet/index.html#placement",
+        theme: "dark",
+        width: 390,
+    },
+};
+
+export const ClosingPage: Story = {
+    args: { path: "plant-booklet/index.html#pachira-glabra" },
+    play: async ({ canvasElement }) => {
+        const { canvas, document, userEvent } =
+            await websiteCanvas(canvasElement);
+        await userEvent.click(
+            canvas.getByRole("button", { name: "Next Back to the Garden" })
+        );
+        await waitFor(() =>
+            expect(
+                canvas.getByRole("heading", { name: "Back to the garden." })
+            ).toBeVisible()
+        );
+        await expect(document.querySelector("#next-page")).toBeDisabled();
+        await expectNoOverflow(document);
+        await userEvent.click(
+            canvas.getByRole("link", { name: /Browse the Collection/v })
+        );
+        await waitFor(() =>
+            expect(document.querySelector("#contents")).toBeVisible()
+        );
+    },
+};
+
+export const ClosingPageMobile: Story = {
+    ...ClosingPage,
+    args: {
+        path: "plant-booklet/index.html#pachira-glabra",
+        theme: "dark",
+        width: 390,
+    },
+};
+
 export const SearchAndOpenPlant: Story = {
     play: async ({ canvasElement }) => {
         const { canvas, document, userEvent } =

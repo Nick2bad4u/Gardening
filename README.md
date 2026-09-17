@@ -11,6 +11,7 @@ The installed AW200 and AeroLight 240 W remain at their last reported 45% and 38
 
 ## Current notes
 
+- [Equipment and supplies inventory](docs/equipment/inventory.md) — the complete documented setup, including all four table links, lights, meters, scales, tools, pots, and stored supplies; also [in the field guide](https://nick2bad4u.github.io/Gardening/#equipment)
 - [Watering strategy](docs/watering-strategy.md) — how references, curves, readiness, and plant-specific exceptions guide watering decisions
 - [Weighing strategy](docs/weighing-strategy.md) — how learned cycles reduce routine weigh-ins, with no daily quota or cap
 - [Spreadsheet and logger actions](docs/logger-actions.md) — all action types, structured fields, bulk entry, queues, and corrections

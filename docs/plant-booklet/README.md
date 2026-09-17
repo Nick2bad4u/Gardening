@@ -22,7 +22,7 @@ Mountain Crest plants received on 2026-08-28. Rehab-04 is retained as a clearly
 marked historical record.
 
 The cover's **Start reading** button opens the **Table of Contents**. The next
-page is the placement guide, followed by the plant profiles. The keyboard
+pages are the placement guide and the **Equipment and Supplies** inventory, followed by the plant profiles and a **Back to the Garden** closing page. The equipment page is generated from [`docs/equipment/inventory.md`](../equipment/inventory.md), with product links and current/stored equipment kept together in one maintained source. The closing page links back to contents, the daily report, tracker, photos, and equipment. The keyboard
 **Skip to the current page** link focuses the current reading area without
 changing the selected page or its bookmark.
 

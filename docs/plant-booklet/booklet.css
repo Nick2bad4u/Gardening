@@ -666,9 +666,141 @@ main {
     }
 }
 
-.placement-page {
+.placement-page,
+.equipment-page,
+.closing-page {
     --profile-accent: var(--moss);
     padding: clamp(1.25rem, 5vi, 4rem);
+}
+
+.equipment-copy {
+    margin-block-start: 2rem;
+    font-family: var(--sans), system-ui;
+    line-height: 1.625;
+    overflow-wrap: anywhere;
+}
+
+.equipment-group {
+    margin-block-start: 2.5rem;
+
+    & h2 {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        padding-block-end: 0.75rem;
+        font-family: var(--serif), serif;
+        color: var(--moss-dark);
+        border-block-end: 2px solid var(--line-strong);
+        break-after: avoid;
+    }
+
+    & :where(h2 .site-icon) {
+        flex: none;
+        inline-size: 2rem;
+        block-size: 2rem;
+    }
+
+    & ul {
+        display: grid;
+        grid-template-columns: repeat(
+            auto-fit,
+            [card-start] minmax(min(100%, 280px), 1fr) [card-end]
+        );
+        gap: 0.85rem;
+        padding: 0;
+        list-style-type: "";
+    }
+
+    & li {
+        min-inline-size: 0;
+        padding: 1rem 1.15rem;
+        background: var(--page-soft);
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        break-inside: avoid;
+    }
+
+    & :where(li > strong:first-child) {
+        display: block;
+        margin-block-end: 0.6rem;
+        color: var(--moss-dark);
+    }
+
+    & a {
+        color: var(--moss);
+        text-underline-offset: 0.2em;
+    }
+}
+
+.closing-page {
+    text-align: center;
+
+    & h1 {
+        margin-block: 0.6rem 1rem;
+        font-family: var(--serif), serif;
+        font-size: clamp(2.5rem, 6vi, 4rem);
+        text-wrap: balance;
+    }
+}
+
+.closing-art .site-icon {
+    inline-size: 6rem;
+    block-size: 6rem;
+}
+
+.closing-kicker {
+    font-family: var(--sans), system-ui;
+    font-size: 0.875rem;
+    font-weight: 750;
+    color: var(--clay);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.closing-message {
+    max-inline-size: 42rem;
+    margin: 0 auto 2rem;
+    font-size: 1.25rem;
+    line-height: 1.625;
+    text-wrap: pretty;
+}
+
+.closing-links {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        [link-start] minmax(min(100%, 280px), 1fr) [link-end]
+    );
+    gap: 0.9rem;
+    text-align: start;
+
+    & a {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        padding: 1rem;
+        color: var(--moss-dark);
+        text-decoration: none;
+        background: var(--moss-soft);
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+    }
+
+    & span {
+        display: grid;
+        flex: 1;
+        gap: 0.4rem;
+    }
+
+    & small {
+        color: var(--muted-ink);
+    }
+}
+
+.closing-note {
+    margin-block: 2.5rem 0;
+    font-style: italic;
+    color: var(--muted-ink);
 }
 
 .placement-copy {

@@ -59,6 +59,87 @@ function readGuidePortraits() {
 for (const theme of ["dark", "light"] as const) {
     test.describe(`${theme} field guide`, () => {
         test(
+            "opens the equipment inventory before the plant profiles",
+            { tag: "@layout" },
+            async ({ page }) => {
+                await openGuide(page, theme, "placement");
+                await page.keyboard.press("ArrowRight");
+                const equipment = page.getByRole("region", {
+                    exact: true,
+                    name: "Equipment and Supplies",
+                });
+                await expect.soft(equipment).toBeVisible();
+                await expect
+                    .soft(
+                        equipment.getByRole("link", {
+                            name: "LEJANEOYE two-tier bamboo side tables",
+                        })
+                    )
+                    .toHaveAttribute(
+                        "href",
+                        "https://www.amazon.com/dp/B0D25H73ZS"
+                    );
+                await expect.soft(equipment).toContainText("4 tables");
+                expect
+                    .soft(
+                        await page.evaluate(
+                            () =>
+                                document.documentElement.scrollWidth <=
+                                innerWidth
+                        )
+                    )
+                    .toBe(true);
+                await page.keyboard.press("ArrowRight");
+                await expect
+                    .soft(
+                        page.getByRole("heading", {
+                            exact: true,
+                            name: "Variegated moon cactus",
+                        })
+                    )
+                    .toBeVisible();
+            }
+        );
+
+        test(
+            "ends on a closing page with a way back to the collection",
+            { tag: "@layout" },
+            async ({ page }) => {
+                await openGuide(page, theme, "pachira-glabra");
+                await page.keyboard.press("ArrowRight");
+                await expect
+                    .soft(
+                        page.getByRole("heading", {
+                            name: "Back to the garden.",
+                        })
+                    )
+                    .toBeVisible();
+                await expect
+                    .soft(page.getByRole("button", { name: /^Next /iv }))
+                    .toBeDisabled();
+                expect
+                    .soft(
+                        await page.evaluate(
+                            () =>
+                                document.documentElement.scrollWidth <=
+                                innerWidth
+                        )
+                    )
+                    .toBe(true);
+                await page
+                    .getByRole("link", { name: /Browse the Collection/v })
+                    .click();
+                await expect
+                    .soft(
+                        page.getByRole("heading", {
+                            name: "A field guide to the collection.",
+                        })
+                    )
+                    .toBeVisible();
+            }
+        );
+
+        test(
             "starts at contents, opens placement next, and links to the reviewed plants",
             { tag: "@layout" },
             async ({ page }) => {
@@ -379,7 +460,7 @@ for (const theme of ["dark", "light"] as const) {
                     });
 
                 await page.mouse.wheel(0, -1000);
-                await page.getByRole("button", { name: /^Next /v }).click();
+                await page.keyboard.press("ArrowRight");
                 await expect
                     .poll(() => page.evaluate(readGuidePortraits))
                     .toMatchObject({

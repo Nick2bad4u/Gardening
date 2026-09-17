@@ -1,5 +1,7 @@
 # Equipment research
 
+- [Complete equipment and supplies inventory](./inventory.md) — furniture, lights, controllers, air treatment, meters, scales, water supplies, pots, media, labels, camera storage, and stored equipment with product links; also available as a page in the field guide
+
 - [AW200 + new AeroLight 240 W](./aw200-and-aerolight-240w.md) — two horizontal
   fixtures installed September 13, one above the other in the bird's-eye plan,
   independent controls, AW200 at 45% and AL240 at 38%,

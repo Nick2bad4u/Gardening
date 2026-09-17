@@ -40,6 +40,7 @@ const captionLinkEndIconClass = "caption-link-end-icon";
 const linkEndIconClass = "link-end-icon";
 const speciesObservationScope = "Species observations";
 const forwardIcon = "arrow-right";
+const fieldGuideIcon = "field-guide";
 
 const scriptDirectory = import.meta.dirname;
 const repositoryRoot = path.resolve(scriptDirectory, "..");
@@ -1440,13 +1441,16 @@ async function main() {
         }
     }
 
-    const placementHtml = await renderPlacementGuide();
+    const [placementHtml, equipmentHtml] = await Promise.all([
+        renderPlacementGuide(),
+        renderEquipmentGuide(),
+    ]);
     const dimensionsBySource = await readReferenceImageDimensions(
         profiles,
         placementHtml
     );
     const renderedBooklet = addReferenceImageDimensions(
-        renderBooklet(profiles, placementHtml),
+        renderBooklet(profiles, placementHtml, equipmentHtml),
         dimensionsBySource
     );
     const renderedPhotoAlbum = addReferenceImageDimensions(
@@ -1497,8 +1501,9 @@ async function main() {
 /**
  * @param {Profile[]} profiles
  * @param {string} placementHtml
+ * @param {string} equipmentHtml
  */
-function renderBooklet(profiles, placementHtml) {
+function renderBooklet(profiles, placementHtml, equipmentHtml) {
     const presentCount = profiles.filter(
         (profile) => !profile.historical && !profile.receiptUnverified
     ).length;
@@ -1584,8 +1589,9 @@ function renderBooklet(profiles, placementHtml) {
     <p class="search-status" id="search-status" aria-live="polite">Showing all ${profiles.length} profiles</p>
     <nav class="drawer-nav" aria-label="Plant profiles">
       <a class="drawer-special" href="#cover" data-page-link="cover"><span>${renderSiteIcon("cactus")} Cover</span><small>Start of the guide</small></a>
-      <a class="drawer-special" href="#contents" data-page-link="contents"><span>${renderSiteIcon("field-guide")} Table of Contents</span><small>All profiles at a glance</small></a>
+      <a class="drawer-special" href="#contents" data-page-link="contents"><span>${renderSiteIcon(fieldGuideIcon)} Table of Contents</span><small>All profiles at a glance</small></a>
       <a class="drawer-special" href="#placement" data-page-link="placement"><span>${renderSiteIcon("layout")} Table Placement Guide</span><small>29 on tables · 1 on windowsill</small></a>
+      <a class="drawer-special" href="#equipment" data-page-link="equipment"><span>${renderSiteIcon("inventory")} Equipment and Supplies</span><small>Tables, lights, tools, pots, and product links</small></a>
       <a class="drawer-special" href="../layouts/plant-tracker.html"><span>${renderSiteIcon("tracker")} Plant tracker</span><small>Live weights, watering, and measurements</small></a>
       <a class="drawer-special" href="../layouts/grow-spot-layout.html"><span>${renderSiteIcon("layout")} Grow-spot layout</span><small>Tables, risers, light, fan, and camera</small></a>
       <a class="drawer-special" href="../layouts/indoor-acclimation-calendar.html"><span>${renderSiteIcon("calendar")} Acclimation calendar</span><small>Dated light and airflow schedule</small></a>
@@ -1593,6 +1599,7 @@ function renderBooklet(profiles, placementHtml) {
       <a class="drawer-special" href="../layouts/daily-report.html"><span>📋 Daily report</span><small>Watering mixes, weigh-ins, and plant evidence</small></a>
       <a class="drawer-special" id="surprise-plant" href="#${escapeHtml(required(profiles[0], "first profile").slug)}" data-surprise-plant><span>${renderSiteIcon("cactus")} Surprise me</span><small>Explore a random plant profile</small></a>
       ${navigation}
+      <a class="drawer-special" href="#closing" data-page-link="closing"><span>${renderSiteIcon("growth")} Back to the Garden</span><small>Closing page and useful next stops</small></a>
     </nav>
   </dialog>
 
@@ -1605,7 +1612,8 @@ function renderBooklet(profiles, placementHtml) {
         <h1>A field guide to the collection.</h1>
         <span>Each profile combines identity, care, seller and nursery evidence, licensed references, live records, and a newest-first photo history. Two current views stay visible; each complete history opens in its own Gyazo Collection.</span>
       </header>
-      <a class="placement-contents-link" href="#placement" data-page-link="placement">${renderSiteIcon("layout")}<span><strong>Table Placement Guide</strong><small>Next page · AW200 + AeroLight 240 W, north-windowsill move, and light needs for all 30 pots</small></span>${renderSiteIcon("arrow-right")}</a>
+      <a class="placement-contents-link" href="#placement" data-page-link="placement">${renderSiteIcon("layout")}<span><strong>Table Placement Guide</strong><small>Next page · AW200 + AeroLight 240 W, north-windowsill move, and light needs for all 30 pots</small></span>${renderSiteIcon(forwardIcon)}</a>
+      <a class="placement-contents-link equipment-contents-link" href="#equipment" data-page-link="equipment">${renderSiteIcon("inventory")}<span><strong>Equipment and Supplies</strong><small>The full documented setup, organized by purpose, with product links and stored equipment</small></span>${renderSiteIcon(forwardIcon)}</a>
       <div class="contents-columns">${contents}</div>
       <aside class="contents-note">
         <strong>Three IDs, three jobs</strong>
@@ -1622,7 +1630,31 @@ function renderBooklet(profiles, placementHtml) {
       <div class="placement-copy prose">${placementHtml}</div>
     </section>
 
+    <section class="book-page equipment-page" id="equipment" data-page="equipment" data-title="Equipment and Supplies" data-icon="inventory" aria-labelledby="equipment-title" hidden>
+      <header class="contents-heading">
+        <p>The Fenton Collection · Behind the Garden</p>
+        <h1 id="equipment-title">Equipment and Supplies</h1>
+        <span>The furniture, lights, measuring tools, pots, and everyday supplies that support this collection.</span>
+      </header>
+      <div class="equipment-copy">${equipmentHtml}</div>
+    </section>
+
     ${profilePages}
+
+    <section class="book-page closing-page" id="closing" data-page="closing" data-title="Back to the Garden" data-icon="growth" aria-labelledby="closing-title" hidden>
+      <div class="closing-art" aria-hidden="true">${renderSiteIcon("growth")}</div>
+      <p class="closing-kicker">The Fenton Collection · End of the Guide</p>
+      <h1 id="closing-title">Back to the garden.</h1>
+      <p class="closing-message">A living notebook, one observation at a time. The profiles are here when you need them; the plants can be enjoyed in between.</p>
+      <nav class="closing-links" aria-label="Continue exploring">
+        <a href="#contents" data-page-link="contents">${renderSiteIcon(fieldGuideIcon)}<span><strong>Browse the Collection</strong><small>Return to the table of contents</small></span>${renderSiteIcon(forwardIcon)}</a>
+        <a href="../layouts/daily-report.html">${renderSiteIcon("calendar")}<span><strong>Today's Garden Report</strong><small>Read the latest reviewed care plan</small></span>${renderSiteIcon(forwardIcon)}</a>
+        <a href="../layouts/plant-tracker.html">${renderSiteIcon("tracker")}<span><strong>Open the Live Tracker</strong><small>Weights, watering, and plant history</small></span>${renderSiteIcon(forwardIcon)}</a>
+        <a href="../layouts/photo-album.html">${renderSiteIcon("photos")}<span><strong>Revisit the Photos</strong><small>Explore the collection over time</small></span>${renderSiteIcon(forwardIcon)}</a>
+        <a href="#equipment" data-page-link="equipment">${renderSiteIcon("inventory")}<span><strong>Equipment and Supplies</strong><small>Find the setup and product references</small></span>${renderSiteIcon(forwardIcon)}</a>
+      </nav>
+      <p class="closing-note">Keep the notes useful. Keep the hobby enjoyable.</p>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -1631,7 +1663,7 @@ function renderBooklet(profiles, placementHtml) {
       <span><strong>The Fenton Collection</strong><small>A personal gardening notebook and browser field guide</small></span>
     </div>
     <nav aria-label="Field guide footer links">
-      <a href="#contents" data-page-link="contents">${renderSiteIcon("field-guide")} Contents</a>
+      <a href="#contents" data-page-link="contents">${renderSiteIcon(fieldGuideIcon)} Contents</a>
       <a href="../layouts/plant-tracker.html">${renderSiteIcon("tracker")} Live tracker</a>
       <a href="../layouts/photo-album.html">${renderSiteIcon("photos")} Photo Collections</a>
       <a href="../layouts/daily-report.html">📋 Daily report</a>
@@ -1753,6 +1785,47 @@ function renderCredit(photo, isShort = false) {
     return `<span class="photo-kind">Species-reference ${escapeHtml(subject)}</span>
     <span>${escapeHtml(photo.title)}</span>
     ${renderPhotoAttribution(photo)}`;
+}
+
+/** Render the maintained equipment inventory without a second editable catalog. */
+async function renderEquipmentGuide() {
+    const markdown = await readFile(
+        path.join(repositoryRoot, "docs/equipment/inventory.md"),
+        "utf8"
+    );
+    const rendered = String(
+        await markdownProcessor.process(markdown.replace(/^# [^\n]+\n+/v, ""))
+    );
+    const linked = externalizeLinks(rendered).replaceAll(
+        /href="(?<reference>\.{1,2}\/[^\n"]+)"/gv,
+        (/** @type {string} */ _match, /** @type {string} */ reference) => {
+            const repositoryPath = path.posix.normalize(
+                `docs/equipment/${reference}`
+            );
+            return `href="https://github.com/Nick2bad4u/Gardening/blob/main/${escapeHtml(repositoryPath)}" target="_blank" rel="noreferrer"`;
+        }
+    );
+    const icons = new Map([
+        ["Air and Climate", "airflow"],
+        ["Display and Support", "layout"],
+        ["Lights and Controls", "light"],
+        ["Measuring and Watering", "weight"],
+        ["Photos, Labels, and Records", "camera"],
+        ["Pots, Medium, and Top Dressing", "repot"],
+        ["Sources and Record Limits", "source"],
+        ["Stored and Historical Choices", "history"],
+    ]);
+    return linked.replaceAll(
+        /<h2>(?<heading>[^<]+)<\/h2>(?<body>[\s\S]*?)(?=<h2>|$)/gv,
+        (
+            /** @type {string} */ _match,
+            /** @type {string} */ heading,
+            /** @type {string} */ body
+        ) => {
+            const id = `equipment-${heading.toLowerCase().replaceAll(/[^0-9a-z]+/gv, "-")}`;
+            return `<section class="equipment-group" aria-labelledby="${id}"><h2 id="${id}">${renderSiteIcon(icons.get(heading) ?? "info")}<span>${heading}</span></h2>${body}</section>`;
+        }
+    );
 }
 
 /**
