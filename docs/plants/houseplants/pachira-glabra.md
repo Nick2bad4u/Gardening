@@ -66,6 +66,10 @@ repot rather than using calendar age alone.
 
 The owner reported downward-pointing leaves and planned a north-windowsill move on September 15, then confirmed on September 16 that the move was complete. The exact move time was not supplied. Excess light is a suspected cause, not a diagnosis from leaf angle. [NC State's _P. aquatica_ guidance](https://plants.ces.ncsu.edu/plants/pachira-aquatica/) supports indirect light as a comparison for this genus-tagged specimen. [University of Maryland Extension](https://extension.umd.edu/resource/watering-indoor-plants) notes that both under- and overwatering can cause wilting. This move does not establish a need to water, repot or reset the pot's weight references. Sill size and clearance are unmeasured; fully support the pot and saucer, away from cold glass and drafts.
 
+## Recorded pot changes
+
+On September 16, 2026, the owner added bone-dry top dressing and measured **1,638 g before and 1,746 g after**, a **108 g** addition. On September 17, the owner authorized adding that offset to the 30 earlier P21 workbook weights, preserving the original readings in cell notes and a backup. The pot remains setup 1; enter future weights directly from the scale without another offset.
+
 ## Rotation, propagation, and watch points
 
 - Rotate the pot 90° weekly if it leans toward the window.

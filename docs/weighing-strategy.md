@@ -1,6 +1,6 @@
 # Weighing Strategy
 
-Updated: 2026-09-16. This guide documents the owner's requested transition from frequent learning measurements to fewer, better-timed weigh-ins. The daily chat report and generated report page are the maintained care plan; the Daily care worksheet is retired.
+Updated: 2026-09-17. This guide documents the owner's requested transition from frequent learning measurements to fewer, better-timed weigh-ins. The daily chat report and generated report page are the maintained care plan; the Daily care worksheet is retired.
 
 Read alongside the [watering strategy](./watering-strategy.md), [logger action guide](./logger-actions.md), and [daily task prompt](./daily-weighing-watering-prompt.md).
 
@@ -32,6 +32,21 @@ Use the same assembly and a stable scale surface. Keep the same pot, plant, medi
 Pruning, spilled medium, removed labels, or changed saucers can shift mass independently of drying. Log what actually happened and treat the comparison cautiously. Clean, Prune, Check, and Other notes do not automatically subtract that mass from the model or create a new setup. Do not fabricate a Repot just to make a graph line up; use the appropriate entry and a reviewed setup correction when needed.
 
 The ledger's **Date** is when the observation happened. **Recorded** is when it was saved. **Updated from Google** is when a view was fetched. A newly refreshed screen can still be showing an old measured weight.
+
+### Recorded Dry Top-Dressing Adjustment
+
+On September 16, 2026, the owner added top dressing to the money tree and Kiwi aeonium and weighed each pot before and after. On September 17, the owner confirmed that all added stones were bone dry and requested a one-time historical weight adjustment.
+
+| Pot                           | Original before | Measured after | Added dry mass | Earlier weights adjusted |
+| ----------------------------- | --------------: | -------------: | -------------: | -----------------------: |
+| #3 · Money tree · P21         |         1,638 g |        1,746 g |         +108 g |                       30 |
+| #4 · Kiwi 'Dream Color' · P22 |         841.5 g |          992 g |       +150.5 g |                       29 |
+
+The live History weights before the additions, including the immediate before readings, now include the corresponding offset. The post-dressing readings remain the actual scale values. Original scale readings are retained in weight-cell notes and a native workbook backup; the two post-dressing rows explain the change. Observation times, IDs, watering events, and pot setup numbers remain unchanged.
+
+**Enter future weights directly from the scale. Do not add or subtract these offsets again.** Wet/dry references, charts, and other derived values recalculate from the adjusted history. Earlier losses and wet-to-dry capacities stay the same; this preserves comparable mass history without claiming that future drying conditions will be identical. Dated reports, photographs, and older repository observations remain evidence of what was recorded at that time.
+
+This was an owner-authorized correction for measured, dry added mass, not an automatic logger feature or permission to normalize an unknown change. Other changes still need the comparison and setup review described above. The [workbook runbook](../scripts/google-sheets/README.md#september-17-dry-top-dressing-normalization) records the scope and verification.
 
 ## Useful Points in a Cycle
 

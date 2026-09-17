@@ -41,6 +41,10 @@ a desert cactus.
 | Pot and mix         | Keep the current 5-inch pot while drainage and drying are satisfactory.                                                                                                                                                                                                                                                       |
 | Seasonal behavior   | Aeoniums often slow in summer heat and grow more actively in cooler bright conditions.                                                                                                                                                                                                                                        |
 
+## Recorded pot changes
+
+On September 16, 2026, the owner added bone-dry top dressing and measured **841.5 g before and 992 g after**, a **150.5 g** addition. On September 17, the owner authorized adding that offset to the 29 earlier P22 workbook weights, preserving the original readings in cell notes and a backup. The pot remains setup 1; enter future weights directly from the scale without another offset.
+
 ## Rotation, propagation, and watch points
 
 - Rotate 90° clockwise weekly so the branching rosettes do not lean toward one

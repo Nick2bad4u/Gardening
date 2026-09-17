@@ -63,6 +63,16 @@ point; photo publication and the real inspection records are separate steps.
 
 ## Current production baseline
 
+### September 17 dry top-dressing normalization
+
+The owner added top dressing on September 16, 2026, recorded paired scale readings, and confirmed on September 17 that the stones were bone dry. At the owner's explicit request, 30 earlier P21 weights received **+108 g** (1,638 → 1,746 g) and 29 earlier P22 weights received **+150.5 g** (841.5 → 992 g). All affected records use setup 1. This one-time reviewed correction preserves that setup and learned history; it does not implement automatic mass compensation for later changes.
+
+The native backup **Garden Plant Tracker — before top-dressing weight normalization — 2026-09-17** is in **Archive → Garden Plant Tracker Backups**. The write changed only 59 `History!E` weights with original-value cell notes, the explanatory notes at `History!I1018:I1019`, and `Integrity!A13:B13` / `D13`. The earlier owner-corrected P22 reading of 934.5 g is now 1,085 g on the normalized basis; its original correction provenance is retained, and the integrity formula accounts for the additional 150.5 g.
+
+Readback verified all **1,019 observations**, **1,019 unique Observation IDs**, and **922 distinct Request IDs**, with no changes to timestamps, watering events, setup numbers, status, remaining history cells, staging entries, or baseline formulas. All **660 model output cells** matched the checked-in detector run against the adjusted data. The other 28 pots' models were unchanged; earlier weight differences, wet-to-dry capacities, and eligible learned cycles were preserved. Integrity reports zero formula errors and zero active trend-review flags at this verification.
+
+The post-dressing readings remain **1,746 g for P21** and **992 g for P22**. Derived dry/wet references became **1,637 / 1,746 g** and **991.5 / 1,166.5 g**, respectively. Future readings use actual scale values without another offset. The existing logger remains **5.24.0 / immutable version 91**, with its single five-minute queue trigger; this data correction requires no Apps Script deployment or schema change. See the [weighing strategy](../../docs/weighing-strategy.md#recorded-dry-top-dressing-adjustment).
+
 ### Workbook presentation and Daily care retirement (September 16, 2026)
 
 All **51 remaining sheets** and **145 charts** use **JetBrains Mono** explicitly.
@@ -1778,8 +1788,8 @@ curve still needs evidence; the model does not invent a history for a new pot.
 - Training uses up to five recent, completed cycles for the **same Plant ID and
   pot setup**, ending within 180 days of the current watering. A Repot advances
   the setup, so old-pot curves and anchors cannot carry over. Changes to the
-  saucer, top dressing, medium, or other weighed components also need a new
-  setup before the weights are compared.
+  saucer, top dressing, medium, or other weighed components normally need a new
+  setup before the weights are compared. The September 17 adjustment documented above is an owner-authorized exception for paired measurements of known dry added mass; the logger does not apply that compensation automatically.
 - A completed cycle needs a Wet anchor, a later non-Wet endpoint before the
   following watering, at least four distinct dated readings spanning three
   days, a descending log-linear fit with R² at least 0.60, and a meaningful
