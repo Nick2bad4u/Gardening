@@ -50,6 +50,9 @@
   inventory, plant index, labels, profiles, equipment schedules, and layouts
   whenever a change affects those surfaces.
 - `docs/equipment/` holds exact-model research and operating guidance.
+  Its `inventory.md` is also the maintained source for the generated field
+  guide's equipment page; update that source and rebuild rather than keeping
+  a second equipment catalog in generated HTML.
   `docs/layouts/` holds maintained standalone HTML tools and diagrams.
 - `docs/daily-reports/` contains reviewed dated report inputs. Read its nested
   `AGENTS.md` and `docs/daily-weighing-watering-prompt.md` before preparing a
@@ -58,6 +61,9 @@
   publication. `test/AGENTS.md` covers Node, Storybook, Playwright, and PowerShell
   tests; also read it when changing `.storybook/` or root test configuration.
   `.github/AGENTS.md` covers CI and Pages deployment.
+- `types/` contains shared runtime and test contracts. Read the instructions
+  for each consuming runtime before changing a declaration; an Apps Script
+  ambient type does not establish native runtime support.
 - `scripts/google-sheets/` contains the bound Apps Script logger, its
   self-contained HTML client, and the operator runbook; its regression tests
   live in `test/google-sheets/`. Follow the logger's nested `AGENTS.md` before
@@ -121,6 +127,9 @@
 - Treat prior-chat summaries as orientation only. Establish the current commit,
   pushed SHA, Apps Script version/deployment, workbook schema, and AppSheet
   configuration from their authoritative surfaces before resuming a rollout.
+- Keep durable lessons in the nearest existing `AGENTS.md`; keep dated audits,
+  deployment IDs, measured timings, and rollout status in the relevant runbook.
+  Do not add another instruction file merely to repeat inherited rules.
 
 ## Working tree and change discipline
 
@@ -152,7 +161,8 @@
   as the only writer to `History`.
 - Do not send synthetic observations to production. Use a disposable workbook
   and script copy for integration data, then verify production row counts,
-  request-ID uniqueness, formulas, and record values after deployment.
+  observation-ID uniqueness, request-ID grouping, formulas, and record values
+  after deployment. One request may legitimately produce multiple event rows.
 - Preserve the existing production Apps Script deployment URL by creating an
   immutable version and updating that deployment in place. Verify the live
   logger version, successful executions, and exactly one five-minute AppSheet

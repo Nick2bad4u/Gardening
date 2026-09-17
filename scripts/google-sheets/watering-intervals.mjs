@@ -1,6 +1,8 @@
 import { plantColor } from "./plant-chart-colors.mjs";
 import palette from "./plant-colors.json" with { type: "json" };
 
+const intervalFont = "JetBrains Mono";
+
 export const wateringIntervalSheetId = 907_202_605;
 export const wateringIntervalTitle = "Time between waterings";
 
@@ -240,7 +242,7 @@ export function buildWateringIntervalRequests({ cells, metadata }) {
                         userEnteredFormat: {
                             textFormat: {
                                 bold: true,
-                                fontFamily: "JetBrains Mono",
+                                fontFamily: intervalFont,
                                 fontSize: 12,
                                 foregroundColorStyle: {
                                     rgbColor: {
@@ -319,7 +321,7 @@ export function buildWateringIntervalRequests({ cells, metadata }) {
                                         placement: "OUTSIDE_END",
                                         textFormat: {
                                             bold: true,
-                                            fontFamily: "JetBrains Mono",
+                                            fontFamily: intervalFont,
                                             fontSize: 12,
                                         },
                                         type: "DATA",
@@ -329,7 +331,7 @@ export function buildWateringIntervalRequests({ cells, metadata }) {
                                 },
                             ],
                         },
-                        fontName: "JetBrains Mono",
+                        fontName: intervalFont,
                         hiddenDimensionStrategy: "SHOW_ALL",
                         subtitle:
                             "Calendar days · date = later watering · same-day entries combined · all pot setups",
@@ -357,6 +359,119 @@ export function buildWateringIntervalRequests({ cells, metadata }) {
 }
 
 /**
+ * Repair styles Google discarded while an interval chart had no series. Counts
+ * must come from a fresh read of calculated positive gaps, never from the
+ * existence of helper formulas. This changes chart specifications only: IDs,
+ * positions, unrelated charts, and canonical data remain untouched.
+ *
+ * @param {import("../../test/workbook-fixtures.d.ts").WorkbookSnapshot} snapshot
+ * @param {string[]} plantIds
+ * @param {{ completedIntervalsByPlant: Record<string, number> }} options
+ *
+ * @returns {Record<string, unknown>[]}
+ */
+export function buildWateringIntervalStyleRepairRequests(
+    { metadata },
+    plantIds,
+    { completedIntervalsByPlant }
+) {
+    const uniquePlants = new Set(plantIds);
+    if (uniquePlants.size !== plantIds.length)
+        throw new Error("Do not repeat plants in an interval style repair");
+    const helpers = metadata.sheets.filter(
+        ({ properties }) =>
+            properties.sheetId === wateringIntervalSheetId ||
+            properties.title === "Watering intervals"
+    );
+    const helper = helpers[0];
+    if (
+        helpers.length !== 1 ||
+        helper?.properties.sheetId !== wateringIntervalSheetId ||
+        helper.properties.title !== "Watering intervals" ||
+        helper.properties.gridProperties.rowCount !== 5000 ||
+        helper.properties.gridProperties.columnCount !== 90
+    )
+        throw new Error("Review the installed Watering intervals helper");
+    return plantIds.map((plantId) => {
+        const index = palette.findIndex(({ id }) => id === plantId);
+        if (index === -1) throw new Error(`Unknown plant: ${plantId}`);
+        const count = completedIntervalsByPlant[plantId];
+        if (count === undefined || !Number.isSafeInteger(count) || count <= 0)
+            throw new Error(
+                `Verify positive completed intervals for ${plantId}`
+            );
+        const chart = intervalRepairChart(metadata, plantId);
+        const spec = structuredClone(chart.spec);
+        const basic =
+            /**
+             * @type {Omit<typeof spec.basicChart, "series" | "axis"> & {
+             *     chartType?: string;
+             *     series?: import("../../test/workbook-fixtures.d.ts").ChartSeries[];
+             *     axis?: IntervalRepairAxis[];
+             * }}
+             */ (spec.basicChart);
+        const series = basic.series ?? [];
+        if (
+            basic.chartType !== "COLUMN" ||
+            basic.domains.length !== 1 ||
+            !intervalRepairRangeMatches(
+                basic.domains[0]?.domain,
+                index * 3 + 1
+            ) ||
+            series.length > 1 ||
+            (series.length === 1 &&
+                !intervalRepairRangeMatches(series[0]?.series, index * 3 + 2))
+        )
+            throw new Error(
+                `Unexpected watering interval source bindings for ${plantId}`
+            );
+        const repairedAxes = intervalRepairAxes(basic.axis ?? [], plantId);
+        return {
+            updateChartSpec: {
+                chartId: chart.chartId,
+                spec: {
+                    ...spec,
+                    basicChart: {
+                        ...basic,
+                        axis: repairedAxes,
+                        series: [
+                            {
+                                ...series[0],
+                                colorStyle: { rgbColor: plantColor(plantId) },
+                                dataLabel: {
+                                    placement: "OUTSIDE_END",
+                                    textFormat: {
+                                        bold: true,
+                                        fontFamily: intervalFont,
+                                        fontSize: 12,
+                                    },
+                                    type: "DATA",
+                                },
+                                series: series[0]?.series ?? {
+                                    sourceRange: {
+                                        sources: [
+                                            {
+                                                endColumnIndex: index * 3 + 3,
+                                                endRowIndex: 5000,
+                                                sheetId:
+                                                    wateringIntervalSheetId,
+                                                startColumnIndex: index * 3 + 2,
+                                                startRowIndex: 0,
+                                            },
+                                        ],
+                                    },
+                                },
+                                targetAxis: "LEFT_AXIS",
+                            },
+                        ],
+                    },
+                },
+            },
+        };
+    });
+}
+
+/**
  * Calendar dates follow the workbook time zone, including date-only imports.
  *
  * @param {string} plantId
@@ -377,4 +492,68 @@ function columnName(column) {
     )
         name = String.fromCodePoint(65 + ((value - 1) % 26)) + name;
     return name;
+}
+
+/**
+ * @typedef {{
+ *     position: string;
+ *     title?: string;
+ *     format?: Record<string, unknown>;
+ *     viewWindowOptions?: Record<string, unknown>;
+ * }} IntervalRepairAxis
+ */
+
+/** @param {IntervalRepairAxis[]} axes @param {string} plantId */
+function intervalRepairAxes(axes, plantId) {
+    if (axes.filter(({ position }) => position === "LEFT_AXIS").length > 1)
+        throw new Error(`Duplicate watering interval left axis for ${plantId}`);
+    const left = axes.find(({ position }) => position === "LEFT_AXIS");
+    const restored = {
+        ...left,
+        format: { fontFamily: intervalFont, ...left?.format },
+        position: "LEFT_AXIS",
+        title: "Days since previous watering",
+        viewWindowOptions: { ...left?.viewWindowOptions, viewWindowMin: 0 },
+    };
+    return left
+        ? axes.map((axis) => (axis.position === "LEFT_AXIS" ? restored : axis))
+        : [...axes, restored];
+}
+
+/**
+ * @param {import("../../test/workbook-fixtures.d.ts").WorkbookSnapshot["metadata"]} metadata
+ * @param {string} plantId
+ */
+function intervalRepairChart(metadata, plantId) {
+    const pages = metadata.sheets.filter(({ properties }) =>
+        properties.title.startsWith(`${plantId} `)
+    );
+    const page = pages[0];
+    const charts =
+        page?.charts?.filter(
+            ({ spec }) => spec.title === wateringIntervalTitle
+        ) ?? [];
+    const chart = charts[0];
+    if (pages.length !== 1 || charts.length !== 1 || !chart?.position)
+        throw new Error(
+            `Review the unique watering interval chart for ${plantId}`
+        );
+    return chart;
+}
+
+/**
+ * @param {import("../../test/workbook-fixtures.d.ts").ChartData | undefined} data
+ * @param {number} column
+ */
+function intervalRepairRangeMatches(data, column) {
+    const sources = data?.sourceRange.sources ?? [];
+    const range = sources[0];
+    return (
+        sources.length === 1 &&
+        range?.sheetId === wateringIntervalSheetId &&
+        (range.startRowIndex ?? 0) === 0 &&
+        range.endRowIndex === 5000 &&
+        range.startColumnIndex === column &&
+        range.endColumnIndex === column + 1
+    );
 }

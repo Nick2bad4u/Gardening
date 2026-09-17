@@ -12,10 +12,10 @@
    getWebSaveStatus, getWebBatchSaveStatus, installGardenLogger, installAppSheetIntake,
    refreshGardenWorkbook, refreshGardenWorkbookPages01To10,
    refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30,
-   installDailyCareDashboard */
+   installDailyCareDashboard, GARDEN_CYCLE_COMPARISON */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.24.1",
+    version: "5.25.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -24,6 +24,7 @@ const GARDEN_LOGGER = Object.freeze({
     plantTrackerSheet: "Plant tracker",
     baselinesSheet: "Baselines",
     dryDownModelsSheet: "Dry-down models",
+    workbookCalculationsSheet: "Workbook calculations",
     appSheetEntriesSheet: "App entries",
     appSheetBulkSheet: "App bulk",
     headerRow: 4,
@@ -625,15 +626,15 @@ const DASHBOARD_VIEW_HEADERS = Object.freeze([
     "Width (cm)",
     "Waterings",
     "Measurements",
-    "Avg water interval",
+    "Avg completed gap (days)",
     "Calibration",
     "Trend",
     "Trend review",
     "Remeasure",
     "Next dry check",
     "Data quality",
-    "Recommended water date",
-    "Watering guidance",
+    "Model water-date estimate",
+    "Model readiness notes",
     "Weight measurements",
     "Last weight change (g)",
     "Last interval loss (g/day)",
@@ -658,7 +659,7 @@ const PLANT_HEADER_SECTIONS = Object.freeze([
     {
         column: 4,
         width: 3,
-        title: "💧 Care Forecast",
+        title: "💧 Model Estimates",
         dark: "#725316",
         light: "#fff9eb",
         label: "#f6eacb",
@@ -4199,6 +4200,7 @@ function refreshDryDownModels_(spreadsheet) {
 function installDryDownLearning() {
     const spreadsheet = getGardenSpreadsheet_();
     const plants = workbookPlantRecords_(spreadsheet);
+    refreshWorkbookCalculations_(spreadsheet, plants);
     refreshDryDownModels_(spreadsheet);
     const sheet = requireSheet_(spreadsheet, GARDEN_LOGGER.baselinesSheet);
     [9, 10, 12, 19, 21, 23, 25, 31, 32, 33, 34].forEach((column) => {
@@ -4276,7 +4278,12 @@ function installWateringRecommendations() {
                         row[index] !== "" || formulas[rowIndex]?.[index] !== ""
                 );
             if (
-                (value !== "" && value !== expected[index]) ||
+                (value !== "" &&
+                    value !== expected[index] &&
+                    !(
+                        name === "Dashboard" &&
+                        value === DASHBOARD_VIEW_HEADERS[column - 1 + index]
+                    )) ||
                 unlabelledContent
             ) {
                 throw new Error(
@@ -4292,7 +4299,11 @@ function installWateringRecommendations() {
         ensureSheetRowCapacity_(sheet, headerRow + plants.length);
         sheet
             .getRange(headerRow, column, 1, 2)
-            .setValues([["Recommended water date", "Watering guidance"]]);
+            .setValues([
+                name === "Dashboard"
+                    ? DASHBOARD_VIEW_HEADERS.slice(column - 1, column + 1)
+                    : ["Recommended water date", "Watering guidance"],
+            ]);
         sheet
             .getRange(headerRow + 1, column, plants.length, 2)
             .setValues(
@@ -4393,15 +4404,74 @@ function predictedDryDateFormula_(row) {
     return "=" + dryDownLookupFormula_(row, "H");
 }
 
-/** Reuse the measured pair so legacy summaries respect correction ordering. */
+/** Reuse the shared measured pair so both values retain identical ordering. */
 /** @param {number} row @param {number} valueColumn @returns {string} */
 function latestMeasuredWeightFormula_(row, valueColumn) {
-    const pair = dailyCareWeightFormula_(
-        row,
-        { history: 5000, baseline: 1000 },
-        "A"
+    const column = valueColumn === 1 ? "B" : "C";
+    const end = APP_SHEET_BULK_PLANTS.length + 1;
+    return `=XLOOKUP($A${row},'Workbook calculations'!$A$2:$A$${end},'Workbook calculations'!$${column}$2:$${column}$${end},"")`;
+}
+
+/** Install only derived calculations; never write canonical or staging data. */
+/** @param {GardenSpreadsheet} spreadsheet @param {GardenWorkbookViewPlant[]} plants */
+function refreshWorkbookCalculations_(spreadsheet, plants) {
+    const existing = spreadsheet.getSheetByName(
+        GARDEN_LOGGER.workbookCalculationsSheet
     );
-    return `=INDEX(${pair.slice(1)},1,${valueColumn})`;
+    const sheet =
+        existing ||
+        spreadsheet.insertSheet(GARDEN_LOGGER.workbookCalculationsSheet);
+    if (!existing)
+        sheet
+            .protect()
+            .setDescription("Read-only workbook calculations")
+            .setWarningOnly(true);
+    ensureSheetColumnCapacity_(sheet, 6);
+    ensureSheetRowCapacity_(sheet, plants.length + 1);
+    sheet
+        .getRange(1, 1, 1, 6)
+        .setValues([
+            [
+                "Plant ID",
+                "Latest measured weight (g)",
+                "Latest measured at",
+                "",
+                "Calculated as of",
+                "Calculation date",
+            ],
+        ])
+        .setFontFamily("JetBrains Mono");
+    sheet.getRange(2, 1, plants.length, 3).clearContent();
+    sheet
+        .getRange("E2")
+        .setFormula("=NOW()")
+        .setNumberFormat("mmm d, yyyy h:mm am/pm");
+    sheet.getRange("F2").setFormula("=INT(E2)").setNumberFormat("mmm d, yyyy");
+    plants.forEach((plant, index) => {
+        const row = index + 2;
+        sheet.getRange(row, 1).setValue(plant.id);
+        sheet.getRange(row, 2).setFormula(
+            dailyCareWeightFormula_(
+                row,
+                {
+                    history: GARDEN_LOGGER.historyCapacityRows,
+                    baseline: plants.length + 1,
+                },
+                "A",
+                "'Workbook calculations'!$E$2"
+            )
+        );
+    });
+    sheet.getRange(2, 2, plants.length, 1).setNumberFormat("0.0");
+    sheet
+        .getRange(2, 3, plants.length, 1)
+        .setNumberFormat("mmm d, yyyy h:mm am/pm");
+    sheet
+        .getRange("A1")
+        .setNote(
+            "Read-only derived calculations. The shared clock describes the last calculation, not guaranteed live time. Keep disconnected from AppSheet."
+        );
+    sheet.hideSheet();
 }
 
 /** @param {number} rowNumber @param {GardenWorkbookViewPlant} plant @returns {string[]} */
@@ -4413,13 +4483,13 @@ function baselineViewRow_(rowNumber, plant) {
         latestMeasuredWeightFormula_(row, 1),
         `=IF(C${row}="","",C${row}/453.59237)`,
         latestMeasuredWeightFormula_(row, 2),
-        `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AB:$AB,"Not recorded")`,
-        `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$O:$O,"")`,
+        `=XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$AB$2:$AB$${APP_SHEET_BULK_PLANTS.length + 1},"Not recorded")`,
+        `=XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$O$2:$O$${APP_SHEET_BULK_PLANTS.length + 1},"")`,
         `=IFS(V${row}<1,"Collecting weights",Y${row}="","Need a wet weight",W${row}="","Need a completed dry cycle",Z${row}="","Recheck weights",TRUE,"Calibrated")`,
         `=${dryDownLookupFormula_(row, "L")}`,
-        `=LET(review,XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AD:$AD,""),IF(review<>"",review,${dryDownLookupFormula_(row, "M")}))`,
+        `=LET(review,XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$AD$2:$AD$${APP_SHEET_BULK_PLANTS.length + 1},""),IF(review<>"",review,${dryDownLookupFormula_(row, "M")}))`,
         remeasureStatusFormula_(row),
-        `=IF(AF${row}<>"",LET(early,${dryDownLookupFormula_(row, "I")},late,${dryDownLookupFormula_(row, "J")},IF(late<TODAY(),"Inspect / reweigh now","Reweigh "&TEXT(early,"mmm d")&"–"&TEXT(late,"mmm d"))),${dryDownLookupFormula_(row, "K")})`,
+        `=IF(AF${row}<>"",LET(early,${dryDownLookupFormula_(row, "I")},late,${dryDownLookupFormula_(row, "J")},IF(late<'Workbook calculations'!$F$2,"Inspect / reweigh now","Reweigh "&TEXT(early,"mmm d")&"–"&TEXT(late,"mmm d"))),${dryDownLookupFormula_(row, "K")})`,
         `=IF(OR(AE${row}="",C${row}<=0),"",AE${row}/C${row})`,
         `=IF(MAX(N(O${row}),N(AA${row}))=0,"No anchor",IF(N(O${row})>=N(AA${row}),"Water","Repot"))`,
         `=IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Water",History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed")),"")`,
@@ -4436,11 +4506,11 @@ function baselineViewRow_(rowNumber, plant) {
         `=IF(OR(W${row}="",Y${row}="",Y${row}<=W${row}),"",Y${row}-W${row})`,
         `=IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Repot",History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed")),"")`,
         `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$5000,History!$AC$2:$AC$5000},History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),1,2),"No measurement")`,
-        `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AJ:$AJ,"Not recorded")`,
-        `=XLOOKUP($A${row},'Plant tracker'!$A:$A,'Plant tracker'!$AI:$AI,"cm")`,
+        `=XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$AJ$2:$AJ$${APP_SHEET_BULK_PLANTS.length + 1},"Not recorded")`,
+        `=XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$AI$2:$AI$${APP_SHEET_BULK_PLANTS.length + 1},"cm")`,
         currentCurveLossFormula_(row),
         predictedDryDateFormula_(row),
-        `=LET(basis,${dryDownLookupFormula_(row, "K")},learned,${dryDownLookupFormula_(row, "F")},late,${dryDownLookupFormula_(row, "J")},basis&IF(learned>0," · "&learned&" learned cycle"&IF(learned=1,"","s"),"")&IF(AND(late<>"",late<TODAY())," · Overdue — reweigh",""))`,
+        `=LET(basis,${dryDownLookupFormula_(row, "K")},learned,${dryDownLookupFormula_(row, "F")},late,${dryDownLookupFormula_(row, "J")},basis&IF(learned>0," · "&learned&" learned cycle"&IF(learned=1,"","s"),"")&IF(AND(late<>"",late<'Workbook calculations'!$F$2)," · Overdue — reweigh",""))`,
         `=IF(AF${row}="",DATE(9999,12,31),AF${row})`,
         `=${dryDownLookupFormula_(row, "O")}`,
         `=${dryDownLookupFormula_(row, "P")}`,
@@ -4453,6 +4523,7 @@ function baselineViewRow_(rowNumber, plant) {
  * @returns {void}
  */
 function refreshBaselineView_(spreadsheet, plants) {
+    refreshWorkbookCalculations_(spreadsheet, plants);
     refreshDryDownModels_(spreadsheet);
     const sheet = requireSheet_(spreadsheet, GARDEN_LOGGER.baselinesSheet);
     ensureSheetColumnCapacity_(sheet, BASELINE_VIEW_HEADERS.length);
@@ -4791,9 +4862,15 @@ function dailyCareErrorScanFormula_(formula) {
  * @param {number} row
  * @param {Pick<GardenDailyCareBounds, 'history' | 'baseline'>} bounds
  * @param {string} [plantColumn]
+ * @param {string} [clock]
  * @returns {string}
  */
-function dailyCareWeightFormula_(row, bounds, plantColumn = "B") {
+function dailyCareWeightFormula_(
+    row,
+    bounds,
+    plantColumn = "B",
+    clock = "NOW()"
+) {
     /** @param {string} column @returns {string} */
     const h = (column) => `History!$${column}$2:$${column}$${bounds.history}`;
     const plantId = `$${plantColumn}${row}`;
@@ -4803,7 +4880,7 @@ function dailyCareWeightFormula_(row, bounds, plantColumn = "B") {
         "physical,INDEX(records,0,3),identities,INDEX(records,0,4),parents,INDEX(records,0,5),states,INDEX(records,0,6),",
         'validParents,ARRAYFORMULA((parents<>"")*(COUNTIF(identities,parents)=1)*(COUNTIF(identities,identities)=1)*(IFNA(XLOOKUP(parents,identities,states),"")="Removed")),',
         'anchors,REDUCE(ARRAYFORMULA(IF(parents="",physical,0)),SEQUENCE(MAX(1,SUM(ARRAYFORMULA(N(parents<>""))))),LAMBDA(previous,step,ARRAYFORMULA(IF(parents="",physical,IF(validParents,IFNA(XLOOKUP(parents,identities,previous),0),0))))),',
-        'readings,SORT(FILTER({INDEX(records,0,1),INDEX(records,0,2),ARRAYFORMULA(IF(anchors=0,physical,anchors)),physical},EXACT(TRIM(states),"Removed")=FALSE,ISNUMBER(INDEX(records,0,1)),INDEX(records,0,1)>0,ISNUMBER(INDEX(records,0,2)),INDEX(records,0,2)>0,INDEX(records,0,2)<=NOW(),REGEXMATCH(INDEX(records,0,7)&" "&INDEX(records,0,8),"(?i)estimat")=FALSE),2,FALSE,3,FALSE,4,FALSE),',
+        `readings,SORT(FILTER({INDEX(records,0,1),INDEX(records,0,2),ARRAYFORMULA(IF(anchors=0,physical,anchors)),physical},EXACT(TRIM(states),"Removed")=FALSE,ISNUMBER(INDEX(records,0,1)),INDEX(records,0,1)>0,ISNUMBER(INDEX(records,0,2)),INDEX(records,0,2)>0,INDEX(records,0,2)<=${clock},REGEXMATCH(INDEX(records,0,7)&" "&INDEX(records,0,8),"(?i)estimat")=FALSE),2,FALSE,3,FALSE,4,FALSE),`,
         'HSTACK(INDEX(readings,1,1),INDEX(readings,1,2))),{"",""})',
     ].join("");
 }
@@ -5410,7 +5487,7 @@ function dashboardViewRow_(spreadsheet, plant, index) {
         `='Plant tracker'!K${trackerRow}`,
         `=COUNTIFS(History!$B$2:$B$5000,$B${dashboardRow},History!$C$2:$C$5000,"Water",History!$AJ$2:$AJ$5000,"<>Removed")`,
         `=COUNTIFS(History!$B$2:$B$5000,$B${dashboardRow},History!$C$2:$C$5000,"Measure",History!$AJ$2:$AJ$5000,"<>Removed")`,
-        `=IF(N${dashboardRow}<2,"—",(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$B${dashboardRow},History!$C$2:$C$5000="Water",History!$AJ$2:$AJ$5000<>"Removed"))-MIN(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$B${dashboardRow},History!$C$2:$C$5000="Water",History!$AJ$2:$AJ$5000<>"Removed")))/(N${dashboardRow}-1))`,
+        `=IFERROR(AVERAGE('Watering intervals'!${columnName_(index * 3 + 3)}$2:${columnName_(index * 3 + 3)}$5000),"—")`,
         `=Baselines!H${baselineRow}`,
         `=Baselines!I${baselineRow}`,
         `=Baselines!J${baselineRow}`,
@@ -5450,24 +5527,62 @@ function refreshDashboardView_(spreadsheet, plants) {
     sheet.getRange(1, 1, 1, 3).merge();
     sheet
         .getRange(1, 1)
-        .setValue(
-            "Garden Dashboard · live weights, care, and dry-date forecasts"
-        )
+        .setValue("Garden Dashboard · observations and model estimates")
         .setBackground("#173c2b")
         .setFontColor("#ffffff")
         .setFontSize(18)
         .setFontWeight("bold")
         .setHorizontalAlignment("left");
+    sheet
+        .getRange(4, 1, 1, 3)
+        .merge()
+        .setFormula(
+            `=HYPERLINK("${GARDEN_LOGGER.fieldGuideUrl}layouts/daily-report.html","Open daily care report ↗")`
+        )
+        .setWrap(true);
+    sheet
+        .getRange(4, 4, 1, 5)
+        .merge()
+        .setValue(
+            "Model dates are estimates; use daily report and plant checks."
+        )
+        .setWrap(true);
+    sheet.getRange(5, 1).setValue("Calculated as of");
+    sheet
+        .getRange(5, 2, 1, 2)
+        .merge()
+        .setFormula("='Workbook calculations'!$E$2")
+        .setNumberFormat("mmm d, yyyy h:mm am/pm");
+    sheet
+        .getRange(5, 4, 1, 5)
+        .merge()
+        .setValue("Calculated as of ← · cached workbook time");
+    sheet
+        .getRange(4, 1, 2, 8)
+        .setFontFamily("JetBrains Mono")
+        .setFontSize(10)
+        .setFontWeight("normal")
+        .setVerticalAlignment("middle")
+        .setHorizontalAlignment("left")
+        .setWrap(true);
+    sheet.showRows(4, 2);
+    sheet.setRowHeight(4, 32);
+    sheet.setRowHeight(5, 26);
+    sheet
+        .getRange(6, 14)
+        .setNote(
+            "Count of active recorded Water events. Same-day entries can be separate events; completed intervals combine dates."
+        );
     /** @type {[string, string][]} */
     const summary = [
         ["Plants tracked", `=COUNTA('Plant tracker'!$A$2:$A$31)`],
         [
             "Logs this month",
-            `=COUNTIFS(History!$A$2:$A$5000,">="&EOMONTH(TODAY(),-1)+1,History!$AJ$2:$AJ$5000,"<>Removed")`,
+            `=COUNTIFS(History!$A$2:$A$5000,">="&EOMONTH('Workbook calculations'!$F$2,-1)+1,History!$AJ$2:$AJ$5000,"<>Removed")`,
         ],
         [
             "Waterings this month",
-            `=COUNTIFS(History!$C$2:$C$5000,"Water",History!$A$2:$A$5000,">="&EOMONTH(TODAY(),-1)+1,History!$AJ$2:$AJ$5000,"<>Removed")`,
+            `=COUNTIFS(History!$C$2:$C$5000,"Water",History!$A$2:$A$5000,">="&EOMONTH('Workbook calculations'!$F$2,-1)+1,History!$AJ$2:$AJ$5000,"<>Removed")`,
         ],
         ["Remeasure due", `=COUNTIF(Baselines!$K$2:$K$31,"Due now")`],
         [
@@ -5641,7 +5756,7 @@ function refreshRecentWeightColumns_(
 /** @param {string} plantId @returns {string} */
 function plantPageHistoryFormula_(plantId) {
     const id = formulaString_(plantId);
-    return `=LET(plant,"${id}",rows,SORT(FILTER({History!$A$2:$A$5000,History!$C$2:$C$5000,History!$D$2:$D$5000,History!$E$2:$E$5000,History!$F$2:$F$5000,History!$G$2:$G$5000,History!$H$2:$H$5000,History!$I$2:$I$5000,History!$AC$2:$AC$5000,History!$AI$2:$AI$5000,History!$J$2:$J$5000,History!$AJ$2:$AJ$5000},History!$B$2:$B$5000=plant,History!$A$2:$A$5000<>""),1,FALSE,11,FALSE),dates,CHOOSECOLS(rows,1),events,CHOOSECOLS(rows,2),recordedStates,CHOOSECOLS(rows,3),weights,CHOOSECOLS(rows,4),heights,CHOOSECOLS(rows,5),widths,CHOOSECOLS(rows,6),conditions,CHOOSECOLS(rows,7),notes,CHOOSECOLS(rows,8),qualities,CHOOSECOLS(rows,9),methods,CHOOSECOLS(rows,10),statuses,CHOOSECOLS(rows,12),states,MAP(events,weights,recordedStates,statuses,LAMBDA(event,w,recordedState,status,IF(status="Removed","Removed",IF(event<>"Weigh","",IF(w="","",IF(recordedState="","Routine",recordedState)))))),pounds,MAP(weights,LAMBDA(w,IF(w="","",w/453.59237))),quality,MAP(qualities,methods,LAMBDA(q,m,IF(q="",m,IF(m="",q,q&" · "&m)))),HSTACK(dates,events,states,pounds,weights,heights,widths,conditions,notes,quality,statuses))`;
+    return `=IFNA(LET(plant,"${id}",rows,SORT(FILTER({History!$A$2:$A$5000,History!$C$2:$C$5000,History!$D$2:$D$5000,History!$E$2:$E$5000,History!$F$2:$F$5000,History!$G$2:$G$5000,History!$H$2:$H$5000,History!$I$2:$I$5000,History!$AC$2:$AC$5000,History!$AI$2:$AI$5000,History!$J$2:$J$5000,History!$AJ$2:$AJ$5000,History!$X$2:$X$5000},History!$B$2:$B$5000=plant,History!$A$2:$A$5000<>""),1,FALSE,11,FALSE),dates,CHOOSECOLS(rows,1),events,CHOOSECOLS(rows,2),recordedStates,CHOOSECOLS(rows,3),weights,CHOOSECOLS(rows,4),heights,CHOOSECOLS(rows,5),widths,CHOOSECOLS(rows,6),conditions,CHOOSECOLS(rows,7),notes,CHOOSECOLS(rows,8),qualities,CHOOSECOLS(rows,9),methods,CHOOSECOLS(rows,10),statuses,CHOOSECOLS(rows,12),states,MAP(events,weights,recordedStates,statuses,LAMBDA(event,w,recordedState,status,IF(status="Removed","Removed",IF(event<>"Weigh","",IF(w="","",IF(recordedState="","Routine",recordedState)))))),pounds,MAP(weights,LAMBDA(w,IF(w="","",w/453.59237))),quality,MAP(qualities,methods,LAMBDA(q,m,IF(q="",m,IF(m="",q,q&" · "&m)))),HSTACK(dates,events,states,pounds,weights,heights,widths,conditions,notes,quality,statuses,MAP(CHOOSECOLS(rows,13),LAMBDA(url,IF(url="","",HYPERLINK(url,"Open photo")))))),"")`;
 }
 
 /** @param {GardenSpreadsheet} spreadsheet @param {string} plantId @returns {GardenSheet} */
@@ -5680,15 +5795,23 @@ function plantPageSheet_(spreadsheet, plantId) {
 function refreshPlantPage_(spreadsheet, plants, index, plant) {
     const sheet = plantPageSheet_(spreadsheet, plant.id);
     ensureSheetColumnCapacity_(sheet, 18);
-    ensureSheetRowCapacity_(sheet, 1000);
-    const contentRows = Math.min(1000, sheet.getMaxRows());
+    const historyHeaderRow = 140;
+    const historyStartRow = historyHeaderRow + 1;
+    const contentRows =
+        historyHeaderRow + GARDEN_LOGGER.historyCapacityRows - 1;
+    ensureSheetRowCapacity_(sheet, contentRows);
     sheet.getRange(1, 1, 12, 13).breakApart();
     const filter = sheet.getFilter();
     if (filter) filter.remove();
+    // Preserve the analytics and chart-status area between the header and history.
     sheet
-        .getRange(1, 1, contentRows, 13)
+        .getRange(1, 1, 13, 13)
         .clearContent()
         .clearFormat()
+        .setFontFamily("JetBrains Mono");
+    sheet
+        .getRange(historyHeaderRow, 1, contentRows - historyHeaderRow + 1, 12)
+        .clearContent()
         .setFontFamily("JetBrains Mono");
     sheet.getRange(1, 1, 1, 10).merge();
     sheet
@@ -5735,7 +5858,7 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
     /** @type {[number, number, string][]} */
     const sections = [
         [1, 3, "Current weight"],
-        [4, 3, "Care forecast"],
+        [4, 3, "Model estimates"],
         [7, 4, "Data quality"],
     ];
     sections.forEach(([column, width, label]) => {
@@ -5769,7 +5892,7 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
         [
             "Dry weight (g)",
             `=Baselines!W${baselineRow}`,
-            "Predicted dry date",
+            "Model dry-check estimate",
             `=Baselines!AF${baselineRow}`,
             "Trend review",
             `=Baselines!J${baselineRow}`,
@@ -5829,10 +5952,35 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
     sheet.getRange(11, 1, 1, 10).merge();
     sheet
         .getRange(11, 1)
-        .setValue("Complete history · newest first · scroll normally")
+        .setFormula(
+            `=HYPERLINK("#gid=${sheet.getSheetId()}&range=A${historyHeaderRow}","Jump to complete history ↓")`
+        )
         .setBackground("#dcebdd")
         .setFontColor("#173c2b")
         .setFontWeight("bold");
+    sheet
+        .getRange(historyHeaderRow - 1, 1)
+        .setFormula(
+            `=HYPERLINK("#gid=${sheet.getSheetId()}&range=A54","Back to charts ↑")`
+        );
+    sheet
+        .getRange(12, 1, 1, 3)
+        .merge()
+        .setFormula(
+            `=HYPERLINK("#gid=${sheet.getSheetId()}&range=A54","Jump to charts ↓")`
+        );
+    sheet.getRange(12, 4, 1, 3).merge().setValue("Calculated as of");
+    sheet
+        .getRange(12, 1, 1, 10)
+        .setBackground("#24533f")
+        .setFontColor("#ffffff")
+        .setFontWeight("bold");
+    sheet
+        .getRange(12, 7, 1, 4)
+        .merge()
+        .setFormula("='Workbook calculations'!$E$2")
+        .setFontSize(9)
+        .setNumberFormat("mmm d, yyyy h:mm am/pm");
     const historyHeaders = [
         "Date",
         "Event",
@@ -5845,20 +5993,27 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
         "Notes",
         "Quality / method",
         "Record status",
+        "Photo",
     ];
     sheet
-        .getRange(12, 1, 1, historyHeaders.length)
+        .getRange(historyHeaderRow, 1, 1, historyHeaders.length)
         .setValues([historyHeaders])
         .setBackground("#24533f")
         .setFontColor("#ffffff")
         .setFontWeight("bold")
         .setWrap(true);
-    sheet.getRange(13, 1).setFormula(plantPageHistoryFormula_(plant.id));
     sheet
-        .getRange(13, 1, contentRows - 12, 1)
+        .getRange(historyStartRow, 1)
+        .setFormula(plantPageHistoryFormula_(plant.id));
+    sheet
+        .getRange(historyStartRow, 1, contentRows - historyHeaderRow, 1)
         .setNumberFormat("mmm d, yyyy h:mm am/pm");
-    sheet.getRange(13, 4, contentRows - 12, 1).setNumberFormat("0.000");
-    sheet.getRange(13, 5, contentRows - 12, 3).setNumberFormat("0.0");
+    sheet
+        .getRange(historyStartRow, 4, contentRows - historyHeaderRow, 1)
+        .setNumberFormat("0.000");
+    sheet
+        .getRange(historyStartRow, 5, contentRows - historyHeaderRow, 3)
+        .setNumberFormat("0.0");
     sheet.setFrozenRows(0);
     sheet.setFrozenColumns(0);
     sheet.setHiddenGridlines(true);
@@ -5871,9 +6026,25 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
     sheet.setColumnWidth(10, 190);
     sheet.setColumnWidth(11, 120);
     formatPlantPageHeader_(sheet);
-    sheet.setRowHeight(12, 40);
-    /** @type {GoogleAppsScript.Spreadsheet.ConditionalFormatRule[]} */
-    const rules = [];
+    sheet.setRowHeights(9, 2, 66);
+    sheet.setRowHeight(24, 54);
+    sheet.setRowHeight(27, 66);
+    sheet.setRowHeight(historyHeaderRow, 40);
+    sheet.setColumnWidth(12, 150);
+    const rules = sheet
+        .getConditionalFormatRules()
+        .filter(
+            (rule) =>
+                !rule
+                    .getRanges()
+                    .every(
+                        (range) =>
+                            range.getColumn() >= 1 &&
+                            range.getLastColumn() <= 12 &&
+                            (range.getRow() >= historyStartRow ||
+                                range.getRow() === 13)
+                    )
+        );
     Object.entries(WORKBOOK_EVENT_COLORS).forEach(
         ([eventName, [background, foreground]]) => {
             rules.push(
@@ -5882,7 +6053,14 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
                     .setBackground(background)
                     .setFontColor(foreground)
                     .setBold(true)
-                    .setRanges([sheet.getRange(13, 2, contentRows - 12, 1)])
+                    .setRanges([
+                        sheet.getRange(
+                            historyStartRow,
+                            2,
+                            contentRows - historyHeaderRow,
+                            1
+                        ),
+                    ])
                     .build()
             );
         }
@@ -5901,7 +6079,14 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
                 .setBackground(background)
                 .setFontColor(foreground)
                 .setBold(true)
-                .setRanges([sheet.getRange(13, 3, contentRows - 12, 1)])
+                .setRanges([
+                    sheet.getRange(
+                        historyStartRow,
+                        3,
+                        contentRows - historyHeaderRow,
+                        1
+                    ),
+                ])
                 .build()
         );
     });
@@ -10395,4 +10580,126 @@ function columnName_(columnNumber) {
         value = Math.floor((value - 1) / 26);
     }
     return result;
+}
+
+/**
+ * Compare the current and last two completed watering cycles in one pot setup.
+ * @param {GardenHistoryRow[]} history Native History A:AP range including dates.
+ * @param {GardenCell} plantId Selected plant ID.
+ * @param {GardenCell} potSetup Current Baselines pot setup.
+ * @returns {GardenCell[][]}
+ * @customfunction
+ */
+function GARDEN_CYCLE_COMPARISON(history, plantId, potSetup) {
+    const timeZone =
+        SpreadsheetApp.getActiveSpreadsheet().getSpreadsheetTimeZone();
+    const projected = history.map((row) => [
+        row[0] ?? "",
+        row[1] ?? "",
+        row[2] ?? "",
+        row[3] ?? "",
+        row[4] ?? "",
+        row[10] ?? "",
+        row[15] ?? "",
+        row[29] ?? "",
+        row[35] ?? "",
+        row[40] ?? "",
+        row[28] ?? "",
+        row[34] ?? "",
+        row[26] ?? "",
+        row[30] ?? "",
+    ]);
+    return cycleComparisonRows_(projected, plantId, potSetup, new Date(), {
+        recordsByPlant: dryDownRecordsByPlant_,
+        cycles: dryDownCycles_,
+        dateLabel: (days) =>
+            Utilities.formatDate(
+                new Date(days * 86400000),
+                timeZone,
+                "yyyy-MM-dd"
+            ),
+    });
+}
+
+/**
+ * @param {GardenHistoryRow[]} history
+ * @param {GardenCell} plantId
+ * @param {GardenCell} potSetup
+ * @param {Date} asOf
+ * @param {{recordsByPlant: (history: GardenHistoryRow[]) => Map<string, DryDownRecord[]>, cycles: (records: DryDownRecord[]) => GardenDryDownCycle[], dateLabel: (unixDays: number) => string}} helpers
+ * @returns {GardenCell[][]}
+ */
+function cycleComparisonRows_(history, plantId, potSetup, asOf, helpers) {
+    const empty = [
+        ["Days since watering", "", "", ""],
+        ["", "", "", ""],
+    ];
+    const setup = Number(potSetup);
+    if (
+        !String(plantId).trim() ||
+        !Number.isSafeInteger(setup) ||
+        setup < 1 ||
+        !Number.isFinite(asOf.getTime())
+    )
+        return empty;
+    const millisecondsPerDay = 24 * 60 * 60 * 1000;
+    const now = asOf.getTime() / millisecondsPerDay;
+    const normalized = history.map((row) => {
+        const copy = [...row];
+        copy[0] =
+            row[0] instanceof Date ? row[0].getTime() / millisecondsPerDay : 0;
+        return copy;
+    });
+    const records = (
+        helpers.recordsByPlant(normalized).get(String(plantId).trim()) ?? []
+    ).filter(
+        (record) =>
+            record.setup === setup &&
+            (record.date <= now || !Number.isFinite(record.date))
+    );
+    if (
+        records.some(
+            (record) =>
+                ["Repot", "Water"].includes(record.event) &&
+                (!Number.isFinite(record.date) || record.date <= 0)
+        )
+    )
+        return empty;
+    const ordered = records
+        .filter((record) => Number.isFinite(record.date) && record.date > 0)
+        .sort(
+            (left, right) => left.date - right.date || left.index - right.index
+        );
+    const repot = ordered.findLast((record) => record.event === "Repot");
+    const inSetup = ordered.filter(
+        (record) =>
+            !repot ||
+            record.date > repot.date ||
+            (record.date === repot.date &&
+                (record.index >= repot.index ||
+                    (record.save !== "" && record.save === repot.save)))
+    );
+    const selected = helpers.cycles(inSetup).slice(-3).reverse();
+    const headers = ["Days since watering", "", "", ""];
+    /** @type {Map<number, GardenCell[]>} */
+    const rows = new Map();
+    for (const [index, cycle] of selected.entries()) {
+        const role = ["Current", "Previous", "Older"][index] ?? "Older";
+        headers[index + 1] = `${role} · ${helpers.dateLabel(cycle.water.date)}`;
+        for (const point of cycle.points) {
+            const elapsed = point.date - cycle.water.date;
+            const values = rows.get(elapsed) ?? [elapsed, "", "", ""];
+            values[index + 1] = point.weight;
+            rows.set(elapsed, values);
+        }
+    }
+    const entries = [...rows];
+    return [
+        headers,
+        ...(rows.size > 0
+            ? entries
+                  .sort(([left], [right]) => left - right)
+                  .map(([, row]) => row)
+            : [["", "", "", ""]]),
+    ];
 }

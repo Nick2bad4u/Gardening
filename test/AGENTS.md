@@ -55,3 +55,11 @@
 - Run `npm run typecheck:tests` for TypeScript/JSDoc test changes, plus the suite
   that exercises the changed behavior. Snapshot or source-string assertions
   alone do not establish a working browser interaction or safe write/retry path.
+- Workbook migration tests must reject occupied destinations, schema drift,
+  and replay, and assert that canonical/staging data and existing chart specs
+  are outside the write set. Rehearse formula spills at 96, 97, and more plant
+  records on a native copy; Node mocks do not evaluate Sheets formulas.
+- Test cycle comparisons with corrections, removed/future records, setup
+  boundaries, missing weights, and daylight-saving transitions. Compare the
+  generated Apps Script snippet with its maintained server copy; Node's VM and
+  the ES2023 typecheck do not prove Google's parser or V8 supports an API.

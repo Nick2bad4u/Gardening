@@ -69,8 +69,25 @@ separate metered volume or water-quality measurement was supplied.
 
 ## Workbook maintenance
 
+The analytics migration adds a read-only summary in **O1:T12**, beside the
+existing chart and above the entry log. It shows the latest recorded refill
+visit and gallons added, then each container's latest fill date, amount,
+recorded empty date, and status. **Not marked empty** means the empty-date field
+is blank; it is not an estimate of available stock. Containers without a
+recorded refill remain unknown. The summary reads the existing records and
+does not create another entry table.
+
+This addition is pending production deployment; see the
+[analytics rollout record](WORKBOOK-ANALYTICS.md#rollout-record). Keep the manual
+entry exceptions **A20:I1000** and **K20:M1000**, calculated totals in J, and the
+existing chart unchanged. The summary formulas are maintained in
+[`workbook-analytics.mjs`](workbook-analytics.mjs).
+
 Back up the native workbook before structural changes. Preserve this tab,
 its manually entered refill records, and its chart during workbook refreshes.
 It has no plant ID, does not write to `History`, and does not alter watering
 forecasts. Keep plant observation headers, formulas, staging tables, triggers,
 and deployment assignments unchanged when maintaining this supply log.
+Do not rewrite the RO chart through the Sheets API for an unrelated change:
+native readback has shown that a full specification update drops its custom
+axis-title colors. Inspect any necessary presentation repair in the chart editor.

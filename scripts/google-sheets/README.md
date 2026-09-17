@@ -19,7 +19,7 @@ for retained water, measured loss, forecast windows, and model evidence. The
 **Current weight difference** comparison starts at **Insights A586**.
 The [RO refill log](RO-REFILLS.md) records water-supply refill dates, amounts
 for the four storage containers, and a chart of gallons refilled per visit.
-The **Plant colors** sheet at the end of the workbook maps all 30 plants to
+The **Plant colors** sheet maps all 30 plants to
 consistent chart colors, with full names, swatches, and links to their charts.
 Comparison charts keep P01–P30 order so colors stay attached to the same plant;
 the cycle explorer changes color automatically with its selected plant.
@@ -62,6 +62,28 @@ trigger error rate. No photo observations had been written at this verification
 point; photo publication and the real inspection records are separate steps.
 
 ## Current production baseline
+
+### Workbook analytics upgrade (5.25.0, deployment pending)
+
+The maintained source and guarded migration add plant history below the charts,
+watering/feeding/photo summaries, shared calculation timestamps, two Insights
+charts, an eight-week watering calendar, and an RO refill summary. See the
+[analytics operator guide](WORKBOOK-ANALYTICS.md) for locations, evidence limits,
+migration phases, and the verification record.
+
+The combined release also includes the validated client changes from commit
+`80d88ee`: accessible inline **Use current time** controls for single and bulk
+entry, a correction pencil at the top of History, badges below plant names at
+mobile widths, and readable metadata pills with local times. Exact ISO values
+remain in time attributes and titles. These changes preserve time capture,
+save, and retry behavior.
+
+**Production rollout is pending.** The target is **54 tabs and 147 charts**,
+including **25 Insights charts**, after adding three derived sheets and two
+charts. These counts describe the migration target, not a completed live check.
+Record the immutable Apps Script version, source commit, exact preservation
+results, and final live checks in that guide after deployment. Keep the existing
+phone URL and single five-minute queue trigger.
 
 ### September 17 dry top-dressing normalization
 
@@ -1633,11 +1655,15 @@ The implementation follows Google's official guidance for
 
 ## One-time installation
 
+These steps describe initial installation. Existing production upgrades follow
+the scoped migration and deployment guidance above; do not rerun installers
+merely to add a chart or change formatting.
+
 The repository contains the logger source, but Google does not install a
 container-bound Apps Script merely because the repository is deployed. Install
 or update it in the workbook once:
 
-1. Open the [Garden Plant Tracker Quick log](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=2015971861#gid=2015971861).
+1. Open the [Garden Plant Tracker](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit).
 2. Choose **Extensions → Apps Script**.
 3. Replace the complete `Code.gs` contents with
    [`plant-tracker.gs`](./plant-tracker.gs), replace `Index.html` with
@@ -1648,7 +1674,7 @@ or update it in the workbook once:
 5. Return to the workbook and refresh it. A **Garden logger** menu should
    appear.
 6. Do not create a synthetic production observation. When a real observation is
-   due, save it through `Quick log` and confirm that the expected event row or
+   due, save it through the mobile logger or AppSheet and confirm that the expected event row or
    rows appear at the bottom of `History`. If an end-to-end integration test is
    needed before then, create a native Drive copy of the workbook, bind a
    disposable script copy to it, and submit the test observation there.
@@ -1665,6 +1691,13 @@ that long presentation-only refresh, run
 page batch remains unfinished. These resumable commands rebuild only the named
 plant pages; they do not write to canonical `History` or the AppSheet staging
 tables.
+
+The 5.25.0 page builder places history headers at **A140:L140**, its formula at
+**A141**, and retains capacity through **row 5139**. It preserves the summaries
+and chart annotations in **rows 14:138**, while rebuilding the top header and
+history. Keep those history spill cells free of manually entered content.
+For the analytics migration, use the guarded request builder instead of a full
+refresh; the [operator guide](WORKBOOK-ANALYTICS.md) defines its write boundaries.
 
 The mobile app remembers the selected plant, theme, plant-picker style, and
 recent-History length on that device. The searchable selector can be switched

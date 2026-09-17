@@ -120,8 +120,11 @@ npm run check:booklet
 npm run check:logger
 ```
 
-`lint:all` includes ESLint, TypeScript, unit tests, Stylelint, Prettier, Markdown,
-HTML, GitHub Actions, package ordering, TSDoc configuration, and secret checks.
+`lint:all` runs ESLint, TypeScript including Apps Script, Node and Storybook
+tests, Prettier, package checks, and secret checks. It does not run every
+repository check. Run the relevant `lint:style`, `lint:remark`, `lint:html`,
+`lint:actions`, `lint:yaml`, and `lint:tsdoc` commands separately when those
+surfaces change, along with the appropriate generated-output checks.
 Run `npm run lint:lychee` when external links change. Review automated fixes:
 an API suggestion must still be supported by the runtime that executes the file.
 The link check covers maintained Markdown and HTML; JavaScript fault fixtures

@@ -10,6 +10,11 @@
   `tsconfig.apps-script.json`. Keep domain/entry declarations under
   `types/apps-script*.d.ts` aligned with the implementation; do not weaken the
   custom checker to accommodate missing globals or invalid fixtures.
+- Typechecking is not runtime compatibility evidence. Native rehearsal rejected
+  numeric separators; emitted Apps Script must avoid them. The cycle source
+  generator replaces Node's `toSorted`/`toReversed` with `sort`/`reverse` only
+  on newly allocated arrays. Preserve that ownership boundary and verify new
+  syntax/APIs in a disposable bound script before deployment.
 - Keep observations append-only unless the repository owner explicitly requests
   a historical correction. One save may append multiple event-specific rows.
 - Keep every retry idempotent through the hidden Request ID in History column P.
@@ -70,13 +75,52 @@
   font in the UI and verify non-font metadata. Keep the theme and data intact.
 - Dashboard check links target Integrity A4:D21. Keep the Integrity formula
   scan independent of those indicators and free of retired-sheet references.
+  Cover new helper anchors and populated spill ranges when extending the
+  workbook; a zero result is meaningful only for the ranges actually scanned.
+- Plant history headers belong at A140:L140 and the complete-history formula
+  at A141, with capacity through row 5139 for the 4,999 ledger rows. Keep that
+  spill area uninterrupted, including its photo-link column. Retain Jump to
+  history at A11 and Back to charts at A139; rows 14:138 hold summaries and
+  chart annotations. A page refresh preserves that area but still rebuilds
+  the header and history, so it is not a substitute for a scoped migration.
+
+## Derived analytics and freshness
+
+- `workbook-analytics.mjs` owns watering summaries, photo/condition/feeding
+  evidence, RO summaries, and the eight-week Watering calendar. These are
+  read-only views, not additional AppSheet input tables. Keep nutrient Yes,
+  No, unknown, and mixed same-day history distinct; a blank empty date means
+  an RO container is "not marked empty," not that it remains full.
+- Label the latest condition as recorded evidence and retain event, quality,
+  method, notes, and timestamp context. A photo-only observation is not proof
+  of a physical inspection. Preserve recorded feeding dose units and unknowns;
+  past intervals, feeding summaries, and model estimates are not care schedules.
+- `Workbook calculations` contains one correction-aware latest weight/time
+  pair per plant in A:C, the shared clock at E2, and its calendar date at F2.
+  Age-based formulas should share those cells and expose Calculated as of.
+  A cached calculation timestamp is not a fresh observation or an API-read
+  timestamp; keep absolute observation times visible and check freshness.
+- `Workbook analytics` holds selected-cycle data in A:D and watering-gap
+  comparisons in F:H. `cycle-comparison.mjs` generates the maintained
+  `GARDEN_CYCLE_COMPARISON` server snippet and formula. Pass native History
+  A:AP, the Insights selector, and current setup explicitly; reuse the existing
+  correction resolver and cycle helpers. Use actual elapsed time for curve
+  comparisons and the workbook timezone for labels. Do not pass NOW/TODAY,
+  including indirect references, into custom functions.
+- Keep inventory lookups bounded to the maintained inventory and regenerate
+  their bounds when adding plants. Compare derived outputs before and after
+  optimization; report measured timings without promising a fixed speedup.
 
 ## Validation and deployment
 
 - Native chart-only changes are scoped workbook migrations. Follow
   `INSIGHTS-CHARTS.md` and the relevant request builder; do not run a full
-  workbook/page refresh or deploy Apps Script solely to add a chart. A page
-  refresh clears A:M content and can erase chart-adjacent status labels.
+  workbook/page refresh or deploy Apps Script solely to add a chart.
+- `workbook-upgrade.mjs` is a guarded one-time migration, not a refresh command.
+  Recheck its captured cell preconditions and empty destinations immediately
+  before writing. Apply preparation, then formulas, verify their calculated
+  outputs, and only then create charts. Stop on drift or an already-installed
+  destination instead of clearing cells or replaying the migration blindly.
 - Preserve every existing chart ID, complete specification, and position. The
   basic metadata connector may omit chart definitions; a no-op `findReplace`
   request with `include_spreadsheet_in_response: true` and grid data disabled
@@ -109,6 +153,11 @@
   current headers, formulas, validations, last populated rows, request IDs,
   AppSheet staging schemas, deployment assignment, and trigger list. Do not
   infer live state from an older chat or repository snapshot.
+- Keep full native before/after metadata and cell snapshots in ignored private
+  storage. For derived-view migrations, compare canonical History, staging
+  tables, and RO entry/formula ranges exactly, along with existing chart IDs,
+  specifications, positions, protections, and relative tab order. Rehearse
+  structural changes on a separate native workbook and bound script copy.
 - A History contract change must update the constants and row builders in
   `plant-tracker.gs`, the logger tests/checker, the public tracker/history
   parser and CSV export when applicable, this runbook, and the AppSheet column
@@ -126,5 +175,6 @@
   scheduled every five minutes.
 - Do not submit fake observations to production. Use a disposable workbook and
   bound script for integration writes. Finish with pre/post canonical History
-  row counts, request-ID uniqueness, formula/error checks, and an exact-range
-  comparison for any authorized historical correction.
+  row counts, observation-ID uniqueness, request-ID grouping, formula/error
+  checks, and an exact-range comparison for any authorized historical correction.
+  Shared request IDs across event rows from one save are intentional.

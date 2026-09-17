@@ -2134,7 +2134,24 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
             name: "Test plant",
         });
 
-        expect(baselineRow).toHaveLength(36);
+        expect({
+            length: baselineRow.length,
+            time: baselineRow[4],
+            weight: baselineRow[2],
+        }).toStrictEqual({
+            length: 36,
+            time: "=XLOOKUP($A2,'Workbook calculations'!$A$2:$A$31,'Workbook calculations'!$C$2:$C$31,\"\")",
+            weight: "=XLOOKUP($A2,'Workbook calculations'!$A$2:$A$31,'Workbook calculations'!$B$2:$B$31,\"\")",
+        });
+        expect(baselineRow.join(" ")).not.toMatch(
+            /NOW\(|TODAY\(|\$[A-Z]+:\$[A-Z]+/v
+        );
+        expect(context.plantPageHistoryFormula_("P01")).toContain(
+            'HYPERLINK(url,"Open photo")'
+        );
+        expect(context.plantPageHistoryFormula_("P01")).toContain(
+            "History!$X$2:$X$5000"
+        );
 
         const modelColumns = /** @type {[number, string][]} */ ([
             [22, "C"],
@@ -2152,7 +2169,7 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
         expect(baselineRow[25]).toContain('Y2<=W2),"",Y2-W2');
         expect(baselineRow[12]).toBe('=IF(OR(AE2="",C2<=0),"",AE2/C2)');
         expect(baselineRow[8]).toContain("'Dry-down models'!$L$2:$L$31");
-        expect(baselineRow[9]).toContain("'Plant tracker'!$AD:$AD");
+        expect(baselineRow[9]).toContain("'Plant tracker'!$AD$2:$AD$31");
         expect(baselineRow[11]).toContain('TEXT(early,"mmm d")');
         expect(baselineRow[11]).toContain('TEXT(late,"mmm d")');
         expect(baselineRow[32]).toContain("learned cycle");
@@ -2283,7 +2300,7 @@ describe("garden logger workbook refresh and navigation", () => {
         expect(structuredClone(context.refreshGardenWorkbook())).toStrictEqual({
             baselineColumns: 36,
             dashboardColumns: 31,
-            loggerVersion: "5.24.1",
+            loggerVersion: "5.25.0",
             plantPages: 2,
         });
         expect(calls.filter(([name]) => name === "plant")).toHaveLength(2);
@@ -2342,7 +2359,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P01",
             lastPlant: "P10",
-            loggerVersion: "5.24.1",
+            loggerVersion: "5.25.0",
             plantPages: 10,
         });
         expect(
@@ -2350,7 +2367,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P11",
             lastPlant: "P20",
-            loggerVersion: "5.24.1",
+            loggerVersion: "5.25.0",
             plantPages: 10,
         });
         expect(
@@ -2358,7 +2375,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P21",
             lastPlant: "P30",
-            loggerVersion: "5.24.1",
+            loggerVersion: "5.25.0",
             plantPages: 10,
         });
 
@@ -2489,7 +2506,9 @@ describe("garden logger workbook refresh and navigation", () => {
         );
         expect(context.formulaString_(null)).toBe("");
     });
+});
 
+describe("garden logger workbook formatting", () => {
     it("removes the legacy A36:R36 footer merge before writing P30", () => {
         expect.hasAssertions();
 
@@ -2498,6 +2517,13 @@ describe("garden logger workbook refresh and navigation", () => {
             { column: 1, columnCount: 18, row: 36, rowCount: 1 },
         ];
         const cells = new Map();
+        const hiddenRows = new Set([
+            4,
+            5,
+            40,
+        ]);
+        /** @type {Map<string, unknown>} */
+        const appearance = new Map();
         const hasOverlap = (
             /** @type {import("../sheet-fixtures.d.ts").RangePosition} */ left,
             /** @type {import("../sheet-fixtures.d.ts").RangePosition} */ right
@@ -2620,7 +2646,17 @@ describe("garden logger workbook refresh and navigation", () => {
                     "setVerticalAlignment",
                     "setWrap",
                 ]) {
-                    Reflect.set(range, method, () => range);
+                    Reflect.set(
+                        range,
+                        method,
+                        (/** @type {unknown[]} */ ...args) => {
+                            appearance.set(
+                                `${row}:${column}:${method}`,
+                                args[0]
+                            );
+                            return range;
+                        }
+                    );
                 }
                 return range;
             },
@@ -2631,6 +2667,19 @@ describe("garden logger workbook refresh and navigation", () => {
             setFrozenColumns: () => {},
             setFrozenRows: () => {},
             setHiddenGridlines: () => {},
+            setRowHeight: (
+                /** @type {number} */ row,
+                /** @type {number} */ size
+            ) => {
+                appearance.set(`height:${row}`, size);
+            },
+            showRows: (
+                /** @type {number} */ start,
+                /** @type {number} */ count
+            ) => {
+                for (let row = start; row < start + count; row += 1)
+                    hiddenRows.delete(row);
+            },
         };
         const plants = Array.from({ length: 30 }, (_, index) => ({
             id: `P${String(index + 1).padStart(2, "0")}`,
@@ -2656,6 +2705,19 @@ describe("garden logger workbook refresh and navigation", () => {
 
         context.refreshDashboardView_(spreadsheet, plants);
 
+        expect(hiddenRows).toStrictEqual(new Set([40]));
+        expect(Object.fromEntries(appearance)).toMatchObject({
+            "4:1:setFontSize": 10,
+            "4:1:setFontWeight": "normal",
+            "4:1:setHorizontalAlignment": "left",
+            "4:1:setVerticalAlignment": "middle",
+            "4:1:setWrap": true,
+            "height:4": 32,
+            "height:5": 26,
+        });
+        expect(cells.get("5:4")).toBe(
+            "Calculated as of ← · cached workbook time"
+        );
         expect(cells.get("36:2")).toBe("P30");
         expect(cells.get("3:21")).toContain("#gid=99&range=A4:D21");
         expect(cells.get("3:23")).toContain("#gid=99&range=A4:D21");
@@ -2674,6 +2736,16 @@ describe("garden logger workbook refresh and navigation", () => {
         expect.hasAssertions();
 
         const headerWrites = new Map();
+        /**
+         * @type {{
+         *     name: string;
+         *     row: number;
+         *     column: number;
+         *     rows: number;
+         *     columns: number;
+         * }[]}
+         */
+        const rangeRequests = [];
         const conditionalRule = {};
         const ruleBuilder = {
             build: () => conditionalRule,
@@ -2691,8 +2763,11 @@ describe("garden logger workbook refresh and navigation", () => {
         ) => {
             const getRange = (
                 /** @type {number} */ row,
-                /** @type {number} */ column
+                /** @type {number} */ column,
+                /** @type {number} */ rows = 1,
+                /** @type {number} */ columns = 1
             ) => {
+                rangeRequests.push({ column, columns, name, row, rows });
                 const range = {};
                 for (const method of [
                     "breakApart",
@@ -2732,6 +2807,7 @@ describe("garden logger workbook refresh and navigation", () => {
             };
             return {
                 autoResizeRows: () => {},
+                getConditionalFormatRules: () => [],
                 getFilter: () =>
                     hasFilter
                         ? {
@@ -2756,6 +2832,7 @@ describe("garden logger workbook refresh and navigation", () => {
                 setHiddenGridlines: () => {},
                 setRowHeight: () => {},
                 setRowHeights: () => {},
+                showRows: () => {},
             };
         };
         const sheets = new Map([
@@ -2764,6 +2841,7 @@ describe("garden logger workbook refresh and navigation", () => {
             ["Dry-down models", makeSheet("Dry-down models")],
             ["P01", makeSheet("P01", { hasFilter: true, id: 101 })],
             ["P02", makeSheet("P02", { id: 102 })],
+            ["Workbook calculations", makeSheet("Workbook calculations")],
         ]);
         const spreadsheet = {
             getSheetByName: (/** @type {string} */ name) =>
@@ -2801,10 +2879,65 @@ describe("garden logger workbook refresh and navigation", () => {
         context.refreshPlantPage_(spreadsheet, plants, 1, plants[1]);
 
         expect(structuredClone(removedFilters)).toStrictEqual(["P01"]);
+        expect(
+            headerWrites.get("Workbook calculations:E2:undefined:setFormula")
+        ).toBe("=NOW()");
+        expect(
+            headerWrites.get("Workbook calculations:2:2:setFormula")
+        ).toContain("INDEX(records,0,2)<='Workbook calculations'!$E$2");
+        expect(
+            headerWrites.get("Workbook calculations:2:2:setFormula")
+        ).toContain("2,FALSE,3,FALSE,4,FALSE");
+        expect(headerWrites.has("Workbook calculations:2:3:setFormula")).toBe(
+            false
+        );
 
         for (const [index, plant] of plants.entries()) {
             const baselineRow = index + 2;
+            // All 4,999 possible source records fit below the chart/status area,
+            // including the old 97th-record collision and later observations.
+            for (const observations of [
+                96,
+                97,
+                150,
+                4999,
+            ]) {
+                expect(
+                    rangeRequests.some(
+                        (range) =>
+                            range.name === plant.id &&
+                            range.row === 141 &&
+                            range.rows >= observations
+                    )
+                ).toBe(true);
+            }
 
+            expect(headerWrites.has(`${plant.id}:14:1:clearContent`)).toBe(
+                false
+            );
+
+            expect([
+                headerWrites.get(`${plant.id}:11:1:setFormula`),
+                headerWrites.get(`${plant.id}:139:1:setFormula`),
+                headerWrites.get(`${plant.id}:12:1:setFormula`),
+            ]).toStrictEqual([
+                expect.stringContaining("&range=A140"),
+                expect.stringContaining("&range=A54"),
+                expect.stringContaining("Jump to charts"),
+            ]);
+            expect(headerWrites.get(`${plant.id}:141:1:setFormula`)).toBe(
+                context.plantPageHistoryFormula_(plant.id)
+            );
+            expect(headerWrites.has(`${plant.id}:13:1:setFormula`)).toBe(false);
+
+            const historyHeadings = /** @type {unknown[][]} */ (
+                headerWrites.get(`${plant.id}:140:1:setValues`)
+            );
+
+            expect(historyHeadings[0]).toHaveLength(12);
+            expect(headerWrites.get(`${plant.id}:12:7:setFormula`)).toBe(
+                "='Workbook calculations'!$E$2"
+            );
             expect(headerWrites.get(`${plant.id}:6:4:setValue`)).toBe(
                 "Days since water"
             );
@@ -3034,7 +3167,7 @@ describe("scoped Dashboard weight count installer", () => {
             ).toStrictEqual({
                 plants: 30,
                 range: "Dashboard!Y6:Y36",
-                version: "5.24.1",
+                version: "5.25.0",
             });
 
             const after = structuredClone(rows);
@@ -3756,7 +3889,7 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.24.1");
+        expect(bootstrap.version).toBe("5.25.0");
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             activitySummary: {
@@ -8454,10 +8587,10 @@ describe("garden logger workbook installation and History headers", () => {
         context.installGardenLogger();
 
         expect(required(calls.properties)["gardenLoggerVersion"]).toBe(
-            "5.24.1"
+            "5.25.0"
         );
         expect(required(calls.toast)[1]).toBe("Garden logger verified");
-        expect(required(calls.toast)[0]).toMatch(/Logger 5\.24\.0 is ready/v);
+        expect(required(calls.toast)[0]).toMatch(/Logger 5\.25\.0 is ready/v);
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(

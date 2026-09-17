@@ -376,7 +376,7 @@ describe("dry-down formulas and workbook installation", () => {
                 structuredClone(context.installWateringRecommendations())
             ).toStrictEqual({
                 historyChanged: false,
-                loggerVersion: "5.24.1",
+                loggerVersion: "5.25.0",
                 plants: 2,
             });
 
@@ -477,6 +477,8 @@ describe("dry-down formulas and workbook installation", () => {
                 const range = {};
                 for (const method of [
                     "setValues",
+                    "setValue",
+                    "setFontFamily",
                     "clearContent",
                     "setFormula",
                     "setNumberFormat",
@@ -499,6 +501,13 @@ describe("dry-down formulas and workbook installation", () => {
             },
             hideSheet: () => {
                 calls.push({ method: "hideSheet", name });
+            },
+            protect: () => {
+                const protection = {
+                    setDescription: () => protection,
+                    setWarningOnly: () => protection,
+                };
+                return protection;
             },
         });
         const sheets = new Map([["Baselines", makeSheet("Baselines")]]);
@@ -523,7 +532,7 @@ describe("dry-down formulas and workbook installation", () => {
         expect(context.installDryDownLearning()).toMatchObject({
             baselineColumns: 36,
             historyChanged: false,
-            loggerVersion: "5.24.1",
+            loggerVersion: "5.25.0",
             plants: 1,
         });
         expect(
@@ -548,11 +557,15 @@ describe("dry-down formulas and workbook installation", () => {
             33,
             34,
         ]);
-        expect(calls.filter((c) => c.method === "setFormula")).toHaveLength(1);
+        expect(calls.filter((c) => c.method === "setFormula")).toHaveLength(4);
         expect(
             calls
                 .filter((c) => c.method === "clearContent")
-                .every((c) => c.name === "Dry-down models")
+                .every((c) =>
+                    ["Dry-down models", "Workbook calculations"].includes(
+                        c.name ?? ""
+                    )
+                )
         ).toBe(true);
         expect(calls.some((c) => c.name === "History")).toBe(false);
         expect(calls).toContainEqual({
@@ -564,7 +577,7 @@ describe("dry-down formulas and workbook installation", () => {
 
         context.refreshDryDownModels_(spreadsheet);
 
-        expect(sheets.size).toBe(2);
+        expect(sheets.size).toBe(3);
     });
 });
 

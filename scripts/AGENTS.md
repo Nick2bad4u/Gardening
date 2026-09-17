@@ -14,6 +14,10 @@
   `test:unit` files for Node changes. Browser and Apps Script APIs have separate
   checks; a function working in current Node does not prove those runtimes
   support it.
+- Native workbook request builders under `google-sheets/` run in Node; they
+  are not part of the clasp upload. Keep exported Apps Script snippets free
+  of Node-only syntax/APIs and validate their actual emitted source in a
+  disposable bound script before a production release.
 
 ## Generated outputs
 

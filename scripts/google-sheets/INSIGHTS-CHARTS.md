@@ -1,6 +1,9 @@
 # Insights dry-down charts
 
-The native **Insights** sheet has 23 charts. Its dry-down explorer starts at
+The analytics upgrade extends the native **Insights** sheet from 23 to **25
+charts**. Deployment is pending; see the
+[analytics rollout record](WORKBOOK-ANALYTICS.md#rollout-record) for verified
+status. Its dry-down explorer starts at
 **A226**; choose **P01–P30 in B228** in the current native layout. The selected
 plant's care guidance, predicted dry-check date, and earliest/latest window
 appear above the graphs. The selected plant's **Current weight difference (g)**
@@ -22,8 +25,9 @@ appears in **N228:R228**, and its collection comparison starts at **A586**.
 | Forecast basis                    | How much of the collection has current-cycle, historical, or incomplete evidence? |
 
 The existing drying-rate chart reads **Baselines AE** and is labeled as a modeled
-rate. The existing 20 Insights charts share Roboto text, 18-point green titles, and
-11-point subtitles and axis titles. Each plant has a permanent, distinct color
+rate. Charts use **JetBrains Mono**, including title, axis, subtitle, and
+data-label overrides; existing chart sizing and presentation remain intact.
+Each plant has a permanent, distinct color
 defined in [`plant-colors.json`](plant-colors.json). The visible **Plant colors**
 sheet lists all 30 IDs, full plant names, color names, hex values, swatches, and
 links to their individual charts. These are arbitrary identity colors, unrelated
@@ -52,8 +56,8 @@ other Insights charts. Individual plant charts retain their existing layout.
 ## Recent weight comparisons
 
 The recent-weight additions use current-cycle measured readings and actual
-elapsed time. **Dashboard Z:AE** and **Daily care I:N** show the same five metrics
-and the curve's inspection prompt.
+elapsed time. **Dashboard Z:AE** shows the five metrics and the curve's
+inspection prompt. Daily care is retired; use the daily report for care planning.
 
 | Location      | Comparison                                                      |
 | ------------- | --------------------------------------------------------------- |
@@ -75,6 +79,36 @@ four chart specifications with [`recent-weights.mjs`](recent-weights.mjs);
 do not replay an older chart migration. See the
 [forecast rules](README.md#recent-weights-and-curve-inspection-5220) for the
 plateau heuristic and species exceptions.
+
+## Watering history and cycle comparison
+
+After the analytics migration, the linked index in **Insights A2** jumps to
+Watering history, Current cycle, Collection comparisons, and Model evidence.
+The two additional charts occupy new space below the existing graphs:
+
+| Location      | Comparison                                             | Interpretation                                                                              |
+| ------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| Insights A790 | Latest versus previous completed watering gap          | Whole calendar-day gaps, permanent P01–P30 order and colors; unavailable values stay blank. |
+| Insights A840 | Selected plant's current and last two completed cycles | Actual days after watering against measured whole-pot grams, within the current setup.      |
+
+Both cycle views use the selector at **B228**. The new comparison's selected
+plant name and watering-date key are in **A837:R839**. Solid circles identify
+the current cycle, dotted diamonds the previous cycle, and dashed squares the
+older cycle. Only available cycles appear. Follow the dated key when comparing
+curves; their shapes describe recorded weight changes rather than watering
+instructions. The comparison reuses the logger's correction and eligibility
+rules and preserves actual elapsed time across daylight-saving changes.
+
+Plant pages also show latest, median, shortest, and longest completed watering
+gaps with the interval count. One interval is a recorded example, not an
+established pattern. A single ruler measurement remains a size baseline;
+estimated dimensions do not establish a measured growth rate.
+
+The **Calculated as of** value at **Insights T2** discloses the shared clock's
+last calculation. It may be cached during an API read. Keep absolute observation
+times and the daily report's evidence review alongside elapsed-age values.
+See the [analytics operator guide](WORKBOOK-ANALYTICS.md) for the calendar,
+per-plant evidence, formula ownership, and migration checks.
 
 ## Reading the graphs
 
@@ -137,7 +171,8 @@ cells. Apply `helperRequests`, verify the calculated intervals and status
 labels, then apply `chartRequests`. Preserve existing charts and their colors;
 the additions use `plant-colors.json`. No logger version change, Apps Script
 deployment, or AppSheet regeneration is needed. Do not run the broad page
-refresh to install these charts; it clears the A109 status labels.
+refresh to install these charts. The current page builder preserves the
+summary/status area, but a full refresh still rebuilds other presentation.
 
 Google Sheets omits series styling when a chart has no numeric observations.
 Its range binding survives: a copy-only second-watering test confirmed that
@@ -146,6 +181,14 @@ default bar color and omit the bar-top label until its planned specification
 is reapplied with `updateChartSpec` after its first interval exists. A109 still
 shows the exact latest gap automatically. Do not seed fake observations or
 add a trigger just to force an empty chart's cosmetic settings.
+
+`buildWateringIntervalStyleRepairRequests(snapshot, plantIds, options)` provides a guarded
+repair for existing populated charts. It verifies their IDs, anchors, bindings,
+and real interval evidence supplied in `options.completedIntervalsByPlant`
+before restoring the plant color, data labels, and
+numeric axis settings. Preserve the chart IDs and positions. P24–P26 are the
+identified targets in the analytics rehearsal; record verified production
+results in the [rollout record](WORKBOOK-ANALYTICS.md#rollout-record).
 
 ### Shared migration workflow
 
