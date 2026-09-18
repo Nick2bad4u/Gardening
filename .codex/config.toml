@@ -1,3 +1,7 @@
+# Configuration file for Codex
+# .codex/config.toml
+#:schema https://learn.chatgpt.com/docs/config-schema.json
+
 web_search              = "live"
 model_verbosity         = "high"
 model_reasoning_summary = "detailed"
@@ -5,6 +9,7 @@ model_reasoning_summary = "detailed"
 [mcp_servers.playwright]
     enabled             = true
     startup_timeout_sec = 60
+    name                = "playwright"
     tool_timeout_sec    = 60
     command             = "npx"
     args                = [ "-y", "@playwright/mcp" ]
@@ -12,6 +17,15 @@ model_reasoning_summary = "detailed"
 [mcp_servers."storybook mcp addon"]
     enabled             = true
     startup_timeout_sec = 60
+    name                = "Storybook MCP Addon"
     tool_timeout_sec    = 60
     command             = "npx"
     args                = [ "-y", "@storybook/addon-mcp", "--port", "6006" ]
+
+[mcp_servers.astro-docs]
+    enabled             = true
+    startup_timeout_sec = 60
+    name                = "astro-docs"
+    tool_timeout_sec    = 60
+    command             = "npx"
+    args                = [ "-y", "mcp-remote", "https://mcp.docs.astro.build/mcp" ]
