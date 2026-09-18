@@ -1,0 +1,1053 @@
+{
+    "aiRecommendation": [
+        "💧 I would water none from the reviewed evidence today, and I would add no fertilizer. No pot has a confirmed plateau; the dated photographs and current curves do not support an earlier watering exception.",
+        "⏳ I would hold #4: it is 7 g below its corrected reference but still loses 6.80 g/day over the latest interval. I would also hold #6: its broader curve is slower, yet the newest interval increased to 1.80 g/day and its four-point spread still fails the plateau test. Their next useful weights are September 19, not another repeat today.",
+        "⚖️ I would weigh G2 and #2 this evening. G2 needs its promised sample before the earliest historical window; #2’s measured 58.54 g/day decline makes a current position more useful than waiting for its forecast date.",
+        "⚖️ I would skip repeat weighing for A1, A2, B3, D3, F2, G1, #3, #4, #5 and #6 after the overnight readings. Keep the remaining intermediate samples anchored to September 19; A1, A2 and G1 also merit follow-up then because their reference margins are narrowing.",
+        "👀 I would check #3’s upper mix beneath the dressing and compare its leaflets, keep G3 on the inner-firmness/outer-shrinkage leaf-cycle check, and inspect H3’s strands before assigning a cause. H1’s perlite, H2’s normal condition, the likely old C1/F2 marks and the withdrawn #2 concern do not need added health tasks."
+    ],
+    "coverage": "complete",
+    "date": "2026-09-18",
+    "generatedAt": "2026-09-18T13:58:24.360Z",
+    "mixes": [],
+    "notes": [
+        "Fresh read-only workbook review: September 18 at 9:50:33 a.m. Eastern. All 30 active pots/shared containers were reviewed from 1,029 canonical observations, tracker, baselines, models, Dashboard, Integrity and relevant detail pages. No care entries or workbook changes were made.",
+        "Today: 0 Water, 1 reference-only (#4), 2 requested weigh-ins (G2 and #2), 3 Check-only (G3, H3 and #3), and 24 with no action today. No watering candidates with a confirmed plateau today. No watering mix is assigned.",
+        "Ten new weights were recorded September 18 between 2:20 and 2:30 a.m.: A1, A2, B3, D3, F2, G1 and #3–#6. These fall before the 4 a.m. care-day rollover but are only about seven hours old at the source read. They satisfy earlier follow-ups; rollover alone is not a reason to weigh them again. No new Water, Check, Photo or Repot was recorded.",
+        "The remaining small-pot intermediate samples stay on September 19: A3, B1, B2, C1, C2, C3, D1, D2, E1, E2, E3, F1, F3 and H1–H3. #1 also keeps its September 19 follow-up. These are anchored observation windows, not watering dates or an indefinitely deferred schedule.",
+        "The September 16 drainage-opening changes have no measured pot/medium mass correction. A2, B3, D3, F2 and G1 now have intervals crossing that change; do not call their whole decline water loss or borrow it as another pot’s drying rate. A1’s newest interval is entirely after the change. The dry top-dressing offsets for #3 (+108 g) and #4 (+150.5 g) are already in the history; use actual new scale readings without applying them again.",
+        "All 32 attached photos retain their September 16 capture dates and verified capture bindings. Relevant H3, G3 and #3–#6 views were re-inspected from preserved local QA crops; Pages-hosted previews are accessible. Direct Gyazo image/page requests returned HTTP 502 during this review, so fresh full-resolution online access was unavailable. These are historical photos, not new observations or physical moisture, firmness, root-health or pest checks. Owner clarifications remain applied: H1 is perlite, H2 is normal, C1/F2 marks are probably shipping/store damage, and #2’s extra photo concern is withdrawn.",
+        "Actual nutrient history and the current MSU plan were reviewed separately. A1–F3 received MSU 13-3-15 at 0.75 g/US gallon September 14; H1–H3 received no nutrients September 16; #3’s September 13 Foliage-Pro event counts as a completed feed. No qualifying watering session or AI exception is recommended, so no fertilizer or plain-RO recipe is prescribed today.",
+        "The checked-in detector and live logger are 5.25.0 (immutable version 92); all 660 live model cells agree with fresh local analysis. Integrity reports no formula errors, duplicate/missing observation IDs or active trend-review flags. #5/#6 still lack completed dry references. The Sheet’s cached calculation clock was 6:28 a.m.; this report uses the fresh source-read time and absolute observation timestamps instead of cached age displays.",
+        "Reference-only means hold watering while plateau is unconfirmed. Water candidates have a confirmed plateau; water only if your usual moisture/readiness check confirms they are ready. Dry-reference-only pots stay out of the Water list. If a pot is actually watered following a supported readiness decision, weigh it after drainage; that conditional weight is separate from today’s two requested weigh-ins."
+    ],
+    "pots": [
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 361.5,
+            "id": "P01",
+            "label": "A1",
+            "latest": { "at": "2026-09-18T06:28:27.474Z", "grams": 397 },
+            "metricsNote": "The newest 412 → 397 g interval spans 1.10 days and both readings follow the drainage-opening change. It lost 13.64 g/day; three suitably separated tail readings are still insufficient for the four-point plateau assessment. Last-three mean: 411.50 g; signed change over their actual span: -14.59 g/day.",
+            "mixId": null,
+            "name": "Variegated moon cactus",
+            "photos": [
+                {
+                    "alt": "A1, Variegated moon cactus: dark-green ribbed globe with bronze and red sectors, pale areoles and sparse long spines.",
+                    "caption": "A1 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:09:59-04:00",
+                    "findings": [
+                        "Dark-green ribbed globe with bronze and red sectors, pale areoles and sparse long spines.",
+                        "Color alone does not establish a new stress problem in this variegated plant.",
+                        "Comparison: retain the same face and lighting to judge future color or shape changes."
+                    ],
+                    "height": 6261,
+                    "imageUrl": "https://i.gyazo.com/133ec25058b5878a0760d143de6e4d7f.png",
+                    "limitations": "AI photo-only review. The base is hidden; one view cannot establish changes in color or size. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/133ec25058b5878a0760d143de6e4d7f",
+                    "width": 6578
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": { "at": "2026-09-17T04:04:26.925Z", "grams": 412 },
+            "reason": "none",
+            "recommendation": "The 2:28 a.m. September 18 reading satisfies the requested follow-up. No repeat weighing or watering today. The latest 397 g remains 35.5 g above the dry reference. Follow up September 19 to check whether the continuing post-modification decline slows."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 347.5,
+            "id": "P02",
+            "label": "A2",
+            "latest": { "at": "2026-09-18T06:28:11.841Z", "grams": 375.5 },
+            "metricsNote": "The latest interval crosses the September 16 drainage-opening modification. Pot or medium loss was not measured; the calculated mass change is not necessarily all water loss. Only two suitably separated current-cycle points exist, so the plateau assessment is unavailable.",
+            "mixId": null,
+            "name": "Feather cactus",
+            "photos": [
+                {
+                    "alt": "A2, Feather cactus: rounded clustered heads carry dense white featherlike spines and cream crown areas.",
+                    "caption": "A2 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:09:56-04:00",
+                    "findings": [
+                        "Rounded clustered heads carry dense white featherlike spines and cream crown areas.",
+                        "The spine coat conceals most of the skin and the bases.",
+                        "Comparison: watch for a new localized patch or change in head shape, rather than judging wool color alone."
+                    ],
+                    "height": 5830,
+                    "imageUrl": "https://i.gyazo.com/3f987aed742abc212d79b9fb13fd29f4.png",
+                    "limitations": "AI photo-only review. Spines hide the skin and bases; hidden pests or damage cannot be excluded. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/3f987aed742abc212d79b9fb13fd29f4",
+                    "width": 6088
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": { "at": "2026-09-15T20:30:44.618Z", "grams": 444 },
+            "reason": "none",
+            "recommendation": "Already weighed at 2:28 a.m.; no repeat today. The latest 375.5 g is only 28 g above its reference, so take the next time-spaced sample September 19 rather than relying only on the historical forecast. Hold watering."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 321.5,
+            "id": "P03",
+            "label": "A3",
+            "latest": { "at": "2026-09-15T20:36:29.18Z", "grams": 414 },
+            "metricsNote": "Only one eligible current-cycle reading is available, so last-two change and sustained-plateau assessment are unavailable. This weight predates the September 16 drainage-opening modification; any unmeasured pot or medium loss must not be called water loss.",
+            "mixId": null,
+            "name": "Serpent cactus",
+            "photos": [
+                {
+                    "alt": "A3, Serpent cactus: the sideways green body has pale areoles, thin spines and a brighter ridge and tip.",
+                    "caption": "A3 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:30-04:00",
+                    "findings": [
+                        "The sideways green body has pale areoles, thin spines and a brighter ridge and tip.",
+                        "This unusual outline is also present in the archived August photograph.",
+                        "Comparison: use the same angle to follow the growing ridge; differing views do not measure growth."
+                    ],
+                    "height": 6399,
+                    "imageUrl": "https://i.gyazo.com/59e7c70fdc65683ce5c0803c33882922.webp",
+                    "limitations": "AI photo-only review. Hidden surfaces are unassessed; differing camera angles prevent a growth measurement. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/59e7c70fdc65683ce5c0803c33882922",
+                    "width": 7018
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "none",
+            "recommendation": "No watering or weighing is requested today. Keep the intermediate sample anchored to September 19, within the already planned September 18–19 window. This will establish a reading after the drainage-opening modification; do not wait unobserved until the broad historical forecast."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 317.5,
+            "id": "P04",
+            "label": "B1",
+            "latest": { "at": "2026-09-15T20:30:55.245Z", "grams": 404 },
+            "metricsNote": "Only one eligible current-cycle reading is available, so last-two change and sustained-plateau assessment are unavailable. This weight predates the September 16 drainage-opening modification; any unmeasured pot or medium loss must not be called water loss.",
+            "mixId": null,
+            "name": "Grass-blade cactus",
+            "photos": [
+                {
+                    "alt": "B1, Grass-blade cactus: a green globe has closely folded ribs, regular white areole wool and red-to-tan spines.",
+                    "caption": "B1 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:01-04:00",
+                    "findings": [
+                        "A green globe has closely folded ribs, regular white areole wool and red-to-tan spines.",
+                        "The crown retains its visible structure; regular wool is not itself a pest finding.",
+                        "Comparison: check any new irregular material separately from the normal areole tufts."
+                    ],
+                    "height": 6775,
+                    "imageUrl": "https://i.gyazo.com/fb9e1a0ba47e563fdc24016d726816f0.png",
+                    "limitations": "AI photo-only review. Only upper surfaces are shown; the base and lower side are hidden. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/fb9e1a0ba47e563fdc24016d726816f0",
+                    "width": 7296
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "none",
+            "recommendation": "No watering or weighing is requested today. Keep the intermediate sample anchored to September 19, within the already planned September 18–19 window. This will establish a reading after the drainage-opening modification; do not wait unobserved until the broad historical forecast."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 380.5,
+            "id": "P05",
+            "label": "B2",
+            "latest": { "at": "2026-09-15T20:34:41.518Z", "grams": 490 },
+            "metricsNote": "Only one eligible current-cycle reading is available, so last-two change and sustained-plateau assessment are unavailable. This weight predates the September 16 drainage-opening modification; any unmeasured pot or medium loss must not be called water loss.",
+            "mixId": null,
+            "name": "Old Man of the Andes",
+            "photos": [
+                {
+                    "alt": "B2, Old Man of the Andes: an upright column has long white hairs, orange-brown central spines and glimpses of green skin.",
+                    "caption": "B2 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:11-04:00",
+                    "findings": [
+                        "An upright column has long white hairs, orange-brown central spines and glimpses of green skin.",
+                        "Much of the stem is covered by the hair coat.",
+                        "Comparison: retain this view for changes in exposed tissue, crown shape or localized patches."
+                    ],
+                    "height": 6519,
+                    "imageUrl": "https://i.gyazo.com/b64e95b60a160a79d28a0d47b199b5a2.png",
+                    "limitations": "AI photo-only review. Dense hair hides most of the stem and base. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/b64e95b60a160a79d28a0d47b199b5a2",
+                    "width": 5712
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "none",
+            "recommendation": "No watering or weighing is requested today. Keep the intermediate sample anchored to September 19, within the already planned September 18–19 window. This will establish a reading after the drainage-opening modification; do not wait unobserved until the broad historical forecast."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 343.5,
+            "id": "P06",
+            "label": "B3",
+            "latest": { "at": "2026-09-18T06:29:33.122Z", "grams": 393.5 },
+            "metricsNote": "The latest interval crosses the September 16 drainage-opening modification. Pot or medium loss was not measured; the calculated mass change is not necessarily all water loss. Only two suitably separated current-cycle points exist, so the plateau assessment is unavailable.",
+            "mixId": null,
+            "name": "Indigo Wave",
+            "photos": [
+                {
+                    "alt": "B3, Indigo Wave: blue-green fan-shaped ridges and upright shoots have greener tips and surface patches.",
+                    "caption": "B3 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:41-04:00",
+                    "findings": [
+                        "Blue-green fan-shaped ridges and upright shoots have greener tips and surface patches.",
+                        "The large left fan projects over the pot rim; the irregular form is documented for this plant.",
+                        "Comparison: preserve the full silhouette when following future shape changes."
+                    ],
+                    "height": 8493,
+                    "imageUrl": "https://i.gyazo.com/310a133683310c526002d8cf4014da1c.webp",
+                    "limitations": "AI photo-only review. The photograph cannot establish the cause of greener patches or measure growth. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/310a133683310c526002d8cf4014da1c",
+                    "width": 11017
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": { "at": "2026-09-15T20:27:16.112Z", "grams": 449.5 },
+            "reason": "none",
+            "recommendation": "The 2:29 a.m. reading completes the intermediate sample. No repeat weight or watering today. At 393.5 g it remains 50 g above reference; a follow-up September 19–20 can begin a rate based entirely on readings after the modification."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 361,
+            "id": "P07",
+            "label": "C1",
+            "latest": { "at": "2026-09-15T20:22:45.45Z", "grams": 463.5 },
+            "metricsNote": "Only one eligible current-cycle reading is available, so last-two change and sustained-plateau assessment are unavailable. This weight predates the September 16 drainage-opening modification; any unmeasured pot or medium loss must not be called water loss.",
+            "mixId": null,
+            "name": "Giant chin cactus",
+            "photos": [
+                {
+                    "alt": "C1, Giant chin cactus: dark-green rounded ribs surround the crown, with long curved dark spines.",
+                    "caption": "C1 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:55-04:00",
+                    "findings": [
+                        "Dark-green rounded ribs surround the crown, with long curved dark spines.",
+                        "Small cream-to-tan oval marks are visible low on the front-left rib.",
+                        "Owner clarification, September 16: the tan spots are probably physical damage from shipping or the store. This is the owner's likely explanation, not a confirmed diagnosis.",
+                        "Retain this dated photograph as a baseline; no separate inspection is requested today."
+                    ],
+                    "height": 5876,
+                    "imageUrl": "https://i.gyazo.com/3ac7f532f232c8980a50fad95de14785.webp",
+                    "limitations": "Photo interpretation supplemented by the owner's likely explanation. Cause and progression have not been independently established. Root-zone moisture, tissue firmness and root health were not measured in this photo review.",
+                    "pageUrl": "https://gyazo.com/3ac7f532f232c8980a50fad95de14785",
+                    "width": 5141
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "none",
+            "recommendation": "No special photo inspection or watering is requested. The owner considers the tan marks likely physical damage from shipping or store handling. Keep the intermediate weigh-in on September 19 and retain the dated photograph as the comparison baseline."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 380.5,
+            "id": "P08",
+            "label": "C2",
+            "latest": { "at": "2026-09-15T20:32:29.474Z", "grams": 473.5 },
+            "metricsNote": "Only one eligible current-cycle reading is available, so last-two change and sustained-plateau assessment are unavailable. This weight predates the September 16 drainage-opening modification; any unmeasured pot or medium loss must not be called water loss.",
+            "mixId": null,
+            "name": "Rainbow hedgehog cactus",
+            "photos": [
+                {
+                    "alt": "C2, Rainbow hedgehog cactus: an upright oval body has dense pale radial spines and pink-red coloring near the crown.",
+                    "caption": "C2 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:47-04:00",
+                    "findings": [
+                        "An upright oval body has dense pale radial spines and pink-red coloring near the crown.",
+                        "Green tissue is visible between some spine rows.",
+                        "Comparison: use a similar angle to follow crown and body proportions."
+                    ],
+                    "height": 6840,
+                    "imageUrl": "https://i.gyazo.com/dbdcc10a52ebc1826b139daecb76acec.webp",
+                    "limitations": "AI photo-only review. Spines cover much of the skin, and the base is hidden. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/dbdcc10a52ebc1826b139daecb76acec",
+                    "width": 6693
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "none",
+            "recommendation": "No watering or weighing is requested today. Keep the intermediate sample anchored to September 19, within the already planned September 18–19 window. This will establish a reading after the drainage-opening modification; do not wait unobserved until the broad historical forecast."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 340.5,
+            "id": "P09",
+            "label": "C3",
+            "latest": { "at": "2026-09-15T20:26:33.982Z", "grams": 429.5 },
+            "metricsNote": "Only one eligible current-cycle reading is available, so last-two change and sustained-plateau assessment are unavailable. This weight predates the September 16 drainage-opening modification; any unmeasured pot or medium loss must not be called water loss.",
+            "mixId": null,
+            "name": "Monk's hood cactus",
+            "photos": [
+                {
+                    "alt": "C3, Monk's hood cactus: the green star-ribbed body carries white flecks, pale woolly areoles and long tan-brown spines.",
+                    "caption": "C3 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:45-04:00",
+                    "findings": [
+                        "The green star-ribbed body carries white flecks, pale woolly areoles and long tan-brown spines.",
+                        "White flecks and regular areole wool match the documented appearance.",
+                        "Comparison: retain this view of the crown and lower visible ribs."
+                    ],
+                    "height": 6610,
+                    "imageUrl": "https://i.gyazo.com/c3a5a3532b31929433bf0b5350e0f805.webp",
+                    "limitations": "AI photo-only review. Hidden surfaces and tissue beneath the dressing are unassessed. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/c3a5a3532b31929433bf0b5350e0f805",
+                    "width": 6203
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "none",
+            "recommendation": "No watering or weighing is requested today. Keep the intermediate sample anchored to September 19, within the already planned September 18–19 window. This will establish a reading after the drainage-opening modification; do not wait unobserved until the broad historical forecast."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 363,
+            "id": "P10",
+            "label": "D1",
+            "latest": { "at": "2026-09-15T20:28:38.866Z", "grams": 448.5 },
+            "metricsNote": "Only one eligible current-cycle reading is available, so last-two change and sustained-plateau assessment are unavailable. This weight predates the September 16 drainage-opening modification; any unmeasured pot or medium loss must not be called water loss.",
+            "mixId": null,
+            "name": "Dragon's Egg (probable Euphorbia obesa-type hybrid)",
+            "photos": [
+                {
+                    "alt": "D1, Dragon's Egg, probable Euphorbia obesa-type hybrid or selection: the rounded gray-green body has regular ribs, tan rib structures and a small purplish crown area.",
+                    "caption": "D1 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:43-04:00",
+                    "findings": [
+                        "The rounded gray-green body has regular ribs, tan rib structures and a small purplish crown area.",
+                        "The regular tan structures are not an identified pest finding.",
+                        "Comparison: use similar future views to follow crown and base appearance."
+                    ],
+                    "height": 6335,
+                    "imageUrl": "https://i.gyazo.com/779815a486d62a1371aab18680feb547.webp",
+                    "limitations": "AI photo-only review. The base is partly hidden; this view cannot identify every surface structure. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/779815a486d62a1371aab18680feb547",
+                    "width": 7051
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "none",
+            "recommendation": "No watering or weighing is requested today. Keep the intermediate sample anchored to September 19, within the already planned September 18–19 window. This will establish a reading after the drainage-opening modification; do not wait unobserved until the broad historical forecast."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 369,
+            "id": "P11",
+            "label": "D2",
+            "latest": { "at": "2026-09-15T20:23:21.044Z", "grams": 473 },
+            "metricsNote": "Only one eligible current-cycle reading is available, so last-two change and sustained-plateau assessment are unavailable. This weight predates the September 16 drainage-opening modification; any unmeasured pot or medium loss must not be called water loss.",
+            "mixId": null,
+            "name": "Domino cactus",
+            "photos": [
+                {
+                    "alt": "D2, Domino cactus: a compact green ribbed body has regular white woolly areoles and an intact-looking crown.",
+                    "caption": "D2 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:54-04:00",
+                    "findings": [
+                        "A compact green ribbed body has regular white woolly areoles and an intact-looking crown.",
+                        "A few small tan or pale marks are visible on the upper ribs.",
+                        "Comparison: obtain a closer image if a discrete mark changes."
+                    ],
+                    "height": 5371,
+                    "imageUrl": "https://i.gyazo.com/5ef804d947d111115c9ae90966b1eca7.webp",
+                    "limitations": "AI photo-only review. The base and lower side are partly hidden; mark causes are unknown. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/5ef804d947d111115c9ae90966b1eca7",
+                    "width": 5779
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "none",
+            "recommendation": "No watering or weighing is requested today. Keep the intermediate sample anchored to September 19, within the already planned September 18–19 window. This will establish a reading after the drainage-opening modification; do not wait unobserved until the broad historical forecast."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 317.5,
+            "id": "P12",
+            "label": "D3",
+            "latest": { "at": "2026-09-18T06:27:52.986Z", "grams": 396.5 },
+            "metricsNote": "The latest interval crosses the September 16 drainage-opening modification. Pot or medium loss was not measured; the calculated mass change is not necessarily all water loss. Only two suitably separated current-cycle points exist, so the plateau assessment is unavailable.",
+            "mixId": null,
+            "name": "Ming Thing",
+            "photos": [
+                {
+                    "alt": "D3, Ming Thing: dense blue-green knobby stems have rounded tips and regularly placed pale areoles.",
+                    "caption": "D3 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:09:53-04:00",
+                    "findings": [
+                        "Dense blue-green knobby stems have rounded tips and regularly placed pale areoles.",
+                        "The exposed cluster retains its shape in this upper view.",
+                        "Comparison: use this as a dated baseline for localized color or shape changes."
+                    ],
+                    "height": 6335,
+                    "imageUrl": "https://i.gyazo.com/54b148c1d21ee20b5610a9fd78a78d60.png",
+                    "limitations": "AI photo-only review. Inner folds and stem bases are partly hidden. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/54b148c1d21ee20b5610a9fd78a78d60",
+                    "width": 6561
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": { "at": "2026-09-15T20:36:17.15Z", "grams": 437.5 },
+            "reason": "none",
+            "recommendation": "The 2:27 a.m. reading supplies the intermediate sample. No repeat weight or watering today. It remains 79 g above reference; September 20 is a useful next sample, before the broad historical window and without restarting daily weighing automatically."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 366,
+            "id": "P13",
+            "label": "E1",
+            "latest": { "at": "2026-09-15T20:32:43.678Z", "grams": 439.5 },
+            "metricsNote": "Only one eligible current-cycle reading is available, so last-two change and sustained-plateau assessment are unavailable. This weight predates the September 16 drainage-opening modification; any unmeasured pot or medium loss must not be called water loss.",
+            "mixId": null,
+            "name": "Dwarf old man cactus (likely Espostoa melanostele subsp. nana)",
+            "photos": [
+                {
+                    "alt": "E1, Dwarf old man cactus: a compact upright column has a continuous cream-white wool coat and a rounded crown.",
+                    "caption": "E1 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:07-04:00",
+                    "findings": [
+                        "A compact upright column has a continuous cream-white wool coat and a rounded crown.",
+                        "The wool is a documented feature of this plant.",
+                        "Comparison: obtain a sharper side or base view if a localized concern appears."
+                    ],
+                    "height": 6151,
+                    "imageUrl": "https://i.gyazo.com/90399e885ccf0f7b1573217e28a195e7.png",
+                    "limitations": "AI photo-only review. Soft focus and dense wool obscure most of the skin and base. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/90399e885ccf0f7b1573217e28a195e7",
+                    "width": 6447
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "none",
+            "recommendation": "No watering or weighing is requested today. Keep the intermediate sample anchored to September 19, within the already planned September 18–19 window. This will establish a reading after the drainage-opening modification; do not wait unobserved until the broad historical forecast."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 325,
+            "id": "P14",
+            "label": "E2",
+            "latest": { "at": "2026-09-15T20:22:06.245Z", "grams": 434 },
+            "metricsNote": "Only one eligible current-cycle reading is available, so last-two change and sustained-plateau assessment are unavailable. This weight predates the September 16 drainage-opening modification; any unmeasured pot or medium loss must not be called water loss.",
+            "mixId": null,
+            "name": "Chamaelobivia / peanut cactus hybrid",
+            "photos": [
+                {
+                    "alt": "E2, Chamaelobivia / peanut cactus hybrid: a crowded green cluster combines short rounded stems with several longer leaning stems.",
+                    "caption": "E2 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:13-04:00",
+                    "findings": [
+                        "A crowded green cluster combines short rounded stems with several longer leaning stems.",
+                        "Regular pale-to-tan spines cover the visible stems.",
+                        "Comparison: follow the longer tips in later photographs before inferring a change in growth shape."
+                    ],
+                    "height": 7391,
+                    "imageUrl": "https://i.gyazo.com/938c636b21f294015c8fdb20fe74d270.png",
+                    "limitations": "AI photo-only review. The crowded interior and stem bases are hidden; no matched growth comparison was made. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/938c636b21f294015c8fdb20fe74d270",
+                    "width": 6529
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "none",
+            "recommendation": "No watering or weighing is requested today. Keep the intermediate sample anchored to September 19, within the already planned September 18–19 window. This will establish a reading after the drainage-opening modification; do not wait unobserved until the broad historical forecast."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 319,
+            "id": "P15",
+            "label": "E3",
+            "latest": { "at": "2026-09-15T20:25:58.679Z", "grams": 404 },
+            "metricsNote": "Only one eligible current-cycle reading is available, so last-two change and sustained-plateau assessment are unavailable. This weight predates the September 16 drainage-opening modification; any unmeasured pot or medium loss must not be called water loss.",
+            "mixId": null,
+            "name": "Woolly nipple cactus",
+            "photos": [
+                {
+                    "alt": "E3, Woolly nipple cactus: seven red club-shaped fruits are visible among green tubercles, spines and regular white wool.",
+                    "caption": "E3 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:04-04:00",
+                    "findings": [
+                        "Seven red club-shaped fruits are visible among green tubercles, spines and regular white wool.",
+                        "Seven is the visible count, not a complete plant total or an open-flower count.",
+                        "Comparison: track fruit persistence and appearance without removing them solely because they are present."
+                    ],
+                    "height": 6197,
+                    "imageUrl": "https://i.gyazo.com/86d82be6de04f96731de3f5aa43d7652.png",
+                    "limitations": "AI photo-only review. Hidden fruit and attachment undersides are not shown. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/86d82be6de04f96731de3f5aa43d7652",
+                    "width": 6725
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "none",
+            "recommendation": "No watering or weighing is requested today. Keep the intermediate sample anchored to September 19, within the already planned September 18–19 window. This will establish a reading after the drainage-opening modification; do not wait unobserved until the broad historical forecast."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 340,
+            "id": "P16",
+            "label": "F1",
+            "latest": { "at": "2026-09-15T20:24:02.646Z", "grams": 424.5 },
+            "metricsNote": "Only one eligible current-cycle reading is available, so last-two change and sustained-plateau assessment are unavailable. This weight predates the September 16 drainage-opening modification; any unmeasured pot or medium loss must not be called water loss.",
+            "mixId": null,
+            "name": "Hook-spined pincushion cactus (Mammillaria cf. rekoi)",
+            "photos": [
+                {
+                    "alt": "F1, Hook-spined pincushion cactus (Mammillaria cf. rekoi): a rounded green body carries pale radial spines and a golden-tan crown.",
+                    "caption": "F1 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:57-04:00",
+                    "findings": [
+                        "A rounded green body carries pale radial spines and a golden-tan crown.",
+                        "Brown material is visible low among the spines and dressing.",
+                        "Comparison: obtain a lower-side close-up if the discoloration changes; retain the cf. rekoi identity qualifier."
+                    ],
+                    "height": 4655,
+                    "imageUrl": "https://i.gyazo.com/012cf31b5b380ba885aa05a34daf5ecc.webp",
+                    "limitations": "AI photo-only review. Spines obscure the skin; the low material cannot be identified from this view. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/012cf31b5b380ba885aa05a34daf5ecc",
+                    "width": 4620
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "none",
+            "recommendation": "No watering or weighing is requested today. Keep the intermediate sample anchored to September 19, within the already planned September 18–19 window. This will establish a reading after the drainage-opening modification; do not wait unobserved until the broad historical forecast."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 339,
+            "id": "P17",
+            "label": "F2",
+            "latest": { "at": "2026-09-18T06:29:06.892Z", "grams": 381.5 },
+            "metricsNote": "The latest interval crosses the September 16 drainage-opening modification. Pot or medium loss was not measured; the calculated mass change is not necessarily all water loss. Only two suitably separated current-cycle points exist, so the plateau assessment is unavailable.",
+            "mixId": null,
+            "name": "Boobie cactus",
+            "photos": [
+                {
+                    "alt": "F2, Boobie cactus: an upright green lobed column has a lighter apex and a tan band at the dressing line.",
+                    "caption": "F2 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:52-04:00",
+                    "findings": [
+                        "An upright green lobed column has a lighter apex and a tan band at the dressing line.",
+                        "Scattered small tan-beige spots and uneven pale surface coating are visible.",
+                        "Owner clarification, September 16: the tan spots are probably physical damage from shipping or the store. This is the owner's likely explanation, not a confirmed diagnosis.",
+                        "Retain this dated photograph as a baseline; no separate inspection is requested today."
+                    ],
+                    "height": 8308,
+                    "imageUrl": "https://i.gyazo.com/20723c224b42a92a6ba2468357c59b73.webp",
+                    "limitations": "Photo interpretation supplemented by the owner's likely explanation. Cause and progression have not been independently established. Root-zone moisture, tissue firmness and root health were not measured in this photo review.",
+                    "pageUrl": "https://gyazo.com/20723c224b42a92a6ba2468357c59b73",
+                    "width": 6202
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": { "at": "2026-09-15T20:24:54.437Z", "grams": 411.5 },
+            "reason": "none",
+            "recommendation": "The 2:29 a.m. reading completes the requested intermediate sample. No repeat weighing, watering or special photo inspection today. The owner considers the tan marks likely old physical damage. Follow up September 19–20 to assess the 42.5 g remaining reference margin with a comparable interval."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 339,
+            "id": "P18",
+            "label": "F3",
+            "latest": { "at": "2026-09-15T20:21:14.694Z", "grams": 422.5 },
+            "metricsNote": "Only one eligible current-cycle reading is available, so last-two change and sustained-plateau assessment are unavailable. This weight predates the September 16 drainage-opening modification; any unmeasured pot or medium loss must not be called water loss.",
+            "mixId": null,
+            "name": "Yellow tower cactus",
+            "photos": [
+                {
+                    "alt": "F3, Yellow tower cactus: an upright green ribbed column carries yellow-gold spines and a denser golden crown.",
+                    "caption": "F3 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:49-04:00",
+                    "findings": [
+                        "An upright green ribbed column carries yellow-gold spines and a denser golden crown.",
+                        "The visible silhouette is intact; neighboring white-haired stems belong to the shared planter.",
+                        "Comparison: retain the crown and exposed-side view as a baseline."
+                    ],
+                    "height": 5692,
+                    "imageUrl": "https://i.gyazo.com/52a26a07576435ef8995096302381bbb.webp",
+                    "limitations": "AI photo-only review. The back and tissue below the dressing are hidden. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/52a26a07576435ef8995096302381bbb",
+                    "width": 4896
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "none",
+            "recommendation": "No watering or weighing is requested today. Keep the intermediate sample anchored to September 19, within the already planned September 18–19 window. This will establish a reading after the drainage-opening modification; do not wait unobserved until the broad historical forecast."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-04T04:45:00Z",
+            "dryReferenceGrams": 3692,
+            "id": "P19",
+            "label": "#1",
+            "latest": { "at": "2026-09-17T03:49:08.149Z", "grams": 4189 },
+            "metricsNote": "The latest interval lost 229 g over 3.93 days (58.29 g/day). The selected tail still loses 54.08 g/day versus 61.22 earlier, so a sustained plateau is not supported. The distant model window does not justify waiting until October for another sample. Last-three mean: 4380.67 g; signed change over their actual span: -57.60 g/day.",
+            "mixId": null,
+            "name": "Shared rehab cactus planter",
+            "photos": [
+                {
+                    "alt": "#1, Shared rehab cactus planter, left panel: a green-yellow blue-torch column and white-haired monkey-tail stems.",
+                    "caption": "#1 · Shared planter, left panel · September 16",
+                    "capturedAt": "2026-09-16T15:11:13-04:00",
+                    "findings": [
+                        "The left panel shows the green-yellow blue-torch column and part of the white-haired monkey-tail group.",
+                        "Yellow sectors are a documented feature of this variegated column; the tallest tip was already clipped by the original photograph.",
+                        "Read with the overlapping right panel to review this shared container as one pot."
+                    ],
+                    "height": 9180,
+                    "imageUrl": "https://i.gyazo.com/a544d1a3f5a1f64e806dc13b69616581.webp",
+                    "limitations": "AI photo-only review. This is one of two overlapping panels from the same photograph; read both together. The original frame clips the tallest tip and lower tails, and neighboring pots partly overlap the view. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/a544d1a3f5a1f64e806dc13b69616581",
+                    "width": 5630
+                },
+                {
+                    "alt": "#1, Shared rehab cactus planter, right panel: a green golden-torch column and white-haired monkey-tail stems.",
+                    "caption": "#1 · Shared planter, right panel · September 16",
+                    "capturedAt": "2026-09-16T15:11:13-04:00",
+                    "findings": [
+                        "The right panel shows the green golden-torch column and the overlapping monkey-tail stems.",
+                        "Some monkey-tail stem areas have tan marks; white hair is a documented feature, and this photograph does not establish the cause or progression of the marks.",
+                        "Future comparison: these panels document the single shared-container Check recorded September 16. A later full-height view can help compare any changing tan areas; no new photograph or physical check is requested today."
+                    ],
+                    "height": 9180,
+                    "imageUrl": "https://i.gyazo.com/a6f8e642b6c3fb5d5b1b7bc893d6bd02.webp",
+                    "limitations": "AI photo-only review. This is one of two overlapping panels from the same photograph; read both together. The original frame clips the tallest tip and lower tails, and neighboring pots partly overlap the view. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/a6f8e642b6c3fb5d5b1b7bc893d6bd02",
+                    "width": 5630
+                }
+            ],
+            "plateau": "not-supported",
+            "plateauPoints": [],
+            "previous": { "at": "2026-09-13T05:32:00Z", "grams": 4418 },
+            "reason": "none",
+            "recommendation": "No watering or weighing today. Keep the next intermediate sample on September 19, anchored to the September 16 late-night reading. The latest 4,189 g remains 497 g above reference; all three cactus components share this one container."
+        },
+        {
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-02T19:40:00Z",
+            "dryReferenceGrams": 1524,
+            "id": "P20",
+            "label": "#2",
+            "latest": { "at": "2026-09-17T03:48:37.453Z", "grams": 1729 },
+            "metricsNote": "The last measurement is September 16 at 11:48 p.m. The four-point tail still loses 63.53 g/day versus 76.11 earlier, not a sustained plateau. One shared container requires one weigh-in; no active problem was established from the surface differences in its dated photograph. Last-three mean: 1929.33 g; signed change over their actual span: -61.76 g/day.",
+            "mixId": null,
+            "name": "Shared succulent planter",
+            "photos": [
+                {
+                    "alt": "#2, Shared succulent planter: the echeveria rosette and round-leaved elephant bush are visible; rear components are partly hidden.",
+                    "caption": "#2 · Shared planter · September 16",
+                    "capturedAt": "2026-09-16T15:11:16-04:00",
+                    "findings": [
+                        "The echeveria rosette and round-leaved elephant bush are visible; rear components are partly hidden.",
+                        "Bronze-brown surface areas are visible on the lower/front echeveria leaves, clearest near the pointed tip of the outer leaf just right of centre.",
+                        "AI follow-up review: the image does not establish an active health problem. The extra inspection request is withdrawn; retain the photo as a comparison baseline."
+                    ],
+                    "height": 5325,
+                    "imageUrl": "https://i.gyazo.com/0d8b755bc8e45ca911da1992302313b4.webp",
+                    "limitations": "Surface colour differences are visible, but their cause and progression cannot be established from this still image. Rear components remain partly hidden. Root-zone moisture, tissue firmness and root health were not measured in this photo review.",
+                    "pageUrl": "https://gyazo.com/0d8b755bc8e45ca911da1992302313b4",
+                    "width": 8324
+                }
+            ],
+            "plateau": "not-supported",
+            "plateauPoints": [],
+            "previous": { "at": "2026-09-13T05:31:00Z", "grams": 1959 },
+            "reason": "priority",
+            "recommendation": "Weigh once today, preferably this evening, within the established September 18–19 follow-up window. The last measured 1,729 g is 205 g above reference, but the actual recent decline was 58.54 g/day. This will locate the pot before relying on its more distant forecast. Hold watering; the extra photo health concern remains withdrawn."
+        },
+        {
+            "action": "check",
+            "cycleStartedAt": "2026-09-13T23:14:00Z",
+            "dryReferenceGrams": 1637,
+            "id": "P21",
+            "label": "#3",
+            "latest": { "at": "2026-09-18T06:20:46.887Z", "grams": 1710 },
+            "metricsNote": "The new 1,746 → 1,710 g pair is genuinely time-spaced: −36 g over 1.10 days (−32.77 g/day). Only two separated tail readings exist, so plateau assessment is unavailable. Earlier weights already contain the +108 g dry-stone correction. The recovered wet reference was measured about 3.19 days after Water, not immediately after drainage. Last-three mean: 1734.00 g; signed change over their actual span: -32.53 g/day.",
+            "mixId": null,
+            "name": "Money tree (Pachira cf. glabra)",
+            "photos": [
+                {
+                    "alt": "#3, Money tree (Pachira cf. glabra): light-green upper leaflets hang downward above darker lower leaves on the windowsill.",
+                    "caption": "#3 · Foliage · September 16",
+                    "capturedAt": "2026-09-16T15:11:21-04:00",
+                    "findings": [
+                        "Light-green upper leaflets hang downward above darker lower leaves on the windowsill.",
+                        "Small pale marks are visible on a darker right-side leaflet.",
+                        "Follow-up from the September 16 photo: compare the pale marks and leaflet angle at a similar time of day. The previously missing post-water weight has now been recorded; it is separate from the visual assessment."
+                    ],
+                    "height": 4867,
+                    "imageUrl": "https://i.gyazo.com/f2b36dccdb3cc6cb0895f352686ddbf8.webp",
+                    "limitations": "AI photo-only review. The pot, substrate and most of the trunk are hidden. Leaf angle does not establish thirst, excess moisture or light injury. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/f2b36dccdb3cc6cb0895f352686ddbf8",
+                    "width": 5958
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": { "at": "2026-09-17T03:58:53.299Z", "grams": 1746 },
+            "reason": "special",
+            "recommendation": "Check the upper roughly 2 inches of actual mix beneath the dressing and compare the leaflet angle and pale marks with the September 16 photo. No repeat weighing or watering is requested from today’s evidence. The money tree uses upper-mix readiness, not cactus-level dryness; leaf angle alone does not establish thirst."
+        },
+        {
+            "action": "reference",
+            "cycleStartedAt": "2026-09-02T19:40:00Z",
+            "dryReferenceGrams": 991.5,
+            "id": "P22",
+            "label": "#4",
+            "latest": { "at": "2026-09-18T06:25:22.506Z", "grams": 984.5 },
+            "metricsNote": "The selected tail is 1,014.5 → 1,001.5 → 992 → 984.5 g over 5.04 days. Its regression loss is 5.94 g/day versus 14.13 earlier, and the latest interval still loses 6.80 g/day. The 7 g reference undershoot is not a plateau or proof of dry soil. The +150.5 g dry-stone correction is already included; do not apply it again. Last-three mean: 989.50 g; signed change over their actual span: -6.76 g/day.",
+            "mixId": null,
+            "name": "Kiwi aeonium",
+            "photos": [
+                {
+                    "alt": "#4, Kiwi aeonium (probable Dream Color cultivar): green-cream rosettes have pink-red margins and folded central leaves; outer leaves spread outward.",
+                    "caption": "#4 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:11:11-04:00",
+                    "findings": [
+                        "Green-cream rosettes have pink-red margins and folded central leaves; outer leaves spread outward.",
+                        "No broad crisp tan patch or generalized collapse is apparent on the exposed foliage.",
+                        "Comparison: retain this angle to follow rosette openness, color and leaf loss."
+                    ],
+                    "height": 6243,
+                    "imageUrl": "https://i.gyazo.com/225839b672067633f5f88053bb4ad2ed.webp",
+                    "limitations": "AI photo-only review. Lower leaves and stems are partly hidden; central leaves do not establish active growth or a resting state. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/225839b672067633f5f88053bb4ad2ed",
+                    "width": 5631
+                }
+            ],
+            "plateau": "not-supported",
+            "plateauPoints": [],
+            "previous": { "at": "2026-09-17T03:56:35.158Z", "grams": 992 },
+            "reason": "reference",
+            "recommendation": "Hold watering: the historical dry reference is reached, but plateau is not yet supported. The 2:25 a.m. September 18 reading satisfies yesterday’s follow-up; do not repeat it today. A useful next reading is September 19 morning or evening, at least about a day later. Assess much of the mix and active versus resting rosettes before any later watering decision."
+        },
+        {
+            "action": "weigh",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 350,
+            "id": "P23",
+            "label": "G2",
+            "latest": { "at": "2026-09-15T20:29:16.448Z", "grams": 406.5 },
+            "metricsNote": "Only one eligible current-cycle reading is available, so last-two change and sustained-plateau assessment are unavailable. This weight predates the September 16 drainage-opening modification; any unmeasured pot or medium loss must not be called water loss. The new weight will provide the first measured point after the modification, not a clean water-loss rate across it.",
+            "mixId": null,
+            "name": "Paper spine cactus",
+            "photos": [
+                {
+                    "alt": "G2, Paper spine cactus: a rounded gray-green joint carries broad cream-tan papery spines.",
+                    "caption": "G2 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:25-04:00",
+                    "findings": [
+                        "A rounded gray-green joint carries broad cream-tan papery spines.",
+                        "Some spines curve and have tan bases; these are not identified pest deposits.",
+                        "Comparison: retain a view of the joint and its base."
+                    ],
+                    "height": 7529,
+                    "imageUrl": "https://i.gyazo.com/32c8bb88b36914586b6e853dd839f391.webp",
+                    "limitations": "AI photo-only review. Basal tissue is partly hidden; the photograph does not assess firmness. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/32c8bb88b36914586b6e853dd839f391",
+                    "width": 7427
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "priority",
+            "recommendation": "Weigh once this evening, honoring the September 18 follow-up already requested. The sole current-cycle reading is 406.5 g on September 15, 56.5 g above reference. The earliest historical window begins September 19 evening, so a current observation is useful now. Hold watering."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-16T06:53:02.877Z",
+            "dryReferenceGrams": 326,
+            "id": "P24",
+            "label": "H1",
+            "latest": { "at": "2026-09-16T07:30:48.739Z", "grams": 428.5 },
+            "metricsNote": "Plain watering September 16 at 2:53 a.m. has a recorded 428.5 g weight at 3:30 a.m. Only one current-cycle point is available, so last-two change and plateau assessment are unavailable. The weight precedes the drainage-opening modification.",
+            "mixId": null,
+            "name": "Coconut Crystal hens and chicks",
+            "photos": [
+                {
+                    "alt": "H1, Coconut Crystal hens and chicks: the green central rosette is surrounded by paler outer leaves with brown-pink edges, damaged-looking tips and small tan marks.",
+                    "caption": "H1 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:22-04:00",
+                    "findings": [
+                        "The green central rosette is surrounded by paler outer leaves with brown-pink edges, damaged-looking tips and small tan marks.",
+                        "Owner clarification, September 16: the white material between the inner leaves is perlite.",
+                        "The earlier request to inspect that material is resolved. Keep the image as a dated comparison baseline."
+                    ],
+                    "height": 6748,
+                    "imageUrl": "https://i.gyazo.com/d23efcfcff0bbd9efe15f10d98b3e7e6.webp",
+                    "limitations": "The perlite identification is owner-reported; the image alone did not establish it. Root-zone moisture, tissue firmness and root health were not measured in this photo review.",
+                    "pageUrl": "https://gyazo.com/d23efcfcff0bbd9efe15f10d98b3e7e6",
+                    "width": 8324
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "none",
+            "recommendation": "No watering, weighing or special inspection today. H1’s white material is perlite, as identified by the owner. Keep the intermediate sample on September 19, ahead of the earliest historical window on September 20; the latest reading remains 102.5 g above reference."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-16T06:53:02.877Z",
+            "dryReferenceGrams": 316.5,
+            "id": "P25",
+            "label": "H2",
+            "latest": { "at": "2026-09-16T07:30:29.934Z", "grams": 425 },
+            "metricsNote": "The September 16 plain watering is followed by one eligible 425 g reading at 3:30 a.m. Last-two change and plateau assessment are unavailable; never compare it with a reading before that Water. It also predates the drainage-opening change.",
+            "mixId": null,
+            "name": "Raindrops echeveria",
+            "photos": [
+                {
+                    "alt": "H2, Raindrops echeveria: the blue-green rosette has a powdery coating, pink-red margins and raised purple caruncles on older leaves.",
+                    "caption": "H2 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:19-04:00",
+                    "findings": [
+                        "The blue-green rosette has a powdery coating, pink-red margins and raised purple caruncles on older leaves.",
+                        "Owner clarification, September 16: H2 is normal.",
+                        "Keep this photograph as a baseline; no extra inspection is requested for its visible surface features."
+                    ],
+                    "height": 7107,
+                    "imageUrl": "https://i.gyazo.com/c85297486d8346a88e36eab20da46fcb.webp",
+                    "limitations": "Photo interpretation supplemented by the owner's assessment that H2 is normal. Root-zone moisture, tissue firmness and root health were not measured in this photo review.",
+                    "pageUrl": "https://gyazo.com/c85297486d8346a88e36eab20da46fcb",
+                    "width": 7835
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "none",
+            "recommendation": "No watering, weighing or special inspection today; the owner reports H2 is normal. Keep the intermediate sample on September 19, ahead of the earliest historical window on September 20. Its latest 425 g remains 108.5 g above reference."
+        },
+        {
+            "action": "check",
+            "cycleStartedAt": "2026-09-16T06:53:02.877Z",
+            "dryReferenceGrams": 327.5,
+            "id": "P26",
+            "label": "H3",
+            "latest": { "at": "2026-09-16T07:31:04.671Z", "grams": 446.5 },
+            "metricsNote": "The September 16 446.5 g post-water reading is still the only current-cycle point, so last-two change and plateau assessment are unavailable. It predates the drainage-opening change. No later Check resolves the strand observation; H2’s normal-condition clarification applies to a different pot.",
+            "mixId": null,
+            "name": "Eve's needle cactus",
+            "photos": [
+                {
+                    "alt": "H3, Eve's needle cactus: upright green branches carry narrow lime-green leaves with pink-purple tips and some curled tan older remnants.",
+                    "caption": "H3 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:27-04:00",
+                    "findings": [
+                        "Upright green branches carry narrow lime-green leaves with pink-purple tips and some curled tan older remnants.",
+                        "Fine strands span leaves or areoles; a small brown mark is visible on an upper-right leaf.",
+                        "Next check: inspect strands, leaf undersides and axils with magnification before assigning a pest cause."
+                    ],
+                    "height": 6426,
+                    "imageUrl": "https://i.gyazo.com/34d2a738c9dcd6204a3cd5f05fbe2b03.webp",
+                    "limitations": "AI photo-only review. No insect or mite is resolved; ordinary silk or debris remains possible. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/34d2a738c9dcd6204a3cd5f05fbe2b03",
+                    "width": 6692
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": null,
+            "reason": "special",
+            "recommendation": "Check the fine strands around the leaves and areoles, including leaf undersides and axils. The dated photograph resolves no insect or mite; ordinary silk or debris remains possible. No treatment or watering is recommended. A weight is not needed just because you inspect it; keep the intermediate weigh-in on September 19."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-15T00:30:00Z",
+            "dryReferenceGrams": 349.5,
+            "id": "P27",
+            "label": "G1",
+            "latest": { "at": "2026-09-18T06:28:49.771Z", "grams": 379 },
+            "metricsNote": "The latest interval crosses the September 16 drainage-opening modification. Pot or medium loss was not measured; the calculated mass change is not necessarily all water loss. Only two suitably separated current-cycle points exist, so the plateau assessment is unavailable.",
+            "mixId": null,
+            "name": "Black Widow chin cactus",
+            "photos": [
+                {
+                    "alt": "G1, Black Widow chin cactus: a low burgundy-purple globe has angular ribs, projecting spines and pale crown areoles.",
+                    "caption": "G1 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:10:16-04:00",
+                    "findings": [
+                        "A low burgundy-purple globe has angular ribs, projecting spines and pale crown areoles.",
+                        "Purple color and folded ribs alone do not establish injury or dehydration.",
+                        "Comparison: use a consistent angle to follow localized changes."
+                    ],
+                    "height": 4820,
+                    "imageUrl": "https://i.gyazo.com/38a48b067d97ad21e6f41cfed3fcbad1.png",
+                    "limitations": "AI photo-only review. A neighboring stem crosses the background; the base and roots are hidden. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/38a48b067d97ad21e6f41cfed3fcbad1",
+                    "width": 5468
+                }
+            ],
+            "plateau": "unavailable",
+            "plateauPoints": [],
+            "previous": { "at": "2026-09-15T20:29:27.876Z", "grams": 411 },
+            "reason": "none",
+            "recommendation": "The 2:28 a.m. reading already satisfies today’s planned sample. No repeat or watering today. At 379 g it is 29.5 g above reference; follow up September 19 so the next interval is entirely after the drainage modification, ahead of the updated historical window beginning September 20."
+        },
+        {
+            "action": "check",
+            "cycleStartedAt": "2026-09-04T04:44:00Z",
+            "dryReferenceGrams": 336,
+            "id": "P28",
+            "label": "G3",
+            "latest": { "at": "2026-09-15T20:28:03.971Z", "grams": 334 },
+            "metricsNote": "The last weight, 334 g on September 15, is 2 g below the completed reference. The latest interval is −0.5 g over 0.86 days (−0.58 g/day), but the four-point tail still loses 3.78 g/day versus 11.26 earlier; plateau is not supported. The reading predates the drainage-opening change. Leaf-cycle evidence controls the care decision. Last-three mean: 336.83 g; signed change over their actual span: -3.04 g/day.",
+            "mixId": null,
+            "name": "Royal Flush split rock",
+            "photos": [
+                {
+                    "alt": "G3, Royal Flush split rock: purple speckled outer leaves open around smaller central growth",
+                    "caption": "G3 · Leaf overview · September 16",
+                    "capturedAt": "2026-09-16T15:10:33-04:00",
+                    "findings": [
+                        "Purple speckled outer leaves open around smaller rounded growth visible in the central split.",
+                        "The larger leaves retain volume and show small tan marks; a lower older leaf is also visible.",
+                        "Companion view: use the inner-leaf detail alongside this overview when following leaf replacement."
+                    ],
+                    "height": 6885,
+                    "imageUrl": "https://i.gyazo.com/c6a3bc252ed064c2055fa6f3396a3893.webp",
+                    "limitations": "AI photo-only review. Appearance is not a firmness measurement. The complete pair count, mark causes and rate of leaf absorption remain unknown. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/c6a3bc252ed064c2055fa6f3396a3893",
+                    "width": 7606
+                },
+                {
+                    "alt": "G3, Royal Flush split rock: the detail view shows smaller rounded purple inner growth between the larger speckled leaves, supporting the reported emerging pair.",
+                    "caption": "G3 · Inner-leaf detail · September 16",
+                    "capturedAt": "2026-09-16T15:10:37-04:00",
+                    "findings": [
+                        "The detail view shows smaller rounded purple inner growth between the larger speckled leaves, supporting the reported emerging pair.",
+                        "Outer leaves still retain volume, a lower older leaf is visible, and some outer surfaces have tan marks.",
+                        "Next check: assess inner-leaf firmness physically and compare whether old leaves are shrinking; hold watering under the current report."
+                    ],
+                    "height": 6886,
+                    "imageUrl": "https://i.gyazo.com/1cd5866ea968cbb21f7c39e8d8625ba5.webp",
+                    "limitations": "AI photo-only review. Appearance is not a firmness measurement. The complete pair count, mark causes and rate of leaf absorption remain unknown. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/1cd5866ea968cbb21f7c39e8d8625ba5",
+                    "width": 8488
+                }
+            ],
+            "plateau": "not-supported",
+            "plateauPoints": [],
+            "previous": { "at": "2026-09-14T23:47:00Z", "grams": 334.5 },
+            "reason": "special",
+            "recommendation": "Check the emerging inner leaves gently for firmness and compare whether the older outer leaves are shrinking. Hold watering and feeding while this leaf-cycle uncertainty remains. The September 16 photos show the emerging pair and outer leaves retaining volume, but cannot establish firmness. Do not weigh merely to chase the old dry reference."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-03T04:23:00Z",
+            "dryReferenceGrams": null,
+            "id": "P29",
+            "label": "#5",
+            "latest": { "at": "2026-09-18T06:26:03.602Z", "grams": 1032 },
+            "metricsNote": "The latest interval is 1,039 → 1,032 g over 1.11 days (−6.31 g/day). The selected four-point tail still loses 6.34 g/day versus 17.90 earlier, so plateau is not supported. The dated photo does not measure firmness, moisture or root health. Last-three mean: 1044.33 g; signed change over their actual span: -5.96 g/day.",
+            "mixId": null,
+            "name": "Tuberculate tiger jaws (probable Faucaria tuberculosa)",
+            "photos": [
+                {
+                    "alt": "#5, Tuberculate tiger jaws (probable Faucaria tuberculosa): paired triangular green leaves have pale teeth or tubercles and purple-red lower or side coloring.",
+                    "caption": "#5 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:11:16-04:00",
+                    "findings": [
+                        "Paired triangular green leaves have pale teeth or tubercles and purple-red lower or side coloring.",
+                        "Small lower leaf remnants are tan and shriveled.",
+                        "Comparison: follow the leaf centers and any changing tan area; retain the probable identification."
+                    ],
+                    "height": 5297,
+                    "imageUrl": "https://i.gyazo.com/4ed8a71842cb3457aae16afa1ea03eed.webp",
+                    "limitations": "AI photo-only review. Overlap hides some bases; one photo cannot distinguish ordinary leaf turnover from stress. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/4ed8a71842cb3457aae16afa1ea03eed",
+                    "width": 4767
+                }
+            ],
+            "plateau": "not-supported",
+            "plateauPoints": [],
+            "previous": { "at": "2026-09-17T03:47:33.002Z", "grams": 1039 },
+            "reason": "none",
+            "recommendation": "The 2:26 a.m. September 18 weight satisfies the next-sample request. No repeat weight or watering today. Follow up September 19–20 to track the continuing decline; a completed dry reference remains unavailable. Preserve the probable Faucaria identification and do not water merely to create calibration."
+        },
+        {
+            "action": "none",
+            "cycleStartedAt": "2026-09-03T04:18:00Z",
+            "dryReferenceGrams": null,
+            "id": "P30",
+            "label": "#6",
+            "latest": { "at": "2026-09-18T06:26:42.772Z", "grams": 400.5 },
+            "metricsNote": "The latest interval is 402.5 → 400.5 g over 1.11 days (−1.80 g/day), faster than the preceding −0.89 g/day interval. The four-point tail is 408.5 → 406 → 402.5 → 400.5 g over 7.12 days: 1.07 g/day versus 8.13 earlier, but its 8 g spread still fails the shared plateau test. No completed dry reference is available. Last-three mean: 403.00 g; signed change over their actual span: -1.09 g/day.",
+            "mixId": null,
+            "name": "Tiny mixed succulent planter (component taxa unresolved)",
+            "photos": [
+                {
+                    "alt": "#6, Tiny mixed succulent planter: several differently colored rosettes and broad paddle-like leaves share one orange pot.",
+                    "caption": "#6 · Plant view · September 16",
+                    "capturedAt": "2026-09-16T15:11:16-04:00",
+                    "findings": [
+                        "Several differently colored rosettes and broad paddle-like leaves share one orange pot.",
+                        "A tan-brown older leaf and patchy surface marks are visible; a neighboring monkey-tail stem crosses the view.",
+                        "Comparison: retain component positions when following leaf changes; continue treating this as one container."
+                    ],
+                    "height": 4811,
+                    "imageUrl": "https://i.gyazo.com/83d1ae73a807f1826755282af1fde4ce.webp",
+                    "limitations": "AI photo-only review. Crowding hides some bases. Mark causes and exact component taxa remain unresolved. Root-zone moisture, tissue firmness and root health were not measured.",
+                    "pageUrl": "https://gyazo.com/83d1ae73a807f1826755282af1fde4ce",
+                    "width": 5582
+                }
+            ],
+            "plateau": "not-supported",
+            "plateauPoints": [],
+            "previous": { "at": "2026-09-17T03:48:11.899Z", "grams": 402.5 },
+            "reason": "none",
+            "recommendation": "The 2:26 a.m. September 18 reading completes yesterday’s follow-up; no repeat weighing or watering today. Take the next useful reading September 19. A slower curve is present, but the detector still does not confirm a plateau and the shared root volume and all components need readiness assessment before watering."
+        }
+    ],
+    "sourceReadAt": "2026-09-18T13:50:33.759Z",
+    "summary": "No plateau-confirmed watering today. #4 has crossed its dry reference but remains on hold. Weigh G2 and #2; check G3’s leaf cycle, H3’s strands and #3’s upper mix. The ten overnight weigh-ins are already accounted for.",
+    "timeZone": "America/New_York",
+    "totalPots": 30,
+    "version": 2
+}
