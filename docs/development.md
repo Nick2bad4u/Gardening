@@ -40,7 +40,7 @@ The live tracker and history read the published spreadsheet. They do not write o
 - `docs/equipment/inventory.md` remains the equipment catalog. Care and setup Markdown remain the source for their web pages. Do not maintain another editable copy inside an Astro template.
 - `docs/layouts/plant-profile-data.json` remains the profile-to-pot mapping. The existing `plant-tracker-data.js` and `plant-charts.js` modules retain spreadsheet parsing and measurement calculations. Website layout work does not authorize changing their data semantics.
 - `docs/daily-reports/YYYY-MM-DD.json` contains reviewed report inputs. The renderer preserves source timestamps, incomplete coverage, and historical schema distinctions; it never reads private Sheets or makes new watering decisions during a build.
-- `astro.config.mjs` controls static output, the `/Gardening/` base, and the explicitly prepared public directory. `.cache/site-public/` and `.pages-site/` are generated artifacts, not content sources.
+- `astro.config.ts` controls typed static-output options, the `/Gardening/` base, and the explicitly prepared public directory. `tsconfig.astro.json` extends Astro's `strictest` preset, including exact optional properties and unchecked-index checks, with verbatim module syntax and index-signature access enforced. `.cache/site-public/` and `.pages-site/` are generated artifacts, not content sources.
 
 Markdown rendering uses the existing `remark-html` sanitization. Resolve relative links from their source document through the shared route map. Preserve exact scientific names, identity qualifiers, nursery evidence, acquisition dates, labels, and source citations. The homepage and directory must not embed complete profile bodies.
 

@@ -41,9 +41,11 @@ export const Contents: Story = {
         await expect(
             document.querySelectorAll("[data-directory-entry]:not([hidden])")
         ).toHaveLength(1);
-        await expect(
-            canvas.getByRole("heading", { name: "Money tree" })
-        ).toBeVisible();
+        await waitFor(() =>
+            expect(
+                canvas.getByRole("heading", { name: "Money tree" })
+            ).toBeVisible()
+        );
         await userEvent.clear(search);
         await userEvent.type(search, "zzzz-no-such-plant-98765");
         await expect(document.querySelector("#plant-empty")).toBeVisible();
@@ -117,9 +119,11 @@ export const ProfileMobileDark: Story = {
     play: async ({ canvasElement }) => {
         const { canvas, document, userEvent } =
             await websiteCanvas(canvasElement);
-        await expect(
-            canvas.getByRole("heading", { name: "Money tree" })
-        ).toBeVisible();
+        await waitFor(() =>
+            expect(
+                canvas.getByRole("heading", { name: "Money tree" })
+            ).toBeVisible()
+        );
         await expect(
             document.querySelectorAll("[data-plant-profile]")
         ).toHaveLength(1);
@@ -163,6 +167,118 @@ export const IdentificationEvidence: Story = {
         await expect(details.textContent.length).toBeGreaterThan(
             summary.textContent.length
         );
+        await expectNoOverflow(document);
+    },
+};
+
+export const ProfileNavigation: Story = {
+    args: { path: "plants/mammillaria-plumosa/", width: 390 },
+    play: async ({ canvasElement }) => {
+        const { document, userEvent } = await websiteCanvas(canvasElement);
+        const navigation = document.querySelector<HTMLElement>(
+            "[data-profile-navigation]"
+        );
+        const panel = navigation?.querySelector<HTMLElement>(
+            "[data-profile-panel]"
+        );
+        const pin =
+            navigation?.querySelector<HTMLButtonElement>("[data-profile-pin]");
+        const reveal = navigation?.querySelector<HTMLButtonElement>(
+            "[data-profile-reveal]"
+        );
+        const jump = navigation?.querySelector<HTMLDetailsElement>(
+            "[data-profile-jump]"
+        );
+        const summary = jump?.querySelector("summary");
+        const view = document.defaultView;
+        if (
+            !navigation ||
+            !panel ||
+            !pin ||
+            !reveal ||
+            !jump ||
+            !summary ||
+            !view
+        )
+            throw new Error("The real profile navigation is incomplete.");
+
+        await waitFor(() =>
+            expect(navigation).toHaveAttribute("data-initialized", "true")
+        );
+        await userEvent.click(pin);
+        await expect(pin).toHaveAttribute("aria-pressed", "true");
+        await expect(
+            view.localStorage.getItem("gardening-profile-navigation-pinned")
+        ).toBe("true");
+        view.scrollTo({ behavior: "instant", top: 400 });
+        await waitFor(() => expect(view.scrollY).toBe(400));
+        await expect(panel.inert).toBe(false);
+
+        await userEvent.click(pin);
+        await expect(pin).toHaveAttribute("aria-pressed", "false");
+        await userEvent.unhover(navigation);
+        pin.blur();
+        view.scrollTo({ behavior: "instant", top: 800 });
+        await waitFor(() => expect(navigation).toHaveClass("is-scroll-hidden"));
+        await expect(panel.inert).toBe(true);
+        await expect(reveal).toBeVisible();
+        reveal.focus();
+        await waitFor(() =>
+            expect(navigation).not.toHaveClass("is-scroll-hidden")
+        );
+        await expect(panel.inert).toBe(false);
+        await expect(panel.querySelector("a")).toHaveFocus();
+
+        await userEvent.click(summary);
+        await expect(jump).toHaveAttribute("open");
+        await expect(
+            jump.querySelector('a[aria-current="page"]')
+        ).toHaveAttribute(
+            "href",
+            "/Gardening/storybook/preview/plants/mammillaria-plumosa/"
+        );
+        await expect(navigation.querySelector('a[rel="prev"]')).toHaveAttribute(
+            "href",
+            expect.stringContaining("/plants/")
+        );
+        await expect(navigation.querySelector('a[rel="next"]')).toHaveAttribute(
+            "href",
+            expect.stringContaining("/plants/")
+        );
+        await userEvent.keyboard("{Escape}");
+        await expect(jump).not.toHaveAttribute("open");
+        await expect(summary).toHaveFocus();
+        await expectNoOverflow(document);
+    },
+};
+
+export const ProfilePhotoFallback: Story = {
+    args: { path: "plants/pachira-glabra/", theme: "dark", width: 390 },
+    play: async ({ canvasElement }) => {
+        const { document } = await websiteCanvas(canvasElement);
+        const image = document.querySelector<HTMLImageElement>(
+            ".profile-avatar-photo"
+        );
+        const caption = document.querySelector("[data-avatar-caption]");
+        const source = image?.closest("a");
+        if (!image || !caption || !source)
+            throw new Error("The owned-photo avatar is missing.");
+        await waitFor(() => expect(image.naturalWidth).toBeGreaterThan(0));
+        await waitFor(() => expect(image).toBeVisible());
+        await expect(caption).toHaveTextContent("Owned plant · © Nick");
+        const originalSource = source.href;
+        image.dispatchEvent(new Event("error"));
+        await expect(image).not.toBeVisible();
+        await expect(caption).toHaveTextContent(
+            "Illustration · Open owned photo ↗"
+        );
+        await expect(
+            document.querySelector(".profile-avatar-fallback")
+        ).toBeVisible();
+        await expect(source.href).toBe(originalSource);
+        await expect(
+            document.querySelector(".profile-hero-credit")
+        ).toHaveTextContent("Species reference");
         await expectNoOverflow(document);
     },
 };

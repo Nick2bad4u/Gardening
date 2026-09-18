@@ -1,0 +1,138 @@
+---
+import type { SiteProfile } from "../lib/content.mjs";
+import { profileUrl, siteUrl } from "../lib/routes.mjs";
+import SiteIcon from "./SiteIcon.astro";
+import "../styles/profile-navigation.css";
+
+interface Props {
+    profiles: readonly SiteProfile[];
+    currentSlug: string;
+}
+const { profiles, currentSlug } = Astro.props;
+const index = profiles.findIndex((profile) => profile.slug === currentSlug);
+const current = profiles[index];
+const previous = profiles[index - 1];
+const next = profiles[index + 1];
+---
+
+{current && (
+    <nav class="profile-navigation" data-profile-navigation aria-label="Plant navigation">
+        <button
+            class="profile-navigation-reveal"
+            data-profile-reveal
+            aria-controls="profile-navigation-panel"
+            aria-expanded="false"
+            hidden
+        >
+            <SiteIcon name="arrow-up" size={18} /> Plant Navigation
+        </button>
+        <div class="profile-navigation-panel" id="profile-navigation-panel" data-profile-panel>
+            {previous ? (
+                <a
+                    class="profile-navigation-control"
+                    href={profileUrl(previous.slug)}
+                    rel="prev"
+                    aria-label={`Previous plant: ${previous.title}`}
+                    title={`Previous: ${previous.title}`}
+                >
+                    <SiteIcon name="arrow-left" size={22} />
+                </a>
+            ) : (
+                <span
+                    class="profile-navigation-control profile-navigation-boundary"
+                    aria-label="First plant"
+                >
+                    <SiteIcon name="arrow-left" size={22} />
+                </span>
+            )}
+            <a
+                class="profile-navigation-control"
+                href={siteUrl("plants/")}
+                aria-label="All plants"
+                title="All plants"
+            >
+                <SiteIcon name="list" size={22} />
+            </a>
+            <details class="profile-navigation-jump" data-profile-jump>
+                <summary
+                    aria-label={`Jump to a plant. Current: ${current.title}, ${index + 1} of ${profiles.length}`}
+                >
+                    <img
+                        class="profile-navigation-portrait"
+                        src={siteUrl(`assets/plant-icons/${current.slug}.svg`)}
+                        alt=""
+                        width="32"
+                        height="32"
+                    />
+                    <span>
+                        <strong>
+                            Plant {index + 1}{" "}
+                            <span class="profile-navigation-total">/ {profiles.length}</span>
+                        </strong>
+                        <small>
+                            Label {current.drawerLabel.primary} <span aria-hidden="true">⌃</span>
+                        </small>
+                    </span>
+                </summary>
+                <div class="profile-navigation-choices">
+                    <p>Jump to a Plant</p>
+                    <ol>
+                        {profiles.map((profile, position) => (
+                            <li>
+                                <a
+                                    href={profileUrl(profile.slug)}
+                                    aria-current={profile.slug === currentSlug ? "page" : undefined}
+                                    data-astro-prefetch="false"
+                                >
+                                    <span class="profile-navigation-choice-index">
+                                        {position + 1}
+                                    </span>
+                                    <span>
+                                        {profile.title}
+                                        <small>
+                                            Label {profile.drawerLabel.primary}
+                                            {profile.historical ? " · Historical" : ""}
+                                        </small>
+                                    </span>
+                                </a>
+                            </li>
+                        ))}
+                    </ol>
+                </div>
+            </details>
+            {next ? (
+                <a
+                    class="profile-navigation-control"
+                    href={profileUrl(next.slug)}
+                    rel="next"
+                    aria-label={`Next plant: ${next.title}`}
+                    title={`Next: ${next.title}`}
+                >
+                    <SiteIcon name="arrow-right" size={22} />
+                </a>
+            ) : (
+                <span
+                    class="profile-navigation-control profile-navigation-boundary"
+                    aria-label="Last plant"
+                >
+                    <SiteIcon name="arrow-right" size={22} />
+                </span>
+            )}
+            <button
+                class="profile-navigation-control profile-navigation-pin"
+                data-profile-pin
+                aria-pressed="false"
+                aria-label="Pin plant navigation"
+                title="Pin plant navigation"
+                hidden
+            >
+                <SiteIcon name="pin" size={22} />
+            </button>
+        </div>
+    </nav>
+)}
+
+<script>
+    import { initializeProfileNavigation } from "../client/profile-navigation";
+    initializeProfileNavigation();
+</script>

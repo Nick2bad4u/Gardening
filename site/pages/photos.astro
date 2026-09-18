@@ -105,7 +105,7 @@ const [manifest, profiles] = await Promise.all([getCollectionManifest(), getProf
         const query = input.value.trim().toLowerCase();
         let count = 0;
         for (const record of records) {
-            record.hidden = !(record.dataset.photoSearch ?? "").includes(query);
+            record.hidden = !(record.dataset["photoSearch"] ?? "").includes(query);
             if (!record.hidden) count++;
         }
         const status = document.querySelector("#photo-result-count");

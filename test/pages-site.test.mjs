@@ -7,10 +7,48 @@ import {
     findLoggerAssetReferences,
     injectGoogleTagManager,
     injectPageNotFoundEvent,
+    rewriteFixturePreviews,
     rewritePublishedPlantImages,
 } from "../scripts/build-pages-site.mjs";
 
 describe("the GitHub Pages publication transforms", () => {
+    it("uses the configured fixture base without changing photo provenance or the production default", () => {
+        expect.hasAssertions();
+
+        const html =
+            '<figure><a href="https://gyazo.com/example"><img src="https://thumb.gyazo.com/thumb/640/example.jpg" srcset="https://thumb.gyazo.com/thumb/320/example.jpg 320w" alt="Owned plant" data-image-id="example"></a><figcaption>Owned plant · © Nick</figcaption></figure>';
+        for (const base of [
+            "/Gardening/storybook/preview",
+            "/Gardening/storybook/preview/",
+        ]) {
+            const result = rewriteFixturePreviews(html, base);
+
+            expect(result).toContain(
+                'src="/Gardening/storybook/preview/assets/fixture-collection-preview.svg"'
+            );
+            expect(result).toContain('href="https://gyazo.com/example"');
+            expect(result).toContain(
+                'alt="Owned plant" data-image-id="example"'
+            );
+            expect(result).toContain("Owned plant · © Nick");
+            expect(result).not.toContain("srcset=");
+        }
+
+        expect(rewriteFixturePreviews(html)).toContain(
+            'src="/Gardening/assets/fixture-collection-preview.svg"'
+        );
+
+        const illustration =
+            '<img src="/Gardening/assets/plant-icons/example.svg" alt="">';
+
+        expect(
+            rewriteFixturePreviews(
+                illustration,
+                "/Gardening/storybook/preview/"
+            )
+        ).toBe(illustration);
+    });
+
     it("accepts formatted HTML tags and rejects missing injection targets", () => {
         expect.hasAssertions();
 

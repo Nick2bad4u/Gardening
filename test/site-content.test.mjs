@@ -2,14 +2,95 @@ import { describe, expect, it } from "vitest";
 
 import { sheetUrls } from "../docs/layouts/plant-tracker-data.js";
 import { plantSheetUrl } from "../scripts/build-data.mjs";
-import { getDocument, renderMarkdown } from "../site/lib/content.mjs";
 import {
+    getDocument,
+    getProfiles,
+    renderMarkdown,
+} from "../site/lib/content.mjs";
+import {
+    decorateProfileBody,
     identificationLabel,
     loadProfiles,
     renderInline,
+    stripHtml,
 } from "../site/lib/content/profile-source.mjs";
 
 describe("field guide source rendering", () => {
+    it("decorates profile headings and identity/care tables without losing routes, anchors, or qualified evidence", async () => {
+        expect.hasAssertions();
+
+        const rendered = await renderMarkdown(
+            [
+                "## Names and identity",
+                "| Kind | Name |",
+                "| --- | --- |",
+                "| Provisional identification | Probable _Example cf. species_; cultivar unknown. |",
+                "",
+                "## Practical care",
+                "| Topic | Practical approach |",
+                "| --- | --- |",
+                "| Light | Use the [care notes](../../care-notes.md). |",
+                "| Water | Evidence first; no fixed calendar. |",
+                "",
+                "## Seller listing snapshot",
+                "Seller wording remains unverified. [Source](https://example.com/source)",
+                "",
+                "## Sources",
+                "[Scientific source](https://example.com/taxon)",
+            ].join("\n"),
+            "docs/plants/cacti/example.md",
+            "example-"
+        );
+        const html = decorateProfileBody(rendered.html);
+
+        expect(stripHtml(html)).toBe(stripHtml(rendered.html));
+
+        for (const heading of rendered.toc) {
+            expect(html).toContain(`id="${heading.id}"`);
+        }
+
+        expect(html).toContain(
+            'class="profile-section-heading profile-section-heading--identity"'
+        );
+        expect(html).toContain(
+            'class="semantic-table semantic-table--identity"'
+        );
+        expect(html).toContain('class="semantic-table semantic-table--care"');
+        expect(html).toContain('class="semantic-row semantic-row--caution"');
+        expect(html).toContain('src="/Gardening/assets/ui-icons/light.svg"');
+        expect(html).toContain('href="/Gardening/guides/care-notes/"');
+        expect(html).toContain('href="https://example.com/taxon"');
+        expect(html).toContain('<div class="table-scroll"');
+        expect(html).toMatch(
+            /<section class="seller-snapshot"[\s\S]*?<\/section>\s*<h2 id="example-sources"/v
+        );
+        expect(html).not.toContain("<use");
+    });
+
+    it("publishes rich profile bodies through the site adapter while preserving every source heading and all text", async () => {
+        expect.hasAssertions();
+
+        const profiles = await getProfiles();
+        for (const profile of profiles) {
+            const plain = await renderMarkdown(
+                profile.bodyMarkdown,
+                profile.sourcePath,
+                `${profile.slug}-`
+            );
+
+            expect(stripHtml(profile.bodyHtml)).toBe(stripHtml(plain.html));
+            expect(profile.bodyHtml).toContain(
+                'class="profile-section-heading'
+            );
+
+            for (const heading of profile.toc) {
+                expect(profile.bodyHtml).toContain(`id="${heading.id}"`);
+            }
+
+            expect(profile.bodyHtml).not.toContain("./plant-icons.svg#");
+        }
+    });
+
     it("retains all current placement illustrations as visible images and separates download-only maps", async () => {
         expect.hasAssertions();
 

@@ -1,0 +1,171 @@
+.profile-navigation {
+    position: fixed;
+    inset-block-end: max(1rem, env(safe-area-inset-bottom));
+    inset-inline: 1rem;
+    z-index: 40;
+    inline-size: min(34rem, calc(100% - 2rem));
+    min-block-size: 44px;
+    margin-inline: auto;
+    pointer-events: none;
+}
+.profile-navigation-panel {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    padding: 0.5rem;
+    pointer-events: auto;
+    background: var(--surface);
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    box-shadow: 0 8px 32px rgb(0 0 0 / 16%);
+    backdrop-filter: blur(16px);
+    transition:
+        transform 180ms ease,
+        opacity 180ms ease;
+}
+.profile-navigation-control {
+    display: grid;
+    flex: 0 0 44px;
+    place-items: center;
+    inline-size: 44px;
+    min-block-size: 44px;
+    padding: 0.25rem;
+    font-size: 1.25rem;
+    color: var(--accent);
+    text-decoration: none;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 14px;
+    &:hover,
+    &:focus-visible,
+    &[aria-pressed="true"] {
+        background: var(--accent-soft);
+        border-color: var(--line);
+    }
+}
+.profile-navigation-boundary {
+    color: var(--muted);
+    opacity: 0.45;
+}
+.profile-navigation-jump {
+    flex: 1;
+    min-inline-size: 0;
+    & summary {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: center;
+        min-block-size: 44px;
+        padding: 0.25rem;
+        cursor: pointer;
+        list-style: "";
+        border-radius: 12px;
+    }
+    & strong {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+    & small {
+        display: block;
+        font-size: 0.75rem;
+        color: var(--muted);
+    }
+}
+.profile-navigation-total {
+    font-weight: 400;
+    color: var(--muted);
+}
+.profile-navigation-portrait {
+    flex: 0 0 32px;
+}
+.profile-navigation-choices {
+    position: absolute;
+    inset-block-end: calc(100% + 0.65rem);
+    inset-inline: 0;
+    max-block-size: min(55dvb, 28rem);
+    padding: 0.5rem;
+    overflow: auto;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    & p {
+        padding: 0.5rem;
+        margin: 0;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--muted);
+    }
+    & ol {
+        padding: 0;
+        margin: 0;
+        list-style: "";
+    }
+    & a {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        min-block-size: 44px;
+        padding: 0.6rem;
+        font-size: 0.875rem;
+        overflow-wrap: anywhere;
+        text-decoration: none;
+        border-radius: 10px;
+        &:hover,
+        &:focus-visible,
+        &[aria-current="page"] {
+            background: var(--accent-soft);
+        }
+    }
+}
+.profile-navigation-choice-index {
+    flex: 0 0 1.5rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+}
+.profile-navigation-reveal {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-end: 0;
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    min-block-size: 44px;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.875rem;
+    color: var(--ink);
+    pointer-events: auto;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+}
+.profile-navigation.is-scroll-hidden {
+    pointer-events: auto;
+    & .profile-navigation-panel {
+        pointer-events: none;
+        opacity: 0;
+        transform: translateY(calc(100% + 2rem));
+    }
+}
+
+@media (width <= 390px) {
+    .profile-navigation-portrait {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .profile-navigation-panel {
+        transition: none;
+    }
+}
+
+@media print {
+    .profile-navigation {
+        display: none;
+    }
+}

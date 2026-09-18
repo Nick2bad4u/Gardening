@@ -1,0 +1,230 @@
+.plant-profile .profile-copy {
+    & .profile-section-heading {
+        --heading-accent: #668362;
+
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        padding-block: 0.9rem;
+        color: var(--ink);
+        border-block-end-color: color-mix(
+            in srgb,
+            var(--heading-accent) 40%,
+            var(--line, transparent)
+        );
+    }
+
+    & .profile-section-heading--care {
+        --heading-accent: #42859a;
+    }
+
+    & .profile-section-heading--growth {
+        --heading-accent: #658644;
+    }
+
+    & .profile-section-heading--warning {
+        --heading-accent: #b8664c;
+    }
+
+    & .profile-section-heading--identity {
+        --heading-accent: #987bb5;
+    }
+
+    & .profile-section-heading--habitat {
+        --heading-accent: #a68642;
+    }
+
+    & .profile-section-heading--seller {
+        --heading-accent: #b97d53;
+    }
+
+    & .profile-section-heading--sources {
+        --heading-accent: #648399;
+    }
+
+    & .profile-section-icon {
+        display: inline-grid;
+        flex: 0 0 auto;
+        place-items: center;
+        inline-size: 2.75rem;
+        block-size: 2.75rem;
+        background: color-mix(
+            in srgb,
+            var(--heading-accent) 13%,
+            var(--surface, transparent)
+        );
+        border: 1px solid
+            color-mix(
+                in srgb,
+                var(--heading-accent) 45%,
+                var(--line, transparent)
+            );
+        border-radius: 0.8rem;
+    }
+
+    & .site-icon {
+        display: block;
+        inline-size: 1.6rem;
+        block-size: 1.6rem;
+        border-radius: 0;
+    }
+
+    & .semantic-table {
+        --table-accent: #987bb5;
+
+        table-layout: fixed;
+        background: color-mix(
+            in srgb,
+            var(--table-accent) 3%,
+            var(--surface, transparent)
+        );
+
+        & th {
+            color: var(--ink);
+            background: color-mix(
+                in srgb,
+                var(--table-accent) 16%,
+                var(--surface, transparent)
+            );
+        }
+
+        & th:first-child,
+        & td:first-child {
+            inline-size: 31%;
+            font-weight: 700;
+        }
+
+        & :where(tbody tr:nth-child(even)) {
+            background: color-mix(in srgb, var(--table-accent) 6%, transparent);
+        }
+    }
+
+    & .semantic-table--care {
+        --table-accent: #42859a;
+    }
+
+    & .semantic-label {
+        display: flex;
+        gap: 0.65rem;
+        align-items: flex-start;
+    }
+
+    & .semantic-table-icon {
+        display: inline-grid;
+        flex: 0 0 auto;
+        place-items: center;
+        inline-size: 2rem;
+        block-size: 2rem;
+        background: color-mix(
+            in srgb,
+            var(--row-accent, var(--table-accent)) 14%,
+            var(--surface, transparent)
+        );
+        border: 1px solid
+            color-mix(
+                in srgb,
+                var(--row-accent, var(--table-accent)) 35%,
+                var(--line, transparent)
+            );
+        border-radius: 0.6rem;
+
+        & .site-icon {
+            inline-size: 1.35rem;
+            block-size: 1.35rem;
+        }
+    }
+
+    & .semantic-row--light,
+    & .semantic-row--origin {
+        --row-accent: #bd9641;
+    }
+
+    & .semantic-row--water,
+    & .semantic-row--airflow {
+        --row-accent: #4489a3;
+    }
+
+    & .semantic-row--caution,
+    & .semantic-row--temperature {
+        --row-accent: #ba7052;
+    }
+
+    & .semantic-row--botanical,
+    & .semantic-row--feeding,
+    & .semantic-row--form {
+        --row-accent: #6a9455;
+    }
+
+    & .seller-snapshot {
+        padding: clamp(1rem, 3vi, 1.6rem);
+        margin-block: 2rem;
+        background: linear-gradient(
+            135deg,
+            color-mix(
+                in srgb,
+                var(--clay, #94583e) 9%,
+                var(--surface, transparent)
+            ),
+            var(--surface, transparent) 75%
+        );
+        border: 1px solid
+            color-mix(
+                in srgb,
+                var(--clay, #94583e) 40%,
+                var(--line, transparent)
+            );
+        border-inline-start: 4px solid var(--clay, #94583e);
+        border-radius: 1rem;
+
+        & > :first-child {
+            margin-block-start: 0;
+        }
+
+        & > :last-child {
+            margin-block-end: 0;
+        }
+    }
+
+    @media (width <= 600px) {
+        & .profile-section-heading {
+            gap: 0.6rem;
+        }
+
+        & .profile-section-icon {
+            inline-size: 2.25rem;
+            block-size: 2.25rem;
+        }
+
+        & .semantic-table :is(th, td) {
+            padding: 0.7rem 0.6rem;
+        }
+
+        & .semantic-table :is(th, td):first-child {
+            inline-size: 36%;
+        }
+
+        & .semantic-label {
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+    }
+
+    @media print {
+        & .profile-section-heading,
+        & .semantic-table th {
+            color: #203d2c;
+        }
+
+        & .profile-section-heading {
+            break-after: avoid;
+        }
+
+        & .semantic-table tr {
+            break-inside: avoid;
+        }
+
+        & .table-scroll {
+            overflow: visible;
+        }
+    }
+}

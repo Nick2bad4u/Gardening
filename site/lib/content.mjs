@@ -12,6 +12,7 @@ import {
 } from "../../scripts/build-data.mjs";
 import {
     compareCollectionPhotosNewestFirst,
+    decorateProfileBody,
     inaturalistBySlug,
     loadProfiles,
     stripHtml,
@@ -236,7 +237,7 @@ async function loadSiteProfiles() {
                 .slice(0, 2);
             return {
                 ...profile,
-                bodyHtml: body.html,
+                bodyHtml: decorateProfileBody(body.html),
                 inaturalist: inaturalistBySlug.get(profile.slug),
                 nurseryPhotos: profile.collectionRecord.photos.filter(
                     (photo) => photo.kind === "nursery-label"

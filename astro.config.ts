@@ -6,6 +6,10 @@ export default defineConfig({
     devToolbar: { enabled: false },
     outDir: process.env["GARDENING_SITE_OUT_DIR"] ?? "./.pages-site",
     output: "static",
+    prefetch: {
+        defaultStrategy: "load",
+        prefetchAll: true,
+    },
     publicDir: "./.cache/site-public",
     server: { host: "127.0.0.1", port: 5173 },
     site: "https://nick2bad4u.github.io",

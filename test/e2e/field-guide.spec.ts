@@ -69,7 +69,37 @@ async function inspectPlacementMaps(main: Readonly<Element>) {
     for (const image of images) {
         if (!(image instanceof HTMLImageElement))
             throw new Error("Diagram must be an image");
-        image.scrollIntoView({ block: "center" });
+        // Lazy requests start after the image becomes visible; decode() before
+        // that request starts can reject even though the published PNG is valid.
+        // eslint-disable-next-line no-await-in-loop -- Each lazy image must load before the next viewport movement.
+        await new Promise<void>((resolve, reject) => {
+            const controller = new AbortController();
+            const loaded = () => {
+                controller.abort();
+                resolve();
+            };
+            const failed = () => {
+                controller.abort();
+                reject(
+                    new Error(
+                        `Placement image failed to load: ${image.currentSrc || image.src}`
+                    )
+                );
+            };
+            image.addEventListener("load", loaded, {
+                once: true,
+                signal: controller.signal,
+            });
+            image.addEventListener("error", failed, {
+                once: true,
+                signal: controller.signal,
+            });
+            image.scrollIntoView({ behavior: "instant", block: "center" });
+            if (image.complete) {
+                if (image.naturalWidth > 0) loaded();
+                else failed();
+            }
+        });
         // Each lazy image must enter the viewport and finish decoding before scrolling to the next.
         // eslint-disable-next-line no-await-in-loop -- Parallel scrolling can leave preceding lazy images unloaded.
         await image.decode();
@@ -228,7 +258,7 @@ for (const theme of ["dark", "light"] as const) {
             expect.soft(hero).toMatchObject({ attributed: true, loaded: true });
             expect.soft(hero.height).toBeGreaterThan(250);
             const neighbors = page.getByRole("navigation", {
-                name: "Browse plant profiles",
+                name: "Plant navigation",
             });
             await expect.soft(neighbors).toBeInViewport();
             const next = neighbors.getByRole("link", { name: /Next/v });
@@ -238,7 +268,7 @@ for (const theme of ["dark", "light"] as const) {
                 .soft(page)
                 .toHaveURL(target ?? "missing-next-destination");
             await page
-                .getByRole("navigation", { name: "Browse plant profiles" })
+                .getByRole("navigation", { name: "Plant navigation" })
                 .getByRole("link", { name: /Previous/v })
                 .click();
             await expect

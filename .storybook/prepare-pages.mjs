@@ -128,7 +128,7 @@ async function sourceFingerprint() {
             "docs/daily-reports/*.json",
             "assets/**/*.json",
             "assets/artwork/*.svg",
-            "astro.config.mjs",
+            "astro.config.ts",
             "package-lock.json",
             ".storybook/*.mjs",
             "test/fixtures/daily-report.json",

@@ -20,6 +20,7 @@ const { profile } = Astro.props;
     title={profile.title}
     description={stripMarkdown(profile.visualDescriptionMarkdown)}
     section="plants"
+    class="plant-page"
     breadcrumbs={[
         { label: "Plants", href: siteUrl("plants/") },
         { label: profile.title, href: "" },

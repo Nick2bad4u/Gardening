@@ -2,7 +2,10 @@
 import { contentUrl, potUrl, profileUrl, repositoryUrl, siteUrl } from "../lib/routes.mjs";
 import { getProfiles, photoPreview } from "../lib/content.mjs";
 import { stripMarkdown } from "../lib/content/profile-source.mjs";
+import SiteIcon from "./SiteIcon.astro";
+import ProfileNavigation from "./ProfileNavigation.astro";
 import "../styles/profile.css";
+import "../styles/profile-details.css";
 interface Props {
     profile: import("../lib/content.mjs").SiteProfile;
 }
@@ -25,6 +28,30 @@ const collectionCaptures = profile.collectionRecord.photos.filter(
     (photo) => photo.kind === "collection"
 );
 const newestCapture = profile.ownedPhotos[0];
+const collectionIcon = {
+    cacti: "cactus",
+    succulents: "succulent",
+    rehab: "rehab",
+    houseplants: "houseplant",
+}[profile.group];
+const photoDate = (value: string | undefined) => {
+    if (!value || !/^\d{4}-\d{2}-\d{2}$/v.test(value)) return value ?? "Date not recorded";
+    return new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        timeZone: "UTC",
+    }).format(new Date(`${value}T12:00:00Z`));
+};
+const sectionIcon = (title: string) => {
+    if (/care|water|grow/iv.test(title)) return "care";
+    if (/ident|name|label/iv.test(title)) return "identity";
+    if (/risk|problem|caution/iv.test(title)) return "caution";
+    if (/source|reference|research/iv.test(title)) return "research";
+    if (/origin|habitat|range/iv.test(title)) return "habitat";
+    if (/history|record/iv.test(title)) return "history";
+    return "botanical";
+};
 const metadata = [
     ["Collection Record", profile.inventoryId, "inventory"],
     ["Permanent Label", profile.labelHtml, "label"],
@@ -36,37 +63,12 @@ const metadata = [
 ].filter(([, value]) => value);
 ---
 
-<article class="plant-profile" data-plant-profile={profile.slug}>
-    <nav class="profile-neighbors profile-neighbors-top" aria-label="Browse plant profiles">
-        {previous ? (
-            <a
-                class="profile-neighbor profile-neighbor-previous"
-                href={profileUrl(previous.slug)}
-                rel="prev"
-            >
-                <span>← Previous</span>
-                <strong>{previous.title}</strong>
-            </a>
-        ) : (
-            <span class="profile-neighbor profile-neighbor-empty">First Plant</span>
-        )}
-        <a class="profile-neighbor profile-neighbor-index" href={siteUrl("plants/")}>
-            <img src={siteUrl("assets/ui-icons/list.svg")} alt="" width="24" height="24" />
-            <span>All Plants</span>
-        </a>
-        {next ? (
-            <a
-                class="profile-neighbor profile-neighbor-next"
-                href={profileUrl(next.slug)}
-                rel="next"
-            >
-                <span>Next →</span>
-                <strong>{next.title}</strong>
-            </a>
-        ) : (
-            <span class="profile-neighbor profile-neighbor-empty">Last Plant</span>
-        )}
-    </nav>
+<article
+    class="plant-profile"
+    data-plant-profile={profile.slug}
+    data-collection={profile.group}
+    style={`--plant-cursor: url("${siteUrl("cactus-cursor.svg")}") 1 1, auto`}
+>
     <header class="profile-heading" id={profile.slug}>
         {heroPhoto && (
             <img
@@ -80,9 +82,13 @@ const metadata = [
         )}
         <div class="profile-hero-shade" aria-hidden="true"></div>
         <div class="profile-hero-topline">
-            <p>{profile.eyebrow}</p>
-            <span>
-                Plant {index + 1} / {profiles.length}
+            <p>
+                <SiteIcon name={collectionIcon} size={28} />
+                {profile.eyebrow}
+            </p>
+            <span class="profile-number">
+                <SiteIcon name="field-guide" size={22} />
+                Plant {String(index + 1).padStart(2, "0")} / {profiles.length}
             </span>
         </div>
         <div class="profile-hero-title">
@@ -110,22 +116,63 @@ const metadata = [
                 </p>
                 <h1>{profile.title}</h1>
                 <div class="profile-badges">
-                    <span class="badge badge-label">Label {profile.drawerLabel.primary}</span>
+                    <span class="badge badge-record">
+                        <SiteIcon name="inventory" size={24} />
+                        <span>
+                            <small>Collection Record</small>
+                            <strong class="profile-badge-value">{profile.inventoryId}</strong>
+                        </span>
+                    </span>
+                    <span class="badge badge-label">
+                        <SiteIcon name="label" size={24} />
+                        <span>
+                            <small>Pot Label</small>
+                            <strong class="profile-badge-value">
+                                {profile.drawerLabel.primary}
+                            </strong>
+                        </span>
+                    </span>
                     {profile.trackerId && (
                         <a class="badge badge-id" href={potUrl(profile.trackerId)}>
-                            {profile.trackerId}
+                            <SiteIcon name="tracker" size={24} />
+                            <span>
+                                <small>Pot History</small>
+                                <strong class="profile-badge-value">{profile.trackerId}</strong>
+                            </span>
+                            <SiteIcon name="arrow-right" size={18} />
                         </a>
                     )}
-                    {profile.historical && <span class="badge">Historical Record</span>}
+                    {profile.historical && (
+                        <span class="badge">
+                            <SiteIcon name="history" />
+                            Historical Record
+                        </span>
+                    )}
+                    {profile.receiptUnverified && (
+                        <span class="badge">
+                            <SiteIcon name="seller" />
+                            Ordered · Receipt Unverified
+                        </span>
+                    )}
                 </div>
             </div>
             {ownedAvatar && (
                 <figure class="profile-owned-avatar">
                     <a
+                        class="profile-avatar-link"
                         href={ownedAvatar.page_url}
                         aria-label={`Open owned-plant photo of ${profile.title}`}
                     >
                         <img
+                            class="profile-avatar-fallback"
+                            src={siteUrl(`assets/plant-icons/${profile.slug}.svg`)}
+                            alt=""
+                            width="240"
+                            height="240"
+                            aria-hidden="true"
+                        />
+                        <img
+                            class="profile-avatar-photo"
                             src={photoPreview(ownedAvatar)}
                             alt={ownedAvatar.alt}
                             width="240"
@@ -133,7 +180,9 @@ const metadata = [
                             data-image-id={ownedAvatar.image_id}
                         />
                     </a>
-                    <figcaption>Owned plant · © Nick</figcaption>
+                    <figcaption>
+                        <span data-avatar-caption>Owned plant · © Nick</span>
+                    </figcaption>
                 </figure>
             )}
         </div>
@@ -190,7 +239,7 @@ const metadata = [
                             {" "}
                             · newest{" "}
                             <time datetime={newestCapture.captured_on ?? newestCapture.provided_on}>
-                                {newestCapture.captured_on ?? newestCapture.provided_on}
+                                {photoDate(newestCapture.captured_on ?? newestCapture.provided_on)}
                             </time>
                         </>
                     )}{" "}
@@ -216,7 +265,10 @@ const metadata = [
     {profile.trackerId && (
         <div class="card record-actions">
             <div>
-                <h2>Measurements and care history</h2>
+                <h2>
+                    <SiteIcon name="history" size={32} />
+                    Measurements and Care History
+                </h2>
                 <p>Weights, watering, events, and charts for {profile.trackerId}.</p>
                 {siblings.length > 0 && (
                     <p>
@@ -231,49 +283,73 @@ const metadata = [
                 )}
             </div>
             <a class="button" href={potUrl(profile.trackerId)}>
+                <SiteIcon name="tracker" />
                 Open Pot History
+                <SiteIcon name="arrow-right" size={18} />
             </a>
             {profile.sheetUrl && (
                 <a class="button-secondary" href={profile.sheetUrl}>
+                    <SiteIcon name="sheets" />
                     Google Sheets
                 </a>
             )}
         </div>
     )}
     <section class="card-grid profile-introduction" aria-label="About this plant">
-        <div class="card">
-            <p class="eyebrow">Spot it</p>
+        <div class="card profile-story-card profile-story-appearance">
+            <p class="eyebrow">
+                <SiteIcon name="eye" size={28} />
+                Spot it
+            </p>
             <h2>What it looks like</h2>
             <p set:html={profile.visualDescriptionHtml} />
         </div>
-        <div class="card">
-            <p class="eyebrow">One curious thing</p>
+        <div class="card profile-story-card profile-story-fact">
+            <p class="eyebrow">
+                <SiteIcon name="sparkles" size={28} />
+                One curious thing
+            </p>
             <h2>Did you know?</h2>
             <p set:html={profile.interestingFactHtml} />
         </div>
     </section>
     <div class="profile-reading">
         <details class="profile-toc" open>
-            <summary>Explore This Plant</summary>
+            <summary>
+                <SiteIcon name="field-guide" size={26} />
+                Explore This Plant
+            </summary>
             <nav aria-label="On this page">
                 <ul>
                     {profile.toc
                         .filter((item) => item.level === 2)
                         .map((item) => (
                             <li>
-                                <a href={`#${item.id}`}>{item.title}</a>
+                                <a href={`#${item.id}`}>
+                                    <SiteIcon name={sectionIcon(item.title)} size={22} />
+                                    {item.title}
+                                </a>
                             </li>
                         ))}
                     <li>
-                        <a href={`#${profile.slug}-photo-history`}>Plant Photo History</a>
+                        <a href={`#${profile.slug}-photo-history`}>
+                            <SiteIcon name="photos" />
+                            Plant Photo History
+                        </a>
                     </li>
                     {profile.nurseryPhotos.length > 0 && (
                         <li>
-                            <a href={`#${profile.slug}-nursery-evidence`}>Nursery Evidence</a>
+                            <a href={`#${profile.slug}-nursery-evidence`}>
+                                <SiteIcon name="label" />
+                                Nursery Evidence
+                            </a>
                         </li>
                     )}
                     <li>
-                        <a href={`#${profile.slug}-gallery-heading`}>Reference Gallery</a>
+                        <a href={`#${profile.slug}-gallery-heading`}>
+                            <SiteIcon name="botanical" />
+                            Reference Gallery
+                        </a>
                     </li>
                 </ul>
             </nav>
@@ -284,7 +360,10 @@ const metadata = [
         <div class="section-heading">
             <div>
                 <p class="eyebrow">Dated collection evidence</p>
-                <h2 id={`${profile.slug}-collection-heading`}>Plant Photo History</h2>
+                <h2 id={`${profile.slug}-collection-heading`}>
+                    <SiteIcon name="photos" size={36} />
+                    Plant Photo History
+                </h2>
             </div>
             {profile.collectionRecord.gyazo_collection && (
                 <a class="button-secondary" href={profile.collectionRecord.gyazo_collection.url}>
@@ -316,7 +395,7 @@ const metadata = [
                             <span>
                                 {photo.captured_on ? "Photographed" : "Provided"}{" "}
                                 <time datetime={photo.captured_on ?? photo.provided_on}>
-                                    {photo.captured_on ?? photo.provided_on}
+                                    {photoDate(photo.captured_on ?? photo.provided_on)}
                                 </time>{" "}
                                 · © Nick, all rights reserved
                             </span>
@@ -333,7 +412,10 @@ const metadata = [
     {profile.nurseryPhotos.length > 0 && (
         <section class="photo-section" id={`${profile.slug}-nursery-evidence`}>
             <p class="eyebrow">Original identification evidence</p>
-            <h2 id={`${profile.slug}-nursery-heading`}>Nursery Labels</h2>
+            <h2 id={`${profile.slug}-nursery-heading`}>
+                <SiteIcon name="label" size={36} />
+                Nursery Labels
+            </h2>
             <p>Seller wording is evidence, not botanical proof.</p>
             <div class="photo-grid">
                 {profile.nurseryPhotos.map((photo) => (
@@ -352,8 +434,8 @@ const metadata = [
                         <figcaption>
                             <strong>{photo.caption}</strong>
                             <span>
-                                {photo.captured_on ?? photo.provided_on} · © Nick, all rights
-                                reserved
+                                {photoDate(photo.captured_on ?? photo.provided_on)} · © Nick, all
+                                rights reserved
                             </span>
                             <a href={photo.page_url}>Open Nursery Evidence ↗</a>
                             {photo.source_file && (
@@ -367,7 +449,10 @@ const metadata = [
     )}
     <section class="photo-section" aria-labelledby={`${profile.slug}-gallery-heading`}>
         <p class="eyebrow">Licensed species references</p>
-        <h2 id={`${profile.slug}-gallery-heading`}>Reference Gallery</h2>
+        <h2 id={`${profile.slug}-gallery-heading`}>
+            <SiteIcon name="botanical" size={36} />
+            Reference Gallery
+        </h2>
         <p>{profile.scopeNote}</p>
         <p>
             These photographs illustrate the working species or cultivar. They are separate from
@@ -403,23 +488,31 @@ const metadata = [
         {!profile.allPhotos.length && <p>No licensed reference photographs are archived yet.</p>}
     </section>
     <section class="card research-links">
-        <h2>Research Trail</h2>
+        <h2>
+            <SiteIcon name="research" size={36} />
+            Research Trail
+        </h2>
         <ul>
             <li>
                 <a href={`${repositoryUrl}/blob/main/${profile.sourcePath}`}>
+                    <SiteIcon name="field-guide" size={28} />
                     Maintained Source Profile
                 </a>
             </li>
             {profile.allPhotos.length > 0 && (
                 <li>
                     <a href={`${repositoryUrl}/blob/main/assets/plants/${profile.slug}/README.md`}>
+                        <SiteIcon name="photos" size={28} />
                         Complete Photo Archive and Credits
                     </a>
                 </li>
             )}
             {profile.sellerProductLink && (
                 <li>
-                    <a href={profile.sellerProductLink.href}>{profile.sellerProductLink.label}</a>
+                    <a href={profile.sellerProductLink.href}>
+                        <SiteIcon name="seller" size={28} />
+                        {profile.sellerProductLink.label}
+                    </a>
                 </li>
             )}
             {profile.inaturalist && (
@@ -427,6 +520,7 @@ const metadata = [
                     <a
                         href={`https://www.inaturalist.org/observations?taxon_name=${encodeURIComponent(profile.inaturalist.taxon)}`}
                     >
+                        <SiteIcon name="habitat" size={28} />
                         iNaturalist Observations
                     </a>{" "}
                     — {profile.inaturalist.scope}
@@ -442,7 +536,7 @@ const metadata = [
                 rel="prev"
             >
                 <span>← Previous</span>
-                <strong>{previous.title}</strong>
+                <strong class="profile-neighbor-title">{previous.title}</strong>
             </a>
         ) : (
             <span></span>
@@ -457,10 +551,15 @@ const metadata = [
                 rel="next"
             >
                 <span>Next →</span>
-                <strong>{next.title}</strong>
+                <strong class="profile-neighbor-title">{next.title}</strong>
             </a>
         ) : (
             <span></span>
         )}
     </nav>
+    <ProfileNavigation profiles={profiles} currentSlug={profile.slug} />
 </article>
+<script>
+    import { initializeProfilePhotos } from "../client/profile";
+    initializeProfilePhotos();
+</script>

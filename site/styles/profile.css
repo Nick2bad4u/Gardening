@@ -1,19 +1,80 @@
+.plant-page {
+    background:
+        radial-gradient(
+            ellipse at 0 10rem,
+            color-mix(in srgb, var(--clay) 9%, transparent),
+            transparent 45rem
+        ),
+        radial-gradient(
+            ellipse at 100% 40rem,
+            var(--accent-soft),
+            transparent 45rem
+        ),
+        var(--paper);
+
+    & .site-header {
+        inset-block-start: 0.75rem;
+        inline-size: min(90rem, calc(100% - 1.5rem));
+        margin: 0.75rem auto 0;
+        background: color-mix(in srgb, var(--surface) 95%, transparent);
+        border: 1px solid var(--line);
+        border-radius: 1.25rem;
+        box-shadow: 0 10px 35px rgb(17 41 25 / 12%);
+        backdrop-filter: blur(16px);
+    }
+
+    & .header-inner {
+        padding-block: 0.8rem;
+    }
+    & .site-main {
+        padding-block-start: 1.5rem;
+    }
+    & .breadcrumbs {
+        margin-block-end: 1.25rem;
+    }
+}
+
 .plant-profile {
+    --profile-bloom: #b9663d;
+
     min-inline-size: 0;
+    padding-block-end: calc(7rem + env(safe-area-inset-bottom, 0px));
+
+    &[data-collection="succulents"] {
+        --profile-bloom: #90679e;
+    }
+    &[data-collection="houseplants"] {
+        --profile-bloom: #438576;
+    }
+    &[data-collection="rehab"] {
+        --profile-bloom: #bc8b3f;
+    }
+
+    & :is(.record-actions, .photo-section, .research-links) h2 {
+        display: flex;
+        gap: 0.7rem;
+        align-items: center;
+    }
 
     & .profile-heading {
         position: relative;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        min-block-size: clamp(24rem, 36vi, 30rem);
+        min-block-size: clamp(27rem, 38vi, 34rem);
         padding: clamp(1.25rem, 4vi, 3rem);
         overflow: hidden;
         color: #fffdf3;
-        scroll-margin-block-start: 10rem;
+        scroll-margin-block-start: 2rem;
         background: #22392b;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
+        border: 1px solid
+            color-mix(
+                in srgb,
+                var(--profile-bloom) 65%,
+                var(--line, transparent)
+            );
+        border-radius: 1.6rem;
+        box-shadow: 0 18px 48px rgb(9 25 15 / 18%);
         isolation: isolate;
     }
 
@@ -32,7 +93,7 @@
 
     & .profile-hero-shade {
         background:
-            linear-gradient(0deg, rgb(10 23 15 / 96%), rgb(10 23 15 / 18%) 85%),
+            linear-gradient(0deg, rgb(10 23 15 / 98%), rgb(10 23 15 / 12%) 90%),
             linear-gradient(90deg, rgb(10 23 15 / 64%), transparent);
     }
 
@@ -49,11 +110,28 @@
         text-shadow: 0 2px 5px #000000;
 
         & p {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            max-inline-size: 65%;
+            padding: 0.55rem 0.8rem;
             margin: 0;
+            background: rgb(15 32 22 / 80%);
+            border: 1px solid rgb(212 234 185 / 30%);
+            border-radius: 0.8rem;
         }
 
-        & span {
+        & .profile-number {
+            display: flex;
             flex-shrink: 0;
+            gap: 0.5rem;
+            align-items: center;
+            align-self: flex-start;
+            padding: 0.55rem 0.8rem;
+            color: #ffe3ac;
+            background: rgb(15 32 22 / 80%);
+            border: 1px solid rgb(255 213 143 / 35%);
+            border-radius: 0.8rem;
         }
     }
 
@@ -97,7 +175,7 @@
         font-size: clamp(1.125rem, 2.2vi, 1.75rem);
         font-style: italic;
         line-height: 1.375;
-        color: #d3ead1;
+        color: #d9eab6;
         text-shadow: 0 2px 5px #000000;
     }
 
@@ -107,9 +185,30 @@
         gap: 0.6rem;
 
         & .badge {
+            display: inline-flex;
+            gap: 0.6rem;
+            align-items: center;
+            min-block-size: 3.25rem;
+            padding: 0.5rem 0.85rem;
             color: #e2eee2;
+            text-decoration: none;
             background: rgb(21 42 30 / 90%);
             border: 1px solid #a4c6a1;
+            border-radius: 0.9rem;
+            box-shadow: 0 3px 12px rgb(0 0 0 / 16%);
+
+            & small {
+                display: block;
+                font-size: 0.625rem;
+                font-weight: 600;
+                line-height: 1.375;
+                letter-spacing: 0.05em;
+            }
+            & .profile-badge-value {
+                display: block;
+                font-size: 1rem;
+                line-height: 1.25;
+            }
         }
 
         & .badge-label {
@@ -122,6 +221,12 @@
             color: #d8edff;
             background: rgb(26 49 63 / 90%);
             border-color: #93b6cf;
+        }
+
+        & .badge-record {
+            color: #ead6fc;
+            background: rgb(55 37 70 / 90%);
+            border-color: #ac8cc8;
         }
     }
 
@@ -160,13 +265,31 @@
 
     & .profile-owned-avatar {
         flex: 0 0 auto;
-        inline-size: clamp(9rem, 20vi, 15rem);
+        inline-size: clamp(10rem, 22vi, 17rem);
         overflow: visible;
         & img {
             aspect-ratio: 1;
-            border: 3px solid #c9d7b6;
+            border: 4px solid #d2dcb5;
             border-radius: 50%;
             box-shadow: 0 8px 25px rgb(0 0 0 / 30%);
+        }
+        & .profile-avatar-link {
+            position: relative;
+            display: grid;
+            background: radial-gradient(circle, #385541, #15271b);
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 8px rgb(209 226 170 / 12%),
+                0 18px 40px rgb(0 0 0 / 28%);
+            & :is(.profile-avatar-photo, .profile-avatar-fallback) {
+                grid-area: 1 / 1;
+            }
+        }
+        & .profile-avatar-fallback {
+            padding: 1.25rem;
+        }
+        & .profile-avatar-photo {
+            position: relative;
         }
         & figcaption {
             margin-block-start: 0.6rem;
@@ -177,7 +300,7 @@
     }
 
     & .profile-art-complement {
-        inline-size: 3rem;
+        inline-size: 4rem;
         margin: 0;
     }
 
@@ -187,8 +310,8 @@
             auto-fit,
             [pill-start] minmax(min(100%, 15rem), 1fr) [pill-end]
         );
-        gap: 0.75rem;
-        margin-block: 1rem 1.5rem;
+        gap: 0.85rem;
+        margin-block: 1.4rem 1.75rem;
     }
 
     & .profile-metadata {
@@ -199,12 +322,14 @@
         padding: 1rem 1rem 1rem 3.8rem;
         background: color-mix(
             in srgb,
-            var(--pill-accent) 10%,
+            var(--pill-accent) 15%,
             var(--surface, transparent)
         );
         border: 1px solid
             color-mix(in srgb, var(--pill-accent) 45%, var(--line, transparent));
+        border-block-start: 3px solid var(--pill-accent);
         border-radius: 14px;
+        box-shadow: 0 4px 16px rgb(15 35 23 / 4%);
 
         & dt {
             font-size: 0.75rem;
@@ -217,8 +342,8 @@
             position: absolute;
             inset-block-start: 1rem;
             inset-inline-start: 0.8rem;
-            padding: 0.2rem;
-            background: color-mix(in srgb, var(--pill-accent) 18%, transparent);
+            padding: 0.15rem;
+            background: color-mix(in srgb, var(--pill-accent) 24%, transparent);
             border-radius: 9px;
         }
 
@@ -230,7 +355,10 @@
         }
 
         & summary {
+            min-block-size: 2.75rem;
+            padding-block-start: 0.15rem;
             font-weight: 650;
+            color: var(--ink);
             cursor: pointer;
         }
 
@@ -272,6 +400,12 @@
         gap: 1rem;
         align-items: center;
         margin-block: 1.5rem;
+        background: linear-gradient(
+            110deg,
+            var(--surface-soft),
+            var(--surface)
+        );
+        border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
 
         & > div {
             flex: 1 1 25rem;
@@ -291,14 +425,27 @@
         margin-block: 2rem;
 
         & .card {
-            background:
-                radial-gradient(
-                    ellipse at top right,
-                    var(--accent-soft),
-                    transparent 65%
-                ),
-                var(--surface);
-            border-block-start: 3px solid var(--clay);
+            background-color: var(--surface);
+            background-image: radial-gradient(
+                ellipse at top right,
+                var(--accent-soft),
+                transparent 65%
+            );
+            border-block-start: 3px solid var(--profile-bloom);
+        }
+
+        & .eyebrow {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+        }
+        & .profile-story-fact {
+            background-color: var(--surface);
+            background-image: radial-gradient(
+                ellipse at top right,
+                color-mix(in srgb, var(--profile-bloom) 18%, transparent),
+                transparent 75%
+            );
         }
     }
 
@@ -309,8 +456,13 @@
         border-radius: var(--radius);
 
         & summary {
+            min-block-size: 2.75rem;
+            padding-block: 0.4rem;
             font-weight: 750;
             cursor: pointer;
+            & img {
+                margin-inline: 0.45rem;
+            }
         }
 
         & ul {
@@ -319,19 +471,51 @@
                 auto-fit,
                 [link-start] minmax(min(100%, 14rem), 1fr) [link-end]
             );
-            gap: 0.5rem 1.5rem;
-            padding-inline-start: 1.2rem;
+            gap: 0.5rem;
+            padding-inline-start: 0;
             margin-block-end: 0;
             font-size: 0.875rem;
+            list-style: "";
+        }
+
+        & a {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            min-block-size: 2.75rem;
+            padding: 0.45rem 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 0.65rem;
+            &:is(:hover, :focus-visible) {
+                background: var(--accent-soft);
+                border-color: var(--accent);
+            }
         }
     }
 
     & .photo-section {
         margin-block: 3rem;
-        scroll-margin-block-start: 10rem;
+        scroll-margin-block-start: 2rem;
 
         & h2 {
-            scroll-margin-block-start: 11rem;
+            scroll-margin-block-start: 2rem;
+        }
+        & .eyebrow {
+            color: var(--clay);
+        }
+        & figure {
+            border-block-start: 3px solid var(--profile-bloom);
+        }
+        & figure > a {
+            display: block;
+            overflow: hidden;
+            border-radius: 0.75rem;
+        }
+        & figcaption strong {
+            color: var(--ink);
         }
     }
 
@@ -344,7 +528,7 @@
         border-radius: var(--radius);
 
         & :is(h2, h3) {
-            scroll-margin-block-start: 11rem;
+            scroll-margin-block-start: 2rem;
         }
 
         & h2 {
@@ -366,6 +550,38 @@
         gap: 1rem;
     }
 
+    & .research-links {
+        background: linear-gradient(
+            125deg,
+            var(--surface-soft),
+            var(--surface)
+        );
+        & ul {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                [link-start] minmax(min(100%, 17rem), 1fr) [link-end]
+            );
+            gap: 0.8rem;
+            padding: 0;
+            margin-block-end: 0;
+            list-style: "";
+        }
+        & li {
+            padding: 0.8rem;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 0.75rem;
+        }
+        & :where(a) {
+            display: flex;
+            gap: 0.65rem;
+            align-items: center;
+            min-block-size: 2.75rem;
+            font-weight: 650;
+        }
+    }
+
     & .profile-neighbors {
         display: grid;
         grid-template-columns:
@@ -384,12 +600,6 @@
         box-shadow: var(--shadow);
     }
 
-    & .profile-neighbors-top {
-        position: sticky;
-        inset-block-start: 5.5rem;
-        z-index: 20;
-    }
-
     & .profile-neighbor {
         display: flex;
         flex-direction: column;
@@ -402,7 +612,7 @@
         text-decoration: none;
         border-radius: 10px;
 
-        & strong {
+        & .profile-neighbor-title {
             overflow: hidden;
             text-overflow: ellipsis;
             font-size: 0.875rem;
@@ -429,24 +639,88 @@
     & .profile-neighbor-empty {
         color: var(--muted);
     }
+
+    @media (prefers-reduced-motion: no-preference) {
+        & .profile-heading {
+            animation: profile-arrive 600ms ease both;
+        }
+        & .profile-hero-title {
+            animation: profile-arrive 700ms 100ms ease both;
+        }
+        & .profile-art,
+        & .profile-avatar-link,
+        & .profile-metadata,
+        & .profile-story-card,
+        & .profile-toc a,
+        & .research-links li {
+            transition:
+                transform 240ms ease,
+                box-shadow 240ms ease,
+                border-color 240ms ease;
+        }
+        & .profile-art:hover,
+        & .profile-art:focus {
+            transform: translateY(-0.2rem) rotate(-3deg) scale(1.12);
+        }
+        & .profile-avatar-link:is(:hover, :focus-visible) {
+            transform: scale(1.12) rotate(1deg);
+        }
+        & .profile-metadata:is(:hover, :focus-within),
+        & .profile-story-card:is(:hover, :focus-within),
+        & .research-links li:is(:hover, :focus-within) {
+            box-shadow: 0 10px 28px rgb(20 43 27 / 12%);
+            transform: translateY(-3px);
+        }
+        & .photo-section figure img {
+            transition: transform 350ms ease;
+        }
+        & .photo-section figure > a:is(:hover, :focus-visible) img {
+            transform: scale(1.035);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        & .profile-heading,
+        & .profile-hero-title {
+            animation: none;
+        }
+        & .profile-art,
+        & .profile-avatar-link,
+        & .profile-metadata,
+        & .profile-story-card,
+        & .profile-toc a,
+        & .research-links li,
+        & .photo-section figure img {
+            transition: none;
+        }
+    }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .plant-profile .profile-art {
-        transition: transform 180ms ease;
+@keyframes profile-arrive {
+    from {
+        opacity: 0;
+        transform: translateY(0.8rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-        &:hover,
-        &:focus {
-            transform: scale(1.12);
+@media (hover: hover) and (pointer: fine) {
+    .plant-profile {
+        cursor: var(--plant-cursor);
+        & :is(a, button, summary) {
+            cursor: pointer;
+        }
+        & :is(input, textarea, [contenteditable="true"]) {
+            cursor: text;
         }
     }
 }
 
 @media (width <= 600px) {
     .plant-profile {
-        & .profile-neighbors-top {
-            inset-block-start: 4.5rem;
-        }
         & .profile-introduction {
             grid-template-columns: [card-start] minmax(0, 1fr) [card-end];
         }
@@ -466,12 +740,38 @@
         }
 
         & .profile-owned-avatar {
-            inline-size: 8rem;
+            inline-size: 9rem;
             margin-block-start: 1.5rem;
         }
 
         & .profile-heading {
             min-block-size: 29rem;
+            border-radius: 1.2rem;
+        }
+
+        & .profile-hero-topline {
+            gap: 0.5rem;
+            font-size: 0.625rem;
+        }
+        & .profile-hero-topline p {
+            gap: 0.3rem;
+            padding: 0.45rem;
+        }
+        & .profile-number {
+            gap: 0.3rem;
+            padding: 0.45rem;
+        }
+        & .profile-hero-topline .site-icon {
+            inline-size: 1.25rem;
+        }
+        & .profile-badges {
+            gap: 0.5rem;
+        }
+        & .profile-badges .badge {
+            padding: 0.45rem 0.55rem;
+        }
+        & .profile-badges .badge-record {
+            flex-basis: 100%;
         }
 
         & .profile-hero-credit {
@@ -492,8 +792,30 @@
     }
 }
 
+@media (width <= 600px) {
+    .plant-page {
+        & .site-header {
+            inset-block-start: 0.4rem;
+            inline-size: calc(100% - 0.8rem);
+            margin-block-start: 0.4rem;
+            border-radius: 1rem;
+        }
+        & .header-inner {
+            gap: 0.5rem;
+            padding: 0.55rem 0.65rem;
+        }
+        & .site-brand small {
+            letter-spacing: 0.08em;
+        }
+        & .site-main {
+            padding-block-start: 1rem;
+        }
+    }
+}
+
 @media print {
     .plant-profile {
+        padding-block-end: 0;
         & .profile-toc,
         & .record-actions,
         & .profile-neighbors {
@@ -504,6 +826,7 @@
             min-block-size: 0;
             color: #203d2c;
             background: none;
+            box-shadow: none;
         }
 
         & .profile-hero-photo,
@@ -525,6 +848,17 @@
 
         & .profile-owned-avatar figcaption {
             color: #203d2c;
+        }
+
+        & .profile-avatar-fallback {
+            display: none;
+        }
+        & .profile-avatar-unavailable .profile-avatar-fallback {
+            display: block;
+        }
+        & :is(.profile-metadata, .profile-story-card, .research-links) {
+            background: none;
+            box-shadow: none;
         }
 
         & .profile-hero-title {

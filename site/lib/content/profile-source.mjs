@@ -14,6 +14,7 @@ import {
     readJson,
     required,
 } from "../../../scripts/build-data.mjs";
+import { siteUrl } from "../routes.mjs";
 /**
  * @import {
  *   CollectionPhoto,
@@ -363,7 +364,7 @@ function compareProfiles(left, right) {
  */
 function decorateProfileBody(html) {
     const wrapped = html.replace(
-        /(?<heading><h2>Seller listing snapshot<\/h2>[\s\S]*?)(?=<h2>|$)/v,
+        /(?<heading><h2[^>]*>Seller listing snapshot<\/h2>[\s\S]*?)(?=<h2[\s>]|$)/v,
         '<section class="seller-snapshot" aria-label="Seller listing snapshot">$<heading></section>\n'
     );
 
@@ -373,8 +374,12 @@ function decorateProfileBody(html) {
     );
 
     return decoratedTables.replaceAll(
-        /<h2>(?<heading>[\s\S]*?)<\/h2>/gv,
-        (/** @type {string} */ _match, /** @type {string} */ headingHtml) => {
+        /<h2(?<attributes>[^>]*)>(?<heading>[\s\S]*?)<\/h2>/gv,
+        (
+            /** @type {string} */ _match,
+            /** @type {string} */ attributes,
+            /** @type {string} */ headingHtml
+        ) => {
             const heading = stripHtml(headingHtml).toLowerCase();
             let tone = "story";
             let icon = "story";
@@ -412,7 +417,7 @@ function decorateProfileBody(html) {
                 // Other headings retain the general story treatment.
             }
 
-            return `<h2 class="profile-section-heading profile-section-heading--${tone}"><span class="profile-section-icon" aria-hidden="true">${renderSiteIcon(icon)}</span><span>${headingHtml}</span></h2>`;
+            return `<h2${attributes} class="profile-section-heading profile-section-heading--${tone}"><span class="profile-section-icon" aria-hidden="true">${renderSiteIcon(icon)}</span><span>${headingHtml}</span></h2>`;
         }
     );
 }
@@ -627,13 +632,9 @@ async function renderInline(markdown) {
 /**
  * @param {string} name
  */
-function renderSiteIcon(
-    name,
-    className = "",
-    spritePath = "./plant-icons.svg"
-) {
-    const classes = ["site-icon", className].filter(Boolean).join(" ");
-    return `<svg class="${escapeHtml(classes)}" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><use href="${escapeHtml(spritePath)}#icon-${escapeHtml(name)}" width="64" height="64"></use></svg>`;
+function renderSiteIcon(name) {
+    const source = siteUrl(`assets/ui-icons/${name}.svg`);
+    return `<img class="site-icon" src="${escapeHtml(source)}" width="24" height="24" alt="" aria-hidden="true">`;
 }
 
 /**
@@ -1103,6 +1104,7 @@ function renderMetadataDetails(label, evidenceHtml) {
 export {
     collectionViewLabel,
     compareCollectionPhotosNewestFirst,
+    decorateProfileBody,
     groups,
     identificationLabel,
     inaturalistBySlug,

@@ -153,7 +153,9 @@ async function finalizePublishedSite({
         filenames.map((filename) => readFile(filename, "utf8"))
     );
     const documents = isFixtureBuild
-        ? sourceDocuments.map((html) => rewriteFixturePreviews(html))
+        ? sourceDocuments.map((html) =>
+              rewriteFixturePreviews(html, env["GARDENING_SITE_BASE"])
+          )
         : sourceDocuments;
     if (isFixtureBuild) {
         const placeholder = containedPath(
@@ -641,16 +643,14 @@ async function prepareSiteAssets({ directory = publicDirectory } = {}) {
     return { assetCount: references.size, directory };
 }
 
-/** @param {string} html */
-function rewriteFixturePreviews(html) {
+/** @param {string} html @param {string} [base] */
+function rewriteFixturePreviews(html, base = "/Gardening/") {
+    const previewPath = `${base.replace(/\/$/v, "")}/assets/fixture-collection-preview.svg`;
     return html.replaceAll(/<img\b[^>]*>/gv, (imageTag) => {
         if (!/\bsrc="https:\/\/(?:i|thumb)\.gyazo\.com\//v.test(imageTag))
             return imageTag;
         return imageTag
-            .replace(
-                /\bsrc="[^"]*"/v,
-                'src="/Gardening/assets/fixture-collection-preview.svg"'
-            )
+            .replace(/\bsrc="[^"]*"/v, () => `src="${previewPath}"`)
             .replace(/\bsrcset="[^"]*"/v, "");
     });
 }
@@ -722,5 +722,6 @@ export {
     injectGoogleTagManager,
     injectPageNotFoundEvent,
     prepareSiteAssets,
+    rewriteFixturePreviews,
     rewritePublishedPlantImages,
 };

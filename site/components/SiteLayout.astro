@@ -44,14 +44,14 @@ const canonical = new URL(Astro.url.pathname, siteOrigin).href;
         <script is:inline>
             try {
                 const savedTheme = localStorage.getItem("gardening-site-theme");
-                document.documentElement.dataset.theme =
+                document.documentElement.dataset["theme"] =
                     savedTheme === "light" || savedTheme === "dark"
                         ? savedTheme
                         : matchMedia("(prefers-color-scheme: dark)").matches
                           ? "dark"
                           : "light";
             } catch {
-                document.documentElement.dataset.theme = "light";
+                document.documentElement.dataset["theme"] = "light";
             }
         </script>
         <slot name="head" />
@@ -158,7 +158,9 @@ const canonical = new URL(Astro.url.pathname, siteOrigin).href;
                     <a href={siteUrl("setup/equipment/")}>Equipment &amp; supplies</a>
                     <a href={siteUrl("reports/")}>Report archive</a>
                     <a href={repositoryUrl}>Repository &amp; sources</a>
-                    <a href={siteUrl("storybook/")}>Component workbench</a>
+                    <a href={siteUrl("storybook/")} data-astro-prefetch="false">
+                        Component workbench
+                    </a>
                     <a href={`${repositoryUrl}/blob/main/assets/plants/ATTRIBUTION.md`}>
                         Photo credits
                     </a>

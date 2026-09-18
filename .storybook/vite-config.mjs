@@ -19,6 +19,60 @@ const contentTypes = /** @type {Record<string, string>} */ ({
 });
 
 /**
+ * Resolve only maintained browser modules, including the two Astro wrappers
+ * whose explicit initializer calls must survive coverage instrumentation.
+ *
+ * @param {string} filename
+ * @param {readonly unknown[]} sources
+ */
+export function sourceMapModule(filename, sources) {
+    const entry = sources.at(-1);
+    if (typeof entry !== "string") return undefined;
+    const entryPath = entry.split("?", 1)[0] ?? "";
+    const source = path.resolve(path.dirname(filename), entryPath);
+    const relative = path
+        .relative(repositoryRoot, source)
+        .replaceAll("\\", "/");
+    const initializers =
+        /** @type {Record<string, { module: string; name: string }>} */ ({
+            "site/client/profile-navigation.ts": {
+                module: "site/client/profile-navigation.ts",
+                name: "initializeProfileNavigation",
+            },
+            "site/client/profile.ts": {
+                module: "site/client/profile.ts",
+                name: "initializeProfilePhotos",
+            },
+            "site/components/PlantProfile.astro": {
+                module: "site/client/profile.ts",
+                name: "initializeProfilePhotos",
+            },
+            "site/components/ProfileNavigation.astro": {
+                module: "site/client/profile-navigation.ts",
+                name: "initializeProfileNavigation",
+            },
+        });
+    const initializer = Object.hasOwn(initializers, relative)
+        ? initializers[relative]
+        : undefined;
+    if (initializer) {
+        const module = viteFileSystemUrl(
+            path.join(repositoryRoot, initializer.module)
+        );
+        return `import { ${initializer.name} } from ${JSON.stringify(module)};\n${initializer.name}();`;
+    }
+    if (!/\.[jt]s$/v.test(entryPath)) return undefined;
+    if (
+        !/^(?:docs\/layouts\/|site\/client\/)[\w\-.\/]+\.[jt]s$/v.test(relative)
+    ) {
+        throw new Error(
+            "Fixture source map is not a maintained browser module."
+        );
+    }
+    return `export * from ${JSON.stringify(viteFileSystemUrl(source))};`;
+}
+
+/**
  * Vite's filesystem URL already supplies the POSIX root slash. A doubled slash
  * loads the module but gives browser coverage a different source ID.
  *
@@ -56,19 +110,7 @@ async function originalModule(filename) {
         !Array.isArray(map.sources)
     )
         return undefined;
-    const sources = /** @type {unknown[]} */ (map.sources);
-    const entry = sources.at(-1);
-    if (typeof entry !== "string" || !entry.endsWith(".js")) return undefined;
-    const source = path.resolve(path.dirname(filename), entry);
-    const relative = path
-        .relative(repositoryRoot, source)
-        .replaceAll("\\", "/");
-    if (!/^(?:docs\/layouts\/|site\/client\/)[\w\-.\/]+\.js$/v.test(relative)) {
-        throw new Error(
-            "Fixture source map is not a maintained browser module."
-        );
-    }
-    return viteFileSystemUrl(source);
+    return sourceMapModule(filename, map.sources);
 }
 
 /**
@@ -97,7 +139,7 @@ async function serveFixture(request, response) {
         const sourceModule = await originalModule(filename);
         if (sourceModule !== undefined) {
             response.writeHead(200, { "Content-Type": "text/javascript" });
-            response.end(`export * from ${JSON.stringify(sourceModule)};`);
+            response.end(sourceModule);
             return;
         }
     }
