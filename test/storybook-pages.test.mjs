@@ -13,8 +13,8 @@ import { viteFileSystemUrl } from "../.storybook/vite-config.mjs";
 describe("storybook preview preparation", () => {
     it.each([
         [
-            "/home/runner/work/Gardening/Gardening/site/client/site.js",
-            "/@fs/home/runner/work/Gardening/Gardening/site/client/site.js",
+            "/workspace/Gardening/site/client/site.js",
+            "/@fs/workspace/Gardening/site/client/site.js",
         ],
         [
             String.raw`C:\Repos\Gardening\site\client\site.js`,
