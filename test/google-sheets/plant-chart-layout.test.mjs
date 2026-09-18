@@ -240,6 +240,118 @@ describe("native plant chart template and spacing", () => {
         }
     });
 
+    it("shares a conservative heavy-pot floor without adding or replacing axis maxima", () => {
+        expect.hasAssertions();
+
+        const before = fixture();
+        const cases = [
+            [3400, 2500],
+            [1800, 1000],
+            [900, 500],
+            [624, 250],
+            [625, 500],
+            [251, 250],
+            [250, 200],
+        ];
+        for (const [index, [minimum]] of cases.entries()) {
+            required(before.weightMinimums[index]).minimum = required(minimum);
+            const charts = required(
+                required(before.metadata.sheets[index]).charts
+            );
+            for (const chart of charts) {
+                const axis = required(
+                    chart.spec.basicChart.axis.find(
+                        (item) => item.position === "LEFT_AXIS"
+                    )
+                );
+                const window = required(axis.viewWindowOptions);
+                if (index === 1)
+                    Reflect.deleteProperty(window, "viewWindowMax");
+                else window["viewWindowMax"] = 6000;
+            }
+        }
+        const plan = buildPlantChartLayoutRequests(before);
+        for (const [index, [minimum, floor]] of cases.entries()) {
+            const weights = plan.expectedCharts.filter(
+                (chart) =>
+                    chart.position.overlayPosition.anchorCell.sheetId ===
+                        index + 1 && chart.spec.title.startsWith("Weight ")
+            );
+
+            expect(weights).toHaveLength(2);
+
+            for (const chart of weights) {
+                const window = required(
+                    chart.spec.basicChart.axis.find(
+                        (axis) => axis.position === "LEFT_AXIS"
+                    )?.viewWindowOptions
+                );
+
+                expect(window["viewWindowMin"]).toBe(floor);
+                expect(Number(window["viewWindowMin"])).toBeLessThan(
+                    required(minimum)
+                );
+                expect(window["viewWindowMode"]).toBe("EXPLICIT");
+                expect(window["viewWindowMax"]).toBe(
+                    index === 1 ? undefined : 6000
+                );
+            }
+        }
+    });
+
+    it("lowers both heavy-pot chart floors when new plotted evidence drops below the previous floor", () => {
+        expect.hasAssertions();
+
+        const before = fixture();
+        required(before.weightMinimums[0]).minimum = 3400;
+        const charts = required(required(before.metadata.sheets[0]).charts);
+        for (const chart of charts) {
+            const axis = required(
+                chart.spec.basicChart.axis.find(
+                    (item) => item.position === "LEFT_AXIS"
+                )
+            );
+            Reflect.deleteProperty(
+                required(axis.viewWindowOptions),
+                "viewWindowMax"
+            );
+        }
+        let current = finalSnapshot(
+            before,
+            buildPlantChartLayoutRequests(before)
+        );
+        for (const [minimum, floor] of [
+            [1800, 1000],
+            [249, 200],
+        ]) {
+            required(current.weightMinimums[0]).minimum = required(minimum);
+            const next = buildPlantChartLayoutRequests(current);
+
+            expect(next.requests).toHaveLength(2);
+
+            const weights = next.expectedCharts.filter(
+                (item) =>
+                    item.position.overlayPosition.anchorCell.sheetId === 1 &&
+                    item.spec.title.startsWith("Weight ")
+            );
+            for (const chart of weights) {
+                expect(
+                    chart.spec.basicChart.axis.find(
+                        (axis) => axis.position === "LEFT_AXIS"
+                    )?.viewWindowOptions
+                ).toStrictEqual({
+                    viewWindowMin: floor,
+                    viewWindowMode: "EXPLICIT",
+                });
+            }
+            current = finalSnapshot(current, next);
+
+            expect(
+                buildPlantChartLayoutRequests(current).requests
+            ).toHaveLength(0);
+        }
+    });
+
     it("rejects invalid column geometry and invalid weight evidence", () => {
         expect.hasAssertions();
 

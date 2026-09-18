@@ -116,9 +116,10 @@
   workbook/page refresh or deploy Apps Script solely to add a chart.
 - `plant-chart-layout.mjs` copies P01 styling by verified chart role and binding.
   Retain bindings/colors and axis maxima; derive width from visible A:J columns.
-  Supply fresh plotted-weight minima for the requested 250 g floor; lower it
-  on rerun when needed to avoid clipping. Keep weight labels off and markers/
-  hover values intact. Recheck chart, dimension, and evidence preconditions.
+  Derive floors from fresh plotted minima with a 250 g base and measured
+  headroom. Preserve automatic/existing maxima and verify rendered ticks;
+  native rounding can differ from the configured floor. Keep weight labels
+  off, markers/hover intact, and recheck all captured preconditions.
 - `plant-page-presentation.mjs` styles A1:J38 with guarded labels, merges,
   formulas, formats, and dimensions. Preserve formulas, evidence, and full
   notes. Never run a broad workbook refresh merely to apply these styles.

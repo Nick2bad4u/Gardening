@@ -268,11 +268,14 @@ function capture(snapshot) {
                 throw new Error(
                     `Review plotted weight minimum for ${plant.id}`
                 );
-            // Use the requested common scale without clipping a lighter pot on a later rerun.
+            // Leave headroom below recorded weights without fixing an upper limit.
+            // Coarse floors remain legible for heavy pots and fall with lighter evidence.
             const weightFloor =
-                minimum === null || minimum > 250
+                minimum === null
                     ? 250
-                    : Math.max(0, Math.floor((minimum - 25) / 50) * 50);
+                    : minimum > 250
+                      ? Math.max(250, Math.floor((minimum * 0.8) / 500) * 500)
+                      : Math.max(0, Math.floor((minimum - 25) / 50) * 50);
             const dimensions = snapshot.rowDimensions.filter(
                 (item) => item.sheetId === sheetId
             );

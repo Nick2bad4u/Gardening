@@ -63,15 +63,25 @@ The presentation-only planner in
 P01 styling to the four corresponding charts on every P01–P30 page. It matches
 roles by chart type, title, and exact source bindings, rather than assuming the
 native chart-array order represents those roles. Keep each target's domain and
-series ranges, identity text, permanent plant color, and axis maxima. The owner
-explicitly requested a **250 g minimum for both weight charts**. Supply the
-actual minimum across their plotted R/T weight-helper values before planning.
-All 30 plants' currently inspected minima are at least **301 g**, so the 250 g
-floor retains every recorded point. On a later rerun, a minimum at or below
-250 g lowers the floor to give 25 g headroom, rounded down to a 50 g step and
-clamped at zero. This adjustment happens when the planner runs, not
-automatically when new observations arrive. Existing axis maxima remain intact.
-Watering-gap charts retain a zero minimum for the days axis.
+series ranges, identity text, permanent plant color, and axis maxima. Use a
+**250 g base minimum for both weight charts**, with higher floors for heavy pots
+to make their measured variation readable. Supply the actual minimum across
+their plotted R/T weight-helper values before planning. For minima above 250 g,
+the floor is `max(250, floor(minimum × 0.8 / 500) × 500)`. A minimum at or below
+250 g instead receives 25 g headroom, rounded down to a 50 g step and clamped
+at zero. With no numeric weight, use the 250 g base. These adjustments happen when
+the planner runs, not automatically when observations arrive. Preserve existing
+or automatic maxima. Watering-gap charts retain a zero minimum for the days axis.
+
+The selected floors are **250 g for 25 plants**, **2,500 g for P19**, **1,000 g
+for P20/P21**, and **500 g for P22/P29**, applied to both weight charts. Verify
+the visible ticks as well as metadata: in native P19 tests, explicit 200 g and
+250 g minima still rendered a zero lower tick with an automatic maximum. A
+2,500 g minimum visibly rendered a 2,500–5,000 g scale. This is observed coarse
+axis rounding; the underlying Google rendering cause was not established.
+A fixed 5,500 g maximum also changed the rendered minimum in the copy, but
+fixing that upper limit would risk clipping future readings, so retain the
+automatic maximum.
 
 Titles use centered, bold italic **18-point JetBrains Mono**; subtitles use
 centered, bold italic **12-point JetBrains Mono**. Axis titles use the same
@@ -169,9 +179,18 @@ and separate
 [rehearsal copy](https://docs.google.com/spreadsheets/d/138D0Ux_-AlpsYgSpIvgwg6KCHtoua5lXxV1e-x6hpLU/edit)
 retain the original and rehearsed presentation. Production applied **1,327
 requests**: 120 chart widths, 60 weight-axis specifications, 570 scoped format
-updates, 150 static icon labels, and 427 row heights within rows 1:38. The 250 g
-linear minimum retains all current readings; the lowest plotted weight was
-301 g. All 120 charts now span the 1,285 px visible page width.
+updates, 150 static icon labels, and 427 row heights within rows 1:38. The initial
+250 g floor retained all readings, whose minimum was 301 g. Native visual
+follow-up selected **50 weight charts at 250 g** and **10 heavy-pot weight
+charts at higher floors**: P19 at 2,500 g, P20/P21 at 1,000 g, and P22/P29 at
+500 g. The **10 heavy-chart updates are applied in production**. Native readback
+confirms **50 minima at 250 g, two at 2,500 g, four at 1,000 g, and four at
+500 g**. Comparing all 20 charts on the five affected pages found only the
+10 intended `LEFT_AXIS.viewWindowMin` changes; the other 10 charts match exactly,
+and all remaining fields, including the absent fixed maxima, are preserved.
+Rehearsal visual checks confirmed P19 at 2,500 g and P20 at 1,000 g; this does
+not claim a separate visual check of all 10 adjusted charts. All **120 charts**
+span the **1,285 px** visible page width.
 
 Independent readback passed **955 checks**. The 1,029 observations and their
 unique IDs, staging and RO cells, 1,530 plant formulas, chart bindings, all 147
@@ -183,7 +202,7 @@ native workbook, and Integrity B5:B12 remains zero.
 Native inspection verified the wider weight chart and long/sparse summaries on
 the rehearsal copy. The live evidence sections were checked page by page;
 original dates, dose units, photo-only distinctions, and full notes remain
-readable. The 28 focused tests, build/test type checks, scoped ESLint,
+readable. The **30 focused tests** (23 chart-layout and seven top-section tests), build/test type checks, scoped ESLint,
 Prettier, Remark, and secret checks passed. Apps Script remains **5.25.0 /
 immutable version 92**; this presentation migration requires no runtime deploy.
 The rollout below records the earlier 952 px layout.
