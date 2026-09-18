@@ -77,12 +77,10 @@
   scan independent of those indicators and free of retired-sheet references.
   Cover new helper anchors and populated spill ranges when extending the
   workbook; a zero result is meaningful only for the ranges actually scanned.
-- Plant history headers belong at A140:L140 and the complete-history formula
-  at A141, with capacity through row 5139 for the 4,999 ledger rows. Keep that
-  spill area uninterrupted, including its photo-link column. Retain Jump to
-  history at A11 and Back to charts at A139; rows 14:138 hold summaries and
-  chart annotations. A page refresh preserves that area but still rebuilds
-  the header and history, so it is not a substitute for a scoped migration.
+- Keep history headers at A140:L140, its uninterrupted spill at A141:L5139,
+  and navigation at A11/A139. Refresh rebuilds rows 1:13 and history; summary
+  styles survive, but column widths and selected row heights reset. Reapply
+  both scoped presentation planners after a deliberate broad refresh.
 
 ## Derived analytics and freshness
 
@@ -117,9 +115,13 @@
   `INSIGHTS-CHARTS.md` and the relevant request builder; do not run a full
   workbook/page refresh or deploy Apps Script solely to add a chart.
 - `plant-chart-layout.mjs` copies P01 styling by verified chart role and binding.
-  Retain each target's data, permanent color, identity, and axis window. Keep
-  weight value labels off, retaining markers/hover values and dimension/watering
-  labels. Recheck chart/row preconditions before writing.
+  Retain bindings/colors and axis maxima; derive width from visible A:J columns.
+  Supply fresh plotted-weight minima for the requested 250 g floor; lower it
+  on rerun when needed to avoid clipping. Keep weight labels off and markers/
+  hover values intact. Recheck chart, dimension, and evidence preconditions.
+- `plant-page-presentation.mjs` styles A1:J38 with guarded labels, merges,
+  formulas, formats, and dimensions. Preserve formulas, evidence, and full
+  notes. Never run a broad workbook refresh merely to apply these styles.
 - Chart pixels and row heights are independent. Validate gaps around all four
   charts, A109's status, A139's backlink, and A140's history. Follow the guide's
   scoped row heights; reject hidden boundary rows and avoid sheet-wide autofit.

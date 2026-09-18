@@ -54,7 +54,12 @@ function finalSnapshot(before, plan) {
 /** Synthetic data only; no live chart IDs or observations. */
 function fixture() {
     /** @type {import("../../types/plant-chart-layout.js").PlantLayoutSnapshot} */
-    const snapshot = { metadata: { sheets: [] }, rowDimensions: [] };
+    const snapshot = {
+        columnDimensions: [],
+        metadata: { sheets: [] },
+        rowDimensions: [],
+        weightMinimums: [],
+    };
     for (let index = 0; index < 30; index++) {
         const sheetId = index + 1;
         const id = `P${String(sheetId).padStart(2, "0")}`;
@@ -155,12 +160,105 @@ function fixture() {
             })),
             sheetId,
         });
+        snapshot.columnDimensions.push({
+            columns: [
+                150,
+                115,
+                120,
+                105,
+                105,
+                105,
+                105,
+                180,
+                300,
+                190,
+            ].map((pixelSize, index) => ({
+                hiddenByUser: index === 9,
+                pixelSize,
+            })),
+            sheetId,
+        });
+        snapshot.weightMinimums.push({ minimum: 301, sheetId });
     }
     return snapshot;
 }
 
 describe("native plant chart template and spacing", () => {
-    it("preserves all 30 identities, live bindings, text, axis windows and sparse omissions", () => {
+    it("fits the visible page edge and lowers the preferred floor for lighter recorded pots", () => {
+        expect.hasAssertions();
+
+        const before = fixture();
+        required(before.weightMinimums[0]).minimum = 249;
+        required(before.weightMinimums[1]).minimum = 20;
+        required(before.weightMinimums[2]).minimum = null;
+        required(required(before.columnDimensions[0]).columns[9]).hiddenByUser =
+            false;
+        const plan = buildPlantChartLayoutRequests(before);
+        for (const [
+            sheetId,
+            floor,
+            width,
+        ] of [
+            [
+                1,
+                200,
+                1475,
+            ],
+            [
+                2,
+                0,
+                1285,
+            ],
+            [
+                3,
+                250,
+                1285,
+            ],
+        ]) {
+            const charts = plan.expectedCharts.filter(
+                (chart) =>
+                    chart.position.overlayPosition.anchorCell.sheetId ===
+                    sheetId
+            );
+
+            expect(
+                charts.every(
+                    (chart) =>
+                        chart.position.overlayPosition.widthPixels === width
+                )
+            ).toBe(true);
+            expect(
+                charts
+                    .filter((chart) => chart.spec.title.startsWith("Weight "))
+                    .map(
+                        (chart) =>
+                            chart.spec.basicChart.axis.find(
+                                (axis) => axis.position === "LEFT_AXIS"
+                            )?.viewWindowOptions?.["viewWindowMin"]
+                    )
+            ).toStrictEqual([floor, floor]);
+        }
+    });
+
+    it("rejects invalid column geometry and invalid weight evidence", () => {
+        expect.hasAssertions();
+
+        const before = fixture();
+        required(required(before.columnDimensions[0]).columns[0]).pixelSize =
+            NaN;
+
+        expect(() => buildPlantChartLayoutRequests(before)).toThrow(/columns/v);
+
+        required(required(before.columnDimensions[0]).columns[0]).pixelSize =
+            150;
+        required(before.weightMinimums[0]).minimum = 0;
+
+        expect(() => buildPlantChartLayoutRequests(before)).toThrow(
+            /weight minimum/v
+        );
+    });
+
+    it("preserves all 30 identities, live bindings, text, other axis limits and sparse omissions", () => {
         expect.hasAssertions();
 
         const before = fixture();
@@ -224,6 +322,10 @@ describe("native plant chart template and spacing", () => {
                         ? undefined
                         : {
                               ...oldLeft.viewWindowOptions,
+                              ...(chart.spec.title.startsWith("Weight ") && {
+                                  viewWindowMin: 250,
+                                  viewWindowMode: "EXPLICIT",
+                              }),
                               ...(chart.spec.basicChart.chartType ===
                                   "COLUMN" && { viewWindowMin: 0 }),
                           }
@@ -301,10 +403,10 @@ describe("native plant chart template and spacing", () => {
                     (chart) => chart.position.overlayPosition.widthPixels
                 )
             ).toStrictEqual([
-                952,
-                952,
-                952,
-                952,
+                1285,
+                1285,
+                1285,
+                1285,
             ]);
             expect(rows.slice(138)).toStrictEqual(
                 required(
@@ -482,6 +584,8 @@ describe("native plant chart template and spacing", () => {
         "position",
         "border",
         "row",
+        "column",
+        "weight",
     ])("rejects intervening %s edits before writing", (field) => {
         expect.hasAssertions();
 
@@ -528,6 +632,12 @@ function mutateFixture(before, field) {
             chart.border = {};
             break;
         }
+        case "column": {
+            required(
+                required(before.columnDimensions[0]).columns[0]
+            ).pixelSize = 175;
+            break;
+        }
         case "custom-label": {
             series.dataLabel = { customLabelData: series.series };
             break;
@@ -563,6 +673,10 @@ function mutateFixture(before, field) {
         }
         case "type": {
             chart.spec.basicChart.chartType = "BAR";
+            break;
+        }
+        case "weight": {
+            required(before.weightMinimums[0]).minimum = 200;
             break;
         }
         default: {

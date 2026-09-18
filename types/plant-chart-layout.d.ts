@@ -44,10 +44,12 @@ export interface LayoutChart {
     };
 }
 export interface PlantLayoutSnapshot {
+    columnDimensions: { columns: RowDimension[]; sheetId: number }[];
     metadata: {
         sheets: (Omit<SheetMetadata, "charts"> & { charts?: LayoutChart[] })[];
     };
     rowDimensions: { rows: RowDimension[]; sheetId: number }[];
+    weightMinimums: { minimum: null | number; sheetId: number }[];
 }
 export interface RowDimension {
     hiddenByFilter?: boolean;

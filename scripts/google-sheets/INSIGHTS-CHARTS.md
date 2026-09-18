@@ -53,7 +53,7 @@ status, and forecast basis) retain their category colors.
 Insights chart scales and heights remain as configured.
 The first chart shares the 1,155-pixel width and 10-pixel left inset used by the
 other Insights charts. The plant-page layout below defines its chart spacing
-while preserving each plant's data bindings and weight-axis windows.
+while preserving each plant's data bindings and weight-axis maximum.
 
 ## Plant-page chart layout
 
@@ -63,9 +63,15 @@ The presentation-only planner in
 P01 styling to the four corresponding charts on every P01–P30 page. It matches
 roles by chart type, title, and exact source bindings, rather than assuming the
 native chart-array order represents those roles. Keep each target's domain and
-series ranges, identity text, permanent plant color, and axis windows. P01's
-fixed **250 g** weight-axis limit must not become another pot's limit. Watering
-gap charts retain a zero minimum for the days axis.
+series ranges, identity text, permanent plant color, and axis maxima. The owner
+explicitly requested a **250 g minimum for both weight charts**. Supply the
+actual minimum across their plotted R/T weight-helper values before planning.
+All 30 plants' currently inspected minima are at least **301 g**, so the 250 g
+floor retains every recorded point. On a later rerun, a minimum at or below
+250 g lowers the floor to give 25 g headroom, rounded down to a 50 g step and
+clamped at zero. This adjustment happens when the planner runs, not
+automatically when new observations arrive. Existing axis maxima remain intact.
+Watering-gap charts retain a zero minimum for the days axis.
 
 Titles use centered, bold italic **18-point JetBrains Mono**; subtitles use
 centered, bold italic **12-point JetBrains Mono**. Axis titles use the same
@@ -77,12 +83,17 @@ and hover values. Dimension and watering-interval labels remain unchanged.
 
 The spacing contract is explicit:
 
-| Chart role                                     | Anchor cell | Width  | Height |
-| ---------------------------------------------- | ----------- | ------ | ------ |
-| Weight history, calendar time                  | A55         | 952 px | 551 px |
-| Weight trend after latest Water / Repot anchor | A75         | 952 px | 454 px |
-| Plant dimensions, measurement history          | A92         | 952 px | 469 px |
-| Time between waterings                         | A111        | 952 px | 440 px |
+| Chart role                                     | Anchor cell | Width             | Height |
+| ---------------------------------------------- | ----------- | ----------------- | ------ |
+| Weight history, calendar time                  | A55         | Visible A:J width | 551 px |
+| Weight trend after latest Water / Repot anchor | A75         | Visible A:J width | 454 px |
+| Plant dimensions, measurement history          | A92         | Visible A:J width | 469 px |
+| Time between waterings                         | A111        | Visible A:J width | 440 px |
+
+The current visible A:J span is **1,285 px** on all 30 pages. Each chart reaches
+that page edge; the planner sums actual visible column widths instead of using
+the earlier fixed 952 px width. Hidden columns do not contribute to that sum.
+Anchors, chart heights, and vertical gaps are unchanged by this follow-up.
 
 All anchors have **0 px horizontal offset** and **7 px vertical offset**. Rows
 **54:138** use **30 px** heights, except the status row **109**, which uses
@@ -98,10 +109,14 @@ To apply or rerun the planner:
    native chart specifications, borders, positions, and worksheet metadata.
    Capture `rowDimensions` for each plant sheet as `{ sheetId, rows }`, with
    zero-based dimension arrays beginning at worksheet row 1 and covering at
-   least row 140; include pixel heights and user/filter-hidden flags. See
+   least row 140; include pixel heights and user/filter-hidden flags. Also supply
+   `columnDimensions` as `{ sheetId, columns }` arrays beginning at column A and
+   covering A:J, with pixel widths and both hidden flags. Supply `weightMinimums`
+   as `{ sheetId, minimum }`, using the fresh numeric minimum across both charts'
+   plotted R/T helper values, or `null` only when no numeric weight exists. See
    [`types/plant-chart-layout.d.ts`](../../types/plant-chart-layout.d.ts).
 2. Build a fresh plan with
-   `buildPlantChartLayoutRequests({ metadata, rowDimensions })`. Review its
+   `buildPlantChartLayoutRequests({ metadata, rowDimensions, columnDimensions, weightMinimums })`. Review its
    `requests`, `expectedCharts`, and `preconditions`. The planner rejects
    missing/duplicate roles, unexpected bindings, and invalid or hidden rows.
 3. Immediately before writing, capture the native state again and call
@@ -121,6 +136,57 @@ P28–P30 waiting charts must remain empty; do not copy P01's series or fabricat
 observations to make them look populated. After a real completed interval
 appears, use the existing [interval-style repair](#time-between-waterings) when
 needed, retaining the chart's ID and position.
+
+### Plant-page summaries and evidence
+
+[`plant-page-presentation.mjs`](plant-page-presentation.mjs) provides
+`buildPlantPagePresentationRequests(snapshot)` and
+`assertPlantPagePresentationPreconditions(freshSnapshot, plan.preconditions)`
+for the existing **A1:J38** section. Supply fresh native grid cells, merges,
+formats, validation, and row/column dimensions using
+[`types/plant-page-presentation.d.ts`](../../types/plant-page-presentation.d.ts).
+Recheck the captured preconditions immediately before applying its requests.
+
+The formatter adds icon headings and blue watering-history, purple evidence,
+and green feeding-history sections. Photo links remain links; condition,
+provenance, dates, dose units, unknowns, and full notes remain available. Wrapped
+content determines reviewed row heights. Existing formulas, merges, number
+formats, links, and validations remain unchanged; no care policy is inferred
+from the presentation colors.
+
+Apps Script's `refreshPlantPage_` rebuilds rows **1:13**. It preserves summary
+cell styles below them but resets visible column widths and selected summary
+row heights. Reapply both scoped planners after a deliberate broad refresh,
+using fresh snapshots and verifying the resulting page-edge widths and wrapped
+notes. Do not run a workbook refresh to apply these presentation changes, and
+do not replay the one-time analytics upgrade.
+
+### September 18 width and summary follow-up
+
+**Applied and verified.** The fresh
+[backup](https://docs.google.com/spreadsheets/d/1n6TveZFpKQEKOFxBjASiMcFk1W5erkhLXBkQSwwVPBA/edit)
+and separate
+[rehearsal copy](https://docs.google.com/spreadsheets/d/138D0Ux_-AlpsYgSpIvgwg6KCHtoua5lXxV1e-x6hpLU/edit)
+retain the original and rehearsed presentation. Production applied **1,327
+requests**: 120 chart widths, 60 weight-axis specifications, 570 scoped format
+updates, 150 static icon labels, and 427 row heights within rows 1:38. The 250 g
+linear minimum retains all current readings; the lowest plotted weight was
+301 g. All 120 charts now span the 1,285 px visible page width.
+
+Independent readback passed **955 checks**. The 1,029 observations and their
+unique IDs, staging and RO cells, 1,530 plant formulas, chart bindings, all 147
+chart IDs, 27 nonplant charts, merges, protections, tab order, and hidden states
+were preserved. Chart heights, anchors, axis maxima, and the 49 / 56 / 107 px
+gaps are unchanged. Both planners return **zero requests** against the finished
+native workbook, and Integrity B5:B12 remains zero.
+
+Native inspection verified the wider weight chart and long/sparse summaries on
+the rehearsal copy. The live evidence sections were checked page by page;
+original dates, dose units, photo-only distinctions, and full notes remain
+readable. The 28 focused tests, build/test type checks, scoped ESLint,
+Prettier, Remark, and secret checks passed. Apps Script remains **5.25.0 /
+immutable version 92**; this presentation migration requires no runtime deploy.
+The rollout below records the earlier 952 px layout.
 
 ### September 18 layout rollout
 

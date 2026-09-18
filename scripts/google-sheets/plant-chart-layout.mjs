@@ -54,7 +54,7 @@ const roles = [
 export function assertPlantChartLayoutPreconditions(snapshot, preconditions) {
     if (!isDeepStrictEqual(capture(snapshot), preconditions))
         throw new Error(
-            "Plant chart specifications, positions, or row dimensions changed; rebuild the reviewed plan"
+            "Plant chart specifications, positions, dimensions, or weight evidence changed; rebuild the reviewed plan"
         );
 }
 
@@ -125,7 +125,8 @@ export function buildPlantChartLayoutRequests(snapshot) {
                 required(template.charts[index]).spec,
                 original.spec,
                 page.id,
-                role
+                role,
+                page.weightFloor
             );
             const position = {
                 overlayPosition: {
@@ -137,7 +138,7 @@ export function buildPlantChartLayoutRequests(snapshot) {
                     heightPixels: role.height,
                     offsetXPixels: 0,
                     offsetYPixels: 7,
-                    widthPixels: 952,
+                    widthPixels: page.width,
                 },
             };
             const chart = {
@@ -232,6 +233,46 @@ function capture(snapshot) {
             )
                 throw new Error(`Review four-chart inventory for ${plant.id}`);
             const sheetId = page.properties.sheetId;
+            const columnSets = snapshot.columnDimensions.filter(
+                (item) => item.sheetId === sheetId
+            );
+            const columns = required(columnSets[0]).columns.slice(0, 10);
+            if (
+                columnSets.length !== 1 ||
+                columns.length !== 10 ||
+                columns.some(
+                    (column) =>
+                        !Number.isSafeInteger(column.pixelSize) ||
+                        Number(column.pixelSize) <= 0
+                )
+            )
+                throw new Error(`Review visible page columns for ${plant.id}`);
+            const width = columns
+                .filter(
+                    (column) =>
+                        column.hiddenByUser !== true &&
+                        column.hiddenByFilter !== true
+                )
+                .reduce((sum, column) => sum + required(column.pixelSize), 0);
+            if (width < 600)
+                throw new Error(`Review narrow page width for ${plant.id}`);
+            const weights = snapshot.weightMinimums.filter(
+                (item) => item.sheetId === sheetId
+            );
+            const minimum = required(weights[0]).minimum;
+            if (
+                weights.length !== 1 ||
+                (minimum !== null &&
+                    (!Number.isFinite(minimum) || minimum <= 0))
+            )
+                throw new Error(
+                    `Review plotted weight minimum for ${plant.id}`
+                );
+            // Use the requested common scale without clipping a lighter pot on a later rerun.
+            const weightFloor =
+                minimum === null || minimum > 250
+                    ? 250
+                    : Math.max(0, Math.floor((minimum - 25) / 50) * 50);
             const dimensions = snapshot.rowDimensions.filter(
                 (item) => item.sheetId === sheetId
             );
@@ -267,10 +308,14 @@ function capture(snapshot) {
             });
             return {
                 charts,
+                columns: structuredClone(columns),
                 id: plant.id,
+                minimum,
                 rows: structuredClone(rows),
                 sheetId,
                 title: page.properties.title,
+                weightFloor,
+                width,
             };
         }),
     };
@@ -339,9 +384,10 @@ function required(value) {
 /**
  * @param {import("../../types/plant-chart-layout.js").LayoutChart["spec"]} template
  * @param {import("../../types/plant-chart-layout.js").LayoutChart["spec"]} original
- * @param {string} plantId @param {typeof roles[number]} role
+ * @param {string} plantId @param {typeof roles[number]} role @param {number}
+ *   weightFloor
  */
-function styledSpec(template, original, plantId, role) {
+function styledSpec(template, original, plantId, role, weightFloor) {
     const spec = withWorkbookChartFont(template);
     spec.title = original.title;
     delete spec.subtitle;
@@ -389,6 +435,12 @@ function styledSpec(template, original, plantId, role) {
             );
         if (axis.position === "LEFT_AXIS") {
             result.title = role.unit;
+            if (role.unit === "Weight (g)")
+                result.viewWindowOptions = {
+                    ...result.viewWindowOptions,
+                    viewWindowMin: weightFloor,
+                    viewWindowMode: "EXPLICIT",
+                };
             if (role.type === "COLUMN")
                 result.viewWindowOptions = {
                     ...result.viewWindowOptions,
