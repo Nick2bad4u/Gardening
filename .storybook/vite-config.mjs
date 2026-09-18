@@ -19,6 +19,16 @@ const contentTypes = /** @type {Record<string, string>} */ ({
 });
 
 /**
+ * Vite's filesystem URL already supplies the POSIX root slash. A doubled slash
+ * loads the module but gives browser coverage a different source ID.
+ *
+ * @param {string} source
+ */
+export function viteFileSystemUrl(source) {
+    return path.posix.join("/@fs/", source.replaceAll("\\", "/"));
+}
+
+/**
  * Use the maintained module through Vite's browser coverage pipeline. Static
  * Storybook serves the ordinary Astro bundles unchanged.
  *
@@ -58,7 +68,7 @@ async function originalModule(filename) {
             "Fixture source map is not a maintained browser module."
         );
     }
-    return `/@fs/${source.replaceAll("\\", "/")}`;
+    return viteFileSystemUrl(source);
 }
 
 /**

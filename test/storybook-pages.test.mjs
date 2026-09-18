@@ -8,8 +8,31 @@ import {
     injectFixture,
     writeChangedFile,
 } from "../.storybook/prepare-pages.mjs";
+import { viteFileSystemUrl } from "../.storybook/vite-config.mjs";
 
 describe("storybook preview preparation", () => {
+    it.each([
+        [
+            "/home/runner/work/Gardening/Gardening/site/client/site.js",
+            "/@fs/home/runner/work/Gardening/Gardening/site/client/site.js",
+        ],
+        [
+            String.raw`C:\Repos\Gardening\site\client\site.js`,
+            "/@fs/C:/Repos/Gardening/site/client/site.js",
+        ],
+        [
+            "C:/Repos/Gardening/docs/layouts/plant-history.js",
+            "/@fs/C:/Repos/Gardening/docs/layouts/plant-history.js",
+        ],
+    ])(
+        "maps %s to Vite's canonical coverage module URL",
+        (source, expected) => {
+            expect.hasAssertions();
+
+            expect(viteFileSystemUrl(source)).toBe(expected);
+        }
+    );
+
     it("installs isolated storage and network fixtures before page scripts", () => {
         expect.hasAssertions();
 
