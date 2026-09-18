@@ -26,7 +26,8 @@ appears in **N228:R228**, and its collection comparison starts at **A586**.
 
 The existing drying-rate chart reads **Baselines AE** and is labeled as a modeled
 rate. Charts use **JetBrains Mono**, including title, axis, subtitle, and
-data-label overrides; existing chart sizing and presentation remain intact.
+data-label overrides. Insights sizing remains intact; the plant-page layout
+has its own [guarded styling procedure](#plant-page-chart-layout).
 Each plant has a permanent, distinct color
 defined in [`plant-colors.json`](plant-colors.json). The visible **Plant colors**
 sheet lists all 30 IDs, full plant names, color names, hex values, swatches, and
@@ -49,9 +50,113 @@ Height and width on individual plant pages use solid/circle and dashed/diamond
 styles respectively. The three aggregate charts (care activity, calibration
 status, and forecast basis) retain their category colors.
 
-Chart scales and heights remain as configured.
+Insights chart scales and heights remain as configured.
 The first chart shares the 1,155-pixel width and 10-pixel left inset used by the
-other Insights charts. Individual plant charts retain their existing layout.
+other Insights charts. The plant-page layout below defines its chart spacing
+while preserving each plant's data bindings and weight-axis windows.
+
+## Plant-page chart layout
+
+**Applied and verified September 18, 2026.**
+The presentation-only planner in
+[`plant-chart-layout.mjs`](plant-chart-layout.mjs) applies the owner's reviewed
+P01 styling to the four corresponding charts on every P01–P30 page. It matches
+roles by chart type, title, and exact source bindings, rather than assuming the
+native chart-array order represents those roles. Keep each target's domain and
+series ranges, identity text, permanent plant color, and axis windows. P01's
+fixed **250 g** weight-axis limit must not become another pot's limit. Watering
+gap charts retain a zero minimum for the days axis.
+
+Titles use centered, bold italic **18-point JetBrains Mono**; subtitles use
+centered, bold italic **12-point JetBrains Mono**. Axis titles use the same
+12-point family and emphasis, and the chart borders follow the reviewed P01
+weight-history border. Preserve the distinct line/point styles for dimensions
+and other series so color is not the only way to distinguish them.
+Both weight charts omit crowded per-point value labels while retaining markers
+and hover values. Dimension and watering-interval labels remain unchanged.
+
+The spacing contract is explicit:
+
+| Chart role                                     | Anchor cell | Width  | Height |
+| ---------------------------------------------- | ----------- | ------ | ------ |
+| Weight history, calendar time                  | A55         | 952 px | 551 px |
+| Weight trend after latest Water / Repot anchor | A75         | 952 px | 454 px |
+| Plant dimensions, measurement history          | A92         | 952 px | 469 px |
+| Time between waterings                         | A111        | 952 px | 440 px |
+
+All anchors have **0 px horizontal offset** and **7 px vertical offset**. Rows
+**54:138** use **30 px** heights, except the status row **109**, which uses
+**36 px**. A chart's height is measured in pixels independently of its anchor
+row. The planner checks that charts do not overlap each other, the A109 status,
+or the A139 backlink; history headers at A140 and the A141 spill remain clear.
+Do not run sheet-wide row autofit: it changes the geometry underneath these
+floating charts. Hidden rows in the chart/history boundary require review.
+
+To apply or rerun the planner:
+
+1. Create a fresh native backup and rehearse on a separate copy. Capture full
+   native chart specifications, borders, positions, and worksheet metadata.
+   Capture `rowDimensions` for each plant sheet as `{ sheetId, rows }`, with
+   zero-based dimension arrays beginning at worksheet row 1 and covering at
+   least row 140; include pixel heights and user/filter-hidden flags. See
+   [`types/plant-chart-layout.d.ts`](../../types/plant-chart-layout.d.ts).
+2. Build a fresh plan with
+   `buildPlantChartLayoutRequests({ metadata, rowDimensions })`. Review its
+   `requests`, `expectedCharts`, and `preconditions`. The planner rejects
+   missing/duplicate roles, unexpected bindings, and invalid or hidden rows.
+3. Immediately before writing, capture the native state again and call
+   `assertPlantChartLayoutPreconditions(freshSnapshot, plan.preconditions)`.
+   Rebuild and review the plan if it rejects drift; do not replay stale requests.
+   The preflight comparison remains exact. Plan generation accounts for native
+   float-color precision and omitted zero defaults so equivalent readback does
+   not create repeat styling writes.
+4. Apply the reviewed requests, then compare native charts against
+   `expectedCharts` and check the row heights and spacing visually. Confirm
+   unchanged source ranges, chart IDs, canonical data, protections, tab order,
+   and every nonplant chart. This migration needs no workbook refresh, helper
+   formula replacement, Apps Script deployment, or queue-trigger change.
+
+Native empty watering charts can omit their series entirely. The current
+P28–P30 waiting charts must remain empty; do not copy P01's series or fabricate
+observations to make them look populated. After a real completed interval
+appears, use the existing [interval-style repair](#time-between-waterings) when
+needed, retaining the chart's ID and position.
+
+### September 18 layout rollout
+
+The native [backup](https://docs.google.com/spreadsheets/d/1AJ_ZEYGCjFI6QQP57ysd6YZRSIFtvXBVJPpBpeoP91k/edit)
+and separate [rehearsal copy](https://docs.google.com/spreadsheets/d/1Iz5_Aah57JW2iHzAqW305Fw7wVPfh-oa8gs4JAZNc9g/edit)
+retain the before-change state and the tested presentation. Replanning against
+the completed rehearsal returned **zero requests**.
+
+Production applied **362 requests** across the **120 existing chart IDs** on
+all **30 plant pages**: **61 row-dimension updates, 120 chart specifications,
+62 changed positions, and 119 borders**. No charts were recreated.
+
+Readback found **zero changes** to entered values/formulas, notes, validations,
+or cell formats in **History A1:AP1100**, **App entries A1:AH1000**,
+**App bulk A1:BB1000**, **RO refills A1:M1000**, and **A1:V145 on all 30 plant
+pages**. The intended row heights and floating-chart presentation are separate
+from these preserved cell properties.
+
+The **17 focused tests**, applicable type checks, and lint checks passed.
+Apps Script remains **5.25.0 / immutable deployment version 92**, without a
+runtime deployment for this change. A fresh trigger check found exactly one
+five-minute queue trigger with **0% errors**.
+
+Final native readback preserved all **147 workbook chart IDs**, every plant's
+source bindings and axis windows, all **27 nonplant charts**, tab order,
+protections, and row dimensions outside **54:138**. All 30 pages have **49 / 56 /
+107 px** gaps between charts, with the watering status and history navigation
+clear. Production replanning returned **zero requests**, and **Integrity B5:B12**
+remained zero, including the formula-error count.
+
+Native visual checks covered the weight-history chart on every plant page,
+both P01 weight charts, representative dimension charts and their units,
+P24–P26's populated watering bars, P28–P30's waiting states, and P01's history
+boundary. The full repository link scan encountered HTTP 403 responses on
+existing SANBI and Wiley references outside this change; authenticated native
+reads verified the new backup and rehearsal links.
 
 ## Recent weight comparisons
 

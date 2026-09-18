@@ -116,12 +116,26 @@
 - Native chart-only changes are scoped workbook migrations. Follow
   `INSIGHTS-CHARTS.md` and the relevant request builder; do not run a full
   workbook/page refresh or deploy Apps Script solely to add a chart.
+- For plant-chart template styling, use `plant-chart-layout.mjs` and match
+  chart roles by verified type/title and source bindings. Copy presentation
+  from P01 while retaining each target's source ranges, permanent plant color,
+  identity text, and axis windows; never spread P01's fixed weight limit to
+  other pots. Recheck captured chart and row-dimension preconditions before
+  writing, and preserve chart IDs and all nonplant charts. Keep per-point value
+  labels off on both weight charts for readability; retain markers and hover
+  values, and preserve dimension and watering labels.
+- Chart anchors are cells; chart heights and row heights are separate pixel
+  measurements. Validate their combined geometry against other charts, A109's
+  status, A139's backlink, and history from A140. Reject hidden boundary rows.
+  Use the chart guide's scoped row-height contract, not sheet-wide autofit;
+  keep canonical data, protections, tab order, and empty-chart waiting states.
 - `workbook-upgrade.mjs` is a guarded one-time migration, not a refresh command.
   Recheck its captured cell preconditions and empty destinations immediately
   before writing. Apply preparation, then formulas, verify their calculated
   outputs, and only then create charts. Stop on drift or an already-installed
   destination instead of clearing cells or replaying the migration blindly.
-- Preserve every existing chart ID, complete specification, and position. The
+- Preserve every existing chart ID and all specifications/positions outside
+  the reviewed migration's intended presentation changes. The
   basic metadata connector may omit chart definitions; a no-op `findReplace`
   request with `include_spreadsheet_in_response: true` and grid data disabled
   returns the full native chart metadata. Rehearse on a separate native copy,
