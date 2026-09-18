@@ -2,6 +2,7 @@
 import { contentUrl, potUrl, profileUrl, repositoryUrl, siteUrl } from "../lib/routes.mjs";
 import { getProfiles, photoPreview } from "../lib/content.mjs";
 import { stripMarkdown } from "../lib/content/profile-source.mjs";
+import "../styles/profile.css";
 interface Props {
     profile: import("../lib/content.mjs").SiteProfile;
 }
@@ -13,48 +14,204 @@ const siblings = profiles.filter(
 const index = profiles.findIndex((item) => item.slug === profile.slug);
 const previous = profiles[index - 1];
 const next = profiles[index + 1];
+const heroPhoto = profile.selectedPhotos[0];
+const ownedAvatarId = profile.avatar?.external ? profile.avatar.image_id : undefined;
+const ownedAvatar = ownedAvatarId
+    ? profile.collectionRecord.photos.find(
+          (photo) => photo.kind === "collection" && photo.image_id === ownedAvatarId
+      )
+    : undefined;
+const collectionCaptures = profile.collectionRecord.photos.filter(
+    (photo) => photo.kind === "collection"
+);
+const newestCapture = profile.ownedPhotos[0];
 const metadata = [
-    ["Collection Record", profile.inventoryId],
-    ["Permanent Label", profile.labelHtml],
-    ["Identification", profile.identificationHtml],
-    ["Status", profile.statusHtml],
-    ["Acquired From", profile.acquiredFromHtml],
-    ["Acquired On", profile.acquiredOnHtml],
-    ["Ordered From", profile.orderedFromHtml],
+    ["Collection Record", profile.inventoryId, "inventory"],
+    ["Permanent Label", profile.labelHtml, "label"],
+    ["Identification", profile.identificationHtml, "identity"],
+    ["Status", profile.statusHtml, "status"],
+    ["Acquired From", profile.acquiredFromHtml, "source"],
+    ["Acquired On", profile.acquiredOnHtml, "calendar"],
+    ["Ordered From", profile.orderedFromHtml, "seller"],
 ].filter(([, value]) => value);
 ---
 
 <article class="plant-profile" data-plant-profile={profile.slug}>
-    <header class="page-heading profile-heading" id={profile.slug}>
-        <img
-            class="profile-art"
-            src={siteUrl(`assets/plant-icons/${profile.slug}.svg`)}
-            alt=""
-            width="144"
-            height="144"
-        />
-        <div>
-            <p class="eyebrow">{profile.eyebrow}</p>
-            <h1>{profile.title}</h1>
-            <p class="scientific-name">{stripMarkdown(profile.scientificMarkdown)}</p>
-            <div class="profile-badges">
-                <span class="badge badge-label">Label {profile.drawerLabel.primary}</span>
-                {profile.trackerId && (
-                    <a class="badge badge-id" href={potUrl(profile.trackerId)}>
-                        {profile.trackerId}
-                    </a>
-                )}
-                {profile.historical && <span class="badge">Historical Record</span>}
-            </div>
+    <nav class="profile-neighbors profile-neighbors-top" aria-label="Browse plant profiles">
+        {previous ? (
+            <a
+                class="profile-neighbor profile-neighbor-previous"
+                href={profileUrl(previous.slug)}
+                rel="prev"
+            >
+                <span>← Previous</span>
+                <strong>{previous.title}</strong>
+            </a>
+        ) : (
+            <span class="profile-neighbor profile-neighbor-empty">First Plant</span>
+        )}
+        <a class="profile-neighbor profile-neighbor-index" href={siteUrl("plants/")}>
+            <img src={siteUrl("assets/ui-icons/list.svg")} alt="" width="24" height="24" />
+            <span>All Plants</span>
+        </a>
+        {next ? (
+            <a
+                class="profile-neighbor profile-neighbor-next"
+                href={profileUrl(next.slug)}
+                rel="next"
+            >
+                <span>Next →</span>
+                <strong>{next.title}</strong>
+            </a>
+        ) : (
+            <span class="profile-neighbor profile-neighbor-empty">Last Plant</span>
+        )}
+    </nav>
+    <header class="profile-heading" id={profile.slug}>
+        {heroPhoto && (
+            <img
+                class="profile-hero-photo"
+                src={contentUrl(heroPhoto.file)}
+                alt=""
+                width="1600"
+                height="1067"
+                fetchpriority="high"
+            />
+        )}
+        <div class="profile-hero-shade" aria-hidden="true"></div>
+        <div class="profile-hero-topline">
+            <p>{profile.eyebrow}</p>
+            <span>
+                Plant {index + 1} / {profiles.length}
+            </span>
         </div>
+        <div class="profile-hero-title">
+            {!ownedAvatar && (
+                <img
+                    class="profile-art"
+                    src={siteUrl(`assets/plant-icons/${profile.slug}.svg`)}
+                    alt=""
+                    width="176"
+                    height="176"
+                />
+            )}
+            <div class="profile-title-copy">
+                <p class="scientific-name">
+                    {ownedAvatar && (
+                        <img
+                            class="profile-art profile-art-complement"
+                            src={siteUrl(`assets/plant-icons/${profile.slug}.svg`)}
+                            alt=""
+                            width="48"
+                            height="48"
+                        />
+                    )}
+                    <span>{stripMarkdown(profile.scientificMarkdown)}</span>
+                </p>
+                <h1>{profile.title}</h1>
+                <div class="profile-badges">
+                    <span class="badge badge-label">Label {profile.drawerLabel.primary}</span>
+                    {profile.trackerId && (
+                        <a class="badge badge-id" href={potUrl(profile.trackerId)}>
+                            {profile.trackerId}
+                        </a>
+                    )}
+                    {profile.historical && <span class="badge">Historical Record</span>}
+                </div>
+            </div>
+            {ownedAvatar && (
+                <figure class="profile-owned-avatar">
+                    <a
+                        href={ownedAvatar.page_url}
+                        aria-label={`Open owned-plant photo of ${profile.title}`}
+                    >
+                        <img
+                            src={photoPreview(ownedAvatar)}
+                            alt={ownedAvatar.alt}
+                            width="240"
+                            height="240"
+                            data-image-id={ownedAvatar.image_id}
+                        />
+                    </a>
+                    <figcaption>Owned plant · © Nick</figcaption>
+                </figure>
+            )}
+        </div>
+        {heroPhoto && (
+            <p class="profile-hero-credit">
+                Species reference · {heroPhoto.author} ·{" "}
+                <a href={heroPhoto.license_url}>{heroPhoto.license}</a> ·{" "}
+                <a href={heroPhoto.source_url}>Photo Source ↗</a>
+            </p>
+        )}
     </header>
     <dl class="metadata-grid">
-        {metadata.map(([label, value]) => (
-            <div class="metadata">
-                <dt>{label}</dt>
+        {metadata.map(([label, value, icon]) => (
+            <div class={`profile-metadata profile-metadata-${icon}`}>
+                <dt>
+                    <img
+                        src={siteUrl(`assets/ui-icons/${icon}.svg`)}
+                        alt=""
+                        width="32"
+                        height="32"
+                    />
+                    <span>{label}</span>
+                </dt>
                 <dd set:html={value} />
             </div>
         ))}
+        {profile.trackerId && profile.sheetUrl && (
+            <div class="profile-metadata profile-metadata-status">
+                <dt>
+                    <img
+                        src={siteUrl("assets/ui-icons/sheets.svg")}
+                        alt=""
+                        width="32"
+                        height="32"
+                    />
+                    <span>Google Sheets ID</span>
+                </dt>
+                <dd>
+                    <a href={profile.sheetUrl}>{profile.trackerId} ↗</a>
+                </dd>
+            </div>
+        )}
+        <div class="profile-metadata profile-metadata-photos">
+            <dt>
+                <img src={siteUrl("assets/ui-icons/photos.svg")} alt="" width="32" height="32" />
+                <span>Photo History</span>
+            </dt>
+            <dd>
+                <a href={`#${profile.slug}-photo-history`}>
+                    {collectionCaptures.length}{" "}
+                    {collectionCaptures.length === 1 ? "capture" : "captures"}
+                    {newestCapture && (
+                        <>
+                            {" "}
+                            · newest{" "}
+                            <time datetime={newestCapture.captured_on ?? newestCapture.provided_on}>
+                                {newestCapture.captured_on ?? newestCapture.provided_on}
+                            </time>
+                        </>
+                    )}{" "}
+                    ↓
+                </a>
+            </dd>
+        </div>
+        {profile.scopeNote && (
+            <div class="profile-metadata profile-metadata-scope">
+                <dt>
+                    <img
+                        src={siteUrl("assets/ui-icons/botanical.svg")}
+                        alt=""
+                        width="32"
+                        height="32"
+                    />
+                    <span>Photo Scope</span>
+                </dt>
+                <dd>{profile.scopeNote}</dd>
+            </div>
+        )}
     </dl>
     {profile.trackerId && (
         <div class="card record-actions">
@@ -95,31 +252,33 @@ const metadata = [
             <p set:html={profile.interestingFactHtml} />
         </div>
     </section>
-    <div class="article-layout">
-        <aside class="article-toc" aria-label="On this page">
-            <h2>On this page</h2>
-            <ul>
-                {profile.toc
-                    .filter((item) => item.level === 2)
-                    .map((item) => (
-                        <li>
-                            <a href={`#${item.id}`}>{item.title}</a>
-                        </li>
-                    ))}
-                <li>
-                    <a href={`#${profile.slug}-photo-history`}>Plant Photo History</a>
-                </li>
-                {profile.nurseryPhotos.length > 0 && (
+    <div class="profile-reading">
+        <details class="profile-toc" open>
+            <summary>Explore This Plant</summary>
+            <nav aria-label="On this page">
+                <ul>
+                    {profile.toc
+                        .filter((item) => item.level === 2)
+                        .map((item) => (
+                            <li>
+                                <a href={`#${item.id}`}>{item.title}</a>
+                            </li>
+                        ))}
                     <li>
-                        <a href={`#${profile.slug}-nursery-evidence`}>Nursery Evidence</a>
+                        <a href={`#${profile.slug}-photo-history`}>Plant Photo History</a>
                     </li>
-                )}
-                <li>
-                    <a href={`#${profile.slug}-gallery-heading`}>Reference Gallery</a>
-                </li>
-            </ul>
-        </aside>
-        <div class="prose" set:html={profile.bodyHtml} />
+                    {profile.nurseryPhotos.length > 0 && (
+                        <li>
+                            <a href={`#${profile.slug}-nursery-evidence`}>Nursery Evidence</a>
+                        </li>
+                    )}
+                    <li>
+                        <a href={`#${profile.slug}-gallery-heading`}>Reference Gallery</a>
+                    </li>
+                </ul>
+            </nav>
+        </details>
+        <div class="prose profile-copy" set:html={profile.bodyHtml} />
     </div>
     <section class="photo-section" id={`${profile.slug}-photo-history`}>
         <div class="section-heading">
@@ -276,113 +435,32 @@ const metadata = [
         </ul>
     </section>
     <nav class="profile-neighbors" aria-label="Other plant profiles">
-        {previous && <a href={profileUrl(previous.slug)}>← {previous.title}</a>}
-        <a href={siteUrl("plants/")}>All Plants</a>
-        {next && <a href={profileUrl(next.slug)}>{next.title} →</a>}
+        {previous ? (
+            <a
+                class="profile-neighbor profile-neighbor-previous"
+                href={profileUrl(previous.slug)}
+                rel="prev"
+            >
+                <span>← Previous</span>
+                <strong>{previous.title}</strong>
+            </a>
+        ) : (
+            <span></span>
+        )}
+        <a class="profile-neighbor profile-neighbor-index" href={siteUrl("plants/")}>
+            All Plants
+        </a>
+        {next ? (
+            <a
+                class="profile-neighbor profile-neighbor-next"
+                href={profileUrl(next.slug)}
+                rel="next"
+            >
+                <span>Next →</span>
+                <strong>{next.title}</strong>
+            </a>
+        ) : (
+            <span></span>
+        )}
     </nav>
 </article>
-<style>
-    .profile-heading {
-        display: flex;
-        gap: 1.5rem;
-        align-items: center;
-    }
-    .profile-art {
-        flex: 0 0 auto;
-    }
-    .scientific-name {
-        font-family: Georgia, serif;
-        font-style: italic;
-        font-size: clamp(1.15rem, 3vw, 1.6rem);
-        opacity: 0.8;
-    }
-    .profile-badges,
-    .profile-neighbors {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-    }
-    .metadata-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-        gap: 0.75rem;
-    }
-    .metadata-grid dd {
-        margin: 0.3rem 0 0;
-        overflow-wrap: anywhere;
-    }
-    .metadata-grid dt {
-        font-size: 0.8rem;
-        font-weight: 700;
-        opacity: 0.75;
-    }
-    .record-actions {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 1rem;
-        margin-block: 1.5rem;
-    }
-    .record-actions > div {
-        flex: 1 1 25rem;
-    }
-    .record-actions h2,
-    .record-actions p {
-        margin-block: 0.4rem;
-    }
-    .profile-introduction {
-        margin-block: 2rem;
-    }
-    .photo-section {
-        margin-block: 3rem;
-        scroll-margin-top: 6rem;
-    }
-    .photo-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-        gap: 1rem;
-    }
-    figure {
-        margin: 0;
-        overflow: hidden;
-    }
-    figure img {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 4 / 3;
-        object-fit: cover;
-        border-radius: 0.6rem;
-    }
-    figcaption {
-        display: grid;
-        gap: 0.5rem;
-        margin-top: 0.75rem;
-        font-size: 0.9rem;
-    }
-    .profile-neighbors {
-        justify-content: space-between;
-        margin-block: 2rem;
-    }
-    @media (max-width: 520px) {
-        .profile-art {
-            width: 90px;
-            height: 90px;
-        }
-        .profile-heading {
-            gap: 0.75rem;
-        }
-    }
-    @media print {
-        .article-toc,
-        .record-actions,
-        .profile-neighbors {
-            display: none;
-        }
-        .photo-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        figure {
-            break-inside: avoid;
-        }
-    }
-</style>

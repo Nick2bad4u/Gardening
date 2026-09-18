@@ -13,6 +13,87 @@ async function expectContained(page: Readonly<Page>) {
         .toBe(true);
 }
 
+function inspectCardGeometry(entries: readonly Readonly<Element>[]) {
+    const rows = new Map<number, number[]>();
+    const unlinked: string[] = [];
+    for (const entry of entries) {
+        const card = entry.querySelector("[data-plant-card]");
+        if (!(card instanceof HTMLElement))
+            throw new Error("Missing plant card");
+        const links = card.querySelectorAll("a");
+        const link = links[0];
+        if (!link || links.length !== 1)
+            throw new Error("Plant card must have exactly one link");
+        const original = card.getBoundingClientRect();
+        const row = Math.round(original.top + scrollY);
+        rows.set(row, [...(rows.get(row) ?? []), original.height]);
+        card.scrollIntoView({ block: "center" });
+        const box = card.getBoundingClientRect();
+        const labels = card.querySelector(".plant-card-labels");
+        const labelBox = labels?.getBoundingClientRect();
+        const points = [
+            [box.left + 6, box.top + 6],
+            [box.right - 6, box.top + 6],
+            [box.left + 6, box.bottom - 6],
+            [box.right - 6, box.bottom - 6],
+            [
+                labelBox ? labelBox.left + labelBox.width / 2 : box.left,
+                labelBox ? labelBox.top + labelBox.height / 2 : box.top,
+            ],
+        ];
+        if (
+            points.some(
+                ([x, y]) =>
+                    document.elementFromPoint(x ?? 0, y ?? 0)?.closest("a") !==
+                    link
+            )
+        ) {
+            unlinked.push(link.href);
+        }
+    }
+    return {
+        count: entries.length,
+        rowHeightDifferences: rows
+            .values()
+            .map((heights) => Math.max(...heights) - Math.min(...heights))
+            .toArray(),
+        unlinked,
+    };
+}
+
+async function inspectPlacementMaps(main: Readonly<Element>) {
+    const images = [
+        ...main.querySelectorAll(":scope .document-article .prose img"),
+    ];
+    const metrics = [];
+    for (const image of images) {
+        if (!(image instanceof HTMLImageElement))
+            throw new Error("Diagram must be an image");
+        image.scrollIntoView({ block: "center" });
+        // Each lazy image must enter the viewport and finish decoding before scrolling to the next.
+        // eslint-disable-next-line no-await-in-loop -- Parallel scrolling can leave preceding lazy images unloaded.
+        await image.decode();
+        const body = image.closest(".prose");
+        const { height, width } = image.getBoundingClientRect();
+        metrics.push({
+            fillsBody:
+                width >=
+                (body?.getBoundingClientRect().width ?? Infinity) * 0.9,
+            loaded: image.naturalWidth > 0 && image.naturalHeight > 0,
+            nativeAspect:
+                Math.abs(
+                    width / height - image.naturalWidth / image.naturalHeight
+                ) < 0.02,
+        });
+    }
+    return {
+        count: metrics.length,
+        valid: metrics.every(
+            (metric) => metric.fillsBody && metric.nativeAspect && metric.loaded
+        ),
+    };
+}
+
 async function openSite(
     page: Readonly<Page>,
     route: string,
@@ -28,6 +109,143 @@ async function openSite(
 
 for (const theme of ["dark", "light"] as const) {
     test.describe(`${theme} modular website`, { tag: "@layout" }, () => {
+        for (const width of [390, 1280]) {
+            test(`directory cards share row heights and their entire surface is linked at ${width}px`, async ({
+                page,
+            }) => {
+                await page.setViewportSize({ height: 900, width });
+                await openSite(page, "plants/", theme);
+                const directory = page.getByRole("list", {
+                    name: "Plant directory",
+                });
+                const geometry = await directory
+                    .getByRole("listitem")
+                    .evaluateAll(inspectCardGeometry);
+                expect.soft(geometry.count).toBeGreaterThan(20);
+                expect.soft(geometry.unlinked).toStrictEqual([]);
+                expect
+                    .soft(Math.max(...geometry.rowHeightDifferences))
+                    .toBeLessThanOrEqual(1);
+                const firstCard = directory.getByRole("article").filter({
+                    has: page.getByRole("heading", {
+                        exact: true,
+                        name: "Variegated moon cactus",
+                    }),
+                });
+                const destination = await firstCard
+                    .getByRole("link")
+                    .getAttribute("href");
+                await firstCard.click({ position: { x: 6, y: 6 } });
+                await expect
+                    .soft(page)
+                    .toHaveURL(destination ?? "missing-card-destination");
+            });
+
+            test(`setup previews lead to uncropped full-width placement maps at ${width}px`, async ({
+                page,
+            }) => {
+                await page.setViewportSize({ height: 900, width });
+                await openSite(page, "setup/", theme);
+                const preview = page.getByRole("link", {
+                    name: /Current Arrangement/v,
+                });
+                const previewSize = await preview
+                    .getByRole("img")
+                    .evaluate(async (element) => {
+                        if (!(element instanceof HTMLImageElement))
+                            throw new Error("Preview must be an image");
+                        element.scrollIntoView({ block: "center" });
+                        await element.decode();
+                        return {
+                            height: element.clientHeight,
+                            width: element.clientWidth,
+                        };
+                    });
+                expect.soft(previewSize.width).toBeGreaterThan(250);
+                expect.soft(previewSize.height).toBeGreaterThan(150);
+                await preview.click();
+                await expect
+                    .soft(page)
+                    .toHaveURL(
+                        /\/setup\/placement\/#illustrated-whole-display$/v
+                    );
+                const maps = await page
+                    .getByRole("main")
+                    .evaluate(inspectPlacementMaps);
+                expect.soft(maps).toMatchObject({ valid: true });
+                expect.soft(maps.count).toBeGreaterThanOrEqual(4);
+            });
+        }
+
+        for (const route of [
+            "plants/pachira-glabra/",
+            "guides/watering-strategy/",
+            "setup/",
+            "setup/equipment/",
+        ]) {
+            test(`${route} uses the available desktop width for its article text`, async ({
+                page,
+            }) => {
+                await page.setViewportSize({ height: 900, width: 1280 });
+                await openSite(page, route, theme);
+                const sizes = await page.getByRole("main").evaluate((main) => {
+                    const body = main.querySelector(".prose");
+                    if (!body) throw new Error("Missing readable article body");
+                    const mainBox = main.getBoundingClientRect();
+                    const bodyBox = body.getBoundingClientRect();
+                    return {
+                        leftGap: bodyBox.left - mainBox.left,
+                        mainWidth: mainBox.width,
+                        width: bodyBox.width,
+                    };
+                });
+                expect.soft(sizes.width).toBeGreaterThan(600);
+                expect.soft(sizes.width / sizes.mainWidth).toBeGreaterThan(0.6);
+                expect.soft(sizes.leftGap).toBeLessThan(80);
+            });
+        }
+
+        test("profile hero is loaded with attribution and prominent neighbor links work in both directions", async ({
+            page,
+        }) => {
+            await page.setViewportSize({ height: 900, width: 1280 });
+            await openSite(page, "plants/mammillaria-plumosa/", theme);
+            const hero = await page.getByRole("main").evaluate(async (main) => {
+                const image = main.querySelector(".profile-hero-photo");
+                if (!(image instanceof HTMLImageElement))
+                    throw new Error("Missing profile hero photograph");
+                await image.decode();
+                const credit = main.querySelector(".profile-hero-credit");
+                return {
+                    attributed:
+                        credit !== null &&
+                        credit.textContent.includes("Species reference") &&
+                        Boolean(credit.querySelector("a[href]")),
+                    height: image.getBoundingClientRect().height,
+                    loaded: image.naturalWidth > 0 && image.naturalHeight > 0,
+                };
+            });
+            expect.soft(hero).toMatchObject({ attributed: true, loaded: true });
+            expect.soft(hero.height).toBeGreaterThan(250);
+            const neighbors = page.getByRole("navigation", {
+                name: "Browse plant profiles",
+            });
+            await expect.soft(neighbors).toBeInViewport();
+            const next = neighbors.getByRole("link", { name: /Next/v });
+            const target = await next.getAttribute("href");
+            await next.click();
+            await expect
+                .soft(page)
+                .toHaveURL(target ?? "missing-next-destination");
+            await page
+                .getByRole("navigation", { name: "Browse plant profiles" })
+                .getByRole("link", { name: /Previous/v })
+                .click();
+            await expect
+                .soft(page)
+                .toHaveURL(`${base}plants/mammillaria-plumosa/`);
+        });
+
         test("loads a homepage with normal navigation and a dated report", async ({
             page,
         }) => {
@@ -174,6 +392,35 @@ for (const theme of ["dark", "light"] as const) {
                 .soft(page.getByRole("main"))
                 .toContainText("Identification");
             await expect.soft(page.getByRole("main")).toContainText("Sources");
+            const badgeContrast = await page
+                .getByRole("main")
+                .evaluate((main) =>
+                    [
+                        ...main.querySelectorAll(
+                            ":scope .profile-badges .badge"
+                        ),
+                    ].map((badge) => {
+                        const channels = getComputedStyle(badge)
+                            .color.match(/[\d.]+/gv)
+                            ?.slice(0, 3)
+                            .map(Number)
+                            .map((value) => {
+                                const channel = value / 255;
+                                return channel <= 0.04045
+                                    ? channel / 12.92
+                                    : ((channel + 0.055) / 1.055) ** 2.4;
+                            });
+                        if (channels?.length !== 3)
+                            throw new Error("Missing printable badge color");
+                        const luminance =
+                            0.2126 * (channels[0] ?? 1) +
+                            0.7152 * (channels[1] ?? 1) +
+                            0.0722 * (channels[2] ?? 1);
+                        return 1.05 / (luminance + 0.05);
+                    })
+                );
+            expect.soft(badgeContrast.length).toBeGreaterThan(0);
+            expect.soft(Math.min(...badgeContrast)).toBeGreaterThanOrEqual(4.5);
         });
     });
 }

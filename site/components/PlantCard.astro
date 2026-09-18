@@ -7,42 +7,63 @@ interface Props {
 const { profile } = Astro.props;
 ---
 
-<article class="card plant-card" data-plant-card>
-    <a class="plant-card-link" href={profileUrl(profile.slug)}>
-        <img
-            class="plant-card-art"
-            src={siteUrl(`assets/plant-icons/${profile.slug}.svg`)}
-            alt=""
-            width="80"
-            height="80"
-            loading="lazy"
-        />
-        <div>
-            <p class="eyebrow">{profile.groupTitle}</p>
-            <h2>{profile.title}</h2>
-            <p class="scientific">{stripMarkdown(profile.scientificMarkdown)}</p>
+<article class="plant-card" data-plant-card>
+    <a class="card plant-card-link" href={profileUrl(profile.slug)}>
+        <div class="plant-card-summary">
+            <img
+                class="plant-card-art"
+                src={siteUrl(`assets/plant-icons/${profile.slug}.svg`)}
+                alt=""
+                width="80"
+                height="80"
+                loading="lazy"
+            />
+            <div>
+                <p class="eyebrow">{profile.groupTitle}</p>
+                <h2>{profile.title}</h2>
+                <p class="scientific">{stripMarkdown(profile.scientificMarkdown)}</p>
+            </div>
+        </div>
+        <div class="plant-card-labels">
+            <span class="badge badge-label">{profile.drawerLabel.primary}</span>
+            {profile.trackerId && <span class="badge badge-id">{profile.trackerId}</span>}
+            {profile.historical && <span class="badge">Historical</span>}
         </div>
     </a>
-    <div class="plant-card-labels">
-        <span class="badge badge-label">{profile.drawerLabel.primary}</span>
-        {profile.trackerId && <span class="badge badge-id">{profile.trackerId}</span>}
-        {profile.historical && <span class="badge">Historical</span>}
-    </div>
 </article>
 <style>
     .plant-card {
-        display: grid;
-        gap: 1rem;
+        block-size: 100%;
+        min-inline-size: 0;
     }
     .plant-card-link {
         display: flex;
-        gap: 1rem;
-        align-items: center;
+        flex-direction: column;
+        gap: 1.25rem;
+        block-size: 100%;
         text-decoration: none;
         color: inherit;
+        transition:
+            border-color 150ms ease,
+            background-color 150ms ease,
+            box-shadow 150ms ease;
+        &:hover,
+        &:focus-visible {
+            color: var(--ink);
+            background: var(--surface-soft);
+            border-color: var(--accent);
+            box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 15%, transparent);
+        }
+    }
+    .plant-card-summary {
+        display: grid;
+        grid-template-columns: [art-start] 80px [art-end title-start] minmax(0, 1fr) [title-end];
+        gap: 1rem;
+        align-items: center;
     }
     .plant-card-art {
-        flex: 0 0 80px;
+        inline-size: 80px;
+        block-size: 80px;
     }
     .plant-card h2 {
         margin: 0.2rem 0;
@@ -52,11 +73,18 @@ const { profile } = Astro.props;
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
+        margin-block-start: auto;
+        & .badge {
+            justify-content: center;
+            min-inline-size: 3rem;
+            min-block-size: 28px;
+        }
     }
     .scientific {
         font-family: Georgia, serif;
+        font-size: 0.875rem;
         font-style: italic;
         margin: 0;
-        opacity: 0.8;
+        color: var(--muted);
     }
 </style>

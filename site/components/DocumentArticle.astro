@@ -13,6 +13,7 @@ const { document } = Astro.props;
             Maintained Source ↗
         </a>
     </header>
+    <slot />
     <div class="article-layout">
         <aside class="article-toc" aria-label="On this page">
             <h2>On this page</h2>
@@ -30,10 +31,20 @@ const { document } = Astro.props;
     </div>
 </article>
 <style>
+    .document-article > .article-layout > .prose {
+        padding: clamp(1rem, 2.5vi, 2rem);
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+    }
     .source-link {
         font-size: 0.85rem;
     }
     @media print {
+        .document-article > .article-layout > .prose {
+            padding: 0;
+            border: 0;
+        }
         .source-link {
             display: none;
         }

@@ -229,6 +229,9 @@ h3 {
 .button-small {
     padding: 0.5rem 0.8rem;
 }
+.log-care {
+    white-space: nowrap;
+}
 .menu-toggle {
     display: none;
     gap: 0.5rem;

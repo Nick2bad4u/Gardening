@@ -5,6 +5,17 @@ import { getDocument } from "../../lib/content.mjs";
 import { siteUrl } from "../../lib/routes.mjs";
 const document = await getDocument("docs/layouts/table-placement-research.md");
 const review = await getDocument("docs/two-light-placement-review.md");
+const diagramSections = document.toc.filter((section) =>
+    [
+        "illustrated-whole-display",
+        "illustrated-front-pots",
+        "illustrated-rear-pots-and-windowsill",
+        "illustrated-relative-light",
+        "whole-display",
+        "front-tables-six-columns-four-rows",
+        "rear-tables-and-north-windowsill",
+    ].includes(section.id)
+);
 ---
 
 <SiteLayout
@@ -16,7 +27,23 @@ const review = await getDocument("docs/two-light-placement-review.md");
         { label: "Placement", href: "" },
     ]}
 >
-    <DocumentArticle document={document} />
+    <DocumentArticle document={document}>
+        <nav class="diagram-navigation card" aria-label="Placement and light diagrams">
+            <h2>Placement and Light Diagrams</h2>
+            <p>
+                Jump to a picture, then open it at full size. All views show the current four-table
+                arrangement and separate Money Tree windowsill position; light intensity is
+                estimated.
+            </p>
+            <ul>
+                {diagramSections.map((section) => (
+                    <li>
+                        <a href={`#${section.id}`}>{section.title}</a>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    </DocumentArticle>
     <section class="placement-review" id="placement-review">
         <h2>Supporting Two-Light Review</h2>
         <p>
@@ -33,6 +60,16 @@ const review = await getDocument("docs/two-light-placement-review.md");
     </section>
 </SiteLayout>
 <style>
+    .diagram-navigation {
+        margin-block: 2rem;
+    }
+    .diagram-navigation ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem 1.5rem;
+        padding-inline-start: 1.25rem;
+        margin-block-start: 1rem;
+    }
     .placement-review {
         margin-block: 3rem;
     }

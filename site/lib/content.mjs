@@ -143,10 +143,28 @@ export async function getDocument(
         throw new Error(`Missing document title: ${sourcePath}`);
     const content = markdown.replace(/^# [^\n]+\n+/v, "");
     const rendered = await renderMarkdown(content, sourcePath);
+    const illustrations = markdownProcessor
+        .parse(content)
+        .children.flatMap((node) => {
+            if (node.type !== "paragraph") return [];
+            return node.children.flatMap((child) => {
+                if (child.type !== "image") return [];
+                const target = path.posix.normalize(
+                    path.posix.join(path.posix.dirname(sourcePath), child.url)
+                );
+                if (!target.startsWith("assets/layouts/")) return [];
+                return [
+                    {
+                        alt: child.alt ?? "Planning illustration",
+                        src: contentUrl(target),
+                    },
+                ];
+            });
+        });
     const description = stripMarkdown(
         content.split(/\r?\n\s*\n/v, 1)[0] ?? ""
     ).slice(0, 240);
-    return { description, slug, sourcePath, title, ...rendered };
+    return { description, illustrations, slug, sourcePath, title, ...rendered };
 }
 
 export async function getEquipmentDocs() {

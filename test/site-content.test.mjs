@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { sheetUrls } from "../docs/layouts/plant-tracker-data.js";
 import { plantSheetUrl } from "../scripts/build-data.mjs";
+import { getDocument, renderMarkdown } from "../site/lib/content.mjs";
 import {
     identificationLabel,
     loadProfiles,
@@ -9,6 +10,56 @@ import {
 } from "../site/lib/content/profile-source.mjs";
 
 describe("field guide source rendering", () => {
+    it("retains all current placement illustrations as visible images and separates download-only maps", async () => {
+        expect.hasAssertions();
+
+        const document = await getDocument(
+            "docs/layouts/table-placement-research.md"
+        );
+        const names = document.illustrations.map((image) =>
+            image.src.split("/").at(-1)
+        );
+
+        expect(names).toStrictEqual([
+            "combined-plan-illustrated.png",
+            "front-pots-illustrated.png",
+            "rear-pots-illustrated.png",
+            "relative-light-illustrated.png",
+            "combined-plan.png",
+            "front-pots.png",
+            "rear-pots.png",
+        ]);
+
+        for (const image of document.illustrations) {
+            expect(image.src).toMatch(/^\/Gardening\/assets\/layouts\//v);
+            expect(document.html).toContain(`<img src="${image.src}"`);
+            expect(document.html).toContain(`<a href="${image.src}">`);
+            expect(image.alt.length).toBeGreaterThan(20);
+        }
+
+        expect(document.html).toContain(
+            "Money Tree is now on the north-facing windowsill"
+        );
+        expect(document.html).toContain("estimated-light-map-transparent.png");
+        expect(names).not.toContain("estimated-light-map-transparent.png");
+    });
+
+    it("preserves safe Markdown images and formatting without accepting raw executable HTML", async () => {
+        expect.hasAssertions();
+
+        const rendered = await renderMarkdown(
+            '## Light Map\n\n![Relative light](../../assets/layouts/map.png)\n\n**Estimated**, not measured.\n\n<img src="bad.png" onerror="alert(1)">\n<script>alert(2)</script>\n\n[unsafe](javascript:alert%281%29)',
+            "docs/layouts/example.md"
+        );
+
+        expect(rendered.html).toContain(
+            '<img src="/Gardening/assets/layouts/map.png"'
+        );
+        expect(rendered.html).toContain('<figure class="placement-figure">');
+        expect(rendered.html).toContain("<strong>Estimated</strong>");
+        expect(rendered.html).not.toMatch(/<script|onerror|javascript:/iv);
+    });
+
     it("keeps qualified corrections and hybrid uncertainty ahead of broad label matches", () => {
         expect.hasAssertions();
 

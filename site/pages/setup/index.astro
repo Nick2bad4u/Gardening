@@ -4,6 +4,25 @@ import DocumentArticle from "../../components/DocumentArticle.astro";
 import { getDocument } from "../../lib/content.mjs";
 import { siteUrl } from "../../lib/routes.mjs";
 const document = await getDocument("docs/setup.md");
+const placement = await getDocument("docs/layouts/table-placement-research.md");
+const previews = [
+    {
+        title: "Current Arrangement",
+        filename: "combined-plan-illustrated.png",
+        anchor: "illustrated-whole-display",
+    },
+    {
+        title: "Estimated Relative Light",
+        filename: "relative-light-illustrated.png",
+        anchor: "illustrated-relative-light",
+    },
+].map((preview) => ({
+    ...preview,
+    image: placement.illustrations.find((image) => image.src.endsWith(`/${preview.filename}`)),
+}));
+if (previews.some((preview) => preview.image === undefined)) {
+    throw new Error("Current placement source is missing a setup preview illustration");
+}
 ---
 
 <SiteLayout
@@ -11,23 +30,87 @@ const document = await getDocument("docs/setup.md");
     description="The current growing space, equipment, and maintained setup notes."
     section="setup"
 >
-    <div class="card-grid setup-links">
-        <a class="card" href={siteUrl("setup/placement/")}>
-            <h2>Current Placement</h2>
-            <p>Plant locations, diagrams, and estimated relative light.</p>
-        </a>
-        <a class="card" href={siteUrl("setup/equipment/")}>
-            <h2>Equipment and Supplies</h2>
-            <p>The maintained inventory and exact-model research.</p>
-        </a>
-        <a class="card" href={siteUrl("setup/archive/")}>
-            <h2>Setup Archive</h2>
-            <p>Earlier arrangements and the dated acclimation calendar.</p>
-        </a>
-    </div>
-    <DocumentArticle document={document} />
+    <DocumentArticle document={document}>
+        <section class="setup-visuals" aria-labelledby="setup-visuals-heading">
+            <h2 id="setup-visuals-heading">The Current Display at a Glance</h2>
+            <p>
+                Four wooden tables, with Money Tree on the separate north windowsill. These planning
+                illustrations retain the September 16 arrangement; the light map is an unmeasured
+                comparison hypothesis.
+            </p>
+            <div class="card-grid">
+                {previews.map(
+                    ({ title, image, anchor }) =>
+                        image && (
+                            <figure class="card">
+                                <a href={siteUrl(`setup/placement/#${anchor}`)}>
+                                    <img
+                                        src={image.src}
+                                        alt={image.alt}
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
+                                    <h3>{title}</h3>
+                                </a>
+                                <figcaption>View the full diagram and its notes →</figcaption>
+                            </figure>
+                        )
+                )}
+            </div>
+            <p>
+                <a
+                    class="button button-secondary"
+                    href={siteUrl("setup/placement/#illustrated-views")}
+                >
+                    See All Placement and Light Diagrams →
+                </a>
+            </p>
+        </section>
+        <div class="card-grid setup-links">
+            <a class="card" href={siteUrl("setup/placement/")}>
+                <h2>Current Placement</h2>
+                <p>Plant locations, diagrams, and estimated relative light.</p>
+            </a>
+            <a class="card" href={siteUrl("setup/equipment/")}>
+                <h2>Equipment and Supplies</h2>
+                <p>The maintained inventory and exact-model research.</p>
+            </a>
+            <a class="card" href={siteUrl("setup/archive/")}>
+                <h2>Setup Archive</h2>
+                <p>Earlier arrangements and the dated acclimation calendar.</p>
+            </a>
+        </div>
+    </DocumentArticle>
 </SiteLayout>
 <style>
+    .setup-visuals {
+        margin-block: 2rem;
+    }
+    .setup-visuals .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    @media (width < 700px) {
+        .setup-visuals .card-grid {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+    .setup-visuals figure {
+        margin: 0;
+    }
+    .setup-visuals img {
+        display: block;
+        inline-size: 100%;
+        block-size: auto;
+    }
+    .setup-visuals h3 {
+        margin-block: 1rem 0.5rem;
+    }
+    .setup-visuals figcaption {
+        color: var(--muted);
+    }
+    .setup-visuals > p {
+        margin-block: 1rem;
+    }
     .setup-links {
         margin-block: 2rem;
     }

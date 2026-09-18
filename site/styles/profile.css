@@ -1,0 +1,545 @@
+.plant-profile {
+    min-inline-size: 0;
+
+    & .profile-heading {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        min-block-size: clamp(24rem, 36vi, 30rem);
+        padding: clamp(1.25rem, 4vi, 3rem);
+        overflow: hidden;
+        color: #fffdf3;
+        scroll-margin-block-start: 10rem;
+        background: #22392b;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        isolation: isolate;
+    }
+
+    & .profile-hero-photo,
+    & .profile-hero-shade {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        inline-size: 100%;
+        block-size: 100%;
+    }
+
+    & .profile-hero-photo {
+        object-fit: cover;
+    }
+
+    & .profile-hero-shade {
+        background:
+            linear-gradient(0deg, rgb(10 23 15 / 96%), rgb(10 23 15 / 18%) 85%),
+            linear-gradient(90deg, rgb(10 23 15 / 64%), transparent);
+    }
+
+    & .profile-hero-topline {
+        position: absolute;
+        inset-block-start: 1.5rem;
+        inset-inline: clamp(1.25rem, 4vi, 3rem);
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        font-weight: 750;
+        letter-spacing: 0.07em;
+        text-shadow: 0 2px 5px #000000;
+
+        & p {
+            margin: 0;
+        }
+
+        & span {
+            flex-shrink: 0;
+        }
+    }
+
+    & .profile-hero-title {
+        display: flex;
+        gap: clamp(1rem, 3vi, 2.5rem);
+        align-items: center;
+        padding-block-start: 5rem;
+    }
+
+    & .profile-art {
+        flex: 0 0 auto;
+        inline-size: clamp(7rem, 16vi, 11rem);
+        block-size: auto;
+        filter: drop-shadow(0 6px 12px rgb(0 0 0 / 45%));
+    }
+
+    & .profile-title-copy {
+        flex: 1 1 auto;
+        min-inline-size: 0;
+    }
+
+    & .profile-heading h1 {
+        max-inline-size: 18ch;
+        margin-block: 0.35rem 1.2rem;
+        font-size: clamp(2.5rem, 5.8vi, 5rem);
+        font-weight: 500;
+        line-height: 1;
+        color: #fffdf3;
+        letter-spacing: -0.035em;
+        text-wrap: balance;
+        text-shadow: 0 2px 12px rgb(0 0 0 / 45%);
+    }
+
+    & .scientific-name {
+        display: flex;
+        gap: 0.6rem;
+        align-items: center;
+        margin: 0;
+        font-family: var(--font-display), serif;
+        font-size: clamp(1.125rem, 2.2vi, 1.75rem);
+        font-style: italic;
+        line-height: 1.375;
+        color: #d3ead1;
+        text-shadow: 0 2px 5px #000000;
+    }
+
+    & .profile-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+
+        & .badge {
+            color: #e2eee2;
+            background: rgb(21 42 30 / 90%);
+            border: 1px solid #a4c6a1;
+        }
+
+        & .badge-label {
+            color: #ffe0a4;
+            background: rgb(70 49 19 / 90%);
+            border-color: #d7b16d;
+        }
+
+        & .badge-id {
+            color: #d8edff;
+            background: rgb(26 49 63 / 90%);
+            border-color: #93b6cf;
+        }
+    }
+
+    & .profile-hero-credit {
+        margin-block: 1.75rem 0;
+        font-size: 0.75rem;
+        line-height: 1.5;
+        color: #dbe5d9;
+        text-align: end;
+
+        & a {
+            color: inherit;
+            white-space: nowrap;
+        }
+    }
+
+    & figure {
+        margin: 0;
+        overflow: hidden;
+
+        & img {
+            inline-size: 100%;
+            block-size: auto;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    }
+
+    & figcaption {
+        display: grid;
+        gap: 0.5rem;
+        margin-block-start: 0.75rem;
+        font-size: 0.875rem;
+    }
+
+    & .profile-owned-avatar {
+        flex: 0 0 auto;
+        inline-size: clamp(9rem, 20vi, 15rem);
+        overflow: visible;
+        & img {
+            aspect-ratio: 1;
+            border: 3px solid #c9d7b6;
+            border-radius: 50%;
+            box-shadow: 0 8px 25px rgb(0 0 0 / 30%);
+        }
+        & figcaption {
+            margin-block-start: 0.6rem;
+            font-size: 0.75rem;
+            color: #e5eddd;
+            text-align: center;
+        }
+    }
+
+    & .profile-art-complement {
+        inline-size: 3rem;
+        margin: 0;
+    }
+
+    & .metadata-grid {
+        display: grid;
+        grid-template-columns: repeat(
+            auto-fit,
+            [pill-start] minmax(min(100%, 15rem), 1fr) [pill-end]
+        );
+        gap: 0.75rem;
+        margin-block: 1rem 1.5rem;
+    }
+
+    & .profile-metadata {
+        --pill-accent: #67855f;
+
+        position: relative;
+        min-inline-size: 0;
+        padding: 1rem 1rem 1rem 3.8rem;
+        background: color-mix(
+            in srgb,
+            var(--pill-accent) 10%,
+            var(--surface, transparent)
+        );
+        border: 1px solid
+            color-mix(in srgb, var(--pill-accent) 45%, var(--line, transparent));
+        border-radius: 14px;
+
+        & dt {
+            font-size: 0.75rem;
+            font-weight: 750;
+            color: var(--muted);
+            letter-spacing: 0.035em;
+        }
+
+        & dt img {
+            position: absolute;
+            inset-block-start: 1rem;
+            inset-inline-start: 0.8rem;
+            padding: 0.2rem;
+            background: color-mix(in srgb, var(--pill-accent) 18%, transparent);
+            border-radius: 9px;
+        }
+
+        & dd {
+            margin: 0.4rem 0 0;
+            font-size: 1rem;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        & summary {
+            font-weight: 650;
+            cursor: pointer;
+        }
+
+        & .meta-evidence {
+            margin-block-start: 0.6rem;
+            font-size: 0.875rem;
+        }
+    }
+
+    & .profile-metadata-inventory {
+        --pill-accent: #587c99;
+    }
+
+    & .profile-metadata-photos {
+        --pill-accent: #6588a9;
+    }
+
+    & .profile-metadata-scope {
+        grid-column: 1 / -1;
+    }
+
+    & .profile-metadata-label,
+    & .profile-metadata-calendar {
+        --pill-accent: #b18b41;
+    }
+
+    & .profile-metadata-identity {
+        --pill-accent: #9375ad;
+    }
+
+    & .profile-metadata-source,
+    & .profile-metadata-seller {
+        --pill-accent: #b47b59;
+    }
+
+    & .record-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        margin-block: 1.5rem;
+
+        & > div {
+            flex: 1 1 25rem;
+        }
+
+        & h2,
+        & p {
+            margin-block: 0.4rem;
+        }
+    }
+
+    & .profile-introduction {
+        grid-template-columns: repeat(
+            2,
+            [card-start] minmax(0, 1fr) [card-end]
+        );
+        margin-block: 2rem;
+
+        & .card {
+            background:
+                radial-gradient(
+                    ellipse at top right,
+                    var(--accent-soft),
+                    transparent 65%
+                ),
+                var(--surface);
+            border-block-start: 3px solid var(--clay);
+        }
+    }
+
+    & .profile-toc {
+        padding: 1.1rem 1.4rem;
+        background: var(--surface-soft);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+
+        & summary {
+            font-weight: 750;
+            cursor: pointer;
+        }
+
+        & ul {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                [link-start] minmax(min(100%, 14rem), 1fr) [link-end]
+            );
+            gap: 0.5rem 1.5rem;
+            padding-inline-start: 1.2rem;
+            margin-block-end: 0;
+            font-size: 0.875rem;
+        }
+    }
+
+    & .photo-section {
+        margin-block: 3rem;
+        scroll-margin-block-start: 10rem;
+
+        & h2 {
+            scroll-margin-block-start: 11rem;
+        }
+    }
+
+    & .profile-copy {
+        max-inline-size: none;
+        padding: clamp(1.1rem, 3vi, 2.5rem);
+        margin-block-start: 1.5rem;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+
+        & :is(h2, h3) {
+            scroll-margin-block-start: 11rem;
+        }
+
+        & h2 {
+            padding-block: 0.8rem;
+            border-block-end: 1px solid var(--line);
+        }
+
+        & h2:first-child {
+            margin-block-start: 0;
+        }
+    }
+
+    & .photo-grid {
+        display: grid;
+        grid-template-columns: repeat(
+            auto-fit,
+            [photo-start] minmax(min(100%, 19rem), 1fr) [photo-end]
+        );
+        gap: 1rem;
+    }
+
+    & .profile-neighbors {
+        display: grid;
+        grid-template-columns:
+            [previous-start] minmax(0, 1fr)
+            [previous-end index-start] auto [index-end next-start] minmax(
+                0,
+                1fr
+            )
+            [next-end];
+        gap: 0.5rem;
+        padding: 0.5rem;
+        margin-block: 1rem;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+    }
+
+    & .profile-neighbors-top {
+        position: sticky;
+        inset-block-start: 5.5rem;
+        z-index: 20;
+    }
+
+    & .profile-neighbor {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        justify-content: center;
+        min-inline-size: 0;
+        min-block-size: 44px;
+        padding: 0.5rem 0.8rem;
+        font-size: 0.75rem;
+        text-decoration: none;
+        border-radius: 10px;
+
+        & strong {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.875rem;
+            white-space: nowrap;
+        }
+
+        &:is(:hover, :focus-visible) {
+            background: var(--accent-soft);
+        }
+    }
+
+    & .profile-neighbor-index {
+        flex-direction: row;
+        gap: 0.4rem;
+        align-items: center;
+        font-weight: 750;
+        background: var(--surface-soft);
+    }
+
+    & .profile-neighbor-next {
+        text-align: end;
+    }
+
+    & .profile-neighbor-empty {
+        color: var(--muted);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .plant-profile .profile-art {
+        transition: transform 180ms ease;
+
+        &:hover,
+        &:focus {
+            transform: scale(1.12);
+        }
+    }
+}
+
+@media (width <= 600px) {
+    .plant-profile {
+        & .profile-neighbors-top {
+            inset-block-start: 4.5rem;
+        }
+        & .profile-introduction {
+            grid-template-columns: [card-start] minmax(0, 1fr) [card-end];
+        }
+
+        & .profile-hero-title {
+            display: block;
+        }
+
+        & .profile-art {
+            inline-size: 5rem;
+            margin-block-end: 0.8rem;
+        }
+
+        & .profile-art-complement {
+            inline-size: 2.5rem;
+            margin: 0;
+        }
+
+        & .profile-owned-avatar {
+            inline-size: 8rem;
+            margin-block-start: 1.5rem;
+        }
+
+        & .profile-heading {
+            min-block-size: 29rem;
+        }
+
+        & .profile-hero-credit {
+            text-align: start;
+        }
+
+        & .profile-neighbor {
+            padding-inline: 0.35rem;
+        }
+
+        & .profile-neighbor strong {
+            font-size: 0.75rem;
+        }
+
+        & .profile-neighbor-index img {
+            display: none;
+        }
+    }
+}
+
+@media print {
+    .plant-profile {
+        & .profile-toc,
+        & .record-actions,
+        & .profile-neighbors {
+            display: none;
+        }
+
+        & .profile-heading {
+            min-block-size: 0;
+            color: #203d2c;
+            background: none;
+        }
+
+        & .profile-hero-photo,
+        & .profile-hero-shade,
+        & .profile-hero-topline {
+            display: none;
+        }
+
+        & .profile-heading :is(h1, .scientific-name, .profile-hero-credit) {
+            color: #203d2c;
+            text-shadow: none;
+        }
+
+        & .profile-badges .badge {
+            color: #203d2c;
+            background: none;
+            border-color: #203d2c;
+        }
+
+        & .profile-owned-avatar figcaption {
+            color: #203d2c;
+        }
+
+        & .profile-hero-title {
+            padding-block-start: 0;
+        }
+
+        & .photo-grid {
+            grid-template-columns: repeat(
+                2,
+                [photo-start] minmax(0, 1fr) [photo-end]
+            );
+        }
+
+        & figure {
+            break-inside: avoid;
+        }
+    }
+}

@@ -77,15 +77,20 @@
 }
 .article-layout {
     display: grid;
+    grid-template-areas: "body contents";
     grid-template-columns:
         [column-1-start] minmax(0, 1fr)
         [column-1-end column-2-start] 230px [column-2-end];
     gap: 3rem;
     align-items: start;
+    & > .prose {
+        grid-area: body;
+    }
 }
 .article-toc {
     position: sticky;
     inset-block-start: 110px;
+    grid-area: contents;
     padding-inline-start: 1.2rem;
     font-size: 0.875rem;
     border-inline-start: 1px solid var(--line);
@@ -191,6 +196,9 @@
     font-size: 0.875rem;
     color: var(--muted);
 }
+.plant-directory {
+    grid-auto-rows: 1fr;
+}
 .search-results {
     display: grid;
     gap: 0.8rem;
@@ -214,12 +222,14 @@
 
 @media (width <= 900px) {
     .article-layout {
+        grid-template-areas:
+            "contents"
+            "body";
         grid-template-columns: [column-1-start] minmax(0, 1fr) [column-1-end];
         gap: 1rem;
     }
     .article-toc {
         position: static;
-        grid-row: 1;
         padding: 1rem;
         border: 1px solid var(--line);
         border-radius: 10px;
