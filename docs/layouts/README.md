@@ -10,13 +10,13 @@ The [illustrated views](./table-placement-research.md#illustrated-views) add fou
 
 The [installed AW200 + AeroLight 240 W](../equipment/aw200-and-aerolight-240w.md) retain their last reported 45% / 38%, shared 13 h 15 m total cycle including 15 m sunrise and 15 m sunset, and 18-inch tip reference. The new photos do not remeasure fixture centers or clearances. The room-facing end stays open without the two-foot reflector.
 
-Read the guide [immediately after the booklet contents](https://nick2bad4u.github.io/Gardening/#placement), or open the [placement gallery](https://nick2bad4u.github.io/Gardening/layouts/grow-spot-layout.html#researched-placement).
+Read the [current placement page](https://nick2bad4u.github.io/Gardening/setup/placement/) for the guide and illustration gallery. Earlier interactive room and riser diagrams are in the [setup archive](https://nick2bad4u.github.io/Gardening/setup/archive/layout/).
 
-Open the [daily report](./daily-report.html) for the latest published watering
+Open the [daily report](https://nick2bad4u.github.io/Gardening/report/) for the latest published watering
 mixes, quick list, and per-pot evidence. The [daily report guide](../daily-reports/README.md)
 explains its dated input, generator, and daily publication.
 
-Open [plant-tracker.html](./plant-tracker.html) for the live collection
+Open the [plant tracker](https://nick2bad4u.github.io/Gardening/tracker/) for the live collection
 dashboard backed by Google Sheets. The finished workbook includes Dashboard,
 Insights, Baselines, a combined History, and one native sheet page for each
 container. Its permanent-row `Quick log` accepts watering, weight, height,
@@ -30,7 +30,7 @@ editable source of truth.
 
 Each of the 30 physical pots or shared planters has a permanent internal ID from
 `P01` through `P30` and links to a stable
-[history URL](./plant-history.html?id=P01) with independent last-checked dates,
+[history URL](https://nick2bad4u.github.io/Gardening/pots/P01/) with independent last-checked dates,
 searchable and exportable history, dry/wet statistics, weight and growth
 changes, watering-interval calculations, responsive SVG trend charts, and
 range controls. The public tables also show the workbook's estimated dry time,
@@ -48,7 +48,7 @@ Weight analytics retain their existing rules.
 
 The exact permanent-ID-to-profile mapping lives in
 [`plant-profile-data.json`](./plant-profile-data.json). The history page reads
-that manifest for field-guide links, while the booklet generator and checker
+that manifest for profile links, while the site content adapters and checks
 verify every current profile's title and `Tracker ID` against it. `P19` and
 `P20` intentionally map to several profiles because they identify shared
 planters; all other P-IDs map to one profile.
@@ -61,22 +61,21 @@ watering is soak-through rather than a metered dose. `#1` and `#2` are still
 weighed and watered as whole containers. “Days since water” and the estimated
 remaining-water percentage are observations, not watering deadlines.
 
-Open [indoor-acclimation-calendar.html](./indoor-acclimation-calendar.html) for
+Open the [historical acclimation calendar](https://nick2bad4u.github.io/Gardening/setup/archive/calendar/) for
 the browser/print calendar covering the July move-in, August light ramp,
 second-table expansion, weekly adjustments and rotations, manual
 temperature/RH readings, natural daylight context, and September seasonal
 timer.
 
-Open [grow-spot-layout.html](./grow-spot-layout.html) in a browser for the
-September 15 four-table placement and historical room, height, fan, camera, and riser diagrams.
-Its views are tabbed and its theme choice is shared with the calendar. Hover,
+The [current placement page](https://nick2bad4u.github.io/Gardening/setup/placement/) shows the September 15 four-table arrangement and the confirmed windowsill move. Open the [historical layout tool](https://nick2bad4u.github.io/Gardening/setup/archive/layout/) for the earlier room, height, fan, camera, and riser diagrams.
+The historical tool's views are tabbed and its theme choice is shared with the website. Hover,
 tap, or keyboard-focus any plant marker to reveal its common and botanical
 names, inventory record, label status, origin, placement, identification
 status, and field-guide link.
 
 The current guide uses a six-column/four-row front grid, five rear containers on wood plus #3 on the north windowsill, and a new relative-light comparison sheet. Its 26 × 32-inch footprint is photo-inferred. The old 4-column/6-row and round-glass coordinates are superseded.
 
-Below the current placement section, the older measured diagrams retain this
+In the setup archive, the older measured diagrams retain this
 earlier working arrangement for reference:
 
 - the occupied bay is 36 in wide by about 60 in long;
@@ -138,8 +137,9 @@ riser or marker assignments are final.
 
 The deployed URLs are:
 
-- [Plant tracker](https://nick2bad4u.github.io/Gardening/layouts/plant-tracker.html)
-- [Example individual history page](https://nick2bad4u.github.io/Gardening/layouts/plant-history.html?id=P01)
-- [Grow-spot layout](https://nick2bad4u.github.io/Gardening/layouts/grow-spot-layout.html)
-- [Indoor acclimation calendar](https://nick2bad4u.github.io/Gardening/layouts/indoor-acclimation-calendar.html)
-- [Plant photo Collections index](https://nick2bad4u.github.io/Gardening/layouts/photo-album.html)
+- [Plant tracker](https://nick2bad4u.github.io/Gardening/tracker/)
+- [Example individual history page](https://nick2bad4u.github.io/Gardening/pots/P01/)
+- [Current placement](https://nick2bad4u.github.io/Gardening/setup/placement/)
+- [Historical layout tool](https://nick2bad4u.github.io/Gardening/setup/archive/layout/)
+- [Historical acclimation calendar](https://nick2bad4u.github.io/Gardening/setup/archive/calendar/)
+- [Plant photo Collections index](https://nick2bad4u.github.io/Gardening/photos/)

@@ -21,26 +21,35 @@
 
 ## Generated outputs
 
-- `build-plant-booklet.mjs` generates the field guide and photo album, exports
-  canonical SVG artwork, and updates generated artwork in
-  `google-sheets/Index.html`. Follow `docs/plant-booklet/AGENTS.md` and review the
-  complete generated diff. Its `--check` mode checks freshness without writing.
-- `build-pages-site.mjs` replaces only `.pages-site/`. Keep its publication file
-  allowlist and path validation explicit; do not broaden it to copy the entire
-  repository, private caches, or credentials. It rewrites source-relative links
-  for Pages, preserves old field-guide bookmarks, and injects GTM only into the
-  publication artifact. Preserve exactly one installation per applicable page.
+- `build-pages-site.mjs` prepares an explicit public asset allowlist under
+  `.cache/site-public` for development and isolated `.cache/site-public-<UUID>`
+  snapshots for builds, invokes Astro, and finalizes `.pages-site/`. Site pages,
+  components, and content adapters live under `site/`; Markdown and JSON remain
+  authoritative. Never broaden publication to private caches or whole-repo copies.
+- `sync-site-artwork.mjs` exports the canonical `assets/artwork/plant-icons.svg`
+  into standalone portrait/UI SVGs. `--check` verifies without writing. These
+  commands never read or rewrite logger HTML. Only the explicit
+  `sync-logger-artwork.mjs` operator command synchronizes logger symbols/revision;
+  follow the logger's instructions before running it.
+- Production finalization publishes responsive images and installs GTM exactly
+  once per canonical page. Redirect pages marked `gardening-redirect` and fixture
+  builds must remain free of analytics. Preserve `/Gardening/` routing and old
+  public logger artwork/evidence URLs.
 - `collection-previews.mjs` caches selected Gyazo thumbnails by capture ID in
   `.cache/collection-previews-v1` and publishes responsive, metadata-stripped
-  WebP previews. Preserve outbound capture/Collection links and fail on a bad
-  download instead of publishing a broken preview. Cached publication previews
+  WebP previews. Preserve outbound capture/Collection links. Corrupt bytes and
+  invalid provenance mappings fail publication. Transient network failures get
+  bounded retries and an exact reviewed-capture fallback; the site finalizer may
+  explicitly render an unavailable-preview state and record affected IDs instead
+  of emitting a broken image. The lower-level publisher defaults to strict mode. Cached publication previews
   do not replace the source-quality capture or private original.
-- `npm run build:pages` runs booklet/report generation before the Pages builder
-  and builds Storybook last under `.pages-site/storybook`. Running the Pages
-  builder again after that step removes the appended Storybook output.
-- `build-daily-report.mjs` validates the newest dated report input and renders
-  `templates/daily-report.html`. It does not fetch private sources or make care
-  decisions. Read `docs/daily-reports/AGENTS.md` for reviewed input requirements.
+- `npm run build:pages` runs the Astro site builder and appends Storybook last
+  under `.pages-site/storybook`. A subsequent site rebuild replaces that artifact.
+  `npm run prepare:site` prepares the same allowed assets for local Astro preview.
+- `build-daily-report.mjs` validates reviewed dated report inputs. Astro renders
+  reports from JSON; generated site HTML is not a committed input. Neither build
+  fetches private workbook data nor makes care decisions. Read
+  `docs/daily-reports/AGENTS.md` for input/publication requirements.
 - `analyze-drying.mjs` evaluates the checked-in Apps Script detector in a local
   VM. Keep imported History cells as data. Require fresh header-bearing
   `UNFORMATTED_VALUE` input, actual `readAt`, and current plant IDs; numeric dates

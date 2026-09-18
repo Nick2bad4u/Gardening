@@ -7,4 +7,4 @@ title = "Nick2bad4u shared Gitleaks configuration"
 
 [[allowlists]]
     description = "Ignore Git-excluded local audit output and scratch files"
-    paths       = [ '''^temp/''', '''^output/''' ]
+    paths       = [ '''^temp/''', '''^output/''', '''^\.cache/private-diagnostics/''' ]

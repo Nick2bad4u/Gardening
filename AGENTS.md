@@ -53,7 +53,7 @@
   Its `inventory.md` is also the maintained source for the generated field
   guide's equipment page; update that source and rebuild rather than keeping
   a second equipment catalog in generated HTML.
-  `docs/layouts/` holds maintained standalone HTML tools and diagrams.
+  `site/` holds the Astro routes, shared components, styles, and browser entry points. `docs/layouts/` retains maintained research, profile mappings, and shared tracker calculation modules.
 - `docs/daily-reports/` contains reviewed dated report inputs. Read its nested
   `AGENTS.md` and `docs/daily-weighing-watering-prompt.md` before preparing a
   report. Generated report HTML is not a fresh workbook read.
@@ -89,23 +89,11 @@
 
 ## Generated content and scripts
 
-- `npm run build:booklet` generates `docs/plant-booklet/index.html` and
-  `docs/layouts/photo-album.html` from profiles and photo manifests. It also
-  synchronizes standalone SVGs and generated artwork in the Apps Script client.
-  Follow `docs/plant-booklet/AGENTS.md`; review every generated diff, including
-  changes outside the booklet directory.
-- The booklet generator and checker enumerate `starter`, `cacti`, `succulents`,
-  `rehab`, and `houseplants`. Read current counts from
-  `scripts/check-plant-booklet.mjs`; profile counts and tracked pot counts differ
-  because some plants share a container. Coordinate membership changes across
-  both build/check scripts, profile mappings, indexes, icons, and photo metadata.
-- `docs/layouts/daily-report.html` is generated from dated report JSON and
-  `scripts/templates/daily-report.html`. Use `npm run build:daily-report`.
-- `npm run build:pages` rebuilds the booklet/report and replaces the ignored
-  `.pages-site/` artifact, then adds Storybook. It can download selected Gyazo
-  previews into `.cache/collection-previews-v1`. Edit maintained sources, never
-  the artifact. Production Google Tag Manager (GTM) is injected only into the
-  Pages output.
+- Astro generates individual pages from `site/` and the maintained Markdown/JSON sources. Use `npm run build:site` and `npm run check:site`; never edit `.pages-site/`. The booklet renderer and reader are retired. Keep the small legacy redirect routes working.
+- Content adapters enumerate `starter`, `cacti`, `succulents`, `rehab`, and `houseplants`. Derive profile and pot counts from current source data; shared containers have several botanical profiles but one P-ID history. Coordinate membership changes across mappings, indexes, artwork, manifests, and checks.
+- `npm run build:daily-report` validates reviewed JSON and writes an ignored preview. The website renders those same decisions; commit the dated reviewed JSON, never generated report HTML.
+- `npm run build:pages` prepares public assets, builds Astro into `.pages-site/`, optimizes selected images, installs production analytics, and appends Storybook. Keep the explicit publication allowlist and production-only GTM. `.cache/collection-previews-v1` holds reusable sanitized thumbnail downloads.
+- Canonical artwork lives in `assets/artwork/`. Website builds export public icons without changing the logger; only the explicitly invoked logger-artwork synchronization command may rewrite its generated symbols.
 - `scripts/fetch-plant-images.ps1` performs network downloads and regenerates the
   photo manifest, attribution table, and archive indexes. Prefer a scoped
   `-PlantSlug` refresh, inspect licenses and every generated diff, and do not run
@@ -196,19 +184,18 @@
 - For plant profiles or booklet inputs, also run:
 
   ```powershell
-  npm run build:booklet
-  npm run check:booklet
+  npm run build:site
+  npm run check:site
   ```
 
-  Include the regenerated `docs/plant-booklet/index.html` in the resulting diff
-  when source profiles covered by the generator change.
+  Commit maintained sources only; generated site output remains ignored.
 
 - For HTML, CSS, JavaScript, or layout changes, also run `npm run lint:html` and
   the applicable ESLint, `lint:style`, and type checks. `npm run typecheck` covers
   repository TypeScript/checked JavaScript and Apps Script; focused commands are
   `typecheck:browser`, `typecheck:build`, `typecheck:tests`, and
   `typecheck:apps-script`. Read `docs/development.md` for runtime-specific details.
-- Use `npm run dev` for the source website preview at `127.0.0.1:5173`; it can
+- Use `npm run dev` for the source website preview at `127.0.0.1:5173/Gardening/`; it can
   read live published Sheet data. Use Storybook for isolated synthetic data.
   Build Pages before `npm run test:e2e` or `npm run test:storybook:static`.
   Inspect affected pages at desktop and 390 px widths in both themes: console,

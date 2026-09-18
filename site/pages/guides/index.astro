@@ -1,0 +1,28 @@
+---
+import SiteLayout from "../../components/SiteLayout.astro";
+import { getGuides } from "../../lib/content.mjs";
+import { contentUrl } from "../../lib/routes.mjs";
+const guides = await getGuides();
+---
+
+<SiteLayout
+    title="Care Guides"
+    description="How this collection uses observations, weights, watering records, and permanent labels."
+    section="guides"
+>
+    <header class="page-heading">
+        <p class="eyebrow">The collection notebook</p>
+        <h1>Care Guides</h1>
+        <p class="lede">The reasoning behind the records, and how to keep them useful.</p>
+    </header>
+    <div class="card-grid">
+        {guides.map((guide) => (
+            <article class="card">
+                <h2>
+                    <a href={contentUrl(guide.sourcePath)}>{guide.title}</a>
+                </h2>
+                <p>{guide.description}</p>
+            </article>
+        ))}
+    </div>
+</SiteLayout>

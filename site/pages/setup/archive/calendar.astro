@@ -1,0 +1,28 @@
+---
+import SiteLayout from "../../../components/SiteLayout.astro";
+import CalendarHeader from "../../../components/tools/calendar/CalendarHeader.astro";
+import CalendarContext from "../../../components/tools/calendar/CalendarContext.astro";
+import CalendarPriorities from "../../../components/tools/calendar/CalendarPriorities.astro";
+import CalendarSchedule from "../../../components/tools/calendar/CalendarSchedule.astro";
+import CalendarPhases from "../../../components/tools/calendar/CalendarPhases.astro";
+import CalendarMonths from "../../../components/tools/calendar/CalendarMonths.astro";
+import CalendarNotes from "../../../components/tools/calendar/CalendarNotes.astro";
+import "../../../styles/tools/calendar.css";
+---
+
+<SiteLayout title="2026 acclimation calendar archive" section="setup">
+    <div class="tool-calendar">
+        <div class="shell">
+            <CalendarHeader />
+            <CalendarContext />
+            <CalendarPriorities />
+            <CalendarSchedule />
+            <CalendarPhases />
+            <CalendarMonths />
+            <CalendarNotes />
+        </div>
+    </div>
+</SiteLayout>
+<script>
+    import "../../../client/tools/calendar.js";
+</script>

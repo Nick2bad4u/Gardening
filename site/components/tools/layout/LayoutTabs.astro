@@ -1,0 +1,64 @@
+---
+import { siteUrl } from "../../../lib/routes.mjs";
+---
+
+<div class="tabs-shell">
+    <nav class="diagram-tabs" role="tablist" aria-label="Grow-spot diagrams">
+        <button
+            class="tab"
+            id="tab-room"
+            type="button"
+            role="tab"
+            aria-controls="room"
+            aria-selected="true"
+            data-tab="room"
+        >
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-layout")} width="64" height="64"></use>
+            </svg>
+            Room layout
+        </button>
+        <button
+            class="tab"
+            id="tab-tables"
+            type="button"
+            role="tab"
+            aria-controls="tables"
+            aria-selected="false"
+            data-tab="tables"
+        >
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-plant")} width="64" height="64"></use>
+            </svg>
+            Plant map
+        </button>
+        <button
+            class="tab"
+            id="tab-height"
+            type="button"
+            role="tab"
+            aria-controls="height"
+            aria-selected="false"
+            data-tab="height"
+        >
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-dimensions")} width="64" height="64"></use>
+            </svg>
+            Height + risers
+        </button>
+        <button
+            class="tab"
+            id="tab-wiring"
+            type="button"
+            role="tab"
+            aria-controls="wiring"
+            aria-selected="false"
+            data-tab="wiring"
+        >
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-cable")} width="64" height="64"></use>
+            </svg>
+            Wiring
+        </button>
+    </nav>
+</div>

@@ -1,0 +1,388 @@
+---
+import { contentUrl, potUrl, profileUrl, repositoryUrl, siteUrl } from "../lib/routes.mjs";
+import { getProfiles, photoPreview } from "../lib/content.mjs";
+import { stripMarkdown } from "../lib/content/profile-source.mjs";
+interface Props {
+    profile: import("../lib/content.mjs").SiteProfile;
+}
+const { profile } = Astro.props;
+const profiles = await getProfiles();
+const siblings = profiles.filter(
+    (item) => item.trackerId && item.trackerId === profile.trackerId && item.slug !== profile.slug
+);
+const index = profiles.findIndex((item) => item.slug === profile.slug);
+const previous = profiles[index - 1];
+const next = profiles[index + 1];
+const metadata = [
+    ["Collection Record", profile.inventoryId],
+    ["Permanent Label", profile.labelHtml],
+    ["Identification", profile.identificationHtml],
+    ["Status", profile.statusHtml],
+    ["Acquired From", profile.acquiredFromHtml],
+    ["Acquired On", profile.acquiredOnHtml],
+    ["Ordered From", profile.orderedFromHtml],
+].filter(([, value]) => value);
+---
+
+<article class="plant-profile" data-plant-profile={profile.slug}>
+    <header class="page-heading profile-heading" id={profile.slug}>
+        <img
+            class="profile-art"
+            src={siteUrl(`assets/plant-icons/${profile.slug}.svg`)}
+            alt=""
+            width="144"
+            height="144"
+        />
+        <div>
+            <p class="eyebrow">{profile.eyebrow}</p>
+            <h1>{profile.title}</h1>
+            <p class="scientific-name">{stripMarkdown(profile.scientificMarkdown)}</p>
+            <div class="profile-badges">
+                <span class="badge badge-label">Label {profile.drawerLabel.primary}</span>
+                {profile.trackerId && (
+                    <a class="badge badge-id" href={potUrl(profile.trackerId)}>
+                        {profile.trackerId}
+                    </a>
+                )}
+                {profile.historical && <span class="badge">Historical Record</span>}
+            </div>
+        </div>
+    </header>
+    <dl class="metadata-grid">
+        {metadata.map(([label, value]) => (
+            <div class="metadata">
+                <dt>{label}</dt>
+                <dd set:html={value} />
+            </div>
+        ))}
+    </dl>
+    {profile.trackerId && (
+        <div class="card record-actions">
+            <div>
+                <h2>Measurements and care history</h2>
+                <p>Weights, watering, events, and charts for {profile.trackerId}.</p>
+                {siblings.length > 0 && (
+                    <p>
+                        This container is shared with{" "}
+                        {siblings.map((item, siblingIndex) => (
+                            <>
+                                <a href={profileUrl(item.slug)}>{item.title}</a>
+                                {siblingIndex < siblings.length - 1 ? ", " : "."}
+                            </>
+                        ))}
+                    </p>
+                )}
+            </div>
+            <a class="button" href={potUrl(profile.trackerId)}>
+                Open Pot History
+            </a>
+            {profile.sheetUrl && (
+                <a class="button-secondary" href={profile.sheetUrl}>
+                    Google Sheets
+                </a>
+            )}
+        </div>
+    )}
+    <section class="card-grid profile-introduction" aria-label="About this plant">
+        <div class="card">
+            <p class="eyebrow">Spot it</p>
+            <h2>What it looks like</h2>
+            <p set:html={profile.visualDescriptionHtml} />
+        </div>
+        <div class="card">
+            <p class="eyebrow">One curious thing</p>
+            <h2>Did you know?</h2>
+            <p set:html={profile.interestingFactHtml} />
+        </div>
+    </section>
+    <div class="article-layout">
+        <aside class="article-toc" aria-label="On this page">
+            <h2>On this page</h2>
+            <ul>
+                {profile.toc
+                    .filter((item) => item.level === 2)
+                    .map((item) => (
+                        <li>
+                            <a href={`#${item.id}`}>{item.title}</a>
+                        </li>
+                    ))}
+                <li>
+                    <a href={`#${profile.slug}-photo-history`}>Plant Photo History</a>
+                </li>
+                {profile.nurseryPhotos.length > 0 && (
+                    <li>
+                        <a href={`#${profile.slug}-nursery-evidence`}>Nursery Evidence</a>
+                    </li>
+                )}
+                <li>
+                    <a href={`#${profile.slug}-gallery-heading`}>Reference Gallery</a>
+                </li>
+            </ul>
+        </aside>
+        <div class="prose" set:html={profile.bodyHtml} />
+    </div>
+    <section class="photo-section" id={`${profile.slug}-photo-history`}>
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">Dated collection evidence</p>
+                <h2 id={`${profile.slug}-collection-heading`}>Plant Photo History</h2>
+            </div>
+            {profile.collectionRecord.gyazo_collection && (
+                <a class="button-secondary" href={profile.collectionRecord.gyazo_collection.url}>
+                    Full Gyazo Collection ↗
+                </a>
+            )}
+        </div>
+        <p>
+            The latest two owned-plant photographs. Open a capture or the full Collection for the
+            complete history.
+        </p>
+        {profile.ownedPhotos.length ? (
+            <div class="photo-grid">
+                {profile.ownedPhotos.map((photo) => (
+                    <figure class="card" data-photo-kind="collection">
+                        <a href={photo.page_url}>
+                            <img
+                                src={photoPreview(photo)}
+                                alt={photo.alt}
+                                width="640"
+                                height="480"
+                                loading="lazy"
+                                decoding="async"
+                                data-image-id={photo.image_id}
+                            />
+                        </a>
+                        <figcaption>
+                            <strong>{photo.caption}</strong>
+                            <span>
+                                {photo.captured_on ? "Photographed" : "Provided"}{" "}
+                                <time datetime={photo.captured_on ?? photo.provided_on}>
+                                    {photo.captured_on ?? photo.provided_on}
+                                </time>{" "}
+                                · © Nick, all rights reserved
+                            </span>
+                            {photo.derived_note && <span>{photo.derived_note}</span>}
+                            <a href={photo.page_url}>Open This Capture ↗</a>
+                        </figcaption>
+                    </figure>
+                ))}
+            </div>
+        ) : (
+            <p class="card">Collection photo pending. {profile.collectionRecord.pending_note}</p>
+        )}
+    </section>
+    {profile.nurseryPhotos.length > 0 && (
+        <section class="photo-section" id={`${profile.slug}-nursery-evidence`}>
+            <p class="eyebrow">Original identification evidence</p>
+            <h2 id={`${profile.slug}-nursery-heading`}>Nursery Labels</h2>
+            <p>Seller wording is evidence, not botanical proof.</p>
+            <div class="photo-grid">
+                {profile.nurseryPhotos.map((photo) => (
+                    <figure class="card" data-photo-kind="nursery-label">
+                        <a href={photo.page_url}>
+                            <img
+                                src={photoPreview(photo)}
+                                alt={photo.alt}
+                                width="640"
+                                height="480"
+                                loading="lazy"
+                                decoding="async"
+                                data-image-id={photo.image_id}
+                            />
+                        </a>
+                        <figcaption>
+                            <strong>{photo.caption}</strong>
+                            <span>
+                                {photo.captured_on ?? photo.provided_on} · © Nick, all rights
+                                reserved
+                            </span>
+                            <a href={photo.page_url}>Open Nursery Evidence ↗</a>
+                            {photo.source_file && (
+                                <a href={contentUrl(photo.source_file)}>Archived Evidence Crop</a>
+                            )}
+                        </figcaption>
+                    </figure>
+                ))}
+            </div>
+        </section>
+    )}
+    <section class="photo-section" aria-labelledby={`${profile.slug}-gallery-heading`}>
+        <p class="eyebrow">Licensed species references</p>
+        <h2 id={`${profile.slug}-gallery-heading`}>Reference Gallery</h2>
+        <p>{profile.scopeNote}</p>
+        <p>
+            These photographs illustrate the working species or cultivar. They are separate from
+            photographs of the owned plant, and do not establish its identification.
+        </p>
+        <div class="photo-grid reference-grid">
+            {profile.allPhotos.map((photo) => (
+                <figure class="card" data-photo-kind="reference">
+                    <a href={photo.source_url}>
+                        <img
+                            src={contentUrl(photo.file)}
+                            alt={photo.title}
+                            width="640"
+                            height="480"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                    </a>
+                    <figcaption>
+                        <span class="eyebrow">{photo.subject.replaceAll("-", " ")}</span>
+                        <strong>{photo.title}</strong>
+                        <span>
+                            {[photo.location, photo.observed_on].filter(Boolean).join(" · ")}
+                        </span>
+                        <span>
+                            {photo.author} · <a href={photo.license_url}>{photo.license}</a>
+                        </span>
+                        <a href={photo.source_url}>Photo Source and Attribution ↗</a>
+                    </figcaption>
+                </figure>
+            ))}
+        </div>
+        {!profile.allPhotos.length && <p>No licensed reference photographs are archived yet.</p>}
+    </section>
+    <section class="card research-links">
+        <h2>Research Trail</h2>
+        <ul>
+            <li>
+                <a href={`${repositoryUrl}/blob/main/${profile.sourcePath}`}>
+                    Maintained Source Profile
+                </a>
+            </li>
+            {profile.allPhotos.length > 0 && (
+                <li>
+                    <a href={`${repositoryUrl}/blob/main/assets/plants/${profile.slug}/README.md`}>
+                        Complete Photo Archive and Credits
+                    </a>
+                </li>
+            )}
+            {profile.sellerProductLink && (
+                <li>
+                    <a href={profile.sellerProductLink.href}>{profile.sellerProductLink.label}</a>
+                </li>
+            )}
+            {profile.inaturalist && (
+                <li>
+                    <a
+                        href={`https://www.inaturalist.org/observations?taxon_name=${encodeURIComponent(profile.inaturalist.taxon)}`}
+                    >
+                        iNaturalist Observations
+                    </a>{" "}
+                    — {profile.inaturalist.scope}
+                </li>
+            )}
+        </ul>
+    </section>
+    <nav class="profile-neighbors" aria-label="Other plant profiles">
+        {previous && <a href={profileUrl(previous.slug)}>← {previous.title}</a>}
+        <a href={siteUrl("plants/")}>All Plants</a>
+        {next && <a href={profileUrl(next.slug)}>{next.title} →</a>}
+    </nav>
+</article>
+<style>
+    .profile-heading {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+    }
+    .profile-art {
+        flex: 0 0 auto;
+    }
+    .scientific-name {
+        font-family: Georgia, serif;
+        font-style: italic;
+        font-size: clamp(1.15rem, 3vw, 1.6rem);
+        opacity: 0.8;
+    }
+    .profile-badges,
+    .profile-neighbors {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+    .metadata-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+        gap: 0.75rem;
+    }
+    .metadata-grid dd {
+        margin: 0.3rem 0 0;
+        overflow-wrap: anywhere;
+    }
+    .metadata-grid dt {
+        font-size: 0.8rem;
+        font-weight: 700;
+        opacity: 0.75;
+    }
+    .record-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+        margin-block: 1.5rem;
+    }
+    .record-actions > div {
+        flex: 1 1 25rem;
+    }
+    .record-actions h2,
+    .record-actions p {
+        margin-block: 0.4rem;
+    }
+    .profile-introduction {
+        margin-block: 2rem;
+    }
+    .photo-section {
+        margin-block: 3rem;
+        scroll-margin-top: 6rem;
+    }
+    .photo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+        gap: 1rem;
+    }
+    figure {
+        margin: 0;
+        overflow: hidden;
+    }
+    figure img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        border-radius: 0.6rem;
+    }
+    figcaption {
+        display: grid;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+        font-size: 0.9rem;
+    }
+    .profile-neighbors {
+        justify-content: space-between;
+        margin-block: 2rem;
+    }
+    @media (max-width: 520px) {
+        .profile-art {
+            width: 90px;
+            height: 90px;
+        }
+        .profile-heading {
+            gap: 0.75rem;
+        }
+    }
+    @media print {
+        .article-toc,
+        .record-actions,
+        .profile-neighbors {
+            display: none;
+        }
+        .photo-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        figure {
+            break-inside: avoid;
+        }
+    }
+</style>

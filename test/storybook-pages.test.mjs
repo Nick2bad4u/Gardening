@@ -4,9 +4,28 @@ import * as path from "node:path";
 import { pathToFileURL } from "node:url";
 import { describe, expect, it, onTestFinished } from "vitest";
 
-import { writeChangedFile } from "../.storybook/prepare-pages.mjs";
+import {
+    injectFixture,
+    writeChangedFile,
+} from "../.storybook/prepare-pages.mjs";
 
 describe("storybook preview preparation", () => {
+    it("installs isolated storage and network fixtures before page scripts", () => {
+        expect.hasAssertions();
+
+        const html = injectFixture(
+            '<!doctype html><html><head data-site="garden"><script>readPreferences()</script></head><body><main>Garden</main></body></html>'
+        );
+
+        expect(html.indexOf("storybook-fixture.js")).toBeLessThan(
+            html.indexOf("readPreferences()")
+        );
+        expect(html).toContain(
+            'src="/Gardening/storybook/preview/storybook-fixture.js"'
+        );
+        expect(html).not.toContain("googletagmanager");
+    });
+
     it("preserves unchanged files so starting another runner does not reload an active story", async () => {
         expect.hasAssertions();
 

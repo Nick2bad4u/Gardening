@@ -13,7 +13,7 @@ import {
 const meta = {
     afterEach: releaseWebsiteFocus,
     args: {
-        path: "layouts/plant-history.html?id=P01",
+        path: "pots/P01/",
         scenario: "ready",
         theme: "light",
         width: 1280,
@@ -100,7 +100,7 @@ export const MobileDark: Story = {
 };
 
 export const NoObservations: Story = {
-    args: { path: "layouts/plant-history.html?id=P03" },
+    args: { path: "pots/P03/" },
     play: async ({ canvasElement }) => {
         const { canvas, document } = await websiteCanvas(canvasElement);
         await expect(
@@ -118,7 +118,7 @@ export const NoObservations: Story = {
 };
 
 export const UnknownPlant: Story = {
-    args: { path: "layouts/plant-history.html?id=unknown" },
+    args: { path: "pots/?id=unknown" },
     play: async ({ canvasElement }) => {
         const { document } = await websiteCanvas(canvasElement);
         await waitFor(() =>

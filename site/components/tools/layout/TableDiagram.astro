@@ -1,0 +1,950 @@
+---
+import { siteUrl } from "../../../lib/routes.mjs";
+---
+
+<section class="section tab-panel" id="tables" role="tabpanel" aria-labelledby="tab-tables" hidden>
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">Diagram 2</p>
+            <h2>Plant positions</h2>
+        </div>
+        <div class="controls">
+            <div class="field">
+                <label for="round-diameter">Round table diameter</label>
+                <input id="round-diameter" type="number" min="18" max="36" step="0.5" value="24" />
+            </div>
+            <div class="switch">
+                <input id="show-risers" type="checkbox" checked />
+                <label for="show-risers">Show recommended riser shelves</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="plant-interaction-note">
+        <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+            <use href={siteUrl("plant-icons.svg#icon-observation")} width="64" height="64"></use>
+        </svg>
+        <p>
+            <strong>Interactive plant map:</strong> hover a pot or planter to see its name,
+            botanical ID, origin, and placement. Tap it on a phone or use Tab with a keyboard.
+        </p>
+    </div>
+
+    <div class="tables-grid">
+        <article class="table-panel">
+            <div class="diagram-header">
+                <strong>Wooden table · A1–D3</strong>
+                <span>13 inches wide × 16 inches deep · room at bottom</span>
+            </div>
+            <svg
+                class="diagram"
+                viewBox="0 0 620 620"
+                role="group"
+                aria-labelledby="wood-title wood-desc"
+            >
+                <title id="wood-title">
+                                Twelve-position wooden cactus table
+                            </title>
+                <desc id="wood-desc">
+                    Twelve cactus pots are arranged in three physical columns and four rows. The
+                    revised height-first plan puts the visibly shortest serpent cactus on the
+                    tallest acrylic riser and keeps the taller Old Man of the Andes on the shortest
+                    riser. The divider-side pot in each row stays directly on the wood, while the
+                    two pots toward the light center share a riser when both bases fit safely.
+                </desc>
+
+                <text x="310" y="31" class="svg-label" text-anchor="middle">
+                    WINDOW SIDE
+                </text>
+                <text x="310" y="50" class="svg-small" text-anchor="middle">
+                    ROW 1 IS WINDOW-SIDE
+                </text>
+                <rect x="130" y="67" width="360" height="443" rx="8" class="wood"></rect>
+
+                <g aria-label="Recommended riser shelves beneath the two center-side pots in each row">
+                    <rect x="250" y="86" width="222" height="76" rx="9" class="riser-lane"></rect>
+                    <rect x="250" y="194" width="222" height="76" rx="9" class="riser-lane"></rect>
+                    <rect x="250" y="302" width="222" height="76" rx="9" class="riser-lane"></rect>
+                    <rect x="250" y="410" width="222" height="76" rx="9" class="riser-lane"></rect>
+                </g>
+
+                <text x="92" y="130" class="svg-small" text-anchor="middle">
+                    ROW 1
+                </text>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood"
+                    data-name="Variegated moon cactus"
+                    data-botanical="Variegated Gymnocalycium mihanovichii"
+                    data-record="A1 · Starter-07"
+                    data-origin="Paraguay and northeastern Argentina"
+                    data-placement="Row 1, divider side · direct on wood"
+                    data-status="Labeled selection · keep the palest side outward"
+                    data-profile={siteUrl("plants/gymnocalycium-mihanovichii-variegated/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="A1, Variegated moon cactus, Variegated Gymnocalycium mihanovichii, direct on wood"
+                >
+                    <title>
+                                    A1 — Variegated moon cactus — direct on wood
+                                </title>
+                    <circle cx="190" cy="124" r="42" class="pot-edge"></circle>
+                    <text x="190" y="130" class="pot-id" text-anchor="middle">
+                        A1
+                    </text>
+                </g>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood"
+                    data-name="Serpent cactus"
+                    data-botanical="Nyctocereus serpentinus"
+                    data-record="A3 · Starter-04"
+                    data-origin="Mexico"
+                    data-placement="Row 1, fixture center · +5.11-inch riser with B1"
+                    data-status="Labeled · scrambling growth may need support"
+                    data-profile={siteUrl("plants/nyctocereus-serpentinus/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="A3, Serpent cactus, Nyctocereus serpentinus, on the 5.11-inch riser"
+                >
+                    <title>
+                                    A3 — Serpent cactus — +5.11-inch riser
+                                </title>
+                    <circle cx="310" cy="124" r="42" class="pot"></circle>
+                    <text x="310" y="130" class="pot-id" text-anchor="middle">
+                        A3
+                    </text>
+                </g>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood"
+                    data-name="Grass-blade cactus"
+                    data-botanical="Stenocactus phyllacanthus"
+                    data-record="B1 · Starter-02"
+                    data-origin="Central, northeastern, Gulf, and southwestern Mexico"
+                    data-placement="Row 1, wall side · +5.11-inch riser with A3"
+                    data-status="Labeled · long, flattened sharp spines"
+                    data-profile={siteUrl("plants/stenocactus-phyllacanthus/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="B1, Grass-blade cactus, Stenocactus phyllacanthus, on the 5.11-inch riser"
+                >
+                    <title>
+                                    B1 — Grass-blade cactus — +5.11-inch riser
+                                </title>
+                    <circle cx="430" cy="124" r="42" class="pot"></circle>
+                    <text x="430" y="130" class="pot-id" text-anchor="middle">
+                        B1
+                    </text>
+                </g>
+                <text x="370" y="129" class="svg-small riser-label" text-anchor="middle">
+                    +5.11
+                </text>
+
+                <text x="92" y="238" class="svg-small" text-anchor="middle">
+                    ROW 2
+                </text>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood"
+                    data-name="Giant chin cactus"
+                    data-botanical="Gymnocalycium saglionis"
+                    data-record="C1 · Starter-08"
+                    data-origin="Northwestern Argentina"
+                    data-placement="Row 2, divider side · direct on wood"
+                    data-status="Labeled · heavy curved spines"
+                    data-profile={siteUrl("plants/gymnocalycium-saglionis/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="C1, Giant chin cactus, Gymnocalycium saglionis, direct on wood"
+                >
+                    <title>
+                                    C1 — Giant chin cactus — direct on wood
+                                </title>
+                    <circle cx="190" cy="232" r="42" class="pot-edge"></circle>
+                    <text x="190" y="238" class="pot-id" text-anchor="middle">
+                        C1
+                    </text>
+                </g>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood"
+                    data-name="Old Man of the Andes"
+                    data-botanical="Oreocereus trollii"
+                    data-record="B2 · Starter-01"
+                    data-origin="Bolivia and northwestern Argentina"
+                    data-placement="Row 2, fixture center · +1.18-inch riser with C2"
+                    data-status="Labeled · sharp central spines hide under the wool"
+                    data-profile={siteUrl("plants/oreocereus-trollii/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="B2, Old Man of the Andes, Oreocereus trollii, on the 1.18-inch riser"
+                >
+                    <title>
+                                    B2 — Old Man of the Andes — +1.18-inch riser
+                                </title>
+                    <circle cx="310" cy="232" r="42" class="pot"></circle>
+                    <text x="310" y="238" class="pot-id" text-anchor="middle">
+                        B2
+                    </text>
+                </g>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood"
+                    data-name="Rainbow hedgehog cactus"
+                    data-botanical="Echinocereus rigidissimus subsp. rubispinus"
+                    data-record="C2 · Starter-03"
+                    data-origin="Western Chihuahua, Mexico"
+                    data-placement="Row 2, wall side · +1.18-inch riser with B2"
+                    data-status="Labeled · acclimate carefully to stronger light"
+                    data-profile={siteUrl("plants/echinocereus-rigidissimus-rubispinus/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="C2, Rainbow hedgehog cactus, Echinocereus rigidissimus subspecies rubispinus, on the 1.18-inch riser"
+                >
+                    <title>
+                                    C2 — Rainbow hedgehog cactus — +1.18-inch
+                                    riser
+                                </title>
+                    <circle cx="430" cy="232" r="42" class="pot"></circle>
+                    <text x="430" y="238" class="pot-id" text-anchor="middle">
+                        C2
+                    </text>
+                </g>
+                <text x="370" y="237" class="svg-small riser-label" text-anchor="middle">
+                    +1.18
+                </text>
+
+                <text x="92" y="346" class="svg-small" text-anchor="middle">
+                    ROW 3
+                </text>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood"
+                    data-name="Dragon's Egg"
+                    data-botanical="Probable Euphorbia obesa-type hybrid"
+                    data-record="D1 · Starter-11"
+                    data-origin="Reference species: Eastern Cape, South Africa; hybrid origin unknown"
+                    data-placement="Row 3, divider side · direct on wood"
+                    data-status="Probable ID · caustic milky sap"
+                    data-profile={siteUrl("plants/euphorbia-obesa-hybrid/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="D1, Dragon's Egg, probable Euphorbia obesa-type hybrid, direct on wood"
+                >
+                    <title>
+                                    D1 — Dragon's Egg — direct on wood
+                                </title>
+                    <circle cx="190" cy="340" r="42" class="pot-edge"></circle>
+                    <text x="190" y="346" class="pot-id" text-anchor="middle">
+                        D1
+                    </text>
+                </g>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood"
+                    data-name="Ming Thing"
+                    data-botanical="Cereus forbesii 'Ming Thing'"
+                    data-record="D3 · Starter-10"
+                    data-origin="Species: Bolivia, Paraguay, and northern Argentina; cultivar origin unknown"
+                    data-placement="Row 3, fixture center · +3.93-inch riser with A2"
+                    data-status="High-confidence corrected ID · monstrose growth is normal"
+                    data-profile={siteUrl("plants/cereus-forbesii-ming-thing/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="D3, Ming Thing, Cereus forbesii Ming Thing, on the 3.93-inch riser"
+                >
+                    <title>
+                                    D3 — Ming Thing — +3.93-inch riser
+                                </title>
+                    <circle cx="310" cy="340" r="42" class="pot"></circle>
+                    <text x="310" y="346" class="pot-id" text-anchor="middle">
+                        D3
+                    </text>
+                </g>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood"
+                    data-name="Feather cactus"
+                    data-botanical="Mammillaria plumosa"
+                    data-record="A2 · Starter-05"
+                    data-origin="Coahuila, Nuevo León, and Tamaulipas, Mexico"
+                    data-placement="Row 3, wall side · +3.93-inch riser with D3"
+                    data-status="Labeled · fine spines hide under the feathery covering"
+                    data-profile={siteUrl("plants/mammillaria-plumosa/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="A2, Feather cactus, Mammillaria plumosa, on the 3.93-inch riser"
+                >
+                    <title>
+                                    A2 — Feather cactus — +3.93-inch riser
+                                </title>
+                    <circle cx="430" cy="340" r="42" class="pot"></circle>
+                    <text x="430" y="346" class="pot-id" text-anchor="middle">
+                        A2
+                    </text>
+                </g>
+                <text x="370" y="345" class="svg-small riser-label" text-anchor="middle">
+                    +3.93
+                </text>
+
+                <text x="92" y="454" class="svg-small" text-anchor="middle">
+                    ROW 4
+                </text>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood"
+                    data-name="Indigo Wave"
+                    data-botanical="Myrtillocactus geometrizans 'Indigo Wave'"
+                    data-record="B3 · Starter-09"
+                    data-origin="Species: Mexico; trade-selection origin unknown"
+                    data-placement="Row 4, divider side · direct on wood"
+                    data-status="Labeled trade selection · do not rub off the blue wax"
+                    data-profile={siteUrl("plants/myrtillocactus-geometrizans-indigo-wave/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="B3, Indigo Wave, Myrtillocactus geometrizans Indigo Wave, direct on wood"
+                >
+                    <title>B3 — Indigo Wave — direct on wood</title>
+                    <circle cx="190" cy="448" r="42" class="pot-edge"></circle>
+                    <text x="190" y="454" class="pot-id" text-anchor="middle">
+                        B3
+                    </text>
+                </g>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood"
+                    data-name="Domino cactus"
+                    data-botanical="Echinopsis subdenudata"
+                    data-record="D2 · Starter-06"
+                    data-origin="Bolivia into northwestern Argentina"
+                    data-placement="Row 4, fixture center · +2.75-inch riser with C3"
+                    data-status="Labeled horticultural name · do not leave wet"
+                    data-profile={siteUrl("plants/echinopsis-subdenudata/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="D2, Domino cactus, Echinopsis subdenudata, on the 2.75-inch riser"
+                >
+                    <title>
+                                    D2 — Domino cactus — +2.75-inch riser
+                                </title>
+                    <circle cx="310" cy="448" r="42" class="pot"></circle>
+                    <text x="310" y="454" class="pot-id" text-anchor="middle">
+                        D2
+                    </text>
+                </g>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood"
+                    data-name="Monk's hood cactus"
+                    data-botanical="Astrophytum ornatum"
+                    data-record="C3 · Starter-12"
+                    data-origin="Northeastern and Gulf Mexico to Veracruz"
+                    data-placement="Row 4, wall side · +2.75-inch riser with D2"
+                    data-status="Labeled · long sharp spines"
+                    data-profile={siteUrl("plants/astrophytum-ornatum/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="C3, Monk's hood cactus, Astrophytum ornatum, on the 2.75-inch riser"
+                >
+                    <title>
+                                    C3 — Monk's hood cactus — +2.75-inch riser
+                                </title>
+                    <circle cx="430" cy="448" r="42" class="pot"></circle>
+                    <text x="430" y="454" class="pot-id" text-anchor="middle">
+                        C3
+                    </text>
+                </g>
+                <text x="370" y="453" class="svg-small riser-label" text-anchor="middle">
+                    +2.75
+                </text>
+
+                <line x1="130" y1="540" x2="490" y2="540" class="measure"></line>
+                <line x1="130" y1="532" x2="130" y2="548" class="measure"></line>
+                <line x1="490" y1="532" x2="490" y2="548" class="measure"></line>
+                <text x="310" y="564" class="svg-label" text-anchor="middle">
+                    13 IN WIDE
+                </text>
+                <line x1="528" y1="67" x2="528" y2="510" class="measure"></line>
+                <line x1="520" y1="67" x2="536" y2="67" class="measure"></line>
+                <line x1="520" y1="510" x2="536" y2="510" class="measure"></line>
+                <text
+                    x="552"
+                    y="289"
+                    class="svg-label"
+                    text-anchor="middle"
+                    transform="rotate(90 552 289)"
+                >
+                    16 IN DEEP
+                </text>
+                <text x="310" y="603" class="svg-label" text-anchor="middle">
+                    INSPECTION AISLE / ROOM SIDE
+                </text>
+            </svg>
+            <div
+                class="plant-detail-card"
+                data-plant-panel="wood"
+                aria-live="polite"
+                aria-atomic="true"
+            >
+                <p class="plant-detail-kicker">Wooden table</p>
+                <h3 data-plant-field="name">Hover, tap, or focus a pot</h3>
+                <p class="plant-detail-botanical" data-plant-field="botanical">
+                    Plant details will appear here without covering the diagram.
+                </p>
+                <dl class="plant-detail-grid">
+                    <div>
+                        <dt>Label / record</dt>
+                        <dd data-plant-field="record">A1–D3</dd>
+                    </div>
+                    <div>
+                        <dt>Native origin</dt>
+                        <dd data-plant-field="origin">Select a pot</dd>
+                    </div>
+                    <div>
+                        <dt>Placement</dt>
+                        <dd data-plant-field="placement">Direct or riser details</dd>
+                    </div>
+                    <div>
+                        <dt>ID / watch point</dt>
+                        <dd data-plant-field="status">Identification confidence and warning</dd>
+                    </div>
+                </dl>
+                <a class="plant-detail-link" data-plant-profile href={siteUrl("plants/")} hidden>
+                    Open full plant profile →
+                </a>
+            </div>
+            <div class="panel-copy">
+                <p>
+                    A1–D3 are permanent plant IDs, not grid coordinates. The left pot in every
+                    physical row remains direct on the wood; the two right pots use the labeled
+                    riser toward the fixture center. The risers now follow the visible height tiers:
+                    A3 moves to +5.11, while B2 and C2 use only +1.18.
+                </p>
+                <p class="muted">
+                    Each acrylic top is only 2.95 inches wide. Two 4-inch pots are the practical
+                    maximum, not three. Center each saucer and press its rim from several
+                    directions; if either pot rocks, use one named pot on that shelf or leave the
+                    row direct. Never stack.
+                </p>
+            </div>
+        </article>
+
+        <article class="table-panel">
+            <div class="diagram-header">
+                <strong>Wooden table 2 · August additions</strong>
+                <span>13 inches wide × 16 inches deep · labels confirmed; heights pending</span>
+            </div>
+            <svg
+                class="diagram"
+                viewBox="0 0 620 520"
+                role="group"
+                aria-labelledby="wood-new-title wood-new-desc"
+            >
+                <title id="wood-new-title">
+                                Provisional second wooden-table plant map
+                            </title>
+                <desc id="wood-new-desc">
+                    Six newly added cacti occupy two three-pot rows. The Kiwi aeonium and money tree
+                    occupy the lower-light room-side row. Every pot stays directly on wood until
+                    measured. The E1 through F3 cactus labels, #3 money-tree label, and #4
+                    Kiwi-aeonium label are confirmed.
+                </desc>
+                <text x="310" y="30" class="svg-label" text-anchor="middle">
+                    WINDOW SIDE
+                </text>
+                <rect x="75" y="52" width="470" height="390" rx="10" class="wood"></rect>
+                <text x="48" y="147" class="svg-small" text-anchor="middle">
+                    ROW 1
+                </text>
+                <text x="48" y="262" class="svg-small" text-anchor="middle">
+                    ROW 2
+                </text>
+                <text x="48" y="382" class="svg-small" text-anchor="middle">
+                    LOWER
+                </text>
+
+                <g
+                    data-plant-marker
+                    data-detail-target="wood-new"
+                    data-name="Dwarf old man cactus"
+                    data-botanical="Probable Espostoa melanostele subsp. nana"
+                    data-record="E1 · Cactus-01"
+                    data-origin="Probably Ancash, Peru"
+                    data-placement="Row 1 · direct on wood · outer-to-middle cactus zone"
+                    data-status="Probable; E. lanata is the main alternative · spines hidden under wool"
+                    data-profile={siteUrl("plants/espostoa-melanostele-nana/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="E1, Cactus-01 dwarf old man cactus"
+                >
+                    <title>
+                                    E1 — Cactus-01 — Dwarf old man cactus
+                                </title>
+                    <circle cx="155" cy="145" r="45" class="pot"></circle>
+                    <text x="155" y="151" class="pot-id" text-anchor="middle">
+                        E1
+                    </text>
+                </g>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood-new"
+                    data-name="Chamaelobivia / peanut cactus hybrid"
+                    data-botanical="Echinopsis hybrid — Chamaelobivia Group"
+                    data-record="E2 · Cactus-02"
+                    data-origin="Horticultural hybrid; peanut-cactus ancestry from northwestern Argentina"
+                    data-placement="Row 1 · direct on wood · bright middle after edge acclimation"
+                    data-status="Secure at hybrid-group level · exact cultivar unknown"
+                    data-profile={siteUrl("plants/chamaelobivia-hybrid/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="E2, Cactus-02 Chamaelobivia hybrid"
+                >
+                    <title>
+                                    E2 — Cactus-02 — Chamaelobivia hybrid
+                                </title>
+                    <circle cx="310" cy="145" r="45" class="pot"></circle>
+                    <text x="310" y="151" class="pot-id" text-anchor="middle">
+                        E2
+                    </text>
+                </g>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood-new"
+                    data-name="Woolly nipple cactus"
+                    data-botanical="Probable Mammillaria mammillaris"
+                    data-record="E3 · Cactus-03"
+                    data-origin="Southeastern Coahuila and western Nuevo León, Mexico"
+                    data-placement="Row 1 · direct on wood · outer-to-middle cactus zone"
+                    data-status="Probable; M. mystax is the main alternative · red projection is fruit"
+                    data-profile={siteUrl("plants/mammillaria-mammillaris/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="E3, Cactus-03 woolly nipple cactus"
+                >
+                    <title>
+                                    E3 — Cactus-03 — Woolly nipple cactus
+                                </title>
+                    <circle cx="465" cy="145" r="45" class="pot"></circle>
+                    <text x="465" y="151" class="pot-id" text-anchor="middle">
+                        E3
+                    </text>
+                </g>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood-new"
+                    data-name="Yellow tower cactus"
+                    data-botanical="Parodia leninghausii"
+                    data-record="F3 · Cactus-04"
+                    data-origin="Rio Grande do Sul, southern Brazil"
+                    data-placement="Row 2 · direct on wood · high-light zone after acclimation"
+                    data-status="High-confidence ID · recheck stability as the column grows"
+                    data-profile={siteUrl("plants/parodia-leninghausii/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="F3, Cactus-04 yellow tower cactus"
+                >
+                    <title>
+                                    F3 — Cactus-04 — Yellow tower cactus
+                                </title>
+                    <circle cx="155" cy="260" r="45" class="pot"></circle>
+                    <text x="155" y="266" class="pot-id" text-anchor="middle">
+                        F3
+                    </text>
+                </g>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood-new"
+                    data-name="Boobie cactus"
+                    data-botanical="Myrtillocactus geometrizans 'Fukurokuryuzinboku'"
+                    data-record="F2 · Cactus-05"
+                    data-origin="Horticultural cultivar; underlying species native to Mexico"
+                    data-placement="Row 2 · direct on wood · smaller 3-inch pot"
+                    data-status="Very high-confidence cultivar ID · keep water out of folds"
+                    data-profile={siteUrl("plants/myrtillocactus-geometrizans-fukurokuryuzinboku/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="F2, Cactus-05 boobie cactus"
+                >
+                    <title>F2 — Cactus-05 — Boobie cactus</title>
+                    <circle cx="310" cy="260" r="38" class="pot"></circle>
+                    <text x="310" y="266" class="pot-id" text-anchor="middle">
+                        F2
+                    </text>
+                </g>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood-new"
+                    data-name="Hook-spined pincushion cactus"
+                    data-botanical="Probable Mammillaria cf. rekoi"
+                    data-record="F1 · Cactus-06"
+                    data-origin="Guanajuato and Querétaro, central Mexico"
+                    data-placement="Row 2 · direct on wood · bright middle"
+                    data-status="High-confidence ID · hooked central spine catches skin and fabric"
+                    data-profile={siteUrl("plants/mammillaria-rekoi/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="F1, Cactus-06 hook-spined pincushion cactus"
+                >
+                    <title>
+                                    F1 — Cactus-06 — Hook-spined pincushion
+                                </title>
+                    <circle cx="465" cy="260" r="45" class="pot"></circle>
+                    <text x="465" y="266" class="pot-id" text-anchor="middle">
+                        F1
+                    </text>
+                </g>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood-new"
+                    data-name="Kiwi aeonium"
+                    data-botanical="Aeonium haworthii 'Dream Color'"
+                    data-record="#4 · Succulent-05"
+                    data-origin="Cultivar; underlying species native to Tenerife"
+                    data-placement="Room-side row · direct on wood · lower-light edge"
+                    data-status="Very high-confidence cultivar ID · variegated rosettes can scorch"
+                    data-profile={siteUrl("plants/aeonium-haworthii-dream-color/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="#4, Succulent-05 Kiwi aeonium"
+                >
+                    <title>#4 — Succulent-05 — Kiwi aeonium</title>
+                    <circle cx="220" cy="378" r="52" class="succulent-planter"></circle>
+                    <text x="220" y="384" class="pot-id" text-anchor="middle">
+                        #4
+                    </text>
+                </g>
+                <g
+                    data-plant-marker
+                    data-detail-target="wood-new"
+                    data-name="Money tree"
+                    data-botanical="Pachira glabra"
+                    data-record="#3 · Houseplant-01"
+                    data-origin="Southeastern and southern Brazil"
+                    data-placement="Room-side/periphery · direct on wood · outside cactus hotspot"
+                    data-status="Reported retail ID · tropical watering rule; do not use cactus dry-down"
+                    data-profile={siteUrl("plants/pachira-glabra/")}
+                    tabindex="0"
+                    role="img"
+                    aria-label="#3, Houseplant-01 money tree"
+                >
+                    <title>#3 — Houseplant-01 — Money tree</title>
+                    <circle cx="410" cy="378" r="61" class="pot-edge"></circle>
+                    <text x="410" y="384" class="pot-id" text-anchor="middle">
+                        #3
+                    </text>
+                </g>
+                <text x="310" y="485" class="svg-label" text-anchor="middle">
+                    INSPECTION AISLE / ROOM SIDE
+                </text>
+            </svg>
+            <div
+                class="plant-detail-card"
+                data-plant-panel="wood-new"
+                aria-live="polite"
+                aria-atomic="true"
+            >
+                <p class="plant-detail-kicker">Second wooden table</p>
+                <h3 data-plant-field="name">Hover, tap, or focus a new plant</h3>
+                <p class="plant-detail-botanical" data-plant-field="botanical">
+                    Confirmed label and inventory details will appear here.
+                </p>
+                <dl class="plant-detail-grid">
+                    <div>
+                        <dt>Label / record</dt>
+                        <dd data-plant-field="record">Select a plant</dd>
+                    </div>
+                    <div>
+                        <dt>Native origin</dt>
+                        <dd data-plant-field="origin">Select a plant</dd>
+                    </div>
+                    <div>
+                        <dt>Placement</dt>
+                        <dd data-plant-field="placement">All direct on wood until measured</dd>
+                    </div>
+                    <div>
+                        <dt>ID / watch point</dt>
+                        <dd data-plant-field="status">Identification and care notes</dd>
+                    </div>
+                </dl>
+                <a class="plant-detail-link" data-plant-profile href={siteUrl("plants/")} hidden>
+                    Open full plant profile →
+                </a>
+            </div>
+            <div class="panel-copy">
+                <p>
+                    This is a provisional position map, not proof that the current pots still occupy
+                    these rows. Keep all eight containers directly on the second wood table until
+                    tabletop-to-tip measurements are recorded. Plant-body heights logged on August
+                    10 do not include the pots and cannot set riser height. If rims overlap, a
+                    saucer overhangs, or airflow is blocked, move one lower-light plant to a safe
+                    adjacent surface instead of forcing the fit.
+                </p>
+                <p class="muted">
+                    All labels are confirmed: E1–F3 for the cacti, #4 for the Kiwi aeonium, and #3
+                    for the money tree. The money tree stays at the periphery and does not set
+                    cactus light clearance.
+                </p>
+            </div>
+        </article>
+
+        <article class="table-panel">
+            <div class="diagram-header">
+                <strong>Round table · two shared planters</strong>
+                <span>
+                    Planning diameter:
+                    <span data-round-diameter>24</span> inches
+                </span>
+            </div>
+            <svg
+                class="diagram"
+                viewBox="0 0 620 520"
+                role="group"
+                aria-labelledby="glass-title glass-desc"
+            >
+                <title id="glass-title">
+                                Round table shared-planter layout
+                            </title>
+                <desc id="glass-desc">
+                    The older cactus planter is on the left half of the round table with its monkey
+                    tail trailing over the open room-side arc. The succulent planter is on the right
+                    half with its echeveria side facing inward.
+                </desc>
+
+                <text x="310" y="34" class="svg-label" text-anchor="middle">
+                    WINDOW SIDE
+                </text>
+                <circle cx="310" cy="252" r="190" class="glass"></circle>
+                <line x1="310" y1="70" x2="310" y2="434" class="centerline"></line>
+
+                <g
+                    data-plant-marker
+                    data-detail-target="glass"
+                    data-name="#1 shared rehab cactus planter · 3 living plants"
+                    data-botanical="Pilosocereus pachycladus · Cleistocactus colademononis · Echinopsis spachiana"
+                    data-record="#1 · formerly A4-B4 · Rehab-01 through Rehab-03"
+                    data-origin="Northeastern Brazil · Santa Cruz, Bolivia · Bolivia to northwestern Argentina"
+                    data-placement="Left half · direct on glass · monkey tail toward the open room arc"
+                    data-status="Blue torch and golden torch IDs are probable; monkey tail ID is high confidence"
+                    data-profile={siteUrl("plants/")}
+                    data-link-label="Open collection guide →"
+                    tabindex="0"
+                    role="img"
+                    aria-label="#1 shared rehab cactus planter with variegated blue torch, monkey tail, and golden torch cacti"
+                >
+                    <title>
+                                    #1 — Variegated blue torch, monkey tail, and
+                                    golden torch cacti
+                                </title>
+                    <rect
+                        x="144"
+                        y="164"
+                        width="142"
+                        height="154"
+                        rx="23"
+                        class="older-planter"
+                    ></rect>
+                    <text x="215" y="225" class="svg-label" text-anchor="middle">
+                        REHAB CACTI
+                    </text>
+                    <text x="215" y="247" class="svg-small" text-anchor="middle">
+                        #1
+                    </text>
+                    <path d="M247 284C271 319 285 350 291 392" class="tail"></path>
+                </g>
+
+                <g
+                    data-plant-marker
+                    data-detail-target="glass"
+                    data-name="#2 shared succulent planter · 4 living plants"
+                    data-botanical="Echeveria pulidonis · Portulacaria afra · Kalanchoe bracteata · Kalanchoe orgyalis"
+                    data-record="#2 · formerly C4-D4 · Succulent-01 through Succulent-04"
+                    data-origin="Mexico · eastern and southern Africa · Madagascar"
+                    data-placement="Right half · direct on glass · echeveria faces fixture center"
+                    data-status="Echeveria and silver-teaspoons IDs are probable; Kalanchoe is toxic to pets"
+                    data-profile={siteUrl("plants/")}
+                    data-link-label="Open collection guide →"
+                    tabindex="0"
+                    role="img"
+                    aria-label="#2 shared succulent planter with Pulido's echeveria, elephant bush, silver teaspoons, and copper spoons"
+                >
+                    <title>
+                                    #2 — Pulido's echeveria, elephant bush,
+                                    silver teaspoons, and copper spoons
+                                </title>
+                    <rect
+                        x="334"
+                        y="164"
+                        width="142"
+                        height="154"
+                        rx="16"
+                        class="succulent-planter"
+                    ></rect>
+                    <text x="405" y="225" class="svg-label" text-anchor="middle">
+                        SUCCULENTS
+                    </text>
+                    <text x="405" y="247" class="svg-small" text-anchor="middle">
+                        #2
+                    </text>
+                    <path
+                        d="M405 264L412 278L427 274L417 286L429 297L413 295L405 310L397 295L381 297L393 286L383 274L398 278Z"
+                        class="echeveria"
+                    ></path>
+                    <text x="405" y="344" class="svg-small" text-anchor="middle">
+                        ECHEVERIA → CENTER
+                    </text>
+                </g>
+
+                <text x="310" y="458" class="svg-small" text-anchor="middle">
+                    TAIL CLEAR OF WOOD + WALL CABLES
+                </text>
+
+                <text x="123" y="105" class="svg-small" text-anchor="middle">
+                    DIVIDER / MYLAR
+                </text>
+                <text x="497" y="105" class="svg-small" text-anchor="middle">
+                    WHITE WALL
+                </text>
+                <text x="310" y="483" class="svg-label" text-anchor="middle">
+                    OPEN ROOM / ACCESS SIDE
+                </text>
+            </svg>
+            <div
+                class="plant-detail-card"
+                data-plant-panel="glass"
+                aria-live="polite"
+                aria-atomic="true"
+            >
+                <p class="plant-detail-kicker">Round glass table</p>
+                <h3 data-plant-field="name">Hover, tap, or focus a planter</h3>
+                <p class="plant-detail-botanical" data-plant-field="botanical">
+                    The living plants and placement notes will appear here.
+                </p>
+                <dl class="plant-detail-grid">
+                    <div>
+                        <dt>Label / records</dt>
+                        <dd data-plant-field="record">#1 rehab · #2 succulent</dd>
+                    </div>
+                    <div>
+                        <dt>Native origins</dt>
+                        <dd data-plant-field="origin">Select a planter</dd>
+                    </div>
+                    <div>
+                        <dt>Placement</dt>
+                        <dd data-plant-field="placement">Both planters stay directly on glass</dd>
+                    </div>
+                    <div>
+                        <dt>ID / watch points</dt>
+                        <dd data-plant-field="status">Identification confidence and warnings</dd>
+                    </div>
+                </dl>
+                <a class="plant-detail-link" data-plant-profile href={siteUrl("plants/")} hidden>
+                    Open collection guide →
+                </a>
+            </div>
+            <div class="panel-copy">
+                <p>
+                    Keep both planters directly on the glass. The older planter uses the open
+                    room-side arc that clears both the wooden table and wall cables. The 2026-07-31
+                    GrowCam photo shows the two planters reversed; swap them when the risers go in.
+                </p>
+                <p class="muted">
+                    The former A4–B4 and C4–D4 values are historical cross-references only. The
+                    physical labels now identify the rehab planter as #1 and the succulent planter
+                    as #2.
+                </p>
+            </div>
+        </article>
+    </div>
+
+    <div class="pot-key" aria-label="Pot position key">
+        <div class="pot-key-item">
+            <code>A1</code>
+            <span>Variegated moon cactus</span>
+        </div>
+        <div class="pot-key-item">
+            <code>B1</code>
+            <span>Grass-blade cactus</span>
+        </div>
+        <div class="pot-key-item">
+            <code>C1</code>
+            <span>Giant chin cactus</span>
+        </div>
+        <div class="pot-key-item">
+            <code>D1</code>
+            <span>Dragon’s Egg</span>
+        </div>
+        <div class="pot-key-item">
+            <code>A2</code>
+            <span>Feather cactus</span>
+        </div>
+        <div class="pot-key-item">
+            <code>B2</code>
+            <span>Old Man of the Andes</span>
+        </div>
+        <div class="pot-key-item">
+            <code>C2</code>
+            <span>Rainbow hedgehog</span>
+        </div>
+        <div class="pot-key-item">
+            <code>D2</code>
+            <span>Domino cactus</span>
+        </div>
+        <div class="pot-key-item">
+            <code>A3</code>
+            <span>Serpent cactus</span>
+        </div>
+        <div class="pot-key-item">
+            <code>B3</code>
+            <span>Indigo Wave</span>
+        </div>
+        <div class="pot-key-item">
+            <code>C3</code>
+            <span>Monk’s hood</span>
+        </div>
+        <div class="pot-key-item">
+            <code>D3</code>
+            <span>Ming Thing</span>
+        </div>
+        <div class="pot-key-item">
+            <code>E1</code>
+            <span>Dwarf old man</span>
+        </div>
+        <div class="pot-key-item">
+            <code>E2</code>
+            <span>Chamaelobivia</span>
+        </div>
+        <div class="pot-key-item">
+            <code>E3</code>
+            <span>Woolly nipple cactus</span>
+        </div>
+        <div class="pot-key-item">
+            <code>F3</code>
+            <span>Yellow tower</span>
+        </div>
+        <div class="pot-key-item">
+            <code>F2</code>
+            <span>Boobie cactus</span>
+        </div>
+        <div class="pot-key-item">
+            <code>F1</code>
+            <span>Hook-spined pincushion</span>
+        </div>
+        <div class="pot-key-item">
+            <code>#1</code>
+            <span>Shared rehab planter</span>
+        </div>
+        <div class="pot-key-item">
+            <code>#2</code>
+            <span>Shared succulent planter</span>
+        </div>
+        <div class="pot-key-item">
+            <code>#4</code>
+            <span>Kiwi aeonium</span>
+        </div>
+        <div class="pot-key-item">
+            <code>#3</code>
+            <span>Money tree</span>
+        </div>
+    </div>
+</section>

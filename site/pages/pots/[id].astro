@@ -1,0 +1,47 @@
+---
+import SiteLayout from "../../components/SiteLayout.astro";
+import profilesById from "../../../docs/layouts/plant-profile-data.json";
+import HistoryHeader from "../../components/tools/history/HistoryHeader.astro";
+import HistoryPager from "../../components/tools/history/HistoryPager.astro";
+import HistoryStatus from "../../components/tools/history/HistoryStatus.astro";
+import HistorySummary from "../../components/tools/history/HistorySummary.astro";
+import HistoryTrend from "../../components/tools/history/HistoryTrend.astro";
+import HistoryMilestones from "../../components/tools/history/HistoryMilestones.astro";
+import HistoryBaselines from "../../components/tools/history/HistoryBaselines.astro";
+import HistoryCharts from "../../components/tools/history/HistoryCharts.astro";
+import HistoryTable from "../../components/tools/history/HistoryTable.astro";
+import HistoryLogging from "../../components/tools/history/HistoryLogging.astro";
+import "../../styles/tools/tracker.css";
+export function getStaticPaths() {
+    return Object.keys(profilesById).map((id) => ({ params: { id } }));
+}
+const { id } = Astro.params;
+---
+
+<SiteLayout
+    title={`${id} · Pot history`}
+    section="tracker"
+    description="Weights, watering, measurements, and observations for this tracked pot."
+>
+    <div class="tool-tracker tool-content" data-pot-id={id}>
+        <HistoryHeader />
+        <HistoryPager />
+        <HistoryStatus />
+        <HistorySummary />
+        <HistoryTrend />
+        <HistoryMilestones />
+        <HistoryBaselines />
+        <HistoryCharts />
+        <HistoryTable />
+        <HistoryLogging />
+        <noscript>
+            <p>
+                Live observations need JavaScript. Use the Google Sheets link above to read the
+                workbook directly.
+            </p>
+        </noscript>
+    </div>
+</SiteLayout>
+<script>
+    import "../../../docs/layouts/plant-history.js";
+</script>

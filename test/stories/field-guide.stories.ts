@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { expect, waitFor, within } from "storybook/test";
+import { expect, waitFor } from "storybook/test";
 
 import {
     expectNoOverflow,
@@ -12,324 +12,187 @@ import {
 
 const meta = {
     afterEach: releaseWebsiteFocus,
-    args: {
-        path: "plant-booklet/index.html#contents",
-        scenario: "ready",
-        theme: "light",
-        width: 1280,
-    },
+    args: { path: "plants/", scenario: "ready", theme: "light", width: 1280 },
     argTypes: websiteArgTypes,
     component: renderWebsiteFrame,
     parameters: {
         docs: {
             description: {
                 component:
-                    "The collection reader: searchable contents, plant profiles, keyboard navigation, and a mobile dark preview. Controls configure the preview wrapper around the maintained static page.",
+                    "The modular plant directory and individual research pages, rendered by the same Astro components as the public site.",
             },
         },
         layout: "fullscreen",
     },
     title: "Website/Field guide",
 } satisfies Meta<typeof renderWebsiteFrame>;
-
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Contents: Story = {
-    args: { path: "plant-booklet/index.html#cover" },
     play: async ({ canvasElement }) => {
         const { canvas, document, userEvent } =
             await websiteCanvas(canvasElement);
-        await userEvent.click(
-            canvas.getByRole("link", { name: "Start reading" })
+        await expect(
+            canvas.getByRole("heading", { name: "Meet the plants." })
+        ).toBeVisible();
+        const search = canvas.getByRole("searchbox", { name: "Find a plant" });
+        await userEvent.type(search, "pachira");
+        await expect(
+            document.querySelectorAll("[data-directory-entry]:not([hidden])")
+        ).toHaveLength(1);
+        await expect(
+            canvas.getByRole("heading", { name: "Money tree" })
+        ).toBeVisible();
+        await userEvent.clear(search);
+        await userEvent.type(search, "zzzz-no-such-plant-98765");
+        await expect(document.querySelector("#plant-empty")).toBeVisible();
+        await userEvent.clear(search);
+        await userEvent.selectOptions(
+            canvas.getByRole("combobox", { name: "Records" }),
+            "historical"
         );
-        await waitFor(() =>
-            expect(
-                canvas.getByRole("heading", {
-                    name: "A field guide to the collection.",
-                })
-            ).toBeVisible()
-        );
+        await expect(
+            document.querySelectorAll(
+                '[data-directory-entry][data-historical="false"]:not([hidden])'
+            )
+        ).toHaveLength(0);
+        await expect(
+            document.querySelectorAll(
+                '[data-directory-entry][data-historical="true"]:not([hidden])'
+            ).length
+        ).toBeGreaterThan(0);
+        await expectNoOverflow(document);
+    },
+};
+
+export const Home: Story = {
+    args: { path: "" },
+    play: async ({ canvasElement }) => {
+        const { document } = await websiteCanvas(canvasElement);
+        await expect(
+            document.querySelectorAll("[data-plant-profile]")
+        ).toHaveLength(0);
+        await expect(
+            document.querySelector("[data-reviewed-date]")
+        ).toBeVisible();
         await expectNoOverflow(document);
     },
 };
 
 export const PlacementGuide: Story = {
+    args: { path: "setup/placement/" },
     play: async ({ canvasElement }) => {
-        const { canvas, document, userEvent } =
-            await websiteCanvas(canvasElement);
-        await userEvent.click(
-            canvas.getByRole("button", { name: "Next Table Placement Guide" })
-        );
-        await waitFor(() =>
-            expect(
-                canvas.getByRole("heading", {
-                    name: "Table Placement Guide",
-                })
-            ).toBeVisible()
-        );
+        const { document } = await websiteCanvas(canvasElement);
         await expect(
-            document.querySelectorAll("#placement .placement-figure")
-        ).toHaveLength(7);
-        await expect(
-            canvas.getByRole("img", {
-                name: /^Illustrated relative-light hypothesis/v,
-            })
-        ).toHaveAttribute(
-            "src",
-            "../../assets/layouts/2026-09-16-illustrated/relative-light-illustrated.png"
-        );
+            document.querySelectorAll("main figure").length
+        ).toBeGreaterThan(0);
         await expectNoOverflow(document);
-        await userEvent.click(
-            within(
-                document.querySelector<HTMLElement>("#placement") ??
-                    document.body
-            ).getByRole("link", { name: "Ming Thing" })
-        );
-        await waitFor(() =>
-            expect(
-                canvas.getByRole("heading", { name: "Ming Thing" })
-            ).toBeVisible()
-        );
     },
 };
-
 export const PlacementGuideMobile: Story = {
     ...PlacementGuide,
-    args: { theme: "dark", width: 390 },
+    args: { path: "setup/placement/", theme: "dark", width: 390 },
 };
 
 export const EquipmentGuide: Story = {
-    args: { path: "plant-booklet/index.html#placement" },
+    args: { path: "setup/equipment/" },
     play: async ({ canvasElement }) => {
-        const { canvas, document, userEvent } =
-            await websiteCanvas(canvasElement);
-        await userEvent.click(
-            canvas.getByRole("button", { name: "Next Equipment and Supplies" })
-        );
-        await waitFor(() =>
-            expect(document.querySelector("#equipment")).toBeVisible()
-        );
-        await expect(
-            canvas.getByRole("heading", { name: "Equipment and Supplies" })
-        ).toBeVisible();
+        const { document } = await websiteCanvas(canvasElement);
         await expect(
             document.querySelector(
-                '#equipment a[href="https://www.amazon.com/dp/B0D25H73ZS"]'
+                'main a[href="https://www.amazon.com/dp/B0D25H73ZS"]'
             )
-        ).toHaveTextContent("LEJANEOYE");
+        ).toBeVisible();
         await expectNoOverflow(document);
-        await userEvent.click(
-            document.querySelector<HTMLButtonElement>("#next-page") ??
-                canvas.getByRole("button", { name: /^Next /v })
-        );
-        await waitFor(() =>
-            expect(
-                document.querySelector(".profile-page:not([hidden])")
-            ).toBeVisible()
-        );
     },
 };
-
 export const EquipmentGuideMobile: Story = {
     ...EquipmentGuide,
-    args: {
-        path: "plant-booklet/index.html#placement",
-        theme: "dark",
-        width: 390,
-    },
-};
-
-export const ClosingPage: Story = {
-    args: { path: "plant-booklet/index.html#pachira-glabra" },
-    play: async ({ canvasElement }) => {
-        const { canvas, document, userEvent } =
-            await websiteCanvas(canvasElement);
-        await userEvent.click(
-            canvas.getByRole("button", { name: "Next Back to the Garden" })
-        );
-        await waitFor(() =>
-            expect(
-                canvas.getByRole("heading", { name: "Back to the garden." })
-            ).toBeVisible()
-        );
-        await expect(document.querySelector("#next-page")).toBeDisabled();
-        await expectNoOverflow(document);
-        await userEvent.click(
-            canvas.getByRole("link", { name: /Browse the Collection/v })
-        );
-        await waitFor(() =>
-            expect(document.querySelector("#contents")).toBeVisible()
-        );
-    },
-};
-
-export const ClosingPageMobile: Story = {
-    ...ClosingPage,
-    args: {
-        path: "plant-booklet/index.html#pachira-glabra",
-        theme: "dark",
-        width: 390,
-    },
-};
-
-export const SearchAndOpenPlant: Story = {
-    play: async ({ canvasElement }) => {
-        const { canvas, document, userEvent } =
-            await websiteCanvas(canvasElement);
-        await userEvent.click(canvas.getByRole("button", { name: "Contents" }));
-        const dialog = canvas.getByRole("dialog");
-        const search = within(dialog).getByRole("searchbox");
-        await userEvent.type(search, "zzzz no such plant");
-        await expect(
-            document.querySelector("#search-status")
-        ).toHaveTextContent("0");
-        await userEvent.clear(search);
-        await userEvent.type(search, "pachira");
-        await expect(
-            document.querySelector("#search-status")
-        ).toHaveTextContent("1");
-        await userEvent.click(
-            within(dialog).getByRole("link", { name: /Money tree/v })
-        );
-        await waitFor(() =>
-            expect(
-                canvas.getByRole("heading", { name: "Money tree" })
-            ).toBeVisible()
-        );
-        await expect(dialog).not.toBeVisible();
-        await expect(
-            document.querySelectorAll(".profile-page[data-profile-mounted]")
-        ).toHaveLength(1);
-    },
+    args: { path: "setup/equipment/", theme: "dark", width: 390 },
 };
 
 export const ProfileMobileDark: Story = {
-    args: {
-        path: "plant-booklet/index.html#pachira-glabra",
-        theme: "dark",
-        width: 390,
-    },
+    args: { path: "plants/pachira-glabra/", theme: "dark", width: 390 },
     play: async ({ canvasElement }) => {
         const { canvas, document, userEvent } =
             await websiteCanvas(canvasElement);
-        await waitFor(() =>
-            expect(
-                canvas.getByRole("heading", { name: "Money tree" })
-            ).toBeVisible()
-        );
+        await expect(
+            canvas.getByRole("heading", { name: "Money tree" })
+        ).toBeVisible();
+        await expect(
+            document.querySelectorAll("[data-plant-profile]")
+        ).toHaveLength(1);
         await expect(document.documentElement).toHaveAttribute(
             "data-theme",
             "dark"
         );
-        await expectNoOverflow(document);
         await userEvent.click(
-            document.querySelector<HTMLButtonElement>("#theme-toggle") ??
-                canvas.getByRole("button", { name: "Theme" })
+            canvas.getByRole("button", { name: "Switch to light theme" })
         );
         await expect(document.documentElement).toHaveAttribute(
             "data-theme",
             "light"
         );
-    },
-};
-
-export const KeyboardNavigation: Story = {
-    args: { path: "plant-booklet/index.html#cover" },
-    play: async ({ canvasElement }) => {
-        const { canvas, document, userEvent } =
-            await websiteCanvas(canvasElement);
-        const keyboard = userEvent;
-        await keyboard.click(document.body);
-        await keyboard.keyboard("{ArrowRight}");
-        await waitFor(() =>
-            expect(document.querySelector("#contents")).toBeVisible()
-        );
-        await keyboard.keyboard("/");
-        await expect(document.querySelector("#contents-dialog")).toBeVisible();
-        await expect(document.querySelector("#plant-search")).toHaveFocus();
-        await keyboard.click(
-            canvas.getByRole("button", { name: "Close contents" })
-        );
+        await userEvent.click(canvas.getByRole("button", { name: "Menu" }));
         await expect(
-            document.querySelector("#contents-dialog")
-        ).not.toBeVisible();
+            document.querySelector("[data-menu-toggle]")
+        ).toHaveAttribute("aria-expanded", "true");
+        await userEvent.keyboard("{Escape}");
+        await expect(
+            document.querySelector("[data-menu-toggle]")
+        ).toHaveAttribute("aria-expanded", "false");
+        await expect(
+            document.querySelector("[data-menu-toggle]")
+        ).toHaveFocus();
+        await expectNoOverflow(document);
     },
 };
 
-export const HoverPageControls: Story = {
-    args: { path: "plant-booklet/index.html#nyctocereus-serpentinus" },
+export const IdentificationEvidence: Story = {
+    args: { path: "plants/aeonium-haworthii-dream-color/" },
+    play: async ({ canvasElement }) => {
+        const { document, userEvent } = await websiteCanvas(canvasElement);
+        const details =
+            document.querySelector<HTMLDetailsElement>(".meta-details");
+        const summary = details?.querySelector("summary");
+        if (!details || !summary)
+            throw new Error("Identification evidence is missing.");
+        await userEvent.click(summary);
+        await expect(details).toHaveAttribute("open");
+        await expect(details.textContent.length).toBeGreaterThan(
+            summary.textContent.length
+        );
+        await expectNoOverflow(document);
+    },
+};
+
+export const GlobalSearch: Story = {
+    args: { path: "search/", theme: "dark", width: 390 },
     play: async ({ canvasElement }) => {
         const { canvas, document, userEvent } =
             await websiteCanvas(canvasElement);
-        const view = document.defaultView;
-        if (!view) throw new Error("Website preview window is unavailable.");
-        const controls = canvas.getByRole("navigation", {
-            name: "Page navigation",
+        const search = canvas.getByRole("searchbox", {
+            name: "Search plants, guides, and equipment",
         });
-        const previous = canvas.getByRole("button", {
-            name: "Previous Feather cactus",
-        });
-        view.scrollTo({ behavior: "instant", top: 600 });
-        await waitFor(() => expect(controls).toHaveClass("is-scroll-hidden"));
-        const bounds = previous.getBoundingClientRect();
-        await userEvent.pointer({
-            coords: {
-                clientX: bounds.left + bounds.width / 2,
-                clientY: view.innerHeight - 1,
-            },
-            target: document.body,
-        });
-        await waitFor(() =>
-            expect(controls).not.toHaveClass("is-scroll-hidden")
-        );
-        await userEvent.click(
-            canvas.getByRole("button", { name: "Next Grass-blade cactus" })
-        );
+        await userEvent.type(search, "pachira");
         await waitFor(() =>
             expect(
-                canvas.getByRole("heading", { name: "Grass-blade cactus" })
+                canvas.getByRole("heading", { name: "Money tree" })
             ).toBeVisible()
         );
-    },
-};
-
-export const PrintIdentificationEvidence: Story = {
-    args: { path: "plant-booklet/index.html#aeonium-haworthii-dream-color" },
-    play: async ({ canvasElement }) => {
-        const { canvas, document, userEvent } =
-            await websiteCanvas(canvasElement);
-        const view = document.defaultView;
-        if (!view) throw new Error("Website preview window is unavailable.");
-        await userEvent.click(
-            canvas.getByText("Likely Cultivar", { exact: true })
-        );
-        // Exercise browser print lifecycle events without opening a system print dialog.
-        view.dispatchEvent(new Event("beforeprint"));
-        await expect(
-            document.querySelectorAll(".profile-page[data-profile-mounted]")
-        ).toHaveLength(36);
-        await expect(
-            document.querySelectorAll(".meta-details:not([open])")
-        ).toHaveLength(0);
-        view.dispatchEvent(new Event("afterprint"));
-        await expect(
-            document.querySelectorAll(".profile-page[data-profile-mounted]")
-        ).toHaveLength(1);
-        await expect(
-            document.querySelectorAll(".meta-details[open]")
-        ).toHaveLength(1);
-        await expect(
-            canvas.getByText(
-                "probable cultivar; appearance is consistent, but no nursery label or seller provenance is archived",
-                { exact: true }
+        await userEvent.clear(search);
+        await userEvent.type(search, "zzzz-no-such-plant-98765");
+        await waitFor(() =>
+            expect(document.querySelector("#search-status")).toHaveTextContent(
+                "No results"
             )
-        ).toBeVisible();
-        await userEvent.click(
-            canvas.getByText("Likely Cultivar", { exact: true })
         );
+        await userEvent.click(canvas.getByRole("button", { name: "Search" }));
+        await userEvent.clear(search);
         await expect(
-            document.querySelectorAll(".meta-details[open]")
-        ).toHaveLength(0);
+            document.querySelector("#search-status")
+        ).toHaveTextContent("Enter a name or topic");
+        await expectNoOverflow(document);
     },
 };

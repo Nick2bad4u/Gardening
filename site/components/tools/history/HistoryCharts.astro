@@ -1,0 +1,156 @@
+---
+import { siteUrl } from "../../../lib/routes.mjs";
+---
+
+<section class="charts-panel" aria-labelledby="charts-title">
+    <header>
+        <div>
+            <p class="eyebrow">Interactive history</p>
+            <h2 id="charts-title">Trends over time</h2>
+            <p>
+                Hover or keyboard-focus a chart point for its exact value. Growth charts and rates
+                exclude estimates and removed records. Rates are descriptive slopes, not forecasts.
+            </p>
+        </div>
+        <label class="range-control">
+            <span>Chart range</span>
+            <select id="chart-range">
+                <option value="all">All history</option>
+                <option value="30">Last 30 days</option>
+                <option value="90">Last 90 days</option>
+                <option value="365">Last year</option>
+            </select>
+        </label>
+    </header>
+    <div class="chart-grid">
+        <article class="chart-card">
+            <header>
+                <div>
+                    <h3>
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 64 64"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href={siteUrl("plant-icons.svg#icon-weight")}
+                                width="64"
+                                height="64"
+                            ></use>
+                        </svg>
+                        Pot weight
+                    </h3>
+                    <p>Current pot setup; dry and wet means appear when available.</p>
+                </div>
+            </header>
+            <div class="chart-canvas" id="weight-chart"></div>
+            <div class="chart-summary" id="weight-chart-summary"></div>
+        </article>
+        <article class="chart-card">
+            <header>
+                <div>
+                    <h3>
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 64 64"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href={siteUrl("plant-icons.svg#icon-dimensions")}
+                                width="64"
+                                height="64"
+                            ></use>
+                        </svg>
+                        Plant dimensions
+                    </h3>
+                    <p>
+                        Measured height and width stay separate even when recorded on different
+                        days. Estimates remain available in the table below.
+                    </p>
+                </div>
+            </header>
+            <div class="chart-canvas" id="growth-chart"></div>
+            <div class="chart-summary" id="growth-chart-summary"></div>
+        </article>
+        <article class="chart-card">
+            <header>
+                <div>
+                    <h3>
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 64 64"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href={siteUrl("plant-icons.svg#icon-water")}
+                                width="64"
+                                height="64"
+                            ></use>
+                        </svg>
+                        Watering intervals
+                    </h3>
+                    <p>Elapsed days between recorded soak-to-runoff events.</p>
+                </div>
+            </header>
+            <div class="chart-canvas" id="watering-chart"></div>
+            <div class="chart-summary" id="watering-chart-summary"></div>
+        </article>
+        <article class="chart-card">
+            <header>
+                <div>
+                    <h3>
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 64 64"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href={siteUrl("plant-icons.svg#icon-inventory")}
+                                width="64"
+                                height="64"
+                            ></use>
+                        </svg>
+                        Event mix
+                    </h3>
+                    <p>
+                        Counts active event types in the selected chart range. Removed audit records
+                        stay in the timeline and history table.
+                    </p>
+                </div>
+            </header>
+            <div class="chart-canvas" id="event-mix-chart"></div>
+            <div class="chart-summary" id="event-mix-chart-summary"></div>
+        </article>
+        <article class="chart-card chart-card-wide">
+            <header>
+                <div>
+                    <h3>
+                        <svg
+                            class="site-icon"
+                            viewBox="0 0 64 64"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use
+                                href={siteUrl("plant-icons.svg#icon-care")}
+                                width="64"
+                                height="64"
+                            ></use>
+                        </svg>
+                        Care activity
+                    </h3>
+                    <p>
+                        Dated events are separated into labeled lanes so overlapping care remains
+                        visible. Removed audit records remain visible and are labeled.
+                    </p>
+                </div>
+            </header>
+            <div class="chart-canvas" id="activity-chart"></div>
+            <div class="chart-summary" id="activity-chart-summary"></div>
+        </article>
+    </div>
+</section>

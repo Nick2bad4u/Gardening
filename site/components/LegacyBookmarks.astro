@@ -1,0 +1,8 @@
+---
+import { legacyData, legacyScript } from "../lib/legacy.mjs";
+import { siteUrl } from "../lib/routes.mjs";
+const { profiles } = Astro.props;
+const script = legacyScript(legacyData(profiles), siteUrl());
+---
+
+<script is:inline set:html={script}></script>

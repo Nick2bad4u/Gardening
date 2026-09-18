@@ -1,0 +1,26 @@
+---
+import { siteUrl } from "../../lib/routes.mjs";
+import SiteLayout from "../../components/SiteLayout.astro";
+import ReviewedReport from "../../components/report/ReviewedReport.astro";
+import { getReports } from "../../lib/reports.mjs";
+export async function getStaticPaths() {
+    return (await getReports()).map((report) => ({
+        params: { date: report.date },
+        props: { report },
+    }));
+}
+const { report } = Astro.props;
+---
+
+<SiteLayout
+    title={`Garden report · ${report.date}`}
+    description={report.summary}
+    section="report"
+    breadcrumbs={[{ label: "Reports", href: siteUrl("reports/") }]}
+>
+    <p class="report-archive-link">
+        <a href={siteUrl("report/")}>Latest reviewed report</a> ·{" "}
+        <a href={siteUrl("reports/")}>All reports</a>
+    </p>
+    <ReviewedReport report={report} archived />
+</SiteLayout>

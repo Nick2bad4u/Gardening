@@ -34,18 +34,23 @@
 - Types are in `types/daily-report.d.ts`; validation and calculations are in
   `scripts/daily-report-model.mjs`. Update types, validator, generator, fixtures,
   and public presentation together for a deliberate contract change.
-- Edit report layout in `scripts/templates/daily-report.html` and maintained
-  `docs/layouts/daily-report.css` / `daily-report.js`. The generator selects the
-  newest dated input and writes `docs/layouts/daily-report.html`; never edit
-  reviewed recommendations only in the generated page.
+- Edit report content in `scripts/templates/daily-report.html`, the shared
+  renderer, and `site/components/report/`; presentation and browser behavior
+  live in `site/styles/report.css` and `site/client/report.js`. Astro supplies
+  the common layout and native latest/archive/date routes. Never edit reviewed
+  recommendations only in generated output.
+- `build:daily-report` writes only an ignored `.cache/daily-report-preview/`
+  artifact. `check:daily-report` validates and renders all dated inputs. Version-1
+  archives retain original fields and an explicit historical-policy notice; do
+  not coerce them into the version-2 validator or silently change decisions.
 
 ## Validation and publication
 
 - Follow the exact checks and publication sequence in `README.md`: build/check
-  the report, run `test/daily-report.test.mjs`, check the dated JSON/generated
-  HTML with ESLint and Prettier, then review `git diff --check`.
+  the report, run `test/daily-report.test.mjs`, check the dated JSON
+  with ESLint and Prettier, then review `git diff --check`.
 - The documented standing authorization applies to the scheduled daily-report
-  task's dated JSON and generated report page only. Use an inspected isolated
+  task's reviewed dated JSON only. Generated HTML is an ignored build artifact. Use an inspected isolated
   worktree when another task or dirty checkout is present. It does not grant
   permission to publish unrelated edits, record care, change the workbook, or
   deploy Apps Script.

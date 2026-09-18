@@ -1,7 +1,7 @@
 # Shared interface icons
 
 These 83 standalone multicolor SVGs are generated from the non-portrait symbols
-in [the canonical sprite](../../docs/plant-booklet/plant-icons.svg). They cover
+in [the canonical sprite](../artwork/plant-icons.svg). They cover
 menus, buttons, measurement and care fields, status indicators, and generic
 plant categories. The separate collection portraits live in `../plant-icons/`.
 
@@ -25,9 +25,10 @@ check/status symbols. All icons were reviewed at 64 px and at 16–32 px. The
 automated render check rejects empty artwork or paint inside the outer two-pixel
 border, and reference checks catch missing or duplicate local definitions.
 
-Edit the canonical symbol, then run `npm run build:booklet`. The build exports
-every icon here and synchronizes the logger's embedded copies, with namespaced
-local definitions. The logger stays self-contained and makes no network
+Edit the canonical symbol, then run `npm run build:artwork`. This exports
+every icon here without changing the logger. The separate explicit
+`npm run sync:logger-artwork` command updates its embedded copies with
+namespaced local definitions. The logger stays self-contained and makes no network
 requests for interface artwork. `node scripts/sync-ui-icons.mjs --check` detects
 drift. Use an adjacent accessible text label for controls; the standalone
 exports also include a title and an associated description when used as images.
@@ -35,5 +36,5 @@ The field guide, public tools, and logger use 64-unit SVG viewports; CSS control
 their displayed size and the existing button hit areas.
 
 Original source/adaptation details remain in
-[ICON-SOURCES.md](../../docs/plant-booklet/ICON-SOURCES.md). No new license is
+[ICON-SOURCES.md](../artwork/ICON-SOURCES.md). No new license is
 granted for the repository artwork by exporting it.

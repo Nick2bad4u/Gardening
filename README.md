@@ -11,16 +11,16 @@ The installed AW200 and AeroLight 240 W remain at their last reported 45% and 38
 
 ## Current notes
 
-- [Equipment and supplies inventory](docs/equipment/inventory.md) — the complete documented setup, including all four table links, lights, meters, scales, tools, pots, and stored supplies; also [in the field guide](https://nick2bad4u.github.io/Gardening/#equipment)
+- [Equipment and supplies inventory](docs/equipment/inventory.md) — the complete documented setup, including all four table links, lights, meters, scales, tools, pots, and stored supplies; also [on the website](https://nick2bad4u.github.io/Gardening/setup/equipment/)
 - [Watering strategy](docs/watering-strategy.md) — how references, curves, readiness, and plant-specific exceptions guide watering decisions
 - [Weighing strategy](docs/weighing-strategy.md) — how learned cycles reduce routine weigh-ins, with no daily quota or cap
 - [Spreadsheet and logger actions](docs/logger-actions.md) — all action types, structured fields, bulk entry, queues, and corrections
 - [Daily weighing and watering prompt](docs/daily-weighing-watering-prompt.md) —
   copyable instructions for the 9:45 a.m. Eastern review and daily report publication
-- [Daily garden report](https://nick2bad4u.github.io/Gardening/layouts/daily-report.html) —
+- [Daily garden report](https://nick2bad4u.github.io/Gardening/report/) —
   a phone-friendly quick list, watering recipes, and expandable weight/plateau evidence,
   generated from each day's reviewed data; [generator and publishing guide](docs/daily-reports/README.md)
-- [Live plant tracker](docs/layouts/plant-tracker.html) — a mobile-friendly view
+- [Live plant tracker](https://nick2bad4u.github.io/Gardening/tracker/) — a mobile-friendly view
   of the Google Sheets log with current status, search and filters, stable
   per-plant history URLs, dry/wet baselines, calculations, charts, and direct
   links back to the editable workbook
@@ -32,12 +32,8 @@ The installed AW200 and AeroLight 240 W remain at their last reported 45% and 38
   desktop entry, save receipts, image-first plant cards, watering-age badges,
   all eight collection Insights charts, and interactive per-plant measurement
   and weight charts
-- [Browser plant field guide](docs/plant-booklet/) — magazine-style cover,
-  searchable contents, one deep page per plant, licensed reference galleries
-  for all 36 records, collection and nursery-label photos where archived,
-  source and live-history links, a random-profile jump, dark mode, keyboard
-  navigation, mobile layout, and print styling
-- [Plant photo Collections index](docs/layouts/photo-album.html) — a searchable,
+- [The Garden website](https://nick2bad4u.github.io/Gardening/) — a collection homepage, searchable plant directory, individual profiles, reviewed reports, photos, setup, equipment, and care guides. Shared navigation, light/dark themes, and individual print styles work across the site; old booklet bookmarks redirect to their new pages.
+- [Plant photo Collections index](https://nick2bad4u.github.io/Gardening/photos/) — a searchable,
   mobile-friendly index of one public Gyazo Collection per current plant plus
   the collection-wide overview timeline
 - [Plant profiles](docs/plants/) — names, origins, history, flowers, care,
@@ -58,7 +54,7 @@ The installed AW200 and AeroLight 240 W remain at their last reported 45% and 38
   18-inch/45% light phase, paired E6 Gen2 airflow, August 14 setup-2 medium
   reset and measured dry-down trial,
   pot layout, rotations, local daylight, and outdoor-day overrides
-- [Graphic indoor acclimation calendar](docs/layouts/indoor-acclimation-calendar.html) —
+- [Historical indoor acclimation calendar](https://nick2bad4u.github.io/Gardening/setup/archive/calendar/) —
   browser and print view of the July 31 move-in, revised light ramp, daily clock,
   Sunday rotations, camera milestones, natural daylight, and sensor readings;
   links directly to the layout and shares its light/dark theme
@@ -71,7 +67,7 @@ The installed AW200 and AeroLight 240 W remain at their last reported 45% and 38
 - [MSU 13-3-15 fertilizer schedule](docs/equipment/msu-fertilizer-schedule.md) —
   gram-based RO-water mixing, the post-repot plain-water baseline, alternating
   cactus feeds, and separate starting rules for the other plants
-- [Browser grow-spot diagrams](docs/layouts/grow-spot-layout.html) — tabbed room,
+- [Historical grow-spot diagrams](https://nick2bad4u.github.io/Gardening/setup/archive/layout/) — tabbed room,
   two wooden-table, round-table, height, paired-fan, camera, and riser views with
   one consistent room-facing orientation
 - [Plant collection](docs/collection.md) — compact inventory, working IDs,
@@ -95,20 +91,14 @@ The collection is meant to stay fun. The numerical light targets are starting
 ranges, not rules; compact healthy new growth matters more than chasing one
 perfect meter reading.
 
-The public browser tools are available from the
-[GitHub Pages field guide](https://nick2bad4u.github.io/Gardening/): the live
-[plant tracker](https://nick2bad4u.github.io/Gardening/layouts/plant-tracker.html),
-[grow-spot layout](https://nick2bad4u.github.io/Gardening/layouts/grow-spot-layout.html),
-[indoor acclimation calendar](https://nick2bad4u.github.io/Gardening/layouts/indoor-acclimation-calendar.html),
-and [photo album entry](https://nick2bad4u.github.io/Gardening/layouts/photo-album.html)
-cross-link to one another.
+The public website is built with Astro from the maintained Markdown and reviewed JSON records. The [homepage](https://nick2bad4u.github.io/Gardening/) connects the [plant directory](https://nick2bad4u.github.io/Gardening/plants/), [tracker](https://nick2bad4u.github.io/Gardening/tracker/), [current placement](https://nick2bad4u.github.io/Gardening/setup/placement/), [care guides](https://nick2bad4u.github.io/Gardening/guides/), and [photos](https://nick2bad4u.github.io/Gardening/photos/). Each plant profile has its own URL; a shared pot has one observation history linked from its constituent profiles.
 
 The Pages build also includes the website's Storybook workbench at
 `/Gardening/storybook/`, with an [introduction](test/stories/introduction.mdx),
 documented previews, and synthetic data scenarios.
 
 Run `npm run dev` to edit the website with live CSS updates and automatic page
-reloads at `http://127.0.0.1:5173`. For local builds, strict checks, the Storybook
+reloads at `http://127.0.0.1:5173/Gardening/`. For local builds, strict checks, the Storybook
 workbench, and browser tests, see
 [Maintaining the browser tools](docs/development.md). The Apps Script production
 procedure remains in the [logger runbook](scripts/google-sheets/README.md).

@@ -327,7 +327,7 @@ Use the installed divider-pole mount:
 A **drip loop** is a low bend in a hanging cable before it rises into an
 outlet, adapter, controller, or camera connection. Water following the cable
 falls from the bend instead of entering the connection. The
-[grow-spot diagrams](../layouts/grow-spot-layout.html) show the safe cable
+[historical grow-spot diagrams](https://nick2bad4u.github.io/Gardening/setup/archive/layout/#wiring) show the safe cable
 path in the **Wiring** tab.
 
 Test each fan alone and then both together with a narrow strip of tissue at the
@@ -476,7 +476,7 @@ The tape-measure set from 2026-07-31 changes the planning geometry:
 5. Leave enough space between the table edges that they do not transfer wobble
    or pinch a monkey-tail stem.
 
-The [browser grow-spot diagrams](../layouts/grow-spot-layout.html) show the
+The [historical browser grow-spot diagrams](https://nick2bad4u.github.io/Gardening/setup/archive/layout/) show the
 room, tables, fan sweep, camera view, clearance, and riser measurements.
 
 ### Original wooden table — A1–D3

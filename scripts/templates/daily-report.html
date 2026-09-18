@@ -1,359 +1,241 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1"
-        />
-        <title>Daily report · Garden notebook</title>
-        <script>
-            (() => {
-                let saved = null;
-                try {
-                    saved = localStorage.getItem("gardening-site-theme");
-                } catch {
-                    /* Reading the report does not require browser storage. */
-                }
-                document.documentElement.dataset.theme =
-                    saved === "dark" ||
-                    (saved !== "light" &&
-                        matchMedia("(prefers-color-scheme: dark)").matches)
-                        ? "dark"
-                        : "light";
-            })();
-        </script>
-        <link
-            rel="stylesheet"
-            href="./daily-report.css"
-        />
-        <script
-            type="module"
-            src="./daily-report.js"
-        ></script>
-        <meta
-            name="description"
-            content="Today's watering mixes, useful weigh-ins, and the evidence for each pot in the garden collection."
-        />
-        <meta
-            property="og:title"
-            content="Daily garden report"
-        />
-        <meta
-            property="og:type"
-            content="website"
-        />
-        <meta
-            property="og:url"
-            content="https://nick2bad4u.github.io/Gardening/layouts/daily-report.html"
-        />
-        <meta
-            property="og:image"
-            content="https://nick2bad4u.github.io/Gardening/assets/plant-icons/mammillaria-plumosa.svg"
-        />
-        <meta
-            property="og:image:alt"
-            content="Illustrated feather cactus from the garden field guide"
-        />
-        <link
-            rel="icon"
-            href="../plant-booklet/favicon.svg"
-        />
-    </head>
-    <body data-report-date="{{REPORT_DATE}}">
-        <a
-            class="skip-link"
-            href="#quick-list"
-            >Skip to today's quick list</a
+<div
+    class="daily-report"
+    data-report-date="{{REPORT_DATE}}"
+>
+    <header class="report-hero">
+        <div>
+            <p class="eyebrow">The daily garden note</p>
+            <h1>Your garden,<br /><span>one good round.</span></h1>
+            <p class="report-date">{{DATE_LABEL}}</p>
+            <p class="hero-summary">{{SUMMARY}}</p>
+            <p class="read-time">{{READ_TIME}}</p>
+        </div>
+        <div
+            class="hero-art"
+            aria-hidden="true"
         >
-        <header class="site-header">
-            <a
-                class="brand"
-                href="../plant-booklet/"
-                ><span
-                    class="brand-icon"
-                    aria-hidden="true"
-                    >🌵</span
-                ><span
-                    >Garden notebook<small
-                        >A little care, well considered.</small
-                    ></span
-                ></a
+            <span class="art-orbit"></span>
+            <img
+                class="art-cactus"
+                src="../../assets/plant-icons/mammillaria-plumosa.svg"
+                alt=""
+                width="180"
+                height="180"
+            />
+            <img
+                class="art-rosette"
+                src="../../assets/plant-icons/sempervivum-coconut-crystal.svg"
+                alt=""
+                width="142"
+                height="142"
+            />
+            <span class="art-caption"
+                >Observe. Water when ready.<br />Let the garden set the
+                pace.</span
             >
-            <nav
-                class="site-nav"
-                aria-label="Collection tools"
+        </div>
+    </header>
+    <p
+        id="freshness-message"
+        class="notice"
+        role="status"
+        hidden
+    ></p>
+    {{COVERAGE}}
+    <nav
+        class="report-nav"
+        aria-label="Report sections"
+    >
+        <a href="#quick-list"><span aria-hidden="true">📋</span> Quick list</a>
+        <a href="#watering-mixes"
+            ><span aria-hidden="true">🧪</span> Watering mixes</a
+        >
+        <a href="#pot-evidence"><span aria-hidden="true">🌱</span> Your pots</a>
+    </nav>
+    <section
+        id="quick-list"
+        class="quick-panel"
+        aria-labelledby="quick-heading"
+    >
+        <div class="section-heading"
+            ><div
+                ><p class="eyebrow">What to grab</p
+                ><h2 id="quick-heading">Today's quick list</h2></div
+            ><button
+                id="copy-list"
+                class="quiet-button"
+                type="button"
+                hidden
+                >Copy list</button
+            ></div
+        >
+        <p class="readiness"
+            >Water candidates have a confirmed plateau; water only if your usual
+            moisture/readiness check confirms they are ready. Dry-reference-only
+            pots stay out of the Water list.</p
+        >
+        {{QUICK_LIST}}
+        <p class="after-water"
+            ><span aria-hidden="true">⚖️</span> Weigh each pot you actually
+            water after it drains.</p
+        >
+        <a
+            class="pocket-jump"
+            href="#pocket-list"
+            >Open the compact pocket list ↓</a
+        >
+        <p
+            id="copy-status"
+            aria-label="Copy status"
+            role="status"
+            class="sr-only"
+            aria-live="polite"
+        ></p>
+    </section>
+    <section
+        id="watering-mixes"
+        aria-labelledby="mix-heading"
+    >
+        <div class="section-heading"
+            ><div
+                ><p class="eyebrow">Choose the right pitcher</p
+                ><h2 id="mix-heading">Watering mixes</h2></div
+            ><span class="section-note">Only for pots ready to water</span></div
+        >
+        <div class="mix-grid">{{MIXES}}</div>
+    </section>
+    <section
+        id="pot-evidence"
+        aria-labelledby="pots-heading"
+    >
+        <div class="section-heading"
+            ><div
+                ><p class="eyebrow">The reason behind the round</p
+                ><h2 id="pots-heading">Your pots, at a glance</h2></div
+            ><span class="section-note">Open a card for the evidence</span></div
+        >
+        <div
+            id="report-filters"
+            class="filter-bar"
+            hidden
+        >
+            <label
+                class="search-label"
+                for="pot-search"
+                ><span aria-hidden="true">⌕</span
+                ><span class="sr-only">Find a pot by label, name, or ID</span
+                ><input
+                    id="pot-search"
+                    type="search"
+                    placeholder="Find a pot: A1, #3, or feather…"
+                    autocomplete="off"
+            /></label>
+            <div
+                class="filter-buttons"
+                role="group"
+                aria-label="Filter recommendations"
             >
-                <a href="../plant-booklet/">Field guide</a>
-                <a href="./plant-tracker.html">Plant tracker</a>
-                <a href="./grow-spot-layout.html">Grow-spot layout</a>
-                <a href="./indoor-acclimation-calendar.html">Calendar</a>
-                <a href="./photo-album.html">Photos</a>
-                <a
-                    href="./daily-report.html"
-                    aria-current="page"
-                    >Daily report</a
+                <button
+                    type="button"
+                    data-filter="all"
+                    aria-pressed="true"
+                    >All pots</button
                 >
                 <button
-                    id="theme-toggle"
                     type="button"
+                    data-filter="water"
                     aria-pressed="false"
-                    hidden
-                    ><span aria-hidden="true">◐</span>
-                    <span id="theme-label">Dark mode</span></button
+                    >💧 Water</button
                 >
-            </nav>
-        </header>
-        <main>
-            <header class="report-hero">
-                <div>
-                    <p class="eyebrow">The daily garden note</p>
-                    <h1>Your garden,<br /><span>one good round.</span></h1>
-                    <p class="report-date">{{DATE_LABEL}}</p>
-                    <p class="hero-summary">{{SUMMARY}}</p>
-                    <p class="read-time">{{READ_TIME}}</p>
-                </div>
-                <div
-                    class="hero-art"
-                    aria-hidden="true"
+                <button
+                    type="button"
+                    data-filter="reference"
+                    aria-pressed="false"
+                    >⏳ Dry reference only</button
                 >
-                    <span class="art-orbit"></span>
-                    <img
-                        class="art-cactus"
-                        src="../../assets/plant-icons/mammillaria-plumosa.svg"
-                        alt=""
-                        width="180"
-                        height="180"
-                    />
-                    <img
-                        class="art-rosette"
-                        src="../../assets/plant-icons/sempervivum-coconut-crystal.svg"
-                        alt=""
-                        width="142"
-                        height="142"
-                    />
-                    <span class="art-caption"
-                        >Observe. Water when ready.<br />Let the garden set the
-                        pace.</span
-                    >
-                </div>
-            </header>
+                <button
+                    type="button"
+                    data-filter="weigh"
+                    aria-pressed="false"
+                    >⚖️ Weigh</button
+                >
+                <button
+                    type="button"
+                    data-filter="check"
+                    aria-pressed="false"
+                    >👀 Check</button
+                >
+                <button
+                    type="button"
+                    data-filter="none"
+                    aria-pressed="false"
+                    >⏸️ Nothing today</button
+                >
+            </div>
             <p
-                id="freshness-message"
-                class="notice"
+                id="filter-status"
+                aria-label="Filter results"
                 role="status"
-                hidden
             ></p>
-            {{COVERAGE}}
-            <nav
-                class="report-nav"
-                aria-label="Report sections"
-            >
-                <a href="#quick-list"
-                    ><span aria-hidden="true">📋</span> Quick list</a
-                >
-                <a href="#watering-mixes"
-                    ><span aria-hidden="true">🧪</span> Watering mixes</a
-                >
-                <a href="#pot-evidence"
-                    ><span aria-hidden="true">🌱</span> Your pots</a
-                >
-            </nav>
-            <section
-                id="quick-list"
-                class="quick-panel"
-                aria-labelledby="quick-heading"
-            >
-                <div class="section-heading"
-                    ><div
-                        ><p class="eyebrow">What to grab</p
-                        ><h2 id="quick-heading">Today's quick list</h2></div
-                    ><button
-                        id="copy-list"
-                        class="quiet-button"
-                        type="button"
-                        hidden
-                        >Copy list</button
-                    ></div
-                >
-                <p class="readiness"
-                    >Water candidates have a confirmed plateau; water only if
-                    your usual moisture/readiness check confirms they are ready.
-                    Dry-reference-only pots stay out of the Water list.</p
-                >
-                {{QUICK_LIST}}
-                <p class="after-water"
-                    ><span aria-hidden="true">⚖️</span> Weigh each pot you
-                    actually water after it drains.</p
-                >
-                <a
-                    class="pocket-jump"
-                    href="#pocket-list"
-                    >Open the compact pocket list ↓</a
-                >
-                <p
-                    id="copy-status"
-                    aria-label="Copy status"
-                    role="status"
-                    class="sr-only"
-                    aria-live="polite"
-                ></p>
-            </section>
-            <section
-                id="watering-mixes"
-                aria-labelledby="mix-heading"
-            >
-                <div class="section-heading"
-                    ><div
-                        ><p class="eyebrow">Choose the right pitcher</p
-                        ><h2 id="mix-heading">Watering mixes</h2></div
-                    ><span class="section-note"
-                        >Only for pots ready to water</span
-                    ></div
-                >
-                <div class="mix-grid">{{MIXES}}</div>
-            </section>
-            <section
-                id="pot-evidence"
-                aria-labelledby="pots-heading"
-            >
-                <div class="section-heading"
-                    ><div
-                        ><p class="eyebrow">The reason behind the round</p
-                        ><h2 id="pots-heading">Your pots, at a glance</h2></div
-                    ><span class="section-note"
-                        >Open a card for the evidence</span
-                    ></div
-                >
-                <div
-                    id="report-filters"
-                    class="filter-bar"
-                    hidden
-                >
-                    <label
-                        class="search-label"
-                        for="pot-search"
-                        ><span aria-hidden="true">⌕</span
-                        ><span class="sr-only"
-                            >Find a pot by label, name, or ID</span
-                        ><input
-                            id="pot-search"
-                            type="search"
-                            placeholder="Find a pot: A1, #3, or feather…"
-                            autocomplete="off"
-                    /></label>
-                    <div
-                        class="filter-buttons"
-                        role="group"
-                        aria-label="Filter recommendations"
-                    >
-                        <button
-                            type="button"
-                            data-filter="all"
-                            aria-pressed="true"
-                            >All pots</button
-                        >
-                        <button
-                            type="button"
-                            data-filter="water"
-                            aria-pressed="false"
-                            >💧 Water</button
-                        >
-                        <button
-                            type="button"
-                            data-filter="reference"
-                            aria-pressed="false"
-                            >⏳ Dry reference only</button
-                        >
-                        <button
-                            type="button"
-                            data-filter="weigh"
-                            aria-pressed="false"
-                            >⚖️ Weigh</button
-                        >
-                        <button
-                            type="button"
-                            data-filter="check"
-                            aria-pressed="false"
-                            >👀 Check</button
-                        >
-                        <button
-                            type="button"
-                            data-filter="none"
-                            aria-pressed="false"
-                            >⏸️ Nothing today</button
-                        >
-                    </div>
-                    <p
-                        id="filter-status"
-                        aria-label="Filter results"
-                        role="status"
-                    ></p>
-                </div>
-                {{POT_GROUPS}}
-                <p
-                    id="no-matches"
-                    class="notice"
-                    hidden
-                    >No pots match. Try a different name, label, or filter.</p
-                >
-            </section>
-            <aside
-                class="report-notes"
-                aria-labelledby="notes-heading"
-            >
-                <h2 id="notes-heading">A few useful details</h2>
-                <ul
-                    >{{NOTES}}</ul
-                >
-                <p
-                    >Weight change is the average between the last two eligible
-                    readings, using their actual timestamps. A negative rate
-                    means weight lost. Plateau evidence is assessed separately
-                    from reaching an old dry reference.</p
-                >
-                <div class="source-links"
-                    ><a href="./plant-tracker.html">Open live tracker ↗</a
-                    ><a href="../equipment/msu-fertilizer-schedule.md"
-                        >Nutrient plan ↗</a
-                    ><a
-                        href="https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit"
-                        >Source workbook ↗</a
-                    ></div
-                >
-            </aside>
-            <section
-                id="pocket-list"
-                class="quick-panel pocket-list"
-                aria-labelledby="pocket-heading"
-                ><p class="eyebrow">{{DATE_LABEL}}</p
-                ><h2 id="pocket-heading">Your pocket list</h2
-                ><div class="pocket-conditions"
-                    ><p
-                        >⏳ Dry reference only means hold watering while plateau
-                        evidence is unconfirmed. Water candidates still need
-                        your usual readiness check. Weigh pots you actually
-                        water after draining.</p
-                    >{{POCKET_MIXES}}</div
-                >{{POCKET_LIST}}</section
-            >
-            <section
-                id="ai-recommendation"
-                class="ai-recommendation"
-                aria-labelledby="ai-heading"
-            >
-                <p class="eyebrow">A second look at the evidence</p>
-                <h2 id="ai-heading">🤖 AI recommendation</h2>
-                <p class="ai-context"
-                    >A separate assessment of this report's data. Any difference
-                    from the main list is explained below.</p
-                >
-                <div class="ai-assessment">{{AI_RECOMMENDATION}}</div>
-            </section>
-        </main>
-        <footer class="site-footer"
-            ><span>Garden notebook · {{DATE_LABEL}}</span
-            ><a href="#quick-list">Back to the quick list ↑</a></footer
+        </div>
+        {{POT_GROUPS}}
+        <p
+            id="no-matches"
+            class="notice"
+            hidden
+            >No pots match. Try a different name, label, or filter.</p
         >
-    </body>
-</html>
+    </section>
+    <aside
+        class="report-notes"
+        aria-labelledby="notes-heading"
+    >
+        <h2 id="notes-heading">A few useful details</h2>
+        <ul
+            >{{NOTES}}</ul
+        >
+        <p
+            >Weight change is the average between the last two eligible
+            readings, using their actual timestamps. A negative rate means
+            weight lost. Plateau evidence is assessed separately from reaching
+            an old dry reference.</p
+        >
+        <div class="source-links"
+            ><a href="./plant-tracker.html">Open live tracker ↗</a
+            ><a href="../equipment/msu-fertilizer-schedule.md"
+                >Nutrient plan ↗</a
+            ><a
+                href="https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit"
+                >Source workbook ↗</a
+            ></div
+        >
+    </aside>
+    <section
+        id="pocket-list"
+        class="quick-panel pocket-list"
+        aria-labelledby="pocket-heading"
+        ><p class="eyebrow">{{DATE_LABEL}}</p
+        ><h2 id="pocket-heading">Your pocket list</h2
+        ><div class="pocket-conditions"
+            ><p
+                >⏳ Dry reference only means hold watering while plateau
+                evidence is unconfirmed. Water candidates still need your usual
+                readiness check. Weigh pots you actually water after
+                draining.</p
+            >{{POCKET_MIXES}}</div
+        >{{POCKET_LIST}}</section
+    >
+    <section
+        id="ai-recommendation"
+        class="ai-recommendation"
+        aria-labelledby="ai-heading"
+    >
+        <p class="eyebrow">A second look at the evidence</p>
+        <h2 id="ai-heading">🤖 AI recommendation</h2>
+        <p class="ai-context"
+            >A separate assessment of this report's data. Any difference from
+            the main list is explained below.</p
+        >
+        <div class="ai-assessment">{{AI_RECOMMENDATION}}</div>
+    </section>
+</div>

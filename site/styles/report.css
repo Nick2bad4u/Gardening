@@ -1,0 +1,984 @@
+.daily-report {
+    scroll-behavior: smooth;
+    font-family: Inter, system-ui, sans-serif;
+    font-synthesis: none;
+    line-height: 1.5;
+    color-scheme: light;
+    scroll-padding-block-start: 1rem;
+
+    --paper: #f4f2e9;
+    --card: #fffef9;
+    --ink: #223f33;
+    --muted: #586c61;
+    --line: #d4ddd1;
+    --green: #285b42;
+    --soft: #e7eedf;
+    --blue: #224f64;
+    --blue-soft: #e5f0f2;
+    --amber: #684515;
+    --amber-soft: #fff0d3;
+
+    :root[data-theme="dark"] & {
+        color-scheme: dark;
+
+        --paper: #101c17;
+        --card: #192a21;
+        --ink: #edf2e5;
+        --muted: #b1c4b4;
+        --line: #36513f;
+        --green: #b5dcab;
+        --soft: #243d2c;
+        --blue: #b5dfef;
+        --blue-soft: #203741;
+        --amber: #ffe0a6;
+        --amber-soft: #3e321f;
+    }
+
+    background: transparent;
+
+    & * {
+        box-sizing: border-box;
+    }
+    & a {
+        color: var(--green);
+        text-underline-offset: 0.2em;
+    }
+    & button,
+    & input {
+        font: inherit;
+    }
+    & button,
+    & a {
+        -webkit-tap-highlight-color: transparent;
+    }
+    & button {
+        cursor: pointer;
+    }
+    & button,
+    & input,
+    & summary,
+    & a {
+        touch-action: manipulation;
+    }
+    & :focus-visible {
+        outline: 3px solid var(--green);
+        outline-offset: 4px;
+    }
+    & [hidden] {
+        /* stylelint-disable-next-line declaration-no-important -- Hidden controls and print exclusions must override component display rules. */
+        display: none !important; /* eslint-disable-line css/no-important -- Hidden controls and print exclusions must override component display rules. */
+    }
+    & h1,
+    & h2,
+    & h3,
+    & p {
+        margin: 0;
+    }
+    & h1,
+    & h2,
+    & h3 {
+        line-height: 1.125;
+    }
+    & h2 {
+        font-size: clamp(1.5rem, 3vi, 2rem);
+        letter-spacing: -0.045em;
+    }
+    & .report-hero {
+        display: grid;
+        grid-template-columns: [content] minmax(0, 1fr) [art] 290px [end];
+        gap: 2rem;
+        align-items: center;
+        padding: 54px 0 24px;
+    }
+    & .eyebrow {
+        margin-block-end: 10px;
+        font-size: 0.625rem;
+        font-weight: 800;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+    }
+    & h1 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2.5rem, 5.5vi, 4rem);
+        font-weight: 500;
+        letter-spacing: -0.05em;
+        & span {
+            font-style: italic;
+            color: var(--green);
+        }
+    }
+    & .report-date {
+        margin-block-start: 22px;
+        font-size: 1rem;
+        font-weight: 750;
+    }
+    & .hero-summary {
+        max-inline-size: 640px;
+        margin-block-start: 8px;
+        font-size: 1rem;
+    }
+    & .read-time {
+        margin-block-start: 12px;
+        font-size: 0.75rem;
+        color: var(--muted);
+    }
+    & .hero-art {
+        position: relative;
+        align-self: stretch;
+        min-block-size: 250px;
+    }
+    & .art-orbit {
+        position: absolute;
+        inset-block-start: 10px;
+        inset-inline-end: 0;
+        inline-size: 250px;
+        block-size: 250px;
+        background: radial-gradient(
+            circle at center,
+            var(--soft) 0%,
+            transparent 70%
+        );
+        border: 1px solid var(--line);
+        border-radius: 50%;
+    }
+    & .art-cactus {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-end: 72px;
+        inline-size: 180px;
+        block-size: 180px;
+        transform: rotate(-8deg);
+    }
+    & .art-rosette {
+        position: absolute;
+        inset-block-start: 110px;
+        inset-inline-end: 0;
+        inline-size: 142px;
+        block-size: 142px;
+        transform: rotate(12deg);
+    }
+    & .art-caption {
+        position: absolute;
+        inset-block-end: 0;
+        inset-inline-end: 110px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 0.75rem;
+        font-style: italic;
+        line-height: 1.5;
+        color: var(--muted);
+    }
+    & .coverage-complete {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--green);
+        & span {
+            font-size: 0.625rem;
+        }
+    }
+    & .notice {
+        padding: 16px;
+        margin-block: 12px;
+        font-size: 0.875rem;
+        color: var(--amber);
+        background: var(--amber-soft);
+        border: 1px solid var(--amber);
+        border-radius: 12px;
+    }
+    & .report-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding-block: 22px 28px;
+        & a {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            min-block-size: 44px;
+            padding: 10px 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--ink);
+            text-decoration: none;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 99px;
+        }
+        & a:hover,
+        & a:focus {
+            background: var(--soft);
+        }
+    }
+    & .section-heading {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: end;
+        justify-content: space-between;
+        margin-block-end: 22px;
+        & .eyebrow {
+            margin-block-end: 7px;
+        }
+    }
+    & .section-note,
+    & .empty-category,
+    & .quick-panel {
+        padding: 30px;
+        overflow: hidden;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: 0 6px 30px #10231808;
+        & .section-heading {
+            margin-block-end: 12px;
+        }
+    }
+    & .quiet-button {
+        min-block-size: 44px;
+        padding: 9px 15px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--ink);
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+    }
+    & .readiness {
+        margin-block-end: 22px;
+        font-size: 0.875rem;
+        color: var(--muted);
+    }
+    & .quick-row {
+        display: grid;
+        grid-template-columns: [label] 225px [pots] minmax(0, 1fr) [end];
+        gap: 8px 20px;
+        padding-block: 14px;
+        border-block-start: 1px solid var(--line);
+    }
+    & .quick-label {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        min-block-size: 36px;
+        font-size: 0.875rem;
+        & > span:first-child {
+            font-size: 1rem;
+        }
+    }
+    & .count {
+        display: inline-grid;
+        place-items: center;
+        min-inline-size: 24px;
+        block-size: 24px;
+        padding-inline: 5px;
+        margin-inline-start: auto;
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: var(--green);
+        background: var(--soft);
+        border-radius: 8px;
+    }
+    & .quick-description {
+        grid-row: 2;
+        grid-column: 1;
+        font-size: 0.75rem;
+        color: var(--muted);
+    }
+    & .pot-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+        .quick-row & {
+            grid-row: 1 / span 2;
+            grid-column: 2;
+        }
+    }
+    & .pot-chip {
+        display: inline-grid;
+        place-items: center;
+        min-inline-size: 44px;
+        min-block-size: 44px;
+        padding: 8px 10px;
+        font-size: 0.75rem;
+        font-weight: 750;
+        color: var(--ink);
+        text-decoration: none;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        &:hover,
+        &:focus {
+            background: var(--soft);
+            border-color: var(--green);
+        }
+    }
+
+    & .after-water {
+        padding-block-start: 17px;
+        margin-block-start: 15px;
+        font-size: 0.75rem;
+        color: var(--muted);
+        border-block-start: 1px dashed var(--line);
+    }
+    & :where(#watering-mixes),
+    & :where(#pot-evidence) {
+        margin-block-start: 48px;
+    }
+    & .mix-grid {
+        display: grid;
+        grid-template-columns:
+            [first] minmax(0, 1fr) [second] minmax(0, 1fr)
+            [end];
+        gap: 18px;
+    }
+    & .mix-card {
+        position: relative;
+        padding: 28px;
+        background: var(--soft);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+    }
+    & .plain-mix {
+        background: var(--blue-soft);
+        border-color: var(--line);
+    }
+    & .mix-symbol {
+        float: inline-end;
+        margin-inline-start: 10px;
+        font-size: 2rem;
+    }
+    & .mix-card h3 {
+        margin-block-end: 6px;
+        font-size: 1.75rem;
+        letter-spacing: -0.045em;
+    }
+    & .mix-card p:not(.eyebrow) {
+        margin-block-start: 12px;
+        font-size: 0.875rem;
+    }
+    & .mix-product {
+        font-weight: 650;
+    }
+    & .mix-card .mix-condition {
+        padding: 12px;
+        font-weight: 650;
+        background: var(--card);
+        border-inline-start: 3px solid var(--green);
+    }
+    & .mix-card .recipe {
+        padding-block-start: 14px;
+        font-size: 0.75rem;
+        color: var(--muted);
+        border-block-start: 1px solid var(--line);
+    }
+    & .mix-card .pot-chips {
+        margin-block-start: 20px;
+    }
+    & .filter-bar {
+        padding: 18px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+    }
+    & .search-label {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding: 0 14px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        & input {
+            inline-size: 100%;
+            min-block-size: 48px;
+            font-size: 1rem;
+            color: var(--ink);
+            background: transparent;
+            border: 0;
+        }
+    }
+}
+.daily-report .search-label input::placeholder,
+.daily-report .photo-captured,
+.daily-report .photo-limitations {
+    color: var(--muted);
+}
+.daily-report .filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-block-start: 12px;
+    & button {
+        min-block-size: 44px;
+        padding: 9px 13px;
+        font-size: 0.75rem;
+        font-weight: 650;
+        color: var(--ink);
+        background: transparent;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+    }
+    & [aria-pressed="true"] {
+        color: var(--green);
+        background: var(--soft);
+        border-color: var(--green);
+    }
+}
+.daily-report :where(#filter-status) {
+    margin-block-start: 10px;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+.daily-report .pot-group {
+    margin-block-start: 28px;
+}
+.daily-report .group-heading {
+    margin-block-end: 13px;
+    & h3 {
+        font-size: 1rem;
+    }
+    /* stylelint-disable-next-line no-descending-specificity -- This heading count does not target quick-list labels. */
+    & h3 span {
+        margin-inline-start: 5px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--muted);
+    }
+    /* stylelint-disable-next-line no-descending-specificity -- These section descriptions are separate from mix-card paragraphs. */
+    & p {
+        margin-block-start: 6px;
+        font-size: 0.75rem;
+        color: var(--muted);
+    }
+}
+.daily-report .pot-grid {
+    display: grid;
+    grid-template-columns: [first] minmax(0, 1fr) [second] minmax(0, 1fr) [end];
+    gap: 12px;
+    align-items: start;
+}
+.daily-report .pot-card {
+    min-inline-size: 0;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    &:target {
+        border-color: var(--green);
+        box-shadow: 0 0 0 2px var(--green);
+    }
+    & summary {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 18px 15px;
+        cursor: pointer;
+        list-style: "";
+        border-radius: 16px;
+    }
+}
+.daily-report .pot-card summary::-webkit-details-marker {
+    display: none;
+}
+.daily-report .plant-portrait {
+    flex: 0 0 48px;
+    inline-size: 48px;
+    block-size: 64px;
+    object-fit: contain;
+}
+.daily-report .pot-identity {
+    flex: 1;
+    min-inline-size: 0;
+}
+.daily-report .pot-title {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    & strong {
+        font-size: 1.125rem;
+    }
+}
+.daily-report .pot-id {
+    font-size: 0.625rem;
+    color: var(--muted);
+}
+.daily-report .pot-name {
+    display: block;
+    margin-block-start: 2px;
+    font-size: 0.75rem;
+    font-weight: 550;
+    overflow-wrap: anywhere;
+}
+.daily-report .card-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-block-start: 8px;
+}
+.daily-report .reason-badge,
+.daily-report .mix-badge {
+    display: inline-block;
+    padding: 3px 7px;
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: var(--green);
+    background: var(--soft);
+    border-radius: 6px;
+}
+.daily-report .mix-badge {
+    color: var(--blue);
+    background: var(--blue-soft);
+}
+.daily-report .pot-card[data-action="reference"] .reason-badge {
+    color: var(--amber);
+    background: var(--amber-soft);
+}
+.daily-report .card-rate {
+    flex: 0 0 48px;
+    align-self: start;
+    padding-block-start: 4px;
+    font-size: 1rem;
+    font-weight: 750;
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+    & small {
+        display: block;
+        margin-block-start: 1px;
+        font-size: 0.625rem;
+        font-weight: 500;
+        color: var(--muted);
+    }
+}
+.daily-report .expand-icon {
+    font-size: 1rem;
+    color: var(--muted);
+    .pot-card[open] & {
+        transform: rotate(180deg);
+    }
+}
+.daily-report .pot-detail {
+    padding: 0 20px 20px;
+}
+.daily-report .pot-recommendation {
+    padding: 14px;
+    font-size: 0.875rem;
+    background: var(--soft);
+    border-radius: 10px;
+}
+.daily-report .pot-detail dl {
+    margin: 14px 0;
+    & > div {
+        padding-block: 12px;
+        border-block-end: 1px solid var(--line);
+    }
+}
+.daily-report .pot-detail dt {
+    font-size: 0.75rem;
+    font-weight: 750;
+    color: var(--muted);
+}
+.daily-report .pot-detail dd {
+    margin: 5px 0 0;
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+}
+.daily-report .sparkline {
+    display: block;
+    inline-size: min(240px, 100%);
+    block-size: 60px;
+    margin-block-start: 8px;
+    overflow: visible;
+    fill: var(--green);
+    & polyline {
+        fill: none;
+        stroke: var(--green);
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+}
+.daily-report .spark-base {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 1;
+}
+.daily-report .tail-values {
+    display: block;
+    margin-block-start: 6px;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.daily-report .pot-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-block-start: 10px;
+}
+.daily-report .pot-photos {
+    margin-block-start: 22px;
+    & h4 {
+        font-size: 0.875rem;
+    }
+}
+.daily-report .photo-evidence {
+    margin: 14px 0 0;
+    overflow-wrap: anywhere;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    & figcaption {
+        padding: 14px;
+        font-size: 0.75rem;
+    }
+}
+.daily-report .photo-image-link {
+    display: block;
+    min-block-size: 44px;
+    border-radius: 12px 12px 0 0;
+    & img {
+        display: block;
+        inline-size: 100%;
+        block-size: auto;
+        border-radius: inherit;
+    }
+}
+.daily-report .photo-caption,
+.daily-report .photo-limitations {
+    margin-block-start: 10px;
+}
+.daily-report .photo-findings {
+    padding-inline-start: 20px;
+    margin-block: 10px;
+    & :where(li + li) {
+        margin-block-start: 6px;
+    }
+}
+.daily-report .photo-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    & a {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: 44px;
+        font-weight: 650;
+    }
+}
+.daily-report .pot-links a,
+.daily-report .source-links a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+    font-size: 0.75rem;
+    font-weight: 650;
+}
+.daily-report .report-notes {
+    padding: 28px;
+    margin-block: 48px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    & h2 {
+        font-size: 1.25rem;
+    }
+    & ul {
+        padding-inline-start: 20px;
+    }
+    & li {
+        margin-block-start: 10px;
+    }
+    & li,
+    & > p {
+        font-size: 0.875rem;
+        color: var(--muted);
+    }
+}
+.daily-report .source-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    margin-block-start: 15px;
+}
+.daily-report .sr-only {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+    /* stylelint-disable-next-line css-performance-budget/no-paint-heavy-declarations -- Static one-pixel clipping keeps accessible labels out of the visual layout. */
+    clip-path: inset(50%);
+}
+
+@media (width <= 760px) {
+    .daily-report .report-hero {
+        grid-template-columns: [content] minmax(0, 1fr) [art] 90px [end];
+        gap: 0;
+        padding-block-start: 28px;
+    }
+    .daily-report .hero-art {
+        min-block-size: 170px;
+    }
+    .daily-report .art-orbit {
+        inset-block-start: 20px;
+        inset-inline-end: 0;
+        inline-size: 85px;
+        block-size: 130px;
+    }
+    .daily-report .art-cactus {
+        inset-block-start: 25px;
+        inset-inline-end: 0;
+        inline-size: 100px;
+        block-size: 100px;
+    }
+    .daily-report .art-rosette {
+        inset-block-start: 75px;
+        inset-inline-end: 0;
+        inline-size: 62px;
+        block-size: 62px;
+    }
+    .daily-report .art-caption {
+        display: none;
+    }
+    .daily-report h1 {
+        font-size: 2.5rem;
+    }
+    .daily-report .hero-summary,
+    .daily-report .read-time {
+        inline-size: calc(100% + 90px);
+    }
+    .daily-report .hero-summary {
+        font-size: 1rem;
+    }
+    .daily-report .report-date {
+        margin-block-start: 18px;
+        font-size: 0.875rem;
+    }
+    .daily-report .report-nav {
+        gap: 6px;
+        padding-block: 18px 24px;
+        & a {
+            gap: 5px;
+            padding-inline: 11px;
+            font-size: 0.75rem;
+        }
+    }
+    .daily-report .quick-panel {
+        padding: 20px 18px;
+        border-radius: 20px;
+        & h2 {
+            font-size: 1.5rem;
+        }
+    }
+    .daily-report .quick-row {
+        grid-template-columns: [start] minmax(0, 1fr) [end];
+        gap: 5px;
+        padding-block: 11px;
+    }
+    .daily-report .quick-label {
+        min-block-size: 24px;
+    }
+    .daily-report .quick-description {
+        grid-row: auto;
+        grid-column: auto;
+    }
+    .daily-report .quick-row .pot-chips {
+        grid-row: auto;
+        grid-column: auto;
+        gap: 5px;
+        margin-block-start: 2px;
+    }
+    .daily-report .pot-chip {
+        padding: 7px 8px;
+    }
+    .daily-report .readiness {
+        margin-block-end: 14px;
+        font-size: 0.75rem;
+    }
+    .daily-report .mix-grid,
+    .daily-report .pot-grid {
+        grid-template-columns: [start] minmax(0, 1fr) [end];
+    }
+    .daily-report .mix-card {
+        padding: 22px;
+    }
+    .daily-report .pot-card summary {
+        gap: 9px;
+        padding-inline: 12px;
+    }
+    .daily-report .plant-portrait {
+        flex-basis: 40px;
+        inline-size: 40px;
+        block-size: 56px;
+    }
+    .daily-report .card-rate {
+        flex-basis: 44px;
+        font-size: 0.875rem;
+    }
+    .daily-report .reason-badge,
+    .daily-report .mix-badge {
+        font-size: 0.625rem;
+    }
+    .daily-report .filter-bar {
+        padding: 12px;
+    }
+    .daily-report .filter-buttons {
+        gap: 6px;
+        & button {
+            padding-inline: 9px;
+            font-size: 0.75rem;
+        }
+    }
+    .daily-report .report-notes {
+        padding: 22px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .daily-report {
+        scroll-behavior: auto;
+    }
+}
+
+@media print {
+    .daily-report,
+    :root[data-theme] .daily-report {
+        color-scheme: light;
+
+        --paper: #ffffff;
+        --card: #ffffff;
+        --ink: #000000;
+        --muted: #333333;
+        --line: #bbbbbb;
+        --green: #173d28;
+        --soft: #f3f6f1;
+        --blue: #173f51;
+        --blue-soft: #f0f5f7;
+    }
+    .daily-report .report-nav,
+    .daily-report .filter-bar,
+    .daily-report .quiet-button,
+    .daily-report .hero-art,
+    .daily-report .expand-icon,
+    .daily-report .pot-links {
+        /* stylelint-disable-next-line declaration-no-important -- Hidden controls and print exclusions must override component display rules. */
+        display: none !important; /* eslint-disable-line css/no-important -- Hidden controls and print exclusions must override component display rules. */
+    }
+    .daily-report .report-hero {
+        display: block;
+        padding-block-start: 0;
+    }
+    .daily-report h1 {
+        font-size: 2rem;
+    }
+    .daily-report .hero-summary,
+    .daily-report .read-time {
+        inline-size: auto;
+    }
+    .daily-report .quick-panel,
+    .daily-report .mix-card,
+    .daily-report .pot-card,
+    .daily-report .report-notes {
+        box-shadow: none;
+        break-inside: avoid;
+    }
+    .daily-report .pot-grid {
+        grid-template-columns: [start] minmax(0, 1fr) [end];
+    }
+    .daily-report .quick-row {
+        grid-template-columns: [label] 200px [pots] minmax(0, 1fr) [end];
+        & .pot-chips {
+            grid-row: 1 / span 2;
+            grid-column: 2;
+        }
+    }
+    .daily-report .quick-description {
+        grid-column: 1;
+    }
+    .daily-report .pot-chip {
+        min-inline-size: 32px;
+        min-block-size: 32px;
+    }
+}
+
+.daily-report .pocket-list {
+    margin-block: 40px;
+}
+.daily-report .pocket-row {
+    margin-block-start: 14px;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+.daily-report .pocket-conditions {
+    margin-block: 14px 20px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    /* stylelint-disable-next-line no-descending-specificity -- Pocket notes are independent of recipe paragraphs. */
+    & p {
+        margin-block-start: 8px;
+    }
+}
+.daily-report .pocket-jump {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+    margin-block-start: 8px;
+    font-size: 0.75rem;
+}
+
+.daily-report .ai-recommendation {
+    padding: clamp(20px, 4vi, 32px);
+    margin-block: 0 40px;
+    color: var(--ink);
+    background: var(--blue-soft);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    & h2 {
+        margin-block: 8px 12px;
+        font-size: 1.5rem;
+    }
+}
+.daily-report .ai-context {
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+.daily-report .ai-assessment {
+    display: grid;
+    gap: 16px;
+    margin-block-start: 16px;
+    font-size: 0.875rem;
+    overflow-wrap: anywhere;
+}
+
+.report-archive-link,
+.daily-report.report-archive dl {
+    margin-block: 1rem;
+}
+.daily-report .archive-grid {
+    display: grid;
+    grid-template-columns: [start] repeat(2, [card] minmax(0, 1fr)) [end];
+    gap: 1rem;
+    margin-block: 1.5rem;
+}
+.daily-report .archive-pot,
+.daily-report .archive-metadata {
+    padding: 1.25rem;
+    overflow-wrap: anywhere;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+}
+.daily-report .archive-pot > p,
+.daily-report .archive-pot details {
+    margin-block-start: 1rem;
+}
+.daily-report .archive-pot h3 {
+    margin-block: 0.75rem;
+}
+
+@media (width <= 760px) {
+    .daily-report .archive-grid {
+        grid-template-columns: [start] minmax(0, 1fr) [end];
+    }
+}

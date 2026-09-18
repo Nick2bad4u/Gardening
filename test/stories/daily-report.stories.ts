@@ -15,7 +15,7 @@ const visibleCardsSelector = ".pot-card:not([hidden])";
 const meta = {
     afterEach: releaseWebsiteFocus,
     args: {
-        path: "layouts/daily-report.html",
+        path: "report/",
         scenario: "ready",
         theme: "light",
         width: 1280,
@@ -110,20 +110,23 @@ export const MobileThemeAndStaleDate: Story = {
             "dark"
         );
         await userEvent.click(
-            canvas.getByRole("button", { name: "Light mode" })
+            canvas.getByRole("button", { name: "Switch to light theme" })
         );
         await expect(document.documentElement).toHaveAttribute(
             "data-theme",
             "light"
         );
         await userEvent.click(
-            canvas.getByRole("button", { name: "Dark mode" })
+            canvas.getByRole("button", { name: "Switch to dark theme" })
         );
         await expect(document.documentElement).toHaveAttribute(
             "data-theme",
             "dark"
         );
-        document.body.dataset["reportDate"] = "2000-01-01";
+        const report =
+            document.querySelector<HTMLElement>("[data-report-date]");
+        if (!report) throw new Error("Report metadata missing.");
+        report.dataset["reportDate"] = "2000-01-01";
         view.dispatchEvent(new Event("pageshow"));
         await expect(
             document.querySelector("#freshness-message")
@@ -131,7 +134,7 @@ export const MobileThemeAndStaleDate: Story = {
         await expect(
             document.querySelector("#freshness-message")
         ).toBeVisible();
-        document.body.dataset["reportDate"] = "2999-01-01";
+        report.dataset["reportDate"] = "2999-01-01";
         document.dispatchEvent(new Event("visibilitychange"));
         await expect(
             document.querySelector("#freshness-message")

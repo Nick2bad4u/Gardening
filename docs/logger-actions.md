@@ -42,7 +42,7 @@ The single-plant logger exposes exactly these 12 event choices. Fields listed as
 | ✂️ Prune    | You removed or trimmed plant material.                                                | Lightweight dated event; describe what was removed and why in Notes. It does not automatically adjust a weight baseline.                                                                        |
 | 🪴 Repot    | The plant was repotted or its relevant medium/configuration was deliberately changed. | The detailed form requires the new pot-size text, retains the previous size, and advances Pot setup. Record medium separately. The same physical size can still have a new setup.               |
 | 🌸 Flower   | You want to record flowering, buds, or a flowering change.                            | Requires a positive whole-number flower count, descriptive flower details, or both. For no open flowers or spent blooms, use the description; zero is not accepted as a positive count.         |
-| 📷 Photo    | You have a photo observation to link.                                                 | Requires an HTTPS Google Photos share link or Gyazo capture link. Does not automatically publish a new booklet photograph.                                                                      |
+| 📷 Photo    | You have a photo observation to link.                                                 | Requires an HTTPS Google Photos share link or Gyazo capture link. Does not automatically publish a new website photograph.                                                                      |
 | 🐛 Pest     | You observed a pest/problem and want to record the response.                          | Requires both Pest / issue and Treatment / action. If no treatment was applied, say that honestly in the action field; do not invent one.                                                       |
 | 📝 Other    | A dated event does not fit the named categories.                                      | Describe it in Notes, such as a move or lighting change. Free text does not automatically change forecasts, care rules, or Pot setup.                                                           |
 
@@ -110,7 +110,7 @@ A corrected gram typo is a correction, not a Repot. A lighting change can be Oth
 
 ## Photos and Other Detailed Observations
 
-For Photo, paste an existing Gyazo capture link, or use Open Google Photos and obtain the intended share link. Gyazo links use `https://gyazo.com/` followed by the 32-character lowercase capture ID. A browser file-picker path is not a durable share URL. Logging a photo link and publishing an image into the online booklet are separate operations; the latter has its own checked photo-publication workflow.
+For Photo, paste an existing Gyazo capture link, or use Open Google Photos and obtain the intended share link. Gyazo links use `https://gyazo.com/` followed by the 32-character lowercase capture ID. A browser file-picker path is not a durable share URL. Logging a photo link and publishing an image on the garden website are separate operations; the latter has its own checked photo-publication workflow.
 
 For Flower, describe whether a count refers to open flowers, buds, or something else. A text description can record spent blooms without forcing a positive count. For Pest, retain uncertainty in the issue description and distinguish observation from treatment. Clean and Prune also benefit from a short, specific note because they have no separate structured quantity field.
 

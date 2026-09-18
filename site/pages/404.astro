@@ -1,0 +1,24 @@
+---
+import SiteLayout from "../components/SiteLayout.astro";
+import { siteUrl } from "../lib/routes.mjs";
+---
+
+<SiteLayout title="Page Not Found" noindex>
+    <div class="page-heading">
+        <p class="eyebrow">404 · A PATH LESS TRAVELED</p>
+        <h1>
+            This page has moved
+            <br />
+            or hasn’t grown yet.
+        </h1>
+        <p class="lede">Find a plant by its name, label, or P-ID, or return to the collection.</p>
+        <div class="action-row">
+            <a class="button" href={siteUrl("plants/")}>
+                Browse plants
+            </a>
+            <a class="button button-secondary" href={siteUrl("search/")}>
+                Search the garden
+            </a>
+        </div>
+    </div>
+</SiteLayout>

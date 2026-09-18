@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test.describe("published Storybook", { tag: "@storybook" }, () => {
     test("opens the introduction as the landing page", async ({ page }) => {
-        await page.goto("/storybook/");
+        await page.goto("/Gardening/storybook/");
         const preview = page.frameLocator("#storybook-preview-iframe");
         await expect
             .soft(
@@ -18,7 +18,9 @@ test.describe("published Storybook", { tag: "@storybook" }, () => {
 
     test("renders autodocs and the preview controls", async ({ page }) => {
         await page.setViewportSize({ height: 844, width: 390 });
-        await page.goto("/storybook/?path=/docs/website-field-guide--docs");
+        await page.goto(
+            "/Gardening/storybook/?path=/docs/website-field-guide--docs"
+        );
         const preview = page.frameLocator("#storybook-preview-iframe");
         await expect
             .soft(
@@ -49,7 +51,7 @@ test.describe("published Storybook", { tag: "@storybook" }, () => {
         page,
     }) => {
         await page.goto(
-            "/storybook/iframe.html?id=website-field-guide--contents&viewMode=story"
+            "/Gardening/storybook/iframe.html?id=website-field-guide--contents&viewMode=story"
         );
         const frame = page
             .frameLocator('iframe[title="Gardening website preview"]')
@@ -58,12 +60,12 @@ test.describe("published Storybook", { tag: "@storybook" }, () => {
             .soft(frame)
             .toHaveAttribute(
                 "src",
-                /\/storybook\/docs\/plant-booklet\/index\.html/v
+                /\/Gardening\/storybook\/preview\/plants\//v
             );
         await expect
             .soft(
                 frame.contentFrame().getByRole("heading", {
-                    name: "A field guide to the collection.",
+                    name: "Meet the plants.",
                 })
             )
             .toBeVisible();
@@ -88,7 +90,7 @@ test.describe("published Storybook", { tag: "@storybook" }, () => {
 
     test("loads SVG assets beneath the static workbench", async ({ page }) => {
         await page.goto(
-            "/storybook/iframe.html?id=ui-icons--light&viewMode=story"
+            "/Gardening/storybook/iframe.html?id=ui-icons--light&viewMode=story"
         );
         const icon = page.getByRole("img", { name: "cactus icon" });
         await expect

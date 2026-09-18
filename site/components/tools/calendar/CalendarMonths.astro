@@ -1,0 +1,95 @@
+---
+import { siteUrl } from "../../../lib/routes.mjs";
+---
+
+<section class="section daily-grid" aria-label="Daily clock and sensor plan">
+    <article class="panel">
+        <h3>
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-clock")} width="64" height="64"></use>
+            </svg>
+            Daily clock during the ramp
+        </h3>
+        <p class="panel-intro">
+            Keep the clock stable through September 20. Monday changes happen before either device
+            starts.
+        </p>
+        <div class="clock">
+            <div class="time">All day</div>
+            <div class="clock-task">
+                Core Mini-P on low
+                <small>DH-CS01 stays off unless the sustained-RH rule triggers it.</small>
+            </div>
+            <div class="time">7:45 a.m.</div>
+            <div class="clock-task">
+                Scheduled Monday adjustment
+                <small>Also start the main time-lapse on August 3.</small>
+            </div>
+            <div class="time">8:00 a.m.</div>
+            <div class="clock-task">AW200SE on + gentle integrated Natural Wind</div>
+            <div class="time">8:15 a.m.</div>
+            <div class="clock-task">Paired-fan window starts · both E6 Gen2 units at Level 1–2</div>
+            <div class="time">7:30 p.m.</div>
+            <div class="clock-task">
+                Sensor read
+                <small>
+                    Daily August 3–16; Sunday-only afterward. Sunday is also photo and inspection
+                    time.
+                </small>
+            </div>
+            <div class="time">7:45 p.m.</div>
+            <div class="clock-task">Paired-fan window ends</div>
+            <div class="time">8:00 p.m.</div>
+            <div class="clock-task">
+                AW200SE off
+                <small>After the fade on Sundays, rotate the normal ROT90 pots clockwise.</small>
+            </div>
+        </div>
+    </article>
+
+    <article class="panel">
+        <h3>
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use
+                    href={siteUrl("plant-icons.svg#icon-temperature")}
+                    width="64"
+                    height="64"
+                ></use>
+            </svg>
+            Manual sensor plan
+        </h3>
+        <p class="panel-intro">
+            Put it at canopy height in shade, between the tables if possible. Keep it outside the
+            direct fan jet and off glass, Mylar, and wet trays.
+        </p>
+        <div class="sensor-layout">
+            <div class="sensor-card">
+                <strong>Aug 3–16</strong>
+                <span>7:30 p.m. daily: current T/RH + both 24-hour ranges.</span>
+            </div>
+            <div class="sensor-card">
+                <strong>Aug 17 onward</strong>
+                <span>Sunday 7:30 p.m.: current, 24-hour, and all-time extremes.</span>
+            </div>
+        </div>
+        <div class="range">
+            <span class="range-tag range-tag--comfort">Comfort</span>
+            <p>About 65–85°F and 30–55% RH is a useful broad observation band.</p>
+        </div>
+        <div class="range">
+            <span class="range-tag range-tag--check">Check</span>
+            <p>Investigate a 24-hour low below 55°F or high above 95°F.</p>
+        </div>
+        <div class="range">
+            <span class="range-tag range-tag--humidity">Humidity</span>
+            <p>
+                If the 24-hour RH minimum is above 60%, improve spacing/airflow and be cautious with
+                cool, slow-drying pots. A brief maximum above 60% is fine; use the
+                <a href="https://github.com/Nick2bad4u/Gardening/blob/main/docs/equipment/air-treatment.md">
+                    sensor-driven dehumidifier rule
+                </a>
+                rather than running it every day.
+            </p>
+        </div>
+    </article>
+</section>

@@ -1230,7 +1230,7 @@ Cache Storage retains each SVG across reloads, including when the image server
 is unreachable. This caches artwork only; it does not make the Google-hosted
 logger itself available offline.
 
-`npm run build:booklet` derives `PLANT_ICON_REVISION` from the 38 exported SVGs.
+`npm run sync:logger-artwork` explicitly derives `PLANT_ICON_REVISION` from the 38 exported SVGs. Ordinary website and artwork-export builds leave the logger source unchanged.
 Each image URL includes this revision. The cache stores one entry per portrait
 and replaces an older revision when needed, so future artwork updates do not
 leave the logger stuck on old icons or accumulate a second complete set.

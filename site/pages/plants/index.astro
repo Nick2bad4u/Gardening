@@ -1,0 +1,77 @@
+---
+import SiteLayout from "../../components/SiteLayout.astro";
+import PlantCard from "../../components/PlantCard.astro";
+import { getProfiles } from "../../lib/content.mjs";
+import { groups } from "../../lib/content/profile-source.mjs";
+const profiles = await getProfiles();
+const currentCount = profiles.filter((profile) => !profile.historical).length;
+---
+
+<SiteLayout
+    title="Plants"
+    section="plants"
+    description="Browse the Fenton Collection by plant name, scientific name, label, and pot ID."
+>
+    <header class="page-heading">
+        <p class="eyebrow">THE FENTON COLLECTION</p>
+        <h1>Meet the plants.</h1>
+        <p class="lede">
+            Every plant has a story. Explore the names, nursery records, care notes, and photographs
+            behind the collection.
+        </p>
+    </header>
+    <div class="directory-toolbar no-print">
+        <label for="plant-search">
+            Find a plant
+            <input
+                type="search"
+                id="plant-search"
+                placeholder="Name, scientific name, label, or P-ID"
+                autocomplete="off"
+            />
+        </label>
+        <label for="plant-group">
+            Collection
+            <select id="plant-group">
+                <option value="all">All collections</option>
+                {groups.map((group) => (
+                    <option value={group.key}>{group.title}</option>
+                ))}
+            </select>
+        </label>
+        <label for="plant-status">
+            Records
+            <select id="plant-status">
+                <option value="current">Current plants</option>
+                <option value="all">All records</option>
+                <option value="historical">Historical only</option>
+            </select>
+        </label>
+    </div>
+    <p id="plant-result-count" class="result-count" role="status" aria-live="polite">
+        {currentCount} current plant profiles · shared containers have separate botanical profiles
+    </p>
+    <noscript>
+        <p>
+            Search and filters need JavaScript. Current profiles are listed below; historical
+            records are also available through site search and the repository.
+        </p>
+    </noscript>
+    <ul class="card-grid" id="plant-directory" aria-label="Plant directory">
+        {profiles.map((profile) => (
+            <li
+                data-directory-entry
+                data-search={profile.searchText}
+                data-group={profile.group}
+                data-historical={String(profile.historical)}
+                hidden={profile.historical}
+            >
+                <PlantCard profile={profile} />
+            </li>
+        ))}
+    </ul>
+    <p id="plant-empty" class="empty-state" hidden>
+        No matching plants. Try a different name, label, or collection.
+    </p>
+</SiteLayout>
+<script src="../../client/directory.js"></script>

@@ -1,7 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
-import { groupFor, renderReport } from "../scripts/build-daily-report.mjs";
 import { rewriteCollectionPreviews } from "../scripts/collection-previews.mjs";
 import {
     instant,
@@ -9,6 +8,11 @@ import {
     validateReport,
     weightChange,
 } from "../scripts/daily-report-model.mjs";
+import { groupFor, renderReport } from "../scripts/daily-report-render.mjs";
+import {
+    parseReviewedReport,
+    renderReviewedReport,
+} from "../site/lib/reports.mjs";
 
 /** @typedef {import("../types/daily-report.d.ts").DailyReport} DailyReport */
 /** @typedef {import("../types/daily-report.d.ts").ReportPot} ReportPot */
@@ -50,6 +54,73 @@ const photo = {
 };
 // eslint-disable-next-line no-script-url -- Deliberately unsafe input verifies that photo links reject executable protocols.
 const unsafeScriptUrl = "javascript:alert(1)";
+
+describe("native reviewed report pages", () => {
+    it("preserves archived version-1 decisions without applying the current water gate", async () => {
+        expect.hasAssertions();
+
+        const archive = {
+            ...sample,
+            pots: [
+                {
+                    ...sample.pots[0],
+                    action: "water",
+                    id: "P01",
+                    label: "A1",
+                    name: "Historical plant",
+                    plateau: "not-supported",
+                    reason: "reference",
+                    recommendation:
+                        "Original conditional recommendation <unchanged>.",
+                },
+            ],
+            version: 1,
+        };
+        const original = JSON.stringify(archive);
+        const entry = parseReviewedReport(archive);
+        const html = await renderReviewedReport(entry);
+
+        expect(entry.report).toBeNull();
+        expect(html).toContain("Archived version 1 policy");
+        expect(html).toContain(
+            "Original conditional recommendation &lt;unchanged&gt;."
+        );
+        expect(html).toContain('id="pot-P01"');
+        expect(html).toContain("not-supported");
+        expect(JSON.stringify(archive)).toBe(original);
+    });
+
+    it("rejects malformed archive metadata rather than publishing a false read time", () => {
+        expect.hasAssertions();
+        expect(() =>
+            parseReviewedReport({
+                ...sample,
+                sourceReadAt: "not a date",
+                version: 1,
+            })
+        ).toThrow("Malformed historical report metadata");
+        expect(() => parseReviewedReport({ ...sample, version: 7 })).toThrow(
+            "Unsupported historical report version"
+        );
+    });
+
+    it("renders validated current reports as a dated fragment with canonical pot and profile links", async () => {
+        expect.hasAssertions();
+
+        const entry = parseReviewedReport(sample);
+        const html = await renderReviewedReport(entry);
+
+        expect(entry.report).toStrictEqual(sample);
+        expect(entry.sourceReadAt).toBe(sample.sourceReadAt);
+        expect(html).toContain(`data-report-date="${sample.date}"`);
+        expect(html).toContain("/Gardening/pots/P01/");
+        expect(html).toContain("/Gardening/plants/");
+        expect(html).toContain('id="report-filters"');
+        expect(html).toContain('id="freshness-message"');
+        expect(html).not.toContain("<html");
+        expect(html).not.toContain('class="site-header"');
+    });
+});
 
 /** @param {DailyReport} report @param {string} id */
 function pot(report, id) {

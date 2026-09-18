@@ -5,6 +5,7 @@ const localConfig = {
     ...prettierConfig,
     overrides: [
         ...(prettierConfig.overrides ?? []),
+        { files: "**/*.astro", options: { parser: "astro" } },
         {
             files: "**/*.ps1",
             options: {
@@ -12,6 +13,7 @@ const localConfig = {
             },
         },
     ],
+    plugins: [...(prettierConfig.plugins ?? []), "prettier-plugin-astro"],
 };
 
 export default localConfig;

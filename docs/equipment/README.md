@@ -21,7 +21,7 @@
   18-inch/45% light phase, paired airflow, August 14 medium reset and dry-down
   trial, three-surface pot layout, rotations, local daylight, response rules,
   and outdoor-day overrides
-- [Graphic indoor acclimation calendar](../layouts/indoor-acclimation-calendar.html) —
+- [Historical indoor acclimation calendar](https://nick2bad4u.github.io/Gardening/setup/archive/calendar/) —
   browser and print view of the move-in, ramp, rotations, camera events, and
   manual temperature/RH routine
 - [GrowCam C4 time-lapse and reflector plan](./growcam-c4-and-reflector.md) —

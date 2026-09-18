@@ -44,8 +44,7 @@ recording is active.
 - The lower-right power and controller area is close to the watering zone; keep
   it raised, secured, and below-protected by cable drip loops.
 
-The [browser grow-spot page](../layouts/grow-spot-layout.html) puts the current
-AW400 proposal above these historical measured diagrams and riser assignments.
+The [historical layout tool](https://nick2bad4u.github.io/Gardening/setup/archive/layout/) retains these measured diagrams and riser assignments. The [current placement page](https://nick2bad4u.github.io/Gardening/setup/placement/) records the later installed setup; the AW400 proposal was superseded.
 
 ## Recommended physical layout
 

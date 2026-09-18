@@ -1,4 +1,5 @@
 import { createConfig } from "eslint-config-nick2bad4u";
+import astro from "eslint-plugin-astro";
 
 import appsScriptConfig, {
     createAppsScriptDeclarationConfig,
@@ -77,6 +78,57 @@ const config = [
             : entry
     ),
     appsScriptConfig,
+    {
+        files: [".storybook/prepare-pages.mjs"],
+        name: "Gardening: fixture subprocess environment",
+        // The isolated Astro build inherits the Node toolchain environment and
+        // overrides only the explicit fixture/report/output settings.
+        rules: { "n/no-process-env": "off" },
+    },
+
+    ...astro.configs.recommended,
+    ...astro.configs["jsx-a11y-recommended"],
+    {
+        files: ["site/styles/**/*.css"],
+        name: "Gardening: shared CSS tokens and modern print support",
+        rules: {
+            // Token declarations live in tokens.css and tool-specific styles;
+            // this rule validates one file and cannot resolve those imports.
+            "css/no-invalid-properties": [
+                "error",
+                { allowUnknownVariables: true },
+            ],
+            "css/use-baseline": [
+                "error",
+                {
+                    allowAtRules: ["page"],
+                    allowProperties: [
+                        "break-after",
+                        "overflow-inline",
+                        "overscroll-behavior",
+                        "print-color-adjust",
+                    ],
+                    available: 2024,
+                },
+            ],
+        },
+    },
+    {
+        files: ["site/pages/**/*.ts"],
+        name: "Gardening: Astro static endpoint contracts",
+        rules: {
+            "import-x/extensions": [
+                "error",
+                "ignorePackages",
+                { mjs: "always" },
+            ],
+            // Astro endpoints export the HTTP method as their handler name.
+            "sonarjs/function-name": [
+                "error",
+                { format: "^(?:GET|[a-z][a-zA-Z0-9]*)$" },
+            ],
+        },
+    },
     createAppsScriptDeclarationConfig(
         sharedConfig.find(
             (entry) => entry.name === "🗄️ Type Declarations: TypeScript Parser"
@@ -197,33 +249,6 @@ const config = [
         },
     },
     {
-        files: ["docs/plant-booklet/index.html"],
-        name: "Gardening: separately routed field-guide pages",
-        // Each hidden profile template owns a page heading. Browser tests check
-        // that the active route exposes one heading to assistive technology.
-        rules: { "@html-eslint/no-multiple-h1": "off" },
-    },
-    {
-        files: [
-            "docs/plant-booklet/index.html",
-            "docs/layouts/photo-album.html",
-        ],
-        name: "Gardening: previews with CSS-reserved image geometry",
-        // These exact classes own both dimensions or a width plus aspect ratio.
-        // External capture dimensions are unknown; do not invent intrinsic sizes.
-        rules: {
-            "@html-eslint/require-explicit-size": [
-                "error",
-                {
-                    allowClass: [
-                        "plant-avatar--hero",
-                        "collection-preview-image",
-                    ],
-                },
-            ],
-        },
-    },
-    {
         files: ["scripts/google-sheets/Index.html"],
         name: "Gardening: Apps Script HTML service document",
         rules: {
@@ -299,7 +324,7 @@ const config = [
     },
     {
         files: [
-            "test/booklet-client.test.mjs",
+            "test/site-client.test.mjs",
             "test/google-sheets/logger-client.test.mjs",
             "test/google-sheets/plant-tracker.test.mjs",
         ],
@@ -317,10 +342,11 @@ const config = [
     {
         files: [
             "scripts/check-google-sheets-logger.mjs",
-            "scripts/check-plant-booklet.mjs",
             "scripts/google-sheets/workbook-audit.mjs",
             "scripts/analyze-drying.mjs",
-            "test/booklet-client.test.mjs",
+            "test/site-client.test.mjs",
+            "test/site-routing.test.mjs",
+            "test/site-publication.test.mjs",
             "test/google-sheets/*.test.mjs",
         ],
         name: "Gardening: trusted offline script harnesses",
@@ -329,18 +355,15 @@ const config = [
         rules: { "sdl/no-node-vm-run-in-context": "off" },
     },
     {
-        files: [
-            "scripts/check-google-sheets-logger.mjs",
-            "scripts/check-plant-booklet.mjs",
-        ],
+        files: ["scripts/check-google-sheets-logger.mjs"],
         name: "Gardening: source-contract patterns",
         // Interpolated patterns contain fixed attribute names or escaped,
         // validated icon/plant IDs, not arbitrary user-authored expressions.
         rules: { "security/detect-non-literal-regexp": "off" },
     },
     {
-        files: ["test/booklet-client.test.mjs"],
-        name: "Gardening: isolated booklet DOM fixture",
+        files: ["test/site-client.test.mjs", "test/site-search.test.mjs"],
+        name: "Gardening: isolated website DOM fixture",
         rules: {
             // RequestAnimationFrame receives a timestamp, not a Node error.
             "n/no-callback-literal": "off",
@@ -378,7 +401,7 @@ const config = [
     },
 
     {
-        files: ["docs/**/*.js"],
+        files: ["docs/**/*.js", "site/client/**/*.{js,ts}"],
         name: "Gardening: browser document lifetimes",
         rules: {
             "import-x/extensions": [
@@ -401,16 +424,30 @@ const config = [
     },
 
     {
-        files: ["docs/plant-booklet/booklet.js"],
+        files: ["site/client/tools/*.js"],
         languageOptions: { sourceType: "script" },
         name: "Gardening: classic browser entry points",
         // The HTML and VM-based checks load these as classic scripts.
         rules: { "import-x/unambiguous": "off" },
     },
+    {
+        files: [
+            "site/client/site.js",
+            "site/client/directory.js",
+            "site/client/search.js",
+        ],
+        name: "Gardening: Astro document entry points",
+        // Astro loads these once for each document. Their explicit initializer
+        // call starts the page and exported initializers remain testable.
+        rules: { "unicorn/no-top-level-side-effects": "off" },
+    },
 
     {
         files: [
             "scripts/*.mjs",
+            "site/lib/**/*.mjs",
+            ".storybook/prepare-pages.mjs",
+            ".storybook/vite-config.mjs",
             "scripts/google-sheets/workbook-audit.mjs",
             "test/e2e/serve-pages.ts",
         ],

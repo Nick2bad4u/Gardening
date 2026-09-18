@@ -13,7 +13,7 @@ import {
 const meta = {
     afterEach: releaseWebsiteFocus,
     args: {
-        path: "layouts/photo-album.html",
+        path: "photos/",
         scenario: "ready",
         theme: "light",
         width: 1280,
@@ -42,22 +42,18 @@ export const SearchAndClear: Story = {
         const search = canvas.getByRole("searchbox");
         await userEvent.type(search, "pachira");
         await expect(
-            document.querySelector("#collection-search-status")
-        ).toHaveTextContent("1 matching Collection");
+            document.querySelector("#photo-result-count")
+        ).toHaveTextContent("1 plant record");
         await expect(
             canvas.getByRole("heading", { name: /Money tree/v })
         ).toBeVisible();
         await userEvent.clear(search);
         await userEvent.type(search, "no such plant");
-        await expect(
-            document.querySelector("#photo-album-empty")
-        ).toBeVisible();
+        await expect(document.querySelector("#photo-empty")).toBeVisible();
         await userEvent.clear(search);
+        await expect(document.querySelector("#photo-empty")).not.toBeVisible();
         await expect(
-            document.querySelector("#photo-album-empty")
-        ).not.toBeVisible();
-        await expect(
-            document.querySelectorAll("[data-photo-collection][hidden]")
+            document.querySelectorAll("[data-photo-search][hidden]")
         ).toHaveLength(0);
     },
 };
@@ -73,7 +69,7 @@ export const MobileDark: Story = {
             "dark"
         );
         await userEvent.click(
-            canvas.getByRole("button", { name: "Light mode" })
+            canvas.getByRole("button", { name: "Switch to light theme" })
         );
         await expect(document.documentElement).toHaveAttribute(
             "data-theme",

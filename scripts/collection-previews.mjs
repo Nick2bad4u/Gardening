@@ -1,6 +1,9 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import * as path from "node:path";
+import { setTimeout as delay } from "node:timers/promises";
 import sharp from "sharp";
+
+import { isCollectionManifest, readJson } from "./build-data.mjs";
 
 /** @typedef {{ bytes?: number; path: string; width: number }} PreviewVariant */
 /** @typedef {Map<string, PreviewVariant[]>} CollectionPreviews */
@@ -23,13 +26,15 @@ const previewWidths = [
  * @param {string} repositoryRoot - Repository directory containing the private
  *   build cache.
  * @param {string} outputDirectory - Directory containing the Pages artifact.
+ * @param {{ onUnavailable?: (id: string, error: Error) => void }} [options]
  *
  * @returns {Promise<CollectionPreviews>} Responsive variants by capture ID.
  */
 export async function publishCollectionPreviews(
     documents,
     repositoryRoot,
-    outputDirectory
+    outputDirectory,
+    { onUnavailable } = {}
 ) {
     const captures = new Map(
         documents.flatMap((html) =>
@@ -78,17 +83,13 @@ export async function publishCollectionPreviews(
                 );
                 let bytes = await readCachedPreview(cachePath);
                 if (bytes === undefined) {
-                    const response = await fetch(
-                        `https://thumb.gyazo.com/thumb/960/${id}.${extension}`,
-                        {
-                            signal: AbortSignal.timeout(60_000),
-                        }
+                    bytes = await downloadOptionalCapture(
+                        id,
+                        extension,
+                        repositoryRoot,
+                        onUnavailable
                     );
-                    if (!response.ok)
-                        throw new Error(
-                            `Collection preview ${id}: HTTP ${response.status}.`
-                        );
-                    bytes = Buffer.from(await response.arrayBuffer());
+                    if (bytes === undefined) return;
                     // Decode before caching: an HTML error response must never become a saved preview.
                     await sharp(bytes, {
                         limitInputPixels: 40_000_000,
@@ -163,6 +164,124 @@ export function rewriteCollectionPreviews(html, previews, prefix) {
     });
 }
 
+/**
+ * Show an absence state without changing enclosing capture links or captions.
+ * Only IDs explicitly reported unavailable qualify; other missing previews
+ * fail.
+ *
+ * @param {string} html @param {Set<string>} unavailableIds
+ */
+export function rewriteUnavailableCollectionPreviews(html, unavailableIds) {
+    return html.replaceAll(/<img\b[^>]*>/gv, (imageTag) => {
+        const match = imageTag.matchAll(thumbnailPattern).next().value;
+        const id = match?.groups?.["id"];
+        if (id === undefined || !unavailableIds.has(id)) return imageTag;
+        return `<span class="photo-unavailable" role="img" aria-label="Collection photo preview unavailable" data-unavailable-capture="${id}">Photo preview unavailable</span>`;
+    });
+}
+
+/** @param {string} id @param {string} extension @param {string} repositoryRoot */
+async function downloadCapture(id, extension, repositoryRoot) {
+    try {
+        return await downloadImage(
+            `https://thumb.gyazo.com/thumb/960/${id}.${extension}`
+        );
+    } catch (error) {
+        const manifest = await readJson(
+            path.join(
+                repositoryRoot,
+                "assets/collection-photos/photo-manifest.json"
+            ),
+            isCollectionManifest
+        );
+        const photos = Iterator.concat(
+            manifest.collection_overviews,
+            ...manifest.plants.map((plant) => plant.photos)
+        );
+        const urls = new Set(
+            photos
+                .filter((photo) => photo.image_id === id)
+                .map((photo) => photo.image_url)
+        );
+        if (urls.size !== 1)
+            throw new Error(
+                `No unique reviewed original for collection preview ${id}.`,
+                { cause: error }
+            );
+        const imageUrl = urls.values().next().value;
+        if (imageUrl === undefined)
+            throw new Error(`Missing original for ${id}.`, { cause: error });
+        const parsed = new URL(imageUrl);
+        if (
+            parsed.origin !== "https://i.gyazo.com" ||
+            parsed.pathname !== `/${id}.${extension}` ||
+            parsed.search !== "" ||
+            parsed.hash !== ""
+        ) {
+            throw new Error(
+                `Untrusted fallback URL for collection preview ${id}.`,
+                { cause: error }
+            );
+        }
+        return downloadImage(imageUrl);
+    }
+}
+
+/** @param {string} url @returns {Promise<Buffer>} */
+async function downloadImage(url) {
+    let failure;
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+        if (attempt > 0) {
+            // eslint-disable-next-line no-await-in-loop -- Retry backoff must finish before the next network attempt.
+            await delay(1000 * attempt);
+        }
+        let response;
+        try {
+            // eslint-disable-next-line no-await-in-loop -- Three sequential attempts bound retries per capture.
+            response = await fetch(url, {
+                signal: AbortSignal.timeout(60_000),
+            });
+        } catch (error) {
+            failure = error;
+        }
+        if (response !== undefined) {
+            if (response.ok) return responseBytes(response);
+            failure = new Error(
+                `Collection preview download: HTTP ${response.status} (${url}).`
+            );
+            if (response.status !== 429 && response.status < 500) break;
+        }
+    }
+    throw new DOMException(
+        `Collection preview download failed: ${url}: ${String(failure)}`,
+        "CollectionPreviewUnavailable"
+    );
+}
+
+/**
+ * @param {string} id @param {string} extension @param {string} repositoryRoot
+ * @param {((id: string, error: Error) => void) | undefined} onUnavailable
+ */
+async function downloadOptionalCapture(
+    id,
+    extension,
+    repositoryRoot,
+    onUnavailable
+) {
+    try {
+        return await downloadCapture(id, extension, repositoryRoot);
+    } catch (error) {
+        if (
+            onUnavailable === undefined ||
+            !(error instanceof DOMException) ||
+            error.name !== "CollectionPreviewUnavailable"
+        )
+            throw error;
+        onUnavailable(id, error);
+        return undefined;
+    }
+}
+
 /** @param {string} filename @returns {Promise<Buffer | undefined>} */
 async function readCachedPreview(filename) {
     try {
@@ -177,4 +296,9 @@ async function readCachedPreview(filename) {
             throw error;
         return undefined;
     }
+}
+
+/** @param {Response} response */
+async function responseBytes(response) {
+    return Buffer.from(await response.arrayBuffer());
 }

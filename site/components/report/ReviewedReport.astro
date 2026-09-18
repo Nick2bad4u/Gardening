@@ -1,0 +1,18 @@
+---
+import { renderReviewedReport } from "../../lib/reports.mjs";
+import "../../styles/report.css";
+
+interface Props {
+    archived?: boolean;
+    report: import("../../lib/reports.mjs").ReviewedReport;
+}
+const { report, archived = false } = Astro.props;
+const html = await renderReviewedReport(report);
+---
+
+<div data-dated-report={archived ? "true" : undefined}>
+    <Fragment set:html={html} />
+</div>
+<script>
+    import "../../client/report.js";
+</script>

@@ -1,0 +1,94 @@
+---
+import { siteUrl } from "../../../lib/routes.mjs";
+---
+
+<section class="section" aria-labelledby="calendar-title">
+    <div class="section-heading">
+        <div>
+            <h2 id="calendar-title">
+                <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                    <use
+                        href={siteUrl("plant-icons.svg#icon-calendar")}
+                        width="64"
+                        height="64"
+                    ></use>
+                </svg>
+                August–September calendar
+            </h2>
+            <p>Click a colored task to check it off. Checkmarks stay in this browser.</p>
+        </div>
+    </div>
+    <div class="legend" aria-label="Calendar legend">
+        <span class="legend-item">
+            <svg
+                class="site-icon legend-icon"
+                viewBox="0 0 64 64"
+                aria-hidden="true"
+                focusable="false"
+            >
+                <use href={siteUrl("plant-icons.svg#icon-layout")} width="64" height="64"></use>
+            </svg>
+            Move/setup
+        </span>
+        <span class="legend-item">
+            <svg
+                class="site-icon legend-icon"
+                viewBox="0 0 64 64"
+                aria-hidden="true"
+                focusable="false"
+            >
+                <use href={siteUrl("plant-icons.svg#icon-light")} width="64" height="64"></use>
+            </svg>
+            Light change
+        </span>
+        <span class="legend-item">
+            <svg
+                class="site-icon legend-icon"
+                viewBox="0 0 64 64"
+                aria-hidden="true"
+                focusable="false"
+            >
+                <use href={siteUrl("plant-icons.svg#icon-check")} width="64" height="64"></use>
+            </svg>
+            Sunday check
+        </span>
+        <span class="legend-item">
+            <svg
+                class="site-icon legend-icon"
+                viewBox="0 0 64 64"
+                aria-hidden="true"
+                focusable="false"
+            >
+                <use
+                    href={siteUrl("plant-icons.svg#icon-observation")}
+                    width="64"
+                    height="64"
+                ></use>
+            </svg>
+            Sensor/camera
+        </span>
+        <span class="legend-item">
+            <svg
+                class="site-icon legend-icon"
+                viewBox="0 0 64 64"
+                aria-hidden="true"
+                focusable="false"
+            >
+                <use href={siteUrl("plant-icons.svg#icon-water")} width="64" height="64"></use>
+            </svg>
+            Water/weight
+        </span>
+        <span class="legend-item">
+            <svg
+                class="site-icon legend-icon"
+                viewBox="0 0 64 64"
+                aria-hidden="true"
+                focusable="false"
+            >
+                <use href={siteUrl("plant-icons.svg#icon-calendar")} width="64" height="64"></use>
+            </svg>
+            Seasonal timer
+        </span>
+    </div>
+    <div class="months" id="months"></div>
+</section>

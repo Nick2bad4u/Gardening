@@ -1,0 +1,1183 @@
+:where(.tool-layout) {
+    margin: 0;
+    scroll-behavior: smooth;
+    font-family: Inter, system-ui, "Segoe UI", sans-serif;
+    line-height: 1.5;
+    color: var(--ink);
+    color-scheme: light;
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            rgb(57 118 88 / 9%),
+            transparent 28rem
+        ),
+        var(--bg);
+
+    --bg: #f5f1e8;
+    --surface: #fffdf7;
+    --surface-2: #eee7d9;
+    --ink: #1f2922;
+    --muted: #68716b;
+    --line: #cfc6b5;
+    --green: #397658;
+    --green-soft: #dcecdf;
+    --gold: #b58129;
+    --gold-soft: #f4e5bd;
+    --blue: #39728e;
+    --blue-soft: #dcebf1;
+    --violet: #796397;
+    --violet-soft: #e9e1f1;
+    --danger: #a14c3e;
+    --shadow: 0 18px 45px rgb(58 51 38 / 10%);
+
+    :root[data-theme="dark"] & {
+        color-scheme: dark;
+
+        --bg: #151a17;
+        --surface: #1d241f;
+        --surface-2: #252e28;
+        --ink: #edf2ed;
+        --muted: #aab6ae;
+        --line: #3a463e;
+        --green: #75bd91;
+        --green-soft: #243d2d;
+        --gold: #d8ad58;
+        --gold-soft: #44371f;
+        --blue: #73b5d1;
+        --blue-soft: #213944;
+        --violet: #b4a0d0;
+        --violet-soft: #372e44;
+        --danger: #e18b7e;
+        --shadow: 0 18px 45px rgb(0 0 0 / 28%);
+    }
+
+    & * {
+        box-sizing: border-box;
+    }
+
+    & button,
+    & input,
+    & select {
+        font: inherit;
+    }
+
+    & a {
+        color: var(--green);
+    }
+
+    & .page {
+        max-inline-size: 1180px;
+        padding: 34px 24px 70px;
+        margin: 0 auto;
+    }
+
+    & .hero {
+        display: flex;
+        gap: 28px;
+        align-items: end;
+        justify-content: space-between;
+        margin-block-end: 24px;
+    }
+
+    & .eyebrow {
+        margin: 0 0 7px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--green);
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+    }
+
+    & h1,
+    & h2,
+    & h3,
+    & p {
+        margin-block-start: 0;
+    }
+
+    & h1 {
+        max-inline-size: 760px;
+        margin-block-end: 12px;
+        font-size: clamp(2rem, 5vi, 4rem);
+        line-height: 1;
+        letter-spacing: -0.05em;
+    }
+
+    & h2 {
+        margin-block-end: 8px;
+        font-size: clamp(1.5rem, 3vi, 2rem);
+        line-height: 1.125;
+        letter-spacing: -0.025em;
+    }
+
+    & h3 {
+        margin-block-end: 10px;
+        font-size: 1rem;
+        letter-spacing: 0.02em;
+    }
+
+    & .lede {
+        max-inline-size: 760px;
+        margin-block-end: 0;
+        color: var(--muted);
+    }
+
+    & .hero-actions {
+        display: flex;
+        flex: 0 0 auto;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: flex-end;
+        max-inline-size: 20rem;
+    }
+
+    & .site-icon {
+        display: inline-block;
+        flex: 0 0 auto;
+        inline-size: 1.35rem;
+        block-size: 1.35rem;
+        overflow: visible;
+        vertical-align: -0.24rem;
+    }
+
+    & .button {
+        display: inline-flex;
+        gap: 7px;
+        align-items: center;
+        min-block-size: 42px;
+        padding: 9px 15px;
+        font-weight: 650;
+        color: var(--ink);
+        text-decoration: none;
+        cursor: pointer;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+
+        &.primary {
+            color: #ffffff;
+            background: var(--green);
+            border-color: var(--green);
+        }
+
+        &:hover,
+        &:focus-visible {
+            transform: translateY(-1px);
+        }
+    }
+
+    & .button:focus-visible,
+    & .tab:focus-visible {
+        outline: 3px solid var(--blue);
+        outline-offset: 3px;
+    }
+
+    & .viewpoint {
+        display: grid;
+        grid-template-columns:
+            [primary-start] auto [primary-end secondary-start] minmax(0, 1fr)
+            [secondary-end];
+        gap: 5px 18px;
+        align-items: center;
+        padding: 13px 16px;
+        margin-block-end: 18px;
+        background: var(--blue-soft);
+        border-inline-start: 4px solid var(--blue);
+
+        & strong {
+            grid-row: 1 / span 2;
+        }
+
+        & span {
+            color: var(--muted);
+        }
+    }
+
+    & .tabs-shell {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+        margin-block-end: 24px;
+    }
+
+    & .diagram-tabs {
+        display: flex;
+        gap: 8px;
+        max-inline-size: 100%;
+        padding: 6px;
+        overflow-inline: auto;
+        background: var(--surface-2);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+    }
+
+    & .tab {
+        display: inline-flex;
+        gap: 7px;
+        align-items: center;
+        min-block-size: 40px;
+        padding: 8px 13px;
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: var(--ink);
+        white-space: nowrap;
+        cursor: pointer;
+        background: transparent;
+        border: 0;
+        border-radius: 9px;
+
+        &[aria-selected="true"] {
+            color: #ffffff;
+            background: var(--green);
+        }
+    }
+
+    & .assumption {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 13px 16px;
+        margin-block-end: 28px;
+        background: var(--gold-soft);
+        border-inline-start: 4px solid var(--gold);
+        border-radius: 0 10px 10px 0;
+
+        & strong {
+            white-space: nowrap;
+        }
+    }
+
+    & .section {
+        margin-block-start: 42px;
+        scroll-margin-block-start: 18px;
+    }
+
+    & .tab-panel {
+        margin-block-start: 28px;
+
+        &[hidden] {
+            display: none;
+        }
+    }
+
+    & .section-heading {
+        display: flex;
+        gap: 20px;
+        align-items: end;
+        justify-content: space-between;
+        margin-block-end: 16px;
+
+        & p {
+            max-inline-size: 680px;
+            margin-block-end: 0;
+            color: var(--muted);
+        }
+    }
+
+    & .diagram-shell {
+        overflow: hidden;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        box-shadow: var(--shadow);
+    }
+
+    & .diagram-header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+        background: var(--surface-2);
+        border-block-end: 1px solid var(--line);
+
+        & strong {
+            font-size: 0.875rem;
+        }
+
+        & span {
+            font-size: 0.875rem;
+            color: var(--muted);
+        }
+    }
+
+    & .diagram {
+        display: block;
+        inline-size: 100%;
+        block-size: auto;
+    }
+
+    & .room-grid {
+        display: grid;
+        grid-template-columns:
+            [primary-start] minmax(0, 1.65fr)
+            [primary-end secondary-start] minmax(250px, 0.7fr)
+            [secondary-end];
+    }
+
+    & .key {
+        display: grid;
+        padding: 22px;
+        border-inline-start: 1px solid var(--line);
+    }
+
+    & .key-list {
+        display: grid;
+        gap: 16px;
+        margin: 0;
+    }
+
+    & .key-item {
+        display: grid;
+        grid-template-columns:
+            [primary-start] 12px [primary-end secondary-start] minmax(0, 1fr)
+            [secondary-end];
+        gap: 2px;
+    }
+
+    & .key-item::before {
+        inline-size: 8px;
+        block-size: 8px;
+        margin-block-start: 7px;
+        content: "";
+        background: var(--green);
+        border-radius: 999px;
+    }
+
+    & .key-item dt {
+        grid-column: 2;
+        font-weight: 700;
+    }
+
+    & .key-item dd {
+        grid-column: 2;
+        margin: 0;
+        font-size: 0.875rem;
+        color: var(--muted);
+    }
+
+    & .tables-grid {
+        display: grid;
+        grid-template-columns:
+            [primary-start] minmax(0, 1fr)
+            [primary-end secondary-start] minmax(0, 1fr)
+            [secondary-end];
+        gap: 18px;
+    }
+
+    & .placement-gallery {
+        display: grid;
+        grid-template-columns: repeat(
+            2,
+            [figure-start] minmax(0, 1fr) [figure-end]
+        );
+        gap: 18px;
+        align-items: start;
+
+        & figure {
+            margin: 0;
+        }
+
+        & figure:last-child {
+            grid-column: 1 / -1;
+        }
+
+        & img {
+            display: block;
+            inline-size: 100%;
+            block-size: auto;
+        }
+
+        & figcaption {
+            padding: 12px 16px;
+        }
+
+        @media (width <= 680px) {
+            grid-template-columns:
+                [figure-start] minmax(0, 1fr)
+                [figure-end];
+        }
+    }
+
+    & .plant-interaction-note {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding: 10px 12px;
+        margin: 0 0 18px;
+        background: var(--green-soft);
+        border: 1px solid var(--green);
+        border-radius: 12px;
+
+        & > .site-icon {
+            flex: 0 0 auto;
+            inline-size: 22px;
+            block-size: 22px;
+        }
+
+        & p {
+            margin: 0;
+        }
+    }
+
+    & .table-panel {
+        overflow: hidden;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+    }
+
+    & .panel-copy {
+        padding: 18px;
+        border-block-start: 1px solid var(--line);
+
+        & p:where(:last-child) {
+            margin-block-end: 0;
+        }
+    }
+
+    & .plant-detail-card {
+        min-block-size: 250px;
+        padding: 16px;
+        margin: 0 18px 18px;
+        background: var(--surface-2);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        transition:
+            border-color 140ms ease,
+            box-shadow 140ms ease;
+
+        &.is-populated {
+            border-color: var(--green);
+            box-shadow: 0 10px 26px rgb(22 58 39 / 10%);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    & .plant-detail-kicker {
+        margin: 0 0 4px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: var(--green);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    & .plant-detail-card h3 {
+        margin: 0;
+        font-size: clamp(1rem, 2vi, 1.25rem);
+    }
+
+    & .plant-detail-botanical {
+        margin: 3px 0 14px;
+        font-style: italic;
+        color: var(--muted);
+    }
+
+    & .plant-detail-grid {
+        display: grid;
+        grid-template-columns: repeat(
+            2,
+            [item-start] minmax(0, 1fr) [item-end]
+        );
+        gap: 10px 14px;
+        margin: 0;
+
+        & div {
+            min-inline-size: 0;
+            padding-block-start: 8px;
+            border-block-start: 1px solid var(--line);
+        }
+
+        & dt {
+            font-size: 0.625rem;
+            font-weight: 800;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        & dd {
+            margin: 2px 0 0;
+            font-size: 0.875rem;
+            overflow-wrap: anywhere;
+        }
+    }
+
+    & .plant-detail-link {
+        display: inline-flex;
+        margin-block-start: 13px;
+        font-size: 0.875rem;
+        font-weight: 750;
+
+        &[hidden] {
+            display: none;
+        }
+    }
+
+    & .muted {
+        color: var(--muted);
+    }
+
+    & .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: end;
+    }
+
+    & .field {
+        display: grid;
+        gap: 5px;
+        min-inline-size: 0;
+
+        & label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        & input,
+        & select {
+            inline-size: 100%;
+            min-inline-size: 0;
+            min-block-size: 40px;
+            padding: 7px 10px;
+            color: var(--ink);
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+    }
+
+    & .pot-key {
+        display: grid;
+        grid-template-columns: repeat(
+            4,
+            [item-start] minmax(0, 1fr) [item-end]
+        );
+        gap: 8px;
+        margin-block-start: 18px;
+    }
+
+    & .pot-key-item {
+        display: grid;
+        gap: 2px;
+        padding-block-start: 8px;
+        border-block-start: 1px solid var(--line);
+
+        & code {
+            font-weight: 800;
+            color: var(--green);
+        }
+
+        & span {
+            font-size: 0.875rem;
+        }
+    }
+
+    & .layout-note {
+        padding: 12px 14px;
+        margin-block-start: 18px;
+        background: var(--blue-soft);
+        border-inline-start: 4px solid var(--blue);
+
+        & p {
+            margin-block-end: 0;
+        }
+    }
+
+    & .height-grid {
+        display: grid;
+        grid-template-columns:
+            [primary-start] minmax(0, 1.5fr)
+            [primary-end secondary-start] minmax(300px, 0.8fr)
+            [secondary-end];
+    }
+
+    & .measurement-panel {
+        padding: 20px;
+        border-inline-start: 1px solid var(--line);
+    }
+
+    & .measurement-grid {
+        display: grid;
+        grid-template-columns:
+            [primary-start] minmax(0, 1fr)
+            [primary-end secondary-start] minmax(0, 1fr)
+            [secondary-end];
+        gap: 12px;
+    }
+
+    & .result {
+        padding: 13px 14px;
+        margin-block-start: 16px;
+        background: var(--green-soft);
+        border-inline-start: 4px solid var(--green);
+
+        & strong {
+            display: block;
+            margin-block-end: 3px;
+        }
+    }
+
+    & .riser-table-wrap {
+        overflow-inline: auto;
+    }
+
+    & table {
+        inline-size: 100%;
+        border-collapse: collapse;
+    }
+
+    & th,
+    & td {
+        padding: 10px 9px;
+        vertical-align: middle;
+        text-align: start;
+        border-block-end: 1px solid var(--line);
+    }
+
+    & th {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    & td {
+        font-size: 0.875rem;
+
+        & input {
+            inline-size: 100%;
+            max-inline-size: 94px;
+            min-block-size: 34px;
+            padding: 5px 7px;
+            color: var(--ink);
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+        }
+    }
+
+    & .switch {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        min-block-size: 40px;
+
+        & input {
+            inline-size: 18px;
+            block-size: 18px;
+        }
+
+        & label {
+            font-size: 0.875rem;
+            font-weight: 650;
+            color: var(--ink);
+            cursor: pointer;
+        }
+    }
+
+    & .recommendation {
+        font-weight: 750;
+        color: var(--green);
+        white-space: nowrap;
+    }
+
+    & .riser-inventory {
+        display: grid;
+        grid-template-columns: repeat(
+            4,
+            [item-start] minmax(0, 1fr) [item-end]
+        );
+        gap: 10px;
+        margin-block-start: 18px;
+    }
+
+    & .riser {
+        padding: 12px;
+        background: var(--surface);
+        border-block-start: 4px solid var(--gold);
+
+        & strong,
+        & span {
+            display: block;
+        }
+
+        & span {
+            margin-block-start: 3px;
+            font-size: 0.875rem;
+            color: var(--muted);
+        }
+    }
+
+    & .footer {
+        padding-block-start: 18px;
+        margin-block-start: 48px;
+        font-size: 0.875rem;
+        color: var(--muted);
+        border-block-start: 1px solid var(--line);
+    }
+
+    & .diagram .room-shell {
+        fill: none;
+        stroke: var(--line);
+        stroke-width: 2;
+    }
+
+    & .diagram .fixture-footprint {
+        fill: rgb(181 129 41 / 7%);
+        stroke: var(--gold);
+        stroke-width: 2;
+        stroke-dasharray: 9 7;
+    }
+
+    & .diagram .centerline {
+        stroke: var(--gold);
+        stroke-width: 1.5;
+        stroke-dasharray: 4 7;
+    }
+
+    & .diagram .window,
+    & .diagram .water-drop {
+        fill: var(--blue-soft);
+        stroke: var(--blue);
+        stroke-width: 2;
+    }
+
+    & .diagram .divider {
+        fill: #303732;
+        stroke: #171c18;
+        stroke-width: 2;
+    }
+
+    & .diagram .mylar {
+        fill: #d7d9d6;
+        stroke: var(--blue);
+        stroke-width: 2;
+    }
+
+    & .diagram .floor-mylar {
+        fill: rgb(215 217 214 / 28%);
+        stroke: var(--blue);
+        stroke-width: 1.5;
+        stroke-dasharray: 5 5;
+    }
+
+    & .diagram .blackout {
+        fill: var(--surface-2);
+        stroke: var(--line);
+        stroke-width: 2;
+    }
+
+    & .diagram .wall,
+    & .diagram .table-leg {
+        stroke: var(--line);
+        stroke-width: 5;
+    }
+
+    & .diagram .glass {
+        fill: rgb(57 114 142 / 10%);
+        stroke: var(--blue);
+        stroke-width: 3;
+    }
+
+    & .diagram .wood {
+        fill: #d6b178;
+        stroke: #8d6736;
+        stroke-width: 3;
+    }
+
+    & .diagram .light {
+        fill: var(--gold-soft);
+        stroke: var(--gold);
+        stroke-width: 2;
+    }
+
+    & .diagram .older-planter {
+        fill: var(--green-soft);
+        stroke: var(--green);
+        stroke-width: 2;
+    }
+
+    & .diagram .succulent-planter,
+    & .diagram .camera,
+    & .diagram .echeveria {
+        fill: var(--violet-soft);
+        stroke: var(--violet);
+        stroke-width: 2;
+    }
+
+    & .diagram .pot {
+        fill: var(--surface);
+        stroke: var(--green);
+        stroke-width: 2;
+    }
+
+    & .diagram .pot-edge {
+        fill: var(--surface);
+        stroke: var(--blue);
+        stroke-width: 3;
+    }
+
+    & [data-plant-marker] {
+        cursor: help;
+        outline: none;
+    }
+
+    &
+        [data-plant-marker]
+        :is(.pot, .pot-edge, .older-planter, .succulent-planter) {
+        transform-origin: center;
+        transform-box: fill-box;
+        transition:
+            filter 140ms ease,
+            stroke 140ms ease,
+            stroke-width 140ms ease,
+            transform 140ms ease;
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    & [data-plant-marker]:is(:hover, :focus, .is-active) .pot,
+    & [data-plant-marker]:is(:hover, :focus, .is-active) .pot-edge,
+    & [data-plant-marker]:is(:hover, :focus, .is-active) .older-planter,
+    & [data-plant-marker]:is(:hover, :focus, .is-active) .succulent-planter {
+        stroke: var(--gold);
+        stroke-width: 5;
+        transform: scale(1.035);
+    }
+
+    & .diagram .pot-id {
+        font-family: Inter, system-ui, "Segoe UI", sans-serif;
+        font-size: 1rem;
+        font-weight: 800;
+        fill: var(--ink);
+    }
+
+    & [data-plant-marker]:is(:hover, :focus, .is-active) .pot-id {
+        fill: var(--gold);
+    }
+
+    & .diagram .riser-lane {
+        display: none;
+        fill: rgb(181 129 41 / 13%);
+        stroke: var(--gold);
+        stroke-width: 2;
+        stroke-dasharray: 6 5;
+
+        .show-risers &,
+        &.riser-lane--permanent {
+            display: block;
+        }
+    }
+
+    & .diagram .riser-label {
+        display: none;
+
+        .show-risers & {
+            display: block;
+        }
+    }
+
+    & .diagram .fan {
+        fill: var(--blue-soft);
+        stroke: var(--blue);
+        stroke-width: 2.5;
+    }
+
+    & .diagram .fan-blade {
+        fill: none;
+        stroke: var(--blue);
+        stroke-width: 2;
+    }
+
+    & .diagram .airflow {
+        fill: rgb(57 114 142 / 8%);
+        stroke: var(--blue);
+        stroke-width: 2;
+        stroke-dasharray: 7 6;
+    }
+
+    & .diagram .camera-view {
+        fill: rgb(121 99 151 / 7%);
+        stroke: var(--violet);
+        stroke-width: 1.5;
+        stroke-dasharray: 6 5;
+    }
+
+    & .diagram .air-purifier {
+        fill: var(--green-soft);
+        stroke: var(--green);
+        stroke-width: 2.5;
+    }
+
+    & .diagram .device-ring {
+        fill: none;
+        stroke: var(--green);
+        stroke-width: 1.5;
+    }
+
+    & .diagram .dehumidifier {
+        fill: var(--gold-soft);
+        stroke: var(--gold);
+        stroke-width: 2.5;
+    }
+
+    & .diagram .tail {
+        fill: none;
+        stroke: var(--green);
+        stroke-width: 8;
+        stroke-linecap: round;
+    }
+
+    & .diagram .measure {
+        stroke: var(--gold);
+        stroke-width: 2;
+    }
+
+    & .diagram .target {
+        stroke: var(--green);
+        stroke-width: 2;
+        stroke-dasharray: 8 7;
+    }
+
+    & .diagram .cable {
+        fill: none;
+        stroke: var(--violet);
+        stroke-width: 4;
+        stroke-linecap: round;
+    }
+
+    & .diagram .safe-zone {
+        fill: rgb(121 99 151 / 8%);
+        stroke: var(--violet);
+        stroke-width: 2;
+        stroke-dasharray: 7 6;
+    }
+
+    & .diagram .label-plate {
+        fill: var(--surface);
+        fill-opacity: 0.9;
+    }
+
+    & .diagram .svg-label {
+        font-family: Inter, system-ui, "Segoe UI", sans-serif;
+        font-size: 0.875rem;
+        font-weight: 650;
+        fill: var(--ink);
+    }
+
+    & .diagram .svg-small {
+        font-family: Inter, system-ui, "Segoe UI", sans-serif;
+        font-size: 0.75rem;
+        font-weight: 550;
+        fill: var(--muted);
+    }
+
+    :root[data-theme="dark"] & .diagram .wood {
+        fill: #725838;
+        stroke: #c69a61;
+    }
+
+    :root[data-theme="dark"] & .diagram .divider {
+        fill: #111613;
+        stroke: #6c756f;
+    }
+
+    :root[data-theme="dark"] & .diagram .mylar {
+        fill: #68706b;
+    }
+
+    :root[data-theme="dark"] & .button.primary,
+    :root[data-theme="dark"] & .tab[aria-selected="true"] {
+        color: #101713;
+    }
+
+    @media (width <= 820px) {
+        & .hero,
+        & .section-heading {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        & .hero-actions {
+            max-inline-size: none;
+        }
+
+        & .room-grid,
+        & .tables-grid,
+        & .height-grid {
+            grid-template-columns:
+                [content-start] minmax(0, 1fr)
+                [content-end];
+        }
+
+        & .key,
+        & .measurement-panel {
+            border-block-start: 1px solid var(--line);
+            border-inline-start: 0;
+        }
+
+        & .pot-key,
+        & .riser-inventory {
+            grid-template-columns: repeat(
+                2,
+                [item-start] minmax(0, 1fr) [item-end]
+            );
+        }
+
+        & .plant-detail-card {
+            min-block-size: 0;
+        }
+    }
+
+    @media (width <= 520px) {
+        & .page {
+            padding: 24px 14px 48px;
+        }
+
+        & .hero-actions {
+            justify-content: flex-start;
+            inline-size: 100%;
+
+            & .button {
+                justify-content: center;
+                inline-size: 100%;
+            }
+        }
+
+        & .assumption {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        & .viewpoint {
+            grid-template-columns:
+                [content-start] minmax(0, 1fr)
+                [content-end];
+            align-items: flex-start;
+
+            & strong {
+                grid-row: auto;
+            }
+        }
+
+        & .tabs-shell {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        & .diagram-tabs {
+            display: grid;
+            grid-template-columns: repeat(
+                2,
+                [item-start] minmax(0, 1fr) [item-end]
+            );
+            inline-size: 100%;
+            overflow-inline: visible;
+        }
+
+        & .tab {
+            white-space: normal;
+        }
+
+        & .measurement-grid {
+            grid-template-columns:
+                [content-start] minmax(0, 1fr)
+                [content-end];
+        }
+
+        & .pot-key,
+        & .riser-inventory {
+            grid-template-columns:
+                [content-start] minmax(0, 1fr)
+                [content-end];
+        }
+
+        & .plant-detail-grid {
+            grid-template-columns:
+                [content-start] minmax(0, 1fr)
+                [content-end];
+        }
+
+        & th,
+        & td {
+            padding: 8px 6px;
+        }
+    }
+
+    @media print {
+        &,
+        :root[data-theme="dark"] & {
+            color-scheme: light;
+
+            --bg: #f5f1e8;
+            --surface: #fffdf7;
+            --surface-2: #eee7d9;
+            --ink: #1f2922;
+            --muted: #68716b;
+            --line: #cfc6b5;
+            --green: #397658;
+            --green-soft: #dcecdf;
+            --gold: #b58129;
+            --gold-soft: #f4e5bd;
+            --blue: #39728e;
+            --blue-soft: #dcebf1;
+            --violet: #796397;
+            --violet-soft: #e9e1f1;
+            --danger: #a14c3e;
+            --shadow: none;
+        }
+
+        :root[data-theme="dark"] & .diagram .wood {
+            fill: #d6b178;
+            stroke: #8d6736;
+        }
+
+        :root[data-theme="dark"] & .diagram .divider {
+            fill: #303732;
+            stroke: #171c18;
+        }
+
+        :root[data-theme="dark"] & .diagram .mylar {
+            fill: #d7d9d6;
+        }
+        background: #ffffff;
+
+        & .page {
+            max-inline-size: none;
+            padding: 0;
+        }
+
+        & .hero-actions,
+        & .tabs-shell,
+        & .controls {
+            display: none;
+        }
+
+        & .diagram-shell,
+        & .table-panel {
+            box-shadow: none;
+            break-inside: avoid;
+        }
+
+        & .section {
+            break-before: page;
+        }
+
+        & .tab-panel[hidden] {
+            /* stylelint-disable-next-line declaration-no-important -- Printing must expose hidden archive tabs. */
+            display: block !important; /* eslint-disable-line css/no-important -- Printing must reveal every archived diagram, including hidden tab panels. */
+        }
+    }
+}

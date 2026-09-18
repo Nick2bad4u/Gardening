@@ -1,0 +1,56 @@
+---
+import { siteUrl } from "../../../lib/routes.mjs";
+---
+
+<header class="hero tracker-hero">
+    <div>
+        <p class="eyebrow">Live care log · 28 containers</p>
+        <h1>Plant care dashboard</h1>
+        <p class="lede">
+            See every plant’s latest water, weight, size, condition, and care activity in one place.
+            Each label opens a permanent history page with baselines, trends, photos, repots,
+            fertilizer, flowers, and pest notes.
+        </p>
+    </div>
+    <div class="hero-actions">
+        <a
+            class="button primary"
+            href="https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=2015971861#gid=2015971861"
+            target="_blank"
+            rel="noreferrer"
+        >
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-edit")} width="64" height="64"></use>
+            </svg>
+            Open Quick log
+        </a>
+        <a
+            class="button"
+            href="https://script.google.com/macros/s/AKfycbytpdMto4ZAqOf49igDNoGYr-J6fmSRDNJOKP4-dKDFRmM2YkTCKJp3kmhrD4gOJShF/exec"
+            target="_blank"
+            rel="noreferrer"
+        >
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-mobile")} width="64" height="64"></use>
+            </svg>
+            Open mobile entry app
+        </a>
+        <a class="button" href={siteUrl("photos/")}>
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-photos")} width="64" height="64"></use>
+            </svg>
+            Open plant photo album
+        </a>
+        <a
+            class="button"
+            href="https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=1875598047#gid=1875598047"
+            target="_blank"
+            rel="noreferrer"
+        >
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-sheets")} width="64" height="64"></use>
+            </svg>
+            Open workbook dashboard
+        </a>
+    </div>
+</header>

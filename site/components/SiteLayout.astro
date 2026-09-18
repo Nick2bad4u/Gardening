@@ -1,0 +1,177 @@
+---
+import {
+    loggerUrl,
+    primaryNavigation,
+    repositoryUrl,
+    siteBase,
+    siteOrigin,
+    siteUrl,
+} from "../lib/routes.mjs";
+import SiteIcon from "./SiteIcon.astro";
+import "../styles/tokens.css";
+import "../styles/site.css";
+import "../styles/content.css";
+interface Props {
+    title: string;
+    description?: string;
+    section?: string;
+    breadcrumbs?: { label: string; href: string }[];
+    class?: string;
+    noindex?: boolean;
+}
+const {
+    title,
+    description = "A growing collection of plants, observations, and practical care notes. The Fenton Collection.",
+    section = "",
+    breadcrumbs = [],
+    class: className = "",
+    noindex = false,
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, siteOrigin).href;
+---
+
+<!doctype html>
+<html lang="en" data-site-base={siteBase}>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content={description} />
+        <meta name="theme-color" content="#244633" />
+        {noindex && <meta name="robots" content="noindex" />}
+        <title>{title === "The Garden" ? "The Garden · Fenton Collection" : `${title} · The Garden`}</title>
+        <link rel="canonical" href={canonical} />
+        <link rel="icon" type="image/svg+xml" href={siteUrl("assets/ui-icons/cactus.svg")} />
+        <script is:inline>
+            try {
+                const savedTheme = localStorage.getItem("gardening-site-theme");
+                document.documentElement.dataset.theme =
+                    savedTheme === "light" || savedTheme === "dark"
+                        ? savedTheme
+                        : matchMedia("(prefers-color-scheme: dark)").matches
+                          ? "dark"
+                          : "light";
+            } catch {
+                document.documentElement.dataset.theme = "light";
+            }
+        </script>
+        <slot name="head" />
+    </head>
+    <body class:list={[className, `section-${section || "home"}`]}>
+        <a href="#main" class="skip-link">
+            Skip to content
+        </a>
+        <header class="site-header">
+            <div class="header-inner">
+                <a class="site-brand" href={siteUrl()} aria-label="The Garden home">
+                    <SiteIcon name="houseplant" size={44} />
+                    <span>
+                        <strong>The Garden</strong>
+                        <small>FENTON COLLECTION</small>
+                    </span>
+                </a>
+                <button
+                    class="menu-toggle icon-button"
+                    aria-expanded="false"
+                    aria-controls="site-nav"
+                    type="button"
+                    data-menu-toggle
+                    aria-label="Menu"
+                >
+                    <span aria-hidden="true">☰</span>
+                    <span>Menu</span>
+                </button>
+                <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+                    {primaryNavigation.map((item) => (
+                        <a
+                            href={item.href}
+                            aria-current={section === item.section ? "page" : undefined}
+                        >
+                            {item.label}
+                        </a>
+                    ))}
+                </nav>
+                <div class="header-actions">
+                    <a href={siteUrl("search/")} class="icon-button" aria-label="Search the garden">
+                        <SiteIcon name="search" />
+                        <span class="visually-hidden">Search</span>
+                    </a>
+                    <button
+                        id="theme-toggle"
+                        type="button"
+                        class="icon-button"
+                        aria-label="Toggle color theme"
+                        title="Change color theme"
+                    >
+                        <span data-theme-glyph aria-hidden="true">
+                            ◐
+                        </span>
+                        <span id="theme-label" class="visually-hidden">
+                            Theme
+                        </span>
+                    </button>
+                    <a
+                        class="button button-small log-care"
+                        href={loggerUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <SiteIcon name="edit" size={18} />
+                        <span>Log Care</span>
+                        <span class="visually-hidden"> (opens in a new tab)</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <main id="main" class="site-main" tabindex="-1">
+            {breadcrumbs.length > 0 && (
+                <nav class="breadcrumbs" aria-label="Breadcrumb">
+                    <ol>
+                        <li>
+                            <a href={siteUrl()}>Home</a>
+                        </li>
+                        {breadcrumbs
+                            .filter((item) => item.href !== "")
+                            .map((item) => (
+                                <li>
+                                    <a href={item.href}>{item.label}</a>
+                                </li>
+                            ))}
+                        <li aria-current="page">{title}</li>
+                    </ol>
+                </nav>
+            )}
+            <slot />
+        </main>
+        <footer id="site-footer" class="site-footer">
+            <div class="footer-inner">
+                <div>
+                    <a class="footer-brand" href={siteUrl()}>
+                        The Garden<span aria-hidden="true"> ✦</span>
+                    </a>
+                    <p>
+                        A personal collection. An ongoing notebook.
+                        <br />A little more understood with every observation.
+                    </p>
+                </div>
+                <nav aria-label="Footer navigation">
+                    <a href={siteUrl("guides/")}>Care &amp; logging guides</a>
+                    <a href={siteUrl("setup/equipment/")}>Equipment &amp; supplies</a>
+                    <a href={siteUrl("reports/")}>Report archive</a>
+                    <a href={repositoryUrl}>Repository &amp; sources</a>
+                    <a href={siteUrl("storybook/")}>Component workbench</a>
+                    <a href={`${repositoryUrl}/blob/main/assets/plants/ATTRIBUTION.md`}>
+                        Photo credits
+                    </a>
+                </nav>
+                <p class="footer-note">
+                    Records guide observation.
+                    <br />
+                    They do not replace a plant’s individual needs.
+                    <br />
+                    <a href="#main">Back to top ↑</a>
+                </p>
+            </div>
+        </footer>
+        <script src="../client/site.js"></script>
+    </body>
+</html>

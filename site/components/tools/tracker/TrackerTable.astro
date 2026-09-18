@@ -1,0 +1,131 @@
+---
+import { siteUrl } from "../../../lib/routes.mjs";
+---
+
+<section class="sheet-panel" aria-labelledby="sheet-title">
+    <header>
+        <div>
+            <p class="eyebrow">Published read-only dashboard</p>
+            <h2 id="sheet-title">Current plant status</h2>
+            <p id="sheet-status" aria-live="polite">
+                Loading the latest Google Sheets observations…
+            </p>
+        </div>
+        <div class="panel-actions">
+            <button class="button" id="maximize-table" type="button" aria-pressed="false">
+                <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                    <use href={siteUrl("plant-icons.svg#icon-expand")} width="64" height="64"></use>
+                </svg>
+                <span id="maximize-label">Maximize table</span>
+            </button>
+            <button class="button" id="refresh-sheet" type="button">
+                <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                    <use
+                        href={siteUrl("plant-icons.svg#icon-refresh")}
+                        width="64"
+                        height="64"
+                    ></use>
+                </svg>
+                Refresh data
+            </button>
+        </div>
+    </header>
+
+    <div class="tracker-controls">
+        <label>
+            <span>Find a plant</span>
+            <input
+                id="tracker-search"
+                type="search"
+                placeholder="ID, name, or species"
+                autocomplete="off"
+            />
+        </label>
+        <label>
+            <span>Show</span>
+            <select id="baseline-filter">
+                <option value="all">All containers</option>
+                <option value="needs-baseline">Needs a weight baseline</option>
+                <option value="has-weight">Has a weight</option>
+            </select>
+        </label>
+        <label>
+            <span>Sort</span>
+            <select id="tracker-sort">
+                <option value="label">Natural label order</option>
+                <option value="water">Longest since water</option>
+                <option value="water-date">Water date</option>
+                <option value="activity">Newest activity</option>
+                <option value="weight">Latest weight</option>
+                <option value="name">Plant name</option>
+            </select>
+        </label>
+    </div>
+
+    <div class="water-legend" aria-label="Days since watering color scale">
+        <span>
+            <i class="recent"></i>0 days
+        </span>
+        <span>
+            <i class="middle"></i>14 days
+        </span>
+        <span>
+            <i class="longest"></i>28+ days
+        </span>
+        <small>Elapsed time only—not a watering deadline.</small>
+    </div>
+
+    <div
+        class="sheet-frame-wrap"
+        id="tracker-table-wrap"
+        tabindex="0"
+        aria-label="Scrollable plant tracker"
+    >
+        <table id="tracker-table">
+            <caption>
+                Current collection values derived from the Google Sheets observation history
+            </caption>
+            <thead>
+                <tr>
+                    <th scope="col" data-sort="label" aria-sort="none">
+                        <button type="button">Label ↕</button>
+                    </th>
+                    <th scope="col" data-sort="name" aria-sort="none">
+                        <button type="button">Plant ↕</button>
+                    </th>
+                    <th scope="col" data-sort="water-date" aria-sort="none">
+                        <button type="button">Last watered ↕</button>
+                    </th>
+                    <th scope="col" data-sort="water" aria-sort="none">
+                        <button type="button">Days ↕</button>
+                    </th>
+                    <th scope="col">Est. dry time</th>
+                    <th scope="col" data-sort="weight" aria-sort="none">
+                        <button type="button">Weight ↕</button>
+                    </th>
+                    <th scope="col">Weight trend</th>
+                    <th scope="col">Height</th>
+                    <th scope="col">Width</th>
+                    <th scope="col">Last rotated</th>
+                    <th scope="col">Condition</th>
+                    <th scope="col" data-sort="activity" aria-sort="none">
+                        <button type="button">Last activity ↕</button>
+                    </th>
+                    <th scope="col">History</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="loading-cell" colspan="13">
+                        Loading published observations…
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p class="mobile-note">
+        On a phone, swipe inside the table to see every column. The pot label stays pinned on the
+        left; tap it to open that plant’s complete history. Permanent P-numbers keep those URLs
+        stable after label changes.
+    </p>
+</section>

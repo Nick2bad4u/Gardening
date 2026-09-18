@@ -13,7 +13,7 @@ import {
 const meta = {
     afterEach: releaseWebsiteFocus,
     args: {
-        path: "layouts/grow-spot-layout.html",
+        path: "setup/archive/layout/",
         scenario: "ready",
         theme: "light",
         width: 1280,

@@ -13,7 +13,7 @@ import {
 const meta = {
     afterEach: releaseWebsiteFocus,
     args: {
-        path: "layouts/plant-tracker.html",
+        path: "tracker/",
         scenario: "ready",
         theme: "light",
         width: 1280,
@@ -52,7 +52,7 @@ export const SearchFilterAndSort: Story = {
         await expect(document.querySelectorAll("tbody tr")).toHaveLength(1);
         await expect(canvas.getByRole("link", { name: "1" })).toHaveAttribute(
             "href",
-            "./plant-history.html?id=P01"
+            "/Gardening/storybook/preview/pots/P01/"
         );
         await userEvent.clear(search);
         await userEvent.selectOptions(

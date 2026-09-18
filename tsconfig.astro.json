@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "checkJs": true,
+        "types": ["node", "astro/client"]
+    },
+    "exclude": [
+        ".pages-site",
+        ".cache",
+        "node_modules"
+    ],
+    "extends": "astro/tsconfigs/strict",
+    "include": [
+        ".astro/types.d.ts",
+        "site/**/*",
+        "astro.config.mjs",
+        "types/**/*.d.ts"
+    ]
+}

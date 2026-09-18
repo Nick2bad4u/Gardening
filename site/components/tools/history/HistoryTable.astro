@@ -1,0 +1,165 @@
+---
+import { siteUrl } from "../../../lib/routes.mjs";
+---
+
+<section class="history-panel" id="history" aria-labelledby="history-title">
+    <header>
+        <div>
+            <p class="eyebrow">Append-only log</p>
+            <h2 id="history-title">Observation history</h2>
+            <p>Blank cells mean that item was not checked during that observation.</p>
+        </div>
+        <div class="history-actions">
+            <strong id="history-count">—</strong>
+            <button class="button" id="export-history" type="button">
+                <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                    <use
+                        href={siteUrl("plant-icons.svg#icon-download")}
+                        width="64"
+                        height="64"
+                    ></use>
+                </svg>
+                Export this plant CSV
+            </button>
+        </div>
+    </header>
+    <div class="history-controls">
+        <label>
+            <span>Search this history</span>
+            <input
+                id="history-search"
+                type="search"
+                placeholder="Notes, condition, date…"
+                autocomplete="off"
+            />
+        </label>
+        <label>
+            <span>Event type</span>
+            <select id="history-event-filter">
+                <option value="all">All events</option>
+            </select>
+        </label>
+    </div>
+    <div
+        class="sheet-frame-wrap history-table-wrap"
+        tabindex="0"
+        aria-label="Scrollable plant observation history"
+    >
+        <table id="history-table">
+            <caption>Watering, measurement, weight, and condition events for this plant</caption>
+            <thead>
+                <tr>
+                    <th
+                        scope="col"
+                        data-sort-key="Date"
+                        data-sort-type="date"
+                        aria-sort="descending"
+                    >
+                        <button type="button">
+                            Date
+                            <span aria-hidden="true">↓</span>
+                        </button>
+                    </th>
+                    <th scope="col" data-sort-key="Event" aria-sort="none">
+                        <button type="button">
+                            Event
+                            <span aria-hidden="true">↕</span>
+                        </button>
+                    </th>
+                    <th scope="col" data-sort-key="Weight state" aria-sort="none">
+                        <button type="button">
+                            Weight state
+                            <span aria-hidden="true">↕</span>
+                        </button>
+                    </th>
+                    <th
+                        scope="col"
+                        data-sort-key="Weight (g)"
+                        data-sort-type="number"
+                        aria-sort="none"
+                    >
+                        <button type="button">
+                            Weight
+                            <span aria-hidden="true">↕</span>
+                        </button>
+                    </th>
+                    <th
+                        scope="col"
+                        data-sort-key="Height (cm)"
+                        data-sort-type="number"
+                        aria-sort="none"
+                    >
+                        <button type="button">
+                            Height
+                            <span aria-hidden="true">↕</span>
+                        </button>
+                    </th>
+                    <th
+                        scope="col"
+                        data-sort-key="Width (cm)"
+                        data-sort-type="number"
+                        aria-sort="none"
+                    >
+                        <button type="button">
+                            Width
+                            <span aria-hidden="true">↕</span>
+                        </button>
+                    </th>
+                    <th scope="col" data-sort-key="condition" aria-sort="none">
+                        <button type="button">
+                            Condition / soil
+                            <span aria-hidden="true">↕</span>
+                        </button>
+                    </th>
+                    <th scope="col">Event details</th>
+                    <th scope="col" data-sort-key="Notes" aria-sort="none">
+                        <button type="button">
+                            Notes
+                            <span aria-hidden="true">↕</span>
+                        </button>
+                    </th>
+                    <th
+                        scope="col"
+                        data-sort-key="Trend anchor"
+                        data-sort-type="date"
+                        aria-sort="none"
+                    >
+                        <button type="button">
+                            Trend anchor
+                            <span aria-hidden="true">↕</span>
+                        </button>
+                    </th>
+                    <th
+                        scope="col"
+                        data-sort-key="Days after anchor"
+                        data-sort-type="number"
+                        aria-sort="none"
+                    >
+                        <button type="button">
+                            Days after anchor
+                            <span aria-hidden="true">↕</span>
+                        </button>
+                    </th>
+                    <th
+                        scope="col"
+                        data-sort-key="Pot setup"
+                        data-sort-type="number"
+                        aria-sort="none"
+                    >
+                        <button type="button">
+                            Pot setup
+                            <span aria-hidden="true">↕</span>
+                        </button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="loading-cell" colspan="12">
+                        Loading this plant’s history…
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

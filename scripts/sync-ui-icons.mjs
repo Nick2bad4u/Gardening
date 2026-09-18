@@ -6,7 +6,7 @@ import { format, resolveConfig } from "prettier";
 import { compareText, isNonemptyString, required } from "./build-data.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
-const spritePath = path.join(root, "docs/plant-booklet/plant-icons.svg");
+const spritePath = path.join(root, "assets/artwork/plant-icons.svg");
 const loggerPath = path.join(root, "scripts/google-sheets/Index.html");
 const assetDirectory = path.join(root, "assets/ui-icons");
 
@@ -32,30 +32,38 @@ export function parseUiIcons(sprite) {
         .toArray();
 }
 
-export async function syncUiIcons({ checkOnly = false } = {}) {
+export async function syncUiIcons({
+    checkOnly = false,
+    syncLogger = false,
+} = {}) {
     const [sprite, logger] = await Promise.all([
         readFile(spritePath, "utf8"),
-        readFile(loggerPath, "utf8"),
+        syncLogger ? readFile(loggerPath, "utf8") : Promise.resolve(""),
     ]);
     const icons = parseUiIcons(sprite);
     const byName = new Map(icons.map((icon) => [icon.name, icon]));
     if (icons.length !== 83 || byName.size !== icons.length) {
         throw new Error("Expected 83 unique shared interface/category icons.");
     }
-    const config = await resolveConfig(loggerPath);
-    const nextLogger = await format(
-        logger.replaceAll(
-            /<symbol\s+id="app-icon-(?<icon>[\-a-z]+)"[\s\S]*?<\/symbol>/gv,
-            (/** @type {string} */ _match, /** @type {string} */ name) => {
-                if (!byName.has(name))
-                    throw new Error(`Unmapped logger icon: ${name}`);
-                return loggerSymbol(
-                    required(byName.get(name), `logger icon ${name}`)
-                );
-            }
-        ),
-        { ...config, filepath: loggerPath }
-    );
+    const config = syncLogger ? await resolveConfig(loggerPath) : null;
+    const nextLogger = syncLogger
+        ? await format(
+              logger.replaceAll(
+                  /<symbol\s+id="app-icon-(?<icon>[\-a-z]+)"[\s\S]*?<\/symbol>/gv,
+                  (
+                      /** @type {string} */ _match,
+                      /** @type {string} */ name
+                  ) => {
+                      if (!byName.has(name))
+                          throw new Error(`Unmapped logger icon: ${name}`);
+                      return loggerSymbol(
+                          required(byName.get(name), `logger icon ${name}`)
+                      );
+                  }
+              ),
+              { ...config, filepath: loggerPath }
+          )
+        : logger;
     const outputs = icons.map(({ body, name, viewBox }) => {
         if (viewBox !== "0 0 64 64")
             throw new Error(`UI icon ${name} needs a 64-unit viewBox.`);
@@ -67,7 +75,7 @@ export async function syncUiIcons({ checkOnly = false } = {}) {
     if (checkOnly) {
         if (logger !== nextLogger)
             throw new Error(
-                "Logger UI icons are stale. Run npm run build:booklet."
+                "Logger UI icons are stale. Run npm run build:artwork."
             );
         const directoryEntries1 = await readdir(assetDirectory);
         const names = directoryEntries1
@@ -91,19 +99,21 @@ export async function syncUiIcons({ checkOnly = false } = {}) {
                     )) !== value
                 ) {
                     throw new Error(
-                        `UI icon ${name} is stale. Run npm run build:booklet.`
+                        `UI icon ${name} is stale. Run npm run build:artwork.`
                     );
                 }
             })
         );
     } else {
         await mkdir(assetDirectory, { recursive: true });
-        await Promise.all([
-            writeFile(loggerPath, nextLogger, "utf8"),
-            ...outputs.map(({ name, value }) =>
-                writeFile(path.join(assetDirectory, name), value, "utf8")
-            ),
-        ]);
+        await Promise.all(
+            Iterator.concat(
+                syncLogger ? [writeFile(loggerPath, nextLogger, "utf8")] : [],
+                outputs.map(({ name, value }) =>
+                    writeFile(path.join(assetDirectory, name), value, "utf8")
+                )
+            )
+        );
     }
     return icons;
 }

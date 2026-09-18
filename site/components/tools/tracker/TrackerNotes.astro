@@ -1,0 +1,33 @@
+---
+import { siteUrl } from "../../../lib/routes.mjs";
+---
+
+<aside class="quick-notes" aria-label="Reading this dashboard">
+    <article>
+        <div>
+            <strong>Read-only observations</strong>
+            <p>
+                Published Google Sheets data can take a few minutes to refresh. Blank measurements
+                mean not recorded.
+            </p>
+        </div>
+    </article>
+    <article>
+        <div>
+            <strong>Compare compatible readings</strong>
+            <p>
+                Weight summaries retain the current pot setup and observation eligibility rules. A
+                reference or forecast is evidence, not an automatic watering instruction.
+            </p>
+        </div>
+    </article>
+    <article>
+        <div>
+            <strong>Record care once</strong>
+            <p>
+                Use Log Care to save an observation.{" "}
+                <a href={siteUrl("guides/")}>Read the watering, weighing, and logging guides.</a>
+            </p>
+        </div>
+    </article>
+</aside>

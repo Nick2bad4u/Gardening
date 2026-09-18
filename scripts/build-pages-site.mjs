@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import {
     copyFile,
     mkdir,
@@ -11,35 +12,36 @@ import * as path from "node:path";
 import sharp from "sharp";
 
 import {
+    isCollectionManifest,
+    isPhotoManifest,
+    readJson,
+} from "./build-data.mjs";
+import {
     publishCollectionPreviews,
     rewriteCollectionPreviews,
+    rewriteUnavailableCollectionPreviews,
 } from "./collection-previews.mjs";
 
 /** @typedef {{ bytes: number; path: string; width: number }} PlantImageVariant */
 /** @typedef {{ relativePath: string; variants: PlantImageVariant[] }} PlantImage */
 /** @typedef {Map<string, PlantImage>} PlantImages */
 
+const { env } = process;
 const scriptDirectory = import.meta.dirname;
 const repositoryRoot = path.resolve(scriptDirectory, "..");
-const bookletDirectory = path.join(repositoryRoot, "docs", "plant-booklet");
+const artworkDirectory = path.join(repositoryRoot, "assets", "artwork");
+const publicDirectory = path.join(repositoryRoot, ".cache", "site-public");
 const layoutsDirectory = path.join(repositoryRoot, "docs", "layouts");
-const outputDirectory = path.join(repositoryRoot, ".pages-site");
-const plantIconDirectory = path.join(repositoryRoot, "assets", "plant-icons");
-const repositoryBlobUrl = "https://github.com/Nick2bad4u/Gardening/blob/main";
+const outputDirectory = path.resolve(
+    repositoryRoot,
+    env["GARDENING_SITE_OUT_DIR"] ?? ".pages-site"
+);
 const pagesUrl = "https://nick2bad4u.github.io/Gardening/";
 const googleTagManagerId = "GTM-T8J6HPLF";
 const optimizedPlantImageWidths = [
     480,
     960,
     1440,
-];
-const layoutFileNames = [
-    "grow-spot-layout.html",
-    "indoor-acclimation-calendar.html",
-    "plant-tracker.html",
-    "plant-history.html",
-    "photo-album.html",
-    "daily-report.html",
 ];
 
 /**
@@ -96,10 +98,14 @@ function containedPath(directory, relativePath) {
 
 /**
  * @param {string} relativePath
+ * @param {string} [destinationDirectory]
  */
-async function copyRelativeFile(relativePath) {
+async function copyRelativeFile(
+    relativePath,
+    destinationDirectory = outputDirectory
+) {
     const source = containedPath(repositoryRoot, relativePath);
-    const destination = containedPath(outputDirectory, relativePath);
+    const destination = containedPath(destinationDirectory, relativePath);
     const sourceStats = await stat(source);
 
     if (!sourceStats.isFile()) {
@@ -109,6 +115,161 @@ async function copyRelativeFile(relativePath) {
     await mkdir(path.dirname(destination), { recursive: true });
     await copyFile(source, destination);
     return sourceStats.size;
+}
+
+/** @param {string} directory @returns {Promise<string[]>} */
+async function filesUnder(directory) {
+    const entries = await readdir(directory, { withFileTypes: true });
+    const nested = await Promise.all(
+        entries.map(async (entry) => {
+            const filename = containedPath(directory, entry.name);
+            if (entry.isSymbolicLink())
+                throw new Error(
+                    `Publication input cannot be a symlink: ${filename}`
+                );
+            if (entry.isDirectory()) return filesUnder(filename);
+            return entry.isFile() ? [filename] : [];
+        })
+    );
+    return nested.flat();
+}
+
+/**
+ * Optimize only images actually rendered by Astro, then add production-only
+ * analytics. Compatibility redirects never receive a pageview installation.
+ *
+ * @param {{ analytics?: boolean }} [options]
+ */
+async function finalizePublishedSite({
+    analytics = env["GARDENING_SITE_FIXTURES"] !== "1" &&
+        env["ASTRO_SITE_ANALYTICS"] !== "off",
+} = {}) {
+    const isFixtureBuild = env["GARDENING_SITE_FIXTURES"] === "1";
+    const outputFiles = await filesUnder(outputDirectory);
+    const filenames = outputFiles.filter((filename) =>
+        filename.endsWith(".html")
+    );
+    const sourceDocuments = await Promise.all(
+        filenames.map((filename) => readFile(filename, "utf8"))
+    );
+    const documents = isFixtureBuild
+        ? sourceDocuments.map((html) => rewriteFixturePreviews(html))
+        : sourceDocuments;
+    if (isFixtureBuild) {
+        const placeholder = containedPath(
+            outputDirectory,
+            "assets/fixture-collection-preview.svg"
+        );
+        await mkdir(path.dirname(placeholder), { recursive: true });
+        await writeFile(
+            placeholder,
+            '<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640" role="img" aria-label="Synthetic collection photo fixture"><rect width="960" height="640" fill="#dbe5d8"/><circle cx="480" cy="270" r="130" fill="#618468"/><path d="M350 400h260l-35 160H385z" fill="#a97952"/></svg>',
+            "utf8"
+        );
+    }
+    const references = new Set(
+        documents.flatMap((html) =>
+            html
+                .matchAll(
+                    /\bsrc="\/Gardening\/(?<asset>assets\/plants\/[^"#?]+)"/gv
+                )
+                .map((match) => {
+                    const asset = match.groups?.["asset"];
+                    if (asset === undefined)
+                        throw new Error("Incomplete reference photo path.");
+                    return asset;
+                })
+                .toArray()
+        )
+    );
+    const optimizedImages = await optimizePlantImages(references);
+    /** @type {Set<string>} */
+    const unavailableIds = new Set();
+    /** @type {import("./collection-previews.mjs").CollectionPreviews} */
+    const collectionPreviews = isFixtureBuild
+        ? new Map()
+        : await publishCollectionPreviews(
+              documents,
+              repositoryRoot,
+              outputDirectory,
+              {
+                  onUnavailable: (id, error) => {
+                      unavailableIds.add(id);
+                      console.warn(
+                          `Collection preview ${id} unavailable after retries and verified-source fallback: ${error.message}`
+                      );
+                  },
+              }
+          );
+    await Promise.all(
+        filenames.map(async (filename, index) => {
+            let html = documents[index];
+            if (html === undefined)
+                throw new Error(`Missing page: ${filename}`);
+            html = rewriteCollectionPreviews(
+                rewritePublishedPlantImages(
+                    rewriteUnavailableCollectionPreviews(html, unavailableIds),
+                    optimizedImages
+                ),
+                collectionPreviews,
+                "/Gardening/"
+            );
+            const isRedirect = /<meta\s+name=["']gardening-redirect["']/v.test(
+                html
+            );
+            if (analytics && !isFixtureBuild && !isRedirect) {
+                html = injectGoogleTagManager(html);
+                assertPublishedAnalytics(html, filename);
+            }
+            if (
+                !isRedirect &&
+                !/<link\b[^>]+\brel=["']canonical["']/v.test(html)
+            ) {
+                throw new Error(`Missing canonical URL: ${filename}`);
+            }
+            if (
+                /file:\/\/|C:\\Users\\|source_path|GYAZO_OAUTH_ACCESS_TOKEN/v.test(
+                    html
+                )
+            ) {
+                throw new Error(
+                    `Private source reference in publication: ${filename}`
+                );
+            }
+            await writeFile(filename, html, "utf8");
+        })
+    );
+    const previewStatusPath = containedPath(
+        outputDirectory,
+        "assets/collection-preview-status.json"
+    );
+    await mkdir(path.dirname(previewStatusPath), { recursive: true });
+    await writeFile(
+        previewStatusPath,
+        `${JSON.stringify(
+            {
+                available: collectionPreviews.size,
+                unavailable: [...unavailableIds].map((id) => ({
+                    captureUrl: `https://gyazo.com/${id}`,
+                    id,
+                })),
+            },
+            null,
+            2
+        )}\n`,
+        "utf8"
+    );
+    // Originals are only staging inputs; retain named logger evidence assets.
+    for (const reference of references) {
+        // eslint-disable-next-line no-await-in-loop -- Remove each known single staged file after all pages were rewritten.
+        await rm(containedPath(outputDirectory, reference), { force: true });
+    }
+    return {
+        pageCount: filenames.length,
+        previewCount: collectionPreviews.size,
+        referenceImageCount: references.size,
+        unavailablePreviewCount: unavailableIds.size,
+    };
 }
 
 /** @param {string} source @param {string} [siteBase] */
@@ -134,13 +295,6 @@ function findLoggerAssetReferences(source, siteBase = pagesUrl) {
 }
 
 /**
- * @param {string} relativePath
- */
-function githubBlob(relativePath) {
-    return `${repositoryBlobUrl}/${relativePath}`;
-}
-
-/**
  * @param {string} html
  */
 function injectGoogleTagManager(html) {
@@ -156,6 +310,7 @@ function injectGoogleTagManager(html) {
     const headSnippet = `<!-- Google Tag Manager -->
         <script>
             ((w, d, s, l, i) => {
+                if (d.documentElement.hasAttribute("data-gardening-redirecting")) return;
                 w[l] = w[l] || [];
                 w[l].push({ "gtm.start": Date.now(), event: "gtm.js" });
                 const firstScript = d.getElementsByTagName(s)[0];
@@ -178,10 +333,12 @@ function injectGoogleTagManager(html) {
     const bodySnippet = `<!-- Google Tag Manager (noscript) -->
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${googleTagManagerId}" title="Google Tag Manager" height="0" width="0" style="display: none; visibility: hidden" aria-hidden="true" tabindex="-1"></iframe></noscript>
         <!-- End Google Tag Manager (noscript) -->`;
-    const withHead = html.replace(
-        /<head\b[^>]*>/iv,
-        (openingTag) => `${openingTag}\n        ${headSnippet}`
-    );
+    const withHead = html
+        .replace(/<head\b[^>]*>/iv, (openingTag) => `${openingTag}\n`)
+        .replace(
+            /<\/head\s*>/iv,
+            (closingTag) => `${headSnippet}\n${closingTag}`
+        );
     const withBody = withHead.replace(
         /<body\b[^>]*>/iv,
         (/** @type {string} */ openingTag) =>
@@ -189,8 +346,8 @@ function injectGoogleTagManager(html) {
     );
 
     if (
-        withHead === html ||
         withBody === withHead ||
+        !withHead.includes(headSnippet) ||
         !withBody.includes(`ns.html?id=${googleTagManagerId}`)
     ) {
         throw new Error("Could not inject both Google Tag Manager snippets.");
@@ -232,263 +389,19 @@ function injectPageNotFoundEvent(html) {
 }
 
 async function main() {
-    const [
-        sourceHtml,
-        loggerSource,
-        ...layoutSources
-    ] = await Promise.all([
-        readFile(path.join(bookletDirectory, "index.html"), "utf8"),
-        readFile(
-            path.join(
-                repositoryRoot,
-                "scripts",
-                "google-sheets",
-                "plant-tracker.gs"
-            ),
-            "utf8"
-        ),
-        ...layoutFileNames.map((fileName) =>
-            readFile(path.join(layoutsDirectory, fileName), "utf8")
-        ),
-    ]);
-    const pageAssetReferences = [sourceHtml, ...layoutSources]
-        .flatMap((html) =>
-            html
-                .matchAll(
-                    /\bsrc="\.\.\/\.\.\/(?<reference>assets\/(?:collection-photos|layouts|plants)\/[^"#?]+)"/gv
-                )
-                .toArray()
-        )
-        .map((match) => {
-            const reference = match.groups?.["reference"];
-            if (reference === undefined)
-                throw new Error("Incomplete plant asset reference.");
-            return reference;
-        });
-    const loggerAssetReferences = findLoggerAssetReferences(loggerSource);
-    const plantImageReferences = new Set(
-        pageAssetReferences.filter((reference) =>
-            reference.startsWith("assets/plants/")
-        )
-    );
-    const assetReferences = new Set(
-        Iterator.concat(
-            pageAssetReferences.filter(
-                (reference) => !reference.startsWith("assets/plants/")
-            ),
-            loggerAssetReferences
-        )
-    );
-    for (const html of [sourceHtml, ...layoutSources]) {
-        for (const match of html.matchAll(
-            /\bhref="\.\.\/\.\.\/(?<reference>assets\/layouts\/[^"#?]+\.(?:csv|png))"/gv
-        )) {
-            const reference = match.groups?.["reference"];
-            if (reference === undefined)
-                throw new Error("Incomplete placement download reference.");
-            assetReferences.add(reference);
-        }
-    }
-
-    let publishedHtml = addCanonical(sourceHtml, pagesUrl)
-        .replaceAll('href="../layouts/', 'href="./layouts/')
-        .replaceAll(
-            /href="\.\.\/plants\/(?<relativePath>[^"#?]+)"/gv,
-            (
-                /** @type {string} */ _match,
-                /** @type {string} */ relativePath
-            ) => {
-                const profilePath = `docs/plants/${relativePath}`;
-                return `href="${githubBlob(profilePath)}"`;
-            }
-        )
-        .replaceAll(
-            /href="\.\.\/\.\.\/assets\/plants\/(?<relativePath>[^"#?]+\/README\.md)"/gv,
-            (
-                /** @type {string} */ _match,
-                /** @type {string} */ relativePath
-            ) => {
-                const archivePath = `assets/plants/${relativePath}`;
-                return `href="${githubBlob(archivePath)}"`;
-            }
-        )
-        .replaceAll(
-            /href="\.\.\/\.\.\/(?<relativePath>assets\/(?:measurements|nursery-labels)\/[^"#?]+)"/gv,
-            (
-                /** @type {string} */ _match,
-                /** @type {string} */ relativePath
-            ) => `href="${githubBlob(relativePath)}"`
-        )
-        .replaceAll(
-            /href="\.\.\/\.\.\/(?<relativePath>assets\/collection-photos\/[^"#?]+\.(?:jpe?g|png))"/giv,
-            (
-                /** @type {string} */ _match,
-                /** @type {string} */ relativePath
-            ) => `href="${githubBlob(relativePath)}"`
-        )
-        .replaceAll(
-            /\b(?<attribute>href|src)="\.\.\/\.\.\/(?<relativePath>assets\/collection-photos\/[^"#?]+)"/gv,
-            '$<attribute>="./$<relativePath>"'
-        )
-        .replaceAll(
-            /\b(?<attribute>href|src)="\.\.\/\.\.\/(?<relativePath>assets\/(?:layouts|plants)\/[^"#?]+)"/gv,
-            '$<attribute>="./$<relativePath>"'
-        );
-
-    if (publishedHtml.includes("../../assets/")) {
-        throw new Error(
-            "The Pages HTML still contains an unpublished asset reference."
-        );
-    }
-
-    await rm(outputDirectory, { force: true, recursive: true });
-    await mkdir(outputDirectory, { recursive: true });
-    await mkdir(path.join(outputDirectory, "layouts"), { recursive: true });
-
-    const optimizedImages = await optimizePlantImages(plantImageReferences);
-    const collectionPreviews = await publishCollectionPreviews(
-        [sourceHtml, ...layoutSources],
+    const directory = path.join(
         repositoryRoot,
-        outputDirectory
+        ".cache",
+        `site-public-${randomUUID()}`
     );
-    publishedHtml = rewritePublishedPlantImages(publishedHtml, optimizedImages);
-    publishedHtml = rewriteCollectionPreviews(
-        publishedHtml,
-        collectionPreviews,
-        "./"
-    );
-    publishedHtml = injectGoogleTagManager(publishedHtml);
-    assertPublishedAnalytics(publishedHtml, "field-guide index");
-    const notFoundHtml = injectPageNotFoundEvent(publishedHtml).replace(
-        /<head\b[^>]*>/iv,
-        (openingTag) => `${openingTag}\n        <base href="${pagesUrl}">`
-    );
-    assertPublishedAnalytics(notFoundHtml, "field-guide 404");
-
-    for (const reference of plantImageReferences) {
-        if (publishedHtml.includes(`src="./${reference}"`)) {
-            throw new Error(
-                `The Pages HTML still loads an original plant image: ${reference}`
-            );
-        }
-    }
-
-    let assetBytes = optimizedImages
-        .values()
-        .flatMap((record) => record.variants)
-        .reduce((sum, variant) => sum + variant.bytes, 0);
-    const evidenceSizes = await mapWithConcurrency(
-        [...assetReferences],
-        4,
-        copyRelativeFile
-    );
-    assetBytes += evidenceSizes.reduce((sum, size) => sum + size, 0);
-    assetBytes += Iterator.concat(...collectionPreviews.values()).reduce(
-        (sum, variant) => sum + (variant.bytes ?? 0),
-        0
-    );
-
-    const plantIconEntries = await readdir(plantIconDirectory, {
-        withFileTypes: true,
-    });
-    const plantIconRelativePaths = plantIconEntries
-        .filter((entry) => entry.isFile() && entry.name.endsWith(".svg"))
-        .map((entry) => path.join("assets", "plant-icons", entry.name))
-        .toSorted((left, right) => left.localeCompare(right));
-    if (plantIconRelativePaths.length !== 38) {
-        throw new Error(
-            `Expected 36 profile and two shared-planter portraits for Pages but found ${plantIconRelativePaths.length}.`
-        );
-    }
-    const plantIconSizes = await mapWithConcurrency(
-        plantIconRelativePaths,
-        4,
-        copyRelativeFile
-    );
-    assetBytes += plantIconSizes.reduce((sum, size) => sum + size, 0);
-
-    const uiIconNames = await readdir(
-        path.join(repositoryRoot, "assets", "ui-icons")
-    );
-    const uiIconRelativePaths = uiIconNames
-        .filter((name) => name.endsWith(".svg"))
-        .map((name) => path.join("assets", "ui-icons", name))
-        .toSorted((left, right) => left.localeCompare(right));
-    if (uiIconRelativePaths.length !== 83) {
-        throw new Error(
-            `Expected 83 shared interface SVG exports for Pages but found ${uiIconRelativePaths.length}.`
-        );
-    }
-    const uiIconSizes = await mapWithConcurrency(
-        uiIconRelativePaths,
-        4,
-        copyRelativeFile
-    );
-    assetBytes += uiIconSizes.reduce((sum, size) => sum + size, 0);
-
-    await Promise.all([
-        copyFile(
-            path.join(bookletDirectory, "booklet.css"),
-            path.join(outputDirectory, "booklet.css")
-        ),
-        copyFile(
-            path.join(bookletDirectory, "booklet.js"),
-            path.join(outputDirectory, "booklet.js")
-        ),
-        copyFile(
-            path.join(bookletDirectory, "favicon.svg"),
-            path.join(outputDirectory, "favicon.svg")
-        ),
-        copyFile(
-            path.join(bookletDirectory, "plant-icons.svg"),
-            path.join(outputDirectory, "plant-icons.svg")
-        ),
-        copyFile(
-            path.join(bookletDirectory, "cactus-cursor.svg"),
-            path.join(outputDirectory, "cactus-cursor.svg")
-        ),
-        writeFile(
-            path.join(outputDirectory, "index.html"),
-            publishedHtml,
-            "utf8"
-        ),
-        writeFile(path.join(outputDirectory, "404.html"), notFoundHtml, "utf8"),
-        writeFile(path.join(outputDirectory, ".nojekyll"), "", "utf8"),
-        publishLegacyBookletRedirect(),
-        ...layoutFileNames.map((fileName) =>
-            publishLayout(fileName, optimizedImages, collectionPreviews)
-        ),
-        copyFile(
-            path.join(layoutsDirectory, "plant-tracker.css"),
-            path.join(outputDirectory, "layouts", "plant-tracker.css")
-        ),
-        copyFile(
-            path.join(layoutsDirectory, "plant-tracker-data.js"),
-            path.join(outputDirectory, "layouts", "plant-tracker-data.js")
-        ),
-        copyFile(
-            path.join(layoutsDirectory, "plant-tracker.js"),
-            path.join(outputDirectory, "layouts", "plant-tracker.js")
-        ),
-        ...["daily-report.css", "daily-report.js"].map((fileName) =>
-            copyFile(
-                path.join(layoutsDirectory, fileName),
-                path.join(outputDirectory, "layouts", fileName)
-            )
-        ),
-        publishPlantHistoryClient(),
-        copyFile(
-            path.join(layoutsDirectory, "plant-charts.js"),
-            path.join(outputDirectory, "layouts", "plant-charts.js")
-        ),
-        copyFile(
-            path.join(layoutsDirectory, "plant-profile-data.json"),
-            path.join(outputDirectory, "layouts", "plant-profile-data.json")
-        ),
-    ]);
-
+    await prepareSiteAssets({ directory });
+    const { build } = await import("astro");
+    await build({ publicDir: directory });
+    const summary = await finalizePublishedSite();
+    // The exact snapshot was validated under the repository cache by preparation.
+    await rm(directory, { force: true, recursive: true });
     console.log(
-        `Built GitHub Pages artifact with GTM ${googleTagManagerId}, the field guide, six collection tools, ${optimizedImages.size} responsive plant-image sets, ${plantIconRelativePaths.length} standalone plant portraits, and ${assetReferences.size} copied evidence images (${(assetBytes / 1024 / 1024).toFixed(1)} MiB total).`
+        `Built ${summary.pageCount} Astro pages, ${summary.referenceImageCount} responsive reference-photo sets and ${summary.previewCount} collection previews.`
     );
 }
 
@@ -586,107 +499,160 @@ async function optimizePlantImages(relativePaths) {
 }
 
 /**
- * @param {string} fileName
- * @param {PlantImages} optimizedImages
- * @param {import("./collection-previews.mjs").CollectionPreviews} collectionPreviews
+ * Prepare only reviewed source assets. This command never calls a source
+ * generator, reads private photo mappings, or rewrites the logger.
+ *
+ * @param {{ directory?: string }} [options]
  */
-async function publishLayout(fileName, optimizedImages, collectionPreviews) {
-    const sourceHtml = await readFile(
-        path.join(layoutsDirectory, fileName),
-        "utf8"
-    );
-    let publishedHtml = addCanonical(
-        sourceHtml,
-        `${pagesUrl}layouts/${fileName}`
-    )
-        .replaceAll("../plant-booklet/", "../")
-        .replaceAll(
-            /\b(?<attribute>href|src)="\.\.\/\.\.\/(?<relativePath>assets\/(?:collection-photos|layouts|plant-icons)\/[^"#?]+)"/gv,
-            '$<attribute>="../$<relativePath>"'
-        )
-        .replaceAll(
-            /href="\.\.\/equipment\/(?<relativePath>[^"#?]+\.md)"/gv,
-            (
-                /** @type {string} */ _match,
-                /** @type {string} */ relativePath
-            ) => {
-                const equipmentPath = `docs/equipment/${relativePath}`;
-                return `href="${githubBlob(equipmentPath)}"`;
-            }
-        )
-        .replaceAll(
-            /\b(?<attribute>href|src)="\.\.\/\.\.\/(?<relativePath>assets\/plants\/[^"#?]+)"/gv,
-            '$<attribute>="../$<relativePath>"'
-        );
-
-    publishedHtml = rewritePublishedPlantImages(publishedHtml, optimizedImages);
-    publishedHtml = rewriteCollectionPreviews(
-        publishedHtml,
-        collectionPreviews,
-        "../"
-    );
-    publishedHtml = injectGoogleTagManager(publishedHtml);
-    assertPublishedAnalytics(publishedHtml, fileName);
-
+async function prepareSiteAssets({ directory = publicDirectory } = {}) {
+    // Both default preview assets and isolated build snapshots stay under .cache.
+    if (path.dirname(directory) !== path.join(repositoryRoot, ".cache"))
+        throw new Error("Public assets must stay under the repository cache.");
     if (
-        publishedHtml.includes("../plant-booklet/") ||
-        publishedHtml.includes("../../assets/layouts/")
+        directory !== publicDirectory &&
+        !/^site-public-[\d\-a-f]{36}$/v.test(path.basename(directory))
     ) {
-        throw new Error(
-            `${fileName} still contains an unpublished booklet or layout-asset path.`
-        );
+        throw new Error("Unexpected public asset directory.");
     }
-
-    const destination = path.join(outputDirectory, "layouts", fileName);
-    await mkdir(path.dirname(destination), { recursive: true });
-    await writeFile(destination, publishedHtml, "utf8");
-}
-
-async function publishLegacyBookletRedirect() {
-    const directory = path.join(outputDirectory, "docs", "plant-booklet");
+    await rm(directory, { force: true, recursive: true });
     await mkdir(directory, { recursive: true });
-    await writeFile(
-        path.join(directory, "index.html"),
-        `<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>The Fenton Collection · Plant field guide</title>
-        <link rel="canonical" href="${pagesUrl}">
-        <script>
-            const destination = new URL("../../", location.href);
-            destination.search = location.search;
-            destination.hash = location.hash;
-            location.replace(destination.href);
-        </script>
-    </head>
-    <body><p><a href="../../">Open the plant field guide</a></p></body>
-</html>
-`,
+    /** @type {Set<string>} */
+    const references = new Set();
+    const documents = await filesUnder(path.join(repositoryRoot, "docs"));
+    const textSources = await Promise.all(
+        documents
+            .filter(
+                (filename) =>
+                    filename.endsWith(".md") ||
+                    (filename.endsWith(".html") &&
+                        path.dirname(filename) === layoutsDirectory)
+            )
+            .map((filename) => readFile(filename, "utf8"))
+    );
+    // Only named presentation assets and sanitized nursery derivatives qualify;
+    // private camera originals and measurement archives are never glob-copied.
+    for (const source of textSources) {
+        for (const match of source.matchAll(
+            /\b(?<asset>assets\/(?:layouts|nursery-labels)\/[\w\-.\/]+\.(?:csv|jpe?g|png|svg|webp))/giv
+        )) {
+            const reference = match.groups?.["asset"];
+            if (reference !== undefined) references.add(reference);
+        }
+    }
+    const logger = await readFile(
+        path.join(repositoryRoot, "scripts/google-sheets/plant-tracker.gs"),
         "utf8"
     );
+    for (const reference of findLoggerAssetReferences(logger))
+        references.add(reference);
+    const manifest = await readJson(
+        path.join(repositoryRoot, "assets/plants/photo-manifest.json"),
+        isPhotoManifest
+    );
+    for (const photo of manifest.photos) {
+        if (
+            !/^assets\/plants\/[\w\-\/]+\.(?:jpe?g|png|webp)$/iv.test(
+                photo.file
+            )
+        ) {
+            throw new Error(
+                `Invalid licensed reference-photo path: ${photo.file}`
+            );
+        }
+        references.add(photo.file);
+    }
+    const collectionManifest = await readJson(
+        path.join(
+            repositoryRoot,
+            "assets/collection-photos/photo-manifest.json"
+        ),
+        isCollectionManifest
+    );
+    const nurseryFiles = [
+        ...collectionManifest.nursery_label_archive_evidence.map(
+            (evidence) => evidence.file
+        ),
+        ...collectionManifest.plants.flatMap((plant) =>
+            plant.photos
+                .filter((photo) => photo.kind === "nursery-label")
+                .map((photo) => photo.source_file)
+                .filter((filename) => filename !== undefined)
+        ),
+    ];
+    for (const filename of nurseryFiles) {
+        if (
+            !/^assets\/nursery-labels\/[\w\-.]+\.(?:jpe?g|png|webp)$/iv.test(
+                filename
+            )
+        )
+            throw new Error(`Invalid nursery evidence path: ${filename}`);
+        references.add(filename);
+    }
+    for (const relativeDirectory of ["assets/plant-icons", "assets/ui-icons"]) {
+        // eslint-disable-next-line no-await-in-loop -- Only two explicit icon export directories are examined.
+        const entries = await readdir(
+            containedPath(repositoryRoot, relativeDirectory),
+            { withFileTypes: true }
+        );
+        for (const entry of entries) {
+            if (entry.isFile() && entry.name.endsWith(".svg"))
+                references.add(`${relativeDirectory}/${entry.name}`);
+        }
+    }
+    await mapWithConcurrency([...references], 4, async (reference) => {
+        const destination = containedPath(directory, reference);
+        await mkdir(path.dirname(destination), { recursive: true });
+        if (/\.(?:jpe?g|png|webp)$/iv.test(reference)) {
+            // Sharp drops metadata by default, including location-bearing EXIF.
+            await sharp(containedPath(repositoryRoot, reference))
+                .rotate()
+                .toFile(destination);
+        } else await copyRelativeFile(reference, directory);
+    });
+    const runtimeFiles = [
+        "plant-tracker.js",
+        "plant-tracker-data.js",
+        "plant-history.js",
+        "plant-charts.js",
+        "plant-profile-data.json",
+    ];
+    await mkdir(path.join(directory, "layouts"), { recursive: true });
+    await Promise.all(
+        runtimeFiles.map((filename) =>
+            copyFile(
+                containedPath(layoutsDirectory, filename),
+                containedPath(directory, `layouts/${filename}`)
+            )
+        )
+    );
+    await Promise.all(
+        [
+            "plant-icons.svg",
+            "favicon.svg",
+            "cactus-cursor.svg",
+        ].map((filename) =>
+            copyFile(
+                containedPath(artworkDirectory, filename),
+                containedPath(directory, filename)
+            )
+        )
+    );
+    await writeFile(path.join(directory, ".nojekyll"), "", "utf8");
+    return { assetCount: references.size, directory };
 }
 
-async function publishPlantHistoryClient() {
-    const sourcePath = path.join(layoutsDirectory, "plant-history.js");
-    const sourceScript = await readFile(sourcePath, "utf8");
-    const publishedScript = sourceScript.replaceAll(
-        "../plant-booklet/#",
-        "../#"
-    );
-
-    if (publishedScript.includes("../plant-booklet/")) {
-        throw new Error(
-            "plant-history.js still contains an unpublished booklet path."
-        );
-    }
-
-    await writeFile(
-        path.join(outputDirectory, "layouts", "plant-history.js"),
-        publishedScript,
-        "utf8"
-    );
+/** @param {string} html */
+function rewriteFixturePreviews(html) {
+    return html.replaceAll(/<img\b[^>]*>/gv, (imageTag) => {
+        if (!/\bsrc="https:\/\/(?:i|thumb)\.gyazo\.com\//v.test(imageTag))
+            return imageTag;
+        return imageTag
+            .replace(
+                /\bsrc="[^"]*"/v,
+                'src="/Gardening/assets/fixture-collection-preview.svg"'
+            )
+            .replace(/\bsrcset="[^"]*"/v, "");
+    });
 }
 
 /** @param {string} html @param {PlantImages} optimizedImages */
@@ -695,7 +661,7 @@ function rewritePublishedPlantImages(html, optimizedImages) {
         /<img\b[^>]*>/gv,
         (/** @type {string} */ imageTag) => {
             const source =
-                /\bsrc="(?<prefix>\.\/|\.\.\/|\.\.\/\.\.\/)(?<relativePath>assets\/plants\/[^"#?]+)"/v.exec(
+                /\bsrc="(?<prefix>\/Gardening\/|\.\/|\.\.\/|\.\.\/\.\.\/)(?<relativePath>assets\/plants\/[^"#?]+)"/v.exec(
                     imageTag
                 );
             if (!source) return imageTag;
@@ -743,13 +709,18 @@ const isDirectRun =
     process.argv[1] !== undefined &&
     path.resolve(process.argv[1]) === import.meta.filename;
 
-if (isDirectRun) await main();
+if (isDirectRun) {
+    if (process.argv.includes("--prepare")) await prepareSiteAssets();
+    else await main();
+}
 
 export {
     addCanonical,
     containedPath,
+    finalizePublishedSite,
     findLoggerAssetReferences,
     injectGoogleTagManager,
     injectPageNotFoundEvent,
+    prepareSiteAssets,
     rewritePublishedPlantImages,
 };

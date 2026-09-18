@@ -52,7 +52,9 @@ function isRecord(value) {
 
 async function loadFieldGuideProfiles() {
     const response = await fetch(
-        new URL("plant-profile-data.json", import.meta.url)
+        document.documentElement.dataset["siteBase"] === undefined
+            ? new URL("plant-profile-data.json", import.meta.url)
+            : `${document.documentElement.dataset["siteBase"]}layouts/plant-profile-data.json`
     );
     if (!response.ok) {
         throw new Error(
@@ -122,7 +124,10 @@ const HISTORY_HEADERS = Object.freeze([
 ]);
 
 const searchParameters = new URLSearchParams(location.search);
-const requestedId = searchParameters.get("id");
+const potRoot = document.querySelector("[data-pot-id]");
+const requestedId =
+    (potRoot instanceof HTMLElement ? potRoot.dataset["potId"] : undefined) ??
+    searchParameters.get("id");
 const tableBody = getRequiredElement(
     "#history-table tbody",
     HTMLTableSectionElement
@@ -748,7 +753,11 @@ function renderProfileLinks(plantId) {
     for (const [index, [fragment, title]] of profiles.entries()) {
         const link = document.createElement("a");
         link.className = "button field-guide-button";
-        link.href = `../plant-booklet/#${encodeURIComponent(fragment)}`;
+        const base = document.documentElement.dataset["siteBase"];
+        link.href =
+            base !== undefined && base !== ""
+                ? `${base}plants/${encodeURIComponent(fragment)}/`
+                : `../plant-booklet/#${encodeURIComponent(fragment)}`;
         link.append(
             siteIcon("field-guide"),
             document.createTextNode(
@@ -886,12 +895,13 @@ function setTrendCard(valueSelector, detailSelector, value, detail) {
  */
 function siteIcon(name) {
     const iconTemplate = getRequiredElement(
-        ".brand-mark .site-icon",
+        ".brand-mark .site-icon, [data-tool-icon-template]",
         SVGElement
     );
     const icon = iconTemplate.cloneNode(true);
     if (!(icon instanceof SVGElement))
         throw new Error("Invalid site icon template.");
+    icon.removeAttribute("hidden");
     const use = icon.querySelector("use");
     if (!use)
         throw new Error("The site icon template is missing its use node.");

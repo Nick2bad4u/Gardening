@@ -1,0 +1,30 @@
+---
+import SiteLayout from "../components/SiteLayout.astro";
+import TrackerHeader from "../components/tools/tracker/TrackerHeader.astro";
+import TrackerStats from "../components/tools/tracker/TrackerStats.astro";
+import TrackerNotes from "../components/tools/tracker/TrackerNotes.astro";
+import TrackerTable from "../components/tools/tracker/TrackerTable.astro";
+import "../styles/tools/tracker.css";
+---
+
+<SiteLayout
+    title="Plant tracker"
+    section="tracker"
+    description="Live, read-only observations for the collection."
+>
+    <div class="tool-tracker tool-content">
+        <TrackerHeader />
+        <TrackerStats />
+        <TrackerNotes />
+        <TrackerTable />
+        <noscript>
+            <p>
+                Live observations need JavaScript. Use the Google Sheets link above to read the
+                workbook directly.
+            </p>
+        </noscript>
+    </div>
+</SiteLayout>
+<script>
+    import "../../docs/layouts/plant-tracker.js";
+</script>

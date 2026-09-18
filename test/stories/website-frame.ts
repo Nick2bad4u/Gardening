@@ -82,10 +82,7 @@ export function renderWebsiteFrame({
     theme,
     width,
 }: Readonly<WebsiteFrameProps>): ReactElement {
-    const url = new URL(
-        `${import.meta.env.BASE_URL}docs/${path}`,
-        location.href
-    );
+    const url = new URL(`/Gardening/storybook/preview/${path}`, location.href);
     url.searchParams.set("scenario", scenario);
     url.searchParams.set("theme", theme);
     return createElement("iframe", {

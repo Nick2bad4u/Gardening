@@ -13,7 +13,7 @@ import {
 const meta = {
     afterEach: releaseWebsiteFocus,
     args: {
-        path: "layouts/indoor-acclimation-calendar.html",
+        path: "setup/archive/calendar/",
         scenario: "ready",
         theme: "light",
         width: 1280,

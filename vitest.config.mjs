@@ -1,17 +1,23 @@
 import { defineConfig } from "vitest/config";
 
 import { storybookViteConfig } from "./.storybook/vite-config.mjs";
-import {
-    storybookCoverage,
-    storybookProject,
-} from "./vitest.storybook.config.mjs";
+// A Node-only run must not build or boot the browser workbench. Importing the
+// Storybook plugin eagerly also evaluates its main config and fixture build.
+const isUnitOnly = process.argv.some(
+    (argument, index) =>
+        argument === "--project=unit" ||
+        (argument === "--project" && process.argv[index + 1] === "unit")
+);
+const browser = isUnitOnly
+    ? undefined
+    : await import("./vitest.storybook.config.mjs");
 
 export default defineConfig({
     ...storybookViteConfig,
     test: {
         coverage:
-            process.env["VITEST_STORYBOOK"] === "true"
-                ? storybookCoverage
+            browser && process.env["VITEST_STORYBOOK"] === "true"
+                ? browser.storybookCoverage
                 : {
                       clean: true,
                       include: ["scripts/google-sheets/plant-tracker.gs"],
@@ -42,7 +48,7 @@ export default defineConfig({
                     restoreMocks: true,
                 },
             },
-            storybookProject,
+            ...(browser ? [browser.storybookProject] : []),
         ],
         slowTestThreshold: 300,
     },

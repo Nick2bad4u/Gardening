@@ -3,6 +3,7 @@
     "extends": "./tsconfig.json",
     "include": [
         "scripts/**/*.mjs",
+        "site/lib/**/*.mjs",
         "types/**/*.d.ts"
     ]
 }

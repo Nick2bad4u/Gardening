@@ -1,0 +1,29 @@
+---
+import SiteLayout from "../../../components/SiteLayout.astro";
+import DocumentArticle from "../../../components/DocumentArticle.astro";
+import { getEquipmentDocs } from "../../../lib/content.mjs";
+import { siteUrl } from "../../../lib/routes.mjs";
+export async function getStaticPaths() {
+    return (await getEquipmentDocs()).map((document) => ({
+        params: { slug: document.slug },
+        props: { document },
+    }));
+}
+interface Props {
+    document: Awaited<ReturnType<typeof import("../../../lib/content.mjs").getDocument>>;
+}
+const { document } = Astro.props;
+---
+
+<SiteLayout
+    title={document.title}
+    description={document.description}
+    section="setup"
+    breadcrumbs={[
+        { label: "Setup", href: siteUrl("setup/") },
+        { label: "Equipment", href: siteUrl("setup/equipment/") },
+        { label: document.title, href: "" },
+    ]}
+>
+    <DocumentArticle document={document} />
+</SiteLayout>

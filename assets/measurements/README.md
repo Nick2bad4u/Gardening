@@ -89,5 +89,5 @@ pot after dry-fitting; the browser calculator can override this starting map.
 | `2026-07-31-growcam-overhead-layout.png`     | `camera-export.png`   | GrowCam overhead placement reference           |
 
 The resulting plant and riser arrangement is maintained in the
-[grow-spot layout](../../docs/layouts/grow-spot-layout.html) and the
+[historical grow-spot layout](https://nick2bad4u.github.io/Gardening/setup/archive/layout/) and the
 [AW200SE operating schedule](../../docs/equipment/aw200se-operating-schedule.md).

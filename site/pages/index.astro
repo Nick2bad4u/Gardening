@@ -1,0 +1,234 @@
+---
+import SiteLayout from "../components/SiteLayout.astro";
+import SiteIcon from "../components/SiteIcon.astro";
+import LegacyBookmarks from "../components/LegacyBookmarks.astro";
+import { getCollectionManifest, getProfiles, photoPreview } from "../lib/content.mjs";
+import { getLatestReport } from "../lib/reports.mjs";
+import { loggerUrl, profileUrl, siteUrl } from "../lib/routes.mjs";
+import "../styles/home.css";
+const [profiles, manifest, report] = await Promise.all([
+    getProfiles(),
+    getCollectionManifest(),
+    getLatestReport(),
+]);
+const current = profiles.filter((profile) => !profile.historical);
+const pots = new Set(current.map((profile) => profile.trackerId).filter(Boolean));
+const hero = manifest.collection_overviews.toSorted(
+    (a, b) =>
+        (b.captured_on ?? b.provided_on ?? "").localeCompare(
+            a.captured_on ?? a.provided_on ?? ""
+        ) || Number(b.view === "top") - Number(a.view === "top")
+)[0];
+const recent = [
+    ...new Map(
+        current
+            .flatMap((profile) => profile.ownedPhotos.map((photo) => ({ profile, photo })))
+            .toSorted((a, b) =>
+                (b.photo.captured_on ?? b.photo.provided_on ?? "").localeCompare(
+                    a.photo.captured_on ?? a.photo.provided_on ?? ""
+                )
+            )
+            .map((entry) => [entry.photo.image_id, entry])
+    ).values(),
+].slice(0, 4);
+const groups = [
+    {
+        key: "cacti",
+        title: "Cacti & Euphorbia",
+        description: "Spines, ribs, and remarkable shapes.",
+        icon: "cactus",
+    },
+    {
+        key: "succulents",
+        title: "Succulents",
+        description: "Rosettes, living stones, and shared planters.",
+        icon: "succulent",
+    },
+    {
+        key: "houseplants",
+        title: "Houseplants",
+        description: "The leafy side of the collection.",
+        icon: "houseplant",
+    },
+];
+const groupCounts = new Map(
+    groups.map((group) => [
+        group.key,
+        current.filter((profile) => profile.group === group.key).length,
+    ])
+);
+const reportDate = new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+}).format(new Date(`${report.date}T12:00:00Z`));
+---
+
+<SiteLayout title="The Garden">
+    <LegacyBookmarks slot="head" profiles={profiles} />
+    <section class="home-hero" id="top" aria-labelledby="home-title">
+        <div class="home-introduction">
+            <p class="eyebrow">THE FENTON COLLECTION · A LIVING NOTEBOOK</p>
+            <h1 id="home-title">
+                A little garden.
+                <br />
+                <em>A growing story.</em>
+            </h1>
+            <p class="lede">
+                Meet the plants, follow their changes, and find the next useful observation.
+                Everything from the first nursery label to the latest weigh-in, in one place.
+            </p>
+            <div class="action-row">
+                <a class="button" href={siteUrl("plants/")}>
+                    Explore the plants <span aria-hidden="true">↗</span>
+                </a>
+                <a
+                    class="button button-secondary"
+                    href={loggerUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <SiteIcon name="edit" size={18} />
+                    Log an observation<span class="visually-hidden"> (opens in a new tab)</span>
+                </a>
+            </div>
+            <dl class="home-stats">
+                <div>
+                    <dt>Current plant profiles</dt>
+                    <dd>{current.length}</dd>
+                </div>
+                <div>
+                    <dt>Tracked pots</dt>
+                    <dd>{pots.size}</dd>
+                </div>
+                <div>
+                    <dt>One ongoing</dt>
+                    <dd class="stat-word">experiment</dd>
+                </div>
+            </dl>
+        </div>
+        {hero && (
+            <figure class="home-photo">
+                <a href={siteUrl("photos/")}>
+                    <img
+                        src={photoPreview(hero, 960)}
+                        alt={hero.alt}
+                        width="960"
+                        height="720"
+                        fetchpriority="high"
+                        data-image-id={hero.image_id}
+                    />
+                </a>
+                <figcaption>
+                    <span>
+                        <SiteIcon name="camera" size={18} />
+                        From the collection
+                    </span>
+                    <span>{hero.captured_on ?? hero.provided_on}</span>
+                </figcaption>
+            </figure>
+        )}
+    </section>
+    <section class="review-banner" data-reviewed-date={report.date} aria-labelledby="review-title">
+        <div class="review-icon">
+            <SiteIcon name="care" size={38} />
+        </div>
+        <div>
+            <p class="eyebrow">LATEST REVIEWED REPORT</p>
+            <h2 id="review-title">A plan for the next observation.</h2>
+            <p>
+                <time datetime={report.date}>{reportDate}</time>
+                <span class="review-separator"> · </span>
+                {report.coverage} coverage
+            </p>
+            <p class="review-freshness" data-review-freshness>
+                Reviewed snapshot · check its date before acting.
+            </p>
+        </div>
+        <a class="button button-secondary" href={siteUrl("report/")}>
+            Read the report <span aria-hidden="true">→</span>
+        </a>
+    </section>
+    <section class="section-block" aria-labelledby="collections-title">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">GET TO KNOW THE COLLECTION</p>
+                <h2 id="collections-title">Something growing in every corner.</h2>
+            </div>
+            <a href={siteUrl("plants/")}>View all plants →</a>
+        </div>
+        <div class="home-collections">
+            {groups.map((group) => (
+                <a class="collection-card card" href={siteUrl(`plants/?group=${group.key}`)}>
+                    <SiteIcon name={group.icon} size={62} />
+                    <div>
+                        <h3>{group.title}</h3>
+                        <p>{group.description}</p>
+                        <span>
+                            {groupCounts.get(group.key)}{" "}
+                            {groupCounts.get(group.key) === 1 ? "profile" : "profiles"}{" "}
+                            <span aria-hidden="true">↗</span>
+                        </span>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </section>
+    <section class="section-block" aria-labelledby="recent-title">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">THROUGH THE LENS</p>
+                <h2 id="recent-title">Recent moments.</h2>
+            </div>
+            <a href={siteUrl("photos/")}>Open the photo collection →</a>
+        </div>
+        <div class="recent-photos">
+            {recent.map(({ profile, photo }) => (
+                <a class="recent-photo" href={profileUrl(profile.slug)}>
+                    <img
+                        src={photoPreview(photo)}
+                        alt={photo.alt}
+                        width="640"
+                        height="480"
+                        loading="lazy"
+                        data-image-id={photo.image_id}
+                    />
+                    <div>
+                        <span class="badge badge-label">{profile.drawerLabel.primary}</span>
+                        <h3>{profile.title}</h3>
+                        <p>{photo.captured_on ?? photo.provided_on} · Owned plant</p>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </section>
+    <section class="section-block" aria-labelledby="notebook-title">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">THE PRACTICAL SIDE</p>
+                <h2 id="notebook-title">A place for the details.</h2>
+            </div>
+        </div>
+        <div class="card-grid">
+            <a class="notebook-card card" href={siteUrl("tracker/")}>
+                <SiteIcon name="weight" size={32} />
+                <h3>Weights &amp; observations</h3>
+                <p>Explore the recorded weights, dry-down curves, and history for each pot.</p>
+                <span>Open the tracker →</span>
+            </a>
+            <a class="notebook-card card" href={siteUrl("guides/")}>
+                <SiteIcon name="field-guide" size={32} />
+                <h3>Care &amp; logging guides</h3>
+                <p>The reasoning behind watering, weighing, and the actions we record.</p>
+                <span>Browse the guides →</span>
+            </a>
+            <a class="notebook-card card" href={siteUrl("setup/")}>
+                <SiteIcon name="light" size={32} />
+                <h3>The growing space</h3>
+                <p>Current placement, estimated light maps, and the equipment behind it all.</p>
+                <span>Explore the setup →</span>
+            </a>
+        </div>
+    </section>
+</SiteLayout>

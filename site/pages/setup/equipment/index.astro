@@ -1,0 +1,42 @@
+---
+import SiteLayout from "../../../components/SiteLayout.astro";
+import DocumentArticle from "../../../components/DocumentArticle.astro";
+import { getDocument, getEquipmentDocs } from "../../../lib/content.mjs";
+import { contentUrl, siteUrl } from "../../../lib/routes.mjs";
+const document = await getDocument("docs/equipment/inventory.md");
+const research = await getEquipmentDocs();
+---
+
+<SiteLayout
+    title={document.title}
+    description={document.description}
+    section="setup"
+    breadcrumbs={[
+        { label: "Setup", href: siteUrl("setup/") },
+        { label: "Equipment", href: "" },
+    ]}
+>
+    <DocumentArticle document={document} />
+    <section class="equipment-research">
+        <h2>Operating Guides and Model Research</h2>
+        <p>
+            Each record keeps its own dates and status. A research page or historical purchase is
+            not proof that equipment is currently installed.
+        </p>
+        <div class="card-grid">
+            {research.map((item) => (
+                <article class="card">
+                    <h3>
+                        <a href={contentUrl(item.sourcePath)}>{item.title}</a>
+                    </h3>
+                    <p>{item.description}</p>
+                </article>
+            ))}
+        </div>
+    </section>
+</SiteLayout>
+<style>
+    .equipment-research {
+        margin-block: 3rem;
+    }
+</style>

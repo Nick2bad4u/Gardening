@@ -1,6 +1,6 @@
 # Daily garden report
 
-The [daily report](https://nick2bad4u.github.io/Gardening/layouts/daily-report.html)
+The [daily report](https://nick2bad4u.github.io/Gardening/report/)
 is a static page for the phone: a quick list, watering recipes, searchable
 plant cards, weight changes, plateau evidence, a compact pocket list, and a
 separate AI recommendation at the bottom.
@@ -31,10 +31,13 @@ Dashboard and Integrity remain live workbook summaries.
   actual elapsed day, including daylight-saving transitions.
 - [Generator](../../scripts/build-daily-report.mjs) selects the latest dated
   input and renders the [HTML template](../../scripts/templates/daily-report.html).
-- [Generated page](../layouts/daily-report.html),
-  [styles](../layouts/daily-report.css), and
-  [browser enhancements](../layouts/daily-report.js) use the existing Pages build.
+- [Astro report pages](../../site/pages/reports/index.astro),
+  [styles](../../site/styles/report.css), and
+  [browser enhancements](../../site/client/report.js) use the shared site layout.
   The readable HTML and native expandable cards work without JavaScript.
+- `/report/` shows the latest reviewed input. `/reports/` lists the archive;
+  `/reports/YYYY-MM-DD/` is a permanent dated page. The former
+  `/layouts/daily-report.html` address redirects to the latest report.
 
 The generator formats reviewed decisions. It does not access private accounts,
 recalculate the workbook's plateau predicate, infer plant readiness from one
@@ -49,8 +52,9 @@ pots separate from Water and Nothing today. The usual moisture/readiness check
 still applies to Water candidates. Plateau evidence does not prove dry soil.
 
 Version 2 enforces this distinction during validation. Archived version 1 inputs
-retain the decisions made under the previous policy; they are not valid inputs
-for the current generator without a reviewed policy migration. Do not rewrite
+retain the decisions made under the previous policy. The archive renderer displays
+their original fields with an explicit historical-policy notice; it does not pass
+them through the version-2 recommendation validator or reclassify decisions. Do not rewrite
 historical observations or label a policy-only revision as a fresh workbook read.
 
 Each new review also includes `aiRecommendation`: a nonempty array of plain-text
@@ -176,8 +180,8 @@ Unreviewed pots never belong in “Nothing today.”
    A same-day rerun may revise that day's file using its fresh review.
 3. Run the generator and relevant checks below. Fix a real validation failure
    in the source data or implementation; never weaken evidence checks to publish.
-4. Review the diff and explicitly stage only today's JSON and the generated
-   `docs/layouts/daily-report.html`. Routine daily publication should not change
+4. Review the diff and explicitly stage only today's reviewed dated JSON. The
+   HTML preview and website output are ignored build artifacts. Routine daily publication should not change
    templates, scripts, nutrient plans, workbook code, or other gardening edits.
 5. Commit with an emoji/type message such as
    `📝 [docs] Publish garden report for YYYY-MM-DD`. Push normally to `main`
@@ -195,8 +199,8 @@ For step 3, replace `YYYY-MM-DD` with the date being published:
 npm run build:daily-report
 npm run check:daily-report
 npm run test:unit -- test/daily-report.test.mjs
-npx eslint docs/daily-reports/YYYY-MM-DD.json docs/layouts/daily-report.html --max-warnings 0
-npx prettier docs/daily-reports/YYYY-MM-DD.json docs/layouts/daily-report.html --check
+npx eslint docs/daily-reports/YYYY-MM-DD.json --max-warnings 0
+npx prettier docs/daily-reports/YYYY-MM-DD.json --check
 git diff --check
 ```
 
@@ -206,7 +210,10 @@ build/browser types, HTML/style checks, Pages build, and browser checks at
 desktop and 390 px in both themes. Check search, filters, chip links, printing,
 no-JavaScript reading, date warnings, and horizontal overflow.
 
-`npm run build:pages` regenerates the report and includes its HTML, CSS, and JS
-in `.pages-site/layouts/`. The existing push-to-main workflow publishes it.
+`npm run build:daily-report` renders an ignored preview in
+`.cache/daily-report-preview/`. `npm run check:daily-report` validates and renders
+all reviewed inputs without requiring a committed HTML snapshot.
+`npm run build:pages` generates the native report routes in `.pages-site/`.
+The existing push-to-main workflow publishes them.
 There is no second scheduler or GitHub-hosted private-workbook job. The daily
 task supplies the fresh review; GitHub Actions builds and deploys that commit.

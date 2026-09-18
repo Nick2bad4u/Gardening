@@ -6,7 +6,7 @@ import { storybookViteConfig } from "./.storybook/vite-config.mjs";
 
 /** @type {import("vitest/node").CoverageOptions} */
 export const storybookCoverage = {
-    include: ["docs/plant-booklet/booklet.js", "docs/layouts/*.js"],
+    include: ["site/client/**/*.{js,ts}", "docs/layouts/*.js"],
     provider: "v8",
     reporter: [
         "text",
@@ -24,7 +24,10 @@ export const storybookProject = {
     // The interactive runner must prebundle the assertion libraries and their
     // CommonJS dependencies before serving them to Chromium.
     optimizeDeps: { include: ["storybook/test", "vitest"] },
-    plugins: [storybookTest({ configDir: ".storybook" })],
+    plugins: [
+        ...(storybookViteConfig.plugins ?? []),
+        storybookTest({ configDir: ".storybook" }),
+    ],
     test: {
         browser: {
             enabled: true,

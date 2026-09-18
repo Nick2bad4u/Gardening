@@ -19,8 +19,8 @@ const scriptDirectory = import.meta.dirname;
 const repositoryRoot = path.resolve(scriptDirectory, "..");
 const spritePath = path.join(
     repositoryRoot,
-    "docs",
-    "plant-booklet",
+    "assets",
+    "artwork",
     "plant-icons.svg"
 );
 const profileDataPath = path.join(
@@ -40,7 +40,10 @@ const startMarker = "<!-- GENERATED PLANT ICONS START -->";
 const endMarker = "<!-- GENERATED PLANT ICONS END -->";
 const leadingZeroOmissionPattern = /(?:^|\D)\.(?=\d)|(?<!\d)\d+\.\d+\.(?=\d)/mv;
 
-export async function syncPlantIcons({ checkOnly = false } = {}) {
+export async function syncPlantIcons({
+    checkOnly = false,
+    syncLogger = false,
+} = {}) {
     const [
         sprite,
         profileData,
@@ -48,14 +51,14 @@ export async function syncPlantIcons({ checkOnly = false } = {}) {
     ] = await Promise.all([
         readFile(spritePath, "utf8"),
         readJson(profileDataPath, isProfileData),
-        readFile(loggerPath, "utf8"),
+        syncLogger ? readFile(loggerPath, "utf8") : Promise.resolve(""),
     ]);
     const symbols = parsePlantSymbols(sprite);
     const titles = profileTitles(profileData);
     const descriptions = portraitDescriptions();
     validateSymbols(symbols, titles, descriptions);
 
-    if (!/const PLANT_ICON_REVISION = "[^"]+";/v.test(logger)) {
+    if (syncLogger && !/const PLANT_ICON_REVISION = "[^"]+";/v.test(logger)) {
         throw new Error(
             "The logger is missing its plant-icon revision constant."
         );
@@ -78,18 +81,20 @@ export async function syncPlantIcons({ checkOnly = false } = {}) {
         .update(standalone.map(({ output }) => output).join("\n"))
         .digest("hex")
         .slice(0, 16);
-    const nextLogger = await formatted(
-        replaceGeneratedLoggerSymbols(logger).replace(
-            /const PLANT_ICON_REVISION = "[^"]+";/v,
-            () => `const PLANT_ICON_REVISION = "${revision}";`
-        ),
-        loggerPath
-    );
+    const nextLogger = syncLogger
+        ? await formatted(
+              replaceGeneratedLoggerSymbols(logger).replace(
+                  /const PLANT_ICON_REVISION = "[^"]+";/v,
+                  () => `const PLANT_ICON_REVISION = "${revision}";`
+              ),
+              loggerPath
+          )
+        : logger;
 
     if (checkOnly) {
         if (logger !== nextLogger) {
             throw new Error(
-                "The logger plant portraits are stale. Run `npm run build:booklet`."
+                "The logger plant portraits are stale. Run `npm run build:artwork`."
             );
         }
         const currentAssetNames = await readDirectoryIfPresent(assetDirectory);
@@ -104,7 +109,7 @@ export async function syncPlantIcons({ checkOnly = false } = {}) {
             expectedAssetNames.toSorted(compareText).join("\n")
         ) {
             throw new Error(
-                "The standalone plant-portrait asset inventory is stale. Run `npm run build:booklet`."
+                "The standalone plant-portrait asset inventory is stale. Run `npm run build:artwork`."
             );
         }
         await Promise.all(
@@ -112,7 +117,7 @@ export async function syncPlantIcons({ checkOnly = false } = {}) {
                 const current = await readTextIfPresent(filepath);
                 if (current !== output) {
                     throw new Error(
-                        `Standalone plant portrait ${slug} is stale. Run \`npm run build:booklet\`.`
+                        `Standalone plant portrait ${slug} is stale. Run \`npm run build:artwork\`.`
                     );
                 }
             })
@@ -121,12 +126,14 @@ export async function syncPlantIcons({ checkOnly = false } = {}) {
     }
 
     await mkdir(assetDirectory, { recursive: true });
-    await Promise.all([
-        writeFile(loggerPath, nextLogger, "utf8"),
-        ...standalone.map(({ filepath, output }) =>
-            writeFile(filepath, output, "utf8")
-        ),
-    ]);
+    await Promise.all(
+        Iterator.concat(
+            syncLogger ? [writeFile(loggerPath, nextLogger, "utf8")] : [],
+            standalone.map(({ filepath, output }) =>
+                writeFile(filepath, output, "utf8")
+            )
+        )
+    );
     return symbols;
 }
 

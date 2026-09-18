@@ -1,0 +1,90 @@
+---
+import { siteUrl } from "../../../lib/routes.mjs";
+---
+
+<section class="metric-grid" aria-label="Latest observations">
+    <article data-accent="water">
+        <span>
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-water")} width="64" height="64"></use>
+            </svg>
+            Last watered
+        </span>
+        <strong id="last-watered">—</strong>
+        <small id="water-days">No watering logged</small>
+    </article>
+    <article data-accent="weight">
+        <span>
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-weight")} width="64" height="64"></use>
+            </svg>
+            Latest weight
+        </span>
+        <strong id="latest-weight">—</strong>
+        <small id="weight-checked">Not checked yet</small>
+    </article>
+    <article data-accent="growth">
+        <span>
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-dimensions")} width="64" height="64"></use>
+            </svg>
+            Latest height
+        </span>
+        <strong id="latest-height">—</strong>
+        <small id="height-checked">Not checked yet</small>
+    </article>
+    <article data-accent="growth">
+        <span>
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-dimensions")} width="64" height="64"></use>
+            </svg>
+            Latest width
+        </span>
+        <strong id="latest-width">—</strong>
+        <small id="width-checked">Not checked yet</small>
+    </article>
+    <article data-accent="activity">
+        <span>
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-care")} width="64" height="64"></use>
+            </svg>
+            Latest activity
+        </span>
+        <strong id="latest-activity">—</strong>
+        <small id="latest-activity-detail">No dated history</small>
+    </article>
+    <article data-accent="condition">
+        <span>
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use
+                    href={siteUrl("plant-icons.svg#icon-observation")}
+                    width="64"
+                    height="64"
+                ></use>
+            </svg>
+            Latest condition
+        </span>
+        <strong id="latest-condition">—</strong>
+        <small id="latest-condition-detail">Not recorded</small>
+    </article>
+    <article data-accent="records">
+        <span>
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-inventory")} width="64" height="64"></use>
+            </svg>
+            Logged entries
+        </span>
+        <strong id="logged-entry-count">0</strong>
+        <small id="logged-entry-detail">No observations yet</small>
+    </article>
+    <article data-accent="setup">
+        <span>
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-pot")} width="64" height="64"></use>
+            </svg>
+            Active setup entries
+        </span>
+        <strong id="setup-entry-count">0</strong>
+        <small id="setup-entry-detail">Pot setup 1</small>
+    </article>
+</section>

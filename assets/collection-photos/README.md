@@ -34,10 +34,10 @@ placements using 160 unique Gyazo captures. That session added 32 captures for
 full-resolution panels that together cover the approved whole-planter crop;
 both panels are reused across its three component profiles.
 
-The booklet shows only the two newest plant photographs inline. Nursery-label
+Each plant profile shows only the two newest plant photographs inline. Nursery-label
 evidence remains in its own section, and the complete visual timeline opens in
-the plant's Gyazo Collection. The generated
-[`photo-album.html`](../../docs/layouts/photo-album.html) page is a searchable
+the plant's Gyazo Collection. The
+[Collection Photos](https://nick2bad4u.github.io/Gardening/photos/) page is a searchable
 index of all plant Collections and the overview Collection.
 
 ## Publish a new photo

@@ -22,17 +22,23 @@
   wrapper, not the production website architecture. Keep themes, 390 px layout,
   keyboard interactions, loading/error/retry/empty states, and accessibility
   assertions meaningful for the behavior changed.
-- `.storybook/prepare-pages.mjs` copies an explicit public-file list into
-  `.cache/storybook-pages`. It injects `stories/fixtures/page-bootstrap.js` for
-  isolated storage and synthetic Sheet responses; daily-report stories render
-  `fixtures/daily-report.json`. Never use a production save as a test fixture.
-- Update the copy list when a page gains local dependencies. Restart Storybook
-  after editing copied source pages. Do not run the sidebar test widget and CLI
+- `.storybook/prepare-pages.mjs` builds the actual Astro routes into
+  `.cache/storybook-pages`, with the `/Gardening/storybook/preview/` base. It
+  injects `stories/fixtures/page-bootstrap.js` before page scripts for isolated
+  storage and synthetic Sheet responses; reports use `fixtures/daily-report.json`.
+  Fixture builds disable analytics and use local photo placeholders. Never use
+  a production save as a test fixture.
+- The development fixture server maps known Astro source-map entrypoints back
+  to their maintained browser modules through Vite for auditable coverage. It
+  validates the repository path and serves the same implementation; published
+  Storybook uses Astro's ordinary bundled scripts. Keep both paths exercised.
+- Astro includes emitted page dependencies automatically. Restart Storybook
+  after editing website sources. Do not run the sidebar test widget and CLI
   browser runner concurrently; they share a dependency cache on Windows.
 - Build with `npm run build:pages` before `npm run test:e2e` or
   `npm run test:storybook:static`. Playwright's server reads `.pages-site/` at
-  `127.0.0.1:4173`; it does not regenerate it. The static Storybook smoke check
-  verifies the published `/storybook/` subpath and its assets.
+  `127.0.0.1:4173/Gardening/`; it does not regenerate it. The static Storybook
+  smoke check verifies the published `/Gardening/storybook/` subpath and its assets.
 - On Windows, configured Chromium/mobile tests use installed Microsoft Edge.
   Firefox/WebKit require their Playwright browsers; other platforms use the
   installed Playwright Chromium. State which projects actually ran instead of

@@ -1,0 +1,244 @@
+.home-hero {
+    display: grid;
+    grid-template-columns:
+        [column-1-start] minmax(0, 1.1fr)
+        [column-1-end column-2-start] minmax(0, 1fr) [column-2-end];
+    gap: clamp(2rem, 5vi, 4rem);
+    align-items: center;
+    padding-block: 0.7rem 2.5rem;
+}
+.home-introduction h1 {
+    font-size: clamp(2.5rem, 5vi, 4rem);
+    line-height: 1.125;
+    & em {
+        font-weight: 400;
+        color: var(--accent);
+    }
+}
+.home-introduction .lede {
+    margin-block-end: 1.5rem;
+}
+.home-photo {
+    position: relative;
+    padding: 0.6rem;
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 120px 16px 16px;
+    & > :where(a) > img {
+        inline-size: 100%;
+        block-size: auto;
+        aspect-ratio: 1.1;
+        object-fit: cover;
+        border-radius: 112px 10px 10px;
+    }
+    & figcaption {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        padding: 0.8rem 0.5rem 0.2rem;
+        font-size: 0.75rem;
+        color: var(--muted);
+    }
+    & :where(figcaption span:first-child) {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+}
+.home-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4rem;
+    margin: 2.2rem 0 0;
+    & > div {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 0.25rem;
+        padding-inline-end: 1.3rem;
+        border-inline-end: 1px solid var(--line);
+    }
+    & > :where(div:last-child) {
+        padding-inline-end: 0;
+        border-inline-end: none;
+    }
+    & dt {
+        font-size: 0.625rem;
+        color: var(--muted);
+    }
+    & dd {
+        margin: 0;
+        font: 500 2rem/1 var(--font-display);
+    }
+    & .stat-word {
+        font-size: 1.5rem;
+        font-style: italic;
+    }
+}
+.review-banner {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.75rem 2rem;
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+}
+.review-icon {
+    padding: 0.8rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+}
+.review-banner h2 {
+    margin-block-end: 0.5rem;
+    font-size: 1.75rem;
+}
+.review-banner p {
+    margin-block-end: 0.3rem;
+    font-size: 0.875rem;
+}
+.review-banner .eyebrow {
+    margin-block-end: 0.5rem;
+    font-size: 0.625rem;
+}
+.review-banner .button {
+    flex-shrink: 0;
+    margin-inline-start: auto;
+}
+.review-banner .review-freshness {
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+.home-collections {
+    display: grid;
+    grid-template-columns:
+        [start] repeat(3, [column-start] minmax(0, 1fr) [column-end])
+        [end];
+    gap: 1rem;
+}
+.collection-card {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    color: inherit;
+    text-decoration: none;
+    &:hover,
+    &:focus {
+        border-color: var(--accent);
+    }
+    & h3 {
+        margin-block-end: 0.4rem;
+        font-size: 1.125rem;
+    }
+    & p {
+        margin-block-end: 0.75rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        color: var(--muted);
+    }
+    & span {
+        font-size: 0.75rem;
+        color: var(--accent);
+    }
+}
+.recent-photos {
+    display: grid;
+    grid-template-columns:
+        [start] repeat(4, [column-start] minmax(0, 1fr) [column-end])
+        [end];
+    gap: 1.25rem;
+}
+.recent-photo {
+    min-inline-size: 0;
+    color: var(--ink);
+    text-decoration: none;
+    & > img {
+        inline-size: 100%;
+        block-size: auto;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+    & > div {
+        padding-block-start: 0.8rem;
+    }
+    & h3 {
+        margin: 0.5rem 0 0.3rem;
+        font-size: 1rem;
+    }
+    & p {
+        font-size: 0.75rem;
+        color: var(--muted);
+    }
+}
+.notebook-card {
+    color: inherit;
+    text-decoration: none;
+    & h3 {
+        margin-block-start: 1rem;
+    }
+    & p {
+        font-size: 0.875rem;
+        color: var(--muted);
+    }
+    & > span {
+        font-size: 0.75rem;
+        font-weight: 650;
+        color: var(--accent);
+    }
+}
+
+@media (width <= 900px) {
+    .home-hero {
+        gap: 2rem;
+    }
+    .home-collections {
+        grid-template-columns: [column-1-start] minmax(0, 1fr) [column-1-end];
+    }
+    .collection-card {
+        align-items: center;
+        & p {
+            margin-block-end: 0.4rem;
+        }
+    }
+    .recent-photos {
+        gap: 0.9rem;
+    }
+}
+
+@media (width <= 650px) {
+    .home-hero {
+        grid-template-columns: [column-1-start] minmax(0, 1fr) [column-1-end];
+        gap: 1.75rem;
+    }
+    .home-photo > a > img {
+        aspect-ratio: 1.4;
+    }
+    .home-introduction h1 {
+        font-size: 3rem;
+    }
+    .home-stats {
+        gap: 1rem;
+        & > div {
+            padding-inline-end: 1rem;
+        }
+    }
+    .review-banner {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1.25rem;
+    }
+    .review-icon {
+        display: none;
+    }
+    .review-banner .button {
+        margin-inline-start: 0;
+    }
+    .recent-photos {
+        grid-template-columns:
+            [start] repeat(2, [column-start] minmax(0, 1fr) [column-end])
+            [end];
+        gap: 1rem;
+    }
+}

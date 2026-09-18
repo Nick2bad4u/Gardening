@@ -1,0 +1,47 @@
+---
+import SiteLayout from "../components/SiteLayout.astro";
+import { siteUrl } from "../lib/routes.mjs";
+---
+
+<SiteLayout
+    title="Search"
+    description="Find plants, care guides, equipment, and setup references."
+    noindex
+>
+    <header class="page-heading">
+        <p class="eyebrow">FIND YOUR WAY</p>
+        <h1>Search the garden.</h1>
+        <p class="lede">Look up a plant, pot label, care topic, or piece of equipment.</p>
+    </header>
+    <form role="search" class="directory-toolbar" id="site-search-form" action={siteUrl("search/")}>
+        <label for="site-search">
+            Search plants, guides, and equipment
+            <input
+                id="site-search"
+                name="q"
+                type="search"
+                placeholder="Try A1, aeonium, watering, or lights…"
+                autocomplete="off"
+            />
+        </label>
+        <button class="button" type="submit">
+            Search
+        </button>
+    </form>
+    <p id="search-status" class="result-count" role="status" aria-live="polite">
+        Enter a name or topic to search.
+    </p>
+    <ul
+        id="search-results"
+        class="search-results"
+        data-index-url={siteUrl("search-index.json")}
+    ></ul>
+    <noscript>
+        <p>
+            Interactive search needs JavaScript. Browse <a href={siteUrl("plants/")}>Plants</a>,{" "}
+            <a href={siteUrl("guides/")}>Guides</a>, or{" "}
+            <a href={siteUrl("setup/equipment/")}>Equipment</a>.
+        </p>
+    </noscript>
+</SiteLayout>
+<script src="../client/search.js"></script>

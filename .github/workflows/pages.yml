@@ -59,9 +59,9 @@ jobs:
                   npm run lint
                   npm run lint:style
 
-            - name: "Verify generated pages and daily report"
+            - name: "Verify artwork and reviewed report inputs"
               run: |
-                  npm run check:booklet
+                  npm run check:artwork
                   npm run check:daily-report
                   npm run test:unit -- test/daily-report.test.mjs
 
@@ -90,8 +90,11 @@ jobs:
             - name: "Build Pages site"
               run: "npm run build:pages"
 
-            - name: "Check the static Storybook at its published subpath"
-              run: "npm run test:storybook:static"
+            - name: "Verify public routes and publication boundaries"
+              run: "npm run check:site"
+
+            - name: "Verify routes, tools, and static Storybook in Chromium"
+              run: "npx playwright test --project=chromium"
 
             - name: "Configure GitHub Pages"
               if: "${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}"

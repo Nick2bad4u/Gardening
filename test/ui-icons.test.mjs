@@ -6,7 +6,7 @@ import { parseUiIcons } from "../scripts/sync-ui-icons.mjs";
 import { required } from "./helpers/required.mjs";
 
 const sprite = fs.readFileSync(
-    new URL("../docs/plant-booklet/plant-icons.svg", import.meta.url),
+    new URL("../assets/artwork/plant-icons.svg", import.meta.url),
     "utf8"
 );
 const logger = fs.readFileSync(

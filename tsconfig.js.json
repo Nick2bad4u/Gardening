@@ -10,6 +10,8 @@
     "extends": "./tsconfig.json",
     "include": [
         "docs/**/*.js",
+        "site/client/**/*.js",
+        "site/client/**/*.ts",
         "types/**/*.d.ts"
     ]
 }

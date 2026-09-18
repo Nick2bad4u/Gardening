@@ -1,0 +1,55 @@
+---
+import SiteLayout from "../../../components/SiteLayout.astro";
+import { siteUrl } from "../../../lib/routes.mjs";
+---
+
+<SiteLayout
+    title="Setup Archive"
+    description="Earlier garden arrangements and dated planning tools, preserved in their original context."
+    section="setup"
+    breadcrumbs={[
+        { label: "Setup", href: siteUrl("setup/") },
+        { label: "Archive", href: "" },
+    ]}
+>
+    <header class="page-heading">
+        <p class="eyebrow">THE GARDEN NOTEBOOK</p>
+        <h1>Setup Archive</h1>
+        <p class="lede">
+            The growing space has changed as the collection has grown. These earlier diagrams and
+            dated plans remain available as a record of those decisions.
+        </p>
+        <a class="button button-secondary" href={siteUrl("setup/placement/")}>
+            See the current arrangement →
+        </a>
+    </header>
+    <div class="card-grid section-block">
+        <article class="card">
+            <span class="badge">Historical diagrams</span>
+            <h2>Earlier Room and Table Layout</h2>
+            <p>
+                Interactive viewpoints, table plans, riser options, and wiring diagrams from the
+                earlier setup. Equipment and placement assumptions belong to that plan.
+            </p>
+            <a href={siteUrl("setup/archive/layout/")}>Explore the earlier diagrams →</a>
+        </article>
+        <article class="card">
+            <span class="badge">Dated planning tool</span>
+            <h2>Light Acclimation Calendar</h2>
+            <p>
+                The original acclimation schedule and its saved calendar preferences. Its dates and
+                settings are historical planning references, not a current care schedule.
+            </p>
+            <a href={siteUrl("setup/archive/calendar/")}>Open the dated calendar →</a>
+        </article>
+        <article class="card">
+            <span class="badge">Equipment history</span>
+            <h2>Fixture Research and Changes</h2>
+            <p>
+                Exact-model research retains the distinctions between installed equipment, replaced
+                fixtures, and canceled purchases.
+            </p>
+            <a href={siteUrl("setup/equipment/")}>Read the equipment inventory →</a>
+        </article>
+    </div>
+</SiteLayout>

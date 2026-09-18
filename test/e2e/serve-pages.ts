@@ -18,7 +18,16 @@ await stat(path.join(root, "index.html"));
 const server = createServer((request, response) => {
     async function serve() {
         const requestUrl = new URL(request.url ?? "/", "http://127.0.0.1:4173");
-        const pathname = decodeURIComponent(requestUrl.pathname);
+        const requestedPath = decodeURIComponent(requestUrl.pathname);
+        if (requestedPath === "/" || requestedPath === "/Gardening") {
+            response.writeHead(302, { Location: "/Gardening/" }).end();
+            return;
+        }
+        if (!requestedPath.startsWith("/Gardening/")) {
+            response.writeHead(404).end();
+            return;
+        }
+        const pathname = requestedPath.slice("/Gardening".length);
         let filename = path.resolve(root, `.${pathname}`);
         if (filename !== root && !filename.startsWith(`${root}${path.sep}`)) {
             response.writeHead(403).end();

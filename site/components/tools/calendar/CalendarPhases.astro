@@ -1,0 +1,78 @@
+---
+import { siteUrl } from "../../../lib/routes.mjs";
+---
+
+<section class="section" aria-labelledby="ramp-title">
+    <div class="section-heading">
+        <div>
+            <h2 id="ramp-title">
+                <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                    <use href={siteUrl("plant-icons.svg#icon-growth")} width="64" height="64"></use>
+                </svg>
+                The seven-week light ramp
+            </h2>
+            <p>
+                Height is LED-to-tallest-tip. Sun times are rounded Fenton context, not the E25
+                timer during these weeks.
+            </p>
+        </div>
+    </div>
+    <div class="phase-list">
+        <article class="phase phase--initial">
+            <div class="phase-week">Aug 3–9 · Week 1</div>
+            <span class="phase-setting">40% power</span>
+            <div class="phase-height">20 in · fixed 8–8</div>
+            <div class="sun">
+                <strong>Natural day 14 h 30 m</strong>6:30 a.m.–9:00 p.m.
+            </div>
+        </article>
+        <article class="phase phase--planned">
+            <div class="phase-week">Aug 10–13 · Planned</div>
+            <span class="phase-setting">40% power</span>
+            <div class="phase-height">18 in · not confirmed</div>
+            <div class="sun">
+                <strong>Natural day 14 h 15 m</strong>6:30 a.m.–8:45 p.m.
+            </div>
+        </article>
+        <article class="phase phase--reset">
+            <div class="phase-week">Aug 14–23 · Reset hold</div>
+            <span class="phase-setting">45% power</span>
+            <div class="phase-height">18 in · actual Aug 14</div>
+            <div class="sun">
+                <strong>Natural day about 14 h</strong>6:30 a.m.–8:45 p.m.
+            </div>
+        </article>
+        <article class="phase phase--dry-down">
+            <div class="phase-week">Aug 24–30 · Dry-down hold</div>
+            <span class="phase-setting">Hold 45%</span>
+            <div class="phase-height">18 in · no auto-rise</div>
+            <div class="sun">
+                <strong>Natural day 13 h 30 m</strong>6:45 a.m.–8:15 p.m.
+            </div>
+        </article>
+        <article class="phase phase--review">
+            <div class="phase-week">Aug 31–Sep 6 · Review</div>
+            <span class="phase-setting">45% or 50%</span>
+            <div class="phase-height">50% only if healthy</div>
+            <div class="sun">
+                <strong>Natural day 13 h 15 m</strong>7:00 a.m.–8:15 p.m.
+            </div>
+        </article>
+        <article class="phase phase--hold">
+            <div class="phase-week">Sep 7–13 · Hold</div>
+            <span class="phase-setting">45–50%</span>
+            <div class="phase-height">Lowest successful</div>
+            <div class="sun">
+                <strong>Natural day 13 h</strong>7:00 a.m.–8:00 p.m.
+            </div>
+        </article>
+        <article class="phase phase--optional">
+            <div class="phase-week">Sep 14–20 · Optional step</div>
+            <span class="phase-setting">50% or 55%</span>
+            <div class="phase-height">55% only if fully healthy · 18 in</div>
+            <div class="sun">
+                <strong>Natural day 12 h 30 m</strong>7:15 a.m.–7:45 p.m.
+            </div>
+        </article>
+    </div>
+</section>

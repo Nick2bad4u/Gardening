@@ -1,17 +1,41 @@
 # Repository scripts
 
-## Plant booklet and GitHub Pages
+## Astro website and GitHub Pages
 
-`build-plant-booklet.mjs` regenerates the standalone field guide from the
-Markdown profiles, licensed-photo manifest, and user collection-photo manifest.
-`check-plant-booklet.mjs` checks the generated pages, image records, copyright
-separation, local evidence links, schema-3 Gyazo capture metadata, per-profile
-Collection coverage, and latest-two-only inline rendering.
+The maintained website lives under `site/`, with separate routes, layouts,
+components, styles, and browser modules. Its content adapters read the existing
+plant Markdown, licensed-photo manifests, collection-photo manifests, and
+reviewed daily-report JSON. `build-pages-site.mjs` prepares the public asset
+allowlist, builds Astro pages, optimizes published images, and installs
+production analytics. It never changes the logger source or workbook.
+
+Each build uses its own ignored public-asset snapshot, so concurrent production
+and Storybook builds cannot remove assets from one another. Local development
+keeps the stable `.cache/site-public` asset directory.
+
+Collection thumbnails are retried after transient network failures. If the
+thumbnail service remains unavailable, the publisher uses only the exact
+capture's `image_url` from the validated public manifest. Images are decoded
+before caching and metadata is stripped from published derivatives. Corrupt
+bytes or untrusted source mappings fail the build. Optional owner-photo network
+outages produce a visible “Photo preview unavailable” state while preserving
+capture links, captions, and provenance; affected IDs are logged and recorded
+in `assets/collection-preview-status.json` in the artifact. The lower-level
+publisher remains strict unless this behavior is explicitly requested.
+Storybook fixture builds use a deterministic local preview illustration and
+never request Gyazo images.
 
 ```powershell
-npm run build:booklet
-npm run check:booklet
+npm run build:site
+npm run check:site
+npm run build:pages
 ```
+
+`build:pages` appends Storybook after the public site. `prepare:site` prepares
+allowed assets for local preview. The canonical SVG source and attribution live
+under `assets/artwork/`; `build:artwork` exports standalone icons and
+`check:artwork` verifies them. Logger artwork synchronization is a separate,
+explicit `sync:logger-artwork` command subject to the logger runbook.
 
 `publish-collection-photo.ps1` is the repeatable Gyazo publication interface.
 Single-photo mode prepares a private camera file in a validated temporary
@@ -39,26 +63,11 @@ pwsh -File scripts/publish-collection-photo.ps1 `
   -WhatIf
 ```
 
-`build-pages-site.mjs` creates the ignored `.pages-site/` deployment artifact.
-It injects the production GTM container only into that artifact, converts
-displayed licensed-reference images into responsive WebP sets with Sharp, and
-keeps source-quality Gyazo URLs behind capture links while rendering cached
-Gyazo thumbnails inline.
-It publishes the reader files and licensed/local evidence images used by the
-booklet plus the plant tracker, individual plant history, grow-spot layout,
-acclimation calendar, searchable photo Collections index, and daily garden report. Collection-photo
-publication binaries remain on Gyazo. Source-profile, source-evidence, and
-equipment-note links point back to the GitHub repository.
-
-```powershell
-npm run build:pages
-```
-
 ## Daily report
 
-`build-daily-report.mjs` validates the newest dated JSON in `docs/daily-reports/`
-and renders `docs/layouts/daily-report.html` through its maintained HTML template.
-`npm run build:pages` runs it automatically. See the
+`build-daily-report.mjs` validates the newest reviewed dated JSON in
+`docs/daily-reports/`. Astro renders the latest report and dated archive pages;
+only reviewed JSON is committed by report publication. See the
 [input and publication guide](../docs/daily-reports/README.md).
 
 ```powershell

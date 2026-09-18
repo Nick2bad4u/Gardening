@@ -1,0 +1,44 @@
+---
+import SiteLayout from "../../components/SiteLayout.astro";
+import DocumentArticle from "../../components/DocumentArticle.astro";
+import { getDocument } from "../../lib/content.mjs";
+import { siteUrl } from "../../lib/routes.mjs";
+const document = await getDocument("docs/layouts/table-placement-research.md");
+const review = await getDocument("docs/two-light-placement-review.md");
+---
+
+<SiteLayout
+    title="Current Plant Placement"
+    description={document.description}
+    section="setup"
+    breadcrumbs={[
+        { label: "Setup", href: siteUrl("setup/") },
+        { label: "Placement", href: "" },
+    ]}
+>
+    <DocumentArticle document={document} />
+    <section class="placement-review" id="placement-review">
+        <h2>Supporting Two-Light Review</h2>
+        <p>
+            This supporting review retains its dated observations and original context. The
+            placement guide above records the latest arrangement.
+        </p>
+        <details>
+            <summary>Read the complete review and sources</summary>
+            <div
+                class="prose"
+                set:html={review.html.replaceAll(/id="([^"]+)"/gu, 'id="review-$1"')}
+            />
+        </details>
+    </section>
+</SiteLayout>
+<style>
+    .placement-review {
+        margin-block: 3rem;
+    }
+    summary {
+        cursor: pointer;
+        padding: 1rem;
+        font-weight: 700;
+    }
+</style>

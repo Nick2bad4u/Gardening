@@ -1,0 +1,41 @@
+---
+import { repositoryUrl } from "../lib/routes.mjs";
+interface Props {
+    document: Awaited<ReturnType<typeof import("../lib/content.mjs").getDocument>>;
+}
+const { document } = Astro.props;
+---
+
+<article class="document-article">
+    <header class="page-heading">
+        <h1>{document.title}</h1>
+        <a class="source-link" href={`${repositoryUrl}/blob/main/${document.sourcePath}`}>
+            Maintained Source ↗
+        </a>
+    </header>
+    <div class="article-layout">
+        <aside class="article-toc" aria-label="On this page">
+            <h2>On this page</h2>
+            <ul>
+                {document.toc
+                    .filter((item) => item.level === 2)
+                    .map((item) => (
+                        <li>
+                            <a href={`#${item.id}`}>{item.title}</a>
+                        </li>
+                    ))}
+            </ul>
+        </aside>
+        <div class="prose" set:html={document.html} />
+    </div>
+</article>
+<style>
+    .source-link {
+        font-size: 0.85rem;
+    }
+    @media print {
+        .source-link {
+            display: none;
+        }
+    }
+</style>

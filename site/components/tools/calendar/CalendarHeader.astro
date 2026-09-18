@@ -1,0 +1,123 @@
+---
+import { siteUrl } from "../../../lib/routes.mjs";
+---
+
+<header class="hero">
+    <p class="eyebrow">Fenton indoor season · 2026</p>
+    <h1>2026 acclimation calendar archive</h1>
+    <p class="lede">
+        The collection moved indoors and began a three-day equipment shakedown on Friday, July 31.
+        This calendar preserves that earlier ramp and seasonal plan. The AW200 and new AeroLight 240
+        W were hung September 13, with AW200 at 45% and AeroLight 240 W at 38%, and the owner
+        applied the latest layout. The room end stays open. The owner confirms an 18-inch plant-tip
+        reference and the same 13 h 15 m total cycle for both lights, including 15-minute sunrise
+        and sunset transitions at the start and end. Exact clock times remain unrecorded; the clock
+        events below are earlier planning references.
+    </p>
+    <div class="hero-actions">
+        <button class="button" id="print" type="button">
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-print")} width="64" height="64"></use>
+            </svg>
+            Print calendar
+        </button>
+        <button
+            class="button secondary"
+            id="empty-days-toggle"
+            type="button"
+            aria-controls="months"
+            aria-pressed="false"
+        >
+            <svg
+                id="empty-days-icon"
+                class="site-icon"
+                viewBox="0 0 64 64"
+                aria-hidden="true"
+                focusable="false"
+            >
+                <use href={siteUrl("plant-icons.svg#icon-eye-off")} width="64" height="64"></use>
+            </svg>
+            <span id="empty-days-label">Hide empty days</span>
+        </button>
+        <button class="button secondary" id="reset" type="button">
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-reset")} width="64" height="64"></use>
+            </svg>
+            Clear checkmarks
+        </button>
+        <span class="hero-stat">
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-light")} width="64" height="64"></use>
+            </svg>
+            Light 8 a.m.–8 p.m. during the ramp
+        </span>
+        <span class="hero-stat">
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-airflow")} width="64" height="64"></use>
+            </svg>
+            Fan 8:15 a.m.–7:45 p.m.
+        </span>
+    </div>
+    <div class="live-dashboard" aria-label="Earlier Fenton plan with the current local clock">
+        <div class="live-block">
+            <span class="live-label">
+                <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                    <use href={siteUrl("plant-icons.svg#icon-clock")} width="64" height="64"></use>
+                </svg>
+                Fenton time
+            </span>
+            <time class="live-clock" id="live-clock">
+                --:--:--
+            </time>
+            <span class="live-date" id="live-date">
+                Loading local time…
+            </span>
+        </div>
+        <div class="live-block">
+            <span class="live-label">
+                <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                    <use
+                        href={siteUrl("plant-icons.svg#icon-calendar")}
+                        width="64"
+                        height="64"
+                    ></use>
+                </svg>
+                Next in the earlier plan
+            </span>
+            <strong class="next-event-title" id="next-event-title">
+                Loading schedule…
+            </strong>
+            <span class="next-event-time">
+                <time id="next-event-time"></time>
+                <span aria-hidden="true"> · </span>
+                <span class="countdown" id="countdown"></span>
+            </span>
+        </div>
+        <div class="live-block">
+            <span class="live-label">
+                <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                    <use href={siteUrl("plant-icons.svg#icon-growth")} width="64" height="64"></use>
+                </svg>
+                Earlier ramp progress
+            </span>
+            <div class="progress-heading">
+                <span id="progress-stage">Three-day shakedown</span>
+                <span id="progress-percent">0%</span>
+            </div>
+            <div
+                class="progress-track"
+                id="ramp-progress"
+                role="progressbar"
+                aria-label="Acclimation ramp progress"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+            >
+                <span class="progress-bar" id="progress-bar"></span>
+            </div>
+            <span class="progress-caption" id="progress-caption">
+                Ramp begins August 3.
+            </span>
+        </div>
+    </div>
+</header>

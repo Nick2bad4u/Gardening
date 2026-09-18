@@ -1,0 +1,37 @@
+---
+import { siteUrl } from "../../lib/routes.mjs";
+import SiteLayout from "../../components/SiteLayout.astro";
+import { getReports } from "../../lib/reports.mjs";
+const reports = await getReports();
+---
+
+<SiteLayout
+    title="Report archive"
+    description="Dated, reviewed garden reports. Historical recommendations retain their original evidence and policy."
+    section="report"
+    breadcrumbs={[{ label: "Daily report", href: siteUrl("report/") }]}
+>
+    <header class="page-heading">
+        <p class="eyebrow">Reviewed snapshots</p>
+        <h1>Report archive</h1>
+        <p>
+            Each report preserves the decisions and source-read time from that review. Older
+            recommendations are historical context.
+        </p>
+    </header>
+    <div class="card-grid">
+        {reports.map((report) => (
+            <article class="card">
+                <p class="eyebrow">
+                    {report.coverage} coverage ·{" "}
+                    {report.version === 1 ? "Historical policy" : "Reviewed report"}
+                </p>
+                <h2>
+                    <a href={siteUrl(`reports/${report.date}/`)}>{report.date}</a>
+                </h2>
+                <p>{report.summary}</p>
+                <p>Workbook read: {report.sourceReadAt ?? "Unavailable"}</p>
+            </article>
+        ))}
+    </div>
+</SiteLayout>

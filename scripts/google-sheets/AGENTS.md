@@ -146,9 +146,10 @@
   synchronized.
 - For `.gs` changes, also run `npm run lint:apps-script` and
   `npm run typecheck:apps-script`. For client changes, check maintained inline
-  HTML/styles and the client tests. `npm run build:booklet` can update generated
-  client icons; inspect those changes and their published asset dependencies
-  before deployment even when the task began outside this directory.
+  HTML/styles and the client tests. Only the explicit
+  `npm run sync:logger-artwork` command updates generated client icons/revision;
+  website builds leave them unchanged. Inspect synchronized artwork and its
+  published asset dependencies before deploying an authorized logger update.
 - Before a live workbook write, create a native Drive backup and re-read the
   current headers, formulas, validations, last populated rows, request IDs,
   AppSheet staging schemas, deployment assignment, and trigger list. Do not

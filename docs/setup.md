@@ -91,7 +91,7 @@ black divider first, leave the white wall uncovered, and
 mount the camera rigidly on the right wall so it looks diagonally toward the
 divider instead of directly into the window.
 
-The dated lower [browser grow-spot diagrams](./layouts/grow-spot-layout.html) retain the former room,
+The [historical browser grow-spot diagrams](https://nick2bad4u.github.io/Gardening/setup/archive/layout/) retain the former room,
 all three tabletops, A1–D3, E1–F3, and `#1`–`#4` plant or planter IDs,
 assigned original-table risers, light clearance, fan sweep, camera view,
 provisional open-room air-treatment

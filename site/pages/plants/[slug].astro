@@ -1,0 +1,29 @@
+---
+import SiteLayout from "../../components/SiteLayout.astro";
+import PlantProfile from "../../components/PlantProfile.astro";
+import { getProfiles } from "../../lib/content.mjs";
+import { stripMarkdown } from "../../lib/content/profile-source.mjs";
+import { siteUrl } from "../../lib/routes.mjs";
+export async function getStaticPaths() {
+    return (await getProfiles()).map((profile) => ({
+        params: { slug: profile.slug },
+        props: { profile },
+    }));
+}
+interface Props {
+    profile: import("../../lib/content.mjs").SiteProfile;
+}
+const { profile } = Astro.props;
+---
+
+<SiteLayout
+    title={profile.title}
+    description={stripMarkdown(profile.visualDescriptionMarkdown)}
+    section="plants"
+    breadcrumbs={[
+        { label: "Plants", href: siteUrl("plants/") },
+        { label: profile.title, href: "" },
+    ]}
+>
+    <PlantProfile profile={profile} />
+</SiteLayout>

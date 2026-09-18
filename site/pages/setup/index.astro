@@ -1,0 +1,38 @@
+---
+import SiteLayout from "../../components/SiteLayout.astro";
+import DocumentArticle from "../../components/DocumentArticle.astro";
+import { getDocument } from "../../lib/content.mjs";
+import { siteUrl } from "../../lib/routes.mjs";
+const document = await getDocument("docs/setup.md");
+---
+
+<SiteLayout
+    title="Garden Setup"
+    description="The current growing space, equipment, and maintained setup notes."
+    section="setup"
+>
+    <div class="card-grid setup-links">
+        <a class="card" href={siteUrl("setup/placement/")}>
+            <h2>Current Placement</h2>
+            <p>Plant locations, diagrams, and estimated relative light.</p>
+        </a>
+        <a class="card" href={siteUrl("setup/equipment/")}>
+            <h2>Equipment and Supplies</h2>
+            <p>The maintained inventory and exact-model research.</p>
+        </a>
+        <a class="card" href={siteUrl("setup/archive/")}>
+            <h2>Setup Archive</h2>
+            <p>Earlier arrangements and the dated acclimation calendar.</p>
+        </a>
+    </div>
+    <DocumentArticle document={document} />
+</SiteLayout>
+<style>
+    .setup-links {
+        margin-block: 2rem;
+    }
+    .setup-links a {
+        text-decoration: none;
+        color: inherit;
+    }
+</style>

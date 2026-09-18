@@ -1,0 +1,62 @@
+---
+import { profileUrl, siteUrl } from "../lib/routes.mjs";
+import { stripMarkdown } from "../lib/content/profile-source.mjs";
+interface Props {
+    profile: import("../lib/content.mjs").SiteProfile;
+}
+const { profile } = Astro.props;
+---
+
+<article class="card plant-card" data-plant-card>
+    <a class="plant-card-link" href={profileUrl(profile.slug)}>
+        <img
+            class="plant-card-art"
+            src={siteUrl(`assets/plant-icons/${profile.slug}.svg`)}
+            alt=""
+            width="80"
+            height="80"
+            loading="lazy"
+        />
+        <div>
+            <p class="eyebrow">{profile.groupTitle}</p>
+            <h2>{profile.title}</h2>
+            <p class="scientific">{stripMarkdown(profile.scientificMarkdown)}</p>
+        </div>
+    </a>
+    <div class="plant-card-labels">
+        <span class="badge badge-label">{profile.drawerLabel.primary}</span>
+        {profile.trackerId && <span class="badge badge-id">{profile.trackerId}</span>}
+        {profile.historical && <span class="badge">Historical</span>}
+    </div>
+</article>
+<style>
+    .plant-card {
+        display: grid;
+        gap: 1rem;
+    }
+    .plant-card-link {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        text-decoration: none;
+        color: inherit;
+    }
+    .plant-card-art {
+        flex: 0 0 80px;
+    }
+    .plant-card h2 {
+        margin: 0.2rem 0;
+        font-size: 1.3rem;
+    }
+    .plant-card-labels {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    .scientific {
+        font-family: Georgia, serif;
+        font-style: italic;
+        margin: 0;
+        opacity: 0.8;
+    }
+</style>

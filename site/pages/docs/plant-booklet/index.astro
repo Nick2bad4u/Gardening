@@ -1,0 +1,8 @@
+---
+import { getProfiles } from "../../../lib/content.mjs";
+import { legacyData, redirectHtml } from "../../../lib/legacy.mjs";
+import { siteUrl } from "../../../lib/routes.mjs";
+const html = redirectHtml(legacyData(await getProfiles()), siteUrl());
+---
+
+<Fragment set:html={html} />

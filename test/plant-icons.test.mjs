@@ -7,7 +7,7 @@ import { required } from "./helpers/required.mjs";
 const repositoryRoot = path.resolve(import.meta.dirname, "..");
 const assetDirectory = path.join(repositoryRoot, "assets", "plant-icons");
 const sprite = fs.readFileSync(
-    path.join(repositoryRoot, "docs", "plant-booklet", "plant-icons.svg"),
+    path.join(repositoryRoot, "assets", "artwork", "plant-icons.svg"),
     "utf8"
 );
 const standaloneNames = fs

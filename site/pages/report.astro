@@ -1,0 +1,19 @@
+---
+import { siteUrl } from "../lib/routes.mjs";
+import SiteLayout from "../components/SiteLayout.astro";
+import ReviewedReport from "../components/report/ReviewedReport.astro";
+import { getLatestReport } from "../lib/reports.mjs";
+const report = await getLatestReport();
+---
+
+<SiteLayout
+    title="Daily report"
+    description="The latest reviewed garden report, with its actual source-read time and evidence."
+    section="report"
+>
+    <p class="report-archive-link">
+        <a href={siteUrl("reports/")}>Browse previous reports</a> ·{" "}
+        <a href={siteUrl(`reports/${report.date}/`)}>Permanent link to this review</a>
+    </p>
+    <ReviewedReport report={report} />
+</SiteLayout>

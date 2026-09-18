@@ -47,7 +47,7 @@ marketing, not a component-identification source.
 Source-quality photographs preserve receipt context, three current angles, a
 top view, and the shared post-repot context. They also make it possible to
 compare the separate components later without loading full-resolution files on
-the booklet page.
+the individual plant profile page.
 
 The components were kept together during the September 2 repot in the purchased
 five-inch-class terra-cotta planter. Its exact measured dimensions, root

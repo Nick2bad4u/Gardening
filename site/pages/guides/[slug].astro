@@ -1,0 +1,28 @@
+---
+import SiteLayout from "../../components/SiteLayout.astro";
+import DocumentArticle from "../../components/DocumentArticle.astro";
+import { getGuides } from "../../lib/content.mjs";
+import { siteUrl } from "../../lib/routes.mjs";
+export async function getStaticPaths() {
+    return (await getGuides()).map((document) => ({
+        params: { slug: document.slug },
+        props: { document },
+    }));
+}
+interface Props {
+    document: Awaited<ReturnType<typeof import("../../lib/content.mjs").getDocument>>;
+}
+const { document } = Astro.props;
+---
+
+<SiteLayout
+    title={document.title}
+    description={document.description}
+    section="guides"
+    breadcrumbs={[
+        { label: "Guides", href: siteUrl("guides/") },
+        { label: document.title, href: "" },
+    ]}
+>
+    <DocumentArticle document={document} />
+</SiteLayout>

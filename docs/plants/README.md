@@ -25,9 +25,7 @@ the side-by-side light plan, Sunday arrival, mounting, and open room end. The [p
 groups all pots by light need. The [earlier AW200SE/E25 guide](../equipment/vivosun-aw200se.md)
 retains historical light maps and conversions; these do not measure the new setup.
 The same research is published as the
-[Fenton Collection browser field guide](../plant-booklet/), with searchable
-contents, one reading page per record, keyboard navigation, dark mode, and
-print styling. Profiles have licensed reference galleries where reusable
+[Fenton Collection plant directory](https://nick2bad4u.github.io/Gardening/plants/), with search and filters, individual profile URLs, accessible navigation, dark mode, and individual-page print styling. Profiles have licensed reference galleries where reusable
 photography is available. Cultivar and hybrid pages state when images show the
 underlying species, genus, or ancestry rather than the exact ordered form.
 

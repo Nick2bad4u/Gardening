@@ -26,7 +26,7 @@
   `labels.md`, relevant setup/care/layout records, and
   `docs/layouts/plant-profile-data.json` together when identity, mapping, status,
   or placement changes. A profile edit does not itself change a live workbook.
-- Adding/removing a profile also affects the booklet build/check inventories,
+- Adding/removing a profile also affects the site build/check inventories,
   canonical SVG portraits, photo manifests, and relevant tests. Check those
   contracts before adding only a Markdown file. The current checker expects
   36 profiles: 35 present and one historical, covering 30 tracked containers.
@@ -34,7 +34,8 @@
 - Keep a substantive Sources section with direct evidence for identification,
   nomenclature, range, and specific care claims. Owner observations need clear
   attribution/date; do not turn them into externally verified botanical facts.
-- Run `npm run build:booklet`, `npm run check:booklet`, and the root Markdown/
-  link checks. Include all relevant generated changes, including the photo album
-  and icon/logger output when those inputs changed. Do not hand-edit generated
-  plant text to make it differ from its Markdown source.
+- Run `npm run build:site`, `npm run check:site`, and the root Markdown/link
+  checks. Profile and gallery pages are rendered into the ignored site artifact.
+  Website builds do not update the logger; synchronize artwork only through the
+  explicit artwork command when needed. Do not hand-edit generated plant text
+  to make it differ from its Markdown source.

@@ -1,686 +1,274 @@
 import { expect, type Page, test } from "@playwright/test";
 
-function measureCategoryIcons() {
-    return [...document.querySelectorAll(".contents-group-icon")].map(
-        (badge) => {
-            const svg = badge.querySelector("svg");
-            if (svg === null)
-                throw new Error("A category badge is missing its SVG.");
-            // Read both rectangles in one frame so entry animations cannot skew the comparison.
-            const outer = badge.getBoundingClientRect();
-            const inner = svg.getBoundingClientRect();
-            return Math.max(
-                Math.abs(outer.x + outer.width / 2 - inner.x - inner.width / 2),
-                Math.abs(
-                    outer.y + outer.height / 2 - inner.y - inner.height / 2
-                )
-            );
-        }
-    );
+const base = "/Gardening/";
+const moneyTreeName = "Money tree";
+
+async function expectContained(page: Readonly<Page>) {
+    expect
+        .soft(
+            await page.evaluate(
+                () => document.documentElement.scrollWidth <= innerWidth
+            )
+        )
+        .toBe(true);
 }
 
-async function openGuide(
+async function openSite(
     page: Readonly<Page>,
-    theme: "dark" | "light",
-    hash: string
+    route: string,
+    theme: "dark" | "light"
 ) {
     await page.emulateMedia({ colorScheme: theme, reducedMotion: "reduce" });
-    await page.route("**://*.gyazo.com/**", (route) => route.abort());
-    await page.route("**://*.googletagmanager.com/**", (route) =>
-        route.abort()
+    await page.route("**://*.googletagmanager.com/**", (request) =>
+        request.abort()
     );
-    await page.goto(`/#${hash}`);
-}
-
-function readGuidePortraits() {
-    const heading = document.querySelector(
-        ".profile-page:not([hidden]) .hero-scientific"
-    );
-    const icon = heading?.querySelector("svg");
-    const name = heading?.querySelector("span");
-    if (!icon || !name) throw new Error("Missing scientific name or portrait.");
-    const portrait = icon.getBoundingClientRect();
-    const text = name.getBoundingClientRect();
-    return {
-        header: icon.querySelector("use")?.getAttribute("href"),
-        isAligned:
-            portrait.right <= text.left &&
-            Math.abs(
-                portrait.top + portrait.height / 2 - text.top - text.height / 2
-            ) < 1,
-        isWithinViewport: document.documentElement.scrollWidth <= innerWidth,
-        next: document.querySelector("#next-page use")?.getAttribute("href"),
-        previous: document
-            .querySelector("#previous-page use")
-            ?.getAttribute("href"),
-    };
+    await page.route("**://*.gyazo.com/**", (request) => request.abort());
+    await page.goto(`${base}${route}`);
 }
 
 for (const theme of ["dark", "light"] as const) {
-    test.describe(`${theme} field guide`, () => {
-        test(
-            "opens the equipment inventory before the plant profiles",
-            { tag: "@layout" },
-            async ({ page }) => {
-                await openGuide(page, theme, "placement");
-                await page.keyboard.press("ArrowRight");
-                const equipment = page.getByRole("region", {
-                    exact: true,
-                    name: "Equipment and Supplies",
-                });
-                await expect.soft(equipment).toBeVisible();
-                await expect
-                    .soft(
-                        equipment.getByRole("link", {
-                            name: "LEJANEOYE two-tier bamboo side tables",
-                        })
-                    )
-                    .toHaveAttribute(
-                        "href",
-                        "https://www.amazon.com/dp/B0D25H73ZS"
-                    );
-                await expect.soft(equipment).toContainText("4 tables");
-                expect
-                    .soft(
-                        await page.evaluate(
-                            () =>
-                                document.documentElement.scrollWidth <=
-                                innerWidth
-                        )
-                    )
-                    .toBe(true);
-                await page.keyboard.press("ArrowRight");
-                await expect
-                    .soft(
-                        page.getByRole("heading", {
-                            exact: true,
-                            name: "Variegated moon cactus",
-                        })
-                    )
-                    .toBeVisible();
-            }
-        );
+    test.describe(`${theme} modular website`, { tag: "@layout" }, () => {
+        test("loads a homepage with normal navigation and a dated report", async ({
+            page,
+        }) => {
+            await openSite(page, "", theme);
+            await expect.soft(page.getByRole("main")).toBeVisible();
+            await expect
+                .soft(page.getByRole("link", { name: /Log Care/v }))
+                .toHaveAttribute("href", /script\.google\.com/v);
+            await expectContained(page);
+        });
 
-        test(
-            "ends on a closing page with a way back to the collection",
-            { tag: "@layout" },
-            async ({ page }) => {
-                await openGuide(page, theme, "pachira-glabra");
-                await page.keyboard.press("ArrowRight");
-                await expect
-                    .soft(
-                        page.getByRole("heading", {
-                            name: "Back to the garden.",
-                        })
-                    )
-                    .toBeVisible();
-                await expect
-                    .soft(page.getByRole("button", { name: /^next /iv }))
-                    .toBeDisabled();
-                expect
-                    .soft(
-                        await page.evaluate(
-                            () =>
-                                document.documentElement.scrollWidth <=
-                                innerWidth
-                        )
-                    )
-                    .toBe(true);
-                await page
-                    .getByRole("link", { name: /Browse the Collection/v })
-                    .click();
-                await expect
-                    .soft(
-                        page.getByRole("heading", {
-                            name: "A field guide to the collection.",
-                        })
-                    )
-                    .toBeVisible();
-            }
-        );
-
-        test(
-            "starts at contents, opens placement next, and links to the reviewed plants",
-            { tag: "@layout" },
-            async ({ page }) => {
-                await openGuide(page, theme, "cover");
-                await page.getByRole("link", { name: "Start reading" }).click();
-                await page.keyboard.press("ArrowRight");
-                await expect.soft(page).toHaveURL(/#placement$/v);
-                const guide = page.getByRole("region", {
-                    exact: true,
-                    name: "Table Placement Guide",
-                });
-                await expect.soft(guide).toBeVisible();
-                await guide
-                    .getByRole("link", { exact: true, name: "Ming Thing" })
-                    .click();
-                await expect
-                    .soft(
-                        page.getByRole("heading", {
-                            exact: true,
-                            name: "Ming Thing",
-                        })
-                    )
-                    .toBeVisible();
-                await page.goBack();
-                await expect.soft(guide).toBeVisible();
-                await page.keyboard.press("ArrowLeft");
-                await expect.soft(page).toHaveURL(/#contents$/v);
-            }
-        );
-
-        test(
-            "keeps the six-column four-row placement and full-size image links within the viewport",
-            { tag: "@layout" },
-            async ({ page }) => {
-                await openGuide(page, theme, "placement");
-                const layout = await page.evaluate(() => {
-                    const grid = [
-                        ...document.querySelectorAll("#placement table"),
-                    ].find(
-                        (table) =>
-                            table.querySelector("th")?.textContent === "Row"
-                    );
-                    if (!grid) throw new Error("Missing placement grid.");
-                    const labels = [
-                        ...grid.querySelectorAll(":scope tbody tr"),
-                    ].map((row) =>
-                        [...row.querySelectorAll("td")]
-                            .slice(1)
-                            .map(
-                                (cell) =>
-                                    cell.textContent.trim().split(" · ", 1)[0]
-                            )
-                    );
-                    const images = [
-                        ...document.querySelectorAll<HTMLImageElement>(
-                            "#placement .placement-figure img"
-                        ),
-                    ];
-                    return {
-                        hasOverflow:
-                            document.documentElement.scrollWidth > innerWidth,
-                        imageCount: images.length,
-                        imagesLinkToPublishedAssets: images.every(
-                            (img) =>
-                                img
-                                    .getAttribute("src")
-                                    ?.startsWith("./assets/layouts/") ===
-                                    true &&
-                                img.closest("a")?.href === img.src &&
-                                img.width > 0 &&
-                                img.height > 0
-                        ),
-                        labels,
-                    };
-                });
-                expect.soft(layout).toStrictEqual({
-                    hasOverflow: false,
-                    imageCount: 7,
-                    imagesLinkToPublishedAssets: true,
-                    labels: [
-                        [
-                            "D3",
-                            "E2",
-                            "G1",
-                            "D1",
-                            "B3",
-                            "F2",
-                        ],
-                        [
-                            "A2",
-                            "B2",
-                            "H2",
-                            "G3",
-                            "C3",
-                            "D2",
-                        ],
-                        [
-                            "A1",
-                            "E1",
-                            "H1",
-                            "A3",
-                            "C2",
-                            "C1",
-                        ],
-                        [
-                            "B1",
-                            "E3",
-                            "G2",
-                            "H3",
-                            "F3",
-                            "F1",
-                        ],
-                    ],
-                });
-            }
-        );
-
-        test(
-            "keeps contents cards aligned when plant names wrap",
-            { tag: "@layout" },
-            async ({ page }) => {
-                await openGuide(page, theme, "contents");
-                const layout = await page.evaluate(() => {
-                    const rows = [
-                        ...document.querySelectorAll(
-                            '.contents-group[data-group="cacti"] li'
-                        ),
-                    ];
-                    return {
-                        count: rows.length,
-                        gaps: rows.map((row) => {
-                            const link = row.querySelector("a");
-                            if (link === null)
-                                throw new Error("Missing contents link.");
-                            return (
-                                row.getBoundingClientRect().height -
-                                link.getBoundingClientRect().height
-                            );
-                        }),
-                        hasOverflow:
-                            document.documentElement.scrollWidth > innerWidth,
-                    };
-                });
-                expect.soft(layout.count).toBe(21);
-                expect.soft(Math.max(...layout.gaps)).toBeLessThan(1);
-                expect.soft(layout.hasOverflow).toBe(false);
-            }
-        );
-
-        test(
-            "keeps metadata compact and exposes the full identification evidence",
-            { tag: "@layout" },
-            async ({ page }) => {
-                await openGuide(page, theme, "aeonium-haworthii-dream-color");
-                const layout = await page.evaluate(() => {
-                    const profile = document.querySelector(
-                        ".profile-page:not([hidden])"
-                    );
-                    const compact = [
-                        "inventory",
-                        "sheet",
-                        "label",
-                    ].map((kind) => {
-                        const card = profile?.querySelector(
-                            `.profile-meta--${kind}`
-                        );
-                        if (!card)
-                            throw new Error("Missing compact metadata card.");
-                        return card.getBoundingClientRect().height;
-                    });
-                    const acquiredFrom = profile?.querySelector(
-                        ".profile-meta--source"
-                    );
-                    const acquiredOn = profile?.querySelector(
-                        ".profile-meta--date"
-                    );
-                    if (!acquiredFrom || !acquiredOn)
-                        throw new Error("Missing acquisition metadata.");
-                    return {
-                        acquisitionWidthDifference: Math.abs(
-                            acquiredFrom.getBoundingClientRect().width -
-                                acquiredOn.getBoundingClientRect().width
-                        ),
-                        compact,
-                        hasOverflow:
-                            document.documentElement.scrollWidth > innerWidth,
-                    };
-                });
-                expect
-                    .soft({
-                        compact: Math.max(...layout.compact) < 110,
-                        equalAcquisitionWidths:
-                            layout.acquisitionWidthDifference < 1,
-                        hasOverflow: layout.hasOverflow,
+        test("searches profiles, preserves query on reload, and filters historical records", async ({
+            page,
+        }) => {
+            await openSite(page, "plants/", theme);
+            const search = page.getByRole("searchbox", {
+                name: "Find a plant",
+            });
+            const directory = page.getByRole("list", {
+                name: "Plant directory",
+            });
+            await search.fill("pachira");
+            await expect.soft(directory.getByRole("listitem")).toHaveCount(1);
+            await expect.soft(page).toHaveURL(/q=pachira/v);
+            await page.reload();
+            await expect.soft(search).toHaveValue("pachira");
+            await expect
+                .soft(
+                    page.getByRole("heading", {
+                        exact: true,
+                        name: moneyTreeName,
                     })
-                    .toStrictEqual({
-                        compact: true,
-                        equalAcquisitionWidths: true,
-                        hasOverflow: false,
-                    });
-                const evidence = page.getByText(
-                    "probable cultivar; appearance is consistent, but no nursery label or seller provenance is archived",
-                    { exact: true }
-                );
-                await expect.soft(evidence).toBeHidden();
-                await page
-                    .getByText("Likely Cultivar", { exact: true })
-                    .click();
-                await expect.soft(evidence).toBeVisible();
-                await page.emulateMedia({
-                    media: "print",
-                    reducedMotion: "no-preference",
-                });
-                const printed = await page.evaluate(() => {
-                    const profile = document.querySelector(
-                        ".profile-page:not([hidden])"
-                    );
-                    if (!profile) throw new Error("Missing printed profile.");
-                    return {
-                        animation: getComputedStyle(profile).animationName,
-                        hasClippedMetadata: [
-                            ...profile.querySelectorAll(".profile-meta"),
-                        ].some(
-                            (card) => card.scrollWidth > card.clientWidth + 1
-                        ),
-                    };
-                });
-                expect.soft(printed).toStrictEqual({
-                    animation: "none",
-                    hasClippedMetadata: false,
-                });
-            }
-        );
+                )
+                .toBeVisible();
+        });
 
-        test(
-            "enlarges the hero portrait on hover and honors reduced motion",
-            { tag: "@layout" },
-            async ({ isMobile, page }) => {
-                await openGuide(page, theme, "nyctocereus-serpentinus");
-                await page.emulateMedia({ reducedMotion: "no-preference" });
-                // The hero and photo-history image share alt text; target the visible hero presentation.
-                // eslint-disable-next-line playwright/no-raw-locators -- This visual variant has no distinct accessible name.
-                const portraits = page.locator(".plant-avatar--hero:visible");
-                await expect.soft(portraits).toHaveCount(isMobile ? 0 : 1);
-                const visiblePortraits = await portraits.all();
-                await Promise.all(
-                    visiblePortraits.map(async (portrait) => {
-                        await portrait.hover();
-                        await expect
-                            .soft(portrait)
-                            .toHaveCSS(
-                                "transform",
-                                "matrix(1.2, 0, 0, 1.2, 0, 0)"
-                            );
-                        await page.emulateMedia({ reducedMotion: "reduce" });
-                        await expect
-                            .soft(portrait)
-                            .toHaveCSS("transform", "none");
+        test("filters missing and historical plants", async ({ page }) => {
+            await openSite(page, "plants/", theme);
+            const search = page.getByRole("searchbox", {
+                name: "Find a plant",
+            });
+            const directory = page.getByRole("list", {
+                name: "Plant directory",
+            });
+            await search.fill("zzzz-no-such-plant-98765");
+            await expect
+                .soft(
+                    page.getByText(
+                        "No matching plants. Try a different name, label, or collection."
+                    )
+                )
+                .toBeVisible();
+            await search.clear();
+            await page
+                .getByRole("combobox", { name: "Records" })
+                .selectOption("historical");
+            await expect.soft(directory).toContainText("Historical");
+            await expect
+                .soft(directory.getByRole("heading", { name: moneyTreeName }))
+                .toHaveCount(0);
+            await expectContained(page);
+        });
+
+        test("opens one profile with provenance and browser navigation", async ({
+            page,
+        }) => {
+            await openSite(page, "plants/pachira-glabra/", theme);
+            await expect
+                .soft(
+                    page.getByRole("heading", {
+                        exact: true,
+                        name: moneyTreeName,
                     })
-                );
-            }
-        );
+                )
+                .toBeVisible();
+            await expect
+                .soft(page.getByRole("main").getByRole("article"))
+                .toHaveCount(1);
+            await expect.soft(page.getByRole("main")).toContainText("Sources");
+            await page.goto(`${base}plants/`);
+            await page.goBack();
+            await expect
+                .soft(
+                    page.getByRole("heading", {
+                        exact: true,
+                        name: moneyTreeName,
+                    })
+                )
+                .toBeVisible();
+            await page.reload();
+            await expect
+                .soft(page.getByRole("main").getByRole("article"))
+                .toHaveCount(1);
+            await expectContained(page);
+        });
 
-        test(
-            "animates hover and keyboard focus while respecting reduced motion",
-            { tag: "@layout" },
-            async ({ isMobile, page }) => {
-                await openGuide(page, theme, "contents");
-                const plant = page.getByRole("link", {
-                    name: /^P01 A1 Variegated moon cactus/v,
-                });
-                await page.emulateMedia({ reducedMotion: "no-preference" });
-                await plant.scrollIntoViewIfNeeded();
-                // Finish the page/row entrance before putting the pointer on it.
-                await page.evaluate(async () => {
-                    await Promise.allSettled(
-                        document
-                            .getAnimations()
-                            .map((animation) => animation.finished)
-                    );
-                });
-                await plant.hover();
-                await expect
-                    .soft(plant)
-                    .toHaveCSS("translate", isMobile ? "none" : "0px -3px");
-                await plant.focus();
-                await expect.soft(plant).toHaveCSS("outline-style", "solid");
-                await page.emulateMedia({ reducedMotion: "reduce" });
-                await expect.soft(plant).toHaveCSS("translate", "none");
-                await expect
-                    .poll(() =>
-                        plant.evaluate((link) => {
-                            const portrait =
-                                link.querySelector(".plant-nav-icon");
-                            if (portrait === null)
-                                throw new Error("Missing plant portrait.");
-                            return getComputedStyle(portrait).rotate;
-                        })
-                    )
-                    .toBe("none");
-            }
-        );
+        test("retains native reading keys and accessible mobile navigation", async ({
+            page,
+        }) => {
+            await page.setViewportSize({ height: 844, width: 390 });
+            await openSite(page, "plants/pachira-glabra/", theme);
+            const url = page.url();
+            await page.keyboard.press("ArrowRight");
+            await page.keyboard.press("End");
+            await expect.soft(page).toHaveURL(url);
+            await page.keyboard.press("Home");
+            const menu = page.getByRole("button", {
+                exact: true,
+                name: "Menu",
+            });
+            await menu.click();
+            await expect.soft(menu).toHaveAttribute("aria-expanded", "true");
+            await page.keyboard.press("Escape");
+            await expect.soft(menu).toHaveAttribute("aria-expanded", "false");
+            await expect.soft(menu).toBeFocused();
+            await page
+                .getByRole("button", {
+                    name: `Switch to ${theme === "dark" ? "light" : "dark"} theme`,
+                })
+                .click();
+            await expect
+                .soft(
+                    page.getByRole("button", {
+                        name: `Switch to ${theme} theme`,
+                    })
+                )
+                .toBeVisible();
+            await expectContained(page);
+        });
 
-        test(
-            "shows destination portraits and a portrait beside the scientific name",
-            { tag: "@navigation" },
-            async ({ page }) => {
-                await openGuide(page, theme, "oreocereus-trollii");
-                await expect
-                    .poll(() => page.evaluate(readGuidePortraits))
-                    .toMatchObject({
-                        header: "./plant-icons.svg#icon-plant-oreocereus-trollii",
-                        isAligned: true,
-                        isWithinViewport: true,
-                        next: "./plant-icons.svg#icon-plant-myrtillocactus-geometrizans-indigo-wave",
-                        previous:
-                            "./plant-icons.svg#icon-plant-stenocactus-phyllacanthus",
-                    });
-
-                await page.mouse.wheel(0, -1000);
-                await page.keyboard.press("ArrowRight");
-                await expect
-                    .poll(() => page.evaluate(readGuidePortraits))
-                    .toMatchObject({
-                        header: "./plant-icons.svg#icon-plant-myrtillocactus-geometrizans-indigo-wave",
-                        isAligned: true,
-                        isWithinViewport: true,
-                        previous:
-                            "./plant-icons.svg#icon-plant-oreocereus-trollii",
-                    });
-                await page.getByRole("main").focus();
-                await page.keyboard.press("ArrowLeft");
-                await expect
-                    .poll(() => page.evaluate(readGuidePortraits))
-                    .toMatchObject({
-                        header: "./plant-icons.svg#icon-plant-oreocereus-trollii",
-                        next: "./plant-icons.svg#icon-plant-myrtillocactus-geometrizans-indigo-wave",
-                        previous:
-                            "./plant-icons.svg#icon-plant-stenocactus-phyllacanthus",
-                    });
-            }
-        );
-
-        test(
-            "keeps a wrapping photo credit below the plant title",
-            { tag: "@layout" },
-            async ({ page }) => {
-                await openGuide(page, theme, "pachira-glabra");
-                await expect
-                    .soft(page.getByRole("heading", { level: 1 }))
-                    .toHaveCount(1);
-                await expect
-                    .soft(
-                        page.getByRole("heading", {
-                            exact: true,
-                            name: "Money tree",
-                        })
-                    )
-                    .toBeVisible();
-                const gap = await page.evaluate(() => {
-                    const hero = document.querySelector(
-                        ".profile-page:not([hidden]) .profile-hero"
-                    );
-                    const title = hero?.querySelector(".hero-title");
-                    const credit = hero?.querySelector(".hero-credit");
-                    if (!title || !credit)
-                        throw new Error("Missing profile title or credit.");
-                    return (
-                        credit.getBoundingClientRect().top -
-                        title.getBoundingClientRect().bottom
-                    );
-                });
-                expect.soft(gap).toBeGreaterThanOrEqual(8);
-            }
-        );
-
-        test(
-            "preserves the selected plant in an old booklet bookmark",
-            { tag: "@navigation" },
-            async ({ page }) => {
-                await openGuide(page, theme, "contents");
-                await page.goto("/docs/plant-booklet/#pachira-glabra");
-                await expect.soft(page).toHaveURL(/\/#pachira-glabra$/v);
-                await expect
-                    .soft(
-                        page.getByRole("heading", {
-                            exact: true,
-                            name: "Money tree",
-                        })
-                    )
-                    .toBeVisible();
-            }
-        );
-
-        test(
-            "centers category icons and removes the navigation glass bar",
-            { tag: "@layout" },
-            async ({ page }) => {
-                await openGuide(page, theme, "contents");
-                await expect
-                    .soft(
-                        page.getByRole("heading", {
-                            name: "A field guide to the collection.",
-                        })
-                    )
-                    .toBeVisible();
-                const offsets = await page.evaluate(measureCategoryIcons);
-                expect.soft(offsets).toHaveLength(4);
-                expect.soft(Math.max(...offsets)).toBeLessThan(0.6);
-                await expect
-                    .soft(
-                        page.getByRole("navigation", {
-                            name: "Page navigation",
-                        })
-                    )
-                    .toHaveCSS("backdrop-filter", "none");
-                expect
-                    .soft(
-                        await page.evaluate(
-                            () =>
-                                document.documentElement.scrollWidth <=
-                                innerWidth
-                        )
-                    )
-                    .toBe(true);
-            }
-        );
-
-        test(
-            "loads both current photos when Gyazo is blocked",
-            { tag: "@photos" },
-            async ({ page }) => {
-                await openGuide(
-                    page,
-                    theme,
-                    "gymnocalycium-mihanovichii-black-widow-photo-history"
-                );
-                const gallery = page.getByRole("region", {
-                    exact: true,
-                    name: "Plant photo history",
-                });
-                const photos = gallery.getByRole("img");
-                await expect.soft(photos).toHaveCount(2);
-                await expect
-                    .poll(() =>
-                        photos.evaluateAll((images) =>
-                            images.every(
-                                (image) =>
-                                    image instanceof HTMLImageElement &&
-                                    image.complete &&
-                                    image.naturalWidth > 0
-                            )
-                        )
-                    )
-                    .toBe(true);
-                const pageUrl = new URL(page.url());
-                expect
-                    .soft(
-                        await photos.evaluateAll((images) =>
-                            images.map((image) => {
-                                if (!(image instanceof HTMLImageElement))
-                                    throw new TypeError(
-                                        "A preview must be an image."
-                                    );
-                                const source = new URL(image.currentSrc);
-                                return source.origin;
-                            })
-                        )
-                    )
-                    .toStrictEqual([pageUrl.origin, pageUrl.origin]);
-                const captureLinks = gallery
-                    .getByRole("link")
-                    .filter({ has: page.getByRole("img") });
-                expect
-                    .soft(
-                        await captureLinks.evaluateAll((links) =>
-                            links.every(
-                                (link) =>
-                                    link instanceof HTMLAnchorElement &&
-                                    link.hostname === "gyazo.com"
-                            )
-                        )
-                    )
-                    .toBe(true);
-            }
-        );
-
-        test(
-            "keeps photo source and license links together without overflow",
-            { tag: "@layout" },
-            async ({ page }) => {
-                await openGuide(
-                    page,
-                    theme,
-                    "gymnocalycium-mihanovichii-black-widow-photo-history"
-                );
-                const credits = await page.evaluate(() => {
-                    const rows = [
-                        ...document.querySelectorAll(
-                            ".reference-photo .photo-credit-links"
-                        ),
-                    ];
-                    return rows.map((row) => ({
-                        display: getComputedStyle(row).display,
-                        labels: [...row.querySelectorAll("a")].map((link) =>
-                            link.textContent.trim()
-                        ),
-                        wrap: getComputedStyle(row).flexWrap,
-                    }));
-                });
-                expect.soft(credits.length).toBeGreaterThan(0);
-                expect
-                    .soft(
-                        credits.every(
-                            (credit) =>
-                                credit.display === "flex" &&
-                                credit.wrap === "wrap"
-                        )
-                    )
-                    .toBe(true);
-                expect
-                    .soft(
-                        credits.every(
-                            (credit) =>
-                                credit.labels.includes("Photo source") &&
-                                credit.labels.some((label) =>
-                                    label.startsWith("License:")
-                                )
-                        )
-                    )
-                    .toBe(true);
-                expect
-                    .soft(
-                        await page.evaluate(
-                            () =>
-                                document.documentElement.scrollWidth <=
-                                innerWidth
-                        )
-                    )
-                    .toBe(true);
-            }
-        );
+        test("prints only the current profile with research evidence", async ({
+            page,
+        }) => {
+            await openSite(
+                page,
+                "plants/aeonium-haworthii-dream-color/",
+                theme
+            );
+            await page.emulateMedia({ media: "print" });
+            await expect
+                .soft(page.getByRole("main").getByRole("article"))
+                .toHaveCount(1);
+            await expect
+                .soft(page.getByRole("main"))
+                .toContainText("Identification");
+            await expect.soft(page.getByRole("main")).toContainText("Sources");
+        });
     });
 }
+
+test.describe("migration compatibility", { tag: "@routes" }, () => {
+    for (const [section, heading] of [
+        ["collection-heading", "Plant Photo History"],
+        ["nursery-heading", "Nursery Labels"],
+    ] as const) {
+        test(`preserves the legacy ${section} bookmark`, async ({ page }) => {
+            const slug = "gymnocalycium-mihanovichii-variegated";
+            const anchor = `${slug}-${section}`;
+            await openSite(page, `docs/plant-booklet/#${anchor}`, "light");
+            await expect
+                .soft(page)
+                .toHaveURL(`${base}plants/${slug}/#${anchor}`);
+            await expect
+                .soft(page.getByRole("heading", { exact: true, name: heading }))
+                .toHaveAttribute("id", anchor);
+            await expect
+                .soft(page.getByRole("heading", { exact: true, name: heading }))
+                .toBeVisible();
+        });
+    }
+
+    test("preserves legacy root and nested profile bookmarks", async ({
+        page,
+    }) => {
+        await openSite(page, "#pachira-glabra", "light");
+        await expect
+            .soft(page)
+            .toHaveURL(/\/Gardening\/plants\/pachira-glabra\//v);
+        await page.goto(
+            `${base}docs/plant-booklet/#pachira-glabra-photo-history`
+        );
+        await expect
+            .soft(page)
+            .toHaveURL(
+                /\/plants\/pachira-glabra\/#pachira-glabra-photo-history$/v
+            );
+        await expect
+            .soft(
+                page.getByRole("heading", { exact: true, name: moneyTreeName })
+            )
+            .toBeVisible();
+        await page.goto(`${base}#equipment`);
+        await expect.soft(page).toHaveURL(/\/setup\/equipment\//v);
+    });
+
+    for (const route of [
+        "tracker/",
+        "pots/P19/",
+        "pots/P20/",
+        "report/",
+        "reports/",
+        "photos/",
+        "guides/",
+        "setup/",
+        "setup/placement/",
+        "setup/equipment/",
+        "setup/archive/",
+        "setup/archive/calendar/",
+        "setup/archive/layout/",
+        "search/",
+    ]) {
+        test(`loads ${route} directly`, async ({ page }) => {
+            await page.route("**://*.googletagmanager.com/**", (request) =>
+                request.abort()
+            );
+            await page.route("**://docs.google.com/**", (request) =>
+                request.abort()
+            );
+            const response = await page.goto(`${base}${route}`);
+            expect.soft(response?.status()).toBe(200);
+            await expect.soft(page.getByRole("main")).toBeVisible();
+            await expect
+                .soft(page.getByRole("heading", { level: 1 }))
+                .toHaveCount(1);
+        });
+    }
+
+    test("remains readable without JavaScript", async ({ browser }) => {
+        const context = await browser.newContext({ javaScriptEnabled: false });
+        const page = await context.newPage();
+        await page.goto(`${base}plants/pachira-glabra/`);
+        await expect
+            .soft(
+                page.getByRole("heading", { exact: true, name: moneyTreeName })
+            )
+            .toBeVisible();
+        await expect.soft(page.getByRole("main")).toContainText("Sources");
+        await page.goto(`${base}plants/`);
+        await expect
+            .soft(page.getByRole("heading", { name: "Meet the plants." }))
+            .toBeVisible();
+        await context.close();
+    });
+});

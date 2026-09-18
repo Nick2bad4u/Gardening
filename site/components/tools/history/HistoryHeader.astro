@@ -1,0 +1,77 @@
+---
+import { siteUrl } from "../../../lib/routes.mjs";
+---
+
+<header class="hero history-hero">
+    <span hidden>
+        <svg
+            data-tool-icon-template
+            class="site-icon"
+            viewBox="0 0 64 64"
+            aria-hidden="true"
+            focusable="false"
+        >
+            <use href={siteUrl("plant-icons.svg#icon-cactus")} width="64" height="64"></use>
+        </svg>
+    </span>
+    <div>
+        <p class="eyebrow" id="plant-label">
+            Loading plant…
+        </p>
+        <h1 id="plant-name">Plant history</h1>
+        <div class="scientific-heading" id="plant-scientific"></div>
+        <p class="lede">
+            Every watering, weight, size check, and observation is kept as its own event.
+            Calculations use the full log, while weight baselines use only the active pot setup.
+        </p>
+    </div>
+    <div class="hero-actions">
+        <div
+            class="profile-actions"
+            id="profile-actions"
+            role="group"
+            aria-label="Field guide profiles"
+        ></div>
+        <a
+            class="button primary"
+            id="edit-history"
+            href="https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=2015971861#gid=2015971861"
+            target="_blank"
+            rel="noreferrer"
+        >
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-edit")} width="64" height="64"></use>
+            </svg>
+            Open Quick log
+        </a>
+        <a
+            class="button"
+            href="https://script.google.com/macros/s/AKfycbytpdMto4ZAqOf49igDNoGYr-J6fmSRDNJOKP4-dKDFRmM2YkTCKJp3kmhrD4gOJShF/exec"
+            target="_blank"
+            rel="noreferrer"
+        >
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-mobile")} width="64" height="64"></use>
+            </svg>
+            Open mobile logger
+        </a>
+        <a
+            class="button"
+            id="sheet-plant-page"
+            href="https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=1875598047#gid=1875598047"
+            target="_blank"
+            rel="noreferrer"
+        >
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-sheets")} width="64" height="64"></use>
+            </svg>
+            Open Sheets plant page
+        </a>
+        <a class="button" href={siteUrl("tracker/")}>
+            <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <use href={siteUrl("plant-icons.svg#icon-arrow-left")} width="64" height="64"></use>
+            </svg>
+            Back to all plants
+        </a>
+    </div>
+</header>

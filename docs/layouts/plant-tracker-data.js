@@ -725,7 +725,13 @@ export function formatSigned(value, unit = "", digits = 1) {
 
 /** @param {string} labelId */
 export function historyPageUrl(labelId) {
-    return `./plant-history.html?id=${encodeURIComponent(labelId)}`;
+    const base =
+        typeof document === "undefined"
+            ? ""
+            : document.documentElement.dataset["siteBase"];
+    return base !== undefined && base !== ""
+        ? `${base}pots/${encodeURIComponent(labelId)}/`
+        : `./plant-history.html?id=${encodeURIComponent(labelId)}`;
 }
 
 /** @returns {Promise<CollectionData>} */
@@ -1015,6 +1021,8 @@ export function getRequiredElement(selector, elementType) {
 /** @param {HTMLButtonElement} button */
 export function installThemeToggle(button) {
     const root = document.documentElement;
+    // The modern site shell owns its shared theme control. Standalone fixtures retain the legacy control.
+    if (root.dataset["siteBase"] !== undefined) return;
     const label = button.querySelector("[data-theme-label]");
     const update = () => {
         const isDark = root.dataset["theme"] === "dark";

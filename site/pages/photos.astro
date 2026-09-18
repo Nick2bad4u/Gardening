@@ -1,0 +1,143 @@
+---
+import SiteLayout from "../components/SiteLayout.astro";
+import { getCollectionManifest, getProfiles, photoPreview } from "../lib/content.mjs";
+import { profileUrl } from "../lib/routes.mjs";
+const [manifest, profiles] = await Promise.all([getCollectionManifest(), getProfiles()]);
+---
+
+<SiteLayout
+    title="Collection Photos"
+    description="Dated photographs of the owned plants, with links to their complete photo histories."
+    section="photos"
+>
+    <header class="page-heading">
+        <p class="eyebrow">The growing collection</p>
+        <h1>Collection Photos</h1>
+        <p class="lede">Owned plants, dated evidence, and the changes between visits.</p>
+        <p>{manifest.copyright_notice}</p>
+        <a class="button-secondary" href={manifest.gyazo_collection.url}>
+            Full Collection Overview ↗
+        </a>
+    </header>
+    <section aria-labelledby="overview-heading">
+        <h2 id="overview-heading">Collection Overviews</h2>
+        <div class="card-grid">
+            {manifest.collection_overviews.map((photo) => (
+                <figure class="card">
+                    <a href={photo.page_url}>
+                        <img
+                            src={photoPreview(photo)}
+                            alt={photo.alt}
+                            width="640"
+                            height="480"
+                            loading="lazy"
+                            decoding="async"
+                            data-image-id={photo.image_id}
+                        />
+                    </a>
+                    <figcaption>
+                        <strong>{photo.caption}</strong>
+                        <span>{photo.captured_on ?? photo.provided_on} · © Nick</span>
+                    </figcaption>
+                </figure>
+            ))}
+        </div>
+    </section>
+    <section aria-labelledby="plant-photos-heading">
+        <div class="section-heading">
+            <h2 id="plant-photos-heading">Plant Photo Histories</h2>
+            <label>
+                Find a plant
+                <input type="search" id="photo-search" placeholder="Name, label, or P-ID" />
+            </label>
+        </div>
+        <p id="photo-result-count" role="status" aria-live="polite">
+            {profiles.length} plant records
+        </p>
+        <div class="card-grid" id="plant-photos">
+            {profiles.map((profile) => (
+                <article class="card photo-record" data-photo-search={profile.searchText}>
+                    <h3>
+                        <a href={profileUrl(profile.slug)}>{profile.title}</a>
+                    </h3>
+                    <p>
+                        {profile.drawerLabel.primary} · {profile.trackerId ?? "Historical"}
+                    </p>
+                    {profile.ownedPhotos[0] ? (
+                        <a href={profile.ownedPhotos[0].page_url}>
+                            <img
+                                src={photoPreview(profile.ownedPhotos[0])}
+                                alt={profile.ownedPhotos[0].alt}
+                                width="640"
+                                height="480"
+                                loading="lazy"
+                                decoding="async"
+                                data-image-id={profile.ownedPhotos[0].image_id}
+                            />
+                        </a>
+                    ) : (
+                        <p>Collection photo pending.</p>
+                    )}
+                    {profile.ownedPhotos[0] && (
+                        <p>
+                            Latest:{" "}
+                            {profile.ownedPhotos[0].captured_on ??
+                                profile.ownedPhotos[0].provided_on}
+                        </p>
+                    )}
+                    {profile.collectionRecord.gyazo_collection && (
+                        <a href={profile.collectionRecord.gyazo_collection.url}>
+                            Full Gyazo Collection ↗
+                        </a>
+                    )}
+                </article>
+            ))}
+        </div>
+        <p id="photo-empty" hidden>
+            No plant records match this search.
+        </p>
+    </section>
+</SiteLayout>
+<script>
+    const input = document.querySelector<HTMLInputElement>("#photo-search");
+    const records = Array.from(document.querySelectorAll<HTMLElement>("[data-photo-search]"));
+    input?.addEventListener("input", () => {
+        const query = input.value.trim().toLowerCase();
+        let count = 0;
+        for (const record of records) {
+            record.hidden = !(record.dataset.photoSearch ?? "").includes(query);
+            if (!record.hidden) count++;
+        }
+        const status = document.querySelector("#photo-result-count");
+        if (status) status.textContent = `${count} plant records`;
+        const empty = document.querySelector<HTMLElement>("#photo-empty");
+        if (empty) empty.hidden = count !== 0;
+    });
+</script>
+<style>
+    section {
+        margin-block: 2rem;
+    }
+    figure {
+        margin: 0;
+    }
+    img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        border-radius: 0.6rem;
+    }
+    figcaption {
+        display: grid;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+    }
+    label {
+        display: grid;
+        gap: 0.5rem;
+    }
+    .photo-record[hidden] {
+        display: none;
+    }
+</style>

@@ -6,7 +6,7 @@
   `.pages-site/`. Pull requests validate only; deployment requires a successful
   non-PR run on `main`. Preserve that gate, the `github-pages` environment, and
   deploy-job-only Pages write permissions.
-- Keep the existing type/lint, generated-booklet/report, Storybook coverage,
+- Keep the existing type/lint, artwork/report validation, public-site checks, Storybook coverage,
   and static `/storybook/` smoke checks before artifact upload. Preserve the
   selected-photo cache without publishing `.cache`, private originals, source
   snapshots, credentials, or test coverage as site content.

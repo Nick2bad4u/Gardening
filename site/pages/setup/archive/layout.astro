@@ -1,0 +1,42 @@
+---
+import SiteLayout from "../../../components/SiteLayout.astro";
+import { siteUrl } from "../../../lib/routes.mjs";
+import LayoutViewpoint from "../../../components/tools/layout/LayoutViewpoint.astro";
+import LayoutTabs from "../../../components/tools/layout/LayoutTabs.astro";
+import LayoutControls from "../../../components/tools/layout/LayoutControls.astro";
+import RoomDiagram from "../../../components/tools/layout/RoomDiagram.astro";
+import TableDiagram from "../../../components/tools/layout/TableDiagram.astro";
+import HeightDiagram from "../../../components/tools/layout/HeightDiagram.astro";
+import WiringDiagram from "../../../components/tools/layout/WiringDiagram.astro";
+import "../../../styles/tools/layout.css";
+---
+
+<SiteLayout title="Earlier grow-spot diagrams" section="setup">
+    <div class="tool-layout">
+        <div class="page show-risers" id="layout-page">
+            <header>
+                <p class="eyebrow">Setup archive</p>
+                <h1>Earlier room and table diagrams</h1>
+                <p>
+                    Historical planning references. These diagrams retain the older round-table
+                    setup and equipment assumptions; see the current placement page for the
+                    installed arrangement.
+                </p>
+                <a href={siteUrl("setup/placement/")}>Current placement →</a>
+                <button class="button" type="button" id="print-layout">
+                    Print diagrams
+                </button>
+            </header>
+            <LayoutViewpoint />
+            <LayoutTabs />
+            <LayoutControls />
+            <RoomDiagram />
+            <TableDiagram />
+            <HeightDiagram />
+            <WiringDiagram />
+        </div>
+    </div>
+</SiteLayout>
+<script>
+    import "../../../client/tools/layout.js";
+</script>

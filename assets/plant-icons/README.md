@@ -1,7 +1,7 @@
 # Custom plant portraits
 
 These standalone multicolor SVGs are generated from
-[`docs/plant-booklet/plant-icons.svg`](../../docs/plant-booklet/plant-icons.svg).
+[`assets/artwork/plant-icons.svg`](../artwork/plant-icons.svg).
 The 38 files cover 36 field-guide profiles and two whole-planter portraits and
 can be used without loading the complete sprite. The latter are
 `shared-rehab-cactus-planter.svg` (**#1 / P19**) and
@@ -38,10 +38,8 @@ style-independent so the transparent multicolor portraits work on the
 collection's light, dark, print, and embedded surfaces without inheriting an
 unexpected CSS cascade.
 
-Run `npm run build:booklet` after changing the canonical sprite. The build keeps
-these standalone exports synchronized, and the Google Apps Script logger loads
-them from the public Pages site instead of embedding the complete portrait
-sprite in every response. The build also derives the logger's artwork revision
-from all exported SVGs. Its browser cache keeps one copy per portrait, fetches
-only visible portraits, and replaces an older revision when that portrait is
-next displayed. Do not hand-edit the generated SVG files or revision constant.
+Run `npm run build:artwork` after changing the canonical sprite, then
+`npm run check:artwork` to verify the standalone exports. Website builds never
+rewrite the logger's symbols or artwork revision. Updating those is an explicit
+`npm run sync:logger-artwork` operation; publish changed portrait assets before
+an authorized logger deployment that refers to their new revision.

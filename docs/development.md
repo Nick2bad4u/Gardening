@@ -1,8 +1,6 @@
-# Maintaining the browser tools
+# Maintaining the Gardening website
 
-The field guide and collection tools are static HTML, CSS, and JavaScript. Node.js
-builds the publication files; it does not run a production application server.
-Use Node.js 26.7 or later and npm 12 or later, then install the checked-in lockfile:
+The public website uses Astro to build static HTML pages, shared styles, and browser enhancements. There is no production application server. The Google-hosted Quick Logger remains a separate application. Run repository commands from the repository root with Node.js 26.7 or later and npm 12 or later, using the checked-in lockfile and reviewed lifecycle-script allowlist:
 
 ```powershell
 npm ci
@@ -14,142 +12,117 @@ npm ci
 npm run dev
 ```
 
-This starts Vite at `http://127.0.0.1:5173` and opens the field guide. Keep the
-terminal running and save edits in your editor: CSS updates in place, preserving
-your current page and scroll position. HTML and JavaScript changes reload the
-page. SVG sprites, images, and fetched local JSON also trigger a reload.
+This prepares the explicitly allowed public assets and starts Astro at `http://127.0.0.1:5173/Gardening/`. Development and GitHub Pages use the same project base path. Keep the terminal running while editing; Astro refreshes the affected pages and styles. Stop it with **Ctrl+C**. If port 5173 is occupied, stop the other preview or run `npm run dev -- --port 5174`.
 
-The terminal prints links to all six pages:
+| Area                            | Local path                          |
+| ------------------------------- | ----------------------------------- |
+| Collection home                 | `/Gardening/`                       |
+| Plant directory                 | `/Gardening/plants/`                |
+| Individual profile              | `/Gardening/plants/pachira-glabra/` |
+| Live tracker                    | `/Gardening/tracker/`               |
+| Pot history                     | `/Gardening/pots/P21/`              |
+| Latest reviewed report          | `/Gardening/report/`                |
+| Report archive                  | `/Gardening/reports/`               |
+| Collection photos               | `/Gardening/photos/`                |
+| Care guides                     | `/Gardening/guides/`                |
+| Current setup                   | `/Gardening/setup/`                 |
+| Placement diagrams              | `/Gardening/setup/placement/`       |
+| Equipment inventory             | `/Gardening/setup/equipment/`       |
+| Historical layouts and calendar | `/Gardening/setup/archive/`         |
 
-| Page             | Local path                                       |
-| ---------------- | ------------------------------------------------ |
-| Field guide      | `/docs/plant-booklet/`                           |
-| Plant tracker    | `/docs/layouts/plant-tracker.html`               |
-| Plant history    | `/docs/layouts/plant-history.html`               |
-| Photo album      | `/docs/layouts/photo-album.html`                 |
-| Grow-spot layout | `/docs/layouts/grow-spot-layout.html`            |
-| Calendar         | `/docs/layouts/indoor-acclimation-calendar.html` |
+The live tracker and history read the published spreadsheet. They do not write observations. Use Storybook for deterministic synthetic responses. The ordinary development preview uses allowed source assets; the production build adds optimized image variants and same-origin collection previews. After changing artwork or other copied assets, rerun `npm run prepare:site` and reload the preview.
 
-Edit `docs/plant-booklet/booklet.css` and `booklet.js` for the field guide.
-The tracker and history share `docs/layouts/plant-tracker.css`; their scripts
-are beside the HTML files. The layout and calendar keep their styles and
-scripts inside their HTML files. No Pages or Storybook rebuild is needed for
-these presentation edits.
+## Maintained sources and page boundaries
 
-Generated content still uses its existing build command. After editing plant
-Markdown or photo metadata, run `npm run build:booklet` in another terminal;
-the preview reloads when the generated HTML changes. Do not edit generated
-profile text directly in `docs/plant-booklet/index.html`.
+- `site/pages/` defines individual routes. Plant profile routes use slugs; pot histories use permanent P-IDs because several botanical profiles can share one weighed container.
+- `site/components/` contains the shared page layout, navigation, plant cards, profiles, document articles, and tool presentation. `site/styles/` holds design tokens and maintained styles. `site/client/` holds browser enhancements.
+- `site/lib/` contains build-time content adapters, route resolution, legacy redirects, and reviewed-report loading. Profile parsing comes from `site/lib/content/profile-source.mjs`; its validated input remains the maintained Markdown under `docs/plants/` and the photo manifests.
+- `docs/equipment/inventory.md` remains the equipment catalog. Care and setup Markdown remain the source for their web pages. Do not maintain another editable copy inside an Astro template.
+- `docs/layouts/plant-profile-data.json` remains the profile-to-pot mapping. The existing `plant-tracker-data.js` and `plant-charts.js` modules retain spreadsheet parsing and measurement calculations. Website layout work does not authorize changing their data semantics.
+- `docs/daily-reports/YYYY-MM-DD.json` contains reviewed report inputs. The renderer preserves source timestamps, incomplete coverage, and historical schema distinctions; it never reads private Sheets or makes new watering decisions during a build.
+- `astro.config.mjs` controls static output, the `/Gardening/` base, and the explicitly prepared public directory. `.cache/site-public/` and `.pages-site/` are generated artifacts, not content sources.
 
-This preview serves repository sources, including their original image paths
-and live read-only spreadsheet data. Use Storybook for isolated fixture data,
-or `npm run build:pages` for the publication output and optimized photo assets.
-The local server is separate from the deployed Apps Script logger.
-Its dedicated `vite.website.config.mjs` also keeps the website preview settings
-out of Storybook and Vitest.
+Markdown rendering uses the existing `remark-html` sanitization. Resolve relative links from their source document through the shared route map. Preserve exact scientific names, identity qualifiers, nursery evidence, acquisition dates, labels, and source citations. The homepage and directory must not embed complete profile bodies.
 
-Press **Ctrl+C** in the terminal to stop it. If port 5173 is occupied, stop the
-other preview or use `npm run dev -- --port 5174`. Vite uses the existing
-development dependency and listens only on this computer by default.
+Ordinary HTML navigation replaces booklet pagination and reader shortcuts. Keep long-page contents links, visible keyboard focus, 44 px touch targets, reduced-motion behavior, and the `gardening-site-theme` preference. Individual profiles, reports, and applicable setup pages have print styles; there is no print-all collection mode.
 
-## Shared configuration
+## Build and publication
 
-The repository uses the shared ESLint, Stylelint, TypeScript, Playwright,
-Storybook, and TSDoc packages. Local configuration maps those presets to the
-files and runtimes in this notebook:
+```powershell
+npm run build:site
+npm run check:site
+npm run build:pages
+```
 
-- TypeScript checks the build scripts, browser JavaScript, test fixtures, and
-  tooling files with strict checking and without emitting compiled copies.
-  Browser code retains an ES2024 API baseline.
-- Vitest rules apply to `test/**/*.test.mjs`; Playwright rules apply to
-  `test/e2e/**/*.spec.ts`. The local browser test server is ordinary Node code.
-- `lint:actions` discovers `.github/actionlint.yaml`. `lint:yamllint` uses the
-  existing YAML ESLint checks, including the yamllint rule configured through
-  `yaml-policy.config.mjs`, so both YAML commands share one policy.
-- Browser module imports retain their `.js` extensions because Pages serves
-  them directly. The booklet entry point remains a classic script.
-- The booklet build uses `remark-html`'s default sanitization for Markdown and
-  shares the browser's worksheet URL mapping through `scripts/build-data.mjs`.
-  Raw HTML and unsafe Markdown links do not pass through to profile content.
-- Booklet hover effects respect reduced motion and reserve pointer-driven
-  movement for devices with a fine pointer. Keyboard focus retains a visible
-  outline, and print output excludes the screen entrance animations.
-- Document listeners remain active for the life of each page, including browser
-  back-cache restoration.
-- Stylelint checks maintained stylesheets and inline styles, including the
-  self-contained Apps Script client. Docusaurus-specific rules do not apply to
-  these standalone documents.
-- Generated artifacts and local audit output are excluded through the existing
-  ignore files. Build scripts are included in ESLint, even though the shared
-  preset normally ignores script directories.
+`build:site` prepares allowed assets, builds Astro into `.pages-site/`, optimizes published images, and adds production analytics. `check:site` checks the built artifact, including expected routes, local references, profile completeness, shared navigation, duplicate IDs, and publication boundaries. It does not build missing pages.
 
-Vitest, its V8 coverage provider, and its Playwright browser provider use the
-same 4.1 release line. Storybook 10.6's Vitest addon supports Vitest 3 or 4;
-keep these packages compatible when upgrading. The shared TypeScript package
-also accepts Vitest 4, so no peer override or forced installation is needed.
+`build:pages` runs the site build and then appends the static Storybook workbench under `.pages-site/storybook/`. Running `build:site` afterward replaces that artifact and removes the appended workbench; run `build:pages` again when a complete deployment artifact is needed.
 
-The `unit` Vitest project uses native Node imports through
-`experimental.viteModuleRunner: false`.
-The tests already use native ESM, and the logger harness evaluates the Apps
-Script source verbatim in VM contexts. Vite's SSR transform inserts characters
-into that file, so applying it only during coverage reporting shifts the V8
-offsets and reports exercised code as uncovered. Native execution keeps coverage
-aligned with the actual source. The previous per-branch V8 ignore comments are
-removed; the existing 90% coverage thresholds remain in force.
+The builder uses an explicit asset allowlist and contained-path checks. Do not point Astro's public directory at the repository or copy private caches into it. Production GTM appears once on canonical public pages, and does not run in development, fixture builds, or compatibility redirects.
 
-The HTML parser dependencies are pinned separately. `@html-eslint/parser@0.65.0`
-uses `es-html-parser@0.3.1`, whose source-location helper rescans a document for
-each token. The large generated field guide makes that quadratic cost visible.
-`scripts/html-eslint-parser.mjs` indexes line breaks for each synchronous parse,
-then restores the upstream helper in `finally`. It retains all HTML rules and
-parser options. Version guards reject an unreviewed parser upgrade; equivalence
-tests cover complete parse results, Unicode line locations, nested parsing, and
-restoration after errors. Remove this adapter when an upstream repair passes
-those tests.
+Old root fragments, `/docs/plant-booklet/` bookmarks, and `/layouts/*.html` addresses have small compatibility redirects. Keep nested plant/photo anchors and history P-ID or label query handling working. Update maintained links to canonical routes, but retain these aliases for existing bookmarks. A redirect must not load a retired all-profile document.
 
-## Checks
+For an authorized deployment, push the reviewed commit normally to `main`, follow **Website Checks and Pages** for that exact commit through deployment, and verify the public homepage, a profile, a shared-pot history, the latest and dated reports, legacy bookmarks, and image/icon assets. A successful push alone does not confirm publication. The preceding site commit for the Astro migration is `ef789f7059d58a10653921a4e5e1f74c2120b5c2`. If rollback is needed, inspect subsequent work and revert the migration in a new commit, then run the preceding build and deployment workflow; do not reset or force-push shared history. Revert the scheduled task's publication instructions in coordination with a rollback because the preceding site expects committed report HTML.
+
+For reports:
+
+```powershell
+npm run check:daily-report
+npm run build:daily-report
+```
+
+The first command validates the reviewed report inputs and their rendering. The second also writes a standalone ignored preview under `.cache/daily-report-preview/`. Use the Astro development route to review the report with full site navigation. Daily publication commits the reviewed dated JSON, not generated site HTML; follow the report-specific instructions and existing scheduled-task authority.
+
+## Artwork and photo publication
+
+The canonical portrait and interface artwork lives under `assets/artwork/`. Standalone exports retain their public `/assets/plant-icons/`, `/assets/ui-icons/`, and `/plant-icons.svg` addresses.
+
+```powershell
+npm run build:artwork
+npm run check:artwork
+```
+
+These commands export or check website artwork without rewriting the logger. `npm run sync:site-artwork` is the equivalent explicit export command. A deliberate logger artwork update uses the separate `npm run sync:logger-artwork` command, followed by the logger checks and its authorized deployment procedure. An ordinary website build must leave Apps Script source unchanged.
+
+The publication builder downloads only selected Gyazo thumbnails actually used on public pages. It caches captures under `.cache/collection-previews-v1` and publishes metadata-stripped WebP previews at 320, 640, and 960 pixels, capped at source width. Smaller images do not create duplicate variants. Licensed reference photographs also receive responsive publication variants; their attribution and source links remain available.
+
+Owned-plant pages show the latest two collection photographs, with nursery-label evidence separate and full Gyazo Collection links intact. Public previews do not replace private camera originals or the source-quality captures. An invalid image or failed required download fails publication instead of creating a broken preview. An optional Gyazo preview that remains unavailable after bounded retries receives a visible unavailable notice and its original capture link; the build records this in `assets/collection-preview-status.json`. The Pages workflow restores the capture cache between builds. Tests can block Gyazo to verify that production previews load from the Pages origin.
+
+Follow `assets/AGENTS.md` and the photo-publication runbook for source changes or uploads. A website build does not authorize publishing another photograph or changing its rights.
+
+## Strict checks and runtime boundaries
 
 ```powershell
 npm run typecheck
 npm run typecheck:browser
 npm run typecheck:build
 npm run typecheck:tests
+npm run typecheck:site
 npm run lint:all
-npm run test:coverage
-npm run check:booklet
+npm run lint:style
+npm run lint:remark
+npm run lint:html
+npm run check:artwork
+npm run check:daily-report
 npm run check:logger
 ```
 
-`lint:all` runs ESLint, TypeScript including Apps Script, Node and Storybook
-tests, Prettier, package checks, and secret checks. It does not run every
-repository check. Run the relevant `lint:style`, `lint:remark`, `lint:html`,
-`lint:actions`, `lint:yaml`, and `lint:tsdoc` commands separately when those
-surfaces change, along with the appropriate generated-output checks.
-Run `npm run lint:lychee` when external links change. Review automated fixes:
-an API suggestion must still be supported by the runtime that executes the file.
-The link check covers maintained Markdown and HTML; JavaScript fault fixtures
-and source-code URL fragments are checked by their regression tests.
+`typecheck` includes repository TypeScript/checked JavaScript, Astro checking, and the separate Apps Script checker. The focused commands cover their named runtimes. Browser code retains the ES2024 API baseline; build-only Node APIs must not leak into browser or Apps Script code. Imported browser modules keep explicit `.js` extensions even when Astro bundles their entry point.
 
-## Browser and icon review
+`lint:all` aggregates ESLint, type checks, Node and Storybook tests, Prettier, package checks, and secret checks. It does not run every repository check. Run the additional CSS, Markdown, HTML, workflow/YAML, link, and generated-output checks for changed surfaces. `lint:lychee:smoke` discovers README inputs only; use `npm run lint:lychee` to check changed external URLs and inspect changed local targets directly. Review automatic fixes against the actual runtime APIs.
+
+ESLint and Prettier include Astro sources. Stylelint covers maintained CSS and the remaining standalone HTML styles, including the self-contained logger client. Generated artifacts and private caches stay excluded. Preserve the shared configurations and narrow runtime overrides rather than weakening checks to accommodate a migration.
+
+The pinned HTML parser adapter in `scripts/html-eslint-parser.mjs` indexes line breaks to avoid repeated source rescans and restores the upstream helper in `finally`. Its version guards and equivalence tests still apply to the remaining large standalone HTML inputs. Remove the adapter only when an upstream repair passes those tests.
+
+Vitest, its V8 coverage provider, and its Playwright browser provider use the same 4.1 release line. Storybook 10.6's Vitest addon supports Vitest 3 or 4. Keep these dependencies and the shared TypeScript preset compatible when updating; do not force a conflicting installation.
+
+The Node unit project uses native imports through `experimental.viteModuleRunner: false`. The logger harness evaluates Apps Script verbatim in VM contexts; Vite SSR transformations change source offsets and distort its V8 coverage. Preserve native execution and the separate 90% logger thresholds.
+
+## Storybook and browser verification
 
 ```powershell
-npm run build:pages
-npm run test:e2e
 npm run storybook
-```
-
-Playwright starts a local server for `.pages-site` and checks desktop and mobile
-layouts in light and dark themes. The Windows Chromium project uses installed
-Microsoft Edge. Other platforms use Playwright's Chromium; Firefox and WebKit
-projects require their matching Playwright browser installations.
-
-Storybook includes the existing SVG icon workbench and six public website
-surfaces: the field guide, plant tracker, plant history, photo album, grow-spot
-layout, and calendar. Website stories load the actual HTML, CSS, and JavaScript
-in separate frames at desktop and 390 px widths, with light and dark themes.
-The icon workbench retains icon, size, and background controls.
-
-```powershell
 npm run test:storybook
 npm run test:storybook:watch
 npm run test:storybook:coverage
@@ -157,99 +130,27 @@ npm run test:unit
 npm run build:storybook
 ```
 
-`npm test` runs both the Node tests and Storybook browser tests. The Storybook
-sidebar's test widget runs the same story assertions and supports coverage.
-The browser project explicitly prebundles `storybook/test` and `vitest` so
-their CommonJS dependencies also work in the interactive test runner. Run
-the sidebar widget and CLI browser tests separately; concurrent runners share
-Storybook's dependency cache and can conflict on Windows.
-On Windows, the browser project uses installed Microsoft Edge. On other
-platforms, install Chromium once with `npx playwright install chromium`.
+Storybook is the isolated browser workbench at port 6006. Its website stories use the real Astro pages in frames, plus the existing SVG icon workbench. `.storybook/prepare-pages.mjs` builds those pages into `.cache/storybook-pages/` with a fixed report input and synthetic spreadsheet responses. A source fingerprint rebuilds changed fixtures at the next Storybook preparation. Restart Storybook after changing inputs that affect those generated frames.
 
-The story assertions cover reader search and keyboard navigation, plant
-filtering and sorting, loading and unavailable data, successful retry, empty
-history, chart rendering, photo search, theme changes, table maximization,
-layout tabs and riser inputs, and calendar task toggles. Mobile stories also
-check horizontal page overflow. These are interaction checks; they do not
-compare screenshot baselines or replace the existing Playwright layout tests.
+Fixture HTML receives its storage/network bootstrap before application scripts. The fixture build uses `/Gardening/storybook/preview` as its base, disables analytics, and cannot write observations to Google Sheets. It does not replace production report inputs, preferences, or site output. Keep fixture switches confined to this explicit test build.
 
-`.storybook/prepare-pages.mjs` copies an explicit list of public files into
-`.cache/storybook-pages` when Storybook starts or builds. It adds a fixture
-bootstrap to those copies. Each frame has isolated storage and synthetic
-spreadsheet responses; no observations are sent to Google Sheets. Remote Gyazo
-thumbnails use a labeled placeholder so preview availability cannot affect a
-test. Restart Storybook after editing the copied website sources. Production
-HTML, scripts, assets, and preferences are not rewritten by this preparation.
+`npm test` runs Node unit tests and Storybook browser tests. Run the interactive sidebar test widget and CLI browser tests separately; simultaneous runners share dependency caches and can conflict on Windows. Windows browser tests use installed Microsoft Edge; other platforms use Playwright Chromium. Install the required browsers when missing rather than changing the tested browser silently.
 
-`test:storybook:coverage` writes V8 HTML and LCOV reports to
-`coverage/storybook`. It measures the external booklet, tracker, history, data,
-and chart scripts, with floors of 80% statements, lines, and functions and 60%
-branches. The calendar, layout, and photo album retain inline scripts: their
-behavior is tested, but their HTML files are outside this JavaScript coverage
-report. `test:coverage` retains the logger's separate 90% gate and writes to
-`coverage`; run browser coverage afterward to retain both reports.
+Browser coverage writes HTML and LCOV to `coverage/storybook`, covering `site/client/` modules and the maintained `docs/layouts/` JavaScript, with floors of 80% statements, lines, and functions and 60% branches. Template markup is verified through route/content checks and browser interactions. The separate logger coverage gate remains 90%. Run browser coverage after general coverage if both reports need to be retained.
 
-The **Get started** MDX introduction explains the workbench, preview data, and
-test commands. Global `autodocs` tags in `.storybook/preview.ts` add a **Docs**
-page to every story group. The website control tables describe the frame wrapper
-(theme, width, path, and spreadsheet scenario); the actual website remains static
-HTML and JavaScript. Add a description and meaningful controls when adding a
-story group.
+```powershell
+npm run build:pages
+npm run check:site
+npm run test:e2e
+npm run test:storybook:static
+```
 
-`npm run build:storybook` and `npx storybook build` both write an independent
-static workbench to `storybook-static`. `npm run build:pages` builds the ordinary
-website from maintained sources, then adds Storybook and its fixture copies at
-`.pages-site/storybook`. The published workbench is served at
-`/Gardening/storybook/`. Relative production asset URLs keep both standalone
-hosting and the nested Pages address working.
+Playwright serves the built Pages artifact and exercises the actual `/Gardening/` routes. Check direct load, reload, Back/Forward, old bookmarks, shared-container links, 390 px layouts, both themes, keyboard focus, reduced motion, contained table scrolling, and individual-page printing. Include loading, stale, unavailable, empty, correction, retry, filtering, sorting, export, and chart-tooltip behavior where applicable.
 
-The **Website Checks and Pages** workflow runs on pull requests, pushes to
-`main`, and manual dispatch. It installs Chromium, runs Storybook tests with the
-coverage thresholds above, uploads the HTML and LCOV coverage artifact for seven
-days, builds the combined site, and runs `npm run test:storybook:static`. That
-browser smoke check verifies the introduction, generated docs, website frame,
-and SVG assets under `/storybook/`. Tests or build failures block deployment.
-Only successful runs on `main` outside pull requests can upload and deploy the
-Pages artifact. Pull requests never deploy.
+`build:storybook` writes a standalone workbench to `storybook-static/`; `build:pages` appends it at `/Gardening/storybook/`. The static smoke check verifies the introduction, generated documentation, website frame, and SVG assets at that nested address. The published workbench supports browsing and interactions; its Vitest widget requires the local development server.
 
-After a local `npm run build:pages`, run `npm run test:storybook:static` to check
-the same artifact. The published workbench supports browsing and interactions;
-the Vitest test widget needs the local development server. Test results and
-coverage reports remain CI artifacts rather than website content.
+The **Website Checks and Pages** workflow runs on pull requests, `main` pushes, and manual dispatch. It runs maintained-source checks, artwork/report validation, Storybook coverage, the combined build, publication checks, and the Chromium end-to-end suite, including the static Storybook smoke check. Failed checks block deployment. Only successful runs on `main` outside pull requests deploy the Pages artifact. Coverage reports remain CI artifacts rather than public garden content.
 
-Storybook 10.6.0's Vitest addon still calls the deprecated `vitest.init()` alias
-when starting its interactive test widget. Vitest 4.1.11 retains that alias and
-the tests still run. The replacement belongs in the upstream addon; there is no
-call to replace in this repository. Keep the supported versions aligned instead
-of patching installed dependencies or suppressing all deprecation warnings.
+## Retired workflows
 
-## Collection photo previews
-
-The Pages build downloads only the selected Gyazo thumbnails currently shown
-in the guide and album. It caches them by capture ID under
-`.cache/collection-previews-v1`, then publishes responsive WebP previews at
-320, 640, and 960 pixels, capped at the source width. Smaller images do not
-produce duplicate size variants. Publication strips image metadata.
-
-The published previews load from the same GitHub Pages origin as the guide, so
-viewing a plant does not require the phone to contact Gyazo's thumbnail host.
-Original capture links, complete Gyazo Collections, captions, and credits remain
-available. The browser tests block Gyazo to verify this behavior.
-
-The Pages workflow restores the capture cache between builds. Existing capture
-IDs are reused when the photo manifest changes; new captures are downloaded
-once. A failed download or invalid image fails the build instead of publishing a
-broken preview. The cache and generated photo variants stay out of Git.
-
-The older `/docs/plant-booklet/` publication address redirects to the current
-field-guide root while preserving its query and plant anchor. The fallback
-404 document uses an absolute base URL so its styles and links still resolve
-when someone opens an obsolete nested bookmark.
-
-## Retired print-book workflow
-
-The dedicated PDF interior and dust-jacket pipeline was retired on September 5, 2026. Its commands, rendering dependencies, and source files are no longer part
-of the active toolchain. The owner retains a local archive with the current
-source and generated proofs; the last committed implementation is also
-recoverable from Git history. The field guide's ordinary browser Print control
-continues to use its own screen/print stylesheet.
+The all-profiles booklet, reader pager, and booklet-specific build/check commands are retired. Ordinary pages and their compatibility redirects replace them. The earlier PDF interior and dust-jacket pipeline was retired on September 5, 2026; its historical implementation remains in Git history. Neither pipeline is needed to maintain or print the current website.
