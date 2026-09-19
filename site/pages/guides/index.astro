@@ -1,7 +1,9 @@
 ---
 import SiteLayout from "../../components/SiteLayout.astro";
 import { getGuides } from "../../lib/content.mjs";
-import { contentUrl } from "../../lib/routes.mjs";
+import { contentUrl, siteUrl } from "../../lib/routes.mjs";
+import { documentAppearance } from "../../lib/document-presentation.mjs";
+import "../../styles/documents.css";
 const guides = await getGuides();
 ---
 
@@ -10,19 +12,58 @@ const guides = await getGuides();
     description="How this collection uses observations, weights, watering records, and permanent labels."
     section="guides"
 >
-    <header class="page-heading">
-        <p class="eyebrow">The collection notebook</p>
-        <h1>Care Guides</h1>
-        <p class="lede">The reasoning behind the records, and how to keep them useful.</p>
-    </header>
-    <div class="card-grid">
-        {guides.map((guide) => (
-            <article class="card">
-                <h2>
-                    <a href={contentUrl(guide.sourcePath)}>{guide.title}</a>
-                </h2>
-                <p>{guide.description}</p>
-            </article>
-        ))}
+    <div class="guide-library">
+        <header class="page-heading guide-library-heading">
+            <div class="document-emblem" aria-hidden="true">
+                <img
+                    src={siteUrl("assets/ui-icons/field-guide.svg")}
+                    alt=""
+                    width="64"
+                    height="64"
+                />
+            </div>
+            <div>
+                <p class="eyebrow">The Collection Notebook · {guides.length} Guides</p>
+                <h1>Care Guides</h1>
+                <p class="lede">The reasoning behind the records, and how to keep them useful.</p>
+            </div>
+        </header>
+        <div class="guide-library-grid">
+            {guides.map((guide) => {
+                const appearance = documentAppearance(guide.sourcePath);
+                const sections = guide.toc.filter((section) => section.level === 2);
+                const url = contentUrl(guide.sourcePath);
+                return (
+                    <article class="guide-library-card" data-tone={appearance.tone}>
+                        <header>
+                            <img
+                                src={siteUrl(`assets/ui-icons/${appearance.icon}.svg`)}
+                                alt=""
+                                width="48"
+                                height="48"
+                            />
+                            <div>
+                                <p class="eyebrow">{appearance.label}</p>
+                                <h2>
+                                    <a href={url}>{guide.title}</a>
+                                </h2>
+                            </div>
+                        </header>
+                        <p>{guide.description}</p>
+                        <ul aria-label={`Topics in ${guide.title}`}>
+                            {sections.slice(0, 3).map((section) => (
+                                <li>
+                                    <a href={`${url}#${section.id}`}>{section.title}</a>
+                                </li>
+                            ))}
+                        </ul>
+                        <footer>
+                            <span>{sections.length} Reference Sections</span>
+                            <a href={url}>Read the Guide →</a>
+                        </footer>
+                    </article>
+                );
+            })}
+        </div>
     </div>
 </SiteLayout>

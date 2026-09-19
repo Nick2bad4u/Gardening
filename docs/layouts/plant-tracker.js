@@ -1,3 +1,4 @@
+import { sourceReadLabel } from "./plant-sheet-cache.js";
 import {
     comparePlantsByNaturalLabel,
     dayColor,
@@ -6,14 +7,15 @@ import {
     formatDate,
     formatMeasurement,
     getRequiredElement,
+    getSavedCollectionData,
     historyPageUrl,
     installThemeToggle,
-    loadCollectionData,
+    loadCollectionSnapshot,
     parseDate,
     plantLabel,
 } from "./plant-tracker-data.js";
 
-/** @typedef {Awaited<ReturnType<typeof loadCollectionData>>} CollectionData */
+/** @typedef {import("./plant-tracker-data.js").CollectionData} CollectionData */
 /** @typedef {CollectionData["plants"][number]} CollectionPlant */
 /** @typedef {import("./plant-tracker-data.js").HistoryEvent} HistoryEvent */
 
@@ -22,6 +24,7 @@ const tableBody = getRequiredElement(
     HTMLTableSectionElement
 );
 const status = getRequiredElement("#sheet-status", HTMLElement);
+const sourceStatus = getRequiredElement("#tracker-source-status", HTMLElement);
 const refreshButton = getRequiredElement("#refresh-sheet", HTMLButtonElement);
 const searchInput = getRequiredElement("#tracker-search", HTMLInputElement);
 const baselineFilter = getRequiredElement(
@@ -35,8 +38,14 @@ const maximizeLabel = getRequiredElement("#maximize-label", HTMLElement);
 const sortHeaders = [
     ...document.querySelectorAll("#tracker-table th[data-sort]"),
 ].filter((header) => header instanceof HTMLTableCellElement);
-/** @type {{ collection: CollectionData | null; sortDirection: string }} */
-const state = { collection: null, sortDirection: "asc" };
+/**
+ * @type {{
+ *     collection: CollectionData | null;
+ *     readAt: number | null;
+ *     sortDirection: string;
+ * }}
+ */
+const state = { collection: null, readAt: null, sortDirection: "asc" };
 
 /**
  * @param {unknown} value
@@ -75,28 +84,53 @@ function latestActivityTime(plant) {
 }
 
 async function loadData() {
-    refreshButton.disabled = true;
-    status.textContent = "Loading the latest Google Sheets observations…";
-    try {
-        state.collection = await loadCollectionData();
+    if (refreshButton.disabled) return;
+    setRefreshBusy(true);
+    const saved = state.collection === null ? getSavedCollectionData() : null;
+    if (saved) {
+        state.collection = saved.collection;
+        state.readAt = saved.readAt;
         renderStats();
         renderTable();
-        status.textContent = `${state.collection.plants.length} containers and ${state.collection.history.length} observations loaded from Google Sheets.`;
+    }
+    status.textContent = state.collection
+        ? `${state.collection.plants.length} containers and ${state.collection.history.length} observations in the saved preview.`
+        : "Loading the latest Google Sheets observations…";
+    sourceStatus.dataset["state"] = "saved";
+    sourceStatus.textContent =
+        state.readAt === null
+            ? "First read in progress. No saved observations are available yet."
+            : `Saved preview · Source read ${sourceReadLabel(state.readAt)} · Refreshing Google Sheets…`;
+    try {
+        const snapshot = await loadCollectionSnapshot();
+        applySnapshot(snapshot);
+        renderStats();
+        renderTable();
+        status.textContent = `${snapshot.collection.plants.length} containers and ${snapshot.collection.history.length} observations loaded from Google Sheets.`;
+        sourceStatus.dataset["state"] = "live";
+        sourceStatus.textContent = `Source read ${sourceReadLabel(snapshot.readAt)} · Published Sheets data may lag recent saves.`;
     } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
-        const row = document.createElement("tr");
-        const cell = element(
-            "td",
-            `Live data unavailable: ${message}`,
-            "loading-cell error-cell"
-        );
-        cell.colSpan = 12;
-        row.append(cell);
-        tableBody.replaceChildren(row);
-        status.textContent =
-            "The published log could not load. Open Google Sheets with the button above.";
+        sourceStatus.dataset["state"] = "error";
+        if (state.collection && state.readAt !== null) {
+            sourceStatus.textContent = `Refresh failed · Still showing saved data read ${sourceReadLabel(state.readAt)}. ${message} Use Refresh data to retry.`;
+        } else {
+            const row = document.createElement("tr");
+            const cell = element(
+                "td",
+                `Live data unavailable: ${message}`,
+                "loading-cell error-cell"
+            );
+            cell.colSpan = 12;
+            row.append(cell);
+            tableBody.replaceChildren(row);
+            status.textContent =
+                "The published log could not load. Open Google Sheets with the button above.";
+            sourceStatus.textContent =
+                "No saved preview available. Use Refresh data to retry.";
+        }
     } finally {
-        refreshButton.disabled = false;
+        setRefreshBusy(false);
     }
 }
 
@@ -387,6 +421,12 @@ document.addEventListener("keydown", handleEscape);
 updateSortHeaders();
 await loadData();
 
+/** @param {{ collection: CollectionData; readAt: number }} snapshot */
+function applySnapshot(snapshot) {
+    state.collection = snapshot.collection;
+    state.readAt = snapshot.readAt;
+}
+
 /** @param {Event} event */
 function changeHeaderSort(event) {
     const button = event.currentTarget;
@@ -419,6 +459,11 @@ function lastWaterTime(plant) {
 
 function refreshData() {
     void loadData();
+}
+
+/** @param {boolean} isBusy */
+function setRefreshBusy(isBusy) {
+    refreshButton.disabled = isBusy;
 }
 
 function toggleMaximized() {

@@ -1,6 +1,6 @@
 # Watering Strategy
 
-Updated: 2026-09-14. This guide explains the collection's care decisions and the checked-in logger 5.22.1 behavior. It is a strategy reference, not a recommendation to water particular pots today.
+Updated: 2026-09-18. This guide explains the collection's care decisions, the checked-in logger 5.25.0 behavior, and the current daily-report policy. It is a strategy reference, not a recommendation to water particular pots today.
 
 Read alongside the [weighing strategy](./weighing-strategy.md), [logger action guide](./logger-actions.md), and [daily task prompt](./daily-weighing-watering-prompt.md).
 
@@ -22,7 +22,7 @@ For the usual cactus and succulent group, the care starting point is a thorough 
 
 The logger's **Water date*** is conditional; the asterisk matters. Its **Dry-check window** describes uncertainty around approaching a previous mass reference. Older documentation or interfaces may call that window **Reweigh**, but it is not the next weighing appointment. **Forecast basis** explains which observations support the forecast; it is not a separate care action.
 
-The daily AI report deliberately contains only watering and weighing tasks. It must withhold an unsupported watering recommendation and explain the missing evidence briefly. It must not turn that explanation into a new moisture-check chore or request repeated weights to answer a question that weight cannot resolve. That reporting preference does not remove the underlying plant-specific readiness requirements.
+The daily report separates **Water Today**, **Dry reference reached — waiting for plateau**, plant-specific **Check only** exceptions, and useful weighing. Its main Water list requires a confirmed sustained plateau and the current validity/manual guards; a reached dry reference alone stays out of that list. The owner performs the usual moisture/readiness check before watering, so an unlogged routine check alone does not exclude an otherwise supported candidate. Known moisture, root, setup, new-watering, and species restrictions still take precedence. A separately labeled AI assessment can explain an exception without changing the main list or claiming an unsupported plateau is confirmed. Follow the [current report policy](./daily-weighing-watering-prompt.md) rather than a generic calendar.
 
 ## What Wet and Dry References Mean
 
@@ -56,7 +56,9 @@ The current implementation has two signals that can bring a readiness inspection
 - **Previous weight reference reached:** an eligible current weight has reached or crossed the completed dry reference.
 - **Sustained plateau:** the recent tail is small relative to that pot's earlier decline, even if it is still above the old reference.
 
-As implemented in 5.22.1, the plateau heuristic uses four readings spanning 3–10 days, a cycle at least seven days old, at least 10 g of observed loss, and an earlier decline spanning at least two days after excluding the first 48 hours. Recent loss must be no more than 20% of the earlier rate, and the four-reading range must fit within 5% of total observed loss, with a minimum 2 g allowance. A recent gain above 2 g instead raises a measurement/setup concern. These are implementation thresholds, not validated species-specific moisture limits. See the [recent-weight and curve-inspection rules](../scripts/google-sheets/README.md#recent-weights-and-curve-inspection-5220).
+The current plateau detector uses four readings at least 12 hours apart over 2–10 days, with **no seven-day lockout**. The earlier measured decline must start at least 24 hours after Water, span at least a day, and exceed 4 g; total observed loss must be at least 10 g. Elapsed-time regression rates compare the tail with that earlier decline: tail loss must be at most 20% of the earlier rate, and its spread at most 5% of total loss, with a minimum 2 g allowance. A net tail gain up to 2 g is tolerated as noise; renewed loss exceeding 2 g and 40% of the earlier rate invalidates the plateau. These are adjustable software heuristics, not species-specific moisture limits. The shared detector, not a separately recreated report predicate, remains authoritative. See the [current detector rules](../scripts/google-sheets/README.md#improved-drying-detector-5230).
+
+A supported observed plateau can remain useful without an old dry reference or timely wet anchor. Those missing anchors still prevent a calibrated future forecast. A flat pot with no demonstrated earlier decline remains uncertain.
 
 A plateau can also reflect measurement noise, changed conditions, or poor uptake. The model therefore advances an inspection opportunity rather than issuing an unconditional watering order. It does not rewrite the dry reference to match the plateau.
 
@@ -65,7 +67,7 @@ A plateau can also reflect measurement noise, changed conditions, or poor uptake
 1. **Confirm that the evidence belongs together.** Check the plant/container identity, current setup, actual observation times, last watering, and any corrections or unusual changes. Do not combine old-pot readings with a new setup.
 2. **Locate the current observation on its own curve.** Consider the difference from the old dry reference, recent measured losses, any plateau, and whether the current curve agrees with learned history.
 3. **Apply the plant-specific rule.** A dry-looking surface, a reached forecast date, or another plant being watered is not enough. The exceptions below take precedence over a general cactus routine.
-4. **Choose the supported action.** Water if readiness is supported; request a useful weight if timing or a measurement is the uncertainty; otherwise leave the decision unresolved and explain why. Do not invent a water date just to complete the table.
+4. **Choose the supported action.** For the main daily report, require a confirmed plateau and valid plant-specific guards for a conditional Water candidate. Keep reference-only hits in the hold/monitor category, or request a useful weight when due. Keep plant-specific Check-only exceptions separate. Actual watering still requires the usual readiness check; do not invent a water date to complete a table.
 5. **When watering actually occurs, log it accurately.** Record the application style, nutrients if used, and measured volume only if known. Record a separate post-drain weight or include the actual post-drain weight with Water.
 
 There is no automatic extra four- or six-day drought after reaching the reference. Equally, a pot that remains damp should not be watered to satisfy a forecast. The existing [small-pot dryness guidance](./care-notes.md#checking-dryness-in-small-pots) explains the limitations of a skewer observation without treating it as a calibrated test.
@@ -97,14 +99,14 @@ These are descriptions of what happened, not prescriptions to use a particular m
 
 ## Missing or Conflicting Evidence
 
-| Situation                                          | Interpretation and response                                                                                                        |
-| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| No wet reference or completed dry cycle            | The model lacks an anchor. Keep honest observations during normal care; do not water or prolong drought merely to manufacture one. |
-| Undated Water or Repot in the current setup        | The boundary cannot be placed reliably. Forecasts and recent-cycle metrics are withheld until the record issue is resolved.        |
-| Unexpected gain, poor fit, or incompatible anchors | Check whether observations are comparable and obtain a useful repeat measurement if needed. A guessed date is not a repair.        |
-| Partial or Spot watering                           | Preserve the event and accept that a full-cycle estimate is not appropriate.                                                       |
-| Forecast window passed without a new observation   | The model has stale evidence. A useful follow-up weight can be due; the missed date is not permission to water.                    |
-| Missing plant-specific confirmation                | Withhold watering. More weighing does not automatically resolve missing leaf-cycle or shared-root-zone evidence.                   |
+| Situation                                          | Interpretation and response                                                                                                                                                                                              |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| No wet reference or completed dry cycle            | The model lacks an anchor. Keep honest observations during normal care; do not water or prolong drought merely to manufacture one.                                                                                       |
+| Undated Water or Repot in the current setup        | The boundary cannot be placed reliably. Forecasts and recent-cycle metrics are withheld until the record issue is resolved.                                                                                              |
+| Unexpected gain, poor fit, or incompatible anchors | Check whether observations are comparable and obtain a useful repeat measurement if needed. A guessed date is not a repair.                                                                                              |
+| Partial or Spot watering                           | Preserve the event and accept that a full-cycle estimate is not appropriate.                                                                                                                                             |
+| Forecast window passed without a new observation   | The model has stale evidence. A useful follow-up weight can be due; the missed date is not permission to water.                                                                                                          |
+| Missing plant-specific confirmation                | Keep manual-decision exceptions separate. More weighing cannot resolve missing leaf-cycle or shared-root-zone evidence; an unlogged routine pre-water check alone does not exclude an otherwise valid plateau candidate. |
 
 The September 13 installation of the AW200 and AeroLight 240 W changed growing conditions, not the physical weighing assembly. It does not automatically advance Pot setup. The model does not read lamp settings or recognize a lighting note as a numerical correction; actual subsequent weights must show the response. See the [installed setup record](./equipment/aw200-and-aerolight-240w.md).
 

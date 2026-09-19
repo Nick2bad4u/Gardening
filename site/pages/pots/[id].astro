@@ -1,6 +1,7 @@
 ---
 import SiteLayout from "../../components/SiteLayout.astro";
 import profilesById from "../../../docs/layouts/plant-profile-data.json";
+import { getProfiles } from "../../lib/content.mjs";
 import HistoryHeader from "../../components/tools/history/HistoryHeader.astro";
 import HistoryPager from "../../components/tools/history/HistoryPager.astro";
 import HistoryStatus from "../../components/tools/history/HistoryStatus.astro";
@@ -16,6 +17,7 @@ export function getStaticPaths() {
     return Object.keys(profilesById).map((id) => ({ params: { id } }));
 }
 const { id } = Astro.params;
+const profiles = (await getProfiles()).filter((profile) => profile.trackerId === id);
 ---
 
 <SiteLayout
@@ -24,7 +26,7 @@ const { id } = Astro.params;
     description="Weights, watering, measurements, and observations for this tracked pot."
 >
     <div class="tool-tracker tool-content" data-pot-id={id}>
-        <HistoryHeader />
+        <HistoryHeader potId={id} profiles={profiles} />
         <HistoryPager />
         <HistoryStatus />
         <HistorySummary />

@@ -4,6 +4,7 @@ import {
     renderIntervalChart,
     renderLineChart,
 } from "./plant-charts.js";
+import { sourceReadLabel } from "./plant-sheet-cache.js";
 import {
     comparePlantsByNaturalLabel,
     daysSince,
@@ -12,17 +13,18 @@ import {
     formatMeasurement,
     formatSigned,
     getRequiredElement,
+    getSavedCollectionData,
     historyPageUrl,
     installThemeToggle,
     isActiveHistoryEvent,
-    loadCollectionData,
+    loadCollectionSnapshot,
     numericValue,
     parseDate,
     plantLabel,
     sheetUrls,
 } from "./plant-tracker-data.js";
 
-/** @typedef {Awaited<ReturnType<typeof loadCollectionData>>["plants"][number]} CollectionPlant */
+/** @typedef {import("./plant-tracker-data.js").CollectionData["plants"][number]} CollectionPlant */
 /** @typedef {import("./plant-tracker-data.js").HistoryEvent} HistoryEvent */
 /** @typedef {CollectionPlant["summary"]} PlantSummary */
 /** @typedef {Record<string, readonly (readonly [string, string])[]>} FieldGuideProfiles */
@@ -128,6 +130,8 @@ const potRoot = document.querySelector("[data-pot-id]");
 const requestedId =
     (potRoot instanceof HTMLElement ? potRoot.dataset["potId"] : undefined) ??
     searchParameters.get("id");
+const refreshButton = getRequiredElement("#refresh-history", HTMLButtonElement);
+const sourceStatus = getRequiredElement("#history-source-status", HTMLElement);
 const tableBody = getRequiredElement(
     "#history-table tbody",
     HTMLTableSectionElement
@@ -142,6 +146,7 @@ const chartRange = getRequiredElement("#chart-range", HTMLSelectElement);
 /**
  * @type {{
  *     currentPlant: CollectionPlant | null;
+ *     readAt: number | null;
  *     fieldGuideProfiles: Readonly<FieldGuideProfiles>;
  *     historySort: {
  *         direction: "ascending" | "descending";
@@ -154,6 +159,7 @@ const state = {
     currentPlant: null,
     fieldGuideProfiles: Object.freeze({}),
     historySort: { direction: "descending", key: "Date", type: "date" },
+    readAt: null,
 };
 
 /**
@@ -205,12 +211,14 @@ function configurePager(plants, index) {
     const previousPlant = plants[index - 1];
     const nextPlant = plants[index + 1];
     if (previousPlant) {
+        previous.hidden = false;
         previous.href = historyPageUrl(previousPlant["Plant ID"]);
         previous.textContent = `← ${plantLabel(previousPlant)} · ${previousPlant["Plant / planter"]}`;
     } else {
         previous.hidden = true;
     }
     if (nextPlant) {
+        next.hidden = false;
         next.href = historyPageUrl(nextPlant["Plant ID"]);
         next.textContent = `${plantLabel(nextPlant)} · ${nextPlant["Plant / planter"]} →`;
     } else {
@@ -420,24 +428,45 @@ function latestMatching(events, predicate) {
 }
 
 async function loadPlant() {
+    if (refreshButton.disabled) return;
+    setRefreshBusy(true);
+    const saved = state.currentPlant === null ? getSavedCollectionData() : null;
+    if (saved) {
+        try {
+            renderLoadedPlant(saved.collection, state.fieldGuideProfiles);
+            state.readAt = saved.readAt;
+        } catch {
+            // A pot missing from an older snapshot may exist in the next source read.
+        }
+    }
+    sourceStatus.dataset["state"] = "saved";
+    sourceStatus.textContent =
+        state.readAt === null
+            ? "First read in progress. No saved observations are available yet."
+            : `Saved preview · Source read ${sourceReadLabel(state.readAt)} · Refreshing Google Sheets…`;
     try {
-        const [collection, loadedFieldGuideProfiles] = await Promise.all([
-            loadCollectionData(),
-            loadFieldGuideProfiles(),
-        ]);
-        renderLoadedPlant(collection, loadedFieldGuideProfiles);
+        const snapshot = await loadCollectionSnapshot();
+        setSourceReadTime(snapshot.readAt);
+        sourceStatus.dataset["state"] = "live";
+        sourceStatus.textContent = `Source read ${sourceReadLabel(snapshot.readAt)} · Published Sheets data may lag recent saves.`;
+        try {
+            renderLoadedPlant(snapshot.collection, state.fieldGuideProfiles);
+        } catch (error) {
+            // A successful empty/new inventory supersedes any previous pot preview.
+            showFreshHistoryError(error);
+        }
     } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
-        setText("#plant-label", "Plant not found");
-        setText("#plant-name", "This history page could not load");
-        setText("#page-status", message);
-        const row = document.createElement("tr");
-        const cell = tableCell(message, "loading-cell error-cell");
-        cell.colSpan = document.querySelectorAll(
-            "#history-table thead th"
-        ).length;
-        row.append(cell);
-        tableBody.replaceChildren(row);
+        sourceStatus.dataset["state"] = "error";
+        if (state.currentPlant && state.readAt !== null) {
+            sourceStatus.textContent = `Refresh failed · Still showing saved data read ${sourceReadLabel(state.readAt)}. ${message} Use Refresh data to retry.`;
+        } else {
+            showHistoryError(message);
+            sourceStatus.textContent =
+                "No saved preview available. Use Refresh data to retry.";
+        }
+    } finally {
+        setRefreshBusy(false);
     }
 }
 
@@ -653,6 +682,7 @@ function renderHistory() {
  */
 function renderPlant(plant, plants, index, trackerIndex) {
     state.currentPlant = plant;
+    setHistoryPanelsVisible(true);
     const summary = plant.summary;
     const name = plant["Plant / planter"];
     const id = plant["Plant ID"];
@@ -749,6 +779,7 @@ function renderPlant(plant, plants, index, trackerIndex) {
 function renderProfileLinks(plantId) {
     const container = getRequiredElement("#profile-actions", HTMLElement);
     const profiles = state.fieldGuideProfiles[plantId] ?? [];
+    if (profiles.length === 0 && container.childElementCount > 0) return;
     container.replaceChildren();
     for (const [index, [fragment, title]] of profiles.entries()) {
         const link = document.createElement("a");
@@ -869,6 +900,15 @@ function setCheckedValue(valueSelector, dateSelector, event, field, unit) {
     );
 }
 
+/** @param {boolean} isVisible */
+function setHistoryPanelsVisible(isVisible) {
+    for (const panel of document.querySelectorAll(
+        ".tool-tracker > :is(.metric-grid, .analytics-panel, .baseline-panel, .charts-panel, .plant-pager)"
+    )) {
+        if (panel instanceof HTMLElement) panel.hidden = !isVisible;
+    }
+}
+
 /**
  * @param {string} selector
  * @param {string | number | null | undefined} value
@@ -888,6 +928,19 @@ function setText(selector, value) {
 function setTrendCard(valueSelector, detailSelector, value, detail) {
     setText(valueSelector, value);
     setText(detailSelector, detail);
+}
+
+/** @param {string} message */
+function showHistoryError(message) {
+    state.currentPlant = null;
+    setHistoryPanelsVisible(false);
+    setText("#page-status", message);
+    setText("#history-count", "No matching observations available");
+    const row = document.createElement("tr");
+    const cell = tableCell(message, "loading-cell error-cell");
+    cell.colSpan = document.querySelectorAll("#history-table thead th").length;
+    row.append(cell);
+    tableBody.replaceChildren(row);
 }
 
 /**
@@ -1060,6 +1113,19 @@ getRequiredElement("#export-history", HTMLButtonElement).addEventListener(
     "click",
     exportHistory
 );
+refreshButton.addEventListener("click", () => {
+    void loadPlant();
+});
+void loadFieldGuideProfiles()
+    .then((profiles) => {
+        state.fieldGuideProfiles = profiles;
+        if (state.currentPlant)
+            renderProfileLinks(state.currentPlant["Plant ID"]);
+        return undefined;
+    })
+    .catch(() => {
+        // Static profile links remain available when the optional map cannot load.
+    });
 await loadPlant();
 
 function changeChartRange() {
@@ -1206,7 +1272,7 @@ function renderCareSummary(plant) {
 }
 
 /**
- * @param {Awaited<ReturnType<typeof loadCollectionData>>} collection
+ * @param {import("./plant-tracker-data.js").CollectionData} collection
  * @param {Readonly<FieldGuideProfiles>} loadedFieldGuideProfiles
  */
 function renderLoadedPlant(collection, loadedFieldGuideProfiles) {
@@ -1225,11 +1291,39 @@ function renderLoadedPlant(collection, loadedFieldGuideProfiles) {
         throw new Error(
             requestedId !== null && requestedId !== ""
                 ? `No collection label matches “${requestedId}”.`
-                : "No plant label was provided in this URL."
+                : "No plant label was provided in this URL.",
+            { cause: "plant-not-found" }
         );
     }
     const trackerIndex = collection.plants.findIndex(
         (plant) => plant["Plant ID"] === selectedPlant["Plant ID"]
     );
     renderPlant(selectedPlant, naturallyOrderedPlants, index, trackerIndex);
+}
+
+/** @param {boolean} isBusy */
+function setRefreshBusy(isBusy) {
+    refreshButton.disabled = isBusy;
+}
+
+/** @param {number} readAt */
+function setSourceReadTime(readAt) {
+    state.readAt = readAt;
+}
+
+/** @param {unknown} error */
+function showFreshHistoryError(error) {
+    if (error instanceof Error && error.cause === "plant-not-found") {
+        const request = requestedId?.trim() ?? "";
+        setText("#plant-label", "Plant not found");
+        setText(
+            "#plant-name",
+            request === ""
+                ? "Choose a plant from the tracker"
+                : `No plant matches “${request}”`
+        );
+        setText("#plant-scientific", "");
+        document.title = "Plant not found · Plant history";
+    }
+    showHistoryError(error instanceof Error ? error.message : String(error));
 }

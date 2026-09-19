@@ -1,3 +1,17 @@
-<p class="page-status" id="page-status" aria-live="polite">
-    Loading published history from Google Sheets…
-</p>
+<div class="history-source-status">
+    <div>
+        <p class="page-status" id="page-status" aria-live="polite">
+            Loading published history from Google Sheets…
+        </p>
+        <p
+            class="source-read-status"
+            id="history-source-status"
+            role="status"
+            aria-label="Data freshness"
+            aria-live="polite"
+        ></p>
+    </div>
+    <button class="button" id="refresh-history" type="button">
+        Refresh data
+    </button>
+</div>

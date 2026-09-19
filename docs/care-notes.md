@@ -1,14 +1,14 @@
 # Practical care notes
 
-Last updated: 2026-09-15
+Last updated: 2026-09-18
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
 
-For detailed tracker guidance, read the [watering strategy](./watering-strategy.md), [weighing strategy](./weighing-strategy.md), and [spreadsheet/logger action guide](./logger-actions.md). The [daily task prompt](./daily-weighing-watering-prompt.md) applies the requested adaptive weighing policy while keeping its report limited to watering and weighing.
+For detailed tracker guidance, read the [watering strategy](./watering-strategy.md), [weighing strategy](./weighing-strategy.md), and [spreadsheet/logger action guide](./logger-actions.md). The [daily task prompt](./daily-weighing-watering-prompt.md) applies the requested adaptive weighing policy with separate conditional Water candidates, reference-only holds, plant-specific Check-only exceptions, and useful weighing.
 
 The [AW200 + AeroLight 240 W pair](./equipment/aw200-and-aerolight-240w.md)
-was hung September 13 with **AW200 at 45% and AeroLight 240 W at 38%** and the room
+was hung September 13 with **AW200 at 45% and AeroLight 240 W at 38%, both in Veg mode** and the room
 end open. The owner applied the September 13 layout and confirms an **18-inch
 plant-tip reference**. Both lights use the same **13 h 15 m total cycle**,
 including **15-minute sunrise and sunset transitions** at the start and end.
@@ -17,7 +17,7 @@ and dry-down. Use the
 [final placement guide](./layouts/table-placement-research.md) for each pot's
 ongoing light need; adding a light does not by itself make a pot ready to water.
 
-The September 15 photographs replace the old placement plan with four wooden tables: 24 small pots in a six-column/four-row front grid and, in the updated arrangement, five larger/shared containers behind them plus #3 / P21 Money Tree separately on the north windowsill. The owner confirmed the money-tree move complete on September 16 after planning it on September 15; the exact move time was not recorded. Downward-pointing leaves prompted the move, but excess light remains a suspected cause. The vacated table slot stays open and Kiwi stays in place. The [current guide](./layouts/table-placement-research.md) records photo-matched positions and the inferred footprint. A new location does not reset a pot setup, wet/dry reference or learned watering cycle. Keep existing observations and use useful measurements to detect changed drying; moving a pot is not automatically a reason to water or weigh daily.
+The September 15 photographs replace the old placement plan with four wooden tables: 24 small pots in a six-column/four-row front grid and, in the updated arrangement, five larger/shared containers behind them plus #3 / P21 Money Tree separately on the north windowsill. The owner confirmed the money-tree move complete on September 16 after planning it on September 15; the exact move time was not recorded. Downward-pointing leaves prompted the move, but excess light remains a suspected cause. The vacated table slot stays open and Kiwi stays in place. The [current guide](./layouts/table-placement-research.md#owner-light-readings-and-confirmed-swap) now also records the owner's approximate light comparison and the confirmed A3 Serpent / F1 Hook-spined exchange; other positions remain unchanged. A new location does not reset a pot setup, wet/dry reference or learned watering cycle. Keep existing observations and use useful measurements to detect changed drying; moving a pot is not automatically a reason to water or weigh daily.
 
 For the installed 240 W fixture, the [manufacturer's operating limit](https://vivosun.com/support/guide/aerolight-gen2)
 requires the growing space below **86°F (30°C)**. The older outdoor weather
@@ -61,8 +61,8 @@ digging or unpot the plant just to establish an exact dry weight.
 The tracker now uses a sustained plateau or a crossed old weight reference to
 bring an **inspection** forward. A plateau alone does not mean water: poor root
 uptake, changed conditions, and scale noise can also produce a slow curve.
-The [recent-weight guide](../scripts/google-sheets/README.md#recent-weights-and-curve-inspection-5220)
-documents the starting criteria. P21 still uses its upper-2-inch check, and P28
+The [current detector guide](../scripts/google-sheets/README.md#improved-drying-detector-5230)
+documents the maintained criteria. P21 still uses its upper-2-inch check, and P28
 still requires a leaf-cycle decision. SANBI describes how new split-rock leaves
 use water from the older pair in its [Pleiospilos nelii account](https://pza.sanbi.org/pleiospilos-nelii).
 
@@ -71,8 +71,7 @@ use water from the older pair in its [Pleiospilos nelii account](https://pza.san
 The September 13 lighting change does **not** reset a pot setup: the pot,
 plant, and medium still weigh together in the same configuration. It does
 change the conditions behind an extrapolated curve. Keep the old observations,
-but collect another weight about a day after installation and follow the
-new trend before relying on a distant predicted date. This is a measurement
+and use subsequent comparable observations before relying on a distant predicted date. The immediate post-installation follow-up belonged to that dated transition; today's weighing cadence follows the adaptive policy. This is a measurement
 check, not a new daily watering schedule or a reason to delay a needed water.
 
 An actual moisture check takes priority over the model. If the skewer is damp,
@@ -81,10 +80,7 @@ dry and the plant is ready earlier, do not keep it dry until an estimated date.
 The logger does not automatically ingest a lighting change or use a skewer
 observation to prove that every part of a shared root ball is dry.
 
-Use the rolling **Daily care** sheet to schedule weighing and inspection. The
-calendar uses the latest actual readings and the current setup's forecast;
-future checks move when new weights or watering observations are saved. Its
-water checks are conditional on plant readiness, not appointments to water.
+**Daily care is retired.** Use the daily chat report and generated report page as the maintained care plan. The adaptive policy requests only useful weigh-ins, with no quota. The main Water list requires a confirmed plateau and the current validity/manual guards; reference-only hits stay in a separate hold/monitor category. The usual moisture/readiness check remains necessary before actual watering, and plant-specific Check-only exceptions remain separate. Neither a forecast nor a plateau proves physical dryness.
 
 Do not deliberately extend a dry-down until the scale stops moving. Equally,
 1–2 g/day is not a universal watering threshold: a daily whole-pot difference

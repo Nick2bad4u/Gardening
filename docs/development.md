@@ -32,6 +32,10 @@ This prepares the explicitly allowed public assets and starts Astro at `http://1
 
 The live tracker and history read the published spreadsheet. They do not write observations. Use Storybook for deterministic synthetic responses. The ordinary development preview uses allowed source assets; the production build adds optimized image variants and same-origin collection previews. After changing artwork or other copied assets, rerun `npm run prepare:site` and reload the preview.
 
+Tracker and pot-history pages share a browser-local snapshot of the last validated tracker/history CSV pair. A saved snapshot younger than 24 hours can render immediately while both feeds refresh; the visible freshness status gives its source-read time and reports refresh failures. A successful empty response replaces older data. The first visit still needs a network read, and a successful read of the published feeds does not prove that Google has published the latest workbook edit. Pot names, labels, and profile links are built into the page so they remain available during that first load.
+
+The snapshot is bounded to 1,048,576 serialized characters and keyed by the complete source URLs and schema. Invalid, expired, future-dated, or incompatible snapshots are ignored; blocked or full browser storage leaves ordinary network reads working. Storybook paths do not persist synthetic observations. `docs/layouts/plant-sheet-cache.js` manages storage and refresh coordination; `plant-tracker-data.js` validates the CSV pair and applies the existing data calculations. Keep this browser cache out of report preparation: daily reports require new live reads, not a saved website preview.
+
 ## Maintained sources and page boundaries
 
 - `site/pages/` defines individual routes. Plant profile routes use slugs; pot histories use permanent P-IDs because several botanical profiles can share one weighed container.

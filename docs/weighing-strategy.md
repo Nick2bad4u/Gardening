@@ -1,6 +1,6 @@
 # Weighing Strategy
 
-Updated: 2026-09-17. This guide documents the owner's requested transition from frequent learning measurements to fewer, better-timed weigh-ins. The daily chat report and generated report page are the maintained care plan; the Daily care worksheet is retired.
+Updated: 2026-09-18. This guide documents the owner's requested transition from frequent learning measurements to fewer, better-timed weigh-ins. The daily chat report and generated report page are the maintained care plan; the Daily care worksheet is retired.
 
 Read alongside the [watering strategy](./watering-strategy.md), [logger action guide](./logger-actions.md), and [daily task prompt](./daily-weighing-watering-prompt.md).
 
@@ -14,12 +14,12 @@ Reviewing every active container's existing data each morning does not require p
 
 ## What Exists Today
 
-| Surface                         | Current role                                                                                                                                                                                                                                                                |
-| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Daily AI task instructions      | The [saved prompt](./daily-weighing-watering-prompt.md) requests an adaptive per-pot schedule that can reduce routine weighing below that fixed cadence when evidence supports it. The daily chat report and generated page apply this policy to freshly reviewed evidence. |
-| Logger Not weighed today filter | Shows collection progress within the care day. It is a filter, not a list of plants that must be weighed.                                                                                                                                                                   |
-| Dry-check window                | A forecast of approaching a historical mass reference. It is not the next appointment to weigh.                                                                                                                                                                             |
-| Water date*                     | A conditional care-planning date. It does not authorize watering from weight alone.                                                                                                                                                                                         |
+| Surface                         | Current role                                                                                                                                                                                                                                                                                      |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Daily AI task instructions      | The [saved prompt](./daily-weighing-watering-prompt.md) requests an adaptive per-pot schedule that can reduce routine weighing below the former daily/every-other-day cadence when evidence supports it. The daily chat report and generated page apply this policy to freshly reviewed evidence. |
+| Logger Not weighed today filter | Shows collection progress within the care day. It is a filter, not a list of plants that must be weighed.                                                                                                                                                                                         |
+| Dry-check window                | A forecast of approaching a historical mass reference. It is not the next appointment to weigh.                                                                                                                                                                                                   |
+| Water date*                     | A conditional care-planning date. It does not authorize watering from weight alone.                                                                                                                                                                                                               |
 
 The saved prompt does not itself create or update a scheduled task. The existing daily task uses the adaptive policy; do not recreate a second workbook calendar. The existing validity, correction, watering, and measurement rules still apply.
 
@@ -93,7 +93,7 @@ There is a tradeoff: a cycle with too few measurements may help the current care
 5. **Spread flexible work within defensible windows.** Use each pot's last actual reading and current evidence. Do not use fixed groups that can put a rapidly changing pot on the wrong day.
 6. **Explain exceptions briefly.** If many pots really need weights today, include them. If none needs one, the report can say “No weigh-ins due” after a complete review.
 
-For any request, the useful question is: **What will this weight help decide or validate?** If missing leaf-cycle, drainage, or other plant-specific confirmation is the only obstacle to watering, another gram reading may not resolve it. The daily report should identify the withheld decision without adding an out-of-scope chore.
+For any request, the useful question is: **What will this weight help decide or validate?** If missing leaf-cycle, drainage, or other plant-specific confirmation is the only obstacle to watering, another gram reading may not resolve it. The daily report should retain any plant-specific Check-only exception, distinguish it from Water candidates, and avoid repeated weights that cannot resolve the missing evidence. A dry-reference hit alone stays in the hold/monitor category until a plateau is confirmed; another same-evening weight should not be requested merely to force that signal.
 
 ### Avoid Indefinite Deferral
 
@@ -154,6 +154,6 @@ The model does not automatically interpret an Other note about lighting, prune a
 - [Daily task prompt](./daily-weighing-watering-prompt.md) — the owner's adaptive workload policy and report restrictions.
 - [Dry-down learning](../scripts/google-sheets/README.md#dry-down-learning) — eligible cycles, forecast basis, and learning limits.
 - [Daily care and Integrity](../scripts/google-sheets/README.md#daily-care-and-integrity) — the retired calendar and maintained integrity checks.
-- [Recent-weight metrics](../scripts/google-sheets/README.md#recent-weights-and-curve-inspection-5220) — signed changes, elapsed-time rates, and the plateau heuristic.
+- [Recent-weight metrics](../scripts/google-sheets/README.md#recent-weights-and-curve-inspection-5220) — signed changes and elapsed-time rates. See the [current detector rules](../scripts/google-sheets/README.md#improved-drying-detector-5230) for plateau evidence.
 - [Logger source](../scripts/google-sheets/plant-tracker.gs) — `recentWeightMetrics_`, `learnedDryDownCurves_`, and care-day handling.
 - [Practical care notes](./care-notes.md#using-weights-without-chasing-zero-daily-loss) — collection-specific interpretation and the limits of scale evidence.

@@ -1,10 +1,15 @@
 ---
 import { profileUrl, siteUrl } from "../lib/routes.mjs";
-import { stripMarkdown } from "../lib/content/profile-source.mjs";
+import { identificationLabel, stripMarkdown } from "../lib/content/profile-source.mjs";
 interface Props {
     profile: import("../lib/content.mjs").SiteProfile;
+    sharedProfileCount?: number;
 }
-const { profile } = Astro.props;
+const { profile, sharedProfileCount = 1 } = Astro.props;
+const photoCount = profile.collectionRecord.photos.filter(
+    (photo) => photo.kind === "collection"
+).length;
+const identification = identificationLabel(profile.identificationMarkdown);
 ---
 
 <article class="plant-card" data-plant-card>
@@ -29,24 +34,32 @@ const { profile } = Astro.props;
             {profile.trackerId && <span class="badge badge-id">{profile.trackerId}</span>}
             {profile.historical && <span class="badge">Historical</span>}
         </div>
+        <div class="plant-card-metadata">
+            <span class="badge" title="Identification evidence">
+                {identification}
+            </span>
+            <span class="badge" title="Published photos of this collection plant">
+                {photoCount} collection {photoCount === 1 ? "photo" : "photos"}
+            </span>
+            {sharedProfileCount > 1 && (
+                <span class="badge">Shared pot · {sharedProfileCount} profiles</span>
+            )}
+        </div>
     </a>
 </article>
 <style>
     .plant-card {
-        block-size: 100%;
         min-inline-size: 0;
+        block-size: 100%;
     }
     .plant-card-link {
         display: flex;
         flex-direction: column;
-        gap: 1.25rem;
+        gap: 0.75rem;
         block-size: 100%;
-        text-decoration: none;
+        padding: 1rem;
         color: inherit;
-        transition:
-            border-color 150ms ease,
-            background-color 150ms ease,
-            box-shadow 150ms ease;
+        text-decoration: none;
         &:hover,
         &:focus-visible {
             color: var(--ink);
@@ -57,17 +70,30 @@ const { profile } = Astro.props;
     }
     .plant-card-summary {
         display: grid;
-        grid-template-columns: [art-start] 80px [art-end title-start] minmax(0, 1fr) [title-end];
-        gap: 1rem;
+        grid-template-columns: [art-start] 64px [art-end title-start] minmax(0, 1fr) [title-end];
+        gap: 0.75rem;
         align-items: center;
     }
     .plant-card-art {
-        inline-size: 80px;
-        block-size: 80px;
+        inline-size: 64px;
+        block-size: 64px;
     }
     .plant-card h2 {
         margin: 0.2rem 0;
-        font-size: 1.3rem;
+        font-size: 1.25rem;
+    }
+    .plant-card-metadata {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        & .badge {
+            padding: 0.2rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            line-height: 1.5;
+            color: var(--muted);
+            background: var(--surface-soft);
+        }
     }
     .plant-card-labels {
         display: flex;
@@ -81,10 +107,10 @@ const { profile } = Astro.props;
         }
     }
     .scientific {
+        margin: 0;
         font-family: Georgia, serif;
         font-size: 0.875rem;
         font-style: italic;
-        margin: 0;
         color: var(--muted);
     }
 </style>

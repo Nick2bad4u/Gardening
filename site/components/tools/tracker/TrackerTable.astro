@@ -10,6 +10,13 @@ import { siteUrl } from "../../../lib/routes.mjs";
             <p id="sheet-status" aria-live="polite">
                 Loading the latest Google Sheets observations…
             </p>
+            <p
+                class="source-read-status"
+                id="tracker-source-status"
+                role="status"
+                aria-label="Data freshness"
+                aria-live="polite"
+            ></p>
         </div>
         <div class="panel-actions">
             <button class="button" id="maximize-table" type="button" aria-pressed="false">

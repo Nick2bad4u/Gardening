@@ -614,6 +614,7 @@ async function prepareSiteAssets({ directory = publicDirectory } = {}) {
     const runtimeFiles = [
         "plant-tracker.js",
         "plant-tracker-data.js",
+        "plant-sheet-cache.js",
         "plant-history.js",
         "plant-charts.js",
         "plant-profile-data.json",

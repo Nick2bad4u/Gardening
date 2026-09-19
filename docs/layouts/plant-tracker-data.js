@@ -1,3 +1,5 @@
+import { createSheetSnapshotCache } from "./plant-sheet-cache.js";
+
 /** @typedef {Record<string, string>} SheetRow */
 /** @typedef {{ [key: string]: string | number; _index: number }} HistoryEvent */
 /** @typedef {{ date: Date; event: HistoryEvent; value: number }} MeasurementPoint */
@@ -291,14 +293,17 @@ export function standardDeviation(values) {
 /**
  * @param {string} url
  *
- * @returns {Promise<SheetRow[]>}
+ * @returns {Promise<string>}
  */
 async function fetchCsv(url) {
-    const response = await fetch(`${url}&refresh=${Date.now()}`);
+    const response = await fetch(`${url}&refresh=${Date.now()}`, {
+        cache: "no-store",
+        signal: AbortSignal.timeout(20_000),
+    });
     if (!response.ok) {
         throw new Error(`Google Sheets returned ${response.status}.`);
     }
-    return rowsToObjects(parseCsv(await response.text()));
+    return response.text();
 }
 
 /**
@@ -734,12 +739,100 @@ export function historyPageUrl(labelId) {
         : `./plant-history.html?id=${encodeURIComponent(labelId)}`;
 }
 
+/** @typedef {{ plants: string; history: string }} SourceCsv */
+
+/** @param {string} csv @param {readonly string[]} required */
+function hasSourceHeaders(csv, required) {
+    let hasUnpairedQuote = false;
+    for (const character of csv) {
+        if (character === '"') hasUnpairedQuote = !hasUnpairedQuote;
+    }
+    if (hasUnpairedQuote) return false;
+    const rows = parseCsv(csv);
+    const headers = rows[0] ?? [];
+    const uniqueHeaders = new Set(headers);
+    return (
+        required.every((header) => headers.includes(header)) &&
+        uniqueHeaders.size === headers.length &&
+        rows.every((row) => row.length <= headers.length)
+    );
+}
+
+/** @param {unknown} value @returns {value is SourceCsv} */
+function isSourceCsv(value) {
+    if (
+        typeof value !== "object" ||
+        value === null ||
+        !("plants" in value) ||
+        !("history" in value)
+    )
+        return false;
+    return (
+        typeof value.plants === "string" &&
+        typeof value.history === "string" &&
+        hasSourceHeaders(value.plants, ["Plant ID", "Plant / planter"]) &&
+        hasSourceHeaders(value.history, [
+            "Date",
+            "Plant ID",
+            "Event",
+        ])
+    );
+}
+
+const collectionCache = createSheetSnapshotCache({
+    load: async () => {
+        const [plants, history] = await Promise.all([
+            fetchCsv(sheetUrls.trackerCsv),
+            fetchCsv(sheetUrls.historyCsv),
+        ]);
+        return { history, plants };
+    },
+    sourceKey: JSON.stringify({
+        history: sheetUrls.historyCsv,
+        schema: "collection-csv-v1",
+        tracker: sheetUrls.trackerCsv,
+    }),
+    validate: isSourceCsv,
+});
+
+/** Return a saved preview, never a claim that Google Sheets was just read. */
+export function getSavedCollectionData() {
+    const snapshot = collectionCache.saved();
+    return snapshot
+        ? {
+              collection: buildCollectionData(snapshot.data),
+              readAt: snapshot.readAt,
+          }
+        : null;
+}
+
 /** @returns {Promise<CollectionData>} */
 export async function loadCollectionData() {
-    const [plants, history] = await Promise.all([
-        fetchCsv(sheetUrls.trackerCsv),
-        fetchCsv(sheetUrls.historyCsv),
-    ]);
+    const snapshot = await loadCollectionSnapshot();
+    return snapshot.collection;
+}
+
+/**
+ * Refresh both sources together so a partial response cannot replace saved
+ * data.
+ */
+export async function loadCollectionSnapshot() {
+    const snapshot = await collectionCache.refresh();
+    return {
+        collection: buildCollectionData(snapshot.data),
+        readAt: snapshot.readAt,
+    };
+}
+
+/** @param {PlantLabelRecord} plant */
+export function plantLabel(plant) {
+    return (plant["Current pot label"] ?? "") || (plant["Plant ID"] ?? "");
+}
+
+/** @param {SourceCsv} source @returns {CollectionData} */
+function buildCollectionData(source) {
+    const plants = rowsToObjects(parseCsv(source.plants));
+    const history = rowsToObjects(parseCsv(source.history));
     /** @type {HistoryEvent[]} */
     const observations = history.map((event, index) => ({
         ...event,
@@ -772,11 +865,6 @@ export async function loadCollectionData() {
             };
         }),
     };
-}
-
-/** @param {PlantLabelRecord} plant */
-export function plantLabel(plant) {
-    return (plant["Current pot label"] ?? "") || (plant["Plant ID"] ?? "");
 }
 
 /**

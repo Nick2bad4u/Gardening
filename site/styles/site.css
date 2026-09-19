@@ -2,8 +2,15 @@
     box-sizing: border-box;
 }
 html {
+    scrollbar-gutter: stable;
     scroll-behavior: smooth;
     scroll-padding-block-start: 100px;
+    @supports (scrollbar-color: auto) {
+        scrollbar-color: var(--accent) var(--surface-soft);
+        @media (forced-colors: active) {
+            scrollbar-color: auto;
+        }
+    }
 }
 body {
     margin: 0;

@@ -1,8 +1,8 @@
 # AW200 + AeroLight 240 W — Installed Horizontal Pair
 
-Updated September 15, 2026. The owner installed the **AW200 + AeroLight 240 W** pair on September 13 and subsequently leveled the lights. On September 15 the owner added two tables and rearranged the pots; current positions are photo-matched in the placement guide.
+Updated September 18, 2026. The owner installed the **AW200 + AeroLight 240 W** pair on September 13 and subsequently leveled the lights. On September 15 the owner added two tables and rearranged the pots; the placement guide retains that photo record and the later owner-confirmed A3/F1 exchange.
 
-The last reported settings are **AW200 45%** and **AeroLight 240 W 38%**, an **18-inch (45.7 cm) LED-to-plant-tip reference**, and **13 h 15 m total daily cycle** including **15 minutes of sunrise and 15 minutes of sunset**. The new photos do not remeasure controller settings, fixture centers or current individual clearances.
+The last reported settings are **AW200 45%** and **AeroLight 240 W 38%**, **Veg mode on both**, an **18-inch (45.7 cm) LED-to-plant-tip reference**, and **13 h 15 m total daily cycle** including **15 minutes of sunrise and 15 minutes of sunset**. The new photos do not remeasure controller settings, fixture centers or current individual clearances.
 
 This supersedes the [unavailable AW400 selection](./vivosun-aw400.md) and
 [canceled AW400SE order](./vivosun-aw400se.md). Reusing the AW200 costs the owner
@@ -42,12 +42,12 @@ chosen dimming settings. Both lights use the confirmed 13 h 15 m cycle. The
 15-minute transitions are included in that total, leaving **12 h 45 m between
 transitions**. The owner subsequently confirmed **Veg mode on both fixtures**; exact clock times remain unrecorded.
 The 18-inch plant-tip reference is owner-reported;
-individual plant-tip distances and the light field have not been mapped.
+individual plant-tip distances remain unmeasured. The owner later supplied 48 approximate lux-derived light estimates at individual plant heights, rather than one common plane; see the [measurement record](../layouts/table-placement-research.md#owner-light-readings-and-confirmed-swap).
 No controller program was remotely changed for this update.
 
 ## Recommended Starting Decision
 
-**Keep AW200 at 45% and AeroLight 240 W at 38% for the first comparison of the four-table arrangement.** The September 15 photo-matched positions replace the old proposed swaps; do not carry the glass-spill gradient into the current plan.
+**Keep the reported AW200 45% and AeroLight 240 W 38% settings.** The owner's later 48-reading comparison spans 145–677 estimated PPFD across the full mapped rectangle, including the intentionally unlit far edge; its app DLI is 6.8–31.7 at the 13-hour setting. These lux-derived per-height estimates do not establish calibrated PAR, uniformity, or a reason to change both dimmers. Only the A3 Serpent / F1 Hook-spined exchange was confirmed after review. Do not carry the old glass-spill gradient into the current plan.
 The confirmed 18-inch reference supports retaining this starting setup while
 checking actual plant exposure; the photograph cannot provide PPFD.
 
@@ -63,13 +63,11 @@ Keep both lights on their confirmed **13 h 15 m** cycle, including the
 15-minute sunrise and sunset transitions. Increasing duration and intensity
 together makes the cause of a response harder to judge.
 
-The useful next check is small: with the reported 18-inch plant-tip reference,
-compare light at the central low rosettes, the tallest
-cactus tip, Ming Thing, Variegated Moon and tiger jaws. Assess the money tree's upper leaves separately at its confirmed north-windowsill position, with daylight conditions recorded. Use both lights at their normal settings. A suitable quantum meter
+The first owner comparison is now recorded. If a follow-up is useful, measure A3 and F1 at their own heights after the exchange; different-height occupants do not inherit each other's old readings. Assess the money tree's upper leaves separately at its confirmed north-windowsill position, with daylight conditions recorded. Use both lights at their normal settings. A suitable quantum meter
 can measure PPFD; a consistent lux reading can reveal relative bright and dim
 spots, but do not apply an old AW200SE lux conversion to these mixed spectra.
 
-Keep low rosettes and split rock clearly lit without assigning the strongest exposure to all of them. Raindrops uses bright light rather than a maximum-intensity priority. The [placement review](../two-light-placement-review.md) explains the revised proposed grid and phone-meter comparison and the limits of edge, seam, and height assumptions. Any future fixture-height adjustment affects neighboring plants as well as the tallest tip.
+Keep low rosettes and split rock clearly lit without assigning the strongest exposure to all of them. Raindrops uses bright light rather than a maximum-intensity priority. The [placement review](../two-light-placement-review.md) explains the corrected written grid, retained earlier illustrations and approximate light comparison and the limits of edge, seam, and height assumptions. Any future fixture-height adjustment affects neighboring plants as well as the tallest tip.
 
 The [new-model manual][new-manual] requires the growing space to stay **below
 86°F (30°C)** during operation. Recheck room temperature with both fixtures
@@ -77,13 +75,13 @@ running; circulation fans do not establish that the room stays below this limit.
 
 ## Coverage and Current Plant Positions
 
-Four **16 × 13-inch wooden tables** now support the photographed collection. The working footprint is **26 inches across × 32 inches toward the window**, inferred as a 2 × 2 block before gaps. The front pair holds the 24 small pots in six columns × four rows; the current arrangement has five larger/shared containers on the rear pair and #3 / P21 Money Tree separately on the north windowsill. The owner confirmed the move complete on September 16; its exact time was not supplied. The photographs precede the move; #4 Kiwi and the other table positions remain unchanged. The square shared succulent box remains square, and the glass table is no longer part of the pictured placement.
+Four **16 × 13-inch wooden tables** now support the photographed collection. The working footprint is **26 inches across × 32 inches toward the window**, inferred as a 2 × 2 block before gaps. The front pair holds the 24 small pots in six columns × four rows; the current arrangement has five larger/shared containers on the rear pair and #3 / P21 Money Tree separately on the north windowsill. The owner confirmed the move complete on September 16; its exact time was not supplied. The photographs precede the move and the later A3/F1 exchange; #4 Kiwi and all other table positions remain unchanged. The square shared succulent box remains square, and the glass table is no longer part of the pictured placement.
 
 The [placement guide](../layouts/table-placement-research.md) faces the window: **window top, open room bottom, Mylar left, white wall right**. The current photographs crop the fixtures, so exact centers and which model occupies each position remain unverified. Do not transfer the old one-inch end margins, ½–1-inch gap, wood/glass boundary or relative-light gradient to this larger block as confirmed facts.
 
 Each fixture is about 26 × 13 inches. Adjacent bodies would occupy roughly 26 × 26 inches before their gap, compared with the inferred 26 × 32-inch furniture block. Light spreads beyond a fixture outline, but body dimensions do not prove adequate or uniform illumination. Preserve adjustable independent suspension and unobstructed fans. Recheck the tallest #1 tips and low rosettes if furniture or fixture positions changed; compare money-tree leaves separately on the north windowsill, whose daylight and lamp spill remain unmeasured; the earlier 18-inch reference is not a measurement at every plant.
 
-The photo-matched D3 and F2 front corners are plausible gentler positions; Mylar and the wall can keep either side bright. Compare B3 at the front against stronger interior exposure, and compare low H1 against shadows from nearby tall plants. The rear group requires leaf- and tip-height comparisons rather than a universal weaker-glass assumption. The two-foot return reflector stays out of the display.
+The photo-matched D3 and F2 front corners are plausible gentler positions; Mylar and the wall can keep either side bright. The later owner comparison does not authorize additional moves for B3, H1 or other pots. Preserve the remaining arrangement while considering actual plant-height exposure and shadows. The rear group requires leaf- and tip-height comparisons rather than a universal weaker-glass assumption. The two-foot return reflector stays out of the display.
 
 ## Independent Ceiling Hooks
 

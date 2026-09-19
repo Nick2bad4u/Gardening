@@ -1,5 +1,17 @@
 ---
-import { siteUrl } from "../../../lib/routes.mjs";
+import { profileUrl, siteUrl } from "../../../lib/routes.mjs";
+import { stripMarkdown } from "../../../lib/content/profile-source.mjs";
+interface Props {
+    potId?: string;
+    profiles?: readonly import("../../../lib/content.mjs").SiteProfile[];
+}
+const { potId = "", profiles = [] } = Astro.props;
+const primaryProfile = profiles[0];
+const potLabel = primaryProfile?.drawerLabel.primary;
+const initialName =
+    profiles.length > 1
+        ? `Shared container ${potLabel ?? potId}`
+        : (primaryProfile?.title ?? (potId ? `Pot ${potId}` : "Plant history"));
 ---
 
 <header class="hero history-hero">
@@ -16,10 +28,12 @@ import { siteUrl } from "../../../lib/routes.mjs";
     </span>
     <div>
         <p class="eyebrow" id="plant-label">
-            Loading plant…
+            {potLabel ? `${potLabel} · ${potId}` : potId || "Collection observations"}
         </p>
-        <h1 id="plant-name">Plant history</h1>
-        <div class="scientific-heading" id="plant-scientific"></div>
+        <h1 id="plant-name">{initialName}</h1>
+        <div class="scientific-heading" id="plant-scientific">
+            {profiles.map((profile) => stripMarkdown(profile.scientificMarkdown)).join(" · ")}
+        </div>
         <p class="lede">
             Every watering, weight, size check, and observation is kept as its own event.
             Calculations use the full log, while weight baselines use only the active pot setup.
@@ -31,7 +45,19 @@ import { siteUrl } from "../../../lib/routes.mjs";
             id="profile-actions"
             role="group"
             aria-label="Field guide profiles"
-        ></div>
+        >
+            {profiles.map((profile) => (
+                <a class="button" href={profileUrl(profile.slug)}>
+                    <img
+                        src={siteUrl(`assets/plant-icons/${profile.slug}.svg`)}
+                        width="28"
+                        height="28"
+                        alt=""
+                    />
+                    {profile.title}
+                </a>
+            ))}
+        </div>
         <a
             class="button primary"
             id="edit-history"

@@ -1,14 +1,8 @@
 # Pot labels
 
-Last updated: 2026-09-03
+Last updated: 2026-09-18
 
-This is the print reference for the 35 plants or planters physically documented
-in the collection. Pot labels use only the short
-permanent ID, such as `A1` or `B2`.
-These IDs identify
-plants; they are not physical row/column coordinates. The longer
-inventory IDs remain in the collection records so the historical documentation
-and photo archive do not need to be renamed.
+This is the print reference for 35 current botanical profiles across 30 tracked pots or shared containers. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
 
 The six August cactus labels are `E1`–`E3` and `F1`–`F3`; their exact mapping
 was recorded from the pots on 2026-08-10. The numbered mapping was also

@@ -63,7 +63,9 @@ function inspectCardGeometry(entries: readonly Readonly<Element>[]) {
 
 async function inspectPlacementMaps(main: Readonly<Element>) {
     const images = [
-        ...main.querySelectorAll(":scope .document-article .prose img"),
+        ...main.querySelectorAll(
+            ":scope .document-article .placement-figure img"
+        ),
     ];
     const metrics = [];
     for (const image of images) {
@@ -103,7 +105,9 @@ async function inspectPlacementMaps(main: Readonly<Element>) {
         // Each lazy image must enter the viewport and finish decoding before scrolling to the next.
         // eslint-disable-next-line no-await-in-loop -- Parallel scrolling can leave preceding lazy images unloaded.
         await image.decode();
-        const body = image.closest(".prose");
+        const body =
+            image.closest(".document-section-content") ??
+            image.closest(".prose");
         const { height, width } = image.getBoundingClientRect();
         metrics.push({
             fillsBody:
@@ -177,7 +181,7 @@ for (const theme of ["dark", "light"] as const) {
                 await page.setViewportSize({ height: 900, width });
                 await openSite(page, "setup/", theme);
                 const preview = page.getByRole("link", {
-                    name: /Current Arrangement/v,
+                    name: /Four-Table Arrangement/v,
                 });
                 const previewSize = await preview
                     .getByRole("img")
@@ -234,6 +238,27 @@ for (const theme of ["dark", "light"] as const) {
                 expect.soft(sizes.leftGap).toBeLessThan(80);
             });
         }
+
+        test("guide contents stays compact on mobile and opens with the keyboard", async ({
+            page,
+        }) => {
+            await page.setViewportSize({ height: 844, width: 390 });
+            await openSite(page, "guides/watering-strategy/", theme);
+            const contents = page.getByRole("complementary", {
+                name: "On this page",
+            });
+            const section = contents.getByRole("link", {
+                name: /what we are trying to learn/iv,
+            });
+            await expect.soft(section).toBeHidden();
+            await contents
+                .getByText("On This Page", { exact: false })
+                .press("Enter");
+            await expect.soft(section).toBeVisible();
+            await section.click();
+            await expect.soft(page).toHaveURL(/#what-we-are-trying-to-learn$/v);
+            await expectContained(page);
+        });
 
         test("profile hero is loaded with attribution and prominent neighbor links work in both directions", async ({
             page,

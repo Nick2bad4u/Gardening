@@ -5,6 +5,10 @@ import { getProfiles } from "../../lib/content.mjs";
 import { groups } from "../../lib/content/profile-source.mjs";
 const profiles = await getProfiles();
 const currentCount = profiles.filter((profile) => !profile.historical).length;
+const potProfiles = Map.groupBy(
+    profiles.filter((profile) => profile.trackerId !== undefined),
+    (profile) => profile.trackerId
+);
 ---
 
 <SiteLayout
@@ -12,13 +16,10 @@ const currentCount = profiles.filter((profile) => !profile.historical).length;
     section="plants"
     description="Browse the Fenton Collection by plant name, scientific name, label, and pot ID."
 >
-    <header class="page-heading">
+    <header class="page-heading directory-heading">
         <p class="eyebrow">THE FENTON COLLECTION</p>
         <h1>Meet the plants.</h1>
-        <p class="lede">
-            Every plant has a story. Explore the names, nursery records, care notes, and photographs
-            behind the collection.
-        </p>
+        <p class="lede">Names, care notes, photos, and nursery records for the collection.</p>
     </header>
     <div class="directory-toolbar no-print">
         <label for="plant-search">
@@ -66,7 +67,12 @@ const currentCount = profiles.filter((profile) => !profile.historical).length;
                 data-historical={String(profile.historical)}
                 hidden={profile.historical}
             >
-                <PlantCard profile={profile} />
+                <PlantCard
+                    profile={profile}
+                    sharedProfileCount={
+                        profile.trackerId ? (potProfiles.get(profile.trackerId)?.length ?? 1) : 1
+                    }
+                />
             </li>
         ))}
     </ul>
@@ -75,3 +81,47 @@ const currentCount = profiles.filter((profile) => !profile.historical).length;
     </p>
 </SiteLayout>
 <script src="../../client/directory.js"></script>
+<style>
+    .directory-heading {
+        margin-block-end: 1.25rem;
+        & .eyebrow {
+            margin-block-end: 0.45rem;
+        }
+        & h1 {
+            margin-block-end: 0.5rem;
+            font-size: clamp(2rem, 4vi, 3rem);
+        }
+        & .lede {
+            margin-block-end: 0;
+            line-height: 1.5;
+        }
+    }
+    .directory-toolbar {
+        gap: 0.75rem;
+        padding: 0.875rem;
+        margin-block-end: 0.75rem;
+    }
+    .plant-directory {
+        grid-auto-rows: auto;
+        gap: 1rem;
+    }
+
+    @media (width <= 600px) {
+        .directory-toolbar {
+            display: grid;
+            grid-template-columns:
+                [start] repeat(2, [column-start] minmax(0, 1fr) [column-end])
+                [end];
+            & label {
+                min-inline-size: 0;
+            }
+            & label:first-child {
+                grid-column: start / end;
+            }
+            & select {
+                inline-size: 100%;
+                min-inline-size: 0;
+            }
+        }
+    }
+</style>

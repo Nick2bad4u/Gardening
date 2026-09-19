@@ -1,0 +1,281 @@
+.document-article,
+.guide-library {
+    --document-color: var(--accent);
+
+    & [data-tone="water"],
+    &[data-tone="water"] {
+        --document-color: light-dark(#276579, #9bd2df);
+    }
+    & [data-tone="weight"],
+    &[data-tone="weight"] {
+        --document-color: light-dark(#66528a, #cbb9e9);
+    }
+    & [data-tone="record"],
+    &[data-tone="record"] {
+        --document-color: light-dark(#855638, #e6b58e);
+    }
+    & [data-tone="light"],
+    &[data-tone="light"] {
+        --document-color: light-dark(#806018, #dfc477);
+    }
+}
+.document-heading,
+.guide-library-heading {
+    display: flex;
+    gap: clamp(1rem, 3vi, 2rem);
+    align-items: center;
+    padding: clamp(1.2rem, 3vi, 2.5rem);
+    background: linear-gradient(120deg, var(--surface), var(--surface-soft));
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+
+    & h1 {
+        margin-block: 0.4rem 1rem;
+    }
+    & .eyebrow {
+        color: var(--document-color);
+    }
+}
+.document-emblem {
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    inline-size: 96px;
+    block-size: 96px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+}
+.document-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+
+    & > span,
+    & > a {
+        display: inline-flex;
+        gap: 0.4rem;
+        align-items: center;
+        padding: 0.4rem 0.7rem;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+    }
+}
+.guide-library-grid {
+    display: grid;
+    grid-template-columns:
+        [start] repeat(2, [column-start] minmax(0, 1fr) [column-end])
+        [end];
+    gap: 1.3rem;
+    margin-block: 2rem;
+}
+.guide-library-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-inline-size: 0;
+    padding: clamp(1.2rem, 2.4vi, 2rem);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-block-start: 4px solid var(--document-color);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+
+    & header {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+    & h2 {
+        margin: 0.3rem 0 0;
+        font-size: 1.75rem;
+    }
+    & h2 a {
+        color: var(--ink);
+        text-decoration: none;
+    }
+    & .eyebrow {
+        margin: 0;
+        color: var(--document-color);
+    }
+    & p {
+        margin: 0;
+        line-height: 1.625;
+    }
+    & ul {
+        display: grid;
+        gap: 0.4rem;
+        padding-inline-start: 1.2rem;
+        margin: 0;
+        font-size: 0.875rem;
+    }
+    @supports selector(::marker) {
+        & li::marker {
+            color: var(--document-color);
+        }
+    }
+    & footer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+        justify-content: space-between;
+        padding-block-start: 1rem;
+        margin-block-start: auto;
+        font-size: 0.75rem;
+        border-block-start: 1px solid var(--line);
+    }
+}
+.document-article .article-toc {
+    padding: 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+
+    & a {
+        display: flex;
+        gap: 0.6rem;
+        align-items: baseline;
+        padding-block: 0.2rem;
+    }
+    & .toc-number {
+        font-size: 0.75rem;
+        font-variant-numeric: tabular-nums;
+        color: var(--document-color);
+    }
+}
+.document-contents {
+    & summary {
+        padding-block: 0.35rem;
+        font-size: 0.75rem;
+        font-weight: 750;
+        cursor: pointer;
+    }
+    & summary span {
+        margin-inline-start: 0.5rem;
+        font-size: 0.625rem;
+        font-weight: 500;
+        color: var(--muted);
+    }
+    &[open] summary {
+        margin-block-end: 0.8rem;
+    }
+}
+.document-body {
+    display: grid;
+    gap: 1.5rem;
+}
+.document-introduction,
+.document-section {
+    min-inline-size: 0;
+    padding: clamp(1rem, 2.5vi, 2rem);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+.document-introduction {
+    background: linear-gradient(140deg, var(--surface), var(--surface-soft));
+    border-inline-start: 4px solid var(--document-color);
+}
+.document-section {
+    border-block-start: 3px solid var(--document-color);
+}
+.document-section-marker {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    margin-block-end: 0.9rem;
+    font-size: 0.625rem;
+    font-weight: 750;
+    color: var(--document-color);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+.document-section-content {
+    & > h2:first-child {
+        padding: 0;
+        margin-block: 0 1.25rem;
+        font-size: clamp(1.5rem, 2.3vi, 2rem);
+        line-height: 1.25;
+    }
+    & h3 {
+        padding-block-end: 0.5rem;
+        color: var(--document-color);
+        border-block-end: 1px solid var(--line);
+    }
+    & > :last-child {
+        margin-block-end: 0;
+    }
+    @supports selector(::marker) {
+        & li::marker {
+            color: var(--document-color);
+        }
+    }
+    & strong {
+        color: var(--document-color);
+    }
+    & table th {
+        color: var(--document-color);
+    }
+    & table tbody tr:nth-child(even) {
+        background: color-mix(in srgb, var(--surface-soft) 50%, transparent);
+    }
+}
+.setup-links .setup-link-icon {
+    inline-size: 42px;
+    block-size: 42px;
+    margin-block-end: 0.75rem;
+}
+
+@media (width <= 700px) {
+    .document-heading,
+    .guide-library-heading {
+        align-items: start;
+    }
+    .document-emblem {
+        inline-size: 54px;
+        block-size: 54px;
+        border-radius: 14px;
+
+        & img {
+            inline-size: 40px;
+            block-size: 40px;
+        }
+    }
+    .guide-library-grid {
+        grid-template-columns: [start] minmax(0, 1fr) [end];
+    }
+}
+
+@media (width <= 450px) {
+    .document-heading,
+    .guide-library-heading {
+        flex-direction: column;
+    }
+}
+
+@media print {
+    .document-heading,
+    .document-introduction,
+    .document-section {
+        padding: 0;
+        background: none;
+        border: 0;
+        box-shadow: none;
+    }
+    .document-section {
+        margin-block: 1.5rem;
+    }
+    .document-metadata,
+    .document-emblem,
+    .document-section-marker {
+        display: none;
+    }
+    .document-section-content h2 {
+        break-after: avoid;
+    }
+}
