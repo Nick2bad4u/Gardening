@@ -234,7 +234,9 @@ function orderedPages(snapshot) {
         /^P\d{2} /v.test(properties.title)
     );
     if (pages.length !== palette.length)
-        throw new Error("Expected exactly 30 complete plant-page snapshots");
+        throw new Error(
+            `Expected exactly ${palette.length} complete plant-page snapshots`
+        );
     return palette.map(({ id }) => {
         const matches = pages.filter(({ properties }) =>
             properties.title.startsWith(`${id} `)

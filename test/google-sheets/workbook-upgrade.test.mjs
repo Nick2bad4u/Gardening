@@ -2,6 +2,7 @@ import * as fs from "node:fs";
 import vm from "node:vm";
 import { describe, expect, it } from "vitest";
 
+import palette from "../../scripts/google-sheets/plant-colors.json" with { type: "json" };
 import {
     analyticsSheetId,
     buildWorkbookUpgradeRequests,
@@ -49,7 +50,7 @@ const factories = {
         /** @type {string} */ (
             sourceApi.dailyCareWeightFormula_(
                 row,
-                { baseline: 31, history: 5000 },
+                { baseline: palette.length + 1, history: 5000 },
                 "A",
                 "'Workbook calculations'!$E$2"
             )
@@ -74,7 +75,7 @@ function fixture() {
         "App entries",
         "App bulk",
         ...Array.from(
-            { length: 30 },
+            { length: palette.length },
             (_, index) => `P${String(index + 1).padStart(2, "0")} Test`
         ),
     ];
@@ -110,7 +111,7 @@ function fixture() {
         1,
         "=SUM(ARRAYFORMULA(N(ISERROR(Dashboard!U4:X254))))"
     );
-    for (let index = 0; index < 30; index++) {
+    for (let index = 0; index < palette.length; index++) {
         const id = `P${String(index + 1).padStart(2, "0")}`;
         put("Baselines", index + 1, 0, id);
         put("Plant tracker", index + 1, 0, id);
@@ -208,7 +209,7 @@ describe("native workbook reliability and analytics migration", () => {
         );
         expect(result.chartRequests[1]).toHaveProperty(
             "addChart.chart.spec.basicChart.series.length",
-            90
+            palette.length * 3
         );
         expect(result.chartRequests[1]).toHaveProperty(
             "addChart.chart.spec.basicChart.series.1.pointStyle.shape",
@@ -491,7 +492,7 @@ describe("native workbook reliability and analytics migration", () => {
             '=IF(A2="NOW()",TODAY()+NOW(),XLOOKUP(A2,\'Plant tracker\'!$A:$A,Baselines!C:C,"TODAY()"))';
 
         expect(normalizeDerivedFormula(formula)).toBe(
-            "=IF(A2=\"NOW()\",'Workbook calculations'!$F$2+'Workbook calculations'!$E$2,XLOOKUP(A2,'Plant tracker'!$A$2:$A$31,Baselines!$C$2:$C$31,\"TODAY()\"))"
+            "=IF(A2=\"NOW()\",'Workbook calculations'!$F$2+'Workbook calculations'!$E$2,XLOOKUP(A2,'Plant tracker'!$A$2:$A$33,Baselines!$C$2:$C$33,\"TODAY()\"))"
         );
 
         const snapshot = fixture();

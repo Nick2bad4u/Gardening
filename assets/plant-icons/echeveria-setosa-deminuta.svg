@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="echeveria-setosa-deminuta-title echeveria-setosa-deminuta-description" data-plant-slug="echeveria-setosa-deminuta" focusable="false">
+  <title id="echeveria-setosa-deminuta-title">Deminuta echeveria plant portrait</title>
+  <desc id="echeveria-setosa-deminuta-description">A small blue-green rosette and offset with pale fuzzy leaf detail in a terracotta planter.</desc>
+  <defs>
+  <linearGradient id="deminuta-leaf-color" x1="0" y1="0" x2="0.8" y2="1">
+  <stop offset="0" stop-color="#c6d5c1" />
+  <stop offset="1" stop-color="#6d9993" />
+  </linearGradient>
+  <g id="deminuta-leaf">
+  <path d="M0 2C-6-1-7-11 0-20C7-11 6-1 0 2Z" fill="url(#deminuta-leaf-color)" stroke="#dbe3cb" stroke-width="0.8" />
+  <path d="M0-15Q-2-7 0 0" fill="none" stroke="#f7ebde" stroke-width="0.65" opacity="0.5" />
+  </g>
+  </defs>
+  <ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
+  <path d="M10 43H54L50 58Q32 63 14 58Z" fill="#bf805d" stroke="#735447" stroke-width="1.6" />
+  <ellipse cx="32" cy="43" rx="22" ry="4" fill="#624d3c" stroke="#735447" stroke-width="1.5" />
+  <path d="M15 49Q32 53 49 49" fill="none" stroke="#fff1d5" stroke-width="1.4" opacity="0.5" />
+  <g transform="translate(28 31) scale(1.02 0.92)">
+  <use href="#deminuta-leaf" transform="rotate(0) scale(1)" />
+  <use href="#deminuta-leaf" transform="rotate(45) scale(1)" />
+  <use href="#deminuta-leaf" transform="rotate(90) scale(1)" />
+  <use href="#deminuta-leaf" transform="rotate(135) scale(1)" />
+  <use href="#deminuta-leaf" transform="rotate(180) scale(1)" />
+  <use href="#deminuta-leaf" transform="rotate(225) scale(1)" />
+  <use href="#deminuta-leaf" transform="rotate(270) scale(1)" />
+  <use href="#deminuta-leaf" transform="rotate(315) scale(1)" />
+  <use href="#deminuta-leaf" transform="rotate(20) scale(0.67)" />
+  <use href="#deminuta-leaf" transform="rotate(71) scale(0.67)" />
+  <use href="#deminuta-leaf" transform="rotate(123) scale(0.67)" />
+  <use href="#deminuta-leaf" transform="rotate(174) scale(0.67)" />
+  <use href="#deminuta-leaf" transform="rotate(226) scale(0.67)" />
+  <use href="#deminuta-leaf" transform="rotate(277) scale(0.67)" />
+  <use href="#deminuta-leaf" transform="rotate(329) scale(0.67)" />
+  <use href="#deminuta-leaf" transform="rotate(0) scale(0.4)" />
+  <use href="#deminuta-leaf" transform="rotate(72) scale(0.4)" />
+  <use href="#deminuta-leaf" transform="rotate(144) scale(0.4)" />
+  <use href="#deminuta-leaf" transform="rotate(216) scale(0.4)" />
+  <use href="#deminuta-leaf" transform="rotate(288) scale(0.4)" />
+  <use href="#deminuta-leaf" transform="rotate(30) scale(0.2)" />
+  <use href="#deminuta-leaf" transform="rotate(150) scale(0.2)" />
+  <use href="#deminuta-leaf" transform="rotate(270) scale(0.2)" />
+  </g>
+  <g transform="translate(46 37) scale(0.55)">
+  <use href="#deminuta-leaf" transform="rotate(0) scale(1)" />
+  <use href="#deminuta-leaf" transform="rotate(45) scale(1)" />
+  <use href="#deminuta-leaf" transform="rotate(90) scale(1)" />
+  <use href="#deminuta-leaf" transform="rotate(135) scale(1)" />
+  <use href="#deminuta-leaf" transform="rotate(180) scale(1)" />
+  <use href="#deminuta-leaf" transform="rotate(225) scale(1)" />
+  <use href="#deminuta-leaf" transform="rotate(270) scale(1)" />
+  <use href="#deminuta-leaf" transform="rotate(315) scale(1)" />
+  <use href="#deminuta-leaf" transform="rotate(20) scale(0.67)" />
+  <use href="#deminuta-leaf" transform="rotate(71) scale(0.67)" />
+  <use href="#deminuta-leaf" transform="rotate(123) scale(0.67)" />
+  <use href="#deminuta-leaf" transform="rotate(174) scale(0.67)" />
+  <use href="#deminuta-leaf" transform="rotate(226) scale(0.67)" />
+  <use href="#deminuta-leaf" transform="rotate(277) scale(0.67)" />
+  <use href="#deminuta-leaf" transform="rotate(329) scale(0.67)" />
+  <use href="#deminuta-leaf" transform="rotate(0) scale(0.4)" />
+  <use href="#deminuta-leaf" transform="rotate(72) scale(0.4)" />
+  <use href="#deminuta-leaf" transform="rotate(144) scale(0.4)" />
+  <use href="#deminuta-leaf" transform="rotate(216) scale(0.4)" />
+  <use href="#deminuta-leaf" transform="rotate(288) scale(0.4)" />
+  <use href="#deminuta-leaf" transform="rotate(30) scale(0.2)" />
+  <use href="#deminuta-leaf" transform="rotate(150) scale(0.2)" />
+  <use href="#deminuta-leaf" transform="rotate(270) scale(0.2)" />
+  </g>
+  <g fill="#f7f4db" opacity="0.85">
+  <circle cx="28.00" cy="31.00" r="0.7" />
+  <circle cx="25.27" cy="33.50" r="0.7" />
+  <circle cx="28.46" cy="25.79" r="0.7" />
+  <circle cx="31.90" cy="36.09" r="0.7" />
+  <circle cx="20.71" cy="29.71" r="0.7" />
+  <circle cx="34.98" cy="26.56" r="0.7" />
+  <circle cx="25.65" cy="39.75" r="0.7" />
+  <circle cx="23.49" cy="22.31" r="0.7" />
+  <circle cx="37.83" cy="34.59" r="0.7" />
+  <circle cx="17.74" cy="35.23" r="0.7" />
+  <circle cx="32.96" cy="20.40" r="0.7" />
+  <circle cx="31.67" cy="42.71" r="0.7" />
+  <circle cx="16.91" cy="24.57" r="0.7" />
+  <circle cx="41.03" cy="28.14" r="0.7" />
+  <circle cx="20.03" cy="42.32" r="0.7" />
+  <circle cx="26.17" cy="16.79" r="0.7" />
+  <circle cx="39.31" cy="40.54" r="0.7" />
+  <circle cx="12.76" cy="31.62" r="0.7" />
+  <circle cx="39.13" cy="19.93" r="0.7" />
+  <circle cx="27.24" cy="47.11" r="0.7" />
+  <circle cx="17.41" cy="18.29" r="0.7" />
+  <circle cx="44.80" cy="33.27" r="0.7" />
+  </g>
+</svg>

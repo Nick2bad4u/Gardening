@@ -11513,6 +11513,382 @@
     </g>
   </symbol>
 
+
+  <symbol id="icon-plant-echeveria-cubic-frost" viewBox="0 0 64 64">
+<defs>
+<linearGradient id="cubic-leaf-color" x1="0" y1="0" x2="0.8" y2="1">
+<stop offset="0" stop-color="#e4d5e4" />
+<stop offset="1" stop-color="#a8a6c4" />
+</linearGradient>
+<g id="cubic-leaf">
+<path d="M0 2C-6 0-10-7-9-12L-5-12-4-19 1-17 5-20 8-14C9-6 6-1 0 2Z" fill="url(#cubic-leaf-color)" stroke="#9a7b9d" stroke-width="0.8" />
+<path d="M0-15Q-2-7 0 0" fill="none" stroke="#f7ebde" stroke-width="0.65" opacity="0.5" />
+</g>
+</defs>
+<ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
+<path d="M10 43H54L50 58Q32 63 14 58Z" fill="#e6c1a2" stroke="#735447" stroke-width="1.6" />
+<ellipse cx="32" cy="43" rx="22" ry="4" fill="#624d3c" stroke="#735447" stroke-width="1.5" />
+<path d="M15 49Q32 53 49 49" fill="none" stroke="#fff1d5" stroke-width="1.4" opacity="0.5" />
+<g transform="translate(32 31) scale(1.15 0.87)">
+<use href="#cubic-leaf" transform="rotate(0) scale(1)" />
+<use href="#cubic-leaf" transform="rotate(45) scale(1)" />
+<use href="#cubic-leaf" transform="rotate(90) scale(1)" />
+<use href="#cubic-leaf" transform="rotate(135) scale(1)" />
+<use href="#cubic-leaf" transform="rotate(180) scale(1)" />
+<use href="#cubic-leaf" transform="rotate(225) scale(1)" />
+<use href="#cubic-leaf" transform="rotate(270) scale(1)" />
+<use href="#cubic-leaf" transform="rotate(315) scale(1)" />
+<use href="#cubic-leaf" transform="rotate(20) scale(0.67)" />
+<use href="#cubic-leaf" transform="rotate(71) scale(0.67)" />
+<use href="#cubic-leaf" transform="rotate(123) scale(0.67)" />
+<use href="#cubic-leaf" transform="rotate(174) scale(0.67)" />
+<use href="#cubic-leaf" transform="rotate(226) scale(0.67)" />
+<use href="#cubic-leaf" transform="rotate(277) scale(0.67)" />
+<use href="#cubic-leaf" transform="rotate(329) scale(0.67)" />
+<use href="#cubic-leaf" transform="rotate(0) scale(0.4)" />
+<use href="#cubic-leaf" transform="rotate(72) scale(0.4)" />
+<use href="#cubic-leaf" transform="rotate(144) scale(0.4)" />
+<use href="#cubic-leaf" transform="rotate(216) scale(0.4)" />
+<use href="#cubic-leaf" transform="rotate(288) scale(0.4)" />
+<use href="#cubic-leaf" transform="rotate(30) scale(0.2)" />
+<use href="#cubic-leaf" transform="rotate(150) scale(0.2)" />
+<use href="#cubic-leaf" transform="rotate(270) scale(0.2)" />
+</g>
+  </symbol>
+
+  <symbol id="icon-plant-echeveria-setosa-deminuta" viewBox="0 0 64 64">
+<defs>
+<linearGradient id="deminuta-leaf-color" x1="0" y1="0" x2="0.8" y2="1">
+<stop offset="0" stop-color="#c6d5c1" />
+<stop offset="1" stop-color="#6d9993" />
+</linearGradient>
+<g id="deminuta-leaf">
+<path d="M0 2C-6-1-7-11 0-20C7-11 6-1 0 2Z" fill="url(#deminuta-leaf-color)" stroke="#dbe3cb" stroke-width="0.8" />
+<path d="M0-15Q-2-7 0 0" fill="none" stroke="#f7ebde" stroke-width="0.65" opacity="0.5" />
+</g>
+</defs>
+<ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
+<path d="M10 43H54L50 58Q32 63 14 58Z" fill="#bf805d" stroke="#735447" stroke-width="1.6" />
+<ellipse cx="32" cy="43" rx="22" ry="4" fill="#624d3c" stroke="#735447" stroke-width="1.5" />
+<path d="M15 49Q32 53 49 49" fill="none" stroke="#fff1d5" stroke-width="1.4" opacity="0.5" />
+<g transform="translate(28 31) scale(1.02 0.92)">
+<use href="#deminuta-leaf" transform="rotate(0) scale(1)" />
+<use href="#deminuta-leaf" transform="rotate(45) scale(1)" />
+<use href="#deminuta-leaf" transform="rotate(90) scale(1)" />
+<use href="#deminuta-leaf" transform="rotate(135) scale(1)" />
+<use href="#deminuta-leaf" transform="rotate(180) scale(1)" />
+<use href="#deminuta-leaf" transform="rotate(225) scale(1)" />
+<use href="#deminuta-leaf" transform="rotate(270) scale(1)" />
+<use href="#deminuta-leaf" transform="rotate(315) scale(1)" />
+<use href="#deminuta-leaf" transform="rotate(20) scale(0.67)" />
+<use href="#deminuta-leaf" transform="rotate(71) scale(0.67)" />
+<use href="#deminuta-leaf" transform="rotate(123) scale(0.67)" />
+<use href="#deminuta-leaf" transform="rotate(174) scale(0.67)" />
+<use href="#deminuta-leaf" transform="rotate(226) scale(0.67)" />
+<use href="#deminuta-leaf" transform="rotate(277) scale(0.67)" />
+<use href="#deminuta-leaf" transform="rotate(329) scale(0.67)" />
+<use href="#deminuta-leaf" transform="rotate(0) scale(0.4)" />
+<use href="#deminuta-leaf" transform="rotate(72) scale(0.4)" />
+<use href="#deminuta-leaf" transform="rotate(144) scale(0.4)" />
+<use href="#deminuta-leaf" transform="rotate(216) scale(0.4)" />
+<use href="#deminuta-leaf" transform="rotate(288) scale(0.4)" />
+<use href="#deminuta-leaf" transform="rotate(30) scale(0.2)" />
+<use href="#deminuta-leaf" transform="rotate(150) scale(0.2)" />
+<use href="#deminuta-leaf" transform="rotate(270) scale(0.2)" />
+</g>
+<g transform="translate(46 37) scale(0.55)">
+<use href="#deminuta-leaf" transform="rotate(0) scale(1)" />
+<use href="#deminuta-leaf" transform="rotate(45) scale(1)" />
+<use href="#deminuta-leaf" transform="rotate(90) scale(1)" />
+<use href="#deminuta-leaf" transform="rotate(135) scale(1)" />
+<use href="#deminuta-leaf" transform="rotate(180) scale(1)" />
+<use href="#deminuta-leaf" transform="rotate(225) scale(1)" />
+<use href="#deminuta-leaf" transform="rotate(270) scale(1)" />
+<use href="#deminuta-leaf" transform="rotate(315) scale(1)" />
+<use href="#deminuta-leaf" transform="rotate(20) scale(0.67)" />
+<use href="#deminuta-leaf" transform="rotate(71) scale(0.67)" />
+<use href="#deminuta-leaf" transform="rotate(123) scale(0.67)" />
+<use href="#deminuta-leaf" transform="rotate(174) scale(0.67)" />
+<use href="#deminuta-leaf" transform="rotate(226) scale(0.67)" />
+<use href="#deminuta-leaf" transform="rotate(277) scale(0.67)" />
+<use href="#deminuta-leaf" transform="rotate(329) scale(0.67)" />
+<use href="#deminuta-leaf" transform="rotate(0) scale(0.4)" />
+<use href="#deminuta-leaf" transform="rotate(72) scale(0.4)" />
+<use href="#deminuta-leaf" transform="rotate(144) scale(0.4)" />
+<use href="#deminuta-leaf" transform="rotate(216) scale(0.4)" />
+<use href="#deminuta-leaf" transform="rotate(288) scale(0.4)" />
+<use href="#deminuta-leaf" transform="rotate(30) scale(0.2)" />
+<use href="#deminuta-leaf" transform="rotate(150) scale(0.2)" />
+<use href="#deminuta-leaf" transform="rotate(270) scale(0.2)" />
+</g>
+<g fill="#f7f4db" opacity="0.85">
+<circle cx="28.00" cy="31.00" r="0.7" />
+<circle cx="25.27" cy="33.50" r="0.7" />
+<circle cx="28.46" cy="25.79" r="0.7" />
+<circle cx="31.90" cy="36.09" r="0.7" />
+<circle cx="20.71" cy="29.71" r="0.7" />
+<circle cx="34.98" cy="26.56" r="0.7" />
+<circle cx="25.65" cy="39.75" r="0.7" />
+<circle cx="23.49" cy="22.31" r="0.7" />
+<circle cx="37.83" cy="34.59" r="0.7" />
+<circle cx="17.74" cy="35.23" r="0.7" />
+<circle cx="32.96" cy="20.40" r="0.7" />
+<circle cx="31.67" cy="42.71" r="0.7" />
+<circle cx="16.91" cy="24.57" r="0.7" />
+<circle cx="41.03" cy="28.14" r="0.7" />
+<circle cx="20.03" cy="42.32" r="0.7" />
+<circle cx="26.17" cy="16.79" r="0.7" />
+<circle cx="39.31" cy="40.54" r="0.7" />
+<circle cx="12.76" cy="31.62" r="0.7" />
+<circle cx="39.13" cy="19.93" r="0.7" />
+<circle cx="27.24" cy="47.11" r="0.7" />
+<circle cx="17.41" cy="18.29" r="0.7" />
+<circle cx="44.80" cy="33.27" r="0.7" />
+</g>
+  </symbol>
+
+  <symbol id="icon-plant-sedum-adolphi-coppertone" viewBox="0 0 64 64">
+<defs>
+<linearGradient id="coppertone-leaf-color" x1="0" y1="0" x2="0.8" y2="1">
+<stop offset="0" stop-color="#ffd17c" />
+<stop offset="1" stop-color="#b78539" />
+</linearGradient>
+<g id="coppertone-leaf">
+<path d="M0 2C-7-1-9-11-5-17Q0-21 5-17C9-11 7-1 0 2Z" fill="url(#coppertone-leaf-color)" stroke="#bb7143" stroke-width="0.8" />
+<path d="M0-15Q-2-7 0 0" fill="none" stroke="#f7ebde" stroke-width="0.65" opacity="0.5" />
+</g>
+</defs>
+<ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
+<path d="M10 43H54L50 58Q32 63 14 58Z" fill="#97b7b2" stroke="#735447" stroke-width="1.6" />
+<ellipse cx="32" cy="43" rx="22" ry="4" fill="#624d3c" stroke="#735447" stroke-width="1.5" />
+<path d="M15 49Q32 53 49 49" fill="none" stroke="#fff1d5" stroke-width="1.4" opacity="0.5" />
+<path d="M30 45Q35 26 27 14M31 35Q44 24 46 17M30 38Q18 29 16 22" fill="none" stroke="#a17643" stroke-width="2.3" />
+<use href="#coppertone-leaf" transform="translate(27 16) rotate(-30) scale(0.65)" />
+<use href="#coppertone-leaf" transform="translate(30 24) rotate(45) scale(0.8)" />
+<use href="#coppertone-leaf" transform="translate(29 27) rotate(-65) scale(0.8)" />
+<use href="#coppertone-leaf" transform="translate(33 33) rotate(55) scale(0.85)" />
+<use href="#coppertone-leaf" transform="translate(28 38) rotate(-70) scale(0.9)" />
+<use href="#coppertone-leaf" transform="translate(44 24) rotate(35) scale(0.7)" />
+<use href="#coppertone-leaf" transform="translate(43 26) rotate(-45) scale(0.7)" />
+<use href="#coppertone-leaf" transform="translate(17 27) rotate(-55) scale(0.65)" />
+<use href="#coppertone-leaf" transform="translate(20 31) rotate(35) scale(0.65)" />
+  </symbol>
+
+  <symbol id="icon-plant-echeveria-harmsii-ruby-slippers" viewBox="0 0 64 64">
+<defs>
+<linearGradient id="ruby-leaf-color" x1="0" y1="0" x2="0.8" y2="1">
+<stop offset="0" stop-color="#bace9b" />
+<stop offset="1" stop-color="#5c896a" />
+</linearGradient>
+<g id="ruby-leaf">
+<path d="M0 2C-6-1-7-11 0-20C7-11 6-1 0 2Z" fill="url(#ruby-leaf-color)" stroke="#b34b54" stroke-width="0.8" />
+<path d="M0-15Q-2-7 0 0" fill="none" stroke="#f7ebde" stroke-width="0.65" opacity="0.5" />
+</g>
+</defs>
+<ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
+<path d="M10 43H54L50 58Q32 63 14 58Z" fill="#dcba81" stroke="#735447" stroke-width="1.6" />
+<ellipse cx="32" cy="43" rx="22" ry="4" fill="#624d3c" stroke="#735447" stroke-width="1.5" />
+<path d="M15 49Q32 53 49 49" fill="none" stroke="#fff1d5" stroke-width="1.4" opacity="0.5" />
+<path d="M31 45V25M31 34L18 21M31 33L45 20" fill="none" stroke="#79594b" stroke-width="2" />
+<use href="#ruby-leaf" transform="translate(30 24) rotate(0) scale(0.8)" />
+<use href="#ruby-leaf" transform="translate(30 35) rotate(-60) scale(0.95)" />
+<use href="#ruby-leaf" transform="translate(33 35) rotate(60) scale(0.95)" />
+<use href="#ruby-leaf" transform="translate(18 25) rotate(-40) scale(0.7)" />
+<use href="#ruby-leaf" transform="translate(44 25) rotate(40) scale(0.7)" />
+<use href="#ruby-leaf" transform="translate(31 41) rotate(-110) scale(0.8)" />
+<use href="#ruby-leaf" transform="translate(33 41) rotate(110) scale(0.8)" />
+  </symbol>
+
+  <symbol id="icon-plant-tradescantia-nanouk" viewBox="0 0 64 64">
+<defs>
+<linearGradient id="nanouk-leaf-color" x1="0" y1="0" x2="0.8" y2="1">
+<stop offset="0" stop-color="#ecd7eb" />
+<stop offset="1" stop-color="#9d719c" />
+</linearGradient>
+<g id="nanouk-leaf">
+<path d="M0 2C-6-1-7-11 0-20C7-11 6-1 0 2Z" fill="url(#nanouk-leaf-color)" stroke="#746781" stroke-width="0.8" />
+<path d="M0-15Q-2-7 0 0" fill="none" stroke="#f7ebde" stroke-width="0.65" opacity="0.5" />
+<path d="M-1-17C-4-10-2-3 0 1L2-2Q0-9 2-17Z" fill="#71957c" />
+</g>
+</defs>
+<ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
+<path d="M10 43H54L50 58Q32 63 14 58Z" fill="#b981a3" stroke="#765575" stroke-width="1.6" />
+<ellipse cx="32" cy="43" rx="22" ry="4" fill="#624d3c" stroke="#765575" stroke-width="1.5" />
+<path d="M15 49Q32 53 49 49" fill="none" stroke="#fff1d5" stroke-width="1.4" opacity="0.5" />
+<path d="M31 44Q25 30 26 17M32 43Q42 32 43 15M29 40Q16 33 12 27" fill="none" stroke="#926786" stroke-width="2.2" />
+<use href="#nanouk-leaf" transform="translate(26 21) rotate(-25) scale(0.8)" />
+<use href="#nanouk-leaf" transform="translate(28 31) rotate(45) scale(0.95)" />
+<use href="#nanouk-leaf" transform="translate(26 34) rotate(-55) scale(1)" />
+<use href="#nanouk-leaf" transform="translate(42 22) rotate(30) scale(0.85)" />
+<use href="#nanouk-leaf" transform="translate(39 33) rotate(75) scale(0.9)" />
+<use href="#nanouk-leaf" transform="translate(18 37) rotate(-70) scale(0.85)" />
+<use href="#nanouk-leaf" transform="translate(45 35) rotate(135) scale(0.7)" />
+<g fill="#e6bdd6">
+<circle cx="18" cy="48" r="0.9" />
+<circle cx="25" cy="48" r="0.9" />
+<circle cx="32" cy="48" r="0.9" />
+<circle cx="39" cy="48" r="0.9" />
+<circle cx="46" cy="48" r="0.9" />
+<circle cx="18" cy="53" r="0.9" />
+<circle cx="25" cy="53" r="0.9" />
+<circle cx="32" cy="53" r="0.9" />
+<circle cx="39" cy="53" r="0.9" />
+<circle cx="46" cy="53" r="0.9" />
+<circle cx="18" cy="57" r="0.9" />
+<circle cx="25" cy="57" r="0.9" />
+<circle cx="32" cy="57" r="0.9" />
+<circle cx="39" cy="57" r="0.9" />
+<circle cx="46" cy="57" r="0.9" />
+</g>
+  </symbol>
+
+  <symbol id="icon-plant-four-succulent-planter" viewBox="0 0 64 64">
+<defs>
+<linearGradient id="four-cubic-leaf-color" x1="0" y1="0" x2="0.8" y2="1">
+<stop offset="0" stop-color="#e4d5e4" />
+<stop offset="1" stop-color="#a8a6c4" />
+</linearGradient>
+<g id="four-cubic-leaf">
+<path d="M0 2C-6 0-10-7-9-12L-5-12-4-19 1-17 5-20 8-14C9-6 6-1 0 2Z" fill="url(#four-cubic-leaf-color)" stroke="#9a7b9d" stroke-width="0.8" />
+<path d="M0-15Q-2-7 0 0" fill="none" stroke="#f7ebde" stroke-width="0.65" opacity="0.5" />
+</g>
+</defs>
+<defs>
+<linearGradient id="four-copper-leaf-color" x1="0" y1="0" x2="0.8" y2="1">
+<stop offset="0" stop-color="#ffd17c" />
+<stop offset="1" stop-color="#b78539" />
+</linearGradient>
+<g id="four-copper-leaf">
+<path d="M0 2C-7-1-9-11-5-17Q0-21 5-17C9-11 7-1 0 2Z" fill="url(#four-copper-leaf-color)" stroke="#bb7143" stroke-width="0.8" />
+<path d="M0-15Q-2-7 0 0" fill="none" stroke="#f7ebde" stroke-width="0.65" opacity="0.5" />
+</g>
+</defs>
+<defs>
+<linearGradient id="four-deminuta-leaf-color" x1="0" y1="0" x2="0.8" y2="1">
+<stop offset="0" stop-color="#c6d5c1" />
+<stop offset="1" stop-color="#6d9993" />
+</linearGradient>
+<g id="four-deminuta-leaf">
+<path d="M0 2C-6-1-7-11 0-20C7-11 6-1 0 2Z" fill="url(#four-deminuta-leaf-color)" stroke="#dbe3cb" stroke-width="0.8" />
+<path d="M0-15Q-2-7 0 0" fill="none" stroke="#f7ebde" stroke-width="0.65" opacity="0.5" />
+</g>
+</defs>
+<defs>
+<linearGradient id="four-ruby-leaf-color" x1="0" y1="0" x2="0.8" y2="1">
+<stop offset="0" stop-color="#bace9b" />
+<stop offset="1" stop-color="#5c896a" />
+</linearGradient>
+<g id="four-ruby-leaf">
+<path d="M0 2C-6-1-7-11 0-20C7-11 6-1 0 2Z" fill="url(#four-ruby-leaf-color)" stroke="#b34b54" stroke-width="0.8" />
+<path d="M0-15Q-2-7 0 0" fill="none" stroke="#f7ebde" stroke-width="0.65" opacity="0.5" />
+</g>
+</defs>
+<ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
+<path d="M10 43H54L50 58Q32 63 14 58Z" fill="#efe8dd" stroke="#899287" stroke-width="1.6" />
+<ellipse cx="32" cy="43" rx="22" ry="4" fill="#624d3c" stroke="#899287" stroke-width="1.5" />
+<path d="M15 49Q32 53 49 49" fill="none" stroke="#fff1d5" stroke-width="1.4" opacity="0.5" />
+<g transform="translate(19 28) scale(0.68)">
+<use href="#four-cubic-leaf" transform="rotate(0) scale(1)" />
+<use href="#four-cubic-leaf" transform="rotate(45) scale(1)" />
+<use href="#four-cubic-leaf" transform="rotate(90) scale(1)" />
+<use href="#four-cubic-leaf" transform="rotate(135) scale(1)" />
+<use href="#four-cubic-leaf" transform="rotate(180) scale(1)" />
+<use href="#four-cubic-leaf" transform="rotate(225) scale(1)" />
+<use href="#four-cubic-leaf" transform="rotate(270) scale(1)" />
+<use href="#four-cubic-leaf" transform="rotate(315) scale(1)" />
+<use href="#four-cubic-leaf" transform="rotate(20) scale(0.67)" />
+<use href="#four-cubic-leaf" transform="rotate(71) scale(0.67)" />
+<use href="#four-cubic-leaf" transform="rotate(123) scale(0.67)" />
+<use href="#four-cubic-leaf" transform="rotate(174) scale(0.67)" />
+<use href="#four-cubic-leaf" transform="rotate(226) scale(0.67)" />
+<use href="#four-cubic-leaf" transform="rotate(277) scale(0.67)" />
+<use href="#four-cubic-leaf" transform="rotate(329) scale(0.67)" />
+<use href="#four-cubic-leaf" transform="rotate(0) scale(0.4)" />
+<use href="#four-cubic-leaf" transform="rotate(72) scale(0.4)" />
+<use href="#four-cubic-leaf" transform="rotate(144) scale(0.4)" />
+<use href="#four-cubic-leaf" transform="rotate(216) scale(0.4)" />
+<use href="#four-cubic-leaf" transform="rotate(288) scale(0.4)" />
+<use href="#four-cubic-leaf" transform="rotate(30) scale(0.2)" />
+<use href="#four-cubic-leaf" transform="rotate(150) scale(0.2)" />
+<use href="#four-cubic-leaf" transform="rotate(270) scale(0.2)" />
+</g>
+<g transform="translate(44 24) scale(0.6)">
+<use href="#four-copper-leaf" transform="rotate(0) scale(1)" />
+<use href="#four-copper-leaf" transform="rotate(45) scale(1)" />
+<use href="#four-copper-leaf" transform="rotate(90) scale(1)" />
+<use href="#four-copper-leaf" transform="rotate(135) scale(1)" />
+<use href="#four-copper-leaf" transform="rotate(180) scale(1)" />
+<use href="#four-copper-leaf" transform="rotate(225) scale(1)" />
+<use href="#four-copper-leaf" transform="rotate(270) scale(1)" />
+<use href="#four-copper-leaf" transform="rotate(315) scale(1)" />
+<use href="#four-copper-leaf" transform="rotate(20) scale(0.67)" />
+<use href="#four-copper-leaf" transform="rotate(71) scale(0.67)" />
+<use href="#four-copper-leaf" transform="rotate(123) scale(0.67)" />
+<use href="#four-copper-leaf" transform="rotate(174) scale(0.67)" />
+<use href="#four-copper-leaf" transform="rotate(226) scale(0.67)" />
+<use href="#four-copper-leaf" transform="rotate(277) scale(0.67)" />
+<use href="#four-copper-leaf" transform="rotate(329) scale(0.67)" />
+<use href="#four-copper-leaf" transform="rotate(0) scale(0.4)" />
+<use href="#four-copper-leaf" transform="rotate(72) scale(0.4)" />
+<use href="#four-copper-leaf" transform="rotate(144) scale(0.4)" />
+<use href="#four-copper-leaf" transform="rotate(216) scale(0.4)" />
+<use href="#four-copper-leaf" transform="rotate(288) scale(0.4)" />
+<use href="#four-copper-leaf" transform="rotate(30) scale(0.2)" />
+<use href="#four-copper-leaf" transform="rotate(150) scale(0.2)" />
+<use href="#four-copper-leaf" transform="rotate(270) scale(0.2)" />
+</g>
+<g transform="translate(44 38) scale(0.68)">
+<use href="#four-ruby-leaf" transform="rotate(0) scale(1)" />
+<use href="#four-ruby-leaf" transform="rotate(45) scale(1)" />
+<use href="#four-ruby-leaf" transform="rotate(90) scale(1)" />
+<use href="#four-ruby-leaf" transform="rotate(135) scale(1)" />
+<use href="#four-ruby-leaf" transform="rotate(180) scale(1)" />
+<use href="#four-ruby-leaf" transform="rotate(225) scale(1)" />
+<use href="#four-ruby-leaf" transform="rotate(270) scale(1)" />
+<use href="#four-ruby-leaf" transform="rotate(315) scale(1)" />
+<use href="#four-ruby-leaf" transform="rotate(20) scale(0.67)" />
+<use href="#four-ruby-leaf" transform="rotate(71) scale(0.67)" />
+<use href="#four-ruby-leaf" transform="rotate(123) scale(0.67)" />
+<use href="#four-ruby-leaf" transform="rotate(174) scale(0.67)" />
+<use href="#four-ruby-leaf" transform="rotate(226) scale(0.67)" />
+<use href="#four-ruby-leaf" transform="rotate(277) scale(0.67)" />
+<use href="#four-ruby-leaf" transform="rotate(329) scale(0.67)" />
+<use href="#four-ruby-leaf" transform="rotate(0) scale(0.4)" />
+<use href="#four-ruby-leaf" transform="rotate(72) scale(0.4)" />
+<use href="#four-ruby-leaf" transform="rotate(144) scale(0.4)" />
+<use href="#four-ruby-leaf" transform="rotate(216) scale(0.4)" />
+<use href="#four-ruby-leaf" transform="rotate(288) scale(0.4)" />
+<use href="#four-ruby-leaf" transform="rotate(30) scale(0.2)" />
+<use href="#four-ruby-leaf" transform="rotate(150) scale(0.2)" />
+<use href="#four-ruby-leaf" transform="rotate(270) scale(0.2)" />
+</g>
+<g transform="translate(22 42) scale(0.68)">
+<use href="#four-deminuta-leaf" transform="rotate(0) scale(1)" />
+<use href="#four-deminuta-leaf" transform="rotate(45) scale(1)" />
+<use href="#four-deminuta-leaf" transform="rotate(90) scale(1)" />
+<use href="#four-deminuta-leaf" transform="rotate(135) scale(1)" />
+<use href="#four-deminuta-leaf" transform="rotate(180) scale(1)" />
+<use href="#four-deminuta-leaf" transform="rotate(225) scale(1)" />
+<use href="#four-deminuta-leaf" transform="rotate(270) scale(1)" />
+<use href="#four-deminuta-leaf" transform="rotate(315) scale(1)" />
+<use href="#four-deminuta-leaf" transform="rotate(20) scale(0.67)" />
+<use href="#four-deminuta-leaf" transform="rotate(71) scale(0.67)" />
+<use href="#four-deminuta-leaf" transform="rotate(123) scale(0.67)" />
+<use href="#four-deminuta-leaf" transform="rotate(174) scale(0.67)" />
+<use href="#four-deminuta-leaf" transform="rotate(226) scale(0.67)" />
+<use href="#four-deminuta-leaf" transform="rotate(277) scale(0.67)" />
+<use href="#four-deminuta-leaf" transform="rotate(329) scale(0.67)" />
+<use href="#four-deminuta-leaf" transform="rotate(0) scale(0.4)" />
+<use href="#four-deminuta-leaf" transform="rotate(72) scale(0.4)" />
+<use href="#four-deminuta-leaf" transform="rotate(144) scale(0.4)" />
+<use href="#four-deminuta-leaf" transform="rotate(216) scale(0.4)" />
+<use href="#four-deminuta-leaf" transform="rotate(288) scale(0.4)" />
+<use href="#four-deminuta-leaf" transform="rotate(30) scale(0.2)" />
+<use href="#four-deminuta-leaf" transform="rotate(150) scale(0.2)" />
+<use href="#four-deminuta-leaf" transform="rotate(270) scale(0.2)" />
+</g>
+  </symbol>
+
   <symbol id="icon-menu" viewBox="0 0 64 64">
 <desc id="ui-menu-description">
     Three balanced colored menu bars inside a rounded cream tile.

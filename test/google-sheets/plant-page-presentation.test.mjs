@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import palette from "../../scripts/google-sheets/plant-colors.json" with { type: "json" };
 import {
     assertPlantPagePresentationPreconditions,
     buildPlantPagePresentationRequests,
@@ -122,7 +123,7 @@ function fixture() {
         [38, "Dimension evidence"],
     ]);
     return {
-        sheets: Array.from({ length: 30 }, (_, index) => {
+        sheets: Array.from({ length: palette.length }, (_, index) => {
             const id = `P${String(index + 1).padStart(2, "0")}`;
             /** @type {import("../../types/plant-page-presentation.js").PageCell[][]} */
             const cells = Array.from({ length: 38 }, () =>

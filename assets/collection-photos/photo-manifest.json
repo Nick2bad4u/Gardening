@@ -4485,6 +4485,31 @@
                     "derivation_note": "Lossless WebP encoding of the source-resolution crop from the auto-oriented private photograph; decoded pixels match the approved lossless PNG crop, and hidden metadata is removed before upload."
                 }
             ]
+        },
+        {
+            "plant_slug": "echeveria-cubic-frost",
+            "photos": [],
+            "pending_note": "Active collection profile registered September 19, 2026 at the owner’s request. An owned-plant photograph has not yet been published; seller imagery is not collection evidence."
+        },
+        {
+            "plant_slug": "sedum-adolphi-coppertone",
+            "photos": [],
+            "pending_note": "Active collection profile registered September 19, 2026 at the owner’s request. An owned-plant photograph has not yet been published; seller imagery is not collection evidence."
+        },
+        {
+            "plant_slug": "echeveria-setosa-deminuta",
+            "photos": [],
+            "pending_note": "Active collection profile registered September 19, 2026 at the owner’s request. An owned-plant photograph has not yet been published; seller imagery is not collection evidence."
+        },
+        {
+            "plant_slug": "echeveria-harmsii-ruby-slippers",
+            "photos": [],
+            "pending_note": "Active collection profile registered September 19, 2026 at the owner’s request. An owned-plant photograph has not yet been published; seller imagery is not collection evidence."
+        },
+        {
+            "plant_slug": "tradescantia-nanouk",
+            "photos": [],
+            "pending_note": "Active collection profile registered September 19, 2026 at the owner’s request. An owned-plant photograph has not yet been published; seller imagery is not collection evidence."
         }
     ],
     "schema_version": 3

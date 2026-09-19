@@ -1,6 +1,9 @@
 /** Native chart colors belong to permanent plant IDs, never row positions. */
 import palette from "./plant-colors.json" with { type: "json" };
 
+const comparisonBlockRows = palette.length + 5;
+const selectedColumnCount = 7 + palette.length * 4;
+
 export const plantColorSheetId = 907_202_602;
 
 /**
@@ -52,7 +55,7 @@ export function buildPlantColorKeyRequests({ cells, metadata }) {
                         columnCount: 6,
                         frozenRowCount: 4,
                         hideGridlines: true,
-                        rowCount: 38,
+                        rowCount: palette.length + 8,
                     },
                     index: metadata.sheets.length,
                     sheetId,
@@ -285,7 +288,7 @@ export function buildPlantInsightColorRequests({ cells, metadata }) {
             addSheet: {
                 properties: {
                     gridProperties: {
-                        columnCount: 127,
+                        columnCount: selectedColumnCount,
                         frozenRowCount: 1,
                         rowCount: 5001,
                     },
@@ -339,7 +342,7 @@ export function buildPlantInsightColorRequests({ cells, metadata }) {
         spec.hiddenDimensionStrategy = "SHOW_ALL";
         requests.push({ updateChartSpec: { chartId: chart.chartId, spec } });
     }
-    if (comparisonIndex !== 14 || selectedColumn !== 127)
+    if (comparisonIndex !== 14 || selectedColumn !== selectedColumnCount)
         throw new Error("Plant chart layout changed");
     requests.push({
         addProtectedRange: {
@@ -434,7 +437,7 @@ function colorComparisonChart(spec, metadata, comparisonIndex) {
         ...(isScatter ? [domain] : []),
         ...basic.series.map((entry) => singleSource(entry.series)),
     ];
-    const row = comparisonIndex * 35;
+    const row = comparisonIndex * comparisonBlockRows;
     const rows = [
         [
             "Plant ID",
@@ -456,14 +459,21 @@ function colorComparisonChart(spec, metadata, comparisonIndex) {
     ];
     const write = colorWrite(helperId, row, 0, rows);
     basic.domains = [
-        { domain: colorData(helperId, row, isScatter ? 1 : 0, 31) },
+        {
+            domain: colorData(
+                helperId,
+                row,
+                isScatter ? 1 : 0,
+                palette.length + 1
+            ),
+        },
     ];
     for (const [index, series] of basic.series.entries()) {
         series.series = colorData(
             helperId,
             row,
             index + (isScatter ? 2 : 1),
-            31
+            palette.length + 1
         );
         series.styleOverrides = palette.map((plant, pointIndex) => ({
             colorStyle: { rgbColor: plantColor(plant.id) },
@@ -476,7 +486,7 @@ function colorComparisonChart(spec, metadata, comparisonIndex) {
             throw new Error("Shape-map series is missing");
         series.pointStyle = { ...series.pointStyle, size: 8 };
         series.dataLabel = {
-            customLabelData: colorData(helperId, row, 0, 31),
+            customLabelData: colorData(helperId, row, 0, palette.length + 1),
             textFormat: { fontFamily: "JetBrains Mono", fontSize: 9 },
             type: "CUSTOM",
         };
@@ -600,7 +610,7 @@ function colorSelectedChart(spec, metadata, selectorA1, firstColumn) {
     const series = [];
     for (const plant of palette) {
         for (const [metricIndex, original] of basic.series.entries()) {
-            if (selectedColumn >= 127)
+            if (selectedColumn >= selectedColumnCount)
                 throw new Error("Selected-cycle series layout changed");
             const source = singleSource(original.series);
             const sourceA1 = nativeA1(metadata, {
@@ -653,7 +663,7 @@ function colorSelectedChart(spec, metadata, selectorA1, firstColumn) {
     basic.series = series;
     basic.legendPosition = "NO_LEGEND";
     spec.subtitle =
-        basic.series.length === 90
+        basic.series.length === palette.length * 3
             ? "Selected plant color • solid circles: measured • dotted diamonds: dry • dashed squares: wet"
             : "Selected plant color • loss since the previous reading • negative values are gains";
     spec.altText = `${spec.title}. ${spec.subtitle}`;
@@ -708,10 +718,10 @@ function comparisonNumberFormat(title, block) {
             fields: "userEnteredFormat.numberFormat",
             range: {
                 endColumnIndex: 6,
-                endRowIndex: block * 35 + 31,
+                endRowIndex: block * comparisonBlockRows + palette.length + 1,
                 sheetId: plantColorDataSheetId,
                 startColumnIndex: 1,
-                startRowIndex: block * 35 + 1,
+                startRowIndex: block * comparisonBlockRows + 1,
             },
         },
     };

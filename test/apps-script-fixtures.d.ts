@@ -318,7 +318,10 @@ export interface AppsScriptTestApi {
     markSaveError_: (saveCell: unknown, message: unknown) => void;
     measuredDimensionCondition_: () => string;
     measurementToCentimeters_: (value: unknown, unit: unknown) => "" | number;
-    migrateLegacyAppSheetBulkSheet_: (sheet: unknown) => boolean;
+    migrateLegacyAppSheetBulkSheet_: (
+        sheet: unknown,
+        shouldUpgradeInventory?: boolean
+    ) => boolean;
     normalizeAppSheetBulkAction_: (value: unknown) => string;
     normalizeDate_: (value: unknown) => Date;
     normalizeMeasurementMethod_: (
@@ -447,6 +450,13 @@ export interface AppsScriptTestApi {
         plantPages: number;
     };
     refreshGardenWorkbookPages21To30: () => {
+        firstPlant: unknown;
+        lastPlant: unknown;
+        loggerVersion: string;
+        plantPages: number;
+    };
+
+    refreshGardenWorkbookPages31To32: () => {
         firstPlant: unknown;
         lastPlant: unknown;
         loggerVersion: string;

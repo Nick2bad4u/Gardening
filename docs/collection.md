@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-09-11
+Last updated: 2026-09-19
 
 This is the current working inventory plus historical records for plants
 removed from the collection. A label is useful evidence, but not a guarantee;
@@ -19,11 +19,7 @@ a photo-only collection ID.
 The short label IDs are permanent plant or shared-planter identifiers, not
 table coordinates. They are shown beside the longer historical inventory IDs.
 
-The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md)
-was installed September 13, and the owner reports applying the latest
-[Table Placement Guide](./layouts/table-placement-research.md). Keep its 30
-pot positions as the working arrangement while checking light at plant height.
-The collection IDs and inventory remain the same.
+The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13, and the owner reports applying the [Table Placement Guide](./layouts/table-placement-research.md). Its established positions remain the baseline for the original 30 containers. The September 19 additions bring the inventory to **41 profiles: 40 active and one historical, across 32 tracked containers**. The four new succulents share `#7` / `P31`; Nanouk has its own `#8` / `P32`. Their final individual placement and leaf-height exposure are unrecorded.
 
 ## Confidence guide
 
@@ -39,9 +35,7 @@ The collection IDs and inventory remain the same.
   photo could change it.
 - **Genus tag; working species ID** — the physical tag confirms the genus, while
   the species remains a working identification that needs stronger evidence.
-- **Seller-labeled** — the seller's name is retained as provenance. Receipt and
-  owner inspection confirm the physical plant, but cultivar-level identity can
-  still benefit from individual diagnostic photographs.
+- **Seller-labeled** — the seller's name is retained as provenance. Receipt and owner inspection, when separately recorded, document the physical plant; an order alone does not. Cultivar-level identity can still benefit from individual diagnostic photographs.
 
 ## Collection setup history
 
@@ -269,6 +263,22 @@ cycle. 'Coconut Crystal' will remain indoors by choice, in the brightest and
 coolest practical indoor position rather than being treated like a warm,
 lower-light houseplant.
 
+## September 19 Amazon additions — active by owner request
+
+The owner requested active collection treatment for five The Succulent Cult starters ordered through Amazon. The supplied order screen advertises 2-inch rooted plants and estimates October 1 delivery; actual receipt and planting dates remain unrecorded. These active records prepare the site, labels, and tracker without inventing observations.
+
+| Inventory ID  | Label ID | Tracker ID | Individual plant profile                                                          | Identification evidence                                 |
+| ------------- | -------- | ---------- | --------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| Succulent-11  | `#7`     | `P31`      | [Cubic Frost echeveria](./plants/succulents/echeveria-cubic-frost.md)             | Seller-labeled _Echeveria_ 'Cubic Frost'                |
+| Succulent-12  | `#7`     | `P31`      | [Coppertone sedum](./plants/succulents/sedum-adolphi-coppertone.md)               | Seller “Sedum Coppertone”; probable _S. adolphi_        |
+| Succulent-13  | `#7`     | `P31`      | [Deminuta echeveria](./plants/succulents/echeveria-setosa-deminuta.md)            | Seller-labeled _E. setosa_ var. _deminuta_              |
+| Succulent-14  | `#7`     | `P31`      | [Ruby Slippers echeveria](./plants/succulents/echeveria-harmsii-ruby-slippers.md) | Seller “Echeveria Ruby Slippers”; probable _E. harmsii_ |
+| Houseplant-02 | `#8`     | `P32`      | [Nanouk tradescantia](./plants/houseplants/tradescantia-nanouk.md)                | Seller-labeled _Tradescantia_ 'Nanouk'                  |
+
+The four succulents have separate botanical pages but share one decorated Amazon Basics 8-inch white polypropylene drainage pot, one P31 history, and one watering decision. The owner selected Molly's Succulent Mix and the far-table area, previously reported at approximately 18–22 estimated DLI. That area estimate is not a new measurement at each component's final height. No extra component P-IDs or artificial initial weights are created.
+
+Nanouk stays separate because its preferred partial drying differs from the shared succulents' dry-down. Its owner-selected container is the D'vine Dev Beaded Ceramic 4-inch Blush Mauve pot, model `27-C-Z-K`, with drainage holes and no saucer in use, also using Molly's Succulent Mix. Its final location and exposure are unrecorded. Product sizes are nominal rather than measured interior/root volumes.
+
 ## Identification follow-ups
 
 The most useful future evidence would be:
@@ -284,4 +294,5 @@ The most useful future evidence would be:
 - a flower, fruit capsule, and mature growth for testing the seller-labeled
   `P29` identification, plus mature growth or flowers before narrowing any
   `P30` component identification; and
+- individual plant and tag photographs for the five September 19 active additions, especially the probable Coppertone and Ruby Slippers species identifications; and
 - original nursery tags or receipts for the probable IDs.

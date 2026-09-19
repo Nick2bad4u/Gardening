@@ -5,6 +5,7 @@ import {
     assertPlantChartLayoutPreconditions,
     buildPlantChartLayoutRequests,
 } from "../../scripts/google-sheets/plant-chart-layout.mjs";
+import palette from "../../scripts/google-sheets/plant-colors.json" with { type: "json" };
 import { wateringIntervalSheetId } from "../../scripts/google-sheets/watering-intervals.mjs";
 import { required } from "../helpers/required.mjs";
 
@@ -60,7 +61,7 @@ function fixture() {
         rowDimensions: [],
         weightMinimums: [],
     };
-    for (let index = 0; index < 30; index++) {
+    for (let index = 0; index < palette.length; index++) {
         const sheetId = index + 1;
         const id = `P${String(sheetId).padStart(2, "0")}`;
         const charts = definitions.map((role, roleIndex) => {
@@ -370,7 +371,7 @@ describe("native plant chart template and spacing", () => {
         );
     });
 
-    it("preserves all 30 identities, live bindings, text, other axis limits and sparse omissions", () => {
+    it("preserves all maintained identities, live bindings, text, other axis limits and sparse omissions", () => {
         expect.hasAssertions();
 
         const before = fixture();
@@ -378,12 +379,10 @@ describe("native plant chart template and spacing", () => {
         const plan = buildPlantChartLayoutRequests(before);
 
         expect(before).toStrictEqual(original);
-        expect(plan.expectedCharts).toHaveLength(120);
-        expect(plan.sparseChartIds).toStrictEqual([
-            283,
-            293,
-            303,
-        ]);
+        expect(plan.expectedCharts).toHaveLength(palette.length * 4);
+        expect(plan.sparseChartIds).toStrictEqual(
+            palette.slice(27).map((_, index) => (index + 28) * 10 + 3)
+        );
 
         for (const page of before.metadata.sheets) {
             const id = page.properties.title.slice(0, 3);
@@ -567,7 +566,7 @@ describe("native plant chart template and spacing", () => {
             (request) => request["updateEmbeddedObjectPosition"] !== undefined
         );
 
-        expect(positionRequests).toHaveLength(120);
+        expect(positionRequests).toHaveLength(palette.length * 4);
 
         for (const request of positionRequests)
             expect(request).toMatchObject({
@@ -662,7 +661,7 @@ describe("native plant chart template and spacing", () => {
             chart.spec.title.startsWith("Weight ")
         );
 
-        expect(weightCharts).toHaveLength(60);
+        expect(weightCharts).toHaveLength(palette.length * 2);
         expect(
             weightCharts.every(
                 (chart) =>

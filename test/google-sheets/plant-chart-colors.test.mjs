@@ -17,6 +17,36 @@ import { required } from "../helpers/required.mjs";
 function fixture() {
     /** @type {import("../plant-chart-colors-fixtures.d.ts").PlantColorSnapshot} */
     const snapshot = structuredClone(original);
+    // Keep the historical chart template; extend only the synthetic roster.
+    for (const [index, plant] of palette.entries()) {
+        if (
+            snapshot.metadata.sheets.some((sheet) =>
+                sheet.properties.title.startsWith(`${plant.id} `)
+            )
+        )
+            continue;
+        snapshot.metadata.sheets.push({
+            properties: {
+                gridProperties: { columnCount: 22, rowCount: 1000 },
+                sheetId: 300_000 + index,
+                title: `${plant.id} Synthetic plant`,
+            },
+        });
+        snapshot.cells.push(
+            {
+                column: 0,
+                row: index + 1,
+                sheet: "Plant tracker",
+                value: { stringValue: plant.id },
+            },
+            {
+                column: 1,
+                row: index + 1,
+                sheet: "Plant tracker",
+                value: { stringValue: `${plant.id} Synthetic plant` },
+            }
+        );
+    }
     const template = required(
         snapshot.metadata.sheets.find((sheet) =>
             sheet.properties.title.startsWith("P01 ")
@@ -49,18 +79,18 @@ function fixture() {
 }
 
 describe("plant chart color identity", () => {
-    it("assigns thirty distinct colors to permanent IDs and rejects unknown plants", () => {
+    it("assigns distinct colors to the maintained inventory to permanent IDs and rejects unknown plants", () => {
         expect.hasAssertions();
         expect(palette.map((color) => color.id)).toStrictEqual(
             Array.from(
-                { length: 30 },
+                { length: palette.length },
                 (_, index) => `P${String(index + 1).padStart(2, "0")}`
             )
         );
 
         const uniqueColors = new Set(palette.map((color) => color.hex));
 
-        expect(uniqueColors.size).toBe(30);
+        expect(uniqueColors.size).toBe(palette.length);
         expect(palette.every((color) => /^#[\dA-F]{6}$/v.test(color.hex))).toBe(
             true
         );
@@ -69,7 +99,7 @@ describe("plant chart color identity", () => {
             green: 61 / 255,
             red: 146 / 255,
         });
-        expect(() => plantColor("P31")).toThrow("Unknown plant color");
+        expect(() => plantColor("P99")).toThrow("Unknown plant color");
     });
 
     it("adds a key and colors all existing plant charts without changing their data", () => {
@@ -82,7 +112,7 @@ describe("plant chart color identity", () => {
         expect(snapshot).toStrictEqual(before);
         expect(
             requests.filter((request) => "updateChartSpec" in request)
-        ).toHaveLength(90);
+        ).toHaveLength(palette.length * 3);
 
         const writes = requests.filter((request) => "updateCells" in request);
 
@@ -128,7 +158,7 @@ describe("plant chart color identity", () => {
         ).toHaveLength(16);
         expect(
             requests.filter((request) => "addConditionalFormatRule" in request)
-        ).toHaveLength(30);
+        ).toHaveLength(palette.length);
         expect(
             requests.some(
                 (request) =>
@@ -140,7 +170,7 @@ describe("plant chart color identity", () => {
 
         const writes = requests.filter((request) => "updateCells" in request);
 
-        expect(writes).toHaveLength(136);
+        expect(writes).toHaveLength(16 + palette.length * 4);
 
         for (const write of writes)
             expect(write).toMatchObject({

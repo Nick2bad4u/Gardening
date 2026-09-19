@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="echeveria-harmsii-ruby-slippers-title echeveria-harmsii-ruby-slippers-description" data-plant-slug="echeveria-harmsii-ruby-slippers" focusable="false">
+  <title id="echeveria-harmsii-ruby-slippers-title">Ruby Slippers echeveria plant portrait</title>
+  <desc id="echeveria-harmsii-ruby-slippers-description">Branching narrow green leaves with ruby-red margins in a golden planter.</desc>
+  <defs>
+  <linearGradient id="ruby-leaf-color" x1="0" y1="0" x2="0.8" y2="1">
+  <stop offset="0" stop-color="#bace9b" />
+  <stop offset="1" stop-color="#5c896a" />
+  </linearGradient>
+  <g id="ruby-leaf">
+  <path d="M0 2C-6-1-7-11 0-20C7-11 6-1 0 2Z" fill="url(#ruby-leaf-color)" stroke="#b34b54" stroke-width="0.8" />
+  <path d="M0-15Q-2-7 0 0" fill="none" stroke="#f7ebde" stroke-width="0.65" opacity="0.5" />
+  </g>
+  </defs>
+  <ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
+  <path d="M10 43H54L50 58Q32 63 14 58Z" fill="#dcba81" stroke="#735447" stroke-width="1.6" />
+  <ellipse cx="32" cy="43" rx="22" ry="4" fill="#624d3c" stroke="#735447" stroke-width="1.5" />
+  <path d="M15 49Q32 53 49 49" fill="none" stroke="#fff1d5" stroke-width="1.4" opacity="0.5" />
+  <path d="M31 45V25M31 34L18 21M31 33L45 20" fill="none" stroke="#79594b" stroke-width="2" />
+  <use href="#ruby-leaf" transform="translate(30 24) rotate(0) scale(0.8)" />
+  <use href="#ruby-leaf" transform="translate(30 35) rotate(-60) scale(0.95)" />
+  <use href="#ruby-leaf" transform="translate(33 35) rotate(60) scale(0.95)" />
+  <use href="#ruby-leaf" transform="translate(18 25) rotate(-40) scale(0.7)" />
+  <use href="#ruby-leaf" transform="translate(44 25) rotate(40) scale(0.7)" />
+  <use href="#ruby-leaf" transform="translate(31 41) rotate(-110) scale(0.8)" />
+  <use href="#ruby-leaf" transform="translate(33 41) rotate(110) scale(0.8)" />
+</svg>

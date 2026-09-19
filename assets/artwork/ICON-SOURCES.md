@@ -11,19 +11,19 @@ Two plant illustrations are adapted from SVG Repo sources:
 | `icon-cactus`    | [Cactus, SVG Repo 206109](https://www.svgrepo.com/svg/206109/cactus)         | SVG Repo                 | [CC0](https://www.svgrepo.com/page/licensing/#CC0)          | Redrawn and simplified for clear rendering from 16–52 px; colors were harmonized with the field-guide palette.       |
 | `icon-succulent` | [Succulents, SVG Repo 474474](https://www.svgrepo.com/svg/474474/succulents) | xiyou0608                | [Public domain](https://www.svgrepo.com/page/licensing/#PD) | Redrawn as a compact rosette while retaining the source illustration's concentric soil and layered-leaf composition. |
 
-The 38 `icon-plant-*` portraits and the remaining interface symbols are original
+The 44 `icon-plant-*` portraits and the remaining interface symbols are original
 repository artwork. Each portrait uses a different simplified silhouette,
 color pattern, growth habit, spine or leaf treatment, and pot where appropriate
 to evoke the plant named by that profile. The P29 portrait emphasizes paired,
 toothed, white-tubercled _Faucaria_ leaves; the P30 portrait combines a pale
 rosette, copper-orange stems, and broad red-edged leaves in one pot. The four
 directional controls are custom filled arrows with restrained highlights rather
-than font glyphs. The two additional portraits depict the whole shared planters:
+than font glyphs. Three additional portraits depict the whole shared planters:
 physical **#1 / P19** combines the variegated column, golden torch, and trailing
 monkey tails in their dark patterned pot; **#2 / P20** combines elephant bush,
 silver spoons, copper spoons, and the front rosette in their square wooden planter.
-Their shapes follow the owner's Gyazo collection photographs, without replacing
-the individual component profiles or asserting a new identification.
+The first two shared-planter shapes follow the owner's Gyazo collection photographs, without replacing
+the individual component profiles or asserting a new identification. The September 19 additions illustrate the seller-labeled Cubic Frost, Coppertone, Deminuta, Ruby Slippers, and Nanouk profiles. The third shared portrait combines the four succulents for **#7 / P31**; Nanouk remains separate as **#8 / P32** in a mauve beaded pot. These new silhouettes are illustrative, not traced seller photographs or depictions of observed specimens. The #7 pot decoration is not documented, so its illustrated pot is neutral.
 
 All 83 interface and category symbols have been redrawn with native 64-unit
 geometry, a multicolor material palette, and consistent optical padding. Linear

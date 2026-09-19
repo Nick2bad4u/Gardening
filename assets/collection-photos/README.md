@@ -17,7 +17,7 @@ from the licensed species-reference archive under
 [`assets/plants`](../plants/).
 
 Manifest schema 3 records the collection-wide overview Collection, one
-`gyazo_collection` for each of the 35 physically present profiles, and the
+`gyazo_collection` for each of the 35 previously photographed current profiles, five active photo-pending profiles registered on September 19, 2026, and the
 explicit photo-pending historical record for removed Rehab-04. Each remote
 placement records its stable publication name, provider, Gyazo capture ID,
 direct image URL, capture page URL, evidence date, view, alt text, caption, and

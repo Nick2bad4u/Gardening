@@ -216,8 +216,10 @@ function capture(snapshot) {
     const pages = snapshot.metadata.sheets.filter((sheet) =>
         /^P\d{2}(?:\s|$)/v.test(sheet.properties.title)
     );
-    if (pages.length !== 30)
-        throw new Error("Expected exactly P01–P30 chart pages");
+    if (pages.length !== palette.length)
+        throw new Error(
+            `Expected exactly ${palette.length} maintained plant chart pages`
+        );
     const ids = new Set();
     return {
         pages: palette.map((plant, plantIndex) => {

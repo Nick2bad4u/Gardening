@@ -6,6 +6,10 @@ The [equipment and supplies inventory](./equipment/inventory.md) consolidates th
 
 ## Current routine
 
+**September 19 inventory expansion:** the collection now tracks **32 containers**. **#7 / P31** is the decorated eight-inch shared planter with four separate profiles: [Cubic Frost](./plants/succulents/echeveria-cubic-frost.md), [Coppertone](./plants/succulents/sedum-adolphi-coppertone.md), [Deminuta](./plants/succulents/echeveria-setosa-deminuta.md), and [Ruby Slippers](./plants/succulents/echeveria-harmsii-ruby-slippers.md). **#8 / P32 [Nanouk tradescantia](./plants/houseplants/tradescantia-nanouk.md)** has its own four-inch D'vine Dev drainage pot, without its saucer. Both use the owner's specified Molly's Succulent Mix. They are active records at the owner's request; receipt, planting dates, initial weights, and watering events remain unrecorded.
+
+The owner describes continuous rotating canopy airflow and an additional fan beneath the perforated tables. The lower fan's exact model and settings are unconfirmed. Feeling slight air movement at the top dressing is an owner observation, not a measurement of oxygen throughout the root zone. The intended area for #7 is the far end near the glass table, where the owner reports approximately **18–22 app-estimated DLI**; this is location-level context, not a verified reading for each new leaf. #8 needs its own suitable exposure and watering decision. Neither new pot has a confirmed coordinate in the older placement drawings; those drawings retain their dated 30-container scope.
+
 The collection is in Fenton, Michigan. The cacti and succulents previously spent suitable dry summer weather outside. The permanent 2026 move indoors began July 31 after the first RO-water watering
 and several hours of drainage, followed by the dated
 [AW200SE and paired-fan operating schedule](./equipment/aw200se-operating-schedule.md).

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import palette from "../../scripts/google-sheets/plant-colors.json" with { type: "json" };
 import {
     buildWateringCalendarRequests,
     plantEvidenceFormulas,
@@ -234,7 +235,7 @@ describe("native derived formula contracts", () => {
             expect(value).toContain('),"")');
         }
 
-        expect(() => wateringSummaryFormulas("P31")).toThrow("Unknown plant");
+        expect(() => wateringSummaryFormulas("P99")).toThrow("Unknown plant");
         expect(() => plantEvidenceFormulas('P01"')).toThrow("Unknown plant");
     });
 
@@ -333,11 +334,11 @@ describe("native derived formula contracts", () => {
 
         const calendar = wateringCalendarFormulas(clock);
 
-        expect(calendar.plantRows).toHaveLength(30);
+        expect(calendar.plantRows).toHaveLength(palette.length);
         expect(calendar.dates).toBe(`=SEQUENCE(1,56,INT(${clock})-55,1)`);
         expect(calendar.plantRows.map(({ plantId }) => plantId)).toStrictEqual(
             Array.from(
-                { length: 30 },
+                { length: palette.length },
                 (_, index) => `P${String(index + 1).padStart(2, "0")}`
             )
         );

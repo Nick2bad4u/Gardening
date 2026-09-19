@@ -12,10 +12,11 @@
    getWebSaveStatus, getWebBatchSaveStatus, installGardenLogger, installAppSheetIntake,
    refreshGardenWorkbook, refreshGardenWorkbookPages01To10,
    refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30,
+   refreshGardenWorkbookPages31To32,
    installDailyCareDashboard, GARDEN_CYCLE_COMPARISON */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.25.0",
+    version: "5.26.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -408,10 +409,16 @@ const APP_SHEET_BULK_V513_PLANTS = Object.freeze([
     "P28",
 ]);
 
-const APP_SHEET_BULK_PLANTS = Object.freeze([
+const APP_SHEET_BULK_V514_PLANTS = Object.freeze([
     ...APP_SHEET_BULK_V513_PLANTS,
     "P29",
     "P30",
+]);
+
+const APP_SHEET_BULK_PLANTS = Object.freeze([
+    ...APP_SHEET_BULK_V514_PLANTS,
+    "P31",
+    "P32",
 ]);
 
 const APP_SHEET_BULK_LEGACY_HEADERS = Object.freeze([
@@ -482,12 +489,19 @@ const APP_SHEET_BULK_V513_HEADERS = Object.freeze([
 
 const APP_SHEET_BULK_V514_HEADERS = Object.freeze([
     ...APP_SHEET_BULK_V513_HEADERS.slice(0, 6),
-    ...APP_SHEET_BULK_PLANTS.map((plantId) => `${plantId} weight (g)`),
+    ...APP_SHEET_BULK_V514_PLANTS.map((plantId) => `${plantId} weight (g)`),
     ...APP_SHEET_BULK_V513_HEADERS.slice(6 + APP_SHEET_BULK_V513_PLANTS.length),
 ]);
-const APP_SHEET_BULK_HEADERS = Object.freeze([
+const APP_SHEET_BULK_V525_HEADERS = Object.freeze([
     ...APP_SHEET_BULK_V514_HEADERS,
     ...HISTORY_WATER_HEADERS,
+]);
+
+// Append new inventory weights; never shift the existing AppSheet columns.
+const APP_SHEET_BULK_HEADERS = Object.freeze([
+    ...APP_SHEET_BULK_V525_HEADERS,
+    "P31 weight (g)",
+    "P32 weight (g)",
 ]);
 
 const APP_SHEET_BULK_ACTION_INDEX = 3;
@@ -495,7 +509,7 @@ const APP_SHEET_BULK_SELECTED_PLANTS_INDEX = 4;
 const APP_SHEET_BULK_WEIGHT_STATE_INDEX = 5;
 const APP_SHEET_BULK_WEIGHT_START_INDEX = 6;
 const APP_SHEET_BULK_NOTES_INDEX =
-    APP_SHEET_BULK_WEIGHT_START_INDEX + APP_SHEET_BULK_PLANTS.length;
+    APP_SHEET_BULK_WEIGHT_START_INDEX + APP_SHEET_BULK_V514_PLANTS.length;
 const APP_SHEET_BULK_STATUS_INDEX = APP_SHEET_BULK_NOTES_INDEX + 3;
 const APP_SHEET_BULK_ROTATION_INDEX = APP_SHEET_BULK_STATUS_INDEX + 5;
 const APP_SHEET_BULK_CONDITION_INDEX = APP_SHEET_BULK_ROTATION_INDEX + 1;
@@ -569,6 +583,8 @@ const INITIAL_POT_SIZE_BY_PLANT = Object.freeze({
     P27: "4 in",
     P28: "4 in",
     P30: "5 in",
+    P31: "8 in",
+    P32: "4 in",
 });
 
 const BASELINE_VIEW_HEADERS = Object.freeze([
@@ -1419,7 +1435,7 @@ function finishAppSheetQueueRun_(spreadsheet, entrySummary) {
 /**
  * Expands each queued AppSheet bulk-care row into stable per-plant requests.
  * A whole Water, Weigh, or Water + weigh round is kept together, so a normal
- * 30-plant round reaches the canonical writer in one saveWebObservationBatch()
+ * collection round reaches the canonical writer in one saveWebObservationBatch()
  * call.
  * @param {GardenSpreadsheet} spreadsheet
  */
@@ -1431,8 +1447,13 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
     if (!bulkSheet) {
         return appSheetBulkQueueSummary_(false, 0, [], 0, startedAt);
     }
-    migrateLegacyAppSheetBulkSheet_(bulkSheet);
-    assertHeaders_(bulkSheet, APP_SHEET_BULK_HEADERS, 1);
+    // A live 54-column AppSheet app remains usable until its explicit upgrade.
+    migrateLegacyAppSheetBulkSheet_(bulkSheet, false);
+    const bulkHeaders =
+        bulkSheet.getLastColumn() >= APP_SHEET_BULK_HEADERS.length
+            ? APP_SHEET_BULK_HEADERS
+            : APP_SHEET_BULK_V525_HEADERS;
+    assertHeaders_(bulkSheet, bulkHeaders, 1);
 
     const rowCount = Math.max(0, bulkSheet.getLastRow() - 1);
     if (!rowCount) {
@@ -1441,7 +1462,7 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
 
     /** @type {GardenHistoryRow[]} */
     const rows = bulkSheet
-        .getRange(2, 1, rowCount, APP_SHEET_BULK_HEADERS.length)
+        .getRange(2, 1, rowCount, bulkHeaders.length)
         .getValues();
     /** @type {Map<string, number>} */
     const idCounts = new Map();
@@ -1621,9 +1642,10 @@ function appSheetBulkPayloadsFromRow_(row, roundId) {
 
     /** @type {Map<string, GardenCell>} */
     const weights = new Map();
-    APP_SHEET_BULK_PLANTS.forEach((plantId, index) => {
+    APP_SHEET_BULK_PLANTS.forEach((plantId) => {
         if (!includesWeigh) return;
-        const weight = row[APP_SHEET_BULK_WEIGHT_START_INDEX + index];
+        const weight =
+            row[APP_SHEET_BULK_HEADERS.indexOf(`${plantId} weight (g)`)];
         if (
             (typeof weight === "number" && Number.isFinite(weight)) ||
             cleanText_(weight)
@@ -1846,13 +1868,17 @@ function installAppSheetBulkSheet() {
             2,
             APP_SHEET_BULK_WEIGHT_START_INDEX + 1,
             dataRowCount,
-            APP_SHEET_BULK_PLANTS.length
+            APP_SHEET_BULK_V514_PLANTS.length
         )
         .setDataValidation(weightValidation)
         .setNumberFormat("0.0");
     sheet
         .getRange(2, APP_SHEET_BULK_STATUS_INDEX + 1, dataRowCount, 1)
         .setDataValidation(statusValidation);
+    sheet
+        .getRange(2, APP_SHEET_BULK_V525_HEADERS.length + 1, dataRowCount, 2)
+        .setDataValidation(weightValidation)
+        .setNumberFormat("0.0");
     const rotationValidation = SpreadsheetApp.newDataValidation()
         .requireNumberBetween(1, 360)
         .setAllowInvalid(false)
@@ -1926,9 +1952,10 @@ function installAppSheetBulkSheet() {
     sheet.setColumnWidth(APP_SHEET_BULK_WEIGHT_STATE_INDEX + 1, 120);
     sheet.setColumnWidths(
         APP_SHEET_BULK_WEIGHT_START_INDEX + 1,
-        APP_SHEET_BULK_PLANTS.length,
+        APP_SHEET_BULK_V514_PLANTS.length,
         105
     );
+    sheet.setColumnWidths(APP_SHEET_BULK_V525_HEADERS.length + 1, 2, 105);
     sheet.setColumnWidth(APP_SHEET_BULK_NOTES_INDEX + 1, 280);
     sheet.setColumnWidth(APP_SHEET_BULK_ROTATION_INDEX + 1, 110);
     sheet.setColumnWidths(APP_SHEET_BULK_CONDITION_INDEX + 1, 4, 190);
@@ -1954,8 +1981,8 @@ function installAppSheetBulkSheet() {
     return result;
 }
 
-/** @param {GardenSheet} sheet @returns {boolean} */
-function migrateLegacyAppSheetBulkSheet_(sheet) {
+/** @param {GardenSheet} sheet @param {boolean} [shouldUpgradeInventory] @returns {boolean} */
+function migrateLegacyAppSheetBulkSheet_(sheet, shouldUpgradeInventory = true) {
     /** @param {readonly string[]} expectedHeaders @returns {boolean} */
     const hasHeaders = (expectedHeaders) => {
         if (sheet.getLastColumn() < expectedHeaders.length) return false;
@@ -1968,6 +1995,23 @@ function migrateLegacyAppSheetBulkSheet_(sheet) {
     };
 
     if (hasHeaders(APP_SHEET_BULK_HEADERS)) return false;
+    if (hasHeaders(APP_SHEET_BULK_V525_HEADERS)) {
+        if (!shouldUpgradeInventory) return false;
+        if (sheet.getLastColumn() > APP_SHEET_BULK_V525_HEADERS.length) {
+            throw new Error(
+                "Unexpected App bulk columns after BB; review before appending new plant weights."
+            );
+        }
+        ensureSheetColumnCapacity_(sheet, APP_SHEET_BULK_HEADERS.length);
+        sheet
+            .getRange(1, APP_SHEET_BULK_V525_HEADERS.length + 1, 1, 2)
+            .setValues([
+                APP_SHEET_BULK_HEADERS.slice(
+                    APP_SHEET_BULK_V525_HEADERS.length
+                ),
+            ]);
+        return true;
+    }
 
     if (hasHeaders(APP_SHEET_BULK_V514_HEADERS)) {
         ensureSheetColumnCapacity_(sheet, APP_SHEET_BULK_HEADERS.length);
@@ -2034,7 +2078,7 @@ function migrateLegacyAppSheetBulkSheet_(sheet) {
     if (!priorPlantContract) return migrated;
 
     const insertedWeightColumns =
-        APP_SHEET_BULK_PLANTS.length - priorPlantContract.plants.length;
+        APP_SHEET_BULK_V514_PLANTS.length - priorPlantContract.plants.length;
     const oldLastWeightColumn =
         APP_SHEET_BULK_WEIGHT_START_INDEX + priorPlantContract.plants.length;
     sheet.insertColumnsAfter(oldLastWeightColumn, insertedWeightColumns);
@@ -3079,7 +3123,7 @@ function installAppSheetIntake() {
 }
 
 /**
- * Rebuilds the human-facing Dashboard, Baselines, and P01-P30 workbook pages.
+ * Rebuilds the human-facing Dashboard, Baselines, and P01-P32 workbook pages.
  * Canonical History and writable intake data are never rewritten here.
  */
 function refreshGardenWorkbook() {
@@ -3122,6 +3166,11 @@ function refreshGardenWorkbookPages11To20() {
 /** Refreshes P21-P30 without rebuilding the shared workbook views. */
 function refreshGardenWorkbookPages21To30() {
     return refreshGardenWorkbookPageRange_(20, 30);
+}
+
+/** Refreshes only the two newest tracked containers. */
+function refreshGardenWorkbookPages31To32() {
+    return refreshGardenWorkbookPageRange_(30, 32);
 }
 
 /** @param {number} startIndex @param {number} endIndex */
@@ -3300,7 +3349,9 @@ function dryDownOutputRow_(id, records) {
             ? "Leaf-cycle check only"
             : cleanText_(id) === "P21"
               ? "Check upper 2 in of mix"
-              : model.inspection,
+              : cleanText_(id) === "P32"
+                ? "Check upper mix; avoid complete drying"
+                : model.inspection,
     ];
 }
 
@@ -3321,13 +3372,14 @@ function wateringRecommendation_(plantId, model) {
     /** @type {Record<string, string>} */
     const manual = {
         P21: "Inspect upper 2 in of mix; water when dry there. Do not wait for the whole root ball to become bone dry.",
+        P32: "Let the upper mix dry somewhat, then water and drain. Do not wait for the whole root ball to become bone dry; a weight forecast alone cannot establish readiness.",
         P28: "Inspect inner-leaf firmness and leaf replacement. A dry pot or wrinkled old leaves alone do not mean water.",
     };
     const manualGuidance = manual[plantId];
     if (manualGuidance) {
         return { date: "", guidance: manualGuidance };
     }
-    if (!/^P(?:0[1-9]|[12]\d|30)$/.test(plantId)) {
+    if (!APP_SHEET_BULK_PLANTS.includes(plantId)) {
         return {
             date: "",
             guidance: "No verified watering rule — inspect plant.",
@@ -3355,7 +3407,7 @@ function wateringReadinessGuidance_(plantId) {
     if (plantId === "P22") {
         return "During active growth, let much of the mix dry; no extra drought delay. If resting, inspect before watering.";
     }
-    if (["P19", "P20", "P30"].includes(plantId)) {
+    if (["P19", "P20", "P30", "P31"].includes(plantId)) {
         return "Confirm the shared root zone is dry, inspect every component, and verify drainage before a thorough watering; no fixed extra dry days.";
     }
     return "Confirm the root zone is dry and the plant is ready; reduce watering during rest. No fixed extra dry days.";
@@ -4156,12 +4208,12 @@ function dryDownModelsFromHistory_(historyRows, plantIds, timeZone) {
 
 /** @returns {string} */
 function dryDownModelFormula_() {
-    return "=GARDEN_DRY_DOWN({ARRAYFORMULA(N(History!A2:A5000)),History!B2:E5000,History!K2:K5000,History!P2:P5000,History!AD2:AD5000,History!AJ2:AJ5000,History!AO2:AO5000,History!AC2:AC5000,History!AI2:AI5000,History!AA2:AA5000,History!AE2:AE5000},'Plant tracker'!A2:A31)";
+    return `=GARDEN_DRY_DOWN({ARRAYFORMULA(N(History!A2:A5000)),History!B2:E5000,History!K2:K5000,History!P2:P5000,History!AD2:AD5000,History!AJ2:AJ5000,History!AO2:AO5000,History!AC2:AC5000,History!AI2:AI5000,History!AA2:AA5000,History!AE2:AE5000},'Plant tracker'!A2:A${APP_SHEET_BULK_PLANTS.length + 1})`;
 }
 
 /** @param {number} row @param {string} column @returns {string} */
 function dryDownLookupFormula_(row, column) {
-    return `XLOOKUP($A${row},'Dry-down models'!$A$2:$A$31,'Dry-down models'!$${column}$2:$${column}$31,"")`;
+    return `XLOOKUP($A${row},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Dry-down models'!$${column}$2:$${column}$${APP_SHEET_BULK_PLANTS.length + 1},"")`;
 }
 
 /** @param {GardenSpreadsheet} spreadsheet @returns {void} */
@@ -4183,8 +4235,12 @@ function refreshDryDownModels_(spreadsheet) {
         )
         .clearContent();
     sheet.getRange("A2").setFormula(dryDownModelFormula_());
-    sheet.getRange("H2:J31").setNumberFormat("mmm d, yyyy");
-    sheet.getRange("O2:O31").setNumberFormat("mmm d, yyyy");
+    sheet
+        .getRange(`H2:J${APP_SHEET_BULK_PLANTS.length + 1}`)
+        .setNumberFormat("mmm d, yyyy");
+    sheet
+        .getRange(`O2:O${APP_SHEET_BULK_PLANTS.length + 1}`)
+        .setNumberFormat("mmm d, yyyy");
     sheet
         .getRange("A1")
         .setNote(
@@ -4212,9 +4268,9 @@ function installDryDownLearning() {
                 ])
             );
     });
-    sheet.getRange("I2:J31").setWrap(true);
-    sheet.getRange("L2:L31").setWrap(true);
-    sheet.getRange("AG2:AG31").setWrap(true);
+    sheet.getRange(`I2:J${APP_SHEET_BULK_PLANTS.length + 1}`).setWrap(true);
+    sheet.getRange(`L2:L${APP_SHEET_BULK_PLANTS.length + 1}`).setWrap(true);
+    sheet.getRange(`AG2:AG${APP_SHEET_BULK_PLANTS.length + 1}`).setWrap(true);
     sheet.autoResizeRows(2, plants.length);
     sheet
         .getRange("AE1:AG1")
@@ -4310,7 +4366,7 @@ function installWateringRecommendations() {
                 plants.map((_, index) =>
                     ["O", "P"].map(
                         (modelColumn) =>
-                            `=XLOOKUP($${idColumn}${headerRow + index + 1},'Dry-down models'!$A$2:$A$31,'Dry-down models'!$${modelColumn}$2:$${modelColumn}$31,"")`
+                            `=XLOOKUP($${idColumn}${headerRow + index + 1},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Dry-down models'!$${modelColumn}$2:$${modelColumn}$${APP_SHEET_BULK_PLANTS.length + 1},"")`
                     )
                 )
             );
@@ -4594,9 +4650,9 @@ function refreshBaselineView_(spreadsheet, plants) {
     sheet.setColumnWidth(19, 240);
     sheet.setColumnWidth(33, 220);
     formatWateringRecommendationColumns_(sheet, 1, 35, plants.length);
-    sheet.getRange("I2:J31").setWrap(true);
-    sheet.getRange("L2:L31").setWrap(true);
-    sheet.getRange("AG2:AG31").setWrap(true);
+    sheet.getRange(`I2:J${APP_SHEET_BULK_PLANTS.length + 1}`).setWrap(true);
+    sheet.getRange(`L2:L${APP_SHEET_BULK_PLANTS.length + 1}`).setWrap(true);
+    sheet.getRange(`AG2:AG${APP_SHEET_BULK_PLANTS.length + 1}`).setWrap(true);
     sheet.autoResizeRows(2, plants.length);
 }
 
@@ -4607,20 +4663,27 @@ function dashboardWeightCountFormula_(row) {
 }
 
 /**
- * Install only Dashboard Y6:Y36; preserve every other cell and sheet.
+ * Install only the maintained inventory in Dashboard column Y; preserve other cells.
  * @returns {{version: string, range: string, plants: number}}
  */
 function installDashboardWeightCounts() {
     const spreadsheet = getGardenSpreadsheet_();
     const sheet = requireSheet_(spreadsheet, "Dashboard");
-    if (sheet.getMaxRows() < 36) {
-        throw new Error("Dashboard needs existing plant rows through row 36.");
+    if (sheet.getMaxRows() < APP_SHEET_BULK_PLANTS.length + 6) {
+        throw new Error(
+            `Dashboard needs existing plant rows through row ${APP_SHEET_BULK_PLANTS.length + 6}.`
+        );
     }
     if (sheet.getMaxColumns() >= 25) {
-        const destination = sheet.getRange(6, 25, 31, 1);
+        const destination = sheet.getRange(
+            6,
+            25,
+            APP_SHEET_BULK_PLANTS.length + 1,
+            1
+        );
         if (destination.isPartOfMerge()) {
             throw new Error(
-                "Dashboard Y6:Y36 contains merged cells; review before installing."
+                `Dashboard Y6:Y${APP_SHEET_BULK_PLANTS.length + 6} contains merged cells; review before installing.`
             );
         }
         /** @type {GardenHistoryRow[]} */
@@ -4648,17 +4711,17 @@ function installDashboardWeightCounts() {
         .setFontWeight("bold")
         .setWrap(true);
     sheet
-        .getRange(7, 25, 30, 1)
+        .getRange(7, 25, APP_SHEET_BULK_PLANTS.length, 1)
         .setValues(
-            Array.from({ length: 30 }, (_, index) => [
+            Array.from({ length: APP_SHEET_BULK_PLANTS.length }, (_, index) => [
                 dashboardWeightCountFormula_(index + 7),
             ])
         )
         .setNumberFormat("0");
     return {
         version: GARDEN_LOGGER.version,
-        range: "Dashboard!Y6:Y36",
-        plants: 30,
+        range: `Dashboard!Y6:Y${APP_SHEET_BULK_PLANTS.length + 6}`,
+        plants: APP_SHEET_BULK_PLANTS.length,
     };
 }
 
@@ -4933,7 +4996,7 @@ function dailyCareWeekFormula_(detailRow, column, bounds) {
         `=IF($B${detailRow}="","",IFERROR(LET(plant,$B${detailRow},day,${column}$6,today,$B$6,weight,$D${detailRow},weighed,$E${detailRow},`,
         `watered,${baseline("O")},dry,${model("C")},wet,${model("D")},early,${model("I")},planned,${model("O")},review,${model("M")},points,${model("E")},`,
         `lastDay,IF(AND(ISNUMBER(weighed),weighed>0),INT(ROUND(weighed-${offset},8)),today-2),waterDay,IF(AND(ISNUMBER(watered),watered>0),INT(ROUND(watered-${offset},8)),0),`,
-        'special,OR(plant="P21",plant="P28"),hasForecast,AND(ISNUMBER(early),early>0),',
+        'special,OR(plant="P21",plant="P28",plant="P32"),hasForecast,AND(ISNUMBER(early),early>0),',
         'reviewNeeded,AND(review<>"",review<>"OK",review<>"No trend",review<>"No current-cycle alert",review<>"Owner-confirmed normal"),',
         "nearMass,AND(ISNUMBER(weight),weight>0,weighed>=watered,ISNUMBER(dry),dry>0,ISNUMBER(wet),wet>dry,weight<=dry+MAX(2,0.05*(wet-dry))),",
         `nearDay,AND(hasForecast,day>=INT(early-${offset})),waterCheck,AND(NOT(special),NOT(reviewNeeded),OR(nearDay,nearMass,AND(ISNUMBER(planned),planned>0,day>=planned))),`,
@@ -4941,7 +5004,7 @@ function dailyCareWeekFormula_(detailRow, column, bounds) {
         "afterWater,AND(ISNUMBER(watered),watered>0,OR(NOT(ISNUMBER(weighed)),watered>weighed)),",
         "nextDay,MAX(today,IF(afterWater,waterDay,lastDay+cadence)),due,AND(day>=nextDay,MOD(day-nextDay,cadence)=0),",
         "saved,AND(day=today,lastDay=today,NOT(afterWater)),waterSaved,AND(day=today,waterDay=today),",
-        'inspection,IF(plant="P21","Check top 2 in",IF(plant="P28",IF(OR(due,saved),"Inspect inner leaves",""),IF(waterCheck,"Water check",""))),',
+        'inspection,IF(plant="P21","Check top 2 in",IF(plant="P32","Check upper mix",IF(plant="P28",IF(OR(due,saved),"Inspect inner leaves",""),IF(waterCheck,"Water check","")))),',
         'task,IF(saved,"✓ Weighed",IF(due,IF(reviewNeeded,"Reweigh / review",IF(AND(afterWater,day=waterDay),"Weigh after draining","Weigh")),"")),',
         'TEXTJOIN(CHAR(10),TRUE,IF(waterSaved,"✓ Water logged",""),task,IF(waterSaved,"",inspection),IF(AND(task="",inspection="",NOT(waterSaved)),"—",""))),"Review source data"))',
     ].join("");
@@ -5499,7 +5562,7 @@ function dashboardViewRow_(spreadsheet, plant, index) {
         dashboardWeightCountFormula_(dashboardRow),
         ...["Q", "R", "S", "T", "U", "V"].map(
             (column) =>
-                `=IFNA(INDEX('Dry-down models'!${column}$2:${column}$31,MATCH($B${dashboardRow},'Dry-down models'!$A$2:$A$31,0)),"")`
+                `=IFNA(INDEX('Dry-down models'!${column}$2:${column}$${APP_SHEET_BULK_PLANTS.length + 1},MATCH($B${dashboardRow},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},0)),"")`
         ),
     ];
 }
@@ -5575,7 +5638,10 @@ function refreshDashboardView_(spreadsheet, plants) {
         );
     /** @type {[string, string][]} */
     const summary = [
-        ["Plants tracked", `=COUNTA('Plant tracker'!$A$2:$A$31)`],
+        [
+            "Plants tracked",
+            `=COUNTA('Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1})`,
+        ],
         [
             "Logs this month",
             `=COUNTIFS(History!$A$2:$A$5000,">="&EOMONTH('Workbook calculations'!$F$2,-1)+1,History!$AJ$2:$AJ$5000,"<>Removed")`,
@@ -5584,7 +5650,10 @@ function refreshDashboardView_(spreadsheet, plants) {
             "Waterings this month",
             `=COUNTIFS(History!$C$2:$C$5000,"Water",History!$A$2:$A$5000,">="&EOMONTH('Workbook calculations'!$F$2,-1)+1,History!$AJ$2:$AJ$5000,"<>Removed")`,
         ],
-        ["Remeasure due", `=COUNTIF(Baselines!$K$2:$K$31,"Due now")`],
+        [
+            "Remeasure due",
+            `=COUNTIF(Baselines!$K$2:$K$${APP_SHEET_BULK_PLANTS.length + 1},"Due now")`,
+        ],
         [
             "Last observation",
             `=IFNA(TEXT(MAX(FILTER(History!$A$2:$A$5000,History!$AJ$2:$AJ$5000<>"Removed")),"mmm d, yyyy"),"—")`,
@@ -5599,15 +5668,15 @@ function refreshDashboardView_(spreadsheet, plants) {
         ],
         [
             "Forecast ready",
-            `=COUNT(Baselines!$AF$2:$AF$31)&" / "&COUNTA(Baselines!$A$2:$A$31)`,
+            `=COUNT(Baselines!$AF$2:$AF$${APP_SHEET_BULK_PLANTS.length + 1})&" / "&COUNTA(Baselines!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1})`,
         ],
         [
             "Current curve supported",
-            `=COUNTIF(Baselines!$I$2:$I$31,"Current cycle supported")&" / "&COUNTA(Baselines!$A$2:$A$31)`,
+            `=COUNTIF(Baselines!$I$2:$I$${APP_SHEET_BULK_PLANTS.length + 1},"Current cycle supported")&" / "&COUNTA(Baselines!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1})`,
         ],
         [
             "Calibrated",
-            `=COUNTIF(Baselines!$H$2:$H$31,"Calibrated")&" / "&COUNTA(Baselines!$A$2:$A$31)`,
+            `=COUNTIF(Baselines!$H$2:$H$${APP_SHEET_BULK_PLANTS.length + 1},"Calibrated")&" / "&COUNTA(Baselines!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1})`,
         ],
     ];
     const integrity = spreadsheet.getSheetByName("Integrity");
@@ -5730,7 +5799,7 @@ function refreshRecentWeightColumns_(
             Array.from({ length: count }, (_, index) =>
                 ["Q", "R", "S", "T", "U", "V"].map(
                     (source) =>
-                        `=IFNA(INDEX('Dry-down models'!${source}$2:${source}$31,MATCH($${plantColumn}${header + 1 + index},'Dry-down models'!$A$2:$A$31,0)),"")`
+                        `=IFNA(INDEX('Dry-down models'!${source}$2:${source}$${APP_SHEET_BULK_PLANTS.length + 1},MATCH($${plantColumn}${header + 1 + index},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},0)),"")`
                 )
             )
         )
@@ -5756,7 +5825,7 @@ function refreshRecentWeightColumns_(
 /** @param {string} plantId @returns {string} */
 function plantPageHistoryFormula_(plantId) {
     const id = formulaString_(plantId);
-    return `=IFNA(LET(plant,"${id}",rows,SORT(FILTER({History!$A$2:$A$5000,History!$C$2:$C$5000,History!$D$2:$D$5000,History!$E$2:$E$5000,History!$F$2:$F$5000,History!$G$2:$G$5000,History!$H$2:$H$5000,History!$I$2:$I$5000,History!$AC$2:$AC$5000,History!$AI$2:$AI$5000,History!$J$2:$J$5000,History!$AJ$2:$AJ$5000,History!$X$2:$X$5000},History!$B$2:$B$5000=plant,History!$A$2:$A$5000<>""),1,FALSE,11,FALSE),dates,CHOOSECOLS(rows,1),events,CHOOSECOLS(rows,2),recordedStates,CHOOSECOLS(rows,3),weights,CHOOSECOLS(rows,4),heights,CHOOSECOLS(rows,5),widths,CHOOSECOLS(rows,6),conditions,CHOOSECOLS(rows,7),notes,CHOOSECOLS(rows,8),qualities,CHOOSECOLS(rows,9),methods,CHOOSECOLS(rows,10),statuses,CHOOSECOLS(rows,12),states,MAP(events,weights,recordedStates,statuses,LAMBDA(event,w,recordedState,status,IF(status="Removed","Removed",IF(event<>"Weigh","",IF(w="","",IF(recordedState="","Routine",recordedState)))))),pounds,MAP(weights,LAMBDA(w,IF(w="","",w/453.59237))),quality,MAP(qualities,methods,LAMBDA(q,m,IF(q="",m,IF(m="",q,q&" · "&m)))),HSTACK(dates,events,states,pounds,weights,heights,widths,conditions,notes,quality,statuses,MAP(CHOOSECOLS(rows,13),LAMBDA(url,IF(url="","",HYPERLINK(url,"Open photo")))))),"")`;
+    return `=IF(COUNTIFS(History!$B$2:$B$5000,"${id}",History!$A$2:$A$5000,"<>")=0,"",IFNA(LET(plant,"${id}",rows,SORT(FILTER({History!$A$2:$A$5000,History!$C$2:$C$5000,History!$D$2:$D$5000,History!$E$2:$E$5000,History!$F$2:$F$5000,History!$G$2:$G$5000,History!$H$2:$H$5000,History!$I$2:$I$5000,History!$AC$2:$AC$5000,History!$AI$2:$AI$5000,History!$J$2:$J$5000,History!$AJ$2:$AJ$5000,History!$X$2:$X$5000},History!$B$2:$B$5000=plant,History!$A$2:$A$5000<>""),1,FALSE,11,FALSE),dates,CHOOSECOLS(rows,1),events,CHOOSECOLS(rows,2),recordedStates,CHOOSECOLS(rows,3),weights,CHOOSECOLS(rows,4),heights,CHOOSECOLS(rows,5),widths,CHOOSECOLS(rows,6),conditions,CHOOSECOLS(rows,7),notes,CHOOSECOLS(rows,8),qualities,CHOOSECOLS(rows,9),methods,CHOOSECOLS(rows,10),statuses,CHOOSECOLS(rows,12),states,MAP(events,weights,recordedStates,statuses,LAMBDA(event,w,recordedState,status,IF(status="Removed","Removed",IF(event<>"Weigh","",IF(w="","",IF(recordedState="","Routine",recordedState)))))),pounds,MAP(weights,LAMBDA(w,IF(w="","",w/453.59237))),quality,MAP(qualities,methods,LAMBDA(q,m,IF(q="",m,IF(m="",q,q&" · "&m)))),HSTACK(dates,events,states,pounds,weights,heights,widths,conditions,notes,quality,statuses,MAP(CHOOSECOLS(rows,13),LAMBDA(url,IF(url="","",HYPERLINK(url,"Open photo")))))),""))`;
 }
 
 /** @param {GardenSpreadsheet} spreadsheet @param {string} plantId @returns {GardenSheet} */

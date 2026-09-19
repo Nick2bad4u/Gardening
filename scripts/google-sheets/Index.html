@@ -14795,7 +14795,7 @@
             ].join("/");
             const PLANT_ICON_PATH = "/Gardening/assets/plant-icons/";
             // Generated from the exported artwork by sync-plant-icons.mjs.
-            const PLANT_ICON_REVISION = "2e71bf2a701aa61f";
+            const PLANT_ICON_REVISION = "247fa8a658d6a14b";
             const PLANT_ICON_CACHE = "gardenLoggerPlantPortraitsV1";
             const plantPortraitRequests = new Map();
             let plantPortraitCache;
@@ -16280,6 +16280,7 @@
             function plantIconName(plant) {
                 if (plant?.id === "P19") return "shared-rehab-cactus-planter";
                 if (plant?.id === "P20") return "shared-succulent-planter";
+                if (plant?.id === "P31") return "four-succulent-planter";
                 const match = /#([a-z0-9-]+)$/i.exec(
                     String(plant?.fieldGuideUrl || "")
                 );

@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="four-succulent-planter-title four-succulent-planter-description" data-plant-slug="four-succulent-planter" focusable="false">
+  <title id="four-succulent-planter-title">Four-succulent planter · #7 plant portrait</title>
+  <desc id="four-succulent-planter-description">Lilac Cubic Frost, golden Coppertone, fuzzy blue-green Deminuta, and red-edged Ruby Slippers share one light-colored round planter.</desc>
+  <defs>
+  <linearGradient id="four-cubic-leaf-color" x1="0" y1="0" x2="0.8" y2="1">
+  <stop offset="0" stop-color="#e4d5e4" />
+  <stop offset="1" stop-color="#a8a6c4" />
+  </linearGradient>
+  <g id="four-cubic-leaf">
+  <path d="M0 2C-6 0-10-7-9-12L-5-12-4-19 1-17 5-20 8-14C9-6 6-1 0 2Z" fill="url(#four-cubic-leaf-color)" stroke="#9a7b9d" stroke-width="0.8" />
+  <path d="M0-15Q-2-7 0 0" fill="none" stroke="#f7ebde" stroke-width="0.65" opacity="0.5" />
+  </g>
+  </defs>
+  <defs>
+  <linearGradient id="four-copper-leaf-color" x1="0" y1="0" x2="0.8" y2="1">
+  <stop offset="0" stop-color="#ffd17c" />
+  <stop offset="1" stop-color="#b78539" />
+  </linearGradient>
+  <g id="four-copper-leaf">
+  <path d="M0 2C-7-1-9-11-5-17Q0-21 5-17C9-11 7-1 0 2Z" fill="url(#four-copper-leaf-color)" stroke="#bb7143" stroke-width="0.8" />
+  <path d="M0-15Q-2-7 0 0" fill="none" stroke="#f7ebde" stroke-width="0.65" opacity="0.5" />
+  </g>
+  </defs>
+  <defs>
+  <linearGradient id="four-deminuta-leaf-color" x1="0" y1="0" x2="0.8" y2="1">
+  <stop offset="0" stop-color="#c6d5c1" />
+  <stop offset="1" stop-color="#6d9993" />
+  </linearGradient>
+  <g id="four-deminuta-leaf">
+  <path d="M0 2C-6-1-7-11 0-20C7-11 6-1 0 2Z" fill="url(#four-deminuta-leaf-color)" stroke="#dbe3cb" stroke-width="0.8" />
+  <path d="M0-15Q-2-7 0 0" fill="none" stroke="#f7ebde" stroke-width="0.65" opacity="0.5" />
+  </g>
+  </defs>
+  <defs>
+  <linearGradient id="four-ruby-leaf-color" x1="0" y1="0" x2="0.8" y2="1">
+  <stop offset="0" stop-color="#bace9b" />
+  <stop offset="1" stop-color="#5c896a" />
+  </linearGradient>
+  <g id="four-ruby-leaf">
+  <path d="M0 2C-6-1-7-11 0-20C7-11 6-1 0 2Z" fill="url(#four-ruby-leaf-color)" stroke="#b34b54" stroke-width="0.8" />
+  <path d="M0-15Q-2-7 0 0" fill="none" stroke="#f7ebde" stroke-width="0.65" opacity="0.5" />
+  </g>
+  </defs>
+  <ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
+  <path d="M10 43H54L50 58Q32 63 14 58Z" fill="#efe8dd" stroke="#899287" stroke-width="1.6" />
+  <ellipse cx="32" cy="43" rx="22" ry="4" fill="#624d3c" stroke="#899287" stroke-width="1.5" />
+  <path d="M15 49Q32 53 49 49" fill="none" stroke="#fff1d5" stroke-width="1.4" opacity="0.5" />
+  <g transform="translate(19 28) scale(0.68)">
+  <use href="#four-cubic-leaf" transform="rotate(0) scale(1)" />
+  <use href="#four-cubic-leaf" transform="rotate(45) scale(1)" />
+  <use href="#four-cubic-leaf" transform="rotate(90) scale(1)" />
+  <use href="#four-cubic-leaf" transform="rotate(135) scale(1)" />
+  <use href="#four-cubic-leaf" transform="rotate(180) scale(1)" />
+  <use href="#four-cubic-leaf" transform="rotate(225) scale(1)" />
+  <use href="#four-cubic-leaf" transform="rotate(270) scale(1)" />
+  <use href="#four-cubic-leaf" transform="rotate(315) scale(1)" />
+  <use href="#four-cubic-leaf" transform="rotate(20) scale(0.67)" />
+  <use href="#four-cubic-leaf" transform="rotate(71) scale(0.67)" />
+  <use href="#four-cubic-leaf" transform="rotate(123) scale(0.67)" />
+  <use href="#four-cubic-leaf" transform="rotate(174) scale(0.67)" />
+  <use href="#four-cubic-leaf" transform="rotate(226) scale(0.67)" />
+  <use href="#four-cubic-leaf" transform="rotate(277) scale(0.67)" />
+  <use href="#four-cubic-leaf" transform="rotate(329) scale(0.67)" />
+  <use href="#four-cubic-leaf" transform="rotate(0) scale(0.4)" />
+  <use href="#four-cubic-leaf" transform="rotate(72) scale(0.4)" />
+  <use href="#four-cubic-leaf" transform="rotate(144) scale(0.4)" />
+  <use href="#four-cubic-leaf" transform="rotate(216) scale(0.4)" />
+  <use href="#four-cubic-leaf" transform="rotate(288) scale(0.4)" />
+  <use href="#four-cubic-leaf" transform="rotate(30) scale(0.2)" />
+  <use href="#four-cubic-leaf" transform="rotate(150) scale(0.2)" />
+  <use href="#four-cubic-leaf" transform="rotate(270) scale(0.2)" />
+  </g>
+  <g transform="translate(44 24) scale(0.6)">
+  <use href="#four-copper-leaf" transform="rotate(0) scale(1)" />
+  <use href="#four-copper-leaf" transform="rotate(45) scale(1)" />
+  <use href="#four-copper-leaf" transform="rotate(90) scale(1)" />
+  <use href="#four-copper-leaf" transform="rotate(135) scale(1)" />
+  <use href="#four-copper-leaf" transform="rotate(180) scale(1)" />
+  <use href="#four-copper-leaf" transform="rotate(225) scale(1)" />
+  <use href="#four-copper-leaf" transform="rotate(270) scale(1)" />
+  <use href="#four-copper-leaf" transform="rotate(315) scale(1)" />
+  <use href="#four-copper-leaf" transform="rotate(20) scale(0.67)" />
+  <use href="#four-copper-leaf" transform="rotate(71) scale(0.67)" />
+  <use href="#four-copper-leaf" transform="rotate(123) scale(0.67)" />
+  <use href="#four-copper-leaf" transform="rotate(174) scale(0.67)" />
+  <use href="#four-copper-leaf" transform="rotate(226) scale(0.67)" />
+  <use href="#four-copper-leaf" transform="rotate(277) scale(0.67)" />
+  <use href="#four-copper-leaf" transform="rotate(329) scale(0.67)" />
+  <use href="#four-copper-leaf" transform="rotate(0) scale(0.4)" />
+  <use href="#four-copper-leaf" transform="rotate(72) scale(0.4)" />
+  <use href="#four-copper-leaf" transform="rotate(144) scale(0.4)" />
+  <use href="#four-copper-leaf" transform="rotate(216) scale(0.4)" />
+  <use href="#four-copper-leaf" transform="rotate(288) scale(0.4)" />
+  <use href="#four-copper-leaf" transform="rotate(30) scale(0.2)" />
+  <use href="#four-copper-leaf" transform="rotate(150) scale(0.2)" />
+  <use href="#four-copper-leaf" transform="rotate(270) scale(0.2)" />
+  </g>
+  <g transform="translate(44 38) scale(0.68)">
+  <use href="#four-ruby-leaf" transform="rotate(0) scale(1)" />
+  <use href="#four-ruby-leaf" transform="rotate(45) scale(1)" />
+  <use href="#four-ruby-leaf" transform="rotate(90) scale(1)" />
+  <use href="#four-ruby-leaf" transform="rotate(135) scale(1)" />
+  <use href="#four-ruby-leaf" transform="rotate(180) scale(1)" />
+  <use href="#four-ruby-leaf" transform="rotate(225) scale(1)" />
+  <use href="#four-ruby-leaf" transform="rotate(270) scale(1)" />
+  <use href="#four-ruby-leaf" transform="rotate(315) scale(1)" />
+  <use href="#four-ruby-leaf" transform="rotate(20) scale(0.67)" />
+  <use href="#four-ruby-leaf" transform="rotate(71) scale(0.67)" />
+  <use href="#four-ruby-leaf" transform="rotate(123) scale(0.67)" />
+  <use href="#four-ruby-leaf" transform="rotate(174) scale(0.67)" />
+  <use href="#four-ruby-leaf" transform="rotate(226) scale(0.67)" />
+  <use href="#four-ruby-leaf" transform="rotate(277) scale(0.67)" />
+  <use href="#four-ruby-leaf" transform="rotate(329) scale(0.67)" />
+  <use href="#four-ruby-leaf" transform="rotate(0) scale(0.4)" />
+  <use href="#four-ruby-leaf" transform="rotate(72) scale(0.4)" />
+  <use href="#four-ruby-leaf" transform="rotate(144) scale(0.4)" />
+  <use href="#four-ruby-leaf" transform="rotate(216) scale(0.4)" />
+  <use href="#four-ruby-leaf" transform="rotate(288) scale(0.4)" />
+  <use href="#four-ruby-leaf" transform="rotate(30) scale(0.2)" />
+  <use href="#four-ruby-leaf" transform="rotate(150) scale(0.2)" />
+  <use href="#four-ruby-leaf" transform="rotate(270) scale(0.2)" />
+  </g>
+  <g transform="translate(22 42) scale(0.68)">
+  <use href="#four-deminuta-leaf" transform="rotate(0) scale(1)" />
+  <use href="#four-deminuta-leaf" transform="rotate(45) scale(1)" />
+  <use href="#four-deminuta-leaf" transform="rotate(90) scale(1)" />
+  <use href="#four-deminuta-leaf" transform="rotate(135) scale(1)" />
+  <use href="#four-deminuta-leaf" transform="rotate(180) scale(1)" />
+  <use href="#four-deminuta-leaf" transform="rotate(225) scale(1)" />
+  <use href="#four-deminuta-leaf" transform="rotate(270) scale(1)" />
+  <use href="#four-deminuta-leaf" transform="rotate(315) scale(1)" />
+  <use href="#four-deminuta-leaf" transform="rotate(20) scale(0.67)" />
+  <use href="#four-deminuta-leaf" transform="rotate(71) scale(0.67)" />
+  <use href="#four-deminuta-leaf" transform="rotate(123) scale(0.67)" />
+  <use href="#four-deminuta-leaf" transform="rotate(174) scale(0.67)" />
+  <use href="#four-deminuta-leaf" transform="rotate(226) scale(0.67)" />
+  <use href="#four-deminuta-leaf" transform="rotate(277) scale(0.67)" />
+  <use href="#four-deminuta-leaf" transform="rotate(329) scale(0.67)" />
+  <use href="#four-deminuta-leaf" transform="rotate(0) scale(0.4)" />
+  <use href="#four-deminuta-leaf" transform="rotate(72) scale(0.4)" />
+  <use href="#four-deminuta-leaf" transform="rotate(144) scale(0.4)" />
+  <use href="#four-deminuta-leaf" transform="rotate(216) scale(0.4)" />
+  <use href="#four-deminuta-leaf" transform="rotate(288) scale(0.4)" />
+  <use href="#four-deminuta-leaf" transform="rotate(30) scale(0.2)" />
+  <use href="#four-deminuta-leaf" transform="rotate(150) scale(0.2)" />
+  <use href="#four-deminuta-leaf" transform="rotate(270) scale(0.2)" />
+  </g>
+</svg>

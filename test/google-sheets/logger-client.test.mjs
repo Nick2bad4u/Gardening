@@ -6381,6 +6381,7 @@ describe("garden logger plant photos and portrait rendering", () => {
     it.each([
         ["P19", "shared-rehab-cactus-planter"],
         ["P20", "shared-succulent-planter"],
+        ["P31", "four-succulent-planter"],
     ])("uses the accurate shared-planter portrait for %s", (id, slug) => {
         expect.hasAssertions();
 

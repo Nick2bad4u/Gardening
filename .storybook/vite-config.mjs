@@ -178,6 +178,7 @@ export const storybookViteConfig = {
     server: {
         watch: {
             ignored: [
+                "**/.cache/**",
                 "**/.pages-site/**",
                 "**/coverage/**",
                 "**/storybook-static/**",

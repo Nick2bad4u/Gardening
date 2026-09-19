@@ -16,6 +16,8 @@ export const calculationsSheetId = 907_202_607;
 export const analyticsSheetId = 907_202_608;
 const clock = "'Workbook calculations'!$E$2";
 const font = "JetBrains Mono";
+const inventoryEnd = palette.length + 1;
+const cycleLastColumn = columnName(9 + palette.length * 3);
 const timestampFormat = "mmm d, yyyy h:mm am/pm";
 const refillTitle = "RO refills";
 const calculatedLabel = "Calculated as of";
@@ -71,7 +73,7 @@ export function buildWorkbookUpgradeRequests(snapshot, factories) {
                 cell.sheet === "Plant tracker" &&
                 cell.column === 0 &&
                 cell.row >= 1 &&
-                cell.row <= 30
+                cell.row <= palette.length
         )
         .map((cell) => cell.value.stringValue);
     if (
@@ -79,7 +81,7 @@ export function buildWorkbookUpgradeRequests(snapshot, factories) {
         palette.some(({ id }) => !trackerIds.includes(id))
     )
         throw new Error(
-            "Expected the maintained Plant tracker inventory in A2:A31"
+            `Expected the maintained Plant tracker inventory in A2:A${palette.length + 1}`
         );
     const pages = palette.map(({ id }, index) => {
         const matches = metadata.sheets.filter((entry) =>
@@ -126,8 +128,18 @@ export function buildWorkbookUpgradeRequests(snapshot, factories) {
             throw new Error(`Chart ${id} already exists`);
     }
     prepareRequests.push(
-        ...newHelper("Workbook calculations", calculationsSheetId, 32, 6),
-        ...newHelper("Workbook analytics", analyticsSheetId, 5001, 100),
+        ...newHelper(
+            "Workbook calculations",
+            calculationsSheetId,
+            palette.length + 2,
+            6
+        ),
+        ...newHelper(
+            "Workbook analytics",
+            analyticsSheetId,
+            5001,
+            10 + palette.length * 3
+        ),
         ...buildWateringCalendarRequests(snapshot, { clockReference: clock })
     );
     const cycleFormula = cycleComparisonFormula();
@@ -225,7 +237,8 @@ export function normalizeDerivedFormula(formula) {
                               /** @type {string} */ _,
                               /** @type {string} */ sheet,
                               /** @type {string} */ column
-                          ) => `${sheet}!$${column}$2:$${column}$31`
+                          ) =>
+                              `${sheet}!$${column}$2:$${column}$${inventoryEnd}`
                       )
         )
         .join("");
@@ -421,13 +434,13 @@ function addDerivedFormulas(context, pages) {
             const reference = `'${page.properties.title.replaceAll("'", "''")}'`;
             return `${reference}!A1:INDEX(${reference}!V1:V5139,140+MAX(1,COUNTIF(History!$B$2:$B$5000,"${String(palette[index]?.id)}")))`;
         }),
-        "'Watering intervals'!A1:CL5000",
+        `'Watering intervals'!A1:${columnName(palette.length * 3 - 1)}5000`,
         "'Dry-down insights'!A1:AE5000",
-        "'Workbook calculations'!A1:F32",
+        `'Workbook calculations'!A1:F${palette.length + 2}`,
         "'Workbook analytics'!A1:INDEX('Workbook analytics'!D1:D5001,MIN(5001,MAX(2,COUNTA(History!A2:A5000)+2)))",
-        "'Workbook analytics'!F1:H31",
-        "'Workbook analytics'!J1:INDEX('Workbook analytics'!CV1:CV5001,MIN(5001,MAX(2,COUNTA(History!A2:A5000)+2)))",
-        "'Workbook analytics'!J5001:CV5001",
+        `'Workbook analytics'!F1:H${inventoryEnd}`,
+        `'Workbook analytics'!J1:INDEX('Workbook analytics'!${cycleLastColumn}1:${cycleLastColumn}5001,MIN(5001,MAX(2,COUNTA(History!A2:A5000)+2)))`,
+        `'Workbook analytics'!J5001:${cycleLastColumn}5001`,
         "'Watering calendar'!A1:BE40",
         "Insights!A226:W900",
     ];
@@ -474,7 +487,7 @@ function addInsights(context) {
         "Insights",
         836,
         0,
-        "=B228&\" · \"&XLOOKUP(B228,'Plant tracker'!$A$2:$A$31,'Plant tracker'!$B$2:$B$31,\"\")"
+        `=B228&" · "&XLOOKUP(B228,'Plant tracker'!$A$2:$A$${inventoryEnd},'Plant tracker'!$B$2:$B$${inventoryEnd},"")`
     );
     write("Insights", 837, 0, "=\"Solid circles: \"&'Workbook analytics'!B1");
     write(
@@ -732,7 +745,7 @@ function addPlantPages(context, pages, factories) {
                 "Baselines",
                 index + 1,
                 column,
-                `=XLOOKUP($A${index + 2},'Workbook calculations'!$A$2:$A$31,'Workbook calculations'!$${source}$2:$${source}$31,"")`
+                `=XLOOKUP($A${index + 2},'Workbook calculations'!$A$2:$A$${inventoryEnd},'Workbook calculations'!$${source}$2:$${source}$${inventoryEnd},"")`
             );
         const intervals = wateringSummaryFormulas(plant.id);
         const gapColumn = columnName(index * 3 + 2);
@@ -1006,7 +1019,7 @@ function addRefillSummary(context) {
             "mmm d, yyyy"
         ),
         numberFormat(
-            grid(calculationsSheetId, 1, 31, 2, 3),
+            grid(calculationsSheetId, 1, inventoryEnd, 2, 3),
             "DATE_TIME",
             timestampFormat
         ),
@@ -1015,7 +1028,11 @@ function addRefillSummary(context) {
             "DATE_TIME",
             timestampFormat
         ),
-        numberFormat(grid(analyticsSheetId, 1, 31, 6, 8), "NUMBER", "0")
+        numberFormat(
+            grid(analyticsSheetId, 1, inventoryEnd, 6, 8),
+            "NUMBER",
+            "0"
+        )
     );
     const wrappedColumns = /** @type {[string, number][]} */ ([
         ["Plant tracker", 7],
@@ -1026,7 +1043,7 @@ function addRefillSummary(context) {
         const range = grid(
             id,
             1,
-            title === "Plant tracker" ? 31 : 5000,
+            title === "Plant tracker" ? inventoryEnd : 5000,
             column,
             column + 1
         );
@@ -1176,11 +1193,11 @@ function gapChart(sheetId) {
                             },
                         ],
                         chartType: "COLUMN",
-                        domains: [{ domain: data(5, 31) }],
+                        domains: [{ domain: data(5, inventoryEnd) }],
                         headerCount: 1,
                         legendPosition: "BOTTOM_LEGEND",
                         series: [6, 7].map((column) => ({
-                            series: data(column, 31),
+                            series: data(column, inventoryEnd),
                             styleOverrides: palette.map(
                                 ({ id }, pointIndex) => {
                                     const color = plantColor(id);

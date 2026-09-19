@@ -12,6 +12,8 @@ Frequent early weighing helps establish how a particular plant, pot, and medium 
 
 Reviewing every active container's existing data each morning does not require physically weighing every container. A shared planter counts as one weighed assembly even when several plants live in it.
 
+The September 19 additions follow the same rule: **#7 / P31 is one weigh-in for four succulent profiles; #8 / P32 Nanouk is a separate weigh-in.** There are now 32 tracked containers. New active records begin without weights, completed cycles, or invented planting dates. Establish their actual measured starting points through normal logging; never copy another pot's reference weight or water merely to create a baseline. Nanouk's weighing trend must not impose the cactus group's full-dry or plateau requirement on its watering decision.
+
 ## What Exists Today
 
 | Surface                         | Current role                                                                                                                                                                                                                                                                                      |

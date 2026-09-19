@@ -8,7 +8,6 @@ import {
 } from "../docs/layouts/plant-tracker-data.js";
 import {
     arrayOf,
-    compareText,
     hasFields,
     isNonemptyString,
     isPlantSlug,
@@ -36,7 +35,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.25.0");
+assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.26.0");
 for (const name of [
     "getWebCorrectionEntry",
     "previewWebObservationCorrection",
@@ -219,7 +218,7 @@ assert.deepEqual(appSheetEntryHeaders, [
     "Water amount (mL)",
 ]);
 const appSheetBulkHeaders = strings(evaluateLogger("APP_SHEET_BULK_HEADERS"));
-assert.equal(appSheetBulkHeaders.length, 54);
+assert.equal(appSheetBulkHeaders.length, 56);
 assert.deepEqual(appSheetBulkHeaders.slice(0, 6), [
     "Round ID",
     "Started at",
@@ -241,6 +240,10 @@ assert.equal(appSheetBulkHeaders[44], "Rotation (°)");
 assert.equal(appSheetBulkHeaders[51], "Nutrient amount");
 assert.equal(appSheetBulkHeaders[52], "Watering application");
 assert.equal(appSheetBulkHeaders[53], "Water amount (mL)");
+assert.deepEqual(appSheetBulkHeaders.slice(54), [
+    "P31 weight (g)",
+    "P32 weight (g)",
+]);
 assert.deepEqual(strings(evaluateLogger("NUTRIENT_PRODUCT_OPTIONS")), [
     "MSU 13-3-15",
     "SuperThrive Foliage Pro",
@@ -267,7 +270,7 @@ assert.deepEqual(
         (_, index) => `P${String(index + 1).padStart(2, "0")} weight (g)`
     )
 );
-assert.deepEqual(appSheetBulkHeaders.slice(-18), [
+assert.deepEqual(appSheetBulkHeaders.slice(36, 54), [
     "Notes",
     "Created by",
     "Created at",
@@ -464,7 +467,7 @@ assert.equal(
 assert.ok(appSheetImageExpression.includes(`"${appSheetPortraits.folder}/"`));
 assert.deepEqual(
     appSheetPortraits.portraits.map(({ id }) => id),
-    Object.keys(webPlantImageUrls).toSorted(compareText),
+    strings(evaluateLogger("APP_SHEET_BULK_PLANTS")),
     "Every current plant must have an AppSheet portrait."
 );
 assert.deepEqual(
@@ -728,7 +731,10 @@ assert.match(
     /function processQueuedAppSheetBulkEntries_\(spreadsheet\)/v
 );
 assert.match(source, /function installAppSheetBulkSheet\(\)/v);
-assert.match(source, /function migrateLegacyAppSheetBulkSheet_\(sheet\)/v);
+assert.match(
+    source,
+    /function migrateLegacyAppSheetBulkSheet_\(sheet, shouldUpgradeInventory = true\)/v
+);
 assert.match(source, /function normalizeAppSheetBulkAction_\(value\)/v);
 assert.match(source, /function appSheetBulkWateredPlants_\(value\)/v);
 assert.match(source, /function appSheetBulkSelectedPlants_\(value\)/v);
@@ -768,11 +774,11 @@ const forecastFormulaRow = strings(
 );
 assert.match(
     required(forecastFormulaRow[20], "forecast formula"),
-    /'Dry-down models'!\$E\$2:\$E\$31/v
+    /'Dry-down models'!\$E\$2:\$E\$33/v
 );
 assert.match(
     required(forecastFormulaRow[30], "forecast formula"),
-    /'Dry-down models'!\$G\$2:\$G\$31/v
+    /'Dry-down models'!\$G\$2:\$G\$33/v
 );
 assert.doesNotMatch(
     required(forecastFormulaRow[30], "forecast formula"),

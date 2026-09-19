@@ -1,5 +1,5 @@
 {
-    "folder": "GardenPlantPortraits-2e71bf2a701aa61f",
+    "folder": "GardenPlantPortraits-247fa8a658d6a14b",
     "portraits": [
         {
             "id": "P01",
@@ -150,7 +150,17 @@
             "id": "P30",
             "name": "Tiny mixed succulent planter",
             "slug": "tiny-mixed-succulent-planter"
+        },
+        {
+            "id": "P31",
+            "name": "Four-succulent planter",
+            "slug": "four-succulent-planter"
+        },
+        {
+            "id": "P32",
+            "name": "Nanouk tradescantia",
+            "slug": "tradescantia-nanouk"
         }
     ],
-    "revision": "2e71bf2a701aa61f"
+    "revision": "247fa8a658d6a14b"
 }

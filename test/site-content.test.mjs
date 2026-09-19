@@ -213,7 +213,7 @@ describe("field guide source rendering", () => {
     it("uses the browser's worksheet mapping for every plant and rejects unknown IDs", () => {
         expect.hasAssertions();
 
-        for (let number = 1; number <= 30; number += 1) {
+        for (let number = 1; number <= 32; number += 1) {
             const trackerId = `P${String(number).padStart(2, "0")}`;
 
             expect(plantSheetUrl(trackerId)).toBe(

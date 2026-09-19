@@ -1,9 +1,8 @@
 # Plant profiles
 
-Last updated: 2026-09-03
+Last updated: 2026-09-19
 
-These 36 pages cover 35 plants or planters physically documented in the
-collection and one historical record. The six Mountain Crest plants ordered on
+These **41 pages cover 40 active profile records and one historical record, across 32 tracked containers**. Four September 19 succulent additions have individual profiles but share `#7` / `P31`; Nanouk is separately potted as `#8` / `P32`. They are active by owner instruction; their receipt and planting dates remain unrecorded. The six Mountain Crest plants ordered on
 2026-08-25 were received, inspected, and repotted on 2026-08-28. Tuberculate
 tiger jaws and a five-plant succulent garden were acquired from Home Depot,
 photographed, repotted, and assigned `P29`/`#5` and `P30`/`#6` on 2026-09-02.
@@ -91,10 +90,12 @@ weights and Ruler dimensions are recorded in the individual profiles.
 | Succulent-08 | `H1`                   | [Coconut Crystal hens and chicks (_Sempervivum_ Colorockz® 'Coconut Crystal')](./succulents/sempervivum-coconut-crystal.md) | Seller-labeled; owner-inspected; P24                               |
 | Succulent-09 | `#5`                   | [Tuberculate tiger jaws (probable _Faucaria tuberculosa_)](./succulents/faucaria-tuberculosa.md)                            | Seller-labeled _F. tigrina_; qualified correction; P29             |
 | Succulent-10 | `#6`                   | [Tiny mixed succulent planter](./succulents/tiny-mixed-succulent-planter.md)                                                | Seller-described five-plant garden; component IDs provisional; P30 |
+| Succulent-11 | `#7`                   | [Cubic Frost echeveria (_Echeveria_ 'Cubic Frost')](./succulents/echeveria-cubic-frost.md)                                  | Seller-labeled cultivar; shared P31                                |
+| Succulent-12 | `#7`                   | [Coppertone sedum (probable _Sedum adolphi_)](./succulents/sedum-adolphi-coppertone.md)                                     | Seller trade name; working species qualified; shared P31           |
+| Succulent-13 | `#7`                   | [Deminuta echeveria (_Echeveria setosa_ var. _deminuta_)](./succulents/echeveria-setosa-deminuta.md)                        | Seller-labeled variety; shared P31                                 |
+| Succulent-14 | `#7`                   | [Ruby Slippers echeveria (probable _Echeveria harmsii_)](./succulents/echeveria-harmsii-ruby-slippers.md)                   | Seller trade name; working species qualified; shared P31           |
 
-All three arrived rooted in 2-inch nursery pots of unrecorded shape and moved
-to matching round 4 × 4 × 3.7-inch pots on 2026-08-28. Their 2026-08-29 Scale
-weights and Ruler dimensions are recorded in the individual profiles.
+The three Mountain Crest succulents arrived rooted in 2-inch nursery pots of unrecorded shape and moved to matching round 4 × 4 × 3.7-inch pots on 2026-08-28. Their 2026-08-29 Scale weights and Ruler dimensions are recorded in the individual profiles.
 
 The live 2026-08-28 Check/Clean bulk round records slightly moist substrate for
 all six Mountain Crest plants; it is not a watering or fertilizer record.
@@ -120,9 +121,12 @@ logged.
 
 ## Houseplants
 
-| Inventory ID  | Label ID | Profile                                                          | Identification status         |
-| ------------- | -------- | ---------------------------------------------------------------- | ----------------------------- |
-| Houseplant-01 | `#3`     | [Money tree (_Pachira glabra_)](./houseplants/pachira-glabra.md) | Genus tag; working species ID |
+| Inventory ID  | Label ID | Profile                                                                               | Identification status                 |
+| ------------- | -------- | ------------------------------------------------------------------------------------- | ------------------------------------- |
+| Houseplant-01 | `#3`     | [Money tree (_Pachira glabra_)](./houseplants/pachira-glabra.md)                      | Genus tag; working species ID         |
+| Houseplant-02 | `#8`     | [Nanouk tradescantia (_Tradescantia_ 'Nanouk')](./houseplants/tradescantia-nanouk.md) | Seller-labeled cultivar; separate P32 |
+
+The September 19 Amazon records retain five individual plant pages. `#7` / `P31` combines Cubic Frost, Coppertone, Deminuta, and Ruby Slippers in the owner-designated decorated 8-inch drainage pot with Molly's Succulent Mix. `#8` / `P32` keeps Nanouk in its own D'vine Dev 4-inch Blush Mauve drainage pot, without the saucer. Enrollment is not a receipt, repot, or measurement event; the order's October 1 delivery estimate remains distinct from an actual arrival date.
 
 The reusable-license [photo archive](../../assets/plants/) provides source
 links, licenses, creator attribution, and machine-readable metadata for every

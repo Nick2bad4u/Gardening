@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="tradescantia-nanouk-title tradescantia-nanouk-description" data-plant-slug="tradescantia-nanouk" focusable="false">
+  <title id="tradescantia-nanouk-title">Nanouk tradescantia plant portrait</title>
+  <desc id="tradescantia-nanouk-description">Pink, cream, and green striped pointed leaves on branching stems above a mauve beaded pot.</desc>
+  <defs>
+  <linearGradient id="nanouk-leaf-color" x1="0" y1="0" x2="0.8" y2="1">
+  <stop offset="0" stop-color="#ecd7eb" />
+  <stop offset="1" stop-color="#9d719c" />
+  </linearGradient>
+  <g id="nanouk-leaf">
+  <path d="M0 2C-6-1-7-11 0-20C7-11 6-1 0 2Z" fill="url(#nanouk-leaf-color)" stroke="#746781" stroke-width="0.8" />
+  <path d="M0-15Q-2-7 0 0" fill="none" stroke="#f7ebde" stroke-width="0.65" opacity="0.5" />
+  <path d="M-1-17C-4-10-2-3 0 1L2-2Q0-9 2-17Z" fill="#71957c" />
+  </g>
+  </defs>
+  <ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
+  <path d="M10 43H54L50 58Q32 63 14 58Z" fill="#b981a3" stroke="#765575" stroke-width="1.6" />
+  <ellipse cx="32" cy="43" rx="22" ry="4" fill="#624d3c" stroke="#765575" stroke-width="1.5" />
+  <path d="M15 49Q32 53 49 49" fill="none" stroke="#fff1d5" stroke-width="1.4" opacity="0.5" />
+  <path d="M31 44Q25 30 26 17M32 43Q42 32 43 15M29 40Q16 33 12 27" fill="none" stroke="#926786" stroke-width="2.2" />
+  <use href="#nanouk-leaf" transform="translate(26 21) rotate(-25) scale(0.8)" />
+  <use href="#nanouk-leaf" transform="translate(28 31) rotate(45) scale(0.95)" />
+  <use href="#nanouk-leaf" transform="translate(26 34) rotate(-55) scale(1)" />
+  <use href="#nanouk-leaf" transform="translate(42 22) rotate(30) scale(0.85)" />
+  <use href="#nanouk-leaf" transform="translate(39 33) rotate(75) scale(0.9)" />
+  <use href="#nanouk-leaf" transform="translate(18 37) rotate(-70) scale(0.85)" />
+  <use href="#nanouk-leaf" transform="translate(45 35) rotate(135) scale(0.7)" />
+  <g fill="#e6bdd6">
+  <circle cx="18" cy="48" r="0.9" />
+  <circle cx="25" cy="48" r="0.9" />
+  <circle cx="32" cy="48" r="0.9" />
+  <circle cx="39" cy="48" r="0.9" />
+  <circle cx="46" cy="48" r="0.9" />
+  <circle cx="18" cy="53" r="0.9" />
+  <circle cx="25" cy="53" r="0.9" />
+  <circle cx="32" cy="53" r="0.9" />
+  <circle cx="39" cy="53" r="0.9" />
+  <circle cx="46" cy="53" r="0.9" />
+  <circle cx="18" cy="57" r="0.9" />
+  <circle cx="25" cy="57" r="0.9" />
+  <circle cx="32" cy="57" r="0.9" />
+  <circle cx="39" cy="57" r="0.9" />
+  <circle cx="46" cy="57" r="0.9" />
+  </g>
+</svg>

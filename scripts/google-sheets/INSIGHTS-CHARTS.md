@@ -4,7 +4,7 @@ The native **Insights** sheet has **25 charts** after the September 17, 2026
 analytics upgrade. See the
 [analytics rollout record](WORKBOOK-ANALYTICS.md#rollout-record) for verification.
 Its dry-down explorer starts at
-**A226**; choose **P01–P30 in B228** in the current native layout. The selected
+**A226**; the maintained selector covers **P01–P32 in B228** after the September 19 inventory expansion. The selected
 plant's care guidance, predicted dry-check date, and earliest/latest window
 appear above the graphs. The selected plant's **Current weight difference (g)**
 appears in **N228:R228**, and its collection comparison starts at **A586**.
@@ -30,15 +30,15 @@ data-label overrides. Insights sizing remains intact; the plant-page layout
 has its own [guarded styling procedure](#plant-page-chart-layout).
 Each plant has a permanent, distinct color
 defined in [`plant-colors.json`](plant-colors.json). The visible **Plant colors**
-sheet lists all 30 IDs, full plant names, color names, hex values, swatches, and
+sheet covers all 32 maintained IDs, full plant names, color names, hex values, swatches, and
 links to their individual charts. These are arbitrary identity colors, unrelated
 to the appearance of the plants. Keep the names and IDs alongside color because
 similar hues can still be difficult to distinguish.
 
-The 90 weight/dimension charts and populated watering-interval charts on the
+The 96 weight/dimension charts and populated watering-interval charts on the
 individual plant sheets use that plant's color. The 15
 plant comparison charts use the same colors for each plant's bars or points, in
-consistent P01–P30 order. This fixed order prevents point colors from moving to
+consistent P01–P32 order. This fixed order prevents point colors from moving to
 another plant when a sorted source recalculates. Source values still update
 automatically. Comparisons with several metrics use separate grouped bars, with
 the metric order in the subtitle and names in the tooltips; the old metric-color
@@ -55,12 +55,18 @@ The first chart shares the 1,155-pixel width and 10-pixel left inset used by the
 other Insights charts. The plant-page layout below defines its chart spacing
 while preserving each plant's data bindings and weight-axis maximum.
 
+## September 19 roster expansion
+
+The maintained roster now contains 32 tracked containers. The 32-page target has **128 plant charts**: 96 weight/dimension charts and 32 watering-interval charts. `P31` / `#7` represents all four new succulents; `P32` / `#8` is Nanouk. Missing observations remain blank, including the new containers' histories. Earlier dated verification counts below remain evidence for the 30-container workbook at those dates.
+
+The guarded [`inventory-expansion.mjs`](inventory-expansion.mjs) migration extends the maintained inventory and model rows to **2:33**, Dashboard data to **7:38**, comparison helpers, selector validation, and the newly duplicated page/chart bindings. It appends helper columns where necessary so existing chart sources do not move. Derive endpoints from the current roster; do not rerun an old fixed-size chart installer over populated helpers. Native application, calculated readback, and empty-data chart checks passed: the workbook now has 156 charts and retains all 148 prior chart IDs and positions. The separate AppSheet editor changes remain pending browser authentication; see the [logger deployment record](README.md).
+
 ## Plant-page chart layout
 
 **Applied and verified September 18, 2026.**
 The presentation-only planner in
 [`plant-chart-layout.mjs`](plant-chart-layout.mjs) applies the owner's reviewed
-P01 styling to the four corresponding charts on every P01–P30 page. It matches
+P01 styling to the four corresponding charts on every current Pxx page. It matches
 roles by chart type, title, and exact source bindings, rather than assuming the
 native chart-array order represents those roles. Keep each target's domain and
 series ranges, identity text, permanent plant color, and axis maxima. Use a
@@ -100,7 +106,7 @@ The spacing contract is explicit:
 | Plant dimensions, measurement history          | A92         | Visible A:J width | 469 px |
 | Time between waterings                         | A111        | Visible A:J width | 440 px |
 
-The current visible A:J span is **1,285 px** on all 30 pages. Each chart reaches
+The September 18 verified visible A:J span was **1,285 px** on all 30 then-current pages. Each chart reaches
 that page edge; the planner sums actual visible column widths instead of using
 the earlier fixed 952 px width. Hidden columns do not contribute to that sum.
 Anchors, chart heights, and vertical gaps are unchanged by this follow-up.
@@ -142,7 +148,7 @@ To apply or rerun the planner:
    formula replacement, Apps Script deployment, or queue-trigger change.
 
 Native empty watering charts can omit their series entirely. The current
-P28–P30 waiting charts must remain empty; do not copy P01's series or fabricate
+pages without intervals, including new P31/P32, must remain empty; do not copy P01's series or fabricate
 observations to make them look populated. After a real completed interval
 appears, use the existing [interval-style repair](#time-between-waterings) when
 needed, retaining the chart's ID and position.
@@ -262,7 +268,7 @@ them. The three-reading daily rate divides total loss by total elapsed time,
 including unequal intervals. Missing evidence stays blank and numeric zero stays
 visible. A heavy pot's larger rate does not establish greater watering urgency.
 
-The helper at **Plant color data DX:EC** looks up permanent IDs in fixed P01–P30
+The helper at **Plant color data DX:EC** looks up permanent IDs in fixed P01–P32
 order. Sorting Dashboard therefore preserves the plants' colors. The second
 series uses a lighter shade and the legend identifies each metric. Maintain the
 four chart specifications with [`recent-weights.mjs`](recent-weights.mjs);
@@ -278,7 +284,7 @@ The two additional charts occupy new space below the existing graphs:
 
 | Location      | Comparison                                             | Interpretation                                                                              |
 | ------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
-| Insights A790 | Latest versus previous completed watering gap          | Whole calendar-day gaps, permanent P01–P30 order and colors; unavailable values stay blank. |
+| Insights A790 | Latest versus previous completed watering gap          | Whole calendar-day gaps, permanent P01–P32 order and colors; unavailable values stay blank. |
 | Insights A840 | Selected plant's current and last two completed cycles | Actual days after watering against measured whole-pot grams, within the current setup.      |
 
 Both cycle views use the selector at **B228**. The new comparison's selected
@@ -327,7 +333,7 @@ per-plant evidence, formula ownership, and migration checks.
 
 ### Time between waterings
 
-Every **P01–P30** plant page has a fourth chart, **Time between waterings**, at
+Every current plant page (**P01–P32** in the maintained roster) has a fourth chart, **Time between waterings**, at
 **A111**, with its calculation status at **A109**. Each column is a completed
 gap between two recorded watering dates. Its height and label show whole
 calendar days; the date underneath is the later watering. For example,
@@ -349,7 +355,7 @@ The unfinished gap since the latest watering stays in the existing
 
 [`watering-intervals.mjs`](watering-intervals.mjs) builds a separate additive
 migration. Its **Watering intervals** helper (`sheetId` **907202605**) contains
-three columns per permanent plant ID in P01–P30 order: previous date, later
+three columns per permanent plant ID in P01–P32 order: previous date, later
 date, and days between. It is hidden, warning-protected, and not an AppSheet
 table. Formulas cover **History rows 2–5000**. The migration checks the source
 headers, history capacity, plant roster, existing three-chart layout, and empty
@@ -422,8 +428,8 @@ npm run lint
 
 The current-weight comparison is maintained separately in
 [`weight-difference.mjs`](weight-difference.mjs). Its helper uses
-**Dry-down insights W1:X31**, looking up **Dashboard I7:I36** by permanent plant
-ID. Keep that helper in P01–P30 order so its point colors retain their meaning.
+**Dry-down insights W1:X33**, looking up **Dashboard I7:I38** by permanent plant
+ID after the roster expansion. Keep that helper in P01–P32 order so its point colors retain their meaning.
 The same migration adds the Dashboard column and formats the plant headers;
 follow its [workbook runbook](README.md#current-weight-difference-and-plant-headers)
 instead of replaying the original Insights or color migrations.

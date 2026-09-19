@@ -130,6 +130,7 @@ export function appsScriptApi(context) {
         refreshGardenWorkbookPages01To10: null,
         refreshGardenWorkbookPages11To20: null,
         refreshGardenWorkbookPages21To30: null,
+        refreshGardenWorkbookPages31To32: null,
         refreshPlantPage_: null,
         remeasureStatusFormula_: null,
         removeSelectedHistoryObservations: null,

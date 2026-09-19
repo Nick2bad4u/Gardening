@@ -232,12 +232,24 @@ function portraitDescriptions() {
             "Three pale-haired cactus stems trailing from a hanging terracotta basket.",
         ],
         [
+            "echeveria-cubic-frost",
+            "A pale lilac rosette with angular upturned leaves above a warm cream pot.",
+        ],
+        [
+            "echeveria-harmsii-ruby-slippers",
+            "Branching narrow green leaves with ruby-red margins in a golden planter.",
+        ],
+        [
             "echeveria-pulidonis",
             "A gray-green succulent rosette with thin red leaf margins in a blue planter.",
         ],
         [
             "echeveria-raindrops",
             "A blue-green succulent rosette with rounded raised leaf bumps in a yellow planter.",
+        ],
+        [
+            "echeveria-setosa-deminuta",
+            "A small blue-green rosette and offset with pale fuzzy leaf detail in a terracotta planter.",
         ],
         [
             "echinocereus-rigidissimus-rubispinus",
@@ -262,6 +274,10 @@ function portraitDescriptions() {
         [
             "faucaria-tuberculosa",
             "Three opposing pairs of thick triangular green leaves with pale marginal teeth and raised white tubercles.",
+        ],
+        [
+            "four-succulent-planter",
+            "Lilac Cubic Frost, golden Coppertone, fuzzy blue-green Deminuta, and red-edged Ruby Slippers share one light-colored round planter.",
         ],
         [
             "gymnocalycium-mihanovichii-black-widow",
@@ -336,6 +352,10 @@ function portraitDescriptions() {
             "A fine branching reddish-brown succulent shrub with small rounded green leaves in opposite pairs.",
         ],
         [
+            "sedum-adolphi-coppertone",
+            "Branching stems with plump golden-orange leaves in a sage planter.",
+        ],
+        [
             "sempervivum-coconut-crystal",
             "A tightly layered lime-green rosette with pointed leaves and muted burgundy leaf bases in a yellow planter.",
         ],
@@ -359,6 +379,10 @@ function portraitDescriptions() {
             "tiny-mixed-succulent-planter",
             "Two large pale rosettes and a smaller open rosette surround broad red-edged green paddles, copper-orange shoots, and a green-and-burgundy shoot in a striped terracotta planter.",
         ],
+        [
+            "tradescantia-nanouk",
+            "Pink, cream, and green striped pointed leaves on branching stems above a mauve beaded pot.",
+        ],
     ]);
 }
 
@@ -379,6 +403,7 @@ function profileTitles(profileData) {
         "Shared rehab cactus planter · #1"
     );
     titles.set("shared-succulent-planter", "Shared succulent planter · #2");
+    titles.set("four-succulent-planter", "Four-succulent planter · #7");
     return titles;
 }
 

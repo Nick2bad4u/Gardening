@@ -138,7 +138,7 @@
   returns the full native chart metadata. Rehearse on a separate native copy,
   apply helper formulas before chart requests, and verify calculation and
   retained series colors after creation.
-- Every P01–P30 page has a watering-interval status at A109 and chart anchored
+- Every current Pxx page has a watering-interval status at A109 and chart anchored
   at A111, maintained by `watering-intervals.mjs`. Its hidden, warning-protected
   `Watering intervals` helper is derived from History and is not an AppSheet
   table. Keep whole calendar-day gaps between distinct non-removed Water

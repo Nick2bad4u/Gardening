@@ -132,6 +132,7 @@ function plateauTail(pot) {
 function portraitFor(id, slug) {
     if (id === "P19") return "shared-rehab-cactus-planter";
     if (id === "P20") return "shared-succulent-planter";
+    if (id === "P31") return "four-succulent-planter";
     return slug;
 }
 
