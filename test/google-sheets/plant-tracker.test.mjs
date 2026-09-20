@@ -6860,6 +6860,75 @@ describe("garden logger AppSheet bulk submission and validation", () => {
 });
 
 describe("garden logger AppSheet staging migration and trigger installation", () => {
+    it("normalizes array-valued bulk selections without mutating the staged round", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet());
+        const round = emptyCells(56);
+        round[appSheetBulkActionIndex] = "Water + weigh";
+        round[appSheetBulkWeightStartIndex] = 300;
+        // Exercise the supported external array shape, which native Sheet cells
+        // ordinarily serialize as comma-separated text.
+        Reflect.set(round, appSheetBulkSelectedPlantsIndex, [" P01 ", "P02"]);
+        const before = structuredClone(round);
+
+        const requests = context.appSheetBulkPayloadsFromRow_(
+            round,
+            "ARRAY-SELECTION"
+        );
+
+        expect(
+            structuredClone(requests.map(({ plantId }) => plantId))
+        ).toStrictEqual(["P01", "P02"]);
+        expect(requests[0]?.payload).toMatchObject({
+            events: ["Water", "Weigh"],
+            plantId: "P01",
+            weight: 300,
+        });
+        expect(requests[1]?.payload).toMatchObject({
+            events: ["Water"],
+            plantId: "P02",
+            weight: "",
+        });
+        expect(round).toStrictEqual(before);
+    });
+
+    it.each(["P31", "P32"])(
+        "rejects mixed active/archived array selections for %s before writing any observations",
+        (plantId) => {
+            expect.hasAssertions();
+
+            const workbook = createLoggerWorkbook(["P01"]);
+            const round = emptyCells(56);
+            round[0] = `ARRAY-${plantId}`;
+            round[appSheetBulkActionIndex] = "Weigh";
+            round[appSheetBulkWeightStartIndex] = 300;
+            round[appSheetBulkStatusIndex] = "Queued";
+            const selection = ["P01", ` ${plantId} `];
+            Reflect.set(round, appSheetBulkSelectedPlantsIndex, selection);
+            required(workbook.sheets.get("App bulk")).__rows.push(round);
+            const before = structuredClone(workbook.history.__rows);
+            const context = loadAppsScript(workbook.history, {
+                globals: workbook.globals,
+                spreadsheet: workbook.spreadsheet,
+            });
+
+            const result = context.processQueuedAppSheetEntries();
+
+            expect(result.bulk["needsCorrectionCount"]).toBe(1);
+            expect(result.bulk["savedRequestCount"]).toBe(0);
+            expect(round[appSheetBulkStatusIndex]).toBe("Needs correction");
+            expect(round[appSheetBulkStatusIndex + 1]).toMatch(
+                /archived canceled-order IDs/v
+            );
+            expect(round[appSheetBulkSelectedPlantsIndex]).toStrictEqual(
+                selection
+            );
+            expect(round[appSheetBulkWeightStartIndex]).toBe(300);
+            expect(workbook.history.__rows).toStrictEqual(before);
+        }
+    );
+
     it.each(["P31", "P32"])(
         "rejects archived %s drafts even when stale tracker rows remain",
         (plantId) => {
