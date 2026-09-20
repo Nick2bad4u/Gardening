@@ -1,3 +1,4 @@
+import { archivedAmazonPlan } from "./old-plans.mjs";
 import { potUrl, profileUrl, siteUrl } from "./routes.mjs";
 
 /**
@@ -66,6 +67,18 @@ export function legacyData(profiles) {
             data.pots[profile.trackerId] = potUrl(profile.trackerId);
         }
     }
+    for (const [slug] of archivedAmazonPlan.profiles) {
+        data.profiles[slug] = siteUrl(
+            `guides/old-plans/${archivedAmazonPlan.folder}/${slug}/`
+        );
+    }
+    for (const id of archivedAmazonPlan.pots) {
+        data.pots[id] = siteUrl(
+            `guides/old-plans/${archivedAmazonPlan.overview}/`
+        );
+    }
+    data.labels["#7"] = "P31";
+    data.labels["#8"] = "P32";
     return data;
 }
 
@@ -115,8 +128,12 @@ export function resolveLegacy(data, fallback, isRedirectPage = false) {
         );
         for (const [slug, href] of profiles) {
             if (normalized === slug) return href;
-            if (normalized.startsWith(`${slug}-`))
-                return `${href}#${normalized}`;
+            if (normalized.startsWith(`${slug}-`)) {
+                const section = href.includes("/guides/old-plans/")
+                    ? normalized.slice(slug.length + 1)
+                    : normalized;
+                return `${href}#${section}`;
+            }
         }
         return undefined;
     };

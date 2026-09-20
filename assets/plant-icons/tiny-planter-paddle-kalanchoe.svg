@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="tiny-planter-paddle-kalanchoe-title tiny-planter-paddle-kalanchoe-description" data-plant-slug="tiny-planter-paddle-kalanchoe" focusable="false">
+  <title id="tiny-planter-paddle-kalanchoe-title">Paddle kalanchoe plant portrait</title>
+  <desc id="tiny-planter-paddle-kalanchoe-description">Illustrative broad green paddles with red edges in a terracotta pot; unresolved paddle kalanchoe group within the shared planter, not a separate container.</desc>
+  <defs>
+  <linearGradient id="tiny-planter-paddle-kalanchoe-pot" x1="0" x2="0.9" y1="0" y2="1">
+          <stop offset="0" stop-color="#f3ad73" />
+          <stop offset="1" stop-color="#c75d3a" />
+        </linearGradient>
+  <linearGradient id="tiny-planter-paddle-kalanchoe-paddle" x1="0.2" y1="0" x2="0.8" y2="1">
+          <stop offset="0" stop-color="#c5d881" />
+          <stop offset="0.55" stop-color="#9cbd65" />
+          <stop offset="1" stop-color="#678b4f" />
+        </linearGradient>
+  <g id="tiny-planter-paddle-kalanchoe-paddle-leaf">
+          <path
+            d="M0 1C-4-1-7-7-6.5-14-6.2-19-2.5-21 0-21 3-21 6.2-18 6.5-14 7-7 4-1 0 1Z"
+            fill="url(#tiny-planter-paddle-kalanchoe-paddle)"
+            stroke="#a46454"
+            stroke-width="0.8"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M0-2Q-0.8-9 0-16"
+            fill="none"
+            stroke="#d5df9c"
+            stroke-width="0.55"
+            stroke-linecap="round"
+          />
+        </g>
+  </defs>
+  <ellipse cx="32" cy="60" rx="22" ry="2" fill="#294d3d" opacity="0.12" />
+  <path d="M11 44H53L49 58Q32 63 15 58Z" fill="url(#tiny-planter-paddle-kalanchoe-pot)" stroke="#945f49" stroke-width="1.5" />
+  <ellipse cx="32" cy="44" rx="21" ry="4" fill="#705445" stroke="#945f49" stroke-width="1.5" />
+  <path d="M14 49Q32 54 50 49M16 54Q32 58 48 54" fill="none" stroke="#ffe2b5" stroke-width="1.2" opacity="0.75" />
+  <use href="#tiny-planter-paddle-kalanchoe-paddle-leaf" transform="translate(32 42) rotate(-48) scale(1.4)" />
+  <use href="#tiny-planter-paddle-kalanchoe-paddle-leaf" transform="translate(32 42) rotate(43) scale(1.4)" />
+  <use href="#tiny-planter-paddle-kalanchoe-paddle-leaf" transform="translate(32 41) rotate(-20) scale(1.45)" />
+  <use href="#tiny-planter-paddle-kalanchoe-paddle-leaf" transform="translate(32 42) rotate(22) scale(1.25)" />
+  <use href="#tiny-planter-paddle-kalanchoe-paddle-leaf" transform="translate(32 42) rotate(0) scale(0.85)" />
+</svg>

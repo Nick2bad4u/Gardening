@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-09-19
+Last updated: 2026-09-20
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
@@ -25,7 +25,7 @@ triggers below do not replace that equipment limit.
 
 ## Baseline routine
 
-**New containers:** #7 / P31 combines [Cubic Frost](./plants/succulents/echeveria-cubic-frost.md), [Coppertone](./plants/succulents/sedum-adolphi-coppertone.md), [Deminuta](./plants/succulents/echeveria-setosa-deminuta.md), and [Ruby Slippers](./plants/succulents/echeveria-harmsii-ruby-slippers.md) in one eight-inch planter. Weigh and water the shared container once, while retaining the four individual care profiles. #8 / P32 [Nanouk tradescantia](./plants/houseplants/tradescantia-nanouk.md) is separate in a four-inch pot without a saucer. Its upper mix can dry between waterings, but do not deliberately wait for the whole root ball to reach cactus-level dryness or a weight plateau. A gritty mix and strong circulation affect drying; they do not provide immunity from wet-root damage. [Costa Farms Nanouk care](https://costafarms.com/blogs/plant-finder/nanouk-tradescantia)
+**Archived plan:** the five unreceived Amazon plants are excluded from the active care routine; see the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Their former #7 / P31 and #8 / P32 allocations do not create current weighing, watering, or feeding tasks. Cancellation remains pending.
 
 1. Give the plants strong light, but increase intensity gradually after a
    low-light period or a major move.
@@ -33,7 +33,7 @@ triggers below do not replace that equipment limit.
    root ball, let it drain, and empty the tray. Verify drainage in a shared
    planter, especially the square wooden box, before using soak-through watering.
 3. For the usual cactus and succulent group, check that the root-zone mix is
-   dry and the plant is ready before watering again. Money tree, Nanouk, Royal Flush,
+   dry and the plant is ready before watering again. Money tree, Royal Flush,
    active/resting Kiwi aeonium, and shared containers need the specific checks
    below; one whole-pot rule does not cover the collection.
 4. Keep gentle air movement across the group without aiming a harsh, constant
@@ -478,13 +478,11 @@ weekly for even window growth.
   Altman Plants _F. tigrina_ label retained as conflicting seller evidence. Begin in a
   bright acclimation position, let the root zone dry through, and use leaf
   firmness plus pot-weight history rather than a fixed calendar.
-- `P30`/`#6` is sold as a Smart Planet Home five-plant garden and deliberately remains one mixed-planter record. Its pale
+- `P30`/`#6` is sold as a Smart Planet Home five-plant garden and remains one weighed container, now with an aggregate overview and [three component-group pages](./plants/succulents/tiny-mixed-succulent-planter.md#component-pages). Its pale
   _Echeveria_-like rosettes, orange _Sedum_-like growth, and red-edged
   _Kalanchoe_-like paddles may respond differently, so inspect the components
   individually while watering and weighing the shared root volume as one pot.
-- Both were repotted on 2026-09-02, but exact pot size, mix, placement, weight,
-  and dimensions remain unrecorded. Establish those facts before deriving care
-  decisions from the new logger records.
+- Both were repotted on 2026-09-02. Exact pot size, mix, placement, weight, and dimensions were missing from the original acquisition note; consult the current placement guide and eligible live observations for later evidence. The new component pages do not reset P30's setup, references, or care clock.
 
 ## Removed cactus: historical record
 

@@ -4487,29 +4487,493 @@
             ]
         },
         {
-            "plant_slug": "echeveria-cubic-frost",
-            "photos": [],
-            "pending_note": "Active collection profile registered September 19, 2026 at the owner’s request. An owned-plant photograph has not yet been published; seller imagery is not collection evidence."
+            "plant_slug": "tiny-planter-echeveria",
+            "gyazo_collection": {
+                "id": "fbf249c03364e1640e2d5c8d573c49d2",
+                "url": "https://gyazo.com/collections/fbf249c03364e1640e2d5c8d573c49d2"
+            },
+            "photos": [
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-02",
+                    "view": "context",
+                    "alt": "Tuberculate tiger jaws and the tiny mixed succulent planter together after repotting",
+                    "caption": "Shared post-repot context view of the two Home Depot arrivals on September 2, 2026; P29 / #5 is at left and P30 / #6 is at right.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-02-faucaria-tuberculosa-context.jpg",
+                    "provider": "gyazo",
+                    "image_id": "1969eb198d71008ab4e14d38663bcdec",
+                    "image_url": "https://i.gyazo.com/1969eb198d71008ab4e14d38663bcdec.jpg",
+                    "page_url": "https://gyazo.com/1969eb198d71008ab4e14d38663bcdec",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Tuberculate tiger jaws and the tiny mixed succulent planter together after repotting",
+                        "url": "https://nick2bad4u.github.io/Gardening/#faucaria-tuberculosa",
+                        "desc": "Shared post-repot context view of the two Home Depot arrivals on September 2, 2026; P29 / #5 is at left and P30 / #6 is at right. Captured 2026-09-02; view: context; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-02",
+                    "view": "receipt-context",
+                    "alt": "Both Home Depot succulent purchases in the car before repotting",
+                    "caption": "Shared receipt context for P29 / #5 and P30 / #6 before repotting on September 2, 2026.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-02-faucaria-tuberculosa-receipt-context.jpg",
+                    "provider": "gyazo",
+                    "image_id": "3b636217ef84655d3f91bbe54d277b58",
+                    "image_url": "https://i.gyazo.com/3b636217ef84655d3f91bbe54d277b58.jpg",
+                    "page_url": "https://gyazo.com/3b636217ef84655d3f91bbe54d277b58",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Both Home Depot succulent purchases in the car before repotting",
+                        "url": "https://nick2bad4u.github.io/Gardening/#faucaria-tuberculosa",
+                        "desc": "Shared receipt context for P29 / #5 and P30 / #6 before repotting on September 2, 2026. Captured 2026-09-02; view: receipt-context; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-02",
+                    "view": "three-quarter",
+                    "alt": "Three-quarter view of the tiny mixed succulent planter after repotting",
+                    "caption": "Current three-quarter view of P30 / #6, showing pale rosettes, copper-orange stems, and broad red-edged leaves after repotting.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-02-tiny-mixed-succulent-planter-three-quarter.jpg",
+                    "provider": "gyazo",
+                    "image_id": "bdf70b0ece57c89c782c860e4f557c4f",
+                    "image_url": "https://i.gyazo.com/bdf70b0ece57c89c782c860e4f557c4f.jpg",
+                    "page_url": "https://gyazo.com/bdf70b0ece57c89c782c860e4f557c4f",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Three-quarter view of the tiny mixed succulent planter after repotting",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Current three-quarter view of P30 / #6, showing pale rosettes, copper-orange stems, and broad red-edged leaves after repotting. Captured 2026-09-02; view: three-quarter; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-02",
+                    "view": "opposite-side",
+                    "alt": "Opposite-side view of the tiny mixed succulent planter after repotting",
+                    "caption": "Opposite-side current view of P30 / #6, retained to track the separate component plants without assigning unsupported cultivar names.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-02-tiny-mixed-succulent-planter-opposite-side.jpg",
+                    "provider": "gyazo",
+                    "image_id": "5b9d1a76d513495570a7ad039563ad5d",
+                    "image_url": "https://i.gyazo.com/5b9d1a76d513495570a7ad039563ad5d.jpg",
+                    "page_url": "https://gyazo.com/5b9d1a76d513495570a7ad039563ad5d",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Opposite-side view of the tiny mixed succulent planter after repotting",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Opposite-side current view of P30 / #6, retained to track the separate component plants without assigning unsupported cultivar names. Captured 2026-09-02; view: opposite-side; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-02",
+                    "view": "top",
+                    "alt": "Top view of the tiny mixed succulent planter after repotting",
+                    "caption": "Current top view of P30 / #6 after repotting on September 2, 2026.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-02-tiny-mixed-succulent-planter-top.jpg",
+                    "provider": "gyazo",
+                    "image_id": "52ca4a6bae0a377ae39bac78665e32f9",
+                    "image_url": "https://i.gyazo.com/52ca4a6bae0a377ae39bac78665e32f9.jpg",
+                    "page_url": "https://gyazo.com/52ca4a6bae0a377ae39bac78665e32f9",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Top view of the tiny mixed succulent planter after repotting",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Current top view of P30 / #6 after repotting on September 2, 2026. Captured 2026-09-02; view: top; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "nursery-label",
+                    "captured_on": "2026-09-02",
+                    "view": "label-front",
+                    "alt": "Front of the Smart Planet Home nursery label for P30 mixed succulent planter",
+                    "caption": "Retail label front photographed September 2, 2026: Smart Planet Home branding and Plant smart, Decorate smart tagline.",
+                    "source_file": "assets/nursery-labels/2026-09-02-p30-smart-planet-label-front.webp",
+                    "publication_name": "2026-09-02-tiny-mixed-succulent-planter-label-front.webp",
+                    "provider": "gyazo",
+                    "image_id": "a9b8fd1b6ab2e49c263806566ad79087",
+                    "image_url": "https://i.gyazo.com/a9b8fd1b6ab2e49c263806566ad79087.webp",
+                    "page_url": "https://gyazo.com/a9b8fd1b6ab2e49c263806566ad79087",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Front of the Smart Planet Home nursery label for P30 mixed succulent planter",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Retail label front photographed September 2, 2026: Smart Planet Home branding and Plant smart, Decorate smart tagline. Captured 2026-09-02; view: label-front; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "nursery-label",
+                    "captured_on": "2026-09-02",
+                    "view": "label-back",
+                    "alt": "Back of the Altman Plants nursery label for P30 five-inch terra-cotta succulent garden with price, product number, barcode, care QR, and container-capacity markings",
+                    "caption": "Retail label back photographed September 2, 2026: 5-inch clay terra-cotta C and S garden, Altman Plants, Home Depot product 1002971690, 7.98-dollar price, care QR, and printed 11-ounce container capacity.",
+                    "source_file": "assets/nursery-labels/2026-09-02-p30-smart-planet-label-back.webp",
+                    "publication_name": "2026-09-02-tiny-mixed-succulent-planter-label-back.webp",
+                    "provider": "gyazo",
+                    "image_id": "5f9403cceb7fc06b3ab32881f7a3c31c",
+                    "image_url": "https://i.gyazo.com/5f9403cceb7fc06b3ab32881f7a3c31c.webp",
+                    "page_url": "https://gyazo.com/5f9403cceb7fc06b3ab32881f7a3c31c",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Back of the Altman Plants nursery label for P30 five-inch terra-cotta succulent garden with price, product number, barcode, care QR, and container-capacity markings",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Retail label back photographed September 2, 2026: 5-inch clay terra-cotta C and S garden, Altman Plants, Home Depot product 1002971690, 7.98-dollar price, care QR, and printed 11-ounce container capacity. Captured 2026-09-02; view: label-back; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-16",
+                    "view": "plant",
+                    "alt": "Tiny mixed succulent planter (#6) plant view on September 16, 2026",
+                    "caption": "Several differently colored rosettes and broad paddle-like leaves share the small orange pot. Leaves appear intact overall; a dry tan/brown leaf and patchy rubbed-looking areas on pale leaves are visible. Photograph documents visible appearance; it does not establish moisture, firmness or a diagnosis.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-16-tiny-mixed-succulent-planter-plant.webp",
+                    "provider": "gyazo",
+                    "image_id": "83d1ae73a807f1826755282af1fde4ce",
+                    "image_url": "https://i.gyazo.com/83d1ae73a807f1826755282af1fde4ce.webp",
+                    "page_url": "https://gyazo.com/83d1ae73a807f1826755282af1fde4ce",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Tiny mixed succulent planter (#6) plant view on September 16, 2026",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Several differently colored rosettes and broad paddle-like leaves share the small orange pot. Leaves appear intact overall; a dry tan/brown leaf and patchy rubbed-looking areas on pale leaves are visible. Photograph documents visible appearance; it does not establish moisture, firmness or a diagnosis. Captured 2026-09-16; view: plant; Copyright Nick; all rights reserved."
+                    },
+                    "crop_geometry": "5582x4811+4390+4369",
+                    "derivation_note": "Lossless WebP encoding of the source-resolution crop from the auto-oriented private photograph; decoded pixels match the approved lossless PNG crop, and hidden metadata is removed before upload."
+                }
+            ]
         },
         {
-            "plant_slug": "sedum-adolphi-coppertone",
-            "photos": [],
-            "pending_note": "Active collection profile registered September 19, 2026 at the owner’s request. An owned-plant photograph has not yet been published; seller imagery is not collection evidence."
+            "plant_slug": "tiny-planter-coppertone-sedum",
+            "gyazo_collection": {
+                "id": "fbf249c03364e1640e2d5c8d573c49d2",
+                "url": "https://gyazo.com/collections/fbf249c03364e1640e2d5c8d573c49d2"
+            },
+            "photos": [
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-02",
+                    "view": "context",
+                    "alt": "Tuberculate tiger jaws and the tiny mixed succulent planter together after repotting",
+                    "caption": "Shared post-repot context view of the two Home Depot arrivals on September 2, 2026; P29 / #5 is at left and P30 / #6 is at right.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-02-faucaria-tuberculosa-context.jpg",
+                    "provider": "gyazo",
+                    "image_id": "1969eb198d71008ab4e14d38663bcdec",
+                    "image_url": "https://i.gyazo.com/1969eb198d71008ab4e14d38663bcdec.jpg",
+                    "page_url": "https://gyazo.com/1969eb198d71008ab4e14d38663bcdec",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Tuberculate tiger jaws and the tiny mixed succulent planter together after repotting",
+                        "url": "https://nick2bad4u.github.io/Gardening/#faucaria-tuberculosa",
+                        "desc": "Shared post-repot context view of the two Home Depot arrivals on September 2, 2026; P29 / #5 is at left and P30 / #6 is at right. Captured 2026-09-02; view: context; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-02",
+                    "view": "receipt-context",
+                    "alt": "Both Home Depot succulent purchases in the car before repotting",
+                    "caption": "Shared receipt context for P29 / #5 and P30 / #6 before repotting on September 2, 2026.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-02-faucaria-tuberculosa-receipt-context.jpg",
+                    "provider": "gyazo",
+                    "image_id": "3b636217ef84655d3f91bbe54d277b58",
+                    "image_url": "https://i.gyazo.com/3b636217ef84655d3f91bbe54d277b58.jpg",
+                    "page_url": "https://gyazo.com/3b636217ef84655d3f91bbe54d277b58",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Both Home Depot succulent purchases in the car before repotting",
+                        "url": "https://nick2bad4u.github.io/Gardening/#faucaria-tuberculosa",
+                        "desc": "Shared receipt context for P29 / #5 and P30 / #6 before repotting on September 2, 2026. Captured 2026-09-02; view: receipt-context; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-02",
+                    "view": "three-quarter",
+                    "alt": "Three-quarter view of the tiny mixed succulent planter after repotting",
+                    "caption": "Current three-quarter view of P30 / #6, showing pale rosettes, copper-orange stems, and broad red-edged leaves after repotting.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-02-tiny-mixed-succulent-planter-three-quarter.jpg",
+                    "provider": "gyazo",
+                    "image_id": "bdf70b0ece57c89c782c860e4f557c4f",
+                    "image_url": "https://i.gyazo.com/bdf70b0ece57c89c782c860e4f557c4f.jpg",
+                    "page_url": "https://gyazo.com/bdf70b0ece57c89c782c860e4f557c4f",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Three-quarter view of the tiny mixed succulent planter after repotting",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Current three-quarter view of P30 / #6, showing pale rosettes, copper-orange stems, and broad red-edged leaves after repotting. Captured 2026-09-02; view: three-quarter; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-02",
+                    "view": "opposite-side",
+                    "alt": "Opposite-side view of the tiny mixed succulent planter after repotting",
+                    "caption": "Opposite-side current view of P30 / #6, retained to track the separate component plants without assigning unsupported cultivar names.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-02-tiny-mixed-succulent-planter-opposite-side.jpg",
+                    "provider": "gyazo",
+                    "image_id": "5b9d1a76d513495570a7ad039563ad5d",
+                    "image_url": "https://i.gyazo.com/5b9d1a76d513495570a7ad039563ad5d.jpg",
+                    "page_url": "https://gyazo.com/5b9d1a76d513495570a7ad039563ad5d",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Opposite-side view of the tiny mixed succulent planter after repotting",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Opposite-side current view of P30 / #6, retained to track the separate component plants without assigning unsupported cultivar names. Captured 2026-09-02; view: opposite-side; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-02",
+                    "view": "top",
+                    "alt": "Top view of the tiny mixed succulent planter after repotting",
+                    "caption": "Current top view of P30 / #6 after repotting on September 2, 2026.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-02-tiny-mixed-succulent-planter-top.jpg",
+                    "provider": "gyazo",
+                    "image_id": "52ca4a6bae0a377ae39bac78665e32f9",
+                    "image_url": "https://i.gyazo.com/52ca4a6bae0a377ae39bac78665e32f9.jpg",
+                    "page_url": "https://gyazo.com/52ca4a6bae0a377ae39bac78665e32f9",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Top view of the tiny mixed succulent planter after repotting",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Current top view of P30 / #6 after repotting on September 2, 2026. Captured 2026-09-02; view: top; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "nursery-label",
+                    "captured_on": "2026-09-02",
+                    "view": "label-front",
+                    "alt": "Front of the Smart Planet Home nursery label for P30 mixed succulent planter",
+                    "caption": "Retail label front photographed September 2, 2026: Smart Planet Home branding and Plant smart, Decorate smart tagline.",
+                    "source_file": "assets/nursery-labels/2026-09-02-p30-smart-planet-label-front.webp",
+                    "publication_name": "2026-09-02-tiny-mixed-succulent-planter-label-front.webp",
+                    "provider": "gyazo",
+                    "image_id": "a9b8fd1b6ab2e49c263806566ad79087",
+                    "image_url": "https://i.gyazo.com/a9b8fd1b6ab2e49c263806566ad79087.webp",
+                    "page_url": "https://gyazo.com/a9b8fd1b6ab2e49c263806566ad79087",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Front of the Smart Planet Home nursery label for P30 mixed succulent planter",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Retail label front photographed September 2, 2026: Smart Planet Home branding and Plant smart, Decorate smart tagline. Captured 2026-09-02; view: label-front; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "nursery-label",
+                    "captured_on": "2026-09-02",
+                    "view": "label-back",
+                    "alt": "Back of the Altman Plants nursery label for P30 five-inch terra-cotta succulent garden with price, product number, barcode, care QR, and container-capacity markings",
+                    "caption": "Retail label back photographed September 2, 2026: 5-inch clay terra-cotta C and S garden, Altman Plants, Home Depot product 1002971690, 7.98-dollar price, care QR, and printed 11-ounce container capacity.",
+                    "source_file": "assets/nursery-labels/2026-09-02-p30-smart-planet-label-back.webp",
+                    "publication_name": "2026-09-02-tiny-mixed-succulent-planter-label-back.webp",
+                    "provider": "gyazo",
+                    "image_id": "5f9403cceb7fc06b3ab32881f7a3c31c",
+                    "image_url": "https://i.gyazo.com/5f9403cceb7fc06b3ab32881f7a3c31c.webp",
+                    "page_url": "https://gyazo.com/5f9403cceb7fc06b3ab32881f7a3c31c",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Back of the Altman Plants nursery label for P30 five-inch terra-cotta succulent garden with price, product number, barcode, care QR, and container-capacity markings",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Retail label back photographed September 2, 2026: 5-inch clay terra-cotta C and S garden, Altman Plants, Home Depot product 1002971690, 7.98-dollar price, care QR, and printed 11-ounce container capacity. Captured 2026-09-02; view: label-back; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-16",
+                    "view": "plant",
+                    "alt": "Tiny mixed succulent planter (#6) plant view on September 16, 2026",
+                    "caption": "Several differently colored rosettes and broad paddle-like leaves share the small orange pot. Leaves appear intact overall; a dry tan/brown leaf and patchy rubbed-looking areas on pale leaves are visible. Photograph documents visible appearance; it does not establish moisture, firmness or a diagnosis.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-16-tiny-mixed-succulent-planter-plant.webp",
+                    "provider": "gyazo",
+                    "image_id": "83d1ae73a807f1826755282af1fde4ce",
+                    "image_url": "https://i.gyazo.com/83d1ae73a807f1826755282af1fde4ce.webp",
+                    "page_url": "https://gyazo.com/83d1ae73a807f1826755282af1fde4ce",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Tiny mixed succulent planter (#6) plant view on September 16, 2026",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Several differently colored rosettes and broad paddle-like leaves share the small orange pot. Leaves appear intact overall; a dry tan/brown leaf and patchy rubbed-looking areas on pale leaves are visible. Photograph documents visible appearance; it does not establish moisture, firmness or a diagnosis. Captured 2026-09-16; view: plant; Copyright Nick; all rights reserved."
+                    },
+                    "crop_geometry": "5582x4811+4390+4369",
+                    "derivation_note": "Lossless WebP encoding of the source-resolution crop from the auto-oriented private photograph; decoded pixels match the approved lossless PNG crop, and hidden metadata is removed before upload."
+                }
+            ]
         },
         {
-            "plant_slug": "echeveria-setosa-deminuta",
-            "photos": [],
-            "pending_note": "Active collection profile registered September 19, 2026 at the owner’s request. An owned-plant photograph has not yet been published; seller imagery is not collection evidence."
-        },
-        {
-            "plant_slug": "echeveria-harmsii-ruby-slippers",
-            "photos": [],
-            "pending_note": "Active collection profile registered September 19, 2026 at the owner’s request. An owned-plant photograph has not yet been published; seller imagery is not collection evidence."
-        },
-        {
-            "plant_slug": "tradescantia-nanouk",
-            "photos": [],
-            "pending_note": "Active collection profile registered September 19, 2026 at the owner’s request. An owned-plant photograph has not yet been published; seller imagery is not collection evidence."
+            "plant_slug": "tiny-planter-paddle-kalanchoe",
+            "gyazo_collection": {
+                "id": "fbf249c03364e1640e2d5c8d573c49d2",
+                "url": "https://gyazo.com/collections/fbf249c03364e1640e2d5c8d573c49d2"
+            },
+            "photos": [
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-02",
+                    "view": "context",
+                    "alt": "Tuberculate tiger jaws and the tiny mixed succulent planter together after repotting",
+                    "caption": "Shared post-repot context view of the two Home Depot arrivals on September 2, 2026; P29 / #5 is at left and P30 / #6 is at right.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-02-faucaria-tuberculosa-context.jpg",
+                    "provider": "gyazo",
+                    "image_id": "1969eb198d71008ab4e14d38663bcdec",
+                    "image_url": "https://i.gyazo.com/1969eb198d71008ab4e14d38663bcdec.jpg",
+                    "page_url": "https://gyazo.com/1969eb198d71008ab4e14d38663bcdec",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Tuberculate tiger jaws and the tiny mixed succulent planter together after repotting",
+                        "url": "https://nick2bad4u.github.io/Gardening/#faucaria-tuberculosa",
+                        "desc": "Shared post-repot context view of the two Home Depot arrivals on September 2, 2026; P29 / #5 is at left and P30 / #6 is at right. Captured 2026-09-02; view: context; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-02",
+                    "view": "receipt-context",
+                    "alt": "Both Home Depot succulent purchases in the car before repotting",
+                    "caption": "Shared receipt context for P29 / #5 and P30 / #6 before repotting on September 2, 2026.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-02-faucaria-tuberculosa-receipt-context.jpg",
+                    "provider": "gyazo",
+                    "image_id": "3b636217ef84655d3f91bbe54d277b58",
+                    "image_url": "https://i.gyazo.com/3b636217ef84655d3f91bbe54d277b58.jpg",
+                    "page_url": "https://gyazo.com/3b636217ef84655d3f91bbe54d277b58",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Both Home Depot succulent purchases in the car before repotting",
+                        "url": "https://nick2bad4u.github.io/Gardening/#faucaria-tuberculosa",
+                        "desc": "Shared receipt context for P29 / #5 and P30 / #6 before repotting on September 2, 2026. Captured 2026-09-02; view: receipt-context; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-02",
+                    "view": "three-quarter",
+                    "alt": "Three-quarter view of the tiny mixed succulent planter after repotting",
+                    "caption": "Current three-quarter view of P30 / #6, showing pale rosettes, copper-orange stems, and broad red-edged leaves after repotting.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-02-tiny-mixed-succulent-planter-three-quarter.jpg",
+                    "provider": "gyazo",
+                    "image_id": "bdf70b0ece57c89c782c860e4f557c4f",
+                    "image_url": "https://i.gyazo.com/bdf70b0ece57c89c782c860e4f557c4f.jpg",
+                    "page_url": "https://gyazo.com/bdf70b0ece57c89c782c860e4f557c4f",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Three-quarter view of the tiny mixed succulent planter after repotting",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Current three-quarter view of P30 / #6, showing pale rosettes, copper-orange stems, and broad red-edged leaves after repotting. Captured 2026-09-02; view: three-quarter; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-02",
+                    "view": "opposite-side",
+                    "alt": "Opposite-side view of the tiny mixed succulent planter after repotting",
+                    "caption": "Opposite-side current view of P30 / #6, retained to track the separate component plants without assigning unsupported cultivar names.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-02-tiny-mixed-succulent-planter-opposite-side.jpg",
+                    "provider": "gyazo",
+                    "image_id": "5b9d1a76d513495570a7ad039563ad5d",
+                    "image_url": "https://i.gyazo.com/5b9d1a76d513495570a7ad039563ad5d.jpg",
+                    "page_url": "https://gyazo.com/5b9d1a76d513495570a7ad039563ad5d",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Opposite-side view of the tiny mixed succulent planter after repotting",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Opposite-side current view of P30 / #6, retained to track the separate component plants without assigning unsupported cultivar names. Captured 2026-09-02; view: opposite-side; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-02",
+                    "view": "top",
+                    "alt": "Top view of the tiny mixed succulent planter after repotting",
+                    "caption": "Current top view of P30 / #6 after repotting on September 2, 2026.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-02-tiny-mixed-succulent-planter-top.jpg",
+                    "provider": "gyazo",
+                    "image_id": "52ca4a6bae0a377ae39bac78665e32f9",
+                    "image_url": "https://i.gyazo.com/52ca4a6bae0a377ae39bac78665e32f9.jpg",
+                    "page_url": "https://gyazo.com/52ca4a6bae0a377ae39bac78665e32f9",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Top view of the tiny mixed succulent planter after repotting",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Current top view of P30 / #6 after repotting on September 2, 2026. Captured 2026-09-02; view: top; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "nursery-label",
+                    "captured_on": "2026-09-02",
+                    "view": "label-front",
+                    "alt": "Front of the Smart Planet Home nursery label for P30 mixed succulent planter",
+                    "caption": "Retail label front photographed September 2, 2026: Smart Planet Home branding and Plant smart, Decorate smart tagline.",
+                    "source_file": "assets/nursery-labels/2026-09-02-p30-smart-planet-label-front.webp",
+                    "publication_name": "2026-09-02-tiny-mixed-succulent-planter-label-front.webp",
+                    "provider": "gyazo",
+                    "image_id": "a9b8fd1b6ab2e49c263806566ad79087",
+                    "image_url": "https://i.gyazo.com/a9b8fd1b6ab2e49c263806566ad79087.webp",
+                    "page_url": "https://gyazo.com/a9b8fd1b6ab2e49c263806566ad79087",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Front of the Smart Planet Home nursery label for P30 mixed succulent planter",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Retail label front photographed September 2, 2026: Smart Planet Home branding and Plant smart, Decorate smart tagline. Captured 2026-09-02; view: label-front; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "nursery-label",
+                    "captured_on": "2026-09-02",
+                    "view": "label-back",
+                    "alt": "Back of the Altman Plants nursery label for P30 five-inch terra-cotta succulent garden with price, product number, barcode, care QR, and container-capacity markings",
+                    "caption": "Retail label back photographed September 2, 2026: 5-inch clay terra-cotta C and S garden, Altman Plants, Home Depot product 1002971690, 7.98-dollar price, care QR, and printed 11-ounce container capacity.",
+                    "source_file": "assets/nursery-labels/2026-09-02-p30-smart-planet-label-back.webp",
+                    "publication_name": "2026-09-02-tiny-mixed-succulent-planter-label-back.webp",
+                    "provider": "gyazo",
+                    "image_id": "5f9403cceb7fc06b3ab32881f7a3c31c",
+                    "image_url": "https://i.gyazo.com/5f9403cceb7fc06b3ab32881f7a3c31c.webp",
+                    "page_url": "https://gyazo.com/5f9403cceb7fc06b3ab32881f7a3c31c",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Back of the Altman Plants nursery label for P30 five-inch terra-cotta succulent garden with price, product number, barcode, care QR, and container-capacity markings",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Retail label back photographed September 2, 2026: 5-inch clay terra-cotta C and S garden, Altman Plants, Home Depot product 1002971690, 7.98-dollar price, care QR, and printed 11-ounce container capacity. Captured 2026-09-02; view: label-back; Copyright Nick; all rights reserved."
+                    }
+                },
+                {
+                    "kind": "collection",
+                    "captured_on": "2026-09-16",
+                    "view": "plant",
+                    "alt": "Tiny mixed succulent planter (#6) plant view on September 16, 2026",
+                    "caption": "Several differently colored rosettes and broad paddle-like leaves share the small orange pot. Leaves appear intact overall; a dry tan/brown leaf and patchy rubbed-looking areas on pale leaves are visible. Photograph documents visible appearance; it does not establish moisture, firmness or a diagnosis.",
+                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "publication_name": "2026-09-16-tiny-mixed-succulent-planter-plant.webp",
+                    "provider": "gyazo",
+                    "image_id": "83d1ae73a807f1826755282af1fde4ce",
+                    "image_url": "https://i.gyazo.com/83d1ae73a807f1826755282af1fde4ce.webp",
+                    "page_url": "https://gyazo.com/83d1ae73a807f1826755282af1fde4ce",
+                    "upload_metadata": {
+                        "app": "Fenton Garden Field Guide",
+                        "title": "Tiny mixed succulent planter (#6) plant view on September 16, 2026",
+                        "url": "https://nick2bad4u.github.io/Gardening/#tiny-mixed-succulent-planter",
+                        "desc": "Several differently colored rosettes and broad paddle-like leaves share the small orange pot. Leaves appear intact overall; a dry tan/brown leaf and patchy rubbed-looking areas on pale leaves are visible. Photograph documents visible appearance; it does not establish moisture, firmness or a diagnosis. Captured 2026-09-16; view: plant; Copyright Nick; all rights reserved."
+                    },
+                    "crop_geometry": "5582x4811+4390+4369",
+                    "derivation_note": "Lossless WebP encoding of the source-resolution crop from the auto-oriented private photograph; decoded pixels match the approved lossless PNG crop, and hidden metadata is removed before upload."
+                }
+            ]
         }
     ],
     "schema_version": 3

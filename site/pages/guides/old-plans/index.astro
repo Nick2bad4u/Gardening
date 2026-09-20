@@ -1,0 +1,50 @@
+---
+import SiteLayout from "../../../components/SiteLayout.astro";
+import { getOldPlans } from "../../../lib/content.mjs";
+import { contentUrl, siteUrl } from "../../../lib/routes.mjs";
+import "../../../styles/documents.css";
+const plans = (await getOldPlans()).filter((plan) => !plan.slug.includes("/"));
+---
+
+<SiteLayout
+    title="Old plans"
+    description="Abandoned collection plans and their preserved research, separate from the active garden."
+    section="guides"
+    breadcrumbs={[
+        { label: "Guides", href: siteUrl("guides/") },
+        { label: "Old plans", href: "" },
+    ]}
+>
+    <header class="page-heading">
+        <p class="eyebrow">The collection notebook · Archived research</p>
+        <h1>Old plans</h1>
+        <p class="lede">
+            Ideas we set aside. These records preserve the research and decisions without adding
+            plants to the active collection or care schedule.
+        </p>
+    </header>
+    <div class="guide-library-grid">
+        {plans.map((plan) => (
+            <article class="guide-library-card" data-tone="record">
+                <header>
+                    <img
+                        src={siteUrl("assets/ui-icons/history.svg")}
+                        alt=""
+                        width="48"
+                        height="48"
+                    />
+                    <div>
+                        <p class="eyebrow">Archived plan</p>
+                        <h2>
+                            <a href={contentUrl(plan.sourcePath)}>{plan.title}</a>
+                        </h2>
+                    </div>
+                </header>
+                <p>{plan.description}</p>
+                <footer>
+                    <a href={contentUrl(plan.sourcePath)}>Read the old plan →</a>
+                </footer>
+            </article>
+        ))}
+    </div>
+</SiteLayout>

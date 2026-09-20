@@ -15,6 +15,13 @@ const guideAppearances = new Map([
 
 /** @param {string} sourcePath */
 export function documentAppearance(sourcePath) {
+    if (sourcePath.startsWith("docs/old-plans/")) {
+        return {
+            icon: "history",
+            label: "Old Plan · Archived Research",
+            tone: "record",
+        };
+    }
     const slug = sourcePath.split("/").at(-1)?.replace(/\.md$/v, "") ?? "";
     const guide = guideAppearances.get(slug);
     if (guide) return guide;

@@ -2,8 +2,22 @@ import { createHash } from "node:crypto";
 
 import { isRecord } from "../build-data.mjs";
 import { buildInventoryMetadataRequests } from "./inventory-metadata.mjs";
-import { plantColor } from "./plant-chart-colors.mjs";
-import palette from "./plant-colors.json" with { type: "json" };
+// Historical September 19 enrollment palette, independent of the active roster.
+const palette = [
+    { hex: "#BD704B", id: "P31", name: "Terracotta" },
+    { hex: "#A36591", id: "P32", name: "Mauve" },
+];
+
+/** @param {string} id */
+function plantColor(id) {
+    const color = palette.find((entry) => entry.id === id);
+    if (!color) throw new Error(`Unknown historical enrollment color: ${id}`);
+    return {
+        blue: Number.parseInt(color.hex.slice(5, 7), 16) / 255,
+        green: Number.parseInt(color.hex.slice(3, 5), 16) / 255,
+        red: Number.parseInt(color.hex.slice(1, 3), 16) / 255,
+    };
+}
 
 /** @typedef {import("../../test/workbook-fixtures.d.ts").EnteredValue} EnteredValue */
 /**

@@ -1,6 +1,11 @@
 import type { APIRoute } from "astro";
 
-import { getEquipmentDocs, getGuides, getProfiles } from "../lib/content.mjs";
+import {
+    getEquipmentDocs,
+    getGuides,
+    getOldPlans,
+    getProfiles,
+} from "../lib/content.mjs";
 import { stripHtml } from "../lib/content/profile-source.mjs";
 import { profileUrl, siteUrl } from "../lib/routes.mjs";
 
@@ -9,10 +14,12 @@ export const GET: APIRoute = async () => {
         profiles,
         guides,
         equipment,
+        oldPlans,
     ] = await Promise.all([
         getProfiles(),
         getGuides(),
         getEquipmentDocs(),
+        getOldPlans(),
     ]);
     const entries = [
         ...profiles.map((profile) => ({
@@ -25,6 +32,11 @@ export const GET: APIRoute = async () => {
             title: profile.title,
         })),
         ...[
+            ...oldPlans.map((doc) => ({
+                ...doc,
+                category: "Old plan · Archived",
+                href: siteUrl(`guides/old-plans/${doc.slug}/`),
+            })),
             ...guides.map((doc) => ({
                 ...doc,
                 category: "Guide",

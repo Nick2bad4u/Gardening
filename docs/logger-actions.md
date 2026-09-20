@@ -29,7 +29,7 @@ Quick log is hidden for compatibility; use the mobile logger or AppSheet for rou
 - **Plant condition**, **Soil moisture**, and **Medium / substrate** are different fields. Condition and moisture belong to Check; the growing-medium description belongs to Repot.
 - A shared planter receives one observation identity per event for that container. Its components do not receive invented individual weights.
 
-For example, `#7` / `P31` contains Cubic Frost, Coppertone, Deminuta, and Ruby Slippers. Select P31 once when weighing or watering that planter; name a particular component in the note when useful. Its four individual plant pages do not create four measurement targets. Nanouk is the separate `#8` / `P32` pot and receives its own observations. The owner does not use its saucer, so keep that assembly consistent when weighing. Adding either active inventory record is not a logged Water, Repot, Weigh, or acquisition event.
+For example, `#2` / `P20` is one shared succulent container with several botanical profiles. Select P20 once for a whole-pot weight or watering and identify a particular component in the note when useful. The same applies to #6 / P30: its overview and Succulent-10A/B/C component pages share one pot entry, with no duplicate measurement or care event. The abandoned #7 / P31 and #8 / P32 Amazon allocations are archived, unreceived, and excluded from active entry; withdrawing an administrative plan is not a plant-care event.
 
 ## The 12 Selectable Actions
 

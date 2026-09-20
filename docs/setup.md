@@ -1,14 +1,14 @@
 # Setup and equipment
 
-Last updated: 2026-09-18
+Last updated: 2026-09-20
 
 The [equipment and supplies inventory](./equipment/inventory.md) consolidates the documented products and relevant Amazon order links. The owner confirmed all four wooden tables are the [LEJANEOYE two-tier bamboo side-table model](https://www.amazon.com/dp/B0D25H73ZS) on September 17; the new inventory preserves the measured dimensions separately from the listing.
 
 ## Current routine
 
-**September 19 inventory expansion:** the collection now tracks **32 containers**. **#7 / P31** is the decorated eight-inch shared planter with four separate profiles: [Cubic Frost](./plants/succulents/echeveria-cubic-frost.md), [Coppertone](./plants/succulents/sedum-adolphi-coppertone.md), [Deminuta](./plants/succulents/echeveria-setosa-deminuta.md), and [Ruby Slippers](./plants/succulents/echeveria-harmsii-ruby-slippers.md). **#8 / P32 [Nanouk tradescantia](./plants/houseplants/tradescantia-nanouk.md)** has its own four-inch D'vine Dev drainage pot, without its saucer. Both use the owner's specified Molly's Succulent Mix. They are active records at the owner's request; receipt, planting dates, initial weights, and watering events remain unrecorded.
+**September 20 plan withdrawal:** the collection tracks **30 containers**. The five unreceived Amazon plants have been removed from active inventory and preserved in the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Cancellation is pending, not confirmed. Former #7 / P31 and #8 / P32 are archived allocations; no existing pot setup or weighing reference changes.
 
-The owner describes continuous rotating canopy airflow and an additional fan beneath the perforated tables. The lower fan's exact model and settings are unconfirmed. Feeling slight air movement at the top dressing is an owner observation, not a measurement of oxygen throughout the root zone. The intended area for #7 is the far end near the glass table, where the owner reports approximately **18–22 app-estimated DLI**; this is location-level context, not a verified reading for each new leaf. #8 needs its own suitable exposure and watering decision. Neither new pot has a confirmed coordinate in the older placement drawings; those drawings retain their dated 30-container scope.
+The owner describes continuous rotating canopy airflow and an additional fan beneath the perforated tables. The lower fan's exact model and settings are unconfirmed. Slight air movement felt at the dressing is an owner observation, not a root-zone oxygen measurement. The decorated eight-inch pot remains owned and unassigned for a future local-greenhouse plant. The owner previously reported approximately 18–22 app-estimated DLI in the far-table area; no replacement plant or final position has been selected. The separate D'vine four-inch pot order is not known to be canceled or received.
 
 The collection is in Fenton, Michigan. The cacti and succulents previously spent suitable dry summer weather outside. The permanent 2026 move indoors began July 31 after the first RO-water watering
 and several hours of drainage, followed by the dated
@@ -262,15 +262,11 @@ a 2.5-inch _F. tigrina_ retail assortment and `P30` as a five-inch terra-cotta
 succulent garden; the latter's matching Home Depot listing says it contains five
 plants. The exact store, current measured pot dimensions,
 replacement-medium composition, weights, plant dimensions, and maintained
-placement are not logged. Their source-quality publication photographs live in
+placement were not logged in that original acquisition note; current observations and the placement guide take precedence for subsequent conditions. Their source-quality publication photographs live in
 separate Gyazo Collections; shared receipt and post-repot context captures are
 reused across both records rather than uploaded twice.
 
-Do not infer either pot's physical configuration from its photograph. Before
-folding them into ordinary rounds, confirm drainage, record a whole-pot dry
-baseline, and enter measured dimensions if those analytics are wanted. `P30`
-is one tracked pot even though it contains several plants; any later separation
-should create an explicit history event before new permanent IDs are assigned.
+Do not infer either pot's physical configuration or current dryness from a photograph. Use eligible live observations for care and measured dimensions when those analytics are wanted. `P30` is one tracked pot: its aggregate overview and three component-group profiles (Succulent-10A/B/C) all retain #6 and the same history. Adding those reference pages on September 20 is not a repot or a reason to establish new weight references. Any later physical separation needs an explicit history event before new pot labels are assigned.
 
 ## Shared planters
 

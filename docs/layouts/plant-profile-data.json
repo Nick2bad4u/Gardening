@@ -46,13 +46,9 @@
     "P28": [["pleiospilos-nelii-royal-flush", "Royal Flush split rock"]],
     "P29": [["faucaria-tuberculosa", "Tuberculate tiger jaws"]],
     "P30": [
-        ["tiny-mixed-succulent-planter", "Tiny mixed succulent planter"]
-    ],
-    "P31": [
-        ["echeveria-cubic-frost", "Cubic Frost echeveria"],
-        ["sedum-adolphi-coppertone", "Coppertone sedum"],
-        ["echeveria-setosa-deminuta", "Deminuta echeveria"],
-        ["echeveria-harmsii-ruby-slippers", "Ruby Slippers echeveria"]
-    ],
-    "P32": [["tradescantia-nanouk", "Nanouk tradescantia"]]
+        ["tiny-mixed-succulent-planter", "Tiny mixed succulent planter"],
+        ["tiny-planter-echeveria", "Pale rosette echeveria"],
+        ["tiny-planter-coppertone-sedum", "Coppertone-type sedum"],
+        ["tiny-planter-paddle-kalanchoe", "Paddle kalanchoe"]
+    ]
 }

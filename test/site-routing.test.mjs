@@ -44,6 +44,38 @@ function redirected(path, fallback = siteUrl(), isRedirectPage = true) {
 }
 
 describe("site routes and serialized legacy bookmarks", () => {
+    it("keeps abandoned order bookmarks in the old-plan archive", () => {
+        expect.hasAssertions();
+        expect(
+            contentUrl(
+                "docs/old-plans/amazon-2026-09-19/tradescantia-nanouk.md#sources"
+            )
+        ).toBe(
+            "/Gardening/guides/old-plans/amazon-2026-09-19/tradescantia-nanouk/#sources"
+        );
+        expect(
+            redirected(
+                "/Gardening/layouts/plant-history.html?id=P31",
+                siteUrl("pots/")
+            )
+        ).toStrictEqual([
+            "https://example.test/Gardening/guides/old-plans/amazon-plant-order-2026-09/",
+        ]);
+        expect(
+            redirected(
+                "/Gardening/layouts/plant-history.html?id=%238",
+                siteUrl("pots/")
+            )
+        ).toStrictEqual([
+            "https://example.test/Gardening/guides/old-plans/amazon-plant-order-2026-09/",
+        ]);
+        expect(
+            redirected("/Gardening/#echeveria-cubic-frost", siteUrl(), false)
+        ).toStrictEqual([
+            "https://example.test/Gardening/guides/old-plans/amazon-2026-09-19/echeveria-cubic-frost/",
+        ]);
+    });
+
     it.each([
         "display-and-support",
         "lights-and-controls",

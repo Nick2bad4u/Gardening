@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="tiny-planter-coppertone-sedum-title tiny-planter-coppertone-sedum-description" data-plant-slug="tiny-planter-coppertone-sedum" focusable="false">
+  <title id="tiny-planter-coppertone-sedum-title">Coppertone-type sedum plant portrait</title>
+  <desc id="tiny-planter-coppertone-sedum-description">Illustrative branching copper-orange fleshy leaves in a terracotta pot; probable sedum group within the shared planter, not a confirmed species or separate container.</desc>
+  <defs>
+  <linearGradient id="tiny-planter-coppertone-sedum-pot" x1="0" x2="0.9" y1="0" y2="1">
+          <stop offset="0" stop-color="#f3ad73" />
+          <stop offset="1" stop-color="#c75d3a" />
+        </linearGradient>
+  <linearGradient id="tiny-planter-coppertone-sedum-copper-color" x1="0.2" y1="0" x2="0.75" y2="1">
+          <stop offset="0" stop-color="#e1bd6e" />
+          <stop offset="0.48" stop-color="#dda05e" />
+          <stop offset="1" stop-color="#bb764a" />
+        </linearGradient>
+  <g id="tiny-planter-coppertone-sedum-copper-leaf">
+          <path
+            d="M0 1C-2.8-1.8-4.2-5.6 0-11 4.2-5.6 2.8-1.8 0 1Z"
+            fill="url(#tiny-planter-coppertone-sedum-copper-color)"
+            stroke="#9b6648"
+            stroke-width="0.6"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M0-2Q-0.8-5.5 0-8.5"
+            fill="none"
+            stroke="#efd293"
+            stroke-width="0.4"
+            stroke-linecap="round"
+          />
+        </g>
+  </defs>
+  <ellipse cx="32" cy="60" rx="22" ry="2" fill="#294d3d" opacity="0.12" />
+  <path d="M11 44H53L49 58Q32 63 15 58Z" fill="url(#tiny-planter-coppertone-sedum-pot)" stroke="#945f49" stroke-width="1.5" />
+  <ellipse cx="32" cy="44" rx="21" ry="4" fill="#705445" stroke="#945f49" stroke-width="1.5" />
+  <path d="M14 49Q32 54 50 49M16 54Q32 58 48 54" fill="none" stroke="#ffe2b5" stroke-width="1.2" opacity="0.75" />
+  <path d="M31 45Q35 24 30 16M32 37L45 26M30 36L18 25" fill="none" stroke="#957049" stroke-width="2" />
+  <use href="#tiny-planter-coppertone-sedum-copper-leaf" transform="translate(30 18) rotate(-20) scale(1.3)" />
+  <use href="#tiny-planter-coppertone-sedum-copper-leaf" transform="translate(31 25) rotate(55) scale(1.5)" />
+  <use href="#tiny-planter-coppertone-sedum-copper-leaf" transform="translate(30 31) rotate(-60) scale(1.6)" />
+  <use href="#tiny-planter-coppertone-sedum-copper-leaf" transform="translate(33 38) rotate(65) scale(1.6)" />
+  <use href="#tiny-planter-coppertone-sedum-copper-leaf" transform="translate(44 29) rotate(25) scale(1.2)" />
+  <use href="#tiny-planter-coppertone-sedum-copper-leaf" transform="translate(43 31) rotate(-55) scale(1.2)" />
+  <use href="#tiny-planter-coppertone-sedum-copper-leaf" transform="translate(19 28) rotate(-40) scale(1.2)" />
+  <use href="#tiny-planter-coppertone-sedum-copper-leaf" transform="translate(20 31) rotate(35) scale(1.1)" />
+</svg>

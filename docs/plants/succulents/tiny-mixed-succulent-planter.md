@@ -4,7 +4,7 @@
 - Label ID: `#6` — owner-assigned 2026-09-02
 - Tracker ID: `P30`
 - Visual description: A small shared planter combining pale powdery rosettes, copper-orange narrow-leaved rosettes on short stems, and broad green paddle leaves with red margins.
-- Interesting fact: This is deliberately tracked as one pot rather than several overconfident species records; each component can be promoted to its own profile later if flowers, growth, or separation supplies better evidence.
+- Interesting fact: Three component-group profiles make the visible plants easier to follow while preserving one shared pot, label, and observation history.
 - Identification: **Smart Planet Home five-plant retail succulent garden; component-level foliage matches are provisional and no cultivar is treated as proven**
 - Acquired from: Home Depot; grown by Altman Plants under Smart Planet Home branding; exact store not recorded
 - Acquired on: 2026-09-02
@@ -29,9 +29,17 @@ frequently confused _Kalanchoe luciae_ / _K. thyrsiflora_ pair. Those working
 groups are enough to notice component-specific changes without inventing a
 precise retail cultivar history.
 
-The entire container stays `Succulent-10`, label `#6`, and tracker `P30`.
-Individual components should not receive separate permanent IDs unless the
-owner later separates them or wants independent histories.
+The entire container stays `Succulent-10`, label `#6`, and tracker `P30`. On September 20 the owner requested separate component pages. `Succulent-10A`, `Succulent-10B`, and `Succulent-10C` identify those profile groups only; they are not new physical labels, separate weigh-ins, or proof of exactly three individual plants. The seller's five-plant description does not establish five verified identities.
+
+## Component pages
+
+| Profile record | Component group                                                                                          | Shared label / tracker |
+| -------------- | -------------------------------------------------------------------------------------------------------- | ---------------------- |
+| Succulent-10A  | [Pale rosette echeveria — species and cultivar unresolved](./tiny-planter-echeveria.md)                  | #6 / P30               |
+| Succulent-10B  | [Coppertone-type sedum — probable adolphi / nussbaumerianum complex](./tiny-planter-coppertone-sedum.md) | #6 / P30               |
+| Succulent-10C  | [Paddle kalanchoe — luciae / thyrsiflora complex](./tiny-planter-paddle-kalanchoe.md)                    | #6 / P30               |
+
+These pages describe the three visible foliage groups. They retain the same whole-pot history and shared acquisition evidence as this overview. No new acquisition, repot, planting, or measurement event was created when the pages were added.
 
 ## Acquisition and photo evidence
 
@@ -65,9 +73,7 @@ accepted taxon name is not evidence that one retail cutting belongs to it.
 Flowers, mature growth, provenance, and clean close views after acclimation are
 better evidence than color alone.
 
-This conservative record is intentional. It keeps the pot searchable and
-trackable while avoiding the maintenance burden of three speculative profiles
-for a low-priority mixed planter.
+The separate component pages preserve this uncertainty while giving each recognizable group its own care notes and photographs. They do not upgrade a foliage-only match to a confirmed species, assign a cultivar, or claim that every rosette is a separate rooted individual.
 
 ## Care in this collection
 

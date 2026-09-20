@@ -10,12 +10,11 @@
   `P##` tracker IDs identify weighed containers. Multiple profiles may share
   one tracker ID; never create independent weigh-ins for their component plants.
 - `P19` / `#1` is the shared rehab cactus container and `P20` / `#2` the shared
-  succulent container. `P30` / `#6` stays one mixed-planter record with unresolved
-  component taxa. Removed Rehab-04 remains historical and has no active pot.
-- `P31` / `#7` is the four-succulent planter with separate profiles
-  `Succulent-11`–`Succulent-14`; `P32` / `#8` is the separately potted Nanouk
-  (`Houseplant-02`). Active inventory enrollment does not establish receipt,
-  repotting, a measurement, or a completed care event.
+  succulent container. `P30` / `#6` has aggregate Succulent-10 and component-group profiles
+  Succulent-10A/B/C, all sharing one pot; component taxa remain qualified. Removed Rehab-04 remains historical and has no active pot.
+- Former `P31` / `#7` and `P32` / `#8` are abandoned allocations for the
+  unreceived Amazon order archived under `docs/old-plans/`. Do not silently
+  reuse these IDs or count those research pages as active plant profiles.
 - Keep seller labels, qualified working IDs, receipt dates, and repot dates
   distinct. Preserve original label evidence when the probable identification
   changes. An order is not a confirmed arrival; a retail pot size is not a
@@ -33,7 +32,7 @@
 - Adding/removing a profile also affects the site build/check inventories,
   canonical SVG portraits, photo manifests, and relevant tests. Check those
   contracts before adding only a Markdown file. The current checker expects
-  41 profiles: 40 active and one historical, covering 32 tracked containers.
+  39 profiles: 38 active and one historical, covering 30 tracked containers.
   Recalculate these separately when the collection changes.
 - Keep a substantive Sources section with direct evidence for identification,
   nomenclature, range, and specific care claims. Owner observations need clear

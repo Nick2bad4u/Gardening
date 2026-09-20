@@ -1,4 +1,6 @@
 AND(
+  ISBLANK([P31 weight (g)]),
+  ISBLANK([P32 weight (g)]),
   IN([Round action], LIST("Water", "Weigh", "Water + weigh", "Rotation", "Check", "Clean", "Prune", "Pest", "Other")),
   OR([Round action] = "Weigh", ISNOTBLANK([Selected plants])),
   OR(
@@ -32,8 +34,6 @@ AND(
     [P27 weight (g)] > 0,
     [P28 weight (g)] > 0,
     [P29 weight (g)] > 0,
-    [P30 weight (g)] > 0,
-    [P31 weight (g)] > 0,
-    [P32 weight (g)] > 0
+    [P30 weight (g)] > 0
   )
 )

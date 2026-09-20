@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-09-19
+Last updated: 2026-09-20
 
 This is the current working inventory plus historical records for plants
 removed from the collection. A label is useful evidence, but not a guarantee;
@@ -19,7 +19,7 @@ a photo-only collection ID.
 The short label IDs are permanent plant or shared-planter identifiers, not
 table coordinates. They are shown beside the longer historical inventory IDs.
 
-The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13, and the owner reports applying the [Table Placement Guide](./layouts/table-placement-research.md). Its established positions remain the baseline for the original 30 containers. The September 19 additions bring the inventory to **41 profiles: 40 active and one historical, across 32 tracked containers**. The four new succulents share `#7` / `P31`; Nanouk has its own `#8` / `P32`. Their final individual placement and leaf-height exposure are unrecorded.
+The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The active collection has **39 profile records: 38 active and one historical, across 30 tracked containers**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement. The unreceived September 19 Amazon plants have moved to the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md); cancellation is pending, not confirmed.
 
 ## Confidence guide
 
@@ -200,20 +200,23 @@ The owner acquired both pots from Home Depot on 2026-09-02, repotted them the
 same day, and assigned the next permanent numbered labels. Photographed labels
 identify Altman Plants as grower and Smart Planet Home as the retail brand.
 Exact store, current measured pot dimensions, replacement-medium composition,
-weights, plant dimensions, and maintained placement are not yet recorded.
+weights, plant dimensions, and maintained placement were not recorded in the acquisition note; use the current placement guide and live ledger for subsequent observations.
 
-| Inventory ID | Label ID | Tracker ID | Working identification                                                                                         | Common name                  | Confidence                                  | Current record                                     |
-| ------------ | -------- | ---------- | -------------------------------------------------------------------------------------------------------------- | ---------------------------- | ------------------------------------------- | -------------------------------------------------- |
-| Succulent-09 | `#5`     | `P29`      | [Probable _Faucaria tuberculosa_](./plants/succulents/faucaria-tuberculosa.md); seller label says _F. tigrina_ | Tuberculate tiger jaws       | Qualified correction from seller label      | Altman 2.5-inch assortment; repotted 2026-09-02    |
-| Succulent-10 | `#6`     | `P30`      | [Mixed succulent planter](./plants/succulents/tiny-mixed-succulent-planter.md); component taxa unresolved      | Tiny mixed succulent planter | Aggregate record; component IDs provisional | Smart Planet five-plant garden; tracked as one pot |
+| Inventory ID  | Label ID | Tracker ID | Working identification                                                                                          | Common name                  | Confidence                                  | Current record                                     |
+| ------------- | -------- | ---------- | --------------------------------------------------------------------------------------------------------------- | ---------------------------- | ------------------------------------------- | -------------------------------------------------- |
+| Succulent-09  | `#5`     | `P29`      | [Probable _Faucaria tuberculosa_](./plants/succulents/faucaria-tuberculosa.md); seller label says _F. tigrina_  | Tuberculate tiger jaws       | Qualified correction from seller label      | Altman 2.5-inch assortment; repotted 2026-09-02    |
+| Succulent-10  | `#6`     | `P30`      | [Mixed succulent planter](./plants/succulents/tiny-mixed-succulent-planter.md); component taxa unresolved       | Tiny mixed succulent planter | Aggregate record; component IDs provisional | Smart Planet five-plant garden; tracked as one pot |
+| Succulent-10A | `#6`     | `P30`      | [_Echeveria_ sp.; species and cultivar unresolved](./plants/succulents/tiny-planter-echeveria.md)               | Pale rosette echeveria       | Provisional foliage group                   | Same shared container and history as Succulent-10  |
+| Succulent-10B | `#6`     | `P30`      | [Probable _Sedum adolphi_ / _S. nussbaumerianum_ complex](./plants/succulents/tiny-planter-coppertone-sedum.md) | Coppertone-type sedum        | Provisional foliage group                   | Same shared container and history as Succulent-10  |
+| Succulent-10C | `#6`     | `P30`      | [_Kalanchoe luciae_ / _K. thyrsiflora_ complex](./plants/succulents/tiny-planter-paddle-kalanchoe.md)           | Paddle kalanchoe             | Provisional foliage group                   | Same shared container and history as Succulent-10  |
 
 For `P29`, the paired toothed leaves establish _Faucaria_, and the conspicuous
 raised white tubercles favor _F. tuberculosa_ over the photographed
-_F. tigrina_ seller label. `P30` remains one low-maintenance aggregate record:
+_F. tigrina_ seller label. `P30` remains one tracked pot with an aggregate overview and three component-group pages:
 the pale rosettes are provisionally _Echeveria_ sp., the copper-orange narrow
 rosettes resemble the _Sedum adolphi_ / _S. nussbaumerianum_ horticultural
 complex, and the broad red-edged paddles resemble the _Kalanchoe luciae_ /
-_K. thyrsiflora_ complex. None of those component names is treated as proven.
+_K. thyrsiflora_ complex. None of those component names is treated as proven. The additional profile records do not establish the number of rooted individuals or create additional care tasks.
 
 ## Mountain Crest Gardens arrivals — received 2026-08-28
 
@@ -263,21 +266,9 @@ cycle. 'Coconut Crystal' will remain indoors by choice, in the brightest and
 coolest practical indoor position rather than being treated like a warm,
 lower-light houseplant.
 
-## September 19 Amazon additions — active by owner request
+## Abandoned September 19 Amazon plan
 
-The owner requested active collection treatment for five The Succulent Cult starters ordered through Amazon. The supplied order screen advertises 2-inch rooted plants and estimates October 1 delivery; actual receipt and planting dates remain unrecorded. These active records prepare the site, labels, and tracker without inventing observations.
-
-| Inventory ID  | Label ID | Tracker ID | Individual plant profile                                                          | Identification evidence                                 |
-| ------------- | -------- | ---------- | --------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| Succulent-11  | `#7`     | `P31`      | [Cubic Frost echeveria](./plants/succulents/echeveria-cubic-frost.md)             | Seller-labeled _Echeveria_ 'Cubic Frost'                |
-| Succulent-12  | `#7`     | `P31`      | [Coppertone sedum](./plants/succulents/sedum-adolphi-coppertone.md)               | Seller “Sedum Coppertone”; probable _S. adolphi_        |
-| Succulent-13  | `#7`     | `P31`      | [Deminuta echeveria](./plants/succulents/echeveria-setosa-deminuta.md)            | Seller-labeled _E. setosa_ var. _deminuta_              |
-| Succulent-14  | `#7`     | `P31`      | [Ruby Slippers echeveria](./plants/succulents/echeveria-harmsii-ruby-slippers.md) | Seller “Echeveria Ruby Slippers”; probable _E. harmsii_ |
-| Houseplant-02 | `#8`     | `P32`      | [Nanouk tradescantia](./plants/houseplants/tradescantia-nanouk.md)                | Seller-labeled _Tradescantia_ 'Nanouk'                  |
-
-The four succulents have separate botanical pages but share one decorated Amazon Basics 8-inch white polypropylene drainage pot, one P31 history, and one watering decision. The owner selected Molly's Succulent Mix and the far-table area, previously reported at approximately 18–22 estimated DLI. That area estimate is not a new measurement at each component's final height. No extra component P-IDs or artificial initial weights are created.
-
-Nanouk stays separate because its preferred partial drying differs from the shared succulents' dry-down. Its owner-selected container is the D'vine Dev Beaded Ceramic 4-inch Blush Mauve pot, model `27-C-Z-K`, with drainage holes and no saucer in use, also using Molly's Succulent Mix. Its final location and exposure are unrecorded. Product sizes are nominal rather than measured interior/root volumes.
+All five unreceived plants are excluded from the active inventory. Their research is preserved in the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). The former Succulent-11–14 / #7 / P31 shared-planter allocation and Houseplant-02 / #8 / P32 Nanouk allocation are archived and must not be silently reused. The decorated eight-inch pot remains owned and unassigned; the separate D'vine four-inch pot order has no confirmed cancellation or receipt.
 
 ## Identification follow-ups
 
@@ -294,5 +285,4 @@ The most useful future evidence would be:
 - a flower, fruit capsule, and mature growth for testing the seller-labeled
   `P29` identification, plus mature growth or flowers before narrowing any
   `P30` component identification; and
-- individual plant and tag photographs for the five September 19 active additions, especially the probable Coppertone and Ruby Slippers species identifications; and
 - original nursery tags or receipts for the probable IDs.

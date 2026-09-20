@@ -3,7 +3,9 @@ import { describe, expect, it } from "vitest";
 import { sheetUrls } from "../docs/layouts/plant-tracker-data.js";
 import { plantSheetUrl } from "../scripts/build-data.mjs";
 import {
+    getCollectionManifest,
     getDocument,
+    getOldPlans,
     getProfiles,
     renderMarkdown,
 } from "../site/lib/content.mjs";
@@ -16,6 +18,101 @@ import {
 } from "../site/lib/content/profile-source.mjs";
 
 describe("field guide source rendering", () => {
+    it("keeps abandoned plants searchable as old plans and out of active profiles and pots", async () => {
+        expect.hasAssertions();
+
+        const profiles = await getProfiles();
+        const archived = await getOldPlans();
+
+        expect(profiles).toHaveLength(39);
+        expect(profiles.filter((profile) => !profile.historical)).toHaveLength(
+            38
+        );
+        expect(
+            profiles.some((profile) =>
+                ["P31", "P32"].includes(profile.trackerId ?? "")
+            )
+        ).toBe(false);
+        expect(archived).toHaveLength(6);
+        expect(
+            archived.some((document) =>
+                document.slug.endsWith("tradescantia-nanouk")
+            )
+        ).toBe(true);
+        expect(() => plantSheetUrl("P31")).toThrow(/No Google Sheets tab/v);
+        expect(() => plantSheetUrl("P32")).toThrow(/No Google Sheets tab/v);
+    });
+
+    it("keeps the tiny-planter overview and three qualified groups on one shared history with original photo provenance", async () => {
+        expect.hasAssertions();
+
+        const profiles = await getProfiles();
+        const members = profiles.filter(
+            (profile) => profile.trackerId === "P30"
+        );
+        const slugs = [
+            "tiny-mixed-succulent-planter",
+            "tiny-planter-echeveria",
+            "tiny-planter-coppertone-sedum",
+            "tiny-planter-paddle-kalanchoe",
+        ];
+
+        const potIds = new Set(
+            profiles.map((profile) => profile.trackerId).filter(Boolean)
+        );
+
+        expect(
+            members
+                .map((profile) => profile.slug)
+                .toSorted((left, right) => left.localeCompare(right))
+        ).toStrictEqual(
+            slugs.toSorted((left, right) => left.localeCompare(right))
+        );
+        expect(potIds.size).toBe(30);
+        expect(
+            members
+                .map((profile) => profile.inventoryId)
+                .toSorted((left, right) => left.localeCompare(right))
+        ).toStrictEqual([
+            "Succulent-10",
+            "Succulent-10A",
+            "Succulent-10B",
+            "Succulent-10C",
+        ]);
+
+        for (const member of members) {
+            expect(member.drawerLabel.primary).toBe("#6");
+            expect(member.sheetUrl).toBe(plantSheetUrl("P30"));
+            expect(member.historical).toBe(false);
+        }
+        const manifest = await getCollectionManifest();
+        const overview = manifest.plants.find(
+            (record) => record.plant_slug === "tiny-mixed-succulent-planter"
+        );
+
+        expect(overview?.photos).toHaveLength(8);
+
+        for (const slug of slugs.slice(1)) {
+            const record = manifest.plants.find(
+                (entry) => entry.plant_slug === slug
+            );
+
+            expect(record?.photos).toStrictEqual(overview?.photos);
+            expect(record?.gyazo_collection).toStrictEqual(
+                overview?.gyazo_collection
+            );
+
+            const member = members.find((profile) => profile.slug === slug);
+
+            expect(member?.identificationMarkdown).toMatch(
+                /probable|provisional|unresolved/iv
+            );
+            expect(member?.scientificMarkdown).toMatch(
+                /Echeveria|Kalanchoe|Sedum/v
+            );
+        }
+    });
+
     it("decorates profile headings and identity/care tables without losing routes, anchors, or qualified evidence", async () => {
         expect.hasAssertions();
 
@@ -160,6 +257,12 @@ describe("field guide source rendering", () => {
         expect(identificationLabel("unresolved identification")).toBe(
             "Working ID"
         );
+        expect(
+            identificationLabel("Provisional genus-level foliage match")
+        ).toBe("Tentative Genus");
+        expect(
+            identificationLabel("Provisional paddle-kalanchoe foliage match")
+        ).toBe("Tentative Foliage Match");
     });
 
     it("retains every profile's identification evidence and historical status behind its summary", async () => {
@@ -213,7 +316,7 @@ describe("field guide source rendering", () => {
     it("uses the browser's worksheet mapping for every plant and rejects unknown IDs", () => {
         expect.hasAssertions();
 
-        for (let number = 1; number <= 32; number += 1) {
+        for (let number = 1; number <= 30; number += 1) {
             const trackerId = `P${String(number).padStart(2, "0")}`;
 
             expect(plantSheetUrl(trackerId)).toBe(

@@ -75,6 +75,12 @@ export function contentUrl(repositoryPath) {
     const suffix = suffixIndex < 0 ? "" : normalized.slice(suffixIndex);
     const known = documentRoutes.get(target);
     if (known !== undefined) return `${siteUrl(known)}${suffix}`;
+    if (target.startsWith("docs/old-plans/") && target.endsWith(".md")) {
+        const archiveRoute = siteUrl(
+            `guides/old-plans/${target.slice(15, -3)}/`
+        );
+        return `${archiveRoute}${suffix}`;
+    }
     const plant =
         /^docs\/plants\/(?:cacti|houseplants|rehab|starter|succulents)\/(?<slug>[^\/]+)\.md$/v.exec(
             target

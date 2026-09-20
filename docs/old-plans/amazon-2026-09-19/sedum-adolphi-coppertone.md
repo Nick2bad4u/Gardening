@@ -1,16 +1,20 @@
-# Coppertone sedum
+# Coppertone sedum — archived plan
 
-- Inventory: Succulent-12 — probable _Sedum adolphi_; seller name “Sedum Coppertone”
-- Label ID: `#7` — shared four-succulent planter
-- Tracker ID: `P31`
-- Status: **Active — included at the owner's request on 2026-09-19; physical receipt date unrecorded**
+**Archived September 20, 2026. Unreceived plant; cancellation pending, not confirmed.** The owner abandoned this five-plant Amazon plan after reviewing seller feedback. This page preserves September 19 research and proposed care only. It is outside the active collection and is not a watering, weighing, or shopping task. See the [old-plan overview](../amazon-plant-order-2026-09.md).
+
+- Former inventory allocation: Succulent-12 — probable _Sedum adolphi_; seller name “Sedum Coppertone”
+- Former label allocation: `#7` — shared four-succulent planter
+- Former tracker allocation: `P31`
+- Status: **Archived old plan — unreceived; plant-order cancellation pending as of 2026-09-20**
 - Visual description: Reference plants have fleshy pointed leaves around spreading stems, with yellow-green foliage that can become orange or copper in stronger light; the purchased plant has not yet been documented individually.
 - Interesting fact: Coppertone describes the familiar foliage color, but orange color alone does not establish a particular cultivar or species identification.
 - Identification: **seller-labeled Coppertone sedum; _Sedum adolphi_ is a probable working identification, not independently confirmed**
 - Ordered from: The Succulent Cult through Amazon; order screenshot supplied 2026-09-19
-- Order status: **Active collection entry by owner instruction; screenshot estimates October 1 delivery, not a confirmed receipt**
-- Received container: Seller lists a rooted starter in a 2-inch nursery pot; receipt and root condition unrecorded
-- Current pot: Owner-designated shared decorated Amazon Basics 8-inch white polypropylene pot with drainage, in Molly's Succulent Mix; actual planting date and measured dimensions unrecorded
+- Order status: **Owner is canceling the plant order; seller cancellation and refund are not confirmed. The old October 1 delivery estimate is superseded planning context.**
+- Advertised container: Seller lists a rooted starter in a 2-inch nursery pot; receipt and root condition unrecorded
+- Former proposed pot: Owner-designated shared decorated Amazon Basics 8-inch white polypropylene pot with drainage, in Molly's Succulent Mix; actual planting date and measured dimensions unrecorded
+
+Former label/tracker allocations are preserved as historical references and must not be silently reused. The decorated 8-inch pot remains owned and unassigned for a future local-greenhouse choice; it is not occupied by these plants.
 
 ## Names and identity
 
@@ -26,11 +30,11 @@ Singapore's National Parks Board treats Coppertone stonecrop under _Sedum adolph
 
 ## Collection evidence and shared container
 
-This active entry was authorized by the owner on September 19. The order screenshot is provenance for the seller's name and advertised starter size; it does not prove arrival or planting.
+The September 19 order described a two-inch rooted starter. The owner initially requested administrative enrollment, then abandoned the unreceived five-plant order on September 20 after reviewing seller feedback. Cancellation is pending, not confirmed; no receipt, planting, weight, or care event was recorded.
 
-Coppertone shares `#7` / `P31` with [Cubic Frost](./echeveria-cubic-frost.md), [Deminuta](./echeveria-setosa-deminuta.md), and [Ruby Slippers](./echeveria-harmsii-ruby-slippers.md). The four individual pages lead to one shared observation history. Water, weight, pot setup, and future dry references describe P31 as a whole. [Nanouk](../houseplants/tradescantia-nanouk.md) remains separate in `#8` / `P32`.
+The former #7 / P31 plan grouped [Cubic Frost](./echeveria-cubic-frost.md), [Coppertone](./sedum-adolphi-coppertone.md), [Deminuta](./echeveria-setosa-deminuta.md), and [Ruby Slippers](./echeveria-harmsii-ruby-slippers.md) in one decorated eight-inch pot. [Nanouk](./tradescantia-nanouk.md) was planned separately as #8 / P32. The four botanical profiles were intended to share one whole-container history, but no actual care or weight history was established. These are abandoned allocations, not IDs to reuse silently.
 
-## Care in this collection
+## Proposed care — archived research
 
 | Topic            | Practical starting approach                                                                                                                                                                                                                                        |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -40,7 +44,7 @@ Coppertone shares `#7` / `P31` with [Cubic Frost](./echeveria-cubic-frost.md), [
 | Mix and drainage | Molly's Succulent Mix and the drainage pot are owner-selected. Keep the outlet clear; airflow does not establish that the interior root zone has dried.                                                                                                            |
 | Tracking         | Measure the complete P31 assembly consistently. Do not divide its weight by four or give a component a separate watering date.                                                                                                                                     |
 
-## Watch points
+## Reference watch points — not current chores
 
 The NParks species reference describes a low succulent subshrub with white flowers and notes that excess moisture can contribute to stem rot. These are reference traits and risks, not observations of this purchase. Photograph the actual plant's stems, leaf arrangement, and eventual flowers if a more confident identification becomes useful.
 

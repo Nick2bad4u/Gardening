@@ -35,7 +35,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.26.0");
+assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.26.1");
 for (const name of [
     "getWebCorrectionEntry",
     "previewWebObservationCorrection",
@@ -484,11 +484,15 @@ assert.deepEqual(
         ),
         ([, header]) => header
     ),
-    appSheetBulkHeaders.filter((header) =>
-        /^P\d{2} weight \(g\)$/v.test(header)
+    strings(evaluateLogger("APP_SHEET_BULK_PLANTS")).map(
+        (id) => `${id} weight (g)`
     ),
     "AppSheet bulk validation must include every supported plant weight."
 );
+const archivedPlantIds = strings(evaluateLogger("ARCHIVED_PLANT_IDS"));
+for (const id of archivedPlantIds) {
+    assert.ok(appSheetBulkValidation.includes(`ISBLANK([${id} weight (g)])`));
+}
 await Promise.all(
     appSheetPortraits.portraits.map(async ({ slug }) => {
         assert.ok(isPlantSlug(slug), `Unsafe plant portrait slug: ${slug}`);
@@ -774,11 +778,11 @@ const forecastFormulaRow = strings(
 );
 assert.match(
     required(forecastFormulaRow[20], "forecast formula"),
-    /'Dry-down models'!\$E\$2:\$E\$33/v
+    /'Dry-down models'!\$E\$2:\$E\$31/v
 );
 assert.match(
     required(forecastFormulaRow[30], "forecast formula"),
-    /'Dry-down models'!\$G\$2:\$G\$33/v
+    /'Dry-down models'!\$G\$2:\$G\$31/v
 );
 assert.doesNotMatch(
     required(forecastFormulaRow[30], "forecast formula"),

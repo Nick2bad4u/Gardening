@@ -4,7 +4,7 @@ The native **Insights** sheet has **25 charts** after the September 17, 2026
 analytics upgrade. See the
 [analytics rollout record](WORKBOOK-ANALYTICS.md#rollout-record) for verification.
 Its dry-down explorer starts at
-**A226**; the maintained selector covers **P01–P32 in B228** after the September 19 inventory expansion. The selected
+**A226**; the maintained selector covers **P01–P30 in B228** after the September 20 withdrawal. The selected
 plant's care guidance, predicted dry-check date, and earliest/latest window
 appear above the graphs. The selected plant's **Current weight difference (g)**
 appears in **N228:R228**, and its collection comparison starts at **A586**.
@@ -30,15 +30,15 @@ data-label overrides. Insights sizing remains intact; the plant-page layout
 has its own [guarded styling procedure](#plant-page-chart-layout).
 Each plant has a permanent, distinct color
 defined in [`plant-colors.json`](plant-colors.json). The visible **Plant colors**
-sheet covers all 32 maintained IDs, full plant names, color names, hex values, swatches, and
+sheet covers all 30 active IDs, full plant names, color names, hex values, swatches, and
 links to their individual charts. These are arbitrary identity colors, unrelated
 to the appearance of the plants. Keep the names and IDs alongside color because
 similar hues can still be difficult to distinguish.
 
-The 96 weight/dimension charts and populated watering-interval charts on the
+The 90 weight/dimension charts and populated watering-interval charts on the
 individual plant sheets use that plant's color. The 15
 plant comparison charts use the same colors for each plant's bars or points, in
-consistent P01–P32 order. This fixed order prevents point colors from moving to
+consistent P01–P30 order. This fixed order prevents point colors from moving to
 another plant when a sorted source recalculates. Source values still update
 automatically. Comparisons with several metrics use separate grouped bars, with
 the metric order in the subtitle and names in the tooltips; the old metric-color
@@ -55,11 +55,15 @@ The first chart shares the 1,155-pixel width and 10-pixel left inset used by the
 other Insights charts. The plant-page layout below defines its chart spacing
 while preserving each plant's data bindings and weight-axis maximum.
 
-## September 19 roster expansion
+## September 20 withdrawal
 
-The maintained roster now contains 32 tracked containers. The 32-page target has **128 plant charts**: 96 weight/dimension charts and 32 watering-interval charts. `P31` / `#7` represents all four new succulents; `P32` / `#8` is Nanouk. Missing observations remain blank, including the new containers' histories. Earlier dated verification counts below remain evidence for the 30-container workbook at those dates.
+The owner withdrew P31 and P32 from active care while cancellation of their Amazon order is pending. The active chart target returns to 30 pots: **90 weight/dimension charts and 30 watering-interval charts**, with model rows 2:31 and Dashboard rows 7:36. Their five botanical profiles remain archived; no observations are fabricated or deleted. The prior expansion planner retains its original P31/P32 colors independently of the active palette for historical reproducibility, not as authority to reenroll them. Native withdrawal and deployment verification are recorded separately in the logger runbook.
 
-The guarded [`inventory-expansion.mjs`](inventory-expansion.mjs) migration extends the maintained inventory and model rows to **2:33**, Dashboard data to **7:38**, comparison helpers, selector validation, and the newly duplicated page/chart bindings. It appends helper columns where necessary so existing chart sources do not move. Derive endpoints from the current roster; do not rerun an old fixed-size chart installer over populated helpers. Native application, calculated readback, and empty-data chart checks passed: the workbook now has 156 charts and retains all 148 prior chart IDs and positions. Logger 5.26.0 / immutable version 93 and the corresponding AppSheet schema, forms, and portrait update are live; see the [logger deployment record](README.md#september-19-inventory-expansion-5260--immutable-version-93).
+## September 19 roster expansion (historical)
+
+The September 19 enrollment contained 32 tracked containers. The 32-page target has **128 plant charts**: 96 weight/dimension charts and 32 watering-interval charts. `P31` / `#7` represents all four new succulents; `P32` / `#8` is Nanouk. Missing observations remain blank, including the new containers' histories. Earlier dated verification counts below remain evidence for the 30-container workbook at those dates.
+
+The guarded [`inventory-expansion.mjs`](inventory-expansion.mjs) migration extends the maintained inventory and model rows to **2:33**, Dashboard data to **7:38**, comparison helpers, selector validation, and the newly duplicated page/chart bindings. It appends helper columns where necessary so existing chart sources do not move. Derive endpoints from the current roster; do not rerun an old fixed-size chart installer over populated helpers. Native application, calculated readback, and empty-data chart checks passed: the September 19 workbook had 156 charts and retains all 148 prior chart IDs and positions. Logger 5.26.0 / immutable version 93 and the corresponding AppSheet schema, forms, and portrait update are live; see the [logger deployment record](README.md#september-19-inventory-expansion-5260--immutable-version-93).
 
 ## Plant-page chart layout
 
@@ -148,7 +152,7 @@ To apply or rerun the planner:
    formula replacement, Apps Script deployment, or queue-trigger change.
 
 Native empty watering charts can omit their series entirely. The current
-pages without intervals, including new P31/P32, must remain empty; do not copy P01's series or fabricate
+pages without intervals must remain empty; do not copy P01's series or fabricate
 observations to make them look populated. After a real completed interval
 appears, use the existing [interval-style repair](#time-between-waterings) when
 needed, retaining the chart's ID and position.

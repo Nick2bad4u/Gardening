@@ -16,8 +16,8 @@ reserved. The generated booklet keeps them visually and textually separate
 from the licensed species-reference archive under
 [`assets/plants`](../plants/).
 
-Manifest schema 3 records the collection-wide overview Collection, one
-`gyazo_collection` for each of the 35 previously photographed current profiles, five active photo-pending profiles registered on September 19, 2026, and the
+Manifest schema 3 records the collection-wide overview Collection, a
+`gyazo_collection` link for each of the 38 photographed current profile records, and the
 explicit photo-pending historical record for removed Rehab-04. Each remote
 placement records its stable publication name, provider, Gyazo capture ID,
 direct image URL, capture page URL, evidence date, view, alt text, caption, and
@@ -28,7 +28,7 @@ and copyright notice. Hidden camera metadata is never made public.
 When one frame documents several shared-planter profiles, every placement
 reuses the same Gyazo capture instead of uploading duplicate bytes.
 
-After the September 16, 2026 photo session, the manifest contains 213 photo
+After the September 16, 2026 photo session, the manifest contained 213 photo
 placements using 160 unique Gyazo captures. That session added 32 captures for
 30 tracked pots. The shared rehab cactus planter uses two overlapping,
 full-resolution panels that together cover the approved whole-planter crop;
@@ -84,3 +84,7 @@ Wide room, table, and setup frames belong in `collection_overviews` rather than
 a plant record. Profile views use `side`, `top`, `detail`, `context`, or
 `overview`. Do not substitute a similar plant or a reusable-license reference
 photo for missing collection evidence.
+
+The five unreceived Amazon-order plants were removed from the active photo manifest when the plan was abandoned on September 20, 2026. No owned photographs had been published for them; their research and presentation artwork remain in [Old plans](../../docs/old-plans/amazon-plant-order-2026-09.md).
+
+On September 20, the three provisional component-group profiles of #6 / P30 reused all eight existing whole-planter and label captures, preserving their original captions and verified upload metadata. The manifest now has 237 placements and still 160 unique captures. These three pages share the existing P30 Gyazo Collection; they do not represent new plants, separate pots, new uploads, or individually identified seller specimens.

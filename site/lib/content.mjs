@@ -18,6 +18,7 @@ import {
     stripHtml,
     stripMarkdown,
 } from "./content/profile-source.mjs";
+import { archivedAmazonPlan } from "./old-plans.mjs";
 import { contentUrl } from "./routes.mjs";
 
 const root = process.cwd();
@@ -198,6 +199,19 @@ export async function getGuides() {
     ];
     return Promise.all(
         sources.map(([source, slug]) => getDocument(source, slug))
+    );
+}
+
+/** Explicitly published research from abandoned plans, never active profiles. */
+export async function getOldPlans() {
+    const sources = [
+        archivedAmazonPlan.overview,
+        ...archivedAmazonPlan.profiles.map(
+            ([slug]) => `${archivedAmazonPlan.folder}/${slug}`
+        ),
+    ];
+    return Promise.all(
+        sources.map((slug) => getDocument(`docs/old-plans/${slug}.md`, slug))
     );
 }
 

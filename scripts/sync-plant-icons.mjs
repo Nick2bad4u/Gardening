@@ -4,6 +4,7 @@ import * as path from "node:path";
 import { pathToFileURL } from "node:url";
 import { format, resolveConfig } from "prettier";
 
+import { archivedAmazonPlan } from "../site/lib/old-plans.mjs";
 import {
     compareText,
     isNonemptyString,
@@ -380,6 +381,18 @@ function portraitDescriptions() {
             "Two large pale rosettes and a smaller open rosette surround broad red-edged green paddles, copper-orange shoots, and a green-and-burgundy shoot in a striped terracotta planter.",
         ],
         [
+            "tiny-planter-coppertone-sedum",
+            "Illustrative branching copper-orange fleshy leaves in a terracotta pot; probable sedum group within the shared planter, not a confirmed species or separate container.",
+        ],
+        [
+            "tiny-planter-echeveria",
+            "Illustrative pale powdery rosette with layered pointed leaves in a terracotta pot; a shared-planter foliage group, not a confirmed species or separate container.",
+        ],
+        [
+            "tiny-planter-paddle-kalanchoe",
+            "Illustrative broad green paddles with red edges in a terracotta pot; unresolved paddle kalanchoe group within the shared planter, not a separate container.",
+        ],
+        [
             "tradescantia-nanouk",
             "Pink, cream, and green striped pointed leaves on branching stems above a mauve beaded pot.",
         ],
@@ -404,6 +417,12 @@ function profileTitles(profileData) {
     );
     titles.set("shared-succulent-planter", "Shared succulent planter · #2");
     titles.set("four-succulent-planter", "Four-succulent planter · #7");
+    for (const [slug, title] of archivedAmazonPlan.profiles) {
+        titles.set(
+            required(slug, "archived portrait slug"),
+            required(title, "archived portrait title")
+        );
+    }
     return titles;
 }
 

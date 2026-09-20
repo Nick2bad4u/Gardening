@@ -1,16 +1,20 @@
-# Deminuta echeveria
+# Deminuta echeveria — archived plan
 
-- Inventory: Succulent-13 — seller-labeled _Echeveria setosa_ var. _deminuta_
-- Label ID: `#7` — shared four-succulent planter
-- Tracker ID: `P31`
-- Status: **Active — included at the owner's request on 2026-09-19; physical receipt date unrecorded**
+**Archived September 20, 2026. Unreceived plant; cancellation pending, not confirmed.** The owner abandoned this five-plant Amazon plan after reviewing seller feedback. This page preserves September 19 research and proposed care only. It is outside the active collection and is not a watering, weighing, or shopping task. See the [old-plan overview](../amazon-plant-order-2026-09.md).
+
+- Former inventory allocation: Succulent-13 — seller-labeled _Echeveria setosa_ var. _deminuta_
+- Former label allocation: `#7` — shared four-succulent planter
+- Former tracker allocation: `P31`
+- Status: **Archived old plan — unreceived; plant-order cancellation pending as of 2026-09-20**
 - Visual description: The seller thumbnail depicts a cluster of small blue-green rosettes with fine pale hairs; it is a reference depiction, not a photograph of the purchased plant.
 - Interesting fact: “Deminuta” is a published botanical variety of _Echeveria setosa_, not merely a descriptive nickname for a small starter.
 - Identification: **seller-labeled variety; no diagnostic photograph of the purchased plant yet**
 - Ordered from: The Succulent Cult through Amazon; order screenshot supplied 2026-09-19
-- Order status: **Active collection entry by owner instruction; screenshot estimates October 1 delivery, not a confirmed receipt**
-- Received container: Seller lists a rooted starter in a 2-inch nursery pot; receipt and root condition unrecorded
-- Current pot: Owner-designated shared decorated Amazon Basics 8-inch white polypropylene pot with drainage, in Molly's Succulent Mix; actual planting date and measured dimensions unrecorded
+- Order status: **Owner is canceling the plant order; seller cancellation and refund are not confirmed. The old October 1 delivery estimate is superseded planning context.**
+- Advertised container: Seller lists a rooted starter in a 2-inch nursery pot; receipt and root condition unrecorded
+- Former proposed pot: Owner-designated shared decorated Amazon Basics 8-inch white polypropylene pot with drainage, in Molly's Succulent Mix; actual planting date and measured dimensions unrecorded
+
+Former label/tracker allocations are preserved as historical references and must not be silently reused. The decorated 8-inch pot remains owned and unassigned for a future local-greenhouse choice; it is not occupied by these plants.
 
 ## Names and identity
 
@@ -26,11 +30,11 @@ Kew accepts this variety and places it in the dry shrubland/desert flora of Oaxa
 
 ## Collection evidence and shared container
 
-The owner requested active collection treatment on September 19 while the supplied order screen still showed an estimated October 1 delivery. Receipt and planting remain undated.
+The September 19 order described a two-inch rooted starter. The owner initially requested administrative enrollment, then abandoned the unreceived five-plant order on September 20 after reviewing seller feedback. Cancellation is pending, not confirmed; no receipt, planting, weight, or care event was recorded.
 
-This profile is one of four in `#7` / `P31`, together with [Cubic Frost](./echeveria-cubic-frost.md), [Coppertone sedum](./sedum-adolphi-coppertone.md), and [Ruby Slippers](./echeveria-harmsii-ruby-slippers.md). Its separate page preserves its botanical identity and care notes. P31 remains one pot for measurements, watering, setup changes, and learned cycles.
+The former #7 / P31 plan grouped [Cubic Frost](./echeveria-cubic-frost.md), [Coppertone](./sedum-adolphi-coppertone.md), [Deminuta](./echeveria-setosa-deminuta.md), and [Ruby Slippers](./echeveria-harmsii-ruby-slippers.md) in one decorated eight-inch pot. [Nanouk](./tradescantia-nanouk.md) was planned separately as #8 / P32. The four botanical profiles were intended to share one whole-container history, but no actual care or weight history was established. These are abandoned allocations, not IDs to reuse silently.
 
-## Care in this collection
+## Proposed care — archived research
 
 | Topic            | Practical starting approach                                                                                                                                                                                                                               |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -42,10 +46,10 @@ This profile is one of four in `#7` / `P31`, together with [Cubic Frost](./echev
 
 Bright conditions and a well-drained medium are supported by NC State's broader _Echeveria_ guidance. A variety-specific safe PPFD or a measured growth rate has not been established here. The existing cactus light map should not be copied onto this new container without checking its actual position.
 
-## Watch points
+## Reference watch points — not current chores
 
 - Compare the purchased plant with the seller's intended small, hairy rosette form; preserve any conflicting nursery tag.
-- Record stretching, shading, or damage against the affected component in a P31 note.
+- Record stretching, shading, or damage against the affected component in a future shared-container note.
 - Treat a future separation as a documented setup/identity change, leaving the earlier shared history intact.
 
 ## Sources

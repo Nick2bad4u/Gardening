@@ -549,7 +549,7 @@ function parseProfile(markdown, group, sourceDirectory, fileName) {
 
     const inventory = stripMarkdown(metadata.inventory);
     const inventoryMatch =
-        /^(?<inventoryId>[A-Za-z]+-\d+)\s+[\-—]\s+(?<scientificName>\S.*)$/v.exec(
+        /^(?<inventoryId>[A-Za-z]+-\d+[A-Za-z]?)\s+[\-—]\s+(?<scientificName>\S.*)$/v.exec(
             inventory
         );
     const inventoryId =
@@ -877,6 +877,8 @@ function identificationLabel(markdown) {
         [/^probable cultivar/v, "Likely Cultivar"],
         [/hybrid-group level/v, "Likely Hybrid Group"],
         [/^probable/v, "Likely Match"],
+        [/^provisional genus-level/v, "Tentative Genus"],
+        [/^provisional/v, "Tentative Foliage Match"],
         [/^retail tag confirms genus/v, "Genus Known; Species Tentative"],
         [/component-level.*provisional/v, "Tentative Component IDs"],
     ];

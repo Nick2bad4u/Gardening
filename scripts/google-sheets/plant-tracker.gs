@@ -16,7 +16,7 @@
    installDailyCareDashboard, GARDEN_CYCLE_COMPARISON */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.26.0",
+    version: "5.26.1",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -415,11 +415,10 @@ const APP_SHEET_BULK_V514_PLANTS = Object.freeze([
     "P30",
 ]);
 
-const APP_SHEET_BULK_PLANTS = Object.freeze([
-    ...APP_SHEET_BULK_V514_PLANTS,
-    "P31",
-    "P32",
-]);
+const APP_SHEET_BULK_PLANTS = Object.freeze([...APP_SHEET_BULK_V514_PLANTS]);
+// Reserved IDs from the canceled September order. Never reuse these IDs or
+// silently discard stale offline drafts addressed to them.
+const ARCHIVED_PLANT_IDS = Object.freeze(["P31", "P32"]);
 
 const APP_SHEET_BULK_LEGACY_HEADERS = Object.freeze([
     "Round ID",
@@ -500,6 +499,7 @@ const APP_SHEET_BULK_V525_HEADERS = Object.freeze([
 // Append new inventory weights; never shift the existing AppSheet columns.
 const APP_SHEET_BULK_HEADERS = Object.freeze([
     ...APP_SHEET_BULK_V525_HEADERS,
+    // Deprecated compatibility columns: retain stored data and reject new input.
     "P31 weight (g)",
     "P32 weight (g)",
 ]);
@@ -583,8 +583,6 @@ const INITIAL_POT_SIZE_BY_PLANT = Object.freeze({
     P27: "4 in",
     P28: "4 in",
     P30: "5 in",
-    P31: "8 in",
-    P32: "4 in",
 });
 
 const BASELINE_VIEW_HEADERS = Object.freeze([
@@ -919,7 +917,8 @@ function getWebAppBootstrap() {
                 fieldGuideUrl,
                 historyUrl: `${GARDEN_LOGGER.historyUrl}?id=${encodeURIComponent(cleanText_(plantId))}`,
             };
-        });
+        })
+        .filter((plant) => !ARCHIVED_PLANT_IDS.includes(plant.id));
     assertUniquePlantIds_(plants);
     const plantNames = new Map(plants.map((plant) => [plant.id, plant.name]));
 
@@ -1048,6 +1047,11 @@ function isGardenEntryPayload_(value) {
  */
 function prepareWebObservation_(spreadsheet, payload, plantRecords) {
     const plantId = cleanText_(payload?.plantId);
+    if (ARCHIVED_PLANT_IDS.includes(plantId)) {
+        throw new Error(
+            `Plant ${plantId} is archived; its purchase plan was withdrawn. Remove this plant from the queued entry.`
+        );
+    }
     /** @type {GardenEntryPlant | null | undefined} */
     const plant = plantRecords
         ? plantRecords.get(plantId)
@@ -1607,6 +1611,23 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
 
 /** @param {GardenHistoryRow} row @param {string} roundId */
 function appSheetBulkPayloadsFromRow_(row, roundId) {
+    const selection = row[APP_SHEET_BULK_SELECTED_PLANTS_INDEX];
+    const selectedIds = Array.isArray(selection)
+        ? selection.map(cleanText_)
+        : cleanText_(selection).split(/[,;]/).map(cleanText_);
+    if (selectedIds.some((id) => ARCHIVED_PLANT_IDS.includes(id))) {
+        throw new Error(
+            "P31 and P32 are archived canceled-order IDs. Remove them from the selected plants before retrying."
+        );
+    }
+    const archivedWeights = ARCHIVED_PLANT_IDS.filter((plantId) =>
+        cleanText_(row[APP_SHEET_BULK_HEADERS.indexOf(`${plantId} weight (g)`)])
+    );
+    if (archivedWeights.length) {
+        throw new Error(
+            `Archived plant weight fields must be blank: ${archivedWeights.join(", ")}. Remove these canceled-order entries before retrying.`
+        );
+    }
     const observedAt = row[2] || row[1] || "";
     const action = normalizeAppSheetBulkAction_(
         row[APP_SHEET_BULK_ACTION_INDEX]
@@ -1723,7 +1744,9 @@ function appSheetBulkWateredPlants_(value) {
         (plantId) => !APP_SHEET_BULK_PLANTS.includes(plantId)
     );
     if (invalid.length) {
-        throw new Error(`Unknown selected plant ID: ${invalid.join(", ")}.`);
+        throw new Error(
+            `Unknown selected plant ID: ${invalid.join(", ")}. P31 and P32 are archived canceled-order IDs.`
+        );
     }
     return selected;
 }
@@ -1877,7 +1900,12 @@ function installAppSheetBulkSheet() {
         .setDataValidation(statusValidation);
     sheet
         .getRange(2, APP_SHEET_BULK_V525_HEADERS.length + 1, dataRowCount, 2)
-        .setDataValidation(weightValidation)
+        .setDataValidation(
+            SpreadsheetApp.newDataValidation()
+                .requireValueInList([""], false)
+                .setAllowInvalid(false)
+                .build()
+        )
         .setNumberFormat("0.0");
     const rotationValidation = SpreadsheetApp.newDataValidation()
         .requireNumberBetween(1, 360)
@@ -1963,6 +1991,7 @@ function installAppSheetBulkSheet() {
     sheet.setColumnWidth(APP_SHEET_BULK_WATERING_APPLICATION_INDEX + 1, 180);
     sheet.setColumnWidth(APP_SHEET_BULK_WATER_AMOUNT_INDEX + 1, 130);
     sheet.hideColumns(APP_SHEET_BULK_NOTES_INDEX + 2, 7);
+    sheet.hideColumns(APP_SHEET_BULK_V525_HEADERS.length + 1, 2);
 
     const result = {
         created,
@@ -3123,7 +3152,7 @@ function installAppSheetIntake() {
 }
 
 /**
- * Rebuilds the human-facing Dashboard, Baselines, and P01-P32 workbook pages.
+ * Rebuilds the human-facing Dashboard, Baselines, and P01-P30 workbook pages.
  * Canonical History and writable intake data are never rewritten here.
  */
 function refreshGardenWorkbook() {
@@ -3168,9 +3197,11 @@ function refreshGardenWorkbookPages21To30() {
     return refreshGardenWorkbookPageRange_(20, 30);
 }
 
-/** Refreshes only the two newest tracked containers. */
+/** Retained operator entry point; archived pages are not refreshed. */
 function refreshGardenWorkbookPages31To32() {
-    return refreshGardenWorkbookPageRange_(30, 32);
+    throw new Error(
+        "P31 and P32 are archived; there are no active pages to refresh."
+    );
 }
 
 /** @param {number} startIndex @param {number} endIndex */
@@ -3369,6 +3400,12 @@ function dryDownOutputRow_(id, records) {
  * @returns {GardenWateringRecommendation}
  */
 function wateringRecommendation_(plantId, model) {
+    if (ARCHIVED_PLANT_IDS.includes(plantId)) {
+        return {
+            date: "",
+            guidance: "Archived canceled-order plant; no care recommendation.",
+        };
+    }
     /** @type {Record<string, string>} */
     const manual = {
         P21: "Inspect upper 2 in of mix; water when dry there. Do not wait for the whole root ball to become bone dry.",
@@ -8533,7 +8570,7 @@ function plantRecordsById_(spreadsheet) {
     const records = new Map();
     rows.forEach((row, index) => {
         const plantId = cleanText_(row[0]);
-        if (!plantId) return;
+        if (!plantId || ARCHIVED_PLANT_IDS.includes(plantId)) return;
         if (records.has(plantId)) {
             throw new Error(
                 `Plant ID ${plantId} appears more than once in Plant tracker.`

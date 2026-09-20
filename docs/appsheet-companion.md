@@ -12,9 +12,17 @@ contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
-## September 19 roster and artwork deployment
+## September 20 active-roster withdrawal
 
-The live contract now covers **32 containers, P01–P32**. New `#7` / `P31` combines Cubic Frost, Coppertone, Deminuta, and Ruby Slippers: four botanical pages, one shared observation history. `#8` / `P32` is separate Nanouk, with upper-mix/manual watering guidance rather than cactus full-dry/plateau readiness. The roster is active by owner request; receipt, repotting, and measurements are not fabricated.
+The maintained active roster is **P01–P30**. The owner requested cancellation of the five-plant Amazon order; retailer confirmation remains pending. P31/#7 and P32/#8 are archived, reserved IDs, not active care targets. Their five botanical profiles remain available as archived records.
+
+Logger **5.26.1 / immutable version 95** rejects new P31/P32 observations, stale selections, and nonblank deprecated bulk weights. All **56 physical App bulk columns**, including BC/BD, remain to preserve existing rows and offline compatibility. **Production AppSheet version 1.100107** is saved: P31/P32 weights are hidden, noneditable, and blank-only. The maintained Round action expression checks 30 active weight fields plus both blank-field guards. Selected plants remains a reference to the active tracker, natural order ends at #6, and the P01–P30 portrait expression retains `GardenPlantPortraits-247fa8a658d6a14b`.
+
+A fresh editor reload verified those settings and the 30-field Bulk Log order. The live form showed exactly 30 blank weight inputs and was canceled without saving. Native spreadsheet verification retained all existing History, staging, and RO refill values, formulas, and notes; the workbook now has 54 tabs and 148 charts. See the [verified withdrawal record](../scripts/google-sheets/README.md#september-20-canceled-order-withdrawal-5261--immutable-version-95) for backup, rehearsal, and preservation evidence.
+
+## September 19 roster and artwork deployment (historical)
+
+The September 19 live contract covered **32 containers, P01–P32**. New `#7` / `P31` combines Cubic Frost, Coppertone, Deminuta, and Ruby Slippers: four botanical pages, one shared observation history. `#8` / `P32` is separate Nanouk, with upper-mix/manual watering guidance rather than cactus full-dry/plateau readiness. The roster is active by owner request; receipt, repotting, and measurements are not fabricated.
 
 The saved `App bulk` contract appends **P31 weight (g)** and **P32 weight (g)** in **BC:BD**, preserving **A:BB**, including **Watering application** and **Water amount (mL)** at **BA:BB**. This is **56 physical columns / 57 including AppSheet's `_RowNumber`**. History remains A:AP and App entries remains A:AH. Logger 5.26.0 also retains compatibility with older 54-column bulk staging.
 
@@ -191,12 +199,12 @@ and defaults to 90. The degree value is archived in `History!AN:AN`, displayed
 in read-only care history, and remains available to the public plant history.
 Clean and Prune are lightweight dated actions whose specifics belong in Notes.
 Bulk Log uses one `Selected plants` field for every supported shared action;
-per-plant weights use the dedicated P01-P32 fields. `Selected plants` is
+per-plant weights use P01-P30; P31/P32 fields remain hidden compatibility columns. `Selected plants` is
 an EnumList of refs with `Valid_If` set to `SORT(Plant tracker[Plant ID])`; if
 that expression is removed, the deployed picker can appear empty even while
 the source table contains plants.
 
-The maintained Round action validation checks all 32 weight fields. Weigh requires
+The maintained Round action validation checks all 30 active weight fields and requires the archived P31/P32 fields blank. Weigh requires
 at least one positive weight; Water + weigh also requires selected plants.
 Other shared care actions require selected plants. The maintained expression
 is [`appsheet-bulk-validation.txt`](../scripts/google-sheets/appsheet-bulk-validation.txt).
@@ -231,9 +239,9 @@ identification.
 The Plants view sorts by the hidden virtual Number column
 `Natural label order`, not by `Plant ID`. Its explicit mapping keeps labels in
 the physical sequence A1-A3 through H1-H3, followed by the numbered plant and
-shared-planter labels #1-#8. The `#` group always sorts after every lettered
+shared-planter labels #1-#6. The `#` group always sorts after every lettered
 label.
-Canonical IDs and writable picker values are P01-P32 in the maintained roster; do not replace them
+Canonical active IDs and writable picker values are P01-P30; do not replace them
 with the display-order helper.
 
 Plants uses the Image virtual column `Plant portrait` as its square main
@@ -246,7 +254,7 @@ image across unrelated history rows. The virtual `Event badge` column adds a
 compact event symbol and name such as `💧 Water`, `⚖ Weigh`, `📏 Measure`, or
 `📝 Other` without changing the canonical `Event` value.
 
-If a portrait is missing, verify its current P01-P32 mapping, the revisioned Drive
+If a portrait is missing, verify its current P01-P30 mapping, the revisioned Drive
 folder and filename, and signed-in app access. For a missing reference photo,
 verify its external URL and the `Reference image` expression. Do not replace
 a missing image with an unrelated taxon merely to fill the thumbnail.
@@ -429,7 +437,7 @@ plant in its left/top Plants pane to filter all three charts together.
 The corresponding read-only slices filter blank values before charting so
 missing measurements or weights do not appear as zero. The charts are the
 AppSheet equivalent of the three weight/dimension charts on each current Pxx workbook page; they
-reuse canonical History fields rather than connecting the 32 individual plant-page
+reuse canonical History fields rather than connecting the 30 active individual plant-page
 tables.
 
 ## Sync and recovery

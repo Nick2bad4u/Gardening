@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="tiny-planter-echeveria-title tiny-planter-echeveria-description" data-plant-slug="tiny-planter-echeveria" focusable="false">
+  <title id="tiny-planter-echeveria-title">Pale rosette echeveria plant portrait</title>
+  <desc id="tiny-planter-echeveria-description">Illustrative pale powdery rosette with layered pointed leaves in a terracotta pot; a shared-planter foliage group, not a confirmed species or separate container.</desc>
+  <defs>
+  <linearGradient id="tiny-planter-echeveria-pot" x1="0" x2="0.9" y1="0" y2="1">
+          <stop offset="0" stop-color="#f3ad73" />
+          <stop offset="1" stop-color="#c75d3a" />
+        </linearGradient>
+  <linearGradient id="tiny-planter-echeveria-rosette-color" x1="0.2" y1="0" x2="0.8" y2="1">
+          <stop offset="0" stop-color="#d8e8d9" />
+          <stop offset="0.5" stop-color="#afd5c8" />
+          <stop offset="1" stop-color="#79b3a5" />
+        </linearGradient>
+  <g id="tiny-planter-echeveria-rosette-leaf">
+          <path
+            d="M0 1C-3.5 0.5-5-3-4.5-7-4-9.7-1.2-11.5 0-12.5 1.2-11.5 4-9.7 4.5-7 5-3 3.5 0.5 0 1Z"
+            fill="url(#tiny-planter-echeveria-rosette-color)"
+            stroke="#69978a"
+            stroke-width="0.6"
+            stroke-linejoin="round"
+          />
+        </g>
+  </defs>
+  <ellipse cx="32" cy="60" rx="22" ry="2" fill="#294d3d" opacity="0.12" />
+  <path d="M11 44H53L49 58Q32 63 15 58Z" fill="url(#tiny-planter-echeveria-pot)" stroke="#945f49" stroke-width="1.5" />
+  <ellipse cx="32" cy="44" rx="21" ry="4" fill="#705445" stroke="#945f49" stroke-width="1.5" />
+  <path d="M14 49Q32 54 50 49M16 54Q32 58 48 54" fill="none" stroke="#ffe2b5" stroke-width="1.2" opacity="0.75" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(0) scale(1.75)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(36) scale(1.75)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(72) scale(1.75)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(108) scale(1.75)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(144) scale(1.75)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(180) scale(1.75)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(216) scale(1.75)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(252) scale(1.75)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(288) scale(1.75)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(324) scale(1.75)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(15) scale(1.12)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(60) scale(1.12)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(105) scale(1.12)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(150) scale(1.12)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(195) scale(1.12)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(240) scale(1.12)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(285) scale(1.12)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(330) scale(1.12)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(0) scale(0.6)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(72) scale(0.6)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(144) scale(0.6)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(216) scale(0.6)" />
+  <use href="#tiny-planter-echeveria-rosette-leaf" transform="translate(32 29) rotate(288) scale(0.6)" />
+</svg>

@@ -1,6 +1,11 @@
 import type { APIRoute } from "astro";
 
-import { getEquipmentDocs, getGuides, getProfiles } from "../lib/content.mjs";
+import {
+    getEquipmentDocs,
+    getGuides,
+    getOldPlans,
+    getProfiles,
+} from "../lib/content.mjs";
 import { getReports } from "../lib/reports.mjs";
 import { potUrl, profileUrl, siteOrigin, siteUrl } from "../lib/routes.mjs";
 
@@ -10,11 +15,13 @@ export const GET: APIRoute = async () => {
         guides,
         equipment,
         reports,
+        oldPlans,
     ] = await Promise.all([
         getProfiles(),
         getGuides(),
         getEquipmentDocs(),
         getReports(),
+        getOldPlans(),
     ]);
     const routes = [
         ...[
@@ -25,6 +32,7 @@ export const GET: APIRoute = async () => {
             "reports/",
             "photos/",
             "guides/",
+            "guides/old-plans/",
             "setup/",
             "setup/placement/",
             "setup/equipment/",
@@ -41,6 +49,7 @@ export const GET: APIRoute = async () => {
             ),
         ].map((id) => potUrl(id)),
         ...guides.map((doc) => siteUrl(`guides/${doc.slug}/`)),
+        ...oldPlans.map((doc) => siteUrl(`guides/old-plans/${doc.slug}/`)),
         ...equipment.map((doc) => siteUrl(`setup/equipment/${doc.slug}/`)),
         ...reports.map((report) => siteUrl(`reports/${report.date}/`)),
     ];

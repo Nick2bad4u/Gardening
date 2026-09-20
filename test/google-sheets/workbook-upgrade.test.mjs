@@ -492,7 +492,7 @@ describe("native workbook reliability and analytics migration", () => {
             '=IF(A2="NOW()",TODAY()+NOW(),XLOOKUP(A2,\'Plant tracker\'!$A:$A,Baselines!C:C,"TODAY()"))';
 
         expect(normalizeDerivedFormula(formula)).toBe(
-            "=IF(A2=\"NOW()\",'Workbook calculations'!$F$2+'Workbook calculations'!$E$2,XLOOKUP(A2,'Plant tracker'!$A$2:$A$33,Baselines!$C$2:$C$33,\"TODAY()\"))"
+            "=IF(A2=\"NOW()\",'Workbook calculations'!$F$2+'Workbook calculations'!$E$2,XLOOKUP(A2,'Plant tracker'!$A$2:$A$31,Baselines!$C$2:$C$31,\"TODAY()\"))"
         );
 
         const snapshot = fixture();

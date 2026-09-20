@@ -1,16 +1,20 @@
-# Ruby Slippers echeveria
+# Ruby Slippers echeveria — archived plan
 
-- Inventory: Succulent-14 — probable _Echeveria harmsii_; seller name “Echeveria Ruby Slippers”
-- Label ID: `#7` — shared four-succulent planter
-- Tracker ID: `P31`
-- Status: **Active — included at the owner's request on 2026-09-19; physical receipt date unrecorded**
+**Archived September 20, 2026. Unreceived plant; cancellation pending, not confirmed.** The owner abandoned this five-plant Amazon plan after reviewing seller feedback. This page preserves September 19 research and proposed care only. It is outside the active collection and is not a watering, weighing, or shopping task. See the [old-plan overview](../amazon-plant-order-2026-09.md).
+
+- Former inventory allocation: Succulent-14 — probable _Echeveria harmsii_; seller name “Echeveria Ruby Slippers”
+- Former label allocation: `#7` — shared four-succulent planter
+- Former tracker allocation: `P31`
+- Status: **Archived old plan — unreceived; plant-order cancellation pending as of 2026-09-20**
 - Visual description: Seller imagery shows fuzzy green leaves with red tips and margins; _Echeveria harmsii_ references describe a branching succulent with hairy, narrow leaves. The actual purchased plant has not been photographed individually.
 - Interesting fact: The working species grows as a small branching subshrub, so it may eventually rise above its flatter rosette companions.
 - Identification: **seller-labeled Ruby Slippers echeveria; _Echeveria harmsii_ is a probable working identification, not a confirmed species or registered cultivar**
 - Ordered from: The Succulent Cult through Amazon; order screenshot supplied 2026-09-19
-- Order status: **Active collection entry by owner instruction; screenshot estimates October 1 delivery, not a confirmed receipt**
-- Received container: Seller lists a rooted starter in a 2-inch nursery pot; receipt and root condition unrecorded
-- Current pot: Owner-designated shared decorated Amazon Basics 8-inch white polypropylene pot with drainage, in Molly's Succulent Mix; actual planting date and measured dimensions unrecorded
+- Order status: **Owner is canceling the plant order; seller cancellation and refund are not confirmed. The old October 1 delivery estimate is superseded planning context.**
+- Advertised container: Seller lists a rooted starter in a 2-inch nursery pot; receipt and root condition unrecorded
+- Former proposed pot: Owner-designated shared decorated Amazon Basics 8-inch white polypropylene pot with drainage, in Molly's Succulent Mix; actual planting date and measured dimensions unrecorded
+
+Former label/tracker allocations are preserved as historical references and must not be silently reused. The decorated 8-inch pot remains owned and unassigned for a future local-greenhouse choice; it is not occupied by these plants.
 
 ## Names and identity
 
@@ -28,25 +32,25 @@ Kew records _Echeveria harmsii_ as an accepted Mexican species. Species nomencla
 
 ## Collection evidence and shared container
 
-The September 19 owner instruction makes this an active profile now; the order screenshot's delivery estimate is not a receipt record. Its assigned shared container is `#7` / `P31`, together with [Cubic Frost](./echeveria-cubic-frost.md), [Coppertone sedum](./sedum-adolphi-coppertone.md), and [Deminuta](./echeveria-setosa-deminuta.md).
+The September 19 order described a two-inch rooted starter. The owner initially requested administrative enrollment, then abandoned the unreceived five-plant order on September 20 after reviewing seller feedback. Cancellation is pending, not confirmed; no receipt, planting, weight, or care event was recorded.
 
-Each component has an individual page. Only the combined container is weighed and watered. No measurement, baseline, or repot date is implied by adding the inventory record.
+The former #7 / P31 plan grouped [Cubic Frost](./echeveria-cubic-frost.md), [Coppertone](./sedum-adolphi-coppertone.md), [Deminuta](./echeveria-setosa-deminuta.md), and [Ruby Slippers](./echeveria-harmsii-ruby-slippers.md) in one decorated eight-inch pot. [Nanouk](./tradescantia-nanouk.md) was planned separately as #8 / P32. The four botanical profiles were intended to share one whole-container history, but no actual care or weight history was established. These are abandoned allocations, not IDs to reuse silently.
 
-## Care in this collection
+## Proposed care — archived research
 
 | Topic              | Practical starting approach                                                                                                                                                                                                                                     |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Light              | Bright, clear exposure. RHS gives full sun for the working species; that is outdoor guidance, not a requirement to place a new starter beneath the collection's highest lamp reading. The intended area is owner-reported at approximately 18–22 estimated DLI. |
 | Position within #7 | Put its potentially taller branching growth where it will not shade the small Deminuta rosettes. Final height and placement are unmeasured.                                                                                                                     |
 | Water              | Follow the shared planter's dry-down and the [watering strategy](../../watering-strategy.md). Red tips alone are not a watering instruction.                                                                                                                    |
-| Mix and drainage   | The shared 8-inch drainage pot and Molly's Succulent Mix are owner-designated. Keep the base of the stems clear and use P31's own weight history.                                                                                                               |
+| Mix and drainage   | The shared 8-inch drainage pot and Molly's Succulent Mix are owner-designated. Keep the base of the stems clear and use a future planting's own weight history.                                                                                                 |
 | Growth             | Reassess crowding as branches develop. The intended arrangement is not a guarantee of permanent size or compatibility.                                                                                                                                          |
 
-## Watch points
+## Reference watch points — not current chores
 
 Keep photographs of actual leaf shape, hairs, branching, and flowers separate from seller thumbnails. RHS describes red-and-yellow flowers for _E. harmsii_; flowers could improve the working identification, but no bloom has been observed in this collection record.
 
-If one component becomes persistently shaded or needs an incompatible watering pattern, a documented separation is preferable to repeatedly watering the entire planter for it. Until then, use one P31 record with component-specific notes.
+If one component becomes persistently shaded or needs an incompatible watering pattern, a documented separation is preferable to repeatedly watering the entire planter for it. In a future arrangement, use one shared record with component-specific notes.
 
 ## Sources
 

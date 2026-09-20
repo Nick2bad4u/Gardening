@@ -6,8 +6,10 @@ import { fileURLToPath } from "node:url";
 import {
     getEquipmentDocs,
     getGuides,
+    getOldPlans,
     getProfiles,
 } from "../site/lib/content.mjs";
+import { archivedAmazonPlan } from "../site/lib/old-plans.mjs";
 import { getReports } from "../site/lib/reports.mjs";
 import { isRecord } from "./build-data.mjs";
 import parser from "./html-eslint-parser.mjs";
@@ -183,11 +185,13 @@ async function main() {
         guides,
         equipment,
         reports,
+        oldPlans,
     ] = await Promise.all([
         getProfiles(),
         getGuides(),
         getEquipmentDocs(),
         getReports(),
+        getOldPlans(),
     ]);
     const pots = new Set(
         profiles
@@ -203,6 +207,7 @@ async function main() {
         "report/index.html",
         "reports/index.html",
         "guides/index.html",
+        "guides/old-plans/index.html",
         "setup/index.html",
         "setup/placement/index.html",
         "setup/equipment/index.html",
@@ -215,6 +220,11 @@ async function main() {
         ...profiles.map((profile) => `plants/${profile.slug}/index.html`),
         ...pots.values().map((id) => `pots/${id}/index.html`),
         ...guides.map((doc) => `guides/${doc.slug}/index.html`),
+        ...oldPlans.map((doc) => `guides/old-plans/${doc.slug}/index.html`),
+        ...archivedAmazonPlan.profiles.map(
+            ([slug]) => `plants/${slug}/index.html`
+        ),
+        ...archivedAmazonPlan.pots.map((id) => `pots/${id}/index.html`),
         ...equipment.map((doc) => `setup/equipment/${doc.slug}/index.html`),
         ...reports.map((report) => `reports/${report.date}/index.html`),
     ];
@@ -235,8 +245,10 @@ async function main() {
     await assertLocalLinks(pages);
     const profilePages = new Map(
         pages
-            .filter((page) =>
-                /^plants\/[^\/]+\/index\.html$/v.test(page.relative)
+            .filter(
+                (page) =>
+                    /^plants\/[^\/]+\/index\.html$/v.test(page.relative) &&
+                    !page.html.includes('name="gardening-redirect"')
             )
             .map((page) => [page.relative.split("/", 2)[1] ?? "", page.html])
     );

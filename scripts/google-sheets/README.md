@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-The maintained **Garden Plant Tracker** roster uses permanent `P01`–`P32` plant IDs
+The maintained **Garden Plant Tracker** roster uses permanent `P01`–`P30` active plant IDs
 internally and keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
@@ -19,22 +19,24 @@ for retained water, measured loss, forecast windows, and model evidence. The
 **Current weight difference** comparison starts at **Insights A586**.
 The [RO refill log](RO-REFILLS.md) records water-supply refill dates, amounts
 for the four storage containers, and a chart of gallons refilled per visit.
-The **Plant colors** sheet maps all 32 tracked containers to
+The **Plant colors** sheet maps all 30 active containers to
 consistent chart colors, with full names, swatches, and links to their charts.
-Comparison charts keep P01–P32 order so colors stay attached to the same plant;
+Comparison charts keep P01–P30 order so colors stay attached to the same plant;
 the cycle explorer changes color automatically with its selected plant.
-Each **P01–P32** page also has a **Time between waterings** column chart at
+Each **P01–P30** page also has a **Time between waterings** column chart at
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
-## September 19 inventory expansion
+## September 20 canceled-order withdrawal
 
-Live logger **5.26.0** adds `P31` / `#7`, the shared Cubic Frost, Coppertone, Deminuta, and Ruby Slippers planter, and `P32` / `#8`, separate Nanouk. Four P31 botanical profiles share one observation history; P32 uses an upper-mix/manual watering decision and does not wait for a cactus-style dry reference or plateau. Active enrollment creates no synthetic observations.
+Checked-in logger **5.26.1** returns the active roster to **30 containers, P01–P30**. The owner requested cancellation of the five-plant Amazon order; retailer cancellation is still pending. The four components formerly assigned to shared `#7` / `P31` and separate Nanouk `#8` / `P32` remain archived in the guide. Those IDs are reserved and must not be reused. No arrival, repot, death, or measurement is inferred from this change.
 
-The maintained 32-container layout uses `Plant tracker`, `Baselines`, and `Dry-down models` rows **2:33**, Dashboard rows **7:38**, and individual pages **P01–P32**. `App bulk` keeps existing **A:BB** fields unchanged and appends **P31 weight (g)** in **BC** and **P32 weight (g)** in **BD**: **56 physical columns**, or **57** in AppSheet including `_RowNumber`. The existing **Watering application** and **Water amount (mL)** columns stay **BA:BB**. The server also accepts the prior 54-column staging contract; production now uses the expanded schema.
+Active inventory/model/calculation rows end at **31**, Dashboard data at **36**, and active plant pages at **P30**. The generalized bounded formulas and empty-history safeguards remain. The September 19 expansion record below is historical; the completed withdrawal is recorded in the September 20 deployment entry.
 
-The guarded [`inventory-expansion.mjs`](inventory-expansion.mjs) planner prepares the additional inventory rows/pages, expands bounded formulas and chart ranges, and retains existing observation and staging values. The native workbook expansion, logger publication, and AppSheet editor changes are applied and verified, as recorded below. These are separate rollout steps; source changes alone do not deploy either application. Future migrations still require a fresh native backup, rehearsal, and immediate precondition checks. Older dated counts below describe their own rollouts.
+`App bulk` deliberately retains **56 physical columns / 57 including AppSheet's \_RowNumber**. Existing **A:BB** and all stored rows stay intact. **BC:BD**, still named **P31 weight (g)** and **P32 weight (g)**, are deprecated compatibility fields: hide them, make them noneditable, and require both blank in AppSheet. The server rejects any nonblank archived field before processing the entire round, even for a non-weighing action. Archived selected IDs and detailed/mobile drafts also fail clearly instead of silently losing their values. Blank compatibility columns remain acceptable, and the previous 54-column staging reader is retained.
+
+AppSheet's active picker and portrait mapping cover P01–P30. The maintained Round action validation checks those 30 weight fields and separately requires both archived fields blank. Keep all old revisioned portrait assets for cached clients and archived pages. Do not run an installer or recreate archived pages merely to remove them from the active UI. Native changes require a fresh backup, rehearsal, and precondition/readback checks; verified deployment details are recorded separately.
 
 For phone entry, open the
 [mobile entry app](https://script.google.com/macros/s/AKfycbytpdMto4ZAqOf49igDNoGYr-J6fmSRDNJOKP4-dKDFRmM2YkTCKJp3kmhrD4gOJShF/exec).
@@ -69,11 +71,21 @@ exactly one five-minute `processQueuedAppSheetEntries` trigger and a zero-percen
 trigger error rate. No photo observations had been written at this verification
 point; photo publication and the real inspection records are separate steps.
 
-## Current production baseline
+## Deployment records
+
+### September 20 canceled-order withdrawal (5.26.1 / immutable version 95)
+
+The live workbook returned to **30 tracked containers, 54 tabs, and 148 charts** after the owner withdrew the unreceived Amazon purchase plan. Retailer cancellation remains pending. A [native backup](https://docs.google.com/spreadsheets/d/1ozRJtoaphoN21Pde1kZOJrjyAydgCGV6htJnJZAU5vM/edit) and [disposable rehearsal](https://docs.google.com/spreadsheets/d/1WdsW3xGtzUmDypdjO9SMEbYjbJpHgR2LgtyiI41AIkg/edit) preceded production changes. The guarded [withdrawal planner](./inventory-withdrawal.mjs) refuses unexpected inventory, observations for the withdrawn pots, nonblank archived bulk weights, stale captured data, and repeat application.
+
+Rehearsal passed **310 checks**. Fresh production reads then guarded **2,358 value/formula requests, 47 metadata updates, 24 chart updates, and the two sheet deletions**. Production verification passed **460 checks**, with every remaining chart ID, position, and intended specification retained. All **1,075 History observations**, App entries, App bulk, and RO refill values, formulas, and notes matched the immediate prewrite snapshots. A deeper comparison verified **195,304 captured cell values** against the planned result and found no formula errors or active references to the withdrawn pots. Native banding normalization removed two explicit header-format overrides in hidden `Quick log!N4:O4`; those exact original formats were restored and verified. Existing pot setups and care observations were not changed.
+
+**AppSheet version 1.100107** is saved and verified after a fresh editor reload. Its two deprecated bulk fields are hidden, noneditable, and blank-only; the Round action expression checks the 30 active weights and both blank guards. Bulk Log contains exactly 30 blank weight inputs, natural label order ends at #6, and portraits use the existing `GardenPlantPortraits-247fa8a658d6a14b` revision. All 56 physical App bulk columns remain. The live form was inspected and canceled without saving an observation.
+
+Logger **5.26.1** is deployed as immutable Apps Script **version 95** at the existing mobile-entry URL. All three immutable files match the maintained source; the live logger reports 5.26.1 and exposes exactly 30 selections, ending at #6 / P30. Version 95 `doGet` and `getWebAppBootstrap` executions completed at **2:14 a.m. EDT**, and the existing five-minute `processQueuedAppSheetEntries` trigger completed at **2:13 a.m. EDT**. There remains exactly one queue trigger. Neither a workbook installer nor a trigger replacement was used. The existing daily review task still runs at **9:45 a.m. America/New_York** and now excludes abandoned purchase plans from active care decisions.
 
 ### September 19 inventory expansion (5.26.0 / immutable version 93)
 
-The native workbook now has **32 tracked containers, 56 tabs, and 156 charts**. `#7` / `P31` is one eight-inch shared planter with four individual botanical profiles; `#8` / `P32` is Nanouk in its separate four-inch drainage pot without a saucer. Both begin with no invented observations, wet/dry references, or watering dates. The website inventory has 41 profiles: 40 active and one historical.
+At the September 19 expansion, the native workbook had **32 tracked containers, 56 tabs, and 156 charts**. `#7` / `P31` is one eight-inch shared planter with four individual botanical profiles; `#8` / `P32` is Nanouk in its separate four-inch drainage pot without a saucer. Both begin with no invented observations, wet/dry references, or watering dates. The website inventory has 41 profiles: 40 active and one historical.
 
 The [native backup](https://docs.google.com/spreadsheets/d/18rGeQDdACX-3ihVSHGxcE_LVzLx_hzOis45NPIHzYSQ/edit) and [disposable rehearsal](https://docs.google.com/spreadsheets/d/1EypaSaC2ers5LB9Ldzdo_biFWqNdYhk80j4H9QhB83U/edit) were created before production changes. Rehearsal verified empty histories, 96/97/98-record history spills, responsive setup/medium formulas, date/date/numeric-day watering helpers, filters, conditional formatting, and retained chart bindings. Synthetic observations were confined to that copy and removed afterward. Google Sheets omits empty chart series from its API readback; the rehearsal confirmed they reappear when real numeric source cells become available. New-chart finalization preserves template series instead of treating that empty representation as the complete chart definition.
 
@@ -1387,7 +1399,7 @@ Gyazo's cached 960 px thumbnails rather than source-resolution captures; the
 source-quality uploads remain available through the field guide and Gyazo
 Collections. Existing current-photo previews cover P01-P30, including the P19 rehab
 planter and P20 shared succulent planter, with a readable fallback if a remote
-preview is unavailable. P31 and P32 have no owned-plant photos yet and use their maintained artwork rather than an invented arrival image.
+preview is unavailable. Archived P31/P32 have no owned-plant photos; their retained guide artwork is not an arrival image.
 
 For a weighing session, the primary **Add to queue** button stores each
 completed reading in this phone's local storage while keeping the current plant
@@ -1497,7 +1509,7 @@ The `App bulk` contract is deliberately narrower and faster: one row is one
 collection-wide Water, Weigh, Water + weigh, Rotation, Check, Clean, Prune,
 Pest, or Other round. It stores `Round ID`, observation time, one action
 selector, a compact EnumList of selected plant IDs, a hidden legacy weight-state
-field, optional shared care details, and P01-P32 gram fields. Empty weight fields are
+field, optional shared care details, and P01-P30 active gram fields. Empty weight fields are
 skipped. `processQueuedAppSheetEntries()` combines the selected IDs and
 nonblank weights into no more than one deterministic
 `appsheet-bulk-{Round ID}-{Plant ID}` request per plant and sends the complete
@@ -1511,8 +1523,8 @@ nutrient, or note fields without fabricating per-plant values.
 
 In AppSheet, `Selected plants` is an EnumList of refs whose `Valid_If` is
 `SORT(Plant tracker[Plant ID])`. Keep that expression in place so shared-action
-rounds can select all current P01-P32 records after the source schema changes.
-The `Round action` validation must also cover all 32 weight fields; keep
+rounds can select all current P01-P30 records after the source schema changes.
+The `Round action` validation must also cover all 30 active weight fields and require the deprecated P31/P32 fields blank; keep
 it aligned with [`appsheet-bulk-validation.txt`](./appsheet-bulk-validation.txt).
 The prior P01-P22-only check rejected valid weigh-only rounds for newer plants.
 `Nutrient amount` is Text in AppSheet, matching the Apps Script contract and
@@ -1589,7 +1601,7 @@ offline limitations documented in the companion guide.
 The app's primary views should expose the plant collection, current baselines,
 active History, new-care form, and any intake rows needing correction. Do not
 connect the generated Dashboard, Integrity, Insights layout, or individual
-`P01`–`P32` pages as editable AppSheet tables. The intentionally connected
+`P01`–`P30` pages as editable AppSheet tables. The intentionally connected
 presentation helpers are the hidden, formula-only, read-only `App insight
 activity`, `App insight calibration`, `App insight followups`, and `App plant
 charts` sheets described in the companion guide. Removing an AppSheet table
@@ -1711,12 +1723,12 @@ or update it in the workbook once:
 that long presentation-only refresh, run
 `refreshGardenWorkbookPages01To10()`,
 `refreshGardenWorkbookPages11To20()`,
-`refreshGardenWorkbookPages21To30()`, or `refreshGardenWorkbookPages31To32()` from the Apps Script editor for whichever
+or `refreshGardenWorkbookPages21To30()` from the Apps Script editor for whichever
 page batch remains unfinished. These resumable commands rebuild only the named
 plant pages; they do not write to canonical `History` or the AppSheet staging
 tables.
 
-The maintained 5.26.0 page builder places history headers at **A140:L140**, its formula at
+The maintained page builder places history headers at **A140:L140**, its formula at
 **A141**, and retains capacity through **row 5139**. It preserves the summaries
 and chart annotations in **rows 14:138**, while rebuilding the top header and
 history. Keep those history spill cells free of manually entered content.
@@ -1919,8 +1931,8 @@ visible. Missed windows require fresh inspection, not an automatic watering.
 - **P28 / split rock** has no weight-only water date. Check inner-leaf firmness
   and leaf replacement; wrinkled old leaves or a dry pot alone are insufficient.
 - **P22 / Kiwi aeonium** calls out active growth versus resting conditions.
-- **P32 / Nanouk** has no weight-only water date. Let the upper mix dry somewhat, then use manual readiness; do not require cactus-level complete drying or a sustained plateau.
-- **P20, P30, and P31 / shared succulent planters** require checking the shared root
+- **P31 and P32** are archived canceled-order IDs and receive no active care recommendation.
+- **P20 and P30 / shared succulent planters** require checking the shared root
   zone and every component, not just one visible plant.
 
 The verified live derived schema is:
@@ -1952,7 +1964,6 @@ Care basis: [University of Minnesota cacti and succulent guidance](https://exten
 supports drying between waterings and reducing water in low-light rest, not a
 universal extra drought interval. Collection-specific exceptions remain in the
 [money tree](../../docs/plants/houseplants/pachira-glabra.md),
-[Nanouk](../../docs/plants/houseplants/tradescantia-nanouk.md),
 [split rock](../../docs/plants/succulents/pleiospilos-nelii-royal-flush.md), and
 [Kiwi aeonium](../../docs/plants/succulents/aeonium-haworthii-dream-color.md) profiles.
 

@@ -21,11 +21,10 @@ prefer practical actions over elaborate tracking or false precision.
 
 ## Starting collection context
 
-Starting facts from September 19, 2026; I may update them:
+Starting facts from September 20, 2026; I may update them:
 
 - The main focus is cacti and succulents, but help with any plants I add.
-- Inventory: 32 containers, 40 active profiles, one historical. #7 / P31 shares Cubic Frost, Coppertone, Deminuta, and Ruby Slippers, each with a page. Nanouk is #8 / P32. Receipt/planting dates and final positions are unrecorded; earlier drawings cover 30 pots.
-- Both new pots use Molly's mix: #7 is a decorated 8-inch drainage pot; #8 a D'vine Dev 4-inch pot without its saucer. Nanouk's upper-mix/manual watering rule overrides cactus full dry-down or plateau logic; #7 has one shared weight/watering history.
+- Inventory: 30 containers, 38 active profiles and one historical. The five unreceived Amazon plants are an archived old plan; cancellation is pending. Former #7 / P31 and #8 / P32 are abandoned allocations, not current care targets or IDs to reuse silently. The decorated 8-inch pot remains owned/unassigned for a local-greenhouse choice; the separate D'vine 4-inch pot order has no confirmed cancellation or receipt.
 - VIVOSUN AW200 plus AeroLight 240 W were installed September 13, superseding
   AW400/AW400SE plans. Last reported: 45% and 38%, shared 13 h 15 m cycle
   including 15-minute sunrise/sunset, and an 18-inch plant-tip reference.

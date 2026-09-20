@@ -1,17 +1,10 @@
 # Table Placement Guide
 
-## September 19 Additions
+## Current scope
 
-The active collection now has **32 tracked containers**. The diagrams and measured comparison below document the earlier 30-container arrangement; they do not assign the two new pots an invented coordinate or light reading.
+The active arrangement contains **30 tracked containers**. The unreceived September 19 Amazon additions were withdrawn September 20 and preserved as an [old plan](../old-plans/amazon-plant-order-2026-09.md); cancellation is pending. Former #7 / P31 and #8 / P32 do not occupy active positions. The decorated eight-inch pot remains owned and unassigned for a future local-greenhouse choice. Existing cactus positions, fixtures, and weight references are unchanged.
 
-| New label / tracker | Container and profiles                                                                                                                                                                                                                                                                                         | Placement record                                                                                                                                                                                                                  |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **#7 / P31**        | Decorated eight-inch shared planter: [Cubic Frost](../plants/succulents/echeveria-cubic-frost.md), [Coppertone](../plants/succulents/sedum-adolphi-coppertone.md), [Deminuta](../plants/succulents/echeveria-setosa-deminuta.md), and [Ruby Slippers](../plants/succulents/echeveria-harmsii-ruby-slippers.md) | Owner-designated far end near the glass table; approximately 18–22 app-estimated DLI reported for that area. Final footprint, component heights, and shadows remain unmeasured. Keep the four profiles linked to one pot history. |
-| **#8 / P32**        | [Nanouk tradescantia](../plants/houseplants/tradescantia-nanouk.md), separate four-inch D'vine Dev pot; no saucer in use                                                                                                                                                                                       | Exact slot unassigned. Use bright filtered exposure appropriate to this foliage plant; do not assign the succulent planter's light estimate or the cactus interior's exposure to it without measuring its actual position.        |
-
-This addition does not move the existing cacti, change either fixture's settings, or reset any existing pot's weight references. #3 / P21 Money Tree remains on the north windowsill. The new profiles and tracker records are active by owner instruction; actual receipt and planting dates remain unrecorded.
-
-## Earlier Photographed Arrangement
+## Photographed Arrangement
 
 The owner added **two new 16 × 13-inch wooden tables** and rearranged the display on **September 15, 2026**. The supplied photos show **24 small pots in six columns × four rows at the room end**, with the six larger or shared containers behind them toward the window. This replaces the previous two-table and round-glass placement plan.
 

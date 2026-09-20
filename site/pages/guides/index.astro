@@ -65,5 +65,23 @@ const guides = await getGuides();
                 );
             })}
         </div>
+        <section class="guide-library-card" data-tone="record" aria-labelledby="old-plans-heading">
+            <header>
+                <img src={siteUrl("assets/ui-icons/history.svg")} alt="" width="48" height="48" />
+                <div>
+                    <p class="eyebrow">Archived research</p>
+                    <h2 id="old-plans-heading">
+                        <a href={siteUrl("guides/old-plans/")}>Old plans</a>
+                    </h2>
+                </div>
+            </header>
+            <p>
+                Previous ideas and abandoned orders, with their plant research preserved separately
+                from the active collection.
+            </p>
+            <footer>
+                <a href={siteUrl("guides/old-plans/")}>Browse old plans →</a>
+            </footer>
+        </section>
     </div>
 </SiteLayout>

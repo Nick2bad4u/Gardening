@@ -376,7 +376,7 @@ describe("dry-down formulas and workbook installation", () => {
                 structuredClone(context.installWateringRecommendations())
             ).toStrictEqual({
                 historyChanged: false,
-                loggerVersion: "5.26.0",
+                loggerVersion: "5.26.1",
                 plants: 2,
             });
 
@@ -428,7 +428,7 @@ describe("dry-down formulas and workbook installation", () => {
 
             expect(required(baselineFormulas[0])[0]).toContain("XLOOKUP($A2,");
             expect(required(baselineFormulas[1])[1]).toContain(
-                "'Dry-down models'!$P$2:$P$33"
+                "'Dry-down models'!$P$2:$P$31"
             );
             expect(required(dashboardFormulas[1])[0]).toContain("XLOOKUP($B8,");
             expect(calls.some((call) => call.name === "History")).toBe(false);
@@ -532,7 +532,7 @@ describe("dry-down formulas and workbook installation", () => {
         expect(context.installDryDownLearning()).toMatchObject({
             baselineColumns: 36,
             historyChanged: false,
-            loggerVersion: "5.26.0",
+            loggerVersion: "5.26.1",
             plants: 1,
         });
         expect(
@@ -719,11 +719,7 @@ describe("same-setup cycle learning", () => {
         expect.hasAssertions();
 
         const context = runtime();
-        for (const id of [
-            "P21",
-            "P28",
-            "P32",
-        ]) {
+        for (const id of ["P21", "P28"]) {
             const values = context.GARDEN_DRY_DOWN(
                 [
                     ...completed(0, 0.2, { id }),
