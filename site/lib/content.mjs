@@ -109,7 +109,16 @@ export async function renderMarkdown(markdown, sourcePath, prefix = "") {
     );
     html = html.replaceAll(
         /<p>(?<image><img src="(?<source>[^"]+)"[^>]*>)<\/p>/gv,
-        '<figure class="placement-figure"><a href="$<source>">$<image></a><figcaption>Planning illustration · Open full size</figcaption></figure>'
+        (
+            /** @type {string} */ _match,
+            /** @type {string} */ image,
+            /** @type {string} */ source
+        ) => {
+            const caption = source.includes("/assets/nursery-labels/")
+                ? "Nursery and acquisition evidence"
+                : "Planning illustration";
+            return `<figure class="placement-figure"><a href="${source}">${image}</a><figcaption>${caption} · Open full size</figcaption></figure>`;
+        }
     );
     return { html, toc };
 }

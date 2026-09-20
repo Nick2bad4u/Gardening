@@ -376,7 +376,7 @@ describe("dry-down formulas and workbook installation", () => {
                 structuredClone(context.installWateringRecommendations())
             ).toStrictEqual({
                 historyChanged: false,
-                loggerVersion: "5.26.1",
+                loggerVersion: "5.27.0",
                 plants: 2,
             });
 
@@ -428,7 +428,7 @@ describe("dry-down formulas and workbook installation", () => {
 
             expect(required(baselineFormulas[0])[0]).toContain("XLOOKUP($A2,");
             expect(required(baselineFormulas[1])[1]).toContain(
-                "'Dry-down models'!$P$2:$P$31"
+                "'Dry-down models'!$P$2:$P$33"
             );
             expect(required(dashboardFormulas[1])[0]).toContain("XLOOKUP($B8,");
             expect(calls.some((call) => call.name === "History")).toBe(false);
@@ -532,7 +532,7 @@ describe("dry-down formulas and workbook installation", () => {
         expect(context.installDryDownLearning()).toMatchObject({
             baselineColumns: 36,
             historyChanged: false,
-            loggerVersion: "5.26.1",
+            loggerVersion: "5.27.0",
             plants: 1,
         });
         expect(
@@ -754,6 +754,49 @@ describe("same-setup cycle learning", () => {
             );
         }
     });
+
+    it.each(["P33", "P34"])(
+        "keeps %s houseplant readiness manual even with a supported near-dry forecast",
+        (id) => {
+            expect.hasAssertions();
+
+            const context = runtime();
+            const history = [
+                ...completed(0, 0.2, { id }),
+                ...current(20, [0], 0.2, { id }),
+            ];
+            const before = structuredClone(history);
+            const values = required(context.GARDEN_DRY_DOWN(history, id)[0]);
+
+            expect(values[7]).not.toBe("");
+            expect(values[14]).toBe("");
+            expect(values[10]).not.toBe("No watering recorded");
+            expect(values[11]).toBe(
+                "Manual houseplant readiness; weigh when useful"
+            );
+            expect(values[15]).toContain(
+                "use a cactus dry reference or plateau"
+            );
+            expect(values.at(-1)).toBe(
+                "Manual houseplant readiness; no cactus dry-out trigger"
+            );
+            expect(structuredClone(history)).toStrictEqual(before);
+
+            const empty = required(context.GARDEN_DRY_DOWN([], id)[0]);
+
+            expect(empty[10]).toBe("No watering recorded");
+            expect(empty[11]).toBe(
+                "Manual houseplant readiness; weigh when useful"
+            );
+            expect(JSON.stringify(empty)).not.toMatch(
+                /Need 4 post-water weights|Need a watering/v
+            );
+            expect(empty[14]).toBe("");
+            expect(empty[15]).toContain(
+                "Do not wait for the whole root ball to become bone dry"
+            );
+        }
+    );
 
     it("withholds a water date with unsupported, partial, removed, or reset cycle data", () => {
         expect.hasAssertions();

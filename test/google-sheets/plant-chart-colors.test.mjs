@@ -81,12 +81,14 @@ function fixture() {
 describe("plant chart color identity", () => {
     it("assigns distinct colors to the maintained inventory to permanent IDs and rejects unknown plants", () => {
         expect.hasAssertions();
-        expect(palette.map((color) => color.id)).toStrictEqual(
-            Array.from(
-                { length: palette.length },
+        expect(palette.map((color) => color.id)).toStrictEqual([
+            ...Array.from(
+                { length: 30 },
                 (_, index) => `P${String(index + 1).padStart(2, "0")}`
-            )
-        );
+            ),
+            "P33",
+            "P34",
+        ]);
 
         const uniqueColors = new Set(palette.map((color) => color.hex));
 

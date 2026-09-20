@@ -32,7 +32,7 @@
 - Adding/removing a profile also affects the site build/check inventories,
   canonical SVG portraits, photo manifests, and relevant tests. Check those
   contracts before adding only a Markdown file. The current checker expects
-  39 profiles: 38 active and one historical, covering 30 tracked containers.
+  41 profiles: 40 active and one historical, covering 32 tracked containers.
   Recalculate these separately when the collection changes.
 - Keep a substantive Sources section with direct evidence for identification,
   nomenclature, range, and specific care claims. Owner observations need clear

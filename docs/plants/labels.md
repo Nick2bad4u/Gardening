@@ -2,7 +2,7 @@
 
 Last updated: 2026-09-20
 
-This is the print reference for 38 active profile records across 30 tracked pots or shared containers. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
+This is the print reference for 40 active profile records across 32 tracked pots or shared containers. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
 
 The six August cactus labels are `E1`–`E3` and `F1`–`F3`; their exact mapping
 was recorded from the pots on 2026-08-10. The numbered mapping was also
@@ -14,7 +14,7 @@ planter (`P30`). Their separate Smart Planet Home / Altman Plants retail-label
 photographs are preserved as provenance. The retail _Faucaria tigrina_ wording
 does not replace the qualified _F. tuberculosa_ working ID printed on `#5`.
 
-The unreceived Amazon plan was abandoned September 20. Former #7 / P31 and #8 / P32 are archived allocations, excluded from current print labels and not available for silent reuse. Keep its five research pages in the [old-plan archive](../old-plans/amazon-plant-order-2026-09.md); cancellation remains pending. Current numbered labels run through #6.
+The unreceived Amazon plan was abandoned September 20. Former #7 / P31 and #8 / P32 are archived allocations, excluded from current print labels and not available for silent reuse. Keep its five research pages in the [old-plan archive](../old-plans/amazon-plant-order-2026-09.md); cancellation remains pending. Current numbered labels are #1–#6, #9, and #10; #7 and #8 remain archived.
 
 The six Mountain Crest mappings were owner-corrected after receipt on
 2026-08-28: `G1` Black Widow (`P27`), `G2` paper spine (`P23`), `G3` Royal
@@ -341,6 +341,27 @@ ORIGIN: HORTICULTURAL RETAIL MIX
 WARN: TRACK + WATER AS ONE POT
 ```
 
+## September 20 Carlson's Greenhouses labels
+
+These new allocations record the two purchased houseplants. The nursery wording is retained in their profiles; cultivar identification relies on that provenance. Do not reuse archived #7 / P31 or #8 / P32.
+
+| ID    | Tracker ID | Common name           | Botanical label                                                                         | Origin wording                                                    | Warning                                                         |
+| ----- | ---------- | --------------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------- |
+| `#9`  | `P33`      | Peperomia Bicolor     | [_Peperomia obtusifolia_ 'Obtipan Bicolor'](./houseplants/peperomia-obtipan-bicolor.md) | Horticultural cultivar; species from tropical America             | Bright indirect light; avoid soggy roots and prolonged drought. |
+| `#10` | `P34`      | Tricolor oyster plant | [_Tradescantia spathacea_ 'Tricolor'](./houseplants/tradescantia-spathacea-tricolor.md) | Horticultural cultivar; species from southern Mexico to Guatemala | Irritating sap; keep away from chewing pets; check upper mix.   |
+
+```text
+#9 | PEPEROMIA BICOLOR
+Peperomia obtusifolia 'Obtipan Bicolor'
+```
+
+```text
+#10 | TRICOLOR OYSTER PLANT
+Tradescantia spathacea 'Tricolor'
+```
+
+The two plants were purchased on 2026-09-20. The tags identify Carlson's Greenhouses as the grower; the retailer is unrecorded. The purchase baskets do not establish measured pot sizes, a repot, or their final display positions.
+
 ## Archived label allocations
 
 The [September 19 Amazon plan](../old-plans/amazon-plant-order-2026-09.md) retains former #7 / P31 (four succulents) and #8 / P32 (Nanouk) as abandoned allocations. No physical plants were received and cancellation is pending. Do not print them as current labels or reassign the IDs without an explicit reviewed allocation.
@@ -372,9 +393,7 @@ The [September 19 Amazon plan](../old-plans/amazon-plant-order-2026-09.md) retai
 
 ### Acquisition details still missing
 
-The repo now contains exact source-and-date records for `A1`–`H3` and `#1`–`#6`
-except the historical, removed Rehab-04 record. Its acquisition source and date
-remain unconfirmed.
+The repo contains acquisition source-and-date records for `A1`–`H3` and `#1`–`#6`, except the historical, removed Rehab-04 record. Its acquisition source and date remain unconfirmed. New #9 and #10 have a confirmed September 20 purchase date and Carlson's Greenhouses grower tags, but their retailer remains unrecorded.
 
 The unreceived September 19 Amazon plant order is archived separately; cancellation remains pending. The separate four-inch pot order has no confirmed receipt or cancellation.
 

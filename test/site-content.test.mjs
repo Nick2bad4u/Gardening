@@ -24,9 +24,9 @@ describe("field guide source rendering", () => {
         const profiles = await getProfiles();
         const archived = await getOldPlans();
 
-        expect(profiles).toHaveLength(39);
+        expect(profiles).toHaveLength(41);
         expect(profiles.filter((profile) => !profile.historical)).toHaveLength(
-            38
+            40
         );
         expect(
             profiles.some((profile) =>
@@ -41,6 +41,34 @@ describe("field guide source rendering", () => {
         ).toBe(true);
         expect(() => plantSheetUrl("P31")).toThrow(/No Google Sheets tab/v);
         expect(() => plantSheetUrl("P32")).toThrow(/No Google Sheets tab/v);
+        expect(
+            profiles
+                .filter((profile) =>
+                    ["P33", "P34"].includes(profile.trackerId ?? "")
+                )
+                .map((profile) => ({
+                    id: profile.trackerId,
+                    inventory: profile.inventoryId,
+                    label: profile.drawerLabel.primary,
+                    slug: profile.slug,
+                }))
+                .toSorted((left, right) =>
+                    String(left.id).localeCompare(String(right.id))
+                )
+        ).toStrictEqual([
+            {
+                id: "P33",
+                inventory: "Houseplant-03",
+                label: "#9",
+                slug: "peperomia-obtipan-bicolor",
+            },
+            {
+                id: "P34",
+                inventory: "Houseplant-04",
+                label: "#10",
+                slug: "tradescantia-spathacea-tricolor",
+            },
+        ]);
     });
 
     it("keeps the tiny-planter overview and three qualified groups on one shared history with original photo provenance", async () => {
@@ -68,7 +96,7 @@ describe("field guide source rendering", () => {
         ).toStrictEqual(
             slugs.toSorted((left, right) => left.localeCompare(right))
         );
-        expect(potIds.size).toBe(30);
+        expect(potIds.size).toBe(32);
         expect(
             members
                 .map((profile) => profile.inventoryId)
@@ -234,8 +262,28 @@ describe("field guide source rendering", () => {
             '<img src="/Gardening/assets/layouts/map.png"'
         );
         expect(rendered.html).toContain('<figure class="placement-figure">');
+        expect(rendered.html).toContain(
+            "Planning illustration · Open full size"
+        );
         expect(rendered.html).toContain("<strong>Estimated</strong>");
         expect(rendered.html).not.toMatch(/<script|onerror|javascript:/iv);
+    });
+
+    it("labels nursery acquisition photographs as evidence rather than planning illustrations", async () => {
+        expect.hasAssertions();
+
+        const rendered = await renderMarkdown(
+            "![Purchased basket and nursery label](../../../assets/nursery-labels/acquisition.jpg)",
+            "docs/plants/houseplants/example.md"
+        );
+
+        expect(rendered.html).toContain(
+            '<a href="/Gardening/assets/nursery-labels/acquisition.jpg">'
+        );
+        expect(rendered.html).toContain(
+            "Nursery and acquisition evidence · Open full size"
+        );
+        expect(rendered.html).not.toContain("Planning illustration");
     });
 
     it("keeps qualified corrections and hybrid uncertainty ahead of broad label matches", () => {
@@ -313,12 +361,17 @@ describe("field guide source rendering", () => {
         expect(rendered).not.toMatch(/<script|onerror|javascript:/iv);
     });
 
-    it("uses the browser's worksheet mapping for every plant and rejects unknown IDs", () => {
+    it("uses the browser's worksheet mapping for every plant and rejects unknown IDs", async () => {
         expect.hasAssertions();
 
-        for (let number = 1; number <= 30; number += 1) {
-            const trackerId = `P${String(number).padStart(2, "0")}`;
+        const profiles = await getProfiles();
+        const trackerIds = new Set(
+            profiles.flatMap((profile) =>
+                profile.trackerId === undefined ? [] : [profile.trackerId]
+            )
+        );
 
+        for (const trackerId of trackerIds) {
             expect(plantSheetUrl(trackerId)).toBe(
                 sheetUrls.plantPage(trackerId)
             );

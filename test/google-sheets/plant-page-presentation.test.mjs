@@ -124,7 +124,7 @@ function fixture() {
     ]);
     return {
         sheets: Array.from({ length: palette.length }, (_, index) => {
-            const id = `P${String(index + 1).padStart(2, "0")}`;
+            const { id } = required(palette[index]);
             /** @type {import("../../types/plant-page-presentation.js").PageCell[][]} */
             const cells = Array.from({ length: 38 }, () =>
                 Array.from({ length: 10 }, () => ({}))

@@ -4,7 +4,7 @@ The native **Insights** sheet has **25 charts** after the September 17, 2026
 analytics upgrade. See the
 [analytics rollout record](WORKBOOK-ANALYTICS.md#rollout-record) for verification.
 Its dry-down explorer starts at
-**A226**; the maintained selector covers **P01–P30 in B228** after the September 20 withdrawal. The selected
+**A226**; the maintained selector covers **P01–P30, P33, and P34 in B228** after the September 20 houseplant purchases. The selected
 plant's care guidance, predicted dry-check date, and earliest/latest window
 appear above the graphs. The selected plant's **Current weight difference (g)**
 appears in **N228:R228**, and its collection comparison starts at **A586**.
@@ -30,15 +30,15 @@ data-label overrides. Insights sizing remains intact; the plant-page layout
 has its own [guarded styling procedure](#plant-page-chart-layout).
 Each plant has a permanent, distinct color
 defined in [`plant-colors.json`](plant-colors.json). The visible **Plant colors**
-sheet covers all 30 active IDs, full plant names, color names, hex values, swatches, and
+sheet covers all 32 active IDs, full plant names, color names, hex values, swatches, and
 links to their individual charts. These are arbitrary identity colors, unrelated
 to the appearance of the plants. Keep the names and IDs alongside color because
 similar hues can still be difficult to distinguish.
 
-The 90 weight/dimension charts and populated watering-interval charts on the
+The 96 weight/dimension charts and populated watering-interval charts on the
 individual plant sheets use that plant's color. The 15
 plant comparison charts use the same colors for each plant's bars or points, in
-consistent P01–P30 order. This fixed order prevents point colors from moving to
+consistent P01–P30, P33, P34 order. This fixed order prevents point colors from moving to
 another plant when a sorted source recalculates. Source values still update
 automatically. Comparisons with several metrics use separate grouped bars, with
 the metric order in the subtitle and names in the tooltips; the old metric-color
@@ -55,7 +55,11 @@ The first chart shares the 1,155-pixel width and 10-pixel left inset used by the
 other Insights charts. The plant-page layout below defines its chart spacing
 while preserving each plant's data bindings and weight-axis maximum.
 
-## September 20 withdrawal
+## September 20 purchased houseplants
+
+Peperomia Bicolor (P33 / #9) and Tricolor oyster plant (P34 / #10) extend the active roster to 32 pots. Their four charts each add empty observation destinations; purchase alone creates no scale readings, waterings, or baselines. P31 and P32 stay archived and reserved. Model rows extend to 2:33 and Dashboard rows to 7:38 while the existing helper layout and chart identities are retained. Both houseplants use manual readiness guidance rather than a cactus dry-out trigger. See the [enrollment record](README.md#september-20-purchased-houseplant-enrollment) for migration verification.
+
+## September 20 withdrawal (historical)
 
 The owner withdrew P31 and P32 from active care while cancellation of their Amazon order is pending. The active chart target returns to 30 pots: **90 weight/dimension charts and 30 watering-interval charts**, with model rows 2:31 and Dashboard rows 7:36. Their five botanical profiles remain archived; no observations are fabricated or deleted. The prior expansion planner retains its original P31/P32 colors independently of the active palette for historical reproducibility, not as authority to reenroll them. Native withdrawal and deployment verification are recorded separately in the logger runbook.
 

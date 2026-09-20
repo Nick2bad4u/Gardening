@@ -35,7 +35,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.26.1");
+assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.27.0");
 for (const name of [
     "getWebCorrectionEntry",
     "previewWebObservationCorrection",
@@ -57,15 +57,41 @@ assert.ok(
     isImageUrls(webPlantImageUrls),
     "Logger image URLs must have the expected record shape."
 );
-assert.equal(Object.keys(webPlantImageUrls).length, 30);
+assert.equal(Object.keys(webPlantImageUrls).length, 32);
 assert.ok(
-    Object.values(webPlantImageUrls).every(({ currentImageUrl }) =>
-        /^https:\/\/thumb\.gyazo\.com\/thumb\/960\/[\da-f]{32}\.(?:jpg|png)$/v.test(
-            currentImageUrl
-        )
-    ),
+    Object.entries(webPlantImageUrls)
+        .filter(([id]) => id !== "P33" && id !== "P34")
+        .every(([, { currentImageUrl }]) =>
+            /^https:\/\/thumb\.gyazo\.com\/thumb\/960\/[\da-f]{32}\.(?:jpg|png)$/v.test(
+                currentImageUrl
+            )
+        ),
     "Every current P01-P30 logger photo must use a cached 960 px Gyazo thumbnail."
 );
+/** @type {URL[]} */
+const acquisitionImageFiles = [];
+for (const [id, slug] of /** @type {const} */ ([
+    ["P33", "peperomia-obtipan-bicolor"],
+    ["P34", "tradescantia-spathacea-tricolor"],
+])) {
+    const expected = `https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-09-20-${id.toLowerCase()}-${slug}-acquisition.jpg`;
+    /** @type {{ currentImageUrl: string; nurseryLabelImageUrl?: string }} */
+    const photo = required(webPlantImageUrls[id], `${id} acquisition photo`);
+    assert.equal(photo.currentImageUrl, expected);
+    assert.equal(photo.nurseryLabelImageUrl, expected);
+    acquisitionImageFiles.push(
+        new URL(
+            `../assets/nursery-labels/2026-09-20-${id.toLowerCase()}-${slug}-acquisition.jpg`,
+            import.meta.url
+        )
+    );
+}
+const acquisitionImageStats = await Promise.all(
+    acquisitionImageFiles.map((url) => stat(url))
+);
+for (const file of acquisitionImageStats) {
+    assert.ok(file.isFile());
+}
 assert.match(
     required(webPlantImageUrls["P20"], "P20 image URL").currentImageUrl,
     /7954fb6f93fc71827ac45cd854eeb25a/v,
@@ -218,7 +244,7 @@ assert.deepEqual(appSheetEntryHeaders, [
     "Water amount (mL)",
 ]);
 const appSheetBulkHeaders = strings(evaluateLogger("APP_SHEET_BULK_HEADERS"));
-assert.equal(appSheetBulkHeaders.length, 56);
+assert.equal(appSheetBulkHeaders.length, 58);
 assert.deepEqual(appSheetBulkHeaders.slice(0, 6), [
     "Round ID",
     "Started at",
@@ -243,6 +269,8 @@ assert.equal(appSheetBulkHeaders[53], "Water amount (mL)");
 assert.deepEqual(appSheetBulkHeaders.slice(54), [
     "P31 weight (g)",
     "P32 weight (g)",
+    "P33 weight (g)",
+    "P34 weight (g)",
 ]);
 assert.deepEqual(strings(evaluateLogger("NUTRIENT_PRODUCT_OPTIONS")), [
     "MSU 13-3-15",
@@ -778,11 +806,11 @@ const forecastFormulaRow = strings(
 );
 assert.match(
     required(forecastFormulaRow[20], "forecast formula"),
-    /'Dry-down models'!\$E\$2:\$E\$31/v
+    /'Dry-down models'!\$E\$2:\$E\$33/v
 );
 assert.match(
     required(forecastFormulaRow[30], "forecast formula"),
-    /'Dry-down models'!\$G\$2:\$G\$31/v
+    /'Dry-down models'!\$G\$2:\$G\$33/v
 );
 assert.doesNotMatch(
     required(forecastFormulaRow[30], "forecast formula"),

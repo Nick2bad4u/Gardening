@@ -61,9 +61,9 @@ function fixture() {
         rowDimensions: [],
         weightMinimums: [],
     };
-    for (let index = 0; index < palette.length; index++) {
+    for (const [index, element] of palette.entries()) {
         const sheetId = index + 1;
-        const id = `P${String(sheetId).padStart(2, "0")}`;
+        const { id } = required(element);
         const charts = definitions.map((role, roleIndex) => {
             const isInterval = role.type === "COLUMN";
             const range = (/** @type {number} */ column) => ({

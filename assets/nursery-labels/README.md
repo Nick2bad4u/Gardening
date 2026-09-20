@@ -94,3 +94,14 @@ the collection's qualified _F. tuberculosa_ working identification remains
 based on the photographed raised leaf tubercles. The matching Home Depot
 listing describes the `P30` product as a five-plant garden; it does not identify
 the individual components.
+
+## September 20 Carlson-tagged houseplants
+
+These full-frame acquisition photographs were supplied by the owner on September 20, 2026. The original supplied files are retained privately. Publication copies use the maintained JPEG metadata sanitizer: no crop, resizing or primary-image re-encoding was applied; a decoded-pixel comparison returned zero changed pixels for both. The visible tags preserve grower wording and guidance, not independent botanical verification. Copyright Nick; all rights reserved.
+
+| File                                                                                                                               | Evidence role                                  | Visible seller evidence                                                                                               |
+| ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| [2026-09-20-p33-peperomia-obtipan-bicolor-acquisition.jpg](./2026-09-20-p33-peperomia-obtipan-bicolor-acquisition.jpg)             | #9 / P33 acquisition, foliage and tag          | Carlson; “Peperomia obtipan Bicolor basket”; bright, indirect light; $14.99                                           |
+| [2026-09-20-p34-tradescantia-spathacea-tricolor-acquisition.jpg](./2026-09-20-p34-tradescantia-spathacea-tricolor-acquisition.jpg) | #10 / P34 acquisition, foliage and clearer tag | “Rhoeo spathacea Tricolor Basket”; bright, indirect light; strong pink light affects foliage color in this photograph |
+
+The blurrier earlier #10 photograph remains private. The clearer frame above is the published evidence. Dedicated Gyazo Collection creation was unavailable during service maintenance; these local references remain usable independently of that service.

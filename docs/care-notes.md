@@ -23,6 +23,14 @@ For the installed 240 W fixture, the [manufacturer's operating limit](https://vi
 requires the growing space below **86°F (30°C)**. The older outdoor weather
 triggers below do not replace that equipment limit.
 
+## September 20 houseplant purchases
+
+The owner purchased **P33 / #9 [Peperomia Bicolor](./plants/houseplants/peperomia-obtipan-bicolor.md)** and **P34 / #10 [Tricolor oyster plant](./plants/houseplants/tradescantia-spathacea-tricolor.md)** on September 20. The tags identify Carlson's Greenhouses as the grower; the retailer is unrecorded. Both labels specify bright, indirect light. Start with a gentler leaf-height exposure and gradual acclimation; the previously reported 18–22 app-estimated DLI far-table area is not automatically assigned. The [placement guide](./layouts/table-placement-research.md#september-20-houseplant-purchases) records explicitly inferred starting ranges.
+
+Check these as houseplants, without waiting for a cactus-style whole-pot dry plateau. Peperomia should partially dry between waterings without prolonged drought; for the oyster plant, check the upper 1–2 inches once the actual pot/root-ball depth is known. Confirm drainage and inspect below a dry surface before watering. A weight or model date is supporting evidence only. Inspect the new plants for pests, keep oyster-plant sap away from skin and chewing pets, and defer feeding until roots, nursery medium, and existing fertilizer are understood. Their profiles cite the species care guidance.
+
+Purchase does not establish a repot, watering, scale observation, dry reference, or arrival-time event. Basket dimensions, medium, final placement, and any subsequent repot remain unrecorded.
+
 ## Baseline routine
 
 **Archived plan:** the five unreceived Amazon plants are excluded from the active care routine; see the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Their former #7 / P31 and #8 / P32 allocations do not create current weighing, watering, or feeding tasks. Cancellation remains pending.
@@ -33,7 +41,7 @@ triggers below do not replace that equipment limit.
    root ball, let it drain, and empty the tray. Verify drainage in a shared
    planter, especially the square wooden box, before using soak-through watering.
 3. For the usual cactus and succulent group, check that the root-zone mix is
-   dry and the plant is ready before watering again. Money tree, Royal Flush,
+   dry and the plant is ready before watering again. Money tree, Peperomia Bicolor, Tricolor oyster plant, Royal Flush,
    active/resting Kiwi aeonium, and shared containers need the specific checks
    below; one whole-pot rule does not cover the collection.
 4. Keep gentle air movement across the group without aiming a harsh, constant

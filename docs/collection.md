@@ -19,7 +19,7 @@ a photo-only collection ID.
 The short label IDs are permanent plant or shared-planter identifiers, not
 table coordinates. They are shown beside the longer historical inventory IDs.
 
-The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The active collection has **39 profile records: 38 active and one historical, across 30 tracked containers**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement. The unreceived September 19 Amazon plants have moved to the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md); cancellation is pending, not confirmed.
+The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The active collection has **41 profile records: 40 active and one historical, across 32 tracked containers**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement. The unreceived September 19 Amazon plants have moved to the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md); cancellation is pending, not confirmed.
 
 ## Confidence guide
 
@@ -193,6 +193,17 @@ The numbered mapping was copied from the physical labels on 2026-08-10: the
 shared rehab cactus planter is `#1`, the shared succulent planter is `#2`, the
 money tree is `#3`, and the Kiwi aeonium is `#4`. The former `A4-B4` and
 `C4-D4` planter IDs remain only as historical cross-references.
+
+## September 20 Carlson's Greenhouses houseplants
+
+The owner purchased two separate basket-grown houseplants on **2026-09-20**. The photographs document their nursery labels and purchase containers. The tags identify Carlson's Greenhouses as the grower; the retailer is unrecorded. Pot dimensions, medium, drainage configuration, any repot, final placement, weights, and watering observations remain unrecorded; no care event is inferred from purchase.
+
+| Inventory ID  | Label ID | Tracker ID | Working identification                                                                         | Common name           | Evidence                                                                  |
+| ------------- | -------- | ---------- | ---------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------------------------------------- |
+| Houseplant-03 | `#9`     | `P33`      | [_Peperomia obtusifolia_ 'Obtipan Bicolor'](./plants/houseplants/peperomia-obtipan-bicolor.md) | Peperomia Bicolor     | Tag: “Peperomia obtipan Bicolor basket”; “bright, indirect light”; $14.99 |
+| Houseplant-04 | `#10`    | `P34`      | [_Tradescantia spathacea_ 'Tricolor'](./plants/houseplants/tradescantia-spathacea-tricolor.md) | Tricolor oyster plant | Tag: “Rhoeo spathacea Tricolor Basket”; “bright, indirect light”          |
+
+These are new allocations. P31 / #7, P32 / #8, and Houseplant-02 remain reserved for the abandoned Amazon plan. Both new plants need a gentler, measured starting position; the previously reported 18–22 app-estimated DLI far-table area is not automatically assigned to either purchase. See the [current placement guide](./layouts/table-placement-research.md#september-20-houseplant-purchases).
 
 ## September 2026 Home Depot succulent additions
 

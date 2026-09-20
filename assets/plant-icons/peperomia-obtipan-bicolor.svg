@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="peperomia-obtipan-bicolor-title peperomia-obtipan-bicolor-description" data-plant-slug="peperomia-obtipan-bicolor" focusable="false">
+  <title id="peperomia-obtipan-bicolor-title">Peperomia Bicolor plant portrait</title>
+  <desc id="peperomia-obtipan-bicolor-description">Illustrative branching baby rubber plant with thick oval green leaves and cream margins in a neutral pale pot; the nursery tag reads Peperomia obtipan Bicolor basket.</desc>
+  <defs>
+  <linearGradient id="peperomia-obtipan-bicolor-pot" x1="0" y1="0" x2="0.8" y2="1">
+  <stop offset="0" stop-color="#f4eee1" />
+  <stop offset="1" stop-color="#c2baa8" />
+  </linearGradient>
+  <radialGradient id="peperomia-obtipan-bicolor-leaf-green" cx="0.3" cy="0.2" r="0.8">
+  <stop offset="0" stop-color="#8dad70" />
+  <stop offset="1" stop-color="#386c4a" />
+  </radialGradient>
+  <g id="peperomia-obtipan-bicolor-leaf">
+  <path d="M0 1C-8 0-12-6-10-14-8-20 0-21 6-17 14-12 10-3 0 1Z" fill="#eee3a7" stroke="#9fa679" stroke-width="0.8" />
+  <path d="M0-1C-4-2-7-5-6-9L-7-13-3-16 1-15 4-16 7-12 6-8 7-5Z" fill="url(#peperomia-obtipan-bicolor-leaf-green)" />
+  <path d="M0-2Q2-9 0-15" fill="none" stroke="#cad69c" stroke-width="0.7" opacity="0.7" />
+  </g>
+  </defs>
+  <ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
+  <path d="M10 43H54L49 58Q32 62 15 58Z" fill="url(#peperomia-obtipan-bicolor-pot)" stroke="#807563" stroke-width="1.5" />
+  <ellipse cx="32" cy="43" rx="22" ry="4" fill="#6f5949" stroke="#807563" stroke-width="1.3" />
+  <path d="M15 51Q32 55 49 51" fill="none" stroke="#fff9eb" stroke-width="1.2" opacity="0.7" />
+  <path d="M32 45Q30 26 33 13M31 34L17 23M32 30L45 16M31 41L45 33" fill="none" stroke="#758857" stroke-width="2.5" stroke-linecap="round" />
+  <use href="#peperomia-obtipan-bicolor-leaf" transform="translate(32 17) rotate(-8) scale(0.78)" />
+  <use href="#peperomia-obtipan-bicolor-leaf" transform="translate(43 22) rotate(35) scale(0.82)" />
+  <use href="#peperomia-obtipan-bicolor-leaf" transform="translate(19 27) rotate(-55) scale(0.95)" />
+  <use href="#peperomia-obtipan-bicolor-leaf" transform="translate(34 30) rotate(35) scale(0.88)" />
+  <use href="#peperomia-obtipan-bicolor-leaf" transform="translate(28 36) rotate(-70) scale(1)" />
+  <use href="#peperomia-obtipan-bicolor-leaf" transform="translate(45 38) rotate(58) scale(0.9)" />
+  <use href="#peperomia-obtipan-bicolor-leaf" transform="translate(26 44) rotate(-67) scale(0.85)" />
+  <use href="#peperomia-obtipan-bicolor-leaf" transform="translate(33 44) rotate(35) scale(0.85)" />
+</svg>

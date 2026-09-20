@@ -2,13 +2,26 @@
 
 ## Current scope
 
-The active arrangement contains **30 tracked containers**. The unreceived September 19 Amazon additions were withdrawn September 20 and preserved as an [old plan](../old-plans/amazon-plant-order-2026-09.md); cancellation is pending. Former #7 / P31 and #8 / P32 do not occupy active positions. The decorated eight-inch pot remains owned and unassigned for a future local-greenhouse choice. Existing cactus positions, fixtures, and weight references are unchanged.
+The collection contains **32 tracked containers**: 30 with established positions and two September 20 houseplant purchases whose final positions remain unrecorded. The unreceived September 19 Amazon additions were withdrawn September 20 and preserved as an [old plan](../old-plans/amazon-plant-order-2026-09.md); cancellation is pending. Former #7 / P31 and #8 / P32 do not occupy active positions. The decorated eight-inch pot remains owned and unassigned; no repot into it is inferred from either purchase. Existing cactus positions, fixtures, and weight references are unchanged.
+
+## September 20 houseplant purchases
+
+**P33 / #9 [Peperomia Bicolor](../plants/houseplants/peperomia-obtipan-bicolor.md)** and **P34 / #10 [Tricolor oyster plant](../plants/houseplants/tradescantia-spathacea-tricolor.md)** were purchased on September 20. The tags identify Carlson's Greenhouses as the grower; the retailer is unrecorded. Both nursery tags say **bright, indirect light**. Their photographed baskets are purchase-container evidence; final position, pot dimensions, medium, drainage, and any repot remain unrecorded. They do not occupy archived P31/P32 positions, and neither is automatically assigned the decorated eight-inch pot.
+
+Use a leaf-height comparison to choose a gentler starting position without moving the established cactus display. The following are **conservative collection-specific trial ranges inferred from bright-indirect care guidance**, not published cultivar thresholds or measurements:
+
+| Plant                           | Initial comparison range | Possible settled range after acclimation                |
+| ------------------------------- | ------------------------ | ------------------------------------------------------- |
+| P33 / #9 Peperomia Bicolor      | About 4–6 mol·m⁻²·day⁻¹  | About 6–10, if new growth remains compact and undamaged |
+| P34 / #10 Tricolor oyster plant | About 6–8 mol·m⁻²·day⁻¹  | About 8–12, if new growth remains compact and undamaged |
+
+The previously reported far-table **18–22 app-estimated DLI** is above these proposed starting comparisons and is not the default new-arrival spot. It is not a measured burn threshold either. Increase exposure gradually only after observing the plants and their root-zone moisture. Keep phone/app estimates distinct from calibrated PAR measurements, and do not change the existing light settings merely to fit a newly purchased basket. Species care evidence and the limits of the inference are linked in each profile.
 
 ## Photographed Arrangement
 
 The owner added **two new 16 × 13-inch wooden tables** and rearranged the display on **September 15, 2026**. The supplied photos show **24 small pots in six columns × four rows at the room end**, with the six larger or shared containers behind them toward the window. This replaces the previous two-table and round-glass placement plan.
 
-**North-windowsill move confirmed September 16:** the owner confirmed that **#3 / P21 Money Tree is now on the north-facing windowsill**, off the rear-left table. The move was planned on September 15 after the owner noticed downward-pointing leaves; its exact completion time was not supplied. The current arrangement has **29 containers on wood (24 small pots at the front and five larger/shared containers behind them), plus one money tree on the windowsill**. Apart from the later confirmed A3/F1 exchange described below, the other positions stay as photographed, including #4 Kiwi Aeonium; the vacated table spot stays open. The supplied photo predates the move. Excess light remains the owner's suspected cause, not a diagnosis established by leaf posture. Sill dimensions, exact position within the sill, daylight, lamp spill and leaf-height clearance remain unmeasured.
+**North-windowsill move confirmed September 16:** the owner confirmed that **#3 / P21 Money Tree is now on the north-facing windowsill**, off the rear-left table. The move was planned on September 15 after the owner noticed downward-pointing leaves; its exact completion time was not supplied. The established arrangement has **29 containers on wood (24 small pots at the front and five larger/shared containers behind them), plus one money tree on the windowsill**. The two September 20 houseplant purchases add P33 and P34 with final positions unrecorded. Apart from the later confirmed A3/F1 exchange described below, the other positions stay as photographed, including #4 Kiwi Aeonium; the vacated table spot stays open. The supplied photo predates the move. Excess light remains the owner's suspected cause, not a diagnosis established by leaf posture. Sill dimensions, exact position within the sill, daylight, lamp spill and leaf-height clearance remain unmeasured.
 
 The working footprint is **four tables in a 2 × 2 block, nominally 26 inches across × 32 inches toward the window**, excluding gaps and rails. That orientation is inferred from the photographs, not a new tape measurement. The old glass table is no longer shown supporting these pots; its storage or other use is not recorded. The new tables' height has not been measured; the earlier pair was 18 inches high.
 

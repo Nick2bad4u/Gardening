@@ -337,10 +337,7 @@ describe("native derived formula contracts", () => {
         expect(calendar.plantRows).toHaveLength(palette.length);
         expect(calendar.dates).toBe(`=SEQUENCE(1,56,INT(${clock})-55,1)`);
         expect(calendar.plantRows.map(({ plantId }) => plantId)).toStrictEqual(
-            Array.from(
-                { length: palette.length },
-                (_, index) => `P${String(index + 1).padStart(2, "0")}`
-            )
+            palette.map(({ id }) => id)
         );
 
         for (const { formula } of calendar.plantRows) {

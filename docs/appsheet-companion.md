@@ -12,9 +12,23 @@ contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
+## September 20 purchased-houseplant enrollment
+
+The maintained roster is **32 active containers: P01–P30, P33, and P34**. **P33 / #9 Peperomia Bicolor** and **P34 / #10 Tricolor oyster plant** were purchased September 20; their tags identify Carlson's Greenhouses as grower, while the retailer is unrecorded. The guide contains **41 profiles: 40 active and one historical**. Archived P31 / #7 and P32 / #8 remain reserved and excluded from active pickers.
+
+Logger **5.27.0** and the maintained AppSheet expressions use **58 physical `App bulk` columns, A:BF / 59 including `_RowNumber`**. P33/P34 weight fields append at **BE:BF**. Preserve **A:BD** and all stored rows; P31/P32 fields at **BC:BD** remain hidden, noneditable, and blank-only. Round validation covers **32 active weights** plus both archived blank guards. The new weights use the existing optional positive Decimal and Weigh / Water + weigh visibility rules. `Selected plants` remains an EnumList of active `Plant tracker` refs; natural label order ends with **#9, #10** after #1–#6, with no active #7/#8. `History` remains A:AP and `App entries` A:AH; canonical and chart-helper tables remain read-only, and the queue bridge remains the only writer to History.
+
+P33 needs partial drying without prolonged drought; P34 needs an upper **1–2-inch** dryness check scaled to its actual root-ball depth once measured. Keep both as manual-readiness exceptions: weight curves and cactus plateaus do not prove their root-zone condition. Enrollment supplies no synthetic observations, watering, repot, measured pot size, medium, or physical setup. The reviewed plant-tab IDs are **202609330** for P33 and **202609340** for P34.
+
+The new portrait revision **8dcdcf679f29f69a** has **32 verified SVG files** for P01–P30/P33/P34 in [GardenPlantPortraits-8dcdcf679f29f69a](https://drive.google.com/drive/folders/1OnqXO0SUxgRBy1cYWjeU5Ua4Lo63g9XO). The maintained [portrait expression](../scripts/google-sheets/appsheet-plant-portrait.txt) and [manifest](../scripts/google-sheets/appsheet-plant-portraits.json) point to that revision. Retain older revision folders for cached clients. A [native backup](https://docs.google.com/spreadsheets/d/10BwubhPU93E8Fe27bh28RHLRCpqh1rXmxYO9rlRq1-8/edit) and [disposable rehearsal](https://docs.google.com/spreadsheets/d/1yrYo-S3hhyK3ylXhmdV4325xZ6hk0Xo5PJF1p-mbSRw/edit) precede the guarded enrollment.
+
+**Final production verification is pending.** Record the saved AppSheet version and immutable Apps Script version after deployment; reload the editor, verify all 32 active picker/portrait mappings and blank bulk inputs without saving a synthetic observation, and confirm the stable logger URL reports 5.27.0 with successful executions and exactly one five-minute queue trigger. The [logger enrollment runbook](../scripts/google-sheets/README.md#september-20-purchased-houseplant-enrollment) records the preservation and readback requirements. Uploaded files and checked-in expressions alone are not a verified production rollout.
+
 ## September 20 active-roster withdrawal
 
-The maintained active roster is **P01–P30**. The owner requested cancellation of the five-plant Amazon order; retailer confirmation remains pending. P31/#7 and P32/#8 are archived, reserved IDs, not active care targets. Their five botanical profiles remain available as archived records.
+This earlier same-day production record is historical; the enrollment section above supersedes its current roster and schema targets.
+
+The active roster after that withdrawal was **P01–P30**. The owner requested cancellation of the five-plant Amazon order; retailer confirmation remains pending. P31/#7 and P32/#8 are archived, reserved IDs, not active care targets. Their five botanical profiles remain available as archived records.
 
 Logger **5.26.1 / immutable version 95** rejects new P31/P32 observations, stale selections, and nonblank deprecated bulk weights. All **56 physical App bulk columns**, including BC/BD, remain to preserve existing rows and offline compatibility. **Production AppSheet version 1.100107** is saved: P31/P32 weights are hidden, noneditable, and blank-only. The maintained Round action expression checks 30 active weight fields plus both blank-field guards. Selected plants remains a reference to the active tracker, natural order ends at #6, and the P01–P30 portrait expression retains `GardenPlantPortraits-247fa8a658d6a14b`.
 
@@ -199,12 +213,12 @@ and defaults to 90. The degree value is archived in `History!AN:AN`, displayed
 in read-only care history, and remains available to the public plant history.
 Clean and Prune are lightweight dated actions whose specifics belong in Notes.
 Bulk Log uses one `Selected plants` field for every supported shared action;
-per-plant weights use P01-P30; P31/P32 fields remain hidden compatibility columns. `Selected plants` is
+per-plant weights use P01-P30, P33, and P34; P31/P32 fields remain hidden compatibility columns. `Selected plants` is
 an EnumList of refs with `Valid_If` set to `SORT(Plant tracker[Plant ID])`; if
 that expression is removed, the deployed picker can appear empty even while
 the source table contains plants.
 
-The maintained Round action validation checks all 30 active weight fields and requires the archived P31/P32 fields blank. Weigh requires
+The maintained Round action validation checks all 32 active weight fields and requires the archived P31/P32 fields blank. Weigh requires
 at least one positive weight; Water + weigh also requires selected plants.
 Other shared care actions require selected plants. The maintained expression
 is [`appsheet-bulk-validation.txt`](../scripts/google-sheets/appsheet-bulk-validation.txt).
@@ -239,9 +253,9 @@ identification.
 The Plants view sorts by the hidden virtual Number column
 `Natural label order`, not by `Plant ID`. Its explicit mapping keeps labels in
 the physical sequence A1-A3 through H1-H3, followed by the numbered plant and
-shared-planter labels #1-#6. The `#` group always sorts after every lettered
+shared-planter labels #1-#6, #9, and #10. The `#` group always sorts after every lettered
 label.
-Canonical active IDs and writable picker values are P01-P30; do not replace them
+Canonical active IDs and writable picker values are P01-P30, P33, and P34; do not replace them
 with the display-order helper.
 
 Plants uses the Image virtual column `Plant portrait` as its square main
@@ -254,14 +268,14 @@ image across unrelated history rows. The virtual `Event badge` column adds a
 compact event symbol and name such as `💧 Water`, `⚖ Weigh`, `📏 Measure`, or
 `📝 Other` without changing the canonical `Event` value.
 
-If a portrait is missing, verify its current P01-P30 mapping, the revisioned Drive
+If a portrait is missing, verify its current P01-P30/P33/P34 mapping, the revisioned Drive
 folder and filename, and signed-in app access. For a missing reference photo,
 verify its external URL and the `Reference image` expression. Do not replace
 a missing image with an unrelated taxon merely to fill the thumbnail.
 
 ### Portrait storage and caching
 
-The September 5 production set comprised thirty private SVGs, `P01.svg` through `P30.svg`, in `GardenPlantPortraits-2e71bf2a701aa61f`, beside the source workbook in Drive. The September 19 release uses `P01.svg` through `P32.svg` in `GardenPlantPortraits-247fa8a658d6a14b`; the earlier folder remains available for rollback. The
+The September 5 production set comprised thirty private SVGs, `P01.svg` through `P30.svg`, in `GardenPlantPortraits-2e71bf2a701aa61f`, beside the source workbook in Drive. The September 19 release used `P01.svg` through `P32.svg` in `GardenPlantPortraits-247fa8a658d6a14b`; the earlier folder remains available for rollback. The
 [portrait manifest](../scripts/google-sheets/appsheet-plant-portraits.json)
 records their canonical source slugs, and the
 [image expression](../scripts/google-sheets/appsheet-plant-portrait.txt)
@@ -437,7 +451,7 @@ plant in its left/top Plants pane to filter all three charts together.
 The corresponding read-only slices filter blank values before charting so
 missing measurements or weights do not appear as zero. The charts are the
 AppSheet equivalent of the three weight/dimension charts on each current Pxx workbook page; they
-reuse canonical History fields rather than connecting the 30 active individual plant-page
+reuse canonical History fields rather than connecting the 32 active individual plant-page
 tables.
 
 ## Sync and recovery

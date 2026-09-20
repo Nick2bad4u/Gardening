@@ -1,7 +1,6 @@
 # Google Sheets observation logger
 
-The maintained **Garden Plant Tracker** roster uses permanent `P01`–`P30` active plant IDs
-internally and keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+The maintained **Garden Plant Tracker** roster has **32 active containers**, using permanent IDs `P01`–`P30`, `P33`, and `P34` internally and keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
@@ -19,18 +18,32 @@ for retained water, measured loss, forecast windows, and model evidence. The
 **Current weight difference** comparison starts at **Insights A586**.
 The [RO refill log](RO-REFILLS.md) records water-supply refill dates, amounts
 for the four storage containers, and a chart of gallons refilled per visit.
-The **Plant colors** sheet maps all 30 active containers to
+The **Plant colors** sheet maps all 32 active containers to
 consistent chart colors, with full names, swatches, and links to their charts.
-Comparison charts keep P01–P30 order so colors stay attached to the same plant;
+Comparison charts keep P01–P30, P33, P34 order so colors stay attached to the same plant;
 the cycle explorer changes color automatically with its selected plant.
-Each **P01–P30** page also has a **Time between waterings** column chart at
+Each active **P01–P30, P33, and P34** page also has a **Time between waterings** column chart at
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## September 20 purchased-houseplant enrollment
+
+Checked-in logger **5.27.0** enrolls **P33 / #9 Peperomia Bicolor** and **P34 / #10 Tricolor oyster plant** alongside P01–P30. Their September 20 purchase is confirmed; the tags identify Carlson's Greenhouses as grower and the retailer remains unrecorded. The field guide now contains **41 profiles: 40 active and one historical, across 32 tracked containers**. P31 / #7 and P32 / #8 remain archived, reserved allocations for the unreceived Amazon order; this enrollment does not reuse them.
+
+The current `App bulk` contract is **58 physical columns, A:BF / 59 including AppSheet's `_RowNumber`**. Append **P33 weight (g)** and **P34 weight (g)** at **BE:BF**, preserving existing **A:BD**, all stored rows, and the deprecated P31/P32 compatibility fields at **BC:BD**. Those archived fields stay hidden, noneditable, and blank-only; the server rejects nonblank archived weights or archived selected IDs. Round validation covers the **32 active weights** plus both archived-field guards. `History` remains **A:AP**, and `App entries` remains **A:AH**. The reviewed new plant-tab IDs are **P33: 202609330** and **P34: 202609340**; active identity order is P01–P30, P33, P34, not a continuous P01–P32 sequence.
+
+Both new plants require **manual moisture/readiness checks**. P33 should partially dry without prolonged whole-pot drought; P34 uses an upper **1–2-inch** check scaled to its actual root-ball depth once known. Weight trends can support those checks, but a cactus plateau, old dry reference, or model date does not establish readiness. No weight, Water, Repot, arrival-time observation, or physical pot setup is fabricated by administrative enrollment. Pot size, medium, and final placement remain unrecorded. See the [watering exceptions](../../docs/watering-strategy.md#collection-exceptions).
+
+The [native pre-enrollment backup](https://docs.google.com/spreadsheets/d/10BwubhPU93E8Fe27bh28RHLRCpqh1rXmxYO9rlRq1-8/edit) and [disposable rehearsal workbook](https://docs.google.com/spreadsheets/d/1yrYo-S3hhyK3ylXhmdV4325xZ6hk0Xo5PJF1p-mbSRw/edit) are recorded for this change. The guarded [purchased-houseplant planner](./purchased-houseplants.mjs) preserves reserved IDs, existing bulk columns, and captured source-state preconditions. Artwork revision **8dcdcf679f29f69a** has **32 verified active-roster SVG files** in [GardenPlantPortraits-8dcdcf679f29f69a](https://drive.google.com/drive/folders/1OnqXO0SUxgRBy1cYWjeU5Ua4Lo63g9XO); retain older revision folders for existing clients.
+
+**Deployment verification pending:** source/schema preparation and uploaded portrait verification do not establish the final production AppSheet version or immutable Apps Script version. Complete the native migration/readback, preserve the existing phone deployment URL, record the immutable version and saved AppSheet version, verify the live logger reports **5.27.0**, inspect both new forms and portrait mappings, and confirm successful executions plus exactly one five-minute queue trigger. Compare canonical History, staging, and RO records with the prewrite snapshot and confirm no synthetic P33/P34 observations before marking this enrollment complete.
+
 ## September 20 canceled-order withdrawal
 
-Checked-in logger **5.26.1** returns the active roster to **30 containers, P01–P30**. The owner requested cancellation of the five-plant Amazon order; retailer cancellation is still pending. The four components formerly assigned to shared `#7` / `P31` and separate Nanouk `#8` / `P32` remain archived in the guide. Those IDs are reserved and must not be reused. No arrival, repot, death, or measurement is inferred from this change.
+This earlier same-day contract is historical; the purchased-houseplant enrollment above supersedes its active counts and bulk-column width.
+
+Logger **5.26.1** returned the active roster to **30 containers, P01–P30**. The owner requested cancellation of the five-plant Amazon order; retailer cancellation is still pending. The four components formerly assigned to shared `#7` / `P31` and separate Nanouk `#8` / `P32` remain archived in the guide. Those IDs are reserved and must not be reused. No arrival, repot, death, or measurement is inferred from this change.
 
 Active inventory/model/calculation rows end at **31**, Dashboard data at **36**, and active plant pages at **P30**. The generalized bounded formulas and empty-history safeguards remain. The September 19 expansion record below is historical; the completed withdrawal is recorded in the September 20 deployment entry.
 

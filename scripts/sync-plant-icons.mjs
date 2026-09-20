@@ -341,6 +341,10 @@ function portraitDescriptions() {
             "An upright green cactus densely covered with golden ribs and radial spines in a purple planter.",
         ],
         [
+            "peperomia-obtipan-bicolor",
+            "Illustrative branching baby rubber plant with thick oval green leaves and cream margins in a neutral pale pot; the nursery tag reads Peperomia obtipan Bicolor basket.",
+        ],
+        [
             "pilosocereus-pachycladus-variegated",
             "A blue-green columnar cactus with lengthwise cream variegation and golden spine clusters in a terracotta planter.",
         ],
@@ -395,6 +399,10 @@ function portraitDescriptions() {
         [
             "tradescantia-nanouk",
             "Pink, cream, and green striped pointed leaves on branching stems above a mauve beaded pot.",
+        ],
+        [
+            "tradescantia-spathacea-tricolor",
+            "Illustrative compact rosettes of narrow pointed leaves striped green, cream and pink with purple tones in a neutral pale pot; nursery-labeled Rhoeo spathacea Tricolor Basket.",
         ],
     ]);
 }

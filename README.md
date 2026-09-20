@@ -7,7 +7,7 @@ succulent, and small houseplant collection, especially learning how to use the
 indoor grow-light setup without turning the hobby into a science project.
 The owner added two more 16 × 13-inch tables on September 15. The [current four-table guide](docs/layouts/table-placement-research.md) records 24 small pots in a six-column/four-row front grid, five larger/shared containers behind them plus #3 Money Tree on the north windowsill (move confirmed September 16), and an inferred 26 × 32-inch wooden footprint. Its new relative-light map is a hypothesis to compare with phone readings; the former round-glass layout is historical.
 
-The collection has **39 profile records: 38 active and one historical, across 30 tracked containers**. The unreceived five-plant Amazon order is now an [old plan under Guides](docs/old-plans/amazon-plant-order-2026-09.md); the owner is canceling it after reviewing seller feedback, and confirmation is pending. The decorated eight-inch pot remains owned and unassigned for a future local-greenhouse choice.
+The collection has **41 profile records: 40 active and one historical, across 32 tracked containers**. The unreceived five-plant Amazon order is now an [old plan under Guides](docs/old-plans/amazon-plant-order-2026-09.md); the owner is canceling it after reviewing seller feedback, and confirmation is pending. Two houseplants purchased on September 20 with Carlson's Greenhouses grower tags (retailer unrecorded) now have separate [profiles and IDs](docs/collection.md#september-20-carlsons-greenhouses-houseplants): #9 / P33 Peperomia Bicolor and #10 / P34 Tricolor oyster plant. Their final placement and any repot remain unrecorded; the decorated eight-inch pot remains owned and unassigned.
 
 The installed AW200 and AeroLight 240 W remain at their last reported 45% and 38%, with an 18-inch tip reference and a shared 13 h 15 m total cycle including 15-minute sunrise and sunset transitions. Current fixture centers and clearances over the new tables are unmeasured. See the [equipment record](docs/equipment/aw200-and-aerolight-240w.md).
 
@@ -38,11 +38,11 @@ The installed AW200 and AeroLight 240 W remain at their last reported 45% and 38
 - [Plant photo Collections index](https://nick2bad4u.github.io/Gardening/photos/) — a searchable,
   mobile-friendly index of one public Gyazo Collection per current plant plus
   the collection-wide overview timeline
-- [Plant profiles](docs/plants/) — names, origins, history, flowers, care, propagation, risks, sources, and photo-archive status for all 39 profile records (38 active and one historical), linked to 30 tracked containers
+- [Plant profiles](docs/plants/) — names, origins, history, flowers, care, propagation, risks, sources, and photo-archive status for all 41 profile records (40 active and one historical), linked to 32 tracked containers
 - [AW200 + AeroLight 240 W setup](docs/equipment/aw200-and-aerolight-240w.md) —
   verified fixture dimensions and weights, installed settings, independent E25
   controls, and four ceiling hooks for independent suspension
-- [Table placement guide](docs/layouts/table-placement-research.md) — the established 30-container arrangement, light maps, and reading sheet; also [on the website](https://nick2bad4u.github.io/Gardening/setup/placement/)
+- [Table placement guide](docs/layouts/table-placement-research.md) — the established 30-container arrangement, two new houseplants with placement pending, light maps, and reading sheet; also [on the website](https://nick2bad4u.github.io/Gardening/setup/placement/)
 - [Two-light placement review](docs/two-light-placement-review.md) — a complete pot-by-pot review, the revised coordinates, shared-planter guidance, and the limits of the estimated light map
 - [Earlier AW200SE and E25 deep guide](docs/equipment/vivosun-aw200se.md) — PPFD maps,
   DLI/lux conversions, distances, dimming, placement, and a simple starting

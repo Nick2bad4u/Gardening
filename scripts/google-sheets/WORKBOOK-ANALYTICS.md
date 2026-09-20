@@ -10,7 +10,7 @@ existing phone URL. See the [rollout record](#rollout-record) for evidence.
 
 | Location                            | Information                                                                                                                         |
 | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Every P01–P30 page, rows 14:38      | Completed watering-gap statistics and sample count; latest photo and recorded condition; feeding history; sparse-evidence guidance. |
+| Every active Pxx page, rows 14:38   | Completed watering-gap statistics and sample count; latest photo and recorded condition; feeding history; sparse-evidence guidance. |
 | Plant page A11                      | Jump to complete history.                                                                                                           |
 | Plant page A12:C12                  | Jump to charts at A54.                                                                                                              |
 | Plant page D12:F12 and G12:J12      | Calculated as of label and timestamp.                                                                                               |

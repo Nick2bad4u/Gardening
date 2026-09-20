@@ -73,6 +73,16 @@
             "file": "assets/nursery-labels/2026-08-29-mountain-crest-labels-02.webp",
             "captured_on": "2026-08-29",
             "description": "Second full evidence view used to derive the six plant-specific label crops; retained for archive completeness rather than repeated on every plant profile."
+        },
+        {
+            "file": "assets/nursery-labels/2026-09-20-p33-peperomia-obtipan-bicolor-acquisition.jpg",
+            "captured_on": "2026-09-20",
+            "description": "Full-frame acquisition evidence for #9 / P33: variegated rounded leaves and the Carlson Peperomia obtipan Bicolor basket tag. Metadata removed without cropping or re-encoding the primary image."
+        },
+        {
+            "file": "assets/nursery-labels/2026-09-20-p34-tradescantia-spathacea-tricolor-acquisition.jpg",
+            "captured_on": "2026-09-20",
+            "description": "Full-frame acquisition evidence for #10 / P34: striped foliage and readable Rhoeo spathacea Tricolor Basket tag. Pink lighting affects apparent colors. Metadata removed without cropping or re-encoding the primary image."
         }
     ],
     "plants": [
@@ -4974,6 +4984,18 @@
                     "derivation_note": "Lossless WebP encoding of the source-resolution crop from the auto-oriented private photograph; decoded pixels match the approved lossless PNG crop, and hidden metadata is removed before upload."
                 }
             ]
+        },
+        {
+            "plant_slug": "peperomia-obtipan-bicolor",
+            "gyazo_collection": null,
+            "pending_note": "Acquired September 20, 2026. The owned acquisition and nursery-tag photograph is preserved as metadata-stripped local evidence. Gyazo was under maintenance during integration; a dedicated photo Collection and remote capture publication remain pending.",
+            "photos": []
+        },
+        {
+            "plant_slug": "tradescantia-spathacea-tricolor",
+            "gyazo_collection": null,
+            "pending_note": "Acquired September 20, 2026. The owned acquisition and nursery-tag photograph is preserved as metadata-stripped local evidence. Gyazo was under maintenance during integration; a dedicated photo Collection and remote capture publication remain pending.",
+            "photos": []
         }
     ],
     "schema_version": 3

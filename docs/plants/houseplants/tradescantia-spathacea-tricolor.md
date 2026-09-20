@@ -1,0 +1,65 @@
+# Tricolor oyster plant
+
+- Inventory: Houseplant-04 — _Tradescantia spathacea_ 'Tricolor'
+- Label ID: `#10`
+- Tracker ID: `P34`
+- Visual description: Compact rosettes of upright, pointed, strap-shaped leaves striped green and cream with pink tones and purple undersides; the photographed purchase is in a hanging nursery basket.
+- Interesting fact: The old nursery genus name _Rhoeo_ survives on this tag, while Kew accepts the species as _Tradescantia spathacea_. Its small flowers sit inside boat-shaped bracts, the origin of the common name oyster plant.
+- Identification: **seller-labeled “Rhoeo spathacea Tricolor”; consistent with variegated _Tradescantia spathacea_, with cultivar identity based on nursery provenance**
+- Acquired from: Retailer unrecorded; grown by Carlson's Greenhouses
+- Acquired on: 2026-09-20
+- Current pot: photographed purchase basket; diameter, drainage arrangement, medium, and any subsequent repot are unrecorded
+
+## Names and identity
+
+| Kind                        | Name                                |
+| --------------------------- | ----------------------------------- |
+| Accepted species            | _Tradescantia spathacea_ Sw.        |
+| Collection cultivar wording | _Tradescantia spathacea_ 'Tricolor' |
+| Exact nursery wording       | “Rhoeo spathacea Tricolor Basket”   |
+| Collection common name      | Tricolor oyster plant               |
+| Other species common names  | Boat lily; Moses-in-the-cradle      |
+
+Kew accepts _Tradescantia spathacea_, and NC State records _Rhoeo spathacea_ among its synonyms. Preserve the nursery's 'Tricolor' wording so the record remains traceable to the acquired plant. The specialist cultivar register Tradescantia Hub treats 'Tricolor' as an established synonym of 'Sitara'; that is a nomenclatural cross-reference, not an independent authentication of this individual plant.
+
+This rosette-forming species is distinct from the unreceived 'Nanouk' in the abandoned Amazon order. It receives **P34 / #10 / Houseplant-04**; archived P32 / #8 / Houseplant-02 remains reserved.
+
+## Purchase and label evidence
+
+![Purchased Tricolor oyster plant basket with its Carlson's Greenhouses nursery label](../../../assets/nursery-labels/2026-09-20-p34-tradescantia-spathacea-tricolor-acquisition.jpg)
+
+The owner confirmed this purchase on September 20, 2026. The tag identifies Carlson's Greenhouses as the grower, not a confirmed retailer. The photographed grower tag reads “Rhoeo spathacea Tricolor Basket” and “bright, indirect light”. No price is confirmed for this plant. The basket establishes the purchase presentation, not a measured current pot size or a completed repot. Placement, medium, drainage configuration, weight, and watering observations remain to be recorded.
+
+## Origin, publication, and form
+
+Kew records the species as first published in **1788** and native from southern Mexico to Guatemala. The cultivated variegated form has no separate wild native range. NC State describes a clumping tropical perennial with purple-backed foliage and small white flowers enclosed by boat-shaped bracts. It can spread outdoors in suitable climates; this collection record is for an indoor container.
+
+## Care in this collection
+
+| Topic                      | Practical approach                                                                                                                                                                                                                                                                                |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Light                      | Bright indirect light, as printed on the nursery tag and described by NC State. Increase exposure gradually after purchase; foliage color does not establish tolerance of the strongest cactus position.                                                                                          |
+| Proposed starting exposure | **About 6–8 mol·m⁻²·day⁻¹ initially**, with **8–12** a possible settled comparison range if new growth remains compact and undamaged. These are conservative collection-specific trial ranges inferred from bright-indirect guidance, not measured cultivar thresholds or an established optimum. |
+| Grow-light position        | Unassigned pending a leaf-height light comparison. The previously reported far-table **18–22 app-estimated DLI** is not the default arrival position. Preserve the existing cactus arrangement while choosing a gentler position.                                                                 |
+| Water                      | NC State advises letting the upper **1–2 inches** dry between waterings in a well-drained medium. Scale the physical check to the actual basket/root ball once measured; do not wait for prolonged cactus-style whole-pot drought. Inspect moisture below a dry surface before watering.          |
+| Tracker                    | Use a manual upper-mix and plant-condition check. Weight trends are supporting observations; neither a plateau nor a model date proves readiness. Establish actual setup and observations before relying on learned timing.                                                                       |
+| Pot and medium             | Verify drainage and inspect the nursery root ball before selecting a pot or mix. No diameter, pot assignment, repot date, or replacement medium is inferred from the photo. Empty retained water after a necessary watering.                                                                      |
+| Temperature and airflow    | Keep warm, away from cold glass and drafts, with gentle airflow that does not constantly bend or dry the leaves.                                                                                                                                                                                  |
+| Feeding                    | Confirm the nursery medium/feed and allow ordinary drying before deciding on fertilizer. The purchase date is not a feeding trigger.                                                                                                                                                              |
+| Handling                   | Sap may irritate skin, and the plant is unsuitable for chewing by pets or people. Wear gloves when cutting or dividing, and keep cuttings and sap out of reach.                                                                                                                                   |
+
+For comparison with the owner's app, 6–8 DLI over a constant 13-hour day is approximately **128–171 µmol·m⁻²·s⁻¹**. The actual 13 h 15 m lighting program includes ramps, so this conversion is a comparison aid rather than a measured daily integral. Evaluate leaf-height readings and subsequent growth before increasing exposure; no upper trial number is a proven burn threshold.
+
+## Watch points and propagation
+
+- Inspect leaf bases, undersides, and the basket for pests before integrating it with the established collection.
+- Soft bases or persistently wet medium call for root-zone inspection. Dry tips or drooping leaves alone do not distinguish excess light, inconsistent moisture, drafts, or root trouble.
+- Avoid leaving water pooled around the crowded leaf bases, and preserve airflow without using a harsh fan stream.
+- NC State describes division, stem cuttings, and seed propagation. Division or offsets can wait until the purchased plant is established; use gloves because of irritating sap.
+
+## Sources
+
+- [Owner's September 20, 2026 acquisition photograph with Carlson's Greenhouses grower tag](../../../assets/nursery-labels/2026-09-20-p34-tradescantia-spathacea-tricolor-acquisition.jpg) and purchase confirmation: exact nursery wording, bright-indirect instruction, purchase date, and purchase basket.
+- [Kew Plants of the World Online: _Tradescantia spathacea_](https://powo.science.kew.org/taxon/173471-1): accepted species, native range, and first publication.
+- [NC State Extension: _Tradescantia spathacea_](https://plants.ces.ncsu.edu/plants/tradescantia-spathacea/): synonyms, growth form, light, upper-mix drying, drainage, propagation, and handling risks.
+- [Tradescantia Hub cultivar register: 'Sitara'](https://tradescantia.uk/cultivar/tra-sitara/): specialist register's 'Tricolor' synonym cross-reference; retained separately from this plant's nursery provenance.

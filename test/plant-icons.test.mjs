@@ -56,12 +56,12 @@ describe("custom plant portrait exports", () => {
 
         const slugs = plantSymbols.map(({ slug }) => slug);
 
-        expect(plantSymbols).toHaveLength(47);
+        expect(plantSymbols).toHaveLength(49);
 
         const uniqueSlugs = new Set(slugs);
 
-        expect(uniqueSlugs.size).toBe(47);
-        expect(standaloneNames).toHaveLength(47);
+        expect(uniqueSlugs.size).toBe(49);
+        expect(standaloneNames).toHaveLength(49);
         expect(standaloneNames).toStrictEqual(
             slugs
                 .map((slug) => `${slug}.svg`)

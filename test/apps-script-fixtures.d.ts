@@ -462,6 +462,12 @@ export interface AppsScriptTestApi {
         loggerVersion: string;
         plantPages: number;
     };
+    refreshGardenWorkbookPages33To34: () => {
+        firstPlant: unknown;
+        lastPlant: unknown;
+        loggerVersion: string;
+        plantPages: number;
+    };
     refreshPlantPage_: (
         spreadsheet: unknown,
         plants: unknown,

@@ -12,11 +12,11 @@
    getWebSaveStatus, getWebBatchSaveStatus, installGardenLogger, installAppSheetIntake,
    refreshGardenWorkbook, refreshGardenWorkbookPages01To10,
    refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30,
-   refreshGardenWorkbookPages31To32,
+   refreshGardenWorkbookPages31To32, refreshGardenWorkbookPages33To34,
    installDailyCareDashboard, GARDEN_CYCLE_COMPARISON */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.26.1",
+    version: "5.27.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -221,6 +221,18 @@ const WEB_PLANT_IMAGE_URLS = Object.freeze({
         nurseryLabelImageUrl:
             "https://i.gyazo.com/a9b8fd1b6ab2e49c263806566ad79087.webp",
     }),
+    P33: Object.freeze({
+        currentImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-09-20-p33-peperomia-obtipan-bicolor-acquisition.jpg",
+        nurseryLabelImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-09-20-p33-peperomia-obtipan-bicolor-acquisition.jpg",
+    }),
+    P34: Object.freeze({
+        currentImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-09-20-p34-tradescantia-spathacea-tricolor-acquisition.jpg",
+        nurseryLabelImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-09-20-p34-tradescantia-spathacea-tricolor-acquisition.jpg",
+    }),
 });
 
 const WEB_EVENT_OPTIONS = Object.freeze([
@@ -415,7 +427,11 @@ const APP_SHEET_BULK_V514_PLANTS = Object.freeze([
     "P30",
 ]);
 
-const APP_SHEET_BULK_PLANTS = Object.freeze([...APP_SHEET_BULK_V514_PLANTS]);
+const APP_SHEET_BULK_PLANTS = Object.freeze([
+    ...APP_SHEET_BULK_V514_PLANTS,
+    "P33",
+    "P34",
+]);
 // Reserved IDs from the canceled September order. Never reuse these IDs or
 // silently discard stale offline drafts addressed to them.
 const ARCHIVED_PLANT_IDS = Object.freeze(["P31", "P32"]);
@@ -497,11 +513,16 @@ const APP_SHEET_BULK_V525_HEADERS = Object.freeze([
 ]);
 
 // Append new inventory weights; never shift the existing AppSheet columns.
-const APP_SHEET_BULK_HEADERS = Object.freeze([
+const APP_SHEET_BULK_V526_HEADERS = Object.freeze([
     ...APP_SHEET_BULK_V525_HEADERS,
     // Deprecated compatibility columns: retain stored data and reject new input.
     "P31 weight (g)",
     "P32 weight (g)",
+]);
+const APP_SHEET_BULK_HEADERS = Object.freeze([
+    ...APP_SHEET_BULK_V526_HEADERS,
+    "P33 weight (g)",
+    "P34 weight (g)",
 ]);
 
 const APP_SHEET_BULK_ACTION_INDEX = 3;
@@ -1451,12 +1472,14 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
     if (!bulkSheet) {
         return appSheetBulkQueueSummary_(false, 0, [], 0, startedAt);
     }
-    // A live 54-column AppSheet app remains usable until its explicit upgrade.
+    // Live 54/56-column AppSheet apps remain usable until an explicit upgrade.
     migrateLegacyAppSheetBulkSheet_(bulkSheet, false);
     const bulkHeaders =
         bulkSheet.getLastColumn() >= APP_SHEET_BULK_HEADERS.length
             ? APP_SHEET_BULK_HEADERS
-            : APP_SHEET_BULK_V525_HEADERS;
+            : bulkSheet.getLastColumn() >= APP_SHEET_BULK_V526_HEADERS.length
+              ? APP_SHEET_BULK_V526_HEADERS
+              : APP_SHEET_BULK_V525_HEADERS;
     assertHeaders_(bulkSheet, bulkHeaders, 1);
 
     const rowCount = Math.max(0, bulkSheet.getLastRow() - 1);
@@ -1907,6 +1930,10 @@ function installAppSheetBulkSheet() {
                 .build()
         )
         .setNumberFormat("0.0");
+    sheet
+        .getRange(2, APP_SHEET_BULK_V526_HEADERS.length + 1, dataRowCount, 2)
+        .setDataValidation(weightValidation)
+        .setNumberFormat("0.0");
     const rotationValidation = SpreadsheetApp.newDataValidation()
         .requireNumberBetween(1, 360)
         .setAllowInvalid(false)
@@ -1984,6 +2011,7 @@ function installAppSheetBulkSheet() {
         105
     );
     sheet.setColumnWidths(APP_SHEET_BULK_V525_HEADERS.length + 1, 2, 105);
+    sheet.setColumnWidths(APP_SHEET_BULK_V526_HEADERS.length + 1, 2, 105);
     sheet.setColumnWidth(APP_SHEET_BULK_NOTES_INDEX + 1, 280);
     sheet.setColumnWidth(APP_SHEET_BULK_ROTATION_INDEX + 1, 110);
     sheet.setColumnWidths(APP_SHEET_BULK_CONDITION_INDEX + 1, 4, 190);
@@ -2024,21 +2052,27 @@ function migrateLegacyAppSheetBulkSheet_(sheet, shouldUpgradeInventory = true) {
     };
 
     if (hasHeaders(APP_SHEET_BULK_HEADERS)) return false;
-    if (hasHeaders(APP_SHEET_BULK_V525_HEADERS)) {
+    const priorHeaders = hasHeaders(APP_SHEET_BULK_V526_HEADERS)
+        ? APP_SHEET_BULK_V526_HEADERS
+        : hasHeaders(APP_SHEET_BULK_V525_HEADERS)
+          ? APP_SHEET_BULK_V525_HEADERS
+          : null;
+    if (priorHeaders) {
         if (!shouldUpgradeInventory) return false;
-        if (sheet.getLastColumn() > APP_SHEET_BULK_V525_HEADERS.length) {
+        if (sheet.getLastColumn() > priorHeaders.length) {
             throw new Error(
-                "Unexpected App bulk columns after BB; review before appending new plant weights."
+                `Unexpected App bulk columns after ${priorHeaders.length === 56 ? "BD" : "BB"}; review before appending new plant weights.`
             );
         }
         ensureSheetColumnCapacity_(sheet, APP_SHEET_BULK_HEADERS.length);
         sheet
-            .getRange(1, APP_SHEET_BULK_V525_HEADERS.length + 1, 1, 2)
-            .setValues([
-                APP_SHEET_BULK_HEADERS.slice(
-                    APP_SHEET_BULK_V525_HEADERS.length
-                ),
-            ]);
+            .getRange(
+                1,
+                priorHeaders.length + 1,
+                1,
+                APP_SHEET_BULK_HEADERS.length - priorHeaders.length
+            )
+            .setValues([APP_SHEET_BULK_HEADERS.slice(priorHeaders.length)]);
         return true;
     }
 
@@ -3152,7 +3186,7 @@ function installAppSheetIntake() {
 }
 
 /**
- * Rebuilds the human-facing Dashboard, Baselines, and P01-P30 workbook pages.
+ * Rebuilds the human-facing Dashboard, Baselines, and active workbook pages.
  * Canonical History and writable intake data are never rewritten here.
  */
 function refreshGardenWorkbook() {
@@ -3202,6 +3236,11 @@ function refreshGardenWorkbookPages31To32() {
     throw new Error(
         "P31 and P32 are archived; there are no active pages to refresh."
     );
+}
+
+/** Refreshes the two purchased houseplants without rebuilding shared views. */
+function refreshGardenWorkbookPages33To34() {
+    return refreshGardenWorkbookPageRange_(30, 32);
 }
 
 /** @param {number} startIndex @param {number} endIndex */
@@ -3358,6 +3397,7 @@ function dryDownRecordsByPlant_(history) {
 function dryDownOutputRow_(id, records) {
     const model = dryDownModelForPlant_(records);
     const watering = wateringRecommendation_(cleanText_(id), model);
+    const isManualHouseplant = ["P33", "P34"].includes(cleanText_(id));
     return [
         cleanText_(id),
         model.setup,
@@ -3369,8 +3409,12 @@ function dryDownOutputRow_(id, records) {
         model.date,
         model.early,
         model.late,
-        model.basis,
-        model.readiness,
+        isManualHouseplant && model.basis === "Need a watering"
+            ? "No watering recorded"
+            : model.basis,
+        isManualHouseplant
+            ? "Manual houseplant readiness; weigh when useful"
+            : model.readiness,
         model.review,
         model.fit,
         watering.date,
@@ -3380,8 +3424,8 @@ function dryDownOutputRow_(id, records) {
             ? "Leaf-cycle check only"
             : cleanText_(id) === "P21"
               ? "Check upper 2 in of mix"
-              : cleanText_(id) === "P32"
-                ? "Check upper mix; avoid complete drying"
+              : isManualHouseplant
+                ? "Manual houseplant readiness; no cactus dry-out trigger"
                 : model.inspection,
     ];
 }
@@ -3410,6 +3454,8 @@ function wateringRecommendation_(plantId, model) {
     const manual = {
         P21: "Inspect upper 2 in of mix; water when dry there. Do not wait for the whole root ball to become bone dry.",
         P32: "Let the upper mix dry somewhat, then water and drain. Do not wait for the whole root ball to become bone dry; a weight forecast alone cannot establish readiness.",
+        P33: "Allow the mix to partially dry before watering and draining. Do not wait for the whole root ball to become bone dry or use a cactus dry reference or plateau as permission to water.",
+        P34: "Allow the upper 1–2 in of mix to dry before watering and draining. Do not wait for the whole root ball to become bone dry or use a cactus dry reference or plateau as permission to water.",
         P28: "Inspect inner-leaf firmness and leaf replacement. A dry pot or wrinkled old leaves alone do not mean water.",
     };
     const manualGuidance = manual[plantId];

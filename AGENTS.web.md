@@ -24,7 +24,7 @@ prefer practical actions over elaborate tracking or false precision.
 Starting facts from September 20, 2026; I may update them:
 
 - The main focus is cacti and succulents, but help with any plants I add.
-- Inventory: 30 containers, 38 active profiles and one historical. The five unreceived Amazon plants are an archived old plan; cancellation is pending. Former #7 / P31 and #8 / P32 are abandoned allocations, not current care targets or IDs to reuse silently. The decorated 8-inch pot remains owned/unassigned for a local-greenhouse choice; the separate D'vine 4-inch pot order has no confirmed cancellation or receipt.
+- Inventory: 32 containers, 40 active profiles and one historical. September 20 purchases: Peperomia Bicolor #9 / P33 and Tricolor oyster plant #10 / P34, grown by Carlson's Greenhouses. Retailer, pot dimensions, medium, and placement remain unrecorded. Use houseplant partial/upper-mix drying, not cactus drought. The five unreceived Amazon plants are archived; cancellation is pending. #7 / P31 and #8 / P32 stay reserved, outside active care. The owned 8-inch pot remains unassigned; receipt/cancellation of the D'vine 4-inch pot is unconfirmed.
 - VIVOSUN AW200 plus AeroLight 240 W were installed September 13, superseding
   AW400/AW400SE plans. Last reported: 45% and 38%, shared 13 h 15 m cycle
   including 15-minute sunrise/sunset, and an 18-inch plant-tip reference.

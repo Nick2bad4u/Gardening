@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { isRecord } from "../../scripts/build-data.mjs";
 import {
     buildInventoryExpansion,
     extendInventoryFormula,
@@ -8,6 +9,11 @@ import {
     shiftInventoryRow,
     verifyInventoryExpansionPreconditions,
 } from "../../scripts/google-sheets/inventory-expansion.mjs";
+import {
+    buildPurchasedHouseplantsExpansion,
+    purchasedHouseplants,
+    verifyPurchasedHouseplantsPreconditions,
+} from "../../scripts/google-sheets/purchased-houseplants.mjs";
 import { required } from "../helpers/required.mjs";
 
 /** @typedef {import("../../scripts/google-sheets/inventory-expansion.mjs").NativeSnapshot} Snapshot */
@@ -34,6 +40,7 @@ function fixture() {
         "App entries",
         "History",
         "RO refills",
+        "Insights",
     ];
     /** @type {Snapshot} */ const snapshot = {
         sheets: names.map((title, index) => ({
@@ -196,6 +203,159 @@ function put(sheet, row, column, value) {
 }
 
 describe("guarded 30-to-32 inventory expansion", () => {
+    it("extends adjacent native bandings before copying row formats", () => {
+        expect.hasAssertions();
+
+        const { metadata, sheet, snapshot } = fixture();
+        const tracker = required(
+            metadata.sheets.find(
+                (current) => current.properties.title === "Plant tracker"
+            )
+        );
+        tracker["bandedRanges"] = [
+            {
+                bandedRangeId: 71,
+                range: {
+                    endColumnIndex: 15,
+                    endRowIndex: 31,
+                    sheetId: sheet("Plant tracker").properties.sheetId,
+                    startColumnIndex: 0,
+                    startRowIndex: 0,
+                },
+            },
+            {
+                bandedRangeId: 72,
+                range: {
+                    endColumnIndex: 36,
+                    endRowIndex: 31,
+                    sheetId: sheet("Plant tracker").properties.sheetId,
+                    startColumnIndex: 15,
+                    startRowIndex: 0,
+                },
+            },
+        ];
+        const plan = buildInventoryExpansion(metadata, [snapshot]);
+        const firstCopy = plan.prepareRequests.findIndex(
+            (request) => request["copyPaste"] !== undefined
+        );
+        const bandingRequests = plan.prepareRequests.filter(
+            (request) => request["updateBanding"] !== undefined
+        );
+
+        expect(bandingRequests).toHaveLength(2);
+        expect(firstCopy).toBeGreaterThan(0);
+        expect(
+            plan.prepareRequests
+                .slice(firstCopy)
+                .every((request) => request["copyPaste"] !== undefined)
+        ).toBe(true);
+        expect(JSON.stringify(bandingRequests)).toContain('"bandedRangeId":71');
+        expect(JSON.stringify(bandingRequests)).toContain('"bandedRangeId":72');
+        expect(JSON.stringify(bandingRequests)).toContain('"endRowIndex":33');
+    });
+
+    it("requires complete ledgers and rejects archived input or evidence drift during purchase enrollment", () => {
+        expect.hasAssertions();
+
+        const { metadata, sheet, snapshot } = fixture();
+        sheet("App bulk").properties.gridProperties.columnCount = 56;
+        required(
+            metadata.sheets.find(
+                (current) => current.properties.title === "App bulk"
+            )
+        ).properties.gridProperties.columnCount = 56;
+        sheet("Integrity").data = required(sheet("Integrity").data).filter(
+            (block) => block.startRow !== 53
+        );
+        put(sheet("Integrity"), 55, 0, "Critical source-row exceptions");
+        put(sheet("App bulk"), 0, 54, "P31 weight (g)");
+        put(sheet("App bulk"), 0, 55, "P32 weight (g)");
+
+        expect(() =>
+            buildPurchasedHouseplantsExpansion(metadata, [snapshot])
+        ).toThrow("Missing complete ledger");
+
+        for (const title of [
+            "History",
+            "App entries",
+            "App bulk",
+            "RO refills",
+        ]) {
+            const source = sheet(title);
+            densifyLedger(source);
+        }
+        put(sheet("Insights"), 227, 1, "P27");
+        const selectorCell = required(
+            required(sheet("Insights").data?.[0]).rowData?.[0]?.values?.[0]
+        );
+        Reflect.set(
+            selectorCell,
+            "note",
+            "Select P01–P30. Only this cell is an input; chart data is derived."
+        );
+        const plan = buildPurchasedHouseplantsExpansion(metadata, [snapshot]);
+
+        expect(plan.prepareRequests.at(-1)).toStrictEqual({
+            updateCells: {
+                fields: "note",
+                rows: [
+                    {
+                        values: [
+                            {
+                                note: "Select an active pot: P01–P30, P33, or P34. Only this cell is an input; chart data is derived.",
+                            },
+                        ],
+                    },
+                ],
+                start: {
+                    columnIndex: 1,
+                    rowIndex: 227,
+                    sheetId: sheet("Insights").properties.sheetId,
+                },
+            },
+        });
+        expect(selectorCell.userEnteredValue).toStrictEqual({
+            stringValue: "P27",
+        });
+
+        expect(() => {
+            verifyPurchasedHouseplantsPreconditions(plan, metadata, [snapshot]);
+        }).not.toThrow();
+
+        Reflect.set(selectorCell, "note", "Owner changed selector guidance");
+
+        expect(() =>
+            buildPurchasedHouseplantsExpansion(metadata, [snapshot])
+        ).toThrow("selector note changed");
+        expect(() => {
+            verifyPurchasedHouseplantsPreconditions(plan, metadata, [snapshot]);
+        }).toThrow("source cells changed");
+
+        Reflect.set(
+            selectorCell,
+            "note",
+            "Select P01–P30. Only this cell is an input; chart data is derived."
+        );
+
+        const historyData = required(sheet("History").data?.[0]);
+        const historyCell = required(historyData.rowData?.[1]?.values?.[0]);
+        const bulkData = required(sheet("App bulk").data?.[0]);
+        const bulkRow = required(bulkData.rowData?.[1]?.values);
+        while (bulkRow.length <= 54) bulkRow.push({});
+        bulkRow[54] = { userEnteredValue: { numberValue: 123 } };
+
+        expect(() =>
+            buildPurchasedHouseplantsExpansion(metadata, [snapshot])
+        ).toThrow("compatibility fields must remain blank");
+
+        bulkRow[54] = {};
+        historyCell.userEnteredValue = { stringValue: "P33" };
+
+        expect(() =>
+            buildPurchasedHouseplantsExpansion(metadata, [snapshot])
+        ).toThrow("Reserved or new ID already present");
+    });
+
     it("extends inventory ranges without changing observations or unrelated numbers", () => {
         expect.hasAssertions();
         expect(
@@ -281,6 +441,43 @@ describe("guarded 30-to-32 inventory expansion", () => {
         expect(
             verifyInventoryExpansionPreconditions(plan, metadata, [snapshot])
         ).toBe(true);
+    });
+
+    it("clones page warning protections with fresh IDs and rebound ranges", () => {
+        expect.hasAssertions();
+
+        const { metadata, snapshot } = fixture();
+        const template = required(
+            metadata.sheets.find(
+                (item) => item.properties.title === "P30 Mixed succulent"
+            )
+        );
+        template["protectedRanges"] = [
+            {
+                description: "Garden workbook · P30 Mixed succulent",
+                protectedRangeId: 123,
+                range: { sheetId: template.properties.sheetId },
+                requestingUserCanEdit: true,
+                warningOnly: true,
+            },
+        ];
+        const plan = buildInventoryExpansion(metadata, [snapshot]);
+        const protections = plan.prepareRequests.filter(
+            (request) => "addProtectedRange" in request
+        );
+
+        expect(protections).toStrictEqual(
+            inventoryAdditions.map((plant) => ({
+                addProtectedRange: {
+                    protectedRange: {
+                        description: `Garden workbook · ${plant.title}`,
+                        range: { sheetId: plant.sheetId },
+                        warningOnly: true,
+                    },
+                },
+            }))
+        );
+        expect(template["protectedRanges"]).toHaveLength(1);
     });
 
     it("rebases local dashboard cells and inventory lookup rows independently", () => {
@@ -378,6 +575,75 @@ describe("guarded 30-to-32 inventory expansion", () => {
         expect(() =>
             verifyInventoryExpansionPreconditions(plan, metadata, [snapshot])
         ).toThrow("Changed formula/value");
+    });
+
+    it("enrolls new permanent IDs in cleared capacity without reusing archived bulk fields", () => {
+        expect.hasAssertions();
+
+        const { metadata, sheet, snapshot } = fixture();
+        sheet("App bulk").properties.gridProperties.columnCount = 56;
+        required(
+            metadata.sheets.find(
+                (current) => current.properties.title === "App bulk"
+            )
+        ).properties.gridProperties.columnCount = 56;
+        sheet("Integrity").data = required(sheet("Integrity").data).filter(
+            (block) => block.startRow !== 53
+        );
+        put(sheet("Integrity"), 55, 0, "Critical source-row exceptions");
+        const options = {
+            additions: purchasedHouseplants,
+            bulkStartColumn: 56,
+            reuseCapacity: true,
+        };
+        const plan = buildInventoryExpansion(metadata, [snapshot], options);
+        const dimensions = plan.prepareRequests.filter(
+            (request) =>
+                request["appendDimension"] !== undefined ||
+                request["insertDimension"] !== undefined
+        );
+
+        expect(dimensions).toHaveLength(1);
+        expect(dimensions[0]).toStrictEqual({
+            appendDimension: {
+                dimension: "COLUMNS",
+                length: 2,
+                sheetId: sheet("App bulk").properties.sheetId,
+            },
+        });
+
+        const bulkWrites = plan.valueRequests.filter(
+            (request) =>
+                updateStart(request)["sheetId"] ===
+                sheet("App bulk").properties.sheetId
+        );
+
+        expect(
+            bulkWrites.map((request) => updateStart(request)["columnIndex"])
+        ).toStrictEqual([56, 57]);
+        expect(JSON.stringify(bulkWrites)).toContain("P33 weight (g)");
+        expect(JSON.stringify(bulkWrites)).toContain("P34 weight (g)");
+
+        const validation = plan.prepareRequests.find(
+            (request) =>
+                request["setDataValidation"] !== undefined &&
+                JSON.stringify(request).includes('"P34"')
+        );
+
+        expect(JSON.stringify(validation)).not.toContain('"P31"');
+        expect(JSON.stringify(validation)).not.toContain('"P32"');
+        expect(JSON.stringify(plan.valueRequests)).toContain(
+            "peperomia-obtipan-bicolor/"
+        );
+        expect(JSON.stringify(plan.valueRequests)).not.toContain(
+            "Molly's Succulent Mix"
+        );
+
+        put(sheet("Integrity"), 53, 0, "Owner notes");
+
+        expect(() =>
+            buildInventoryExpansion(metadata, [snapshot], options)
+        ).toThrow("Occupied expansion destination");
     });
 
     it("restores latent empty-page series from the populated native template", () => {
@@ -478,3 +744,41 @@ describe("guarded 30-to-32 inventory expansion", () => {
         expect(JSON.stringify(requests)).toContain('"targetAxis":"LEFT_AXIS"');
     });
 });
+
+/** @param {Sheet} source */
+function densifyLedger(source) {
+    /**
+     * @type {NonNullable<NonNullable<Sheet["data"]>[number]["rowData"]>}
+     */
+    const rows = Array.from(
+        { length: source.properties.gridProperties.rowCount },
+        () => ({ values: [] })
+    );
+    for (const block of required(source.data)) {
+        const blockRows = (block.rowData ?? []).entries();
+        for (const [rowIndex, row] of blockRows) {
+            const target = required(
+                required(rows[(block.startRow ?? 0) + rowIndex]).values
+            );
+            const cells = (row.values ?? []).entries();
+            for (const [column, cell] of cells)
+                target[(block.startColumn ?? 0) + column] = cell;
+        }
+    }
+    for (const row of rows) {
+        const values = row.values ?? [];
+        row.values = Array.from(
+            { length: values.length },
+            (_, index) => values[index] ?? {}
+        );
+    }
+    source.data = [{ rowData: rows, startColumn: 0, startRow: 0 }];
+}
+
+/** @param {Record<string, unknown>} request */
+function updateStart(request) {
+    const update = request["updateCells"];
+    if (!isRecord(update) || !isRecord(update["start"]))
+        throw new Error("Expected updateCells request");
+    return update["start"];
+}

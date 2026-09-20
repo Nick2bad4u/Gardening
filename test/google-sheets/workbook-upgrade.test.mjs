@@ -74,10 +74,7 @@ function fixture() {
         "Dry-down insights",
         "App entries",
         "App bulk",
-        ...Array.from(
-            { length: palette.length },
-            (_, index) => `P${String(index + 1).padStart(2, "0")} Test`
-        ),
+        ...palette.map(({ id }) => `${id} Test`),
     ];
     /** @type {import("../workbook-fixtures.d.ts").WorkbookSnapshot["cells"]} */
     const cells = [];
@@ -111,8 +108,8 @@ function fixture() {
         1,
         "=SUM(ARRAYFORMULA(N(ISERROR(Dashboard!U4:X254))))"
     );
-    for (let index = 0; index < palette.length; index++) {
-        const id = `P${String(index + 1).padStart(2, "0")}`;
+    for (const [index, element] of palette.entries()) {
+        const { id } = required(element);
         put("Baselines", index + 1, 0, id);
         put("Plant tracker", index + 1, 0, id);
         put("Dashboard", index + 6, 1, id);
@@ -492,7 +489,7 @@ describe("native workbook reliability and analytics migration", () => {
             '=IF(A2="NOW()",TODAY()+NOW(),XLOOKUP(A2,\'Plant tracker\'!$A:$A,Baselines!C:C,"TODAY()"))';
 
         expect(normalizeDerivedFormula(formula)).toBe(
-            "=IF(A2=\"NOW()\",'Workbook calculations'!$F$2+'Workbook calculations'!$E$2,XLOOKUP(A2,'Plant tracker'!$A$2:$A$31,Baselines!$C$2:$C$31,\"TODAY()\"))"
+            "=IF(A2=\"NOW()\",'Workbook calculations'!$F$2+'Workbook calculations'!$E$2,XLOOKUP(A2,'Plant tracker'!$A$2:$A$33,Baselines!$C$2:$C$33,\"TODAY()\"))"
         );
 
         const snapshot = fixture();

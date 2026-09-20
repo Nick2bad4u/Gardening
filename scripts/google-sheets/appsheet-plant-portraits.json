@@ -1,5 +1,5 @@
 {
-    "folder": "GardenPlantPortraits-247fa8a658d6a14b",
+    "folder": "GardenPlantPortraits-8dcdcf679f29f69a",
     "portraits": [
         {
             "id": "P01",
@@ -150,7 +150,17 @@
             "id": "P30",
             "name": "Tiny mixed succulent planter",
             "slug": "tiny-mixed-succulent-planter"
+        },
+        {
+            "id": "P33",
+            "name": "Peperomia Bicolor",
+            "slug": "peperomia-obtipan-bicolor"
+        },
+        {
+            "id": "P34",
+            "name": "Tricolor oyster plant",
+            "slug": "tradescantia-spathacea-tricolor"
         }
     ],
-    "revision": "247fa8a658d6a14b"
+    "revision": "8dcdcf679f29f69a"
 }
