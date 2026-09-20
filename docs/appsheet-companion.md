@@ -12,13 +12,15 @@ contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
-## September 19 roster and artwork update — deployment pending
+## September 19 roster and artwork deployment
 
-The checked-in contract now covers **32 containers, P01–P32**. New `#7` / `P31` combines Cubic Frost, Coppertone, Deminuta, and Ruby Slippers: four botanical pages, one shared observation history. `#8` / `P32` is separate Nanouk, with upper-mix/manual watering guidance rather than cactus full-dry/plateau readiness. The roster is active by owner request; receipt, repotting, and measurements are not fabricated.
+The live contract now covers **32 containers, P01–P32**. New `#7` / `P31` combines Cubic Frost, Coppertone, Deminuta, and Ruby Slippers: four botanical pages, one shared observation history. `#8` / `P32` is separate Nanouk, with upper-mix/manual watering guidance rather than cactus full-dry/plateau readiness. The roster is active by owner request; receipt, repotting, and measurements are not fabricated.
 
-The target `App bulk` contract appends **P31 weight (g)** and **P32 weight (g)** in **BC:BD**, preserving **A:BB**, including Water application and Water amount at **BA:BB**. This is **56 physical columns / 57 including AppSheet's `_RowNumber`**. History remains A:AP and App entries remains A:AH. The server keeps older 54-column bulk staging readable until the explicit upgrade.
+The saved `App bulk` contract appends **P31 weight (g)** and **P32 weight (g)** in **BC:BD**, preserving **A:BB**, including **Watering application** and **Water amount (mL)** at **BA:BB**. This is **56 physical columns / 57 including AppSheet's `_RowNumber`**. History remains A:AP and App entries remains A:AH. Logger 5.26.0 also retains compatibility with older 54-column bulk staging.
 
-Deployment still needs native schema/column regeneration, Decimal-positive weight validation and the existing Weigh/Water + weigh visibility rule for P31/P32, the maintained 32-field Round action expression, natural label order through #8, and revisioned portrait upload/expression verification. The current [portrait manifest](../scripts/google-sheets/appsheet-plant-portraits.json) targets `GardenPlantPortraits-247fa8a658d6a14b` with **P01.svg–P32.svg**. No production AppSheet editor save, portrait upload, or logger 5.26.0 deployment is claimed by this source update. Record verified versions and readback separately after rollout.
+Production AppSheet **version 1.100106** is saved and verified after an editor reload: P31/P32 are optional Decimal fields with positive-number validation and the existing Weigh / Water + weigh visibility rule. The maintained Round action expression checks 32 weight fields. Bulk Log places P31 and P32 immediately after P30, and natural label order maps #7 to 907 and #8 to 908. All **P01.svg–P32.svg** portraits were uploaded to `GardenPlantPortraits-247fa8a658d6a14b`, and the saved expression points to that revision. The live Plants view displayed the new portraits in that order; Bulk Log showed all 32 weight inputs and was canceled without saving an observation. The [portrait manifest](../scripts/google-sheets/appsheet-plant-portraits.json) remains the source mapping.
+
+The stable Quick Logger URL runs **5.26.0 / immutable version 93**. Authenticated UI checks confirmed the new labels and pot sizes, successful version 93 executions, and exactly one five-minute queue trigger with a zero-percent error rate. Final native reads preserved all **1,048 History observations**, existing staging values, and RO refill records, with no fabricated observations for P31/P32. See the [complete rollout record](../scripts/google-sheets/README.md#september-19-inventory-expansion-5260--immutable-version-93).
 
 The September 5–6 production evidence below remains historical. Read those dated 30-pot counts and old portrait paths in that context; source contracts and a saved production app are separate states.
 
@@ -189,7 +191,7 @@ and defaults to 90. The degree value is archived in `History!AN:AN`, displayed
 in read-only care history, and remains available to the public plant history.
 Clean and Prune are lightweight dated actions whose specifics belong in Notes.
 Bulk Log uses one `Selected plants` field for every supported shared action;
-per-plant weights use the dedicated P01-P32 fields after the pending schema update. `Selected plants` is
+per-plant weights use the dedicated P01-P32 fields. `Selected plants` is
 an EnumList of refs with `Valid_If` set to `SORT(Plant tracker[Plant ID])`; if
 that expression is removed, the deployed picker can appear empty even while
 the source table contains plants.
@@ -229,7 +231,7 @@ identification.
 The Plants view sorts by the hidden virtual Number column
 `Natural label order`, not by `Plant ID`. Its explicit mapping keeps labels in
 the physical sequence A1-A3 through H1-H3, followed by the numbered plant and
-shared-planter labels #1-#8 after the pending update. The `#` group always sorts after every lettered
+shared-planter labels #1-#8. The `#` group always sorts after every lettered
 label.
 Canonical IDs and writable picker values are P01-P32 in the maintained roster; do not replace them
 with the display-order helper.
@@ -251,7 +253,7 @@ a missing image with an unrelated taxon merely to fill the thumbnail.
 
 ### Portrait storage and caching
 
-The September 5 production set comprised thirty private SVGs, `P01.svg` through `P30.svg`, in `GardenPlantPortraits-2e71bf2a701aa61f`, beside the source workbook in Drive. The pending 32-container release targets `P01.svg` through `P32.svg` in `GardenPlantPortraits-247fa8a658d6a14b`. The
+The September 5 production set comprised thirty private SVGs, `P01.svg` through `P30.svg`, in `GardenPlantPortraits-2e71bf2a701aa61f`, beside the source workbook in Drive. The September 19 release uses `P01.svg` through `P32.svg` in `GardenPlantPortraits-247fa8a658d6a14b`; the earlier folder remains available for rollback. The
 [portrait manifest](../scripts/google-sheets/appsheet-plant-portraits.json)
 records their canonical source slugs, and the
 [image expression](../scripts/google-sheets/appsheet-plant-portrait.txt)
