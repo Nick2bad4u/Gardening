@@ -124,7 +124,7 @@ tracked planter. Its three component-group pages (Succulent-10A/B/C) retain qual
 | Houseplant-03 | `#9`     | [Peperomia Bicolor (_Peperomia obtusifolia_ 'Obtipan Bicolor')](./houseplants/peperomia-obtipan-bicolor.md)     | Nursery-labeled cultivar; P33; purchased 2026-09-20      |
 | Houseplant-04 | `#10`    | [Tricolor oyster plant (_Tradescantia spathacea_ 'Tricolor')](./houseplants/tradescantia-spathacea-tricolor.md) | Nursery-labeled under _Rhoeo_; P34; purchased 2026-09-20 |
 
-The two September 20 purchases have separate tracked containers and Carlson's Greenhouses grower tags; the retailer is unrecorded. Purchase baskets are photographed; measured pot dimensions, medium, repot status, and final placement remain unrecorded. Houseplant-02 remains the archived Nanouk allocation.
+The owner confirmed buying both directly at Carlson's Greenhouses on September 20 in owner-reported six-inch nursery pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; placement on separate floor pot stools is planned, off the tables; no completed repot or move is reported. Nursery-pot depth, drainage, existing medium, and actual positions remain unmeasured or unrecorded. The proposed airy greenhouse-mix/Molly's blend has no chosen ratio. Houseplant-02 remains the archived Nanouk allocation.
 
 Former #7 / P31 and #8 / P32 were administrative allocations for the abandoned Amazon order, not received plants. Their five [archived research pages](../old-plans/amazon-plant-order-2026-09.md) remain available separately; those IDs must not be silently reused.
 

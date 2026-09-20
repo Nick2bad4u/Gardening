@@ -635,7 +635,17 @@ describe("guarded 30-to-32 inventory expansion", () => {
         expect(JSON.stringify(plan.valueRequests)).toContain(
             "peperomia-obtipan-bicolor/"
         );
-        expect(JSON.stringify(plan.valueRequests)).not.toContain(
+
+        const mediumWrites = plan.valueRequests.filter(
+            (request) =>
+                updateStart(request)["sheetId"] ===
+                    sheet("Baselines").properties.sheetId &&
+                updateStart(request)["columnIndex"] === 17
+        );
+
+        expect(mediumWrites).toHaveLength(2);
+        expect(JSON.stringify(mediumWrites)).toContain("Not recorded");
+        expect(JSON.stringify(mediumWrites)).not.toContain(
             "Molly's Succulent Mix"
         );
 

@@ -360,7 +360,7 @@ Peperomia obtusifolia 'Obtipan Bicolor'
 Tradescantia spathacea 'Tricolor'
 ```
 
-The two plants were purchased on 2026-09-20. The tags identify Carlson's Greenhouses as the grower; the retailer is unrecorded. The purchase baskets do not establish measured pot sizes, a repot, or their final display positions.
+The owner confirmed buying both plants directly at Carlson's Greenhouses on 2026-09-20 in owner-reported six-inch nursery pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; placement on separate floor stools is planned, off the tables. No completed repot or move is reported; nursery-pot depth and actual display positions remain unrecorded. The labels stay #9 and #10 through the planned changes.
 
 ## Archived label allocations
 
@@ -393,7 +393,7 @@ The [September 19 Amazon plan](../old-plans/amazon-plant-order-2026-09.md) retai
 
 ### Acquisition details still missing
 
-The repo contains acquisition source-and-date records for `A1`–`H3` and `#1`–`#6`, except the historical, removed Rehab-04 record. Its acquisition source and date remain unconfirmed. New #9 and #10 have a confirmed September 20 purchase date and Carlson's Greenhouses grower tags, but their retailer remains unrecorded.
+The repo contains acquisition source-and-date records for `A1`–`H3` and `#1`–`#6`, except the historical, removed Rehab-04 record. Its acquisition source and date remain unconfirmed. For new #9 and #10, the owner confirmed direct purchase at Carlson's Greenhouses on September 20; the nursery tags also identify the grower.
 
 The unreceived September 19 Amazon plant order is archived separately; cancellation remains pending. The separate four-inch pot order has no confirmed receipt or cancellation.
 

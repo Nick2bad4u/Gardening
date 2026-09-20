@@ -196,7 +196,7 @@ money tree is `#3`, and the Kiwi aeonium is `#4`. The former `A4-B4` and
 
 ## September 20 Carlson's Greenhouses houseplants
 
-The owner purchased two separate basket-grown houseplants on **2026-09-20**. The photographs document their nursery labels and purchase containers. The tags identify Carlson's Greenhouses as the grower; the retailer is unrecorded. Pot dimensions, medium, drainage configuration, any repot, final placement, weights, and watering observations remain unrecorded; no care event is inferred from purchase.
+The owner purchased two separate basket-grown houseplants on **2026-09-20**. The photographs document their nursery labels and purchase containers. The owner confirmed purchasing both directly at Carlson's Greenhouses in owner-reported six-inch nursery pots; the tags also identify Carlson's as the grower. Current nursery-pot depth, medium, drainage, actual positions, and care observations remain unrecorded. The owner reports both nursery pots are quite full and thinks the plants are ready for larger pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; placement on separate floor pot stools is planned, explicitly off the tables; stools are being purchased/on order. The owner plans to blend loose, airy, perlite-containing greenhouse mix with Molly's Succulent Mix, with more perlite available but no ratio chosen. No completed repot, move, watering, or weight observation is implied.
 
 | Inventory ID  | Label ID | Tracker ID | Working identification                                                                         | Common name           | Evidence                                                                  |
 | ------------- | -------- | ---------- | ---------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------------------------------------- |
@@ -279,7 +279,7 @@ lower-light houseplant.
 
 ## Abandoned September 19 Amazon plan
 
-All five unreceived plants are excluded from the active inventory. Their research is preserved in the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). The former Succulent-11–14 / #7 / P31 shared-planter allocation and Houseplant-02 / #8 / P32 Nanouk allocation are archived and must not be silently reused. The decorated eight-inch pot remains owned and unassigned; the separate D'vine four-inch pot order has no confirmed cancellation or receipt.
+All five unreceived plants are excluded from the active inventory. Their research is preserved in the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). The former Succulent-11–14 / #7 / P31 shared-planter allocation and Houseplant-02 / #8 / P32 Nanouk allocation are archived and must not be silently reused. The decorated pot is one of the two Amazon Basics destinations, with its specific plant assignment unconfirmed; the separate D'vine four-inch pot order has no confirmed cancellation or receipt.
 
 ## Identification follow-ups
 

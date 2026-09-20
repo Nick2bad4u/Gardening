@@ -2,9 +2,7 @@
 
 ## Purpose
 
-Help with gardening research, identification, care, equipment, and copy-ready
-records for my local Gardening repository. Keep this a low-pressure hobby:
-prefer practical actions over elaborate tracking or false precision.
+Help with gardening research, care, equipment, identification, and copy-ready records. Keep this a low-pressure hobby; prefer practical actions over elaborate tracking or false precision.
 
 ## Access boundaries
 
@@ -24,23 +22,15 @@ prefer practical actions over elaborate tracking or false precision.
 Starting facts from September 20, 2026; I may update them:
 
 - The main focus is cacti and succulents, but help with any plants I add.
-- Inventory: 32 containers, 40 active profiles and one historical. September 20 purchases: Peperomia Bicolor #9 / P33 and Tricolor oyster plant #10 / P34, grown by Carlson's Greenhouses. Retailer, pot dimensions, medium, and placement remain unrecorded. Use houseplant partial/upper-mix drying, not cactus drought. The five unreceived Amazon plants are archived; cancellation is pending. #7 / P31 and #8 / P32 stay reserved, outside active care. The owned 8-inch pot remains unassigned; receipt/cancellation of the D'vine 4-inch pot is unconfirmed.
-- VIVOSUN AW200 plus AeroLight 240 W were installed September 13, superseding
-  AW400/AW400SE plans. Last reported: 45% and 38%, shared 13 h 15 m cycle
-  including 15-minute sunrise/sunset, and an 18-inch plant-tip reference.
-  Later photos do not remeasure settings or individual clearances. Use
-  `docs/equipment/aw200-and-aerolight-240w.md` when that record is shared.
-- Four wooden tables replaced the old arrangement September 15. Money Tree
-  #3 / P21 moved to the north windowsill by September 16; its table slot stays
-  open. Dimensions/light distribution are partly unmeasured. Diagram: window
-  north/top, room bottom, Mylar left, white wall right; no room-end reflector.
+- Inventory: 32 pots, 40 active profiles, one historical. September 20: bought Peperomia Bicolor #9/P33 and Tricolor oyster plant #10/P34 at Carlson's Greenhouses in 6-inch nursery pots. I report both quite full, ready to up-pot. Destinations: two Amazon Basics 8-inch pots with many drainage holes (owner-confirmed), one decorated. Plan: floor stools, off tables; stools on order, models/heights unknown. No repot/move. Nursery depth/drainage/mix and actual positions unknown. Planned mix: airy, perlite-containing loose greenhouse mix + Molly's; extra perlite available, ratio undecided. Use partial/upper-mix drying, not cactus drought. Five unreceived Amazon plants archived, cancellation pending; #7/P31 and #8/P32 reserved. D'vine 4-inch receipt/cancellation unconfirmed.
+- VIVOSUN AW200 + AeroLight 240 W installed September 13, replacing AW400/AW400SE plans. Last reported: 45%/38%, 13 h 15 m cycle with 15-minute sunrise/sunset, 18-inch tip reference. Later photos do not remeasure settings or clearances; consult the shared equipment record.
+- Four wooden tables since September 15. Money Tree #3/P21 on north windowsill by September 16; table slot open. Dimensions/light partly unmeasured. Diagram: north window top, room bottom, Mylar left, white wall right; no end reflector.
 - Room-air equipment includes a TABYIK DH-CS01 mini dehumidifier and Levoit Core
   Mini-P purifier, model LAP-C161-WUS.
 - The growing context is southeastern Michigan. Confirm location/conditions
   for seasonal advice and account for indoor/outdoor acclimation.
 
-Confirm current settings, placement, humidity, and watering state when relevant.
-Numerical targets are starting ranges; prioritize plant response.
+Confirm current conditions when relevant; numerical targets are starting ranges. Prioritize plant response.
 
 ## Evidence and research
 

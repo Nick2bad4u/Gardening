@@ -13,31 +13,31 @@ export const purchasedHouseplants = [
     {
         contents: "Peperomia obtusifolia 'Obtipan Bicolor'",
         details:
-            "Purchased September 20, 2026; nursery container size and medium unrecorded; no repot inferred",
+            "Current 6-inch nursery pot, reported quite full; original medium unrecorded. Planned: Amazon Basics 8-inch drainage pot on a floor stool, off tables; greenhouse mix + Molly's Succulent Mix, proportions undecided. Repot and move not yet confirmed.",
         guideUrl:
             "https://nick2bad4u.github.io/Gardening/plants/peperomia-obtipan-bicolor/",
         id: "P33",
         label: "#9",
         medium: "Not recorded",
         name: "Peperomia Bicolor",
-        pot: "Not recorded",
+        pot: "6 in",
         sheetId: 202_609_330,
-        source: "Retailer unrecorded; grown by Carlson’s Greenhouses",
+        source: "Purchased from and grown by Carlson’s Greenhouses; September 20, 2026",
         title: "P33 Peperomia Bicolor",
     },
     {
         contents: "Tradescantia spathacea 'Tricolor'",
         details:
-            "Purchased September 20, 2026; nursery container size and medium unrecorded; no repot inferred",
+            "Current 6-inch nursery pot, reported quite full; original medium unrecorded. Planned: Amazon Basics 8-inch drainage pot on a floor stool, off tables; greenhouse mix + Molly's Succulent Mix, proportions undecided. Repot and move not yet confirmed.",
         guideUrl:
             "https://nick2bad4u.github.io/Gardening/plants/tradescantia-spathacea-tricolor/",
         id: "P34",
         label: "#10",
         medium: "Not recorded",
         name: "Tricolor oyster plant",
-        pot: "Not recorded",
+        pot: "6 in",
         sheetId: 202_609_340,
-        source: "Retailer unrecorded; grown by Carlson’s Greenhouses",
+        source: "Purchased from and grown by Carlson’s Greenhouses; September 20, 2026",
         title: "P34 Tricolor oyster plant",
     },
 ];
