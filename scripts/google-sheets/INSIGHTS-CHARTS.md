@@ -1,10 +1,11 @@
 # Insights dry-down charts
 
-The native **Insights** sheet has **25 charts** after the September 17, 2026
-analytics upgrade. See the
-[analytics rollout record](WORKBOOK-ANALYTICS.md#rollout-record) for verification.
-Its dry-down explorer starts at
-**A226**; the maintained selector covers **P01–P30, P33, and P34 in B228** after the September 20 houseplant purchases. The selected
+The native **Insights** sheet has **26 charts** in the September 21 readback.
+The prepared enrollment retains those chart IDs and positions while extending
+the source roster to **P01–P32, P35, and P36**; production remains at 32 pots
+until the [September 21 cutover](README.md#september-21-prepared-lithops-and-split-rock-enrollment)
+is verified. Its dry-down explorer starts at
+**A226**, with the maintained plant selector in **B228**. The selected
 plant's care guidance, predicted dry-check date, and earliest/latest window
 appear above the graphs. The selected plant's **Current weight difference (g)**
 appears in **N228:R228**, and its collection comparison starts at **A586**.
@@ -30,22 +31,23 @@ data-label overrides. Insights sizing remains intact; the plant-page layout
 has its own [guarded styling procedure](#plant-page-chart-layout).
 Each plant has a permanent, distinct color
 defined in [`plant-colors.json`](plant-colors.json). The visible **Plant colors**
-sheet covers all 32 active IDs, full plant names, color names, hex values, swatches, and
+sheet covers the active IDs, full plant names, color names, hex values, swatches, and
 links to their individual charts. These are arbitrary identity colors, unrelated
 to the appearance of the plants. Keep the names and IDs alongside color because
 similar hues can still be difficult to distinguish.
 
-The 96 weight/dimension charts and populated watering-interval charts on the
-individual plant sheets use that plant's color. The 15
+The prepared 34-pot collection has 102 weight/dimension charts and 34
+watering-interval chart destinations on individual plant sheets. Populated
+charts use that plant's color. The 15
 plant comparison charts use the same colors for each plant's bars or points, in
-consistent P01–P30, P33, P34 order. This fixed order prevents point colors from moving to
+consistent P01–P32, P35, P36 order after enrollment. This fixed order prevents point colors from moving to
 another plant when a sorted source recalculates. Source values still update
 automatically. Comparisons with several metrics use separate grouped bars, with
 the metric order in the subtitle and names in the tooltips; the old metric-color
 legends are removed because color now identifies the plant. The two
-cycle-explorer charts change to the selected plant's
-color automatically. Measured weights use solid lines and circles, dry references
-use dotted lines and diamonds, and wet references use dashed lines and squares.
+cycle-explorer charts retain plant identity through the selected primary curve's
+color. Measured weights use solid lines and circles, dry references
+use neutral dotted lines and diamonds, and wet references use neutral dashed lines and squares.
 Height and width on individual plant pages use solid/circle and dashed/diamond
 styles respectively. The three aggregate charts (care activity, calibration
 status, and forecast basis) retain their category colors.
@@ -54,6 +56,30 @@ Insights chart scales and heights remain as configured.
 The first chart shares the 1,155-pixel width and 10-pixel left inset used by the
 other Insights charts. The plant-page layout below defines its chart spacing
 while preserving each plant's data bindings and weight-axis maximum.
+
+## September 21 selector-series capacity
+
+The 34-pot expansion would require 102 series in each three-role selector
+chart. A disposable native probe containing 102 populated numeric series
+persisted only 99, silently dropping the final plant's three series. The
+[Sheets chart API](https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets/charts#BasicChartSpec)
+documents no limit override; 99 is the observed behavior of this tested path,
+not a published platform guarantee.
+
+The prepared chart builders use **34 plant-colored primary series plus two
+shared neutral role series**. Current measured weight/current cycle stays in
+the plant's permanent color. Dry/wet references and previous/older cycles keep
+their separate dotted/diamond and dashed/square styles, with the role meaning
+in each chart's subtitle. The existing chart IDs, layout, axes, and measured
+data remain in place; no extra chart or trigger is needed.
+
+The shared role helpers read the same selected-plant source values. Their last
+row repeats an existing numeric metric, or zero when none exists, against a
+blank domain coordinate. That unplotted sentinel keeps Sheets from deleting a
+temporarily empty series when the selector changes. It creates no observation,
+baseline, or visible zero measurement. Keep helpers hidden and warning-protected,
+and verify the full 36-series specification after native writes and selector
+changes, including a new plant with no history.
 
 ## September 20 purchased houseplants
 

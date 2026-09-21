@@ -4,6 +4,45 @@ import palette from "./plant-colors.json" with { type: "json" };
 const comparisonBlockRows = palette.length + 5;
 const selectedColumnCount = 7 + palette.length * 4;
 
+/**
+ * Keep one identity-colored primary curve per plant and two shared role curves.
+ * Native Sheets truncates 102 populated series to 99; secondary curves use
+ * neutral colors so all identities fit without changing chart IDs or layout.
+ * Callers supply ungated secondary bindings on the same domain as the primary.
+ *
+ * @param {readonly import("../../test/plant-chart-colors-fixtures.d.ts").PlantColorSeries[]} primarySeries
+ * @param {readonly import("../../test/plant-chart-colors-fixtures.d.ts").PlantColorSeries[]} sharedRoleSeries
+ *
+ * @returns {import("../../test/plant-chart-colors-fixtures.d.ts").PlantColorSeries[]}
+ */
+export function compactSelectedPlantSeries(primarySeries, sharedRoleSeries) {
+    if (
+        primarySeries.length === 0 ||
+        primarySeries.length + 2 > 99 ||
+        sharedRoleSeries.length !== 2
+    ) {
+        throw new Error(
+            "Selected chart needs 1–97 primary curves and exactly two shared role curves"
+        );
+    }
+    const neutral = [
+        { blue: 104 / 255, green: 99 / 255, red: 95 / 255 },
+        { blue: 166 / 255, green: 160 / 255, red: 154 / 255 },
+    ];
+    return [
+        ...primarySeries.map((series) => structuredClone(series)),
+        ...sharedRoleSeries.map((series, index) => {
+            const copy = structuredClone(series);
+            const color = neutral[index];
+            if (!color) throw new Error("Unknown shared curve role");
+            delete copy.color;
+            delete copy.styleOverrides;
+            copy.colorStyle = { rgbColor: color };
+            return copy;
+        }),
+    ];
+}
+
 export const plantColorSheetId = 907_202_602;
 
 /**
@@ -288,7 +327,7 @@ export function buildPlantInsightColorRequests({ cells, metadata }) {
             addSheet: {
                 properties: {
                     gridProperties: {
-                        columnCount: selectedColumnCount,
+                        columnCount: selectedColumnCount + 2,
                         frozenRowCount: 1,
                         rowCount: 5001,
                     },
@@ -399,6 +438,15 @@ export function fixedPlantMetricFormula(plant, ids, values) {
 /** @param {string} selector @param {string} plantId @param {string} source */
 export function selectedPlantColorFormula(selector, plantId, source) {
     return `=VSTACK(IF(${selector}="${plantId}",ARRAYFORMULA(IF(ISNUMBER(${source}),${source},"")),ARRAYFORMULA(IF(ROW(${source})>0,"",""))),IFERROR(INDEX(FILTER(${source},ISNUMBER(${source})),1),0))`;
+}
+
+/**
+ * Keep a neutral role series present even when the selected pot has no data.
+ *
+ * @param {string} source
+ */
+export function sharedSelectedRoleFormula(source) {
+    return `=VSTACK(ARRAYFORMULA(IF(ISNUMBER(${source}),${source},"")),IFERROR(INDEX(FILTER(${source},ISNUMBER(${source})),1),0))`;
 }
 
 /**
@@ -583,6 +631,7 @@ function colorPlantPageChart(chart, plantId) {
  */
 function colorSelectedChart(spec, metadata, selectorA1, firstColumn) {
     const basic = spec.basicChart;
+    const originalSeries = structuredClone(basic.series);
     const helperId = plantColorDataSheetId;
     let selectedColumn = firstColumn;
     /** @type {Record<string, unknown>[]} */
@@ -660,11 +709,44 @@ function colorSelectedChart(spec, metadata, selectorA1, firstColumn) {
             selectedColumn += 1;
         }
     }
-    basic.series = series;
+    if (originalSeries.length === 3) {
+        const sharedRoles = originalSeries.slice(1).map((original, index) => {
+            const source = singleSource(original.series);
+            const sourceA1 = nativeA1(metadata, {
+                ...source,
+                startRowIndex: (source.startRowIndex ?? 0) + 1,
+            });
+            const column = selectedColumnCount + index;
+            requests.push(
+                colorWrite(helperId, 0, column, [
+                    [index === 0 ? "Dry reference" : "Wet reference"],
+                    [sharedSelectedRoleFormula(sourceA1)],
+                ])
+            );
+            return {
+                ...original,
+                lineStyle: {
+                    type: index === 0 ? "DOTTED" : "MEDIUM_DASHED",
+                    width: 2,
+                },
+                pointStyle: {
+                    shape: index === 0 ? "DIAMOND" : "SQUARE",
+                    size: 2,
+                },
+                series: colorData(helperId, 0, column, 5001),
+            };
+        });
+        basic.series = compactSelectedPlantSeries(
+            series.filter((_series, index) => index % 3 === 0),
+            sharedRoles
+        );
+    } else {
+        basic.series = series;
+    }
     basic.legendPosition = "NO_LEGEND";
     spec.subtitle =
-        basic.series.length === palette.length * 3
-            ? "Selected plant color • solid circles: measured • dotted diamonds: dry • dashed squares: wet"
+        originalSeries.length === 3
+            ? "Plant-colored solid circles: measured • neutral dotted diamonds: dry • neutral dashed squares: wet"
             : "Selected plant color • loss since the previous reading • negative values are gains";
     spec.altText = `${spec.title}. ${spec.subtitle}`;
     return { nextColumn: selectedColumn, requests };

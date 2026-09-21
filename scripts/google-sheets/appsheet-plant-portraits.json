@@ -1,5 +1,5 @@
 {
-    "folder": "GardenPlantPortraits-8dcdcf679f29f69a",
+    "folder": "GardenPlantPortraits-b86b51605d0afb26",
     "portraits": [
         {
             "id": "P01",
@@ -160,7 +160,17 @@
             "id": "P32",
             "name": "Tricolor oyster plant",
             "slug": "tradescantia-spathacea-tricolor"
+        },
+        {
+            "id": "P35",
+            "name": "Shared Lithops planter",
+            "slug": "lithops-shared-planter"
+        },
+        {
+            "id": "P36",
+            "name": "Split rock",
+            "slug": "pleiospilos-nelii"
         }
     ],
-    "revision": "8dcdcf679f29f69a"
+    "revision": "b86b51605d0afb26"
 }

@@ -30,5 +30,7 @@
     { "hex": "#774572", "id": "P29", "name": "Mulberry" },
     { "hex": "#7E9C6C", "id": "P30", "name": "Sage" },
     { "hex": "#566E36", "id": "P31", "name": "Moss" },
-    { "hex": "#BE719C", "id": "P32", "name": "Heather" }
+    { "hex": "#BE719C", "id": "P32", "name": "Heather" },
+    { "hex": "#938062", "id": "P35", "name": "Sandstone" },
+    { "hex": "#748765", "id": "P36", "name": "Lichen" }
 ]

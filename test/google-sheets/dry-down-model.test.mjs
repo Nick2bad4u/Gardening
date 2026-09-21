@@ -376,7 +376,7 @@ describe("dry-down formulas and workbook installation", () => {
                 structuredClone(context.installWateringRecommendations())
             ).toStrictEqual({
                 historyChanged: false,
-                loggerVersion: "5.28.0",
+                loggerVersion: "5.29.0",
                 plants: 2,
             });
 
@@ -428,7 +428,7 @@ describe("dry-down formulas and workbook installation", () => {
 
             expect(required(baselineFormulas[0])[0]).toContain("XLOOKUP($A2,");
             expect(required(baselineFormulas[1])[1]).toContain(
-                "'Dry-down models'!$P$2:$P$33"
+                "'Dry-down models'!$P$2:$P$35"
             );
             expect(required(dashboardFormulas[1])[0]).toContain("XLOOKUP($B8,");
             expect(calls.some((call) => call.name === "History")).toBe(false);
@@ -532,7 +532,7 @@ describe("dry-down formulas and workbook installation", () => {
         expect(context.installDryDownLearning()).toMatchObject({
             baselineColumns: 36,
             historyChanged: false,
-            loggerVersion: "5.28.0",
+            loggerVersion: "5.29.0",
             plants: 1,
         });
         expect(
@@ -715,11 +715,11 @@ describe("same-setup cycle learning", () => {
         expect(structuredClone(history)).toStrictEqual(before);
     });
 
-    it("does not schedule tropical or leaf-replacement plants from a near-dry pot forecast", () => {
+    it("does not schedule the tropical plant from a near-dry pot forecast", () => {
         expect.hasAssertions();
 
         const context = runtime();
-        for (const id of ["P21", "P28"]) {
+        for (const id of ["P21"]) {
             const values = context.GARDEN_DRY_DOWN(
                 [
                     ...completed(0, 0.2, { id }),
@@ -731,7 +731,7 @@ describe("same-setup cycle learning", () => {
             expect(required(values)[7]).not.toBe("");
             expect(required(values)[14]).toBe("");
             expect(required(values)[15]).toMatch(
-                /inner-leaf|upper (?:2 in|mix)/v
+                /Lithops pair|inner-leaf|upper (?:2 in|mix)/v
             );
         }
 
@@ -753,6 +753,52 @@ describe("same-setup cycle learning", () => {
             );
         }
     });
+
+    it.each([
+        "P28",
+        "P35",
+        "P36",
+    ])(
+        "keeps %s unobserved leaf-cycle plants free of invented watering targets",
+        (id) => {
+            expect.hasAssertions();
+
+            const context = runtime();
+            const forecast = required(
+                context.GARDEN_DRY_DOWN(
+                    [
+                        ...completed(0, 0.2, { id }),
+                        ...current(20, [0], 0.2, { id }),
+                    ],
+                    id
+                )[0]
+            );
+
+            expect(structuredClone(forecast.slice(7, 10))).toStrictEqual([
+                "",
+                "",
+                "",
+            ]);
+            expect(forecast[14]).toBe("");
+            expect(forecast[11]).toBe(
+                "Manual leaf-cycle readiness; weigh when useful"
+            );
+
+            const values = required(context.GARDEN_DRY_DOWN([], id)[0]);
+
+            expect(structuredClone(values.slice(7, 10))).toStrictEqual([
+                "",
+                "",
+                "",
+            ]);
+            expect(values[10]).toBe("No watering recorded");
+            expect(values[11]).toBe(
+                "Manual leaf-cycle readiness; weigh when useful"
+            );
+            expect(values[14]).toBe("");
+            expect(values.at(-1)).toBe("Leaf-cycle check only");
+        }
+    );
 
     it.each(["P31", "P32"])(
         "keeps %s houseplant readiness manual even with a supported near-dry forecast",

@@ -14795,7 +14795,7 @@
             ].join("/");
             const PLANT_ICON_PATH = "/Gardening/assets/plant-icons/";
             // Generated from the exported artwork by sync-plant-icons.mjs.
-            const PLANT_ICON_REVISION = "8dcdcf679f29f69a";
+            const PLANT_ICON_REVISION = "b86b51605d0afb26";
             const PLANT_ICON_CACHE = "gardenLoggerPlantPortraitsV1";
             const plantPortraitRequests = new Map();
             let plantPortraitCache;
@@ -14805,7 +14805,7 @@
                 "gardenLoggerObservationQueueBackupV1";
             const OBSERVATION_QUEUE_RECOVERY_KEY =
                 "gardenLoggerObservationQueueRecoveryV1";
-            const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV3";
+            const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV4";
             const BOOTSTRAP_CACHE_MAX_AGE_MS = 6 * 60 * 60 * 1000;
             const BOOTSTRAP_TIMEOUT_MS = 20000;
             const BOOTSTRAP_AUTO_RETRIES = 1;
@@ -16302,6 +16302,8 @@
             function plantIconName(plant) {
                 if (plant?.id === "P19") return "shared-rehab-cactus-planter";
                 if (plant?.id === "P20") return "shared-succulent-planter";
+                if (plant?.id === "P35") return "lithops-shared-planter";
+                if (plant?.id === "P36") return "pleiospilos-nelii";
                 if (plant?.id === "P31") return "peperomia-obtipan-bicolor";
                 if (plant?.id === "P32")
                     return "tradescantia-spathacea-tricolor";

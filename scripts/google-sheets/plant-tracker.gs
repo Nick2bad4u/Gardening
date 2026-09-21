@@ -13,10 +13,11 @@
    refreshGardenWorkbook, refreshGardenWorkbookPages01To10,
    refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30,
    refreshGardenWorkbookPages31To32, refreshGardenWorkbookPages33To34,
+   refreshGardenWorkbookPages35To36,
    installDailyCareDashboard, GARDEN_CYCLE_COMPARISON */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.28.0",
+    version: "5.29.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -431,6 +432,8 @@ const APP_SHEET_BULK_PLANTS = Object.freeze([
     ...APP_SHEET_BULK_V514_PLANTS,
     "P31",
     "P32",
+    "P35",
+    "P36",
 ]);
 // Owner reassigned the two purchased houseplants to P31/P32. Old P33/P34
 // requests stay retired; freshness guards prevent canceled-order draft reuse.
@@ -520,11 +523,16 @@ const APP_SHEET_BULK_V526_HEADERS = Object.freeze([
     "P31 weight (g)",
     "P32 weight (g)",
 ]);
-const APP_SHEET_BULK_HEADERS = Object.freeze([
+const APP_SHEET_BULK_V528_HEADERS = Object.freeze([
     ...APP_SHEET_BULK_V526_HEADERS,
     // Retired P33/P34 compatibility fields remain in their original positions.
     "P33 weight (g)",
     "P34 weight (g)",
+]);
+const APP_SHEET_BULK_HEADERS = Object.freeze([
+    ...APP_SHEET_BULK_V528_HEADERS,
+    "P35 weight (g)",
+    "P36 weight (g)",
 ]);
 
 const APP_SHEET_BULK_ACTION_INDEX = 3;
@@ -1482,14 +1490,19 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
     if (!bulkSheet) {
         return appSheetBulkQueueSummary_(false, 0, [], 0, startedAt);
     }
-    // Live 54/56-column AppSheet apps remain usable until an explicit upgrade.
+    // Live 54/56/58-column AppSheet apps remain usable until an explicit upgrade.
     migrateLegacyAppSheetBulkSheet_(bulkSheet, false);
-    const bulkHeaders =
-        bulkSheet.getLastColumn() >= APP_SHEET_BULK_HEADERS.length
-            ? APP_SHEET_BULK_HEADERS
-            : bulkSheet.getLastColumn() >= APP_SHEET_BULK_V526_HEADERS.length
-              ? APP_SHEET_BULK_V526_HEADERS
-              : APP_SHEET_BULK_V525_HEADERS;
+    const bulkHeaders = [
+        APP_SHEET_BULK_HEADERS,
+        APP_SHEET_BULK_V528_HEADERS,
+        APP_SHEET_BULK_V526_HEADERS,
+        APP_SHEET_BULK_V525_HEADERS,
+    ].find((headers) => bulkSheet.getLastColumn() === headers.length);
+    if (!bulkHeaders) {
+        throw new Error(
+            "Unexpected App bulk columns; review the schema before processing queued rounds."
+        );
+    }
     assertHeaders_(bulkSheet, bulkHeaders, 1);
 
     const rowCount = Math.max(0, bulkSheet.getLastRow() - 1);
@@ -1667,13 +1680,10 @@ function appSheetBulkPayloadsFromRow_(row, roundId) {
     );
     const includesWater = action === "Water" || action === "Water + weigh";
     const includesWeigh = action === "Weigh" || action === "Water + weigh";
+    const validatedSelection = appSheetBulkSelectedPlants_(selection);
     /** @type {Set<string>} */
     const selectedPlants =
-        includesWeigh && !includesWater
-            ? new Set()
-            : appSheetBulkSelectedPlants_(
-                  row[APP_SHEET_BULK_SELECTED_PLANTS_INDEX]
-              );
+        includesWeigh && !includesWater ? new Set() : validatedSelection;
     // Weight state is inferred from completed watering cycles after the row is
     // archived. Ignore the legacy staging value so AppSheet and offline drafts
     // cannot stamp a classification that will become stale.
@@ -1952,6 +1962,10 @@ function installAppSheetBulkSheet() {
         .getRange(2, APP_SHEET_BULK_V525_HEADERS.length + 1, dataRowCount, 2)
         .setDataValidation(weightValidation)
         .setNumberFormat("0.0");
+    sheet
+        .getRange(2, APP_SHEET_BULK_V528_HEADERS.length + 1, dataRowCount, 2)
+        .setDataValidation(weightValidation)
+        .setNumberFormat("0.0");
     const rotationValidation = SpreadsheetApp.newDataValidation()
         .requireNumberBetween(1, 360)
         .setAllowInvalid(false)
@@ -2030,6 +2044,7 @@ function installAppSheetBulkSheet() {
     );
     sheet.setColumnWidths(APP_SHEET_BULK_V525_HEADERS.length + 1, 2, 105);
     sheet.setColumnWidths(APP_SHEET_BULK_V526_HEADERS.length + 1, 2, 105);
+    sheet.setColumnWidths(APP_SHEET_BULK_V528_HEADERS.length + 1, 2, 105);
     sheet.setColumnWidth(APP_SHEET_BULK_NOTES_INDEX + 1, 280);
     sheet.setColumnWidth(APP_SHEET_BULK_ROTATION_INDEX + 1, 110);
     sheet.setColumnWidths(APP_SHEET_BULK_CONDITION_INDEX + 1, 4, 190);
@@ -2039,6 +2054,7 @@ function installAppSheetBulkSheet() {
     sheet.hideColumns(APP_SHEET_BULK_NOTES_INDEX + 2, 7);
     sheet.showColumns(APP_SHEET_BULK_V525_HEADERS.length + 1, 2);
     sheet.hideColumns(APP_SHEET_BULK_V526_HEADERS.length + 1, 2);
+    sheet.showColumns(APP_SHEET_BULK_V528_HEADERS.length + 1, 2);
 
     const result = {
         created,
@@ -2071,16 +2087,18 @@ function migrateLegacyAppSheetBulkSheet_(sheet, shouldUpgradeInventory = true) {
     };
 
     if (hasHeaders(APP_SHEET_BULK_HEADERS)) return false;
-    const priorHeaders = hasHeaders(APP_SHEET_BULK_V526_HEADERS)
-        ? APP_SHEET_BULK_V526_HEADERS
-        : hasHeaders(APP_SHEET_BULK_V525_HEADERS)
-          ? APP_SHEET_BULK_V525_HEADERS
-          : null;
+    const priorHeaders = hasHeaders(APP_SHEET_BULK_V528_HEADERS)
+        ? APP_SHEET_BULK_V528_HEADERS
+        : hasHeaders(APP_SHEET_BULK_V526_HEADERS)
+          ? APP_SHEET_BULK_V526_HEADERS
+          : hasHeaders(APP_SHEET_BULK_V525_HEADERS)
+            ? APP_SHEET_BULK_V525_HEADERS
+            : null;
     if (priorHeaders) {
         if (!shouldUpgradeInventory) return false;
         if (sheet.getLastColumn() > priorHeaders.length) {
             throw new Error(
-                `Unexpected App bulk columns after ${priorHeaders.length === 56 ? "BD" : "BB"}; review before appending new plant weights.`
+                `Unexpected App bulk columns after ${priorHeaders.length === 58 ? "BF" : priorHeaders.length === 56 ? "BD" : "BB"}; review before appending new plant weights.`
             );
         }
         ensureSheetColumnCapacity_(sheet, APP_SHEET_BULK_HEADERS.length);
@@ -3259,7 +3277,12 @@ function refreshGardenWorkbookPages31To32() {
     return refreshGardenWorkbookPageRange_(30, 32);
 }
 
-/** Refreshes the two purchased houseplants without rebuilding shared views. */
+/** Refreshes the two new mesemb pots without rebuilding shared views. */
+function refreshGardenWorkbookPages35To36() {
+    return refreshGardenWorkbookPageRange_(32, 34);
+}
+
+/** Retains the retired entry point for stale callers. */
 function refreshGardenWorkbookPages33To34() {
     throw new Error(
         "P33 and P34 are retired; refresh active P31/P32 pages instead."
@@ -3421,6 +3444,9 @@ function dryDownOutputRow_(id, records) {
     const model = dryDownModelForPlant_(records);
     const watering = wateringRecommendation_(cleanText_(id), model);
     const isManualHouseplant = ["P31", "P32"].includes(cleanText_(id));
+    const isLeafReplacementPlant = ["P28", "P35", "P36"].includes(
+        cleanText_(id)
+    );
     return [
         cleanText_(id),
         model.setup,
@@ -3429,21 +3455,24 @@ function dryDownOutputRow_(id, records) {
         model.count,
         model.learned,
         model.loss,
-        model.date,
-        model.early,
-        model.late,
-        isManualHouseplant && model.basis === "Need a watering"
+        isLeafReplacementPlant ? "" : model.date,
+        isLeafReplacementPlant ? "" : model.early,
+        isLeafReplacementPlant ? "" : model.late,
+        (isManualHouseplant || isLeafReplacementPlant) &&
+        model.basis === "Need a watering"
             ? "No watering recorded"
             : model.basis,
-        isManualHouseplant
-            ? "Manual houseplant readiness; weigh when useful"
-            : model.readiness,
+        isLeafReplacementPlant
+            ? "Manual leaf-cycle readiness; weigh when useful"
+            : isManualHouseplant
+              ? "Manual houseplant readiness; weigh when useful"
+              : model.readiness,
         model.review,
         model.fit,
         watering.date,
         watering.guidance,
         ...model.recent,
-        cleanText_(id) === "P28"
+        isLeafReplacementPlant
             ? "Leaf-cycle check only"
             : cleanText_(id) === "P21"
               ? "Check upper 2 in of mix"
@@ -3479,6 +3508,8 @@ function wateringRecommendation_(plantId, model) {
         P31: "Allow the mix to partially dry before watering and draining. Do not wait for the whole root ball to become bone dry or use a cactus dry reference or plateau as permission to water.",
         P32: "Allow the upper 1–2 in of mix to dry before watering and draining. Do not wait for the whole root ball to become bone dry or use a cactus dry reference or plateau as permission to water.",
         P28: "Inspect inner-leaf firmness and leaf replacement. A dry pot or wrinkled old leaves alone do not mean water.",
+        P35: "Inspect each Lithops pair and its leaf-replacement stage. Do not water during leaf replacement; dry pot weight, a plateau, or wrinkled old leaves alone do not establish readiness for the shared pot.",
+        P36: "Inspect inner-leaf firmness and leaf replacement. A dry pot, a plateau, or wrinkled old leaves alone do not mean water; assess the current leaf cycle and substrate before watering.",
     };
     const manualGuidance = manual[plantId];
     if (manualGuidance) {
@@ -5101,7 +5132,7 @@ function dailyCareWeekFormula_(detailRow, column, bounds) {
         `=IF($B${detailRow}="","",IFERROR(LET(plant,$B${detailRow},day,${column}$6,today,$B$6,weight,$D${detailRow},weighed,$E${detailRow},`,
         `watered,${baseline("O")},dry,${model("C")},wet,${model("D")},early,${model("I")},planned,${model("O")},review,${model("M")},points,${model("E")},`,
         `lastDay,IF(AND(ISNUMBER(weighed),weighed>0),INT(ROUND(weighed-${offset},8)),today-2),waterDay,IF(AND(ISNUMBER(watered),watered>0),INT(ROUND(watered-${offset},8)),0),`,
-        'special,OR(plant="P21",plant="P28",plant="P32"),hasForecast,AND(ISNUMBER(early),early>0),',
+        'special,OR(plant="P21",plant="P28",plant="P31",plant="P32",plant="P35",plant="P36"),hasForecast,AND(ISNUMBER(early),early>0),',
         'reviewNeeded,AND(review<>"",review<>"OK",review<>"No trend",review<>"No current-cycle alert",review<>"Owner-confirmed normal"),',
         "nearMass,AND(ISNUMBER(weight),weight>0,weighed>=watered,ISNUMBER(dry),dry>0,ISNUMBER(wet),wet>dry,weight<=dry+MAX(2,0.05*(wet-dry))),",
         `nearDay,AND(hasForecast,day>=INT(early-${offset})),waterCheck,AND(NOT(special),NOT(reviewNeeded),OR(nearDay,nearMass,AND(ISNUMBER(planned),planned>0,day>=planned))),`,
@@ -5109,7 +5140,7 @@ function dailyCareWeekFormula_(detailRow, column, bounds) {
         "afterWater,AND(ISNUMBER(watered),watered>0,OR(NOT(ISNUMBER(weighed)),watered>weighed)),",
         "nextDay,MAX(today,IF(afterWater,waterDay,lastDay+cadence)),due,AND(day>=nextDay,MOD(day-nextDay,cadence)=0),",
         "saved,AND(day=today,lastDay=today,NOT(afterWater)),waterSaved,AND(day=today,waterDay=today),",
-        'inspection,IF(plant="P21","Check top 2 in",IF(plant="P32","Check upper mix",IF(plant="P28",IF(OR(due,saved),"Inspect inner leaves",""),IF(waterCheck,"Water check","")))),',
+        'inspection,IF(plant="P21","Check top 2 in",IF(plant="P32","Check upper mix",IF(OR(plant="P28",plant="P35",plant="P36"),IF(OR(due,saved),"Inspect inner leaves",""),IF(waterCheck,"Water check","")))),',
         'task,IF(saved,"✓ Weighed",IF(due,IF(reviewNeeded,"Reweigh / review",IF(AND(afterWater,day=waterDay),"Weigh after draining","Weigh")),"")),',
         'TEXTJOIN(CHAR(10),TRUE,IF(waterSaved,"✓ Water logged",""),task,IF(waterSaved,"",inspection),IF(AND(task="",inspection="",NOT(waterSaved)),"—",""))),"Review source data"))',
     ].join("");

@@ -1,6 +1,6 @@
 # MSU fertilizer schedule
 
-Last updated: 2026-09-20
+Last updated: 2026-09-21
 
 This is the working nutrient plan for the collection's Tezula/Greencare **MSU
 13-3-15 Tap/Rain/RO formula**. It is a low-dose starting plan for these actual
@@ -16,6 +16,10 @@ make a pot ready to water.
 Newly purchased **P31 / #7 [Peperomia Bicolor](../plants/houseplants/peperomia-obtipan-bicolor.md)** and **P32 / #8 [Tricolor oyster plant](../plants/houseplants/tradescantia-spathacea-tricolor.md)** are not automatically enrolled in the cactus feeding rotation. Their nursery medium, existing fertilizer charge, root condition, and any repot remain unrecorded. Purchase alone is not a reason to feed, flush, or water them.
 
 First inspect drainage, establish ordinary drying, and look for healthy new growth. Use each profile's upper-mix moisture check rather than waiting for a cactus-style whole-pot plateau. If a later review supports feeding, record the actual product, dilution, and application; the cactus **0.75 g/US gallon** starting dose and alternating feed cycle below are not a prescribed new-basket schedule. Avoid stacking MSU on an unknown nursery fertilizer charge.
+
+## September 21 leaf-cycle exceptions
+
+**September 21 additions:** **P35 / #9 [shared Lithops](../plants/succulents/lithops-shared-planter.md)** and **P36 / #10 [split rock](../plants/succulents/pleiospilos-nelii.md)** are outside automatic cactus feed/plain-water alternation. Their current medium, previous feeding, root condition, and leaf stages are unrecorded, and both repots remain planned. Establish their individual leaf-cycle readiness and a supported nutrient need before choosing any feed; this enrollment assigns no dose or completed feeding event. See the [collection watering exceptions](../watering-strategy.md#collection-exceptions).
 
 ## Short answer
 

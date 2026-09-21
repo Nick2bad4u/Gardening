@@ -301,6 +301,10 @@ function portraitDescriptions() {
             "A branching succulent with felted copper-brown spoon-shaped leaves and pale new tips in a blue planter.",
         ],
         [
+            "lithops-shared-planter",
+            "Schematic paired living-stone bodies in one neutral pot; not evidence of species, plant count, or completed planting.",
+        ],
+        [
             "mammillaria-bombycina",
             "A clustered pincushion cactus with dense pale radial spines and reddish hooked central spines.",
         ],
@@ -347,6 +351,10 @@ function portraitDescriptions() {
         [
             "pilosocereus-pachycladus-variegated",
             "A blue-green columnar cactus with lengthwise cream variegation and golden spine clusters in a terracotta planter.",
+        ],
+        [
+            "pleiospilos-nelii",
+            "Schematic split-rock leaf pair in a neutral pot; color and form do not identify the acquired plant or its cultivar.",
         ],
         [
             "pleiospilos-nelii-royal-flush",

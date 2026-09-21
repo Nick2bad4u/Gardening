@@ -12,6 +12,16 @@ contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
+## September 21 prepared Lithops and split-rock enrollment
+
+**Prepared source; not a completed production change.** The new source roster has **34 active allocations: P01–P32, P35, P36**. P35 / #9 is the planned shared pot for two owner-described Lithops pairs; P36 / #10 is the separate split rock, probable Pleiospilos nelii with cultivar unconfirmed and explicitly not Royal Flush. P31 / #7 and P32 / #8 remain the purchased houseplants; P33/P34 remain retired. See the [enrollment runbook](../scripts/google-sheets/README.md#september-21-prepared-lithops-and-split-rock-enrollment).
+
+Logger **5.29.0** and the maintained expressions prepare **60 physical App bulk columns, A:BH / 61 including \_RowNumber**, appending P35/P36 at BG:BH. Preserve A:BF, including the hidden/noneditable blank-only P33/P34 fields. After a native backup and successful disposable rehearsal, regenerate the schema and add optional positive Decimal inputs with the existing Weigh / Water + weigh visibility rule. Bulk Log should order P31, P32, P35, P36 after P30; label sort keys are #9 = 909 and #10 = 910. Install the maintained 34-weight Round action validation, retaining both retired-field guards.
+
+Keep id528 creation-only key initial values and the P31/P32 stale-draft protections unchanged. Keep canonical observations and helper tables read-only, and allow writes only through the staging/bridge path. New portraits require the matching exported and published revision before changing the app expression. These allocations do not assert completed repots, current pot sizes, watering, weights, or feed events. P28/P35/P36 remain manual leaf-cycle decisions, with no automatic weight/plateau watering permission.
+
+**Last recorded production baseline:** AppSheet **1.100110**, logger **5.28.0 / immutable 97**, 32 pots and 59 App bulk columns including \_RowNumber. The production descriptions below remain that baseline until an actual saved cutover and fresh readback are recorded. This documentation update does not save the production app.
+
 ## September 20 owner-requested houseplant reassignment
 
 The maintained roster is **32 active containers, P01–P32**. **P31 / #7 is Peperomia Bicolor** and **P32 / #8 is Tricolor oyster plant**, both purchased from Carlson's Greenhouses. The owner explicitly requested these assignments in place of P33/#9 and P34/#10. The unreceived Amazon research remains archived without active pot or label assignments. Botanical profile IDs remain Houseplant-03 and Houseplant-04.

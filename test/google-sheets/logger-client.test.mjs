@@ -545,7 +545,7 @@ describe("garden logger 4 a.m. weighing day", () => {
         const { window } = createLoggerWindow({
             online: false,
             storage: {
-                gardenLoggerBootstrapV3: JSON.stringify({
+                gardenLoggerBootstrapV4: JSON.stringify({
                     bootstrap: old,
                     savedAt: Date.now(),
                 }),
@@ -885,7 +885,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         const current = createLoggerWindow({
             online: false,
             storage: {
-                gardenLoggerBootstrapV3: JSON.stringify({
+                gardenLoggerBootstrapV4: JSON.stringify({
                     bootstrap: workflowBootstrap(),
                     savedAt: Date.now(),
                 }),
@@ -901,7 +901,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         const legacy = createLoggerWindow({
             online: false,
             storage: {
-                gardenLoggerBootstrapV3: JSON.stringify({
+                gardenLoggerBootstrapV4: JSON.stringify({
                     bootstrap: old,
                     savedAt: Date.now(),
                 }),
@@ -974,8 +974,8 @@ describe("garden logger daily progress, filtered History and measured charts", (
             const reload = createLoggerWindow({
                 online: false,
                 storage: {
-                    gardenLoggerBootstrapV3: required(
-                        window.localStorage.getItem("gardenLoggerBootstrapV3")
+                    gardenLoggerBootstrapV4: required(
+                        window.localStorage.getItem("gardenLoggerBootstrapV4")
                     ),
                 },
             });
@@ -4085,7 +4085,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
                 refreshHandlers = handlers;
             },
             storage: {
-                gardenLoggerBootstrapV3: JSON.stringify({
+                gardenLoggerBootstrapV4: JSON.stringify({
                     bootstrap,
                     savedAt: Date.now(),
                 }),
@@ -4117,7 +4117,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
         ).toBe("Connected · logger fresh");
 
         const storedBootstrap = parseStoredRecord(
-            window.localStorage.getItem("gardenLoggerBootstrapV3")
+            window.localStorage.getItem("gardenLoggerBootstrapV4")
         );
 
         expect(jsonRecord(storedBootstrap["bootstrap"])["version"]).toBe(
@@ -4133,7 +4133,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
                 failure({ message: "Storage unavailable" });
             },
             storage: {
-                gardenLoggerBootstrapV3: JSON.stringify({
+                gardenLoggerBootstrapV4: JSON.stringify({
                     bootstrap,
                     savedAt: Date.now(),
                 }),
@@ -4157,7 +4157,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
 
         const { calls, window } = createLoggerWindow({
             storage: {
-                gardenLoggerBootstrapV3: JSON.stringify({
+                gardenLoggerBootstrapV4: JSON.stringify({
                     bootstrap,
                     savedAt: Date.now() - 6 * 60 * 60 * 1000 - 1,
                 }),
@@ -4173,7 +4173,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
         ).toBe("Connected · logger test");
 
         const storedBootstrap = parseStoredRecord(
-            window.localStorage.getItem("gardenLoggerBootstrapV3")
+            window.localStorage.getItem("gardenLoggerBootstrapV4")
         );
 
         expect(jsonRecord(storedBootstrap["bootstrap"])["version"]).toBe(
@@ -5533,7 +5533,7 @@ describe("garden logger plant selection and label ordering", () => {
                 refreshHandlers = handlers;
             },
             storage: {
-                gardenLoggerBootstrapV3: JSON.stringify({
+                gardenLoggerBootstrapV4: JSON.stringify({
                     bootstrap,
                     savedAt: Date.now(),
                 }),
@@ -5613,7 +5613,7 @@ describe("garden logger plant selection and label ordering", () => {
                 refreshHandlers = handlers;
             },
             storage: {
-                gardenLoggerBootstrapV3: JSON.stringify({
+                gardenLoggerBootstrapV4: JSON.stringify({
                     bootstrap,
                     savedAt: Date.now(),
                 }),
@@ -6580,6 +6580,8 @@ describe("garden logger plant photos and portrait rendering", () => {
         ["P20", "shared-succulent-planter"],
         ["P31", "peperomia-obtipan-bicolor"],
         ["P32", "tradescantia-spathacea-tricolor"],
+        ["P35", "lithops-shared-planter"],
+        ["P36", "pleiospilos-nelii"],
     ])("uses the maintained explicit portrait for %s", (id, slug) => {
         expect.hasAssertions();
 
@@ -7355,7 +7357,7 @@ describe("garden logger local History loading and portraits", () => {
                 pendingBootstrap.push(handlers);
             },
             storage: {
-                gardenLoggerBootstrapV3: JSON.stringify({
+                gardenLoggerBootstrapV4: JSON.stringify({
                     bootstrap: { ...bootstrap, recent: [recentExample] },
                     savedAt: Date.now(),
                 }),
@@ -8578,7 +8580,7 @@ describe("garden logger activity metrics and guidance", () => {
         const { window } = createLoggerWindow({
             online: false,
             storage: {
-                gardenLoggerBootstrapV3: JSON.stringify({
+                gardenLoggerBootstrapV4: JSON.stringify({
                     bootstrap,
                     savedAt: Date.now(),
                 }),

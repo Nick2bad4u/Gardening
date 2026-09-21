@@ -1,8 +1,8 @@
 # Pot labels
 
-Last updated: 2026-09-20
+Last updated: 2026-09-21
 
-This is the print reference for 40 active profile records across 32 tracked pots or shared containers. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
+This is the print reference for 42 active profile records across 34 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
 
 The six August cactus labels are `E1`–`E3` and `F1`–`F3`; their exact mapping
 was recorded from the pots on 2026-08-10. The numbered mapping was also
@@ -14,7 +14,7 @@ planter (`P30`). Their separate Smart Planet Home / Altman Plants retail-label
 photographs are preserved as provenance. The retail _Faucaria tigrina_ wording
 does not replace the qualified _F. tuberculosa_ working ID printed on `#5`.
 
-The unreceived Amazon plan was abandoned September 20 and has no physical-label or tracker allocation. Keep its five research pages in the [old-plan archive](../old-plans/amazon-plant-order-2026-09.md); cancellation remains pending. Current numbered labels are #1–#8. The owner explicitly assigned #7 / P31 to Peperomia Bicolor and #8 / P32 to Tricolor oyster plant.
+The unreceived Amazon plan was abandoned September 20 and has no physical-label or tracker allocation. Keep its five research pages in the [old-plan archive](../old-plans/amazon-plant-order-2026-09.md); cancellation was confirmed in Amazon on September 21. Current numbered labels are #1–#10. The owner explicitly assigned #7 / P31 to Peperomia Bicolor and #8 / P32 to Tricolor oyster plant.
 
 The six Mountain Crest mappings were owner-corrected after receipt on
 2026-08-28: `G1` Black Widow (`P27`), `G2` paper spine (`P23`), `G3` Royal
@@ -362,9 +362,32 @@ Tradescantia spathacea 'Tricolor'
 
 The owner confirmed buying both plants directly at Carlson's Greenhouses on 2026-09-20 in owner-reported six-inch nursery pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; both nursery pots are currently on the floor on the room side near the money tree, as confirmed September 20. Separate floor stools and the eight-inch repots remain planned. Nursery-pot depth, exact display spacing, and leaf-height light remain unrecorded. The labels stay #7 and #8 through the planned changes.
 
+## September 21 Lithops and split-rock labels
+
+These two allocations follow #7 and #8. The Lithops pairs are intended for one shared pot; the split rock is intended for a separate pot. Planting remains planned. P33/P34 are retired houseplant redirects, so the next unused tracker IDs are P35/P36. The owner's wording “two pairs” is not converted into a confirmed count of rooted plants.
+
+| ID    | Tracker | Inventory    | Botanical label                                                                      | Warning                                                      |
+| ----- | ------- | ------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
+| `#9`  | `P35`   | Succulent-15 | [_Lithops_ sp./spp.; species unresolved](./succulents/lithops-shared-planter.md)     | Leaf-cycle checks for both pairs; one planned shared history |
+| `#10` | `P36`   | Succulent-16 | [PROB. _Pleiospilos nelii_; cultivar unconfirmed](./succulents/pleiospilos-nelii.md) | Not Royal Flush; leaf-cycle checks; separate from G3 / P28   |
+
+Suggested strips:
+
+```text
+#9 | LITHOPS SHARED PLANTER
+Lithops sp./spp. | SPECIES UNRESOLVED
+```
+
+```text
+#10 | SPLIT ROCK
+PROB. Pleiospilos nelii | CULTIVAR UNCONFIRMED
+```
+
+Native-origin wording is southern Africa at Lithops genus level and, if the working split-rock identity is correct, South Africa's Cape Provinces. Publication dates are 1922 for the Lithops genus and 1930 for P. nelii, not verified dates for the unidentified collection forms. Exact acquisition source/date remain unrecorded. The owner assigned #9 / P35 to the D'vine Dev selected 4.3-inch Blush Mauve destination and #10 / P36 to the Thirtypot selected 4.5-inch speckled-brown destination. Repots and follow-up photographs are planned for September 22. The profiles carry the botanical sources.
+
 ## Archived label allocations
 
-The [September 19 Amazon plan](../old-plans/amazon-plant-order-2026-09.md) preserves the four succulent and Nanouk research pages without physical-label or tracker allocations. No plants were received and cancellation is pending. Do not print labels for the archived research.
+The [September 19 Amazon plan](../old-plans/amazon-plant-order-2026-09.md) preserves the four succulent and Nanouk research pages without physical-label or tracker allocations. No plants were received and cancellation was confirmed in Amazon on September 21. Do not print labels for the archived research.
 
 ## Identification and origin research outcome
 
@@ -395,7 +418,7 @@ The [September 19 Amazon plan](../old-plans/amazon-plant-order-2026-09.md) prese
 
 The repo contains acquisition source-and-date records for `A1`–`H3` and `#1`–`#6`, except the historical, removed Rehab-04 record. Its acquisition source and date remain unconfirmed. For new #7 and #8, the owner confirmed direct purchase at Carlson's Greenhouses on September 20; the nursery tags also identify the grower.
 
-The unreceived September 19 Amazon plant order is archived separately; cancellation remains pending. The separate four-inch pot order has no confirmed receipt or cancellation.
+The unreceived September 19 Amazon plant order is archived separately; cancellation was confirmed in Amazon on September 21. The D'vine Dev Blush Mauve destination for #9 and Thirtypot speckled-brown destination for #10 are expected September 22; receipt, repots, and the planned follow-up photographs remain unconfirmed.
 
 Keep an order date and a received date as separate facts. They answer different
 questions and should not be silently substituted for one another.

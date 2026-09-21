@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-The maintained **Garden Plant Tracker** roster has **32 active containers**, using IDs `P01`–`P32` internally and keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+The prepared **Garden Plant Tracker** source roster has **34 active container allocations**, using IDs `P01`–`P32`, `P35`, and `P36`. The last recorded production roster remains 32 containers until the September 21 enrollment below is applied and verified. It keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
@@ -18,7 +18,7 @@ for retained water, measured loss, forecast windows, and model evidence. The
 **Current weight difference** comparison starts at **Insights A586**.
 The [RO refill log](RO-REFILLS.md) records water-supply refill dates, amounts
 for the four storage containers, and a chart of gallons refilled per visit.
-The **Plant colors** sheet maps all 32 active containers to
+The recorded September 20 production **Plant colors** sheet maps its 32 active containers to
 consistent chart colors, with full names, swatches, and links to their charts.
 Comparison charts keep P01–P32 order so colors stay attached to the same plant;
 the cycle explorer changes color automatically with its selected plant.
@@ -26,6 +26,41 @@ Each active **P01–P32** page also has a **Time between waterings** column char
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## September 21 prepared Lithops and split-rock enrollment
+
+**Prepared source only; production cutover pending.** Logger **5.29.0** supports **34 active allocations: P01–P32, P35, P36**. The last recorded production baseline remains logger **5.28.0 / immutable version 97**, AppSheet **1.100110**, and 32 enrolled pots. A source edit, build, or test does not establish a live deployment.
+
+| New allocation | Collection record                    | Known state                                                                                                                                                                          |
+| -------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| P35 / #9       | Succulent-15, shared Lithops planter | Two owner-described pairs possessed by September 21; species, rooted-body count, nursery arrangement, leaf stages, medium, and last watering unrecorded. Shared planting is planned. |
+| P36 / #10      | Succulent-16, split rock             | Probable Pleiospilos nelii, cultivar unconfirmed; the owner explicitly excludes Royal Flush. Separate repot planned; current leaf stage, medium, and last watering unrecorded.       |
+
+P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant retain their assignments. P33/P34 remain retired. The collection now has **42 active profiles plus one historical profile**. These administrative allocations create no Water, Weigh, Repot, initial wet/dry reference, or completed pot setup. The September 22 incoming pots have no confirmed plant-to-pot assignment; see the [setup record](../../docs/setup.md) for the separate houseplant stool plan and current purchase evidence.
+
+The prepared bulk schema appends **P35 weight (g)** and **P36 weight (g)** at **BG:BH**, making **60 physical columns, A:BH / 61 including AppSheet's \_RowNumber**. Preserve all existing A:BF values and ordering. BE:BF remain hidden, noneditable, blank-only retired fields. History stays A:AP and App entries stays A:AH. Queue reads support reviewed 54-, 56-, and 58-column schemas until deliberate enrollment; unrecognized columns or selected IDs fail visibly rather than dropping input.
+
+The prepared model withholds forecast dates/windows and automatic watering dates for **P28, P35, and P36**. Their readiness is manual leaf-cycle inspection; a dry reference, plateau, or wrinkled old leaves alone does not authorize watering. Inspect each Lithops group before combining it. New empty histories display “No watering recorded.” No generic alternating-feed rule is introduced. See the [collection exceptions](../../docs/watering-strategy.md#collection-exceptions).
+
+Prepared artwork revision **b86b51605d0afb26** and the maintained AppSheet expression target **GardenPlantPortraits-b86b51605d0afb26**. That private Drive folder still awaits publication; the matching source manifest is not proof that its 34 files are available to the live app. Keep the previous production folder available.
+
+Cutover work still required:
+
+1. Re-read native metadata, ledger/staging cells, formulas, validations, deployment, and the single five-minute queue trigger. Create a native Drive backup and recheck the guarded [inventory expansion](./inventory-expansion.mjs) against that fresh source state. The disposable-copy rehearsal below is retained evidence, not permission to skip current preconditions.
+2. Apply only the reviewed preparation, value, post-value, and chart requests in that order; preserve canonical observations, existing chart IDs/positions, staging values, and RO data. The two post-value requests restore captured Quick log header formatting after native table expansion. Verify both new pages and empty histories. Use the scoped new-page helper only when its refresh is intended; do not substitute a broad workbook refresh for the migration.
+3. Regenerate AppSheet to 61 columns, configure optional positive Decimal P35/P36 weights with the existing weighing visibility rule, and order them after P32. Install the maintained [34-weight validation](./appsheet-bulk-validation.txt), retaining both retired blank guards. Keep canonical/helper tables read-only and staging writable. Retain the creation-only id528 key marker and P31/P32 stale-draft guards.
+4. Export/synchronize the reviewed artwork, publish the matching private portrait revision, and update its AppSheet expression consistently. Push only the three bound-script files; create an immutable version and update the existing deployment in place. Confirm the phone logger version, successful executions, exactly one queue trigger, saved AppSheet configuration, and preserved ledger counts/IDs/values. Do not submit test observations to production.
+5. Publish the matching website sources and update the existing daily task with the reviewed P35/P36 identity and leaf-cycle exceptions, retaining its 9:45 a.m. America/New_York schedule. Editing the checked-in prompt alone does not update that task.
+
+Final local preparation validation passed **993 logger tests** with 99.48% statement, 98.19% branch, 100% function, and 99.71% line coverage, preserving the 90% floors. Full typechecking and the website build/check passed with 43 profiles and 34 pot allocations. Production verification remains a separate requirement.
+
+**Native-copy rehearsal, September 21:** the [disposable workbook](https://docs.google.com/spreadsheets/d/1veKWNBOeSW40GlJTwDWeD3tq-vbbB2qlt9iYfT9ZBG4/edit) has 58 tabs and 164 charts, with P35/P36 pages at sheet IDs **202609350 / 202609360**. The final strict comparison passed **1,001,413 cells / 4,005,652 fields**, including **324,000 canonical, staging, and RO cells**, with no unexplained differences or formula errors. All **156 original chart identities and positions** remain intact, with only the reviewed inventory/specification changes, plus eight new charts. Private evidence is retained under `.cache/mesemb-enrollment-20260921/`; the final receipt is `rehearsal-final-verification.json`.
+
+The two three-role selector charts required the [36-series design](INSIGHTS-CHARTS.md#september-21-selector-series-capacity) after a populated native probe silently truncated 102 requested series to 99. All **19,996 shared-role values** matched their original raw data, with four numeric sentinels at blank domain coordinates. Selecting both empty P35 and P36 preserved every chart specification and position; the original P27 selection was restored. The migration also corrects twelve captured Dry-down insights formulas whose local lookups still ended at the first 30 pots. New shared helper columns extend Plant color data through EU and Workbook analytics through DJ, with inherited formatting verified across all appended cells.
+
+The copy's bound source and calculated model cells exercised the new roster and manual leaf-cycle output. A separate no-write verification helper was uploaded but **not executed** because the copied project requested a new authorization grant; no new grant was accepted. Production remains unchanged.
+
+Empty native charts retain bindings but discard some series styling and vertical-axis settings. Temporary values in six derived helper anchors on the copy proved all eight new charts' bindings; reapplying their planned specifications while populated verified their colors, line/marker styles, axes, and labels. All six formulas were restored and every temporary numeric spill value was confirmed absent. Recheck and reapply the scoped specifications after the first real measurements or watering intervals; do not manufacture production observations to retain formatting. Two newly duplicated watering charts required recreation with the same new IDs and positions because `updateChartSpec` retained the template's P30 alternative text. Existing production chart identities are never recreated by that workaround.
 
 ## September 20 owner-requested houseplant reassignment
 

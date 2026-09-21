@@ -13,6 +13,7 @@
   succulent container. `P30` / `#6` has aggregate Succulent-10 and component-group profiles
   Succulent-10A/B/C, all sharing one pot; component taxa remain qualified. Removed Rehab-04 remains historical and has no active pot.
 - The owner explicitly assigned `P31` / `#7` to Peperomia Bicolor and `P32` / `#8` to Tricolor oyster plant on September 20, 2026. The unreceived Amazon research under `docs/old-plans/` has no physical-label or tracker allocation and is excluded from active profiles.
+- `P35` / `#9` covers the two owner-described Lithops pairs planned for one shared pot; `P36` / `#10` is the separate newly acquired split rock, explicitly not Royal Flush. Never reuse `P33`/`P34`: their old houseplant URLs redirect permanently to `P31`/`P32`. The next profile records are Succulent-15/16; archived Succulent-11–14 remain reserved.
 - Keep seller labels, qualified working IDs, receipt dates, and repot dates
   distinct. Preserve original label evidence when the probable identification
   changes. An order is not a confirmed arrival; a retail pot size is not a
@@ -30,7 +31,7 @@
 - Adding/removing a profile also affects the site build/check inventories,
   canonical SVG portraits, photo manifests, and relevant tests. Check those
   contracts before adding only a Markdown file. The current checker expects
-  41 profiles: 40 active and one historical, covering 32 tracked containers.
+  43 profiles: 42 active and one historical, covering 34 tracker allocations.
   Recalculate these separately when the collection changes.
 - Keep a substantive Sources section with direct evidence for identification,
   nomenclature, range, and specific care claims. Owner observations need clear

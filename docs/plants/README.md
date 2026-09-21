@@ -1,8 +1,8 @@
 # Plant profiles
 
-Last updated: 2026-09-20
+Last updated: 2026-09-21
 
-These **41 pages cover 40 active profile records and one historical record, across 32 tracked containers**. The five unreceived Amazon additions are preserved under [old plans](../old-plans/amazon-plant-order-2026-09.md), with cancellation pending. They are excluded from this active profile index. The six Mountain Crest plants ordered on
+These **43 pages cover 42 active profile records and one historical record, across 34 tracker allocations**. The five unreceived Amazon additions are preserved under [old plans](../old-plans/amazon-plant-order-2026-09.md), with cancellation confirmed in Amazon on September 21. They are excluded from this active profile index. The six Mountain Crest plants ordered on
 2026-08-25 were received, inspected, and repotted on 2026-08-28. Tuberculate
 tiger jaws and a five-plant succulent garden were acquired from Home Depot,
 photographed, repotted, and assigned `P29`/`#5` and `P30`/`#6` on 2026-09-02.
@@ -93,6 +93,8 @@ weights and Ruler dimensions are recorded in the individual profiles.
 | Succulent-10A | `#6`                   | [Pale rosette echeveria](./succulents/tiny-planter-echeveria.md)                                                            | _Echeveria_ sp.; species and cultivar unresolved; shared P30 component group        |
 | Succulent-10B | `#6`                   | [Coppertone-type sedum](./succulents/tiny-planter-coppertone-sedum.md)                                                      | Probable _Sedum adolphi_ / _S. nussbaumerianum_ complex; shared P30 component group |
 | Succulent-10C | `#6`                   | [Paddle kalanchoe](./succulents/tiny-planter-paddle-kalanchoe.md)                                                           | _Kalanchoe luciae_ / _K. thyrsiflora_ complex; shared P30 component group           |
+| Succulent-15  | `#9`                   | [Lithops shared planter](./succulents/lithops-shared-planter.md)                                                            | Owner-reported _Lithops_ sp./spp.; species unresolved; P35                          |
+| Succulent-16  | `#10`                  | [Split rock](./succulents/pleiospilos-nelii.md)                                                                             | Probable _Pleiospilos nelii_; cultivar unconfirmed, not Royal Flush; P36            |
 
 The three Mountain Crest succulents arrived rooted in 2-inch nursery pots of unrecorded shape and moved to matching round 4 × 4 × 3.7-inch pots on 2026-08-28. Their 2026-08-29 Scale weights and Ruler dimensions are recorded in the individual profiles.
 
@@ -105,6 +107,8 @@ limits. `P29` is seller-labeled _Faucaria tigrina_, but the current close view's
 conspicuous raised white leaf tubercles favor the qualified _F. tuberculosa_
 working ID. `P30` is sold as a five-plant Smart Planet Home garden and stays one
 tracked planter. Its three component-group pages (Succulent-10A/B/C) retain qualified working IDs and share the aggregate history. They are profile records, not extra pots or a verified count of individual plants. Acquisition documentation did not include measured pot sizes, replacement-medium composition, weights, or dimensions; consult current eligible P29/P30 observations rather than treating that older omission as today's state.
+
+The September 21 additions are [Lithops shared planter](./succulents/lithops-shared-planter.md) (Succulent-15 / #9 / P35) and [Split rock](./succulents/pleiospilos-nelii.md) (Succulent-16 / #10 / P36). The owner assigned both Lithops pairs to the D'vine Dev selected 4.3-inch Blush Mauve pot, and the split rock, explicitly not Royal Flush, to the Thirtypot selected 4.5-inch speckled-brown pot. Repots and follow-up photographs are planned for September 22. Species-level evidence, acquisition details, planting, and placement remain pending. P33/P34 stay retired houseplant redirects, and archived Succulent-11–14 are not reused.
 
 ## Older mixed cactus planter
 

@@ -4996,6 +4996,18 @@
             "gyazo_collection": null,
             "pending_note": "Acquired September 20, 2026. The owned acquisition and nursery-tag photograph is preserved as metadata-stripped local evidence. Gyazo was under maintenance during integration; a dedicated photo Collection and remote capture publication remain pending.",
             "photos": []
+        },
+        {
+            "plant_slug": "lithops-shared-planter",
+            "gyazo_collection": null,
+            "pending_note": "Owner confirmed possession by September 21, 2026; exact acquisition date and source remain unrecorded. No owned photographs, nursery-label images, or dedicated Gyazo Collection have been supplied. The owner plans repotting and follow-up photographs on September 22; completed planting and final placement remain unconfirmed.",
+            "photos": []
+        },
+        {
+            "plant_slug": "pleiospilos-nelii",
+            "gyazo_collection": null,
+            "pending_note": "Owner confirmed possession by September 21, 2026; exact acquisition date and source remain unrecorded. No owned photographs, nursery-label images, or dedicated Gyazo Collection have been supplied. The owner plans repotting and follow-up photographs on September 22; completed planting and final placement remain unconfirmed.",
+            "photos": []
         }
     ],
     "schema_version": 3

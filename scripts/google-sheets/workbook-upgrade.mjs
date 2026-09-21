@@ -1,7 +1,9 @@
 import { cycleComparisonFormula } from "./cycle-comparison.mjs";
 import {
+    compactSelectedPlantSeries,
     plantColor,
     selectedPlantColorFormula,
+    sharedSelectedRoleFormula,
 } from "./plant-chart-colors.mjs";
 import palette from "./plant-colors.json" with { type: "json" };
 import {
@@ -17,7 +19,7 @@ export const analyticsSheetId = 907_202_608;
 const clock = "'Workbook calculations'!$E$2";
 const font = "JetBrains Mono";
 const inventoryEnd = palette.length + 1;
-const cycleLastColumn = columnName(9 + palette.length * 3);
+const cycleLastColumn = columnName(11 + palette.length * 3);
 const timestampFormat = "mmm d, yyyy h:mm am/pm";
 const refillTitle = "RO refills";
 const calculatedLabel = "Calculated as of";
@@ -138,7 +140,7 @@ export function buildWorkbookUpgradeRequests(snapshot, factories) {
             "Workbook analytics",
             analyticsSheetId,
             5001,
-            10 + palette.length * 3
+            12 + palette.length * 3
         ),
         ...buildWateringCalendarRequests(snapshot, { clockReference: clock })
     );
@@ -179,6 +181,17 @@ export function buildWorkbookUpgradeRequests(snapshot, factories) {
                 ])
             );
         }
+    }
+    for (const [index, source] of ["C", "D"].entries()) {
+        const sharedFormula = sharedSelectedRoleFormula(
+            `${source}2:${source}5000`
+        );
+        formulaRequests.push(
+            update(analyticsSheetId, 0, 10 + palette.length * 3 + index, [
+                [entered(`=${source}1`)],
+                [entered(sharedFormula)],
+            ])
+        );
     }
     formulaRequests.push(
         update(analyticsSheetId, 0, 5, [
@@ -1092,31 +1105,28 @@ function cycleChart(sheetId) {
                         interpolateNulls: false,
                         legendPosition: "NO_LEGEND",
                         lineSmoothing: false,
-                        series: palette.flatMap(({ id }, plantIndex) =>
-                            [
-                                0,
-                                1,
-                                2,
-                            ].map((cycleIndex) => ({
+                        series: compactSelectedPlantSeries(
+                            palette.map(({ id }, plantIndex) => ({
                                 colorStyle: { rgbColor: plantColor(id) },
+                                lineStyle: { type: "SOLID", width: 2 },
+                                pointStyle: { shape: "CIRCLE", size: 5 },
+                                series: data(10 + plantIndex * 3, 5001),
+                                targetAxis: "LEFT_AXIS",
+                            })),
+                            [0, 1].map((index) => ({
                                 lineStyle: {
-                                    type: [
-                                        "SOLID",
-                                        "DOTTED",
-                                        "MEDIUM_DASHED",
-                                    ][cycleIndex],
+                                    type:
+                                        index === 0
+                                            ? "DOTTED"
+                                            : "MEDIUM_DASHED",
                                     width: 2,
                                 },
                                 pointStyle: {
-                                    shape: [
-                                        "CIRCLE",
-                                        "DIAMOND",
-                                        "SQUARE",
-                                    ][cycleIndex],
-                                    size: cycleIndex === 0 ? 5 : 3,
+                                    shape: index === 0 ? "DIAMOND" : "SQUARE",
+                                    size: 3,
                                 },
                                 series: data(
-                                    10 + plantIndex * 3 + cycleIndex,
+                                    10 + palette.length * 3 + index,
                                     5001
                                 ),
                                 targetAxis: "LEFT_AXIS",
@@ -1126,7 +1136,7 @@ function cycleChart(sheetId) {
                     fontName: font,
                     hiddenDimensionStrategy: "SHOW_ALL",
                     subtitle:
-                        "Selected plant color · solid circles: current · dotted diamonds: previous · dashed squares: older · same pot setup",
+                        "Plant-colored solid circles: current · neutral dotted diamonds: previous · neutral dashed squares: older · same pot setup",
                     title: "Compare dry-down cycles · selected plant",
                     titleTextFormat: { fontFamily: font },
                 },

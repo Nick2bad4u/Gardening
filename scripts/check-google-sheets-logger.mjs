@@ -35,7 +35,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.28.0");
+assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.29.0");
 for (const name of [
     "getWebCorrectionEntry",
     "previewWebObservationCorrection",
@@ -256,7 +256,7 @@ assert.deepEqual(appSheetEntryHeaders, [
     "Water amount (mL)",
 ]);
 const appSheetBulkHeaders = strings(evaluateLogger("APP_SHEET_BULK_HEADERS"));
-assert.equal(appSheetBulkHeaders.length, 58);
+assert.equal(appSheetBulkHeaders.length, 60);
 assert.deepEqual(appSheetBulkHeaders.slice(0, 6), [
     "Round ID",
     "Started at",
@@ -283,6 +283,8 @@ assert.deepEqual(appSheetBulkHeaders.slice(54), [
     "P32 weight (g)",
     "P33 weight (g)",
     "P34 weight (g)",
+    "P35 weight (g)",
+    "P36 weight (g)",
 ]);
 assert.deepEqual(strings(evaluateLogger("NUTRIENT_PRODUCT_OPTIONS")), [
     "MSU 13-3-15",
@@ -429,7 +431,7 @@ assert.match(html, /state\.saveStartedAt = Date\.now\(\);/v);
 assert.match(html, /function browserIsOnline\(\)/v);
 assert.match(html, /const BOOTSTRAP_TIMEOUT_MS = 20000;/v);
 assert.match(html, /const BOOTSTRAP_AUTO_RETRIES = 1;/v);
-assert.match(html, /const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV3";/v);
+assert.match(html, /const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV4";/v);
 assert.match(
     html,
     /const BOOTSTRAP_CACHE_MAX_AGE_MS = 6 \* 60 \* 60 \* 1000;/v
@@ -818,11 +820,11 @@ const forecastFormulaRow = strings(
 );
 assert.match(
     required(forecastFormulaRow[20], "forecast formula"),
-    /'Dry-down models'!\$E\$2:\$E\$33/v
+    /'Dry-down models'!\$E\$2:\$E\$35/v
 );
 assert.match(
     required(forecastFormulaRow[30], "forecast formula"),
-    /'Dry-down models'!\$G\$2:\$G\$33/v
+    /'Dry-down models'!\$G\$2:\$G\$35/v
 );
 assert.doesNotMatch(
     required(forecastFormulaRow[30], "forecast formula"),

@@ -288,3 +288,94 @@ describe("inventory presentation range expansion", () => {
         ]);
     });
 });
+
+describe("current 32-pot presentation bounds", () => {
+    it("extends current roster metadata by two and leaves stale or unrelated ranges alone", () => {
+        expect.hasAssertions();
+
+        const range = {
+            endColumnIndex: 36,
+            endRowIndex: 33,
+            sheetId: 3,
+            startColumnIndex: 0,
+            startRowIndex: 0,
+        };
+        const metadata = {
+            sheets: [
+                {
+                    bandedRanges: [{ bandedRangeId: 50, range }],
+                    basicFilter: {
+                        range,
+                        sortSpecs: [
+                            { dimensionIndex: 1, sortOrder: "ASCENDING" },
+                        ],
+                    },
+                    conditionalFormats: [
+                        {
+                            booleanRule: {
+                                condition: {
+                                    type: "TEXT_EQ",
+                                    values: [{ userEnteredValue: "Review" }],
+                                },
+                            },
+                            ranges: [range],
+                        },
+                    ],
+                    properties: { sheetId: 3, title: "Plant tracker" },
+                },
+            ],
+        };
+        const before = structuredClone(metadata);
+        const requests = buildInventoryMetadataRequests(metadata, 32);
+
+        expect(metadata).toStrictEqual(before);
+        expect(requests).toHaveLength(3);
+        expect(JSON.stringify(requests)).toContain('"endRowIndex":35');
+        expect(JSON.stringify(requests)).toContain('"bandedRangeId":50');
+        expect(JSON.stringify(requests)).toContain('"sortOrder":"ASCENDING"');
+        expect(JSON.stringify(requests)).toContain(
+            '"userEnteredValue":"Review"'
+        );
+
+        range.endRowIndex = 31;
+
+        expect(buildInventoryMetadataRequests(metadata, 32)).toStrictEqual([]);
+        expect(() => buildInventoryMetadataRequests(metadata, 34)).toThrow(
+            "Unsupported inventory base count"
+        );
+    });
+});
+
+describe("current Quick log presentation", () => {
+    it("extends the verified current Quick log banding that includes its row-four header", () => {
+        expect.hasAssertions();
+
+        const metadata = {
+            sheets: [
+                {
+                    bandedRanges: [
+                        {
+                            bandedRangeId: 51,
+                            range: {
+                                endColumnIndex: 15,
+                                endRowIndex: 36,
+                                sheetId: 4,
+                                startColumnIndex: 0,
+                                startRowIndex: 3,
+                            },
+                        },
+                    ],
+                    properties: { sheetId: 4, title: "Quick log" },
+                },
+            ],
+        };
+        const requests = buildInventoryMetadataRequests(metadata, 32);
+
+        expect(requests).toHaveLength(1);
+        expect(JSON.stringify(requests)).toContain('"endRowIndex":38');
+        expect(JSON.stringify(requests)).toContain('"startRowIndex":3');
+        expect(buildInventoryMetadataRequests(metadata, 30)).not.toContainEqual(
+            requests[0]
+        );
+    });
+});

@@ -3,11 +3,13 @@ import { describe, expect, it } from "vitest";
 import {
     buildPlantColorKeyRequests,
     buildPlantInsightColorRequests,
+    compactSelectedPlantSeries,
     fixedPlantMetricFormula,
     plantColor,
     plantColorDataSheetId,
     plantColorSheetId,
     selectedPlantColorFormula,
+    sharedSelectedRoleFormula,
 } from "../../scripts/google-sheets/plant-chart-colors.mjs";
 import palette from "../../scripts/google-sheets/plant-colors.json" with { type: "json" };
 import original from "../fixtures/plant-color-charts.json" with { type: "json" };
@@ -88,6 +90,8 @@ describe("plant chart color identity", () => {
             ),
             "P31",
             "P32",
+            "P35",
+            "P36",
         ]);
 
         const uniqueColors = new Set(palette.map((color) => color.hex));
@@ -172,7 +176,33 @@ describe("plant chart color identity", () => {
 
         const writes = requests.filter((request) => "updateCells" in request);
 
-        expect(writes).toHaveLength(16 + palette.length * 4);
+        expect(writes).toHaveLength(18 + palette.length * 4);
+
+        const measured = requests.find((request) =>
+            JSON.stringify(request).includes('"chartId":1091061876')
+        );
+
+        expect(measured).toHaveProperty(
+            "updateChartSpec.spec.basicChart.series.length",
+            palette.length + 2
+        );
+        expect(measured).toHaveProperty(
+            "updateChartSpec.spec.subtitle",
+            "Plant-colored solid circles: measured • neutral dotted diamonds: dry • neutral dashed squares: wet"
+        );
+        expect(measured).toHaveProperty(
+            `updateChartSpec.spec.basicChart.series.${palette.length - 1}.colorStyle.rgbColor`,
+            plantColor("P36")
+        );
+        expect(measured).toHaveProperty(
+            `updateChartSpec.spec.basicChart.series.${palette.length}.series.sourceRange.sources.0.startColumnIndex`,
+            7 + palette.length * 4
+        );
+        expect(measured).toHaveProperty(
+            `updateChartSpec.spec.basicChart.series.${palette.length + 1}.series.sourceRange.sources.0.startColumnIndex`,
+            8 + palette.length * 4
+        );
+        expect(JSON.stringify(writes)).toContain("IFERROR(INDEX(FILTER(");
 
         for (const write of writes)
             expect(write).toMatchObject({
@@ -226,9 +256,99 @@ describe("plant chart color identity", () => {
             true
         );
         expect(selected).toContain("$D$5000");
+        expect(sharedSelectedRoleFormula("C2:C5000")).toBe(
+            '=VSTACK(ARRAYFORMULA(IF(ISNUMBER(C2:C5000),C2:C5000,"")),IFERROR(INDEX(FILTER(C2:C5000,ISNUMBER(C2:C5000)),1),0))'
+        );
         expect(selected).toContain(
             "IFERROR(INDEX(FILTER('Source'!$D$2:$D$5000,ISNUMBER('Source'!$D$2:$D$5000)),1),0)"
         );
+    });
+
+    it("keeps every plant identity and all curve roles below the native series ceiling without mutating inputs", () => {
+        expect.hasAssertions();
+
+        const primary = palette.map(({ id }, index) => ({
+            colorStyle: { rgbColor: plantColor(id) },
+            lineStyle: { type: "SOLID", width: 2 },
+            pointStyle: { shape: "CIRCLE", size: 5 },
+            series: {
+                sourceRange: {
+                    sources: [
+                        {
+                            endColumnIndex: index + 1,
+                            endRowIndex: 5001,
+                            sheetId: 1,
+                            startColumnIndex: index,
+                            startRowIndex: 0,
+                        },
+                    ],
+                },
+            },
+            targetAxis: "LEFT_AXIS",
+        }));
+        const shared = [
+            {
+                ...required(primary[0]),
+                lineStyle: { type: "DOTTED", width: 2 },
+                pointStyle: { shape: "DIAMOND", size: 3 },
+            },
+            {
+                ...required(primary[1]),
+                lineStyle: { type: "MEDIUM_DASHED", width: 2 },
+                pointStyle: { shape: "SQUARE", size: 3 },
+            },
+        ];
+        const before = structuredClone({ primary, shared });
+        const compact = compactSelectedPlantSeries(primary, shared);
+        const identityColors = new Set(
+            compact
+                .slice(0, 34)
+                .map((series) => JSON.stringify(series.colorStyle))
+        );
+
+        expect(compact).toHaveLength(36);
+        expect(compact.slice(0, 34)).toStrictEqual(primary);
+        expect(identityColors.size).toBe(34);
+        expect(
+            compact
+                .slice(34)
+                .map(({ lineStyle, pointStyle, series, targetAxis }) => ({
+                    lineStyle,
+                    pointStyle,
+                    series,
+                    targetAxis,
+                }))
+        ).toStrictEqual(
+            shared.map(({ lineStyle, pointStyle, series, targetAxis }) => ({
+                lineStyle,
+                pointStyle,
+                series,
+                targetAxis,
+            }))
+        );
+        expect(compact[34]?.colorStyle?.rgbColor).toStrictEqual({
+            blue: 104 / 255,
+            green: 99 / 255,
+            red: 95 / 255,
+        });
+        expect(compact[35]?.colorStyle?.rgbColor).toStrictEqual({
+            blue: 166 / 255,
+            green: 160 / 255,
+            red: 154 / 255,
+        });
+        expect({ primary, shared }).toStrictEqual(before);
+        expect(() => compactSelectedPlantSeries([], shared)).toThrow(
+            "1–97 primary"
+        );
+        expect(() => compactSelectedPlantSeries(primary, [])).toThrow(
+            "exactly two"
+        );
+        expect(() =>
+            compactSelectedPlantSeries(
+                Array.from({ length: 98 }, () => required(primary[0])),
+                shared
+            )
+        ).toThrow("1–97 primary");
     });
 
     it("rejects replay, missing plants, missing selectors, and changed chart inventory", () => {

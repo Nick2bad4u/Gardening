@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-09-20
+Last updated: 2026-09-21
 
 This is the current working inventory plus historical records for plants
 removed from the collection. A label is useful evidence, but not a guarantee;
@@ -19,7 +19,18 @@ a photo-only collection ID.
 The short label IDs are permanent plant or shared-planter identifiers, not
 table coordinates. They are shown beside the longer historical inventory IDs.
 
-The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The active collection has **41 profile records: 40 active and one historical, across 32 tracked containers**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement. The unreceived September 19 Amazon plants have moved to the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md); cancellation is pending, not confirmed.
+The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The active collection has **43 profile records: 42 active and one historical, across 34 tracker allocations**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement. The unreceived September 19 Amazon plants have moved to the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md); Amazon confirmed cancellation on September 21 with no charge.
+
+## September 21 Lithops and split-rock additions
+
+The owner confirmed possession of two pairs of Lithops and another split rock by September 21, 2026. The Lithops are planned for one shared pot; the split rock is planned for the other incoming pot. These are two new tracker allocations. Their exact acquisition date, seller, nursery containers, medium, watering history, and final positions remain unrecorded. No planting, watering, or measurement event is inferred.
+
+| Inventory ID | Label ID | Tracker ID | Profile                                                                 | Identification                                                                 |
+| ------------ | -------- | ---------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Succulent-15 | `#9`     | `P35`      | [Lithops shared planter](./plants/succulents/lithops-shared-planter.md) | Owner-described two pairs; _Lithops_ sp./spp., species and cultivar unresolved |
+| Succulent-16 | `#10`    | `P36`      | [Split rock](./plants/succulents/pleiospilos-nelii.md)                  | Probable _Pleiospilos nelii_; cultivar unconfirmed; explicitly not Royal Flush |
+
+P33/P34 remain retired houseplant redirects to P31/P32, so new records start at P35. Archived Succulent-11–14 remain reserved. The incoming Thirtypot speckled-brown pot (selected 4.5-inch variant) and D'vine Dev Blush Mauve pot (four-inch listing, selected 4.3-inch variant) are expected September 22. On September 21, the owner assigned the D'vine Blush Mauve pot to the Lithops together (P35 / #9) and the Thirtypot speckled-brown pot to the split rock (P36 / #10), with repotting and follow-up photographs planned for September 22. Check their actual root room and drainage before the planned planting. The shared Lithops allocation is not proof that the pairs already share a container, or that their leaf cycles match. Royal Flush stays G3 / P28 with its existing history.
 
 ## Confidence guide
 
@@ -196,7 +207,7 @@ money tree is `#3`, and the Kiwi aeonium is `#4`. The former `A4-B4` and
 
 ## September 20 Carlson's Greenhouses houseplants
 
-The owner purchased two separate basket-grown houseplants on **2026-09-20**. The photographs document their nursery labels and purchase containers. The owner confirmed purchasing both directly at Carlson's Greenhouses in owner-reported six-inch nursery pots; the tags also identify Carlson's as the grower. The owner confirmed both are currently on the floor on the room side near the money tree. Current nursery-pot depth, medium, drainage, and leaf-height light remain unrecorded. Leaves were wet at purchase, but the nursery supplied no watering or fertilizer history; wet foliage does not establish a root-ball watering event. The owner reports both nursery pots are quite full and thinks the plants are ready for larger pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; placement on separate floor pot stools is planned, explicitly off the tables; the owner has ordered a three-stool set, with model and heights awaiting verification. The owner plans to blend loose, airy, perlite-containing greenhouse mix with Molly's Succulent Mix, with more perlite available but no ratio chosen. No completed repot, installation on stools, watering, or weight observation is implied.
+The owner purchased two separate basket-grown houseplants on **2026-09-20**. The photographs document their nursery labels and purchase containers. The owner confirmed purchasing both directly at Carlson's Greenhouses in owner-reported six-inch nursery pots; the tags also identify Carlson's as the grower. The owner confirmed both are currently on the floor on the room side near the money tree. Current nursery-pot depth, medium, drainage, and leaf-height light remain unrecorded. Leaves were wet at purchase, but the nursery supplied no watering or fertilizer history; wet foliage does not establish a root-ball watering event. The owner reports both nursery pots are quite full and thinks the plants are ready for larger pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; placement on separate floor pot stools is planned, explicitly off the tables; the ordered Bamworld Nature three-stool set is due September 21, with seller-listed heights of 7.8, 8.6, and 11.5 inches. Receipt and placement remain unconfirmed; see the [equipment inventory](./equipment/inventory.md#display-and-support). The owner plans to blend loose, airy, perlite-containing greenhouse mix with Molly's Succulent Mix, with more perlite available but no ratio chosen. No completed repot, installation on stools, watering, or weight observation is implied.
 
 | Inventory ID  | Label ID | Tracker ID | Working identification                                                                         | Common name           | Evidence                                                                  |
 | ------------- | -------- | ---------- | ---------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------------------------------------- |
@@ -280,7 +291,7 @@ lower-light houseplant.
 
 ## Abandoned September 19 Amazon plan
 
-All five unreceived plants are excluded from the active inventory. Their research is preserved in the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Succulent-11–14 and Houseplant-02 retain archived research identities; their physical-label and tracker allocations are withdrawn. The decorated pot is one of the two Amazon Basics destinations, with its specific plant assignment unconfirmed; the owner is keeping the separate D'vine four-inch pot for a future succulent, with no replacement plant chosen.
+All five unreceived plants are excluded from the active inventory. Their research is preserved in the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Succulent-11–14 and Houseplant-02 retain archived research identities; their physical-label and tracker allocations are withdrawn. The decorated pot is one of the two Amazon Basics destinations, with its specific plant assignment unconfirmed; the D'vine pot (selected 4.3-inch variant) is now assigned to the planned P35 / #9 shared Lithops planting. P36 / #10 split rock is assigned the Thirtypot selected 4.5-inch speckled-brown pot. Both repots and follow-up photographs remain planned for September 22.
 
 ## Identification follow-ups
 

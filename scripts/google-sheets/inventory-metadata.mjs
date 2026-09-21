@@ -47,24 +47,26 @@ const rosterBounds = new Map([
  * original indices, formulas, colors, filter criteria, and sort specifications.
  * No chart, observation, protection, or unrelated range is returned.
  *
- * @param {{ sheets: MetadataSheet[] }} metadata
+ * @param {{ sheets: MetadataSheet[] }} metadata @param {number} [baseCount]
  *
  * @returns {Record<string, unknown>[]}
  */
-export function buildInventoryMetadataRequests(metadata) {
+export function buildInventoryMetadataRequests(metadata, baseCount = 30) {
+    if (![30, 32].includes(baseCount))
+        throw new Error("Unsupported inventory base count");
     /** @type {Record<string, unknown>[]} */
     const requests = [];
     for (const sheet of metadata.sheets) {
         if (sheet.basicFilter !== undefined) {
             const filter = structuredClone(sheet.basicFilter);
-            if (extendRosterRange(filter.range, sheet))
+            if (extendRosterRange(filter.range, sheet, baseCount))
                 requests.push({ setBasicFilter: { filter } });
         }
         const conditionalFormats = sheet.conditionalFormats ?? [];
         for (const [index, source] of conditionalFormats.entries()) {
             const rule = structuredClone(source);
             const isChanged = rule.ranges
-                .map((range) => extendRosterRange(range, sheet))
+                .map((range) => extendRosterRange(range, sheet, baseCount))
                 .some(Boolean);
             if (isChanged)
                 requests.push({
@@ -78,7 +80,7 @@ export function buildInventoryMetadataRequests(metadata) {
         const bandedRanges = sheet.bandedRanges ?? [];
         for (const source of bandedRanges) {
             const bandedRange = structuredClone(source);
-            if (extendRosterRange(bandedRange.range, sheet))
+            if (extendRosterRange(bandedRange.range, sheet, baseCount))
                 requests.push({
                     updateBanding: { bandedRange, fields: "range" },
                 });
@@ -87,9 +89,25 @@ export function buildInventoryMetadataRequests(metadata) {
     return requests;
 }
 
-/** @param {GridRange} range @param {MetadataSheet} sheet */
-function extendRosterRange(range, sheet) {
-    const bounds = rosterBounds.get(sheet.properties.title);
+/**
+ * @param {GridRange} range @param {MetadataSheet} sheet @param {number}
+ *   baseCount
+ */
+function extendRosterRange(range, sheet, baseCount) {
+    const original = rosterBounds.get(sheet.properties.title);
+    const bounds =
+        original === undefined
+            ? undefined
+            : {
+                  ...original,
+                  firstStart:
+                      baseCount === 32 && sheet.properties.title === "Quick log"
+                          ? 3
+                          : original.firstStart,
+                  newEnd: original.newEnd + baseCount - 30,
+                  oldEnds:
+                      baseCount === 30 ? original.oldEnds : [original.newEnd],
+              };
     if (bounds === undefined || range.endRowIndex === undefined) return false;
     if (
         range.sheetId !== undefined &&

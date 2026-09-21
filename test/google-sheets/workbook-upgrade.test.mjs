@@ -206,11 +206,23 @@ describe("native workbook reliability and analytics migration", () => {
         );
         expect(result.chartRequests[1]).toHaveProperty(
             "addChart.chart.spec.basicChart.series.length",
-            palette.length * 3
+            palette.length + 2
         );
         expect(result.chartRequests[1]).toHaveProperty(
-            "addChart.chart.spec.basicChart.series.1.pointStyle.shape",
+            `addChart.chart.spec.basicChart.series.${palette.length}.pointStyle.shape`,
             "DIAMOND"
+        );
+        expect(result.chartRequests[1]).toHaveProperty(
+            `addChart.chart.spec.basicChart.series.${palette.length - 1}.series.sourceRange.sources.0.startColumnIndex`,
+            10 + (palette.length - 1) * 3
+        );
+        expect(result.chartRequests[1]).toHaveProperty(
+            `addChart.chart.spec.basicChart.series.${palette.length}.series.sourceRange.sources.0.startColumnIndex`,
+            10 + palette.length * 3
+        );
+        expect(result.chartRequests[1]).toHaveProperty(
+            "addChart.chart.spec.subtitle",
+            expect.stringContaining("neutral dotted diamonds: previous")
         );
 
         const all = JSON.stringify([
@@ -489,7 +501,7 @@ describe("native workbook reliability and analytics migration", () => {
             '=IF(A2="NOW()",TODAY()+NOW(),XLOOKUP(A2,\'Plant tracker\'!$A:$A,Baselines!C:C,"TODAY()"))';
 
         expect(normalizeDerivedFormula(formula)).toBe(
-            "=IF(A2=\"NOW()\",'Workbook calculations'!$F$2+'Workbook calculations'!$E$2,XLOOKUP(A2,'Plant tracker'!$A$2:$A$33,Baselines!$C$2:$C$33,\"TODAY()\"))"
+            "=IF(A2=\"NOW()\",'Workbook calculations'!$F$2+'Workbook calculations'!$E$2,XLOOKUP(A2,'Plant tracker'!$A$2:$A$35,Baselines!$C$2:$C$35,\"TODAY()\"))"
         );
 
         const snapshot = fixture();

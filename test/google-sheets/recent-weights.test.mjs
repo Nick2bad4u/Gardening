@@ -204,7 +204,12 @@ describe("recent measured weights and inspection timing", () => {
     it("keeps species-specific manual decisions even with a plateau", () => {
         expect.hasAssertions();
 
-        for (const id of ["P21", "P28"]) {
+        for (const id of [
+            "P21",
+            "P28",
+            "P35",
+            "P36",
+        ]) {
             const history = plateau().map((r) =>
                 r.map((v, i) => (i === 1 ? id : v))
             );

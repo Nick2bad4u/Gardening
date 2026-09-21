@@ -1,8 +1,8 @@
 # Abandoned Amazon plant order — September 2026
 
-Status: **Archived September 20, 2026 · Plants unreceived · Cancellation pending, not confirmed.**
+Status: **Archived September 20, 2026 · Plants unreceived · All five seller cancellations confirmed in Amazon September 21; no charge.**
 
-The owner decided to cancel all five The Succulent Cult plants ordered through Amazon after reviewing poor seller feedback. The former plan was four succulents together in a decorated eight-inch pot and Nanouk separately in a four-inch pot. This is a record of an abandoned purchase and arrangement, not an active care plan. Seller acceptance of the cancellation, refund, and any return requirements remain unverified.
+The owner decided to cancel all five The Succulent Cult plants ordered through Amazon after reviewing poor seller feedback. The former plan was four succulents together in a decorated eight-inch pot and Nanouk separately in a four-inch pot. This is a record of an abandoned purchase and arrangement, not an active care plan. Amazon's September 21 order review shows all five plants canceled by the seller and not charged. No received plants or return process is recorded.
 
 ## Preserved plant research
 
@@ -20,9 +20,9 @@ The four succulent profiles describe one proposed shared container, not four for
 
 ## What remains in the collection
 
-At withdrawal on September 20, before the later purchases carrying Carlson's Greenhouses grower tags, the collection had **30 tracked containers and 39 profile records: 38 active and one historical**. This includes the existing tiny planter's aggregate overview and three component-group pages added September 20; those extra reference pages do not add pots or establish a count of individual plants. The numbered pot labels at that point were **#1–#6**. The later same-day Peperomia Bicolor and Tricolor oyster plant purchases bring the [current collection](../collection.md#september-20-carlsons-greenhouses-houseplants) to **32 containers and 41 profiles: 40 active and one historical**. The owner subsequently assigned physical labels and tracker IDs to the two purchased houseplants; see the current collection for their mapping. Succulent-11–14 and Houseplant-02 remain archived botanical research identities, without physical-label or tracker allocations.
+At withdrawal on September 20, before the later purchases carrying Carlson's Greenhouses grower tags, the collection had **30 tracked containers and 39 profile records: 38 active and one historical**. This includes the existing tiny planter's aggregate overview and three component-group pages added September 20; those extra reference pages do not add pots or establish a count of individual plants. The numbered pot labels at that point were **#1–#6**. The later same-day Peperomia Bicolor and Tricolor oyster plant purchases brought the collection to **32 containers and 41 profiles: 40 active and one historical**. The September 21 Lithops and split-rock additions bring the [current collection](../collection.md) to **34 tracker allocations and 43 profiles: 42 active and one historical**, with the two new plantings still planned. The owner subsequently assigned physical labels and tracker IDs to the two purchased houseplants; see the current collection for their mapping. Succulent-11–14 and Houseplant-02 remain archived botanical research identities, without physical-label or tracker allocations.
 
-The **decorated Amazon Basics eight-inch drainage pot** is one of the two owner-confirmed destination pots for the later Carlson's houseplant purchases; see the [equipment inventory](../equipment/inventory.md). No completed repot or installation on stools is reported. The **D'vine Dev four-inch Blush Mauve pot is being kept for a future succulent**, as the owner confirmed September 20; it is separate from the plant cancellation. No replacement plant has been chosen or added to the collection.
+The **decorated Amazon Basics eight-inch drainage pot** is one of the two owner-confirmed destination pots for the later Carlson's houseplant purchases; see the [equipment inventory](../equipment/inventory.md). No completed repot or installation on stools is reported. The **D'vine Dev Blush Mauve pot** was retained for a future succulent on September 20. The September 21 review identifies its selected 4.3-inch variant, model 27-C-Z-K, due September 22. The owner assigned the D'vine pot to the two Lithops pairs together (P35 / #9) and the newly ordered Thirtypot speckled-brown pot to the separate split rock (P36 / #10) on September 21. Repots and follow-up photographs are planned for September 22. These pot orders are separate from the canceled plants.
 
 ## Former placement idea
 
@@ -32,11 +32,12 @@ The proposed shared pot would have occupied the far-table area where the owner r
 
 - Keep the old seller wording and research as historical evidence rather than presenting the plants as current inventory.
 - Do not log removal, repotting, or watering for plants that were never physically received; withdrawing an administrative allocation is different from a plant-care event.
-- The owner reconfirmed September 20 that cancellation remains pending. Do not infer a refund or promise return eligibility.
+- On September 20, cancellation confirmation was still pending. Amazon explicitly showed all five canceled by the seller with no charge on September 21; this supersedes the pending status without inventing a refund transaction.
 - Future purchases need their own confirmed identity, allocation, and actual observations. The archived care suggestions are not current daily-task instructions.
 
 ## Sources
 
 - Owner's September 19, 2026 Amazon order and pot screenshots: seller titles, advertised two-inch starters, and former delivery estimate.
 - Owner's September 20, 2026 instruction to abandon the five-plant order because of seller reviews and request cancellation; confirmation not supplied.
+- September 21, 2026 Amazon account order review: all five The Succulent Cult items marked canceled by the seller and not charged; separate pot orders remain incoming. Private order IDs and account links are omitted.
 - Botanical and horticultural sources are preserved on each linked research page.

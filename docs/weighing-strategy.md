@@ -1,6 +1,6 @@
 # Weighing Strategy
 
-Updated: 2026-09-20. This guide documents the owner's requested transition from frequent learning measurements to fewer, better-timed weigh-ins. The daily chat report and generated report page are the maintained care plan; the Daily care worksheet is retired.
+Updated: 2026-09-21. This guide documents the owner's requested transition from frequent learning measurements to fewer, better-timed weigh-ins. The daily chat report and generated report page are the maintained care plan; the Daily care worksheet is retired.
 
 Read alongside the [watering strategy](./watering-strategy.md), [logger action guide](./logger-actions.md), and [daily task prompt](./daily-weighing-watering-prompt.md).
 
@@ -102,6 +102,10 @@ For any request, the useful question is: **What will this weight help decide or 
 **P31 / #7 [Peperomia Bicolor](./plants/houseplants/peperomia-obtipan-bicolor.md)** and **P32 / #8 [Tricolor oyster plant](./plants/houseplants/tradescantia-spathacea-tricolor.md)** need manual partial-drying checks rather than a cactus-style whole-pot plateau. Peperomia should partially dry without prolonged drought; the oyster plant uses an upper 1–2-inch check scaled to its actual root-ball depth once measured. The [watering exceptions](./watering-strategy.md#collection-exceptions) link the supporting species guidance.
 
 Request a weight when it can establish a real baseline, clarify a changing trend, check a credible measurement problem, or support a justified follow-up. Missing root-zone moisture or plant-condition evidence calls for that physical check; repeated weights cannot supply it. Keep their Check-only decisions separate from main Water candidates, and do not prolong drought to obtain a flat curve. Purchase alone supplies no scale reading, dry reference, watering event, or learned cycle.
+
+### Leaf-Cycle Plants
+
+The same evidence rule applies to **P35 / #9 shared Lithops**, **P36 / #10 split rock**, and **P28 / G3 Royal Flush**: another weight cannot establish the leaf-replacement stage. Their [manual watering exceptions](./watering-strategy.md#collection-exceptions) take priority over a weight-only forecast. P35 represents one planned shared pot and P36 a separate pot; do not combine present nursery-container weights or invent a common baseline before the actual weighing setup exists.
 
 ### Avoid Indefinite Deferral
 

@@ -17976,4 +17976,51 @@
 <use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(32 44) rotate(42) scale(0.76)" />
 <use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(32 44) rotate(4) scale(0.88)" />
 </symbol>
+<symbol id="icon-plant-lithops-shared-planter" viewBox="0 0 64 64">
+<defs>
+<linearGradient id="lithops-shared-planter-pot" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#ead8bc" />
+<stop offset="1" stop-color="#b79979" />
+</linearGradient>
+<linearGradient id="lithops-shared-planter-body" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#c9be94" />
+<stop offset="1" stop-color="#8e9170" />
+</linearGradient>
+</defs>
+<ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
+<path d="M10 40H54L49 58Q32 62 15 58Z" fill="url(#lithops-shared-planter-pot)" stroke="#807563" stroke-width="1.5" />
+<ellipse cx="32" cy="40" rx="22" ry="6" fill="#705445" stroke="#807563" stroke-width="1.3" />
+<path d="M16 37C10 22 13 18 22 19Q29 20 27 38Q22 43 16 37ZM29 38Q26 21 33 20C42 17 45 28 39 38Q34 42 29 38Z" fill="url(#lithops-shared-planter-body)" stroke="#656b51" stroke-width="1.2" />
+<path d="M32 42Q27 29 35 28Q42 27 40 42Q36 46 32 42ZM42 42Q39 28 46 28Q56 28 49 42Q46 46 42 42Z" fill="#bab09b" stroke="#776e5d" stroke-width="1.2" />
+<path d="M17 23L22 25 18 28 23 31M33 24L37 27 32 30M34 32L37 35M45 31L47 35" fill="none" stroke="#706d56" stroke-width="1.2" stroke-linecap="round" />
+<path d="M15 49Q32 55 49 49" fill="none" stroke="#fff4df" stroke-width="1.4" opacity="0.75" />
+</symbol>
+<symbol id="icon-plant-pleiospilos-nelii" viewBox="0 0 64 64">
+<defs>
+<linearGradient id="pleiospilos-nelii-pot" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#e4d8ce" />
+<stop offset="1" stop-color="#b29b91" />
+</linearGradient>
+<radialGradient id="pleiospilos-nelii-body" cx="0.3" cy="0.2" r="0.9">
+<stop offset="0" stop-color="#c7c0a8" />
+<stop offset="1" stop-color="#8b8b7b" />
+</radialGradient>
+</defs>
+<ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
+<path d="M11 41H53L48 58Q32 62 16 58Z" fill="url(#pleiospilos-nelii-pot)" stroke="#807563" stroke-width="1.5" />
+<ellipse cx="32" cy="41" rx="21" ry="5" fill="#705445" stroke="#807563" stroke-width="1.3" />
+<path d="M14 35C8 12 22 7 29 17L31 40Q23 47 14 35ZM33 40L35 17C43 7 56 15 50 35Q42 47 33 40Z" fill="url(#pleiospilos-nelii-body)" stroke="#686958" stroke-width="1.5" />
+<path d="M31 38Q31 25 29 18M33 38Q33 25 35 18" fill="none" stroke="#555444" stroke-width="1.1" />
+<g fill="#696b57" opacity="0.8">
+<circle cx="19" cy="20" r="1.1" />
+<circle cx="24" cy="24" r="1" />
+<circle cx="17" cy="28" r="1" />
+<circle cx="23" cy="34" r="1.1" />
+<circle cx="40" cy="21" r="1" />
+<circle cx="46" cy="25" r="1.1" />
+<circle cx="39" cy="30" r="1" />
+<circle cx="43" cy="35" r="1" />
+</g>
+<path d="M17 50Q32 55 47 50" fill="none" stroke="#fff3e5" stroke-width="1.4" opacity="0.75" />
+</symbol>
 </svg>

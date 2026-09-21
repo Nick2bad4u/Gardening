@@ -2,8 +2,13 @@ import { createHash } from "node:crypto";
 
 import { isRecord } from "../build-data.mjs";
 import { buildInventoryMetadataRequests } from "./inventory-metadata.mjs";
+import {
+    compactSelectedPlantSeries,
+    sharedSelectedRoleFormula,
+} from "./plant-chart-colors.mjs";
 import activePalette from "./plant-colors.json" with { type: "json" };
 // Historical enrollment palettes, independent of the current reassigned roster.
+const dryDownSheet = "Dry-down insights";
 const palette = [
     { hex: "#BD704B", id: "P31", name: "Terracotta" },
     { hex: "#A36591", id: "P32", name: "Mauve" },
@@ -30,6 +35,7 @@ function plantColor(id) {
  *     userEnteredValue?: EnteredValue;
  *     effectiveValue?: EnteredValue;
  *     dataValidation?: object;
+ *     userEnteredFormat?: Record<string, unknown>;
  * }} Cell
  */
 /**
@@ -61,6 +67,7 @@ function plantColor(id) {
  *     additions?: Addition[];
  *     bulkStartColumn?: number;
  *     reuseCapacity?: boolean;
+ *     existingIds?: string[];
  * }} ExpansionOptions
  */
 
@@ -99,6 +106,7 @@ const analyticsSheet = "Workbook analytics";
 const intervalSheet = "Watering intervals";
 
 const appEntriesSheet = "App entries";
+const trackerSheet = "Plant tracker";
 
 /** @param {Sheet} template @param {Addition} plant */
 function clonePageProtections(template, plant) {
@@ -134,16 +142,17 @@ const boundedSheets = new Set([
     "Baselines",
     calculationSheet,
     colorDataSheet,
-    "Dry-down insights",
     "Dry-down models",
+    dryDownSheet,
     "Insights data",
-    "Plant tracker",
+    trackerSheet,
 ]);
 
 /**
- * Build the one-time 30-to-32 inventory expansion, without any remote writes.
- * Duplicate pages first, then apply values, verify native outputs, and only
- * then apply chart requests. Use finalizeInventoryPageCharts with fresh
+ * Build a guarded two-pot expansion from the historical 30-pot or current
+ * 32-pot roster, without remote writes. Explicit existingIds selects the
+ * latter. Duplicate pages first, then apply values, verify native outputs, and
+ * only then apply chart requests. Use finalizeInventoryPageCharts with fresh
  * metadata after duplication to discover Google's newly assigned chart IDs.
  *
  * @param {NativeSnapshot} metadata
@@ -154,6 +163,17 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
     /** @type {Addition[]} */
     const additions = options.additions ?? inventoryAdditions;
     const bulkStartColumn = options.bulkStartColumn ?? 54;
+    const existingIds = expansionRoster(options, additions, bulkStartColumn);
+    const baseCount = existingIds.length;
+    const offset = baseCount - 30;
+    const lastId = existingIds.at(-1) ?? "P30";
+    const lastPage = metadata.sheets.find((current) =>
+        current.properties.title.startsWith(`${lastId} `)
+    );
+    if (!lastPage) throw new Error(`Missing last active page: ${lastId}`);
+    const lastPageIndex = lastPage.properties.index ?? 36;
+    const extendFormula = (/** @type {string} */ formula) =>
+        extendInventoryFormula(formula, baseCount);
     const sheets = sheetMap(snapshots);
     /** @param {string} title */
     const sheet = (title) => {
@@ -179,8 +199,10 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
         cell,
         meta,
         additions,
-        bulkStartColumn
+        bulkStartColumn,
+        existingIds
     );
+    if (baseCount === 32) assertCurrentEnrollment(cell, sheet, additions);
 
     /** @type {Record<string, unknown>[]} */
     const prepareRequests = [];
@@ -293,25 +315,27 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
             for (const item of rowEntries) {
                 const value = structuredClone(item.cell.userEnteredValue ?? {});
                 if (value.formulaValue !== undefined)
-                    value.formulaValue = extendInventoryFormula(
+                    value.formulaValue = extendFormula(
                         shiftInventoryRow(
                             shiftInventoryRow(
                                 value.formulaValue,
                                 sourceRow + 1,
                                 targetRow + 1
                             ),
-                            31,
-                            32 + index
+                            baseCount + 1,
+                            baseCount + 2 + index
                         )
-                    ).replaceAll("P30", () => plant.id);
+                    ).replaceAll(lastId, () => plant.id);
                 if (value.formulaValue !== undefined)
                     value.formulaValue = rebaseIntervalRange(
                         value.formulaValue,
-                        index
+                        index,
+                        baseCount,
+                        89 + offset * 3
                     );
-                if (value.stringValue?.includes("P30") === true)
+                if (value.stringValue?.includes(lastId) === true)
                     value.stringValue = value.stringValue.replaceAll(
-                        "P30",
+                        lastId,
                         () => plant.id
                     );
                 write(title, targetRow, item.column, value);
@@ -355,10 +379,10 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
                 String(title) === "App bulk"
                     ? bulkStartColumn + 2
                     : {
-                          [analyticsSheet]: 106,
-                          [calculationSheet]: 34,
-                          [colorDataSheet]: 141,
-                          [intervalSheet]: 96,
+                          [analyticsSheet]: 106 + offset * 3,
+                          [calculationSheet]: 34 + offset,
+                          [colorDataSheet]: 141 + offset * 4,
+                          [intervalSheet]: 96 + offset * 3,
                       }[String(title)];
             const current =
                 dimension === "ROWS"
@@ -381,8 +405,7 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
             prepareRequests.push(
                 {
                     duplicateSheet: {
-                        insertSheetIndex:
-                            (template.properties.index ?? 36) + index + 1,
+                        insertSheetIndex: lastPageIndex + index + 1,
                         newSheetId: plant.sheetId,
                         newSheetName: plant.title,
                         sourceSheetId: template.properties.sheetId,
@@ -397,7 +420,7 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
     function expandCellReference(current, item) {
         const formula = item.cell.userEnteredValue?.formulaValue;
         if (formula !== undefined) {
-            const next = extendInventoryFormula(formula);
+            const next = extendFormula(formula);
             if (next !== formula)
                 write(current.properties.title, item.row, item.column, {
                     formulaValue: next,
@@ -405,7 +428,7 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
         }
         if (item.cell.dataValidation === undefined) return;
         const before = JSON.stringify(item.cell.dataValidation);
-        const after = extendInventoryFormula(before);
+        const after = extendFormula(before);
         if (after === before) return;
         prepareRequests.push({
             setDataValidation: {
@@ -439,7 +462,7 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
             end,
         ] of [
             [
-                "Plant tracker",
+                trackerSheet,
                 30,
                 0,
                 36,
@@ -469,7 +492,7 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
                 30,
             ],
             [
-                "Dry-down insights",
+                dryDownSheet,
                 30,
                 0,
                 24,
@@ -499,30 +522,35 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
                 6,
             ],
         ])
-            appendRows(String(title), Number(row), Number(start), Number(end));
+            appendRows(
+                String(title),
+                Number(row) + offset,
+                Number(start),
+                Number(end)
+            );
         // Fixed-color comparisons occupy independent 35-row blocks; expand each
         // block in place without relocating the following blocks or any chart.
         for (const item of colorEntries)
             if (
                 item.column === 0 &&
-                item.cell.userEnteredValue?.stringValue === "P30"
+                item.cell.userEnteredValue?.stringValue === lastId
             )
                 appendRows(colorDataSheet, item.row, 0, 6);
-        appendRows(colorDataSheet, 30, 127, 133);
+        appendRows(colorDataSheet, baseCount, 127, 133);
     }
     appendDerivedRows();
     function expandIntegrityRows() {
         if (options.reuseCapacity === true) {
             if (
-                cell("Integrity", 55, 0)?.userEnteredValue?.stringValue !==
-                "Critical source-row exceptions"
+                cell("Integrity", 55 + offset, 0)?.userEnteredValue
+                    ?.stringValue !== "Critical source-row exceptions"
             )
                 throw new Error("Integrity reusable slots changed");
-            requireEmpty("Integrity", 53, 55, 0, 10);
+            requireEmpty("Integrity", 53 + offset, 55 + offset, 0, 10);
         } else {
             if (
-                cell("Integrity", 53, 0)?.userEnteredValue?.stringValue !==
-                "Critical source-row exceptions"
+                cell("Integrity", 53 + offset, 0)?.userEnteredValue
+                    ?.stringValue !== "Critical source-row exceptions"
             )
                 throw new Error("Integrity exception section moved");
             prepareRequests.push({
@@ -530,9 +558,9 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
                     inheritFromBefore: true,
                     range: {
                         dimension: "ROWS",
-                        endIndex: 55,
+                        endIndex: 55 + offset,
                         sheetId: meta("Integrity").properties.sheetId,
-                        startIndex: 53,
+                        startIndex: 53 + offset,
                     },
                 },
             });
@@ -540,13 +568,17 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
         for (const index of additions.keys()) {
             for (const item of integrityEntries) {
                 const formula = item.cell.userEnteredValue?.formulaValue;
-                if (formula !== undefined && item.row === 52) {
-                    const shifted = shiftInventoryRow(formula, 31, 32 + index);
-                    const formulaValue = extendInventoryFormula(shifted);
+                if (formula !== undefined && item.row === 52 + offset) {
+                    const shifted = shiftInventoryRow(
+                        formula,
+                        baseCount + 1,
+                        baseCount + 2 + index
+                    );
+                    const formulaValue = extendFormula(shifted);
                     valueRequests.push(
                         update(
                             meta("Integrity").properties.sheetId,
-                            53 + index,
+                            53 + offset + index,
                             item.column,
                             { formulaValue }
                         )
@@ -556,12 +588,21 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
         }
     }
     expandIntegrityRows();
-    prepareRequests.push(...buildInventoryMetadataRequests(metadata));
+    prepareRequests.push(
+        ...buildInventoryMetadataRequests(metadata, baseCount)
+    );
     /**
      * @param {string} title @param {number} sourceStart @param {number}
      *   targetStart @param {number} width @param {string} id
      */
     function copyHelper(title, sourceStart, targetStart, width, id) {
+        requireEmpty(
+            title,
+            0,
+            meta(title).properties.gridProperties.rowCount,
+            targetStart,
+            targetStart + width
+        );
         const sourceEntries = entries(sheet(title));
         for (const item of sourceEntries) {
             if (
@@ -592,24 +633,23 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
     }
     /** @param {Addition} plant @param {number} index */
     function copyPlantPage(plant, index) {
-        const row = 31 + index;
+        const row = baseCount + 1 + index;
         for (const item of templateEntries)
             if (item.cell.userEnteredValue) {
                 const value = structuredClone(item.cell.userEnteredValue);
                 if (value.formulaValue !== undefined)
-                    value.formulaValue = extendInventoryFormula(
-                        value.formulaValue
-                    )
+                    value.formulaValue = extendFormula(value.formulaValue)
                         .replaceAll("P30", () => plant.id)
                         .replaceAll("202609300", () => String(plant.sheetId))
                         .replaceAll(
-                            /(?<prefix>(?:'Plant tracker'|Baselines)!\$?[A-Z]{1,3})31\b/gv,
+                            /(?<prefix>(?:'Plant tracker'|Baselines)!\$?[A-Z]{1,3}\$?)31\b/gv,
                             (_match, prefix) => `${String(prefix)}${row + 1}`
                         );
                 if (value.formulaValue !== undefined)
                     value.formulaValue = rebaseIntervalRange(
                         value.formulaValue,
-                        index
+                        index,
+                        baseCount
                     );
                 if (
                     item.row === 140 &&
@@ -624,7 +664,7 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
     }
     function appendContainers() {
         for (const [index, plant] of additions.entries()) {
-            const row = 31 + index;
+            const row = baseCount + 1 + index;
             const guideUrl = plantGuideUrl(plant);
             const next = additionAt(additions, 1);
             for (const [column, value] of [
@@ -639,7 +679,7 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
                 [30, plant.source],
             ])
                 write(
-                    "Plant tracker",
+                    trackerSheet,
                     row,
                     Number(column),
                     entered(String(value))
@@ -665,7 +705,7 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
             );
             write(
                 "Dashboard",
-                36 + index,
+                36 + offset + index,
                 0,
                 entered(`=HYPERLINK("#gid=${plant.sheetId}","View")`)
             );
@@ -682,7 +722,7 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
             ])
                 write(
                     "Plant colors",
-                    34 + index,
+                    34 + offset + index,
                     Number(column),
                     entered(String(value))
                 );
@@ -698,10 +738,10 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
                     fields: "userEnteredFormat.backgroundColorStyle",
                     range: {
                         endColumnIndex: 5,
-                        endRowIndex: 35 + index,
+                        endRowIndex: 35 + offset + index,
                         sheetId: meta("Plant colors").properties.sheetId,
                         startColumnIndex: 4,
-                        startRowIndex: 34 + index,
+                        startRowIndex: 34 + offset + index,
                     },
                 },
             });
@@ -741,25 +781,25 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
                 [
                     intervalSheet,
                     87,
-                    90 + index * 3,
+                    90 + offset * 3 + index * 3,
                     3,
                 ],
                 [
                     analyticsSheet,
                     97,
-                    100 + index * 3,
+                    100 + offset * 3 + index * 3,
                     3,
                 ],
                 [
                     colorDataSheet,
                     94,
-                    133 + index * 4,
+                    133 + offset * 4 + index * 4,
                     3,
                 ],
                 [
                     colorDataSheet,
                     126,
-                    136 + index * 4,
+                    136 + offset * 4 + index * 4,
                     1,
                 ],
             ]) {
@@ -780,8 +820,15 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
         }
     }
     appendContainers();
+    requireEmpty(
+        "App bulk",
+        0,
+        meta("App bulk").properties.gridProperties.rowCount,
+        bulkStartColumn,
+        bulkStartColumn + 2
+    );
     write(
-        "P30 Mixed succulent",
+        lastPage.properties.title,
         2,
         6,
         entered(
@@ -790,24 +837,8 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
     );
     // Extend the existing error scan to both new pages and appended helper cells.
     const integrity = cell("Integrity", 11, 1)?.userEnteredValue?.formulaValue;
-    if (integrity?.startsWith("=SUM(") !== true)
-        throw new Error("Integrity formula-error anchor changed");
-    const scan = additions
-        .map(
-            (plant) =>
-                `SUM(ARRAYFORMULA(N(ISERROR('${plant.title}'!A1:INDEX('${plant.title}'!V1:V5139,140+MAX(1,COUNTIF(History!$B$2:$B$5000,"${plant.id}")))))))`
-        )
-        .join(",");
-    const helperScans = [
-        "'Watering intervals'!CM1:CR5000",
-        "'Plant color data'!ED1:EK5001",
-        "'Workbook analytics'!CW1:DB5001",
-        "'Workbook calculations'!A33:F34",
-    ]
-        .map((range) => `SUM(ARRAYFORMULA(N(ISERROR(${range}))))`)
-        .filter((term) => !integrity.includes(term));
     write("Integrity", 11, 1, {
-        formulaValue: `${extendInventoryFormula(integrity).slice(0, -1)},${[scan, ...helperScans].join(",")})`,
+        formulaValue: expandedIntegrityFormula(integrity, additions, baseCount),
     });
     // App entries retain every staged observation; only their ID dropdown grows.
     prepareRequests.push({
@@ -824,11 +855,7 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
                 condition: {
                     type: "ONE_OF_LIST",
                     values: [
-                        ...Array.from(
-                            { length: 30 },
-                            (_, index) =>
-                                `P${String(index + 1).padStart(2, "0")}`
-                        ),
+                        ...existingIds,
                         ...additions.map((plant) => plant.id),
                     ].map((userEnteredValue) => ({ userEnteredValue })),
                 },
@@ -837,19 +864,28 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
             },
         },
     });
-    expandHelperFormatting(meta, prepareRequests, bulkStartColumn);
+    expandHelperFormatting(meta, prepareRequests, bulkStartColumn, baseCount);
     /** @param {Sheet} current @param {Record<string, unknown>} protection */
     function expandProtection(current, protection) {
         const range = structuredClone(record(protection["range"]));
         const title = current.properties.title;
-        if (title === intervalSheet && range["endColumnIndex"] === 90)
-            range["endColumnIndex"] = 96;
-        if (title === analyticsSheet && range["endColumnIndex"] === 100)
-            range["endColumnIndex"] = 106;
-        if (title === colorDataSheet && range["endColumnIndex"] === 133)
-            range["endColumnIndex"] = 141;
-        if (title === calculationSheet && range["endRowIndex"] === 32)
-            range["endRowIndex"] = 34;
+        if (
+            title === intervalSheet &&
+            range["endColumnIndex"] === 90 + offset * 3
+        )
+            range["endColumnIndex"] = 96 + offset * 3;
+        if (
+            title === analyticsSheet &&
+            range["endColumnIndex"] === 100 + offset * 3
+        )
+            range["endColumnIndex"] = 106 + offset * 3;
+        if (
+            title === colorDataSheet &&
+            range["endColumnIndex"] === 133 + offset * 4
+        )
+            range["endColumnIndex"] = 141 + offset * 4;
+        if (title === calculationSheet && range["endRowIndex"] === 32 + offset)
+            range["endRowIndex"] = 34 + offset;
         if (JSON.stringify(range) === JSON.stringify(protection["range"]))
             return;
         prepareRequests.push({
@@ -876,7 +912,12 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
             for (const source of current.charts) {
                 const chart = structuredClone(source);
                 const before = JSON.stringify(chart.spec);
-                extendChartInventory(chart.spec, metadata, additions);
+                extendChartInventory(
+                    chart.spec,
+                    metadata,
+                    additions,
+                    baseCount
+                );
                 if (JSON.stringify(chart.spec) !== before)
                     chartRequests.push({
                         updateChartSpec: {
@@ -888,22 +929,28 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
         }
     }
     expandExistingCharts();
+    if (baseCount === 32)
+        compactEnrollmentCharts(
+            metadata,
+            chartRequests,
+            prepareRequests,
+            write,
+            requireEmpty,
+            cell
+        );
+    const quickLog = meta("Quick log");
     return {
+        baseCount,
+        capturedSnapshotDigest: inventorySnapshotDigest(
+            sourceSnapshot(snapshots)
+        ),
         chartRequests,
         emptyRanges,
         metadataDigest: inventorySnapshotDigest(metadata),
         newPageChartFinalizationRequired: true,
+        postValueRequests: headerFormatRequests(quickLog, cell, baseCount),
         preconditions,
-        // Native PASTE_FORMAT can extend adjacent banding. Resize the maintained
-        // bandings first so format copies cannot create overlapping ranges.
-        prepareRequests: [
-            ...prepareRequests.filter(
-                (request) => request["copyPaste"] === undefined
-            ),
-            ...prepareRequests.filter(
-                (request) => request["copyPaste"] !== undefined
-            ),
-        ],
+        prepareRequests: orderedPreparationRequests(prepareRequests),
         validationPreconditions,
         valueRequests,
     };
@@ -913,11 +960,11 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
  * Extend only explicit inventory ranges. History limits and unrelated 31s stay
  * intact.
  *
- * @param {string} formula
+ * @param {string} formula @param {number} [baseCount]
  */
-export function extendInventoryFormula(formula) {
+export function extendInventoryFormula(formula, baseCount = 30) {
     return formula.replaceAll(
-        /(?<reference>!\$?[A-Z]{1,3}\$?\d+:\$?[A-Z]{1,3}\$?)(?<end>31|36)(?!\d)/gv,
+        /(?<reference>!\$?[A-Z]{1,3}\$?\d+:\$?[A-Z]{1,3}\$?)(?<end>31|33|36|38)(?!\d)/gv,
         (match, reference, end, offset) => {
             const before = formula.slice(0, Number(offset));
             const name = [...boundedSheets, "Dashboard"].find(
@@ -927,8 +974,8 @@ export function extendInventoryFormula(formula) {
             if (name === undefined) return match;
             const row = Number(end);
             if (
-                (row === 31 && boundedSheets.has(name)) ||
-                (row === 36 && name === "Dashboard")
+                (row === baseCount + 1 && boundedSheets.has(name)) ||
+                (name === "Dashboard" && row === baseCount + 6)
             )
                 return `${String(reference)}${row + 2}`;
             return match;
@@ -941,10 +988,12 @@ export function extendInventoryFormula(formula) {
  *
  * @param {NativeSnapshot} metadata
  * @param {Addition[]} [additions]
+ * @param {number} [baseCount]
  */
 export function finalizeInventoryPageCharts(
     metadata,
-    additions = inventoryAdditions
+    additions = inventoryAdditions,
+    baseCount = 30
 ) {
     /** @type {Record<string, unknown>[]} */
     const requests = [];
@@ -963,10 +1012,22 @@ export function finalizeInventoryPageCharts(
             chart.spec["title"] = title
                 .replaceAll("P30", () => plant.id)
                 .replaceAll("Tiny mixed succulent planter", () => plant.name);
-            patchNewChart(chart.spec, index, plant.id);
-            requests.push({
-                updateChartSpec: { chartId: chart.chartId, spec: chart.spec },
-            });
+            patchNewChart(chart.spec, index, plant.id, baseCount);
+            if (baseCount === 32 && title === "Time between waterings")
+                // Updating a duplicated chart leaves the template alt text in
+                // native Sheets. Recreate only this newly enrolled chart with
+                // its same ID, position, border, and complete rebound spec.
+                requests.push(
+                    { deleteEmbeddedObject: { objectId: chart.chartId } },
+                    { addChart: { chart } }
+                );
+            else
+                requests.push({
+                    updateChartSpec: {
+                        chartId: chart.chartId,
+                        spec: chart.spec,
+                    },
+                });
         }
     }
     return requests;
@@ -1051,6 +1112,11 @@ export function verifyInventoryExpansionPreconditions(
         )
             throw new Error(`Occupied destination: ${range.sheet}`);
     }
+    if (
+        plan.capturedSnapshotDigest !==
+        inventorySnapshotDigest(sourceSnapshot(snapshots))
+    )
+        throw new Error("Captured source cells changed since planning");
     return true;
 }
 /** @param {Addition[]} additions @param {number} index */
@@ -1060,26 +1126,70 @@ function additionAt(additions, index) {
     return plant;
 }
 
-/** @param {unknown[]} series @param {Addition[]} additions */
-function appendColoredSeries(series, additions) {
+/**
+ * @param {unknown[]} series @param {Addition[]} additions @param {number}
+ *   baseCount
+ */
+function appendColoredSeries(series, additions, baseCount) {
     const text = JSON.stringify(series.at(-1));
     if (
         !text.includes('"sheetId":907202603') &&
         !text.includes('"sheetId":907202608')
     )
         return;
-    const width = series.length === 90 ? 3 : 1;
+    const width = series.length === baseCount * 3 ? 3 : 1;
     const originals = series.slice(-width);
     for (const [index, plant] of additions.entries()) {
         for (const [offset, original] of originals.entries())
             series.push(
-                expandedSeries(original, index, plant.id, offset, width)
+                expandedSeries(
+                    original,
+                    index,
+                    plant.id,
+                    offset,
+                    width,
+                    baseCount
+                )
             );
     }
 }
 
-/** @param {(title: string, row: number, column: number) => Cell | undefined} cell */
-function assertEntryValidation(cell) {
+/**
+ * @param {(title: string, row: number, column: number) => Cell | undefined} cell
+ * @param {(title: string) => Sheet} sheet
+ * @param {Addition[]} additions
+ */
+function assertCurrentEnrollment(cell, sheet, additions) {
+    assertNewIdentitiesUnused(sheet, additions);
+    for (const [column, expected] of [
+        [54, "P31 weight (g)"],
+        [55, "P32 weight (g)"],
+        [56, "P33 weight (g)"],
+        [57, "P34 weight (g)"],
+    ]) {
+        if (
+            cell("App bulk", 0, Number(column))?.userEnteredValue
+                ?.stringValue !== expected
+        )
+            throw new Error("Current App bulk identity headers changed");
+    }
+    for (const title of [
+        "History",
+        appEntriesSheet,
+        "App bulk",
+        "RO refills",
+    ]) {
+        const source = sheet(title);
+        if (!hasCompleteSourceRows(source))
+            throw new Error(`Missing complete source rows: ${title}`);
+    }
+}
+
+/**
+ * @param {(title: string, row: number, column: number) => Cell | undefined} cell
+ * @param {string[]} expectedIds
+ */
+function assertEntryValidation(cell, expectedIds) {
     if (
         cell(appEntriesSheet, 0, 2)?.userEnteredValue?.stringValue !==
         "Plant ID"
@@ -1089,10 +1199,6 @@ function assertEntryValidation(cell) {
     const entryCondition = record(entryValidation["condition"]);
     const entryIds = records(entryCondition["values"]).map(
         (value) => value["userEnteredValue"]
-    );
-    const expectedIds = Array.from(
-        { length: 30 },
-        (_, index) => `P${String(index + 1).padStart(2, "0")}`
     );
     if (
         entryCondition["type"] !== "ONE_OF_LIST" ||
@@ -1105,14 +1211,16 @@ function assertEntryValidation(cell) {
 /**
  * @param {NativeSnapshot} metadata @param {(title: string, row: number, column:
  *   number) => Cell | undefined} cell @param {(title: string) => Sheet} meta
- * @param {Addition[]} additions @param {number} bulkStartColumn
+ * @param {Addition[]} additions @param {number} bulkStartColumn @param
+ *   {string[]} existingIds
  */
 function assertInventorySources(
     metadata,
     cell,
     meta,
     additions,
-    bulkStartColumn
+    bulkStartColumn,
+    existingIds
 ) {
     for (const plant of additions)
         if (
@@ -1125,14 +1233,14 @@ function assertInventorySources(
             throw new Error(
                 `${plant.id} already exists; do not replay expansion`
             );
-    for (let i = 1; i <= 30; i += 1)
-        for (const title of ["Plant tracker", "Baselines"])
+    for (let i = 1; i <= existingIds.length; i += 1)
+        for (const title of [trackerSheet, "Baselines"])
             if (
                 cell(title, i, 0)?.userEnteredValue?.stringValue !==
-                `P${String(i).padStart(2, "0")}`
+                existingIds[i - 1]
             )
                 throw new Error(
-                    `Expected ordered 30-pot inventory: ${title} row ${i + 1}`
+                    `Expected ordered ${existingIds.length}-pot inventory: ${title} row ${i + 1}`
                 );
     const template = meta("P30 Mixed succulent");
     if (template.charts?.length !== 4)
@@ -1150,7 +1258,7 @@ function assertInventorySources(
         bulkStartColumn
     )
         throw new Error(`Expected ${bulkStartColumn}-column App bulk schema`);
-    const entryValidation = assertEntryValidation(cell);
+    const entryValidation = assertEntryValidation(cell, existingIds);
     const validationPreconditions = [
         {
             column: 2,
@@ -1163,6 +1271,45 @@ function assertInventorySources(
     return { template, validationPreconditions };
 }
 
+/** @param {(title: string) => Sheet} sheet @param {Addition[]} additions */
+function assertNewIdentitiesUnused(sheet, additions) {
+    const newIds = new Set(additions.map((plant) => plant.id));
+    const newLabels = new Set(additions.map((plant) => plant.label));
+    for (const [title, idColumn] of [
+        ["History", 1],
+        [appEntriesSheet, 2],
+        ["App bulk", 4],
+        [trackerSheet, 14],
+    ]) {
+        const identities = title === trackerSheet ? newLabels : newIds;
+        const isFound = entries(sheet(String(title))).some(
+            ({ cell, column, row }) =>
+                row > 0 &&
+                column === idColumn &&
+                (cell.userEnteredValue?.stringValue ?? "")
+                    .split(/[,;]/v)
+                    .some((id) => identities.has(id.trim()))
+        );
+        if (isFound)
+            throw new Error(
+                `New identity already appears in ${String(title)}; review enrollment`
+            );
+    }
+}
+
+/** @param {Sheet | undefined} raw @param {Sheet} target @param {boolean} isColor */
+function assertSelectedRoleCapacity(raw, target, isColor) {
+    if (
+        raw === undefined ||
+        raw.properties.gridProperties.rowCount < 5000 ||
+        raw.properties.gridProperties.columnCount < (isColor ? 29 : 4) ||
+        target.properties.gridProperties.rowCount < 5001
+    )
+        throw new Error(
+            "Selected-role helper requires verified source and sentinel rows"
+        );
+}
+
 /** @param {number} index */
 function columnName(index) {
     let value = index + 1;
@@ -1172,6 +1319,166 @@ function columnName(index) {
         value = Math.floor((value - 1) / 26);
     }
     return name;
+}
+
+/**
+ * Preserve every primary plant curve and two selected reference roles below
+ * native Sheets' 99-series limit.
+ *
+ * @param {NativeSnapshot} metadata
+ * @param {Record<string, unknown>[]} chartRequests
+ * @param {Record<string, unknown>[]} prepareRequests
+ * @param {(
+ *     title: string,
+ *     row: number,
+ *     column: number,
+ *     value: EnteredValue
+ * ) => void} write
+ * @param {(
+ *     title: string,
+ *     startRow: number,
+ *     endRow: number,
+ *     startColumn: number,
+ *     endColumn: number
+ * ) => void} requireEmpty
+ * @param {(title: string, row: number, column: number) => Cell | undefined} cell
+ */
+function compactEnrollmentCharts(
+    metadata,
+    chartRequests,
+    prepareRequests,
+    write,
+    requireEmpty,
+    cell
+) {
+    const basicCharts = chartRequests.filter((request) =>
+        isRecord(
+            record(record(request["updateChartSpec"])["spec"])["basicChart"]
+        )
+    );
+    for (const request of basicCharts) {
+        const chart = record(request["updateChartSpec"]);
+        const spec = record(chart["spec"]);
+        const basic = record(spec["basicChart"]);
+        const series = records(basic["series"]);
+        if (series.length !== 102) continue;
+        const seriesData = record(record(series[0])["series"]);
+        const source = records(record(seriesData["sourceRange"])["sources"])[0];
+        const target = metadata.sheets.find(
+            (sheet) => sheet.properties.sheetId === source?.["sheetId"]
+        );
+        if (
+            !target ||
+            ![analyticsSheet, colorDataSheet].includes(target.properties.title)
+        )
+            throw new Error("Unexpected oversized selected-plant chart source");
+        const isColor = target.properties.title === colorDataSheet;
+        const startColumn = isColor ? 149 : 112;
+        const rawTitle = isColor ? dryDownSheet : analyticsSheet;
+        const raw = metadata.sheets.find(
+            (sheet) => sheet.properties.title === rawTitle
+        );
+        assertSelectedRoleCapacity(raw, target, isColor);
+        if (isColor) expandLegacyDryDownBounds(cell, write);
+        requireEmpty(
+            target.properties.title,
+            0,
+            5001,
+            startColumn,
+            startColumn + 2
+        );
+        let appended = 0;
+        const appends = prepareRequests.filter(
+            (current) => current["appendDimension"] !== undefined
+        );
+        for (const current of appends) {
+            const append = record(current["appendDimension"]);
+            if (
+                append["sheetId"] === target.properties.sheetId &&
+                append["dimension"] === "COLUMNS"
+            )
+                appended += Number(append["length"]);
+        }
+        const missing =
+            startColumn +
+            2 -
+            target.properties.gridProperties.columnCount -
+            appended;
+        if (missing > 0)
+            prepareRequests.push({
+                appendDimension: {
+                    dimension: "COLUMNS",
+                    length: missing,
+                    sheetId: target.properties.sheetId,
+                },
+            });
+        const protectionRequests = prepareRequests.filter(
+            (current) => current["updateProtectedRange"] !== undefined
+        );
+        for (const current of protectionRequests) {
+            const protection = record(
+                record(current["updateProtectedRange"])["protectedRange"]
+            );
+            const range = record(protection["range"]);
+            if (
+                range["sheetId"] === target.properties.sheetId &&
+                range["endColumnIndex"] === startColumn
+            )
+                range["endColumnIndex"] = startColumn + 2;
+        }
+        const roles = series.slice(1, 3).map((entry, index) => {
+            const column = startColumn + index;
+            const rawColumn = columnName((isColor ? 27 : 2) + index);
+            const values = `'${rawTitle}'!${rawColumn}2:${rawColumn}5000`;
+            const roleSource = records(
+                record(record(entry["series"])["sourceRange"])["sources"]
+            )[0];
+            const sourceFormula = cell(
+                target.properties.title,
+                1,
+                Number(roleSource?.["startColumnIndex"])
+            )?.userEnteredValue?.formulaValue?.replaceAll("$", "");
+            const expectedReference = values;
+            if (
+                sourceFormula?.includes(`ISNUMBER(${expectedReference})`) !==
+                true
+            )
+                throw new Error("Selected-role source formula changed");
+            const label = isColor
+                ? index === 0
+                    ? "Selected dry reference"
+                    : "Selected wet reference"
+                : index === 0
+                  ? "Selected previous cycle"
+                  : "Selected older cycles";
+            write(target.properties.title, 0, column, { stringValue: label });
+            write(target.properties.title, 1, column, {
+                formulaValue: sharedSelectedRoleFormula(values),
+            });
+            const role = structuredClone(entry);
+            role["series"] = {
+                sourceRange: {
+                    sources: [
+                        {
+                            endColumnIndex: column + 1,
+                            endRowIndex: 5001,
+                            sheetId: target.properties.sheetId,
+                            startColumnIndex: column,
+                            startRowIndex: 0,
+                        },
+                    ],
+                },
+            };
+            return role;
+        });
+        basic["series"] = compactSelectedPlantSeries(
+            typedEnrollmentSeries(series.filter((_, index) => index % 3 === 0)),
+            typedEnrollmentSeries(roles)
+        );
+        spec["subtitle"] = isColor
+            ? "Plant-colored solid circles: measured • neutral dotted diamonds: dry • neutral dashed squares: wet"
+            : "Plant-colored solid circles: current • neutral dotted diamonds: previous • neutral dashed squares: older • same pot setup";
+    }
 }
 
 /** @param {string | number | boolean} value @returns {EnteredValue} */
@@ -1210,10 +1517,35 @@ function entries(sheet) {
 }
 
 /**
- * @param {unknown} original @param {number} index @param {string} id @param
- *   {number} offset @param {number} width
+ * @param {string | undefined} integrity @param {Addition[]} additions @param
+ *   {number} baseCount
  */
-function expandedSeries(original, index, id, offset, width) {
+function expandedIntegrityFormula(integrity, additions, baseCount) {
+    if (integrity?.startsWith("=SUM(") !== true)
+        throw new Error("Integrity formula-error anchor changed");
+    const offset = baseCount - 30;
+    const scan = additions
+        .map(
+            (plant) =>
+                `SUM(ARRAYFORMULA(N(ISERROR('${plant.title}'!A1:INDEX('${plant.title}'!V1:V5139,140+MAX(1,COUNTIF(History!$B$2:$B$5000,"${plant.id}")))))))`
+        )
+        .join(",");
+    const helperScans = [
+        `'Watering intervals'!${columnName(90 + offset * 3)}1:${columnName(95 + offset * 3)}5000`,
+        `'Plant color data'!${columnName(133 + offset * 4)}1:${columnName(140 + offset * 4)}5001`,
+        `'Workbook analytics'!${columnName(100 + offset * 3)}1:${columnName(105 + offset * 3)}5001`,
+        `'Workbook calculations'!A${33 + offset}:F${34 + offset}`,
+    ]
+        .map((range) => `SUM(ARRAYFORMULA(N(ISERROR(${range}))))`)
+        .filter((term) => !integrity.includes(term));
+    return `${extendInventoryFormula(integrity, baseCount).slice(0, -1)},${[scan, ...helperScans].join(",")})`;
+}
+
+/**
+ * @param {unknown} original @param {number} index @param {string} id @param
+ *   {number} offset @param {number} width @param {number} baseCount
+ */
+function expandedSeries(original, index, id, offset, width, baseCount) {
     const next = structuredClone(record(original));
     const data = record(next["series"]);
     const source = record(data["sourceRange"]);
@@ -1223,10 +1555,10 @@ function expandedSeries(original, index, id, offset, width) {
         throw new Error("Missing chart column");
     const column =
         first["sheetId"] === 907_202_608
-            ? 100 + index * 3 + offset
+            ? 100 + (baseCount - 30) * 3 + index * 3 + offset
             : width === 3
-              ? 133 + index * 4 + offset
-              : 136 + index * 4;
+              ? 133 + (baseCount - 30) * 4 + index * 4 + offset
+              : 136 + (baseCount - 30) * 4 + index * 4;
     const difference = column - first["startColumnIndex"];
     for (const range of ranges) {
         if (
@@ -1244,9 +1576,15 @@ function expandedSeries(original, index, id, offset, width) {
 
 /**
  * @param {(title: string) => Sheet} meta @param {Record<string, unknown>[]}
- *   prepareRequests @param {number} bulkStartColumn
+ *   prepareRequests @param {number} bulkStartColumn @param {number} baseCount
  */
-function expandHelperFormatting(meta, prepareRequests, bulkStartColumn) {
+function expandHelperFormatting(
+    meta,
+    prepareRequests,
+    bulkStartColumn,
+    baseCount
+) {
+    const offset = baseCount - 30;
     // Fill the newly appended helper columns with their existing number formats.
     for (const [
         title,
@@ -1257,19 +1595,19 @@ function expandHelperFormatting(meta, prepareRequests, bulkStartColumn) {
         [
             intervalSheet,
             87,
-            90,
+            90 + offset * 3,
             6,
         ],
         [
             analyticsSheet,
             97,
-            100,
+            100 + offset * 3,
             6,
         ],
         [
             colorDataSheet,
             94,
-            133,
+            133 + offset * 4,
             8,
         ],
         [
@@ -1309,44 +1647,194 @@ function expandHelperFormatting(meta, prepareRequests, bulkStartColumn) {
 }
 
 /**
- * @param {unknown} value @param {NativeSnapshot} metadata @param {Addition[]}
- *   additions
+ * Extend only the twelve captured legacy helper anchors. Their exact original
+ * formulas remain preconditions; quoted strings and qualified ranges stay
+ * intact.
+ *
+ * @param {(title: string, row: number, column: number) => Cell | undefined} cell
+ * @param {(
+ *     title: string,
+ *     row: number,
+ *     column: number,
+ *     value: EnteredValue
+ * ) => void} write
  */
-function extendChartInventory(value, metadata, additions) {
+function expandLegacyDryDownBounds(cell, write) {
+    const anchors = [
+        [1, 25],
+        [1, 27],
+        [1, 28],
+        [1, 30],
+        ...[
+            41,
+            81,
+            121,
+            161,
+            201,
+            241,
+            281,
+            321,
+        ].map((row) => [row, 0]),
+    ];
+    for (const [row, column] of anchors) {
+        if (row === undefined || column === undefined)
+            throw new Error("Missing legacy helper coordinate");
+        const before = cell(dryDownSheet, row, column)?.userEnteredValue
+            ?.formulaValue;
+        if (before === undefined || before === "")
+            throw new Error("Missing captured legacy dry-down helper formula");
+        const after = before
+            .split(/(?<quoted>"(?:[^"]|"")*")/v)
+            .map((part, index) =>
+                index % 2
+                    ? part
+                    : part.replaceAll(
+                          /(?<![\w!$'])(?<start>\$?(?<column>[A-W])\$?2:\$?\k<column>\$?)31(?!\d)/gv,
+                          "$<start>35"
+                      )
+            )
+            .join("");
+        if (after === before)
+            throw new Error("Legacy dry-down helper bounds changed");
+        write(dryDownSheet, row, column, { formulaValue: after });
+    }
+}
+
+/**
+ * @param {ExpansionOptions} options @param {Addition[]} additions @param
+ *   {number} bulkStartColumn
+ */
+function expansionRoster(options, additions, bulkStartColumn) {
+    const existingIds =
+        options.existingIds ??
+        Array.from(
+            { length: 30 },
+            (_, index) => `P${String(index + 1).padStart(2, "0")}`
+        );
+    const baseCount = existingIds.length;
+    const uniqueIds = new Set(
+        Iterator.concat(
+            existingIds,
+            additions.map((plant) => plant.id)
+        )
+    );
+    if (
+        ![30, 32].includes(baseCount) ||
+        additions.length !== 2 ||
+        existingIds.some(
+            (id, index) => id !== `P${String(index + 1).padStart(2, "0")}`
+        ) ||
+        uniqueIds.size !== baseCount + 2
+    )
+        throw new Error(
+            "Expected an ordered 30- or 32-pot roster and two distinct new IDs"
+        );
+    if (
+        baseCount === 32 &&
+        (bulkStartColumn !== 58 ||
+            additions.some((plant) => ["P33", "P34"].includes(plant.id)))
+    )
+        throw new Error(
+            "Current enrollment must preserve retired P33/P34 and append after 58 bulk columns"
+        );
+    return existingIds;
+}
+
+/**
+ * @param {unknown} value @param {NativeSnapshot} metadata @param {Addition[]}
+ *   additions @param {number} baseCount
+ */
+function extendChartInventory(value, metadata, additions, baseCount) {
     walkRecords(value, (item) => {
         const title = metadata.sheets.find(
             (sheet) => sheet.properties.sheetId === item["sheetId"]
         )?.properties.title;
-        if (title !== undefined) extendChartRange(item, title);
+        if (title !== undefined) extendChartRange(item, title, baseCount);
         const overrides = item["styleOverrides"];
-        if (Array.isArray(overrides) && overrides.length === 30) {
+        if (Array.isArray(overrides) && overrides.length === baseCount) {
             for (const [index, plant] of additions.entries())
                 overrides.push({
                     colorStyle: { rgbColor: plantColor(plant.id) },
-                    index: 30 + index,
+                    index: baseCount + index,
                 });
         }
         const series = item["series"];
-        if (Array.isArray(series) && [30, 90].includes(series.length))
-            appendColoredSeries(series, additions);
+        if (
+            Array.isArray(series) &&
+            [baseCount, baseCount * 3].includes(series.length)
+        )
+            appendColoredSeries(series, additions, baseCount);
     });
 }
 
-/** @param {Record<string, unknown>} item @param {string} title */
-function extendChartRange(item, title) {
+/**
+ * @param {Record<string, unknown>} item @param {string} title @param {number}
+ *   baseCount
+ */
+function extendChartRange(item, title, baseCount) {
     if (
         title === colorDataSheet &&
         typeof item["startRowIndex"] === "number" &&
         typeof item["endRowIndex"] === "number" &&
-        item["endRowIndex"] - item["startRowIndex"] === 31
+        item["endRowIndex"] - item["startRowIndex"] === baseCount + 1
     ) {
         item["endRowIndex"] += 2;
         return;
     }
-    if (item["endRowIndex"] === 31 && boundedSheets.has(title))
-        item["endRowIndex"] = 33;
-    if (title === "Dashboard" && item["endRowIndex"] === 36)
-        item["endRowIndex"] = 38;
+    if (item["endRowIndex"] === baseCount + 1 && boundedSheets.has(title))
+        item["endRowIndex"] = baseCount + 3;
+    if (title === "Dashboard" && item["endRowIndex"] === baseCount + 6)
+        item["endRowIndex"] = baseCount + 8;
+}
+/** @param {Sheet} source */
+function hasCompleteSourceRows(source) {
+    const intervals = (source.data ?? [])
+        .filter((block) => (block.startColumn ?? 0) === 0)
+        .map((block) => ({
+            end: (block.startRow ?? 0) + (block.rowData?.length ?? 0),
+            start: block.startRow ?? 0,
+        }))
+        .toSorted((left, right) => left.start - right.start);
+    let end = 0;
+    for (const interval of intervals) {
+        if (interval.start > end) return false;
+        end = Math.max(end, interval.end);
+    }
+    return end === source.properties.gridProperties.rowCount;
+}
+/**
+ * @param {Sheet} quickLog
+ * @param {(title: string, row: number, column: number) => Cell | undefined} cell
+ * @param {number} baseCount
+ */
+function headerFormatRequests(quickLog, cell, baseCount) {
+    /** @type {Record<string, unknown>[]} */
+    const requests = [];
+    if (baseCount === 32 && records(quickLog["tables"]).length > 0) {
+        // Extending the native table clears explicit colors on its two newer
+        // headers. Restore their captured formats after the format copies.
+        for (const columnIndex of [13, 14]) {
+            const userEnteredFormat = cell(
+                "Quick log",
+                3,
+                columnIndex
+            )?.userEnteredFormat;
+            if (!userEnteredFormat)
+                throw new Error("Missing Quick log header format snapshot");
+            requests.push({
+                updateCells: {
+                    fields: "userEnteredFormat",
+                    rows: [{ values: [{ userEnteredFormat }] }],
+                    start: {
+                        columnIndex,
+                        rowIndex: 3,
+                        sheetId: quickLog.properties.sheetId,
+                    },
+                },
+            });
+        }
+    }
+    return requests;
 }
 
 /** @param {number} column */
@@ -1366,15 +1854,42 @@ function intervalChartSource(column) {
     };
 }
 
+/**
+ * Native format copying can expand banding and overwrite swatches. Resize
+ * banding first, copy formats second, and apply the new palette colors last.
+ *
+ * @param {Record<string, unknown>[]} prepareRequests
+ */
+function orderedPreparationRequests(prepareRequests) {
+    return [
+        ...prepareRequests.filter(
+            (request) =>
+                request["copyPaste"] === undefined &&
+                request["repeatCell"] === undefined
+        ),
+        ...prepareRequests.filter(
+            (request) => request["copyPaste"] !== undefined
+        ),
+        // Row-format copies include the old swatch background. Apply the
+        // two new palette colors after those copies so they remain visible.
+        ...prepareRequests.filter(
+            (request) => request["repeatCell"] !== undefined
+        ),
+    ];
+}
+
 /** @param {string} source */
 function parseRecord(source) {
     const value = /** @type {unknown} */ (JSON.parse(source));
     return record(value);
 }
 
-/** @param {Record<string, unknown>} basic @param {number} index */
-function patchIntervalChart(basic, index) {
-    const domainColumn = 91 + index * 3;
+/**
+ * @param {Record<string, unknown>} basic @param {number} index @param {number}
+ *   baseCount
+ */
+function patchIntervalChart(basic, index, baseCount) {
+    const domainColumn = 91 + (baseCount - 30) * 3 + index * 3;
     basic["domains"] = [{ domain: intervalChartSource(domainColumn) }];
     basic["series"] = [
         {
@@ -1387,14 +1902,14 @@ function patchIntervalChart(basic, index) {
 
 /**
  * @param {Record<string, unknown>} spec @param {number} index @param {string}
- *   id
+ *   id @param {number} baseCount
  */
-function patchNewChart(spec, index, id) {
+function patchNewChart(spec, index, id, baseCount) {
     const basic = record(spec["basicChart"]);
     if (typeof spec["altText"] === "string")
         spec["altText"] = spec["altText"].replaceAll("P30", () => id);
     if (spec["title"] === "Time between waterings")
-        patchIntervalChart(basic, index);
+        patchIntervalChart(basic, index, baseCount);
     const seriesEntries = records(basic["series"]);
     for (const series of seriesEntries) {
         series["colorStyle"] = { rgbColor: plantColor(id) };
@@ -1407,6 +1922,7 @@ function patchNewChart(spec, index, id) {
         delete axis["viewWindowOptions"]["viewWindowMax"];
     }
 }
+
 /** @param {Addition} plant */
 function plantGuideUrl(plant) {
     return (
@@ -1414,23 +1930,26 @@ function plantGuideUrl(plant) {
         `https://nick2bad4u.github.io/Gardening/pots/${plant.id}/`
     );
 }
+
 /**
  * Rebase both endpoints; a reversed CO:CL reference is a multi-column range.
  *
- * @param {string} formula @param {number} index
+ * @param {string} formula @param {number} index @param {number} baseCount
+ * @param {number} [sourceColumn]
  */
-function rebaseIntervalRange(formula, index) {
-    const column = columnName(92 + index * 3);
+function rebaseIntervalRange(formula, index, baseCount, sourceColumn = 89) {
+    const column = columnName(92 + (baseCount - 30) * 3 + index * 3);
+    const source = columnName(sourceColumn);
     /** @type {[string, string][]} */
     const replacements = [
-        ["$CL$2:$CL$5000", `$${column}$2:$${column}$5000`],
-        ["CL2:CL5000", `${column}2:${column}5000`],
-        ["CL$2:CL$5000", `${column}$2:${column}$5000`],
+        [`$${source}$2:$${source}$5000`, `$${column}$2:$${column}$5000`],
+        [`${source}2:${source}5000`, `${column}2:${column}5000`],
+        [`${source}$2:${source}$5000`, `${column}$2:${column}$5000`],
     ];
     let result = formula;
-    for (const [source, destination] of replacements)
+    for (const [from, destination] of replacements)
         result = result.replaceAll(
-            `'Watering intervals'!${source}`,
+            `'Watering intervals'!${from}`,
             () => `'Watering intervals'!${destination}`
         );
     return result;
@@ -1468,7 +1987,6 @@ function restoreTemplateChart(chart, metadata, sheetId) {
         if (entry["sheetId"] === 202_609_300) entry["sheetId"] = sheetId;
     });
 }
-
 /** @param {NativeSnapshot[]} snapshots */
 function sheetMap(snapshots) {
     /** @type {Map<string, Sheet>} */
@@ -1477,6 +1995,54 @@ function sheetMap(snapshots) {
         for (const sheet of snapshot.sheets)
             result.set(sheet.properties.title, sheet);
     return result;
+}
+
+/**
+ * Compare entered evidence without volatile calculated clock values. @param
+ * {NativeSnapshot[]} snapshots
+ */
+function sourceSnapshot(snapshots) {
+    const copy = structuredClone(snapshots);
+    walkRecords(copy, (item) => {
+        delete item["effectiveValue"];
+        delete item["formattedValue"];
+        delete item["effectiveFormat"];
+    });
+    return copy;
+}
+
+/**
+ * @param {Record<string, unknown>[]} series
+ *
+ * @returns {import("../../test/plant-chart-colors-fixtures.d.ts").PlantColorSeries[]}
+ */
+function typedEnrollmentSeries(series) {
+    for (const entry of series) {
+        const sources = records(
+            record(record(entry["series"])["sourceRange"])["sources"]
+        );
+        if (
+            sources.length !== 1 ||
+            sources.some(
+                (source) =>
+                    [
+                        "sheetId",
+                        "startRowIndex",
+                        "endRowIndex",
+                        "startColumnIndex",
+                        "endColumnIndex",
+                    ].some((field) => !Number.isSafeInteger(source[field])) ||
+                    source["startRowIndex"] !== 0 ||
+                    source["endRowIndex"] !== 5001 ||
+                    Number(source["endColumnIndex"]) !==
+                        Number(source["startColumnIndex"]) + 1
+            )
+        )
+            throw new Error("Invalid selected-role chart source binding");
+    }
+    return /** @type {import("../../test/plant-chart-colors-fixtures.d.ts").PlantColorSeries[]} */ (
+        /** @type {unknown} */ (series)
+    );
 }
 
 /**
@@ -1492,6 +2058,7 @@ function update(sheetId, row, column, value) {
         },
     };
 }
+
 /**
  * @param {unknown} value @param {(entry: Record<string, unknown>) => void}
  *   visit

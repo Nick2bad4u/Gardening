@@ -79,8 +79,9 @@ export function legacyData(profiles) {
         if (data.pots[current] !== undefined)
             data.pots[previous] = potUrl(current);
     }
-    if (data.pots["P31"] !== undefined) data.labels["#9"] = "P31";
-    if (data.pots["P32"] !== undefined) data.labels["#10"] = "P32";
+    // Current physical labels take precedence over retired label aliases.
+    if (data.pots["P31"] !== undefined) data.labels["#9"] ??= "P31";
+    if (data.pots["P32"] !== undefined) data.labels["#10"] ??= "P32";
     return data;
 }
 

@@ -18,6 +18,16 @@ const data = legacyData([
         slug: "tradescantia-spathacea-tricolor",
         trackerId: "P32",
     },
+    {
+        drawerLabel: { primary: "#9" },
+        slug: "lithops-shared-planter",
+        trackerId: "P35",
+    },
+    {
+        drawerLabel: { primary: "#10" },
+        slug: "pleiospilos-nelii",
+        trackerId: "P36",
+    },
 ]);
 
 /**
@@ -77,10 +87,12 @@ describe("site routes and serialized legacy bookmarks", () => {
         ["P34", "P32"],
         ["#7", "P31"],
         ["#8", "P32"],
-        ["#9", "P31"],
-        ["#10", "P32"],
+        ["P35", "P35"],
+        ["P36", "P36"],
+        ["#9", "P35"],
+        ["#10", "P36"],
     ])(
-        "resolves current and previous houseplant identity %s to %s",
+        "resolves current labels and permanent tracker redirects %s to %s",
         (previous, current) => {
             expect.hasAssertions();
             expect(

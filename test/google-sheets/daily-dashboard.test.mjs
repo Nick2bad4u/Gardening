@@ -368,7 +368,7 @@ describe("scoped daily Dashboard presentation", () => {
             "INT(ROUND(weighed-4/24,8))"
         );
         expect(daily.state.cells.get("H10")).toContain(
-            'special,OR(plant="P21",plant="P28",plant="P32")'
+            'special,OR(plant="P21",plant="P28",plant="P31",plant="P32",plant="P35",plant="P36")'
         );
     });
 

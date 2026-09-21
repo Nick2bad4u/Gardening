@@ -18,15 +18,67 @@ import {
 } from "../site/lib/content/profile-source.mjs";
 
 describe("field guide source rendering", () => {
+    it("keeps the new Lithops group and split rock separate with qualified identities and pending photographs", async () => {
+        expect.hasAssertions();
+
+        const profiles = await getProfiles();
+        const manifest = await getCollectionManifest();
+        const records = [
+            {
+                confidence: "Tentative Genus",
+                id: "P35",
+                inventory: "Succulent-15",
+                label: "#9",
+                slug: "lithops-shared-planter",
+            },
+            {
+                confidence: "Likely Match",
+                id: "P36",
+                inventory: "Succulent-16",
+                label: "#10",
+                slug: "pleiospilos-nelii",
+            },
+        ];
+        for (const record of records) {
+            const members = profiles.filter(
+                (profile) => profile.trackerId === record.id
+            );
+
+            expect(members).toHaveLength(1);
+            expect(members[0]).toMatchObject({
+                historical: false,
+                inventoryId: record.inventory,
+                slug: record.slug,
+            });
+            expect(members[0]?.drawerLabel.primary).toBe(record.label);
+            expect(members[0]?.identificationMarkdown).toMatch(
+                /unconfirmed|unresolved/iv
+            );
+            expect(
+                identificationLabel(members[0]?.identificationMarkdown ?? "")
+            ).toBe(record.confidence);
+            expect(members[0]?.photoCount).toBe(0);
+            expect(
+                manifest.plants.find(
+                    (plant) => plant.plant_slug === record.slug
+                )
+            ).toMatchObject({ gyazo_collection: null, photos: [] });
+        }
+
+        expect(
+            profiles.find((profile) => profile.trackerId === "P28")?.slug
+        ).toBe("pleiospilos-nelii-royal-flush");
+    });
+
     it("assigns the received houseplants to P31/P32 while keeping abandoned orders in old plans", async () => {
         expect.hasAssertions();
 
         const profiles = await getProfiles();
         const archived = await getOldPlans();
 
-        expect(profiles).toHaveLength(41);
+        expect(profiles).toHaveLength(43);
         expect(profiles.filter((profile) => !profile.historical)).toHaveLength(
-            40
+            42
         );
         expect(
             profiles.some((profile) =>
@@ -98,7 +150,7 @@ describe("field guide source rendering", () => {
         ).toStrictEqual(
             slugs.toSorted((left, right) => left.localeCompare(right))
         );
-        expect(potIds.size).toBe(32);
+        expect(potIds.size).toBe(34);
         expect(
             members
                 .map((profile) => profile.inventoryId)
