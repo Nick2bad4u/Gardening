@@ -3,8 +3,8 @@
 **Archived September 20, 2026. Unreceived plant; cancellation pending, not confirmed.** The owner abandoned this five-plant Amazon plan after reviewing seller feedback. This page preserves September 19 research and proposed care only. It is outside the active collection and is not a watering, weighing, or shopping task. See the [old-plan overview](../amazon-plant-order-2026-09.md).
 
 - Former inventory allocation: Succulent-13 — seller-labeled _Echeveria setosa_ var. _deminuta_
-- Former label allocation: `#7` — shared four-succulent planter
-- Former tracker allocation: `P31`
+- Physical-label allocation: none — withdrawn
+- Tracker allocation: none — withdrawn
 - Status: **Archived old plan — unreceived; plant-order cancellation pending as of 2026-09-20**
 - Visual description: The seller thumbnail depicts a cluster of small blue-green rosettes with fine pale hairs; it is a reference depiction, not a photograph of the purchased plant.
 - Interesting fact: “Deminuta” is a published botanical variety of _Echeveria setosa_, not merely a descriptive nickname for a small starter.
@@ -14,7 +14,7 @@
 - Advertised container: Seller lists a rooted starter in a 2-inch nursery pot; receipt and root condition unrecorded
 - Former proposed pot: Owner-designated shared decorated Amazon Basics 8-inch white polypropylene pot with drainage, in Molly's Succulent Mix; actual planting date and measured dimensions unrecorded
 
-Former label/tracker allocations are preserved as historical references and must not be silently reused. The decorated 8-inch pot remains owned and unassigned for a future local-greenhouse choice; it is not occupied by these plants.
+Physical-label and tracker allocations are withdrawn; this is botanical research only. The decorated 8-inch pot is not occupied by these plants; its current plan is recorded in the [equipment inventory](../../equipment/inventory.md).
 
 ## Names and identity
 
@@ -32,7 +32,7 @@ Kew accepts this variety and places it in the dry shrubland/desert flora of Oaxa
 
 The September 19 order described a two-inch rooted starter. The owner initially requested administrative enrollment, then abandoned the unreceived five-plant order on September 20 after reviewing seller feedback. Cancellation is pending, not confirmed; no receipt, planting, weight, or care event was recorded.
 
-The former #7 / P31 plan grouped [Cubic Frost](./echeveria-cubic-frost.md), [Coppertone](./sedum-adolphi-coppertone.md), [Deminuta](./echeveria-setosa-deminuta.md), and [Ruby Slippers](./echeveria-harmsii-ruby-slippers.md) in one decorated eight-inch pot. [Nanouk](./tradescantia-nanouk.md) was planned separately as #8 / P32. The four botanical profiles were intended to share one whole-container history, but no actual care or weight history was established. These are abandoned allocations, not IDs to reuse silently.
+The abandoned shared-pot plan grouped [Cubic Frost](./echeveria-cubic-frost.md), [Coppertone](./sedum-adolphi-coppertone.md), [Deminuta](./echeveria-setosa-deminuta.md), and [Ruby Slippers](./echeveria-harmsii-ruby-slippers.md) in one decorated eight-inch pot. [Nanouk](./tradescantia-nanouk.md) was planned separately. The four botanical profiles were intended to share one whole-container history, but no actual care or weight history was established. These research pages have no physical-label or tracker allocation.
 
 ## Proposed care — archived research
 

@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-The maintained **Garden Plant Tracker** roster has **32 active containers**, using permanent IDs `P01`–`P30`, `P33`, and `P34` internally and keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+The maintained **Garden Plant Tracker** roster has **32 active containers**, using IDs `P01`–`P32` internally and keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
@@ -20,14 +20,34 @@ The [RO refill log](RO-REFILLS.md) records water-supply refill dates, amounts
 for the four storage containers, and a chart of gallons refilled per visit.
 The **Plant colors** sheet maps all 32 active containers to
 consistent chart colors, with full names, swatches, and links to their charts.
-Comparison charts keep P01–P30, P33, P34 order so colors stay attached to the same plant;
+Comparison charts keep P01–P32 order so colors stay attached to the same plant;
 the cycle explorer changes color automatically with its selected plant.
-Each active **P01–P30, P33, and P34** page also has a **Time between waterings** column chart at
+Each active **P01–P32** page also has a **Time between waterings** column chart at
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## September 20 owner-requested houseplant reassignment
+
+The owner explicitly reassigned **Peperomia Bicolor from P33 / #9 to P31 / #7** and **Tricolor oyster plant from P34 / #10 to P32 / #8**. Their botanical inventory records remain Houseplant-03 and Houseplant-04. The canceled, unreceived Amazon plants retain their archived research but have no active tracker ID or physical label. This specific authorization supersedes the earlier reservation of P31/P32; it is not a general policy of recycling IDs that have observation history.
+
+Logger **5.28.0** and the maintained mappings use **P01–P32**. The native houseplant sheets retain IDs **202609330** and **202609340**, their existing charts, and their history links while their titles and formulas change to P31/P32. Old website links for P33/P34 redirect to the corresponding current pot; Amazon botanical-slug links still lead to the archived plan. Acquisition-photo filenames retain their original `p33`/`p34` fragments so existing evidence URLs remain valid.
+
+`App bulk` remains **58 physical columns, A:BF / 59 including AppSheet's `_RowNumber`**. **BC:BD**, named P31/P32 weight, now belong to the purchased houseplants. **BE:BF**, named P33/P34 weight, remain hidden, noneditable compatibility columns and must be blank. The server rejects retired IDs and nonblank retired weights. `History` stays A:AP and `App entries` stays A:AH; no schema width, observation, pot setup, watering rule, or forecast model changes.
+
+Freshly created mobile payloads include the inventory revision `id528`. The token is captured when the draft is created and is never added to a restored old draft merely to make it pass validation. AppSheet's Entry ID and Round ID use the maintained [creation-only initial value](./appsheet-entry-id-initial-value.txt), `CONCATENATE("id528-", UNIQUEID())`; retry actions preserve the original keys. Do not enable reset-on-edit or rewrite existing keys. This creation marker prevents a stale Amazon form from silently attaching an entry to a different plant after the ID reuse. An affected old draft must be reviewed and recreated using the current inventory; its original values remain recoverable. P01–P30 intake and successful-request idempotence remain unchanged. Bootstrap cache V3 prevents an older roster from initializing the new client.
+
+The guarded [houseplant reassignment planner](./houseplant-renumber.mjs) uses fresh metadata and cell preconditions. A [native backup](https://docs.google.com/spreadsheets/d/1dAIqSnQ4QXpdfl-5DQkNzTy4Gs1DeNHAKFHGWU8v9EM/edit) and [disposable rehearsal](https://docs.google.com/spreadsheets/d/1gFiyiu-5CVbB6L_h4CVcK48dS54XfklqkKrOyAXN0ug/edit) were created before migration. The initial live snapshot contains **1,075 History records**, **38 saved App entries**, empty App bulk staging, and no P31–P34 observations. Full private proof is retained under `.cache/renumber-houseplants-20260920/`.
+
+**Production cutover, September 20, 2026:** fresh guarded cells still matched the backup before the atomic **128-request** native update. It implements 1,126 logical changes, combining 999 identical dropdown-cell validations into one equivalent range request. The native-copy rehearsal compared **514,087 captured cells** without unexplained value, formula, note, validation, or format changes and preserved all **156 chart definitions** against production. The workbook still has 56 tabs; both houseplant tabs were renamed in place.
+
+The complete production readback then passed the same **514,087-cell** comparison with zero unexplained changes and zero formula errors. All **156 chart specifications and positions**, **1,075 History records**, saved staging rows, and RO data were preserved. Both new IDs display the correct partial-drying/manual-readiness guidance with no invented forecast or observation. The native proof is `production-verification.json` and `production-summary.json` in the private audit folder above.
+
+Logger **5.28.0 / immutable version 97** is deployed at the existing phone URL. Production HEAD and version 97 each contain exactly three files matching the maintained source after newline normalization; the disposable rehearsal helper was not deployed. The Google V8 rehearsal verified stale/fresh mobile and AppSheet identity handling without writing observations. **AppSheet version 1.100110** is saved and confirmed after an editor reload. The current portrait folder retains its existing artwork revision, with correct P31/P32 copies added alongside the older P33/P34 files; the active mapping contains only P01–P32. The existing daily task changed only the two houseplant identity strings and retains its **9:45 a.m. America/New_York** schedule and care rules.
+
 ## September 20 purchased-houseplant enrollment
+
+This earlier same-day enrollment is a historical deployment record. The owner-requested reassignment above supersedes its P33/P34 labels, reserved-ID policy, and active bulk-field assignments.
 
 Checked-in logger **5.27.0** enrolls **P33 / #9 Peperomia Bicolor** and **P34 / #10 Tricolor oyster plant** alongside P01–P30. The owner confirmed buying both in nursery pots directly at Carlson's Greenhouses on September 20; the tags also identify Carlson's as the grower. The field guide now contains **41 profiles: 40 active and one historical, across 32 tracked containers**. P31 / #7 and P32 / #8 remain archived, reserved allocations for the unreceived Amazon order; this enrollment does not reuse them.
 
@@ -49,7 +69,7 @@ Logger **5.27.0 / immutable version 96** is deployed at the existing phone URL. 
 
 This earlier same-day contract is historical; the purchased-houseplant enrollment above supersedes its active counts and bulk-column width.
 
-Logger **5.26.1** returned the active roster to **30 containers, P01–P30**. The owner requested cancellation of the five-plant Amazon order; retailer cancellation is still pending. The four components formerly assigned to shared `#7` / `P31` and separate Nanouk `#8` / `P32` remain archived in the guide. Those IDs are reserved and must not be reused. No arrival, repot, death, or measurement is inferred from this change.
+Logger **5.26.1** returned the active roster to **30 containers, P01–P30**. The owner requested cancellation of the five-plant Amazon order; retailer cancellation was still pending. The four components formerly assigned to shared `#7` / `P31` and separate Nanouk `#8` / `P32` remained archived in the guide. Those IDs were reserved at this stage, before the owner's explicit reassignment later the same day. No arrival, repot, death, or measurement was inferred from the withdrawal.
 
 Active inventory/model/calculation rows end at **31**, Dashboard data at **36**, and active plant pages at **P30**. The generalized bounded formulas and empty-history safeguards remain. The September 19 expansion record below is historical; the completed withdrawal is recorded in the September 20 deployment entry.
 

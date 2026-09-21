@@ -8,6 +8,16 @@ const data = legacyData([
     { drawerLabel: { primary: "A1" }, slug: "moon-cactus", trackerId: "P01" },
     { drawerLabel: { primary: "#1" }, slug: "shared-torch", trackerId: "P19" },
     { drawerLabel: { primary: "#1" }, slug: "shared-tail", trackerId: "P19" },
+    {
+        drawerLabel: { primary: "#7" },
+        slug: "peperomia-obtipan-bicolor",
+        trackerId: "P31",
+    },
+    {
+        drawerLabel: { primary: "#8" },
+        slug: "tradescantia-spathacea-tricolor",
+        trackerId: "P32",
+    },
 ]);
 
 /**
@@ -54,27 +64,53 @@ describe("site routes and serialized legacy bookmarks", () => {
             "/Gardening/guides/old-plans/amazon-2026-09-19/tradescantia-nanouk/#sources"
         );
         expect(
-            redirected(
-                "/Gardening/layouts/plant-history.html?id=P31",
-                siteUrl("pots/")
-            )
-        ).toStrictEqual([
-            "https://example.test/Gardening/guides/old-plans/amazon-plant-order-2026-09/",
-        ]);
-        expect(
-            redirected(
-                "/Gardening/layouts/plant-history.html?id=%238",
-                siteUrl("pots/")
-            )
-        ).toStrictEqual([
-            "https://example.test/Gardening/guides/old-plans/amazon-plant-order-2026-09/",
-        ]);
-        expect(
             redirected("/Gardening/#echeveria-cubic-frost", siteUrl(), false)
         ).toStrictEqual([
             "https://example.test/Gardening/guides/old-plans/amazon-2026-09-19/echeveria-cubic-frost/",
         ]);
     });
+
+    it.each([
+        ["P31", "P31"],
+        ["P32", "P32"],
+        ["P33", "P31"],
+        ["P34", "P32"],
+        ["#7", "P31"],
+        ["#8", "P32"],
+        ["#9", "P31"],
+        ["#10", "P32"],
+    ])(
+        "resolves current and previous houseplant identity %s to %s",
+        (previous, current) => {
+            expect.hasAssertions();
+            expect(
+                redirected(
+                    `/Gardening/layouts/plant-history.html?id=${encodeURIComponent(previous)}&range=cycle#weights`,
+                    siteUrl("pots/")
+                )
+            ).toStrictEqual([
+                `https://example.test/Gardening/pots/${current}/?range=cycle#weights`,
+            ]);
+        }
+    );
+
+    it.each([
+        ["P33", "P31"],
+        ["P34", "P32"],
+    ])(
+        "preserves date controls and anchors on retired %s pot pages",
+        (previous, current) => {
+            expect.hasAssertions();
+            expect(
+                redirected(
+                    `/Gardening/pots/${previous}/?from=2026-09-20#history`,
+                    siteUrl(`pots/${current}/`)
+                )
+            ).toStrictEqual([
+                `https://example.test/Gardening/pots/${current}/?from=2026-09-20#history`,
+            ]);
+        }
+    );
 
     it.each([
         "display-and-support",

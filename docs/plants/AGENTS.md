@@ -12,9 +12,7 @@
 - `P19` / `#1` is the shared rehab cactus container and `P20` / `#2` the shared
   succulent container. `P30` / `#6` has aggregate Succulent-10 and component-group profiles
   Succulent-10A/B/C, all sharing one pot; component taxa remain qualified. Removed Rehab-04 remains historical and has no active pot.
-- Former `P31` / `#7` and `P32` / `#8` are abandoned allocations for the
-  unreceived Amazon order archived under `docs/old-plans/`. Do not silently
-  reuse these IDs or count those research pages as active plant profiles.
+- The owner explicitly assigned `P31` / `#7` to Peperomia Bicolor and `P32` / `#8` to Tricolor oyster plant on September 20, 2026. The unreceived Amazon research under `docs/old-plans/` has no physical-label or tracker allocation and is excluded from active profiles.
 - Keep seller labels, qualified working IDs, receipt dates, and repot dates
   distinct. Preserve original label evidence when the probable identification
   changes. An order is not a confirmed arrival; a retail pot size is not a

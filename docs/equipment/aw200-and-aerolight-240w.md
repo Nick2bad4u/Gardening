@@ -103,7 +103,7 @@ Final hook positions and individual plant-tip distances are not mapped.
   arrangement applied. A follow-up confirms an 18-inch plant-tip reference
   and the same 13 h 15 m total cycle for both lights, including 15-minute
   sunrise and sunset transitions at the start and end. Exact clock times and
-  spectrum modes remain unrecorded. The
+  exact spectral calibration remain unrecorded; the owner later confirmed **Veg mode on both fixtures**. The
   percentage-times-rated-power comparison above is explicitly a planning inference.
 - **Owner's marked-up plan, September 13, 2026:** two horizontal fixture bodies,
   one above the other, both extending from the open room side across wood toward

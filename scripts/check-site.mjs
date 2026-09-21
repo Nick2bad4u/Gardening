@@ -9,6 +9,7 @@ import {
     getOldPlans,
     getProfiles,
 } from "../site/lib/content.mjs";
+import { renumberedPots } from "../site/lib/legacy.mjs";
 import { archivedAmazonPlan } from "../site/lib/old-plans.mjs";
 import { getReports } from "../site/lib/reports.mjs";
 import { isRecord } from "./build-data.mjs";
@@ -224,7 +225,7 @@ async function main() {
         ...archivedAmazonPlan.profiles.map(
             ([slug]) => `plants/${slug}/index.html`
         ),
-        ...archivedAmazonPlan.pots.map((id) => `pots/${id}/index.html`),
+        ...Object.keys(renumberedPots).map((id) => `pots/${id}/index.html`),
         ...equipment.map((doc) => `setup/equipment/${doc.slug}/index.html`),
         ...reports.map((report) => `reports/${report.date}/index.html`),
     ];

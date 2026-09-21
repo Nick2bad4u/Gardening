@@ -45,7 +45,9 @@ Current names, confidence levels, and corrections remain in the
 ## August additions
 
 The six August cacti and Kiwi aeonium came from Carlsons' Greenhouse on Torrey
-Road; the money tree came from Lowe's. The `E1`–`F3` and `#1`–`#4` mappings were
+Road; the money tree came from Home Depot in Howell, Michigan, on July 29, 2026,
+as recorded in its [maintained profile](../../docs/plants/houseplants/pachira-glabra.md).
+The `E1`–`F3` and `#1`–`#4` mappings were
 copied from the physical labels on 2026-08-10. The two Pachira files were
 created on 2026-08-26 as clean, AI-assisted presentation crops from photos
 supplied in chat; they are not untouched camera exports. They preserve the
@@ -99,9 +101,11 @@ the individual components.
 
 These full-frame acquisition photographs were supplied by the owner on September 20, 2026. The original supplied files are retained privately. Publication copies use the maintained JPEG metadata sanitizer: no crop, resizing or primary-image re-encoding was applied; a decoded-pixel comparison returned zero changed pixels for both. The visible tags preserve grower wording and guidance, not independent botanical verification. Copyright Nick; all rights reserved.
 
-| File                                                                                                                               | Evidence role                                  | Visible seller evidence                                                                                               |
-| ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| [2026-09-20-p33-peperomia-obtipan-bicolor-acquisition.jpg](./2026-09-20-p33-peperomia-obtipan-bicolor-acquisition.jpg)             | #9 / P33 acquisition, foliage and tag          | Carlson; “Peperomia obtipan Bicolor basket”; bright, indirect light; $14.99                                           |
-| [2026-09-20-p34-tradescantia-spathacea-tricolor-acquisition.jpg](./2026-09-20-p34-tradescantia-spathacea-tricolor-acquisition.jpg) | #10 / P34 acquisition, foliage and clearer tag | “Rhoeo spathacea Tricolor Basket”; bright, indirect light; strong pink light affects foliage color in this photograph |
+| File                                                                                                                               | Evidence role                                 | Visible seller evidence                                                                                               |
+| ---------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| [2026-09-20-p33-peperomia-obtipan-bicolor-acquisition.jpg](./2026-09-20-p33-peperomia-obtipan-bicolor-acquisition.jpg)             | #7 / P31 acquisition, foliage and tag         | Carlson; “Peperomia obtipan Bicolor basket”; bright, indirect light; $14.99                                           |
+| [2026-09-20-p34-tradescantia-spathacea-tricolor-acquisition.jpg](./2026-09-20-p34-tradescantia-spathacea-tricolor-acquisition.jpg) | #8 / P32 acquisition, foliage and clearer tag | “Rhoeo spathacea Tricolor Basket”; bright, indirect light; strong pink light affects foliage color in this photograph |
 
-The blurrier earlier #10 photograph remains private. The clearer frame above is the published evidence. Dedicated Gyazo Collection creation was unavailable during service maintenance; these local references remain usable independently of that service.
+The blurrier earlier Tricolor photograph remains private. The clearer frame above is the published evidence. Dedicated Gyazo Collection creation was unavailable during service maintenance; these local references remain usable independently of that service.
+
+The September 20 reassignment makes Peperomia **#7 / P31** and Tricolor **#8 / P32**. The `p33` and `p34` acquisition filenames above are retained publication URLs from their initial temporary assignments; those filename fragments are not current plant IDs. The original image bytes remain unchanged.

@@ -4,7 +4,14 @@ These photos document the installed indoor grow spot before the acrylic risers
 were fitted. They were captured on 2026-07-31 and renamed from the Google Photos
 timestamp exports so the subject is clear without opening every image.
 
-## Confirmed dimensions
+This is a **historical July–August 2026 measurement and planning record**, not
+the current display or an instruction to restore the old riser assignments.
+The September four-table arrangement and separate Money Tree windowsill position
+supersede this plan; use the [current placement guide](../../docs/layouts/table-placement-research.md)
+for the maintained arrangement. Original evidence files and recorded measurements
+remain unchanged.
+
+## Dimensions recorded for the earlier setup
 
 | Measurement                     |       Value |
 | ------------------------------- | ----------: |
@@ -16,7 +23,7 @@ timestamp exports so the subject is clear without opening every image.
 | Wooden tabletop                 |  16 × 13 in |
 | AW200SE wing-tip width          | About 26 in |
 
-Because both tabletops are 18 inches high, a riser calculation can compare
+Because both original tabletops were 18 inches high, the earlier riser calculation could compare
 tip-above-table measurements directly. The tape photos indicate these useful
 planning bands:
 
@@ -50,24 +57,27 @@ measurement photograph was supplied for this folder.
 | P27 / G1        | Black Widow     | 388.0 g | 0.50 in | 1.20 in |
 | P28 / G3        | Royal Flush     | 353.5 g | 1.30 in | 1.70 in |
 
-All six are currently in the same 4-inch round pot model, measured at
+At the August baseline, all six were in the same 4-inch round pot model, measured at
 4 × 4 × 3.7 inches. Exact tabletop placement and riser clearance remain to be
 measured separately.
 
-The photographs establish height tiers rather than 12 exact individual
-readings. The revised starting plan aims for a main starter canopy around 8–9
-inches above the wood:
+## Historical riser proposal
 
-- A3 and B1 use the +5.11-inch riser;
-- D3 and A2 use the +3.93-inch riser;
-- D2 and C3 use the +2.75-inch riser;
-- B2 and C2 use the +1.18-inch riser; and
-- A1, C1, D1, and B3 stay directly on the wood.
+The photographs established height tiers rather than 12 exact individual
+readings. The earlier starting plan proposed a main starter canopy around 8–9
+inches above the wood, with these assignments:
 
-A3 is visibly shorter than B2, so the earlier direct-A3 assignment was wrong
-for canopy leveling. A1 remains intentionally lower at the gentler edge because
-of its pale variegated tissue. Measure tabletop-to-highest-living-tip for every
-pot after dry-fitting; the browser calculator can override this starting map.
+- A3 and B1: +5.11-inch riser;
+- D3 and A2: +3.93-inch riser;
+- D2 and C3: +2.75-inch riser;
+- B2 and C2: +1.18-inch riser; and
+- A1, C1, D1, and B3: directly on the wood.
+
+A3 appeared shorter than B2 in the earlier photographs, prompting a revision
+to the proposed direct-A3 assignment. That plan kept A1 lower at an assumed
+gentler edge because of its pale variegated tissue; this was a planning inference,
+not a measured light comparison. The archived calculator and assignments do not
+establish current plant heights, clearances, or light exposure.
 
 ## File index
 
@@ -88,6 +98,6 @@ pot after dry-fitting; the browser calculator can override this starting map.
 | `2026-07-31-starter-height-07.jpg`           | `20260731_152907.jpg` | Starter-table left-side tape reference         |
 | `2026-07-31-growcam-overhead-layout.png`     | `camera-export.png`   | GrowCam overhead placement reference           |
 
-The resulting plant and riser arrangement is maintained in the
+The earlier plant and riser proposal is retained in the
 [historical grow-spot layout](https://nick2bad4u.github.io/Gardening/setup/archive/layout/) and the
 [AW200SE operating schedule](../../docs/equipment/aw200se-operating-schedule.md).

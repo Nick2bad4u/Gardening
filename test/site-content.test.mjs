@@ -18,7 +18,7 @@ import {
 } from "../site/lib/content/profile-source.mjs";
 
 describe("field guide source rendering", () => {
-    it("keeps abandoned plants searchable as old plans and out of active profiles and pots", async () => {
+    it("assigns the received houseplants to P31/P32 while keeping abandoned orders in old plans", async () => {
         expect.hasAssertions();
 
         const profiles = await getProfiles();
@@ -30,21 +30,23 @@ describe("field guide source rendering", () => {
         );
         expect(
             profiles.some((profile) =>
-                ["P31", "P32"].includes(profile.trackerId ?? "")
+                ["P33", "P34"].includes(profile.trackerId ?? "")
             )
         ).toBe(false);
+        expect(plantSheetUrl("P31")).toContain("gid=202609330");
+        expect(plantSheetUrl("P32")).toContain("gid=202609340");
         expect(archived).toHaveLength(6);
         expect(
             archived.some((document) =>
                 document.slug.endsWith("tradescantia-nanouk")
             )
         ).toBe(true);
-        expect(() => plantSheetUrl("P31")).toThrow(/No Google Sheets tab/v);
-        expect(() => plantSheetUrl("P32")).toThrow(/No Google Sheets tab/v);
+        expect(() => plantSheetUrl("P33")).toThrow(/No Google Sheets tab/v);
+        expect(() => plantSheetUrl("P34")).toThrow(/No Google Sheets tab/v);
         expect(
             profiles
                 .filter((profile) =>
-                    ["P33", "P34"].includes(profile.trackerId ?? "")
+                    ["P31", "P32"].includes(profile.trackerId ?? "")
                 )
                 .map((profile) => ({
                     id: profile.trackerId,
@@ -57,15 +59,15 @@ describe("field guide source rendering", () => {
                 )
         ).toStrictEqual([
             {
-                id: "P33",
+                id: "P31",
                 inventory: "Houseplant-03",
-                label: "#9",
+                label: "#7",
                 slug: "peperomia-obtipan-bicolor",
             },
             {
-                id: "P34",
+                id: "P32",
                 inventory: "Houseplant-04",
-                label: "#10",
+                label: "#8",
                 slug: "tradescantia-spathacea-tricolor",
             },
         ]);

@@ -12,7 +12,7 @@ Frequent early weighing helps establish how a particular plant, pot, and medium 
 
 Reviewing every active container's existing data each morning does not require physically weighing every container. A shared planter counts as one weighed assembly even when several plants live in it.
 
-The active roster has 32 tracked containers: P01–P30, P33, and P34. The unreceived [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md) is excluded from weigh-ins; former #7 / P31 and #8 / P32 allocations have no real measurements or care events. Do not request weights or create baselines merely to complete those archived records.
+The active roster has 32 tracked containers: P01–P32. The unreceived [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md) is excluded from weigh-ins; its withdrawn allocations have no real measurements or care events. Do not request weights or create baselines merely to complete those archived records.
 
 ## What Exists Today
 
@@ -99,7 +99,7 @@ For any request, the useful question is: **What will this weight help decide or 
 
 ### Partial-Drying Houseplants
 
-**P33 / #9 [Peperomia Bicolor](./plants/houseplants/peperomia-obtipan-bicolor.md)** and **P34 / #10 [Tricolor oyster plant](./plants/houseplants/tradescantia-spathacea-tricolor.md)** need manual partial-drying checks rather than a cactus-style whole-pot plateau. Peperomia should partially dry without prolonged drought; the oyster plant uses an upper 1–2-inch check scaled to its actual root-ball depth once measured. The [watering exceptions](./watering-strategy.md#collection-exceptions) link the supporting species guidance.
+**P31 / #7 [Peperomia Bicolor](./plants/houseplants/peperomia-obtipan-bicolor.md)** and **P32 / #8 [Tricolor oyster plant](./plants/houseplants/tradescantia-spathacea-tricolor.md)** need manual partial-drying checks rather than a cactus-style whole-pot plateau. Peperomia should partially dry without prolonged drought; the oyster plant uses an upper 1–2-inch check scaled to its actual root-ball depth once measured. The [watering exceptions](./watering-strategy.md#collection-exceptions) link the supporting species guidance.
 
 Request a weight when it can establish a real baseline, clarify a changing trend, check a credible measurement problem, or support a justified follow-up. Missing root-zone moisture or plant-condition evidence calls for that physical check; repeated weights cannot supply it. Keep their Check-only decisions separate from main Water candidates, and do not prolong drought to obtain a flat curve. Purchase alone supplies no scale reading, dry reference, watering event, or learned cycle.
 

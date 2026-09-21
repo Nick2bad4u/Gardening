@@ -14805,7 +14805,7 @@
                 "gardenLoggerObservationQueueBackupV1";
             const OBSERVATION_QUEUE_RECOVERY_KEY =
                 "gardenLoggerObservationQueueRecoveryV1";
-            const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV2";
+            const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV3";
             const BOOTSTRAP_CACHE_MAX_AGE_MS = 6 * 60 * 60 * 1000;
             const BOOTSTRAP_TIMEOUT_MS = 20000;
             const BOOTSTRAP_AUTO_RETRIES = 1;
@@ -15292,6 +15292,17 @@
 
             function payloadFingerprint(payload) {
                 return JSON.stringify(comparablePayload(payload));
+            }
+
+            function isStaleHouseplantDraft(payload) {
+                const ids = Array.isArray(payload?.plantIds)
+                    ? payload.plantIds
+                    : [payload?.plantId];
+                return (
+                    ids.some((id) => ["P33", "P34"].includes(id)) ||
+                    (ids.some((id) => ["P31", "P32"].includes(id)) &&
+                        payload.inventoryRevision !== "id528")
+                );
             }
 
             function renderMeasurementControls() {
@@ -16129,6 +16140,17 @@
 
             function addCurrentEntryToQueue() {
                 if (state.saving) return;
+                if (
+                    state.pendingSave &&
+                    isStaleHouseplantDraft(state.pendingSave.payload)
+                ) {
+                    showToast(
+                        "This saved draft uses an older or retired plant identity. Refresh or sync, review the plant selection, and remove the old draft before creating a new entry. Its unsaved data has been retained.",
+                        true,
+                        9000
+                    );
+                    return;
+                }
                 if (state.pendingSave && !state.pendingSave.replaceable) {
                     showToast(
                         "The direct save is still being confirmed. Wait for it before adding another reading.",
@@ -16280,9 +16302,8 @@
             function plantIconName(plant) {
                 if (plant?.id === "P19") return "shared-rehab-cactus-planter";
                 if (plant?.id === "P20") return "shared-succulent-planter";
-                if (plant?.id === "P31") return "four-succulent-planter";
-                if (plant?.id === "P33") return "peperomia-obtipan-bicolor";
-                if (plant?.id === "P34")
+                if (plant?.id === "P31") return "peperomia-obtipan-bicolor";
+                if (plant?.id === "P32")
                     return "tradescantia-spathacea-tricolor";
                 const match = /#([a-z0-9-]+)$/i.exec(
                     String(plant?.fieldGuideUrl || "")
@@ -19538,6 +19559,9 @@
                     throw new Error("Choose at least one bulk-care action.");
                 }
                 const payload = {
+                    ...(["P31", "P32"].some((id) => state.bulkSelected.has(id))
+                        ? { inventoryRevision: "id528" }
+                        : {}),
                     plantIds: state.bootstrap.plants
                         .filter((plant) => state.bulkSelected.has(plant.id))
                         .map((plant) => plant.id),
@@ -19717,6 +19741,14 @@
                 }
                 const stored = readBulkPendingSave();
                 let pending = stored;
+                if (pending && isStaleHouseplantDraft(pending.payload)) {
+                    showToast(
+                        "This saved draft uses an older or retired plant identity. Refresh or sync, review the plant selection, and remove the old draft before creating a new entry. Its unsaved data has been retained.",
+                        true,
+                        12000
+                    );
+                    return;
+                }
                 if (
                     pending &&
                     JSON.stringify(pending.payload) !== JSON.stringify(payload)
@@ -19927,6 +19959,9 @@
                     );
                 return {
                     plantId: $("plantSelect").value,
+                    ...(["P31", "P32"].includes($("plantSelect").value)
+                        ? { inventoryRevision: "id528" }
+                        : {}),
                     events: [...state.events],
                     observedAt: observedDate.toISOString(),
                     weight: $("weight").value,
@@ -20628,6 +20663,14 @@
                     return;
                 }
                 let pending = state.pendingSave;
+                if (pending && isStaleHouseplantDraft(pending.payload)) {
+                    showToast(
+                        "This saved draft uses an older or retired plant identity. Refresh or sync, review the plant selection, and remove the old draft before creating a new entry. Its unsaved data has been retained.",
+                        true,
+                        12000
+                    );
+                    return;
+                }
                 if (
                     pending &&
                     payloadFingerprint(pending.payload) !==

@@ -3,8 +3,8 @@
 **Archived September 20, 2026. Unreceived plant; cancellation pending, not confirmed.** The owner abandoned this five-plant Amazon plan after reviewing seller feedback. This page preserves September 19 research and proposed care only. It is outside the active collection and is not a watering, weighing, or shopping task. See the [old-plan overview](../amazon-plant-order-2026-09.md).
 
 - Former inventory allocation: Houseplant-02 — _Tradescantia_ 'Nanouk'
-- Former label allocation: `#8` — separate houseplant pot
-- Former tracker allocation: `P32`
+- Physical-label allocation: none — withdrawn
+- Tracker allocation: none — withdrawn
 - Status: **Archived old plan — unreceived; plant-order cancellation pending as of 2026-09-20**
 - Visual description: Cultivar references show broad leaves striped green, cream, and pink-purple on compact branching stems; those references do not document the purchased plant's current appearance.
 - Interesting fact: The cultivar's primary breeder record traces it to a 2012 cross in the Netherlands, selected for compact growth and colorful foliage.
@@ -14,7 +14,7 @@
 - Advertised container: Seller lists a rooted starter in a 2-inch nursery pot; receipt and root condition unrecorded
 - Former proposed pot: Owner-designated D'vine Dev Beaded Ceramic 4-inch pot, Blush Mauve, model `27-C-Z-K`, with drainage holes and no saucer in use; Molly's Succulent Mix; planting date and measured dimensions unrecorded
 
-Former label/tracker allocations are preserved as historical references and must not be silently reused. The separate D'vine Dev pot order has not been reported canceled or received; do not infer its status from the plant cancellation.
+Physical-label and tracker allocations are withdrawn; this is botanical research only. The separate D'vine Dev pot order has not been reported canceled or received; do not infer its status from the plant cancellation.
 
 ## Names and identity
 
@@ -31,7 +31,7 @@ The patent describes a 2012 cross between unnamed selections and subsequent sele
 
 ## Collection evidence and container
 
-The September 19 proposal placed Nanouk separately under former #8 / P32, outside the four-succulent #7 / P31 plan. Both administrative allocations were withdrawn September 20. No plant was received and no planting, watering, weight, or condition observation was recorded. Cancellation of the five-plant order is pending, not confirmed.
+The September 19 proposal placed Nanouk separately, outside the four-succulent shared-pot plan. Both administrative allocations were withdrawn September 20. No plant was received and no planting, watering, weight, or condition observation was recorded. Cancellation of the five-plant order is pending, not confirmed.
 
 The supplied purchase screenshot identified a D'vine Dev four-inch glazed beaded pot in Blush Mauve, model 27-C-Z-K. The owner intended to omit its supplied saucer. That separate pot order is not confirmed canceled or received. The earlier eight-inch Amazon link did not identify this item.
 
@@ -39,7 +39,7 @@ The supplied purchase screenshot identified a D'vine Dev four-inch glazed beaded
 
 | Topic       | Practical starting approach                                                                                                                                                                                                                                               |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Light       | Medium to bright indirect light, following Costa Farms' cultivar guidance. Use a gentler position than the cactus center; the final P32 position and leaf-height reading remain unrecorded. The adjacent area estimate of 18–22 DLI is not automatically its target.      |
+| Light       | Medium to bright indirect light, following Costa Farms' cultivar guidance. Use a gentler position than the cactus center; the proposed position and leaf-height reading remain unrecorded. The adjacent area estimate of 18–22 DLI is not automatically its target.       |
 | Water       | Allow some upper-medium drying, then water and drain. Avoid the prolonged complete dry-down used for many cacti, while also avoiding persistently saturated roots. Learn any future planting separately rather than copying a cactus interval or grams-per-day threshold. |
 | Pot and mix | The owner selected a 4-inch glazed drainage pot and Molly's Succulent Mix. Keep drainage unobstructed and protect furniture from runoff since the saucer is not used.                                                                                                     |
 | Airflow     | Continuous canopy and under-table fans are owner-reported, with slight airflow felt through the dressing. This can affect drying but does not establish uniform aeration around every root or immunity to rot.                                                            |

@@ -1,8 +1,8 @@
 # Tricolor oyster plant
 
 - Inventory: Houseplant-04 — _Tradescantia spathacea_ 'Tricolor'
-- Label ID: `#10`
-- Tracker ID: `P34`
+- Label ID: `#8`
+- Tracker ID: `P32`
 - Visual description: Compact rosettes of upright, pointed, strap-shaped leaves striped green and cream with pink tones and purple undersides; the photographed purchase is in a hanging nursery basket.
 - Interesting fact: The old nursery genus name _Rhoeo_ survives on this tag, while Kew accepts the species as _Tradescantia spathacea_. Its small flowers sit inside boat-shaped bracts, the origin of the common name oyster plant.
 - Identification: **seller-labeled “Rhoeo spathacea Tricolor”; consistent with variegated _Tradescantia spathacea_, with cultivar identity based on nursery provenance**
@@ -22,7 +22,7 @@
 
 Kew accepts _Tradescantia spathacea_, and NC State records _Rhoeo spathacea_ among its synonyms. Preserve the nursery's 'Tricolor' wording so the record remains traceable to the acquired plant. The specialist cultivar register Tradescantia Hub treats 'Tricolor' as an established synonym of 'Sitara'; that is a nomenclatural cross-reference, not an independent authentication of this individual plant.
 
-This rosette-forming species is distinct from the unreceived 'Nanouk' in the abandoned Amazon order. It receives **P34 / #10 / Houseplant-04**; archived P32 / #8 / Houseplant-02 remains reserved.
+This rosette-forming species is distinct from the unreceived 'Nanouk' in the abandoned Amazon order. At the owner's explicit request on September 20, it uses **P32 / #8 / Houseplant-04**. Archived Houseplant-02 retains its botanical research identity, with no physical-label or tracker allocation.
 
 ## Purchase and label evidence
 

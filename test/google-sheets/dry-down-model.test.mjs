@@ -376,7 +376,7 @@ describe("dry-down formulas and workbook installation", () => {
                 structuredClone(context.installWateringRecommendations())
             ).toStrictEqual({
                 historyChanged: false,
-                loggerVersion: "5.27.0",
+                loggerVersion: "5.28.0",
                 plants: 2,
             });
 
@@ -532,7 +532,7 @@ describe("dry-down formulas and workbook installation", () => {
         expect(context.installDryDownLearning()).toMatchObject({
             baselineColumns: 36,
             historyChanged: false,
-            loggerVersion: "5.27.0",
+            loggerVersion: "5.28.0",
             plants: 1,
         });
         expect(
@@ -744,7 +744,6 @@ describe("same-setup cycle learning", () => {
             "P19",
             "P20",
             "P30",
-            "P31",
         ]) {
             expect(context.wateringReadinessGuidance_(id)).toContain(
                 "every component"
@@ -755,7 +754,7 @@ describe("same-setup cycle learning", () => {
         }
     });
 
-    it.each(["P33", "P34"])(
+    it.each(["P31", "P32"])(
         "keeps %s houseplant readiness manual even with a supported near-dry forecast",
         (id) => {
             expect.hasAssertions();

@@ -86,8 +86,8 @@ describe("plant chart color identity", () => {
                 { length: 30 },
                 (_, index) => `P${String(index + 1).padStart(2, "0")}`
             ),
-            "P33",
-            "P34",
+            "P31",
+            "P32",
         ]);
 
         const uniqueColors = new Set(palette.map((color) => color.hex));

@@ -1,8 +1,8 @@
 # Peperomia Bicolor
 
 - Inventory: Houseplant-03 — _Peperomia obtusifolia_ 'Obtipan Bicolor'
-- Label ID: `#9`
-- Tracker ID: `P33`
+- Label ID: `#7`
+- Tracker ID: `P31`
 - Visual description: A compact, branching houseplant with thick, rounded green leaves and broad cream-colored variegation; the photographed purchase is in a hanging nursery basket.
 - Interesting fact: The breeder's patent describes 'Obtipan' as a cross between two unnamed _Peperomia obtusifolia_ cultivars, not a cross between different species. The RHS separately lists the variegated name 'Obtipan Bicolor'.
 - Identification: **seller-labeled “Peperomia obtipan Bicolor”; consistent with the RHS-listed _Peperomia obtusifolia_ 'Obtipan Bicolor', with cultivar identity based on nursery provenance**
@@ -29,7 +29,7 @@ The USPP29598P3 breeder record documents green-leaved 'Obtipan' and its two _P. 
 
 The owner confirmed buying this plant directly at Carlson's Greenhouses on September 20, 2026, in its nursery pot, now reported by the owner as six inches in diameter. The tag also identifies Carlson's Greenhouses as the grower. The photographed grower tag reads “Peperomia obtipan Bicolor basket”, “bright, indirect light”, and **$14.99**. The basket in the acquisition photograph is purchase-container evidence only. No completed repot or move, weight, or watering observation has been supplied. The separate Amazon Basics eight-inch drainage pot and floor-stool arrangement remain planned.
 
-This is a new allocation, **P33 / #9 / Houseplant-03**. Archived P31 / #7 and P32 / #8, including Houseplant-02 Nanouk, belong to the unreceived Amazon plan and are not reused.
+At the owner's explicit request on September 20, this plant uses **P31 / #7 / Houseplant-03**. The abandoned Amazon research has no physical-label or tracker allocation.
 
 ## Planned pots, medium, and floor placement
 

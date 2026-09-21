@@ -6,7 +6,7 @@ The [equipment and supplies inventory](./equipment/inventory.md) consolidates th
 
 ## Current routine
 
-**September 20 inventory update:** the collection now tracks **32 containers**, including newly purchased P33 / #9 Peperomia Bicolor and P34 / #10 Tricolor oyster plant. The owner confirmed buying both directly at Carlson's Greenhouses in owner-reported six-inch nursery pots. The five unreceived Amazon plants have been removed from active inventory and preserved in the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Cancellation is pending, not confirmed. Former #7 / P31 and #8 / P32 are archived allocations; no existing pot setup or weighing reference changes.
+**September 20 inventory update:** the collection now tracks **32 containers**, including newly purchased P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant. The owner confirmed buying both directly at Carlson's Greenhouses in owner-reported six-inch nursery pots. The five unreceived Amazon plants have been removed from active inventory and preserved in the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Cancellation is pending, not confirmed. The owner explicitly reassigned #7 / P31 and #8 / P32 to these two purchases; the canceled Amazon plants have no active pot allocation. No existing pot setup or weighing reference changes.
 
 The owner describes continuous rotating canopy airflow and an additional fan beneath the perforated tables. The lower fan's exact model and settings are unconfirmed. Slight air movement felt at the dressing is an owner observation, not a root-zone oxygen measurement. One destination pot is the previously decorated pot; its specific plant assignment is unconfirmed. The two houseplants remain in owner-reported six-inch nursery pots; depth, drainage, and medium are unrecorded. The owner reports both nursery pots are quite full and thinks the plants are ready for larger pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; placement on separate floor pot stools is planned, off the tables; stool models/heights and actual positions are unmeasured, and no completed repot or move is reported. The planned medium blends loose greenhouse-supplied mix, described by the owner as airy with perlite, with Molly's Succulent Mix; extra perlite is available, but no ratio has been chosen. The owner previously reported approximately 18–22 app-estimated DLI in the far-table area; that is not a default arrival exposure for either new plant. See the [houseplant placement guidance](./layouts/table-placement-research.md#september-20-houseplant-purchases). The separate D'vine four-inch pot order is not known to be canceled or received.
 
@@ -21,7 +21,7 @@ starting points, but plant response matters more than chasing an exact number.
 
 **September 15 table update:** the owner added two more **16 × 13-inch tables** and rearranged all 30 tracked pots onto the wooden display shown in the new photos. The working interpretation is four tables in a **2 × 2 block, nominally 26 inches across × 32 inches toward the window**, with **24 small pots in six columns × four rows at the room end** and the six larger/shared containers behind them. Table orientation and gaps have not been tape-checked; the new tables' height is unmeasured. The glass table no longer supports the photographed collection; its other use is unrecorded.
 
-**North-windowsill move confirmed September 16:** the owner confirmed that **#3 / P21 Money Tree is now on the north-facing windowsill**, off the rear-left table. The move was planned on September 15 after the owner noticed downward-pointing leaves; its exact completion time was not supplied. The established arrangement has **29 containers on wood (24 small pots at the front and five larger/shared containers behind them), plus one money tree on the windowsill**. The two September 20 houseplant purchases add P33 and P34, planned on separate floor pot stools off the tables; no completed move is reported and actual positions remain unmeasured. Apart from the later owner-confirmed A3 Serpent / F1 Hook-spined exchange, the other positions stay as photographed, including #4 Kiwi Aeonium; the vacated table spot stays open. The supplied photo predates the move. Excess light remains the owner's suspected cause, not a diagnosis established by leaf posture. Sill dimensions, exact position within the sill, daylight, lamp spill and leaf-height clearance remain unmeasured.
+**North-windowsill move confirmed September 16:** the owner confirmed that **#3 / P21 Money Tree is now on the north-facing windowsill**, off the rear-left table. The move was planned on September 15 after the owner noticed downward-pointing leaves; its exact completion time was not supplied. The established arrangement has **29 containers on wood (24 small pots at the front and five larger/shared containers behind them), plus one money tree on the windowsill**. The two September 20 houseplant purchases add P31 and P32, planned on separate floor pot stools off the tables; no completed move is reported and actual positions remain unmeasured. Apart from the later owner-confirmed A3 Serpent / F1 Hook-spined exchange, the other positions stay as photographed, including #4 Kiwi Aeonium; the vacated table spot stays open. The supplied photo predates the move. Excess light remains the owner's suspected cause, not a diagnosis established by leaf posture. Sill dimensions, exact position within the sill, daylight, lamp spill and leaf-height clearance remain unmeasured.
 
 The current diagram faces the window: **north window top, open room bottom, Mylar left, white wall right**. This rotates the old schematic view without changing the room. The two-foot end reflector remains absent. See the [current placement guide](./layouts/table-placement-research.md) for the corrected written slots, earlier illustrative light map and [owner light readings](./layouts/table-placement-research.md#owner-light-readings-and-confirmed-swap). The 48 approximate lux-derived PPFD readings were taken at individual plant heights, not one level plane. The whole mapped rectangle, including the intentionally unlit far edge, ranged from 145 to 677 estimated PPFD; the app's 13-hour DLI output ranged from 6.8 to 31.7. This is not calibrated PAR evidence, and the measurement date was not supplied. Only the A3/F1 exchange was confirmed after review. Old proposed swaps and the glass-spill gradient are historical.
 
@@ -67,7 +67,7 @@ plant run from opposing directions. Offset their vertical angles and
 oscillation arcs so their moving air crosses the canopy without forming one
 constant wind tunnel or making the fans fight directly into each other. Start
 both E6 units at Level 1–2, check gentle airflow across the new four-table display, and
-keep both daily programs inside the light window. The second fan is clipped
+treat the earlier daytime-only program as historical. The owner now reports continuous rotating canopy airflow and a separate fan below the perforated tables; exact current controller programs and the lower fan model remain unverified. The second fan is clipped
 high on the room-end divider pole and points slightly downward; exact hub
 heights and plant clearances remain measurements to record. See the
 [paired-fan program and placement rules](./equipment/aw200se-operating-schedule.md#paired-canopy-fan-program).
@@ -186,7 +186,7 @@ planned 30–60-minute drainage baseline.
 | August cactus pots                   | Existing nursery and repotted containers                                                                                         | Most new cacti are in 4 in pots. The boobie cactus is in a small 3 in pot and the Chamaelobivia is in a small 4 in pot.                                                                                                                                                                                                                                                                                                                                           |
 | Kiwi aeonium pot                     | Carlson's Greenhouse 5 in pot                                                                                                    | Current pot for Succulent-05.                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | Money-tree pot                       | [Amazon Basics 6 in pot with drainage holes and ridges](https://www.amazon.com/dp/B0F4QBMJMN?th=1)                               | Current 6 in matte-white pot for Houseplant-01 after transplanting from its Home Depot 4 in nursery pot.                                                                                                                                                                                                                                                                                                                                                          |
-| Planned P33/P34 pots                 | [Amazon Basics 8 in pot with saucer](https://www.amazon.com/dp/B0F4QB8C8M?th=1)                                                  | Two owner-confirmed 8 in Amazon Basics destination pots with many drainage holes, one previously decorated; quantity is owner-reported, not verified against an Amazon order. Separate floor-stool placement is planned; no completed repot or move is reported.                                                                                                                                                                                                  |
+| Planned P31/P32 pots                 | [Amazon Basics 8 in pot with saucer](https://www.amazon.com/dp/B0F4QB8C8M?th=1)                                                  | Two owner-confirmed 8 in Amazon Basics destination pots with many drainage holes, one previously decorated; quantity is owner-reported, not verified against an Amazon order. Separate floor-stool placement is planned; no completed repot or move is reported.                                                                                                                                                                                                  |
 | Mountain Crest received/current pots | Received: six 2 in nursery pots; current: six matching 4 in round pots measuring 4 × 4 × 3.7 in                                  | Received-pot shapes are not reliably documented. The owner reports removing about 95% of the nursery soil during the 2026-08-28 repot. Owner-entered live tracker pot size is 4 in for all six. Replacement-medium composition remains unrecorded.                                                                                                                                                                                                                |
 | Current medium for `P01`–`P18`       | [Molly's Succulent Mix](https://veryplants.com/products/mollys-succulent-mix-premium-gritty-soil-mix) plus horticultural perlite | Pot setup 2: 60% Molly's and 40% perlite by volume, measured as three cups to two cups. Molly's is a soilless gritty blend of akadama, pine bark, lava rock, Hyuga, pumice, and mycorrhizae, with no commercial fertilizer. Only old medium clinging to roots was retained during the August 14 repot.                                                                                                                                                            |
 | Historical medium                    | [Back to the Roots Succulent & Cacti Mix, 12 qt](https://www.amazon.com/dp/B0CLZ2YL9R)                                           | Previous peat-free packaged mix containing aged bark, perlite, horticultural sand, limestone, and a small amount of organic plant food. Retained as history because it was associated with the day-14 10–20 g/day loss observation. See the [manufacturer product page](https://backtotheroots.com/products/organic-succulents-cacti-mix-specialty-blend-6-qt) and [soil FAQ](https://backtotheroots.com/pages/soilFAQ-specialty-blend-succulents-and-cacti-mix). |
@@ -238,9 +238,7 @@ and `P28`/`G3` Royal Flush. The live 2026-08-29 `History` records are:
 | `P28`      | 353.5 g      | 1.3 in       | 1.7 in      |
 
 The 2026-08-28 Check/Clean bulk round records slightly moist substrate for all
-six. It does not document watering or fertilizer use. Exact maintained
-placement, plant-to-light clearance, and replacement-medium composition remain
-unrecorded.
+six. It does not document watering or fertilizer use. The owner confirmed the arrangement in the [current placement guide](./layouts/table-placement-research.md), including the later A3/F1 exchange. Exact individual plant-to-light clearance and replacement-medium composition remain unrecorded.
 
 The owner chose not to quarantine after hand inspection and soil removal. The
 box carried a California agriculture inspection/certification sticker reported
@@ -266,6 +264,8 @@ placement were not logged in that original acquisition note; current observation
 separate Gyazo Collections; shared receipt and post-repot context captures are
 reused across both records rather than uploaded twice.
 
+The live setup-2 Repot records supply later details: **P30 / #6** is logged as **“5 inch shallow”** with **“Nursery cacti soil and my top dressing”** at **September 3, 2026, 12:18 a.m. EDT**; **P29 / #5** is logged as **“4.25 round, 4.25 deep”** with **80% Molly's Succulent Mix / 20% perlite with top dressing** at **12:23 a.m. EDT**. Both timestamps fall in the September 2 care day. These are owner-entered pot descriptions, not fresh ruler measurements. Current placement follows the confirmed placement guide; weights remain in the live observation ledger.
+
 Do not infer either pot's physical configuration or current dryness from a photograph. Use eligible live observations for care and measured dimensions when those analytics are wanted. `P30` is one tracked pot: its aggregate overview and three component-group profiles (Succulent-10A/B/C) all retain #6 and the same history. Adding those reference pages on September 20 is not a repot or a reason to establish new weight references. Any later physical separation needs an explicit history event before new pot labels are assigned.
 
 ## Shared planters
@@ -274,6 +274,17 @@ The succulent arrangement and older cactus arrangement are mixed planters.
 Their plants do not have perfectly identical needs, so they should be managed by
 observation rather than a calendar.
 
+The live `Baselines` records retain these substrate and pot descriptions. They
+are recorded starting information, not new ruler measurements or detailed mix
+recipes; later eligible Repot observations take precedence.
+
+| Pot                            | Recorded pot description | Baseline medium                                                                                               |
+| ------------------------------ | ------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| `P19` / `#1` shared cacti      | 8 in wide                | Greenhouse succulent soil, already provided                                                                   |
+| `P20` / `#2` shared succulents | 7 in diagonal            | Greenhouse succulent soil, already provided                                                                   |
+| `P21` / `#3` Money Tree        | 6 in                     | Original nursery root-ball soil retained; remaining space filled with Back to the Roots cactus/succulent soil |
+| `P22` / `#4` Kiwi aeonium      | 5 in                     | Greenhouse succulent soil, already provided                                                                   |
+
 - The succulent planter contains an echeveria, elephant bush, silver teaspoons,
   and copper spoons.
 - The older cactus planter now contains a blue torch, monkey tail, and golden
@@ -281,7 +292,7 @@ observation rather than a calendar.
   cactus removed on 2026-07-24 after only a small patch of green flesh remained.
 - Decorative moss around the older cacti makes the soil and plant bases harder
   to inspect. Removing it is useful during rehabilitation.
-- Drainage in both shared planters still needs to be confirmed.
+- `P19` / `#1` has a recorded one-inch drainage hole: the September 1, 2026 `Other` observation at 3:58 p.m. local time records drilling it and removing 6 g of ceramic. This documents the modification, not a current drainage-rate measurement. Drainage for `P20` / `#2` remains unconfirmed.
 
 ## Details still worth recording
 
@@ -295,11 +306,9 @@ more precise are:
 - the plant ID used as the 18-inch tallest-tip light reference;
 - each individual pot's tabletop-to-tip height after final riser placement;
 - tabletop-to-tip heights for the six August cacti, Kiwi aeonium, and money tree;
-- exact maintained placement and plant-to-light clearance for the six Mountain
-  Crest plants; their Ruler dimensions and Scale weights are recorded;
+- exact individual plant-to-light clearance for the six Mountain Crest plants; their arrangement is confirmed and their Ruler dimensions and Scale weights are recorded;
 - replacement-medium composition for the six Mountain Crest plants;
-- exact current measured pot sizes, placement, replacement-medium composition,
-  first dry weights, and measured plant dimensions for `P29` and `P30`;
+- precise measured pot geometry beyond the logged P29/P30 size descriptions and any still-needed plant dimensions; their setup-2 repot media are recorded in the Repot observations, placement is confirmed, and current weights must be read from the live ledger;
 - final original-AeroWave hub height and distance to the nearest plant;
 - exact hub height, plant clearance, vertical angle, and app program for each
   E6 Gen2 fan;

@@ -35,7 +35,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.27.0");
+assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.28.0");
 for (const name of [
     "getWebCorrectionEntry",
     "previewWebObservationCorrection",
@@ -60,7 +60,7 @@ assert.ok(
 assert.equal(Object.keys(webPlantImageUrls).length, 32);
 assert.ok(
     Object.entries(webPlantImageUrls)
-        .filter(([id]) => id !== "P33" && id !== "P34")
+        .filter(([id]) => id !== "P31" && id !== "P32")
         .every(([, { currentImageUrl }]) =>
             /^https:\/\/thumb\.gyazo\.com\/thumb\/960\/[\da-f]{32}\.(?:jpg|png)$/v.test(
                 currentImageUrl
@@ -70,18 +70,30 @@ assert.ok(
 );
 /** @type {URL[]} */
 const acquisitionImageFiles = [];
-for (const [id, slug] of /** @type {const} */ ([
-    ["P33", "peperomia-obtipan-bicolor"],
-    ["P34", "tradescantia-spathacea-tricolor"],
+for (const [
+    id,
+    assetId,
+    slug,
+] of /** @type {const} */ ([
+    [
+        "P31",
+        "p33",
+        "peperomia-obtipan-bicolor",
+    ],
+    [
+        "P32",
+        "p34",
+        "tradescantia-spathacea-tricolor",
+    ],
 ])) {
-    const expected = `https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-09-20-${id.toLowerCase()}-${slug}-acquisition.jpg`;
+    const expected = `https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-09-20-${assetId}-${slug}-acquisition.jpg`;
     /** @type {{ currentImageUrl: string; nurseryLabelImageUrl?: string }} */
     const photo = required(webPlantImageUrls[id], `${id} acquisition photo`);
     assert.equal(photo.currentImageUrl, expected);
     assert.equal(photo.nurseryLabelImageUrl, expected);
     acquisitionImageFiles.push(
         new URL(
-            `../assets/nursery-labels/2026-09-20-${id.toLowerCase()}-${slug}-acquisition.jpg`,
+            `../assets/nursery-labels/2026-09-20-${assetId}-${slug}-acquisition.jpg`,
             import.meta.url
         )
     );
@@ -417,7 +429,7 @@ assert.match(html, /state\.saveStartedAt = Date\.now\(\);/v);
 assert.match(html, /function browserIsOnline\(\)/v);
 assert.match(html, /const BOOTSTRAP_TIMEOUT_MS = 20000;/v);
 assert.match(html, /const BOOTSTRAP_AUTO_RETRIES = 1;/v);
-assert.match(html, /const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV2";/v);
+assert.match(html, /const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV3";/v);
 assert.match(
     html,
     /const BOOTSTRAP_CACHE_MAX_AGE_MS = 6 \* 60 \* 60 \* 1000;/v

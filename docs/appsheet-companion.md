@@ -12,7 +12,21 @@ contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
+## September 20 owner-requested houseplant reassignment
+
+The maintained roster is **32 active containers, P01–P32**. **P31 / #7 is Peperomia Bicolor** and **P32 / #8 is Tricolor oyster plant**, both purchased from Carlson's Greenhouses. The owner explicitly requested these assignments in place of P33/#9 and P34/#10. The unreceived Amazon research remains archived without active pot or label assignments. Botanical profile IDs remain Houseplant-03 and Houseplant-04.
+
+Logger **5.28.0** keeps **58 physical App bulk columns / 59 including `_RowNumber`**. Activate the optional positive Decimal P31/P32 weights at **BC:BD** with the existing Weigh / Water + weigh visibility rule; retire P33/P34 at **BE:BF** as hidden, noneditable, blank-only compatibility fields. The maintained Round action covers 32 active weights plus both retired blank guards. Bulk Log orders P31/P32 after P30, and natural label sorting uses **#7 = 907** and **#8 = 908**. No schema regeneration or column deletion is required.
+
+Both creation-only key initial values use the maintained [initial-value expression](../scripts/google-sheets/appsheet-entry-id-initial-value.txt), `CONCATENATE("id528-", UNIQUEID())`: `App entries[Entry ID]` and `App bulk[Round ID]`. Existing keys and retry actions remain unchanged; do not enable reset-on-edit or rewrite old keys. The queue accepts an entry for a reassigned houseplant only when its original creation key carries the current inventory marker. Old saved forms cannot acquire that marker on retry; they require review and recreation against the current plant identity. The mobile logger applies the same rule to its creation-time inventory revision, preserving recoverable old drafts. This prevents reuse of a canceled Amazon form from recording care against a newly purchased plant.
+
+P31/P32 retain their manual-readiness watering exceptions and their current six-inch nursery-pot records. The eight-inch Amazon Basics drainage pots, floor stools, and greenhouse-mix/Molly's blend remain plans until the owner records completion. The native sheet IDs **202609330** and **202609340** remain stable. The [reassignment runbook](../scripts/google-sheets/README.md#september-20-owner-requested-houseplant-reassignment) records backup, rehearsal, preservation checks, and deployment verification.
+
+**Saved production configuration:** AppSheet **1.100110** and logger **5.28.0 / immutable 97** now use these assignments. The editor was reloaded and its disabled Save state confirmed. The private portrait folder `GardenPlantPortraits-8dcdcf679f29f69a` now also contains correct P31/P32 copies, while existing P33/P34 files and older Amazon revision folders remain available for historical clients. Current portrait and picker mappings include only P01–P32. No form observation was submitted during verification.
+
 ## September 20 purchased-houseplant enrollment
+
+This earlier same-day enrollment is historical. The owner-requested reassignment above supersedes its P33/P34 labels, reserved-ID policy, and bulk-field assignments.
 
 The maintained roster is **32 active containers: P01–P30, P33, and P34**. **P33 / #9 Peperomia Bicolor** and **P34 / #10 Tricolor oyster plant** were purchased in nursery pots directly at Carlson's Greenhouses on September 20, as confirmed by the owner; their tags also identify Carlson's as grower. The guide contains **41 profiles: 40 active and one historical**. Archived P31 / #7 and P32 / #8 remain reserved and excluded from active pickers.
 
@@ -215,12 +229,12 @@ and defaults to 90. The degree value is archived in `History!AN:AN`, displayed
 in read-only care history, and remains available to the public plant history.
 Clean and Prune are lightweight dated actions whose specifics belong in Notes.
 Bulk Log uses one `Selected plants` field for every supported shared action;
-per-plant weights use P01-P30, P33, and P34; P31/P32 fields remain hidden compatibility columns. `Selected plants` is
+per-plant weights use P01-P32; P33/P34 fields remain hidden compatibility columns. `Selected plants` is
 an EnumList of refs with `Valid_If` set to `SORT(Plant tracker[Plant ID])`; if
 that expression is removed, the deployed picker can appear empty even while
 the source table contains plants.
 
-The maintained Round action validation checks all 32 active weight fields and requires the archived P31/P32 fields blank. Weigh requires
+The maintained Round action validation checks all 32 active weight fields and requires the retired P33/P34 fields blank. Weigh requires
 at least one positive weight; Water + weigh also requires selected plants.
 Other shared care actions require selected plants. The maintained expression
 is [`appsheet-bulk-validation.txt`](../scripts/google-sheets/appsheet-bulk-validation.txt).
@@ -257,7 +271,7 @@ The Plants view sorts by the hidden virtual Number column
 the physical sequence A1-A3 through H1-H3, followed by the numbered plant and
 shared-planter labels #1-#6, #9, and #10. The `#` group always sorts after every lettered
 label.
-Canonical active IDs and writable picker values are P01-P30, P33, and P34; do not replace them
+Canonical active IDs and writable picker values are P01-P32; do not replace them
 with the display-order helper.
 
 Plants uses the Image virtual column `Plant portrait` as its square main
@@ -270,7 +284,7 @@ image across unrelated history rows. The virtual `Event badge` column adds a
 compact event symbol and name such as `💧 Water`, `⚖ Weigh`, `📏 Measure`, or
 `📝 Other` without changing the canonical `Event` value.
 
-If a portrait is missing, verify its current P01-P30/P33/P34 mapping, the revisioned Drive
+If a portrait is missing, verify its current P01-P32 mapping, the revisioned Drive
 folder and filename, and signed-in app access. For a missing reference photo,
 verify its external URL and the `Reference image` expression. Do not replace
 a missing image with an unrelated taxon merely to fill the thumbnail.

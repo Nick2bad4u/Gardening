@@ -8,7 +8,7 @@
 - Identification: **seller-labeled _Faucaria tigrina_, but probable _F. tuberculosa_ from current owner photographs; the conspicuous raised white leaf tubercles are the reason for the qualified correction**
 - Acquired from: Home Depot; grown by Altman Plants under Smart Planet Home branding; exact store not recorded
 - Acquired on: 2026-09-02
-- Current pot: repotted 2026-09-02; exact pot size and replacement-medium composition not logged
+- Current pot: setup 2; live Repot record describes “4.25 round, 4.25 deep” with 80% Molly's Succulent Mix / 20% perlite and top dressing
 
 ## Names and identification
 
@@ -50,10 +50,7 @@ second Home Depot planter. The Gyazo photo history contains the complete
 publication set; only selected current views are inlined in the field guide.
 
 The plant was repotted on acquisition day. The photographed label establishes
-a 2.5-inch retail assortment, but exact store, price, root condition, current
-measured pot size, replacement-medium ingredients, first weight, and dimensions
-have not been logged. Those blanks should remain blanks rather than being
-estimated from photographs.
+a 2.5-inch retail assortment. The live setup-2 Repot observation at **September 3, 2026, 12:23 a.m. EDT** records the pot as **“4.25 round, 4.25 deep”** and medium as **80% Molly's Succulent Mix / 20% perlite with top dressing**. That timestamp belongs to the September 2 care day, consistent with the acquisition-day repot narrative. These are logged descriptions, not dimensions inferred from photographs. Exact store, price, root condition, and any unlogged plant dimensions remain unknown; current weight observations belong in the live ledger.
 
 ## Origin and growth form
 
@@ -78,7 +75,7 @@ species identity.
 | Arrival             | Treat the September 2 photographs and future measured readings as the baseline. Record any softening, translucent tissue, or root instability during establishment.                                                                                                                                                                 |
 | Grow-light position | **Photo-matched rear right, in front of the square box · Bright.** September 15 rear wooden tables, facing the window. Retain probable Faucaria tuberculosa / seller F. tigrina qualifier; compare at leaf height. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
 | Water               | Soak only after the mix has dried through and the pot-weight trend supports it, then drain completely. Do not use a fixed calendar or misting routine.                                                                                                                                                                              |
-| Pot and mix         | Exact size and composition are unrecorded. Preserve a free-draining root zone and keep the paired-leaf crown above wet top dressing.                                                                                                                                                                                                |
+| Pot and mix         | Setup 2 records “4.25 round, 4.25 deep” and 80% Molly's Succulent Mix / 20% perlite with top dressing. Keep the paired-leaf crown above wet top dressing.                                                                                                                                                                           |
 | Temperature         | Favor warm active-growth conditions, airflow, and protection from cold wet roots. Indoor seasonal behavior should be observed rather than assumed from a retail calendar.                                                                                                                                                           |
 | Feeding             | If established growth is visible, use only the collection's dilute succulent feeding approach during a normal watering; do not feed a stressed or still-wet plant.                                                                                                                                                                  |
 

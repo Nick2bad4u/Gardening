@@ -1,7 +1,7 @@
 import type { APIRoute, GetStaticPaths } from "astro";
 
 import { getProfiles } from "../lib/content.mjs";
-import { legacyData, redirectHtml } from "../lib/legacy.mjs";
+import { legacyData, redirectHtml, renumberedPots } from "../lib/legacy.mjs";
 import { archivedAmazonPlan } from "../lib/old-plans.mjs";
 import { siteUrl } from "../lib/routes.mjs";
 
@@ -12,10 +12,10 @@ export const getStaticPaths: GetStaticPaths = () => [
             destination: `guides/old-plans/${archivedAmazonPlan.folder}/${slug}/`,
         },
     })),
-    ...archivedAmazonPlan.pots.map((id) => ({
+    ...Object.entries(renumberedPots).map(([id, current]) => ({
         params: { retired: `pots/${id}/index.html` },
         props: {
-            destination: `guides/old-plans/${archivedAmazonPlan.overview}/`,
+            destination: `pots/${current}/`,
         },
     })),
 ];

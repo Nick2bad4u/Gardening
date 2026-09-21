@@ -8,7 +8,7 @@
 - Identification: **retail tag confirms genus _Pachira_; _P. glabra_ is a supplied working candidate, not a proven species identification**
 - Acquired from: Home Depot, Howell, Michigan
 - Acquired on: 2026-07-29
-- Current pot: transplanted from 4 inches into a 6-inch Amazon Basics pot
+- Current pot: transplanted from 4 inches into a 6-inch Amazon Basics pot; Baselines records retained nursery root-ball soil with Back to the Roots cactus/succulent soil filling the remaining space
 - Photo archive: [licensed species-reference images](../../../assets/plants/pachira-glabra/)
 
 ## Names and identity

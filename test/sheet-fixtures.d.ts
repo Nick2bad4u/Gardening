@@ -57,6 +57,7 @@ export interface DataSheet {
     setFrozenRows: (rows: number) => DataSheet;
     setHiddenGridlines: (shouldHide: boolean) => DataSheet;
     setParent: (value: object) => void;
+    showColumns: (column: number, count?: number) => DataSheet;
 }
 export interface HistoryRange {
     clearContent: () => HistoryRange;

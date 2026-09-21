@@ -25,7 +25,7 @@ triggers below do not replace that equipment limit.
 
 ## September 20 houseplant purchases
 
-The owner purchased **P33 / #9 [Peperomia Bicolor](./plants/houseplants/peperomia-obtipan-bicolor.md)** and **P34 / #10 [Tricolor oyster plant](./plants/houseplants/tradescantia-spathacea-tricolor.md)** on September 20. The owner confirmed purchasing both directly at Carlson's Greenhouses in owner-reported six-inch nursery pots; the tags also identify Carlson's as the grower. Both labels specify bright, indirect light. Start with a gentler leaf-height exposure and gradual acclimation; the previously reported 18–22 app-estimated DLI far-table area is not automatically assigned. The [placement guide](./layouts/table-placement-research.md#september-20-houseplant-purchases) records explicitly inferred starting ranges.
+The owner purchased **P31 / #7 [Peperomia Bicolor](./plants/houseplants/peperomia-obtipan-bicolor.md)** and **P32 / #8 [Tricolor oyster plant](./plants/houseplants/tradescantia-spathacea-tricolor.md)** on September 20. The owner confirmed purchasing both directly at Carlson's Greenhouses in owner-reported six-inch nursery pots; the tags also identify Carlson's as the grower. Both labels specify bright, indirect light. Start with a gentler leaf-height exposure and gradual acclimation; the previously reported 18–22 app-estimated DLI far-table area is not automatically assigned. The [placement guide](./layouts/table-placement-research.md#september-20-houseplant-purchases) records explicitly inferred starting ranges.
 
 Check these as houseplants, without waiting for a cactus-style whole-pot dry plateau. Peperomia should partially dry between waterings without prolonged drought; for the oyster plant, check the upper 1–2 inches once the actual pot/root-ball depth is known. Check the current nursery-pot drainage and inspect below a dry surface before watering. A weight or model date is supporting evidence only. Inspect the new plants for pests, keep oyster-plant sap away from skin and chewing pets, and defer feeding until roots, nursery medium, and existing fertilizer are understood. Their profiles cite the species care guidance.
 
@@ -37,7 +37,7 @@ A practical initial trial is **two parts greenhouse potting mix to one part Moll
 
 ## Baseline routine
 
-**Archived plan:** the five unreceived Amazon plants are excluded from the active care routine; see the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Their former #7 / P31 and #8 / P32 allocations do not create current weighing, watering, or feeding tasks. Cancellation remains pending.
+**Archived plan:** the five unreceived Amazon plants are excluded from the active care routine; see the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Their pot allocations are withdrawn and do not create current weighing, watering, or feeding tasks. Cancellation remains pending.
 
 1. Give the plants strong light, but increase intensity gradually after a
    low-light period or a major move.
@@ -196,10 +196,7 @@ is the canonical dated plan for the Fenton move indoors, confirmed and pending
 controller paths, light and paired-fan settings, placement and strength, pot
 layout, rotation, local daylight, and outdoor-day overrides.
 
-The older mixed planter spent years in weak light, but it has now had about a
-month outside in bright shade with a little direct sun. That counts as partial
-acclimation, and the monkey tail's improved growth suggests the current outdoor
-exposure is working.
+Before the July indoor transition, the older mixed planter had spent about a month outside in bright shade with a little direct sun after years in weak light. The monkey tail showed better growth then. This is historical rehabilitation evidence; the collection now uses the maintained indoor arrangement, not that outdoor program.
 
 | Date          | Starting setting                                                                                                                                  |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -350,7 +347,7 @@ the next several weeks.
 
 The 2026-08-28 Check/Clean bulk round records slightly moist substrate for all
 six. This does not establish a watering or fertilizer event. Their deliberate
-2026-08-28 repots and 4-inch current pots establish pot setup 1. The [relative-light guide](./layouts/table-placement-research.md) now supplies proposed positions; completed moves and the replacement-medium composition remain unrecorded.
+2026-08-28 repots and 4-inch current pots establish pot setup 1. The [current placement guide](./layouts/table-placement-research.md) records the owner-confirmed arrangement and later A3/F1 exchange. Replacement-medium composition and exact individual clearance remain unrecorded.
 
 | Tracker ID | Scale weight | Ruler height | Ruler width |
 | ---------- | ------------ | ------------ | ----------- |

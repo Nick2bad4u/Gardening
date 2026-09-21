@@ -3,15 +3,17 @@ import { createHash } from "node:crypto";
 import { isRecord } from "../build-data.mjs";
 import { buildInventoryMetadataRequests } from "./inventory-metadata.mjs";
 import activePalette from "./plant-colors.json" with { type: "json" };
-// Historical September 19 enrollment palette, independent of the active roster.
+// Historical enrollment palettes, independent of the current reassigned roster.
 const palette = [
     { hex: "#BD704B", id: "P31", name: "Terracotta" },
     { hex: "#A36591", id: "P32", name: "Mauve" },
+    { hex: "#566E36", id: "P33", name: "Moss" },
+    { hex: "#BE719C", id: "P34", name: "Heather" },
 ];
 
 /** @param {string} id */
 function plantColor(id) {
-    const color = [...activePalette, ...palette].find(
+    const color = [...palette, ...activePalette].find(
         (entry) => entry.id === id
     );
     if (!color) throw new Error(`Unknown historical enrollment color: ${id}`);
@@ -667,7 +669,7 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
                 0,
                 entered(`=HYPERLINK("#gid=${plant.sheetId}","View")`)
             );
-            const color = [...activePalette, ...palette].find(
+            const color = [...palette, ...activePalette].find(
                 (entry) => entry.id === plant.id
             );
             if (!color) throw new Error(`Missing color for ${plant.id}`);

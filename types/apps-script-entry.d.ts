@@ -26,6 +26,7 @@ interface GardenEntryPayload {
     flowerCount?: unknown;
     flowerDetails?: unknown;
     height?: unknown;
+    inventoryRevision?: unknown;
     measurementMethod?: unknown;
     measurementQuality?: unknown;
     measurementUnit?: unknown;

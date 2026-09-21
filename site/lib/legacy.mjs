@@ -1,6 +1,9 @@
 import { archivedAmazonPlan } from "./old-plans.mjs";
 import { potUrl, profileUrl, siteUrl } from "./routes.mjs";
 
+/** Previous Carlson acquisition IDs retained for existing bookmarks. */
+export const renumberedPots = { P33: "P31", P34: "P32" };
+
 /**
  * @typedef {{
  *     anchors: Record<string, string>;
@@ -72,13 +75,12 @@ export function legacyData(profiles) {
             `guides/old-plans/${archivedAmazonPlan.folder}/${slug}/`
         );
     }
-    for (const id of archivedAmazonPlan.pots) {
-        data.pots[id] = siteUrl(
-            `guides/old-plans/${archivedAmazonPlan.overview}/`
-        );
+    for (const [previous, current] of Object.entries(renumberedPots)) {
+        if (data.pots[current] !== undefined)
+            data.pots[previous] = potUrl(current);
     }
-    data.labels["#7"] = "P31";
-    data.labels["#8"] = "P32";
+    if (data.pots["P31"] !== undefined) data.labels["#9"] = "P31";
+    if (data.pots["P32"] !== undefined) data.labels["#10"] = "P32";
     return data;
 }
 

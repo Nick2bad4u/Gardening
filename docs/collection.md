@@ -200,10 +200,10 @@ The owner purchased two separate basket-grown houseplants on **2026-09-20**. The
 
 | Inventory ID  | Label ID | Tracker ID | Working identification                                                                         | Common name           | Evidence                                                                  |
 | ------------- | -------- | ---------- | ---------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------------------------------------- |
-| Houseplant-03 | `#9`     | `P33`      | [_Peperomia obtusifolia_ 'Obtipan Bicolor'](./plants/houseplants/peperomia-obtipan-bicolor.md) | Peperomia Bicolor     | Tag: “Peperomia obtipan Bicolor basket”; “bright, indirect light”; $14.99 |
-| Houseplant-04 | `#10`    | `P34`      | [_Tradescantia spathacea_ 'Tricolor'](./plants/houseplants/tradescantia-spathacea-tricolor.md) | Tricolor oyster plant | Tag: “Rhoeo spathacea Tricolor Basket”; “bright, indirect light”          |
+| Houseplant-03 | `#7`     | `P31`      | [_Peperomia obtusifolia_ 'Obtipan Bicolor'](./plants/houseplants/peperomia-obtipan-bicolor.md) | Peperomia Bicolor     | Tag: “Peperomia obtipan Bicolor basket”; “bright, indirect light”; $14.99 |
+| Houseplant-04 | `#8`     | `P32`      | [_Tradescantia spathacea_ 'Tricolor'](./plants/houseplants/tradescantia-spathacea-tricolor.md) | Tricolor oyster plant | Tag: “Rhoeo spathacea Tricolor Basket”; “bright, indirect light”          |
 
-These are new allocations. P31 / #7, P32 / #8, and Houseplant-02 remain reserved for the abandoned Amazon plan. Both new plants need a gentler, measured starting position; the previously reported 18–22 app-estimated DLI far-table area is not automatically assigned to either purchase. See the [current placement guide](./layouts/table-placement-research.md#september-20-houseplant-purchases).
+The owner explicitly assigned P31 / #7 to Peperomia Bicolor and P32 / #8 to Tricolor oyster plant on September 20. Archived Houseplant-02 and Succulent-11–14 retain research identities only, with no physical-label or tracker allocation. Both new plants need a gentler, measured starting position; the previously reported 18–22 app-estimated DLI far-table area is not automatically assigned to either purchase. See the [current placement guide](./layouts/table-placement-research.md#september-20-houseplant-purchases).
 
 ## September 2026 Home Depot succulent additions
 
@@ -212,6 +212,8 @@ same day, and assigned the next permanent numbered labels. Photographed labels
 identify Altman Plants as grower and Smart Planet Home as the retail brand.
 Exact store, current measured pot dimensions, replacement-medium composition,
 weights, plant dimensions, and maintained placement were not recorded in the acquisition note; use the current placement guide and live ledger for subsequent observations.
+
+The live setup-2 Repot records supply later details: **P30 / #6** is logged as **“5 inch shallow”** with **“Nursery cacti soil and my top dressing”** at **September 3, 2026, 12:18 a.m. EDT**; **P29 / #5** is logged as **“4.25 round, 4.25 deep”** with **80% Molly's Succulent Mix / 20% perlite with top dressing** at **12:23 a.m. EDT**. Both timestamps fall in the September 2 care day. These are owner-entered pot descriptions, not fresh ruler measurements. Current placement follows the confirmed placement guide; weights remain in the live observation ledger.
 
 | Inventory ID  | Label ID | Tracker ID | Working identification                                                                                          | Common name                  | Confidence                                  | Current record                                     |
 | ------------- | -------- | ---------- | --------------------------------------------------------------------------------------------------------------- | ---------------------------- | ------------------------------------------- | -------------------------------------------------- |
@@ -267,8 +269,7 @@ fertilizer use. The live 2026-08-29 `History` measurements are:
 | `P27`      | 388 g           | 0.5 in          | 1.2 in         |
 | `P28`      | 353.5 g         | 1.3 in          | 1.7 in         |
 
-Exact maintained placement and the replacement-medium composition remain
-unrecorded. The observed 2-inch-to-4-inch change is not a general up-pot rule;
+The owner confirmed the arrangement in the [current placement guide](./layouts/table-placement-research.md), including the later A3/F1 exchange. Replacement-medium composition and exact individual clearance remain unrecorded. The observed 2-inch-to-4-inch change is not a general up-pot rule;
 the current pots need their own drainage and dry-down observations.
 
 The Split Rock and hardy _Sempervivum_ are not additions to the established
@@ -279,7 +280,7 @@ lower-light houseplant.
 
 ## Abandoned September 19 Amazon plan
 
-All five unreceived plants are excluded from the active inventory. Their research is preserved in the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). The former Succulent-11–14 / #7 / P31 shared-planter allocation and Houseplant-02 / #8 / P32 Nanouk allocation are archived and must not be silently reused. The decorated pot is one of the two Amazon Basics destinations, with its specific plant assignment unconfirmed; the separate D'vine four-inch pot order has no confirmed cancellation or receipt.
+All five unreceived plants are excluded from the active inventory. Their research is preserved in the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Succulent-11–14 and Houseplant-02 retain archived research identities; their physical-label and tracker allocations are withdrawn. The decorated pot is one of the two Amazon Basics destinations, with its specific plant assignment unconfirmed; the separate D'vine four-inch pot order has no confirmed cancellation or receipt.
 
 ## Identification follow-ups
 

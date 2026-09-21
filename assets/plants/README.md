@@ -45,8 +45,8 @@ the collection plant has the same identification.
 | Rehab-03      | `#1; formerly A4-B4` | _Echinopsis spachiana_ - Golden torch cactus                                    |     10 | [profile](../../docs/plants/rehab/echinopsis-spachiana.md)                           | [open](./echinopsis-spachiana/)                           |
 | Rehab-04      | none                 | _Mammillaria bombycina_ - Silken pincushion cactus                              |      8 | [profile](../../docs/plants/rehab/mammillaria-bombycina.md)                          | [open](./mammillaria-bombycina/)                          |
 | Houseplant-01 | `#3`                 | _Pachira glabra_ - Money tree                                                   |      8 | [profile](../../docs/plants/houseplants/pachira-glabra.md)                           | [open](./pachira-glabra/)                                 |
-| Houseplant-03 | `#9`; `P33`          | Nursery-tagged Peperomia Obtipan Bicolor                                        |      0 | [profile](../../docs/plants/houseplants/peperomia-obtipan-bicolor.md)                | —                                                         |
-| Houseplant-04 | `#10`; `P34`         | Nursery-tagged Rhoeo spathacea Tricolor Basket                                  |      0 | [profile](../../docs/plants/houseplants/tradescantia-spathacea-tricolor.md)          | —                                                         |
+| Houseplant-03 | `#7`; `P31`          | Nursery-tagged Peperomia Obtipan Bicolor                                        |      0 | [profile](../../docs/plants/houseplants/peperomia-obtipan-bicolor.md)                | —                                                         |
+| Houseplant-04 | `#8`; `P32`          | Nursery-tagged Rhoeo spathacea Tricolor Basket                                  |      0 | [profile](../../docs/plants/houseplants/tradescantia-spathacea-tricolor.md)          | —                                                         |
 
 See [ATTRIBUTION.md](./ATTRIBUTION.md) for a compact attribution table and
 [photo-manifest.json](./photo-manifest.json) for machine-readable metadata and hashes.

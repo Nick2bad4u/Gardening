@@ -46,7 +46,7 @@ corrected pot label is `H1`, and the permanent tracker ID is `P24`.
 Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
 slightly moist substrate. The live 2026-08-29 Measurement record is **361.5 g**
 by Scale and **1.0 in high × 2.55 in wide** by Ruler. These are measured
-records, not watering or fertilizer events. The proposed maintained position is documented below; physical completion of that move and the replacement-medium composition remain unrecorded.
+records, not watering or fertilizer events. The owner confirmed the arrangement recorded in the [current placement guide](../../layouts/table-placement-research.md), including the later A3/F1 exchange. Replacement-medium composition and exact individual clearance remain unrecorded; placement completion is no longer pending.
 
 The owner chose not to quarantine this shipment after hand inspection, owner-
 reported near-complete nursery-soil removal, and seeing a California agriculture sticker on

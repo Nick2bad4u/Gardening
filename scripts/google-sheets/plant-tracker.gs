@@ -16,7 +16,7 @@
    installDailyCareDashboard, GARDEN_CYCLE_COMPARISON */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.27.0",
+    version: "5.28.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -221,13 +221,13 @@ const WEB_PLANT_IMAGE_URLS = Object.freeze({
         nurseryLabelImageUrl:
             "https://i.gyazo.com/a9b8fd1b6ab2e49c263806566ad79087.webp",
     }),
-    P33: Object.freeze({
+    P31: Object.freeze({
         currentImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-09-20-p33-peperomia-obtipan-bicolor-acquisition.jpg",
         nurseryLabelImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-09-20-p33-peperomia-obtipan-bicolor-acquisition.jpg",
     }),
-    P34: Object.freeze({
+    P32: Object.freeze({
         currentImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-09-20-p34-tradescantia-spathacea-tricolor-acquisition.jpg",
         nurseryLabelImageUrl:
@@ -429,12 +429,13 @@ const APP_SHEET_BULK_V514_PLANTS = Object.freeze([
 
 const APP_SHEET_BULK_PLANTS = Object.freeze([
     ...APP_SHEET_BULK_V514_PLANTS,
-    "P33",
-    "P34",
+    "P31",
+    "P32",
 ]);
-// Reserved IDs from the canceled September order. Never reuse these IDs or
-// silently discard stale offline drafts addressed to them.
-const ARCHIVED_PLANT_IDS = Object.freeze(["P31", "P32"]);
+// Owner reassigned the two purchased houseplants to P31/P32. Old P33/P34
+// requests stay retired; freshness guards prevent canceled-order draft reuse.
+const ARCHIVED_PLANT_IDS = Object.freeze(["P33", "P34"]);
+const HOUSEPLANT_INVENTORY_REVISION = "id528";
 
 const APP_SHEET_BULK_LEGACY_HEADERS = Object.freeze([
     "Round ID",
@@ -515,12 +516,13 @@ const APP_SHEET_BULK_V525_HEADERS = Object.freeze([
 // Append new inventory weights; never shift the existing AppSheet columns.
 const APP_SHEET_BULK_V526_HEADERS = Object.freeze([
     ...APP_SHEET_BULK_V525_HEADERS,
-    // Deprecated compatibility columns: retain stored data and reject new input.
+    // P31/P32 fields are reused only after the owner-authorized empty proof.
     "P31 weight (g)",
     "P32 weight (g)",
 ]);
 const APP_SHEET_BULK_HEADERS = Object.freeze([
     ...APP_SHEET_BULK_V526_HEADERS,
+    // Retired P33/P34 compatibility fields remain in their original positions.
     "P33 weight (g)",
     "P34 weight (g)",
 ]);
@@ -1070,7 +1072,15 @@ function prepareWebObservation_(spreadsheet, payload, plantRecords) {
     const plantId = cleanText_(payload?.plantId);
     if (ARCHIVED_PLANT_IDS.includes(plantId)) {
         throw new Error(
-            `Plant ${plantId} is archived; its purchase plan was withdrawn. Remove this plant from the queued entry.`
+            `Plant ${plantId} is retired. Refresh or sync and review the plant selection; the unsaved entry is retained.`
+        );
+    }
+    if (
+        ["P31", "P32"].includes(plantId) &&
+        payload.inventoryRevision !== HOUSEPLANT_INVENTORY_REVISION
+    ) {
+        throw new Error(
+            "This draft predates the P31/P32 plant reassignment. Refresh or sync and review the plant selection before creating a new entry; the unsaved draft is retained."
         );
     }
     /** @type {GardenEntryPlant | null | undefined} */
@@ -1640,7 +1650,7 @@ function appSheetBulkPayloadsFromRow_(row, roundId) {
         : cleanText_(selection).split(/[,;]/).map(cleanText_);
     if (selectedIds.some((id) => ARCHIVED_PLANT_IDS.includes(id))) {
         throw new Error(
-            "P31 and P32 are archived canceled-order IDs. Remove them from the selected plants before retrying."
+            "P33 and P34 are retired IDs. Refresh or sync and review the plant selection. Remove them from the selected plants before retrying."
         );
     }
     const archivedWeights = ARCHIVED_PLANT_IDS.filter((plantId) =>
@@ -1717,6 +1727,11 @@ function appSheetBulkPayloadsFromRow_(row, roundId) {
             events.push(action);
         }
         if (!events.length) return [];
+        if (["P31", "P32"].includes(plantId) && !roundId.startsWith("id528-")) {
+            throw new Error(
+                "This round predates the P31/P32 reassignment. Sync AppSheet and review the plant selection before creating a new round; the unsaved round is retained."
+            );
+        }
         const requestId = normalizeRequestId_(
             `appsheet-bulk-${roundId}-${plantId}`,
             true
@@ -1726,6 +1741,9 @@ function appSheetBulkPayloadsFromRow_(row, roundId) {
                 plantId,
                 payload: {
                     requestId,
+                    inventoryRevision: roundId.startsWith("id528-")
+                        ? HOUSEPLANT_INVENTORY_REVISION
+                        : "",
                     observedAt,
                     plantId,
                     events,
@@ -1768,7 +1786,7 @@ function appSheetBulkWateredPlants_(value) {
     );
     if (invalid.length) {
         throw new Error(
-            `Unknown selected plant ID: ${invalid.join(", ")}. P31 and P32 are archived canceled-order IDs.`
+            `Unknown selected plant ID: ${invalid.join(", ")}. P33 and P34 are retired IDs. Refresh or sync and review the plant selection.`
         );
     }
     return selected;
@@ -1922,7 +1940,7 @@ function installAppSheetBulkSheet() {
         .getRange(2, APP_SHEET_BULK_STATUS_INDEX + 1, dataRowCount, 1)
         .setDataValidation(statusValidation);
     sheet
-        .getRange(2, APP_SHEET_BULK_V525_HEADERS.length + 1, dataRowCount, 2)
+        .getRange(2, APP_SHEET_BULK_V526_HEADERS.length + 1, dataRowCount, 2)
         .setDataValidation(
             SpreadsheetApp.newDataValidation()
                 .requireValueInList([""], false)
@@ -1931,7 +1949,7 @@ function installAppSheetBulkSheet() {
         )
         .setNumberFormat("0.0");
     sheet
-        .getRange(2, APP_SHEET_BULK_V526_HEADERS.length + 1, dataRowCount, 2)
+        .getRange(2, APP_SHEET_BULK_V525_HEADERS.length + 1, dataRowCount, 2)
         .setDataValidation(weightValidation)
         .setNumberFormat("0.0");
     const rotationValidation = SpreadsheetApp.newDataValidation()
@@ -2019,7 +2037,8 @@ function installAppSheetBulkSheet() {
     sheet.setColumnWidth(APP_SHEET_BULK_WATERING_APPLICATION_INDEX + 1, 180);
     sheet.setColumnWidth(APP_SHEET_BULK_WATER_AMOUNT_INDEX + 1, 130);
     sheet.hideColumns(APP_SHEET_BULK_NOTES_INDEX + 2, 7);
-    sheet.hideColumns(APP_SHEET_BULK_V525_HEADERS.length + 1, 2);
+    sheet.showColumns(APP_SHEET_BULK_V525_HEADERS.length + 1, 2);
+    sheet.hideColumns(APP_SHEET_BULK_V526_HEADERS.length + 1, 2);
 
     const result = {
         created,
@@ -2307,6 +2326,9 @@ function appSheetPayloadFromRow_(row, requestId) {
         requestId,
         observedAt: row[1] || "",
         plantId: cleanText_(row[2]),
+        inventoryRevision: cleanText_(row[0]).startsWith("id528-")
+            ? HOUSEPLANT_INVENTORY_REVISION
+            : "",
         events: appSheetEventList_(row[3]),
         weightState: cleanText_(row[4]),
         weight: row[5],
@@ -2755,6 +2777,7 @@ function saveBulkCareObservation(payload) {
                 requestId: `${baseRequestId.slice(0, 88)}-${plant.id}`,
                 observedAt: observationDate,
                 plantId: plant.id,
+                inventoryRevision: payload.inventoryRevision,
                 events: eventNames,
                 notes,
                 nutrientsUsed: details.nutrientsUsed,
@@ -3231,16 +3254,16 @@ function refreshGardenWorkbookPages21To30() {
     return refreshGardenWorkbookPageRange_(20, 30);
 }
 
-/** Retained operator entry point; archived pages are not refreshed. */
+/** Refresh the two active houseplant pages after the owner-approved reassignment. */
 function refreshGardenWorkbookPages31To32() {
-    throw new Error(
-        "P31 and P32 are archived; there are no active pages to refresh."
-    );
+    return refreshGardenWorkbookPageRange_(30, 32);
 }
 
 /** Refreshes the two purchased houseplants without rebuilding shared views. */
 function refreshGardenWorkbookPages33To34() {
-    return refreshGardenWorkbookPageRange_(30, 32);
+    throw new Error(
+        "P33 and P34 are retired; refresh active P31/P32 pages instead."
+    );
 }
 
 /** @param {number} startIndex @param {number} endIndex */
@@ -3397,7 +3420,7 @@ function dryDownRecordsByPlant_(history) {
 function dryDownOutputRow_(id, records) {
     const model = dryDownModelForPlant_(records);
     const watering = wateringRecommendation_(cleanText_(id), model);
-    const isManualHouseplant = ["P33", "P34"].includes(cleanText_(id));
+    const isManualHouseplant = ["P31", "P32"].includes(cleanText_(id));
     return [
         cleanText_(id),
         model.setup,
@@ -3447,15 +3470,14 @@ function wateringRecommendation_(plantId, model) {
     if (ARCHIVED_PLANT_IDS.includes(plantId)) {
         return {
             date: "",
-            guidance: "Archived canceled-order plant; no care recommendation.",
+            guidance: "Retired plant ID; no care recommendation.",
         };
     }
     /** @type {Record<string, string>} */
     const manual = {
         P21: "Inspect upper 2 in of mix; water when dry there. Do not wait for the whole root ball to become bone dry.",
-        P32: "Let the upper mix dry somewhat, then water and drain. Do not wait for the whole root ball to become bone dry; a weight forecast alone cannot establish readiness.",
-        P33: "Allow the mix to partially dry before watering and draining. Do not wait for the whole root ball to become bone dry or use a cactus dry reference or plateau as permission to water.",
-        P34: "Allow the upper 1–2 in of mix to dry before watering and draining. Do not wait for the whole root ball to become bone dry or use a cactus dry reference or plateau as permission to water.",
+        P31: "Allow the mix to partially dry before watering and draining. Do not wait for the whole root ball to become bone dry or use a cactus dry reference or plateau as permission to water.",
+        P32: "Allow the upper 1–2 in of mix to dry before watering and draining. Do not wait for the whole root ball to become bone dry or use a cactus dry reference or plateau as permission to water.",
         P28: "Inspect inner-leaf firmness and leaf replacement. A dry pot or wrinkled old leaves alone do not mean water.",
     };
     const manualGuidance = manual[plantId];
@@ -3490,7 +3512,7 @@ function wateringReadinessGuidance_(plantId) {
     if (plantId === "P22") {
         return "During active growth, let much of the mix dry; no extra drought delay. If resting, inspect before watering.";
     }
-    if (["P19", "P20", "P30", "P31"].includes(plantId)) {
+    if (["P19", "P20", "P30"].includes(plantId)) {
         return "Confirm the shared root zone is dry, inspect every component, and verify drainage before a thorough watering; no fixed extra dry days.";
     }
     return "Confirm the root zone is dry and the plant is ready; reduce watering during rest. No fixed extra dry days.";

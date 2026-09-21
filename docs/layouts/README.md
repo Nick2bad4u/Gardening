@@ -4,7 +4,7 @@ Last updated: 2026-09-20
 
 The [Table Placement Guide](./table-placement-research.md) records the new **four wooden tables**: **six columns × four rows** of small pots at the front, with five larger/shared containers behind them and #3 Money Tree separately on the north windowsill (move confirmed September 16). The working 26 × 32-inch block is inferred from the photos before gaps. The current view puts **north window top, room bottom, Mylar left and white wall right**. The former round-glass placement is historical.
 
-The September 20 additions, #9 / P33 Peperomia Bicolor and #10 / P34 Tricolor oyster plant, have [proposed acclimation guidance](./table-placement-research.md#september-20-houseplant-purchases) for planned separate Amazon Basics eight-inch pots with owner-confirmed plentiful drainage holes on floor pot stools, explicitly off the tables. Both current nursery pots are owner-reported as six inches in diameter. No completed repot or move is reported; stool models/heights, actual positions, and leaf-height light remain unmeasured.
+The September 20 additions, #7 / P31 Peperomia Bicolor and #8 / P32 Tricolor oyster plant, have [proposed acclimation guidance](./table-placement-research.md#september-20-houseplant-purchases) for planned separate Amazon Basics eight-inch pots with owner-confirmed plentiful drainage holes on floor pot stools, explicitly off the tables. Both current nursery pots are owner-reported as six inches in diameter. No completed repot or move is reported; stool models/heights, actual positions, and leaf-height light remain unmeasured.
 
 The guide includes an estimated relative-light map, front and rear diagrams, a combined view, 29 photo-matched table positions and the confirmed #3 windowsill position, and a [blank phone-reading sheet](./table-placement-research.md#compare-the-plan-with-a-phone-meter). Labels and current intensity remain to be checked. The [full review](../two-light-placement-review.md) preserves species evidence and explains why front corners, low rosettes and rear shadows should be compared.
 
@@ -30,7 +30,7 @@ prior weight. The
 provides the phone-first input surface. Google Sheets remains the single
 editable source of truth.
 
-Each of the 32 physical pots or shared planters has a permanent internal ID: `P01` through `P30`, plus the September 20 purchases `P33` and `P34`. The abandoned `P31` and `P32` allocations remain reserved. Each active ID links to a stable
+Each of the 32 physical pots or shared planters has a permanent internal ID: `P01` through `P32`, including the September 20 purchases assigned `P31` and `P32` at the owner's request. The abandoned Amazon research has no pot allocation. Each active ID links to a stable
 [history URL](https://nick2bad4u.github.io/Gardening/pots/P01/) with independent last-checked dates,
 searchable and exportable history, dry/wet statistics, weight and growth
 changes, watering-interval calculations, responsive SVG trend charts, and

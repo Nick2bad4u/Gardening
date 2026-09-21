@@ -23,7 +23,7 @@ physical **#1 / P19** combines the variegated column, golden torch, and trailing
 monkey tails in their dark patterned pot; **#2 / P20** combines elephant bush,
 silver spoons, copper spoons, and the front rosette in their square wooden planter.
 The first two shared-planter shapes follow the owner's Gyazo collection photographs, without replacing
-the individual component profiles or asserting a new identification. The September 19 additions illustrate the seller-labeled Cubic Frost, Coppertone, Deminuta, Ruby Slippers, and Nanouk profiles. The third shared portrait combines the four succulents for **#7 / P31**; Nanouk remains separate as **#8 / P32** in a mauve beaded pot. These new silhouettes are illustrative, not traced seller photographs or depictions of observed specimens. The #7 pot decoration is not documented, so its illustrated pot is neutral.
+the individual component profiles or asserting a new identification. The September 19 additions illustrate the seller-labeled Cubic Frost, Coppertone, Deminuta, Ruby Slippers, and Nanouk profiles. The third shared portrait combines the four succulents from the canceled Amazon plan; its Nanouk portrait uses a separate mauve beaded pot. Neither archived portrait has a current P-ID or physical label. These new silhouettes are illustrative, not traced seller photographs or depictions of observed specimens. The canceled mixed planter's pot decoration was not documented, so its illustrated pot is neutral.
 
 All 83 interface and category symbols have been redrawn with native 64-unit
 geometry, a multicolor material palette, and consistent optical padding. Linear
@@ -51,3 +51,5 @@ The September 19 Amazon-order portraits are retained as archived planning artwor
 The three September 20 P30 component portraits adapt the existing mixed-planter rosette, copper-leaf, and paddle-leaf shapes into separate illustrative subjects. Their terracotta pots are visual framing, not three actual containers: all three foliage groups share #6 / P30. The names retain provisional genus or species-complex identification; the drawings do not resolve those identities. Existing shared-planter portraits and public SVG bytes remain unchanged.
 
 The September 20 houseplant portraits show the owned Carlson-tagged Peperomia Obtipan Bicolor and Rhoeo/Tradescantia Tricolor foliage as original vector illustrations: cream-edged rounded leaves and green/cream/pink pointed rosettes, respectively. Neutral illustrated pots do not establish their actual pot dimensions or setup. The acquisition photographs and exact retail wording remain the identity evidence; illustrations do not verify cultivar identity.
+
+The current September 20 assignments are **#7 / P31 Peperomia Obtipan Bicolor** and **#8 / P32 Tricolor oyster plant**. Their existing slug-based portraits remain `peperomia-obtipan-bicolor.svg` and `tradescantia-spathacea-tricolor.svg`; renumbering does not change artwork or public SVG URLs.

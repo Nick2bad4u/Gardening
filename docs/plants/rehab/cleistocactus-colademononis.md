@@ -46,16 +46,14 @@ the current collection-photo archive.
 
 | Topic               | Practical approach                                                                                                                                                                                                                                                                                                       |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Current progress    | It was trimmed several times after years of stretched growth. About a month outside in bright shade with brief direct sun is producing better new growth.                                                                                                                                                                |
+| Current progress    | It was trimmed several times after years of stretched growth. Before the indoor move, about a month outside in bright shade with brief direct sun produced better new growth. This is historical rehabilitation evidence; the plant now shares the indoor P19 planter.                                                   |
 | Grow-light position | **Photo-matched rear center · Mixed.** September 15 rear wooden tables, facing the window. Compare both tall columns and trailing monkey tail; pale tissue and short neighbors need separate attention. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
 | Water               | In warm active growth it may use water sooner than the upright cacti, but the shared planter still needs to dry between soaks.                                                                                                                                                                                           |
 | Habit               | Let stems trail over a protected edge or move the plant eventually to a hanging pot. Forcing every stem upright fights its normal form.                                                                                                                                                                                  |
 | Winter              | Bright, cooler, and drier—without hard frost—gives a useful rest and may support flowering.                                                                                                                                                                                                                              |
 
 The thin old sections will not become thick again. The meaningful evidence is
-the diameter, hair density, and spine spacing of each new tip. The current
-outdoor improvement argues for continuing a gradual transition rather than
-making a sudden jump to 100% at 12 inches.
+the diameter, hair density, and spine spacing of each new tip. The earlier outdoor improvement is historical evidence, not its current location or a new lighting target. Use the maintained indoor placement and current observations rather than restarting the old transition.
 
 ## Pruning, propagation, and watch points
 

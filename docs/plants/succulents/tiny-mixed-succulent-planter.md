@@ -8,7 +8,7 @@
 - Identification: **Smart Planet Home five-plant retail succulent garden; component-level foliage matches are provisional and no cultivar is treated as proven**
 - Acquired from: Home Depot; grown by Altman Plants under Smart Planet Home branding; exact store not recorded
 - Acquired on: 2026-09-02
-- Current pot: repotted together 2026-09-02 in the purchased five-inch-class terra-cotta planter; exact measured dimensions and replacement-medium composition not logged
+- Current pot: setup 2; repotted together in the purchased terra-cotta planter, logged as “5 inch shallow” with “Nursery cacti soil and my top dressing”
 
 ## Names and identification
 
@@ -58,9 +58,7 @@ compare the separate components later without loading full-resolution files on
 the individual plant profile page.
 
 The components were kept together during the September 2 repot in the purchased
-five-inch-class terra-cotta planter. Its exact measured dimensions, root
-condition, original mix, replacement-medium composition, weight, and plant
-dimensions are unrecorded. Because several plants share one root volume, all
+five-inch-class terra-cotta planter. The live setup-2 Repot observation at **September 3, 2026, 12:18 a.m. EDT** records **“5 inch shallow”** and **“Nursery cacti soil and my top dressing.”** That timestamp belongs to the September 2 care day; it does not change the acquisition-day narrative. Exact measured depth, root condition, the soil's ingredient proportions, and any unlogged plant dimensions remain unknown. Current weights are recorded in the live ledger. Because several plants share one root volume, all
 weights and watering events belong to `P30` as a whole.
 
 ## Why the component names stay broad
@@ -82,7 +80,7 @@ The separate component pages preserve this uncertainty while giving each recogni
 | Arrival             | Use the September 2 views as the visual baseline. Watch each component for collapse, translucence, pests, or poor rooting even though observations are saved against one planter.                                                                                                                                  |
 | Grow-light position | **Photo-matched front of rear zone, between #1 and #5 · Bright.** September 15 rear wooden tables, facing the window. Compare the low rosettes and paddle leaves for shadows from the large pots. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
 | Water               | Judge the shared root volume by full dry-down and whole-pot weight. Water thoroughly and drain, but do not repeatedly wet the pot for one component while the others remain firm.                                                                                                                                  |
-| Pot and mix         | Exact size and composition are unrecorded. Maintain an open, rapidly draining mix; a decorative shared pot is not evidence that its drainage is adequate.                                                                                                                                                          |
+| Pot and mix         | Setup 2 records “5 inch shallow” with “Nursery cacti soil and my top dressing.” Exact depth and ingredient proportions remain unrecorded; the pot description alone does not verify drainage performance.                                                                                                          |
 | Mixed growth        | Prune or separate only if one component begins shading, crowding, or demanding a materially different watering rhythm. Keep any future split linked back to this original P30 record.                                                                                                                              |
 | Feeding             | Use the collection's dilute succulent product only during an ordinary active-growth watering. A cheap retail mix does not need compensatory feeding during establishment.                                                                                                                                          |
 

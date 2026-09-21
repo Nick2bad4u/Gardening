@@ -8,7 +8,7 @@
 - Identification: **probable cultivar; appearance is consistent, but no nursery label or seller provenance is archived**
 - Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan
 - Acquired on: 2026-08-10
-- Current pot: approximately 5-inch pot from Carlsons' Greenhouse
+- Current pot: approximately 5-inch pot from Carlsons' Greenhouse; Baselines records the provided greenhouse succulent soil, without an ingredient recipe
 - Photo archive: [licensed cultivar and species references](../../../assets/plants/aeonium-haworthii-dream-color/)
 
 ## Names and identity

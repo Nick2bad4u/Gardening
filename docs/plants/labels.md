@@ -14,7 +14,7 @@ planter (`P30`). Their separate Smart Planet Home / Altman Plants retail-label
 photographs are preserved as provenance. The retail _Faucaria tigrina_ wording
 does not replace the qualified _F. tuberculosa_ working ID printed on `#5`.
 
-The unreceived Amazon plan was abandoned September 20. Former #7 / P31 and #8 / P32 are archived allocations, excluded from current print labels and not available for silent reuse. Keep its five research pages in the [old-plan archive](../old-plans/amazon-plant-order-2026-09.md); cancellation remains pending. Current numbered labels are #1–#6, #9, and #10; #7 and #8 remain archived.
+The unreceived Amazon plan was abandoned September 20 and has no physical-label or tracker allocation. Keep its five research pages in the [old-plan archive](../old-plans/amazon-plant-order-2026-09.md); cancellation remains pending. Current numbered labels are #1–#8. The owner explicitly assigned #7 / P31 to Peperomia Bicolor and #8 / P32 to Tricolor oyster plant.
 
 The six Mountain Crest mappings were owner-corrected after receipt on
 2026-08-28: `G1` Black Widow (`P27`), `G2` paper spine (`P23`), `G3` Royal
@@ -343,28 +343,28 @@ WARN: TRACK + WATER AS ONE POT
 
 ## September 20 Carlson's Greenhouses labels
 
-These new allocations record the two purchased houseplants. The nursery wording is retained in their profiles; cultivar identification relies on that provenance. Do not reuse archived #7 / P31 or #8 / P32.
+These new allocations record the two purchased houseplants. The nursery wording is retained in their profiles; cultivar identification relies on that provenance. The owner explicitly assigned #7 / P31 and #8 / P32 to these purchases.
 
-| ID    | Tracker ID | Common name           | Botanical label                                                                         | Origin wording                                                    | Warning                                                         |
-| ----- | ---------- | --------------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------- |
-| `#9`  | `P33`      | Peperomia Bicolor     | [_Peperomia obtusifolia_ 'Obtipan Bicolor'](./houseplants/peperomia-obtipan-bicolor.md) | Horticultural cultivar; species from tropical America             | Bright indirect light; avoid soggy roots and prolonged drought. |
-| `#10` | `P34`      | Tricolor oyster plant | [_Tradescantia spathacea_ 'Tricolor'](./houseplants/tradescantia-spathacea-tricolor.md) | Horticultural cultivar; species from southern Mexico to Guatemala | Irritating sap; keep away from chewing pets; check upper mix.   |
+| ID   | Tracker ID | Common name           | Botanical label                                                                         | Origin wording                                                    | Warning                                                         |
+| ---- | ---------- | --------------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------- |
+| `#7` | `P31`      | Peperomia Bicolor     | [_Peperomia obtusifolia_ 'Obtipan Bicolor'](./houseplants/peperomia-obtipan-bicolor.md) | Horticultural cultivar; species from tropical America             | Bright indirect light; avoid soggy roots and prolonged drought. |
+| `#8` | `P32`      | Tricolor oyster plant | [_Tradescantia spathacea_ 'Tricolor'](./houseplants/tradescantia-spathacea-tricolor.md) | Horticultural cultivar; species from southern Mexico to Guatemala | Irritating sap; keep away from chewing pets; check upper mix.   |
 
 ```text
-#9 | PEPEROMIA BICOLOR
+#7 | PEPEROMIA BICOLOR
 Peperomia obtusifolia 'Obtipan Bicolor'
 ```
 
 ```text
-#10 | TRICOLOR OYSTER PLANT
+#8 | TRICOLOR OYSTER PLANT
 Tradescantia spathacea 'Tricolor'
 ```
 
-The owner confirmed buying both plants directly at Carlson's Greenhouses on 2026-09-20 in owner-reported six-inch nursery pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; placement on separate floor stools is planned, off the tables. No completed repot or move is reported; nursery-pot depth and actual display positions remain unrecorded. The labels stay #9 and #10 through the planned changes.
+The owner confirmed buying both plants directly at Carlson's Greenhouses on 2026-09-20 in owner-reported six-inch nursery pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; placement on separate floor stools is planned, off the tables. No completed repot or move is reported; nursery-pot depth and actual display positions remain unrecorded. The labels stay #7 and #8 through the planned changes.
 
 ## Archived label allocations
 
-The [September 19 Amazon plan](../old-plans/amazon-plant-order-2026-09.md) retains former #7 / P31 (four succulents) and #8 / P32 (Nanouk) as abandoned allocations. No physical plants were received and cancellation is pending. Do not print them as current labels or reassign the IDs without an explicit reviewed allocation.
+The [September 19 Amazon plan](../old-plans/amazon-plant-order-2026-09.md) preserves the four succulent and Nanouk research pages without physical-label or tracker allocations. No plants were received and cancellation is pending. Do not print labels for the archived research.
 
 ## Identification and origin research outcome
 
@@ -393,7 +393,7 @@ The [September 19 Amazon plan](../old-plans/amazon-plant-order-2026-09.md) retai
 
 ### Acquisition details still missing
 
-The repo contains acquisition source-and-date records for `A1`–`H3` and `#1`–`#6`, except the historical, removed Rehab-04 record. Its acquisition source and date remain unconfirmed. For new #9 and #10, the owner confirmed direct purchase at Carlson's Greenhouses on September 20; the nursery tags also identify the grower.
+The repo contains acquisition source-and-date records for `A1`–`H3` and `#1`–`#6`, except the historical, removed Rehab-04 record. Its acquisition source and date remain unconfirmed. For new #7 and #8, the owner confirmed direct purchase at Carlson's Greenhouses on September 20; the nursery tags also identify the grower.
 
 The unreceived September 19 Amazon plant order is archived separately; cancellation remains pending. The separate four-inch pot order has no confirmed receipt or cancellation.
 

@@ -13,7 +13,7 @@ make a pot ready to water.
 
 ## September 20 foliage-basket exceptions
 
-Newly purchased **P33 / #9 [Peperomia Bicolor](../plants/houseplants/peperomia-obtipan-bicolor.md)** and **P34 / #10 [Tricolor oyster plant](../plants/houseplants/tradescantia-spathacea-tricolor.md)** are not automatically enrolled in the cactus feeding rotation. Their nursery medium, existing fertilizer charge, root condition, and any repot remain unrecorded. Purchase alone is not a reason to feed, flush, or water them.
+Newly purchased **P31 / #7 [Peperomia Bicolor](../plants/houseplants/peperomia-obtipan-bicolor.md)** and **P32 / #8 [Tricolor oyster plant](../plants/houseplants/tradescantia-spathacea-tricolor.md)** are not automatically enrolled in the cactus feeding rotation. Their nursery medium, existing fertilizer charge, root condition, and any repot remain unrecorded. Purchase alone is not a reason to feed, flush, or water them.
 
 First inspect drainage, establish ordinary drying, and look for healthy new growth. Use each profile's upper-mix moisture check rather than waiting for a cactus-style whole-pot plateau. If a later review supports feeding, record the actual product, dilution, and application; the cactus **0.75 g/US gallon** starting dose and alternating feed cycle below are not a prescribed new-basket schedule. Avoid stacking MSU on an unknown nursery fertilizer charge.
 
