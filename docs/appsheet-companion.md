@@ -12,17 +12,21 @@ contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
-## September 21 prepared Lithops and split-rock enrollment
+## September 21 Lithops and split-rock enrollment
 
-**Prepared source; not a completed production change.** The new source roster has **34 active allocations: P01–P32, P35, P36**. P35 / #9 is the planned shared pot for two owner-described Lithops pairs; P36 / #10 is the separate split rock, probable Pleiospilos nelii with cultivar unconfirmed and explicitly not Royal Flush. P31 / #7 and P32 / #8 remain the purchased houseplants; P33/P34 remain retired. See the [enrollment runbook](../scripts/google-sheets/README.md#september-21-prepared-lithops-and-split-rock-enrollment).
+**Production workbook, logger, and AppSheet rollout completed September 21; AppSheet 1.100112 saved and verified.** A fresh editor reload showed no issues and Save disabled. The active roster has **34 active allocations: P01–P32, P35, P36**. P35 / #9 is the planned shared pot for two owner-described Lithops pairs; P36 / #10 is the separate split rock, probable Pleiospilos nelii with cultivar unconfirmed and explicitly not Royal Flush. P31 / #7 and P32 / #8 remain the purchased houseplants; P33/P34 remain retired. See the [enrollment runbook](../scripts/google-sheets/README.md#september-21-lithops-and-split-rock-enrollment).
 
-Logger **5.29.0** and the maintained expressions prepare **60 physical App bulk columns, A:BH / 61 including \_RowNumber**, appending P35/P36 at BG:BH. Preserve A:BF, including the hidden/noneditable blank-only P33/P34 fields. After a native backup and successful disposable rehearsal, regenerate the schema and add optional positive Decimal inputs with the existing Weigh / Water + weigh visibility rule. Bulk Log should order P31, P32, P35, P36 after P30; label sort keys are #9 = 909 and #10 = 910. Install the maintained 34-weight Round action validation, retaining both retired-field guards.
+Logger **5.29.0 / immutable version 98** and the saved AppSheet schema use **60 physical App bulk columns, A:BH / 61 including \_RowNumber**, appending P35/P36 at BG:BH. Preserve A:BF, including the hidden/noneditable blank-only P33/P34 fields. After a native backup and disposable rehearsal, the schema was regenerated and P35/P36 added as optional positive Decimal inputs with the existing Weigh / Water + weigh visibility rule. Bulk Log orders P31, P32, P35, P36 after P30; label sort keys are #9 = 909 and #10 = 910. The maintained 34-weight Round action validation retains both retired-field guards.
 
-Keep id528 creation-only key initial values and the P31/P32 stale-draft protections unchanged. Keep canonical observations and helper tables read-only, and allow writes only through the staging/bridge path. New portraits require the matching exported and published revision before changing the app expression. These allocations do not assert completed repots, current pot sizes, watering, weights, or feed events. P28/P35/P36 remain manual leaf-cycle decisions, with no automatic weight/plateau watering permission.
+The saved 61-column readback preserved all **59 existing column definitions**, with zero differences from the prewrite capture. Both new fields use two decimal digits and `[_THIS] > 0`, with the expected display names and visibility. Round validation, portrait, and natural label-order expressions match maintained source after whitespace normalization. The live empty Bulk Log form rendered exactly **34 blank weight inputs**, P01–P32, P35, P36, then Notes, and was canceled without saving. Both new plant cards displayed the correct portraits and #9/#10 labels, with “No log” and blank metrics.
 
-**Last recorded production baseline:** AppSheet **1.100110**, logger **5.28.0 / immutable 97**, 32 pots and 59 App bulk columns including \_RowNumber. The production descriptions below remain that baseline until an actual saved cutover and fresh readback are recorded. This documentation update does not save the production app.
+Keep id528 creation-only key initial values and the P31/P32 stale-draft protections unchanged. Keep canonical observations and helper tables read-only, and allow writes only through the staging/bridge path. The matching portrait revision **b86b51605d0afb26** has **34 verified files** in [GardenPlantPortraits-b86b51605d0afb26](https://drive.google.com/drive/folders/1GTm2DLCyUchPhkWB1dNqfRGRQZovzXPJ), with previous revisions retained. These allocations do not assert completed repots, current pot sizes, watering, weights, or feed events. P28/P35/P36 remain manual leaf-cycle decisions, with no automatic weight/plateau watering permission.
+
+**Verified production evidence:** the phone logger displayed **Connected · logger 5.29.0** and all 34 labels. The native workbook has **58 tabs / 164 charts**; its readback preserved **534,000 canonical/staging/RO cells**, all **1,094 unique observations**, and **993 request groups** with zero errors. The [enrollment runbook](../scripts/google-sheets/README.md#september-21-lithops-and-split-rock-enrollment) records the backup and detailed comparisons. The owner assigned P35 to D'vine Dev 4.3-inch Blush Mauve and P36 to Thirtypot 4.5-inch speckled-brown; September 22 repots and photographs remain plans.
 
 ## September 20 owner-requested houseplant reassignment
+
+This dated saved configuration is historical. The September 21 section above supersedes its roster count, logger/AppSheet versions, portrait revision, and bulk-schema width.
 
 The maintained roster is **32 active containers, P01–P32**. **P31 / #7 is Peperomia Bicolor** and **P32 / #8 is Tricolor oyster plant**, both purchased from Carlson's Greenhouses. The owner explicitly requested these assignments in place of P33/#9 and P34/#10. The unreceived Amazon research remains archived without active pot or label assignments. Botanical profile IDs remain Houseplant-03 and Houseplant-04.
 
@@ -239,12 +243,12 @@ and defaults to 90. The degree value is archived in `History!AN:AN`, displayed
 in read-only care history, and remains available to the public plant history.
 Clean and Prune are lightweight dated actions whose specifics belong in Notes.
 Bulk Log uses one `Selected plants` field for every supported shared action;
-per-plant weights use P01-P32; P33/P34 fields remain hidden compatibility columns. `Selected plants` is
+per-plant weights use P01–P32, P35, and P36; P33/P34 fields remain hidden compatibility columns. `Selected plants` is
 an EnumList of refs with `Valid_If` set to `SORT(Plant tracker[Plant ID])`; if
 that expression is removed, the deployed picker can appear empty even while
 the source table contains plants.
 
-The maintained Round action validation checks all 32 active weight fields and requires the retired P33/P34 fields blank. Weigh requires
+The maintained Round action validation checks all 34 active weight fields and requires the retired P33/P34 fields blank. Weigh requires
 at least one positive weight; Water + weigh also requires selected plants.
 Other shared care actions require selected plants. The maintained expression
 is [`appsheet-bulk-validation.txt`](../scripts/google-sheets/appsheet-bulk-validation.txt).

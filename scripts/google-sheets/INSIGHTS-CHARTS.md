@@ -1,10 +1,9 @@
 # Insights dry-down charts
 
 The native **Insights** sheet has **26 charts** in the September 21 readback.
-The prepared enrollment retains those chart IDs and positions while extending
-the source roster to **P01–P32, P35, and P36**; production remains at 32 pots
-until the [September 21 cutover](README.md#september-21-prepared-lithops-and-split-rock-enrollment)
-is verified. Its dry-down explorer starts at
+The verified production enrollment retained those chart IDs and positions while extending
+the roster to **P01–P32, P35, and P36**; see the
+[September 21 cutover](README.md#september-21-lithops-and-split-rock-enrollment). Its dry-down explorer starts at
 **A226**, with the maintained plant selector in **B228**. The selected
 plant's care guidance, predicted dry-check date, and earliest/latest window
 appear above the graphs. The selected plant's **Current weight difference (g)**
@@ -36,11 +35,11 @@ links to their individual charts. These are arbitrary identity colors, unrelated
 to the appearance of the plants. Keep the names and IDs alongside color because
 similar hues can still be difficult to distinguish.
 
-The prepared 34-pot collection has 102 weight/dimension charts and 34
+The production 34-allocation collection has 102 weight/dimension charts and 34
 watering-interval chart destinations on individual plant sheets. Populated
 charts use that plant's color. The 15
 plant comparison charts use the same colors for each plant's bars or points, in
-consistent P01–P32, P35, P36 order after enrollment. This fixed order prevents point colors from moving to
+consistent P01–P32, P35, P36 order. This fixed order prevents point colors from moving to
 another plant when a sorted source recalculates. Source values still update
 automatically. Comparisons with several metrics use separate grouped bars, with
 the metric order in the subtitle and names in the tooltips; the old metric-color
@@ -66,7 +65,7 @@ persisted only 99, silently dropping the final plant's three series. The
 documents no limit override; 99 is the observed behavior of this tested path,
 not a published platform guarantee.
 
-The prepared chart builders use **34 plant-colored primary series plus two
+The deployed chart builders use **34 plant-colored primary series plus two
 shared neutral role series**. Current measured weight/current cycle stays in
 the plant's permanent color. Dry/wet references and previous/older cycles keep
 their separate dotted/diamond and dashed/square styles, with the role meaning
@@ -81,7 +80,11 @@ baseline, or visible zero measurement. Keep helpers hidden and warning-protected
 and verify the full 36-series specification after native writes and selector
 changes, including a new plant with no history.
 
+The September 21 production readback preserved all **156 original charts** across the workbook and verified **eight new charts**, bringing the workbook total to **164**. It checked **19,996 helper outputs** and **four sentinels**, with no formula errors. Empty P35/P36 charts can still omit native series styling and vertical-axis settings; reapply the scoped specifications after the first real data populates them, without manufacturing observations. The [runbook](README.md#september-21-lithops-and-split-rock-enrollment) distinguishes the populated native-copy witness from production's currently empty histories.
+
 ## September 20 purchased houseplants
+
+This is the earlier dated enrollment, before the owner reassigned those houseplants to P31/#7 and P32/#8. The September 21 roster above is current.
 
 Peperomia Bicolor (P33 / #9) and Tricolor oyster plant (P34 / #10) extend the active roster to 32 pots. Their four charts each add empty observation destinations; purchase alone creates no scale readings, waterings, or baselines. P31 and P32 stay archived and reserved. Model rows extend to 2:33 and Dashboard rows to 7:38 while the existing helper layout and chart identities are retained. Both houseplants use manual readiness guidance rather than a cactus dry-out trigger. See the [enrollment record](README.md#september-20-purchased-houseplant-enrollment) for migration verification.
 
