@@ -6982,6 +6982,14 @@ describe("garden logger mesemb enrollment", () => {
         expect(sheet.__rows[0]).toStrictEqual(appSheetBulkHeaders);
         expect(required(sheet.__rows[1]).slice(0, 58)).toStrictEqual(before);
 
+        const occupied = createDataSheet("App bulk", [
+            [...appSheetBulkHeaders.slice(0, 58), "Owner data"],
+        ]);
+
+        expect(() => context.migrateLegacyAppSheetBulkSheet_(occupied)).toThrow(
+            "Unexpected App bulk columns after BF"
+        );
+
         const unknown = createDataSheet("App bulk", [
             [...appSheetBulkHeaders, "Unreviewed weight"],
             [

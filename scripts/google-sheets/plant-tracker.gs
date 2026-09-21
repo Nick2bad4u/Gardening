@@ -2087,18 +2087,17 @@ function migrateLegacyAppSheetBulkSheet_(sheet, shouldUpgradeInventory = true) {
     };
 
     if (hasHeaders(APP_SHEET_BULK_HEADERS)) return false;
-    const priorHeaders = hasHeaders(APP_SHEET_BULK_V528_HEADERS)
-        ? APP_SHEET_BULK_V528_HEADERS
-        : hasHeaders(APP_SHEET_BULK_V526_HEADERS)
-          ? APP_SHEET_BULK_V526_HEADERS
-          : hasHeaders(APP_SHEET_BULK_V525_HEADERS)
-            ? APP_SHEET_BULK_V525_HEADERS
-            : null;
-    if (priorHeaders) {
+    const priorSchema = [
+        { headers: APP_SHEET_BULK_V528_HEADERS, lastColumn: "BF" },
+        { headers: APP_SHEET_BULK_V526_HEADERS, lastColumn: "BD" },
+        { headers: APP_SHEET_BULK_V525_HEADERS, lastColumn: "BB" },
+    ].find(({ headers }) => hasHeaders(headers));
+    if (priorSchema) {
         if (!shouldUpgradeInventory) return false;
+        const priorHeaders = priorSchema.headers;
         if (sheet.getLastColumn() > priorHeaders.length) {
             throw new Error(
-                `Unexpected App bulk columns after ${priorHeaders.length === 58 ? "BF" : priorHeaders.length === 56 ? "BD" : "BB"}; review before appending new plant weights.`
+                `Unexpected App bulk columns after ${priorSchema.lastColumn}; review before appending new plant weights.`
             );
         }
         ensureSheetColumnCapacity_(sheet, APP_SHEET_BULK_HEADERS.length);
