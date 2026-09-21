@@ -47,6 +47,14 @@ Receipt, usable internal depth, planting, and final placement are unconfirmed.
 The planned pot size is not the current container size. No repot, watering,
 measurement, or dry-reference event is implied by this entry.
 
+**Visual pairing accepted September 21, 2026:** keep P35 / #9 in the selected
+4.3-inch Blush Mauve pot. The inspected listing photos show orderly rounded
+raised beads, a straight rim, and a uniform mauve glaze. The owner accepted
+this more uniform backdrop for the planned group of small Lithops, leaving
+the busier speckled glaze for the split rock's simple, bold form. This is an
+aesthetic preference, not evidence of plant color, identification, usable root
+room, or care suitability; the September 22 repot and photographs remain plans.
+
 ## Care in this collection
 
 | Topic           | Practical starting approach                                                                                                                                                                                                                                                         |

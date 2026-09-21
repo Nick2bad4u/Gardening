@@ -15,6 +15,9 @@ Updated September 21, 2026. This is the collection's documented equipment invent
 
 ## Lights and Controls
 
+- **Two 10 W LED bars and one additional 10 W LED light · owner-reported September 21.** Already owned and proposed for P31/P32 at a north-facing living-room window. Brand/model, spectrum, measured power draw, timer, lamp-to-leaf distances, and coverage are unrecorded; installation is not yet confirmed. The nominal 30 W sum is not a leaf-level light measurement. See the [living-room light trial](../layouts/table-placement-research.md#planned-living-room-window-and-leds).
+- **20 W three-head LED options · under consideration only.** No purchase or installation is reported. Exact products and whether 20 W denotes the entire fixture or each head are unknown; compare model output and canopy coverage before deciding on an upgrade.
+
 - **[VIVOSUN AeroLight Wing AW200 / VSAW200](https://vivosun.com/support/guide/aerolight).** Existing 200 W fixture with integrated circulation fan and tunable spectrum. Last owner-confirmed settings: **45%, Veg mode**, with an 18-inch plant-tip reference.
 - **[VIVOSUN AeroLight 240 W / VSL-AL240](https://www.amazon.com/dp/B0BKPNRGCJ).** Second installed fixture, with its own integrated fan and independent control. Last confirmed settings: **38%, Veg mode**. The order page has reused older light names; the maintained record identifies this unit as the new 240 W model.
 - **[VIVOSUN GrowHub E25 controllers](https://www.amazon.com/dp/B0BKP7VV1H).** Four independent controller paths are documented for the two lights and two AeroWave E6 Gen2 fans. Separate light settings are confirmed; the current app configuration has not been remotely inspected.

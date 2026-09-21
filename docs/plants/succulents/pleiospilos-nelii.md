@@ -45,6 +45,14 @@ are planned for September 22. Receipt, usable internal depth, finished mix,
 completed repotting, and final position remain unconfirmed.
 This entry creates no watering, repot, measurement, or baseline event.
 
+**Visual pairing accepted September 21, 2026:** keep P36 / #10 in the selected
+4.5-inch Speckled-brown pot. The inspected listing photos show a rounded body,
+a wavy/scalloped rim, and rust, gold, and blue-green mottling. The owner accepted
+the split rock's simple, bold form against this busier glaze, with the grouped
+Lithops on the more uniform Blush Mauve backdrop. This is an aesthetic
+preference, not evidence of this plant's color, identification, usable root
+room, or care suitability; the September 22 repot and photographs remain plans.
+
 ## Care in this collection
 
 | Topic       | Practical starting approach                                                                                                                                                                                                           |
