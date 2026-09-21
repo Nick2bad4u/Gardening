@@ -29,10 +29,12 @@ The previously reported far-table **18–22 app-estimated DLI** is above these p
 
 For the new room, a **12–14-hour daytime light window** is a reasonable initial trial, consistent with University of Minnesota foliage-houseplant guidance. The timer has not been set. The old cactus-room 13 h 15 m program does not establish this setup's runtime. The higher settled ranges above are optional comparisons, not a schedule for increasing light when growth is already satisfactory.
 
-| Plant                          | Initial total DLI comparison | Equivalent constant PPFD over 12 hours | Equivalent constant PPFD over 14 hours |
-| ------------------------------ | ---------------------------- | -------------------------------------- | -------------------------------------- |
-| P31 / #7 Peperomia Bicolor     | About 4–6 mol·m⁻²·day⁻¹      | About 93–139 µmol·m⁻²·s⁻¹              | About 79–119 µmol·m⁻²·s⁻¹              |
-| P32 / #8 Tricolor oyster plant | About 6–8 mol·m⁻²·day⁻¹      | About 139–185 µmol·m⁻²·s⁻¹             | About 119–159 µmol·m⁻²·s⁻¹             |
+For those initial DLI ranges, the equivalent constant PPFD is approximately as follows, in **µmol·m⁻²·s⁻¹**:
+
+| Pot      | 12-hour PPFD | 14-hour PPFD |
+| -------- | ------------ | ------------ |
+| P31 / #7 | 93–139       | 79–119       |
+| P32 / #8 | 139–185      | 119–159      |
 
 These PPFD equivalents assume constant light throughout the stated hours. **DLI = average PPFD × hours × 0.0036**; for example, 100 PPFD for 14 hours supplies 5.04 DLI. The intended comparison is the total from lamps plus daylight, so the lamps need not supply the entire dose where measured daylight contributes meaningfully.
 
