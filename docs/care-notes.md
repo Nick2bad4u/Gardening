@@ -23,13 +23,15 @@ For the installed 240 W fixture, the [manufacturer's operating limit](https://vi
 requires the growing space below **86°F (30°C)**. The older outdoor weather
 triggers below do not replace that equipment limit.
 
+The owner reports current conditions around **45–50% RH** and temperatures **in the 70s °F**, with three sensing points described in the [setup record](./setup.md). Two under-table Honeywell fans are set to low; A22 control is limited to fan cycles. These are operating observations, not a new watering interval or proof of uniform root-zone aeration.
+
 ## September 20 houseplant purchases
 
 The owner purchased **P31 / #7 [Peperomia Bicolor](./plants/houseplants/peperomia-obtipan-bicolor.md)** and **P32 / #8 [Tricolor oyster plant](./plants/houseplants/tradescantia-spathacea-tricolor.md)** on September 20. The owner confirmed purchasing both directly at Carlson's Greenhouses in owner-reported six-inch nursery pots; the tags also identify Carlson's as the grower. Both labels specify bright, indirect light. Start with a gentler leaf-height exposure and gradual acclimation; the previously reported 18–22 app-estimated DLI far-table area is not automatically assigned. The [placement guide](./layouts/table-placement-research.md#september-20-houseplant-purchases) records explicitly inferred starting ranges.
 
 Check these as houseplants, without waiting for a cactus-style whole-pot dry plateau. Peperomia should partially dry between waterings without prolonged drought; for the oyster plant, check the upper 1–2 inches once the actual pot/root-ball depth is known. Check the current nursery-pot drainage and inspect below a dry surface before watering. A weight or model date is supporting evidence only. Inspect the new plants for pests, keep oyster-plant sap away from skin and chewing pets, and defer feeding until roots, nursery medium, and existing fertilizer are understood. Their profiles cite the species care guidance.
 
-Both current nursery pots are owner-reported as six inches in diameter. The owner reports both nursery pots are quite full and thinks the plants are ready for larger pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes, one previously decorated, and plans to use them on separate floor pot stools, explicitly off the tables; the stools are being purchased/on order, with model and height unrecorded. The proposed medium combines loose greenhouse-supplied potting mix, described by the owner as airy and containing perlite, with Molly's Succulent Mix. More perlite is available, but no ratio or completed blend is recorded. This is a future plan, not a completed repot or move. Actual positions, leaf-height light, and current nursery-pot depth, drainage, and medium remain unmeasured or unrecorded. Purchase and future plans do not establish watering, scale observations, dry references, or a new pot setup. One destination pot is the previously decorated pot; its specific plant assignment is unconfirmed.
+Both current nursery pots are owner-reported as six inches in diameter. The owner reports both nursery pots are quite full and thinks the plants are ready for larger pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes, one previously decorated, and plans to use them on separate floor pot stools, explicitly off the tables; the owner has ordered a three-stool set, with model and heights awaiting verification. The proposed medium combines loose greenhouse-supplied potting mix, described by the owner as airy and containing perlite, with Molly's Succulent Mix. More perlite is available, but no ratio or completed blend is recorded. The repots and stool installation remain future plans. As confirmed September 20, both plants are currently on the floor on the room side near the money tree. Exact leaf-height light and current nursery-pot depth, drainage, and medium remain unmeasured or unrecorded. The nursery did not provide watering or feeding history. Wet leaves on arrival are recorded as an observation, not proof of root-ball watering, fertilizer, or a logged Water event. Purchase and future plans do not establish watering, scale observations, dry references, or a new pot setup. One destination pot is the previously decorated pot; its specific plant assignment is unconfirmed.
 
 For these planned repots, compare each actual root ball with the new pot rather than using leaf spread as the size guide. RHS recommends a Peperomia pot only a few centimetres wider than the root ball. Preserve healthy roots and the original planting depth. Use drainage holes and a uniform blend around the root ball; skip a separate clay-pebble bottom layer, because a fine-over-coarse boundary can hinder water movement. A few loose pebbles are not the same as a thick layer, but do not establish better drainage. See [RHS repotting guidance](https://www.rhs.org.uk/plants/peperomia/how-to-grow-peperomia) and [Washington State University on container drainage](https://s3.wp.wsu.edu/uploads/sites/403/2015/03/container-drainage.pdf).
 
@@ -43,7 +45,7 @@ A practical initial trial is **two parts greenhouse potting mix to one part Moll
    low-light period or a major move.
 2. In a container with working drainage, water thoroughly enough to wet the
    root ball, let it drain, and empty the tray. Verify drainage in a shared
-   planter, especially the square wooden box, before using soak-through watering.
+   planter before using soak-through watering. The owner confirmed that #2 has a plastic liner and a one-inch hole through both liner and wooden bottom; this records its construction, not a measured drainage rate.
 3. For the usual cactus and succulent group, check that the root-zone mix is
    dry and the plant is ready before watering again. Money tree, Peperomia Bicolor, Tricolor oyster plant, Royal Flush,
    active/resting Kiwi aeonium, and shared containers need the specific checks
@@ -116,7 +118,9 @@ supports thorough watering, drying between waterings, and reduced watering
 during low-light rest. Keep the money-tree and split-rock exceptions below.
 
 The documented P01–P18 mix is 60% Molly's Succulent Mix and 40% perlite by
-volume. [Molly's lists akadama, pine bark, lava rock, Hyuga, and pumice](https://veryplants.com/products/mollys-succulent-mix-premium-gritty-soil-mix)
+volume. For the six Mountain Crest pots **P23–P28 / G1–G3 and H1–H3**, the owner clarified September 20 that the existing mix probably contains about **20% added perlite**, or roughly **80% Molly's / 20% perlite**. This is a recalled approximate recipe, not a newly measured blend or repot; the established P01–P18 recipe stays 60/40.
+
+[Molly's lists akadama, pine bark, lava rock, Hyuga, and pumice](https://veryplants.com/products/mollys-succulent-mix-premium-gritty-soil-mix)
 and describes a porous mix that still retains moisture. Water held in and on
 porous particles should not be confused with every rock swelling enough to
 damage roots. [The Perlite Institute describes perlite's porous structure](https://www.perlite.org/horticulture/)
@@ -347,7 +351,7 @@ the next several weeks.
 
 The 2026-08-28 Check/Clean bulk round records slightly moist substrate for all
 six. This does not establish a watering or fertilizer event. Their deliberate
-2026-08-28 repots and 4-inch current pots establish pot setup 1. The [current placement guide](./layouts/table-placement-research.md) records the owner-confirmed arrangement and later A3/F1 exchange. Replacement-medium composition and exact individual clearance remain unrecorded.
+2026-08-28 repots and 4-inch current pots establish pot setup 1. The [current placement guide](./layouts/table-placement-research.md) records the owner-confirmed arrangement and later A3/F1 exchange. The owner clarified September 20 that the existing mix is Molly's with probably about 20% added perlite, or approximately 80/20, recalled rather than measured. Exact individual light clearance remains unmeasured; this is not a new repot or setup.
 
 | Tracker ID | Scale weight | Ruler height | Ruler width |
 | ---------- | ------------ | ------------ | ----------- |

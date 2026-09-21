@@ -90,6 +90,8 @@ The owner corrected the ceiling framing orientation on September 11 to
 both lights hung, with separate adjustable suspension, and further leveling
 after the photographs. Each light can be raised or lowered independently.
 
+The September 20 clarification identifies the installed hardware as **heavy-duty screw eyelets bought at a local hardware store**, used with **the adjustable ropes included with the fixtures**. Exact eyelet brand and load ratings were not supplied; no Amazon hanger listing is asserted for this installation.
+
 This replaces the earlier RIMLUFE shared-bar and KAROSOM anti-tip-wire proposal.
 Those accessories are no longer part of the mounting plan, and the two lights
 do not need to be balanced against each other. Use each fixture's manufacturer

@@ -1,18 +1,24 @@
 # Grow-room dehumidifier and air purifier
 
-Last updated: 2026-08-14
+Last updated: 2026-09-20
 
 These two small appliances support the open-table grow area, but neither one is
-a plant controller. The manual temperature/RH sensor remains the decision tool,
-the two pole-mounted circulation fans provide cross-canopy air movement, and the
-normal soak-and-dry watering rule does not change.
+a plant controller. Current readings and plant-specific watering rules remain the decision references. Two pole-mounted fans provide continuous rotating canopy airflow; two additional Honeywell fans below the tables run on Low with A22-controlled cycles of unrecorded duration.
+
+## Owner-Confirmed Operating Record — September 20
+
+The **dehumidifier is currently running directly from a wall outlet**, not from the A22. The **A22 controls fan cycles only**. The two under-table fans are the purchased Honeywell HT900 and an older, slightly larger Honeywell of unknown model; both are set to Low. The owner's roughly six-inch/nine-inch size estimates are not verified dimensions. The canopy fans' continuous operation is a separate record.
+
+Reported room conditions are approximately **45–50% RH and temperatures in the 70s °F**. The owner identifies a VIVOSUN **TH1GS** sensor alongside the A22 probe. The two probe locations are a glass table and the wall at plant height, with roughly two inches of the wall probe's free end leaning away from the wall. The exact probe-to-device assignment is unconfirmed. The body's internal sensor is on a shelf about two feet from the cacti. The mentioned glass table is not yet identified; the former round display table is gone. These are location descriptions, not a calibration or evidence that all sensors read identically.
+
+The owned **Levoit LV600S humidifier** has no confirmed current running state or settings yet. Do not infer its operation from the dehumidifier report. The older guidance below remains a reference for interpreting conditions; it is not an account of the devices' current program or an instruction to change the A22.
 
 ## Current equipment
 
-| Device                                                                                                                                   | Verified details                                                                                                                        | Role in this setup                                                  |
-| ---------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| [TABYIK DH-CS01 dehumidifier](https://www.amazon.com/dp/B0CMTP3GH8?th=1)                                                                 | Thermoelectric/Peltier unit; one speed; 1,000 mL tank; 41.67 W; 5.9 × 5.9 × 10.1 in; advertised 28 dB; automatic stop around 700–800 mL | On-demand help when the room sensor shows sustained excess humidity |
-| [Levoit Core Mini-P](https://levoit.com/products/core-mini-p-air-purifier) ([Amazon listing](https://www.amazon.com/dp/B09GTRVJQM?th=1)) | Model LAP-C161-WUS; 7 W; 34 CFM CADR; 6.5 × 6.5 × 10.4 in; 25–44 dB; 360° intake; three-stage particle/carbon filter; ozone-free        | Low-level dust and pollen removal for the room and camera area      |
+| Device                                                                                                                                   | Verified details                                                                                                                        | Role in this setup                                                     |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| [TABYIK DH-CS01 dehumidifier](https://www.amazon.com/dp/B0CMTP3GH8?th=1)                                                                 | Thermoelectric/Peltier unit; one speed; 1,000 mL tank; 41.67 W; 5.9 × 5.9 × 10.1 in; advertised 28 dB; automatic stop around 700–800 mL | Currently running from the wall outlet; evaluate against room readings |
+| [Levoit Core Mini-P](https://levoit.com/products/core-mini-p-air-purifier) ([Amazon listing](https://www.amazon.com/dp/B09GTRVJQM?th=1)) | Model LAP-C161-WUS; 7 W; 34 CFM CADR; 6.5 × 6.5 × 10.4 in; 25–44 dB; 360° intake; three-stage particle/carbon filter; ozone-free        | Low-level dust and pollen removal for the room and camera area         |
 
 TABYIK advertises up to **450 mL/day**, but that test is at **86°F and 80% RH**
 in a confined space. The open grow area normally targets much cooler and drier
@@ -25,6 +31,8 @@ Levoit rates the Core Mini-P for 254 ft² at one air change per hour or 53 ft² 
 **not** lower humidity and does not replace the oscillating canopy fans.
 
 ## Starting placement
+
+**Historical guidance for the earlier table arrangement:** the geometry below predates the current four-table layout and the removal of the round glass table.
 
 Start both devices **beyond the second wooden table on the open-room side**,
 outside the nominal 60 in plant bay and the grow light's direct footprint. The
@@ -58,6 +66,8 @@ beside a table.
 
 ## Simple operating plan
 
+This is the earlier condition-based operating guidance, retained separately from the September 20 owner-confirmed running state above. It does not describe a current automatic controller program.
+
 | Sensor or room condition                                                                                 | Core Mini-P                                                                            | DH-CS01                                                                                                         |
 | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
 | Normal 30–55% RH                                                                                         | Low continuously; lights-on hours only is also fine if the nighttime noise is annoying | Off                                                                                                             |
@@ -89,6 +99,8 @@ Leave the Core Mini-P aroma pad dry. Essential oil is unrelated to plant or
 particle care and would add an unnecessary variable beside the collection.
 
 ## August 4 commissioning check
+
+This dated commissioning procedure is historical, not a new September task.
 
 1. With both new appliances off for at least an hour, record current
    temperature/RH and the 24-hour ranges.

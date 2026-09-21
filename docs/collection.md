@@ -196,7 +196,7 @@ money tree is `#3`, and the Kiwi aeonium is `#4`. The former `A4-B4` and
 
 ## September 20 Carlson's Greenhouses houseplants
 
-The owner purchased two separate basket-grown houseplants on **2026-09-20**. The photographs document their nursery labels and purchase containers. The owner confirmed purchasing both directly at Carlson's Greenhouses in owner-reported six-inch nursery pots; the tags also identify Carlson's as the grower. Current nursery-pot depth, medium, drainage, actual positions, and care observations remain unrecorded. The owner reports both nursery pots are quite full and thinks the plants are ready for larger pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; placement on separate floor pot stools is planned, explicitly off the tables; stools are being purchased/on order. The owner plans to blend loose, airy, perlite-containing greenhouse mix with Molly's Succulent Mix, with more perlite available but no ratio chosen. No completed repot, move, watering, or weight observation is implied.
+The owner purchased two separate basket-grown houseplants on **2026-09-20**. The photographs document their nursery labels and purchase containers. The owner confirmed purchasing both directly at Carlson's Greenhouses in owner-reported six-inch nursery pots; the tags also identify Carlson's as the grower. The owner confirmed both are currently on the floor on the room side near the money tree. Current nursery-pot depth, medium, drainage, and leaf-height light remain unrecorded. Leaves were wet at purchase, but the nursery supplied no watering or fertilizer history; wet foliage does not establish a root-ball watering event. The owner reports both nursery pots are quite full and thinks the plants are ready for larger pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; placement on separate floor pot stools is planned, explicitly off the tables; the owner has ordered a three-stool set, with model and heights awaiting verification. The owner plans to blend loose, airy, perlite-containing greenhouse mix with Molly's Succulent Mix, with more perlite available but no ratio chosen. No completed repot, installation on stools, watering, or weight observation is implied.
 
 | Inventory ID  | Label ID | Tracker ID | Working identification                                                                         | Common name           | Evidence                                                                  |
 | ------------- | -------- | ---------- | ---------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------------------------------------- |
@@ -269,7 +269,7 @@ fertilizer use. The live 2026-08-29 `History` measurements are:
 | `P27`      | 388 g           | 0.5 in          | 1.2 in         |
 | `P28`      | 353.5 g         | 1.3 in          | 1.7 in         |
 
-The owner confirmed the arrangement in the [current placement guide](./layouts/table-placement-research.md), including the later A3/F1 exchange. Replacement-medium composition and exact individual clearance remain unrecorded. The observed 2-inch-to-4-inch change is not a general up-pot rule;
+The owner confirmed the arrangement in the [current placement guide](./layouts/table-placement-research.md), including the later A3/F1 exchange. The owner clarified September 20 that all six received Molly's Succulent Mix with probably about 20% added perlite, or approximately 80/20 rather than the P01–P18 batch's 60/40. The ratio is recalled, not precisely measured. This clarifies the existing setup without creating a new repot or changing reference weights; exact individual light clearance remains unmeasured. The observed 2-inch-to-4-inch change is not a general up-pot rule;
 the current pots need their own drainage and dry-down observations.
 
 The Split Rock and hardy _Sempervivum_ are not additions to the established
@@ -280,7 +280,7 @@ lower-light houseplant.
 
 ## Abandoned September 19 Amazon plan
 
-All five unreceived plants are excluded from the active inventory. Their research is preserved in the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Succulent-11–14 and Houseplant-02 retain archived research identities; their physical-label and tracker allocations are withdrawn. The decorated pot is one of the two Amazon Basics destinations, with its specific plant assignment unconfirmed; the separate D'vine four-inch pot order has no confirmed cancellation or receipt.
+All five unreceived plants are excluded from the active inventory. Their research is preserved in the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Succulent-11–14 and Houseplant-02 retain archived research identities; their physical-label and tracker allocations are withdrawn. The decorated pot is one of the two Amazon Basics destinations, with its specific plant assignment unconfirmed; the owner is keeping the separate D'vine four-inch pot for a future succulent, with no replacement plant chosen.
 
 ## Identification follow-ups
 

@@ -38,7 +38,9 @@ is `G3`, and the permanent tracker ID is `P28`.
 Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
 slightly moist substrate. The live 2026-08-29 Measurement record is **353.5 g**
 by Scale and **1.3 in high × 1.7 in wide** by Ruler. These are measured records,
-not watering or fertilizer events. The owner confirmed the arrangement recorded in the [current placement guide](../../layouts/table-placement-research.md), including the later A3/F1 exchange. Replacement-medium composition and exact individual clearance remain unrecorded; placement completion is no longer pending.
+not watering or fertilizer events. The owner confirmed the arrangement recorded in the [current placement guide](../../layouts/table-placement-research.md), including the later A3/F1 exchange. Exact individual clearance remains unrecorded; placement completion is no longer pending.
+
+On September 20, 2026, the owner confirmed Molly's Succulent Mix with added perlite for all six G/H pots, estimating approximately 80% Molly's / 20% added perlite from memory rather than the earlier 60/40 description. The proportion is an uncertain recollection, not a measured recipe or a newly dated repot.
 
 The owner chose not to quarantine this shipment after hand inspection, owner-
 reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
@@ -86,7 +88,7 @@ horticultural color selection rather than a separate wild population.
 | Grow-light position | **Photo-matched R2C4 · Bright.** September 15 six-column/four-row front grid, facing the window. Low central split rock. Compare rosette-height exposure and retain its leaf-cycle watering restrictions. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
 | Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use the active leaf cycle, firmness, medium dryness, and pot-weight trend as evidence.                                                                                                                                                              |
 | Leaf replacement    | Let the old pair be consumed while a new inner pair develops; wrinkling old leaves alone is not an automatic water signal.                                                                                                                                                                                                         |
-| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape and replacement-medium composition are unrecorded; depth still matters.                                                                                                                                                                                        |
+| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape is unrecorded. The owner recalls Molly's Succulent Mix with approximately 20% added perlite (September 20 report; ratio estimated); depth still matters.                                                                                                       |
 
 ## Rotation, propagation, and watch points
 
@@ -99,6 +101,8 @@ horticultural color selection rather than a separate wild population.
   different from the 18-pot cactus dry-down experiment.
 
 ## Sources
+
+- Owner clarification on September 20, 2026: all six G1/G2/G3 and H1/H2/H3 pots contain Molly's Succulent Mix with added perlite; approximately 20% added perlite is an uncertain recollection that supersedes the earlier 40% description. This clarifies the existing setup without dating a new repot or changing recorded weights.
 
 - [Mountain Crest Gardens: 'Royal Flush' split rock seller listing](https://mountaincrestgardens.com/pleiospilos-nelii-royal-flush-split-rock/)
 - [LLIFLE succulent encyclopedia: _Pleiospilos nelii_ 'Royal Flush'](https://www.llifle.com/Encyclopedia/SUCCULENTS/Family/Aizoaceae/14727/Pleiospilos_nelii_cv._Royal_Flush)

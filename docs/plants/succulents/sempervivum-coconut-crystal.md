@@ -46,7 +46,9 @@ corrected pot label is `H1`, and the permanent tracker ID is `P24`.
 Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
 slightly moist substrate. The live 2026-08-29 Measurement record is **361.5 g**
 by Scale and **1.0 in high × 2.55 in wide** by Ruler. These are measured
-records, not watering or fertilizer events. The owner confirmed the arrangement recorded in the [current placement guide](../../layouts/table-placement-research.md), including the later A3/F1 exchange. Replacement-medium composition and exact individual clearance remain unrecorded; placement completion is no longer pending.
+records, not watering or fertilizer events. The owner confirmed the arrangement recorded in the [current placement guide](../../layouts/table-placement-research.md), including the later A3/F1 exchange. Exact individual clearance remains unrecorded; placement completion is no longer pending.
+
+On September 20, 2026, the owner confirmed Molly's Succulent Mix with added perlite for all six G/H pots, estimating approximately 80% Molly's / 20% added perlite from memory rather than the earlier 60/40 description. The proportion is an uncertain recollection, not a measured recipe or a newly dated repot.
 
 The owner chose not to quarantine this shipment after hand inspection, owner-
 reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
@@ -100,7 +102,7 @@ coolest available succulent position with steady airflow.
 | Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use drainage, rosette firmness, and pot-weight trend; never leave water standing in the crown or saucer.                                                                                                                                                                               |
 | Heat                | Move toward a cooler edge or add distance if leaves bleach, the rosette opens, or sustained canopy heat becomes excessive.                                                                                                                                                                                                                                            |
 | Winter              | Keep indoors; favor cooler nights and seasonal temperature variation without exposing it to freezing drafts.                                                                                                                                                                                                                                                          |
-| Pot                 | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape and replacement-medium composition are unrecorded; monitor the larger mix volume indoors.                                                                                                                                                                                                         |
+| Pot                 | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape is unrecorded. The owner recalls Molly's Succulent Mix with approximately 20% added perlite (September 20 report; ratio estimated); monitor the larger mix volume indoors.                                                                                                                        |
 
 ## Rotation, propagation, and watch points
 
@@ -113,6 +115,8 @@ coolest available succulent position with steady airflow.
 - Keep it out of the humid, shaded interior of a mixed planter.
 
 ## Sources
+
+- Owner clarification on September 20, 2026: all six G1/G2/G3 and H1/H2/H3 pots contain Molly's Succulent Mix with added perlite; approximately 20% added perlite is an uncertain recollection that supersedes the earlier 40% description. This clarifies the existing setup without dating a new repot or changing recorded weights.
 
 - [Mountain Crest Gardens: Colorockz® 'Coconut Crystal' seller listing](https://mountaincrestgardens.com/sempervivum-colorockz-coconut-crystal/)
 - [NC State Extension: _Sempervivum_](https://plants.ces.ncsu.edu/plants/sempervivum/)

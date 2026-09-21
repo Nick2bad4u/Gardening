@@ -3,7 +3,7 @@
 - Inventory: Succulent-04 — _Kalanchoe orgyalis_
 - Label ID: `#2` — shared succulent planter; formerly `C4-D4`
 - Tracker ID: `P20`
-- Current pot: **square wooden shared planter; outside dimensions unmeasured**
+- Current pot: **square wooden shared planter with plastic liner and owner-drilled approximately one-inch hole through both bottom and liner; outside dimensions unmeasured**
 - Visual description: An upright fuzzy succulent with broad spoon-shaped leaves, pale silver-green at the newest tips and progressively warmer copper-brown on older exposed surfaces.
 - Interesting fact: The common name “copper spoons” describes an aging color transition: new leaves may open pale and silvery before the felted surface develops its characteristic copper cast.
 - Acquired from: Gerych's Greenhouse, as part of the mixed succulent planter
@@ -44,6 +44,8 @@ felt on that old leaf.
 
 ## Care in the shared planter
 
+The owner clarified on September 20, 2026 that the square wooden P20 / #2 container has a plastic liner and an approximately one-inch drainage hole drilled through both the container bottom and liner. The report does not establish the drilling date, a new setup, or a tare adjustment. Keep the opening unobstructed and assess the shared root zone before watering; the hole does not itself establish dryness.
+
 | Topic               | Practical approach                                                                                                                                                                                                                                                                                              |
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Grow-light position | **Photo-matched rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
@@ -69,6 +71,8 @@ contribute. Use stem spacing and the health of the newest leaves too.
   headroom; periodic pruning is part of the shared-planter design.
 
 ## Sources
+
+- Owner clarification on September 20, 2026: plastic liner and approximately one-inch hole drilled through both the P20 / #2 wooden container bottom and liner; exact drilling date and any removed mass were not supplied.
 
 - [Kew Plants of the World Online: _Kalanchoe orgyalis_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A274427-1)
 - [Port St. Lucie Botanical Gardens: copper spoons](https://www.pslbg.org/copper-spoon/)

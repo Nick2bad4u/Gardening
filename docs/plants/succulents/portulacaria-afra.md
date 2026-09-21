@@ -3,7 +3,7 @@
 - Inventory: Succulent-02 — _Portulacaria afra_
 - Label ID: `#2` — shared succulent planter; formerly `C4-D4`
 - Tracker ID: `P20`
-- Current pot: **square wooden shared planter; outside dimensions unmeasured**
+- Current pot: **square wooden shared planter with plastic liner and owner-drilled approximately one-inch hole through both bottom and liner; outside dimensions unmeasured**
 - Visual description: Fine branching reddish stems carry many small, round, glossy green leaves in opposite pairs, creating a miniature-tree texture within the shared planter.
 - Interesting fact: Elephant bush is physiologically flexible: it can use ordinary C3 photosynthesis when conditions allow and shift toward water-saving CAM behavior when conserving moisture matters more.
 - Acquired from: Gerych's Greenhouse, as part of the mixed succulent planter
@@ -55,6 +55,8 @@ top-dressing exposure.
 
 ## Care in the shared planter
 
+The owner clarified on September 20, 2026 that the square wooden P20 / #2 container has a plastic liner and an approximately one-inch drainage hole drilled through both the container bottom and liner. The report does not establish the drilling date, a new setup, or a tare adjustment. Keep the opening unobstructed and assess the shared root zone before watering; the hole does not itself establish dryness.
+
 | Topic               | Practical approach                                                                                                                                                                                                                                                                                              |
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Grow-light position | **Photo-matched rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
@@ -80,6 +82,8 @@ sunburn.
   moved.
 
 ## Sources
+
+- Owner clarification on September 20, 2026: plastic liner and approximately one-inch hole drilled through both the P20 / #2 wooden container bottom and liner; exact drilling date and any removed mass were not supplied.
 
 - [Kew Plants of the World Online: _Portulacaria afra_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A699417-1/general-information)
 - [SANBI PlantZAfrica: _Portulacaria afra_](https://pza.sanbi.org/portulacaria-afra)

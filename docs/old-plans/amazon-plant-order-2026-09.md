@@ -22,7 +22,7 @@ The four succulent profiles describe one proposed shared container, not four for
 
 At withdrawal on September 20, before the later purchases carrying Carlson's Greenhouses grower tags, the collection had **30 tracked containers and 39 profile records: 38 active and one historical**. This includes the existing tiny planter's aggregate overview and three component-group pages added September 20; those extra reference pages do not add pots or establish a count of individual plants. The numbered pot labels at that point were **#1–#6**. The later same-day Peperomia Bicolor and Tricolor oyster plant purchases bring the [current collection](../collection.md#september-20-carlsons-greenhouses-houseplants) to **32 containers and 41 profiles: 40 active and one historical**. The owner subsequently assigned physical labels and tracker IDs to the two purchased houseplants; see the current collection for their mapping. Succulent-11–14 and Houseplant-02 remain archived botanical research identities, without physical-label or tracker allocations.
 
-The **decorated Amazon Basics eight-inch drainage pot** is one of the two owner-confirmed destination pots for the later Carlson's houseplant purchases; see the [equipment inventory](../equipment/inventory.md). No completed repot or move is reported. The **D'vine Dev four-inch Blush Mauve pot order is separate**: its cancellation and receipt have not been reported. Canceling the five plants does not establish that the pot was canceled too.
+The **decorated Amazon Basics eight-inch drainage pot** is one of the two owner-confirmed destination pots for the later Carlson's houseplant purchases; see the [equipment inventory](../equipment/inventory.md). No completed repot or installation on stools is reported. The **D'vine Dev four-inch Blush Mauve pot is being kept for a future succulent**, as the owner confirmed September 20; it is separate from the plant cancellation. No replacement plant has been chosen or added to the collection.
 
 ## Former placement idea
 
@@ -32,7 +32,7 @@ The proposed shared pot would have occupied the far-table area where the owner r
 
 - Keep the old seller wording and research as historical evidence rather than presenting the plants as current inventory.
 - Do not log removal, repotting, or watering for plants that were never physically received; withdrawing an administrative allocation is different from a plant-care event.
-- Cancellation remains pending until confirmation is available. Do not infer a refund or promise return eligibility.
+- The owner reconfirmed September 20 that cancellation remains pending. Do not infer a refund or promise return eligibility.
 - Future purchases need their own confirmed identity, allocation, and actual observations. The archived care suggestions are not current daily-task instructions.
 
 ## Sources

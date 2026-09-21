@@ -3,7 +3,7 @@
 - Inventory: Succulent-01 — probable _Echeveria pulidonis_ or close hybrid
 - Label ID: `#2` — shared succulent planter; formerly `C4-D4`
 - Tracker ID: `P20`
-- Current pot: **square wooden shared planter; outside dimensions unmeasured**
+- Current pot: **square wooden shared planter with plastic liner and owner-drilled approximately one-inch hole through both bottom and liner; outside dimensions unmeasured**
 - Visual description: A symmetrical rosette of thick, pointed blue-green leaves, each carrying a fine powdery bloom and a narrow red outline that is strongest near the tip.
 - Interesting fact: The chalky farina is a one-time finish on each leaf: fingerprints or rub marks do not refill, although every new leaf emerges with a fresh waxy coating of its own.
 - Identification: **probable; flowers would improve confidence**
@@ -43,6 +43,8 @@ pot or lowest leaves rather than polishing the rosette.
 
 ## Care in the shared planter
 
+The owner clarified on September 20, 2026 that the square wooden P20 / #2 container has a plastic liner and an approximately one-inch drainage hole drilled through both the container bottom and liner. The report does not establish the drilling date, a new setup, or a tare adjustment. Keep the opening unobstructed and assess the shared root zone before watering; the hole does not itself establish dryness.
+
 | Topic                     | Practical approach                                                                                                                                                                                                                                                                                              |
 | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Grow-light position       | **Photo-matched rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
@@ -70,6 +72,8 @@ a raised center and widening gaps indicate stretch.
   planter or separating it is simpler than overlighting every plant.
 
 ## Sources
+
+- Owner clarification on September 20, 2026: plastic liner and approximately one-inch hole drilled through both the P20 / #2 wooden container bottom and liner; exact drilling date and any removed mass were not supplied.
 
 - [Kew Plants of the World Online: _Echeveria pulidonis_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A87059-2)
 - [Royal Horticultural Society: _Echeveria pulidonis_](https://www.rhs.org.uk/plants/6239/echeveria-pulidonis/details)

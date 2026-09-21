@@ -98,7 +98,7 @@ The three Mountain Crest succulents arrived rooted in 2-inch nursery pots of unr
 
 The live 2026-08-28 Check/Clean bulk round records slightly moist substrate for
 all six Mountain Crest plants; it is not a watering or fertilizer record.
-The owner confirmed the arrangement recorded in the [current placement guide](../layouts/table-placement-research.md), including the later A3/F1 exchange. Replacement-medium composition and exact individual clearance remain unrecorded; placement completion is no longer pending.
+The owner confirmed the arrangement recorded in the [current placement guide](../layouts/table-placement-research.md), including the later A3/F1 exchange. Exact individual clearance remains unrecorded; placement completion is no longer pending. On September 20, 2026, the owner confirmed Molly's Succulent Mix with added perlite for all six G/H pots, estimating approximately 80% Molly's / 20% added perlite from memory rather than the earlier 60/40 description. The proportion is an uncertain recollection, not a measured recipe or a newly dated repot.
 
 The two September 2 Home Depot records intentionally retain their evidence
 limits. `P29` is seller-labeled _Faucaria tigrina_, but the current close view's
@@ -123,7 +123,7 @@ tracked planter. Its three component-group pages (Succulent-10A/B/C) retain qual
 | Houseplant-03 | `#7`     | [Peperomia Bicolor (_Peperomia obtusifolia_ 'Obtipan Bicolor')](./houseplants/peperomia-obtipan-bicolor.md)     | Nursery-labeled cultivar; P31; purchased 2026-09-20      |
 | Houseplant-04 | `#8`     | [Tricolor oyster plant (_Tradescantia spathacea_ 'Tricolor')](./houseplants/tradescantia-spathacea-tricolor.md) | Nursery-labeled under _Rhoeo_; P32; purchased 2026-09-20 |
 
-The owner confirmed buying both directly at Carlson's Greenhouses on September 20 in owner-reported six-inch nursery pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; placement on separate floor pot stools is planned, off the tables; no completed repot or move is reported. Nursery-pot depth, drainage, existing medium, and actual positions remain unmeasured or unrecorded. The proposed airy greenhouse-mix/Molly's blend has no chosen ratio. Houseplant-02 remains the archived Nanouk allocation.
+The owner confirmed buying both directly at Carlson's Greenhouses on September 20 in owner-reported six-inch nursery pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; both nursery pots are currently on the floor on the room side near the money tree, as confirmed September 20. Placement on separate floor pot stools and the eight-inch repots remain planned. Nursery-pot depth, drainage, existing medium, exact spacing, and leaf-height exposure remain unmeasured or unrecorded. The proposed airy greenhouse-mix/Molly's blend has no chosen ratio. Houseplant-02 remains the archived Nanouk allocation.
 
 The five unreceived Amazon plants have no physical-label or tracker allocation. Their [archived research pages](../old-plans/amazon-plant-order-2026-09.md) remain available separately. The owner explicitly assigned #7 / P31 and #8 / P32 to the two Carlson's purchases on September 20.
 

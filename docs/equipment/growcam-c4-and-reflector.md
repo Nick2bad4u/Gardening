@@ -1,8 +1,10 @@
 # GrowCam C4 time-lapse and reflector plan
 
-Last updated: 2026-09-15
+Last updated: 2026-09-20
 
 The **AW200 + AeroLight 240 W** pair was installed September 13. The owner added two more 16 × 13-inch tables and rearranged the display September 15; see the [current four-table guide](../layouts/table-placement-research.md). Its diagram faces the window: Mylar left, white wall right, window top, open room bottom. The two-foot return panel remains absent. Keep the camera view clear of both fixtures and hangers; the old room framing and riser geometry below are a dated reference, not measurements of the new furniture.
+
+**September 20 owner confirmation:** both GrowCams are working, and the previously requested full-day check has been completed. The historical test procedure below is retained as a reference, not an outstanding task. Exact new per-camera export details, storage configuration and framing were not supplied. The older 24-inch round glass table is gone; current camera framing should be interpreted against the four-table arrangement, not the earlier three-surface geometry.
 
 This guide keeps the GrowCam C4 and divider Mylar around an open plant display.
 The camera is for a stable collection-wide time-lapse, not close-up diagnosis
@@ -10,14 +12,14 @@ of one plant.
 
 ## Confirmed equipment
 
-| Item               | Current equipment                                                                                                      |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------- |
-| Camera             | VIVOSUN GrowCam C4, model VSC-GCC4                                                                                     |
-| Image              | 2564 × 1440, 117° field of view, and automatic day/night imaging                                                       |
-| Network            | 2.4 GHz Wi-Fi through the VIVOSUN app                                                                                  |
-| Local storage      | Installed 256 GB microSD card; short test recordings passed; VIVOSUN supports up to 512 GB                             |
-| Recording interest | Time-lapse is primary; continuous recording is optional                                                                |
-| Reflector          | [VIVOSUN 6 mil diamond Mylar, 4 × 25 ft](https://www.amazon.com/dp/B01MZ72PAH?th=1), advertised at 92–97% reflectivity |
+| Item               | Current equipment                                                                                                               |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| Camera             | VIVOSUN GrowCam C4, model VSC-GCC4                                                                                              |
+| Image              | 2564 × 1440, 117° field of view, and automatic day/night imaging                                                                |
+| Network            | 2.4 GHz Wi-Fi through the VIVOSUN app                                                                                           |
+| Local storage      | Originally documented 256 GB microSD card; short tests passed; both cameras now reported working; VIVOSUN supports up to 512 GB |
+| Recording interest | Time-lapse is primary; continuous recording is optional                                                                         |
+| Reflector          | [VIVOSUN 6 mil diamond Mylar, 4 × 25 ft](https://www.amazon.com/dp/B01MZ72PAH?th=1), advertised at 92–97% reflectivity          |
 
 The C4 requires a microSD card for time-lapse. VIVOSUN says to insert the card
 before powering the camera. A solid green indicator means the connected camera
@@ -69,7 +71,7 @@ priority over enclosing more sides. No additional reflector is proposed.
 
 ### GrowCam
 
-The preferred camera position is a rigid point on the right wall, slightly
+The earlier three-surface plan proposed a rigid point on the right wall, slightly
 toward the room side of the second wooden table, aimed diagonally down and
 lengthwise toward the round table and Mylar-lined divider.
 
@@ -78,7 +80,7 @@ divider as a cleaner background, and avoids mounting the camera on fabric that
 can move. Do not attach it to either fan, the light, adjustable light hangers, or
 anything that vibrates.
 
-Use the following starting geometry, then frame with the live view:
+That earlier plan used the following starting geometry; these are not current measured camera positions:
 
 - lens roughly 18–30 in above the tallest plant tip;
 - camera roughly 24–40 in from the center of the occupied footprint;
@@ -115,9 +117,7 @@ Both pole fans remain separate from the camera:
 
 ### Full-day validation test
 
-The 256 GB card is installed and short test recordings passed. Run one 24-hour
-test from Friday, July 31, into Saturday, August 1, using the installed setup.
-Review the finished test before relying on a multiweek recording:
+The original commissioning plan recorded an installed 256 GB card and successful short tests, then proposed a 24-hour test from Friday, July 31, into Saturday, August 1. The owner confirmed on September 20 that the full-day check is complete and both cameras work; the settings and review procedure below are retained as historical reference, without asserting that every option or export detail was used.
 
 | Setting              | Starting value                                                           |
 | -------------------- | ------------------------------------------------------------------------ |
@@ -176,7 +176,7 @@ menu option exists.
 
 ## Final checks
 
-Before starting the main clip:
+The original main-clip checklist is retained below as a reference, not a list of outstanding checks:
 
 - camera is on a rigid mount and outside the lamp's heat path;
 - all pots and short position labels are visible while the couch and normal

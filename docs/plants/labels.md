@@ -225,7 +225,7 @@ The six permanent labels were corrected from the physical plants after receipt:
 Crystal, `H2` Raindrops, and `H3` Eve's needle. Their tracker IDs are
 `P27`, `P23`, `P28`, `P24`, `P25`, and `P26`, respectively. The owner-entered
 live tracker records 4-inch current pots, and the 2026-08-29 Scale weights and Ruler
-dimensions are recorded. Received nursery-pot shape and replacement-medium composition remain unrecorded. The [current placement guide](../layouts/table-placement-research.md) supplies September 15 photo-matched positions on four wooden tables. The owner rearranged the pots; exact label matching and exposure remain to be checked.
+dimensions are recorded. Received nursery-pot shape remains unrecorded. On September 20, 2026, the owner confirmed Molly's Succulent Mix with added perlite for all six G/H pots, estimating approximately 80% Molly's / 20% added perlite from memory rather than the earlier 60/40 description. The proportion is an uncertain recollection, not a measured recipe or a newly dated repot. The [current placement guide](../layouts/table-placement-research.md) supplies September 15 photo-matched positions on four wooden tables. The owner rearranged the pots; exact label matching and exposure remain to be checked.
 
 The exact product pages were inspected on 2026-08-26. All six list a 2.0-inch
 pot; that seller size and SKU belong in the collection record, not necessarily
@@ -360,7 +360,7 @@ Peperomia obtusifolia 'Obtipan Bicolor'
 Tradescantia spathacea 'Tricolor'
 ```
 
-The owner confirmed buying both plants directly at Carlson's Greenhouses on 2026-09-20 in owner-reported six-inch nursery pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; placement on separate floor stools is planned, off the tables. No completed repot or move is reported; nursery-pot depth and actual display positions remain unrecorded. The labels stay #7 and #8 through the planned changes.
+The owner confirmed buying both plants directly at Carlson's Greenhouses on 2026-09-20 in owner-reported six-inch nursery pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; both nursery pots are currently on the floor on the room side near the money tree, as confirmed September 20. Separate floor stools and the eight-inch repots remain planned. Nursery-pot depth, exact display spacing, and leaf-height light remain unrecorded. The labels stay #7 and #8 through the planned changes.
 
 ## Archived label allocations
 

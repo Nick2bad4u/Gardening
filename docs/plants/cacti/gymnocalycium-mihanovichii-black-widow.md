@@ -38,7 +38,9 @@ label is `G1`, and the permanent tracker ID is `P27`.
 Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
 slightly moist substrate. The live 2026-08-29 Measurement record is **388 g**
 by Scale and **0.5 in high × 1.2 in wide** by Ruler. These are measured records,
-not watering or fertilizer events. The owner confirmed the arrangement recorded in the [current placement guide](../../layouts/table-placement-research.md), including the later A3/F1 exchange. Replacement-medium composition and exact individual clearance remain unrecorded; placement completion is no longer pending.
+not watering or fertilizer events. The owner confirmed the arrangement recorded in the [current placement guide](../../layouts/table-placement-research.md), including the later A3/F1 exchange. Exact individual clearance remains unrecorded; placement completion is no longer pending.
+
+On September 20, 2026, the owner confirmed Molly's Succulent Mix with added perlite for all six G/H pots, estimating approximately 80% Molly's / 20% added perlite from memory rather than the earlier 60/40 description. The proportion is an uncertain recollection, not a measured recipe or a newly dated repot.
 
 The owner chose not to quarantine this shipment after hand inspection, owner-
 reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
@@ -84,7 +86,7 @@ variegated form as a separate botanical taxon.
 | Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual top and side views are archived; add base and complete all-side diagnostic views when available.                                                                                        |
 | Grow-light position | **Photo-matched R1C3 · Bright.** September 15 six-column/four-row front grid, facing the window. Front-center bright position; dark color and variegation do not establish a shade requirement. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
 | Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use medium dryness, plant response, and pot-weight trend as evidence.                                                                                                                                                                     |
-| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape and replacement-medium composition are unrecorded; monitor the larger mix volume closely.                                                                                                                                                            |
+| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape is unrecorded. The owner recalls Molly's Succulent Mix with approximately 20% added perlite (September 20 report; ratio estimated); monitor the larger mix volume closely.                                                                           |
 | Color               | Judge new scars, bleaching, or translucence separately from stable dark purple and green variegation.                                                                                                                                                                                                                    |
 
 ## Rotation, propagation, and watch points
@@ -98,6 +100,8 @@ variegated form as a separate botanical taxon.
 - Keep the plant above freezing and away from standing water.
 
 ## Sources
+
+- Owner clarification on September 20, 2026: all six G1/G2/G3 and H1/H2/H3 pots contain Molly's Succulent Mix with added perlite; approximately 20% added perlite is an uncertain recollection that supersedes the earlier 40% description. This clarifies the existing setup without dating a new repot or changing recorded weights.
 
 - [Mountain Crest Gardens: 'Black Widow' seller listing](https://mountaincrestgardens.com/gymnocalycium-mihanovichii-f-variegata-black-widow-wfzy/)
 - [Kew Plants of the World Online: _Gymnocalycium mihanovichii_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A115434-2)
