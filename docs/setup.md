@@ -1,6 +1,6 @@
 # Setup and equipment
 
-Last updated: 2026-09-21
+Last updated: 2026-09-22
 
 The [equipment and supplies inventory](./equipment/inventory.md) consolidates the documented products and relevant Amazon order links. The owner confirmed all four wooden tables are the [LEJANEOYE two-tier bamboo side-table model](https://www.amazon.com/dp/B0D25H73ZS) on September 17; the new inventory preserves the measured dimensions separately from the listing.
 
@@ -21,9 +21,9 @@ starting points, but plant response matters more than chasing an exact number.
 
 ### Planned living-room houseplants
 
-On **September 21**, the owner plans to move **P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant** to a **north-facing living-room window**. The newly purchased **FECiDA 54 W six-tube clip grow light** will supplement daylight **alongside both owned 10 W LED bars and the separate owned 10 W LED light**. The [equipment inventory](./equipment/inventory.md#lights-and-controls) records the exact listing and September 23 delivery estimate; receipt and installation remain unconfirmed. This is separate from the cactus display and P21 Money Tree's recorded windowsill. The last confirmed position of P31/P32 remains the room-side floor near the money tree; the living-room move, eight-inch repots, and stools are not reported complete. Existing light models, final distances, settings, coverage, and the living room's conditions remain unrecorded.
+On **September 21**, the owner planned to move **P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant** to a **north-facing living-room window**. The **September 22 clarification** identifies the core lighting plan as the purchased **FECiDA 54 W six-tube clip grow light plus two owned Juhefa three-head fixtures**, each rated by the seller at about **10 W for the entire fixture**, not per head. The separate **Diivoo lamp is optional**; its actual input wattage is unverified. The [equipment inventory](./equipment/inventory.md#lights-and-controls) records the exact models and seller claims. The FECiDA's September 23 delivery estimate was checked September 21 and has not been rechecked; receipt and installation remain unconfirmed. This is separate from the cactus display and P21 Money Tree's recorded windowsill. The last confirmed position of P31/P32 remains the room-side floor near the money tree; the living-room move, eight-inch repots, and stools are not reported complete. Final distances, settings, measured coverage, and the living room's conditions remain unrecorded.
 
-The [living-room light trial](./layouts/table-placement-research.md#planned-living-room-window-and-leds) retains inferred starting comparisons of **4–6 DLI for P31** and **6–8 DLI for P32**. The FECiDA's listed **12-hour timer** is the proposed first daytime trial, with the other lights aligned where their controls allow. Measure across both canopies with **all four fixtures on together** after dark, then assess daylight separately before adjusting placement or settings. No timer has been reported set. The main display's timer, readings, airflow, and humidity do not establish conditions at this new window.
+The [living-room light trial](./layouts/table-placement-research.md#planned-living-room-window-and-leds) retains inferred starting comparisons of **4–6 DLI for P31** and **6–8 DLI for P32**, including lamps plus daylight. The listed **12-hour timer** is the proposed first daytime trial, with the lights aligned to the same window. Measure across both canopies with **all lights actually used operating together** after dark, then assess daylight separately before adjusting placement or settings. Compare the optional Diivoo on and off if deciding whether it fills a coverage gap. No timer has been reported set. The main display's timer, readings, airflow, and humidity do not establish conditions at this new window.
 
 ### Established cactus-room display
 

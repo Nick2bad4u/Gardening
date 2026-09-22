@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-09-21
+Last updated: 2026-09-22
 
 This is the current working inventory plus historical records for plants
 removed from the collection. A label is useful evidence, but not a guarantee;
@@ -214,7 +214,7 @@ The owner purchased two separate basket-grown houseplants on **2026-09-20**. The
 | Houseplant-03 | `#7`     | `P31`      | [_Peperomia obtusifolia_ 'Obtipan Bicolor'](./plants/houseplants/peperomia-obtipan-bicolor.md) | Peperomia Bicolor     | Tag: “Peperomia obtipan Bicolor basket”; “bright, indirect light”; $14.99 |
 | Houseplant-04 | `#8`     | `P32`      | [_Tradescantia spathacea_ 'Tricolor'](./plants/houseplants/tradescantia-spathacea-tricolor.md) | Tricolor oyster plant | Tag: “Rhoeo spathacea Tricolor Basket”; “bright, indirect light”          |
 
-The owner explicitly assigned P31 / #7 to Peperomia Bicolor and P32 / #8 to Tricolor oyster plant on September 20. Archived Houseplant-02 and Succulent-11–14 retain research identities only, with no physical-label or tracker allocation. On **September 21**, the owner plans to move both houseplants to a **north-facing living-room window**, using the newly purchased **FECiDA 54 W six-tube clip light alongside both owned 10 W LED bars and the separate owned 10 W LED light**. The [equipment inventory](./equipment/inventory.md#lights-and-controls) records the exact model and September 23 delivery estimate. Receipt, the move, and lamp installation remain unconfirmed; existing lamp models, final distances, settings, and exposure remain unrecorded. Both plants need a gentler, measured starting exposure; the previously reported 18–22 app-estimated DLI far-table area is not automatically assigned to either purchase. See the [living-room plan and light comparison](./layouts/table-placement-research.md#planned-living-room-window-and-leds) for a proposed 12-hour first trial and combined-light measurements.
+The owner explicitly assigned P31 / #7 to Peperomia Bicolor and P32 / #8 to Tricolor oyster plant on September 20. Archived Houseplant-02 and Succulent-11–14 retain research identities only, with no physical-label or tracker allocation. The **September 21 plan** moves both houseplants to a **north-facing living-room window**. On **September 22**, the owner clarified the lighting: **FECiDA 54 W six-tube clip light plus two owned Juhefa three-head fixtures**, each seller-rated about **10 W total**, with the separate **Diivoo lamp optional**. The [equipment inventory](./equipment/inventory.md#lights-and-controls) records exact models and distinguishes seller ratings from measurements; Diivoo's actual input wattage is unverified. The FECiDA's September 23 delivery estimate was last checked September 21. Receipt, the move, and lamp installation remain unconfirmed; final distances, settings, and measured exposure remain unrecorded. Both plants need a gentler, measured starting exposure; the previously reported 18–22 app-estimated DLI far-table area is not automatically assigned to either purchase. See the [living-room plan and light comparison](./layouts/table-placement-research.md#planned-living-room-window-and-leds) for a proposed 12-hour first trial and measurements with all lights actually used operating together.
 
 ## September 2026 Home Depot succulent additions
 
