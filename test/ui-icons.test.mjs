@@ -16,6 +16,7 @@ const logger = fs.readFileSync(
 const icons = parseUiIcons(sprite);
 const launcherIconNames = [
     "full-report",
+    "garden-containers",
     "garden-equipment",
     "garden-guides",
     "garden-home",
@@ -51,7 +52,7 @@ function countPixels(data, info) {
 describe("shared multicolor interface artwork", () => {
     it("exports every interface/category symbol as a self-contained accessible SVG", () => {
         expect.hasAssertions();
-        expect(icons).toHaveLength(96);
+        expect(icons).toHaveLength(97);
 
         const files = fs
             .readdirSync(new URL("../assets/ui-icons/", import.meta.url))
