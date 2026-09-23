@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-garden-pots-title" aria-describedby="ui-garden-pots-description" data-ui-icon="garden-pots" focusable="false">
+  <title id="ui-garden-pots-title">Garden pots</title>
+<desc id="ui-garden-pots-description">Two terracotta pots with visible rims and a small sprout on a warm clay square.</desc>
+<defs><linearGradient id="ui-garden-pots-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c77853" /><stop offset="1" stop-color="#7f4338" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-pots-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><path d="M16 29h20l-3 18H19Z" fill="#f1c28a" stroke="#754b35" stroke-width="1.5"/><ellipse cx="26" cy="29" rx="10" ry="4" fill="#f8d8a4" stroke="#754b35" stroke-width="1.5"/><ellipse cx="26" cy="29" rx="6" ry="1.8" fill="#7c553c"/><path d="M32 37h18l-3 14H35Z" fill="#dc946a" stroke="#754b35" stroke-width="1.5"/><ellipse cx="41" cy="37" rx="9" ry="3.5" fill="#f2bd8b" stroke="#754b35" stroke-width="1.5"/><path d="M41 34V25" stroke="#d8e6ad" stroke-width="2"/><path d="M40 30c-7 0-9-4-8-9 7 0 10 3 8 9Zm2-4c0-6 3-9 9-8 0 6-3 9-9 8Z" fill="#aad095"/><path d="M22 38h8" stroke="#fff0c8" stroke-width="2"/></g>
+</svg>

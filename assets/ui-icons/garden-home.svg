@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-garden-home-title" aria-describedby="ui-garden-home-description" data-ui-icon="garden-home" focusable="false">
+  <title id="ui-garden-home-title">Garden home</title>
+<desc id="ui-garden-home-description">A cream greenhouse shelters a leafy plant on a forest green square.</desc>
+<defs><linearGradient id="ui-garden-home-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3d8566" /><stop offset="1" stop-color="#204d3e" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-home-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><path d="M13 29 32 13 51 29" fill="none" stroke="#d8ebc7" stroke-width="4"/><path d="M18 27v22h28V27L32 16Z" fill="#f9f1d8"/><path d="M21 48h22" stroke="#c6ad83" stroke-width="2"/><path d="M32 40V27" fill="none" stroke="#39774e" stroke-width="2"/><path d="M31 35c-9 1-12-4-11-10 8 0 12 3 11 10Zm2-4c0-7 4-10 12-10 0 7-4 11-12 10Z" fill="#75ae68"/><path d="M26 38h12l-2 9h-8Z" fill="#bd774c"/><path d="M25 38h14" stroke="#84583a" stroke-width="2"/></g>
+</svg>

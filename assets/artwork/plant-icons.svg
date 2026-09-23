@@ -18061,4 +18061,70 @@
   <path d="m31 49 10-11" fill="none" stroke="#d4e9ac" stroke-width="1.7" />
 </g>
   </symbol>
+  <symbol id="icon-garden-home" viewBox="0 0 64 64">
+<desc id="ui-garden-home-description">A cream greenhouse shelters a leafy plant on a forest green square.</desc>
+<defs><linearGradient id="ui-garden-home-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3d8566" /><stop offset="1" stop-color="#204d3e" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-home-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><path d="M13 29 32 13 51 29" fill="none" stroke="#d8ebc7" stroke-width="4"/><path d="M18 27v22h28V27L32 16Z" fill="#f9f1d8"/><path d="M21 48h22" stroke="#c6ad83" stroke-width="2"/><path d="M32 40V27" fill="none" stroke="#39774e" stroke-width="2"/><path d="M31 35c-9 1-12-4-11-10 8 0 12 3 11 10Zm2-4c0-7 4-10 12-10 0 7-4 11-12 10Z" fill="#75ae68"/><path d="M26 38h12l-2 9h-8Z" fill="#bd774c"/><path d="M25 38h14" stroke="#84583a" stroke-width="2"/></g>
+  </symbol>
+  <symbol id="icon-garden-tracker" viewBox="0 0 64 64">
+<desc id="ui-garden-tracker-description">A cream tracking chart with rising aqua points on a blue square.</desc>
+<defs><linearGradient id="ui-garden-tracker-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#287c9a" /><stop offset="1" stop-color="#154b70" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-tracker-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="15" width="36" height="35" rx="6" fill="#f8f1da"/><path d="M20 24h23M20 32h23M20 40h23" stroke="#cfdbcd" stroke-width="1.5"/><path d="M21 21v23h24" fill="none" stroke="#557887" stroke-width="2"/><path d="m23 39 7-7 7 3 7-12" fill="none" stroke="#2b9989" stroke-width="3"/><g fill="#275c68" stroke="#f8f1da" stroke-width="1"><circle cx="23" cy="39" r="2.5"/><circle cx="30" cy="32" r="2.5"/><circle cx="37" cy="35" r="2.5"/><circle cx="44" cy="23" r="2.5"/></g></g>
+  </symbol>
+  <symbol id="icon-garden-plants" viewBox="0 0 64 64">
+<desc id="ui-garden-plants-description">A leafy potted plant with three generous leaves on a moss green square.</desc>
+<defs><linearGradient id="ui-garden-plants-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6a9347" /><stop offset="1" stop-color="#365c2f" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-plants-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><path d="M32 42V22m0 15-8-8m8 3 9-9" fill="none" stroke="#e5dfaa" stroke-width="2.5"/><path d="M30 34c-11 2-16-4-16-14 11-1 17 5 16 14Z" fill="#a8d481" stroke="#2d6545" stroke-width="1.5"/><path d="M33 29c-1-10 5-15 16-14 0 11-5 17-16 14Z" fill="#d1e49b" stroke="#2d6545" stroke-width="1.5"/><path d="M32 25c-9-4-10-10-6-15 8 2 12 7 6 15Z" fill="#87c17c" stroke="#2d6545" stroke-width="1.5"/><path d="M21 39h22l-4 13H25Z" fill="#edbd7b"/><rect x="20" y="37" width="24" height="6" rx="2" fill="#f6d699"/><path d="M28 46h8" stroke="#ae774c" stroke-width="2"/></g>
+  </symbol>
+  <symbol id="icon-garden-pots" viewBox="0 0 64 64">
+<desc id="ui-garden-pots-description">Two terracotta pots with visible rims and a small sprout on a warm clay square.</desc>
+<defs><linearGradient id="ui-garden-pots-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c77853" /><stop offset="1" stop-color="#7f4338" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-pots-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><path d="M16 29h20l-3 18H19Z" fill="#f1c28a" stroke="#754b35" stroke-width="1.5"/><ellipse cx="26" cy="29" rx="10" ry="4" fill="#f8d8a4" stroke="#754b35" stroke-width="1.5"/><ellipse cx="26" cy="29" rx="6" ry="1.8" fill="#7c553c"/><path d="M32 37h18l-3 14H35Z" fill="#dc946a" stroke="#754b35" stroke-width="1.5"/><ellipse cx="41" cy="37" rx="9" ry="3.5" fill="#f2bd8b" stroke="#754b35" stroke-width="1.5"/><path d="M41 34V25" stroke="#d8e6ad" stroke-width="2"/><path d="M40 30c-7 0-9-4-8-9 7 0 10 3 8 9Zm2-4c0-6 3-9 9-8 0 6-3 9-9 8Z" fill="#aad095"/><path d="M22 38h8" stroke="#fff0c8" stroke-width="2"/></g>
+  </symbol>
+  <symbol id="icon-garden-photos" viewBox="0 0 64 64">
+<desc id="ui-garden-photos-description">A cream camera with a green lens and a leaf detail on a violet square.</desc>
+<defs><linearGradient id="ui-garden-photos-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9775ac" /><stop offset="1" stop-color="#573a77" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-photos-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><path d="m23 22 3-7h12l3 7" fill="#b9d5b1"/><rect x="12" y="22" width="40" height="26" rx="6" fill="#f8efd9"/><rect x="16" y="26" width="7" height="4" rx="1" fill="#d9b77d"/><circle cx="33" cy="35" r="10" fill="#658f83" stroke="#c0d4bd" stroke-width="3"/><circle cx="33" cy="35" r="6" fill="#345866"/><path d="M30 36c-1-5 2-7 7-7 0 5-2 8-7 7Z" fill="#cce19b"/><path d="m30 38 5-6" stroke="#799857" stroke-width="1.2"/></g>
+  </symbol>
+  <symbol id="icon-garden-guides" viewBox="0 0 64 64">
+<desc id="ui-garden-guides-description">An open cream book with a green botanical leaf on an indigo square.</desc>
+<defs><linearGradient id="ui-garden-guides-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#527fc1" /><stop offset="1" stop-color="#334c80" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-guides-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round" transform="translate(1.6 1.6) scale(0.95)"><path d="M12 19q11-6 20 0 9-6 20 0v29q-10-5-20 0-10-5-20 0Z" fill="#f7eacb" stroke="#d1b98a" stroke-width="1.5"/><path d="M32 20v27" stroke="#b99e75" stroke-width="2"/><path d="M17 26h9m-9 6h9m-9 6h7" stroke="#9b8968" stroke-width="1.7"/><path d="M37 37c-3-7 0-13 10-14 2 9-2 15-10 14Z" fill="#6ca169"/><path d="m36 41 8-14" stroke="#cee2a0" stroke-width="1.8"/></g>
+  </symbol>
+  <symbol id="icon-garden-setup" viewBox="0 0 64 64">
+<desc id="ui-garden-setup-description">Three adjustable cream and aqua sliders on a slate blue square.</desc>
+<defs><linearGradient id="ui-garden-setup-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6c8994" /><stop offset="1" stop-color="#354b60" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-setup-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><path d="M15 21h34M15 32h34M15 43h34" stroke="#bdd4d5" stroke-width="3"/><rect x="22" y="15" width="8" height="12" rx="3" fill="#f8e7c1" stroke="#344e60" stroke-width="1.5"/><rect x="36" y="26" width="8" height="12" rx="3" fill="#9ed4bd" stroke="#344e60" stroke-width="1.5"/><rect x="19" y="37" width="8" height="12" rx="3" fill="#f8e7c1" stroke="#344e60" stroke-width="1.5"/><path d="M26 19v4m14 7v4m-17 7v4" stroke="#8d9b86" stroke-width="1.3"/></g>
+  </symbol>
+  <symbol id="icon-garden-equipment" viewBox="0 0 64 64">
+<desc id="ui-garden-equipment-description">A hanging grow lamp casts warm light over a green seedling on a teal square.</desc>
+<defs><linearGradient id="ui-garden-equipment-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#438f8d" /><stop offset="1" stop-color="#24595e" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-equipment-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><path d="M32 12v8" stroke="#e1e6cd" stroke-width="3"/><path d="M24 19h16l8 12H16Z" fill="#eee5c8" stroke="#b2c5b4" stroke-width="1.5"/><path d="M19 32h26L39 44H25Z" fill="#e9d88b" opacity="0.35"/><path d="M22 32h20" stroke="#f7d881" stroke-width="3"/><path d="M32 51V40" stroke="#d5e7ad" stroke-width="2"/><path d="M31 45c-7 1-10-3-10-8 7-1 11 3 10 8Zm2-4c0-6 4-9 10-8 0 6-4 10-10 8Z" fill="#afd393"/><path d="M23 51h18" stroke="#eee5c8" stroke-width="3"/></g>
+  </symbol>
+  <symbol id="icon-garden-placement" viewBox="0 0 64 64">
+<desc id="ui-garden-placement-description">An overhead four-square plan with two green planted spots on a rose square.</desc>
+<defs><linearGradient id="ui-garden-placement-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ab7b84" /><stop offset="1" stop-color="#734957" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-placement-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><rect x="15" y="15" width="34" height="34" rx="4" fill="#f6eacf" stroke="#dec1a1" stroke-width="1.5"/><path d="M32 17v30M17 32h30" stroke="#bd9c82" stroke-width="2"/><circle cx="24" cy="24" r="6" fill="#cb9460"/><path d="M24 28c-5-3-5-7-1-10 4 2 5 6 1 10Z" fill="#4b875b"/><path d="M22 24c3-4 6-4 9-1-2 4-6 5-9 1Z" fill="#9aba7c"/><circle cx="40" cy="40" r="6" fill="#cb9460"/><path d="M40 44c-5-3-5-7-1-10 4 2 5 6 1 10Z" fill="#4b875b"/><path d="M38 40c3-4 6-4 9-1-2 4-6 5-9 1Z" fill="#9aba7c"/></g>
+  </symbol>
+  <symbol id="icon-garden-reports" viewBox="0 0 64 64">
+<desc id="ui-garden-reports-description">A cream archive box with stacked report cards and a green label on an ochre square.</desc>
+<defs><linearGradient id="ui-garden-reports-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b48348" /><stop offset="1" stop-color="#795130" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-reports-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><path d="M21 15h24v26H21Z" fill="#b9c5a5" transform="rotate(8 33 28)"/><rect x="17" y="14" width="25" height="28" rx="3" fill="#f6eed9"/><path d="M23 21h13m-13 6h13" stroke="#ad9773" stroke-width="2"/><rect x="14" y="32" width="36" height="18" rx="4" fill="#e6bc77" stroke="#805934" stroke-width="1.5"/><path d="M16 35h32" stroke="#f9dc99" stroke-width="2"/><rect x="25" y="38" width="14" height="7" rx="2" fill="#f9f0d7"/><path d="M29 41.5h6" stroke="#608465" stroke-width="2"/></g>
+  </symbol>
+  <symbol id="icon-garden-search" viewBox="0 0 64 64">
+<desc id="ui-garden-search-description">A cream magnifying glass frames a green leaf on a plum square.</desc>
+<defs><linearGradient id="ui-garden-search-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#aa6492" /><stop offset="1" stop-color="#66385f" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-search-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><path d="m39 40 7 6" stroke="#342d4b" stroke-width="8"/><path d="m39 39 7 7" stroke="#efc791" stroke-width="6"/><circle cx="28" cy="28" r="15" fill="#f5ebd5"/><circle cx="28" cy="28" r="11" fill="#b6c6b3"/><path d="M24 33c-4-8 0-14 11-15 2 10-3 17-11 15Z" fill="#518a68"/><path d="m22 37 10-14" stroke="#d8e5ae" stroke-width="2"/></g>
+  </symbol>
 </svg>

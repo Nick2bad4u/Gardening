@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-garden-equipment-title" aria-describedby="ui-garden-equipment-description" data-ui-icon="garden-equipment" focusable="false">
+  <title id="ui-garden-equipment-title">Garden equipment</title>
+<desc id="ui-garden-equipment-description">A hanging grow lamp casts warm light over a green seedling on a teal square.</desc>
+<defs><linearGradient id="ui-garden-equipment-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#438f8d" /><stop offset="1" stop-color="#24595e" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-equipment-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><path d="M32 12v8" stroke="#e1e6cd" stroke-width="3"/><path d="M24 19h16l8 12H16Z" fill="#eee5c8" stroke="#b2c5b4" stroke-width="1.5"/><path d="M19 32h26L39 44H25Z" fill="#e9d88b" opacity="0.35"/><path d="M22 32h20" stroke="#f7d881" stroke-width="3"/><path d="M32 51V40" stroke="#d5e7ad" stroke-width="2"/><path d="M31 45c-7 1-10-3-10-8 7-1 11 3 10 8Zm2-4c0-6 4-9 10-8 0 6-4 10-10 8Z" fill="#afd393"/><path d="M23 51h18" stroke="#eee5c8" stroke-width="3"/></g>
+</svg>

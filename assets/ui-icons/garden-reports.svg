@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-garden-reports-title" aria-describedby="ui-garden-reports-description" data-ui-icon="garden-reports" focusable="false">
+  <title id="ui-garden-reports-title">Garden reports</title>
+<desc id="ui-garden-reports-description">A cream archive box with stacked report cards and a green label on an ochre square.</desc>
+<defs><linearGradient id="ui-garden-reports-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b48348" /><stop offset="1" stop-color="#795130" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-reports-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><path d="M21 15h24v26H21Z" fill="#b9c5a5" transform="rotate(8 33 28)"/><rect x="17" y="14" width="25" height="28" rx="3" fill="#f6eed9"/><path d="M23 21h13m-13 6h13" stroke="#ad9773" stroke-width="2"/><rect x="14" y="32" width="36" height="18" rx="4" fill="#e6bc77" stroke="#805934" stroke-width="1.5"/><path d="M16 35h32" stroke="#f9dc99" stroke-width="2"/><rect x="25" y="38" width="14" height="7" rx="2" fill="#f9f0d7"/><path d="M29 41.5h6" stroke="#608465" stroke-width="2"/></g>
+</svg>

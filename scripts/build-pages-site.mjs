@@ -11,6 +11,7 @@ import {
 import * as path from "node:path";
 import sharp from "sharp";
 
+import { siteApps } from "../site/lib/site-apps.mjs";
 import {
     isCollectionManifest,
     isPhotoManifest,
@@ -612,23 +613,21 @@ async function prepareSiteAssets({ directory = publicDirectory } = {}) {
         } else await copyRelativeFile(reference, directory);
     });
     // Raster launcher icons are derived only from these reviewed vector exports.
-    const reportAppDirectory = containedPath(directory, "assets/report-apps");
-    await mkdir(reportAppDirectory, { recursive: true });
+    const appDirectory = containedPath(directory, "assets/report-apps");
+    await mkdir(appDirectory, { recursive: true });
     await Promise.all(
-        ["full-report", "pocket-report"].flatMap((name) =>
+        siteApps.flatMap(({ icon }) =>
             [192, 512].map(async (size) =>
                 sharp(
                     containedPath(
                         repositoryRoot,
-                        `assets/ui-icons/${name}.svg`
+                        `assets/ui-icons/${icon}.svg`
                     ),
                     { density: 576 }
                 )
                     .resize(size, size)
                     .png()
-                    .toFile(
-                        path.join(reportAppDirectory, `${name}-${size}.png`)
-                    )
+                    .toFile(path.join(appDirectory, `${icon}-${size}.png`))
             )
         )
     );

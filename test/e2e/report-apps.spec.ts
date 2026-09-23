@@ -219,7 +219,10 @@ test.describe("report home-screen apps", { tag: "@reports" }, () => {
             .soft(
                 await page.evaluate(
                     () =>
-                        document.querySelector('link[rel="manifest"]') === null
+                        document
+                            .querySelector('link[rel="manifest"]')
+                            ?.getAttribute("href") ===
+                        "/Gardening/manifest.webmanifest"
                 )
             )
             .toBe(true);

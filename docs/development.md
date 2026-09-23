@@ -78,13 +78,51 @@ npm run build:daily-report
 
 The first command validates the reviewed report inputs and their rendering. The second also writes a standalone ignored preview under `.cache/daily-report-preview/`. Use the Astro development route to review the report with full site navigation. Daily publication commits the reviewed dated JSON, not generated site HTML; follow the report-specific instructions and existing scheduled-task authority.
 
-### Report home-screen entries
+### Home-screen entries
+
+`site/lib/site-apps.mjs` defines the landing-page app identities. Each has a
+distinct stable manifest ID, name, theme color, and launcher icon. The homepage
+includes a manifest and PNG icons as well as its SVG favicon. The shared layout
+selects the most specific matching route, so equipment pages use Equipment
+rather than Garden Setup, and individual plant pages retain their own document
+titles while sharing the Plant Library app metadata. Unknown routes do not
+inherit the homepage's app identity.
+
+| Launch route        | App name       |
+| ------------------- | -------------- |
+| `/`                 | The Garden     |
+| `/plants/`          | Plant Library  |
+| `/pots/`            | Pot History    |
+| `/tracker/`         | Plant Tracker  |
+| `/photos/`          | Garden Photos  |
+| `/guides/`          | Care Guides    |
+| `/setup/`           | Garden Setup   |
+| `/setup/equipment/` | Equipment      |
+| `/setup/placement/` | Placement      |
+| `/reports/`         | Report Archive |
+| `/search/`          | Garden Search  |
+| `/report/`          | Full Report    |
+| `/pocket-report/`   | Pocket Report  |
+
+Routes above are relative to the configured `/Gardening/` site base. The static
+`[...app]/manifest.webmanifest.ts` endpoint generates each route's manifest from
+the same registry. App IDs contain no query or fragment, and each start URL
+stays within its declared scope. Keep the existing report IDs, manifest paths,
+and icon URLs stable when adding entries. Generated PNGs retain the public
+`assets/report-apps/` directory for compatibility; their source is the explicit
+app registry and canonical SVG exports, not a broad asset-directory scan.
 
 The latest full and pocket reports share `LatestReportPage.astro` and the same reviewed JSON. `/report/` supplies the **Full Report** name and blue document icon. `/pocket-report/` supplies **Pocket Report** and an amber pocket icon, opening the existing pocket list by default. Explicit pot fragments take precedence; `/report/#pocket-list` remains a working bookmark.
 
 Each launch page links its own static manifest with a distinct fragment-free ID, route scope, and start URL. Names and SVG/PNG fallbacks also appear in the page head for home-screen shortcuts. The pocket start URL includes `#pocket-list`; the fragment is a scroll target, not the app identity. All URLs use the configured site base, including isolated Storybook builds. Canonical vectors stay in `assets/artwork/plant-icons.svg`; the public asset preparation generates 192/512-pixel PNGs. No service worker or offline report cache is added. A home-screen entry still opens the latest **published** review, whose source timestamp and stale-report warning remain visible.
 
-To add the distinct entries in Edge on Android, open each launch URL and use **Add to home screen / Install app**. Existing shortcuts may need to be recreated to pick up the new name and icon; actual launcher behavior must be checked on the phone.
+To add the distinct entries in Edge on Android, open each launch URL and use **Add to home screen / Install app**. Existing shortcuts may need to be recreated to pick up the new name and icon; actual launcher behavior must be checked on the phone. These entries share one site origin, so site permissions and browser storage are shared. The main app's scope contains the section apps; use the browser's manual install menu if an automatic install banner is absent.
+
+`check:site` verifies the manifests, unique IDs, names, launch URLs, and actual
+192/512-pixel PNGs. Browser checks cover all landing pages, inherited profile
+metadata, and the homepage's Chromium installability diagnostics. A temporary
+persistent Edge profile can verify the deployed HTTPS pages without changing
+the owner's browser profile; this does not reproduce Android package installation.
 
 ## Artwork and photo publication
 

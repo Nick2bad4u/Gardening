@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { readdir, readFile, stat } from "node:fs/promises";
 import * as path from "node:path";
-import { fileURLToPath } from "node:url";
 
 import {
     getEquipmentDocs,
@@ -12,12 +11,13 @@ import {
 import { renumberedPots } from "../site/lib/legacy.mjs";
 import { archivedAmazonPlan } from "../site/lib/old-plans.mjs";
 import { getReports } from "../site/lib/reports.mjs";
+import { siteApps } from "../site/lib/site-apps.mjs";
 import { isRecord } from "./build-data.mjs";
 import parser from "./html-eslint-parser.mjs";
 
 /** @typedef {{ slug: string; title: string }} ProfileIdentity */
 /** @typedef {{ filename: string; html: string; relative: string }} PublishedPage */
-const root = fileURLToPath(new URL("..", import.meta.url));
+const root = path.resolve(import.meta.dirname, "..");
 const output = path.join(root, ".pages-site");
 const publicBase = "/Gardening/";
 
@@ -105,16 +105,9 @@ function assertProfileCoverage(profiles, profilePages) {
     }
 }
 
-async function assertReportApps() {
-    await Promise.all(
-        [
-            { icon: "full-report", name: "Full Report", route: "report" },
-            {
-                icon: "pocket-report",
-                name: "Pocket Report",
-                route: "pocket-report",
-            },
-        ].map(async ({ icon, name, route }) => {
+async function assertSiteApps() {
+    const identities = await Promise.all(
+        siteApps.map(async ({ fragment, icon, name, route }) => {
             const manifestPath = path.join(
                 output,
                 route,
@@ -123,13 +116,10 @@ async function assertReportApps() {
             /** @type {unknown} */
             const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
             assert.ok(isRecord(manifest), `${route}: invalid app manifest`);
-            const launchPath = `${publicBase}${route}/`;
+            const launchPath = `${publicBase}${route}`;
             assert.equal(manifest["id"], launchPath);
             assert.equal(manifest["scope"], launchPath);
-            assert.equal(
-                manifest["start_url"],
-                `${launchPath}${route === "pocket-report" ? "#pocket-list" : ""}`
-            );
+            assert.equal(manifest["start_url"], `${launchPath}${fragment}`);
             assert.equal(manifest["name"], name);
             assert.equal(manifest["short_name"], name);
             assert.equal(manifest["display"], "standalone");
@@ -167,7 +157,18 @@ async function assertReportApps() {
                 path.join(output, "assets/ui-icons", `${icon}.svg`),
                 `${route}: page icon`
             );
+            await assertTargetExists(
+                path.join(output, route, "index.html"),
+                `${route}: app landing`
+            );
+            return manifest["id"];
         })
+    );
+    const uniqueIdentities = new Set(identities);
+    assert.equal(
+        uniqueIdentities.size,
+        siteApps.length,
+        "Duplicate installed-app identities"
     );
 }
 
@@ -311,7 +312,7 @@ async function main() {
     );
     for (const page of pages) assertPageMarkup(page.html, page.relative);
     await assertLocalLinks(pages);
-    await assertReportApps();
+    await assertSiteApps();
     const profilePages = new Map(
         pages
             .filter(

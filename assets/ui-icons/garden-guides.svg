@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-garden-guides-title" aria-describedby="ui-garden-guides-description" data-ui-icon="garden-guides" focusable="false">
+  <title id="ui-garden-guides-title">Garden guides</title>
+<desc id="ui-garden-guides-description">An open cream book with a green botanical leaf on an indigo square.</desc>
+<defs><linearGradient id="ui-garden-guides-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#527fc1" /><stop offset="1" stop-color="#334c80" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-guides-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round" transform="translate(1.6 1.6) scale(0.95)"><path d="M12 19q11-6 20 0 9-6 20 0v29q-10-5-20 0-10-5-20 0Z" fill="#f7eacb" stroke="#d1b98a" stroke-width="1.5"/><path d="M32 20v27" stroke="#b99e75" stroke-width="2"/><path d="M17 26h9m-9 6h9m-9 6h7" stroke="#9b8968" stroke-width="1.7"/><path d="M37 37c-3-7 0-13 10-14 2 9-2 15-10 14Z" fill="#6ca169"/><path d="m36 41 8-14" stroke="#cee2a0" stroke-width="1.8"/></g>
+</svg>

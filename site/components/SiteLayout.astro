@@ -7,6 +7,7 @@ import {
     siteOrigin,
     siteUrl,
 } from "../lib/routes.mjs";
+import { siteAppForPath } from "../lib/site-apps.mjs";
 import SiteIcon from "./SiteIcon.astro";
 import "../styles/tokens.css";
 import "../styles/site.css";
@@ -18,7 +19,6 @@ interface Props {
     breadcrumbs?: { label: string; href: string }[];
     class?: string;
     noindex?: boolean;
-    reportApp?: import("../lib/report-apps.mjs").ReportApp;
 }
 const {
     title,
@@ -27,8 +27,9 @@ const {
     breadcrumbs = [],
     class: className = "",
     noindex = false,
-    reportApp,
 } = Astro.props;
+const app = siteAppForPath(Astro.url.pathname);
+const isReportApp = app?.route === "report/" || app?.route === "pocket-report/";
 const canonical = new URL(Astro.url.pathname, siteOrigin).href;
 ---
 
@@ -38,30 +39,30 @@ const canonical = new URL(Astro.url.pathname, siteOrigin).href;
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content={description} />
-        <meta name="theme-color" content={reportApp?.themeColor ?? "#244633"} />
+        <meta name="theme-color" content={app?.themeColor ?? "#244633"} />
         {noindex && <meta name="robots" content="noindex" />}
-        <title>{reportApp?.name ?? (title === "The Garden" ? "The Garden · Fenton Collection" : `${title} · The Garden`)}</title>
+        <title>{(isReportApp ? title : undefined) ?? (title === "The Garden" ? "The Garden · Fenton Collection" : `${title} · The Garden`)}</title>
         <link rel="canonical" href={canonical} />
         <link
             rel="icon"
             type="image/svg+xml"
-            href={siteUrl(`assets/ui-icons/${reportApp?.icon ?? "cactus"}.svg`)}
+            href={siteUrl(`assets/ui-icons/${app?.icon ?? "cactus"}.svg`)}
         />
-        {reportApp && (
+        {app && (
             <>
-                <meta name="application-name" content={reportApp.name} />
-                <meta name="apple-mobile-web-app-title" content={reportApp.name} />
-                <link rel="manifest" href={siteUrl(`${reportApp.route}manifest.webmanifest`)} />
+                <meta name="application-name" content={app.name} />
+                <meta name="apple-mobile-web-app-title" content={app.name} />
+                <link rel="manifest" href={siteUrl(`${app.route}manifest.webmanifest`)} />
                 <link
                     rel="icon"
                     type="image/png"
                     sizes="192x192"
-                    href={siteUrl(`assets/report-apps/${reportApp.icon}-192.png`)}
+                    href={siteUrl(`assets/report-apps/${app.icon}-192.png`)}
                 />
                 <link
                     rel="apple-touch-icon"
                     sizes="192x192"
-                    href={siteUrl(`assets/report-apps/${reportApp.icon}-192.png`)}
+                    href={siteUrl(`assets/report-apps/${app.icon}-192.png`)}
                 />
             </>
         )}

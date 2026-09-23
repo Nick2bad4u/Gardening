@@ -14,6 +14,21 @@ const logger = fs.readFileSync(
     "utf8"
 );
 const icons = parseUiIcons(sprite);
+const launcherIconNames = [
+    "full-report",
+    "garden-equipment",
+    "garden-guides",
+    "garden-home",
+    "garden-photos",
+    "garden-placement",
+    "garden-plants",
+    "garden-pots",
+    "garden-reports",
+    "garden-search",
+    "garden-setup",
+    "garden-tracker",
+    "pocket-report",
+];
 
 /** @param {Uint8Array} data @param {import("sharp").OutputInfo} info */
 function countPixels(data, info) {
@@ -36,7 +51,7 @@ function countPixels(data, info) {
 describe("shared multicolor interface artwork", () => {
     it("exports every interface/category symbol as a self-contained accessible SVG", () => {
         expect.hasAssertions();
-        expect(icons).toHaveLength(85);
+        expect(icons).toHaveLength(96);
 
         const files = fs
             .readdirSync(new URL("../assets/ui-icons/", import.meta.url))
@@ -114,8 +129,11 @@ describe("shared multicolor interface artwork", () => {
         expect.hasAssertions();
 
         const controlIcons = icons.filter(
-            ({ name }) => !["full-report", "pocket-report"].includes(name)
+            ({ name }) => !launcherIconNames.includes(name)
         );
+
+        expect(controlIcons).toHaveLength(83);
+
         for (const icon of controlIcons) {
             const { data, info } = await sharp(
                 fs.readFileSync(
@@ -141,7 +159,7 @@ describe("shared multicolor interface artwork", () => {
         }
     });
 
-    it.each(["full-report", "pocket-report"])(
+    it.each(launcherIconNames)(
         "renders opaque %s launcher background with mask-safe foreground",
         async (name) => {
             expect.hasAssertions();

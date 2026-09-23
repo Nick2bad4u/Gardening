@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-garden-plants-title" aria-describedby="ui-garden-plants-description" data-ui-icon="garden-plants" focusable="false">
+  <title id="ui-garden-plants-title">Garden plants</title>
+<desc id="ui-garden-plants-description">A leafy potted plant with three generous leaves on a moss green square.</desc>
+<defs><linearGradient id="ui-garden-plants-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6a9347" /><stop offset="1" stop-color="#365c2f" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-plants-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><path d="M32 42V22m0 15-8-8m8 3 9-9" fill="none" stroke="#e5dfaa" stroke-width="2.5"/><path d="M30 34c-11 2-16-4-16-14 11-1 17 5 16 14Z" fill="#a8d481" stroke="#2d6545" stroke-width="1.5"/><path d="M33 29c-1-10 5-15 16-14 0 11-5 17-16 14Z" fill="#d1e49b" stroke="#2d6545" stroke-width="1.5"/><path d="M32 25c-9-4-10-10-6-15 8 2 12 7 6 15Z" fill="#87c17c" stroke="#2d6545" stroke-width="1.5"/><path d="M21 39h22l-4 13H25Z" fill="#edbd7b"/><rect x="20" y="37" width="24" height="6" rx="2" fill="#f6d699"/><path d="M28 46h8" stroke="#ae774c" stroke-width="2"/></g>
+</svg>

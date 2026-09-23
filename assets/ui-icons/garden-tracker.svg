@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-garden-tracker-title" aria-describedby="ui-garden-tracker-description" data-ui-icon="garden-tracker" focusable="false">
+  <title id="ui-garden-tracker-title">Garden tracker</title>
+<desc id="ui-garden-tracker-description">A cream tracking chart with rising aqua points on a blue square.</desc>
+<defs><linearGradient id="ui-garden-tracker-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#287c9a" /><stop offset="1" stop-color="#154b70" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-tracker-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="15" width="36" height="35" rx="6" fill="#f8f1da"/><path d="M20 24h23M20 32h23M20 40h23" stroke="#cfdbcd" stroke-width="1.5"/><path d="M21 21v23h24" fill="none" stroke="#557887" stroke-width="2"/><path d="m23 39 7-7 7 3 7-12" fill="none" stroke="#2b9989" stroke-width="3"/><g fill="#275c68" stroke="#f8f1da" stroke-width="1"><circle cx="23" cy="39" r="2.5"/><circle cx="30" cy="32" r="2.5"/><circle cx="37" cy="35" r="2.5"/><circle cx="44" cy="23" r="2.5"/></g></g>
+</svg>

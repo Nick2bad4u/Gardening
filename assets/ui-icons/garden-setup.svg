@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-garden-setup-title" aria-describedby="ui-garden-setup-description" data-ui-icon="garden-setup" focusable="false">
+  <title id="ui-garden-setup-title">Garden setup</title>
+<desc id="ui-garden-setup-description">Three adjustable cream and aqua sliders on a slate blue square.</desc>
+<defs><linearGradient id="ui-garden-setup-background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6c8994" /><stop offset="1" stop-color="#354b60" /></linearGradient></defs>
+<rect width="64" height="64" fill="url(#ui-garden-setup-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round"><path d="M15 21h34M15 32h34M15 43h34" stroke="#bdd4d5" stroke-width="3"/><rect x="22" y="15" width="8" height="12" rx="3" fill="#f8e7c1" stroke="#344e60" stroke-width="1.5"/><rect x="36" y="26" width="8" height="12" rx="3" fill="#9ed4bd" stroke="#344e60" stroke-width="1.5"/><rect x="19" y="37" width="8" height="12" rx="3" fill="#f8e7c1" stroke="#344e60" stroke-width="1.5"/><path d="M26 19v4m14 7v4m-17 7v4" stroke="#8d9b86" stroke-width="1.3"/></g>
+</svg>
