@@ -105,7 +105,7 @@ Request a weight when it can establish a real baseline, clarify a changing trend
 
 ### Leaf-Cycle Plants
 
-The same evidence rule applies to **P35 / #9 shared Lithops**, **P36 / #10 split rock**, and **P28 / G3 Royal Flush**: another weight cannot establish the leaf-replacement stage. Their [manual watering exceptions](./watering-strategy.md#collection-exceptions) take priority over a weight-only forecast. P35 represents one planned shared pot and P36 a separate pot; do not combine present nursery-container weights or invent a common baseline before the actual weighing setup exists.
+The same evidence rule applies to **P35 / #9 shared Lithops**, **P36 / #10 split rock**, and **P28 / G3 Royal Flush**: another weight cannot establish the leaf-replacement stage. Their [manual watering exceptions](./watering-strategy.md#collection-exceptions) take priority over a weight-only forecast. P35 is now one shared pot and P36 a separate pot, both repotted into **setup 2 on September 23**. Their initial setup-2 Routine weights are **1247 g for P35** and **713.5 g for P36**, with Dry medium and firm plants recorded separately. Neither is a verified dry baseline, and neither repot batch records a Water event. Keep nursery/setup-1 observations outside the new setup's comparisons; weigh the entire P35 container once, not its four visible heads separately.
 
 ### Avoid Indefinite Deferral
 

@@ -1,84 +1,107 @@
 # Split rock
 
-- Inventory: Succulent-16 — probable _Pleiospilos nelii_; cultivar unconfirmed
+- Inventory: Succulent-16 — Probable species: _Pleiospilos nelii_; no cultivar supplied
 - Label ID: `#10` — assigned 2026-09-21
 - Tracker ID: `P36`
-- Visual description: Owner-described split rock distinct from the existing Royal Flush; color, markings, dimensions, and leaf stage await photographs. The illustration is schematic, not collection evidence.
+- Visual description: One visible pair of rounded grey-green, densely speckled leaves with a deep central cleft and pale inner faces, photographed in the speckled-brown pot on September 23, 2026. No extra old pair is visible. The illustration is schematic.
 - Interesting fact: Split rocks renew their paired leaves using moisture stored in the older pair, so leaf replacement needs a different watering judgment from ordinary cactus dry-down.
-- Identification: **probable Pleiospilos nelii from the owner-reported common name; cultivar unconfirmed; owner explicitly excludes Royal Flush**
-- Acquired from: Not yet recorded
+- Identification: **Probable species: Pleiospilos nelii, supported by the nursery label and consistent photographs; species not independently confirmed; cultivar unconfirmed; owner explicitly excludes Royal Flush**
+- Acquired from: Retailer unrecorded; nursery label names Altman Plants as grower
 - Acquired on: Exact date unrecorded; owner confirmed possession by 2026-09-21
-- Current pot: Nursery container dimensions, drainage, and medium unrecorded; repot planned
+- Current pot: Thirtypot speckled-brown, repotted September 23, 2026; logged as 4 in round, distinct from the seller's selected 4.5-inch variant; 80% Molly's Succulent Mix + 20% perlite; setup 2
 
 ## Names and identity
 
-| Kind            | Record                                                           |
-| --------------- | ---------------------------------------------------------------- |
-| Working species | Probable _Pleiospilos nelii_                                     |
-| Cultivar        | Unconfirmed; owner says this is not 'Royal Flush'                |
-| Common name     | Split rock                                                       |
-| Native origin   | If the working species is correct: South Africa's Cape Provinces |
+| Kind            | Record                                                                               |
+| --------------- | ------------------------------------------------------------------------------------ |
+| Working species | Probable _Pleiospilos nelii_, supported by nursery label and compatible appearance   |
+| Cultivar        | No cultivar supplied; ordinary green appearance does not establish a named selection |
+| Common name     | Split rock                                                                           |
+| Native origin   | South Africa's Cape Provinces                                                        |
 
-Kew accepts _Pleiospilos nelii_ Schwantes, published in 1930. The common name
-alone does not prove this species, nor does “not Royal Flush” establish a
-particular color or cultivar. Retain the qualified identification until labels
-or diagnostic photographs support it.
+Kew accepts _Pleiospilos nelii_ Schwantes, published in 1930. The September 23
+nursery label explicitly names this species, and the rounded, speckled paired
+leaves are consistent with it. This improves the earlier common-name-only
+identification; the label and photographs remain evidence rather than
+taxonomic proof. There is no basis to invent a cultivar name such as
+“Green Form.”
 
-This is a separate acquired plant and container allocation from
-[Royal Flush / G3 / P28](./pleiospilos-nelii-royal-flush.md). Its care history,
-photographs, pot setup, and weight references must remain separate.
+### Probable species from the research
 
-## Acquisition and repot plan
+**This plant looks like _Pleiospilos nelii_, and its nursery label names that
+species, but the identification is not independently confirmed.** The rounded,
+grey-green, densely speckled leaf pair and deep central cleft agree with the
+species description. That makes _P. nelii_ the supported working identification;
+the photographs and label do not establish a named cultivar.
 
-On September 21, 2026, the owner reported acquiring another split rock and
-requested a separate pot from the [two Lithops pairs](./lithops-shared-planter.md).
-Exact purchase date, source, nursery evidence, and previous watering remain
-unrecorded. No owned photograph has been published; P28's Royal Flush images
-are not evidence for this plant.
+This is a separate plant and container from
+[Royal Flush / G3 / P28](./pleiospilos-nelii-royal-flush.md). Its photographs,
+setup, watering history, and weight references remain separate.
 
-The incoming destinations are the Thirtypot speckled-brown pot (selected 4.5-inch variant)
-(`B0GGSNQG27`) and D'vine Dev Blush Mauve (four-inch listing, selected 4.3-inch variant), model `27-C-Z-K` (`B0H6J4RCF8`), due
-Tuesday, September 22. On September 21, the owner assigned **the Thirtypot
-selected 4.5-inch speckled-brown pot to this split rock**, with the D'vine Blush
-Mauve pot assigned to the shared Lithops. Repotting and follow-up photographs
-are planned for September 22. Receipt, usable internal depth, finished mix,
-completed repotting, and final position remain unconfirmed.
-This entry creates no watering, repot, measurement, or baseline event.
+## Nursery and repot evidence
 
-**Visual pairing accepted September 21, 2026:** keep P36 / #10 in the selected
-4.5-inch Speckled-brown pot. The inspected listing photos show a rounded body,
-a wavy/scalloped rim, and rust, gold, and blue-green mottling. The owner accepted
-the split rock's simple, bold form against this busier glaze, with the grouped
-Lithops on the more uniform Blush Mauve backdrop. This is an aesthetic
-preference, not evidence of this plant's color, identification, usable root
-room, or care suitability; the September 22 repot and photographs remain plans.
+The September 23 label photographs show **Split Rock / Pleiospilos nelii**,
+grown by **Altman Plants**, with assortment text `S 2.5" .ASST MIMICRY`, code
+`487712`, and UPC `092852023689`. No cultivar is printed. The owner's former
+nursery-pot description is 2.25 inches; the nominal 2.5-inch assortment label
+does not replace that observation. Retailer and exact acquisition date remain
+unrecorded.
+
+[![Altman Plants nursery label reading Split Rock, Pleiospilos nelii](../../../assets/nursery-labels/2026-09-23-p36-split-rock-nursery-label.jpg)](../../../assets/nursery-labels/2026-09-23-p36-split-rock-nursery-label.jpg)
+
+Owner photograph, September 23, 2026: species-level nursery label, with no cultivar supplied.
+
+At **02:30 EDT on September 23**, live History records the completed repot into
+the Thirtypot speckled-brown pot, **setup 2**, logged as **4 in round**. The
+recorded recipe is **80% Molly's Succulent Mix + 20% perlite**. The raw ledger
+spells the second ingredient “Perlitr”; this description interprets that typo
+without changing the ledger. The seller's selected 4.5-inch variant
+(`B0GGSNQG27`) remains in the
+[equipment inventory](../../equipment/inventory.md), separate from the logged
+size and any still-unmeasured internal depth.
+
+The same batch records a **Routine weight of 713.5 g**, an owner check of
+**Dry**, and **firm leaves with only a single pair**. The owner described a
+very well-rooted plant, almost root-bound in its former 2.25-inch nursery pot.
+Photographs show that single grey-green pair without an obvious additional
+old pair.
+
+**No Water event was recorded in the repot batch.** The 713.5 g reading is not
+a verified dry baseline or a wet anchor. Previous watering remains unknown.
+
+[![Single pair of split-rock leaves in the speckled-brown pot after repotting](../../../assets/nursery-labels/2026-09-23-p36-split-rock-repot-top.jpg)](../../../assets/nursery-labels/2026-09-23-p36-split-rock-repot-top.jpg)
+
+Owner photograph, September 23, 2026: completed P36 / #10 repot in the chosen speckled-brown pot.
+
+[![Close view of the split rock showing speckled leaves and central cleft](../../../assets/nursery-labels/2026-09-23-p36-split-rock-repot-detail.jpg)](../../../assets/nursery-labels/2026-09-23-p36-split-rock-repot-detail.jpg)
+
+Owner photograph, September 23, 2026: the visible leaf pair supports the nursery identification. Final placement is not established by the photography location.
 
 ## Care in this collection
 
-| Topic       | Practical starting approach                                                                                                                                                                                                           |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Light       | Position and leaf-height exposure are unrecorded. Start with gradual acclimation to a bright position; do not copy P28's measured or inferred exposure automatically.                                                                 |
-| Water       | Check the live leaf cycle, firmness, base, roots where accessible, and actual medium dryness. Weight or a plateau alone cannot establish readiness. Do not water an absorbing outer pair merely to restore its former fullness.       |
-| Pot and mix | SANBI describes a relatively long taproot and well-drained soil. Check actual root room and drainage on arrival rather than treating a four-inch seller size as an adequate-depth measurement. Medium composition is still undecided. |
-| Tracking    | Use P36 alone for this pot. Its first genuine observations and eventual repot establish its own setup; P28's weights and nursery history do not transfer.                                                                             |
+| Topic       | Practical starting approach                                                                                                                                                                                                                                  |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Light       | Final position and leaf-height exposure remain unrecorded. Acclimate gradually to a bright position; do not copy P28's exposure automatically.                                                                                                               |
+| Water       | Assess root disturbance after the repot, then use the live leaf cycle, firmness, base, and actual medium dryness. A firm single pair does not need an automatic post-repot drink. Weight or a plateau alone cannot establish readiness.                      |
+| Pot and mix | The recorded recipe is 80% Molly's Succulent Mix plus 20% added perlite, not a measured mineral percentage. SANBI describes a relatively long taproot and well-drained soil. Confirm usable depth and drainage; a seller diameter does not establish either. |
+| Tracking    | Use the complete P36 assembly and setup-2 history only. P28's weights and nursery history do not transfer; the first Routine weight is not a calibrated reference.                                                                                           |
 
 ## Watch points
 
 SANBI notes that persistent old leaves can accompany excess watering. Record
 leaf stage before acting: softening, translucence, a compromised base, or
-unexpectedly prolonged wet medium calls for inspection. The species' seasonal
-description is context from another growing environment, not an instruction
-to follow a Northern Hemisphere watering calendar. Do not assume Lithops and
-Pleiospilos share an identical cycle because both resemble stones.
+unexpectedly prolonged wet medium calls for inspection. When replacement is
+visible, do not water merely to plump an old outer pair being reabsorbed. The September 23
+record describes one pair, so do not invent an observed replacement stage.
+
+Regional seasonal descriptions are context, not a Northern Hemisphere watering
+calendar for this indoor plant. Lithops and Pleiospilos need separate
+observations even though both resemble stones.
 
 ## Sources
 
-- Owner report and destination clarification, September 21, 2026: additional
-  split rock acquired, explicitly not Royal Flush, assigned the incoming
-  Thirtypot speckled-brown pot; repotting and photographs planned for September
-  22, with source/date unspecified.
-- Amazon order evidence inspected September 21, 2026, recorded in the
-  [equipment inventory](../../equipment/inventory.md): pot identities and
-  expected delivery, with no completed repot inferred.
-- [Kew Plants of the World Online: _Pleiospilos nelii_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A364003-1) — accepted name, publication, and range for the qualified working species.
-- [SANBI PlantZAfrica: _Pleiospilos nelii_](https://pza.sanbi.org/pleiospilos-nelii) — paired-leaf renewal, taproot, drainage, and excess-water cautions; this does not identify the owned plant.
+- Owner reports, September 21–23, 2026, and Google Photos originals inspected September 23: separate non-Royal Flush acquisition, pot choice, nursery label, and completed repot photographs.
+- Canonical tracker History read September 23, 2026: P36 repot/check/Routine-weight batch at 02:30 EDT, recorded 02:40:36 EDT; setup 2, recipe, firm single pair, root observations, and no Water event in that batch.
+- [Equipment inventory](../../equipment/inventory.md) — exact ordered pot identity and seller variant, kept separate from the logged dimensions.
+- [Kew Plants of the World Online: _Pleiospilos nelii_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A364003-1) — accepted species name, publication, and range.
+- [SANBI PlantZAfrica: _Pleiospilos nelii_](https://pza.sanbi.org/pleiospilos-nelii) — leaf renewal, appearance, taproot, drainage, and excess-water cautions; the source alone does not identify this owned plant.

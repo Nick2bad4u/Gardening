@@ -83,6 +83,16 @@
             "file": "assets/nursery-labels/2026-09-20-p34-tradescantia-spathacea-tricolor-acquisition.jpg",
             "captured_on": "2026-09-20",
             "description": "Full-frame acquisition evidence for #8 / P32: striped foliage and readable Rhoeo spathacea Tricolor Basket tag. Pink lighting affects apparent colors. Metadata removed without cropping or re-encoding the primary image."
+        },
+        {
+            "file": "assets/nursery-labels/2026-09-23-p35-lithops-nursery-labels.jpg",
+            "captured_on": "2026-09-23",
+            "description": "Full-frame evidence for #9 / P35: both Altman Plants nursery labels read Stone Faces / Lithops spp.; species and cultivars remain unresolved. Primary encoded image retained with private metadata removed."
+        },
+        {
+            "file": "assets/nursery-labels/2026-09-23-p36-split-rock-nursery-label.jpg",
+            "captured_on": "2026-09-23",
+            "description": "Full-frame evidence for #10 / P36: Altman Plants nursery label reads Split Rock / Pleiospilos nelii; no cultivar supplied. Primary encoded image retained with private metadata removed."
         }
     ],
     "plants": [
@@ -5000,13 +5010,13 @@
         {
             "plant_slug": "lithops-shared-planter",
             "gyazo_collection": null,
-            "pending_note": "Owner confirmed possession by September 21, 2026; exact acquisition date and source remain unrecorded. No owned photographs, nursery-label images, or dedicated Gyazo Collection have been supplied. The owner plans repotting and follow-up photographs on September 22; completed planting and final placement remain unconfirmed.",
+            "pending_note": "Repotted and photographed September 23, 2026. Two plant views and nursery-label evidence are preserved as metadata-stripped local files linked from the profile. Gyazo returned its maintenance page during integration; a dedicated Collection and remote capture publication remain pending. Final placement is unconfirmed.",
             "photos": []
         },
         {
             "plant_slug": "pleiospilos-nelii",
             "gyazo_collection": null,
-            "pending_note": "Owner confirmed possession by September 21, 2026; exact acquisition date and source remain unrecorded. No owned photographs, nursery-label images, or dedicated Gyazo Collection have been supplied. The owner plans repotting and follow-up photographs on September 22; completed planting and final placement remain unconfirmed.",
+            "pending_note": "Repotted and photographed September 23, 2026. Two plant views and nursery-label evidence are preserved as metadata-stripped local files linked from the profile. Gyazo returned its maintenance page during integration; a dedicated Collection and remote capture publication remain pending. Final placement is unconfirmed.",
             "photos": []
         }
     ],

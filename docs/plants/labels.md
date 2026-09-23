@@ -364,26 +364,28 @@ The owner confirmed buying both plants directly at Carlson's Greenhouses on 2026
 
 ## September 21 Lithops and split-rock labels
 
-These two allocations follow #7 and #8. The Lithops pairs are intended for one shared pot; the split rock is intended for a separate pot. Planting remains planned. P33/P34 are retired houseplant redirects, so the next unused tracker IDs are P35/P36. The owner's wording “two pairs” is not converted into a confirmed count of rooted plants.
+These two allocations follow #7 and #8. The September 23 repots put the Lithops together in one shared pot and the split rock in a separate pot, each at setup 2. P33/P34 are retired houseplant redirects, so these allocations use P35/P36. Photographs show four visible Lithops heads, but their root attachments are unconfirmed; this is not a verified count of independent rooted plants.
 
-| ID    | Tracker | Inventory    | Botanical label                                                                      | Warning                                                      |
-| ----- | ------- | ------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
-| `#9`  | `P35`   | Succulent-15 | [_Lithops_ sp./spp.; species unresolved](./succulents/lithops-shared-planter.md)     | Leaf-cycle checks for both pairs; one planned shared history |
-| `#10` | `P36`   | Succulent-16 | [PROB. _Pleiospilos nelii_; cultivar unconfirmed](./succulents/pleiospilos-nelii.md) | Not Royal Flush; leaf-cycle checks; separate from G3 / P28   |
+| ID    | Tracker | Inventory    | Botanical label                                                                                           | Warning                                                    |
+| ----- | ------- | ------------ | --------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `#9`  | `P35`   | Succulent-15 | [Probable _L. lesliei_ (tan/brown) + _L. salicola_ (grey/green)](./succulents/lithops-shared-planter.md)  | Inspect all four heads; one shared pot history             |
+| `#10` | `P36`   | Succulent-16 | [Probable _Pleiospilos nelii_; label-supported, cultivar not recorded](./succulents/pleiospilos-nelii.md) | Not Royal Flush; leaf-cycle checks; separate from G3 / P28 |
 
 Suggested strips:
 
 ```text
 #9 | LITHOPS SHARED PLANTER
-Lithops sp./spp. | SPECIES UNRESOLVED
+Probable L. lesliei (tan/brown) + L. salicola (grey/green)
+PHOTO-BASED ID | SPECIES UNCONFIRMED
 ```
 
 ```text
 #10 | SPLIT ROCK
-PROB. Pleiospilos nelii | CULTIVAR UNCONFIRMED
+Probable Pleiospilos nelii | LABEL-SUPPORTED ID
+CULTIVAR NOT RECORDED
 ```
 
-Native-origin wording is southern Africa at Lithops genus level and, if the working split-rock identity is correct, South Africa's Cape Provinces. Publication dates are 1922 for the Lithops genus and 1930 for P. nelii, not verified dates for the unidentified collection forms. Exact acquisition source/date remain unrecorded. The owner assigned #9 / P35 to the D'vine Dev selected 4.3-inch Blush Mauve destination and #10 / P36 to the Thirtypot selected 4.5-inch speckled-brown destination. Repots and follow-up photographs are planned for September 22. The profiles carry the botanical sources.
+Native-origin wording is southern Africa at Lithops genus level and South Africa's Cape Provinces for the label-supported split-rock species. Publication dates are 1922 for the Lithops genus and 1930 for P. nelii, not verified dates for the unidentified collection forms. Altman Plants assortment labels read “Stone Faces / Lithops spp.” and “Split Rock / Pleiospilos nelii”; neither names a cultivar. The retailer and exact acquisition date remain unrecorded. The nominal 2.5-inch nursery labels differ from the owner's 2.25-inch nursery-pot description. September 23 photographs document #9 / P35 in the D'vine Dev Blush Mauve pot and #10 / P36 in the Thirtypot speckled-brown pot. Seller-selected sizes are 4.3 and 4.5 inches; the repot ledger records 4.2 in round and 4 in round, respectively. The profiles carry the botanical sources.
 
 ## Archived label allocations
 
@@ -418,7 +420,7 @@ The [September 19 Amazon plan](../old-plans/amazon-plant-order-2026-09.md) prese
 
 The repo contains acquisition source-and-date records for `A1`–`H3` and `#1`–`#6`, except the historical, removed Rehab-04 record. Its acquisition source and date remain unconfirmed. For new #7 and #8, the owner confirmed direct purchase at Carlson's Greenhouses on September 20; the nursery tags also identify the grower.
 
-The unreceived September 19 Amazon plant order is archived separately; cancellation was confirmed in Amazon on September 21. The D'vine Dev Blush Mauve destination for #9 and Thirtypot speckled-brown destination for #10 are expected September 22; receipt, repots, and the planned follow-up photographs remain unconfirmed.
+The unreceived September 19 Amazon plant order is archived separately; cancellation was confirmed in Amazon on September 21. The unrelated #9/#10 plants were repotted and photographed September 23 in the D'vine Dev Blush Mauve and Thirtypot speckled-brown pots. Their retailer and exact plant acquisition date remain unrecorded.
 
 Keep an order date and a received date as separate facts. They answer different
 questions and should not be silently substituted for one another.

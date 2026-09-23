@@ -27,6 +27,25 @@ Each active **P01–P32, P35, and P36** page also has a **Time between waterings
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## September 23 owner-confirmed Lithops measurement reassignment
+
+The owner confirmed that the September 23 02:38 EDT Measure observation
+`43fef289-f924-430c-8b3b-044c8712acf1:1:measure`, with the note “Measured individual
+light tube since they are all close in size,” belongs to Lithops P35 / #9.
+After a [native backup](https://docs.google.com/spreadsheets/d/1qXcan0librwzp0ksl8eL5e8TtzUMCD-xHtHjoL94WnI/edit),
+the scoped write changed only `History!B1158` from P36 to P35 and `L1158` from
+#10 to #9, adding cell notes with the original assignments and authorization.
+The regular mobile correction flow keeps plant identity fixed, so this was an explicit
+owner-authorized identity reassignment, not a duplicate observation or a deployment.
+
+Readback against the backup preserved the 1 in × 1.25 in measurement
+(2.54 × 3.175 cm), timestamps, original note, setup value, observation/request IDs,
+formulas, formatting, validation, and adjacent rows. P35's derived history shows
+the moved observation; P36 retains its separate 02:37 EDT 1 in × 2.25 in entry.
+The existing setup-1 values on these measurements were not changed by this
+identity correction. Private comparison evidence is retained under
+`.cache/lithops-measurement-reassignment-20260923-{before,after}.json`.
+
 ## September 21 Lithops and split-rock enrollment
 
 **Production workbook, logger, and AppSheet rollout completed September 21.** Logger **5.29.0 / immutable version 98** is live at the existing phone URL with **34 active allocations: P01–P32, P35, P36**. Production source matches website/source commit **12921cdc**. The phone displayed **Connected · logger 5.29.0** and all 34 labels, including #9 / P35 and #10 / P36. AppSheet **1.100112** is saved and verified after a fresh editor reload, with no issues and Save disabled.

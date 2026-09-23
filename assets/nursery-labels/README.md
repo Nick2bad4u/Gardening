@@ -109,3 +109,20 @@ These full-frame acquisition photographs were supplied by the owner on September
 The blurrier earlier Tricolor photograph remains private. The clearer frame above is the published evidence. Dedicated Gyazo Collection creation was unavailable during service maintenance; these local references remain usable independently of that service.
 
 The September 20 reassignment makes Peperomia **#7 / P31** and Tricolor **#8 / P32**. The `p33` and `p34` acquisition filenames above are retained publication URLs from their initial temporary assignments; those filename fragments are not current plant IDs. The original image bytes remain unchanged.
+
+## September 23 Lithops and split-rock repots
+
+The owner authorized review and download of the new Google Photos images. Twenty-three full-resolution camera exports were retained privately: thirteen Lithops views, five split-rock views, and five nursery-label views. The six selected evidence copies below use the maintained JPEG metadata sanitizer without cropping, resizing, or recompressing the primary image. The private originals and source mappings are excluded from publication. Copyright Nick; all rights reserved.
+
+| File                                                               | Evidence role                                                       |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------- |
+| [P35 repot top](./2026-09-23-p35-lithops-repot-top.jpg)            | Four visible heads in the completed shared Blush Mauve planting     |
+| [P35 repot side](./2026-09-23-p35-lithops-repot-side.jpg)          | Leaf bodies, surface condition, and chosen pot                      |
+| [P35 nursery labels](./2026-09-23-p35-lithops-nursery-labels.jpg)  | Both containers labelled Stone Faces / Lithops spp.; Altman Plants  |
+| [P36 repot top](./2026-09-23-p36-split-rock-repot-top.jpg)         | Single leaf pair in the completed speckled-brown planting           |
+| [P36 repot detail](./2026-09-23-p36-split-rock-repot-detail.jpg)   | Speckled leaf surfaces and central cleft                            |
+| [P36 nursery label](./2026-09-23-p36-split-rock-nursery-label.jpg) | Split Rock / Pleiospilos nelii; Altman Plants; no cultivar supplied |
+
+Both nursery products use assortment code `487712`, UPC `092852023689`, and nominal `S 2.5" .ASST MIMICRY` wording. The owner described the former pots as 2.25 inches; these remain separate observations. A shared assortment code does not identify a Lithops species. No retailer or exact purchase date is inferred from the grower labels.
+
+Gyazo still returned its maintenance page on September 23, so these selected repot views and labels use the existing local evidence fallback. Their profiles link to the full sanitized files; the site build supplies smaller responsive previews. Dedicated Gyazo Collections and remote publication remain pending. The bathroom photography location is not a record of final plant placement.

@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-09-22
+Last updated: 2026-09-23
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
@@ -41,9 +41,13 @@ A practical initial trial is **two parts greenhouse potting mix to one part Moll
 
 ## September 21 Lithops and split-rock additions
 
-**P35 / #9 [Lithops shared planter](./plants/succulents/lithops-shared-planter.md)** holds the allocation for two owner-described pairs intended for one pot. **P36 / #10 [Split rock](./plants/succulents/pleiospilos-nelii.md)** is a separate acquired plant, probable _Pleiospilos nelii_, explicitly not Royal Flush. Nursery containers, watering history, leaf stages, finished mix, and final positions are not yet recorded; the two incoming pots are expected September 22. The owner assigned the D'vine Dev selected 4.3-inch Blush Mauve pot to the Lithops together and the Thirtypot selected 4.5-inch speckled-brown pot to the split rock. Repots and follow-up photographs are planned for September 22; purchase and assignment are not completed repots.
+**P35 / #9 [Lithops shared planter](./plants/succulents/lithops-shared-planter.md)** now contains four visible heads from two nursery pots. **P36 / #10 [Split rock](./plants/succulents/pleiospilos-nelii.md)** is a separate, label-supported _Pleiospilos nelii_, cultivar not recorded and explicitly not Royal Flush. Both were repotted September 23 into **setup 2**, using 80% Molly's Succulent Mix + 20% perlite (P36's raw entry says “Perlitr”). P35 uses the D'vine Dev Blush Mauve pot, logged as 4.2 in round; P36 uses the Thirtypot speckled-brown pot, logged as 4 in round. Their seller-selected sizes are 4.3 and 4.5 inches respectively, not measured internal dimensions. Final growing positions, actual drainage, and usable internal depth remain unverified.
 
-Treat both as manual leaf-cycle checks. A weight plateau, dry reference, or model date alone must not trigger watering. Inspect each Lithops pair before combining: their cycles may differ, so a shared root volume may need to wait. Keep P36 separate from the existing G3 / P28 Royal Flush and retain separate observations. The profiles cite Wisconsin Extension and SANBI for drainage and leaf-replacement guidance. Do not copy a fixed seasonal calendar into this indoor setup or interpret wrinkling outer leaves alone as thirst.
+The September 23 checks record Dry medium and firm plants: all four visible Lithops heads, and a single firm split-rock leaf pair. The owner describes nearly rootbound nursery plants and removed only freely detached, extremely dry Lithops leaves; the bumpier, lighter Lithops have small scars/fissures but remain firm. Routine weights were 1247 g for P35 and 713.5 g for P36. These are setup-2 observations, not verified dry baselines, and neither repot batch records watering.
+
+Measurement correction, September 23: the owner confirmed that the 02:38 “Measured individual light tube” entry belongs to **Lithops P35 / #9**. Its **1 in height × 1.25 in width** (2.54 × 3.175 cm) describes an individual head, not the shared planter. After a native backup, only that History entry's plant ID and pot label were reassigned, with original values retained in cell notes. P36 keeps its separate 02:37 measurement of 1 in × 2.25 in. Both measurement rows still carry the originally recorded setup 1 despite earlier setup-2 repots; that separate discrepancy was not changed by this identity correction.
+
+Treat both as manual leaf-cycle checks. A weight plateau, dry reference, or model date alone must not trigger watering. The shared Lithops planting does not require perfectly synchronized heads; inspect actual differences in firmness and replacement stage before watering the common root volume. Keep P36 separate from the existing G3 / P28 Royal Flush and retain separate observations. The profiles cite Wisconsin Extension and SANBI for drainage and leaf-replacement guidance. Do not copy a fixed seasonal calendar into this indoor setup or interpret wrinkling outer leaves alone as thirst.
 
 ## Baseline routine
 
