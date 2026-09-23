@@ -96,7 +96,16 @@ const next = profiles[index + 1];
                                         <span class="profile-navigation-choice-index">
                                             {position + 1}
                                         </span>
-                                        <span>
+                                        <img
+                                            class="profile-navigation-choice-portrait"
+                                            src={siteUrl(`assets/plant-icons/${profile.slug}.svg`)}
+                                            alt=""
+                                            width="36"
+                                            height="36"
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
+                                        <span class="profile-navigation-choice-label">
                                             {profile.title}
                                             <small>
                                                 Label {profile.drawerLabel.primary}
