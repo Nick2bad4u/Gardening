@@ -4,8 +4,9 @@ import { identificationLabel, stripMarkdown } from "../lib/content/profile-sourc
 interface Props {
     profile: import("../lib/content.mjs").SiteProfile;
     sharedProfileCount?: number;
+    overview?: boolean;
 }
-const { profile, sharedProfileCount = 1 } = Astro.props;
+const { profile, sharedProfileCount = 1, overview = false } = Astro.props;
 const photoCount = profile.collectionRecord.photos.filter(
     (photo) => photo.kind === "collection"
 ).length;
@@ -24,7 +25,7 @@ const identification = identificationLabel(profile.identificationMarkdown);
                 loading="lazy"
             />
             <div>
-                <p class="eyebrow">{profile.groupTitle}</p>
+                <p class="eyebrow">{overview ? "Planter overview" : profile.groupTitle}</p>
                 <h2>{profile.title}</h2>
                 <p class="scientific">{stripMarkdown(profile.scientificMarkdown)}</p>
             </div>
@@ -42,7 +43,7 @@ const identification = identificationLabel(profile.identificationMarkdown);
                 {photoCount} collection {photoCount === 1 ? "photo" : "photos"}
             </span>
             {sharedProfileCount > 1 && (
-                <span class="badge">Shared pot · {sharedProfileCount} profiles</span>
+                <span class="badge">Shared pot · {sharedProfileCount} botanical profiles</span>
             )}
         </div>
     </a>

@@ -6,8 +6,8 @@
 - Visual description: One visible pair of rounded grey-green, densely speckled leaves with a deep central cleft and pale inner faces, photographed in the speckled-brown pot on September 23, 2026. No extra old pair is visible. The illustration is schematic.
 - Interesting fact: Split rocks renew their paired leaves using moisture stored in the older pair, so leaf replacement needs a different watering judgment from ordinary cactus dry-down.
 - Identification: **Probable species: Pleiospilos nelii, supported by the nursery label and consistent photographs; species not independently confirmed; cultivar unconfirmed; owner explicitly excludes Royal Flush**
-- Acquired from: Retailer unrecorded; nursery label names Altman Plants as grower
-- Acquired on: Exact date unrecorded; owner confirmed possession by 2026-09-21
+- Acquired from: Home Depot, Howell, Michigan; nursery label identifies Altman Plants as grower
+- Acquired on: 2026-09-21 — owner-confirmed purchase date
 - Current pot: Thirtypot speckled-brown, repotted September 23, 2026; logged as 4 in round, distinct from the seller's selected 4.5-inch variant; 80% Molly's Succulent Mix + 20% perlite; setup 2
 
 ## Names and identity
@@ -44,8 +44,9 @@ The September 23 label photographs show **Split Rock / Pleiospilos nelii**,
 grown by **Altman Plants**, with assortment text `S 2.5" .ASST MIMICRY`, code
 `487712`, and UPC `092852023689`. No cultivar is printed. The owner's former
 nursery-pot description is 2.25 inches; the nominal 2.5-inch assortment label
-does not replace that observation. Retailer and exact acquisition date remain
-unrecorded.
+does not replace that observation. On September 23 the owner clarified that
+this split rock was purchased at **Home Depot in Howell, Michigan, on
+September 21, 2026**, together with the two Lithops nursery pots.
 
 [![Altman Plants nursery label reading Split Rock, Pleiospilos nelii](../../../assets/nursery-labels/2026-09-23-p36-split-rock-nursery-label.jpg)](../../../assets/nursery-labels/2026-09-23-p36-split-rock-nursery-label.jpg)
 
@@ -99,6 +100,8 @@ calendar for this indoor plant. Lithops and Pleiospilos need separate
 observations even though both resemble stones.
 
 ## Sources
+
+- Owner clarification, September 23, 2026: Home Depot, Howell, Michigan, purchase on Monday, September 21; this supplies the previously unrecorded retailer and exact acquisition date.
 
 - Owner reports, September 21–23, 2026, and Google Photos originals inspected September 23: separate non-Royal Flush acquisition, pot choice, nursery label, and completed repot photographs.
 - Canonical tracker History read September 23, 2026: P36 repot/check/Routine-weight batch at 02:30 EDT, recorded 02:40:36 EDT; setup 2, recipe, firm single pair, root observations, and no Water event in that batch.

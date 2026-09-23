@@ -1,5 +1,5 @@
 ---
-import { profileUrl, siteUrl } from "../../../lib/routes.mjs";
+import { containerUrl, profileUrl, siteUrl } from "../../../lib/routes.mjs";
 import { stripMarkdown } from "../../../lib/content/profile-source.mjs";
 interface Props {
     potId?: string;
@@ -58,6 +58,11 @@ const initialName =
                 </a>
             ))}
         </div>
+        {potId && (
+            <a class="button" href={containerUrl(potId)}>
+                Container setup &amp; members →
+            </a>
+        )}
         <a
             class="button primary"
             id="edit-history"

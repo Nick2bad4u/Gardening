@@ -2,13 +2,18 @@
 import SiteLayout from "../../components/SiteLayout.astro";
 import PlantCard from "../../components/PlantCard.astro";
 import { getProfiles } from "../../lib/content.mjs";
+import { getContainers } from "../../lib/containers.mjs";
+import { siteUrl } from "../../lib/routes.mjs";
 import { groups } from "../../lib/content/profile-source.mjs";
 const profiles = await getProfiles();
-const currentCount = profiles.filter((profile) => !profile.historical).length;
-const potProfiles = Map.groupBy(
-    profiles.filter((profile) => profile.trackerId !== undefined),
-    (profile) => profile.trackerId
+const containers = await getContainers();
+const containersById = new Map(containers.map((container) => [container.id, container]));
+const overviewSlugs = new Set(
+    containers.flatMap((container) => (container.overview ? [container.overview.slug] : []))
 );
+const currentCount = profiles.filter(
+    (profile) => !profile.historical && !overviewSlugs.has(profile.slug)
+).length;
 ---
 
 <SiteLayout
@@ -20,6 +25,9 @@ const potProfiles = Map.groupBy(
         <p class="eyebrow">THE FENTON COLLECTION</p>
         <h1>Meet the plants.</h1>
         <p class="lede">Names, care notes, photos, and nursery records for the collection.</p>
+        <a class="button button-secondary" href={siteUrl("containers/")}>
+            Explore {containers.length} containers &amp; shared planters →
+        </a>
     </header>
     <div class="directory-toolbar no-print">
         <label for="plant-search">
@@ -43,14 +51,16 @@ const potProfiles = Map.groupBy(
         <label for="plant-status">
             Records
             <select id="plant-status">
-                <option value="current">Current plants</option>
+                <option value="current">Current botanical profiles</option>
+                <option value="overviews">Planter overviews</option>
                 <option value="all">All records</option>
                 <option value="historical">Historical only</option>
             </select>
         </label>
     </div>
     <p id="plant-result-count" class="result-count" role="status" aria-live="polite">
-        {currentCount} current plant profiles · shared containers have separate botanical profiles
+        {currentCount} active botanical profiles · {overviewSlugs.size} separate planter overviews ·{" "}
+        {containers.length} containers
     </p>
     <noscript>
         <p>
@@ -65,12 +75,16 @@ const potProfiles = Map.groupBy(
                 data-search={profile.searchText}
                 data-group={profile.group}
                 data-historical={String(profile.historical)}
-                hidden={profile.historical}
+                data-overview={String(overviewSlugs.has(profile.slug))}
+                hidden={profile.historical || overviewSlugs.has(profile.slug)}
             >
                 <PlantCard
                     profile={profile}
+                    overview={overviewSlugs.has(profile.slug)}
                     sharedProfileCount={
-                        profile.trackerId ? (potProfiles.get(profile.trackerId)?.length ?? 1) : 1
+                        profile.trackerId
+                            ? (containersById.get(profile.trackerId)?.members.length ?? 1)
+                            : 1
                     }
                 />
             </li>

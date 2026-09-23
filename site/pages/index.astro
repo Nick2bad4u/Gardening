@@ -3,6 +3,7 @@ import SiteLayout from "../components/SiteLayout.astro";
 import SiteIcon from "../components/SiteIcon.astro";
 import LegacyBookmarks from "../components/LegacyBookmarks.astro";
 import { getCollectionManifest, getProfiles, photoPreview } from "../lib/content.mjs";
+import { getContainers } from "../lib/containers.mjs";
 import { getLatestReport } from "../lib/reports.mjs";
 import { loggerUrl, profileUrl, siteUrl } from "../lib/routes.mjs";
 import "../styles/home.css";
@@ -11,7 +12,13 @@ const [profiles, manifest, report] = await Promise.all([
     getCollectionManifest(),
     getLatestReport(),
 ]);
-const current = profiles.filter((profile) => !profile.historical);
+const containers = await getContainers();
+const overviewSlugs = new Set(
+    containers.flatMap((container) => (container.overview ? [container.overview.slug] : []))
+);
+const current = profiles.filter(
+    (profile) => !profile.historical && !overviewSlugs.has(profile.slug)
+);
 const pots = new Set(current.map((profile) => profile.trackerId).filter(Boolean));
 const hero = manifest.collection_overviews.toSorted(
     (a, b) =>
@@ -95,11 +102,13 @@ const reportDate = new Intl.DateTimeFormat("en-US", {
             </div>
             <dl class="home-stats">
                 <div>
-                    <dt>Current plant profiles</dt>
+                    <dt>Botanical profiles</dt>
                     <dd>{current.length}</dd>
                 </div>
                 <div>
-                    <dt>Tracked pots</dt>
+                    <dt>
+                        <a href={siteUrl("containers/")}>Tracked containers</a>
+                    </dt>
                     <dd>{pots.size}</dd>
                 </div>
                 <div>
@@ -211,6 +220,15 @@ const reportDate = new Intl.DateTimeFormat("en-US", {
             </div>
         </div>
         <div class="card-grid">
+            <a class="notebook-card card" href={siteUrl("containers/")}>
+                <SiteIcon name="succulent" size={32} />
+                <h3>Containers &amp; shared planters</h3>
+                <p>
+                    See what grows together, its recorded setup, and the one history each pot
+                    shares.
+                </p>
+                <span>Explore the containers →</span>
+            </a>
             <a class="notebook-card card" href={siteUrl("tracker/")}>
                 <SiteIcon name="weight" size={32} />
                 <h3>Weights &amp; observations</h3>

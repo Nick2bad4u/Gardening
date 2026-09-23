@@ -53,6 +53,10 @@
     ],
     "P31": [["peperomia-obtipan-bicolor", "Peperomia Bicolor"]],
     "P32": [["tradescantia-spathacea-tricolor", "Tricolor oyster plant"]],
-    "P35": [["lithops-shared-planter", "Lithops shared planter"]],
+    "P35": [
+        ["lithops-shared-planter", "Lithops shared planter"],
+        ["lithops-lesliei", "Lithops lesliei (probable)"],
+        ["lithops-salicola", "Lithops salicola (probable)"]
+    ],
     "P36": [["pleiospilos-nelii", "Split rock"]]
 }

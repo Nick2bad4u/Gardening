@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-09-22
+Last updated: 2026-09-23
 
 This is the current working inventory plus historical records for plants
 removed from the collection. A label is useful evidence, but not a guarantee;
@@ -19,18 +19,33 @@ a photo-only collection ID.
 The short label IDs are permanent plant or shared-planter identifiers, not
 table coordinates. They are shown beside the longer historical inventory IDs.
 
-The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The active collection has **43 profile records: 42 active and one historical, across 34 tracker allocations**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement. The unreceived September 19 Amazon plants have moved to the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md); Amazon confirmed cancellation on September 21 with no charge.
+The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The collection has **45 profile records: 44 active and one historical, across 34 tracker allocations**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement. The unreceived September 19 Amazon plants have moved to the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md); Amazon confirmed cancellation on September 21 with no charge.
+
+Profile records and containers answer different questions: a profile describes
+a botanical identity or an aggregate planting, while a tracker identifies the
+physical assembly that is weighed and watered. Shared containers retain one
+physical label, one observation history, and one set of setup-specific weight
+references. Component profiles add botanical detail without adding pots or
+duplicating care events.
+
+The [container guide](./containers.md) brings together the four shared planters,
+their members, and the distinction between 42 botanical profile groups and two
+aggregate overviews. Open the
+[container directory](https://nick2bad4u.github.io/Gardening/containers/) for
+each container's member list, care context, and existing history.
 
 ## September 21 Lithops and split-rock additions
 
-The owner confirmed possession of two pairs of Lithops and another split rock by September 21, 2026. Both were repotted on **September 23, 2026**, creating **pot setup 2** for each tracker. The photographs show four visible Lithops heads together in P35 and one split-rock leaf pair in P36. The photographs document Altman Plants assortment labels; the retailer and exact acquisition date remain unrecorded. The nursery labels give a nominal 2.5-inch size, while the owner describes the original nursery pots as 2.25 inches.
+The owner purchased two Lithops nursery pots and another split rock at **Home Depot in Howell, Michigan, on Monday, September 21, 2026**, with retailer and date clarified on September 23. Both destination containers were repotted on **September 23, 2026**, creating **pot setup 2** for each tracker. The photographs show four visible Lithops heads together in P35 and one split-rock leaf pair in P36. The photographs document Altman Plants assortment labels. The nursery labels give a nominal 2.5-inch size, while the owner describes the original nursery pots as 2.25 inches.
 
-| Inventory ID | Label ID | Tracker ID | Profile                                                                 | Identification                                                                                                            |
-| ------------ | -------- | ---------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| Succulent-15 | `#9`     | `P35`      | [Lithops shared planter](./plants/succulents/lithops-shared-planter.md) | Probable _L. lesliei_ (tan/brown) + _L. salicola_ (grey/green), from photos; label: _Lithops_ spp.; cultivars unconfirmed |
-| Succulent-16 | `#10`    | `P36`      | [Split rock](./plants/succulents/pleiospilos-nelii.md)                  | Probable _Pleiospilos nelii_, supported by label and photos; cultivar not recorded; explicitly not Royal Flush            |
+| Inventory ID  | Label ID | Tracker ID | Profile                                                                 | Identification                                                                                                            |
+| ------------- | -------- | ---------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Succulent-15  | `#9`     | `P35`      | [Lithops shared planter](./plants/succulents/lithops-shared-planter.md) | Probable _L. lesliei_ (tan/brown) + _L. salicola_ (grey/green), from photos; label: _Lithops_ spp.; cultivars unconfirmed |
+| Succulent-15A | `#9`     | `P35`      | [Probable _Lithops lesliei_](./plants/succulents/lithops-lesliei.md)    | Tan/brown component group; two visible heads, root connections unresolved; same P35 history                               |
+| Succulent-15B | `#9`     | `P35`      | [Probable _Lithops salicola_](./plants/succulents/lithops-salicola.md)  | Grey/green component group; two visible heads, root connections unresolved; same P35 history                              |
+| Succulent-16  | `#10`    | `P36`      | [Split rock](./plants/succulents/pleiospilos-nelii.md)                  | Probable _Pleiospilos nelii_, supported by label and photos; cultivar not recorded; explicitly not Royal Flush            |
 
-P33/P34 remain retired houseplant redirects to P31/P32, so new records start at P35. Archived Succulent-11–14 remain reserved. The September 21 pot assignments are now completed: P35 uses the D'vine Dev Blush Mauve pot (seller-selected 4.3-inch variant), and P36 uses the Thirtypot speckled-brown pot (seller-selected 4.5-inch variant). Canonical `History` records the following September 23 repots and Routine weights; seller sizes are distinct from the logged pot sizes.
+Succulent-15 retains the whole-planter overview and evidence; Succulent-15A/B are probable-species pages, not extra acquisitions or separate care records. P33/P34 remain retired houseplant redirects to P31/P32, so new records start at P35. Archived Succulent-11–14 remain reserved. The September 21 pot assignments are now completed: P35 uses the D'vine Dev Blush Mauve pot (seller-selected 4.3-inch variant), and P36 uses the Thirtypot speckled-brown pot (seller-selected 4.5-inch variant). Canonical `History` records the following September 23 repots and Routine weights; seller sizes are distinct from the logged pot sizes.
 
 | Tracker   | Repot time (EDT) | Logged pot size | Routine weight | Owner-observed condition                                             |
 | --------- | ---------------- | --------------- | -------------- | -------------------------------------------------------------------- |

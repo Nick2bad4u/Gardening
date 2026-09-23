@@ -102,6 +102,7 @@ import { sheetUrls } from "../docs/layouts/plant-tracker-data.js";
  *     acquiredFromMarkdown: string;
  *     acquiredOnMarkdown: string;
  *     bodyMarkdown: string;
+ *     currentPotMarkdown: string;
  *     eyebrow: string;
  *     fileName: string;
  *     group: ProfileGroup["key"];

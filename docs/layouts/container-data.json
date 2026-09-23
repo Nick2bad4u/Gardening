@@ -1,0 +1,28 @@
+{
+    "P19": {
+        "careNote": "Three cactus profiles share one root volume and one watering and weight history. Inspect each cactus, then judge the whole container before watering; a concern with one member is not a separate watering instruction.",
+        "name": "Shared rehab cactus planter",
+        "overviewSlug": null,
+        "portraitSlug": "shared-rehab-cactus-planter",
+        "setupNote": "Permanent label #1, formerly A4-B4. Use the current setup and observations in P19's history when assessing this rehabilitation planter."
+    },
+    "P20": {
+        "careNote": "The echeveria, two kalanchoes, and elephant bush have separate identity and care profiles but receive water through one shared root volume. Compare all four members and the whole-pot dry-down before watering.",
+        "name": "Shared succulent planter",
+        "overviewSlug": null,
+        "portraitSlug": "shared-succulent-planter",
+        "setupNote": "Square wooden planter with a plastic liner and an owner-drilled approximately one-inch hole through the bottom and liner; outside dimensions remain unmeasured."
+    },
+    "P30": {
+        "careNote": "Three visible botanical groups share this container. Judge the shared root volume by full dry-down and whole-pot weight; do not repeatedly wet the pot for one component while the others remain firm.",
+        "name": "Tiny mixed succulent planter",
+        "overviewSlug": "tiny-mixed-succulent-planter",
+        "setupNote": "Setup 2, recorded September 3, 2026 for the September 2 care day: 5 inch shallow terra-cotta planter with nursery cacti soil and the owner's top dressing. Exact depth and ingredient proportions remain unrecorded."
+    },
+    "P35": {
+        "careNote": "Probable Lithops lesliei and probable Lithops salicola share one container, but may not synchronize their leaf-replacement cycles. Inspect both appearance groups before watering. Keep dry while old leaves are being absorbed; one group's wrinkles alone do not authorize watering the entire pot.",
+        "name": "Lithops shared planter",
+        "overviewSlug": "lithops-shared-planter",
+        "setupNote": "Repotted September 23, 2026 into the D'vine Dev Blush Mauve pot, setup 2: logged 4.2 in round, with 80% Molly's Succulent Mix and 20% perlite. The seller's selected variant is 4.3 inches. Four visible heads came from two nursery pots; root connections remain unverified."
+    }
+}

@@ -55,7 +55,7 @@ During observed rest, reduce watering. Heat can slow growth, but the indoor envi
 
 ## Lithops: check each head
 
-**P35 / #9 — _Lithops_ spp., species unresolved.** Dry mix is only one part of the decision. Inspect all four visible heads for new leaves, old-leaf absorption, overall firmness, and a sound base. They were repotted together on September 23; both nursery groups were reported well rooted and all heads firm.
+**P35 / #9 — probable _Lithops lesliei_ and probable _Lithops salicola_.** These are photo-based working IDs; nursery labels say _Lithops_ spp. Dry mix is only one part of the decision. Inspect all four visible heads for new leaves, old-leaf absorption, overall firmness, and a sound base. They were repotted together on September 23; both nursery groups were reported well rooted and all heads firm. Their separate species pages share one P35 watering and weight history.
 
 - **Replacing leaves:** usually hold routine watering while old leaves supply the new pair. Outer-leaf shrinkage alone is expected, not a reason to refill the plant.
 - **Replacement complete and actively growing:** consider watering when the root zone is dry and the current leaves show a real hydration need. A firm plant does not need water just because its pot is light.
@@ -81,7 +81,7 @@ Keep both split rocks and the Lithops outside automatic cactus feeding alternati
 
 ## Find every plant in its group
 
-The linked profiles retain scientific names and identification qualifiers. This index covers the **42 active profiles across 34 tracker allocations** as of September 23. The removed silken pincushion and canceled orders are excluded; a shared container is listed once with all its members.
+The linked profiles retain scientific names and identification qualifiers. This index covers the **44 active profiles across 34 tracker allocations** as of September 23. The removed silken pincushion and canceled orders are excluded; a shared container is listed once with all its members.
 
 ### Cacti and Dragon's Egg
 
@@ -122,12 +122,12 @@ The linked profiles retain scientific names and identification qualifiers. This 
 
 ### Individual strategies
 
-| Pot / label | Plant and strategy                                                                            |
-| ----------- | --------------------------------------------------------------------------------------------- |
-| P21 / #3    | [Money tree](./plants/houseplants/pachira-glabra.md) — houseplant                             |
-| P22 / #4    | [Kiwi aeonium](./plants/succulents/aeonium-haworthii-dream-color.md) — growth/rest            |
-| P28 / G3    | [Royal Flush](./plants/succulents/pleiospilos-nelii-royal-flush.md) — split rock              |
-| P31 / #7    | [Peperomia Bicolor](./plants/houseplants/peperomia-obtipan-bicolor.md) — houseplant           |
-| P32 / #8    | [Tricolor oyster plant](./plants/houseplants/tradescantia-spathacea-tricolor.md) — houseplant |
-| P35 / #9    | [Lithops shared planter](./plants/succulents/lithops-shared-planter.md) — Lithops             |
-| P36 / #10   | [Split rock, not Royal Flush](./plants/succulents/pleiospilos-nelii.md) — split rock          |
+| Pot / label | Plant and strategy                                                                                                                                                                                                                            |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P21 / #3    | [Money tree](./plants/houseplants/pachira-glabra.md) — houseplant                                                                                                                                                                             |
+| P22 / #4    | [Kiwi aeonium](./plants/succulents/aeonium-haworthii-dream-color.md) — growth/rest                                                                                                                                                            |
+| P28 / G3    | [Royal Flush](./plants/succulents/pleiospilos-nelii-royal-flush.md) — split rock                                                                                                                                                              |
+| P31 / #7    | [Peperomia Bicolor](./plants/houseplants/peperomia-obtipan-bicolor.md) — houseplant                                                                                                                                                           |
+| P32 / #8    | [Tricolor oyster plant](./plants/houseplants/tradescantia-spathacea-tricolor.md) — houseplant                                                                                                                                                 |
+| P35 / #9    | [Lithops shared planter](./plants/succulents/lithops-shared-planter.md): [probable _L. lesliei_](./plants/succulents/lithops-lesliei.md) and [probable _L. salicola_](./plants/succulents/lithops-salicola.md) — one shared watering decision |
+| P36 / #10   | [Split rock, not Royal Flush](./plants/succulents/pleiospilos-nelii.md) — split rock                                                                                                                                                          |

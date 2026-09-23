@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 
+import { getContainers } from "../lib/containers.mjs";
 import {
     getEquipmentDocs,
     getGuides,
@@ -7,7 +8,13 @@ import {
     getProfiles,
 } from "../lib/content.mjs";
 import { getReports } from "../lib/reports.mjs";
-import { potUrl, profileUrl, siteOrigin, siteUrl } from "../lib/routes.mjs";
+import {
+    containerUrl,
+    potUrl,
+    profileUrl,
+    siteOrigin,
+    siteUrl,
+} from "../lib/routes.mjs";
 
 export const GET: APIRoute = async () => {
     const [
@@ -23,10 +30,13 @@ export const GET: APIRoute = async () => {
         getReports(),
         getOldPlans(),
     ]);
+    const containers = await getContainers();
     const routes = [
+        ...containers.map((container) => containerUrl(container.id)),
         ...[
             "",
             "plants/",
+            "containers/",
             "tracker/",
             "report/",
             "reports/",

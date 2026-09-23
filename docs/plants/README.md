@@ -1,8 +1,8 @@
 # Plant profiles
 
-Last updated: 2026-09-21
+Last updated: 2026-09-23
 
-These **43 pages cover 42 active profile records and one historical record, across 34 tracker allocations**. The five unreceived Amazon additions are preserved under [old plans](../old-plans/amazon-plant-order-2026-09.md), with cancellation confirmed in Amazon on September 21. They are excluded from this active profile index. The six Mountain Crest plants ordered on
+These **45 pages cover 44 active profile records and one historical record, across 34 tracker allocations**. The five unreceived Amazon additions are preserved under [old plans](../old-plans/amazon-plant-order-2026-09.md), with cancellation confirmed in Amazon on September 21. They are excluded from this active profile index. The six Mountain Crest plants ordered on
 2026-08-25 were received, inspected, and repotted on 2026-08-28. Tuberculate
 tiger jaws and a five-plant succulent garden were acquired from Home Depot,
 photographed, repotted, and assigned `P29`/`#5` and `P30`/`#6` on 2026-09-02.
@@ -32,6 +32,12 @@ An identification marked **probable** is a working hypothesis. Its page names
 the best current match and the evidence that could confirm or change it. The
 [pot-label reference](./labels.md) collects the print layouts, native origins,
 publication years, warnings, and orientation instructions.
+
+The [container guide](../containers.md) separates 42 current botanical profile
+groups from two whole-planter overviews. Each member of a shared planter has
+its own profile while retaining one P-ID and care history. Use the
+[container directory](https://nick2bad4u.github.io/Gardening/containers/)
+to browse those relationships and the setup of the complete pot.
 
 ## Starter cactus group
 
@@ -94,6 +100,8 @@ weights and Ruler dimensions are recorded in the individual profiles.
 | Succulent-10B | `#6`                   | [Coppertone-type sedum](./succulents/tiny-planter-coppertone-sedum.md)                                                      | Probable _Sedum adolphi_ / _S. nussbaumerianum_ complex; shared P30 component group            |
 | Succulent-10C | `#6`                   | [Paddle kalanchoe](./succulents/tiny-planter-paddle-kalanchoe.md)                                                           | _Kalanchoe luciae_ / _K. thyrsiflora_ complex; shared P30 component group                      |
 | Succulent-15  | `#9`                   | [Lithops shared planter](./succulents/lithops-shared-planter.md)                                                            | Probable _L. lesliei_ (tan/brown) + _L. salicola_ (grey/green), from photos; P35               |
+| Succulent-15A | `#9`                   | [Probable _Lithops lesliei_](./succulents/lithops-lesliei.md)                                                               | Two tan/brown heads; photo-based working species; shared P35 component group                   |
+| Succulent-15B | `#9`                   | [Probable _Lithops salicola_](./succulents/lithops-salicola.md)                                                             | Two grey/green heads; photo-based working species; shared P35 component group                  |
 | Succulent-16  | `#10`                  | [Split rock](./succulents/pleiospilos-nelii.md)                                                                             | Probable _Pleiospilos nelii_, supported by label and photos; no cultivar, not Royal Flush; P36 |
 
 The three Mountain Crest succulents arrived rooted in 2-inch nursery pots of unrecorded shape and moved to matching round 4 × 4 × 3.7-inch pots on 2026-08-28. Their 2026-08-29 Scale weights and Ruler dimensions are recorded in the individual profiles.
@@ -108,7 +116,7 @@ conspicuous raised white leaf tubercles favor the qualified _F. tuberculosa_
 working ID. `P30` is sold as a five-plant Smart Planet Home garden and stays one
 tracked planter. Its three component-group pages (Succulent-10A/B/C) retain qualified working IDs and share the aggregate history. They are profile records, not extra pots or a verified count of individual plants. Acquisition documentation did not include measured pot sizes, replacement-medium composition, weights, or dimensions; consult current eligible P29/P30 observations rather than treating that older omission as today's state.
 
-The September 21 additions are [Lithops shared planter](./succulents/lithops-shared-planter.md) (Succulent-15 / #9 / P35) and [Split rock](./succulents/pleiospilos-nelii.md) (Succulent-16 / #10 / P36). Both were repotted and photographed **September 23**: four visible Lithops heads share the D'vine Dev Blush Mauve pot, and the split rock, explicitly not Royal Flush, uses the Thirtypot speckled-brown pot. These are setup-2 containers logged as **4.2 in round** and **4 in round**, respectively; the sellers' selected 4.3-inch and 4.5-inch variants are separate size descriptions. Both use 80% Molly's Succulent Mix + 20% perlite. Altman Plants labels say “Stone Faces / Lithops spp.” and “Split Rock / Pleiospilos nelii”; neither supplies a cultivar. The library lists _L. lesliei_ for the tan/brown heads and _L. salicola_ for the grey/green heads as probable species from photographs, with alternatives retained in the profile; _P. nelii_ is probable with label support. Exact Lithops species, retailer, acquisition date, final placement, drainage, and usable internal depth remain unverified. P33/P34 stay retired houseplant redirects, and archived Succulent-11–14 are not reused.
+The owner bought both Lithops nursery pots and the split rock at Home Depot, Howell, Michigan, on September 21, 2026. The additions are [Lithops shared planter](./succulents/lithops-shared-planter.md) (Succulent-15 / #9 / P35) and [Split rock](./succulents/pleiospilos-nelii.md) (Succulent-16 / #10 / P36). The Lithops overview now links to [probable _L. lesliei_](./succulents/lithops-lesliei.md) (Succulent-15A) and [probable _L. salicola_](./succulents/lithops-salicola.md) (Succulent-15B), all sharing P35 / #9 and its existing history. Both containers were repotted and photographed **September 23**: four visible Lithops heads share the D'vine Dev Blush Mauve pot, and the split rock, explicitly not Royal Flush, uses the Thirtypot speckled-brown pot. These are setup-2 containers logged as **4.2 in round** and **4 in round**, respectively; the sellers' selected 4.3-inch and 4.5-inch variants are separate size descriptions. Both use 80% Molly's Succulent Mix + 20% perlite. Altman Plants labels say “Stone Faces / Lithops spp.” and “Split Rock / Pleiospilos nelii”; neither supplies a cultivar. The library lists _L. lesliei_ for the tan/brown heads and _L. salicola_ for the grey/green heads as probable species from photographs, with alternatives retained in the profile; _P. nelii_ is probable with label support. Exact Lithops species, retailer, acquisition date, final placement, drainage, and usable internal depth remain unverified. P33/P34 stay retired houseplant redirects, and archived Succulent-11–14 are not reused.
 
 ## Older mixed cactus planter
 

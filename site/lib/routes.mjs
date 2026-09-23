@@ -15,6 +15,11 @@ export const loggerUrl =
     "https://script.google.com/macros/s/AKfycbytpdMto4ZAqOf49igDNoGYr-J6fmSRDNJOKP4-dKDFRmM2YkTCKJp3kmhrD4gOJShF/exec";
 
 /** @param {string} id */
+export function containerUrl(id) {
+    return siteUrl(`containers/${encodeURIComponent(id)}/`);
+}
+
+/** @param {string} id */
 export function potUrl(id) {
     return siteUrl(`pots/${encodeURIComponent(id)}/`);
 }
@@ -34,6 +39,7 @@ export function siteUrl(relative = "") {
 const documentRoutes = new Map([
     ["docs/care-notes.md", "guides/care-notes/"],
     ["docs/collection.md", "plants/"],
+    ["docs/containers.md", "containers/"],
     ["docs/equipment/inventory.md", "setup/equipment/"],
     ["docs/equipment/README.md", "setup/equipment/"],
     ["docs/layouts/daily-report.html", "report/"],
@@ -108,6 +114,11 @@ export function contentUrl(repositoryPath) {
 
 export const primaryNavigation = [
     { href: siteUrl("plants/"), label: "Plants", section: "plants" },
+    {
+        href: siteUrl("containers/"),
+        label: "Containers",
+        section: "containers",
+    },
     { href: siteUrl("report/"), label: "Daily Report", section: "report" },
     { href: siteUrl("tracker/"), label: "Tracker", section: "tracker" },
     { href: siteUrl("photos/"), label: "Photos", section: "photos" },

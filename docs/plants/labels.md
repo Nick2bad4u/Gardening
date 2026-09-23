@@ -1,8 +1,8 @@
 # Pot labels
 
-Last updated: 2026-09-21
+Last updated: 2026-09-23
 
-This is the print reference for 42 active profile records across 34 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
+This is the print reference for 44 active profile records across 34 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
 
 The six August cactus labels are `E1`–`E3` and `F1`–`F3`; their exact mapping
 was recorded from the pots on 2026-08-10. The numbered mapping was also
@@ -366,6 +366,12 @@ The owner confirmed buying both plants directly at Carlson's Greenhouses on 2026
 
 These two allocations follow #7 and #8. The September 23 repots put the Lithops together in one shared pot and the split rock in a separate pot, each at setup 2. P33/P34 are retired houseplant redirects, so these allocations use P35/P36. Photographs show four visible Lithops heads, but their root attachments are unconfirmed; this is not a verified count of independent rooted plants.
 
+Keep one physical **#9** label for the shared Lithops pot. The component records
+[Succulent-15A — probable _L. lesliei_](./succulents/lithops-lesliei.md) and
+[Succulent-15B — probable _L. salicola_](./succulents/lithops-salicola.md)
+describe the tan/brown and grey/green groups. Both share P35 with aggregate
+Succulent-15; the A/B suffixes are profile identifiers, not new pot labels.
+
 | ID    | Tracker | Inventory    | Botanical label                                                                                           | Warning                                                    |
 | ----- | ------- | ------------ | --------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | `#9`  | `P35`   | Succulent-15 | [Probable _L. lesliei_ (tan/brown) + _L. salicola_ (grey/green)](./succulents/lithops-shared-planter.md)  | Inspect all four heads; one shared pot history             |
@@ -385,7 +391,7 @@ Probable Pleiospilos nelii | LABEL-SUPPORTED ID
 CULTIVAR NOT RECORDED
 ```
 
-Native-origin wording is southern Africa at Lithops genus level and South Africa's Cape Provinces for the label-supported split-rock species. Publication dates are 1922 for the Lithops genus and 1930 for P. nelii, not verified dates for the unidentified collection forms. Altman Plants assortment labels read “Stone Faces / Lithops spp.” and “Split Rock / Pleiospilos nelii”; neither names a cultivar. The retailer and exact acquisition date remain unrecorded. The nominal 2.5-inch nursery labels differ from the owner's 2.25-inch nursery-pot description. September 23 photographs document #9 / P35 in the D'vine Dev Blush Mauve pot and #10 / P36 in the Thirtypot speckled-brown pot. Seller-selected sizes are 4.3 and 4.5 inches; the repot ledger records 4.2 in round and 4 in round, respectively. The profiles carry the botanical sources.
+Native-origin wording is southern Africa at Lithops genus level and South Africa's Cape Provinces for the label-supported split-rock species. For the probable Lithops species, Kew records the current L. lesliei combination in 1922 (earlier name in 1912) and L. salicola in 1936; neither date confirms a collection ID. P. nelii was published in 1930. The component profiles give the proposed species ranges, distinct from nursery provenance. Altman Plants assortment labels read “Stone Faces / Lithops spp.” and “Split Rock / Pleiospilos nelii”; neither names a cultivar. The owner confirmed purchase of both Lithops nursery pots and the split rock at Home Depot, Howell, Michigan, on September 21, 2026. The nominal 2.5-inch nursery labels differ from the owner's 2.25-inch nursery-pot description. September 23 photographs document #9 / P35 in the D'vine Dev Blush Mauve pot and #10 / P36 in the Thirtypot speckled-brown pot. Seller-selected sizes are 4.3 and 4.5 inches; the repot ledger records 4.2 in round and 4 in round, respectively. The profiles carry the botanical sources.
 
 ## Archived label allocations
 
@@ -420,7 +426,7 @@ The [September 19 Amazon plan](../old-plans/amazon-plant-order-2026-09.md) prese
 
 The repo contains acquisition source-and-date records for `A1`–`H3` and `#1`–`#6`, except the historical, removed Rehab-04 record. Its acquisition source and date remain unconfirmed. For new #7 and #8, the owner confirmed direct purchase at Carlson's Greenhouses on September 20; the nursery tags also identify the grower.
 
-The unreceived September 19 Amazon plant order is archived separately; cancellation was confirmed in Amazon on September 21. The unrelated #9/#10 plants were repotted and photographed September 23 in the D'vine Dev Blush Mauve and Thirtypot speckled-brown pots. Their retailer and exact plant acquisition date remain unrecorded.
+The unreceived September 19 Amazon plant order is archived separately; cancellation was confirmed in Amazon on September 21. The unrelated #9/#10 plants were purchased at Home Depot in Howell, Michigan, on September 21 and repotted and photographed September 23 in the D'vine Dev Blush Mauve and Thirtypot speckled-brown pots.
 
 Keep an order date and a received date as separate facts. They answer different
 questions and should not be silently substituted for one another.

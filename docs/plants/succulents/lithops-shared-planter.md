@@ -3,11 +3,12 @@
 - Inventory: Succulent-15 — Probable species: _Lithops lesliei_ + _Lithops salicola_
 - Label ID: `#9` — assigned 2026-09-21
 - Tracker ID: `P35`
+- Status: Active aggregate profile; one shared container with two probable-species component profiles
 - Visual description: Four visible heads: two tan/brown patterned heads and two greyer green heads with darker windows, photographed together in the Blush Mauve pot on September 23, 2026. Each head has its own central fissure. Root connections remain unverified; the illustration is schematic.
 - Interesting fact: A living-stone head consists of paired succulent leaves, and replacement growth draws on the older leaves; an aging outer pair does not by itself mean the plant needs watering.
 - Identification: **Probable species from photographs: Lithops lesliei for the tan/brown heads and Lithops salicola for the grey/green heads. Nursery labels say Lithops spp.; exact species, varieties, and cultivars remain unconfirmed.**
-- Acquired from: Retailer unrecorded; nursery labels name Altman Plants as grower
-- Acquired on: Exact date unrecorded; owner confirmed possession by 2026-09-21
+- Acquired from: Home Depot, Howell, Michigan; nursery labels identify Altman Plants as grower
+- Acquired on: 2026-09-21 — owner-confirmed purchase date
 - Current pot: D'vine Dev Blush Mauve, repotted September 23, 2026; logged as 4.2 in round, distinct from the seller's selected 4.3-inch variant; 80% Molly's Succulent Mix + 20% perlite; setup 2
 
 ## Names and identity
@@ -28,8 +29,24 @@ there are **four heads, each with a paired-leaf body**, not just four leaves.
 Two heads have tan islands and brown/olive channels; the other two have greyer
 sides and more open olive-green windows. The photographs do not establish
 whether the two heads from each nursery pot share a root base. Keep
-`Succulent-15`, `#9`, and `P35` as one profile, label, and container history;
-do not create separate IDs from this appearance difference.
+`Succulent-15` as the aggregate record and `#9` / `P35` as one physical label
+and container history. The component profiles document the two probable species;
+their inventory suffixes do not create extra pots or independently rooted plants.
+
+## Shared container and members
+
+| Record                                                               | Scope                                         | Shared history |
+| -------------------------------------------------------------------- | --------------------------------------------- | -------------- |
+| Succulent-15 — this overview                                         | Complete Blush Mauve planter and its evidence | P35 / #9       |
+| [Succulent-15A — probable _Lithops lesliei_](./lithops-lesliei.md)   | Two tan/brown patterned heads                 | P35 / #9       |
+| [Succulent-15B — probable _Lithops salicola_](./lithops-salicola.md) | Two grey/green, more open-windowed heads      | P35 / #9       |
+
+Use the component pages for botanical background and group-specific appearance.
+This overview keeps the original labels, whole-pot photographs, pot recipe,
+repot evidence, and measurements together. Log watering, feeding, weighing, and
+repotting once for the complete container. Name the appearance group in the
+observation notes when only one group flowers, changes firmness, or replaces
+leaves. A new component page does not reset the existing P35 history.
 
 ### Probable species and alternatives
 
@@ -49,7 +66,8 @@ supplies a cultivar, collection number, or species provenance. Green coloration
 does not establish a named cultivar. The plant library lists the leading
 matches as **probable species**, not confirmed identifications. Keep the shared
 planter title and both alternatives visible until stronger evidence resolves
-the species.
+the species. The [tan/brown group's page](./lithops-lesliei.md) and
+[grey/green group's page](./lithops-salicola.md) retain those qualifications.
 
 Future flowers recorded separately for each appearance group, plus neutral
 daylight top and side photos with a ruler, could narrow the comparison. Do not
@@ -61,8 +79,9 @@ The September 23 label photographs show **Stone Faces / Lithops spp.**, grown
 by **Altman Plants**, with assortment text `S 2.5" .ASST MIMICRY`, code
 `487712`, and UPC `092852023689`. The owner's former-pot description is
 2.25 inches; the label's nominal 2.5-inch assortment size is separate evidence,
-not a correction to that description. The retailer and exact purchase date
-remain unrecorded.
+not a correction to that description. On September 23 the owner clarified that
+both nursery pots were purchased at **Home Depot in Howell, Michigan, on
+September 21, 2026**.
 
 [![Both Altman Plants nursery containers labelled Stone Faces, Lithops spp.](../../../assets/nursery-labels/2026-09-23-p35-lithops-nursery-labels.jpg)](../../../assets/nursery-labels/2026-09-23-p35-lithops-nursery-labels.jpg)
 
@@ -123,6 +142,7 @@ Owner photograph, September 23, 2026: completed shared planting. The photography
 ## Sources
 
 - Owner reports, September 21–23, 2026, and Google Photos originals inspected September 23: acquisition, pot choice, four visible heads, nursery labels, and completed repot photographs.
+- Owner clarification, September 23, 2026: Home Depot, Howell, Michigan, purchase on Monday, September 21; this supplies the previously unrecorded retailer and exact acquisition date.
 - Canonical tracker History read September 23, 2026: P35 repot/check/Routine-weight batch at 02:34 EDT, recorded 02:40:36 EDT; setup 2, recipe, firmness, root observations, and no Water event in that batch.
 - [Equipment inventory](../../equipment/inventory.md) — exact ordered pot identity and seller variant, kept separate from the logged dimensions.
 - [Kew Plants of the World Online: _Lithops_](https://powo.science.kew.org/taxon/16237-1) — accepted genus, publication year, and genus-level range.
