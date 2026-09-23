@@ -18,14 +18,14 @@ import {
 } from "../site/lib/content/profile-source.mjs";
 
 describe("field guide source rendering", () => {
-    it("keeps the new Lithops group and split rock separate with qualified identities and pending photographs", async () => {
+    it("keeps the Lithops group and split rock separate with qualified species and pending remote galleries", async () => {
         expect.hasAssertions();
 
         const profiles = await getProfiles();
         const manifest = await getCollectionManifest();
         const records = [
             {
-                confidence: "Tentative Genus",
+                confidence: "Likely Match",
                 id: "P35",
                 inventory: "Succulent-15",
                 label: "#9",

@@ -13,7 +13,7 @@
   succulent container. `P30` / `#6` has aggregate Succulent-10 and component-group profiles
   Succulent-10A/B/C, all sharing one pot; component taxa remain qualified. Removed Rehab-04 remains historical and has no active pot.
 - The owner explicitly assigned `P31` / `#7` to Peperomia Bicolor and `P32` / `#8` to Tricolor oyster plant on September 20, 2026. The unreceived Amazon research under `docs/old-plans/` has no physical-label or tracker allocation and is excluded from active profiles.
-- `P35` / `#9` covers the two owner-described Lithops pairs planned for one shared pot; `P36` / `#10` is the separate newly acquired split rock, explicitly not Royal Flush. Never reuse `P33`/`P34`: their old houseplant URLs redirect permanently to `P31`/`P32`. The next profile records are Succulent-15/16; archived Succulent-11–14 remain reserved.
+- `P35` / `#9` is the shared Lithops pot: four visible heads from two nursery pots, with root connections unresolved. `P36` / `#10` is the separate nursery-labelled Pleiospilos nelii, with no cultivar supplied and explicitly not Royal Flush. Their profile records are Succulent-15/16; use the profiles for current repot evidence. Never reuse `P33`/`P34`: their old houseplant URLs redirect permanently to `P31`/`P32`. Archived Succulent-11–14 remain reserved.
 - Keep seller labels, qualified working IDs, receipt dates, and repot dates
   distinct. Preserve original label evidence when the probable identification
   changes. An order is not a confirmed arrival; a retail pot size is not a

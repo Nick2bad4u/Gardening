@@ -174,7 +174,7 @@ async function finalizePublishedSite({
         documents.flatMap((html) =>
             html
                 .matchAll(
-                    /\bsrc="\/Gardening\/(?<asset>assets\/plants\/[^"#?]+)"/gv
+                    /<img\b[^>]+\bsrc="\/Gardening\/(?<asset>assets\/(?:nursery-labels|plants)\/[^"#?]+\.(?:jpe?g|png|webp))"/gv
                 )
                 .map((match) => {
                     const asset = match.groups?.["asset"];
@@ -262,8 +262,10 @@ async function finalizePublishedSite({
         )}\n`,
         "utf8"
     );
-    // Originals are only staging inputs; retain named logger evidence assets.
+    // Reference originals are staging inputs; retain full-size nursery evidence
+    // for download links and historical logger URLs.
     for (const reference of references) {
+        if (!reference.startsWith("assets/plants/")) continue;
         // eslint-disable-next-line no-await-in-loop -- Remove each known single staged file after all pages were rewritten.
         await rm(containedPath(outputDirectory, reference), { force: true });
     }
@@ -682,7 +684,7 @@ function rewritePublishedPlantImages(html, optimizedImages) {
         /<img\b[^>]*>/gv,
         (/** @type {string} */ imageTag) => {
             const source =
-                /\bsrc="(?<prefix>\/Gardening\/|\.\/|\.\.\/|\.\.\/\.\.\/)(?<relativePath>assets\/plants\/[^"#?]+)"/v.exec(
+                /\bsrc="(?<prefix>\/Gardening\/|\.\/|\.\.\/|\.\.\/\.\.\/)(?<relativePath>assets\/(?:nursery-labels|plants)\/[^"#?]+\.(?:jpe?g|png|webp))"/v.exec(
                     imageTag
                 );
             if (!source) return imageTag;

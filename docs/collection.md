@@ -23,14 +23,21 @@ The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was
 
 ## September 21 Lithops and split-rock additions
 
-The owner confirmed possession of two pairs of Lithops and another split rock by September 21, 2026. The Lithops are planned for one shared pot; the split rock is planned for the other incoming pot. These are two new tracker allocations. Their exact acquisition date, seller, nursery containers, medium, watering history, and final positions remain unrecorded. No planting, watering, or measurement event is inferred.
+The owner confirmed possession of two pairs of Lithops and another split rock by September 21, 2026. Both were repotted on **September 23, 2026**, creating **pot setup 2** for each tracker. The photographs show four visible Lithops heads together in P35 and one split-rock leaf pair in P36. The photographs document Altman Plants assortment labels; the retailer and exact acquisition date remain unrecorded. The nursery labels give a nominal 2.5-inch size, while the owner describes the original nursery pots as 2.25 inches.
 
-| Inventory ID | Label ID | Tracker ID | Profile                                                                 | Identification                                                                 |
-| ------------ | -------- | ---------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| Succulent-15 | `#9`     | `P35`      | [Lithops shared planter](./plants/succulents/lithops-shared-planter.md) | Owner-described two pairs; _Lithops_ sp./spp., species and cultivar unresolved |
-| Succulent-16 | `#10`    | `P36`      | [Split rock](./plants/succulents/pleiospilos-nelii.md)                  | Probable _Pleiospilos nelii_; cultivar unconfirmed; explicitly not Royal Flush |
+| Inventory ID | Label ID | Tracker ID | Profile                                                                 | Identification                                                                                                            |
+| ------------ | -------- | ---------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Succulent-15 | `#9`     | `P35`      | [Lithops shared planter](./plants/succulents/lithops-shared-planter.md) | Probable _L. lesliei_ (tan/brown) + _L. salicola_ (grey/green), from photos; label: _Lithops_ spp.; cultivars unconfirmed |
+| Succulent-16 | `#10`    | `P36`      | [Split rock](./plants/succulents/pleiospilos-nelii.md)                  | Probable _Pleiospilos nelii_, supported by label and photos; cultivar not recorded; explicitly not Royal Flush            |
 
-P33/P34 remain retired houseplant redirects to P31/P32, so new records start at P35. Archived Succulent-11–14 remain reserved. The incoming Thirtypot speckled-brown pot (selected 4.5-inch variant) and D'vine Dev Blush Mauve pot (four-inch listing, selected 4.3-inch variant) are expected September 22. On September 21, the owner assigned the D'vine Blush Mauve pot to the Lithops together (P35 / #9) and the Thirtypot speckled-brown pot to the split rock (P36 / #10), with repotting and follow-up photographs planned for September 22. Check their actual root room and drainage before the planned planting. The shared Lithops allocation is not proof that the pairs already share a container, or that their leaf cycles match. Royal Flush stays G3 / P28 with its existing history.
+P33/P34 remain retired houseplant redirects to P31/P32, so new records start at P35. Archived Succulent-11–14 remain reserved. The September 21 pot assignments are now completed: P35 uses the D'vine Dev Blush Mauve pot (seller-selected 4.3-inch variant), and P36 uses the Thirtypot speckled-brown pot (seller-selected 4.5-inch variant). Canonical `History` records the following September 23 repots and Routine weights; seller sizes are distinct from the logged pot sizes.
+
+| Tracker   | Repot time (EDT) | Logged pot size | Routine weight | Owner-observed condition                                             |
+| --------- | ---------------- | --------------- | -------------- | -------------------------------------------------------------------- |
+| P35 / #9  | 2:34 a.m.        | 4.2 in round    | 1247 g         | Dry; all four visible heads firm; two formerly separate nursery pots |
+| P36 / #10 | 2:30 a.m.        | 4 in round      | 713.5 g        | Dry; firm leaves; one leaf pair                                      |
+
+Both repots record **80% Molly's Succulent Mix + 20% perlite**; P36's raw ledger entry spells the amendment “Perlitr.” Neither batch contains a Water event, and these Routine weights are not verified dry baselines. The owner describes both Lithops nursery root systems and the split rock as nearly rootbound, and reports removing only freely detached, extremely dry Lithops leaves. The lighter, bumpier Lithops have small scars/fissures but remain firm. Four visible heads do not establish how many share roots. Final placement, actual drainage, and usable internal pot depth remain unverified; the bathroom-counter photographs document repotting, not the growing location. Royal Flush stays G3 / P28 with its existing history.
 
 ## Confidence guide
 
@@ -291,7 +298,7 @@ lower-light houseplant.
 
 ## Abandoned September 19 Amazon plan
 
-All five unreceived plants are excluded from the active inventory. Their research is preserved in the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Succulent-11–14 and Houseplant-02 retain archived research identities; their physical-label and tracker allocations are withdrawn. The decorated pot is one of the two Amazon Basics destinations, with its specific plant assignment unconfirmed; the D'vine pot (selected 4.3-inch variant) is now assigned to the planned P35 / #9 shared Lithops planting. P36 / #10 split rock is assigned the Thirtypot selected 4.5-inch speckled-brown pot. Both repots and follow-up photographs remain planned for September 22.
+All five unreceived plants are excluded from the active inventory. Their research is preserved in the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Succulent-11–14 and Houseplant-02 retain archived research identities; their physical-label and tracker allocations are withdrawn. The decorated pot is one of the two Amazon Basics destinations, with its specific plant assignment unconfirmed. The D'vine pot (selected 4.3-inch variant) now contains P35 / #9 shared Lithops; P36 / #10 split rock uses the Thirtypot selected 4.5-inch speckled-brown pot. Both repots and photographs are documented September 23.
 
 ## Identification follow-ups
 

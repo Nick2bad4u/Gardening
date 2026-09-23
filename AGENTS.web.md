@@ -19,17 +19,15 @@ Help with gardening research, care, equipment, identification, and records. Keep
 
 ## Starting collection context
 
-Starting facts updated September 22, 2026; I may update them:
+Starting facts updated September 23, 2026; I may update them:
 
 - The main focus is cacti and succulents, but help with any plants I add.
-- Collection: 34 allocations (P01–P32, P35/P36), 42 active profiles, one historical; P33/P34 retired. #9/P35: two Lithops pairs planned together in D'vine Dev 4.3-inch Blush Mauve; species/rooted count unresolved. #10/P36: separate probable Pleiospilos nelii, cultivar unknown, not Royal Flush, planned Thirtypot 4.5-inch speckled-brown. Repots/photos planned September 22. Nursery pots/mix, leaf stages, last water/acquisition unknown; owned by September 21. Manual leaf-cycle checks, no weight-only watering or automatic feed alternation. Logger 5.29.0/98; AppSheet 1.100112 verified.
-- P31/#7 Peperomia Bicolor, P32/#8 Tricolor oyster: Carlson's September 20; 6-inch nursery pots last near money tree. Planned 8-inch Amazon Basics pots, greenhouse mix + Molly's (ratio unknown). September 22 plan: side by side at living-room north-facing double glass sliding door; P32 closest to glass, P31 on smallest Bamworld stool; FECiDA clipped to shelf. Move/repot/install pending. Recommend FECiDA alone 12 h; two Juhefas for measured gaps; optional Diivoo off initially. Inferred total DLI P31 4–6/P32 6–8, not thresholds. Partial/upper-mix drying. Five Amazon plants archived/canceled; no IDs.
+- Collection: 34 allocations (P01–P32, P35/P36), 42 active profiles, one historical; P33/P34 retired. #9/P35: four Lithops heads from two nursery pots; species/root connections unresolved; Blush Mauve pot, logged 4.2-inch (seller 4.3). #10/P36: nursery-labelled Pleiospilos nelii, no cultivar, not Royal Flush; speckled-brown pot, logged 4-inch (seller 4.5). Both repotted/photographed September 23, setup 2, 80% Molly's Succulent Mix + 20% perlite. Routine weights 1247/713.5 g respectively, Dry and firm; P36 one pair. No Water in those batches; weights are not dry baselines. Placement/last water/purchase date unknown; owned by September 21. Manual leaf-cycle checks; no weight-only watering or automatic feed alternation. Last documented logger 5.29.0/98, AppSheet 1.100112.
+- P31/#7 Peperomia Bicolor, P32/#8 Tricolor oyster: Carlson's September 20; 6-inch nursery pots last near money tree. Planned 8-inch Amazon Basics pots, greenhouse mix + Molly's (ratio unknown). September 22 plan: living-room north-facing sliding glass door, P32 closest; P31 on smallest Bamworld stool, FECiDA on shelf. Move/repot/install pending. FECiDA 12 h initially; two Juhefas for measured gaps; optional Diivoo off. Inferred DLI P31 4–6/P32 6–8, not thresholds. Partial/upper-mix drying. Five Amazon plants canceled; no IDs.
 - VIVOSUN AW200 + AeroLight 240 W installed September 13. Last reported: 45%/38%, 13 h 15 m cycle, 15-minute sunrise/sunset, 18-inch tip reference. Photos do not remeasure settings or clearances.
 - Four wooden tables since September 15. Money Tree #3/P21 on north windowsill by September 16. Dimensions/light partly unmeasured. Diagram: window top, room bottom, Mylar left, white wall right; no end reflector.
-- Room-air equipment includes a TABYIK DH-CS01 mini dehumidifier and Levoit Core
-  Mini-P purifier, model LAP-C161-WUS.
-- The growing context is southeastern Michigan. Confirm location/conditions
-  for seasonal advice and account for indoor/outdoor acclimation.
+- Room air: TABYIK DH-CS01 dehumidifier; Levoit Core Mini-P purifier LAP-C161-WUS.
+- Southeastern Michigan; check indoor/outdoor conditions for seasonal advice.
 
 Confirm current conditions when relevant; numerical targets are starting ranges. Prioritize plant response.
 
@@ -115,8 +113,6 @@ For repository drafts:
   its report date and actual source-read time distinct from observation times;
   do not claim fresh spreadsheet access unless it occurred in this chat.
 - Avoid unrelated tooling or release advice unless I ask about the repository.
-
-When useful, end with a repository handoff naming intended files, corrected facts, confidence, related records, sources, and remaining questions.
 
 ## Final check
 

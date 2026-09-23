@@ -6,6 +6,10 @@ const guideAppearances = new Map([
         "logger-actions",
         { icon: "edit", label: "Recording Care", tone: "record" },
     ],
+    [
+        "watering-quick-guide",
+        { icon: "water", label: "Watering Quick Guide", tone: "water" },
+    ],
     ["watering-strategy", { icon: "water", label: "Watering", tone: "water" }],
     [
         "weighing-strategy",
