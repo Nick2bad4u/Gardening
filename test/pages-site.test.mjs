@@ -214,4 +214,42 @@ describe("the GitHub Pages publication transforms", () => {
         expect(output).toContain('sizes="50vw"');
         expect(output).not.toContain(`src="../../${source}"`);
     });
+
+    it.each([
+        "jpg",
+        "jpeg",
+        "png",
+        "webp",
+    ])(
+        "serves responsive nursery %s previews without changing full-size download links or other images",
+        (extension) => {
+            expect.hasAssertions();
+
+            const source = `assets/nursery-labels/repot.${extension}`;
+            const preview = "assets/nursery-labels/repot.w480.webp";
+            const images = new Map([
+                [
+                    source,
+                    {
+                        relativePath: source,
+                        variants: [{ bytes: 1200, path: preview, width: 480 }],
+                    },
+                ],
+            ]);
+            const unaffected =
+                '<img src="/Gardening/assets/plant-icons/example.svg" alt="Icon"><img src="https://example.com/photo.jpg" alt="External"><img src="/Gardening/assets/nursery-labels/diagram.svg" alt="Diagram">';
+            const output = rewritePublishedPlantImages(
+                `<a href="/Gardening/${source}"><img src="/Gardening/${source}" alt="Repotted plant" loading="lazy"></a>${unaffected}`,
+                images
+            );
+
+            expect(output).toContain(`href="/Gardening/${source}"`);
+            expect(output).toContain(`src="/Gardening/${preview}"`);
+            expect(output).toContain(`srcset="/Gardening/${preview} 480w"`);
+            expect(output).toContain('sizes="100vw"');
+            expect(output).toContain('alt="Repotted plant" loading="lazy"');
+            expect(output).not.toContain(`src="/Gardening/${source}"`);
+            expect(output).toContain(unaffected);
+        }
+    );
 });
