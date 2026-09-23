@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const landings = [
     { icon: "full-report", name: "Full Report", route: "report/" },
+    { icon: "garden-containers", name: "Containers", route: "containers/" },
     { icon: "garden-equipment", name: "Equipment", route: "setup/equipment/" },
     { icon: "garden-guides", name: "Care Guides", route: "guides/" },
     { icon: "garden-home", name: "The Garden", route: "" },
@@ -21,6 +22,7 @@ test.describe("garden landing app identities", { tag: "@apps" }, () => {
         "",
         "tracker/",
         "plants/",
+        "containers/",
         "guides/",
     ]) {
         for (const theme of ["dark", "light"] as const) {
@@ -180,27 +182,29 @@ test.describe("garden landing app identities", { tag: "@apps" }, () => {
             .toBe(true);
     });
 
-    test("edge reports no home-page installability errors", async ({
-        browserName,
-        context,
-        page,
-    }) => {
-        test.skip(
-            browserName !== "chromium",
-            "Installability diagnostics require Chromium CDP."
-        );
-        await page.goto("/Gardening/");
-        const session = await context.newCDPSession(page);
-        await session.send("Page.enable");
-        const result = await session.send("Page.getInstallabilityErrors");
-        // Playwright contexts are isolated; ignore only that environment restriction.
-        expect
-            .soft(
-                result.installabilityErrors.filter(
-                    (error) => error.errorId !== "in-incognito"
+    for (const route of ["", "containers/"]) {
+        test(`edge reports no ${route || "home"} installability errors`, async ({
+            browserName,
+            context,
+            page,
+        }) => {
+            test.skip(
+                browserName !== "chromium",
+                "Installability diagnostics require Chromium CDP."
+            );
+            await page.goto(`/Gardening/${route}`);
+            const session = await context.newCDPSession(page);
+            await session.send("Page.enable");
+            const result = await session.send("Page.getInstallabilityErrors");
+            // Playwright contexts are isolated; ignore only that environment restriction.
+            expect
+                .soft(
+                    result.installabilityErrors.filter(
+                        (error) => error.errorId !== "in-incognito"
+                    )
                 )
-            )
-            .toStrictEqual([]);
-        await session.detach();
-    });
+                .toStrictEqual([]);
+            await session.detach();
+        });
+    }
 });

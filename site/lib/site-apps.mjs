@@ -55,6 +55,15 @@ export const siteApps = [
     },
     {
         description:
+            "Browse the collection's containers, shared planters, and the plants growing together.",
+        fragment: "",
+        icon: "garden-containers",
+        name: "Containers",
+        route: "containers/",
+        themeColor: "#315a57",
+    },
+    {
+        description:
             "Find each tracked pot's weights, watering records, and observation history.",
         fragment: "",
         icon: "garden-pots",

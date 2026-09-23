@@ -10,6 +10,8 @@ describe("installed garden app routing", () => {
     it.each([
         ["/Gardening/", "The Garden"],
         ["/Gardening", "The Garden"],
+        ["/Gardening/containers", "Containers"],
+        ["/Gardening/containers/P35/", "Containers"],
         ["/Gardening/setup", "Garden Setup"],
         ["/Gardening/setup/equipment/", "Equipment"],
         ["/Gardening/setup/equipment/msu-fertilizer/", "Equipment"],
@@ -28,6 +30,7 @@ describe("installed garden app routing", () => {
         "/Gardening/404.html",
         "/Gardening/unknown/",
         "/Gardening/plants-extra/",
+        "/Gardening/containers-extra/",
         "/Garden/plants/",
     ])("does not offer an unrelated install for %s", (pathname) => {
         expect.hasAssertions();
@@ -40,8 +43,8 @@ describe("installed garden app routing", () => {
         const manifests = siteApps.map((app) => siteManifest(app));
         const identities = new Set(manifests.map((manifest) => manifest.id));
 
-        expect(identities.size).toBe(13);
-        expect(manifests).toHaveLength(13);
+        expect(identities.size).toBe(14);
+        expect(manifests).toHaveLength(14);
         expect([...identities].filter((id) => id.includes("#"))).toStrictEqual(
             []
         );
