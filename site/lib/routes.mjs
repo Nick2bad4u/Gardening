@@ -52,6 +52,7 @@ const documentRoutes = new Map([
     ["docs/plants/README.md", "plants/"],
     ["docs/setup.md", "setup/"],
     ["docs/two-light-placement-review.md", "setup/placement/"],
+    ["docs/watering-quick-guide.md", "guides/watering-quick-guide/"],
     ["docs/watering-strategy.md", "guides/watering-strategy/"],
     ["docs/weighing-strategy.md", "guides/weighing-strategy/"],
     ["README.md", ""],
