@@ -112,6 +112,8 @@ function writtenRows(plan) {
 }
 
 describe("container catalog migration", () => {
+    // This integration check renders all profiles; coverage on shared CI runners
+    // can exceed the default unit-test timeout before catalog assertions begin.
     it("exports probable Lithops members and acquisition evidence without counting the overview", async () => {
         expect.hasAssertions();
 
@@ -148,7 +150,7 @@ describe("container catalog migration", () => {
         expect(
             catalog.containers.find(({ id }) => id === "P35")?.memberSlugs
         ).toHaveLength(2);
-    });
+    }, 20_000);
 
     it("creates one container row for several botanical profiles without changing inputs", () => {
         expect.hasAssertions();
