@@ -1,0 +1,31 @@
+---
+import { siteUrl } from "../../lib/routes.mjs";
+import { fullReportApp, pocketReportApp, type ReportApp } from "../../lib/report-apps.mjs";
+import { getLatestReport } from "../../lib/reports.mjs";
+import SiteLayout from "../SiteLayout.astro";
+import ReviewedReport from "./ReviewedReport.astro";
+
+interface Props {
+    app: ReportApp;
+}
+const { app } = Astro.props;
+const report = await getLatestReport();
+const pocket = app.route === pocketReportApp.route;
+---
+
+<SiteLayout title={app.name} description={app.description} section="report" reportApp={app}>
+    <nav class="report-archive-link report-view-links" aria-label="Report views">
+        <a href={siteUrl(fullReportApp.route)} aria-current={!pocket ? "page" : undefined}>
+            Full report
+        </a>
+        <a
+            href={`${siteUrl(pocketReportApp.route)}#pocket-list`}
+            aria-current={pocket ? "page" : undefined}
+        >
+            Pocket report
+        </a>
+        <a href={siteUrl("reports/")}>Browse previous reports</a>
+        <a href={siteUrl(`reports/${report.date}/`)}>Permanent link to this review</a>
+    </nav>
+    <ReviewedReport report={report} pocket={pocket} />
+</SiteLayout>

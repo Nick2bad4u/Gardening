@@ -187,6 +187,11 @@ function requiredElement(selector, constructor) {
 
 if (typeof document !== "undefined") {
     if (document.querySelector("#report-filters")) initializeReport();
+    const pocket = document.querySelector("[data-pocket-launch] #pocket-list");
+    if (pocket instanceof HTMLElement && location.hash === "") {
+        history.replaceState(null, "", "#pocket-list");
+        pocket.scrollIntoView({ block: "start" });
+    }
     if (document.querySelector(".report-archive")) {
         const details = [
             ...document.querySelectorAll(".report-archive details"),

@@ -18023,4 +18023,42 @@
 </g>
 <path d="M17 50Q32 55 47 50" fill="none" stroke="#fff3e5" stroke-width="1.4" opacity="0.75" />
 </symbol>
+  <symbol id="icon-full-report" viewBox="0 0 64 64">
+<desc id="ui-full-report-description">A cream clipboard with blue report lines and a green leaf on a deep blue square.</desc>
+<defs>
+  <linearGradient id="ui-full-report-background" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#247aa3" />
+    <stop offset="1" stop-color="#153a65" />
+  </linearGradient>
+</defs>
+<rect width="64" height="64" fill="url(#ui-full-report-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round">
+  <rect x="17" y="16" width="30" height="36" rx="5" fill="#0c294b" opacity="0.3" />
+  <rect x="17" y="14" width="30" height="36" rx="5" fill="#f9f2db" />
+  <rect x="25" y="12" width="14" height="7" rx="3" fill="#9bd2e1" stroke="#205779" stroke-width="1.5" />
+  <path d="M23 26h17M23 32h12M23 38h9" fill="none" stroke="#537891" stroke-width="2.8" />
+  <path d="M35 43c-3-8 2-14 13-14 1 10-4 17-13 14Z" fill="#3b9e6b" stroke="#1d644c" stroke-width="1.5" />
+  <path d="m33 47 11-13" fill="none" stroke="#bce5a4" stroke-width="2" />
+</g>
+  </symbol>
+  <symbol id="icon-pocket-report" viewBox="0 0 64 64">
+<desc id="ui-pocket-report-description">A cream checklist tucked into a golden pocket with a green leaf on a warm amber square.</desc>
+<defs>
+  <linearGradient id="ui-pocket-report-background" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#de962d" />
+    <stop offset="1" stop-color="#98501f" />
+  </linearGradient>
+</defs>
+<rect width="64" height="64" fill="url(#ui-pocket-report-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round">
+  <rect x="21" y="13" width="24" height="30" rx="4" fill="#78421f" opacity="0.3" />
+  <rect x="20" y="12" width="24" height="30" rx="4" fill="#fff4d9" />
+  <path d="m24 21 2 2 4-5m-6 12 2 2 4-5" fill="none" stroke="#387559" stroke-width="2" />
+  <path d="M34 21h5m-5 9h5" fill="none" stroke="#9d815d" stroke-width="2.5" />
+  <path d="M16 34h32v9c0 5-8 9-16 11-8-2-16-6-16-11Z" fill="#efc266" stroke="#865222" stroke-width="1.8" />
+  <path d="M20 38v5c0 3 6 6 12 8" fill="none" stroke="#fff0b1" stroke-width="1.5" stroke-dasharray="2 3" />
+  <path d="M33 45c-2-7 2-11 11-11 0 8-4 13-11 11Z" fill="#40885d" stroke="#285b3e" stroke-width="1.4" />
+  <path d="m31 49 10-11" fill="none" stroke="#d4e9ac" stroke-width="1.7" />
+</g>
+  </symbol>
 </svg>

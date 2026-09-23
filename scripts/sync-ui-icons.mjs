@@ -42,8 +42,8 @@ export async function syncUiIcons({
     ]);
     const icons = parseUiIcons(sprite);
     const byName = new Map(icons.map((icon) => [icon.name, icon]));
-    if (icons.length !== 83 || byName.size !== icons.length) {
-        throw new Error("Expected 83 unique shared interface/category icons.");
+    if (icons.length !== 85 || byName.size !== icons.length) {
+        throw new Error("Expected 85 unique shared interface/category icons.");
     }
     const config = syncLogger ? await resolveConfig(loggerPath) : null;
     const nextLogger = syncLogger

@@ -36,7 +36,7 @@ function countPixels(data, info) {
 describe("shared multicolor interface artwork", () => {
     it("exports every interface/category symbol as a self-contained accessible SVG", () => {
         expect.hasAssertions();
-        expect(icons).toHaveLength(83);
+        expect(icons).toHaveLength(85);
 
         const files = fs
             .readdirSync(new URL("../assets/ui-icons/", import.meta.url))
@@ -110,10 +110,13 @@ describe("shared multicolor interface artwork", () => {
         }
     });
 
-    it("renders every icon at 64 pixels without empty artwork or clipped edges", async () => {
+    it("renders control icons at 64 pixels without empty artwork or clipped edges", async () => {
         expect.hasAssertions();
 
-        for (const icon of icons) {
+        const controlIcons = icons.filter(
+            ({ name }) => !["full-report", "pocket-report"].includes(name)
+        );
+        for (const icon of controlIcons) {
             const { data, info } = await sharp(
                 fs.readFileSync(
                     new URL(
@@ -137,6 +140,50 @@ describe("shared multicolor interface artwork", () => {
             expect(clippedPixels, icon.name).toBe(0);
         }
     });
+
+    it.each(["full-report", "pocket-report"])(
+        "renders opaque %s launcher background with mask-safe foreground",
+        async (name) => {
+            expect.hasAssertions();
+
+            const asset = fs.readFileSync(
+                new URL(`../assets/ui-icons/${name}.svg`, import.meta.url),
+                "utf8"
+            );
+            const { data, info } = await sharp(Buffer.from(asset))
+                .ensureAlpha()
+                .raw()
+                .toBuffer({ resolveWithObject: true });
+            const { paintedPixels } = countPixels(data, info);
+
+            expect([info.width, info.height]).toStrictEqual([64, 64]);
+            expect(paintedPixels).toBe(64 ** 2);
+
+            const foreground = asset.replace(
+                /<rect\s[^>]*data-app-icon-background="true"[^>]*\/>/v,
+                ""
+            );
+            const pixels = await sharp(Buffer.from(foreground))
+                .ensureAlpha()
+                .raw()
+                .toBuffer();
+            let foregroundPixels = 0;
+            let maximumRadius = 0;
+            for (let index = 0; index < 64 ** 2; index += 1) {
+                if (required(pixels[index * 4 + 3]) <= 16) continue;
+                foregroundPixels += 1;
+                const x = index % 64;
+                const y = Math.floor(index / 64);
+                maximumRadius = Math.max(
+                    maximumRadius,
+                    Math.hypot(x + 0.5 - 32, y + 0.5 - 32)
+                );
+            }
+
+            expect(foregroundPixels).toBeGreaterThan(120);
+            expect(maximumRadius).toBeLessThanOrEqual(25.6);
+        }
+    );
 
     it("keeps logger definitions namespaced and avoids unresolved gradient references", () => {
         expect.hasAssertions();

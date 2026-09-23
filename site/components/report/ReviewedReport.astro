@@ -4,13 +4,17 @@ import "../../styles/report.css";
 
 interface Props {
     archived?: boolean;
+    pocket?: boolean;
     report: import("../../lib/reports.mjs").ReviewedReport;
 }
-const { report, archived = false } = Astro.props;
+const { report, archived = false, pocket = false } = Astro.props;
 const html = await renderReviewedReport(report);
 ---
 
-<div data-dated-report={archived ? "true" : undefined}>
+<div
+    data-dated-report={archived ? "true" : undefined}
+    data-pocket-launch={pocket ? "true" : undefined}
+>
     <Fragment set:html={html} />
 </div>
 <script>

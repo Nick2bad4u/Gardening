@@ -105,6 +105,72 @@ function assertProfileCoverage(profiles, profilePages) {
     }
 }
 
+async function assertReportApps() {
+    await Promise.all(
+        [
+            { icon: "full-report", name: "Full Report", route: "report" },
+            {
+                icon: "pocket-report",
+                name: "Pocket Report",
+                route: "pocket-report",
+            },
+        ].map(async ({ icon, name, route }) => {
+            const manifestPath = path.join(
+                output,
+                route,
+                "manifest.webmanifest"
+            );
+            /** @type {unknown} */
+            const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+            assert.ok(isRecord(manifest), `${route}: invalid app manifest`);
+            const launchPath = `${publicBase}${route}/`;
+            assert.equal(manifest["id"], launchPath);
+            assert.equal(manifest["scope"], launchPath);
+            assert.equal(
+                manifest["start_url"],
+                `${launchPath}${route === "pocket-report" ? "#pocket-list" : ""}`
+            );
+            assert.equal(manifest["name"], name);
+            assert.equal(manifest["short_name"], name);
+            assert.equal(manifest["display"], "standalone");
+            assert.ok(
+                Array.isArray(manifest["icons"]),
+                `${route}: missing icons`
+            );
+            const icons = manifest["icons"];
+            await Promise.all(
+                [192, 512].map(async (size) => {
+                    const src = `${publicBase}assets/report-apps/${icon}-${size}.png`;
+                    assert.ok(
+                        icons.some(
+                            (entry) =>
+                                isRecord(entry) &&
+                                entry["src"] === src &&
+                                entry["sizes"] === `${size}x${size}` &&
+                                entry["type"] === "image/png"
+                        ),
+                        `${route}: missing ${size}px install icon`
+                    );
+                    const bytes = await readFile(
+                        path.join(
+                            output,
+                            "assets/report-apps",
+                            `${icon}-${size}.png`
+                        )
+                    );
+                    assert.equal(bytes.subarray(1, 4).toString("ascii"), "PNG");
+                    assert.equal(bytes.readUInt32BE(16), size);
+                    assert.equal(bytes.readUInt32BE(20), size);
+                })
+            );
+            await assertTargetExists(
+                path.join(output, "assets/ui-icons", `${icon}.svg`),
+                `${route}: page icon`
+            );
+        })
+    );
+}
+
 /** @param {string} filename @param {string} context */
 async function assertTargetExists(filename, context) {
     let metadata;
@@ -206,6 +272,7 @@ async function main() {
         "photos/index.html",
         "tracker/index.html",
         "report/index.html",
+        "pocket-report/index.html",
         "reports/index.html",
         "guides/index.html",
         "guides/old-plans/index.html",
@@ -244,6 +311,7 @@ async function main() {
     );
     for (const page of pages) assertPageMarkup(page.html, page.relative);
     await assertLocalLinks(pages);
+    await assertReportApps();
     const profilePages = new Map(
         pages
             .filter(

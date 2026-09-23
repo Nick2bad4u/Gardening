@@ -611,6 +611,27 @@ async function prepareSiteAssets({ directory = publicDirectory } = {}) {
                 .toFile(destination);
         } else await copyRelativeFile(reference, directory);
     });
+    // Raster launcher icons are derived only from these reviewed vector exports.
+    const reportAppDirectory = containedPath(directory, "assets/report-apps");
+    await mkdir(reportAppDirectory, { recursive: true });
+    await Promise.all(
+        ["full-report", "pocket-report"].flatMap((name) =>
+            [192, 512].map(async (size) =>
+                sharp(
+                    containedPath(
+                        repositoryRoot,
+                        `assets/ui-icons/${name}.svg`
+                    ),
+                    { density: 576 }
+                )
+                    .resize(size, size)
+                    .png()
+                    .toFile(
+                        path.join(reportAppDirectory, `${name}-${size}.png`)
+                    )
+            )
+        )
+    );
     const runtimeFiles = [
         "plant-tracker.js",
         "plant-tracker-data.js",

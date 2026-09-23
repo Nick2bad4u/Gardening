@@ -1,6 +1,6 @@
 # Shared interface icons
 
-These 83 standalone multicolor SVGs are generated from the non-portrait symbols
+These 85 standalone multicolor SVGs are generated from the non-portrait symbols
 in [the canonical sprite](../artwork/plant-icons.svg). They cover
 menus, buttons, measurement and care fields, status indicators, and generic
 plant categories. The separate collection portraits live in `../plant-icons/`.
@@ -11,7 +11,7 @@ optical padding, warm
 paper highlights, muted botanical greens, blue-gray tools, terracotta accents,
 and gentle material shading. Small controls retain simple silhouettes; a button
 icon should not carry the same density of spines or leaves as a plant portrait.
-Every icon remains transparent, multicolored, static, and self-contained.
+The 83 original control icons remain transparent, multicolored, static, and self-contained. The two report launcher icons have opaque square backgrounds, with their foreground artwork inside the central maskable safe circle.
 Linear and radial gradients shade materials; local `defs` and SVG2 `use`
 references repeat details such as clock ticks, sun rays, and rosette leaves.
 Clipping keeps calendar colors, photo scenes, and the day/night disc inside

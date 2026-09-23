@@ -10,6 +10,7 @@ const contentTypes: Readonly<Record<string, string>> = {
     ".json": "application/json",
     ".png": "image/png",
     ".svg": "image/svg+xml",
+    ".webmanifest": "application/manifest+json",
     ".webp": "image/webp",
 };
 

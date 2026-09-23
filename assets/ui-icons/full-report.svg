@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-full-report-title" aria-describedby="ui-full-report-description" data-ui-icon="full-report" focusable="false">
+  <title id="ui-full-report-title">Full report</title>
+<desc id="ui-full-report-description">A cream clipboard with blue report lines and a green leaf on a deep blue square.</desc>
+<defs>
+  <linearGradient id="ui-full-report-background" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#247aa3" />
+    <stop offset="1" stop-color="#153a65" />
+  </linearGradient>
+</defs>
+<rect width="64" height="64" fill="url(#ui-full-report-background)" data-app-icon-background="true" />
+<g stroke-linecap="round" stroke-linejoin="round">
+  <rect x="17" y="16" width="30" height="36" rx="5" fill="#0c294b" opacity="0.3" />
+  <rect x="17" y="14" width="30" height="36" rx="5" fill="#f9f2db" />
+  <rect x="25" y="12" width="14" height="7" rx="3" fill="#9bd2e1" stroke="#205779" stroke-width="1.5" />
+  <path d="M23 26h17M23 32h12M23 38h9" fill="none" stroke="#537891" stroke-width="2.8" />
+  <path d="M35 43c-3-8 2-14 13-14 1 10-4 17-13 14Z" fill="#3b9e6b" stroke="#1d644c" stroke-width="1.5" />
+  <path d="m33 47 11-13" fill="none" stroke="#bce5a4" stroke-width="2" />
+</g>
+</svg>
