@@ -2,6 +2,8 @@
 import SiteLayout from "../../components/SiteLayout.astro";
 import profilesById from "../../../docs/layouts/plant-profile-data.json";
 import { getProfiles } from "../../lib/content.mjs";
+import { getContainers } from "../../lib/containers.mjs";
+import ContainerMembers from "../../components/ContainerMembers.astro";
 import HistoryHeader from "../../components/tools/history/HistoryHeader.astro";
 import HistoryPager from "../../components/tools/history/HistoryPager.astro";
 import HistoryStatus from "../../components/tools/history/HistoryStatus.astro";
@@ -18,6 +20,7 @@ export function getStaticPaths() {
 }
 const { id } = Astro.params;
 const profiles = (await getProfiles()).filter((profile) => profile.trackerId === id);
+const container = (await getContainers()).find((item) => item.id === id);
 ---
 
 <SiteLayout
@@ -27,6 +30,7 @@ const profiles = (await getProfiles()).filter((profile) => profile.trackerId ===
 >
     <div class="tool-tracker tool-content" data-pot-id={id}>
         <HistoryHeader potId={id} profiles={profiles} />
+        {container?.shared && <ContainerMembers container={container} />}
         <HistoryPager />
         <HistoryStatus />
         <HistorySummary />

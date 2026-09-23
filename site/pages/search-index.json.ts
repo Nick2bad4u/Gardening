@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 
+import { getContainers } from "../lib/containers.mjs";
 import {
     getEquipmentDocs,
     getGuides,
@@ -7,7 +8,7 @@ import {
     getProfiles,
 } from "../lib/content.mjs";
 import { stripHtml } from "../lib/content/profile-source.mjs";
-import { profileUrl, siteUrl } from "../lib/routes.mjs";
+import { containerUrl, profileUrl, siteUrl } from "../lib/routes.mjs";
 
 export const GET: APIRoute = async () => {
     const [
@@ -21,11 +22,26 @@ export const GET: APIRoute = async () => {
         getEquipmentDocs(),
         getOldPlans(),
     ]);
+    const containers = await getContainers();
+    const overviewSlugs = new Set(
+        containers.flatMap((container) =>
+            container.overview ? [container.overview.slug] : []
+        )
+    );
     const entries = [
+        ...containers.map((container) => ({
+            category: container.shared ? "Shared container" : "Container",
+            description: `${container.label} · ${container.members.length} botanical profiles · one care history`,
+            href: containerUrl(container.id),
+            text: `${container.id} ${container.label} ${container.name} ${container.setupNote} ${container.members.map((member) => member.searchText).join(" ")}`.toLowerCase(),
+            title: `${container.id} · ${container.name}`,
+        })),
         ...profiles.map((profile) => ({
             category: profile.historical
                 ? "Historical plant"
-                : profile.groupTitle,
+                : overviewSlugs.has(profile.slug)
+                  ? "Planter overview"
+                  : profile.groupTitle,
             description: `${profile.drawerLabel.primary} · ${profile.trackerId ?? "Historical record"} · ${stripHtml(profile.scientificHtml)}`,
             href: profileUrl(profile.slug),
             text: profile.searchText,

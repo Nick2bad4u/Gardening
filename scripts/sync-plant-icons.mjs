@@ -301,6 +301,14 @@ function portraitDescriptions() {
             "A branching succulent with felted copper-brown spoon-shaped leaves and pale new tips in a blue planter.",
         ],
         [
+            "lithops-lesliei",
+            "Schematic tan-brown living-stone heads for probable Lithops lesliei in the shared blush P35 planter; illustration does not confirm species or separate roots.",
+        ],
+        [
+            "lithops-salicola",
+            "Schematic gray-green living-stone heads for probable Lithops salicola in the shared blush P35 planter; illustration does not confirm species or separate roots.",
+        ],
+        [
             "lithops-shared-planter",
             "Schematic paired living-stone bodies in one neutral pot; not evidence of species, plant count, or completed planting.",
         ],

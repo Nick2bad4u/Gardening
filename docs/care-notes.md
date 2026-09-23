@@ -41,6 +41,13 @@ A practical initial trial is **two parts greenhouse potting mix to one part Moll
 
 ## September 21 Lithops and split-rock additions
 
+Both Lithops nursery pots and the new split rock were purchased at Home Depot
+in Howell, Michigan, on September 21, 2026, as clarified by the owner September 23. P35's [probable _Lithops lesliei_](./plants/succulents/lithops-lesliei.md)
+and [probable _Lithops salicola_](./plants/succulents/lithops-salicola.md)
+profiles describe the tan/brown and grey/green groups, respectively. Both share
+the same P35 / #9 assembly, care events, and setup references; the probable IDs
+do not establish root connections between the four visible heads.
+
 **P35 / #9 [Lithops shared planter](./plants/succulents/lithops-shared-planter.md)** now contains four visible heads from two nursery pots. **P36 / #10 [Split rock](./plants/succulents/pleiospilos-nelii.md)** is a separate, label-supported _Pleiospilos nelii_, cultivar not recorded and explicitly not Royal Flush. Both were repotted September 23 into **setup 2**, using 80% Molly's Succulent Mix + 20% perlite (P36's raw entry says “Perlitr”). P35 uses the D'vine Dev Blush Mauve pot, logged as 4.2 in round; P36 uses the Thirtypot speckled-brown pot, logged as 4 in round. Their seller-selected sizes are 4.3 and 4.5 inches respectively, not measured internal dimensions. Final growing positions, actual drainage, and usable internal depth remain unverified.
 
 The September 23 checks record Dry medium and firm plants: all four visible Lithops heads, and a single firm split-rock leaf pair. The owner describes nearly rootbound nursery plants and removed only freely detached, extremely dry Lithops leaves; the bumpier, lighter Lithops have small scars/fissures but remain firm. Routine weights were 1247 g for P35 and 713.5 g for P36. These are setup-2 observations, not verified dry baselines, and neither repot batch records watering.
@@ -50,6 +57,13 @@ Measurement correction, September 23: the owner confirmed that the 02:38 “Meas
 Treat both as manual leaf-cycle checks. A weight plateau, dry reference, or model date alone must not trigger watering. The shared Lithops planting does not require perfectly synchronized heads; inspect actual differences in firmness and replacement stage before watering the common root volume. Keep P36 separate from the existing G3 / P28 Royal Flush and retain separate observations. The profiles cite Wisconsin Extension and SANBI for drainage and leaf-replacement guidance. Do not copy a fixed seasonal calendar into this indoor setup or interpret wrinkling outer leaves alone as thirst.
 
 ## Baseline routine
+
+For the four [shared containers](./containers.md), inspect members separately
+but record whole-pot weighing, watering, or feeding once. Name any affected
+member in the observation notes instead of duplicating its container's event.
+An aggregate overview adds context, not an extra plant or care task. The same
+P-ID follows a planting through repots; compare weights within the appropriate
+pot setup rather than carrying an older vessel's reference into the new one.
 
 **Archived plan:** the five unreceived Amazon plants are excluded from the active care routine; see the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Their pot allocations are withdrawn and do not create current weighing, watering, or feeding tasks. Amazon confirmed cancellation on September 21 with no charge.
 

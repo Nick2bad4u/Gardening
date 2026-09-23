@@ -1,0 +1,105 @@
+.container-members {
+    margin-block: 1.5rem;
+    overflow-wrap: anywhere;
+    & .section-heading {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    & h2 {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+}
+.container-care-note {
+    padding: 1rem;
+    background: var(--surface-soft);
+    border-inline-start: 3px solid var(--accent);
+}
+.container-member-list {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        [member] minmax(min(100%, 260px), 1fr)
+    );
+    gap: 0.75rem;
+    padding: 0;
+    margin-block: 1.25rem;
+    list-style: "";
+    & li {
+        min-inline-size: 0;
+    }
+}
+.container-member-link {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    block-size: 100%;
+    min-block-size: 44px;
+    padding: 0.75rem;
+    color: var(--ink);
+    text-decoration: none;
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    & img {
+        flex: 0 0 56px;
+        inline-size: 56px;
+        block-size: 56px;
+    }
+    &[aria-current="page"],
+    &:hover,
+    &:focus {
+        border-color: var(--accent);
+    }
+    & .badge {
+        margin-block-start: 0.4rem;
+        margin-inline-end: 0.25rem;
+    }
+}
+.container-member-scientific {
+    display: block;
+    margin-block-start: 0.35rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+}
+.container-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-inline-size: 0;
+    color: inherit;
+    overflow-wrap: anywhere;
+    text-decoration: none;
+    & h3,
+    & p {
+        margin: 0;
+    }
+}
+.container-card-title {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    & img {
+        inline-size: 64px;
+        block-size: 64px;
+    }
+}
+
+@media print {
+    .container-member-list {
+        grid-template-columns:
+            [first] minmax(0, 1fr) [second] minmax(0, 1fr)
+            [end];
+    }
+    .container-member-link {
+        break-inside: avoid;
+    }
+}
+
+.container-guide > summary {
+    min-block-size: 44px;
+    padding-block: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+}

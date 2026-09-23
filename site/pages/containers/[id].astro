@@ -1,0 +1,67 @@
+---
+import SiteLayout from "../../components/SiteLayout.astro";
+import ContainerMembers from "../../components/ContainerMembers.astro";
+import { getContainers } from "../../lib/containers.mjs";
+import { renderMarkdown } from "../../lib/content.mjs";
+import { loggerUrl, potUrl, siteUrl } from "../../lib/routes.mjs";
+export async function getStaticPaths() {
+    return (await getContainers()).map((container) => ({
+        params: { id: container.id },
+        props: { container },
+    }));
+}
+interface Props {
+    container: import("../../lib/containers.mjs").Container;
+}
+const { container } = Astro.props;
+const currentPot =
+    !container.shared && container.currentPot
+        ? await renderMarkdown(
+              container.currentPot,
+              (container.overview ?? container.members[0])!.sourcePath
+          )
+        : undefined;
+---
+
+<SiteLayout
+    title={`${container.id} · ${container.name}`}
+    section="containers"
+    description={`Container ${container.id}, label ${container.label}: setup, botanical members, and shared care history.`}
+    breadcrumbs={[{ label: "Containers", href: siteUrl("containers/") }]}
+>
+    <header class="page-heading">
+        <p class="eyebrow">
+            {container.shared ? "Shared planter" : "Container"} · {container.id} · {container.label}
+        </p>
+        <h1>{container.name}</h1>
+        <p class="lede">
+            {container.shared
+                ? "Separate botanical profiles, one physical planter and one care history."
+                : "The pot setup and care history for this botanical profile."}
+        </p>
+        <div class="action-row">
+            <a class="button" href={potUrl(container.id)}>
+                Open {container.id} history →
+            </a>
+            <a class="button button-secondary" href={loggerUrl}>
+                Log care
+            </a>
+            {container.sheetUrl && (
+                <a class="button button-secondary" href={container.sheetUrl}>
+                    Google Sheets ↗
+                </a>
+            )}
+        </div>
+    </header>
+    <ContainerMembers container={container} showContainerLink={false} />
+    <section class="card">
+        <h2>Recorded container setup</h2>
+        {currentPot && <div class="prose" set:html={currentPot.html} />}
+        <p>{container.setupNote}</p>
+        <p>
+            These are maintained setup notes. Check dated repot and drainage events in the live
+            history for later changes; a new profile page does not create a new pot or reset its
+            setup.
+        </p>
+    </section>
+</SiteLayout>

@@ -17995,6 +17995,44 @@
 <path d="M17 23L22 25 18 28 23 31M33 24L37 27 32 30M34 32L37 35M45 31L47 35" fill="none" stroke="#706d56" stroke-width="1.2" stroke-linecap="round" />
 <path d="M15 49Q32 55 49 49" fill="none" stroke="#fff4df" stroke-width="1.4" opacity="0.75" />
 </symbol>
+<symbol id="icon-plant-lithops-lesliei" viewBox="0 0 64 64">
+<defs>
+<linearGradient id="lithops-lesliei-pot" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#dab7bb" />
+<stop offset="1" stop-color="#9e707c" />
+</linearGradient>
+<linearGradient id="lithops-lesliei-body" x1="0" y1="0" x2="0.8" y2="1">
+<stop offset="0" stop-color="#d2b889" />
+<stop offset="1" stop-color="#8c775f" />
+</linearGradient>
+</defs>
+<ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
+<path d="M10 40H54L49 58Q32 62 15 58Z" fill="url(#lithops-lesliei-pot)" stroke="#815d68" stroke-width="1.5" />
+<ellipse cx="32" cy="40" rx="22" ry="6" fill="#705445" stroke="#815d68" stroke-width="1.3" />
+<path d="M15 32C10 16 15 12 22 15L25 33Q21 38 15 32ZM27 33L28 15C36 11 40 18 35 32Q32 37 27 33Z" fill="url(#lithops-lesliei-body)" stroke="#71604d" stroke-width="1.2" />
+<path d="M29 41C24 26 29 21 36 24L39 42Q34 47 29 41ZM41 42L42 24C50 20 54 27 49 41Q46 46 41 42Z" fill="url(#lithops-lesliei-body)" stroke="#71604d" stroke-width="1.2" />
+<path d="M17 18L21 20 17 23 22 25M30 18L34 20 30 24M31 27L35 30 31 33 36 35M44 27L48 30 44 33" fill="none" stroke="#806240" stroke-width="1.4" stroke-linecap="round" />
+<path d="M15 49Q32 55 49 49" fill="none" stroke="#ffebed" stroke-width="1.4" opacity="0.75" />
+</symbol>
+<symbol id="icon-plant-lithops-salicola" viewBox="0 0 64 64">
+<defs>
+<linearGradient id="lithops-salicola-pot" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#dab7bb" />
+<stop offset="1" stop-color="#9e707c" />
+</linearGradient>
+<linearGradient id="lithops-salicola-body" x1="0" y1="0" x2="0.8" y2="1">
+<stop offset="0" stop-color="#bdc2a9" />
+<stop offset="1" stop-color="#7d8970" />
+</linearGradient>
+</defs>
+<ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
+<path d="M10 40H54L49 58Q32 62 15 58Z" fill="url(#lithops-salicola-pot)" stroke="#815d68" stroke-width="1.5" />
+<ellipse cx="32" cy="40" rx="22" ry="6" fill="#705445" stroke="#815d68" stroke-width="1.3" />
+<path d="M15 32C10 16 15 12 22 15L25 33Q21 38 15 32ZM27 33L28 15C36 11 40 18 35 32Q32 37 27 33Z" fill="url(#lithops-salicola-body)" stroke="#606e5c" stroke-width="1.2" />
+<path d="M29 41C24 26 29 21 36 24L39 42Q34 47 29 41ZM41 42L42 24C50 20 54 27 49 41Q46 46 41 42Z" fill="url(#lithops-salicola-body)" stroke="#606e5c" stroke-width="1.2" />
+<path d="M16 19Q18 16 21 19L22 24Q19 26 17 23ZM29 19Q32 16 34 20L33 24 29 25ZM30 28Q32 25 35 28L36 33Q33 35 31 32ZM43 28Q46 25 48 29L47 33 43 34Z" fill="#7a8876" stroke="#d1c8a0" stroke-width="1.1" />
+<path d="M15 49Q32 55 49 49" fill="none" stroke="#ffebed" stroke-width="1.4" opacity="0.75" />
+</symbol>
 <symbol id="icon-plant-pleiospilos-nelii" viewBox="0 0 64 64">
 <defs>
 <linearGradient id="pleiospilos-nelii-pot" x1="0" y1="0" x2="1" y2="1">

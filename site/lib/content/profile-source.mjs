@@ -333,20 +333,9 @@ const markdownProcessor = remark().use(remarkGfm).use(remarkHtml);
  * @param {ParsedProfile} right
  */
 function compareInventory(left, right) {
-    const [
-        ,
-        leftPrefix,
-        leftNumber,
-    ] = /^(?<prefix>[A-Za-z]+)-(?<number>\d+)$/v.exec(left.inventoryId) ?? [];
-    const [
-        ,
-        rightPrefix,
-        rightNumber,
-    ] = /^(?<prefix>[A-Za-z]+)-(?<number>\d+)$/v.exec(right.inventoryId) ?? [];
-    return (
-        String(leftPrefix).localeCompare(String(rightPrefix)) ||
-        Number(leftNumber) - Number(rightNumber)
-    );
+    return left.inventoryId.localeCompare(right.inventoryId, "en", {
+        numeric: true,
+    });
 }
 
 /**
@@ -582,6 +571,7 @@ function parseProfile(markdown, group, sourceDirectory, fileName) {
         acquiredFromMarkdown: metadata["acquired from"],
         acquiredOnMarkdown: metadata["acquired on"],
         bodyMarkdown: lines.slice(firstSectionIndex).join("\n").trim(),
+        currentPotMarkdown: metadata["current pot"],
         eyebrow: group.eyebrow,
         fileName,
         group: group.key,
@@ -1079,6 +1069,7 @@ function parseProfileMetadata(lines) {
     return {
         "acquired from": "",
         "acquired on": "",
+        "current pot": "",
         identification: "Working identification",
         "interesting fact": "",
         inventory: "",

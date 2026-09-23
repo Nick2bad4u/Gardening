@@ -1,6 +1,6 @@
 # Grow-spot diagrams
 
-Last updated: 2026-09-20
+Last updated: 2026-09-23
 
 The [Table Placement Guide](./table-placement-research.md) records the new **four wooden tables**: **six columns × four rows** of small pots at the front, with five larger/shared containers behind them and #3 Money Tree separately on the north windowsill (move confirmed September 16). The working 26 × 32-inch block is inferred from the photos before gaps. The current view puts **north window top, room bottom, Mylar left and white wall right**. The former round-glass placement is historical.
 
@@ -30,7 +30,13 @@ prior weight. The
 provides the phone-first input surface. Google Sheets remains the single
 editable source of truth.
 
-Each of the 32 physical pots or shared planters has a permanent internal ID: `P01` through `P32`, including the September 20 purchases assigned `P31` and `P32` at the owner's request. The abandoned Amazon research has no pot allocation. Each active ID links to a stable
+Each of the **34 tracked containers** has a permanent internal ID: `P01` through
+`P32`, plus `P35` and `P36`. `P33`/`P34` remain retired houseplant redirects to
+`P31`/`P32`; the abandoned Amazon research has no active pot allocation. The
+[container guide](../containers.md) explains the 42 current botanical profile
+groups, two whole-planter overviews, labels, and setup boundaries. The owner
+purchased the P35 Lithops and P36 split rock at Home Depot in Howell, Michigan,
+on September 21, then repotted them September 23. Each active ID links to a stable
 [history URL](https://nick2bad4u.github.io/Gardening/pots/P01/) with independent last-checked dates,
 searchable and exportable history, dry/wet statistics, weight and growth
 changes, watering-interval calculations, responsive SVG trend charts, and
@@ -51,15 +57,27 @@ The exact permanent-ID-to-profile mapping lives in
 [`plant-profile-data.json`](./plant-profile-data.json). The history page reads
 that manifest for profile links, while the site content adapters and checks
 verify every current profile's title and `Tracker ID` against it. `P19`, `P20`, and
-`P30` intentionally map to several profiles because they identify shared
-planters; all other active P-IDs map to one profile.
+`P30`, and `P35` intentionally map to several profiles because they identify
+shared planters; all other active P-IDs map to one profile. The accompanying
+[`container-data.json`](./container-data.json) supplies shared-container names,
+overview roles, and care/setup notes. The
+[container directory](https://nick2bad4u.github.io/Gardening/containers/) links
+each assembly's members to its existing history. A repot may replace the vessel
+and advance the setup without changing the P-ID.
+
+The workbook's `Containers` and `Container members` reference views organize
+the same 34 containers and 42 botanical profile groups. Current tracker fields
+reference the existing `Plant tracker`; the views do not create another
+observation ledger or duplicate care events. See the [container guide](../containers.md#spreadsheet-reference-views)
+and [operator runbook](../../scripts/google-sheets/README.md).
 
 Water events can distinguish `Flood / soak-through`, `Thorough`, `Partial`, or
 `Spot` application. `Flood / soak-through` is the default and means the root
 zone was evenly saturated until water drained freely. An actual measured water
 amount can be recorded in milliliters, but it is optional because most routine
-watering is soak-through rather than a metered dose. `#1` and `#2` are still
-weighed and watered as whole containers. “Days since water” and the estimated
+watering is soak-through rather than a metered dose. Shared `#1`, `#2`, `#6`,
+and `#9` are weighed and watered as whole containers, with member-specific
+conditions recorded in notes. “Days since water” and the estimated
 remaining-water percentage are observations, not watering deadlines.
 
 Open the [historical acclimation calendar](https://nick2bad4u.github.io/Gardening/setup/archive/calendar/) for

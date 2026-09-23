@@ -11,7 +11,7 @@ Two plant illustrations are adapted from SVG Repo sources:
 | `icon-cactus`    | [Cactus, SVG Repo 206109](https://www.svgrepo.com/svg/206109/cactus)         | SVG Repo                 | [CC0](https://www.svgrepo.com/page/licensing/#CC0)          | Redrawn and simplified for clear rendering from 16–52 px; colors were harmonized with the field-guide palette.       |
 | `icon-succulent` | [Succulents, SVG Repo 474474](https://www.svgrepo.com/svg/474474/succulents) | xiyou0608                | [Public domain](https://www.svgrepo.com/page/licensing/#PD) | Redrawn as a compact rosette while retaining the source illustration's concentric soil and layered-leaf composition. |
 
-The 51 `icon-plant-*` portraits and the remaining interface symbols are original
+The 53 `icon-plant-*` portraits and the remaining interface symbols are original
 repository artwork. Each portrait uses a different simplified silhouette,
 color pattern, growth habit, spine or leaf treatment, and pot where appropriate
 to evoke the plant named by that profile. The P29 portrait emphasizes paired,
@@ -46,7 +46,7 @@ Under its [published plan terms](https://thenounproject.com/pricing/), free
 downloads require creator attribution and are supplied as black icons;
 editable, no-attribution use depends on a paid license or individual purchase.
 
-The September 19 Amazon-order portraits are retained as archived planning artwork after the order was abandoned on September 20. They are excluded from active plant and pot mappings; their public SVG URLs remain available for [the old plan](../../docs/old-plans/amazon-plant-order-2026-09.md). The current collection has 43 profile portraits, plus five archived plant portraits and three shared-planter illustrations (the third belongs to the archived plan).
+The September 19 Amazon-order portraits are retained as archived planning artwork after the order was abandoned on September 20. They are excluded from active plant and pot mappings; their public SVG URLs remain available for [the old plan](../../docs/old-plans/amazon-plant-order-2026-09.md). The collection has 45 profile portraits including the historical removed profile and the two planter overview profiles, plus five archived plant portraits and three additional shared-planter illustrations (the third belongs to the archived plan).
 
 The three September 20 P30 component portraits adapt the existing mixed-planter rosette, copper-leaf, and paddle-leaf shapes into separate illustrative subjects. Their terracotta pots are visual framing, not three actual containers: all three foliage groups share #6 / P30. The names retain provisional genus or species-complex identification; the drawings do not resolve those identities. Existing shared-planter portraits and public SVG bytes remain unchanged.
 
@@ -55,6 +55,8 @@ The September 20 houseplant portraits show the owned Carlson-tagged Peperomia Ob
 The current September 20 assignments are **#7 / P31 Peperomia Obtipan Bicolor** and **#8 / P32 Tricolor oyster plant**. Their existing slug-based portraits remain `peperomia-obtipan-bicolor.svg` and `tradescantia-spathacea-tricolor.svg`; renumbering does not change artwork or public SVG URLs.
 
 The September 21 Lithops shared-planter and split-rock portraits are original schematic artwork for #9 / P35 and #10 / P36. Paired bodies suggest living stones without documenting a verified rooted-plant count, species, cultivar, color, pot, or leaf stage. Neutral illustrative coloring does not identify the new split rock as a green cultivar. These drawings do not substitute for missing collection photographs.
+
+The September 23 Lithops component portraits adapt the existing living-stone geometry into tan-brown heads for probable _Lithops lesliei_ and gray-green heads for probable _Lithops salicola_. Both use a blush pot to refer to the same physical #9 / P35 container; they do not show two separate pots. The body colors and markings distinguish the observed appearance groups schematically, without confirming species, cultivar, rooted-plant count, or leaf stage. The aggregate portrait remains available alongside both component portraits. Site-only artwork export leaves the logger unchanged.
 
 The September 22 report launch icons are original repository vector artwork: `icon-full-report` uses a blue clipboard and leaf; `icon-pocket-report` uses an amber pocket, checklist, and leaf. Their opaque square backgrounds support launcher masks, with the meaningful artwork inside the central 80-percent-diameter safe circle. The public asset build rasterizes the standalone SVG exports to 192- and 512-pixel PNGs; those derived images stay in ignored build output. The logger artwork is unchanged.
 

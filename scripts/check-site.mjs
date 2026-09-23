@@ -20,6 +20,7 @@ import parser from "./html-eslint-parser.mjs";
 const root = path.resolve(import.meta.dirname, "..");
 const output = path.join(root, ".pages-site");
 const publicBase = "/Gardening/";
+const indexFilename = "index.html";
 
 /** @param {PublishedPage[]} pages */
 async function assertLocalLinks(pages) {
@@ -158,7 +159,7 @@ async function assertSiteApps() {
                 `${route}: page icon`
             );
             await assertTargetExists(
-                path.join(output, route, "index.html"),
+                path.join(output, route, indexFilename),
                 `${route}: app landing`
             );
             return manifest["id"];
@@ -181,7 +182,7 @@ async function assertTargetExists(filename, context) {
         throw new Error(`Missing local target: ${context}`, { cause: error });
     }
     if (metadata.isDirectory()) {
-        const index = await stat(path.join(filename, "index.html"));
+        const index = await stat(path.join(filename, indexFilename));
         assert.ok(index.isFile(), `Missing directory index: ${context}`);
     } else assert.ok(metadata.isFile(), `Not a public file: ${context}`);
 }
@@ -267,9 +268,11 @@ async function main() {
             .filter((id) => id !== undefined)
     );
     const required = [
-        "index.html",
+        indexFilename,
         "404.html",
         "plants/index.html",
+        "containers/index.html",
+        ...pots.values().map((id) => `containers/${id}/index.html`),
         "photos/index.html",
         "tracker/index.html",
         "report/index.html",
@@ -323,7 +326,32 @@ async function main() {
             .map((page) => [page.relative.split("/", 2)[1] ?? "", page.html])
     );
     assertProfileCoverage(profiles, profilePages);
-    const homepage = pages.find((page) => page.relative === "index.html")?.html;
+    for (const id of pots) {
+        const page = pages.find(
+            (entry) => entry.relative === `containers/${id}/index.html`
+        );
+        assert.ok(page !== undefined, `Missing container ${id}`);
+        const members = profiles.filter((profile) => profile.trackerId === id);
+        for (const member of members) {
+            assert.ok(
+                page.html.includes(`/plants/${member.slug}/`),
+                `Missing ${member.slug} in ${id}`
+            );
+            assert.ok(
+                profilePages
+                    .get(member.slug)
+                    ?.includes(`/containers/${id}/`) === true,
+                `Missing container link in ${member.slug}`
+            );
+        }
+        assert.ok(
+            page.html.includes(`/pots/${id}/`),
+            `Missing shared history for ${id}`
+        );
+    }
+    const homepage = pages.find(
+        (page) => page.relative === indexFilename
+    )?.html;
     assert.ok(homepage !== undefined, "Missing homepage.");
     assert.ok(
         Buffer.byteLength(homepage) < 150_000,
@@ -386,7 +414,7 @@ function resolvePublicTarget(href, directory = output) {
     );
     if (local === "storybook" || local.startsWith("storybook/"))
         return undefined;
-    const candidate = path.resolve(directory, local || "index.html");
+    const candidate = path.resolve(directory, local || indexFilename);
     const relative = path.relative(directory, candidate);
     assert.ok(
         relative !== ".." &&

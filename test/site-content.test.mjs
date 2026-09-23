@@ -44,7 +44,7 @@ describe("field guide source rendering", () => {
                 (profile) => profile.trackerId === record.id
             );
 
-            expect(members).toHaveLength(1);
+            expect(members).toHaveLength(record.id === "P35" ? 3 : 1);
             expect(members[0]).toMatchObject({
                 historical: false,
                 inventoryId: record.inventory,
@@ -76,9 +76,9 @@ describe("field guide source rendering", () => {
         const profiles = await getProfiles();
         const archived = await getOldPlans();
 
-        expect(profiles).toHaveLength(43);
+        expect(profiles).toHaveLength(45);
         expect(profiles.filter((profile) => !profile.historical)).toHaveLength(
-            42
+            44
         );
         expect(
             profiles.some((profile) =>

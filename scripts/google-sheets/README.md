@@ -27,6 +27,62 @@ Each active **P01–P32, P35, and P36** page also has a **Time between waterings
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## September 23 container catalog and probable Lithops species
+
+The production workbook now has a [Containers catalog](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit#gid=2026092301)
+with **34 container rows** and a [Container members catalog](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit#gid=2026092302)
+with **42 current botanical profile groups**. These reference tabs have warning
+protections, frozen identifiers, filters, and links to profiles, container pages,
+and the existing workbook pages. Current label, setup, medium, pot details,
+watering, and weight values reference `Plant tracker`; observations still enter
+through the logger or AppSheet and remain canonical in `History`.
+
+P19, P20, P30, and P35 are the four shared containers. The P30 and P35 overview
+profiles are excluded from botanical member counts. Probable _Lithops lesliei_
+and probable _Lithops salicola_ now have separate profiles, **Succulent-15A and
+Succulent-15B**, while retaining **P35 / #9** and one shared history. These are
+photo-based working identifications, not confirmed species or counts of rooted
+individuals. The owner confirmed buying both Lithops groups and P36 split rock
+at **Home Depot in Howell, Michigan, on Monday, September 21, 2026**.
+
+The [maintained planner](./container-catalog.mjs) builds both catalogs from
+`normalizeContainerCatalog(await getContainers())`, the fresh native sheet
+inventory, `Plant tracker!A1:AJ35` values, and the captured `Integrity!B12`
+formula. It rejects existing catalog destinations, changed headers, and
+inconsistent IDs or membership. Compare its returned preconditions with a fresh
+read immediately before applying requests. It appends the catalogs and extends
+the existing formula-error check; it does not migrate observation schemas or
+write care events. Future catalog refreshes need a reviewed update plan rather
+than replaying the initial creation requests.
+
+A [native backup](https://docs.google.com/spreadsheets/d/1rBDFCPv1iC-cDNCCqhquom_1bRTZEZfepzKPs3nSGyY/edit)
+preceded a [native-copy rehearsal](https://docs.google.com/spreadsheets/d/16zSo500byLSyyRfu10ZU5cqyp3-Qys1cFqpGu3VV2kQ/edit).
+The production update also corrected **11 descriptive `Plant tracker` cells**:
+the four shared-content descriptions, P36's qualified identification, and the
+P35/P36 size, vessel details, and pot-source links. The September 23 recorded
+repots establish **4.2 in round for P35** and **4 in round for P36**; older
+selected-product dimensions remain purchase evidence, not replacement measured
+values. Acquisition facts belong in the new catalog, while `Pot source` links
+to each vessel's documented Amazon listing. No watering date, setup number,
+measurement, or historical care record was changed.
+
+**Production readback, September 23 at 21:26 UTC:** all expected catalog values
+and formulas matched; the workbook has **60 tabs and 164 charts**. Every
+pre-existing sheet property, chart specification/position, and protection was
+preserved; the API only reordered some protection arrays. `Integrity!B12`
+returned **0**. All **1,158 History records and unique observation IDs**, with
+**1,024 request-ID groups**, remain unchanged, as do the captured App entries,
+App bulk, and RO refill ranges. Tracker values, formulas, notes, and validation
+outside the 11 reviewed cells matched the prewrite snapshot.
+
+Logger **5.29.0 / immutable version 98** and its existing production deployment
+were verified without redeployment. The trigger editor still showed exactly
+one five-minute `processQueuedAppSheetEntries` trigger. AppSheet configuration
+was not changed. Private snapshots, the applied request plan, and the readback
+receipt are retained under `.cache/container-catalog-20260923/`. See the
+[container guide](../../docs/containers.md) for the distinction between
+botanical inventory IDs, P-IDs, physical labels, and pot setups.
+
 ## September 23 owner-confirmed Lithops measurement reassignment
 
 The owner confirmed that the September 23 02:38 EDT Measure observation

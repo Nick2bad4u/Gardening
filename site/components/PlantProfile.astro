@@ -2,6 +2,8 @@
 import { contentUrl, potUrl, profileUrl, repositoryUrl, siteUrl } from "../lib/routes.mjs";
 import { getProfiles, photoPreview } from "../lib/content.mjs";
 import { stripMarkdown } from "../lib/content/profile-source.mjs";
+import { getContainers } from "../lib/containers.mjs";
+import ContainerMembers from "./ContainerMembers.astro";
 import SiteIcon from "./SiteIcon.astro";
 import ProfileNavigation from "./ProfileNavigation.astro";
 import "../styles/profile.css";
@@ -11,9 +13,8 @@ interface Props {
 }
 const { profile } = Astro.props;
 const profiles = await getProfiles();
-const siblings = profiles.filter(
-    (item) => item.trackerId && item.trackerId === profile.trackerId && item.slug !== profile.slug
-);
+const container = (await getContainers()).find((item) => item.id === profile.trackerId);
+const isOverview = container?.overview?.slug === profile.slug;
 const index = profiles.findIndex((item) => item.slug === profile.slug);
 const previous = profiles[index - 1];
 const next = profiles[index + 1];
@@ -116,6 +117,7 @@ const metadata = [
                 </p>
                 <h1>{profile.title}</h1>
                 <div class="profile-badges">
+                    {isOverview && <span class="badge">Planter overview · shared evidence</span>}
                     <span class="badge badge-record">
                         <SiteIcon name="inventory" size={24} />
                         <span>
@@ -194,6 +196,7 @@ const metadata = [
             </p>
         )}
     </header>
+    {container && <ContainerMembers container={container} currentSlug={profile.slug} />}
     <dl class="metadata-grid">
         {metadata.map(([label, value, icon]) => (
             <div class={`profile-metadata profile-metadata-${icon}`}>
@@ -270,17 +273,6 @@ const metadata = [
                     Measurements and Care History
                 </h2>
                 <p>Weights, watering, events, and charts for {profile.trackerId}.</p>
-                {siblings.length > 0 && (
-                    <p>
-                        This container is shared with{" "}
-                        {siblings.map((item, siblingIndex) => (
-                            <>
-                                <a href={profileUrl(item.slug)}>{item.title}</a>
-                                {siblingIndex < siblings.length - 1 ? ", " : "."}
-                            </>
-                        ))}
-                    </p>
-                )}
             </div>
             <a class="button" href={potUrl(profile.trackerId)}>
                 <SiteIcon name="tracker" />

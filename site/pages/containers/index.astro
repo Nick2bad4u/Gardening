@@ -1,0 +1,83 @@
+---
+import SiteLayout from "../../components/SiteLayout.astro";
+import { getDocument } from "../../lib/content.mjs";
+import { getContainers } from "../../lib/containers.mjs";
+import { containerUrl, siteUrl } from "../../lib/routes.mjs";
+import "../../styles/containers.css";
+const containers = await getContainers();
+const containerGuide = await getDocument("docs/containers.md");
+const shared = containers.filter((container) => container.shared);
+const single = containers.filter((container) => !container.shared);
+const botanicalCount = containers.reduce((count, container) => count + container.members.length, 0);
+---
+
+<SiteLayout
+    title="Containers"
+    section="containers"
+    description="The physical planters behind the collection: botanical members, shared care, setup, and one history per container."
+>
+    <header class="page-heading">
+        <p class="eyebrow">One pot · one care history</p>
+        <h1>Containers &amp; their plants.</h1>
+        <p class="lede">
+            Explore what grows together, the recorded pot setup, and the history shared by its
+            botanical profiles.
+        </p>
+        <p>
+            {containers.length} tracked containers · {shared.length} shared planters ·{" "}
+            {botanicalCount} active botanical profiles
+        </p>
+        <p>
+            A P-ID identifies the whole weighed container. Botanical profiles describe its members;
+            planter overviews collect shared evidence and do not count as another plant.
+        </p>
+        <div class="action-row">
+            <a class="button button-secondary" href={siteUrl("plants/")}>
+                Browse botanical profiles →
+            </a>
+            <a class="button button-secondary" href={siteUrl("tracker/")}>
+                Live weights &amp; observations →
+            </a>
+        </div>
+    </header>
+    {[
+        { title: "Shared planters", items: shared },
+        { title: "Single-profile containers", items: single },
+    ].map((group) => (
+        <section class="section-block">
+            <h2>{group.title}</h2>
+            <div class="card-grid">
+                {group.items.map((container) => (
+                    <a class="card container-card" href={containerUrl(container.id)}>
+                        <div class="container-card-title">
+                            <img
+                                src={siteUrl(`assets/plant-icons/${container.portraitSlug}.svg`)}
+                                alt=""
+                                width="64"
+                                height="64"
+                                loading="lazy"
+                            />
+                            <h3>{container.name}</h3>
+                        </div>
+                        <div>
+                            <span class="badge badge-id">{container.id}</span>{" "}
+                            <span class="badge badge-label">{container.label}</span>{" "}
+                            <span class="badge">
+                                {container.members.length} botanical{" "}
+                                {container.members.length === 1 ? "profile" : "profiles"}
+                            </span>
+                        </div>
+                        {container.shared && (
+                            <p>{container.members.map((member) => member.title).join(" · ")}</p>
+                        )}
+                        <span>Setup, members &amp; care history →</span>
+                    </a>
+                ))}
+            </div>
+        </section>
+    ))}
+    <details class="card container-guide" id="container-records">
+        <summary>How container records and spreadsheet views work</summary>
+        <div class="prose" set:html={containerGuide.html} />
+    </details>
+</SiteLayout>

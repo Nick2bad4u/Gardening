@@ -34,6 +34,7 @@ export function initializeDirectory() {
             let visible = 0;
             for (const entry of entries) {
                 const isHistorical = entry.dataset["historical"] === "true";
+                const isOverview = entry.dataset["overview"] === "true";
                 const isMatches = terms.every((term) =>
                     (entry.dataset["search"] ?? "").includes(term)
                 );
@@ -41,12 +42,14 @@ export function initializeDirectory() {
                     !isMatches ||
                     (group.value !== "all" &&
                         entry.dataset["group"] !== group.value) ||
-                    (status.value === "current" && isHistorical) ||
+                    (status.value === "current" &&
+                        (isHistorical || isOverview)) ||
+                    (status.value === "overviews" && !isOverview) ||
                     (status.value === "historical" && !isHistorical);
                 if (!entry.hidden) visible += 1;
             }
             if (resultCount)
-                resultCount.textContent = `${visible} plant ${visible === 1 ? "profile" : "profiles"} shown · shared containers have separate botanical profiles`;
+                resultCount.textContent = `${visible} ${status.value === "overviews" ? "planter overview" : "profile"}${visible === 1 ? "" : "s"} shown · one care history per container`;
             if (empty instanceof HTMLElement) empty.hidden = visible !== 0;
             const url = new URL(location.href);
             const filters = new Map([
