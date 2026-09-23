@@ -26,11 +26,12 @@
             "dryReferenceGrams": null,
             "id": "P01",
             "label": "A1",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:23:05.978-04:00",
                 "grams": 363.5
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 436 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 361.5 g; latest minus that benchmark +2.00 g. This arithmetic is not water remaining or a valid reference hit. The shared detector does not support a sustained plateau. A slowing last interval alone does not establish one. Last three comparable readings: 397 → 377 → 363.5 g; mean 379.17 g. First-to-last change -8.47 g/day over 3.95 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Workbook alert: Faster than learned — reweigh. Today's saved weight addresses the requested follow-up; the old calibrated baseline also predates the drainage change. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 436 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 361.5 g; latest minus that benchmark +2.00 g. This arithmetic is not water remaining or a valid reference hit. The shared detector does not support a sustained plateau. A slowing last interval alone does not establish one. Last three comparable readings: 397 → 377 → 363.5 g; mean 379.17 g. First-to-last change -8.47 g/day over 3.95 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Workbook alert: Faster than learned — reweigh. Today's saved weight addresses the requested follow-up; the old calibrated baseline also predates the drainage change. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Variegated moon cactus",
             "photos": [
@@ -65,11 +66,12 @@
             "dryReferenceGrams": null,
             "id": "P02",
             "label": "A2",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:22:48.467-04:00",
                 "grams": 351
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 444 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 347.5 g; latest minus that benchmark +3.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. Last three comparable readings: 375.5 → 355 → 351 g; mean 360.5 g. First-to-last change -6.20 g/day over 3.95 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Workbook alert: Faster than learned — reweigh. Today's saved weight addresses the requested follow-up; the old calibrated baseline also predates the drainage change. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 444 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 347.5 g; latest minus that benchmark +3.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. Last three comparable readings: 375.5 → 355 → 351 g; mean 360.5 g. First-to-last change -6.20 g/day over 3.95 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Workbook alert: Faster than learned — reweigh. Today's saved weight addresses the requested follow-up; the old calibrated baseline also predates the drainage change. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Feather cactus",
             "photos": [
@@ -104,11 +106,12 @@
             "dryReferenceGrams": null,
             "id": "P03",
             "label": "A3",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:48:01.024-04:00",
                 "grams": 339
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 414 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 321.5 g; latest minus that benchmark +17.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 414 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 321.5 g; latest minus that benchmark +17.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Serpent cactus",
             "photos": [
@@ -143,11 +146,12 @@
             "dryReferenceGrams": null,
             "id": "P04",
             "label": "B1",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:23:24.39-04:00",
                 "grams": 333
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 404 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 317.5 g; latest minus that benchmark +15.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 404 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 317.5 g; latest minus that benchmark +15.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Grass-blade cactus",
             "photos": [
@@ -182,11 +186,12 @@
             "dryReferenceGrams": null,
             "id": "P05",
             "label": "B2",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:24:44.419-04:00",
                 "grams": 396.5
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 490 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 380.5 g; latest minus that benchmark +16.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. Last three comparable readings: 424.5 → 414 → 396.5 g; mean 411.67 g. First-to-last change -9.39 g/day over 2.98 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 490 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 380.5 g; latest minus that benchmark +16.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. Last three comparable readings: 424.5 → 414 → 396.5 g; mean 411.67 g. First-to-last change -9.39 g/day over 2.98 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Old Man of the Andes",
             "photos": [
@@ -221,11 +226,12 @@
             "dryReferenceGrams": null,
             "id": "P06",
             "label": "B3",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:44:13.488-04:00",
                 "grams": 361
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 449.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 343.5 g; latest minus that benchmark +17.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. Last three comparable readings: 393.5 → 375 → 361 g; mean 376.5 g. First-to-last change -8.19 g/day over 3.97 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 449.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 343.5 g; latest minus that benchmark +17.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. Last three comparable readings: 393.5 → 375 → 361 g; mean 376.5 g. First-to-last change -8.19 g/day over 3.97 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Indigo Wave",
             "photos": [
@@ -260,11 +266,12 @@
             "dryReferenceGrams": null,
             "id": "P07",
             "label": "C1",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:48:56.72-04:00",
                 "grams": 381
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 463.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 361 g; latest minus that benchmark +20.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 463.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 361 g; latest minus that benchmark +20.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Giant chin cactus",
             "photos": [
@@ -300,11 +307,12 @@
             "dryReferenceGrams": null,
             "id": "P08",
             "label": "C2",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:47:05.029-04:00",
                 "grams": 388.5
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 473.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 380.5 g; latest minus that benchmark +8.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 473.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 380.5 g; latest minus that benchmark +8.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Rainbow hedgehog cactus",
             "photos": [
@@ -339,11 +347,12 @@
             "dryReferenceGrams": null,
             "id": "P09",
             "label": "C3",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:46:49.558-04:00",
                 "grams": 345
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 429.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 340.5 g; latest minus that benchmark +4.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 429.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 340.5 g; latest minus that benchmark +4.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Monk's hood cactus",
             "photos": [
@@ -378,11 +387,12 @@
             "dryReferenceGrams": null,
             "id": "P10",
             "label": "D1",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:46:31.013-04:00",
                 "grams": 384
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 448.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 363 g; latest minus that benchmark +21.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. Last three comparable readings: 403.5 → 396 → 384 g; mean 394.5 g. First-to-last change -6.51 g/day over 3.00 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 448.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 363 g; latest minus that benchmark +21.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. Last three comparable readings: 403.5 → 396 → 384 g; mean 394.5 g. First-to-last change -6.51 g/day over 3.00 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Dragon's Egg (probable Euphorbia obesa-type hybrid/selection; parentage unverified)",
             "photos": [
@@ -417,11 +427,12 @@
             "dryReferenceGrams": null,
             "id": "P11",
             "label": "D2",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:48:44.021-04:00",
                 "grams": 387
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 473 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 369 g; latest minus that benchmark +18.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 473 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 369 g; latest minus that benchmark +18.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Domino cactus",
             "photos": [
@@ -456,11 +467,12 @@
             "dryReferenceGrams": null,
             "id": "P12",
             "label": "D3",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:22:33.029-04:00",
                 "grams": 353
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 437.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 317.5 g; latest minus that benchmark +35.50 g. This arithmetic is not water remaining or a valid reference hit. The shared detector does not support a sustained plateau. A slowing last interval alone does not establish one. Last three comparable readings: 383 → 372 → 353 g; mean 369.33 g. First-to-last change -10.06 g/day over 2.98 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 437.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 317.5 g; latest minus that benchmark +35.50 g. This arithmetic is not water remaining or a valid reference hit. The shared detector does not support a sustained plateau. A slowing last interval alone does not establish one. Last three comparable readings: 383 → 372 → 353 g; mean 369.33 g. First-to-last change -10.06 g/day over 2.98 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Ming Thing",
             "photos": [
@@ -495,11 +507,12 @@
             "dryReferenceGrams": null,
             "id": "P13",
             "label": "E1",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:25:01.37-04:00",
                 "grams": 365.5
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 439.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 366 g; latest minus that benchmark -0.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. Last three comparable readings: 380 → 373.5 → 365.5 g; mean 373 g. First-to-last change -4.86 g/day over 2.98 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 439.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 366 g; latest minus that benchmark -0.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. Last three comparable readings: 380 → 373.5 → 365.5 g; mean 373 g. First-to-last change -4.86 g/day over 2.98 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Dwarf old man cactus (probable Espostoa melanostele subsp. nana)",
             "photos": [
@@ -534,11 +547,12 @@
             "dryReferenceGrams": null,
             "id": "P14",
             "label": "E2",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:24:25.765-04:00",
                 "grams": 338
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 434 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 325 g; latest minus that benchmark +13.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. Last three comparable readings: 368.5 → 357.5 → 338 g; mean 354.67 g. First-to-last change -10.23 g/day over 2.98 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Workbook alert: Faster than learned — reweigh. Today's saved weight addresses the requested follow-up; the old calibrated baseline also predates the drainage change. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 434 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 325 g; latest minus that benchmark +13.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. Last three comparable readings: 368.5 → 357.5 → 338 g; mean 354.67 g. First-to-last change -10.23 g/day over 2.98 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Workbook alert: Faster than learned — reweigh. Today's saved weight addresses the requested follow-up; the old calibrated baseline also predates the drainage change. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Chamaelobivia / peanut cactus hybrid (probable hybrid group; cultivar unknown)",
             "photos": [
@@ -573,11 +587,12 @@
             "dryReferenceGrams": null,
             "id": "P15",
             "label": "E3",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:25:29.921-04:00",
                 "grams": 324.5
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 404 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 319 g; latest minus that benchmark +5.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 404 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 319 g; latest minus that benchmark +5.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Woolly nipple cactus (probable Mammillaria mammillaris)",
             "photos": [
@@ -612,11 +627,12 @@
             "dryReferenceGrams": null,
             "id": "P16",
             "label": "F1",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:45:03.347-04:00",
                 "grams": 354
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 424.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 340 g; latest minus that benchmark +14.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 424.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 340 g; latest minus that benchmark +14.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Hook-spined pincushion cactus (Mammillaria cf. rekoi)",
             "photos": [
@@ -651,11 +667,12 @@
             "dryReferenceGrams": null,
             "id": "P17",
             "label": "F2",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:48:25.06-04:00",
                 "grams": 353.5
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 411.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 339 g; latest minus that benchmark +14.50 g. This arithmetic is not water remaining or a valid reference hit. The shared detector does not support a sustained plateau. A slowing last interval alone does not establish one. Last three comparable readings: 371 → 365 → 353.5 g; mean 363.17 g. First-to-last change -5.84 g/day over 3.00 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 411.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 339 g; latest minus that benchmark +14.50 g. This arithmetic is not water remaining or a valid reference hit. The shared detector does not support a sustained plateau. A slowing last interval alone does not establish one. Last three comparable readings: 371 → 365 → 353.5 g; mean 363.17 g. First-to-last change -5.84 g/day over 3.00 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Boobie cactus",
             "photos": [
@@ -691,11 +708,12 @@
             "dryReferenceGrams": null,
             "id": "P18",
             "label": "F3",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:47:31.279-04:00",
                 "grams": 339
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 422.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 339 g; latest minus that benchmark 0.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
+            "metricsNote": "Recorded current-cycle wet weight: 422.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 2; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 339 g; latest minus that benchmark 0.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today.",
             "mixId": null,
             "name": "Yellow tower cactus",
             "photos": [
@@ -730,11 +748,12 @@
             "dryReferenceGrams": 3692,
             "id": "P19",
             "label": "#1",
+            "lastWateredAt": "2026-09-04T00:45:00-04:00",
             "latest": {
                 "at": "2026-09-21T00:30:18.173-04:00",
                 "grams": 4020
             },
-            "metricsNote": "Last actual watering: 2026-09-04T00:45:00-04:00; 18.48 elapsed days at the source read. Recorded current-cycle wet weight: 4951 g. The shared detector does not support a sustained plateau. A slowing last interval alone does not establish one. Last three comparable readings: 4189 → 4095 → 4020 g; mean 4101.33 g. First-to-last change -41.95 g/day over 4.03 days; this is an interval average. Most recent actual Water included MSU 13-3-15, recorded as 2 g per gallon. This is past feeding history, not a recipe for today. Use one observation for the shared rehab container. Rehabilitation, component condition and drainage remain separate readiness limits.",
+            "metricsNote": "Recorded current-cycle wet weight: 4951 g. The shared detector does not support a sustained plateau. A slowing last interval alone does not establish one. Last three comparable readings: 4189 → 4095 → 4020 g; mean 4101.33 g. First-to-last change -41.95 g/day over 4.03 days; this is an interval average. Most recent actual Water included MSU 13-3-15, recorded as 2 g per gallon. This is past feeding history, not a recipe for today. Use one observation for the shared rehab container. Rehabilitation, component condition and drainage remain separate readiness limits.",
             "mixId": null,
             "name": "Shared rehab cactus planter",
             "photos": [
@@ -784,11 +803,12 @@
             "dryReferenceGrams": 1620,
             "id": "P20",
             "label": "#2",
+            "lastWateredAt": "2026-09-21T01:34:04.85-04:00",
             "latest": {
                 "at": "2026-09-21T02:15:35.569-04:00",
                 "grams": 2800
             },
-            "metricsNote": "Last actual watering: 2026-09-21T01:34:04.85-04:00; 1.45 elapsed days at the source read. Recorded current-cycle wet weight: 2800 g. Plateau assessment unavailable: fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 2 eligible historical training cycles. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today. Last-two change unavailable: only one eligible weight follows the September 21 Water event. The previous cycle must not be used as its partner. The earlier photo concern was withdrawn after the owner could not identify it. No new visual issue is established. The lined shared planter still requires its own drainage and component checks at the next genuine watering decision.",
+            "metricsNote": "Recorded current-cycle wet weight: 2800 g. Plateau assessment unavailable: fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 2 eligible historical training cycles. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today. Last-two change unavailable: only one eligible weight follows the September 21 Water event. The previous cycle must not be used as its partner. The earlier photo concern was withdrawn after the owner could not identify it. No new visual issue is established. The lined shared planter still requires its own drainage and component checks at the next genuine watering decision.",
             "mixId": null,
             "name": "Shared succulent planter",
             "photos": [
@@ -821,11 +841,12 @@
             "dryReferenceGrams": 1637,
             "id": "P21",
             "label": "#3",
+            "lastWateredAt": "2026-09-13T19:14:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:21:52.401-04:00",
                 "grams": 1638
             },
-            "metricsNote": "Last actual watering: 2026-09-13T19:14:00-04:00; 8.71 elapsed days at the source read. Recorded current-cycle wet weight: 1746 g. The shared detector does not support a sustained plateau. A slowing last interval alone does not establish one. Last three comparable readings: 1666 → 1650 → 1638 g; mean 1651.33 g. First-to-last change -13.87 g/day over 2.02 days; this is an interval average. The workbook retains 2 eligible historical training cycles. Most recent actual Water included SuperThrive Foliage Pro, recorded as 1/4 tsp / gal. This is past feeding history, not a recipe for today. The already-corrected comparable weights include the documented pot-weight adjustment; do not add it again. Latest owner condition note, September 19: leaves looked more horizontal after the light change. That did not measure moisture. Owner-confirmed-normal trend override remains present; the raw Faster than learned model flag does not by itself require another weight.",
+            "metricsNote": "Recorded current-cycle wet weight: 1746 g. The shared detector does not support a sustained plateau. A slowing last interval alone does not establish one. Last three comparable readings: 1666 → 1650 → 1638 g; mean 1651.33 g. First-to-last change -13.87 g/day over 2.02 days; this is an interval average. The workbook retains 2 eligible historical training cycles. Most recent actual Water included SuperThrive Foliage Pro, recorded as 1/4 tsp / gal. This is past feeding history, not a recipe for today. The already-corrected comparable weights include the documented pot-weight adjustment; do not add it again. Latest owner condition note, September 19: leaves looked more horizontal after the light change. That did not measure moisture. Owner-confirmed-normal trend override remains present; the raw Faster than learned model flag does not by itself require another weight.",
             "mixId": null,
             "name": "Money tree (Pachira cf. glabra)",
             "photos": [
@@ -860,11 +881,12 @@
             "dryReferenceGrams": 975,
             "id": "P22",
             "label": "#4",
+            "lastWateredAt": "2026-09-21T01:33:37.548-04:00",
             "latest": {
                 "at": "2026-09-21T02:15:05.848-04:00",
                 "grams": 1388
             },
-            "metricsNote": "Last actual watering: 2026-09-21T01:33:37.548-04:00; 1.45 elapsed days at the source read. Recorded current-cycle wet weight: 1388 g. Plateau assessment unavailable: fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 2 eligible historical training cycles. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today. Last-two change unavailable: only one eligible weight follows the September 21 Water event. The previous cycle must not be used as its partner. The September 21 dry check and actual watering supersede the previous cycle. Rosette appearance in the September 16 photo does not establish current active versus resting growth.",
+            "metricsNote": "Recorded current-cycle wet weight: 1388 g. Plateau assessment unavailable: fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 2 eligible historical training cycles. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today. Last-two change unavailable: only one eligible weight follows the September 21 Water event. The previous cycle must not be used as its partner. The September 21 dry check and actual watering supersede the previous cycle. Rosette appearance in the September 16 photo does not establish current active versus resting growth.",
             "mixId": null,
             "name": "Kiwi aeonium (probable Dream Color cultivar)",
             "photos": [
@@ -897,11 +919,12 @@
             "dryReferenceGrams": null,
             "id": "P23",
             "label": "G2",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:38:33.83-04:00",
                 "grams": 349
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 406.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 1; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 350 g; latest minus that benchmark -1.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water recorded no nutrients. No watering or feeding session is recommended today.",
+            "metricsNote": "Recorded current-cycle wet weight: 406.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 1; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 350 g; latest minus that benchmark -1.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water recorded no nutrients. No watering or feeding session is recommended today.",
             "mixId": null,
             "name": "Paper spine",
             "photos": [
@@ -936,11 +959,12 @@
             "dryReferenceGrams": null,
             "id": "P24",
             "label": "H1",
+            "lastWateredAt": "2026-09-16T02:53:02.877-04:00",
             "latest": {
                 "at": "2026-09-22T01:37:57.872-04:00",
                 "grams": 354.5
             },
-            "metricsNote": "Last actual watering: 2026-09-16T02:53:02.877-04:00; 6.39 elapsed days at the source read. Recorded current-cycle wet weight: 428.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 1; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 326 g; latest minus that benchmark +28.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the top-dressing and cleanup changed total mass; fewer than four eligible spaced readings describe the relevant unchanged assembly. Most recent actual Water recorded no nutrients. No watering or feeding session is recommended today. Last-two change unavailable: 336 → 354.5 g crosses the top-dressing and cleanup event. The owner estimated about 20 g of added dressing, but that is not a measured offset and must not be subtracted. The earlier white material was owner-identified perlite, not an unresolved pest finding.",
+            "metricsNote": "Recorded current-cycle wet weight: 428.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 1; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 326 g; latest minus that benchmark +28.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the top-dressing and cleanup changed total mass; fewer than four eligible spaced readings describe the relevant unchanged assembly. Most recent actual Water recorded no nutrients. No watering or feeding session is recommended today. Last-two change unavailable: 336 → 354.5 g crosses the top-dressing and cleanup event. The owner estimated about 20 g of added dressing, but that is not a measured offset and must not be subtracted. The earlier white material was owner-identified perlite, not an unresolved pest finding.",
             "mixId": null,
             "name": "Coconut Crystal",
             "photos": [
@@ -974,11 +998,12 @@
             "dryReferenceGrams": null,
             "id": "P25",
             "label": "H2",
+            "lastWateredAt": "2026-09-16T02:53:02.877-04:00",
             "latest": {
                 "at": "2026-09-22T01:26:30.102-04:00",
                 "grams": 323
             },
-            "metricsNote": "Last actual watering: 2026-09-16T02:53:02.877-04:00; 6.39 elapsed days at the source read. Recorded current-cycle wet weight: 425 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 1; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 316.5 g; latest minus that benchmark +6.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water recorded no nutrients. No watering or feeding session is recommended today. The displayed last-two comparison ends before the September 22 pruning and is valid only as pre-cleanup context. The removed leaf mass was not measured, so a later reading cannot be interpreted as drying directly against 323 g. The September 16 follow-up records that the owner reports H2 is normal.",
+            "metricsNote": "Recorded current-cycle wet weight: 425 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 1; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 316.5 g; latest minus that benchmark +6.50 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water recorded no nutrients. No watering or feeding session is recommended today. The displayed last-two comparison ends before the September 22 pruning and is valid only as pre-cleanup context. The removed leaf mass was not measured, so a later reading cannot be interpreted as drying directly against 323 g. The September 16 follow-up records that the owner reports H2 is normal.",
             "mixId": null,
             "name": "Raindrops",
             "photos": [
@@ -1014,11 +1039,12 @@
             "dryReferenceGrams": null,
             "id": "P26",
             "label": "H3",
+            "lastWateredAt": "2026-09-16T02:53:02.877-04:00",
             "latest": {
                 "at": "2026-09-22T01:45:26.087-04:00",
                 "grams": 334.5
             },
-            "metricsNote": "Last actual watering: 2026-09-16T02:53:02.877-04:00; 6.39 elapsed days at the source read. Recorded current-cycle wet weight: 446.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 1; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 327.5 g; latest minus that benchmark +7.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water recorded no nutrients. No watering or feeding session is recommended today. At the September 19 check, the owner considered the questioned light stringy material to be wool produced by the plant, not pests. No removal was recorded; no unresolved pest finding is carried forward.",
+            "metricsNote": "Recorded current-cycle wet weight: 446.5 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 1; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 327.5 g; latest minus that benchmark +7.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water recorded no nutrients. No watering or feeding session is recommended today. At the September 19 check, the owner considered the questioned light stringy material to be wool produced by the plant, not pests. No removal was recorded; no unresolved pest finding is carried forward.",
             "mixId": null,
             "name": "Eve's needle",
             "photos": [
@@ -1053,11 +1079,12 @@
             "dryReferenceGrams": null,
             "id": "P27",
             "label": "G1",
+            "lastWateredAt": "2026-09-14T20:30:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:26:16.004-04:00",
                 "grams": 360.5
             },
-            "metricsNote": "Last actual watering: 2026-09-14T20:30:00-04:00; 7.66 elapsed days at the source read. Recorded current-cycle wet weight: 411 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 1; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 349.5 g; latest minus that benchmark +11.00 g. This arithmetic is not water remaining or a valid reference hit. The shared detector does not support a sustained plateau. A slowing last interval alone does not establish one. Last three comparable readings: 373.5 → 369 → 360.5 g; mean 367.67 g. First-to-last change -4.36 g/day over 2.98 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water recorded no nutrients. No watering or feeding session is recommended today.",
+            "metricsNote": "Recorded current-cycle wet weight: 411 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 1; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 349.5 g; latest minus that benchmark +11.00 g. This arithmetic is not water remaining or a valid reference hit. The shared detector does not support a sustained plateau. A slowing last interval alone does not establish one. Last three comparable readings: 373.5 → 369 → 360.5 g; mean 367.67 g. First-to-last change -4.36 g/day over 2.98 days; this is an interval average. The workbook retains 1 eligible historical training cycle; predictions that span the later physical change are context only. Most recent actual Water recorded no nutrients. No watering or feeding session is recommended today.",
             "mixId": null,
             "name": "Black Widow",
             "photos": [
@@ -1092,11 +1119,12 @@
             "dryReferenceGrams": null,
             "id": "P28",
             "label": "G3",
+            "lastWateredAt": "2026-09-04T00:44:00-04:00",
             "latest": {
                 "at": "2026-09-22T01:44:31.872-04:00",
                 "grams": 332
             },
-            "metricsNote": "Last actual watering: 2026-09-04T00:44:00-04:00; 18.48 elapsed days at the source read. Recorded current-cycle wet weight: 461 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 1; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 336 g; latest minus that benchmark -4.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. Most recent actual Water recorded no nutrients. No watering or feeding session is recommended today. Raw shared-detector result: plateau confirmed, with tail 334.5 g at 2026-09-14T19:47:00-04:00; 334 g at 2026-09-15T16:28:03.971-04:00; 332.5 g at 2026-09-20T01:00:01.384-04:00; 332 g at 2026-09-22T01:44:31.872-04:00 (7.25 days). This tail crosses the September 16 drainage change, so an eligible current-assembly plateau is unavailable. The model's inspectionSupported is also false under the manual leaf-cycle guard. Neither this raw plateau nor the old 336 g benchmark permits watering.",
+            "metricsNote": "Recorded current-cycle wet weight: 461 g; this predates the drainage change and does not calibrate the current assembly. Owner recorded a drainage-opening change on September 16, with no measured mass offset. The workbook retains setup 1; its older dry reference is an uncalibrated historical benchmark, not a comparable target for this report. Historical benchmark 336 g; latest minus that benchmark -4.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: the selected model tail crosses the documented drainage change; fewer than four eligible spaced readings describe the relevant unchanged assembly. Most recent actual Water recorded no nutrients. No watering or feeding session is recommended today. Raw shared-detector result: plateau confirmed, with tail 334.5 g at 2026-09-14T19:47:00-04:00; 334 g at 2026-09-15T16:28:03.971-04:00; 332.5 g at 2026-09-20T01:00:01.384-04:00; 332 g at 2026-09-22T01:44:31.872-04:00 (7.25 days). This tail crosses the September 16 drainage change, so an eligible current-assembly plateau is unavailable. The model's inspectionSupported is also false under the manual leaf-cycle guard. Neither this raw plateau nor the old 336 g benchmark permits watering.",
             "mixId": null,
             "name": "Royal Flush",
             "photos": [
@@ -1147,11 +1175,12 @@
             "dryReferenceGrams": null,
             "id": "P29",
             "label": "#5",
+            "lastWateredAt": "2026-09-21T01:33:19.839-04:00",
             "latest": {
                 "at": "2026-09-21T02:14:46.528-04:00",
                 "grams": 1225
             },
-            "metricsNote": "Last actual watering: 2026-09-21T01:33:19.839-04:00; 1.45 elapsed days at the source read. Recorded current-cycle wet weight: 1225 g. Historical benchmark 1023 g; latest minus that benchmark +202.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today. Last-two change unavailable: only one eligible weight follows the September 21 Water event. The previous cycle must not be used as its partner. The 1225 g post-drain reading preceded the September 21 2:36 a.m. removal of loose dead material. Its mass was not measured. The old 1023 g dry reference and pre-cleanup wet anchor do not calibrate the assembly after cleanup; the next reading starts that comparison, without inventing an offset.",
+            "metricsNote": "Recorded current-cycle wet weight: 1225 g. Historical benchmark 1023 g; latest minus that benchmark +202.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle. Most recent actual Water included MSU 13-3-15, recorded as 0.75 g per gallon. This is past feeding history, not a recipe for today. Last-two change unavailable: only one eligible weight follows the September 21 Water event. The previous cycle must not be used as its partner. The 1225 g post-drain reading preceded the September 21 2:36 a.m. removal of loose dead material. Its mass was not measured. The old 1023 g dry reference and pre-cleanup wet anchor do not calibrate the assembly after cleanup; the next reading starts that comparison, without inventing an offset.",
             "mixId": null,
             "name": "Tuberculate tiger jaws (probable Faucaria tuberculosa)",
             "photos": [
@@ -1184,11 +1213,12 @@
             "dryReferenceGrams": null,
             "id": "P30",
             "label": "#6",
+            "lastWateredAt": "2026-09-19T01:19:22.814-04:00",
             "latest": {
                 "at": "2026-09-21T00:28:50.1-04:00",
                 "grams": 448
             },
-            "metricsNote": "Last actual watering: 2026-09-19T01:19:22.814-04:00; 3.46 elapsed days at the source read. Recorded current-cycle wet weight: 561.5 g. Historical benchmark 400 g; latest minus that benchmark +48.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle. Most recent actual Water included MSU 13-3-15, recorded as 0.35 g / half gallon. This is past feeding history, not a recipe for today. The 400 g historical dry reading was recorded September 19 at 12:47 a.m., before loose dead lower leaves were cleaned away at 1:22 a.m. The removed mass was not measured, so that reference and its +48 g arithmetic difference are not calibrated for the current assembly. Both weights in the displayed last-two interval follow cleanup and remain comparable. The modeled observation window begins September 23, but the measured first interval is much steeper than the learned estimate, so today's follow-up is useful. Component identities remain provisional; count and weigh the container once.",
+            "metricsNote": "Recorded current-cycle wet weight: 561.5 g. Historical benchmark 400 g; latest minus that benchmark +48.00 g. This arithmetic is not water remaining or a valid reference hit. Plateau assessment unavailable: fewer than four eligible spaced readings describe the relevant unchanged assembly. The workbook retains 1 eligible historical training cycle. Most recent actual Water included MSU 13-3-15, recorded as 0.35 g / half gallon. This is past feeding history, not a recipe for today. The 400 g historical dry reading was recorded September 19 at 12:47 a.m., before loose dead lower leaves were cleaned away at 1:22 a.m. The removed mass was not measured, so that reference and its +48 g arithmetic difference are not calibrated for the current assembly. Both weights in the displayed last-two interval follow cleanup and remain comparable. The modeled observation window begins September 23, but the measured first interval is much steeper than the learned estimate, so today's follow-up is useful. Component identities remain provisional; count and weigh the container once.",
             "mixId": null,
             "name": "Tiny mixed succulent planter (component identities provisional)",
             "photos": [
@@ -1224,6 +1254,7 @@
             "dryReferenceGrams": null,
             "id": "P31",
             "label": "#7",
+            "lastWateredAt": null,
             "latest": null,
             "metricsNote": "No measured weights, Water records, wet/dry anchors or feeding history exist for this allocation in the current History read. Last-two change and plateau are unavailable. Planned repots are not completed setup records. Moist is the dated September 21 observation, not a fresh September 22 measurement. Dead lower leaves were removed at that check. The 6-inch nursery pot remains the documented current container; the selected 8-inch pot is a plan. The September 20 acquisition photograph is available on the profile, but no verified Gyazo capture is available for this report photo field.",
             "mixId": null,
@@ -1240,6 +1271,7 @@
             "dryReferenceGrams": null,
             "id": "P32",
             "label": "#8",
+            "lastWateredAt": null,
             "latest": null,
             "metricsNote": "No measured weights, Water records, wet/dry anchors or feeding history exist for this allocation in the current History read. Last-two change and plateau are unavailable. Planned repots are not completed setup records. The documented current container is the 6-inch nursery pot, not the selected 8-inch upgrade. September 20 acquisition photos show colored foliage but cannot establish today's moisture, firmness or roots; no verified Gyazo capture is available for this report photo field.",
             "mixId": null,
@@ -1256,6 +1288,7 @@
             "dryReferenceGrams": null,
             "id": "P35",
             "label": "#9",
+            "lastWateredAt": null,
             "latest": null,
             "metricsNote": "No measured weights, Water records, wet/dry anchors or feeding history exist for this allocation in the current History read. Last-two change and plateau are unavailable. Planned repots are not completed setup records. One shared-pot allocation is reserved for both pairs, but a completed shared container is not documented. Do not combine separate nursery-pot weights into one current-cycle series. The D'vine Dev selected 4.3-inch Blush Mauve pot and September 22 repot/photos remain planned. No collection photograph has yet been supplied.",
             "mixId": null,
@@ -1272,6 +1305,7 @@
             "dryReferenceGrams": null,
             "id": "P36",
             "label": "#10",
+            "lastWateredAt": null,
             "latest": null,
             "metricsNote": "No measured weights, Water records, wet/dry anchors or feeding history exist for this allocation in the current History read. Last-two change and plateau are unavailable. Planned repots are not completed setup records. This is the separate newly acquired split rock, probable Pleiospilos nelii with cultivar unknown, explicitly not Royal Flush. The Thirtypot selected 4.5-inch Speckled-brown pot and September 22 repot/photos remain planned. No collection photograph has yet been supplied.",
             "mixId": null,

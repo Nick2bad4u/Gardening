@@ -50,6 +50,7 @@ export interface ReportPot {
     dryReferenceGrams: null | number;
     id: string;
     label: string;
+    lastWateredAt?: null | string;
     latest: null | ReportWeight;
     metricsNote: string;
     mixId: null | string;

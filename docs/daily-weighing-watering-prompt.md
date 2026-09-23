@@ -33,6 +33,7 @@ For each active pot, consider:
 
 - Latest eligible measured weight and exact observation timestamp.
 - Last watering, days since watering, current pot setup, and watering cycle.
+- Record each pot's lastWateredAt from its latest eligible actual Water event in canonical History, with the exact timestamp and offset; use null when no watering is recorded. Include a partial watering if it is the latest actual event, retaining its limitation in metricsNote. Do not substitute a repot/setup boundary, wet weight, recommendation or planned watering. The report displays the Eastern date and elapsed 24-hour days at sourceReadAt, rounded to one decimal, in a Last watered pill. Keep sourceReadAt unchanged when formatting an existing snapshot; do not duplicate the watering date and age in metricsNote.
 - Recent actual Water records and their Nutrients used, Nutrient product, and Nutrient amount fields; the last known feed, intervening plain-water events, current nutrient-plan stage, and any establishment, growth, damage, salt, or root-related limitation.
 - Wet reference, latest completed dry reference, and signed current difference from that dry reference.
 - Signed change between the last two weights, last-three-reading mean weight and change trend, and loss rates normalized by actual elapsed days.
@@ -104,7 +105,7 @@ Daily website publication:
 
 Report format:
 
-Use consistent leading icons on each per-pot detail line: 📌 recommendation, 🧪 watering mix, 🕒 last reading/interval, ⚖️ last-two change and g/day, 🎯 dry reference and signed difference, 📊 plateau, and 📝 a material note. Keep the compact hybrid format the owner chose, with no checklist boxes.
+Use consistent leading icons on each per-pot detail line: 📌 recommendation, 🧪 watering mix, 🕒 last reading/interval, 💧 last watered date and days ago, ⚖️ last-two change and g/day, 🎯 dry reference and signed difference, 📊 plateau, and 📝 a material note. The website shows the reading, watering, change, reference and plateau facts as wrapping pills. Keep the compact hybrid format the owner chose, with no checklist boxes.
 
 Use short, readable entries grouped by the reason for the action. Combine a simple daily list with clear reason groups. Use ordinary bullet points; do not use checkbox symbols, Markdown task-list boxes, or action tables. Do not duplicate a pot in multiple reason groups. Keep the existing evidence and recommendations; the lighter layout must not omit qualifying pots or essential exceptions.
 

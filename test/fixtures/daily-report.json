@@ -28,6 +28,7 @@
             "dryReferenceGrams": 349,
             "id": "P01",
             "label": "A1",
+            "lastWateredAt": "2026-08-25T16:22:00-04:00",
             "latest": {
                 "at": "2026-09-13T01:16:00-04:00",
                 "grams": 362.5
@@ -67,6 +68,7 @@
             "dryReferenceGrams": 324,
             "id": "P03",
             "label": "A3",
+            "lastWateredAt": "2026-08-26T16:22:00-04:00",
             "latest": {
                 "at": "2026-09-13T01:17:00-04:00",
                 "grams": 322.5
@@ -106,6 +108,7 @@
             "dryReferenceGrams": 333,
             "id": "P06",
             "label": "B3",
+            "lastWateredAt": null,
             "latest": {
                 "at": "2026-09-13T01:21:00-04:00",
                 "grams": 345.5
@@ -128,6 +131,7 @@
             "dryReferenceGrams": 388.5,
             "id": "P08",
             "label": "C2",
+            "lastWateredAt": null,
             "latest": {
                 "at": "2026-09-13T01:19:00-04:00",
                 "grams": 382.5
@@ -150,6 +154,7 @@
             "dryReferenceGrams": 1529,
             "id": "P21",
             "label": "#3",
+            "lastWateredAt": "2026-09-13T19:14:00-04:00",
             "latest": {
                 "at": "2026-09-13T19:13:00-04:00",
                 "grams": 1529
@@ -169,6 +174,7 @@
             "dryReferenceGrams": 336,
             "id": "P28",
             "label": "G3",
+            "lastWateredAt": null,
             "latest": {
                 "at": "2026-09-13T01:22:00-04:00",
                 "grams": 342

@@ -151,6 +151,7 @@ Each pot has these additional fields:
 | `mixId`                         | A defined mix for a watering candidate; `null` for every other action                                                             |
 | `recommendation`, `metricsNote` | Practical action and any evidence limitation                                                                                      |
 | `latest`, `previous`            | `{ "at": "ISO timestamp with offset", "grams": 123.5 }`, or `null` when unavailable                                               |
+| `lastWateredAt`                 | Latest actual Water timestamp with an explicit offset, or `null` when not recorded; optional only for older reports               |
 | `cycleStartedAt`                | Actual current watering/setup boundary, or `null` if unknown                                                                      |
 | `dryReferenceGrams`             | Comparable completed reference, or `null`; never substitute zero for missing                                                      |
 | `plateau`                       | `confirmed`, `not-supported`, or `unavailable`                                                                                    |
@@ -161,6 +162,22 @@ context with a clear `metricsNote`, but `previous` must be `null`. It cannot
 justify a new watering recommendation. All normal last-two comparisons must
 remain inside the current cycle. A confirmed plateau and a reached reference
 are independent signals; display `both` when both are supported.
+
+Each new review records `lastWateredAt` from the latest eligible actual Water
+event in canonical History. A repot/setup boundary, wet weight, recommendation,
+or planned watering is not a substitute. Include partial watering when it is
+the latest actual Water event, retaining its limitation in `metricsNote`.
+The watering timestamp cannot postdate `sourceReadAt`.
+
+The detailed cards display their facts as wrapping pills, including **Last
+watered** with an Eastern calendar date and elapsed 24-hour days to one decimal
+place, for example **Sep 14, 2026 (7.7 days ago)**. Ages are calculated at the
+saved source read, which is shown below the pills; opening an old report does
+not advance them. An explicit `null` shows **Not recorded**, not a claim that a
+plant has never been watered. Older snapshots remain valid without this optional
+field and show **Not included in this report**; the renderer does not infer it
+from prose or cycle boundaries. Keep material watering limitations in `metricsNote` without
+repeating the date and age already displayed in the pill.
 
 Complete coverage must include every active pot exactly once, including
 reviewed `none` records. Partial coverage must identify unresolved pots when

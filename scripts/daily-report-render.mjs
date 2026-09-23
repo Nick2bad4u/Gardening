@@ -78,6 +78,31 @@ function groupFor(pot) {
     return pot.action;
 }
 
+/** @param {ReportPot} pot @param {DailyReport} report */
+function lastWatering(pot, report) {
+    if (pot.lastWateredAt === undefined) return "Not included in this report";
+    if (pot.lastWateredAt === null) return "Not recorded";
+    const formatter = new Intl.DateTimeFormat("en-US", {
+        day: "numeric",
+        month: "short",
+        timeZone: report.timeZone,
+        year: "numeric",
+    });
+    const date = formatter.format(instant(pot.lastWateredAt));
+    const elapsed =
+        report.sourceReadAt === null
+            ? ""
+            : number(
+                  (instant(report.sourceReadAt) - instant(pot.lastWateredAt)) /
+                      86_400_000
+              );
+    const age =
+        elapsed === ""
+            ? ""
+            : ` <span class="watering-age">(${elapsed} ${elapsed === "1" ? "day" : "days"} ago)</span>`;
+    return `<time datetime="${escapeHtml(pot.lastWateredAt)}">${escapeHtml(date)}</time>${age}`;
+}
+
 /** @param {ReportMix} mix @param {ReportPot[]} pots */
 function mixCard(mix, pots) {
     const dose =
@@ -189,7 +214,7 @@ function potCard(pot, report, profiles) {
     const note = pot.metricsNote
         ? `<p class="metric-note">${escapeHtml(pot.metricsNote)}</p>`
         : "";
-    return `<details class="pot-card" id="pot-${escapeHtml(pot.id)}" data-action="${escapeHtml(pot.action)}" data-search="${searchText}"><summary><img class="plant-portrait" src="../../assets/plant-icons/${portrait}.svg" alt="" width="64" height="64" loading="lazy" /><span class="pot-identity"><span class="pot-title"><strong>${escapeHtml(pot.label)}</strong><span class="pot-id">${escapeHtml(pot.id)}</span></span><span class="pot-name">${escapeHtml(pot.name)}</span><span class="card-badges"><span class="reason-badge">${escapeHtml(reason)}</span>${mixBadge}</span></span><span class="card-rate">${change === null ? "—" : signed(change.perDay, 2)}<small>g/day</small></span><span class="expand-icon" aria-hidden="true">⌄</span></summary><div class="pot-detail"><p class="pot-recommendation"><span aria-hidden="true">📌</span> ${escapeHtml(pot.recommendation)}</p><dl>${mixDetail}<div><dt>🕒 Last reading</dt><dd>${escapeHtml(latest)}</dd></div><div><dt>⚖️ Weight change</dt><dd>${escapeHtml(changeText)}</dd></div><div><dt>🎯 Dry reference</dt><dd>${escapeHtml(comparison)}</dd></div><div><dt>📊 Plateau</dt><dd><strong>${status}</strong>${plateauDetail}</dd></div></dl>${note}${photoEvidence(pot)}<div class="pot-links"><a href="./plant-history.html?id=${escapeHtml(pot.id)}">Weight history ↗</a><a href="../plant-booklet/#${profile[0]}">Field guide ↗</a></div></div></details>`;
+    return `<details class="pot-card" id="pot-${escapeHtml(pot.id)}" data-action="${escapeHtml(pot.action)}" data-search="${searchText}"><summary><img class="plant-portrait" src="../../assets/plant-icons/${portrait}.svg" alt="" width="64" height="64" loading="lazy" /><span class="pot-identity"><span class="pot-title"><strong>${escapeHtml(pot.label)}</strong><span class="pot-id">${escapeHtml(pot.id)}</span></span><span class="pot-name">${escapeHtml(pot.name)}</span><span class="card-badges"><span class="reason-badge">${escapeHtml(reason)}</span>${mixBadge}</span></span><span class="card-rate">${change === null ? "—" : signed(change.perDay, 2)}<small>g/day</small></span><span class="expand-icon" aria-hidden="true">⌄</span></summary><div class="pot-detail"><p class="pot-recommendation"><span aria-hidden="true">📌</span> ${escapeHtml(pot.recommendation)}</p><dl class="pot-facts">${mixDetail}<div><dt>🕒 Last reading</dt><dd>${escapeHtml(latest)}</dd></div><div><dt>💧 Last watered</dt><dd>${lastWatering(pot, report)}</dd></div><div><dt>⚖️ Weight change</dt><dd>${escapeHtml(changeText)}</dd></div><div><dt>🎯 Dry reference</dt><dd>${escapeHtml(comparison)}</dd></div><div><dt>📊 Plateau</dt><dd><strong>${status}</strong>${plateauDetail}</dd></div></dl>${wateringContext(pot, report)}${note}${photoEvidence(pot)}<div class="pot-links"><a href="./plant-history.html?id=${escapeHtml(pot.id)}">Weight history ↗</a><a href="../plant-booklet/#${profile[0]}">Field guide ↗</a></div></div></details>`;
 }
 
 /**
@@ -410,6 +435,17 @@ function sparkline(pot) {
         .map(([x, y]) => `<circle cx="${x}" cy="${y}" r="3"></circle>`)
         .join("");
     return `<svg class="sparkline" viewBox="0 0 240 60" role="img" aria-label="Recent measured weight trend; exact readings follow"><path class="spark-base" d="M8 50 H232"></path><polyline points="${points.map((point) => point.join(",")).join(" ")}"></polyline>${circles}</svg>`;
+}
+
+/** @param {ReportPot} pot @param {DailyReport} report */
+function wateringContext(pot, report) {
+    if (
+        report.sourceReadAt === null ||
+        pot.lastWateredAt === undefined ||
+        pot.lastWateredAt === null
+    )
+        return "";
+    return `<p class="facts-context">Days ago as of <time datetime="${escapeHtml(report.sourceReadAt)}">${escapeHtml(localDate(report.sourceReadAt, true))} ET</time> · elapsed 24-hour days.</p>`;
 }
 
 export { groupFor, renderReport };

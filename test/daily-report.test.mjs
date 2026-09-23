@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { rewriteCollectionPreviews } from "../scripts/collection-previews.mjs";
 import {
@@ -538,6 +538,135 @@ describe("daily report evidence", () => {
         expect(() => validateReport(report)).toThrow(
             "newer than its source read"
         );
+    });
+});
+
+/** @returns {DailyReport} */
+function wateringReport() {
+    const report = structuredClone(sample);
+    const candidate = pot(report, "P06");
+    candidate.latest = null;
+    candidate.previous = null;
+    report.pots = [candidate];
+    report.totalPots = 1;
+    report.mixes = [];
+    return report;
+}
+
+describe("recorded watering facts", () => {
+    it.each([
+        "not a date",
+        "2026-02-30T12:00:00Z",
+        "2026-09-14T12:00:00",
+        "2026-09-14",
+        "2026-09-14T22:16:20Z",
+        0,
+        false,
+    ])(
+        "rejects invalid, ambiguous, or future watering evidence: %j",
+        (lastWateredAt) => {
+            expect.hasAssertions();
+
+            const report = wateringReport();
+            const candidate = pot(report, "P06");
+            const input = {
+                ...report,
+                pots: [{ ...candidate, lastWateredAt }],
+            };
+
+            expect(() => validateReport(input)).toThrow(/water/iv);
+        }
+    );
+
+    it("requires a source-read timestamp to publish a known watering", () => {
+        expect.hasAssertions();
+
+        const report = wateringReport();
+        report.coverage = "unavailable";
+        report.sourceReadAt = null;
+        const candidate = pot(report, "P06");
+        candidate.action = "unresolved";
+        candidate.reason = "unresolved";
+        candidate.cycleStartedAt = null;
+        candidate.lastWateredAt = "2026-09-13T19:14:00-04:00";
+
+        expect(() => validateReport(report)).toThrow(/water/iv);
+    });
+
+    it.each([
+        { message: "Not recorded", value: null },
+        { message: "Not included in this report", value: undefined },
+    ])(
+        "keeps %s watering unknown despite a setup boundary and narrative date",
+        ({ message, value }) => {
+            expect.hasAssertions();
+
+            const report = wateringReport();
+            const candidate = pot(report, "P06");
+            if (value === undefined) delete candidate.lastWateredAt;
+            else candidate.lastWateredAt = value;
+            candidate.metricsNote =
+                "An old note mentions watering on August 26.";
+            const html = renderReport(
+                validateReport(report),
+                template,
+                profiles
+            );
+
+            expect(html).toContain(`Last watered</dt><dd>${message}</dd>`);
+            expect(html).not.toContain("ago)");
+        }
+    );
+
+    it.each([
+        ["2026-09-14T22:16:19Z", "0 days ago"],
+        ["2026-09-13T22:16:19Z", "1 day ago"],
+        ["2026-09-07T05:28:19Z", "7.7 days ago"],
+    ])(
+        "renders %s relative to the reviewed read time as %s",
+        (lastWateredAt, age) => {
+            expect.hasAssertions();
+
+            const report = wateringReport();
+            pot(report, "P06").lastWateredAt = lastWateredAt;
+            const html = renderReport(
+                validateReport(report),
+                template,
+                profiles
+            );
+
+            expect(html).toContain(`datetime="${lastWateredAt}"`);
+            expect(html).toContain(`(${age})`);
+            expect(html).toMatch(
+                /<\/dl><p class="facts-context">Days ago as of /v
+            );
+        }
+    );
+
+    it("uses elapsed hours across daylight saving and stays frozen when viewed later", () => {
+        expect.hasAssertions();
+
+        const report = wateringReport();
+        report.date = "2026-11-02";
+        report.sourceReadAt = "2026-11-02T08:30:00-05:00";
+        report.generatedAt = "2026-11-02T09:30:00-05:00";
+        pot(report, "P06").lastWateredAt = "2026-11-01T01:30:00-04:00";
+        const validated = validateReport(report);
+        const html = renderReport(validated, template, profiles);
+
+        expect(html).toContain("Nov 1, 2026</time>");
+        expect(html).toContain("(1.3 days ago)");
+
+        vi.useFakeTimers();
+        try {
+            vi.setSystemTime(
+                Temporal.Instant.from("2030-01-01T12:00:00Z").epochMilliseconds
+            );
+
+            expect(renderReport(validated, template, profiles)).toBe(html);
+        } finally {
+            vi.useRealTimers();
+        }
     });
 });
 

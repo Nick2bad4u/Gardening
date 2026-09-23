@@ -151,6 +151,15 @@ function validateCoverage(coverage, total, count, unresolved) {
             "Unavailable data cannot produce care or no-action conclusions."
         );
 }
+/** @param {unknown} value @param {number | null} readAt */
+function validateLastWatering(value, readAt) {
+    if (value === undefined || value === null) return;
+    const wateredAt = instant(value, "lastWateredAt");
+    if (readAt === null || wateredAt > readAt)
+        throw new TypeError(
+            "Last watering cannot be newer than its source read."
+        );
+}
 /** @param {Record<string, unknown>} pot @param {number | null} readAt */
 function validateMeasurements(pot, readAt) {
     const latest = weight(pot["latest"], "latest");
@@ -327,6 +336,7 @@ function validatePots(input, mixIds, readAt) {
         ])
             textValue(pot[key], `pot.${key}`, key === "metricsNote");
         validateAction(pot, mixIds);
+        validateLastWatering(pot["lastWateredAt"], readAt);
         validateMeasurements(pot, readAt);
         validatePhotos(pot["photos"], readAt);
     }

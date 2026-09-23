@@ -417,7 +417,8 @@
 }
 .daily-report .search-label input::placeholder,
 .daily-report .photo-captured,
-.daily-report .photo-limitations {
+.daily-report .photo-limitations,
+.daily-report .watering-age {
     color: var(--muted);
 }
 .daily-report .filter-buttons {
@@ -581,22 +582,36 @@
     background: var(--soft);
     border-radius: 10px;
 }
-.daily-report .pot-detail dl {
+.daily-report .pot-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     margin: 14px 0;
     & > div {
-        padding-block: 12px;
-        border-block-end: 1px solid var(--line);
+        flex: 1 1 13rem;
+        min-inline-size: 0;
+        max-inline-size: 100%;
+        padding: 12px 16px;
+        overflow-wrap: anywhere;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+    }
+    & dt {
+        font-size: 0.75rem;
+        font-weight: 750;
+        color: var(--muted);
+    }
+    & dd {
+        margin: 5px 0 0;
+        font-size: 0.875rem;
+        font-variant-numeric: tabular-nums;
     }
 }
-.daily-report .pot-detail dt {
+.daily-report .facts-context {
+    margin-block-end: 14px;
     font-size: 0.75rem;
-    font-weight: 750;
     color: var(--muted);
-}
-.daily-report .pot-detail dd {
-    margin: 5px 0 0;
-    font-size: 0.75rem;
-    font-variant-numeric: tabular-nums;
 }
 .daily-report .sparkline {
     display: block;
@@ -898,6 +913,14 @@
     }
     .daily-report .pot-grid {
         grid-template-columns: [start] minmax(0, 1fr) [end];
+    }
+    .daily-report .pot-facts {
+        gap: 8px;
+        & > div {
+            padding: 8px 12px;
+            background: transparent;
+            break-inside: avoid;
+        }
     }
     .daily-report .quick-row {
         grid-template-columns: [label] 200px [pots] minmax(0, 1fr) [end];
