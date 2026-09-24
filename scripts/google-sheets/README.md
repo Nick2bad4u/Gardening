@@ -1541,6 +1541,13 @@ reads execution logs. It does **not** emulate `SpreadsheetApp`, `LockService`,
 therefore runs the real `.gs` source in a controlled Apps Script mock and opens
 the real mobile HTML in a lightweight browser DOM.
 
+For a logger version bump, edit only `GARDEN_LOGGER.version` in
+[`plant-tracker.gs`](./plant-tracker.gs). Node tests and checks import
+`LOGGER_VERSION` from [`scripts/logger-version.mjs`](../logger-version.mjs),
+which reads that same constant from the unmodified Apps Script source and
+validates its `major.minor.patch` format. Dated release notes retain their
+historical versions; no generated version file or extra deployment file is needed.
+
 Install exactly from the lockfile and run the logger suite:
 
 ```powershell

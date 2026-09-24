@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 import { describe, expect, it } from "vitest";
 
+import { LOGGER_VERSION } from "../../scripts/logger-version.mjs";
 import {
     appsScriptApi,
     overrideAppsScript,
@@ -2327,7 +2328,7 @@ describe("garden logger workbook refresh and navigation", () => {
         expect(structuredClone(context.refreshGardenWorkbook())).toStrictEqual({
             baselineColumns: 36,
             dashboardColumns: 31,
-            loggerVersion: "5.30.1",
+            loggerVersion: LOGGER_VERSION,
             plantPages: 2,
         });
         expect(calls.filter(([name]) => name === "plant")).toHaveLength(2);
@@ -2384,7 +2385,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P01",
             lastPlant: "P10",
-            loggerVersion: "5.30.1",
+            loggerVersion: LOGGER_VERSION,
             plantPages: 10,
         });
         expect(
@@ -2392,7 +2393,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P11",
             lastPlant: "P20",
-            loggerVersion: "5.30.1",
+            loggerVersion: LOGGER_VERSION,
             plantPages: 10,
         });
         expect(
@@ -2400,7 +2401,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P21",
             lastPlant: "P30",
-            loggerVersion: "5.30.1",
+            loggerVersion: LOGGER_VERSION,
             plantPages: 10,
         });
 
@@ -2409,7 +2410,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P31",
             lastPlant: "P32",
-            loggerVersion: "5.30.1",
+            loggerVersion: LOGGER_VERSION,
             plantPages: 2,
         });
         expect(() => context.refreshGardenWorkbookPages33To34()).toThrow(
@@ -2421,7 +2422,7 @@ describe("garden logger workbook refresh and navigation", () => {
         ).toStrictEqual({
             firstPlant: "P35",
             lastPlant: "P36",
-            loggerVersion: "5.30.1",
+            loggerVersion: LOGGER_VERSION,
             plantPages: 2,
         });
 
@@ -3299,7 +3300,7 @@ describe("scoped Dashboard weight count installer", () => {
             ).toStrictEqual({
                 plants: 34,
                 range: "Dashboard!Y6:Y40",
-                version: "5.30.1",
+                version: LOGGER_VERSION,
             });
 
             const after = structuredClone(rows);
@@ -4021,7 +4022,7 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
 
         const bootstrap = context.getWebAppBootstrap();
 
-        expect(bootstrap.version).toBe("5.30.1");
+        expect(bootstrap.version).toBe(LOGGER_VERSION);
         expect(bootstrap.plants).toHaveLength(1);
         expect(bootstrap.plants[0]).toMatchObject({
             activitySummary: {
@@ -9271,10 +9272,12 @@ describe("garden logger workbook installation and History headers", () => {
         context.installGardenLogger();
 
         expect(required(calls.properties)["gardenLoggerVersion"]).toBe(
-            "5.30.1"
+            LOGGER_VERSION
         );
         expect(required(calls.toast)[1]).toBe("Garden logger verified");
-        expect(required(calls.toast)[0]).toMatch(/Logger 5\.30\.1 is ready/v);
+        expect(required(calls.toast)[0]).toContain(
+            `Logger ${LOGGER_VERSION} is ready`
+        );
         expect(quickLog.__protections).toHaveLength(1);
         expect(workbook.history.__protections).toHaveLength(5);
         expect(
