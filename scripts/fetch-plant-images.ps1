@@ -488,7 +488,7 @@ $plantCatalog = @(
         CommonsCategory = 'Pleiospilos nelii'
         CommonsSearch = 'Pleiospilos nelii'
         INaturalistName = 'Pleiospilos nelii'
-        ScopeNote = 'Species-reference photographs for the probable Pleiospilos nelii identification; exact species and cultivar are unconfirmed and the owned plant is not Royal Flush.'
+        ScopeNote = 'Species-reference photographs for Pleiospilos nelii, the species identified on the owned plant''s nursery label. No cultivar was supplied, and the owned plant is not Royal Flush. These reference photographs do not identify a cultivar.'
     },
     [pscustomobject]@{
         Id = 'Houseplant-03'

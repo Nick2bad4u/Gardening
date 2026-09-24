@@ -372,10 +372,10 @@ Keep one physical **#9** label for the shared Lithops pot. The component records
 describe the tan/brown and grey/green groups. Both share P35 with aggregate
 Succulent-15; the A/B suffixes are profile identifiers, not new pot labels.
 
-| ID    | Tracker | Inventory    | Botanical label                                                                                           | Warning                                                    |
-| ----- | ------- | ------------ | --------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| `#9`  | `P35`   | Succulent-15 | [Probable _L. lesliei_ (tan/brown) + _L. salicola_ (grey/green)](./succulents/lithops-shared-planter.md)  | Inspect all four heads; one shared pot history             |
-| `#10` | `P36`   | Succulent-16 | [Probable _Pleiospilos nelii_; label-supported, cultivar not recorded](./succulents/pleiospilos-nelii.md) | Not Royal Flush; leaf-cycle checks; separate from G3 / P28 |
+| ID    | Tracker | Inventory    | Botanical label                                                                                          | Warning                                                    |
+| ----- | ------- | ------------ | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `#9`  | `P35`   | Succulent-15 | [Probable _L. lesliei_ (tan/brown) + _L. salicola_ (grey/green)](./succulents/lithops-shared-planter.md) | Inspect all four heads; one shared pot history             |
+| `#10` | `P36`   | Succulent-16 | [_Pleiospilos nelii_; nursery-labelled species, no cultivar supplied](./succulents/pleiospilos-nelii.md) | Not Royal Flush; leaf-cycle checks; separate from G3 / P28 |
 
 Suggested strips:
 
@@ -387,7 +387,7 @@ PHOTO-BASED ID | SPECIES UNCONFIRMED
 
 ```text
 #10 | SPLIT ROCK
-Probable Pleiospilos nelii | LABEL-SUPPORTED ID
+Pleiospilos nelii | NURSERY-LABEL SPECIES
 CULTIVAR NOT RECORDED
 ```
 
