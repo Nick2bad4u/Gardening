@@ -14656,12 +14656,32 @@
                     id="correctionEditor"
                     hidden
                 >
-                    <legend>Replacement values</legend>
-                    <p class="hint"
-                        >Only changed fields are sent. Clear an optional field
-                        to remove its value. Plant, event, setup and historical
-                        label stay as saved.</p
+                    <legend>Choose a correction</legend>
+                    <label for="correctionAction">What needs correcting?</label>
+                    <select
+                        id="correctionAction"
+                        aria-describedby="correctionActionHint"
                     >
+                        <option value="edit">Edit saved values</option>
+                        <option value="move">Move to another plant</option>
+                        <option value="remove">Delete this entry</option>
+                    </select>
+                    <p
+                        id="correctionActionHint"
+                        class="hint"
+                    >
+                        Edit this saved event, move it to another plant, or
+                        delete it from active history.
+                    </p>
+                    <div
+                        id="correctionDestinationField"
+                        hidden
+                    >
+                        <label for="correctionDestination"
+                            >Move to plant (required)</label
+                        >
+                        <select id="correctionDestination"></select>
+                    </div>
                     <div id="correctionFields"></div>
                     <label for="correctionReason"
                         >Reason for correction (required)</label
@@ -18347,10 +18367,14 @@
             }
 
             function correctionIdentity(entry) {
-                return `${entry.plantId} · ${entry.event} · Setup ${entry.potSetup} · Historical label ${entry.label || "(blank)"} · Observation ${entry.observationId}`;
+                const plant = state.bootstrap?.plants.find(
+                    (candidate) => candidate.id === entry.plantId
+                );
+                return `${entry.plantId} · ${entry.event} · Setup ${entry.potSetup} · Historical label ${entry.label || "(blank)"} · Observation ${entry.observationId}${plant ? ` · ${plant.name}` : ""}`;
             }
 
             function correctionDraftHasEdits(draft) {
+                if (draft.action && draft.action !== "edit") return true;
                 if (draft.reason.trim()) return true;
                 return Object.entries(draft.inputs).some(([key, value]) => {
                     const field = draft.context.fields?.find(
@@ -18405,6 +18429,8 @@
                 )
                     return false;
                 const draft = {
+                    action: $("correctionAction").value,
+                    destinationPlantId: $("correctionDestination").value,
                     context: correction.context,
                     inputs: Object.fromEntries(
                         [...correction.inputs].map(([key, input]) => [
@@ -18432,6 +18458,27 @@
                 }
             }
 
+            function updateCorrectionAction() {
+                const action = $("correctionAction").value;
+                const moving = action === "move";
+                const removing = action === "remove";
+                $("correctionDestinationField").hidden = !moving;
+                $("correctionDestination").required = moving;
+                $("correctionDestination").disabled = !moving;
+                $("correctionFields").hidden = removing;
+                correction.inputs.forEach((input) => {
+                    input.disabled = removing;
+                });
+                $("correctionActionHint").textContent = removing
+                    ? "Delete only this event from active history and calculations. Its original values and deletion reason remain in the audit history. Other events from the same save stay unchanged."
+                    : moving
+                      ? "Move only this event to the selected plant. Google will review the destination label and pot setup at the observation time. Other events from the same save stay unchanged."
+                      : "Only changed fields are sent. Clear an optional field to remove its value. Plant, event, setup and historical label stay as saved.";
+                if (correction.context?.original.event === "Repot")
+                    $("correctionActionHint").textContent +=
+                        " Repot entries can be edited here, but moving or deleting them requires a reviewed setup correction.";
+            }
+
             function renderCorrectionEditor(context, draft = null) {
                 correction.context = context;
                 correction.stale = false;
@@ -18442,6 +18489,27 @@
                 $("correctionIdentity").textContent = correctionIdentity(
                     context.original
                 );
+                const action = $("correctionAction");
+                [...action.options].forEach((option) => {
+                    option.disabled =
+                        context.original.event === "Repot" &&
+                        option.value !== "edit";
+                });
+                action.value = draft?.action || "edit";
+                const destination = $("correctionDestination");
+                destination.replaceChildren();
+                const placeholder = document.createElement("option");
+                placeholder.value = "";
+                placeholder.textContent = "Choose the correct plant…";
+                destination.append(placeholder);
+                (state.bootstrap?.plants || []).forEach((plant) => {
+                    if (plant.id === context.original.plantId) return;
+                    const option = document.createElement("option");
+                    option.value = plant.id;
+                    option.textContent = `${plant.name} · ${plant.id} · Label ${plant.label || "(blank)"}`;
+                    destination.append(option);
+                });
+                destination.value = draft?.destinationPlantId || "";
                 context.fields.forEach((field) => {
                     const wrapper = document.createElement("div");
                     wrapper.className = "field";
@@ -18501,6 +18569,7 @@
                     $("correctionFields").append(wrapper);
                 });
                 $("correctionReason").value = draft?.reason || "";
+                updateCorrectionAction();
                 $("correctionEditor").hidden = false;
                 $("correctionReview").hidden = true;
                 $("correctionConfirm").hidden = true;
@@ -18508,7 +18577,7 @@
                 $("correctionReload").hidden = true;
                 correctionBusy(false);
                 correctionMessage(
-                    "Edit the saved entry, add a reason, then review the server's proposed replacement."
+                    "Choose edit, move or delete, add a reason, then review the proposed change before confirming."
                 );
                 captureCorrectionDraft();
             }
@@ -18645,6 +18714,8 @@
             }
 
             function renderCorrectionReview(preview) {
+                const action = correction.reviewedPayload.action || "edit";
+                const removing = action === "remove";
                 const review = $("correctionReview");
                 review.replaceChildren();
                 review.append(
@@ -18655,7 +18726,9 @@
                         preview.timeZone
                     ),
                     correctionEntryReview(
-                        "Replacement",
+                        removing
+                            ? "After deletion — removed from active history"
+                            : "Replacement",
                         preview.replacement,
                         preview.fields,
                         preview.timeZone
@@ -18675,6 +18748,13 @@
                 const reason = document.createElement("p");
                 reason.textContent = `Reason: ${correction.reviewedPayload.reason}`;
                 review.append(heading, changes, reason);
+                if (action !== "edit") {
+                    const effect = document.createElement("p");
+                    effect.textContent = removing
+                        ? "After confirmation, this event will no longer affect either history summaries or calculations. The original record and deletion audit remain available."
+                        : "After confirmation, this event will belong to the destination plant shown above and its history and calculations will update. The original record remains in the audit history.";
+                    review.append(effect);
+                }
                 preview.notices.forEach((notice) => {
                     const paragraph = document.createElement("p");
                     paragraph.textContent = notice;
@@ -18712,6 +18792,15 @@
                 review.hidden = false;
                 $("correctionEditor").hidden = true;
                 $("correctionConfirm").hidden = false;
+                setIconLabel(
+                    $("correctionConfirm"),
+                    "check",
+                    removing
+                        ? "Confirm deletion"
+                        : action === "move"
+                          ? "Confirm move"
+                          : "Confirm correction"
+                );
                 $("correctionEdit").hidden = false;
                 correctionMessage(
                     "Review the stacked original and replacement. Only explicit confirmation saves this correction."
@@ -18732,8 +18821,32 @@
                     const reason = $("correctionReason").value.trim();
                     if (!reason)
                         throw new Error("A reason for correction is required.");
-                    const changes = correctionPatch();
-                    if (!Object.keys(changes).length)
+                    const action = $("correctionAction").value;
+                    if (!["edit", "move", "remove"].includes(action))
+                        throw new Error("Choose a correction action.");
+                    if (
+                        action !== "edit" &&
+                        correction.context.original.event === "Repot"
+                    )
+                        throw new Error(
+                            "Moving or deleting a Repot requires a reviewed setup correction."
+                        );
+                    const destinationPlantId = $("correctionDestination").value;
+                    if (
+                        action === "move" &&
+                        (!destinationPlantId ||
+                            destinationPlantId ===
+                                correction.context.original.plantId ||
+                            !state.bootstrap?.plants.some(
+                                (plant) => plant.id === destinationPlantId
+                            ))
+                    )
+                        throw new Error(
+                            "Choose a different plant before reviewing the move."
+                        );
+                    const changes =
+                        action === "remove" ? {} : correctionPatch();
+                    if (action === "edit" && !Object.keys(changes).length)
                         throw new Error(
                             "Change at least one saved value before reviewing."
                         );
@@ -18749,6 +18862,8 @@
                         baseRevision: correction.context.baseRevision,
                         changes,
                         reason,
+                        ...(action === "edit" ? {} : { action }),
+                        ...(action === "move" ? { destinationPlantId } : {}),
                     };
                     correctionMessage("Reviewing changes with Google…");
                     correctionRead(
@@ -18765,6 +18880,12 @@
                                 ) ||
                                 !preview.previewToken ||
                                 !preview.replacement ||
+                                (action === "move" &&
+                                    preview.replacement.plantId !==
+                                        destinationPlantId) ||
+                                (action === "remove" &&
+                                    preview.replacement.recordStatus !==
+                                        "Removed") ||
                                 !Array.isArray(preview.differences)
                             ) {
                                 correctionMessage(
@@ -21473,15 +21594,20 @@
             $("correctionForm").addEventListener("submit", reviewCorrection);
             $("correctionForm").addEventListener("input", () => {
                 if (correction.pending) return;
+                updateCorrectionAction();
                 correction.preview = null;
                 correction.reviewedPayload = null;
                 $("correctionConfirm").hidden = true;
                 captureCorrectionDraft();
             });
-            $("correctionForm").addEventListener(
-                "change",
-                captureCorrectionDraft
-            );
+            $("correctionForm").addEventListener("change", () => {
+                if (correction.pending) return;
+                updateCorrectionAction();
+                correction.preview = null;
+                correction.reviewedPayload = null;
+                $("correctionConfirm").hidden = true;
+                captureCorrectionDraft();
+            });
             $("correctionConfirm").addEventListener("click", confirmCorrection);
             $("correctionCheck").addEventListener("click", () =>
                 runPendingCorrection("getWebCorrectionStatus")

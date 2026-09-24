@@ -947,6 +947,7 @@ docs/docusaurus/static/img/coverage.svg
 .lychee.report.md
 .lycheecache
 .playwright-cli/
+.playwright-mcp/
 .pages-site/
 
 # Retired printer proofs, downloaded templates, and staged full-resolution

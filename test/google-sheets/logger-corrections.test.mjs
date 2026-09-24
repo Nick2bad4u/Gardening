@@ -157,6 +157,124 @@ function cell(value = "") {
     };
 }
 
+/** @param {ReturnType<typeof fixture>} model @param {string} scenario */
+function configureDestinationDrift(model, scenario) {
+    switch (scenario) {
+        case "baseline": {
+            required(model.state.baselines[0])[1] = 2;
+            model.state.rows.push(
+                observation("Repot", "new-repot", {
+                    0: new Date("2026-10-01T12:00:00Z"),
+                    1: "P35",
+                    10: 2,
+                })
+            );
+
+            break;
+        }
+        case "history": {
+            model.state.rows.push(
+                observation("Note", "new-destination-event", {
+                    1: "P35",
+                    10: 1,
+                })
+            );
+            break;
+        }
+        case "label": {
+            required(model.state.plants[0])[14] = "New label";
+            break;
+        }
+        case "plant-name": {
+            required(model.state.plants[0])[1] = "Renamed plant";
+            break;
+        }
+        // No default
+    }
+}
+
+/** @param {ReturnType<typeof fixture>} model @param {string} scenario */
+function configureInvalidDestination(model, scenario) {
+    switch (scenario) {
+        case "blank-name": {
+            required(model.state.plants[0])[1] = "";
+            break;
+        }
+        case "duplicate": {
+            model.state.plants.push([...required(model.state.plants[0])]);
+            break;
+        }
+        case "missing": {
+            model.state.plants = [];
+            break;
+        }
+        // No default
+    }
+}
+
+/** @param {ReturnType<typeof fixture>} model @param {string} scenario */
+function configureInvalidTimeline(model, scenario) {
+    const boundary = "2026-09-03T16:23:45.123Z";
+    switch (scenario) {
+        case "conflicting-reading": {
+            model.state.rows.push(
+                observation("Weigh", "wrong-setup", { 1: "P35", 10: 1 })
+            );
+            break;
+        }
+        case "duplicate-transition": {
+            model.state.rows.push(
+                observation("Repot", "duplicate-repot", { 1: "P35", 10: 2 })
+            );
+            break;
+        }
+        case "invalid-label": {
+            required(model.state.plants[0])[14] = 10;
+            break;
+        }
+        case "missing-baseline": {
+            model.state.baselines = [];
+            break;
+        }
+        case "missing-transition": {
+            model.state.rows.pop();
+            break;
+        }
+        case "out-of-order": {
+            required(model.state.baselines[0])[1] = 3;
+            model.state.rows.push(
+                observation("Repot", "repot-3", {
+                    0: new Date("2026-07-01T12:00:00Z"),
+                    1: "P35",
+                    10: 3,
+                })
+            );
+
+            break;
+        }
+        case "same-instant": {
+            required(required(model.state.rows[2])[0]).value = new Date(
+                boundary
+            );
+            break;
+        }
+    }
+}
+
+/**
+ * @param {import("../logger-correction-fixtures.d.ts").CorrectionSavePayload} payload
+ * @param {"move" | "remove"} action
+ */
+function conflictingActionPayload(payload, action) {
+    const conflicting = {
+        ...payload,
+        action: action === "remove" ? "move" : "remove",
+    };
+    if (action === "remove") conflicting.destinationPlantId = "P35";
+    else delete conflicting.destinationPlantId;
+    return conflicting;
+}
+
 /**
  * A precise sparse Sheets mock: validates the entire batch before publishing
  * changes, preserves every unmasked cell property, and can lose a commit
@@ -174,6 +292,8 @@ function fixture(
         /** @type {string[]} */
         alertMessages: [],
         alerts: 0,
+        /** @type {(string | number)[][]} */
+        baselines: [["P35", 1]],
         /** @type {import("../logger-correction-fixtures.d.ts").CorrectionSheetsRequest[][]} */
         batches: [],
         confirmed: true,
@@ -188,6 +308,15 @@ function fixture(
         maxRows: Math.max(100, observations.length + 1),
         missingFormulaReadRow: 0,
         onAlert: () => {},
+        /** @type {(string | number)[][]} */
+        plants: [
+            [
+                "P35",
+                "Money tree",
+                ...Array.from({ length: 12 }, () => ""),
+                "#3",
+            ],
+        ],
         /** @type {Map<string, string>} */
         properties: new Map(),
         propertyFault: "",
@@ -236,6 +365,34 @@ function fixture(
         },
         getSheetId: () => 27,
     };
+    /**
+     * @param {string} name @param {(string | number)[][]} rows @param
+     *   {string[]} columnHeaders
+     */
+    function inventorySheet(name, rows, columnHeaders) {
+        const matrix = [columnHeaders, ...rows];
+        return {
+            getLastColumn: () => columnHeaders.length,
+            getLastRow: () => matrix.length,
+            getName: () => name,
+            /**
+             * @param {number} row @param {number} column @param {number}
+             *   rowCount @param {number} columnCount
+             */
+            getRange(row, column, rowCount, columnCount) {
+                const values = matrix
+                    .slice(row - 1, row - 1 + rowCount)
+                    .map((cells) =>
+                        cells.slice(column - 1, column - 1 + columnCount)
+                    );
+                const displayed = values.map((cells) => cells.map(String));
+                return {
+                    getDisplayValues: () => displayed,
+                    getValues: () => values,
+                };
+            },
+        };
+    }
     const spreadsheet = {
         getActiveRange: () =>
             state.hasSelection
@@ -247,7 +404,23 @@ function fixture(
         getActiveSheet: () => ({ getName: () => state.sheetName }),
         getId: () => "disposable-workbook",
         getSheetByName: (/** @type {string} */ name) =>
-            name === "History" ? history : null,
+            name === "History"
+                ? history
+                : name === "Plant tracker"
+                  ? inventorySheet(
+                        name,
+                        state.plants,
+                        Array.from(
+                            { length: 15 },
+                            (_, index) => `Column ${index}`
+                        )
+                    )
+                  : name === "Baselines"
+                    ? inventorySheet(name, state.baselines, [
+                          "Plant ID",
+                          "Pot setup",
+                      ])
+                    : null,
         getSpreadsheetTimeZone: () => timeZone,
         toast: () => {},
     };
@@ -460,6 +633,33 @@ function prepare(
 }
 
 /**
+ * @param {ReturnType<typeof fixture>} model
+ * @param {"move" | "remove"} action
+ * @param {Record<string, string | number>} [changes]
+ *
+ * @returns {import("../logger-correction-fixtures.d.ts").CorrectionSavePayload}
+ */
+function prepareAction(model, action, changes = {}) {
+    const original = model.api.getWebCorrectionEntry({
+        observationId: "original-1",
+    });
+    const request = {
+        action,
+        ...(action === "move" && { destinationPlantId: "P35" }),
+        baseRevision: original.baseRevision,
+        changes,
+        observationId: "original-1",
+        reason: "Logged under the wrong plant",
+    };
+    const preview = model.api.previewWebObservationCorrection(request);
+    return {
+        ...request,
+        previewToken: preview.previewToken,
+        requestId: "move-remove-request-001",
+    };
+}
+
+/**
  * @param {import("../logger-correction-fixtures.d.ts").CorrectionSheetsRequest
  *     | undefined} request
  */
@@ -525,6 +725,329 @@ function wallClock(date, timeZone) {
         required(parts.find((item) => item.type === type)).value;
     return `${part("year")}-${part("month")}-${part("day")}T${part("hour")}:${part("minute")}:${part("second")}.${part("fractionalSecond")}`;
 }
+
+describe("moving and removing individual saved events", () => {
+    /** @type {("move" | "remove")[]} */
+    const actions = ["move", "remove"];
+
+    it("moves Water with exact evidence and lineage, without changing same-save Weigh or Baselines", () => {
+        expect.hasAssertions();
+
+        const water = observation("Water", "original-1", {
+            16: "Yes",
+            17: "Measured fertilizer",
+            18: "1 mL/L",
+            29: "shared-save",
+            40: "Flood / soak-through",
+            41: 200,
+        });
+        const sibling = observation("Weigh", "sibling", { 29: "shared-save" });
+        const model = fixture([water, sibling]);
+        const before = structuredClone(model.state.rows);
+        const payload = prepareAction(model, "move");
+        const receipt = model.api.saveWebObservationCorrection(payload);
+        const replacement = required(model.state.rows[3]);
+
+        expect(replacement[1]?.value).toBe("P35");
+        expect(replacement[10]?.value).toBe(1);
+        expect(replacement[11]?.value).toBe("#3");
+        expect(replacement[30]?.value).toBe("original-1");
+        expect(replacement[35]?.value).toBe("Active");
+
+        for (const index of [
+            0,
+            2,
+            4,
+            5,
+            6,
+            8,
+            16,
+            17,
+            18,
+            29,
+            40,
+            41,
+        ])
+            expect(replacement[index]?.value).toStrictEqual(
+                before[1]?.[index]?.value
+            );
+
+        expect(model.state.rows[2]).toStrictEqual(before[2]);
+        expect(model.state.baselines).toStrictEqual([["P35", 1]]);
+        expect(model.api.getWebCorrectionStatus(payload)).toStrictEqual(
+            receipt
+        );
+    });
+
+    it("moves measurements without rounding or converting stored cm", () => {
+        expect.hasAssertions();
+
+        const model = fixture([observation("Measure")]);
+        model.api.saveWebObservationCorrection(prepareAction(model, "move"));
+
+        expect(model.state.rows[2]?.[5]?.value).toBe(12.34567);
+        expect(model.state.rows[2]?.[6]?.value).toBe(4.32109);
+        expect(model.state.rows[2]?.[36]?.value).toBe("in");
+    });
+
+    it.each(actions)(
+        "keeps %s atomic and recovers its durable receipt after a lost response",
+        (action) => {
+            expect.hasAssertions();
+
+            const model = fixture();
+            const payload = prepareAction(model, action);
+            const before = structuredClone(model.state.rows);
+            model.state.fault = "before";
+
+            expect(() =>
+                model.api.saveWebObservationCorrection(payload)
+            ).toThrow("before commit");
+            expect(model.state.rows).toStrictEqual(before);
+            expect(model.api.getWebCorrectionStatus(payload).status).toBe(
+                "missing"
+            );
+
+            model.state.fault = "after";
+
+            expect(() =>
+                model.api.saveWebObservationCorrection(payload)
+            ).toThrow("response connection lost");
+
+            const receipt = model.api.getWebCorrectionStatus(payload);
+
+            expect(receipt.status).toBe("saved");
+            expect(
+                model.api.saveWebObservationCorrection(payload)
+            ).toStrictEqual(receipt);
+            expect(model.state.rows).toHaveLength(3);
+            expect(model.state.rows[1]?.[35]?.value).toBe("Removed");
+            expect(model.state.rows[2]?.[35]?.value).toBe(
+                action === "remove" ? "Removed" : "Active"
+            );
+
+            model.state.properties.clear();
+
+            expect(model.api.getWebCorrectionStatus(payload)).toStrictEqual(
+                receipt
+            );
+
+            const conflicting = conflictingActionPayload(payload, action);
+
+            expect(() =>
+                correctionRpc(
+                    model.context,
+                    "saveWebObservationCorrection",
+                    conflicting
+                )
+            ).toThrow("REQUEST_CONFLICT");
+        }
+    );
+
+    it("refuses a deletion receipt whose audit row was reactivated", () => {
+        expect.hasAssertions();
+
+        const model = fixture();
+        const payload = prepareAction(model, "remove");
+        model.api.saveWebObservationCorrection(payload);
+        required(required(model.state.rows[2])[35]).value = "Active";
+
+        expect(() => model.api.getWebCorrectionStatus(payload)).toThrow(
+            "removal audit row is active"
+        );
+    });
+
+    it.each(actions)(
+        "refuses %s for a Repot without altering Baselines",
+        (action) => {
+            expect.hasAssertions();
+
+            const model = fixture([observation("Repot")]);
+
+            expect(() => prepareAction(model, action)).toThrow(
+                "SETUP_BOUNDARY"
+            );
+            expect(model.state.writes).toBe(0);
+        }
+    );
+
+    it.each([
+        "missing",
+        "duplicate",
+        "archived",
+        "same",
+        "blank-name",
+    ])("rejects a %s destination", (scenario) => {
+        expect.hasAssertions();
+
+        const model = fixture();
+        const original = model.api.getWebCorrectionEntry({
+            observationId: "original-1",
+        });
+        configureInvalidDestination(model, scenario);
+
+        expect(() =>
+            model.api.previewWebObservationCorrection({
+                action: "move",
+                baseRevision: original.baseRevision,
+                changes: {},
+                destinationPlantId:
+                    scenario === "archived"
+                        ? "P33"
+                        : scenario === "same"
+                          ? "P01"
+                          : "P35",
+                observationId: "original-1",
+                reason: "Wrong plant",
+            })
+        ).toThrow("INVALID_CORRECTION");
+    });
+
+    it.each([
+        "label",
+        "baseline",
+        "history",
+        "plant-name",
+    ])("rejects a stale preview after destination %s changes", (scenario) => {
+        expect.hasAssertions();
+
+        const model = fixture();
+        const payload = prepareAction(model, "move");
+        configureDestinationDrift(model, scenario);
+
+        expect(() => model.api.saveWebObservationCorrection(payload)).toThrow(
+            "STALE_PREVIEW"
+        );
+        expect(model.api.getWebCorrectionStatus(payload).status).toBe(
+            "rejected"
+        );
+        expect(model.state.writes).toBe(0);
+    });
+
+    it.each([
+        1,
+        2,
+        3,
+    ])(
+        "uses historical destination setup %i rather than its current setup",
+        (setup) => {
+            expect.hasAssertions();
+
+            const model = fixture([
+                observation("Weigh", "original-1", {
+                    0: new Date(`2026-0${setup + 6}-15T12:00:00Z`),
+                }),
+                observation("Repot", "destination-repot-2", {
+                    0: new Date("2026-08-01T12:00:00Z"),
+                    1: "P35",
+                    10: 2,
+                }),
+                observation("Repot", "destination-repot-3", {
+                    0: new Date("2026-09-01T12:00:00Z"),
+                    1: "P35",
+                    10: 3,
+                }),
+            ]);
+            required(model.state.baselines[0])[1] = 3;
+            model.api.saveWebObservationCorrection(
+                prepareAction(model, "move")
+            );
+
+            expect(model.state.rows[4]?.[10]?.value).toBe(setup);
+            expect(model.state.baselines).toStrictEqual([["P35", 3]]);
+        }
+    );
+
+    it.each([
+        "missing-transition",
+        "duplicate-transition",
+        "out-of-order",
+        "same-instant",
+        "conflicting-reading",
+        "missing-baseline",
+        "invalid-label",
+    ])("refuses ambiguous destination setup: %s", (scenario) => {
+        expect.hasAssertions();
+
+        const model = fixture([
+            observation(),
+            observation("Repot", "repot-2", {
+                0: new Date("2026-08-01T12:00:00Z"),
+                1: "P35",
+                10: 2,
+            }),
+        ]);
+        required(model.state.baselines[0])[1] = 2;
+        configureInvalidTimeline(model, scenario);
+
+        expect(() => prepareAction(model, "move")).toThrow(
+            scenario === "invalid-label" ? "HISTORY_SCHEMA" : "SETUP_BOUNDARY"
+        );
+        expect(model.state.writes).toBe(0);
+    });
+
+    it("allows a combined move/date correction using the destination timeline", () => {
+        expect.hasAssertions();
+
+        const model = fixture([
+            observation(),
+            observation("Repot", "repot-2", {
+                0: new Date("2026-08-01T12:00:00Z"),
+                1: "P35",
+                10: 2,
+            }),
+        ]);
+        required(model.state.baselines[0])[1] = 2;
+        model.api.saveWebObservationCorrection(
+            prepareAction(model, "move", {
+                observationDate: "2026-07-01T12:00:00Z",
+            })
+        );
+
+        expect(model.state.rows[3]?.[10]?.value).toBe(1);
+    });
+
+    it("rejects mixed removal edits and malformed action combinations", () => {
+        expect.hasAssertions();
+
+        const model = fixture();
+        const payload = prepareAction(model, "remove");
+        for (const patch of [
+            { changes: { notes: "Do not combine" } },
+            { action: "unsupported" },
+            { action: 1 },
+            { destinationPlantId: "P35" },
+            { action: "move", destinationPlantId: "unknown" },
+        ]) {
+            expect(() =>
+                correctionRpc(model.context, "saveWebObservationCorrection", {
+                    ...payload,
+                    ...patch,
+                })
+            ).toThrow("INVALID_CORRECTION");
+        }
+    });
+
+    it("does not allow a competing removal to replace an already committed move", () => {
+        expect.hasAssertions();
+
+        const model = fixture();
+        const moving = prepareAction(model, "move");
+        const removing = {
+            ...prepareAction(model, "remove"),
+            requestId: "competing-removal-request",
+        };
+        model.api.saveWebObservationCorrection(moving);
+
+        expect(() => model.api.saveWebObservationCorrection(removing)).toThrow(
+            "REMOVED_ORIGINAL"
+        );
+        expect(model.api.getWebCorrectionStatus(removing).status).toBe(
+            "rejected"
+        );
+        expect(model.state.rows).toHaveLength(3);
+    });
+});
 
 describe("atomic saved History corrections", () => {
     it("returns exact canonical values, immutable metadata, applicable fields and audit context", () => {
