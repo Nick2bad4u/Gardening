@@ -27,6 +27,31 @@ Each active **P01–P32, P35, and P36** page also has a **Time between waterings
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## September 24 perlite spelling and split-rock species corrections
+
+At the owner's request, **P36 / #10 / Succulent-16** is now recorded as
+**Pleiospilos nelii**, the species printed on its Altman Plants nursery label.
+No cultivar was supplied, and this remains separate from Royal Flush / P28.
+The Lithops species identifications remain probable. The earlier enrollment
+and dated report records below retain their historical identification wording.
+
+A [native backup](https://docs.google.com/spreadsheets/d/1XtEwNSmQn1vH0m6jWNESL7mDaqXy7fzdThvH7-t7pQA/edit)
+preceded six scoped cell corrections: `History!AH1151` changes the September 23
+P36 Repot medium from “80% Molly's Succulent Mix + 20% Perlitr” to
+“80% Molly's Succulent Mix + 20% perlite”; `Plant tracker!C35`, `Containers!F35`,
+`Container members!B43/J43`, and `P36 Split rock!A2` use the label-supported
+species without a probable qualifier. Each changed cell has a provenance note.
+The medium correction flows through the existing Baselines, tracker, and
+container formulas; no formula or setup boundary was changed.
+
+Native readback confirmed only those six values and their notes changed.
+All **1,191 History records**, **1,191 unique observation IDs**, and **1,057
+request groups** were retained, along with the captured App entries, App bulk,
+and Baselines formulas. The logger remains **5.30.0 / immutable version 99**;
+this content correction requires no Apps Script or AppSheet redeployment.
+Private preconditions, backup comparison, requests, and readback are under
+`.cache/perlite-split-rock-20260924/`.
+
 ## September 24 saved-entry moves and deletions
 
 Logger **5.30.0** adds **Move to another plant** and **Delete this entry** to

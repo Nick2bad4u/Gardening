@@ -1,38 +1,36 @@
 # Split rock
 
-- Inventory: Succulent-16 — Probable species: _Pleiospilos nelii_; no cultivar supplied
+- Inventory: Succulent-16 — _Pleiospilos nelii_; no cultivar supplied
 - Label ID: `#10` — assigned 2026-09-21
 - Tracker ID: `P36`
 - Visual description: One visible pair of rounded grey-green, densely speckled leaves with a deep central cleft and pale inner faces, photographed in the speckled-brown pot on September 23, 2026. No extra old pair is visible. The illustration is schematic.
 - Interesting fact: Split rocks renew their paired leaves using moisture stored in the older pair, so leaf replacement needs a different watering judgment from ordinary cactus dry-down.
-- Identification: **Probable species: Pleiospilos nelii, supported by the nursery label and consistent photographs; species not independently confirmed; cultivar unconfirmed; owner explicitly excludes Royal Flush**
+- Identification: **Pleiospilos nelii, identified on the Altman Plants nursery label and consistent with the photographs; no cultivar supplied; owner explicitly excludes Royal Flush**
 - Acquired from: Home Depot, Howell, Michigan; nursery label identifies Altman Plants as grower
 - Acquired on: 2026-09-21 — owner-confirmed purchase date
 - Current pot: Thirtypot speckled-brown, repotted September 23, 2026; logged as 4 in round, distinct from the seller's selected 4.5-inch variant; 80% Molly's Succulent Mix + 20% perlite; setup 2
 
 ## Names and identity
 
-| Kind            | Record                                                                               |
-| --------------- | ------------------------------------------------------------------------------------ |
-| Working species | Probable _Pleiospilos nelii_, supported by nursery label and compatible appearance   |
-| Cultivar        | No cultivar supplied; ordinary green appearance does not establish a named selection |
-| Common name     | Split rock                                                                           |
-| Native origin   | South Africa's Cape Provinces                                                        |
+| Kind          | Record                                                                               |
+| ------------- | ------------------------------------------------------------------------------------ |
+| Species       | _Pleiospilos nelii_, identified on the Altman Plants nursery label                   |
+| Cultivar      | No cultivar supplied; ordinary green appearance does not establish a named selection |
+| Common name   | Split rock                                                                           |
+| Native origin | South Africa's Cape Provinces                                                        |
 
 Kew accepts _Pleiospilos nelii_ Schwantes, published in 1930. The September 23
 nursery label explicitly names this species, and the rounded, speckled paired
-leaves are consistent with it. This improves the earlier common-name-only
-identification; the label and photographs remain evidence rather than
-taxonomic proof. There is no basis to invent a cultivar name such as
+leaves are consistent with it. The collection records this label-supported
+species identification. There is no basis to invent a cultivar name such as
 “Green Form.”
 
-### Probable species from the research
+### Species identification and cultivar
 
-**This plant looks like _Pleiospilos nelii_, and its nursery label names that
-species, but the identification is not independently confirmed.** The rounded,
-grey-green, densely speckled leaf pair and deep central cleft agree with the
-species description. That makes _P. nelii_ the supported working identification;
-the photographs and label do not establish a named cultivar.
+**The species is recorded as _Pleiospilos nelii_ from its nursery label.**
+The rounded, grey-green, densely speckled leaf pair and deep central cleft also
+agree with the species description. No cultivar is supplied by the label;
+the photographs do not establish one or show that a named cultivar exists.
 
 This is a separate plant and container from
 [Royal Flush / G3 / P28](./pleiospilos-nelii-royal-flush.md). Its photographs,
@@ -54,9 +52,7 @@ Owner photograph, September 23, 2026: species-level nursery label, with no culti
 
 At **02:30 EDT on September 23**, live History records the completed repot into
 the Thirtypot speckled-brown pot, **setup 2**, logged as **4 in round**. The
-recorded recipe is **80% Molly's Succulent Mix + 20% perlite**. The raw ledger
-spells the second ingredient “Perlitr”; this description interprets that typo
-without changing the ledger. The seller's selected 4.5-inch variant
+recorded recipe is **80% Molly's Succulent Mix + 20% perlite**. The seller's selected 4.5-inch variant
 (`B0GGSNQG27`) remains in the
 [equipment inventory](../../equipment/inventory.md), separate from the logged
 size and any still-unmeasured internal depth.
@@ -101,6 +97,7 @@ observations even though both resemble stones.
 
 ## Sources
 
+- Owner clarification, September 24, 2026: record the species printed on the nursery label, with no cultivar supplied; correct the perlite spelling in the September 23 repot log.
 - Owner clarification, September 23, 2026: Home Depot, Howell, Michigan, purchase on Monday, September 21; this supplies the previously unrecorded retailer and exact acquisition date.
 
 - Owner reports, September 21–23, 2026, and Google Photos originals inspected September 23: separate non-Royal Flush acquisition, pot choice, nursery label, and completed repot photographs.

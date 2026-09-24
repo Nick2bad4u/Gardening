@@ -14,7 +14,9 @@ editor save as a live application change.
 
 ## September 21 Lithops and split-rock enrollment
 
-**Production workbook, logger, and AppSheet rollout completed September 21; AppSheet 1.100112 saved and verified.** A fresh editor reload showed no issues and Save disabled. The active roster has **34 active allocations: P01–P32, P35, P36**. P35 / #9 is the planned shared pot for two owner-described Lithops pairs; P36 / #10 is the separate split rock, probable Pleiospilos nelii with cultivar unconfirmed and explicitly not Royal Flush. P31 / #7 and P32 / #8 remain the purchased houseplants; P33/P34 remain retired. See the [enrollment runbook](../scripts/google-sheets/README.md#september-21-lithops-and-split-rock-enrollment).
+**Production workbook, logger, and AppSheet rollout completed September 21; AppSheet 1.100112 saved and verified.** A fresh editor reload showed no issues and Save disabled. The active roster has **34 active allocations: P01–P32, P35, P36**. P35 / #9 is the planned shared pot for two owner-described Lithops pairs; P36 / #10 is the separate split rock, nursery-labelled Pleiospilos nelii with no cultivar supplied and explicitly not Royal Flush. P31 / #7 and P32 / #8 remain the purchased houseplants; P33/P34 remain retired. See the [enrollment runbook](../scripts/google-sheets/README.md#september-21-lithops-and-split-rock-enrollment).
+
+P36's species wording above reflects the owner's September 24 nursery-label clarification; the allocation and AppSheet schema remain unchanged.
 
 Logger **5.29.0 / immutable version 98** and the saved AppSheet schema use **60 physical App bulk columns, A:BH / 61 including \_RowNumber**, appending P35/P36 at BG:BH. Preserve A:BF, including the hidden/noneditable blank-only P33/P34 fields. After a native backup and disposable rehearsal, the schema was regenerated and P35/P36 added as optional positive Decimal inputs with the existing Weigh / Water + weigh visibility rule. Bulk Log orders P31, P32, P35, P36 after P30; label sort keys are #9 = 909 and #10 = 910. The maintained 34-weight Round action validation retains both retired-field guards.
 

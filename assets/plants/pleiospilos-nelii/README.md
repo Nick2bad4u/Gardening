@@ -4,7 +4,7 @@ _Pleiospilos nelii_ - Succulent-16
 
 Collection label ID: `#10`.
 
-Species-reference photographs for the probable Pleiospilos nelii identification; exact species and cultivar are unconfirmed and the owned plant is not Royal Flush.
+Species-reference photographs for Pleiospilos nelii, the species identified on the owned plant's nursery label. No cultivar was supplied, and the owned plant is not Royal Flush. These reference photographs do not identify a cultivar.
 
 Collection research: [open the plant profile](../../../docs/plants/succulents/pleiospilos-nelii.md).
 
