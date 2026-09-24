@@ -550,6 +550,20 @@
         gap: 1rem;
     }
 
+    & .nursery-grid {
+        grid-template-columns: repeat(
+            auto-fit,
+            [photo-start] minmax(min(100%, 19rem), 24rem) [photo-end]
+        );
+        align-items: start;
+
+        & figure img {
+            max-block-size: 20rem;
+            aspect-ratio: auto;
+            object-fit: contain;
+        }
+    }
+
     & .research-links {
         background: linear-gradient(
             125deg,
@@ -676,6 +690,9 @@
         }
         & .photo-section figure > a:is(:hover, :focus-visible) img {
             transform: scale(1.035);
+        }
+        & .nursery-grid figure > a:is(:hover, :focus-visible) img {
+            transform: none;
         }
     }
 
