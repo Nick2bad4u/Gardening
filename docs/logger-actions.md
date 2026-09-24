@@ -145,11 +145,15 @@ Shared bulk details must really be shared. In particular, a common water-volume 
 | Not weighed today                     | A progress filter using the 4 a.m. care-day boundary. It neither logs a skipped action nor requires every remaining pot to be weighed. |
 | Refresh / Updated from Google         | Refreshes data and reports fetch time. It is not a new observation timestamp.                                                          |
 | Correct entry                         | Opens a supported correction of one saved event, with a reason, preview, and confirmation.                                             |
+| Move to another plant                 | Reassigns that event to the selected plant and its valid pot setup, preserving the original entry in the audit trail.                  |
+| Delete entry                          | Removes the event from active history and calculations; a deletion record preserves its provenance and retry receipt.                  |
 | Exclude selected History observations | The Sheets menu previews selected records and marks confirmed exclusions Removed while retaining the audit trail.                      |
 
 Retry the existing request after a connection problem rather than immediately creating a new observation. The queue and bridge use request identities to avoid duplicating a confirmed save. In AppSheet, use the receipt and supported retry/correction path; staging rows are not a second editable History.
 
-Correct entry operates on one event, not every row from the same Save. A correction appends a replacement and excludes the original from active calculations while retaining its provenance. Plant ID, event type, label provenance, and setup identity are fixed in this flow. A date change that crosses a setup boundary can be refused; it is not a routine way to reorganize history.
+Correct entry operates on one event, not every row from the same Save. Choose whether to edit its details, move it to another plant, or delete it. Each action requires a reason, a preview, and confirmation. A move shows the destination plant, label, and pot setup before saving. The observation time, measurements, and other untouched details are preserved.
+
+Edits and moves append a replacement and exclude the original from active calculations. Deletion excludes the original and saves an excluded audit record; neither record contributes to care history or calculations. Event type remains fixed. Repot entries cannot be moved or deleted through this form because other observations depend on their setup boundary. A date change or move with an uncertain setup can also be refused; coordinated setup changes need a separately reviewed correction.
 
 Do not delete entire History rows, overwrite a formula on a Pxx page, or repeatedly add “fixed” measurements without excluding the incorrect ancestor. See the [correction runbook](../scripts/google-sheets/README.md#saved-entry-corrections) for recovery behavior.
 

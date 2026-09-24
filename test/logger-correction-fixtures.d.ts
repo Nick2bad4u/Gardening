@@ -81,8 +81,13 @@ export interface CorrectionPreview extends CorrectionContext {
 }
 
 export interface CorrectionPreviewPayload {
+    action?:
+        | "edit"
+        | "move"
+        | "remove";
     baseRevision: string;
     changes: Record<string, CorrectionScalar>;
+    destinationPlantId?: string;
     observationId: string;
     reason: string;
 }

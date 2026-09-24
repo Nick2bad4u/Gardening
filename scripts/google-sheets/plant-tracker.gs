@@ -17,7 +17,7 @@
    installDailyCareDashboard, GARDEN_CYCLE_COMPARISON */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.29.0",
+    version: "5.30.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -6387,15 +6387,8 @@ function saveWebObservationCorrection(request) {
         const operation = correctionStoredOperation_(payload);
         if (operation?.status === "rejected")
             throw new Error(`${operation.code}: ${operation.message}`);
-        const { original, targetRow } = correctionCommitValidation_(
-            snapshot,
-            payload,
-            operation
-        );
-        const replacement = correctionPatchedRow_(
-            original.values,
-            payload.changes
-        );
+        const { original, replacement, targetRow } =
+            correctionCommitValidation_(snapshot, payload, operation);
         replacement[9] = new Date();
         replacement[15] = payload.requestId;
         replacement[26] = correctionReplacementId_(payload);
@@ -6403,7 +6396,7 @@ function saveWebObservationCorrection(request) {
         replacement[29] = original.values[29] || original.values[15];
         replacement[30] = payload.observationId;
         replacement[31] = payload.reason;
-        replacement[35] = "Active";
+        replacement[35] = payload.action === "remove" ? "Removed" : "Active";
         /** @type {GardenCorrectionSheetsRequest[]} */
         const requests = [];
         if (targetRow > snapshot.history.getMaxRows()) {
@@ -6517,22 +6510,23 @@ function correctionValidationError_(message) {
  * @param {GardenCorrectionSnapshot} snapshot
  * @param {GardenCorrectionSavePayload} payload
  * @param {GardenCorrectionOperation | null} operation
- * @returns {{original: GardenCorrectionOriginal, targetRow: number}}
+ * @returns {{original: GardenCorrectionOriginal, replacement: GardenCorrectionCanonicalRow, targetRow: number}}
  */
 function correctionCommitValidation_(snapshot, payload, operation) {
     try {
-        const preview = correctionPreview_(snapshot, payload);
+        const original = correctionOriginal_(snapshot, payload.observationId);
+        const actionRow = correctionActionRow_(snapshot, original, payload);
+        const preview = correctionPreview_(snapshot, payload, actionRow);
         if (preview.previewToken !== payload.previewToken)
             throw correctionValidationError_(
                 "STALE_PREVIEW: Related History changed. Reload the entry and review again."
             );
-        const original = correctionOriginal_(snapshot, payload.observationId);
         const targetRow = snapshot.lastReservedRow + 1;
         if (targetRow > GARDEN_LOGGER.historyCapacityRows)
             throw correctionValidationError_(
                 "HISTORY_CAPACITY: History is full. Extend the supported capacity before correcting."
             );
-        return { original, targetRow };
+        return { original, replacement: actionRow.row, targetRow };
     } catch (error) {
         // Only our deterministic validation errors, before any possible batch
         // attempt for this request, can release a phone's immutable retry.
@@ -6728,7 +6722,14 @@ function correctionDigest_(value) {
  */
 function correctionPayload_(request, saving) {
     /** @type {GardenCorrectionRequestKey[]} */
-    const keys = ["observationId", "baseRevision", "changes", "reason"];
+    const keys = [
+        "observationId",
+        "baseRevision",
+        "changes",
+        "reason",
+        "action",
+        "destinationPlantId",
+    ];
     if (saving) keys.push("requestId", "previewToken");
     correctionObject_(request, keys);
     correctionObject_(
@@ -6736,24 +6737,50 @@ function correctionPayload_(request, saving) {
         correctionFieldDefinitions_().map((field) => field.key)
     );
     if (
+        (request.action !== undefined &&
+            (typeof request.action !== "string" ||
+                !["edit", "move", "remove"].includes(request.action))) ||
+        (request.action === "move" &&
+            (typeof request.destinationPlantId !== "string" ||
+                !/^P\d+$/.test(request.destinationPlantId))) ||
+        (request.action !== "move" &&
+            request.destinationPlantId !== undefined) ||
+        (request.action === "remove" && Object.keys(request.changes).length > 0)
+    )
+        throw new Error(
+            "INVALID_CORRECTION: Choose edit, move to an existing plant, or remove without a field patch."
+        );
+    if (
         typeof request.baseRevision !== "string" ||
         !/^[a-f0-9]{64}$/.test(request.baseRevision) ||
         typeof request.reason !== "string" ||
         !request.reason.trim() ||
         request.reason.length > 2000 ||
-        Object.keys(request.changes).length === 0 ||
+        (Object.keys(request.changes).length === 0 &&
+            request.action !== "move" &&
+            request.action !== "remove") ||
         !correctionChangeValues_(request.changes)
     ) {
         throw new Error(
             "INVALID_CORRECTION: Supply a revision, a nonempty patch, and a reason (up to 2000 characters)."
         );
     }
+    /** @type {Omit<GardenCorrectionPayload, "payloadDigest">} */
     const payload = {
         observationId: correctionIdentity_(request.observationId),
         baseRevision: request.baseRevision,
         changes: { ...request.changes },
         reason: request.reason,
     };
+    // Omitted action must retain the digest of already-pending legacy edits.
+    if (
+        request.action === "edit" ||
+        request.action === "move" ||
+        request.action === "remove"
+    )
+        payload.action = request.action;
+    if (typeof request.destinationPlantId === "string")
+        payload.destinationPlantId = request.destinationPlantId;
     const payloadDigest = correctionDigest_(payload);
     if (!saving) return { ...payload, payloadDigest };
     if (
@@ -7256,7 +7283,7 @@ function correctionEntryContext_(snapshot, original, dateChanged) {
             JSON.stringify(left).localeCompare(JSON.stringify(right))
         );
     const notices = [
-        "This corrects one saved event. Plant, event, setup and historical label stay fixed.",
+        "This corrects one saved event. Moving it updates its plant, label and timestamp-appropriate setup; removing it excludes it from active history while retaining an audit record.",
     ];
     if (siblings.length)
         notices.push(
@@ -7300,9 +7327,10 @@ function correctionEntryContext_(snapshot, original, dateChanged) {
 /**
  * @param {GardenCorrectionSnapshot} snapshot
  * @param {GardenCorrectionPayload} payload
+ * @param {{row: GardenCorrectionCanonicalRow, destinationDigest: string}} [actionRow]
  * @returns {GardenCorrectionPreview}
  */
-function correctionPreview_(snapshot, payload) {
+function correctionPreview_(snapshot, payload, actionRow) {
     const original = correctionOriginal_(snapshot, payload.observationId);
     const context = correctionEntryContext_(
         snapshot,
@@ -7314,8 +7342,10 @@ function correctionPreview_(snapshot, payload) {
             "STALE_PREVIEW: The original changed. Reload the entry and review again."
         );
     }
-    const row = correctionPatchedRow_(original.values, payload.changes);
-    correctionDateBoundary_(snapshot, original, row);
+    const { row, destinationDigest } =
+        actionRow || correctionActionRow_(snapshot, original, payload);
+    if (payload.action !== "move")
+        correctionDateBoundary_(snapshot, original, row);
     const replacement = correctionDto_(row);
     replacement.correctsObservationId = payload.observationId;
     replacement.correctionReason = payload.reason;
@@ -7330,6 +7360,18 @@ function correctionPreview_(snapshot, payload) {
             before: context.original.values[key],
             after: replacement.values[key],
         }));
+    /** @type {["plantId" | "label" | "potSetup" | "recordStatus", string][]} */
+    const identityFields = [
+        ["plantId", "Plant"],
+        ["label", "Label"],
+        ["potSetup", "Pot setup"],
+        ["recordStatus", "Record status"],
+    ];
+    for (const [key, label] of identityFields) {
+        const before = context.original[key];
+        const after = replacement[key];
+        if (before !== after) differences.push({ key, label, before, after });
+    }
     if (!differences.length)
         throw correctionValidationError_(
             "INVALID_CORRECTION: Change at least one saved value before reviewing."
@@ -7342,6 +7384,7 @@ function correctionPreview_(snapshot, payload) {
         previewToken: correctionDigest_({
             payloadDigest: payload.payloadDigest,
             contextDigest: context.contextDigest,
+            ...(destinationDigest ? { destinationDigest } : {}),
         }),
     };
 }
@@ -7365,6 +7408,135 @@ function correctionPatchedRow_(original, changes) {
     }
     correctionValidateDependencies_(row, changes);
     return row;
+}
+
+/**
+ * Build either a normal replacement or a removed audit receipt. Repot changes
+ * need a coordinated Baselines migration and are deliberately not offered here.
+ * @param {GardenCorrectionSnapshot} snapshot
+ * @param {GardenCorrectionOriginal} original
+ * @param {GardenCorrectionPayload} payload
+ * @returns {{row: GardenCorrectionCanonicalRow, destinationDigest: string}}
+ */
+function correctionActionRow_(snapshot, original, payload) {
+    const row = correctionPatchedRow_(original.values, payload.changes);
+    if (payload.action !== "move" && payload.action !== "remove")
+        return { row, destinationDigest: "" };
+    if (row[2] === "Repot")
+        throw correctionValidationError_(
+            "SETUP_BOUNDARY: Moving or removing a Repot requires a coordinated setup and Baselines correction."
+        );
+    if (payload.action === "remove") {
+        row[35] = "Removed";
+        return { row, destinationDigest: "" };
+    }
+    const destination = payload.destinationPlantId || "";
+    if (destination === row[1] || ARCHIVED_PLANT_IDS.includes(destination))
+        throw correctionValidationError_(
+            "INVALID_CORRECTION: Choose a different active destination plant."
+        );
+    const tracker = requireSheet_(
+        snapshot.spreadsheet,
+        GARDEN_LOGGER.plantTrackerSheet
+    );
+    const count = Math.max(0, tracker.getLastRow() - 1);
+    const plants = count
+        ? tracker
+              .getRange(2, 1, count, GARDEN_LOGGER.currentLabelColumn)
+              .getValues()
+        : [];
+    const matches = plants.filter((plant) => plant[0] === destination);
+    const plant = matches[0];
+    if (
+        matches.length !== 1 ||
+        !plant ||
+        typeof plant[1] !== "string" ||
+        !plant[1].trim()
+    )
+        throw correctionValidationError_(
+            "INVALID_CORRECTION: Destination must be a unique active plant in Plant tracker."
+        );
+    const baselines = requireSheet_(
+        snapshot.spreadsheet,
+        GARDEN_LOGGER.baselinesSheet
+    );
+    const baseline = baselinePotSetupData_(baselines).rows.find(
+        ([id]) => id === destination
+    );
+    const currentSetup = Number(baseline?.[1]);
+    if (!Number.isSafeInteger(currentSetup) || currentSetup < 1)
+        throw correctionValidationError_(
+            "SETUP_BOUNDARY: Destination has no valid current Baselines setup."
+        );
+    const related = snapshot.rows.filter(
+        (candidate) =>
+            candidate.values[1] === destination &&
+            candidate.values[35] !== "Removed"
+    );
+    const repots = related.filter(
+        (candidate) => candidate.values[2] === "Repot"
+    );
+    if (currentSetup > repots.length + 1)
+        throw correctionValidationError_(
+            "SETUP_BOUNDARY: Destination setup history is incomplete. Review its Repot transitions first."
+        );
+    // Every transition after setup 1 must be explicit and chronological. Do not
+    // infer historical setup from the latest Baselines number alone.
+    /** @type {number[]} */
+    const starts = [];
+    let previous = -Infinity;
+    for (let setup = 2; setup <= currentSetup; setup += 1) {
+        const boundaries = repots.filter(
+            (candidate) => Number(candidate.values[10]) === setup
+        );
+        const date = boundaries[0]?.values[0];
+        if (
+            boundaries.length !== 1 ||
+            !(date instanceof Date) ||
+            !Number.isFinite(date.getTime()) ||
+            date.getTime() <= previous
+        )
+            throw correctionValidationError_(
+                "SETUP_BOUNDARY: Destination setup history is incomplete or ambiguous. Review its Repot transitions first."
+            );
+        previous = date.getTime();
+        starts.push(previous);
+    }
+    const observed = row[0].getTime();
+    if (starts.includes(observed))
+        throw correctionValidationError_(
+            "SETUP_BOUNDARY: The observation is exactly at a destination Repot boundary. Review its setup manually."
+        );
+    const setupAt = (/** @type {number} */ timestamp) =>
+        1 + starts.filter((start) => start <= timestamp).length;
+    for (const candidate of related) {
+        correctionCanonicalSnapshot_(candidate);
+        const date = candidate.values[0];
+        if (
+            !(date instanceof Date) ||
+            (Number(candidate.values[10]) || 1) !== setupAt(date.getTime())
+        )
+            throw correctionValidationError_(
+                "SETUP_BOUNDARY: Destination observations conflict with its Repot timeline. Review its setup history first."
+            );
+    }
+    const label = plant[GARDEN_LOGGER.currentLabelColumn - 1];
+    if (typeof label !== "string")
+        throw correctionValidationError_(
+            "HISTORY_SCHEMA: Destination label is not text."
+        );
+    row[1] = destination;
+    row[10] = setupAt(observed);
+    row[11] = label;
+    return {
+        row,
+        destinationDigest: correctionDigest_({
+            plant: [destination, plant[1], label, currentSetup],
+            history: related.map((candidate) =>
+                correctionRevision_(candidate, snapshot.timeZone)
+            ),
+        }),
+    };
 }
 
 /**
@@ -7643,6 +7815,10 @@ function correctionReceipt_(snapshot, payload) {
             "CORRECTION_RECEIPT_INVALID: The original retirement is missing. Inspect History before retrying."
         );
     }
+    if (payload.action === "remove" && match.values[35] !== "Removed")
+        throw new Error(
+            "CORRECTION_RECEIPT_INVALID: The removal audit row is active. Inspect History before retrying."
+        );
     // AF may gain a menu exclusion timestamp later, and AJ may be Removed.
     // Neither changes this already completed operation's durable identity.
     correctionRevision_(match, snapshot.timeZone);

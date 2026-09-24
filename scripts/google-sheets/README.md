@@ -27,6 +27,46 @@ Each active **P01–P32, P35, and P36** page also has a **Time between waterings
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## September 24 saved-entry moves and deletions
+
+Logger **5.30.0** adds **Move to another plant** and **Delete this entry** to
+the saved-entry correction dialog. Both require a reason, a preview, and a
+separate confirmation. A move selects the destination's label and pot setup
+at the event's original time; ambiguous setup history blocks the move. A
+deletion removes the event from active history and calculations while retaining
+its audit records. Repot events cannot be moved or deleted through this dialog
+because other observations can depend on their setup boundary. See the
+[correction instructions](../../docs/logger-actions.md#saving-queues-and-corrections).
+
+The owner-requested **September 24, 12:18 a.m. EDT Water** entry was corrected
+from **P19 / #1 Shared rehab cactus planter** to **P21 / #3 Money tree** after a
+[native backup](https://docs.google.com/spreadsheets/d/1uCLlHmpiJZCq5u2ub8T3kkM19ZzMCU3afeqbzGV6qP0/edit).
+Only `History!B1192` and `History!L1192` changed, with provenance notes added to
+those cells. The observed time, watering application, skewer note, request ID,
+observation ID, and all other values were preserved. P21's last-watered date
+became September 24, and P19's returned to September 4.
+
+The full before/after comparison retained **1,191 History records and unique
+observation IDs**, **1,057 request groups**, and the captured App entries and
+App bulk ranges. Duplicate/missing IDs, orphan plants, and formula errors all
+remained **0**. The [disposable native rehearsal](https://docs.google.com/spreadsheets/d/1JYav0Sfcl-h6FZ3MgotzecJ5u0pcXyKaMfs_oQOuRPc/edit)
+then passed in Google V8: move, delete, repeat-save retries, and durable receipt
+lookups preserved all original history and Baselines formulas/entered values.
+Its three synthetic audit rows are all Removed; none were sent to production.
+
+Validation passed **1,049 logger tests**, including **157 correction tests**
+and **287 client tests**, plus full typechecking, lint, and the Pages build.
+Logger coverage was **99.5% statements, 98.2% branches, 100% functions, and
+99.71% lines**. Mobile light/dark and desktop checks exercised both confirmation
+flows without horizontal overflow or JavaScript errors. Private source,
+workbook, rehearsal, and deployment receipts belong under
+`.cache/entry-corrections-20260924/`.
+
+This release uses a new immutable version at the existing production phone
+URL and publishes only `plant-tracker.gs`, `Index.html`, and `appsscript.json`.
+History and staging schemas are unchanged; it requires no installer, AppSheet
+configuration change, or replacement of the single five-minute queue trigger.
+
 ## September 23 container catalog and probable Lithops species
 
 The production workbook now has a [Containers catalog](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit#gid=2026092301)
@@ -91,7 +131,7 @@ light tube since they are all close in size,” belongs to Lithops P35 / #9.
 After a [native backup](https://docs.google.com/spreadsheets/d/1qXcan0librwzp0ksl8eL5e8TtzUMCD-xHtHjoL94WnI/edit),
 the scoped write changed only `History!B1158` from P36 to P35 and `L1158` from
 #10 to #9, adding cell notes with the original assignments and authorization.
-The regular mobile correction flow keeps plant identity fixed, so this was an explicit
+The mobile correction flow at that time kept plant identity fixed, so this was an explicit
 owner-authorized identity reassignment, not a duplicate observation or a deployment.
 
 Readback against the backup preserved the 1 in × 1.25 in measurement
@@ -1338,13 +1378,15 @@ logger/report behavior. The signed current-weight difference is in Dashboard I.
 
 ### Saved-entry corrections
 
-**Correct entry** opens one saved History event. Review the original, edit the
-supported fields, provide a reason, preview the exact differences, and confirm.
-Other events from the same save remain separate and unchanged. Plant ID, event
-type, label provenance, and pot-setup identity are fixed. A date change that
-crosses a Repot boundary or invalidates dependent setup observations is refused
-with an explanation; coordinated setup migrations require a separate reviewed
-workbook operation. Measurement units, quality, and method remain explicit.
+**Correct entry** opens one saved History event. Choose to edit its details,
+move it to another plant, or delete the entry. Provide a reason, preview the
+exact change, and confirm. Other events from the same save remain separate and
+unchanged. A move derives the destination label and valid setup at the observed
+time from current inventory and its Repot history; those inputs are bound into
+the preview. Event type remains fixed. Repot moves/deletions, uncertain setup
+timelines, and date changes that invalidate a setup boundary are refused with an
+explanation; coordinated setup migrations require a separate reviewed workbook
+operation. Measurement units, quality, and method remain explicit.
 
 Opening an entry without changing it does not create a recovery draft. Real
 edits stay in this browser when the editor closes, and the banner offers
@@ -1362,8 +1404,10 @@ insufficient History capacity fail before any write.
 
 The manifest enables Advanced Sheets v4. The commit uses one atomic
 `Sheets.Spreadsheets.batchUpdate`: append a replacement A:AP row and mark only
-the original AJ as `Removed`. The original values, formulas, reason, and
-formatting are retained. The replacement receives a new Recorded time and
+the original AJ as `Removed`. Edits and moves create an active replacement;
+deletion creates a replacement already marked `Removed`, leaving neither event
+active while preserving a durable audit receipt. The original values, formulas,
+reason, and formatting are retained. The replacement receives a new Recorded time and
 Request ID, the original save group, the immediate ancestor's Observation ID in
 AE, and the correction reason in AF. Its M:O and AL:AM helper formulas are
 generated for its new row. No correction increments the pot setup or writes

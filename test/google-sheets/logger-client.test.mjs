@@ -1841,6 +1841,26 @@ function correctionField(key, type = "text", unit = "", options = []) {
  * @returns {import("../logger-correction-fixtures.d.ts").CorrectionPreview}
  */
 function correctionPreview(context, payload) {
+    const replacement = {
+        ...context.original,
+        values: { ...context.original.values, ...payload.changes },
+    };
+    switch (payload.action) {
+        case "edit":
+        case undefined: {
+            break;
+        }
+        case "move": {
+            replacement.plantId = payload.destinationPlantId ?? "";
+            replacement.label = "B1";
+            replacement.potSetup = 1;
+            break;
+        }
+        case "remove": {
+            replacement.recordStatus = "Removed";
+            break;
+        }
+    }
     return {
         ...context,
         differences: Object.entries(payload.changes).map(([key, after]) => ({
@@ -1851,10 +1871,7 @@ function correctionPreview(context, payload) {
         })),
         payloadDigest: correctionPayloadDigest,
         previewToken: "signed-preview-token",
-        replacement: {
-            ...context.original,
-            values: { ...context.original.values, ...payload.changes },
-        },
+        replacement,
     };
 }
 
@@ -1928,7 +1945,13 @@ function createCorrectionLogger(event = "Weigh") {
 /** @param {Window} window @param {string} key @param {string} value */
 function editCorrection(window, key, value) {
     const selector =
-        key === "reason" ? "#correctionReason" : `#correctionField-${key}`;
+        key === "reason"
+            ? "#correctionReason"
+            : key === "action"
+              ? "#correctionAction"
+              : key === "destination"
+                ? "#correctionDestination"
+                : `#correctionField-${key}`;
     const input = required(window.document.querySelector(selector));
     if (
         !(input instanceof HTMLInputElement) &&
@@ -2181,6 +2204,269 @@ describe("correction draft retention and discard", () => {
 
         expect(window.localStorage.getItem(correctionPendingKey)).toBe(pending);
         expect(window.localStorage.getItem(correctionDraftKey)).toBe(draft);
+    });
+});
+
+describe("saved History move and deletion controls", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("reviews and confirms moving an unchanged event to another named plant", () => {
+        expect.hasAssertions();
+
+        const { behaviors, calls, window } = createCorrectionLogger("Water");
+        openFirstCorrection(window);
+        editCorrection(window, "action", "move");
+        const destination = queryElement(
+            window.document,
+            "#correctionDestination",
+            HTMLSelectElement
+        );
+
+        expect(destination.textContent).toContain("Yellow tower cactus");
+        expect(
+            [...destination.options].some((option) => option.value === "P01")
+        ).toBe(false);
+
+        editCorrection(window, "reason", "Selected the wrong plant");
+        submitCorrectionReview(window);
+
+        expect(
+            queryElement(window.document, "#correctionStatus", HTMLElement)
+                .textContent
+        ).toContain("Choose a different plant");
+        expect(
+            calls.some(
+                (call) => call.method === "previewWebObservationCorrection"
+            )
+        ).toBe(false);
+
+        editCorrection(window, "destination", "P02");
+        submitCorrectionReview(window);
+        const preview = required(
+            calls.find(
+                (call) => call.method === "previewWebObservationCorrection"
+            )
+        );
+
+        expect(structuredClone(preview.args[0])).toMatchObject({
+            action: "move",
+            changes: {},
+            destinationPlantId: "P02",
+        });
+
+        const review = queryElement(
+            window.document,
+            "#correctionReview",
+            HTMLElement
+        );
+
+        expect(review.textContent).toContain("Moon cactus");
+        expect(review.textContent).toContain("Yellow tower cactus");
+        expect(
+            queryElement(
+                window.document,
+                "#correctionConfirm",
+                HTMLButtonElement
+            ).textContent
+        ).toContain("Confirm move");
+        expect(
+            calls.some((call) => call.method === "saveWebObservationCorrection")
+        ).toBe(false);
+
+        behaviors.saveWebObservationCorrection = ({ args, success }) => {
+            success(correctionReceipt(args[0]));
+        };
+        clickCorrection(window, "correctionConfirm");
+        const saved = required(
+            calls.find((call) => call.method === "saveWebObservationCorrection")
+        );
+
+        expect(saved.args[0].action).toBe("move");
+        expect(saved.args[0].destinationPlantId).toBe("P02");
+        expect(window.localStorage.getItem(correctionPendingKey)).toBeNull();
+    });
+
+    it("deletes only after review, excludes typed replacements and retries the same removal request", () => {
+        expect.hasAssertions();
+
+        const { behaviors, calls, window } = createCorrectionLogger();
+        openFirstCorrection(window);
+        editCorrection(window, "weight", "456");
+        editCorrection(window, "action", "remove");
+
+        expect(
+            queryElement(window.document, "#correctionFields", HTMLElement)
+                .hidden
+        ).toBe(true);
+        expect(
+            queryElement(
+                window.document,
+                "#correctionField-weight",
+                HTMLInputElement
+            ).disabled
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#correctionActionHint", HTMLElement)
+                .textContent
+        ).toContain("audit history");
+
+        editCorrection(window, "reason", "Accidental duplicate");
+        submitCorrectionReview(window);
+
+        expect(
+            queryElement(window.document, "#correctionReview", HTMLElement)
+                .textContent
+        ).toContain("After deletion — removed from active history");
+        expect(
+            queryElement(
+                window.document,
+                "#correctionConfirm",
+                HTMLButtonElement
+            ).textContent
+        ).toContain("Confirm deletion");
+
+        behaviors.saveWebObservationCorrection = ({ failure }) => {
+            failure(new Error("Offline"));
+        };
+        behaviors.getWebCorrectionStatus = ({ args, success }) => {
+            success({ ...correctionReceipt(args[0]), status: "missing" });
+        };
+        clickCorrection(window, "correctionConfirm");
+        const first = required(
+            calls.find((call) => call.method === "saveWebObservationCorrection")
+        );
+
+        expect(first.args[0].action).toBe("remove");
+        expect(structuredClone(first.args[0].changes)).toStrictEqual({});
+        expect(window.localStorage.getItem(correctionDraftKey)).toContain(
+            '"weight":"456"'
+        );
+        expect(window.localStorage.getItem(correctionPendingKey)).toContain(
+            '"action":"remove"'
+        );
+
+        behaviors.saveWebObservationCorrection = ({ args, success }) => {
+            success(correctionReceipt(args[0]));
+        };
+        clickCorrection(window, "correctionRetry");
+        const retries = calls.filter(
+            (call) => call.method === "saveWebObservationCorrection"
+        );
+
+        expect(retries).toHaveLength(2);
+        expect(structuredClone(retries[1]?.args)).toStrictEqual(
+            structuredClone(first.args)
+        );
+        expect(window.localStorage.getItem(correctionPendingKey)).toBeNull();
+    });
+
+    it("retains move destination in an unsent draft and restores it after reopening", () => {
+        expect.hasAssertions();
+
+        const { window } = createCorrectionLogger();
+        openFirstCorrection(window);
+        editCorrection(window, "action", "move");
+        editCorrection(window, "destination", "P02");
+
+        expect(window.localStorage.getItem(correctionDraftKey)).toContain(
+            '"destinationPlantId":"P02"'
+        );
+
+        clickCorrection(window, "correctionClose");
+        clickCorrection(window, "correctionResume");
+
+        expect(
+            queryElement(
+                window.document,
+                "#correctionAction",
+                HTMLSelectElement
+            ).value
+        ).toBe("move");
+        expect(
+            queryElement(
+                window.document,
+                "#correctionDestination",
+                HTMLSelectElement
+            ).value
+        ).toBe("P02");
+
+        editCorrection(window, "action", "edit");
+
+        expect(
+            queryElement(
+                window.document,
+                "#correctionDestinationField",
+                HTMLElement
+            ).hidden
+        ).toBe(true);
+        expect(
+            queryElement(
+                window.document,
+                "#correctionField-weight",
+                HTMLInputElement
+            ).disabled
+        ).toBe(false);
+    });
+
+    it("does not offer move or deletion for a Repot setup boundary", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createCorrectionLogger("Repot");
+        openFirstCorrection(window);
+        const action = queryElement(
+            window.document,
+            "#correctionAction",
+            HTMLSelectElement
+        );
+
+        expect(
+            [...action.options]
+                .filter((option) => option.disabled)
+                .map((option) => option.value)
+        ).toStrictEqual(["move", "remove"]);
+
+        editCorrection(window, "action", "remove");
+        editCorrection(window, "reason", "Wrong setup");
+        submitCorrectionReview(window);
+
+        expect(
+            queryElement(window.document, "#correctionStatus", HTMLElement)
+                .textContent
+        ).toContain("reviewed setup correction");
+        expect(
+            calls.some(
+                (call) => call.method === "previewWebObservationCorrection"
+            )
+        ).toBe(false);
+    });
+
+    it.each(["move", "remove"])("refuses a mismatched %s preview", (action) => {
+        expect.hasAssertions();
+
+        const { behaviors, context, window } = createCorrectionLogger();
+        behaviors.previewWebObservationCorrection = ({ args, success }) => {
+            success({
+                ...correctionPreview(context, args[0]),
+                replacement: context.original,
+            });
+        };
+        openFirstCorrection(window);
+        editCorrection(window, "action", action);
+        editCorrection(window, "destination", "P02");
+        editCorrection(window, "reason", "Wrong plant or duplicate");
+        submitCorrectionReview(window);
+
+        expect(
+            queryElement(
+                window.document,
+                "#correctionConfirm",
+                HTMLButtonElement
+            ).hidden
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#correctionStatus", HTMLElement)
+                .textContent
+        ).toContain("mismatched review");
     });
 });
 

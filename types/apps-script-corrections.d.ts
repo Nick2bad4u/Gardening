@@ -120,8 +120,13 @@ interface GardenCorrectionOriginal extends GardenCorrectionRowSnapshot {
     values: GardenCorrectionCanonicalRow;
 }
 interface GardenCorrectionPayload {
+    action?:
+        | "edit"
+        | "move"
+        | "remove";
     baseRevision: string;
     changes: GardenCorrectionChanges;
+    destinationPlantId?: string;
     observationId: string;
     payloadDigest: string;
     reason: string;
@@ -155,8 +160,10 @@ type GardenCorrectionRejectionCode =
     | "SETUP_BOUNDARY"
     | "STALE_PREVIEW";
 type GardenCorrectionRequestKey =
+    | "action"
     | "baseRevision"
     | "changes"
+    | "destinationPlantId"
     | "observationId"
     | "previewToken"
     | "reason"
