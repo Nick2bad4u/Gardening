@@ -42,6 +42,14 @@ _habit_ - [Echilopsis chomaecereus-2-sunny brook-yercaud-salem-India.jpg](https:
 
 _habit_ - [Echilopsis chomaecereus-1-sunny brook-yercaud-salem-India.jpg](https://commons.wikimedia.org/wiki/File:Echilopsis_chomaecereus-1-sunny_brook-yercaud-salem-India.jpg); Yercaud-elango; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
 
+![Chamaelobivia / peanut cactus hybrid: habit](./commons-115609103-flower.jpg)
+
+_habit_ - [Echilopsis chomaecereus-3-sunny brook-yercaud-salem-India.jpg](https://commons.wikimedia.org/wiki/File:Echilopsis_chomaecereus-3-sunny_brook-yercaud-salem-India.jpg); Yercaud-elango; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+
+![Chamaelobivia / peanut cactus hybrid: flower](./commons-117850934-flower.jpg)
+
+_flower_ - [Flor de Cactus Echinopsis Chamaecereus Silvestrii.jpg](https://commons.wikimedia.org/wiki/File:Flor_de_Cactus_Echinopsis_Chamaecereus_Silvestrii.jpg); Dnmr-mx; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+
 ## File details
 
 | File                                                                                         | Subject | Source                                                                                                                                 | Creator                                               | License                                                         |
@@ -54,5 +62,7 @@ _habit_ - [Echilopsis chomaecereus-1-sunny brook-yercaud-salem-India.jpg](https:
 | [commons-1125359-habit.jpg](./commons-1125359-habit.jpg)                                     | flower  | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Echinopsis_chamaecereus.2006-06-09.2.uellue.jpg)                           | Dieter Weber ( User:Uellue )                          | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) |
 | [commons-115609100-flower.jpg](./commons-115609100-flower.jpg)                               | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Echilopsis_chomaecereus-2-sunny_brook-yercaud-salem-India.jpg)             | Yercaud-elango                                        | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)  |
 | [commons-115609102-flower.jpg](./commons-115609102-flower.jpg)                               | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Echilopsis_chomaecereus-1-sunny_brook-yercaud-salem-India.jpg)             | Yercaud-elango                                        | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)  |
+| [commons-115609103-flower.jpg](./commons-115609103-flower.jpg)                               | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Echilopsis_chomaecereus-3-sunny_brook-yercaud-salem-India.jpg)             | Yercaud-elango                                        | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)  |
+| [commons-117850934-flower.jpg](./commons-117850934-flower.jpg)                               | flower  | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Flor_de_Cactus_Echinopsis_Chamaecereus_Silvestrii.jpg)                     | Dnmr-mx                                               | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)  |
 
 Metadata and SHA-256 hashes are also available in [the global manifest](../photo-manifest.json).

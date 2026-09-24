@@ -2,7 +2,7 @@
 
 _Pleiospilos nelii_ - Succulent-06
 
-Collection label ID: `G3`; permanent tracker ID: `P28`.
+Collection label ID: `G3`.
 
 Species references, including cultivated observations, may show the normal green-gray form; the ordered plant is the purple Royal Flush cultivar.
 
@@ -34,6 +34,22 @@ _habit_ - [Aizoaceae - Pleiospilos nelii.JPG](https://commons.wikimedia.org/wiki
 
 _habit_ - [Dinteranthus? Pleiospilos? (3645391194).jpg](<https://commons.wikimedia.org/wiki/File:Dinteranthus%3F_Pleiospilos%3F_(3645391194).jpg>); Leonora Enking from West Sussex, England; [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0).
 
+![Royal Flush split rock: habit](./commons-47290771-habit.jpg)
+
+_habit_ - [Pleiospilos nelii (4282804191).jpg](<https://commons.wikimedia.org/wiki/File:Pleiospilos_nelii_(4282804191).jpg>); Leonora Enking from West Sussex, England; [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0).
+
+![Royal Flush split rock: habit](./commons-47290773-habit.jpg)
+
+_habit_ - [Pleiospilos nelii (4283548552).jpg](<https://commons.wikimedia.org/wiki/File:Pleiospilos_nelii_(4283548552).jpg>); Leonora Enking from West Sussex, England; [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0).
+
+![Royal Flush split rock: habit](./commons-47290777-habit.jpg)
+
+_habit_ - [Pleiospilos nelii (4282804667).jpg](<https://commons.wikimedia.org/wiki/File:Pleiospilos_nelii_(4282804667).jpg>); Leonora Enking from West Sussex, England; [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0).
+
+![Royal Flush split rock: habit](./commons-47290886-habit.jpg)
+
+_habit_ - [Pleiospilos (3772416642).jpg](<https://commons.wikimedia.org/wiki/File:Pleiospilos_(3772416642).jpg>); Leonora Enking from West Sussex, England; [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0).
+
 ## File details
 
 | File                                                         | Subject | Source                                                                                                         | Creator                                  | License                                                        |
@@ -44,5 +60,9 @@ _habit_ - [Dinteranthus? Pleiospilos? (3645391194).jpg](<https://commons.wikimed
 | [commons-188342-flower.jpg](./commons-188342-flower.jpg)     | flower  | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Pleiospilos_nelii_flower_2.jpg)                    | Stan Shebs                               | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
 | [commons-19629135-habit.jpg](./commons-19629135-habit.jpg)   | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Aizoaceae_-_Pleiospilos_nelii.JPG)                 | Hectonichus                              | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
 | [commons-47290715-habit.jpg](./commons-47290715-habit.jpg)   | habit   | [Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Dinteranthus%3F_Pleiospilos%3F_(3645391194).jpg>) | Leonora Enking from West Sussex, England | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) |
+| [commons-47290771-habit.jpg](./commons-47290771-habit.jpg)   | habit   | [Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Pleiospilos_nelii_(4282804191).jpg>)              | Leonora Enking from West Sussex, England | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) |
+| [commons-47290773-habit.jpg](./commons-47290773-habit.jpg)   | habit   | [Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Pleiospilos_nelii_(4283548552).jpg>)              | Leonora Enking from West Sussex, England | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) |
+| [commons-47290777-habit.jpg](./commons-47290777-habit.jpg)   | habit   | [Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Pleiospilos_nelii_(4282804667).jpg>)              | Leonora Enking from West Sussex, England | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) |
+| [commons-47290886-habit.jpg](./commons-47290886-habit.jpg)   | habit   | [Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Pleiospilos_(3772416642).jpg>)                    | Leonora Enking from West Sussex, England | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) |
 
 Metadata and SHA-256 hashes are also available in [the global manifest](../photo-manifest.json).

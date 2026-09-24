@@ -196,7 +196,7 @@ const metadata = [
             </p>
         )}
     </header>
-    {container && <ContainerMembers container={container} currentSlug={profile.slug} />}
+    {container?.shared && <ContainerMembers container={container} currentSlug={profile.slug} />}
     <dl class="metadata-grid">
         {metadata.map(([label, value, icon]) => (
             <div class={`profile-metadata profile-metadata-${icon}`}>
@@ -447,8 +447,9 @@ const metadata = [
         </h2>
         <p>{profile.scopeNote}</p>
         <p>
-            These photographs illustrate the working species or cultivar. They are separate from
-            photographs of the owned plant, and do not establish its identification.
+            These photographs illustrate the stated species, cultivar, genus, or component taxa.
+            They are separate from photographs of the owned plant and do not establish its
+            identification.
         </p>
         <div class="photo-grid reference-grid">
             {profile.allPhotos.map((photo) => (
@@ -486,14 +487,22 @@ const metadata = [
         </h2>
         <ul>
             <li>
-                <a href={`${repositoryUrl}/blob/main/${profile.sourcePath}`}>
+                <a
+                    href={`${repositoryUrl}/blob/main/${profile.sourcePath}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
                     <SiteIcon name="field-guide" size={28} />
                     Maintained Source Profile
                 </a>
             </li>
             {profile.allPhotos.length > 0 && (
                 <li>
-                    <a href={`${repositoryUrl}/blob/main/assets/plants/${profile.slug}/README.md`}>
+                    <a
+                        href={`${repositoryUrl}/blob/main/assets/plants/${profile.slug}/README.md`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         <SiteIcon name="photos" size={28} />
                         Complete Photo Archive and Credits
                     </a>
@@ -501,7 +510,11 @@ const metadata = [
             )}
             {profile.sellerProductLink && (
                 <li>
-                    <a href={profile.sellerProductLink.href}>
+                    <a
+                        href={profile.sellerProductLink.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         <SiteIcon name="seller" size={28} />
                         {profile.sellerProductLink.label}
                     </a>
@@ -511,6 +524,8 @@ const metadata = [
                 <li>
                     <a
                         href={`https://www.inaturalist.org/observations?taxon_name=${encodeURIComponent(profile.inaturalist.taxon)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                     >
                         <SiteIcon name="habitat" size={28} />
                         iNaturalist Observations

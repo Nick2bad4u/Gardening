@@ -38,6 +38,14 @@ _flower_ - [Close-up photograph of an Echeveria pulidonis flower.jpg](https://co
 
 _flower_ - [Echeveria pulidonis flowers.jpg](https://commons.wikimedia.org/wiki/File:Echeveria_pulidonis_flowers.jpg); Baegilmong; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
 
+![Pulido's echeveria: habit](./commons-153673286-habit.jpg)
+
+_habit_ - [Echeveria pulidonis on a pot.jpg](https://commons.wikimedia.org/wiki/File:Echeveria_pulidonis_on_a_pot.jpg); Kaartic; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+
+![Pulido's echeveria: habit](./commons-181005173-habit.jpg)
+
+_habit_ - [Succulent - Tenerife, Spain.jpg](https://commons.wikimedia.org/wiki/File:Succulent_-_Tenerife,_Spain.jpg); Christoph Strässler; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+
 ![Pulido's echeveria: detail](./commons-25037540-detail.jpg)
 
 _detail_ - [Echeveria Pulidonis from a leaf cutting (5022387951).jpg](<https://commons.wikimedia.org/wiki/File:Echeveria_Pulidonis_from_a_leaf_cutting_(5022387951).jpg>); stephen boisvert from Chicago, United States; [CC BY 2.0](https://creativecommons.org/licenses/by/2.0).
@@ -53,6 +61,8 @@ _detail_ - [Echeveria Pulidonis from a leaf cutting (5022387951).jpg](<https://c
 | [commons-122613540-habit.jpg](./commons-122613540-habit.jpg)                               | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Echeveria_Puldonis.jpg)                                     | Isaac Bee                                                 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)      |
 | [commons-128814965-flower.jpg](./commons-128814965-flower.jpg)                             | flower  | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Close-up_photograph_of_an_Echeveria_pulidonis_flower.jpg)   | Baegilmong                                                | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)      |
 | [commons-128814991-flower.jpg](./commons-128814991-flower.jpg)                             | flower  | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Echeveria_pulidonis_flowers.jpg)                            | Baegilmong                                                | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)      |
+| [commons-153673286-habit.jpg](./commons-153673286-habit.jpg)                               | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Echeveria_pulidonis_on_a_pot.jpg)                           | Kaartic                                                   | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)      |
+| [commons-181005173-habit.jpg](./commons-181005173-habit.jpg)                               | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Succulent_-_Tenerife,_Spain.jpg)                            | Christoph Strässler                                       | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)      |
 | [commons-25037540-detail.jpg](./commons-25037540-detail.jpg)                               | detail  | [Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Echeveria_Pulidonis_from_a_leaf_cutting_(5022387951).jpg>) | stephen boisvert from Chicago, United States              | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0)            |
 
 Metadata and SHA-256 hashes are also available in [the global manifest](../photo-manifest.json).

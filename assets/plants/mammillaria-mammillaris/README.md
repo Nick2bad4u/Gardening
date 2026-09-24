@@ -10,6 +10,22 @@ Collection research: [open the plant profile](../../../docs/plants/cacti/mammill
 
 ## Gallery
 
+![Woolly nipple cactus: habitat](./inaturalist-321915914-582252647-habitat.jpg)
+
+_habitat_ - [Mammillaria mammillaris reference observation](https://www.inaturalist.org/observations/321915914); (c) Laurimar Sepulveda, some rights reserved (CC BY); [CC BY](https://creativecommons.org/licenses/by/4.0/).
+
+![Woolly nipple cactus: habitat](./inaturalist-328531000-595342562-habitat.jpg)
+
+_habitat_ - [Mammillaria mammillaris reference observation](https://www.inaturalist.org/observations/328531000); (c) Laurimar Sepulveda, some rights reserved (CC BY); [CC BY](https://creativecommons.org/licenses/by/4.0/).
+
+![Woolly nipple cactus: habitat](./inaturalist-328531000-595348943-habitat.jpg)
+
+_habitat_ - [Mammillaria mammillaris reference observation](https://www.inaturalist.org/observations/328531000); (c) Laurimar Sepulveda, some rights reserved (CC BY); [CC BY](https://creativecommons.org/licenses/by/4.0/).
+
+![Woolly nipple cactus: habitat](./inaturalist-367299754-670753512-habitat.jpg)
+
+_habitat_ - [Mammillaria mammillaris reference observation](https://www.inaturalist.org/observations/367299754); (c) Laurimar Sepulveda, some rights reserved (CC BY); [CC BY](https://creativecommons.org/licenses/by/4.0/).
+
 ![Woolly nipple cactus: habit](./commons-10106507-habit.png)
 
 _habit_ - [Plukenet Phytographia Vol 1 Plate 29 Fig 1.png](https://commons.wikimedia.org/wiki/File:Plukenet_Phytographia_Vol_1_Plate_29_Fig_1.png); Leonard Plukenet; [Public domain](https://creativecommons.org/publicdomain/zero/1.0/).
@@ -36,13 +52,17 @@ _fruit-seed_ - [Cactaceae - Mammillaria mammillaris.JPG](https://commons.wikimed
 
 ## File details
 
-| File                                                                 | Subject    | Source                                                                                                      | Creator           | License                                                             |
-| -------------------------------------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------- | ----------------- | ------------------------------------------------------------------- |
-| [commons-10106507-habit.png](./commons-10106507-habit.png)           | habit      | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Plukenet_Phytographia_Vol_1_Plate_29_Fig_1.png) | Leonard Plukenet  | [Public domain](https://creativecommons.org/publicdomain/zero/1.0/) |
-| [commons-10673962-habit.jpg](./commons-10673962-habit.jpg)           | habit      | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mammillaria_mammillaris.jpg)                    | Lourdes           | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0)            |
-| [commons-108523918-habit.jpg](./commons-108523918-habit.jpg)         | habit      | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cactaceae_Mammillaria_mammillaris_1.jpg)        | NasserHalaweh     | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)      |
-| [commons-108523984-habit.jpg](./commons-108523984-habit.jpg)         | habit      | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cactaceae_Mammillaria_mammillaris_2.jpg)        | NasserHalaweh     | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)      |
-| [commons-19440297-habit.jpg](./commons-19440297-habit.jpg)           | habit      | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mammillaria_mammillaris_pm_1.JPG)               | Peter A. Mansfeld | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0)            |
-| [commons-19977882-fruit-seed.jpg](./commons-19977882-fruit-seed.jpg) | fruit-seed | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cactaceae_-_Mammillaria_mammillaris.JPG)        | Hectonichus       | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)      |
+| File                                                                                         | Subject    | Source                                                                                                      | Creator                                              | License                                                             |
+| -------------------------------------------------------------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------- |
+| [inaturalist-321915914-582252647-habitat.jpg](./inaturalist-321915914-582252647-habitat.jpg) | habitat    | [iNaturalist](https://www.inaturalist.org/observations/321915914)                                           | (c) Laurimar Sepulveda, some rights reserved (CC BY) | [CC BY](https://creativecommons.org/licenses/by/4.0/)               |
+| [inaturalist-328531000-595342562-habitat.jpg](./inaturalist-328531000-595342562-habitat.jpg) | habitat    | [iNaturalist](https://www.inaturalist.org/observations/328531000)                                           | (c) Laurimar Sepulveda, some rights reserved (CC BY) | [CC BY](https://creativecommons.org/licenses/by/4.0/)               |
+| [inaturalist-328531000-595348943-habitat.jpg](./inaturalist-328531000-595348943-habitat.jpg) | habitat    | [iNaturalist](https://www.inaturalist.org/observations/328531000)                                           | (c) Laurimar Sepulveda, some rights reserved (CC BY) | [CC BY](https://creativecommons.org/licenses/by/4.0/)               |
+| [inaturalist-367299754-670753512-habitat.jpg](./inaturalist-367299754-670753512-habitat.jpg) | habitat    | [iNaturalist](https://www.inaturalist.org/observations/367299754)                                           | (c) Laurimar Sepulveda, some rights reserved (CC BY) | [CC BY](https://creativecommons.org/licenses/by/4.0/)               |
+| [commons-10106507-habit.png](./commons-10106507-habit.png)                                   | habit      | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Plukenet_Phytographia_Vol_1_Plate_29_Fig_1.png) | Leonard Plukenet                                     | [Public domain](https://creativecommons.org/publicdomain/zero/1.0/) |
+| [commons-10673962-habit.jpg](./commons-10673962-habit.jpg)                                   | habit      | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mammillaria_mammillaris.jpg)                    | Lourdes                                              | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0)            |
+| [commons-108523918-habit.jpg](./commons-108523918-habit.jpg)                                 | habit      | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cactaceae_Mammillaria_mammillaris_1.jpg)        | NasserHalaweh                                        | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)      |
+| [commons-108523984-habit.jpg](./commons-108523984-habit.jpg)                                 | habit      | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cactaceae_Mammillaria_mammillaris_2.jpg)        | NasserHalaweh                                        | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)      |
+| [commons-19440297-habit.jpg](./commons-19440297-habit.jpg)                                   | habit      | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mammillaria_mammillaris_pm_1.JPG)               | Peter A. Mansfeld                                    | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0)            |
+| [commons-19977882-fruit-seed.jpg](./commons-19977882-fruit-seed.jpg)                         | fruit-seed | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cactaceae_-_Mammillaria_mammillaris.JPG)        | Hectonichus                                          | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)      |
 
 Metadata and SHA-256 hashes are also available in [the global manifest](../photo-manifest.json).

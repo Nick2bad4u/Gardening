@@ -34,6 +34,14 @@ _flower_ - [Espostoa melanostele pm02.jpg](https://commons.wikimedia.org/wiki/Fi
 
 _habit_ - [Teguise Guatiza - Jardin - Espostoa melanostele 01 ies.jpg](https://commons.wikimedia.org/wiki/File:Teguise_Guatiza_-_Jardin_-_Espostoa_melanostele_01_ies.jpg); Frank Vincentz; [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0).
 
+![Dwarf old man cactus: habit](./commons-17107963-habit.jpg)
+
+_habit_ - [Teguise Guatiza - Jardin - Espostoa melanostele 02 ies.jpg](https://commons.wikimedia.org/wiki/File:Teguise_Guatiza_-_Jardin_-_Espostoa_melanostele_02_ies.jpg); Frank Vincentz; [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0).
+
+![Dwarf old man cactus: habit](./commons-181979576-habit.jpg)
+
+_habit_ - [Espostoa melanostele 3.jpg](https://commons.wikimedia.org/wiki/File:Espostoa_melanostele_3.jpg); Carlo Brescia; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+
 ![Dwarf old man cactus: habitat](./commons-181980248-habitat.jpg)
 
 _habitat_ - [Espostoa melanostele 27.jpeg](https://commons.wikimedia.org/wiki/File:Espostoa_melanostele_27.jpeg); Rosario; [CC BY 4.0](https://creativecommons.org/licenses/by/4.0).
@@ -52,6 +60,8 @@ _habit_ - [Espostoa melanostele at Hampton Court.jpg](https://commons.wikimedia.
 | [commons-15599947-habit.jpg](./commons-15599947-habit.jpg)       | flower  | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Espostoa_melanostele_pm01.jpg)                                 | Peter A. Mansfeld | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0)       |
 | [commons-15599956-habit.jpg](./commons-15599956-habit.jpg)       | flower  | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Espostoa_melanostele_pm02.jpg)                                 | Peter A. Mansfeld | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0)       |
 | [commons-17107946-habit.jpg](./commons-17107946-habit.jpg)       | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Teguise_Guatiza_-_Jardin_-_Espostoa_melanostele_01_ies.jpg)    | Frank Vincentz    | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
+| [commons-17107963-habit.jpg](./commons-17107963-habit.jpg)       | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Teguise_Guatiza_-_Jardin_-_Espostoa_melanostele_02_ies.jpg)    | Frank Vincentz    | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
+| [commons-181979576-habit.jpg](./commons-181979576-habit.jpg)     | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Espostoa_melanostele_3.jpg)                                    | Carlo Brescia     | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | [commons-181980248-habitat.jpg](./commons-181980248-habitat.jpg) | habitat | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Espostoa_melanostele_27.jpeg)                                  | Rosario           | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)       |
 | [commons-50015370-flower.jpg](./commons-50015370-flower.jpg)     | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Espostoa_melanostele_at_Hampton_Court.jpg)                     | Jonathan Cardy    | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
 
