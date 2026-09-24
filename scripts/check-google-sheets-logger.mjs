@@ -35,7 +35,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.30.0");
+assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.30.1");
 for (const name of [
     "getWebCorrectionEntry",
     "previewWebObservationCorrection",

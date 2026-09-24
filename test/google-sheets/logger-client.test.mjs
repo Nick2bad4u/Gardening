@@ -2193,6 +2193,15 @@ describe("correction draft retention and discard", () => {
 
         expect(pending).toContain("saved-observation-1");
 
+        const reviewButton = queryElement(
+            window.document,
+            "#correctionReviewButton",
+            HTMLButtonElement
+        );
+
+        expect(reviewButton.hidden).toBe(true);
+        expect(reviewButton.disabled).toBe(true);
+
         for (const id of ["correctionDiscard", "correctionDiscardEditor"]) {
             expect(
                 queryElement(window.document, `#${id}`, HTMLButtonElement)
@@ -2308,7 +2317,7 @@ describe("saved History move and deletion controls", () => {
         expect(
             queryElement(window.document, "#correctionActionHint", HTMLElement)
                 .textContent
-        ).toContain("audit history");
+        ).toContain("audit record is kept");
 
         editCorrection(window, "reason", "Accidental duplicate");
         submitCorrectionReview(window);
@@ -2473,6 +2482,172 @@ describe("saved History move and deletion controls", () => {
 describe("saved History correction editor and durable recovery", () => {
     afterEach(restoreLoggerMocks);
 
+    it("brings correction feedback into view without moving keyboard focus or disrupting later edits", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createCorrectionLogger();
+        openFirstCorrection(window);
+        const content = queryElement(
+            window.document,
+            "#correctionContent",
+            HTMLElement
+        );
+        const reviewButton = queryElement(
+            window.document,
+            "#correctionReviewButton",
+            HTMLButtonElement
+        );
+        content.scrollTop = 250;
+        reviewButton.focus();
+        reviewButton.click();
+
+        expect(content.scrollTop).toBe(0);
+        expect(window.document.activeElement).toBe(reviewButton);
+        expect(
+            queryElement(window.document, "#correctionStatus", HTMLElement)
+                .textContent
+        ).toContain("A reason for correction is required");
+        expect(
+            calls.some(
+                (call) => call.method === "previewWebObservationCorrection"
+            )
+        ).toBe(false);
+
+        const reason = queryElement(
+            window.document,
+            "#correctionReason",
+            HTMLTextAreaElement
+        );
+        reason.focus();
+        content.scrollTop = 250;
+        editCorrection(window, "reason", "Correct a transposed weight");
+
+        expect(content.scrollTop).toBe(250);
+        expect(window.document.activeElement).toBe(reason);
+    });
+
+    it("keeps the footer review action associated with its form and safe through loading, retry and review", () => {
+        expect.hasAssertions();
+
+        const { behaviors, calls, context, window } = createCorrectionLogger();
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebCorrectionEntry">[]} */
+        const loads = [];
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"previewWebObservationCorrection">[]} */
+        const previews = [];
+        behaviors.getWebCorrectionEntry = (handler) => {
+            loads.push(handler);
+        };
+        behaviors.previewWebObservationCorrection = (handler) => {
+            previews.push(handler);
+        };
+        const reviewButton = queryElement(
+            window.document,
+            "#correctionReviewButton",
+            HTMLButtonElement
+        );
+        const form = queryElement(
+            window.document,
+            "#correctionForm",
+            HTMLFormElement
+        );
+
+        expect(reviewButton.form).toBe(form);
+        expect(form.contains(reviewButton)).toBe(false);
+
+        openFirstCorrection(window);
+
+        expect(reviewButton.hidden).toBe(true);
+        expect(reviewButton.disabled).toBe(true);
+
+        reviewButton.click();
+
+        expect(previews).toHaveLength(0);
+
+        required(loads[0]).success(context);
+
+        expect(reviewButton.hidden).toBe(false);
+        expect(reviewButton.disabled).toBe(false);
+
+        editCorrection(window, "weight", "432.5");
+        editCorrection(window, "reason", "Transposed digits on scale");
+        reviewButton.click();
+
+        expect(previews).toHaveLength(1);
+        expect(reviewButton.disabled).toBe(true);
+
+        reviewButton.click();
+
+        expect(previews).toHaveLength(1);
+
+        required(previews[0]).failure(new Error("Temporary connection loss"));
+
+        expect(reviewButton.hidden).toBe(false);
+        expect(reviewButton.disabled).toBe(false);
+
+        reviewButton.click();
+        const preview = required(previews[1]);
+        preview.success(correctionPreview(context, preview.args[0]));
+
+        expect(reviewButton.hidden).toBe(true);
+        expect(
+            queryElement(
+                window.document,
+                "#correctionConfirm",
+                HTMLButtonElement
+            ).hidden
+        ).toBe(false);
+        expect(
+            calls.filter(
+                (call) => call.method === "saveWebObservationCorrection"
+            )
+        ).toHaveLength(0);
+
+        clickCorrection(window, "correctionEdit");
+
+        expect(reviewButton.hidden).toBe(false);
+        expect(reviewButton.disabled).toBe(false);
+        expect(
+            queryElement(
+                window.document,
+                "#correctionField-weight",
+                HTMLInputElement
+            ).value
+        ).toBe("432.5");
+    });
+
+    it("keeps review unavailable after an entry load fails until a successful reload", () => {
+        expect.hasAssertions();
+
+        const { behaviors, context, window } = createCorrectionLogger();
+        behaviors.getWebCorrectionEntry = ({ failure }) => {
+            failure(new Error("Could not load saved entry"));
+        };
+        openFirstCorrection(window);
+        const reviewButton = queryElement(
+            window.document,
+            "#correctionReviewButton",
+            HTMLButtonElement
+        );
+
+        expect(reviewButton.hidden).toBe(true);
+        expect(reviewButton.disabled).toBe(true);
+
+        behaviors.getWebCorrectionEntry = ({ success }) => {
+            success(context);
+        };
+        clickCorrection(window, "correctionReload");
+
+        expect(reviewButton.hidden).toBe(false);
+        expect(reviewButton.disabled).toBe(false);
+        expect(
+            queryElement(
+                window.document,
+                "#correctionDetails",
+                HTMLDetailsElement
+            ).open
+        ).toBe(false);
+    });
+
     it("fetches a full Weigh entry, reviews safe stacked values and confirms without changing the ordinary draft", () => {
         expect.hasAssertions();
 
@@ -2537,6 +2712,10 @@ describe("saved History correction editor and durable recovery", () => {
         expect(review.textContent).toContain("Only this event is corrected");
         expect(
             queryElement(window.document, "#correctionIdentity", HTMLElement)
+                .textContent
+        ).toBe("Moon cactus · P01 · Weigh");
+        expect(
+            queryElement(window.document, "#correctionMetadata", HTMLElement)
                 .textContent
         ).toContain("P01 · Weigh · Setup 2 · Historical label A1");
         expect(
@@ -2813,6 +2992,14 @@ describe("saved History correction editor and durable recovery", () => {
         ).args[0];
         const changedDate = new Date("2026-09-04T11:22:33");
         const deviceFormatter = new Intl.DateTimeFormat();
+        const dateInput = queryElement(
+            window.document,
+            "#correctionField-observationDate",
+            HTMLInputElement
+        );
+        const timezoneHintId = required(
+            dateInput.getAttribute("aria-describedby")
+        );
 
         expect(structuredClone(payload.changes)).toStrictEqual(
             structuredClone({
@@ -2821,11 +3008,8 @@ describe("saved History correction editor and durable recovery", () => {
             })
         );
         expect(
-            queryElement(
-                window.document,
-                'label[for="correctionField-observationDate"]',
-                HTMLElement
-            ).textContent
+            queryElement(window.document, `#${timezoneHintId}`, HTMLElement)
+                .textContent
         ).toContain(deviceFormatter.resolvedOptions().timeZone);
     });
 
@@ -3045,7 +3229,7 @@ describe("saved History correction editor and durable recovery", () => {
         required(loads[0]).success(context);
 
         expect(
-            queryElement(window.document, "#correctionIdentity", HTMLElement)
+            queryElement(window.document, "#correctionMetadata", HTMLElement)
                 .textContent
         ).toContain("second-observation");
         expect(
@@ -3060,13 +3244,22 @@ describe("saved History correction editor and durable recovery", () => {
         editCorrection(window, "medium", "fresh medium");
         editCorrection(window, "reason", "correct medium");
         submitCorrectionReview(window);
+        const details = queryElement(
+            window.document,
+            "#correctionDetails",
+            HTMLDetailsElement
+        );
+        details.open = true;
         openFirstCorrection(window);
+
+        expect(details.open).toBe(false);
+
         required(loads[2]).success(context);
         const late = required(previews[0]);
         late.success(correctionPreview(secondContext, late.args[0]));
 
         expect(
-            queryElement(window.document, "#correctionIdentity", HTMLElement)
+            queryElement(window.document, "#correctionMetadata", HTMLElement)
                 .textContent
         ).toContain("saved-observation-1");
         expect(
@@ -3098,6 +3291,15 @@ describe("saved History correction editor and durable recovery", () => {
             ).value
         ).toBe("432.5");
 
+        const reviewButton = queryElement(
+            window.document,
+            "#correctionReviewButton",
+            HTMLButtonElement
+        );
+
+        expect(reviewButton.disabled).toBe(true);
+
+        reviewButton.click();
         submitCorrectionReview(window);
 
         expect(
@@ -3115,6 +3317,8 @@ describe("saved History correction editor and durable recovery", () => {
                 HTMLInputElement
             ).value
         ).toBe("10");
+        expect(reviewButton.hidden).toBe(false);
+        expect(reviewButton.disabled).toBe(false);
         expect(
             calls.filter((call) => call.method === "getWebCorrectionEntry")
         ).toHaveLength(2);

@@ -153,6 +153,8 @@ Retry the existing request after a connection problem rather than immediately cr
 
 Correct entry operates on one event, not every row from the same Save. Choose whether to edit its details, move it to another plant, or delete it. Each action requires a reason, a preview, and confirmation. A move shows the destination plant, label, and pot setup before saving. The observation time, measurements, and other untouched details are preserved.
 
+The correction dialog keeps its action buttons visible while you scroll the form. Open **Entry details** for the saved setup, historical label, and observation ID. **Back** returns from the preview to your edits; **Close** keeps an unsent draft available to resume.
+
 Edits and moves append a replacement and exclude the original from active calculations. Deletion excludes the original and saves an excluded audit record; neither record contributes to care history or calculations. Event type remains fixed. Repot entries cannot be moved or deleted through this form because other observations depend on their setup boundary. A date change or move with an uncertain setup can also be refused; coordinated setup changes need a separately reviewed correction.
 
 Do not delete entire History rows, overwrite a formula on a Pxx page, or repeatedly add “fixed” measurements without excluding the incorrect ancestor. See the [correction runbook](../scripts/google-sheets/README.md#saved-entry-corrections) for recovery behavior.

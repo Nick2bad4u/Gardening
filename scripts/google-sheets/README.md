@@ -27,6 +27,25 @@ Each active **P01–P32, P35, and P36** page also has a **Time between waterings
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## September 24 compact correction dialog
+
+Logger **5.30.1** makes the saved-entry correction dialog easier to use on a
+phone. A short plant/event header replaces the expanded record identity;
+**Entry details** retains the setup, historical label, and observation ID.
+The form scrolls between a solid header and an always-visible action bar.
+Shorter help text, two-row notes, and compact controls retain 44-pixel touch
+targets and an accessible device-time description.
+
+Edit, move, delete, draft recovery, and explicit confirmation keep their
+existing contracts. The footer's Review button belongs to the correction
+form and is disabled during loading, pending requests, and stale drafts.
+Validation passed **1,052 logger tests**, including **290 client tests**;
+server coverage remains **99.5% statements, 98.2% branches, 100% functions,
+and 99.71% lines**. This presentation release changes no workbook schema or
+server behavior and needs no installer or trigger replacement. Deployment
+uses an immutable version at the existing production URL; private deployment
+and live verification receipts are under `.cache/compact-correction-20260924/`.
+
 ## September 24 perlite spelling and split-rock species corrections
 
 At the owner's request, **P36 / #10 / Succulent-16** is now recorded as
