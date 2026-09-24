@@ -12,15 +12,15 @@ Collection research: [open the plant profile](../../../docs/plants/starter/eupho
 
 ![Dragon's Egg: habitat](./inaturalist-10791798-15102244-habitat.jpg)
 
-_habitat_ - [Euphorbia obesa in habitat](https://www.inaturalist.org/observations/10791798); (c) Andrew Hankey, some rights reserved (CC BY-SA); [CC BY SA](https://creativecommons.org/licenses/by/4.0/).
+_habitat_ - [Euphorbia obesa in habitat](https://www.inaturalist.org/observations/10791798); (c) Andrew Hankey, some rights reserved (CC BY-SA); [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ![Dragon's Egg: habitat](./inaturalist-10792747-15104052-habitat.jpg)
 
-_habitat_ - [Euphorbia obesa in habitat](https://www.inaturalist.org/observations/10792747); (c) Andrew Hankey, some rights reserved (CC BY-SA); [CC BY SA](https://creativecommons.org/licenses/by/4.0/).
+_habitat_ - [Euphorbia obesa in habitat](https://www.inaturalist.org/observations/10792747); (c) Andrew Hankey, some rights reserved (CC BY-SA); [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ![Dragon's Egg: habitat](./inaturalist-218854729-387317835-habitat.jpg)
 
-_habitat_ - [Euphorbia obesa in habitat](https://www.inaturalist.org/observations/218854729); (c) Andrew Hankey, some rights reserved (CC BY-SA); [CC BY SA](https://creativecommons.org/licenses/by/4.0/).
+_habitat_ - [Euphorbia obesa in habitat](https://www.inaturalist.org/observations/218854729); (c) Andrew Hankey, some rights reserved (CC BY-SA); [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ![Dragon's Egg: habit](./commons-10015952-habit.jpg)
 
@@ -54,9 +54,9 @@ _habit_ - [Euphorbia obesa symmetrica 387317826.jpg](https://commons.wikimedia.o
 
 | File                                                                                         | Subject | Source                                                                                                                        | Creator                                            | License                                                         |
 | -------------------------------------------------------------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | --------------------------------------------------------------- |
-| [inaturalist-10791798-15102244-habitat.jpg](./inaturalist-10791798-15102244-habitat.jpg)     | habitat | [iNaturalist](https://www.inaturalist.org/observations/10791798)                                                              | (c) Andrew Hankey, some rights reserved (CC BY-SA) | [CC BY SA](https://creativecommons.org/licenses/by/4.0/)        |
-| [inaturalist-10792747-15104052-habitat.jpg](./inaturalist-10792747-15104052-habitat.jpg)     | habitat | [iNaturalist](https://www.inaturalist.org/observations/10792747)                                                              | (c) Andrew Hankey, some rights reserved (CC BY-SA) | [CC BY SA](https://creativecommons.org/licenses/by/4.0/)        |
-| [inaturalist-218854729-387317835-habitat.jpg](./inaturalist-218854729-387317835-habitat.jpg) | habitat | [iNaturalist](https://www.inaturalist.org/observations/218854729)                                                             | (c) Andrew Hankey, some rights reserved (CC BY-SA) | [CC BY SA](https://creativecommons.org/licenses/by/4.0/)        |
+| [inaturalist-10791798-15102244-habitat.jpg](./inaturalist-10791798-15102244-habitat.jpg)     | habitat | [iNaturalist](https://www.inaturalist.org/observations/10791798)                                                              | (c) Andrew Hankey, some rights reserved (CC BY-SA) | [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)     |
+| [inaturalist-10792747-15104052-habitat.jpg](./inaturalist-10792747-15104052-habitat.jpg)     | habitat | [iNaturalist](https://www.inaturalist.org/observations/10792747)                                                              | (c) Andrew Hankey, some rights reserved (CC BY-SA) | [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)     |
+| [inaturalist-218854729-387317835-habitat.jpg](./inaturalist-218854729-387317835-habitat.jpg) | habitat | [iNaturalist](https://www.inaturalist.org/observations/218854729)                                                             | (c) Andrew Hankey, some rights reserved (CC BY-SA) | [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)     |
 | [commons-10015952-habit.jpg](./commons-10015952-habit.jpg)                                   | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Euphorbia_obesa_001.JPG)                                          | H. Zell                                            | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)  |
 | [commons-10015978-flower.jpg](./commons-10015978-flower.jpg)                                 | flower  | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Euphorbia_obesa_002.JPG)                                          | H. Zell                                            | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)  |
 | [commons-11506691-habitat.jpg](./commons-11506691-habitat.jpg)                               | habitat | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Euphorbia_obesa_3.jpg)                                            | Ryan Somma                                         | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0)  |

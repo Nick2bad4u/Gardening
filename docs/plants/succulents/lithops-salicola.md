@@ -1,4 +1,4 @@
-# Lithops salicola (probable)
+# Lithops salicola
 
 - Inventory: Succulent-15B — Probable _Lithops salicola_; cultivar unconfirmed
 - Label ID: `#9` — shared physical label, assigned 2026-09-21
@@ -28,7 +28,7 @@ description, but _L. olivacea_ and open-windowed forms of _L. lesliei_ remain
 alternatives. Green coloration alone is not diagnostic and does not establish
 a named cultivar.
 
-Keep **probable** visible wherever the species is displayed. The nursery labels
+The identification remains **probable**; the nursery labels
 say only _Lithops_ spp. Green describes typical _L. salicola_ flowers as white,
 whereas the two alternatives above generally have yellow flowers, sometimes
 with a white center. A flower documented for this particular group could

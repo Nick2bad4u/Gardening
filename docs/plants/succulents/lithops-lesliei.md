@@ -1,4 +1,4 @@
-# Lithops lesliei (probable)
+# Lithops lesliei
 
 - Inventory: Succulent-15A — Probable _Lithops lesliei_; variety and cultivar unconfirmed
 - Label ID: `#9` — shared physical label, assigned 2026-09-21
@@ -28,7 +28,7 @@ network in Keith Green's specialist description. _L. aucampiae_ remains a
 useful alternative; these photographs alone do not separate them securely.
 Brown coloration does not establish a variety or named cultivar.
 
-Keep **probable** visible when displaying this name. The source labels establish
+The identification remains **probable**. The source labels establish
 only the genus, and neither a species-specific nursery record nor diagnostic
 flower evidence is available for these heads. Green describes ordinary
 _L. lesliei_ flowers as yellow; a future flower would add evidence, not by itself

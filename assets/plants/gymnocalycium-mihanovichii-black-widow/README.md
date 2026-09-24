@@ -2,7 +2,7 @@
 
 _Gymnocalycium mihanovichii_ - Cactus-09
 
-Collection label ID: `G1`; permanent tracker ID: `P27`.
+Collection label ID: `G1`.
 
 Variegated and normal species references, including cultivated observations; no reusable image is assumed to show the exact Black Widow cultivar.
 
@@ -34,15 +34,35 @@ _flower_ - [GymnocalyciumMihanovichii.jpg](https://commons.wikimedia.org/wiki/Fi
 
 _detail_ - [Cactaceae in Suan Luang Rama 9 Photographed by Trisorn Triboon (58).jpg](<https://commons.wikimedia.org/wiki/File:Cactaceae_in_Suan_Luang_Rama_9_Photographed_by_Trisorn_Triboon_(58).jpg>); Tris T7; [CC BY 3.0](https://creativecommons.org/licenses/by/3.0).
 
+![Black Widow chin cactus: flower](./../gymnocalycium-mihanovichii-variegated/commons-133539514-flower.jpg)
+
+_flower_ - [Moon Cactus Gymnocalycium Mihanovichii Variegata Lady Star.jpg](https://commons.wikimedia.org/wiki/File:Moon_Cactus_Gymnocalycium_Mihanovichii_Variegata_Lady_Star.jpg); CactusManHere; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+
+![Black Widow chin cactus: habit](./../gymnocalycium-mihanovichii-variegated/commons-133539718-habit.jpg)
+
+_habit_ - [Moon Cactus Gymnocalycium Mihanovichii Variegata Pink Diamond.jpg](https://commons.wikimedia.org/wiki/File:Moon_Cactus_Gymnocalycium_Mihanovichii_Variegata_Pink_Diamond.jpg); CactusManHere; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+
+![Black Widow chin cactus: habit](./../gymnocalycium-mihanovichii-variegated/commons-133539800-habit.jpg)
+
+_habit_ - [Moon Cactus Gymnocalycium Mihanovichii Variegata Tiger.jpg](https://commons.wikimedia.org/wiki/File:Moon_Cactus_Gymnocalycium_Mihanovichii_Variegata_Tiger.jpg); CactusManHere; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+
+![Black Widow chin cactus: detail](./../gymnocalycium-mihanovichii-variegated/commons-133539917-detail.jpg)
+
+_detail_ - [Moon Cactus Gymnocalycium Mihanovichii Variegata Fortie.jpg](https://commons.wikimedia.org/wiki/File:Moon_Cactus_Gymnocalycium_Mihanovichii_Variegata_Fortie.jpg); CactusManHere; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+
 ## File details
 
-| File                                                                                         | Subject | Source                                                                                                                                 | Creator                                                | License                                                             |
-| -------------------------------------------------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------- |
-| [inaturalist-119400162-201837434-habitat.jpg](./inaturalist-119400162-201837434-habitat.jpg) | habitat | [iNaturalist](https://www.inaturalist.org/observations/119400162)                                                                      | (c) Luis Recalde, some rights reserved (CC BY)         | [CC BY](https://creativecommons.org/licenses/by/4.0/)               |
-| [inaturalist-168842048-292657179-habitat.jpg](./inaturalist-168842048-292657179-habitat.jpg) | habitat | [iNaturalist](https://www.inaturalist.org/observations/168842048)                                                                      | (c) Romi Galeota Lencina, some rights reserved (CC BY) | [CC BY](https://creativecommons.org/licenses/by/4.0/)               |
-| [commons-12352443-habit.jpg](./commons-12352443-habit.jpg)                                   | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Gymnocalycium_Liberec_1.jpg)                                               | Karelj                                                 | [Public domain](https://creativecommons.org/publicdomain/zero/1.0/) |
-| [commons-138652485-habit.jpg](./commons-138652485-habit.jpg)                                 | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cactus_rojo.jpg)                                                           | Barracudema                                            | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)            |
-| [commons-160386883-flower.jpg](./commons-160386883-flower.jpg)                               | flower  | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:GymnocalyciumMihanovichii.jpg)                                             | Petr Vodička                                           | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)      |
-| [commons-74976671-detail.jpg](./commons-74976671-detail.jpg)                                 | detail  | [Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Cactaceae_in_Suan_Luang_Rama_9_Photographed_by_Trisorn_Triboon_(58).jpg>) | Tris T7                                                | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0)            |
+| File                                                                                                                                             | Subject | Source                                                                                                                                 | Creator                                                | License                                                             |
+| ------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------- |
+| [inaturalist-119400162-201837434-habitat.jpg](./inaturalist-119400162-201837434-habitat.jpg)                                                     | habitat | [iNaturalist](https://www.inaturalist.org/observations/119400162)                                                                      | (c) Luis Recalde, some rights reserved (CC BY)         | [CC BY](https://creativecommons.org/licenses/by/4.0/)               |
+| [inaturalist-168842048-292657179-habitat.jpg](./inaturalist-168842048-292657179-habitat.jpg)                                                     | habitat | [iNaturalist](https://www.inaturalist.org/observations/168842048)                                                                      | (c) Romi Galeota Lencina, some rights reserved (CC BY) | [CC BY](https://creativecommons.org/licenses/by/4.0/)               |
+| [commons-12352443-habit.jpg](./commons-12352443-habit.jpg)                                                                                       | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Gymnocalycium_Liberec_1.jpg)                                               | Karelj                                                 | [Public domain](https://creativecommons.org/publicdomain/zero/1.0/) |
+| [commons-138652485-habit.jpg](./commons-138652485-habit.jpg)                                                                                     | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cactus_rojo.jpg)                                                           | Barracudema                                            | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)            |
+| [commons-160386883-flower.jpg](./commons-160386883-flower.jpg)                                                                                   | flower  | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:GymnocalyciumMihanovichii.jpg)                                             | Petr Vodička                                           | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)      |
+| [commons-74976671-detail.jpg](./commons-74976671-detail.jpg)                                                                                     | detail  | [Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Cactaceae_in_Suan_Luang_Rama_9_Photographed_by_Trisorn_Triboon_(58).jpg>) | Tris T7                                                | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0)            |
+| [../gymnocalycium-mihanovichii-variegated/commons-133539514-flower.jpg](./../gymnocalycium-mihanovichii-variegated/commons-133539514-flower.jpg) | flower  | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Moon_Cactus_Gymnocalycium_Mihanovichii_Variegata_Lady_Star.jpg)            | CactusManHere                                          | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)      |
+| [../gymnocalycium-mihanovichii-variegated/commons-133539718-habit.jpg](./../gymnocalycium-mihanovichii-variegated/commons-133539718-habit.jpg)   | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Moon_Cactus_Gymnocalycium_Mihanovichii_Variegata_Pink_Diamond.jpg)         | CactusManHere                                          | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)      |
+| [../gymnocalycium-mihanovichii-variegated/commons-133539800-habit.jpg](./../gymnocalycium-mihanovichii-variegated/commons-133539800-habit.jpg)   | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Moon_Cactus_Gymnocalycium_Mihanovichii_Variegata_Tiger.jpg)                | CactusManHere                                          | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)      |
+| [../gymnocalycium-mihanovichii-variegated/commons-133539917-detail.jpg](./../gymnocalycium-mihanovichii-variegated/commons-133539917-detail.jpg) | detail  | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Moon_Cactus_Gymnocalycium_Mihanovichii_Variegata_Fortie.jpg)               | CactusManHere                                          | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)      |
 
 Metadata and SHA-256 hashes are also available in [the global manifest](../photo-manifest.json).

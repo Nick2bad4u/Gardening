@@ -12,11 +12,11 @@ Collection research: [open the plant profile](../../../docs/plants/succulents/po
 
 ![Elephant bush: flower](./inaturalist-11066286-15615094-habitat.jpg)
 
-_flower_ - [Portulacaria afra in habitat](https://www.inaturalist.org/observations/11066286); (c) Nicola van Berkel, some rights reserved (CC BY-SA); [CC BY SA](https://creativecommons.org/licenses/by/4.0/).
+_flower_ - [Portulacaria afra in habitat](https://www.inaturalist.org/observations/11066286); (c) Nicola van Berkel, some rights reserved (CC BY-SA); [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ![Elephant bush: habitat](./inaturalist-219070832-387718905-habitat.jpg)
 
-_habitat_ - [Portulacaria afra in habitat](https://www.inaturalist.org/observations/219070832); (c) Andrew Hankey, some rights reserved (CC BY-SA); [CC BY SA](https://creativecommons.org/licenses/by/4.0/).
+_habitat_ - [Portulacaria afra in habitat](https://www.inaturalist.org/observations/219070832); (c) Andrew Hankey, some rights reserved (CC BY-SA); [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ![Elephant bush: habitat](./inaturalist-267338553-480420123-habitat.jpg)
 
@@ -54,8 +54,8 @@ _flower_ - [Portulacaria afra 1DS-II 2-5242.jpg](https://commons.wikimedia.org/w
 
 | File                                                                                         | Subject | Source                                                                                                            | Creator                                                                                   | License                                                         |
 | -------------------------------------------------------------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| [inaturalist-11066286-15615094-habitat.jpg](./inaturalist-11066286-15615094-habitat.jpg)     | flower  | [iNaturalist](https://www.inaturalist.org/observations/11066286)                                                  | (c) Nicola van Berkel, some rights reserved (CC BY-SA)                                    | [CC BY SA](https://creativecommons.org/licenses/by/4.0/)        |
-| [inaturalist-219070832-387718905-habitat.jpg](./inaturalist-219070832-387718905-habitat.jpg) | habitat | [iNaturalist](https://www.inaturalist.org/observations/219070832)                                                 | (c) Andrew Hankey, some rights reserved (CC BY-SA)                                        | [CC BY SA](https://creativecommons.org/licenses/by/4.0/)        |
+| [inaturalist-11066286-15615094-habitat.jpg](./inaturalist-11066286-15615094-habitat.jpg)     | flower  | [iNaturalist](https://www.inaturalist.org/observations/11066286)                                                  | (c) Nicola van Berkel, some rights reserved (CC BY-SA)                                    | [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)     |
+| [inaturalist-219070832-387718905-habitat.jpg](./inaturalist-219070832-387718905-habitat.jpg) | habitat | [iNaturalist](https://www.inaturalist.org/observations/219070832)                                                 | (c) Andrew Hankey, some rights reserved (CC BY-SA)                                        | [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)     |
 | [inaturalist-267338553-480420123-habitat.jpg](./inaturalist-267338553-480420123-habitat.jpg) | habitat | [iNaturalist](https://www.inaturalist.org/observations/267338553)                                                 | (c) Rosario Douglas, some rights reserved (CC BY)                                         | [CC BY](https://creativecommons.org/licenses/by/4.0/)           |
 | [inaturalist-342579633-623887112-habitat.jpg](./inaturalist-342579633-623887112-habitat.jpg) | habitat | [iNaturalist](https://www.inaturalist.org/observations/342579633)                                                 | (c) Henry de Lange, some rights reserved (CC BY)                                          | [CC BY](https://creativecommons.org/licenses/by/4.0/)           |
 | [inaturalist-342711016-624135273-habitat.jpg](./inaturalist-342711016-624135273-habitat.jpg) | habitat | [iNaturalist](https://www.inaturalist.org/observations/342711016)                                                 | (c) Henry de Lange, some rights reserved (CC BY)                                          | [CC BY](https://creativecommons.org/licenses/by/4.0/)           |

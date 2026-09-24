@@ -55,8 +55,8 @@
     "P32": [["tradescantia-spathacea-tricolor", "Tricolor oyster plant"]],
     "P35": [
         ["lithops-shared-planter", "Lithops shared planter"],
-        ["lithops-lesliei", "Lithops lesliei (probable)"],
-        ["lithops-salicola", "Lithops salicola (probable)"]
+        ["lithops-lesliei", "Lithops lesliei"],
+        ["lithops-salicola", "Lithops salicola"]
     ],
     "P36": [["pleiospilos-nelii", "Split rock"]]
 }

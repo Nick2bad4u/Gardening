@@ -2,11 +2,9 @@
 
 _Austrocylindropuntia subulata_ - Cactus-07
 
-Collection label ID: `H3`. Tracker ID: `P26`.
+Collection label ID: `H3`.
 
-Species-reference photographs. The collection plant was received and
-owner-inspected on 2026-08-28; these licensed images do not document its arrival
-condition, individual form, or exact identity.
+Species-reference photographs. The collection plant was received and owner-inspected on 2026-08-28; these licensed images do not document its arrival condition, individual form, or exact identity.
 
 Collection research: [open the plant profile](../../../docs/plants/cacti/austrocylindropuntia-subulata.md).
 
@@ -36,15 +34,35 @@ _habit_ - [Austrocylindropuntia subulata en el distrito de Cajacay.jpg](https://
 
 _habit_ - [Cacti1004.jpg](https://commons.wikimedia.org/wiki/File:Cacti1004.jpg); Christer Johansson; [CC BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5).
 
+![Eve's needle cactus: habit](./commons-14281574-habit.jpg)
+
+_habit_ - [Austrocylindropuntia subulata (Cactaceae).JPG](<https://commons.wikimedia.org/wiki/File:Austrocylindropuntia_subulata_(Cactaceae).JPG>); Magnus Manske; [CC BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5).
+
+![Eve's needle cactus: habit](./commons-146008762-habit.jpg)
+
+_habit_ - [Austrocylindropuntia subulata 2023-10-31 01.jpg](https://commons.wikimedia.org/wiki/File:Austrocylindropuntia_subulata_2023-10-31_01.jpg); Agnieszka Kwiecień, Nova; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+
+![Eve's needle cactus: habit](./commons-146008763-habit.jpg)
+
+_habit_ - [Austrocylindropuntia subulata 2023-10-31 02.jpg](https://commons.wikimedia.org/wiki/File:Austrocylindropuntia_subulata_2023-10-31_02.jpg); Agnieszka Kwiecień, Nova; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+
+![Eve's needle cactus: habit](./commons-146008764-habit.jpg)
+
+_habit_ - [Austrocylindropuntia subulata 2023-10-31 03.jpg](https://commons.wikimedia.org/wiki/File:Austrocylindropuntia_subulata_2023-10-31_03.jpg); Agnieszka Kwiecień, Nova; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+
 ## File details
 
-| File                                                           | Subject | Source                                                                                                                   | Creator            | License                                                        |
-| -------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------ | -------------------------------------------------------------- |
-| [commons-1029664-habit.jpg](./commons-1029664-habit.jpg)       | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Austrocylindropuntia_subulata1000.jpg)                       | Christer Johansson | [CC BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5) |
-| [commons-115942016-detail.jpg](./commons-115942016-detail.jpg) | detail  | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Austrocylindropuntia_subulata_spines.jpg)                    | Willow Coville     | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| [commons-118100070-habit.jpg](./commons-118100070-habit.jpg)   | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Colibri_en_su_nido.jpg)                                      | Mael Martin        | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| [commons-118100071-habit.jpg](./commons-118100071-habit.jpg)   | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Colibri_gigante_empollando_en_su_nido_en_un_cactus.jpg)      | Mael Martin        | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| [commons-118625826-habit.jpg](./commons-118625826-habit.jpg)   | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Austrocylindropuntia_subulata_en_el_distrito_de_Cajacay.jpg) | Lidsay Brito       | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| [commons-1280415-habit.jpg](./commons-1280415-habit.jpg)       | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cacti1004.jpg)                                               | Christer Johansson | [CC BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5) |
+| File                                                           | Subject | Source                                                                                                                   | Creator                  | License                                                        |
+| -------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------ | -------------------------------------------------------------- |
+| [commons-1029664-habit.jpg](./commons-1029664-habit.jpg)       | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Austrocylindropuntia_subulata1000.jpg)                       | Christer Johansson       | [CC BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5) |
+| [commons-115942016-detail.jpg](./commons-115942016-detail.jpg) | detail  | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Austrocylindropuntia_subulata_spines.jpg)                    | Willow Coville           | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| [commons-118100070-habit.jpg](./commons-118100070-habit.jpg)   | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Colibri_en_su_nido.jpg)                                      | Mael Martin              | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| [commons-118100071-habit.jpg](./commons-118100071-habit.jpg)   | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Colibri_gigante_empollando_en_su_nido_en_un_cactus.jpg)      | Mael Martin              | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| [commons-118625826-habit.jpg](./commons-118625826-habit.jpg)   | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Austrocylindropuntia_subulata_en_el_distrito_de_Cajacay.jpg) | Lidsay Brito             | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| [commons-1280415-habit.jpg](./commons-1280415-habit.jpg)       | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cacti1004.jpg)                                               | Christer Johansson       | [CC BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5) |
+| [commons-14281574-habit.jpg](./commons-14281574-habit.jpg)     | habit   | [Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Austrocylindropuntia_subulata_(Cactaceae).JPG>)             | Magnus Manske            | [CC BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5) |
+| [commons-146008762-habit.jpg](./commons-146008762-habit.jpg)   | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Austrocylindropuntia_subulata_2023-10-31_01.jpg)             | Agnieszka Kwiecień, Nova | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| [commons-146008763-habit.jpg](./commons-146008763-habit.jpg)   | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Austrocylindropuntia_subulata_2023-10-31_02.jpg)             | Agnieszka Kwiecień, Nova | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| [commons-146008764-habit.jpg](./commons-146008764-habit.jpg)   | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Austrocylindropuntia_subulata_2023-10-31_03.jpg)             | Agnieszka Kwiecień, Nova | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 
 Metadata and SHA-256 hashes are also available in [the global manifest](../photo-manifest.json).

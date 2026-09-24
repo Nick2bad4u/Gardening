@@ -2,7 +2,7 @@
 
 _Echeveria Raindrops_ - Succulent-07
 
-Collection label ID: `H2`; permanent tracker ID: `P25`.
+Collection label ID: `H2`.
 
 Cultivar search results are prioritized; broad Echeveria images are genus context and may not show the Raindrops leaf bumps.
 
@@ -18,6 +18,10 @@ _habitat_ - [Echeveria reference observation](https://www.inaturalist.org/observ
 
 _habit_ - [20210623 Hortus botanicus Leiden 07 - Echeveria.jpg](https://commons.wikimedia.org/wiki/File:20210623_Hortus_botanicus_Leiden_07_-_Echeveria.jpg); Rudolphous; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
 
+![Raindrops echeveria: habit](./commons-112292377-habit.jpg)
+
+_habit_ - [Echeveria peruviana en Tacna.jpg](https://commons.wikimedia.org/wiki/File:Echeveria_peruviana_en_Tacna.jpg); Daniel Marquiegui; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+
 ![Raindrops echeveria: habitat](./commons-112816717-habitat.jpg)
 
 _habitat_ - [Echeveria saltensis.jpg](https://commons.wikimedia.org/wiki/File:Echeveria_saltensis.jpg); Daniel Marquiegui; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
@@ -30,19 +34,35 @@ _flower_ - [Echeveria imbricata (Blue rose) (49674371781).jpg](<https://commons.
 
 _flower_ - [Echeveria imbricata (Blue rose) cactus flowers (49495258666).jpg](<https://commons.wikimedia.org/wiki/File:Echeveria_imbricata_(Blue_rose)_cactus_flowers_(49495258666).jpg>); Geoff McKay from Palmerston North, New Zealand; [CC BY 2.0](https://creativecommons.org/licenses/by/2.0).
 
+![Raindrops echeveria: habit](./commons-115460620-habitat.jpg)
+
+_habit_ - [Echeveria - Ботаничка градина Скопје (1).jpg](<https://commons.wikimedia.org/wiki/File:Echeveria_-_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%BA%D0%B0_%D0%B3%D1%80%D0%B0%D0%B4%D0%B8%D0%BD%D0%B0_%D0%A1%D0%BA%D0%BE%D0%BF%D1%98%D0%B5_(1).jpg>); Dandarmkd; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+
+![Raindrops echeveria: detail](./commons-115460621-habitat.jpg)
+
+_detail_ - [Echeveria - Ботаничка градина Скопје (2).jpg](<https://commons.wikimedia.org/wiki/File:Echeveria_-_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%BA%D0%B0_%D0%B3%D1%80%D0%B0%D0%B4%D0%B8%D0%BD%D0%B0_%D0%A1%D0%BA%D0%BE%D0%BF%D1%98%D0%B5_(2).jpg>); Dandarmkd; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+
+![Raindrops echeveria: habit](./commons-115460622-habitat.jpg)
+
+_habit_ - [Echeveria - Ботаничка градина Скопје (3).jpg](<https://commons.wikimedia.org/wiki/File:Echeveria_-_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%BA%D0%B0_%D0%B3%D1%80%D0%B0%D0%B4%D0%B8%D0%BD%D0%B0_%D0%A1%D0%BA%D0%BE%D0%BF%D1%98%D0%B5_(3).jpg>); Dandarmkd; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+
 ![Raindrops echeveria: detail](./commons-124615289-detail.jpg)
 
 _detail_ - [Eche cantaensis Obrajillo.jpg](https://commons.wikimedia.org/wiki/File:Eche_cantaensis_Obrajillo.jpg); Gpinoi; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
 
 ## File details
 
-| File                                                                                     | Subject | Source                                                                                                                          | Creator                                                   | License                                                        |
-| ---------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- | -------------------------------------------------------------- |
-| [inaturalist-19424074-29879583-habitat.jpg](./inaturalist-19424074-29879583-habitat.jpg) | habitat | [iNaturalist](https://www.inaturalist.org/observations/19424074)                                                                | (c) Neptalí Ramírez Marcial, some rights reserved (CC BY) | [CC BY](https://creativecommons.org/licenses/by/4.0/)          |
-| [commons-106922629-habit.jpg](./commons-106922629-habit.jpg)                             | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:20210623_Hortus_botanicus_Leiden_07_-_Echeveria.jpg)                | Rudolphous                                                | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| [commons-112816717-habitat.jpg](./commons-112816717-habitat.jpg)                         | habitat | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Echeveria_saltensis.jpg)                                            | Daniel Marquiegui                                         | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| [commons-113079336-flower.jpg](./commons-113079336-flower.jpg)                           | flower  | [Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Echeveria_imbricata_(Blue_rose)_(49674371781).jpg>)                | Geoff McKay from Palmerston North, New Zealand            | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0)       |
-| [commons-113079815-flower.jpg](./commons-113079815-flower.jpg)                           | flower  | [Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Echeveria_imbricata_(Blue_rose)_cactus_flowers_(49495258666).jpg>) | Geoff McKay from Palmerston North, New Zealand            | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0)       |
-| [commons-124615289-detail.jpg](./commons-124615289-detail.jpg)                           | detail  | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Eche_cantaensis_Obrajillo.jpg)                                      | Gpinoi                                                    | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| File                                                                                     | Subject | Source                                                                                                                                                                                                                    | Creator                                                   | License                                                        |
+| ---------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- | -------------------------------------------------------------- |
+| [inaturalist-19424074-29879583-habitat.jpg](./inaturalist-19424074-29879583-habitat.jpg) | habitat | [iNaturalist](https://www.inaturalist.org/observations/19424074)                                                                                                                                                          | (c) Neptalí Ramírez Marcial, some rights reserved (CC BY) | [CC BY](https://creativecommons.org/licenses/by/4.0/)          |
+| [commons-106922629-habit.jpg](./commons-106922629-habit.jpg)                             | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:20210623_Hortus_botanicus_Leiden_07_-_Echeveria.jpg)                                                                                                          | Rudolphous                                                | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| [commons-112292377-habit.jpg](./commons-112292377-habit.jpg)                             | habit   | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Echeveria_peruviana_en_Tacna.jpg)                                                                                                                             | Daniel Marquiegui                                         | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| [commons-112816717-habitat.jpg](./commons-112816717-habitat.jpg)                         | habitat | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Echeveria_saltensis.jpg)                                                                                                                                      | Daniel Marquiegui                                         | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| [commons-113079336-flower.jpg](./commons-113079336-flower.jpg)                           | flower  | [Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Echeveria_imbricata_(Blue_rose)_(49674371781).jpg>)                                                                                                          | Geoff McKay from Palmerston North, New Zealand            | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0)       |
+| [commons-113079815-flower.jpg](./commons-113079815-flower.jpg)                           | flower  | [Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Echeveria_imbricata_(Blue_rose)_cactus_flowers_(49495258666).jpg>)                                                                                           | Geoff McKay from Palmerston North, New Zealand            | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0)       |
+| [commons-115460620-habitat.jpg](./commons-115460620-habitat.jpg)                         | habit   | [Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Echeveria_-_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%BA%D0%B0_%D0%B3%D1%80%D0%B0%D0%B4%D0%B8%D0%BD%D0%B0_%D0%A1%D0%BA%D0%BE%D0%BF%D1%98%D0%B5_(1).jpg>) | Dandarmkd                                                 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| [commons-115460621-habitat.jpg](./commons-115460621-habitat.jpg)                         | detail  | [Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Echeveria_-_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%BA%D0%B0_%D0%B3%D1%80%D0%B0%D0%B4%D0%B8%D0%BD%D0%B0_%D0%A1%D0%BA%D0%BE%D0%BF%D1%98%D0%B5_(2).jpg>) | Dandarmkd                                                 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| [commons-115460622-habitat.jpg](./commons-115460622-habitat.jpg)                         | habit   | [Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Echeveria_-_%D0%91%D0%BE%D1%82%D0%B0%D0%BD%D0%B8%D1%87%D0%BA%D0%B0_%D0%B3%D1%80%D0%B0%D0%B4%D0%B8%D0%BD%D0%B0_%D0%A1%D0%BA%D0%BE%D0%BF%D1%98%D0%B5_(3).jpg>) | Dandarmkd                                                 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| [commons-124615289-detail.jpg](./commons-124615289-detail.jpg)                           | detail  | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Eche_cantaensis_Obrajillo.jpg)                                                                                                                                | Gpinoi                                                    | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 
 Metadata and SHA-256 hashes are also available in [the global manifest](../photo-manifest.json).

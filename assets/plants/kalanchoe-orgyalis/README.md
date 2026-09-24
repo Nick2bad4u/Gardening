@@ -12,7 +12,7 @@ Collection research: [open the plant profile](../../../docs/plants/succulents/ka
 
 ![Copper spoons: habitat](./inaturalist-12793481-18547867-habitat.jpg)
 
-_habitat_ - [Kalanchoe orgyalis in habitat](https://www.inaturalist.org/observations/12793481); (c) Andrew Hankey, some rights reserved (CC BY-SA); [CC BY SA](https://creativecommons.org/licenses/by/4.0/).
+_habitat_ - [Kalanchoe orgyalis in habitat](https://www.inaturalist.org/observations/12793481); (c) Andrew Hankey, some rights reserved (CC BY-SA); [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ![Copper spoons: habitat](./inaturalist-179601863-312706002-habitat.jpg)
 
@@ -54,7 +54,7 @@ _habitat_ - [Kalanchoe orgyalis kz1.jpg](https://commons.wikimedia.org/wiki/File
 
 | File                                                                                         | Subject | Source                                                                                                                | Creator                                            | License                                                        |
 | -------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------------- |
-| [inaturalist-12793481-18547867-habitat.jpg](./inaturalist-12793481-18547867-habitat.jpg)     | habitat | [iNaturalist](https://www.inaturalist.org/observations/12793481)                                                      | (c) Andrew Hankey, some rights reserved (CC BY-SA) | [CC BY SA](https://creativecommons.org/licenses/by/4.0/)       |
+| [inaturalist-12793481-18547867-habitat.jpg](./inaturalist-12793481-18547867-habitat.jpg)     | habitat | [iNaturalist](https://www.inaturalist.org/observations/12793481)                                                      | (c) Andrew Hankey, some rights reserved (CC BY-SA) | [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)    |
 | [inaturalist-179601863-312706002-habitat.jpg](./inaturalist-179601863-312706002-habitat.jpg) | habitat | [iNaturalist](https://www.inaturalist.org/observations/179601863)                                                     | (c) Rosario Douglas, some rights reserved (CC BY)  | [CC BY](https://creativecommons.org/licenses/by/4.0/)          |
 | [inaturalist-193427156-339755748-habitat.jpg](./inaturalist-193427156-339755748-habitat.jpg) | habitat | [iNaturalist](https://www.inaturalist.org/observations/193427156)                                                     | (c) amantedarmanin, some rights reserved (CC BY)   | [CC BY](https://creativecommons.org/licenses/by/4.0/)          |
 | [inaturalist-194522552-341930012-habitat.jpg](./inaturalist-194522552-341930012-habitat.jpg) | habitat | [iNaturalist](https://www.inaturalist.org/observations/194522552)                                                     | (c) amantedarmanin, some rights reserved (CC BY)   | [CC BY](https://creativecommons.org/licenses/by/4.0/)          |

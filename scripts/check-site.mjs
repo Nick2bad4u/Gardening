@@ -326,6 +326,23 @@ async function main() {
             .map((page) => [page.relative.split("/", 2)[1] ?? "", page.html])
     );
     assertProfileCoverage(profiles, profilePages);
+    for (const profile of profiles) {
+        const html = profilePages.get(profile.slug) ?? "";
+        const referenceCount = attributes(html).filter(
+            (attribute) =>
+                attribute.name === "data-photo-kind" &&
+                attribute.value === "reference"
+        ).length;
+        assert.ok(
+            referenceCount >= 10,
+            `Fewer than ten reference photographs in ${profile.slug}`
+        );
+        assert.equal(
+            referenceCount,
+            profile.photoCount,
+            `Reference gallery differs from its archive: ${profile.slug}`
+        );
+    }
     for (const id of pots) {
         const page = pages.find(
             (entry) => entry.relative === `containers/${id}/index.html`
@@ -337,12 +354,14 @@ async function main() {
                 page.html.includes(`/plants/${member.slug}/`),
                 `Missing ${member.slug} in ${id}`
             );
-            assert.ok(
-                profilePages
-                    .get(member.slug)
-                    ?.includes(`/containers/${id}/`) === true,
-                `Missing container link in ${member.slug}`
-            );
+            if (members.length > 1) {
+                assert.ok(
+                    profilePages
+                        .get(member.slug)
+                        ?.includes(`/containers/${id}/`) === true,
+                    `Missing shared container link in ${member.slug}`
+                );
+            }
         }
         assert.ok(
             page.html.includes(`/pots/${id}/`),

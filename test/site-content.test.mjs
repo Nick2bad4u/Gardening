@@ -18,7 +18,7 @@ import {
 } from "../site/lib/content/profile-source.mjs";
 
 describe("field guide source rendering", () => {
-    it("keeps the Lithops group and split rock separate with qualified species and pending remote galleries", async () => {
+    it("keeps the Lithops group and split rock separate with qualified species and reference galleries", async () => {
         expect.hasAssertions();
 
         const profiles = await getProfiles();
@@ -57,7 +57,7 @@ describe("field guide source rendering", () => {
             expect(
                 identificationLabel(members[0]?.identificationMarkdown ?? "")
             ).toBe(record.confidence);
-            expect(members[0]?.photoCount).toBe(0);
+            expect(members[0]?.photoCount).toBeGreaterThanOrEqual(10);
             expect(
                 manifest.plants.find(
                     (plant) => plant.plant_slug === record.slug
