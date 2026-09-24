@@ -55,7 +55,7 @@ describe("shared drying analysis", () => {
 
         const result = await analyzeDrying(snapshot());
 
-        expect(result.detectorVersion).toBe("5.30.0");
+        expect(result.detectorVersion).toBe("5.30.1");
         expect(result.pots).toHaveLength(1);
         expect(result.pots[0]).toMatchObject({
             evidence: { plateau: true, referenceReached: false },

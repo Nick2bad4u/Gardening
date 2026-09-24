@@ -994,14 +994,20 @@
             .correction-dialog {
                 box-sizing: border-box;
                 inline-size: min(600px, calc(100% - 24px));
+                max-inline-size: calc(100% - 24px);
                 max-block-size: calc(100dvb - 24px);
-                padding: 18px;
-                overflow: auto;
+                padding: 0;
+                overflow: hidden;
                 color: var(--ink);
                 overflow-wrap: anywhere;
-                background: var(--card);
+                background: var(--paper);
                 border: 1px solid var(--line);
                 border-radius: 16px;
+
+                &[open] {
+                    display: flex;
+                    flex-direction: column;
+                }
 
                 &::backdrop {
                     background: rgb(0 0 0 / 45%);
@@ -1016,9 +1022,9 @@
 
                 & label {
                     display: block;
-                    margin-block: 12px 6px;
+                    margin-block: 10px 4px;
                     font-weight: 700;
-                    line-height: 1.5;
+                    line-height: 1.375;
                 }
 
                 & legend {
@@ -1026,15 +1032,42 @@
                 }
 
                 & p {
-                    line-height: 1.5;
+                    margin-block: 6px;
+                    line-height: 1.375;
+                }
+
+                & .hint {
+                    font-size: 0.875rem;
+                }
+
+                & :focus-visible {
+                    scroll-margin-block: 12px;
                 }
 
                 & input,
                 & select,
                 & textarea {
                     box-sizing: border-box;
+                    inline-size: 100%;
                     min-inline-size: 0;
                     max-inline-size: 100%;
+                    min-block-size: 44px;
+                    padding: 10px;
+                    font-size: 1rem;
+                    line-height: 1.375;
+                    border-radius: 10px;
+                }
+
+                & textarea {
+                    min-block-size: 64px;
+                }
+
+                & summary {
+                    min-block-size: 44px;
+                    padding-block: 12px;
+                    font-size: 0.875rem;
+                    color: var(--muted);
+                    cursor: pointer;
                 }
 
                 & dd {
@@ -1048,6 +1081,34 @@
                 }
             }
 
+            .correction-header {
+                flex: none;
+                padding: 14px 16px 10px;
+                border-block-end: 1px solid var(--line);
+
+                & h2 {
+                    margin: 0;
+                    font-size: 1.125rem;
+                }
+
+                & p {
+                    margin-block-end: 0;
+                    font-size: 0.875rem;
+                    color: var(--muted);
+                }
+            }
+
+            .correction-content {
+                min-block-size: 0;
+                padding: 0 16px 14px;
+                overflow: auto;
+                overscroll-behavior: contain;
+
+                & > [role="status"]:empty {
+                    display: none;
+                }
+            }
+
             .correction-actions {
                 display: flex;
                 flex-wrap: wrap;
@@ -1058,6 +1119,26 @@
                     min-block-size: 44px;
                     padding: 10px 14px;
                     white-space: normal;
+                }
+            }
+
+            .correction-footer {
+                flex: none;
+                flex-wrap: nowrap;
+                padding: 10px 12px max(10px, env(safe-area-inset-bottom));
+                margin: 0;
+                background: var(--paper);
+                border-block-start: 1px solid var(--line);
+
+                & button {
+                    flex: 1;
+                    min-inline-size: 0;
+                    padding: 10px 8px;
+                    font-size: 1rem;
+                }
+
+                & .app-icon {
+                    display: none;
                 }
             }
 
@@ -2172,6 +2253,10 @@
                 color: #ffffff;
                 background: var(--forest-2);
                 border: 0;
+
+                .correction-footer & {
+                    flex-grow: 2;
+                }
             }
 
             .secondary {
@@ -14636,77 +14721,107 @@
             aria-labelledby="correctionTitle"
             aria-describedby="correctionStatus"
         >
-            <h2 id="correctionTitle">Correct saved entry</h2>
-            <p
-                id="correctionIdentity"
-                aria-label="Saved entry identity"
-            ></p>
-            <p
-                id="correctionStatus"
-                aria-label="Correction editor status"
-                role="status"
-                aria-live="polite"
-            ></p>
-            <form
-                id="correctionForm"
-                method="dialog"
-                novalidate
+            <header class="correction-header">
+                <h2 id="correctionTitle">Correct saved entry</h2>
+                <p
+                    id="correctionIdentity"
+                    aria-label="Saved entry identity"
+                ></p>
+            </header>
+            <div
+                id="correctionContent"
+                class="correction-content"
             >
-                <fieldset
-                    id="correctionEditor"
-                    hidden
-                >
-                    <legend>Choose a correction</legend>
-                    <label for="correctionAction">What needs correcting?</label>
-                    <select
-                        id="correctionAction"
-                        aria-describedby="correctionActionHint"
-                    >
-                        <option value="edit">Edit saved values</option>
-                        <option value="move">Move to another plant</option>
-                        <option value="remove">Delete this entry</option>
-                    </select>
+                <details id="correctionDetails">
+                    <summary>Entry details</summary>
                     <p
-                        id="correctionActionHint"
+                        id="correctionMetadata"
                         class="hint"
-                    >
-                        Edit this saved event, move it to another plant, or
-                        delete it from active history.
-                    </p>
-                    <div
-                        id="correctionDestinationField"
+                        aria-label="Saved entry details"
+                    ></p>
+                </details>
+                <p
+                    id="correctionStatus"
+                    aria-label="Correction editor status"
+                    role="status"
+                    aria-live="polite"
+                ></p>
+                <form
+                    id="correctionForm"
+                    method="dialog"
+                    novalidate
+                >
+                    <fieldset
+                        id="correctionEditor"
                         hidden
                     >
-                        <label for="correctionDestination"
-                            >Move to plant (required)</label
+                        <legend class="visually-hidden"
+                            >Choose a correction</legend
                         >
-                        <select id="correctionDestination"></select>
-                    </div>
-                    <div id="correctionFields"></div>
-                    <label for="correctionReason"
-                        >Reason for correction (required)</label
+                        <label for="correctionAction">Action</label>
+                        <select
+                            id="correctionAction"
+                            aria-describedby="correctionActionHint"
+                        >
+                            <option value="edit">Edit saved values</option>
+                            <option value="move">Move to another plant</option>
+                            <option value="remove">Delete this entry</option>
+                        </select>
+                        <p
+                            id="correctionActionHint"
+                            class="hint"
+                        >
+                            Review your changes before saving.
+                        </p>
+                        <div
+                            id="correctionDestinationField"
+                            hidden
+                        >
+                            <label for="correctionDestination"
+                                >Move to plant (required)</label
+                            >
+                            <select id="correctionDestination"></select>
+                        </div>
+                        <div id="correctionFields"></div>
+                        <label for="correctionReason">Reason (required)</label>
+                        <textarea
+                            id="correctionReason"
+                            required
+                            rows="2"
+                        ></textarea>
+                    </fieldset>
+                </form>
+                <section
+                    id="correctionReview"
+                    aria-label="Correction review"
+                    hidden
+                ></section>
+                <div class="correction-actions">
+                    <button
+                        id="correctionReload"
+                        class="secondary"
+                        type="button"
+                        hidden
+                        >Reload entry (replaces edits)</button
                     >
-                    <textarea
-                        id="correctionReason"
-                        required
-                        rows="3"
-                    ></textarea>
-                    <div class="correction-actions">
-                        <button
-                            id="correctionReviewButton"
-                            class="primary"
-                            type="submit"
-                            >Review changes</button
-                        >
-                    </div>
-                </fieldset>
-            </form>
-            <section
-                id="correctionReview"
-                aria-label="Correction review"
-                hidden
-            ></section>
-            <div class="correction-actions">
+                    <button
+                        id="correctionDiscardEditor"
+                        class="secondary"
+                        type="button"
+                        hidden
+                        >Discard draft</button
+                    >
+                </div>
+            </div>
+            <div class="correction-actions correction-footer">
+                <button
+                    id="correctionReviewButton"
+                    class="primary"
+                    type="submit"
+                    form="correctionForm"
+                    hidden
+                    >Review changes</button
+                >
                 <button
                     id="correctionConfirm"
                     class="primary"
@@ -14719,27 +14834,13 @@
                     class="secondary"
                     type="button"
                     hidden
-                    >Edit replacement</button
-                >
-                <button
-                    id="correctionReload"
-                    class="secondary"
-                    type="button"
-                    hidden
-                    >Reload saved entry (replaces edits)</button
-                >
-                <button
-                    id="correctionDiscardEditor"
-                    class="secondary"
-                    type="button"
-                    hidden
-                    >Discard draft</button
+                    >Back</button
                 >
                 <button
                     id="correctionClose"
                     class="secondary"
                     type="button"
-                    >Close correction</button
+                    >Close</button
                 >
             </div>
         </dialog>
@@ -18239,6 +18340,8 @@
 
             function correctionMessage(message) {
                 $("correctionStatus").textContent = message;
+                if (message && $("correctionDialog").open)
+                    $("correctionContent").scrollTop = 0;
             }
 
             function retainCorrection(key, value) {
@@ -18287,6 +18390,8 @@
                     $(id).disabled = busy;
                     $(id).setAttribute("aria-busy", String(busy));
                 });
+                $("correctionReviewButton").disabled =
+                    $("correctionEditor").disabled || !correction.context;
                 correctionBanner();
             }
 
@@ -18470,13 +18575,13 @@
                     input.disabled = removing;
                 });
                 $("correctionActionHint").textContent = removing
-                    ? "Delete only this event from active history and calculations. Its original values and deletion reason remain in the audit history. Other events from the same save stay unchanged."
+                    ? "Remove this event from active history. Its audit record is kept; other events stay unchanged."
                     : moving
-                      ? "Move only this event to the selected plant. Google will review the destination label and pot setup at the observation time. Other events from the same save stay unchanged."
-                      : "Only changed fields are sent. Clear an optional field to remove its value. Plant, event, setup and historical label stay as saved.";
+                      ? "Move this event only. Review the destination's label and setup before confirming."
+                      : "Change the values below. Clear an optional field to remove it.";
                 if (correction.context?.original.event === "Repot")
                     $("correctionActionHint").textContent +=
-                        " Repot entries can be edited here, but moving or deleting them requires a reviewed setup correction.";
+                        " Repot entries cannot be moved or deleted here.";
             }
 
             function renderCorrectionEditor(context, draft = null) {
@@ -18486,7 +18591,12 @@
                 correction.reviewedPayload = null;
                 correction.inputs.clear();
                 $("correctionFields").replaceChildren();
-                $("correctionIdentity").textContent = correctionIdentity(
+                const plant = state.bootstrap?.plants.find(
+                    (candidate) => candidate.id === context.original.plantId
+                );
+                $("correctionIdentity").textContent =
+                    `${plant ? `${plant.name} · ` : ""}${context.original.plantId} · ${context.original.event}`;
+                $("correctionMetadata").textContent = correctionIdentity(
                     context.original
                 );
                 const action = $("correctionAction");
@@ -18517,7 +18627,7 @@
                     label.htmlFor = `correctionField-${field.key}`;
                     const deviceZone =
                         Intl.DateTimeFormat().resolvedOptions().timeZone;
-                    label.textContent = `${field.label}${field.unit ? ` (${field.unit})` : ""}${field.type === "datetime" ? ` — device time (${deviceZone})` : ""}${field.required ? " (required)" : ""}`;
+                    label.textContent = `${field.label}${field.unit ? ` (${field.unit})` : ""}${field.required ? " (required)" : ""}`;
                     const input = document.createElement(
                         field.type === "select"
                             ? "select"
@@ -18541,7 +18651,7 @@
                             option.textContent = value || "(blank)";
                             input.append(option);
                         });
-                    } else if (field.type === "text") input.rows = 3;
+                    } else if (field.type === "text") input.rows = 2;
                     else {
                         input.type =
                             field.type === "datetime"
@@ -18559,6 +18669,14 @@
                         input.value = draft.inputs[field.key];
                     correction.inputs.set(field.key, input);
                     wrapper.append(label, input);
+                    if (field.type === "datetime") {
+                        const hint = document.createElement("p");
+                        hint.id = `${input.id}-timezone`;
+                        hint.className = "hint";
+                        hint.textContent = `Device time: ${deviceZone}.`;
+                        input.setAttribute("aria-describedby", hint.id);
+                        wrapper.append(hint);
+                    }
                     if (field.key === "measurementUnit") {
                         const hint = document.createElement("p");
                         hint.className = "hint";
@@ -18571,14 +18689,13 @@
                 $("correctionReason").value = draft?.reason || "";
                 updateCorrectionAction();
                 $("correctionEditor").hidden = false;
+                $("correctionReviewButton").hidden = false;
                 $("correctionReview").hidden = true;
                 $("correctionConfirm").hidden = true;
                 $("correctionEdit").hidden = true;
                 $("correctionReload").hidden = true;
                 correctionBusy(false);
-                correctionMessage(
-                    "Choose edit, move or delete, add a reason, then review the proposed change before confirming."
-                );
+                correctionMessage("");
                 captureCorrectionDraft();
             }
 
@@ -18603,10 +18720,13 @@
                 correction.context = null;
                 correction.preview = null;
                 correction.stale = false;
-                $("correctionIdentity").textContent =
+                $("correctionIdentity").textContent = "";
+                $("correctionDetails").open = false;
+                $("correctionMetadata").textContent =
                     `Observation ${observationId}`;
                 [
                     "correctionEditor",
+                    "correctionReviewButton",
                     "correctionReview",
                     "correctionConfirm",
                     "correctionEdit",
@@ -18616,6 +18736,7 @@
                 });
                 if (!$("correctionDialog").open)
                     $("correctionDialog").showModal();
+                $("correctionContent").scrollTop = 0;
                 correctionMessage("Loading the full saved entry…");
                 correctionRead(
                     "getWebCorrectionEntry",
@@ -18790,7 +18911,9 @@
                 });
                 review.append(siblings);
                 review.hidden = false;
+                $("correctionContent").scrollTop = 0;
                 $("correctionEditor").hidden = true;
+                $("correctionReviewButton").hidden = true;
                 $("correctionConfirm").hidden = false;
                 setIconLabel(
                     $("correctionConfirm"),
@@ -18803,7 +18926,7 @@
                 );
                 $("correctionEdit").hidden = false;
                 correctionMessage(
-                    "Review the stacked original and replacement. Only explicit confirmation saves this correction."
+                    "Check the changes below, then confirm to save."
                 );
                 $("correctionConfirm").focus();
             }
@@ -21636,9 +21759,8 @@
                 $("correctionConfirm").hidden = true;
                 $("correctionEdit").hidden = true;
                 $("correctionEditor").hidden = false;
-                correctionMessage(
-                    "Edit replacement values and review changes again before confirming."
-                );
+                $("correctionReviewButton").hidden = false;
+                correctionMessage("");
                 $("correctionReason").focus();
             });
             $("correctionReload").addEventListener("click", () => {
