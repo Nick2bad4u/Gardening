@@ -16,6 +16,7 @@ import {
     parseJson,
     required,
 } from "./build-data.mjs";
+import { LOGGER_VERSION } from "./logger-version.mjs";
 
 const source = await readFile(
     new URL("google-sheets/plant-tracker.gs", import.meta.url),
@@ -35,7 +36,7 @@ const context = vm.createContext({
     Utilities: { getUuid: () => "test-request-id" },
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
-assert.equal(evaluateLogger("GARDEN_LOGGER.version"), "5.30.1");
+assert.equal(evaluateLogger("GARDEN_LOGGER.version"), LOGGER_VERSION);
 for (const name of [
     "getWebCorrectionEntry",
     "previewWebObservationCorrection",

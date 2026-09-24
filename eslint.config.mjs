@@ -344,6 +344,7 @@ const config = [
             "scripts/check-google-sheets-logger.mjs",
             "scripts/google-sheets/workbook-audit.mjs",
             "scripts/analyze-drying.mjs",
+            "scripts/logger-version.mjs",
             "test/site-client.test.mjs",
             "test/site-routing.test.mjs",
             "test/site-publication.test.mjs",

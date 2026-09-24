@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { analyzeDrying } from "../scripts/analyze-drying.mjs";
+import { LOGGER_VERSION } from "../scripts/logger-version.mjs";
 
 const header = [
     "Date",
@@ -55,7 +56,7 @@ describe("shared drying analysis", () => {
 
         const result = await analyzeDrying(snapshot());
 
-        expect(result.detectorVersion).toBe("5.30.1");
+        expect(result.detectorVersion).toBe(LOGGER_VERSION);
         expect(result.pots).toHaveLength(1);
         expect(result.pots[0]).toMatchObject({
             evidence: { plateau: true, referenceReached: false },

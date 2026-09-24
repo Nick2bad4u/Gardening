@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 import { describe, expect, it } from "vitest";
 
+import { LOGGER_VERSION } from "../../scripts/logger-version.mjs";
 import {
     appsScriptApi,
     overrideAppsScript,
@@ -376,7 +377,7 @@ describe("dry-down formulas and workbook installation", () => {
                 structuredClone(context.installWateringRecommendations())
             ).toStrictEqual({
                 historyChanged: false,
-                loggerVersion: "5.30.1",
+                loggerVersion: LOGGER_VERSION,
                 plants: 2,
             });
 
@@ -532,7 +533,7 @@ describe("dry-down formulas and workbook installation", () => {
         expect(context.installDryDownLearning()).toMatchObject({
             baselineColumns: 36,
             historyChanged: false,
-            loggerVersion: "5.30.1",
+            loggerVersion: LOGGER_VERSION,
             plants: 1,
         });
         expect(
