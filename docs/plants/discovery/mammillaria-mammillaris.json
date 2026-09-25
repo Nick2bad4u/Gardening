@@ -1,0 +1,130 @@
+{
+    "anatomy": {
+        "intro": "The numbered illustration explains probable Mammillaria mammillaris; it is a botanical guide, not a measured portrait.",
+        "parts": [
+            {
+                "function": "Each projecting green mound is part of the succulent, photosynthetic stem.",
+                "label": "Tubercle"
+            },
+            {
+                "function": "The cushion at a tubercle's tip bears its spine cluster.",
+                "label": "Areole"
+            },
+            {
+                "function": "Shorter outward-spreading spines form a protective star around the areole.",
+                "label": "Radial spines"
+            },
+            {
+                "function": "The stronger spine projects beyond the radial spokes.",
+                "label": "Central spine"
+            }
+        ],
+        "sourceIds": [
+            "form",
+            "anatomy"
+        ]
+    },
+    "comparisonSourceIds": [
+        "form",
+        "rekoi"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "The species' tiny cream, pale green, or yellowish flowers can hide between tubercles. The red projection recorded on this plant is fruit, not a petal; it reflects an earlier flower even after that bloom has disappeared."
+    },
+    "growth": {
+        "note": "Use flowers and spine details to refine the probable ID; size alone cannot settle it.",
+        "sourceIds": [
+            "form"
+        ],
+        "stages": [
+            {
+                "text": "The green body is organized into spirals of tubercles.",
+                "title": "Rounded juvenile"
+            },
+            {
+                "text": "Established stems become larger globes or short cylinders.",
+                "title": "Broadening body"
+            },
+            {
+                "text": "Small pale flowers can be followed by conspicuous red club-shaped fruits.",
+                "title": "Flower and fruit"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "Mammillaria mammillaris occurs in the southern Caribbean and northern South America, including northeastern Colombia and northern Venezuela. It belongs to seasonally dry tropical vegetation. This is the natural background of a probable identification: the collection plant was purchased without a species label, and its nursery origin does not establish a wild locality."
+    },
+    "image": {
+        "alt": "Botanical anatomy of probable Mammillaria mammillaris, showing tubercle, areole, radial spines, central spine with numbered markers.",
+        "file": "assets/plant-explainers/mammillaria-mammillaris.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration, warm ivory background, precise pen-and-watercolor, muted forest green/sage/ochre palette, large centered specimen and generous whitespace. Exactly four large legible numbered markers 1, 2, 3, 4, each once, with fine leader lines ending clearly on the named structures. No title, words, border, watering symbols or calendar. No flowers, grafts, or roots. Numbers must remain readable at 350px. Generic anatomical specimen, not measurement evidence. A Mammillaria mammillaris cactus: one rounded short cylinder, green prominent conical tubercles arranged in spirals, white wool in the gaps near the crown, sparse straight tan/dark central spines and shorter pale radial spines. Exactly 1 points to a green conical tubercle, 2 to a small spine-bearing areole at its tip, 3 to short pale radial spines, 4 to one long straight dark central spine. No red fruit.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Probable Mammillaria rekoi",
+            "profileSlug": "mammillaria-rekoi",
+            "text": "The rekoi candidate has finer, denser pale radial spines and conspicuous hooked central spines; this plant's larger exposed tubercles and pale flowers support a different ID."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "LLIFLE describes rounded to short-cylindrical stems about 8–20 cm across, solitary or sometimes clumping. These are species reference dimensions, not measurements of the collection specimen."
+    },
+    "milestones": [
+        {
+            "date": "2026-08-10",
+            "sourcePath": "docs/plants/cacti/mammillaria-mammillaris.md",
+            "text": "Purchased at Carlsons' Greenhouse in a 4-inch pot.",
+            "title": "Joined the collection"
+        },
+        {
+            "date": "2026-08-11",
+            "sourcePath": "docs/plants/cacti/mammillaria-mammillaris.md",
+            "text": "Close photographs showed large tubercles, dark-tipped spines, tiny cream flowers or buds, and a red club-shaped fruit.",
+            "title": "Identification observations"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "Linnaeus published Cactus mammillaris in 1753; Kew dates the present Mammillaria combination to 1886."
+    },
+    "slug": "mammillaria-mammillaris",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "range",
+            "title": "Kew Plants of the World Online: Mammillaria mammillaris",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:134797-1"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "form",
+            "title": "LLIFLE: Mammillaria mammillaris",
+            "url": "https://llifle.com/Encyclopedia/CACTI/Family/Cactaceae/7413/Mammillaria_mammillaris"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "rekoi",
+            "title": "LLIFLE: Mammillaria rekoi",
+            "url": "https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/13403/Mammillaria_rekoi"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "anatomy",
+            "title": "National Park Service: cactus adaptations",
+            "url": "https://www.nps.gov/tont/learn/nature/cacti.htm"
+        }
+    ]
+}

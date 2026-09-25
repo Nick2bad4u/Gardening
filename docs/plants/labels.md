@@ -1,6 +1,6 @@
 # Pot labels
 
-Last updated: 2026-09-23
+Last updated: 2026-09-24
 
 This is the print reference for 44 active profile records across 34 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
 
@@ -14,9 +14,9 @@ planter (`P30`). Their separate Smart Planet Home / Altman Plants retail-label
 photographs are preserved as provenance. The retail _Faucaria tigrina_ wording
 does not replace the qualified _F. tuberculosa_ working ID printed on `#5`.
 
-The unreceived Amazon plan was abandoned September 20 and has no physical-label or tracker allocation. Keep its five research pages in the [old-plan archive](../old-plans/amazon-plant-order-2026-09.md); cancellation was confirmed in Amazon on September 21. Current numbered labels are #1–#10. The owner explicitly assigned #7 / P31 to Peperomia Bicolor and #8 / P32 to Tricolor oyster plant.
+Current numbered labels are **#1–#10**. Peperomia Bicolor uses **#7 / P31**, and Tricolor oyster plant uses **#8 / P32**.
 
-The six Mountain Crest mappings were owner-corrected after receipt on
+The six Mountain Crest mappings were recorded after receipt on
 2026-08-28: `G1` Black Widow (`P27`), `G2` paper spine (`P23`), `G3` Royal
 Flush split rock (`P28`), `H1` Coconut Crystal (`P24`), `H2` Raindrops (`P25`),
 and `H3` Eve's needle (`P26`).
@@ -218,14 +218,14 @@ retain `PROB.`.
 The Chamaelobivia label is secure at hybrid-group level and does not claim an
 unknown cultivar.
 
-## Mountain Crest arrivals — labels corrected 2026-08-28
+## Mountain Crest arrivals — received 2026-08-28
 
-The six permanent labels were corrected from the physical plants after receipt:
+The six permanent labels recorded after receipt on August 28, 2026 are:
 `G1` Black Widow, `G2` paper spine, `G3` Royal Flush split rock, `H1` Coconut
 Crystal, `H2` Raindrops, and `H3` Eve's needle. Their tracker IDs are
 `P27`, `P23`, `P28`, `P24`, `P25`, and `P26`, respectively. The owner-entered
 live tracker records 4-inch current pots, and the 2026-08-29 Scale weights and Ruler
-dimensions are recorded. Received nursery-pot shape remains unrecorded. On September 20, 2026, the owner confirmed Molly's Succulent Mix with added perlite for all six G/H pots, estimating approximately 80% Molly's / 20% added perlite from memory rather than the earlier 60/40 description. The proportion is an uncertain recollection, not a measured recipe or a newly dated repot. The [current placement guide](../layouts/table-placement-research.md) supplies September 15 photo-matched positions on four wooden tables. The owner rearranged the pots; exact label matching and exposure remain to be checked.
+dimensions are recorded. Received nursery-pot shape remains unrecorded. The September 20 medium record is approximately 80% Molly's Succulent Mix / 20% added perlite for all six G/H pots, recalled rather than measured. The [current placement guide](../layouts/table-placement-research.md) supplies September 15 photo-matched positions on four wooden tables. See that guide for current positions; individual light exposure remains unmeasured.
 
 The exact product pages were inspected on 2026-08-26. All six list a 2.0-inch
 pot; that seller size and SKU belong in the collection record, not necessarily
@@ -343,7 +343,7 @@ WARN: TRACK + WATER AS ONE POT
 
 ## September 20 Carlson's Greenhouses labels
 
-These new allocations record the two purchased houseplants. The nursery wording is retained in their profiles; cultivar identification relies on that provenance. The owner explicitly assigned #7 / P31 and #8 / P32 to these purchases.
+These labels identify the two houseplants purchased at Carlson's Greenhouses on September 20, 2026. Their cultivar names follow the photographed nursery labels.
 
 | ID   | Tracker ID | Common name           | Botanical label                                                                         | Origin wording                                                    | Warning                                                         |
 | ---- | ---------- | --------------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------- |
@@ -360,11 +360,11 @@ Peperomia obtusifolia 'Obtipan Bicolor'
 Tradescantia spathacea 'Tricolor'
 ```
 
-The owner confirmed buying both plants directly at Carlson's Greenhouses on 2026-09-20 in owner-reported six-inch nursery pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; both nursery pots are currently on the floor on the room side near the money tree, as confirmed September 20. Separate floor stools and the eight-inch repots remain planned. Nursery-pot depth, exact display spacing, and leaf-height light remain unrecorded. The labels stay #7 and #8 through the planned changes.
+Both plants were purchased in six-inch nursery pots. Separate eight-inch Amazon Basics pots and a living-room display are planned; labels **#7** and **#8** stay with the plants through repotting. See their profiles for the last recorded placement and planned light trial.
 
 ## September 21 Lithops and split-rock labels
 
-These two allocations follow #7 and #8. The September 23 repots put the Lithops together in one shared pot and the split rock in a separate pot, each at setup 2. P33/P34 are retired houseplant redirects, so these allocations use P35/P36. Photographs show four visible Lithops heads, but their root attachments are unconfirmed; this is not a verified count of independent rooted plants.
+These labels follow #7 and #8. The September 23 repots put the Lithops together in one shared pot and the split rock in a separate pot, each at setup 2. Photographs show four visible Lithops heads, but their root attachments are unconfirmed; this is not a verified count of independent rooted plants.
 
 Keep one physical **#9** label for the shared Lithops pot. The component records
 [Succulent-15A — probable _L. lesliei_](./succulents/lithops-lesliei.md) and
@@ -395,13 +395,11 @@ Native-origin wording is southern Africa at Lithops genus level and South Africa
 
 ## Archived label allocations
 
-The [September 19 Amazon plan](../old-plans/amazon-plant-order-2026-09.md) preserves the four succulent and Nanouk research pages without physical-label or tracker allocations. No plants were received and cancellation was confirmed in Amazon on September 21. Do not print labels for the archived research.
+The [archived purchase research](../old-plans/amazon-plant-order-2026-09.md) has no active pot labels.
 
 ## Identification and origin research outcome
 
-- Kew botanical records now support the wild ranges and publication years in
-  the tables. The golden torch reference date was corrected from 1840 to 1839,
-  and the copper spoons range was kept at the defensible “Madagascar” level.
+- Kew supports the wild ranges and publication years in these tables, including 1839 for golden torch and Madagascar for copper spoons.
 - NC State Extension confirms 'Ming Thing' as the monstrose cultivar name for
   _Cereus forbesii_. No reliable breeder, nursery-origin, or release year was
   found.
@@ -424,21 +422,21 @@ The [September 19 Amazon plan](../old-plans/amazon-plant-order-2026-09.md) prese
 
 ### Acquisition details still missing
 
-The repo contains acquisition source-and-date records for `A1`–`H3` and `#1`–`#6`, except the historical, removed Rehab-04 record. Its acquisition source and date remain unconfirmed. For new #7 and #8, the owner confirmed direct purchase at Carlson's Greenhouses on September 20; the nursery tags also identify the grower.
+The collection records include acquisition source-and-date records for `A1`–`H3` and `#1`–`#6`, except the historical, removed Rehab-04 record. Its acquisition source and date remain unconfirmed. For new #7 and #8, the owner confirmed direct purchase at Carlson's Greenhouses on September 20; the nursery tags also identify the grower.
 
-The unreceived September 19 Amazon plant order is archived separately; cancellation was confirmed in Amazon on September 21. The unrelated #9/#10 plants were purchased at Home Depot in Howell, Michigan, on September 21 and repotted and photographed September 23 in the D'vine Dev Blush Mauve and Thirtypot speckled-brown pots.
+The #9/#10 Lithops and split rock were purchased at Home Depot in Howell, Michigan, on September 21 and repotted September 23 into the D'vine Dev Blush Mauve and Thirtypot speckled-brown pots.
 
 Keep an order date and a received date as separate facts. They answer different
 questions and should not be silently substituted for one another.
 
 The requested display fields plus the warning are enough for the visible
-labels. Other useful information belongs in the repo or on a replaceable label
+labels. Other useful information belongs in the care notes or on a replaceable label
 under the pot:
 
 1. **Acquisition date and source** — add when a receipt or order history can
    establish it; do not guess.
 2. **Last repotted date** — useful under the pot or in a care log.
-3. **Full inventory ID** — keep it in the repo records; the short permanent ID
+3. **Full inventory ID** — keep it in the collection records; the short permanent ID
    is intentionally the only ID printed on the visible label.
 
 Do not put a fixed watering interval or “next watering” date on a permanent

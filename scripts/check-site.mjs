@@ -328,6 +328,43 @@ async function main() {
     assertProfileCoverage(profiles, profilePages);
     for (const profile of profiles) {
         const html = profilePages.get(profile.slug) ?? "";
+        const factCount = attributes(html).filter(
+            (attribute) =>
+                attribute.name === "class" &&
+                attribute.value.split(/\s+/v).includes("profile-metadata")
+        ).length;
+        assert.equal(
+            factCount,
+            8,
+            `Expected eight collection facts in ${profile.slug}`
+        );
+        const discovery = attributes(html).filter(
+            (attribute) =>
+                attribute.name === "data-plant-discovery" &&
+                attribute.value === profile.slug
+        );
+        assert.equal(
+            discovery.length,
+            1,
+            `Missing plant discovery in ${profile.slug}`
+        );
+        const anatomyParts = attributes(html)
+            .filter((attribute) => attribute.name === "data-explainer-part")
+            .map((attribute) => attribute.value);
+        assert.deepEqual(
+            anatomyParts,
+            [
+                "1",
+                "2",
+                "3",
+                "4",
+            ],
+            `Expected four numbered anatomy explanations in ${profile.slug}`
+        );
+        assert.ok(
+            html.includes(`/assets/plant-explainers/${profile.slug}.webp`),
+            `Missing unique anatomy image in ${profile.slug}`
+        );
         const referenceCount = attributes(html).filter(
             (attribute) =>
                 attribute.name === "data-photo-kind" &&

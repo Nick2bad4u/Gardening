@@ -1,0 +1,130 @@
+{
+    "anatomy": {
+        "intro": "Four structures that explain the form of Eve's needle.",
+        "parts": [
+            {
+                "function": "A fleshy, pointed leaf adds photosynthetic surface to young growth.",
+                "label": "Awl-shaped leaf"
+            },
+            {
+                "function": "This specialized cactus growth point bears the spines beside the leaf.",
+                "label": "Areole"
+            },
+            {
+                "function": "The sharp spine protects the soft, water-storing tissues.",
+                "label": "Spine"
+            },
+            {
+                "function": "The green stem stores water and supports successive branches.",
+                "label": "Cylindrical stem"
+            }
+        ],
+        "sourceIds": [
+            "form",
+            "anatomy"
+        ]
+    },
+    "comparisonSourceIds": [
+        "form",
+        "paper"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "Flowers are tubular, with colors ranging through yellow-green to orange-red. NC State notes that plants in containers typically do not flower, so healthy leafy growth is a more useful everyday measure of progress."
+    },
+    "growth": {
+        "note": "These describe the species' form, not a timetable for this small indoor specimen.",
+        "sourceIds": [
+            "form"
+        ],
+        "stages": [
+            {
+                "text": "New stem growth carries soft-looking pointed leaves.",
+                "title": "Leafy tip"
+            },
+            {
+                "text": "Side shoots extend the upright framework.",
+                "title": "Branching shrub"
+            },
+            {
+                "text": "Older plants develop a stronger trunk beneath the succulent branches.",
+                "title": "Woody base"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "Eve's needle comes from the Peruvian Andes, where its shrubby, water-storing stems suit arid conditions. Unlike many familiar cacti, it retains conspicuous fleshy leaves on young growth. This upright, branching plant is a very different growth strategy from the low globes beside it in the collection."
+    },
+    "image": {
+        "alt": "Botanical anatomy of Eve's needle, with numbered markers for awl-shaped leaf, areole, spine, cylindrical stem.",
+        "file": "assets/plant-explainers/austrocylindropuntia-subulata.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration, warm ivory background, precise pen-and-watercolor, muted forest green/sage/ochre palette, large centered specimen and generous whitespace. Exactly four large legible numbered markers 1, 2, 3, 4, each once, with fine leader lines ending clearly on the named structures. No title, words, border, watering symbols or calendar. No flowers, grafts, or roots. Numbers must remain readable at 350px. Generic anatomical specimen, not measurement evidence. Eve's needle cactus: small upright branching green cylindrical cactus stems with knobby tubercles, sparse pale areoles, sharp ivory spines, and conspicuous long narrow succulent awl-shaped leaves on young upper growth. 1 points to an awl-shaped fleshy leaf; 2 to a pale areole at a leaf base; 3 to an ivory spine; 4 to the green cylindrical main stem. Leaves must be distinct from spines.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Paper spine cactus",
+            "profileSlug": "tephrocactus-articulatus-papyracanthus",
+            "text": "Paper spine builds stacks of short detachable segments with flat, papery spines; Eve's needle has leafy, cylindrical branches."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "In its native habitat the species can reach roughly 13 ft (4 m); cultivation usually keeps it smaller. That wild scale explains why this miniature purchase can eventually become a substantial shrub."
+    },
+    "milestones": [
+        {
+            "date": "2026-08-28",
+            "sourcePath": "docs/plants/cacti/austrocylindropuntia-subulata.md",
+            "text": "Received from Mountain Crest Gardens and moved from its 2-inch nursery pot into the 4 × 4 × 3.7-inch pot.",
+            "title": "Arrived and repotted"
+        },
+        {
+            "date": "2026-08-29",
+            "sourcePath": "docs/plants/cacti/austrocylindropuntia-subulata.md",
+            "text": "Potted weight 357.5 g; plant 1.8 in high × 1.6 in wide.",
+            "title": "First measured reference"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "The epithet subulata refers to an awl shape: the long pointed leaves provide the clue to the name."
+    },
+    "slug": "austrocylindropuntia-subulata",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "range",
+            "title": "NC State Extension: Eve's needle",
+            "url": "https://plants.ces.ncsu.edu/plants/austrocylindropuntia-subulata/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "form",
+            "title": "NC State Extension: Eve's needle morphology",
+            "url": "https://plants.ces.ncsu.edu/plants/austrocylindropuntia-subulata/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "paper",
+            "title": "Mountain Crest Gardens: paper spine cactus",
+            "url": "https://mountaincrestgardens.com/tephrocactus-articulatus-var-papyracanthus-paper-spine-cactus/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "anatomy",
+            "title": "National Park Service: cactus adaptations",
+            "url": "https://www.nps.gov/arch/learn/nature/cacti.htm"
+        }
+    ]
+}

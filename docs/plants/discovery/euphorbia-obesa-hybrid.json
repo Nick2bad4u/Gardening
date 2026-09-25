@@ -1,0 +1,119 @@
+{
+    "anatomy": {
+        "intro": "This drawing follows the visible obesa-type form without claiming a confirmed pure species.",
+        "parts": [
+            {
+                "function": "The rounded rib is part of the succulent body.",
+                "label": "Fleshy rib"
+            },
+            {
+                "function": "Purple-brown markings cross the grey-green stem; they are coloration rather than separate leaves.",
+                "label": "Transverse band"
+            },
+            {
+                "function": "Small sites near the upper rib crests can produce cyathia, the characteristic Euphorbia flower clusters.",
+                "label": "Flowering eye"
+            },
+            {
+                "function": "The upper growing region continues the rib pattern as the body develops.",
+                "label": "Crown"
+            }
+        ],
+        "sourceIds": [
+            "sanbi",
+            "genus"
+        ]
+    },
+    "comparisonSourceIds": [
+        "genus",
+        "cactus-structure"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "sanbi",
+            "genus"
+        ],
+        "text": "Euphorbia flowers are grouped into tiny cyathia rather than cactus-like petaled trumpets. Pure obesa has separate male and female plants; that reproductive pattern should not be assumed for Dragon’s Egg without observing its flowers."
+    },
+    "growth": {
+        "note": "Species illustrations are a useful comparison, but the hybrid’s mature form and sex remain unconfirmed.",
+        "sourceIds": [
+            "sanbi"
+        ],
+        "stages": [
+            {
+                "text": "The obesa-type body begins as a compact ball.",
+                "title": "Rounded youngster"
+            },
+            {
+                "text": "The stem enlarges while keeping its strongly grooved outline.",
+                "title": "Developing ribs"
+            },
+            {
+                "text": "Pure obesa elongates with age; an unknown hybrid may branch or develop differently.",
+                "title": "Older form"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "sanbi"
+        ],
+        "text": "The wild obesa species comes from the Great Karoo near Graaff-Reinet in South Africa’s Eastern Cape. Its rounded, stone-like body belongs to a drought-adapted spurge, not a cactus. Dragon’s Egg is recorded here as an obesa-type hybrid or selection with unknown parentage, so that South African setting describes its apparent ancestry rather than a verified hybrid origin."
+    },
+    "image": {
+        "alt": "Obesa-type Euphorbia showing numbered fleshy rib, transverse color band, small flowering eye and central crown; no cactus areoles.",
+        "file": "assets/plant-explainers/euphorbia-obesa-hybrid.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024x1024 scientific botanical educational illustration. Warm ivory background; muted forest-green, sage and ochre with natural species colors; clean accurate pen-and-watercolor style, large central specimen, ample whitespace. Exactly four large circled numbered markers 1-4 with clear thin leaders pointing to the features specified below in order. Numbers legible at 350px display width. No words, title, paragraphs, watering or calendar icons. No pot, roots, flowers or grafts unless explicitly requested. An obesa-type Euphorbia hybrid sold as Dragon's Egg: compact rounded grey-green succulent ball, eight broad vertical ribs with muted transverse purple-brown bands. Tiny brown flowering eyes along upper rib crests; NO cactus areoles, NO wool, NO spines, NO latex droplets, NO cutaway. Hybrid parentage is unknown so do not exaggerate pure-species details. 1 points to broad fleshy rib; 2 to a transverse purple-brown band; 3 to a tiny brown flowering eye near an upper rib crest; 4 to the central growing crown. No open flowers.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Monk’s hood cactus",
+            "profileSlug": "astrophytum-ornatum",
+            "text": "A ribbed shape is shared, but Astrophytum has woolly areoles bearing spines. This Euphorbia’s tiny flowering sites are different structures; do not injure the plant to test for latex."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "sanbi"
+        ],
+        "text": "SANBI describes pure obesa to about 20 cm high and 9 cm wide. Those figures offer a comparison scale, not a promised final size for a plant with unknown parentage."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-23",
+            "sourcePath": "docs/plants/starter/euphorbia-obesa-hybrid.md",
+            "text": "Joined the collection from Altman Reserve.",
+            "title": "Acquired"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "genus"
+        ],
+        "text": "The cactus resemblance is an example of similar succulent shapes appearing in unrelated families. Euphorbia’s floral structure and milky latex reveal its very different botanical identity."
+    },
+    "slug": "euphorbia-obesa-hybrid",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "sanbi",
+            "title": "SANBI — Euphorbia obesa",
+            "url": "https://pza.sanbi.org/euphorbia-obesa"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "genus",
+            "title": "SANBI — Euphorbia structures",
+            "url": "https://pza.sanbi.org/euphorbia"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "cactus-structure",
+            "title": "University of Illinois — cactus areoles",
+            "url": "https://www.life.illinois.edu/help/digitalflowers/Cactaceae/5.htm"
+        }
+    ]
+}

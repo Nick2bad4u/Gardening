@@ -1,0 +1,133 @@
+{
+    "anatomy": {
+        "intro": "The diagram explains an irregular blue stem rather than a normal candelabra-shaped tree.",
+        "parts": [
+            {
+                "function": "The folded surface is part of the succulent cactus stem.",
+                "label": "Wavy stem fold"
+            },
+            {
+                "function": "A small cushion produces the short dark spines.",
+                "label": "Areole"
+            },
+            {
+                "function": "The glaucous exterior gives the underlying green stem its blue cast.",
+                "label": "Blue-grey surface"
+            },
+            {
+                "function": "Where growth broadens into a line, it can form a fan instead of a single rounded tip.",
+                "label": "Growth crest"
+            }
+        ],
+        "sourceIds": [
+            "arizona",
+            "rhs-mutations",
+            "cactus-structure"
+        ]
+    },
+    "comparisonSourceIds": [
+        "ming-comparison",
+        "rhs-mutations"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "arizona"
+        ],
+        "text": "The normal species produces small greenish-white flowers followed by dark fruits. Those species traits do not establish how often this distorted nursery form will flower, and this collection has no flowering milestone recorded for it."
+    },
+    "growth": {
+        "note": "These are form-based expectations, not a proven cultivar growth schedule; a crest is a growth pattern rather than a separate botanical species.",
+        "sourceIds": [
+            "rhs-mutations"
+        ],
+        "stages": [
+            {
+                "text": "The cultivated body begins with irregular lobes and ridges.",
+                "title": "Small folded plant"
+            },
+            {
+                "text": "Different growing regions add uneven new folds or fan-shaped tissue.",
+                "title": "Changing outline"
+            },
+            {
+                "text": "Continued growth builds an individual outline rather than a predictable straight column.",
+                "title": "Older sculpture"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew",
+            "arizona",
+            "rhs-mutations"
+        ],
+        "text": "The ordinary species is a Mexican cactus tree from desert and dry shrubland. Indigo Wave is a nursery selection with distorted growth, not a separate wild population with its own mapped habitat. Its blue stem connects it visually to that ancestry, while the folded and sometimes fan-shaped outline is the cultivated feature documented in this collection."
+    },
+    "image": {
+        "alt": "Indigo Wave cactus with numbered wavy stem fold, spine-bearing areole, blue-grey surface and broad growth crest.",
+        "file": "assets/plant-explainers/myrtillocactus-geometrizans-indigo-wave.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024x1024 scientific botanical educational illustration. Warm ivory background; muted forest-green, sage and ochre with natural species colors; clean accurate pen-and-watercolor style, large central specimen, ample whitespace. Exactly four large circled numbered markers 1-4 with clear thin leaders pointing to the features specified below in order. Numbers legible at 350px display width. No words, title, paragraphs, watering or calendar icons. No pot, roots, flowers or grafts unless explicitly requested. Myrtillocactus geometrizans 'Indigo Wave', a compact blue-grey monstrose and partially crested cactus with irregular rippling folded ribs, knobby lobes and short dark spines at scattered white areoles; plant resembles a sculptural blue folded fan, not regular upright columns or an Opuntia. 1 points to a wavy fleshy rib/fold; 2 to an areole bearing short spines; 3 to blue-grey surface bloom; 4 to a widened rippling growth crest at the top. No flower, no graft.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Ming Thing",
+            "profileSlug": "cereus-forbesii-ming-thing",
+            "text": "Ming Thing forms predominantly rounded blue-green clubs; Indigo Wave is documented here with more folded or fan-like growth. Both are variable cultivated forms, so silhouette alone cannot prove their labels."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "arizona"
+        ],
+        "text": "Ordinary Myrtillocactus geometrizans can become a candelabra-like tree around 3.4–4.6 m tall. That outdoor species size is not a credible indoor size prediction for Indigo Wave; no verified cultivar maximum is supplied here."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-15",
+            "sourcePath": "docs/plants/starter/myrtillocactus-geometrizans-indigo-wave.md",
+            "text": "Joined the collection from Altman Reserve.",
+            "title": "Acquired"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "The species appeared as Cereus geometrizans in 1837 and moved to Myrtillocactus in 1897. Indigo Wave is a trade selection name and does not replace that underlying botanical name."
+    },
+    "slug": "myrtillocactus-geometrizans-indigo-wave",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew — Myrtillocactus geometrizans",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:135710-1"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "arizona",
+            "title": "University of Arizona — Myrtillocactus geometrizans",
+            "url": "https://apps.cals.arizona.edu/arboretum/taxon.aspx?id=991"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "cactus-structure",
+            "title": "University of Illinois — cactus areoles",
+            "url": "https://www.life.illinois.edu/help/digitalflowers/Cactaceae/5.htm"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "rhs-mutations",
+            "title": "RHS — Fasciation and distorted growth",
+            "url": "https://www.rhs.org.uk/problems/fasciation"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "ming-comparison",
+            "title": "NC State Extension — Ming Thing",
+            "url": "https://plants.ces.ncsu.edu/plants/cereus-forbesii-ming-thing/"
+        }
+    ]
+}

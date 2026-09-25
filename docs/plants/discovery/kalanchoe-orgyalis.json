@@ -1,0 +1,118 @@
+{
+    "anatomy": {
+        "intro": "The contrasting surfaces and folded shape distinguish copper spoons at a glance.",
+        "parts": [
+            {
+                "function": "Fine cinnamon-colored hairs cover the upper leaf surface.",
+                "label": "Copper upper felt"
+            },
+            {
+                "function": "The underside contrasts with the copper top of the same leaf.",
+                "label": "Grey-bronze underside"
+            },
+            {
+                "function": "The fleshy spoon-shaped blade bends upward along its middle.",
+                "label": "Folded leaf blade"
+            },
+            {
+                "function": "Branching stems lift the leaves into a shrub-like crown.",
+                "label": "Upright stem"
+            }
+        ],
+        "sourceIds": [
+            "garden"
+        ]
+    },
+    "comparisonSourceIds": [
+        "garden",
+        "silver"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "garden"
+        ],
+        "text": "Port St. Lucie Botanical Gardens describes terminal clusters of bright yellow or pink flowers. The collection has no recorded bloom here, so flower color should be documented from this plant rather than inferred from its copper leaves."
+    },
+    "growth": {
+        "note": "Indoor growth and flowering depend on conditions; the illustration shows general structure, not a measured future form.",
+        "sourceIds": [
+            "garden"
+        ],
+        "stages": [
+            {
+                "text": "Leaf pairs develop along an upright stem.",
+                "title": "Extend a shoot"
+            },
+            {
+                "text": "Additional branches spread the foliage above the soil.",
+                "title": "Build a crown"
+            },
+            {
+                "text": "Established branch tips may carry terminal flower clusters.",
+                "title": "Flower at the tips"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "garden",
+            "kew"
+        ],
+        "text": "Copper spoons comes from Madagascar and is associated with rocky, dry ground. Its upright, branching form gives it a different role from the low echeveria beside it in this collection. The felted leaves are its most striking feature, but the plant eventually develops a shrub's framework rather than staying a small cluster of spoons."
+    },
+    "image": {
+        "alt": "Copper spoons with numbered upper felt, grey underside, folded blade and woody stem.",
+        "file": "assets/plant-explainers/kalanchoe-orgyalis.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Scientific educational botanical illustration, square 1024x1024, warm ivory background, accurate clean pen-and-watercolor, forest-green/sage/ochre muted palette with natural species colors. Large central plant, generous whitespace. Exactly four large numbered markers 1–4 with thin clear leaders to the specified features, readable at 350px. No other text, titles, paragraphs, calendar, watering icons, roots or pots. Generic botanical anatomy, not a record of an individual collection specimen. Kalanchoe orgyalis copper spoons: upright branching shrub, opposite fleshy oval spoon-shaped leaves folded slightly upward along midrib. Rich cinnamon copper fine felt on upper leaf surfaces, grey-bronze undersides. One naturally turned leaf reveals underside. Markers: 1 cinnamon felt on upper leaf, 2 grey-bronze leaf underside, 3 folded spoon-shaped leaf blade, 4 upright branching woody stem. No flowers.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Silver spoons (Kalanchoe bracteata)",
+            "profileSlug": "kalanchoe-bracteata",
+            "text": "Silver spoons has predominantly silvery leaves, whereas copper spoons combines cinnamon upper felt with a greyer underside and an upward-folded blade."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "garden"
+        ],
+        "text": "The botanical garden lists roughly 3–6 ft or more for mature plants. A pot-grown specimen may remain much smaller. Its potential height helps explain why this member of the shared box can overtop its low-growing neighbors."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-27",
+            "sourcePath": "docs/plants/succulents/kalanchoe-orgyalis.md",
+            "text": "Acquired at Gerych's Greenhouse with the other plants sharing P20 / #2.",
+            "title": "Joined the collection"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "garden"
+        ],
+        "text": "The common names copper spoons and cinnamon bear describe the same visible feature: warm-colored fine hairs over spoon-shaped leaves. That color is a surface texture, not a metallic coating."
+    },
+    "slug": "kalanchoe-orgyalis",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "garden",
+            "title": "Port St. Lucie Botanical Gardens: copper spoons",
+            "url": "https://www.pslbg.org/copper-spoon/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "silver",
+            "title": "NC State: Kalanchoe bracteata",
+            "url": "https://plants.ces.ncsu.edu/plants/kalanchoe-bracteata/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew: Kalanchoe orgyalis",
+            "url": "https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A274427-1"
+        }
+    ]
+}

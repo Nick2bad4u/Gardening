@@ -1,0 +1,284 @@
+---
+import { photoPreview } from "../lib/content.mjs";
+import { getPhotoComparison } from "../lib/plant-discovery.mjs";
+import { contentUrl, profileUrl, repositoryUrl } from "../lib/routes.mjs";
+import SiteIcon from "./SiteIcon.astro";
+import "../styles/plant-discovery.css";
+
+interface Props {
+    profile: import("../lib/content.mjs").SiteProfile;
+    discovery: import("../lib/plant-discovery.mjs").PlantDiscovery;
+}
+const { profile, discovery } = Astro.props;
+const anchor = (section: string) => `${profile.slug}-discovery-${section}`;
+const citations = (ids: string[]) =>
+    discovery.sources
+        .map((source, index) => ({ ...source, number: index + 1 }))
+        .filter((source) => ids.includes(source.id));
+const photoComparison = getPhotoComparison(profile.collectionRecord.photos);
+const comparisonPhotos = photoComparison
+    ? [
+          { ...photoComparison.earliest, title: "Earliest dated view" },
+          { ...photoComparison.latest, title: "Latest dated view" },
+      ]
+    : [];
+const milestones = discovery.milestones.toSorted((left, right) =>
+    left.date.localeCompare(right.date)
+);
+const formatDate = (date: string) =>
+    new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        timeZone: "UTC",
+    }).format(new Date(`${date}T12:00:00Z`));
+const stories = [
+    { id: "flowers", title: "Flowers", icon: "botanical", section: discovery.flowers },
+    { id: "mature", title: "As it matures", icon: "growth", section: discovery.mature },
+    ...(discovery.nameStory
+        ? [{ id: "name", title: "Behind the name", icon: "identity", section: discovery.nameStory }]
+        : []),
+];
+---
+
+<div class="plant-discovery" data-plant-discovery={profile.slug}>
+    <section class="card discovery-anatomy" aria-labelledby={anchor("anatomy")}>
+        <div class="discovery-heading">
+            <p class="eyebrow">A closer look</p>
+            <h2 id={anchor("anatomy")}>
+                <SiteIcon name="botanical" size={30} /> How this plant works
+            </h2>
+            <p>{discovery.anatomy.intro}</p>
+        </div>
+        <div class="discovery-anatomy-layout">
+            <figure>
+                <a
+                    href={contentUrl(discovery.image.file)}
+                    aria-label={`Open the full anatomy illustration of ${profile.title}`}
+                >
+                    <img
+                        src={contentUrl(discovery.image.file)}
+                        alt={discovery.image.alt}
+                        width="1024"
+                        height="1024"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                </a>
+                <figcaption>
+                    AI-generated botanical illustration · schematic structures, not measurements of
+                    this specimen.
+                </figcaption>
+            </figure>
+            <div>
+                <ol class="discovery-parts" aria-label="Illustration key">
+                    {discovery.anatomy.parts.map((part, index) => (
+                        <li data-explainer-part={index + 1}>
+                            <span class="discovery-number" aria-hidden="true">
+                                {index + 1}
+                            </span>
+                            <div>
+                                <h3>{part.label}</h3>
+                                <p>{part.function}</p>
+                            </div>
+                        </li>
+                    ))}
+                </ol>
+                <p class="discovery-citations">
+                    Anatomy sources:{" "}
+                    {citations(discovery.anatomy.sourceIds).map((source) => (
+                        <a
+                            href={`#${anchor(`source-${source.id}`)}`}
+                            aria-label={`Source: ${source.title}`}
+                        >
+                            [{source.number}]
+                        </a>
+                    ))}
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card discovery-habitat" aria-labelledby={anchor("habitat")}>
+        <h2 id={anchor("habitat")}>
+            <SiteIcon name="habitat" size={30} /> Habitat and origins
+        </h2>
+        <p>{discovery.habitat.text}</p>
+        <p class="discovery-citations">
+            Habitat sources:{" "}
+            {citations(discovery.habitat.sourceIds).map((source) => (
+                <a
+                    href={`#${anchor(`source-${source.id}`)}`}
+                    aria-label={`Source: ${source.title}`}
+                >
+                    [{source.number}]
+                </a>
+            ))}
+        </p>
+    </section>
+
+    <section class="card discovery-growth" aria-labelledby={anchor("growth")}>
+        <h2 id={anchor("growth")}>
+            <SiteIcon name="growth" size={30} /> What growth can look like
+        </h2>
+        <ol class="discovery-stages">
+            {discovery.growth.stages.map((stage, index) => (
+                <li>
+                    <span class="discovery-stage-number">Stage {index + 1}</span>
+                    <h3>{stage.title}</h3>
+                    <p>{stage.text}</p>
+                </li>
+            ))}
+        </ol>
+        <p class="discovery-note">{discovery.growth.note}</p>
+        <p class="discovery-citations">
+            Growth sources:{" "}
+            {citations(discovery.growth.sourceIds).map((source) => (
+                <a
+                    href={`#${anchor(`source-${source.id}`)}`}
+                    aria-label={`Source: ${source.title}`}
+                >
+                    [{source.number}]
+                </a>
+            ))}
+        </p>
+    </section>
+
+    <div class="discovery-stories">
+        {stories.map((story) => (
+            <section class="card" aria-labelledby={anchor(story.id)}>
+                <h2 id={anchor(story.id)}>
+                    <SiteIcon name={story.icon} size={28} /> {story.title}
+                </h2>
+                <p>{story.section.text}</p>
+                <p class="discovery-citations">
+                    Sources:{" "}
+                    {citations(story.section.sourceIds).map((source) => (
+                        <a
+                            href={`#${anchor(`source-${source.id}`)}`}
+                            aria-label={`Source: ${source.title}`}
+                        >
+                            [{source.number}]
+                        </a>
+                    ))}
+                </p>
+            </section>
+        ))}
+    </div>
+
+    <section class="card discovery-lookalikes" aria-labelledby={anchor("lookalikes")}>
+        <h2 id={anchor("lookalikes")}>
+            <SiteIcon name="identity" size={30} /> Similar plants, useful clues
+        </h2>
+        <div class="discovery-comparisons">
+            {discovery.lookalikes.map((lookalike) => (
+                <div>
+                    <h3>
+                        {lookalike.profileSlug ? (
+                            <a href={profileUrl(lookalike.profileSlug)}>{lookalike.name} ↗</a>
+                        ) : (
+                            lookalike.name
+                        )}
+                    </h3>
+                    <p>{lookalike.text}</p>
+                </div>
+            ))}
+        </div>
+        <p class="discovery-citations">
+            Comparison sources:{" "}
+            {citations(discovery.comparisonSourceIds).map((source) => (
+                <a
+                    href={`#${anchor(`source-${source.id}`)}`}
+                    aria-label={`Source: ${source.title}`}
+                >
+                    [{source.number}]
+                </a>
+            ))}
+        </p>
+    </section>
+
+    <section class="card discovery-history" aria-labelledby={anchor("timeline")}>
+        <p class="eyebrow">This plant in the collection</p>
+        <h2 id={anchor("timeline")}>
+            <SiteIcon name="history" size={30} /> Its story so far
+        </h2>
+        <ol class="discovery-timeline">
+            {milestones.map((milestone) => (
+                <li>
+                    <time datetime={milestone.date}>{formatDate(milestone.date)}</time>
+                    <div>
+                        <h3>{milestone.title}</h3>
+                        <p>{milestone.text}</p>
+                        <a
+                            href={`${repositoryUrl}/blob/main/${milestone.sourcePath}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Collection record ↗
+                        </a>
+                    </div>
+                </li>
+            ))}
+        </ol>
+        {photoComparison ? (
+            <section
+                class="discovery-photo-comparison"
+                data-photo-comparison={profile.slug}
+                aria-labelledby={anchor("photo-comparison")}
+            >
+                <h3 id={anchor("photo-comparison")}>Then and now</h3>
+                <p>Compare the recorded views; lighting and camera angles may differ.</p>
+                <div class="discovery-photo-pair">
+                    {comparisonPhotos.map((entry) => (
+                        <figure>
+                            <a href={entry.photo.page_url}>
+                                <img
+                                    src={photoPreview(entry.photo)}
+                                    alt={entry.photo.alt}
+                                    width="640"
+                                    height="480"
+                                    loading="lazy"
+                                    decoding="async"
+                                    data-image-id={entry.photo.image_id}
+                                />
+                            </a>
+                            <figcaption>
+                                <strong>{entry.title}</strong>
+                                <span>
+                                    {entry.basis}{" "}
+                                    <time datetime={entry.date}>{formatDate(entry.date)}</time> · ©
+                                    Nick
+                                </span>
+                                {entry.photo.derived_note && (
+                                    <span>{entry.photo.derived_note}</span>
+                                )}
+                                <a href={entry.photo.page_url}>Open photograph ↗</a>
+                            </figcaption>
+                        </figure>
+                    ))}
+                </div>
+            </section>
+        ) : profile.hasInlinePhotos ? (
+            <p class="discovery-note">
+                <a href={`#${profile.slug}-notes`}>
+                    See the acquisition and repot photographs in the collection notes.
+                </a>
+            </p>
+        ) : null}
+    </section>
+
+    <section class="card discovery-sources" aria-labelledby={anchor("sources")}>
+        <h2 id={anchor("sources")}>
+            <SiteIcon name="research" size={30} /> Explore the sources
+        </h2>
+        <ol>
+            {discovery.sources.map((source) => (
+                <li id={anchor(`source-${source.id}`)}>
+                    <a href={source.url} target="_blank" rel="noopener noreferrer">
+                        {source.title} ↗
+                    </a>
+                </li>
+            ))}
+        </ol>
+    </section>
+</div>

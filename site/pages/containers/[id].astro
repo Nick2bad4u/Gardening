@@ -36,8 +36,8 @@ const currentPot =
         <h1>{container.name}</h1>
         <p class="lede">
             {container.shared
-                ? "Separate botanical profiles, one physical planter and one care history."
-                : "The pot setup and care history for this botanical profile."}
+                ? "Meet the plants growing together and follow their shared care history."
+                : "The pot, growing mix, and care history for this plant."}
         </p>
         <div class="action-row">
             <a class="button" href={potUrl(container.id)}>
@@ -59,9 +59,8 @@ const currentPot =
         {currentPot && <div class="prose" set:html={currentPot.html} />}
         <p>{container.setupNote}</p>
         <p>
-            These are maintained setup notes. Check dated repot and drainage events in the live
-            history for later changes; a new profile page does not create a new pot or reset its
-            setup.
+            The care history includes dated repotting and drainage changes, alongside watering and
+            weight records.
         </p>
     </section>
 </SiteLayout>

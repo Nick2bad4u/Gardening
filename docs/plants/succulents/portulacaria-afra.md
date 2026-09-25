@@ -1,7 +1,7 @@
 # Elephant bush
 
 - Inventory: Succulent-02 — _Portulacaria afra_
-- Label ID: `#2` — shared succulent planter; formerly `C4-D4`
+- Label ID: `#2`
 - Tracker ID: `P20`
 - Current pot: **square wooden shared planter with plastic liner and owner-drilled approximately one-inch hole through both bottom and liner; outside dimensions unmeasured**
 - Visual description: Fine branching reddish stems carry many small, round, glossy green leaves in opposite pairs, creating a miniature-tree texture within the shared planter.
@@ -55,15 +55,15 @@ top-dressing exposure.
 
 ## Care in the shared planter
 
-The owner clarified on September 20, 2026 that the square wooden P20 / #2 container has a plastic liner and an approximately one-inch drainage hole drilled through both the container bottom and liner. The report does not establish the drilling date, a new setup, or a tare adjustment. Keep the opening unobstructed and assess the shared root zone before watering; the hole does not itself establish dryness.
+The square wooden planter has a plastic liner and an approximately one-inch drainage hole through both the bottom and liner, documented September 20, 2026. Keep the opening clear and let the shared root zone dry before watering.
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                              |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Water               | Water thoroughly once the shared planter dries. During warm active growth it may use water sooner than the cacti, but its leaves store a useful buffer.                                                                                                                                                         |
-| Pruning             | Pinch or cut long stems above a leaf pair to keep the echeveria unshaded and encourage branching.                                                                                                                                                                                                               |
-| Temperature         | Warm growth is fastest; protect this African succulent from frost.                                                                                                                                                                                                                                              |
-| Feeding             | Sparse balanced fertilizer during active growth. Too much produces long, fragile internodes.                                                                                                                                                                                                                    |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Water               | Water thoroughly once the shared planter dries. During warm active growth it may use water sooner than the cacti, but its leaves store a useful buffer.                                                                                                                                           |
+| Pruning             | Pinch or cut long stems above a leaf pair to keep the echeveria unshaded and encourage branching.                                                                                                                                                                                                 |
+| Temperature         | Warm growth is fastest; protect this African succulent from frost.                                                                                                                                                                                                                                |
+| Feeding             | Sparse balanced fertilizer during active growth. Too much produces long, fragile internodes.                                                                                                                                                                                                      |
 
 Strong compact growth has short gaps between leaf pairs. Long bare reaches and
 small widely spaced leaves point to inadequate light. A little red edging or
@@ -83,7 +83,7 @@ sunburn.
 
 ## Sources
 
-- Owner clarification on September 20, 2026: plastic liner and approximately one-inch hole drilled through both the P20 / #2 wooden container bottom and liner; exact drilling date and any removed mass were not supplied.
+- Owner observations, September 20, 2026: P20 / #2 wooden planter with a plastic liner and an approximately one-inch drainage hole through both layers.
 
 - [Kew Plants of the World Online: _Portulacaria afra_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A699417-1/general-information)
 - [SANBI PlantZAfrica: _Portulacaria afra_](https://pza.sanbi.org/portulacaria-afra)

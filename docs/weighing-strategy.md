@@ -12,7 +12,7 @@ Frequent early weighing helps establish how a particular plant, pot, and medium 
 
 Reviewing every active container's existing data each morning does not require physically weighing every container. A shared planter counts as one weighed assembly even when several plants live in it.
 
-The active roster has 32 tracked containers: P01–P32. The unreceived [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md) is excluded from weigh-ins; its withdrawn allocations have no real measurements or care events. Do not request weights or create baselines merely to complete those archived records.
+The active roster has **34 tracked containers: P01–P32, P35 and P36**. Shared containers receive one whole-pot weight; separate botanical profiles do not create additional weigh-ins.
 
 ## What Exists Today
 
@@ -23,7 +23,7 @@ The active roster has 32 tracked containers: P01–P32. The unreceived [abandone
 | Dry-check window                | A forecast of approaching a historical mass reference. It is not the next appointment to weigh.                                                                                                                                                                                                   |
 | Water date*                     | A conditional care-planning date. It does not authorize watering from weight alone.                                                                                                                                                                                                               |
 
-The saved prompt does not itself create or update a scheduled task. The existing daily task uses the adaptive policy; do not recreate a second workbook calendar. The existing validity, correction, watering, and measurement rules still apply.
+The daily report uses this adaptive policy alongside the validity, correction, watering, and measurement rules below.
 
 ## What Makes a Weight Comparable
 
@@ -37,18 +37,18 @@ The ledger's **Date** is when the observation happened. **Recorded** is when it 
 
 ### Recorded Dry Top-Dressing Adjustment
 
-On September 16, 2026, the owner added top dressing to the money tree and Kiwi aeonium and weighed each pot before and after. On September 17, the owner confirmed that all added stones were bone dry and requested a one-time historical weight adjustment.
+Dry top dressing added September 16, 2026 increased the measured assembly mass by **108 g for Money Tree** and **150.5 g for Kiwi aeonium**. Earlier History weights include these offsets so they remain comparable with the dressed pots.
 
-| Pot                           | Original before | Measured after | Added dry mass | Earlier weights adjusted |
-| ----------------------------- | --------------: | -------------: | -------------: | -----------------------: |
-| #3 · Money tree · P21         |         1,638 g |        1,746 g |         +108 g |                       30 |
-| #4 · Kiwi 'Dream Color' · P22 |         841.5 g |          992 g |       +150.5 g |                       29 |
+| Pot                           | Original before | Measured after | Added dry mass |
+| ----------------------------- | --------------: | -------------: | -------------: |
+| #3 · Money tree · P21         |         1,638 g |        1,746 g |         +108 g |
+| #4 · Kiwi 'Dream Color' · P22 |         841.5 g |          992 g |       +150.5 g |
 
-The live History weights before the additions, including the immediate before readings, now include the corresponding offset. The post-dressing readings remain the actual scale values. Original scale readings are retained in weight-cell notes and a native workbook backup; the two post-dressing rows explain the change. Observation times, IDs, watering events, and pot setup numbers remain unchanged.
+Post-dressing readings are the actual scale values. Original readings remain in weight-cell notes; observation times, watering events and pot setup numbers are unchanged.
 
 **Enter future weights directly from the scale. Do not add or subtract these offsets again.** Wet/dry references, charts, and other derived values recalculate from the adjusted history. Earlier losses and wet-to-dry capacities stay the same; this preserves comparable mass history without claiming that future drying conditions will be identical. Dated reports, photographs, and older repository observations remain evidence of what was recorded at that time.
 
-This was an owner-authorized correction for measured, dry added mass, not an automatic logger feature or permission to normalize an unknown change. Other changes still need the comparison and setup review described above. The [workbook runbook](../scripts/google-sheets/README.md#september-17-dry-top-dressing-normalization) records the scope and verification.
+This adjustment applies only to the measured dry additions above. Unknown mass changes still need a setup review; the logger does not normalize them automatically. The [workbook runbook](../scripts/google-sheets/README.md#september-17-dry-top-dressing-normalization) retains the detailed record.
 
 ## Useful Points in a Cycle
 
@@ -88,7 +88,7 @@ There is a tradeoff: a cycle with too few measurements may help the current care
 
 ## Choosing Today's Small Subset
 
-1. **Read the current evidence for every active container.** Include new waterings, corrections, exact weight times, current setup, model support, and unresolved alerts. Do not use yesterday's task message as today's spreadsheet snapshot.
+1. **Read the current evidence for every active container.** Include new waterings, corrections, exact weight times, current setup, model support, and unresolved alerts. Use current records rather than a previous day's report.
 2. **Remove already-satisfied work.** A confirmed eligible weight is different from a queued draft. Do not ask for a duplicate merely because a filter or date changed.
 3. **Prioritize necessary follow-ups.** Missing post-water anchors, credible measurement problems, genuinely overdue observations, and pots approaching or at a relevant window come first.
 4. **Choose a few flexible learning samples only when useful.** Favor the pot for which a reading would reduce meaningful uncertainty or prevent its evidence becoming stale. An unfamiliar curve is a reason to plan learning, not an automatic lifelong daily assignment.

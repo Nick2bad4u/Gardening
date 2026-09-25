@@ -1,0 +1,134 @@
+{
+    "anatomy": {
+        "intro": "The drawing compares three foliage groups above one shared potting volume; it does not identify individual root connections.",
+        "parts": [
+            {
+                "function": "Overlapping fleshy leaves form the low Echeveria-type crown.",
+                "label": "Powdery rosette"
+            },
+            {
+                "function": "Sedum-type stems carry narrower leaves outward.",
+                "label": "Branching shoot"
+            },
+            {
+                "function": "Broad Kalanchoe-type leaves rise above their smaller neighbors.",
+                "label": "Upright paddle"
+            },
+            {
+                "function": "The same potting volume serves all components, so watering affects the whole arrangement.",
+                "label": "Shared medium"
+            }
+        ],
+        "sourceIds": [
+            "echeveria",
+            "sedum",
+            "flapjacks"
+        ]
+    },
+    "comparisonSourceIds": [
+        "lithops",
+        "sedum"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "echeveria",
+            "sedum",
+            "flapjacks"
+        ],
+        "text": "There is no single flower for this planter: Echeveria-type stalks, white sedum stars and paddle-kalanchoe flower spikes would belong to different components. None is documented here."
+    },
+    "growth": {
+        "note": "Use photographs to watch for shade and crowding; these are possibilities, not dated predictions or instructions to separate healthy plants.",
+        "sourceIds": [
+            "echeveria",
+            "sedum",
+            "flapjacks"
+        ],
+        "stages": [
+            {
+                "text": "Separate foliage groups fit together within the shallow planter.",
+                "title": "Small arrangement"
+            },
+            {
+                "text": "Stem extension, wider rosettes and taller paddles change the balance.",
+                "title": "Uneven expansion"
+            },
+            {
+                "text": "Offsets or flowering may develop independently in the different groups.",
+                "title": "Established display"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "echeveria",
+            "sedum",
+            "flapjacks"
+        ],
+        "text": "This is a nursery composition rather than a natural plant community. Its working matches bring American Echeveria and Mexican coppertone sedum together with South African paddle kalanchoe. Similar fleshy foliage makes a pleasing display, but does not prove identical growth rates, final sizes or watering needs."
+    },
+    "image": {
+        "alt": "Terracotta mixed-planter schematic with numbered pale rosette, copper stem, green paddle and shared medium.",
+        "file": "assets/plant-explainers/tiny-mixed-succulent-planter.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration on warm ivory. Clean botanically accurate pen-and-watercolor, muted forest-green, sage and ochre palette, generous whitespace, large central specimen. Exactly four large numbered circular markers 1, 2, 3, 4 with thin clear noncrossing leader lines to the specified features. Numerals legible at 350px display. No title, words, paragraphs, watering icons, calendar, border or logo. Schematic anatomy, not a photograph of an owned plant. Show one shallow terracotta shared planter viewed slightly from above, containing pale powdery Echeveria rosettes at front left, narrow copper-orange Sedum rosettes on short branching stems at front right, and upright broad green red-edged Kalanchoe paddles behind them. Group types distinct, five small crowns total, not species proof. No roots, flowers or cutaway. Marker1 to a powdery Echeveria fleshy rosette leaf; marker2 to a copper Sedum branching stem; marker3 to a broad Kalanchoe paddle leaf; marker4 to the visible shared gritty potting-medium surface between them. All four leaders unambiguous.\nFinal refinement: Edit the supplied illustration. Preserve pot, plant arrangement, pale echeveria, copper sedum, all four numbered markers and leader lines. Change ONLY the margins of every broad green red-edged Kalanchoe paddle leaf at the back: they must be SMOOTH entire rounded edges, no scalloping, teeth or serrations. Keep red margins, broad oval paddle forms and everything else exactly as shown.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Lithops shared planter",
+            "profileSlug": "lithops-shared-planter",
+            "text": "Both share one pot history, but Lithops renew paired leaf bodies instead of extending ordinary leafy stems."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "echeveria",
+            "sedum",
+            "flapjacks"
+        ],
+        "text": "The display changes as each component grows: paddle leaves can rise above the rosettes while sedum branches spread sideways. A small dish garden can gradually become a layered scene, with individual plants needing more room at different times."
+    },
+    "milestones": [
+        {
+            "date": "2026-09-02",
+            "sourcePath": "docs/plants/succulents/tiny-mixed-succulent-planter.md",
+            "text": "Acquired in the Smart Planet Home mixed succulent garden from Home Depot.",
+            "title": "Joined the collection"
+        },
+        {
+            "date": "2026-09-02",
+            "sourcePath": "docs/plants/succulents/tiny-mixed-succulent-planter.md",
+            "text": "The rosettes, copper-toned shoots and broad paddles stayed together in the terra-cotta planter.",
+            "title": "Repotted together"
+        }
+    ],
+    "nameStory": null,
+    "slug": "tiny-mixed-succulent-planter",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "echeveria",
+            "title": "NC State Extension: Echeveria",
+            "url": "https://plants.ces.ncsu.edu/plants/echeveria/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "sedum",
+            "title": "NParks: Sedum adolphi",
+            "url": "https://www.nparks.gov.sg/florafaunaweb/flora/6/1/6141"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "flapjacks",
+            "title": "Wisconsin Extension: Flapjacks",
+            "url": "https://hort.extension.wisc.edu/articles/flapjacks-kalanchoe-spp/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "lithops",
+            "title": "Wisconsin Extension: Living stones",
+            "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"
+        }
+    ]
+}

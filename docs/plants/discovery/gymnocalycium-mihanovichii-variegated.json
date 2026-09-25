@@ -1,0 +1,115 @@
+{
+    "anatomy": {
+        "intro": "The same ribbed stem carries green working tissue and lighter variegated sectors.",
+        "parts": [
+            {
+                "function": "A notch beneath an areole gives the rib its characteristic chin-shaped projection.",
+                "label": "Chin-like rib"
+            },
+            {
+                "function": "This cushion bears the short, curved spine cluster.",
+                "label": "Areole"
+            },
+            {
+                "function": "Green tissue contains chlorophyll used to capture light for photosynthesis.",
+                "label": "Green sector"
+            },
+            {
+                "function": "Lighter sectors interrupt the green pattern without representing a second grafted plant.",
+                "label": "Variegated sector"
+            }
+        ],
+        "sourceIds": [
+            "ncsu",
+            "costa"
+        ]
+    },
+    "comparisonSourceIds": [
+        "ncsu",
+        "costa"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "costa",
+            "ncsu"
+        ],
+        "text": "Costa Farms describes creamy to pinkish flowers for this exact variegated selection, while ordinary species accounts include greener or yellow-brown blooms. The seller description is a useful expectation, but the color of a future flower on this specimen still needs an observation."
+    },
+    "growth": {
+        "note": "Color pattern is not a cultivar-level identification by itself, and no offset or bloom is claimed for this specimen.",
+        "sourceIds": [
+            "ncsu",
+            "costa"
+        ],
+        "stages": [
+            {
+                "text": "A compact stem already displays rib notches and patches of color.",
+                "title": "Small globe"
+            },
+            {
+                "text": "Growth enlarges the globe; the exact distribution of colored sectors varies.",
+                "title": "Wider body"
+            },
+            {
+                "text": "A mature stem may produce flowers or offsets while retaining a compact habit.",
+                "title": "Established plant"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "ncsu",
+            "costa"
+        ],
+        "text": "The wild species occurs in rocky places in Paraguay and northeastern Argentina. This variegated nursery plant is a cultivated form, so yellow and pink sectors should not be presented as the normal appearance of every wild population. Its collection record is specifically an own-root plant, unlike the two-part grafted moon cacti often sold beside it."
+    },
+    "image": {
+        "alt": "Own-root variegated moon cactus with numbered chin-shaped rib, areole, green sector and yellow-pink variegated sector.",
+        "file": "assets/plant-explainers/gymnocalycium-mihanovichii-variegated.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024x1024 scientific botanical educational illustration. Warm ivory background; muted forest-green, sage and ochre with natural species colors; clean accurate pen-and-watercolor style, large central specimen, ample whitespace. Exactly four large circled numbered markers 1-4 with clear thin leaders pointing to the features specified below in order. Numbers legible at 350px display width. No words, title, paragraphs, watering or calendar icons. No pot, roots, flowers or grafts unless explicitly requested. Own-root variegated Gymnocalycium mihanovichii, a squat cactus globe with 8 notched ribs, green/bronze tissue and muted yellow-pink variegated sectors. Short curved pale spines arise from small woolly areoles. Each areole sits above a projecting chin-like bump. Absolutely NO graft stock or joined stems. 1 points to a chin-like rib projection beneath an areole; 2 to the areole; 3 to a green sector; 4 to a yellow-pink variegated sector. Clear large specimen from slightly above.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Grafted neon moon cactus",
+            "profileSlug": null,
+            "text": "A graft has a colored scion visibly joined to a separate green rootstock. This collection plant retains green tissue in its own body and is recorded on its own roots."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "costa"
+        ],
+        "text": "Costa Farms gives about 15 cm tall or wide for its selection. This is a seller estimate for the cultivated form, not a measurement or a deadline for the collection plant."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-23",
+            "sourcePath": "docs/plants/starter/gymnocalycium-mihanovichii-variegated.md",
+            "text": "Joined the collection from Costa Farms.",
+            "title": "Acquired"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "ncsu"
+        ],
+        "text": "Gymnocalycium means naked calyx: its flower buds lack the spines and hairs found on many other cactus flower tubes. The name refers to flowers, not a completely spineless body."
+    },
+    "slug": "gymnocalycium-mihanovichii-variegated",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "ncsu",
+            "title": "NC State Extension — Gymnocalycium mihanovichii",
+            "url": "https://plants.ces.ncsu.edu/plants/gymnocalycium-mihanovichii/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "costa",
+            "title": "Costa Farms — Small variegated moon cactus",
+            "url": "https://costafarms.com/products/small-variegated-moon-cactus-parent"
+        }
+    ]
+}

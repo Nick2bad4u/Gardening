@@ -1,0 +1,139 @@
+{
+    "anatomy": {
+        "intro": "This illustration shows the leafy stems and possible flower spike of a variegated baby rubber plant, not a documented bloom on P31.",
+        "parts": [
+            {
+                "function": "The broad, cupped blade carries the green and cream pattern.",
+                "label": "Thick leaf"
+            },
+            {
+                "function": "A short stalk attaches the leaf blade to the stem.",
+                "label": "Petiole"
+            },
+            {
+                "function": "Fleshy stems carry successive leaves and give the plant its bushy form.",
+                "label": "Branching stem"
+            },
+            {
+                "function": "Many tiny petal-less flowers crowd onto a slender upright axis.",
+                "label": "Flower spike"
+            }
+        ],
+        "sourceIds": [
+            "ncsu",
+            "rhs"
+        ]
+    },
+    "comparisonSourceIds": [
+        "ncsu",
+        "ficus"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "ncsu"
+        ],
+        "text": "What looks like a narrow tail is an inflorescence: many minute cream-white flowers packed along a spike. NC State describes flowers without petals. Flowering is not yet documented for this collection plant."
+    },
+    "growth": {
+        "note": "These species-level stages are not a bloom schedule or a promise that a cutting will retain Bicolor's variegation.",
+        "sourceIds": [
+            "ncsu",
+            "rhs"
+        ],
+        "stages": [
+            {
+                "text": "An established plant produces new leaves along growing stems.",
+                "title": "New leafy shoots"
+            },
+            {
+                "text": "Additional branches broaden the rounded foliage display.",
+                "title": "Branching clump"
+            },
+            {
+                "text": "Slender spikes can develop without the showy petals of many other houseplants.",
+                "title": "Flower spikes"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "veracruz",
+            "rhs"
+        ],
+        "text": "The species belongs to tropical America; the named Bicolor cultivar has a horticultural origin. A Veracruz field study records Peperomia obtusifolia growing on trees, on the ground, and on rock across several forest types, including humid and seasonally drier forests. Thick leaves therefore do not make this plant a desert specialist."
+    },
+    "image": {
+        "alt": "Generated variegated Peperomia drawing: 1 thick leaf, 2 short petiole, 3 branching fleshy stem, and 4 illustrative flower spike.",
+        "file": "assets/plant-explainers/peperomia-obtipan-bicolor.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Use case: scientific-educational. Create a compact square 1024 by 1024 botanical anatomy illustration for a plant field guide. Subject: a compact variegated Peperomia obtusifolia of the nursery-labeled Obtipan Bicolor type, with upright branching fleshy stems, thick glossy blunt obovate leaves, irregular cream leaf margins and green centers. Warm ivory background; accurate clean pen-and-watercolor in forest green, sage and ochre, with generous whitespace and a large central plant. One thin cream-green rat-tail flower spike bears many minute petal-less flowers; no big decorative petals. Include exactly four bold circular numbered markers 1,2,3,4 with clear leaders: 1 points into one thick obovate leaf blade; 2 points to its short petiole; 3 points to an exposed fleshy branching stem; 4 points to the thin flower spike. Each leader endpoint must be unambiguous and the four numbers readable at350px display width. No title or any words, no calendar, water icons, roots, pot, or decorative objects. This represents species anatomy and a possible flower structure, not proof the owned plant has flowered or verification of its exact cultivar.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Rubber plant, Ficus elastica",
+            "profileSlug": null,
+            "text": "Both have glossy thick leaves, but Ficus forms a woody tree with much larger leathery blades. Peperomia's compact fleshy stems and slender flower spikes distinguish the baby rubber plant; the common name does not indicate close relationship."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "ncsu"
+        ],
+        "text": "NC State gives a species range of roughly 6 inches to 2 feet in height and spread. Expect a branching herbaceous plant rather than a woody rubber tree; that range does not establish this cultivar's eventual dimensions indoors."
+    },
+    "milestones": [
+        {
+            "date": "2026-09-20",
+            "sourcePath": "docs/plants/houseplants/peperomia-obtipan-bicolor.md",
+            "text": "Purchased at Carlson's Greenhouses in a reported six-inch nursery basket; the tag supplies the Bicolor name.",
+            "title": "Purchased and labeled"
+        },
+        {
+            "date": "2026-09-22",
+            "sourcePath": "docs/plants/houseplants/peperomia-obtipan-bicolor.md",
+            "text": "The owner assigned the smallest Bamworld stool beside P32 at the sliding glass door; the move and repot remain unconfirmed.",
+            "title": "Living-room layout planned"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "patent",
+            "rhs"
+        ],
+        "text": "The breeder's Obtipan patent names two Peperomia obtusifolia parents. RHS separately accepts Obtipan Bicolor; the green Obtipan patent does not establish this variegated plant's exact origin or patent status."
+    },
+    "slug": "peperomia-obtipan-bicolor",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "ncsu",
+            "title": "NC State Extension: Peperomia obtusifolia",
+            "url": "https://plants.ces.ncsu.edu/plants/peperomia-obtusifolia/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "rhs",
+            "title": "RHS: Peperomia obtusifolia Obtipan Bicolor",
+            "url": "https://www.rhs.org.uk/plants/379773/peperomia-obtusifolia-obtipan-bicolor-v/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "veracruz",
+            "title": "Vergara-Rodríguez et al.: Peperomia diversity and ecology in Veracruz",
+            "url": "https://journals.sagepub.com/doi/10.1177/1940082917702383"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "ficus",
+            "title": "NC State Extension: Ficus elastica",
+            "url": "https://plants.ces.ncsu.edu/plants/ficus-elastica/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "patent",
+            "title": "USPP29598P3: Peperomia plant named Obtipan",
+            "url": "https://patents.google.com/patent/USPP29598P3/en"
+        }
+    ]
+}

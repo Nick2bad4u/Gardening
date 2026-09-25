@@ -1,0 +1,124 @@
+{
+    "anatomy": {
+        "intro": "Four structures that explain the form of golden ball cactus.",
+        "parts": [
+            {
+                "function": "The folded stem surface can accommodate changes in stored water.",
+                "label": "Rib"
+            },
+            {
+                "function": "Repeated cushions along the ribs bear the spines.",
+                "label": "Areole"
+            },
+            {
+                "function": "Fine spines screen and defend the green stem beneath.",
+                "label": "Golden spines"
+            },
+            {
+                "function": "A side shoot can gradually turn a single column into a clump.",
+                "label": "Basal offset"
+            }
+        ],
+        "sourceIds": [
+            "form",
+            "anatomy"
+        ]
+    },
+    "comparisonSourceIds": [
+        "form",
+        "wool"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "RHS describes lemon-yellow, bowl-shaped flowers about 4–5 cm across. They rise above the spine coat on established plants, making a striking contrast between the soft-looking gold body and bright open flowers."
+    },
+    "growth": {
+        "note": "Look for gradual changes in shape; indoor light and growing conditions affect the pace.",
+        "sourceIds": [
+            "form"
+        ],
+        "stages": [
+            {
+                "text": "A young stem starts with a rounded outline.",
+                "title": "Golden globe"
+            },
+            {
+                "text": "The body extends upward while retaining its many narrow ribs.",
+                "title": "Lengthening column"
+            },
+            {
+                "text": "Offsets can gather around the base of a flowering-sized column.",
+                "title": "Older clump"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "This species is native to Rio Grande do Sul in southern Brazil. Kew places it in seasonally dry tropical vegetation. The golden covering is a dense layer of slender spines over a green stem: a globe when young, becoming a column with age, sometimes accompanied by offsets."
+    },
+    "image": {
+        "alt": "Botanical anatomy of golden ball cactus, with numbered markers for rib, areole, golden spines, basal offset.",
+        "file": "assets/plant-explainers/parodia-leninghausii.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration, warm ivory background, precise pen-and-watercolor, muted forest green/sage/ochre palette, large centered specimen and generous whitespace. Exactly four large legible numbered markers 1, 2, 3, 4, each once, with fine leader lines ending clearly on the named structures. No title, words, border, watering symbols or calendar. No flowers, grafts, or roots. Numbers must remain readable at 350px. Generic anatomical specimen, not measurement evidence. A Parodia leninghausii yellow tower cactus: green short cylindrical column with many narrow vertical ribs hidden partly by fine golden bristly spines. One small basal offset. 1 points to a vertical rib; 2 to a small areole on a rib; 3 to golden radial spines from that areole; 4 to the small basal offset.\nFinal refinement: Edit the supplied 1024-square botanical anatomy illustration with the smallest possible change. Preserve the cactus, golden spines, green ribs, ivory background, all four numerals and ALL leaders/endpoints for markers 1, 3 and 4 exactly. Change ONLY the endpoint of marker 2's leader and its small green endpoint circle. Currently that endpoint sits on green tissue near x540,y272. Move it slightly up and left, to center precisely on the small PALE WOOLLY AREOLE CUSHION at approximately x521,y254, from which a star of golden spines radiates. The endpoint must identify that pale wool cushion, NOT one of the long spines or a green rib. Reconnect marker 2's existing diagonal leader to that point, and remove the old endpoint/short old line segment. Keep numeral2 position unchanged. Do not redraw or move any botanical structure, change other callouts, add wording or recolor the image. Retain the existing crisp pen-and-watercolor appearance and square composition.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Woolly Espostoa",
+            "profileSlug": "espostoa-melanostele-nana",
+            "text": "Espostoa's white wool conceals sharper projecting spines; this Parodia has a visibly golden bristly coat."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "RHS describes columns reaching about 60 cm, either alone or in clusters. A small pot-bound globe therefore represents an early form, rather than a permanently spherical species."
+    },
+    "milestones": [
+        {
+            "date": "2026-08-10",
+            "sourcePath": "docs/plants/cacti/parodia-leninghausii.md",
+            "text": "Purchased at Carlsons' Greenhouse in a 4-inch individual pot.",
+            "title": "Joined the collection"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "Kew currently records the name as Parodia lenninghausii, published in 2010, and traces its basionym Pilocereus lenninghausii to 1896."
+    },
+    "slug": "parodia-leninghausii",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "range",
+            "title": "Kew Plants of the World Online: Parodia lenninghausii",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:77106741-1"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "form",
+            "title": "RHS: Parodia leninghausii",
+            "url": "https://www.rhs.org.uk/plants/117769/parodia-leninghausii/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "wool",
+            "title": "RHS: Espostoa melanostele",
+            "url": "https://www.rhs.org.uk/plants/6869/espostoa-melanostele/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "anatomy",
+            "title": "National Park Service: cactus adaptations",
+            "url": "https://www.nps.gov/arch/learn/nature/cacti.htm"
+        }
+    ]
+}

@@ -1,15 +1,15 @@
 # Coppertone-type sedum
 
 - Inventory: Succulent-10B — Probable _Sedum adolphi_ / _S. nussbaumerianum_ complex
-- Label ID: `#6` — shared physical label, owner-assigned 2026-09-02
+- Label ID: `#6`
 - Tracker ID: `P30`
-- Status: Active component profile; shared container, not an additional pot
+- Status: Active; shared planter component
 - Visual description: Copper-orange to yellow-green narrow fleshy leaves form loose rosettes along short branching stems in the tiny shared planter.
-- Interesting fact: NParks lists Sedum nussbaumerianum as a synonym of Sedum adolphi; overlapping trade names still do not prove the identity of this unlabeled component.
+- Interesting fact: In the proposed Sedum adolphi group, stems spread along the ground and turn upward at their tips, carrying copper-toned leaves above a low, spreading framework.
 - Identification: **Provisional foliage match to the coppertone sedum horticultural complex; exact identity and cultivar unconfirmed**
 - Acquired from: Home Depot as part of the Smart Planet Home / Altman Plants mixed succulent garden
-- Acquired on: 2026-09-02 — original shared planter acquisition, not this page's creation date
-- Current pot: shared purchased five-inch-class terra-cotta planter, repotted together 2026-09-02; exact measured size and replacement-medium composition not logged in the acquisition record
+- Acquired on: 2026-09-02
+- Current pot: shared terra-cotta planter, repotted 2026-09-02; setup 2, described as “5 inch shallow” with “Nursery cacti soil and my top dressing”
 
 ## Names and identification
 
@@ -21,13 +21,13 @@
 | Seller evidence           | Mixed garden label only; no component-specific botanical name                                                    |
 | Profile scope             | One recognizable foliage group; number of individual plants or cuttings unverified                               |
 
-The narrow, orange-toned leaves and short stems in the September 2 and September 16 photographs fit the working coppertone-type sedum group. The retail label does not name this component. Retaining both names in the working identification preserves the earlier collection evidence without treating color as proof of a species or cultivar. This is the existing Home Depot component, not the unreceived Amazon Coppertone plant archived from the later order.
+The narrow, orange-toned leaves and short stems in the September 2 and September 16 photographs fit the working coppertone-type sedum group. The retail label does not name this component. The foliage suggests the _S. adolphi_ / _S. nussbaumerianum_ complex; a species or cultivar cannot be established from color alone.
 
 ## Collection evidence and shared history
 
-This component belongs to the [tiny mixed succulent planter](./tiny-mixed-succulent-planter.md), acquired and repotted on September 2, 2026. The seller's garden description says five plants; that is a retail claim, not five verified identities. The owner's September 2 top view and September 16 close view support three practical foliage groups. This profile was added on September 20 at the owner's request without a new acquisition, repot, or measurement event.
+This component belongs to the [tiny mixed succulent planter](./tiny-mixed-succulent-planter.md), acquired and repotted on September 2, 2026. The September 2 top view and September 16 close view show three recognizable foliage groups within the seller's five-plant garden.
 
-The other component pages are [pale rosette echeveria](./tiny-planter-echeveria.md) and [paddle kalanchoe](./tiny-planter-paddle-kalanchoe.md). All retain **#6 / P30**. The aggregate overview and these component pages share one observation history: weigh the entire pot once, and log watering or feeding once for the shared root volume. The A/B/C suffix identifies a profile, not a new physical label.
+The other component pages are [pale rosette echeveria](./tiny-planter-echeveria.md) and [paddle kalanchoe](./tiny-planter-paddle-kalanchoe.md). All share **#6 / P30**, one root volume, and one watering and weight history.
 
 ## Botanical context
 
@@ -35,22 +35,22 @@ NParks describes _Sedum adolphi_ from Mexico as a low succulent subshrub with po
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                           |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Position            | Remains inside P30, at the photo-matched front of the rear zone between #1 and #5. See the [current placement guide](../../layouts/table-placement-research.md). No independent position or new PPFD reading is claimed for this component.                                                  |
-| Light and neighbors | Give the orange stems a clear view of the existing lights without moving the whole pot just to intensify color. Shading or elongation can be compared with the dated photographs; orange coloration alone does not establish a light requirement or distress.                                |
-| Water               | Follow the [shared-pot watering strategy](../../watering-strategy.md). Judge the whole root volume and eligible P30 curve; a crossed old weight reference or one soft leaf does not independently authorize watering. Water and drain as one container when the shared decision supports it. |
-| Weighing            | Follow the [adaptive weighing strategy](../../weighing-strategy.md) for P30 once. This component has no independent dry reference, wet reference, or elapsed-cycle clock.                                                                                                                    |
-| Feeding             | Use the current [fertilizer schedule](../../equipment/msu-fertilizer-schedule.md) for the shared planter during an otherwise justified watering. Do not multiply the pot's dose by its component-page count.                                                                                 |
+| Topic               | Practical approach                                                                                                                                                                                                                                            |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Position            | Remains inside P30, at the photo-matched front of the rear zone between #1 and #5. See the [current placement guide](../../layouts/table-placement-research.md). Exposure at individual leaf height remains unmeasured.                                       |
+| Light and neighbors | Give the orange stems a clear view of the existing lights without moving the whole pot just to intensify color. Shading or elongation can be compared with the dated photographs; orange coloration alone does not establish a light requirement or distress. |
+| Water               | Follow the [shared-pot watering strategy](../../watering-strategy.md): assess dryness throughout the pot, the weight trend, and all three foliage groups before watering and draining the container.                                                          |
+| Weighing            | Weigh the complete P30 planter using the [adaptive weighing strategy](../../weighing-strategy.md).                                                                                                                                                            |
+| Feeding             | Use the shared planter's [fertilizer schedule](../../equipment/msu-fertilizer-schedule.md) during a normal watering; the dose applies to the whole pot.                                                                                                       |
 
 ## Growth and watch points
 
 Do not give this component separate small top-ups while the rest of P30 remains wet. If a stem deteriorates while its neighbors look unchanged, record the affected group in the whole-pot note rather than treating that as evidence that every component needs water.
 
-Watch for extending stems shading the pale rosettes or leaning through their leaves. Any later pruning or separation should be documented as an actual event; there is no current instruction to dismantle the planter or an assumed number of cuttings.
+Watch for extending stems shading the pale rosettes or leaning through their leaves. Pruning or separation may become useful if those stems crowd or shade the neighboring rosettes.
 
 ## Sources
 
 - [NParks Flora & Fauna Web: _Sedum adolphi_](https://www.nparks.gov.sg/florafaunaweb/flora/6/1/6141) — synonym treatment, native range, morphology, and drainage guidance.
-- [Owner's September 2 top view](https://gyazo.com/52ca4a6bae0a377ae39bac78665e32f9) and [September 16 close view](https://gyazo.com/83d1ae73a807f1826755282af1fde4ce) — original collection appearance; copyright Nick, all rights reserved. Photos do not prove root condition, moisture, or exact identity.
+- [Owner's September 2 top view](https://gyazo.com/52ca4a6bae0a377ae39bac78665e32f9) and [September 16 close view](https://gyazo.com/83d1ae73a807f1826755282af1fde4ce) — original collection appearance; copyright Nick, all rights reserved.
 - [Shared-planter acquisition and nursery-label evidence](./tiny-mixed-succulent-planter.md#acquisition-and-photo-evidence) — source of acquisition, seller, and repot context.

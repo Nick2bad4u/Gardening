@@ -4,7 +4,7 @@ _Echeveria Raindrops_ - Succulent-07
 
 Collection label ID: `H2`.
 
-Cultivar search results are prioritized; broad Echeveria images are genus context and may not show the Raindrops leaf bumps.
+Echeveria reference photographs may include other species or cultivars without the characteristic Raindrops leaf bumps.
 
 Collection research: [open the plant profile](../../../docs/plants/succulents/echeveria-raindrops.md).
 

@@ -1,13 +1,13 @@
 # Coconut Crystal hens and chicks
 
 - Inventory: Succulent-08 — _Sempervivum_ Colorockz® 'Coconut Crystal'
-- Label ID: `H1` — owner-corrected after arrival
+- Label ID: `H1`
 - Tracker ID: `P24`
 - Visual description: The current plant is a compact pointed rosette; the seller describes the mature cultivar as lime green with maroon shading that begins near the center and spreads outward as seasonal color intensifies.
 - Interesting fact: Every individual rosette is monocarpic and flowers only once, but a well-established plant produces offsets that can continue the colony after the flowering rosette finishes and dies.
-- Identification: **seller-labeled cultivar; individual top and side condition views archived, but identity is not independently proven**
-- Ordered from: Mountain Crest Gardens on 2026-08-25
-- Order status: **Received 2026-08-28; owner inspected roots and plant by hand**
+- Identification: **seller-labeled cultivar**
+- Acquired from: Mountain Crest Gardens
+- Acquired on: 2026-08-28 — received
 - Received container: **2-inch nursery pot; shape not reliably documented**
 - Current pot: **4-inch round pot (4 × 4 × 3.7 in); repotted 2026-08-28**
 - Photo archive: [licensed genus and cultivar references](../../../assets/plants/sempervivum-coconut-crystal/)
@@ -28,34 +28,25 @@ The seller describes a lime-green rosette whose maroon center shading changes
 seasonally. Color change is expected; a mushy crown or translucent lower
 leaves are not part of the cultivar pattern.
 
-The listing supplies no species epithet or parentage. A general
-_Sempervivum heuffelii_ page is therefore not evidence that this cultivar
-belongs to that species, so the collection label stays at genus, trade series,
-and cultivar.
+The listing supplies no species epithet or parentage. Its identity is recorded at genus, trade-series,
+and cultivar level.
 
-## Order evidence and status
+## Arrival and repotting
 
-The 2026-08-25 order lists one Colorockz® 'Coconut Crystal', and the owner
-documented receipt on 2026-08-28. It arrived rooted in a 2-inch nursery pot;
-the received container's shape is not reliably documented. The owner reports
-removing about 95% of the nursery soil during repotting. The owner-entered live
-tracker pot size is 4 inches. The current pot is the same 4 × 4 × 3.7-inch
-round model used for all six plants in this shipment. The
-corrected pot label is `H1`, and the permanent tracker ID is `P24`.
+Ordered from Mountain Crest Gardens on **August 25, 2026**, this plant arrived
+on **August 28** in a **2-inch nursery pot**. Its roots were inspected by hand,
+and approximately **95% of the nursery soil** was removed before repotting into
+the current **4 × 4 × 3.7-inch round pot**. The arrival mix was slightly moist.
+On **August 29**, the complete pot weighed **361.5 g**, and the plant
+measured **1.0 in high × 2.55 in wide** with a ruler.
 
-Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
-slightly moist substrate. The live 2026-08-29 Measurement record is **361.5 g**
-by Scale and **1.0 in high × 2.55 in wide** by Ruler. These are measured
-records, not watering or fertilizer events. The owner confirmed the arrangement recorded in the [current placement guide](../../layouts/table-placement-research.md), including the later A3/F1 exchange. Exact individual clearance remains unrecorded; placement completion is no longer pending.
+The mix is Molly's Succulent Mix with added perlite. The owner estimated
+**80% Molly's / 20% perlite** on September 20; this is a recollection rather
+than a measured recipe.
 
-On September 20, 2026, the owner confirmed Molly's Succulent Mix with added perlite for all six G/H pots, estimating approximately 80% Molly's / 20% added perlite from memory rather than the earlier 60/40 description. The proportion is an uncertain recollection, not a measured recipe or a newly dated repot.
-
-The owner chose not to quarantine this shipment after hand inspection, owner-
-reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
-the box that said it was inspected and certified pest free. The plants were
-also described as outdoor-grown in California sun. Those are useful arrival
-observations, but the sticker is shipment evidence rather than a guarantee that
-the plant remains pest-free; continue close inspections during acclimation.
+The shipment was described as outdoor-grown in California sun and carried an
+agricultural inspection sticker. It was not quarantined after the initial hand
+inspection; routine pest checks remain useful.
 
 ## Seller listing snapshot
 
@@ -95,19 +86,18 @@ coolest available succulent position with steady airflow.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                                                                           |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual top and side views are archived; add base and complete all-side diagnostic views when available.                                                                                                                                     |
-| Grow-light position | **Photo-matched R3C3 · High.** September 15 six-column/four-row front grid, facing the window. Low central rosette. Compare the growing surface for shadows from E1, A3 and the rear shared cactus; strong light does not mean maximum heat. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use drainage, rosette firmness, and pot-weight trend; never leave water standing in the crown or saucer.                                                                                                                                                                               |
-| Heat                | Move toward a cooler edge or add distance if leaves bleach, the rosette opens, or sustained canopy heat becomes excessive.                                                                                                                                                                                                                                            |
-| Winter              | Keep indoors; favor cooler nights and seasonal temperature variation without exposing it to freezing drafts.                                                                                                                                                                                                                                                          |
-| Pot                 | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape is unrecorded. The owner recalls Molly's Succulent Mix with approximately 20% added perlite (September 20 report; ratio estimated); monitor the larger mix volume indoors.                                                                                                                        |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                                                     |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **R3C3 · High.** September 15 six-column/four-row front grid, facing the window. Low central rosette. Compare the growing surface for shadows from E1, A3 and the rear shared cactus; strong light does not mean maximum heat. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Water               | Use drainage, rosette firmness, and pot-weight trend; never leave water standing in the crown or saucer.                                                                                                                                                                                                                                        |
+| Heat                | Move toward a cooler edge or add distance if leaves bleach, the rosette opens, or sustained canopy heat becomes excessive.                                                                                                                                                                                                                      |
+| Winter              | Keep indoors; favor cooler nights and seasonal temperature variation without exposing it to freezing drafts.                                                                                                                                                                                                                                    |
+| Pot                 | The current pot is a 4 × 4 × 3.7-inch round pot. The owner recalls Molly's Succulent Mix with approximately 20% added perlite (September 20 report; ratio estimated); monitor the larger mix volume indoors.                                                                                                                                    |
 
 ## Rotation, propagation, and watch points
 
-- Rotate 90° weekly under the fixed grow light after the `H1` label is attached,
-  unless one side is intentionally sheltered during acclimation or recovery.
+- Rotate 90° weekly under the fixed grow light, unless one side is intentionally
+  sheltered during acclimation or recovery.
 - Offsets can be separated once rooted; do not mistake normal offset production
   for overcrowding on arrival.
 - A flowering rosette will die after seed production. That is the life cycle,
@@ -116,7 +106,7 @@ coolest available succulent position with steady airflow.
 
 ## Sources
 
-- Owner clarification on September 20, 2026: all six G1/G2/G3 and H1/H2/H3 pots contain Molly's Succulent Mix with added perlite; approximately 20% added perlite is an uncertain recollection that supersedes the earlier 40% description. This clarifies the existing setup without dating a new repot or changing recorded weights.
+- Owner arrival and repot observations, August 28–29, 2026; medium description, September 20: Molly's Succulent Mix with approximately 20% added perlite, an estimated proportion.
 
 - [Mountain Crest Gardens: Colorockz® 'Coconut Crystal' seller listing](https://mountaincrestgardens.com/sempervivum-colorockz-coconut-crystal/)
 - [NC State Extension: _Sempervivum_](https://plants.ces.ncsu.edu/plants/sempervivum/)

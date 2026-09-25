@@ -1,0 +1,150 @@
+{
+    "anatomy": {
+        "intro": "A representative grey-green head shows paired leaves and a generic root system, not the collection's unverified root connections.",
+        "parts": [
+            {
+                "function": "Two thickened leaves form one water-storing head.",
+                "label": "Paired fleshy leaves"
+            },
+            {
+                "function": "Translucent areas admit light to tissue inside the leaves.",
+                "label": "Upper windows"
+            },
+            {
+                "function": "Replacement growth and flowers emerge between the leaves.",
+                "label": "Central fissure"
+            },
+            {
+                "function": "A schematic taproot and finer roots anchor the head and absorb water.",
+                "label": "Root system"
+            }
+        ],
+        "sourceIds": [
+            "optica",
+            "olivacea"
+        ]
+    },
+    "comparisonSourceIds": [
+        "olivacea",
+        "green"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "green"
+        ],
+        "text": "Typical L. salicola flowers are white. Documenting a flower on this group could help distinguish it from yellow-flowered alternatives; flowering has not been recorded."
+    },
+    "growth": {
+        "note": "Check these grey heads separately from the tan group; the shared planter does not establish synchronized cycles.",
+        "sourceIds": [
+            "optica",
+            "lithops"
+        ],
+        "stages": [
+            {
+                "text": "The visible head holds water in its two fleshy leaves.",
+                "title": "Current leaf pair"
+            },
+            {
+                "text": "A new body develops inside and uses reserves from the older pair.",
+                "title": "Replacement within"
+            },
+            {
+                "text": "Old tissue becomes a dry sheath around the replacement growth.",
+                "title": "Renewed head"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "salicola",
+            "salicola-habitat"
+        ],
+        "text": "The proposed species is native to South Africa's Northern Cape and Free State. SANBI records low limestone ridges and slopes, sometimes beside brackish pans. These are clues to its wild ecology, not instructions to add salt or limestone to this nursery plant's pot; the photographic identification remains probable."
+    },
+    "image": {
+        "alt": "One grey-green Lithops head with numbered fleshy leaves, olive windows, fissure and schematic taproot.",
+        "file": "assets/plant-explainers/lithops-salicola.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration on warm ivory. Clean botanically accurate pen-and-watercolor, muted forest-green, sage and ochre palette, generous whitespace, large central specimen. Exactly four large numbered circular markers 1, 2, 3, 4 with thin clear noncrossing leader lines to the specified features. Numerals legible at 350px display. No title, words, paragraphs, watering icons, calendar, border or logo. Schematic anatomy, not a photograph of an owned plant. Show ONE representative Lithops salicola-type grey-green head with broad oval relatively open olive window surfaces, pale grey margins, smooth grey sides and a central fissure splitting exactly two succulent leaves. One head only, no cluster, no flowers. Three-quarter view above soil with schematic exposed taproot and fine side roots below a small broken soil line; never another plant attached. Marker1 to fleshy grey leaf side; marker2 to olive upper translucent window; marker3 precisely to central fissure; marker4 to root system below. Rounded low body with flatter tops, not Pleiospilos globes. Probable species illustration, not diagnostic proof.\nFinal refinement: Edit the supplied botanical illustration. Preserve composition, grey leaf sides, root diagram, ivory background, all four numbered markers and leader endpoints exactly. Change ONLY both top window surfaces: make the olive-green areas broad, continuous, mostly open windows with only sparse pale flecks and a pale grey margin. Remove the dense maze of pale islands across the windows. Representative Lithops salicola, not lesliei. No new features.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Lithops olivacea",
+            "profileSlug": null,
+            "text": "Also has open olive windows, but typically produces a yellow flower with a white center."
+        },
+        {
+            "name": "Probable Lithops lesliei",
+            "profileSlug": "lithops-lesliei",
+            "text": "Some forms have open windows too; the tan patterned neighbors are another possible comparison."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "green",
+            "lithops"
+        ],
+        "text": "L. salicola forms small heads that can develop into clumps. More heads need not mean more independently rooted plants, and no final size is assigned to this probable nursery match."
+    },
+    "milestones": [
+        {
+            "date": "2026-09-21",
+            "sourcePath": "docs/plants/succulents/lithops-salicola.md",
+            "text": "Purchased at Home Depot in Howell, Michigan, from Altman Plants nursery stock.",
+            "title": "Home Depot arrival"
+        },
+        {
+            "date": "2026-09-23",
+            "sourcePath": "docs/plants/succulents/lithops-shared-planter.md",
+            "text": "Moved into the Blush Mauve planter with the other appearance group; all four heads were described as firm.",
+            "title": "Shared repot"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "salicola-habitat"
+        ],
+        "text": "SANBI's 2018 assessment lists wild L. salicola as Near Threatened, with habitat loss to cultivation a concern; this is nursery stock, not a documented wild collection."
+    },
+    "slug": "lithops-salicola",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "salicola",
+            "title": "Kew Plants of the World Online: Lithops salicola",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:362486-1"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "salicola-habitat",
+            "title": "SANBI Red List: Lithops salicola, 2018 assessment",
+            "url": "https://redlist.sanbi.org/species.php?species=85-75"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "optica",
+            "title": "SANBI PlantZAfrica: Lithops optica and shared Lithops anatomy",
+            "url": "https://pza.sanbi.org/lithops-optica"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "olivacea",
+            "title": "SANBI PlantZAfrica: Lithops olivacea",
+            "url": "https://pza.sanbi.org/lithops-olivacea"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "lithops",
+            "title": "Wisconsin Extension: Living stones",
+            "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "green",
+            "title": "Keith Green: Lithops species descriptions",
+            "url": "https://scrapbooklithops.com/species.html"
+        }
+    ]
+}

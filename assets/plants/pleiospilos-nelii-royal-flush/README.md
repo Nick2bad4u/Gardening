@@ -4,7 +4,7 @@ _Pleiospilos nelii_ - Succulent-06
 
 Collection label ID: `G3`.
 
-Species references, including cultivated observations, may show the normal green-gray form; the ordered plant is the purple Royal Flush cultivar.
+Species-reference photographs, including cultivated plants, may show the normal green-gray form; the collection plant is the purple Royal Flush cultivar.
 
 Collection research: [open the plant profile](../../../docs/plants/succulents/pleiospilos-nelii-royal-flush.md).
 

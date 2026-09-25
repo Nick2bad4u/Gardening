@@ -1,14 +1,14 @@
 # Lithops salicola
 
 - Inventory: Succulent-15B — Probable _Lithops salicola_; cultivar unconfirmed
-- Label ID: `#9` — shared physical label, assigned 2026-09-21
+- Label ID: `#9`
 - Tracker ID: `P35`
-- Status: Active component profile; shared container, not an additional pot
+- Status: Active; shared planter component
 - Visual description: Two grey/green heads with relatively open olive-green upper windows and paler margins, photographed in the shared Blush Mauve pot on September 23, 2026. Root connections between the heads remain unverified.
 - Interesting fact: Wild Lithops salicola grows on low limestone ridges and slopes, including the margins of brackish pans in South Africa; that habitat does not prescribe salty water for a nursery plant.
 - Identification: **Probable Lithops salicola from photographs; nursery-labelled Lithops spp.; species and cultivar unconfirmed**
 - Acquired from: Home Depot, Howell, Michigan; nursery labels identify Altman Plants as grower
-- Acquired on: 2026-09-21 — owner-confirmed purchase date
+- Acquired on: 2026-09-21
 - Current pot: Shared D'vine Dev Blush Mauve planter, repotted 2026-09-23; see the aggregate P35 record for pot dimensions, medium, and setup history
 
 ## Names and identification
@@ -32,8 +32,7 @@ The identification remains **probable**; the nursery labels
 say only _Lithops_ spp. Green describes typical _L. salicola_ flowers as white,
 whereas the two alternatives above generally have yellow flowers, sometimes
 with a white center. A flower documented for this particular group could
-therefore help reassess the working ID. No flowering observation is currently
-claimed for these plants.
+therefore help reassess the working ID. Flowering has not yet been documented.
 
 ## Botanical context
 
@@ -44,9 +43,8 @@ This is background for the proposed species, not a reason to add limestone or
 salt to the recorded container mix.
 
 SANBI's 2018 assessment lists the wild species as Near Threatened, citing its
-restricted distribution and continuing habitat loss. This conservation status
-concerns wild populations; it neither confirms the identity nor establishes
-wild origin for these Altman nursery plants.
+restricted distribution and continuing habitat loss. The assessment concerns wild populations; these plants came from Altman
+nursery stock.
 
 ## Shared container and collection evidence
 
@@ -57,21 +55,19 @@ Michigan, on September 21, 2026, and combined on September 23. Four visible
 heads are documented; their connections below the surface remain unverified.
 
 The aggregate page holds the original labels, photographs, repot record, and
-corrected individual-head measurement. The measured head was not identified
+individual-head measurement. The measured head was not identified
 as belonging to either species group, so neither component inherits that
 measurement as a species-specific dimension.
 
-**Succulent-15B identifies this profile; #9 / P35 identifies the shared
-container.** Weigh and water the whole pot once under P35. Record this group's
-leaf condition or future flowers in the same observation's notes. It has no
-separate wet anchor, dry baseline, watering clock, or physical pot label.
+These heads share **#9 / P35** with the tan/brown group. Weights and watering
+apply to the whole planter, while leaf condition and replacement stage need
+individual inspection.
 
 [![All four Lithops heads after repotting; this profile describes the grey/green open-windowed group](../../../assets/nursery-labels/2026-09-23-p35-lithops-repot-top.jpg)](../../../assets/nursery-labels/2026-09-23-p35-lithops-repot-top.jpg)
 
 Owner photograph, September 23, 2026: full shared-pot view. The grey/green
 open-windowed group is probable _L. salicola_; the tan/brown group belongs to the
-other component profile. This is collection evidence, not a confirmed-species
-reference image.
+other component profile.
 
 ## Care and watch points
 
@@ -95,4 +91,4 @@ base distinct from normal color differences between the two groups.
 - [Keith Green: Lithops species descriptions](https://scrapbooklithops.com/species.html) — surface-pattern and flower comparisons, with _L. olivacea_ and _L. lesliei_ as alternatives; collection ID remains tentative.
 - [University of Wisconsin–Madison Extension: Living Stones, Lithops](https://hort.extension.wisc.edu/articles/living-stones-lithops/) — light acclimation and leaf-cycle care; seasonal examples are not a fixed indoor calendar.
 - [Shared-planter evidence](./lithops-shared-planter.md#nursery-and-repot-evidence) — owner photographs, nursery labels, and dated P35 observations.
-- Owner clarification, September 23, 2026 — both Lithops nursery pots purchased at Home Depot, Howell, Michigan, on Monday, September 21.
+- Owner acquisition record, documented September 23, 2026: both Lithops nursery pots purchased at Home Depot, Howell, Michigan, on September 21.

@@ -1,0 +1,125 @@
+{
+    "anatomy": {
+        "intro": "A low rosette combines fleshy leaves, a growing center and smaller offsets.",
+        "parts": [
+            {
+                "function": "The thick blade stores water and carries out photosynthesis.",
+                "label": "Fleshy leaf"
+            },
+            {
+                "function": "The narrow colored edge outlines each leaf and may intensify with stronger light.",
+                "label": "Red margin"
+            },
+            {
+                "function": "Successive young leaves expand from the center.",
+                "label": "Rosette center"
+            },
+            {
+                "function": "A daughter rosette can develop beside the original plant.",
+                "label": "Basal offset"
+            }
+        ],
+        "sourceIds": [
+            "rhs",
+            "extension"
+        ]
+    },
+    "comparisonSourceIds": [
+        "rhs",
+        "raindrops"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "rhs"
+        ],
+        "text": "The species has small yellow, urn-shaped flowers that hang from long curved stalks. Flower shape and color would be useful additional identification evidence for this probable plant; foliage alone leaves room for similar hybrids."
+    },
+    "growth": {
+        "note": "These are possible stages, not a timetable; a close hybrid may differ in flower details.",
+        "sourceIds": [
+            "rhs",
+            "extension"
+        ],
+        "stages": [
+            {
+                "text": "New central leaves enlarge while older leaves form the outer tiers.",
+                "title": "Build a rosette"
+            },
+            {
+                "text": "Side rosettes can gradually turn one crown into a small group.",
+                "title": "Add offsets"
+            },
+            {
+                "text": "An established rosette may send an arching stalk above its leaves.",
+                "title": "Raise a flower stalk"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "The species comes from Hidalgo, Puebla and Veracruz in Mexico, where Kew places it in desert or dry shrubland. Its compact succulent rosette belongs to that setting; it is not a tropical foliage plant. This collection plant remains probable E. pulidonis or a close hybrid, so the species story provides context rather than proof of its identity."
+    },
+    "image": {
+        "alt": "Blue-green red-edged rosette with numbered leaf, margin, growing center and basal offset.",
+        "file": "assets/plant-explainers/echeveria-pulidonis.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Scientific educational botanical illustration, square 1024x1024, warm ivory background, accurate clean pen-and-watercolor, forest-green/sage/ochre muted palette with natural species colors. Large central plant, generous whitespace. Exactly four large numbered markers 1–4 with thin clear leaders to the specified features, readable at 350px. No other text, titles, paragraphs, calendar, watering icons, roots or pots. Generic botanical anatomy, not a record of an individual collection specimen. Echeveria pulidonis: low broad symmetrical rosette of smooth fleshy blue-grey-green pointed spoon-shaped leaves with thin red edges, one small basal offset. Three-quarter view showing central young leaves. Markers: 1 fleshy leaf blade, 2 thin red leaf margin, 3 central small emerging leaves, 4 small basal offset. No flowers.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Echeveria 'Raindrops'",
+            "profileSlug": "echeveria-raindrops",
+            "text": "Both form blue-green rosettes, but mature 'Raindrops' develops rounded raised bumps; probable pulidonis has smooth blades with a narrow red outline."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "rhs"
+        ],
+        "text": "RHS describes individual rosettes reaching about 12 cm across. Offsets can broaden the group, while flowering stalks rise above the low leaf crown. That species scale is a reference, not a prediction for a shaded corner of the shared planter."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-27",
+            "sourcePath": "docs/plants/succulents/echeveria-pulidonis.md",
+            "text": "Acquired at Gerych's Greenhouse in the shared square succulent planter, now tracked as P20 / #2.",
+            "title": "Joined the collection"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "Kew records the name Echeveria pulidonis as published by E. Walther in 1972. The botanical name and the collection's probable identification are separate facts."
+    },
+    "slug": "echeveria-pulidonis",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew: Echeveria pulidonis",
+            "url": "https://powo.science.kew.org/taxon/87059-2"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "rhs",
+            "title": "RHS: Echeveria pulidonis",
+            "url": "https://www.rhs.org.uk/plants/6239/echeveria-pulidonis/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "extension",
+            "title": "NC State: Echeveria",
+            "url": "https://plants.ces.ncsu.edu/plants/echeveria/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "raindrops",
+            "title": "Mountain Crest Gardens: Echeveria 'Raindrops'",
+            "url": "https://mountaincrestgardens.com/echeveria-raindrops/"
+        }
+    ]
+}

@@ -1,0 +1,111 @@
+{
+    "anatomy": {
+        "intro": "Small opposite leaves sit on red young shoots above an older woody framework.",
+        "parts": [
+            {
+                "function": "The small rounded blade stores water while producing sugars.",
+                "label": "Fleshy leaf"
+            },
+            {
+                "function": "Flexible-looking reddish shoots carry new foliage before developing older woody tissue.",
+                "label": "Young stem"
+            },
+            {
+                "function": "Opposite leaves and new shoots arise at these junctions.",
+                "label": "Branching node"
+            },
+            {
+                "function": "Older supporting tissue holds the expanding network of branches.",
+                "label": "Woody trunk"
+            }
+        ],
+        "sourceIds": [
+            "extension"
+        ]
+    },
+    "comparisonSourceIds": [
+        "extension"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "sanbi",
+            "extension"
+        ],
+        "text": "Small pink, sometimes whitish star-shaped flowers appear in clusters at branch tips. Cultivated indoor plants flower irregularly, so a healthy leafy plant need not bloom to be growing successfully."
+    },
+    "growth": {
+        "note": "Light, pruning and shared root space strongly affect the indoor shape; this is not an age-to-height schedule.",
+        "sourceIds": [
+            "extension"
+        ],
+        "stages": [
+            {
+                "text": "New red stems lengthen and add opposite pairs of leaves.",
+                "title": "Extend shoots"
+            },
+            {
+                "text": "Side shoots fill out the canopy as older stems become woody.",
+                "title": "Build branches"
+            },
+            {
+                "text": "An established plant can form a dense, irregular framework.",
+                "title": "Develop a shrub"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "sanbi"
+        ],
+        "text": "Elephant bush grows on warm rocky slopes, in thicket and along dry valleys in southern Africa, extending into Mozambique. It can form substantial shrubs in this landscape. Its small leaves and woody branches make a miniature-looking houseplant, but a plant in a shared indoor box occupies a very different space from a wild thicket."
+    },
+    "image": {
+        "alt": "Branching elephant bush with numbered leaf, red shoot, node and woody trunk.",
+        "file": "assets/plant-explainers/portulacaria-afra.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Scientific educational botanical illustration of Portulacaria afra, elephant bush, square 1024x1024. Warm ivory background, clean accurate pen-and-watercolor, forest green, sage and muted ochre, natural red-brown young stems. Large central small branching shrub with numerous small opposite rounded fleshy green leaves, thin reddish young shoots and a thicker grey-brown woody base, bare small soil ellipse, no container. Four clear numbered markers with leaders, exactly 1 pointing to one fleshy rounded leaf, 2 to a red young stem, 3 to a branching node bearing an opposite leaf pair, 4 to the older woody trunk near the base. Numerals 1,2,3,4 large enough to read at 350px; generous whitespace. No other text, title, paragraphs, flowers, roots, calendar or watering icons. Species-specific small leaves and fine branches, not large Crassula jade leaves. Accurate educational illustration of generic species structures, not a documented specimen.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Jade plant (Crassula ovata)",
+            "profileSlug": null,
+            "text": "Elephant bush usually has smaller, closer-set leaves on thinner red shoots. Both can become woody, so trunk appearance alone is less useful than leaf and shoot proportions."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "sanbi"
+        ],
+        "text": "SANBI gives 2–5 m for the shrub or small tree, usually less in gardens. Containers and pruning keep indoor plants much smaller; that wild scale explains its branching habit, not the expected size of P20."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-27",
+            "sourcePath": "docs/plants/succulents/portulacaria-afra.md",
+            "text": "Acquired at Gerych's Greenhouse as one member of the shared P20 / #2 succulent box.",
+            "title": "Joined the collection"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "sanbi"
+        ],
+        "text": "The name afra refers to Africa. Elephants also help explain its common name: broken branches left after browsing can root and contribute to new growth in the thicket."
+    },
+    "slug": "portulacaria-afra",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "sanbi",
+            "title": "SANBI: Portulacaria afra",
+            "url": "https://pza.sanbi.org/portulacaria-afra"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "extension",
+            "title": "Wisconsin Extension: elephant bush",
+            "url": "https://hort.extension.wisc.edu/articles/elephant-bush-portulacaria-afra/"
+        }
+    ]
+}

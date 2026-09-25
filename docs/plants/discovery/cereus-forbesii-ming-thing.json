@@ -1,0 +1,121 @@
+{
+    "anatomy": {
+        "intro": "Ming Thing distributes its growth across a collection of irregular clubs.",
+        "parts": [
+            {
+                "function": "The fleshy blue-green lobe is stem tissue; its uneven outline reflects monstrose growth.",
+                "label": "Club-shaped stem"
+            },
+            {
+                "function": "A small pale cushion is the growing structure from which spines arise.",
+                "label": "Woolly areole"
+            },
+            {
+                "function": "These sparse, stiff projections distinguish the areoles from bare surface bumps.",
+                "label": "Short dark spines"
+            },
+            {
+                "function": "Each rounded lobe tip can extend, adding to the uneven branching silhouette.",
+                "label": "Growing tip"
+            }
+        ],
+        "sourceIds": [
+            "ncsu",
+            "cactus-structure"
+        ]
+    },
+    "comparisonSourceIds": [
+        "ncsu",
+        "kew"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "ncsu"
+        ],
+        "text": "The underlying species has large, white, night-opening funnels, sometimes tinged purple. NC State specifically notes that Ming Thing rarely flowers, so its changing stem architecture is a more realistic everyday attraction than an expected bloom schedule."
+    },
+    "growth": {
+        "note": "Record changes in shape over time; there is no reliable age or height at which this cultivar must flower.",
+        "sourceIds": [
+            "ncsu",
+            "kew"
+        ],
+        "stages": [
+            {
+                "text": "The young form starts with a few thick, irregular lobes.",
+                "title": "Small club"
+            },
+            {
+                "text": "Additional growing points produce more knobs and clubs.",
+                "title": "Sculptural clump"
+            },
+            {
+                "text": "The slow-growing cultivar builds a denser outline rather than matching the wild tree.",
+                "title": "Older mound"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew",
+            "ncsu"
+        ],
+        "text": "The wild species comes from Bolivia through Paraguay into northern Argentina, where it grows in dry shrubland and can become a tree. Ming Thing is a cultivated monstrose form: its miniature club-shaped stems are not the normal outline of a wild Cereus forest. Think of the species range as ancestry, not the cultivar’s own natural habitat."
+    },
+    "image": {
+        "alt": "Ming Thing cactus with numbered club-shaped stem, woolly areole, short dark spines and rounded growing tip.",
+        "file": "assets/plant-explainers/cereus-forbesii-ming-thing.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024x1024 scientific botanical educational illustration. Warm ivory background; muted forest-green, sage and ochre with natural species colors; clean accurate pen-and-watercolor style, large central specimen, ample whitespace. Exactly four large circled numbered markers 1-4 with clear thin leaders pointing to the features specified below in order. Numbers legible at 350px display width. No words, title, paragraphs, watering or calendar icons. No pot, roots, flowers or grafts unless explicitly requested. Cereus forbesii 'Ming Thing', a small blue-green monstrose cactus clump made of irregular upright club-shaped lobes, not a tree and not flat Opuntia pads. Smooth blue-green skin, sparse tiny woolly areoles and short dark spines mainly toward lobe tips. 1 points to a complete club-like lobe; 2 to a small white woolly areole; 3 to short black spines emerging from that areole; 4 to the rounded growing tip of a different lobe. Keep each anatomical target unambiguous.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Normal Cereus forbesii",
+            "profileSlug": null,
+            "text": "The ordinary species forms a ribbed, tree-like cactus; Ming Thing repeatedly interrupts that columnar pattern with clubs and knobs. A single unusually shaped shoot does not prove a different species."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "ncsu",
+            "kew"
+        ],
+        "text": "NC State describes the cultivar at about 15–30 cm tall and 8–15 cm wide. The tree habit recorded for wild Cereus forbesii should not be substituted for those cultivated expectations."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-15",
+            "sourcePath": "docs/plants/starter/cereus-forbesii-ming-thing.md",
+            "text": "Joined the collection from Altman Reserve.",
+            "title": "Acquired"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "ncsu"
+        ],
+        "text": "The epithet forbesii commemorates a Mr. Forbes, head gardener at Woburn Abbey in England. The cultivated form’s name sits on top of that older botanical dedication."
+    },
+    "slug": "cereus-forbesii-ming-thing",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew — Cereus forbesii",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:130203-1"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "ncsu",
+            "title": "NC State Extension — Ming Thing",
+            "url": "https://plants.ces.ncsu.edu/plants/cereus-forbesii-ming-thing/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "cactus-structure",
+            "title": "University of Illinois — cactus areoles",
+            "url": "https://www.life.illinois.edu/help/digitalflowers/Cactaceae/5.htm"
+        }
+    ]
+}

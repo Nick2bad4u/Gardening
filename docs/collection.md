@@ -1,25 +1,24 @@
 # Plant collection
 
-Last updated: 2026-09-23
+Last updated: 2026-09-24
 
 This is the current working inventory plus historical records for plants
 removed from the collection. A label is useful evidence, but not a guarantee;
 photo-only identifications are deliberately marked as probable.
 
-The renamed [original nursery-label archive](../assets/nursery-labels/) keeps
-the supplier evidence separate from the corrected working identifications.
+The [original nursery-label archive](../assets/nursery-labels/) keeps
+supplier wording alongside the current working identifications.
 
 Every record has a [deep plant profile](./plants/) and a
 [licensed reference gallery](../assets/plants/) when reusable photography is
-available. Sparse cultivar galleries stay sparse rather than copying retail
-photographs without reuse permission. Reference photos document the working
+available. Gallery captions identify the scope of each reference image. Reference photos document the working
 taxon or stated ancestry/species scope; they do not increase the confidence of
 a photo-only collection ID.
 
 The short label IDs are permanent plant or shared-planter identifiers, not
 table coordinates. They are shown beside the longer historical inventory IDs.
 
-The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The collection has **45 profile records: 44 active and one historical, across 34 tracker allocations**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement. The unreceived September 19 Amazon plants have moved to the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md); Amazon confirmed cancellation on September 21 with no charge.
+The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The collection has **45 profile records: 44 active and one historical, across 34 tracker allocations**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement.
 
 Profile records and containers answer different questions: a profile describes
 a botanical identity or an aggregate planting, while a tracker identifies the
@@ -36,7 +35,7 @@ each container's member list, care context, and existing history.
 
 ## September 21 Lithops and split-rock additions
 
-The owner purchased two Lithops nursery pots and another split rock at **Home Depot in Howell, Michigan, on Monday, September 21, 2026**, with retailer and date clarified on September 23. Both destination containers were repotted on **September 23, 2026**, creating **pot setup 2** for each tracker. The photographs show four visible Lithops heads together in P35 and one split-rock leaf pair in P36. The photographs document Altman Plants assortment labels. The nursery labels give a nominal 2.5-inch size, while the owner describes the original nursery pots as 2.25 inches.
+The owner purchased two Lithops nursery pots and another split rock at **Home Depot in Howell, Michigan, on Monday, September 21, 2026**. Both destination containers were repotted on **September 23, 2026**, creating **pot setup 2** for each tracker. The photographs show four visible Lithops heads together in P35 and one split-rock leaf pair in P36. The photographs document Altman Plants assortment labels. The nursery labels give a nominal 2.5-inch size, while the owner describes the original nursery pots as 2.25 inches.
 
 | Inventory ID  | Label ID | Tracker ID | Profile                                                                 | Identification                                                                                                             |
 | ------------- | -------- | ---------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
@@ -45,7 +44,7 @@ The owner purchased two Lithops nursery pots and another split rock at **Home De
 | Succulent-15B | `#9`     | `P35`      | [_Lithops salicola_](./plants/succulents/lithops-salicola.md)           | Probable species from photos; grey/green component group; two visible heads, root connections unresolved; same P35 history |
 | Succulent-16  | `#10`    | `P36`      | [Split rock](./plants/succulents/pleiospilos-nelii.md)                  | _Pleiospilos nelii_, identified on the nursery label; no cultivar supplied; explicitly not Royal Flush                     |
 
-Succulent-15 retains the whole-planter overview and evidence; Succulent-15A/B are probable-species pages, not extra acquisitions or separate care records. P33/P34 remain retired houseplant redirects to P31/P32, so new records start at P35. Archived Succulent-11–14 remain reserved. The September 21 pot assignments are now completed: P35 uses the D'vine Dev Blush Mauve pot (seller-selected 4.3-inch variant), and P36 uses the Thirtypot speckled-brown pot (seller-selected 4.5-inch variant). Canonical `History` records the following September 23 repots and Routine weights; seller sizes are distinct from the logged pot sizes.
+Succulent-15 retains the whole-planter overview and evidence; Succulent-15A/B are probable-species pages, not extra acquisitions or separate care records. The September 23 repots use the September 21 pot assignments: P35 uses the D'vine Dev Blush Mauve pot (seller-selected 4.3-inch variant), and P36 uses the Thirtypot speckled-brown pot (seller-selected 4.5-inch variant). The care log records these September 23 repots and Routine weights; seller sizes are distinct from the logged pot sizes.
 
 | Tracker   | Repot time (EDT) | Logged pot size | Routine weight | Owner-observed condition                                             |
 | --------- | ---------------- | --------------- | -------------- | -------------------------------------------------------------------- |
@@ -96,7 +95,7 @@ and its weight trend remain in
 than being erased. Pre-repot weights stay attached to pot setup 1 and are not
 averaged into the new blend's baseline.
 
-The canonical `History` ledger now records the first setup-2 water cycle for
+The care history records the first setup-2 water cycle for
 all 18 pots. `P01`–`P18` received plain Beauchamp's RO water with no nutrients
 at 4:22 p.m. on 2026-08-26. Their Wet setup-2 weights were recorded between 12:14 and 12:20 a.m.
 on 2026-08-27, about eight hours after the Water rows rather than after the
@@ -110,14 +109,14 @@ following row left-to-right.
 
 | Inventory ID | Label ID | Working identification                                                                                                         | Common or trade name    | Confidence | Notes                                                                                                                                                           |
 | ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------ | ----------------------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Starter-01   | `B2`     | [_Oreocereus trollii_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A175986-2)                            | Old Man of the Andes    | Labeled    | Corrects the original spelling “Oreocerus - Trolli.”                                                                                                            |
+| Starter-01   | `B2`     | [_Oreocereus trollii_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A175986-2)                            | Old Man of the Andes    | Labeled    | A woolly cactus with spines beneath the hairs.                                                                                                                  |
 | Starter-02   | `B1`     | [_Stenocactus phyllacanthus_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A244573-2)                     | —                       | Labeled    | The compressed, wavy ribs fit the label.                                                                                                                        |
-| Starter-03   | `C2`     | [_Echinocereus rigidissimus_ subsp. _rubispinus_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A923228-1) | Rainbow hedgehog cactus | Labeled    | Corrects “var. rubrispinus”; current references use subsp. _rubispinus_.                                                                                        |
-| Starter-04   | `A3`     | [_Nyctocereus serpentinus_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A171152-2)                       | Serpent cactus          | Labeled    | Corrects “Nyctocerus serpteninus.” _Peniocereus serpentinus_ is also seen in references.                                                                        |
+| Starter-03   | `C2`     | [_Echinocereus rigidissimus_ subsp. _rubispinus_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A923228-1) | Rainbow hedgehog cactus | Labeled    | Current references use subsp. _rubispinus_.                                                                                                                     |
+| Starter-04   | `A3`     | [_Nyctocereus serpentinus_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A171152-2)                       | Serpent cactus          | Labeled    | _Peniocereus serpentinus_ is also used in references.                                                                                                           |
 | Starter-05   | `A2`     | [_Mammillaria plumosa_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A151448-2)                           | Feather cactus          | Labeled    | Dense white feathers can hide the green body, so inspect gently rather than digging through the wool.                                                           |
 | Starter-06   | `D2`     | [_Echinopsis subdenudata_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A88512-2)                         | Domino cactus           | Labeled    | This familiar horticultural name is currently treated as a synonym of _Echinopsis ancistrophora_ by Kew.                                                        |
-| Starter-07   | `A1`     | [Variegated _Gymnocalycium mihanovichii_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A115434-2)         | Variegated moon cactus  | Labeled    | Its label was confirmed after the initial inventory. This plant appears to be growing on its own roots, not as a chlorophyll-free graft.                        |
-| Starter-08   | `C1`     | [_Gymnocalycium saglionis_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A1155453-2)                      | Giant chin cactus       | Labeled    | Corrects capitalization only; _saglionis_ is the species epithet.                                                                                               |
+| Starter-07   | `A1`     | [Variegated _Gymnocalycium mihanovichii_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A115434-2)         | Variegated moon cactus  | Labeled    | This plant appears to be growing on its own roots, not as a chlorophyll-free graft.                                                                             |
+| Starter-08   | `C1`     | [_Gymnocalycium saglionis_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A1155453-2)                      | Giant chin cactus       | Labeled    | Broad ribs and stout curved spines distinguish the plant.                                                                                                       |
 | Starter-09   | `B3`     | [_Myrtillocactus geometrizans_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A135710-1) ‘Indigo Wave’     | Indigo Wave             | Labeled    | The cultivar or trade name is kept as supplied.                                                                                                                 |
 | Starter-10   | `D3`     | [_Cereus forbesii_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A130203-1) ‘Ming Thing’                  | Ming Thing              | High       | The original “Opuntia - Cylindriva Cristata” label does not fit the plant. Its knobby monstrose growth closely matches ‘Ming Thing’.                            |
 | Starter-11   | `D1`     | [_Euphorbia obesa_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A347540-1) hybrid or selection           | Dragon's Egg            | Probable   | “Dragon's Egg” appears to be a trade name. The plant looks like an _E. obesa_-type hybrid, but the exact parentage is unknown. It is a euphorbia, not a cactus. |
@@ -175,12 +174,12 @@ the rosette.
 
 ## Older mixed cactus planter
 
-| Inventory ID | Label ID               | Working identification                                                                                               | Common or trade name     | Confidence | Status and notes                                                                                                                                                                                                |
-| ------------ | ---------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------ | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Rehab-01     | `#1`; formerly `A4-B4` | Variegated [_Pilosocereus pachycladus_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A196722-2) | Blue torch cactus        | Probable   | Alive. The smooth yellow vertical areas look more like stable variegation than damage. _Pilosocereus azureus_ is an older trade name.                                                                           |
-| Rehab-02     | `#1`; formerly `A4-B4` | [_Cleistocactus colademononis_](https://powo.science.kew.org/taxon/77077298-1)                                       | Monkey tail cactus       | High       | Alive and previously produced a red-orange flower. It has been trimmed several times to remove stretched growth and is now growing better after about a month outside in bright shade with a little direct sun. |
-| Rehab-03     | `#1`; formerly `A4-B4` | [_Echinopsis spachiana_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A88507-2)                 | Golden torch cactus      | Probable   | Alive. The better photo shows continuous ribs, which rules against the earlier _Mammillaria_ guess.                                                                                                             |
-| Rehab-04     | —                      | Probably [_Mammillaria bombycina_](https://www.rhs.org.uk/plants/106175/mammillaria-bombycina/details)               | Silken pincushion cactus | Probable   | Removed 2026-07-24. Final inspection found only a tiny patch of green flesh near the top—too little viable tissue to salvage. The probable ID and older photos remain as a historical record.                   |
+| Inventory ID | Label ID               | Working identification                                                                                               | Common or trade name     | Confidence | Status and notes                                                                                                                                                                                                        |
+| ------------ | ---------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------ | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Rehab-01     | `#1`; formerly `A4-B4` | Variegated [_Pilosocereus pachycladus_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A196722-2) | Blue torch cactus        | Probable   | Alive. The smooth yellow vertical areas look more like stable variegation than damage. _Pilosocereus azureus_ is an older trade name.                                                                                   |
+| Rehab-02     | `#1`; formerly `A4-B4` | [_Cleistocactus colademononis_](https://powo.science.kew.org/taxon/77077298-1)                                       | Monkey tail cactus       | High       | Alive and previously produced a red-orange flower. It has been trimmed several times to remove stretched growth and grew better during a month outside in bright shade with a little direct sun before the indoor move. |
+| Rehab-03     | `#1`; formerly `A4-B4` | [_Echinopsis spachiana_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A88507-2)                 | Golden torch cactus      | Probable   | Alive. Continuous ribs support the golden torch working identification.                                                                                                                                                 |
+| Rehab-04     | —                      | Probably [_Mammillaria bombycina_](https://www.rhs.org.uk/plants/106175/mammillaria-bombycina/details)               | Silken pincushion cactus | Probable   | Removed 2026-07-24. Final inspection found only a tiny patch of green flesh near the top—too little viable tissue to salvage. The probable ID and older photos remain as a historical record.                           |
 
 The three living components now sharing label `#1` were acquired together from
 Gerych's Design in Fenton on 2023-06-21. Rehab-04 is historical and has no
@@ -188,8 +187,7 @@ confirmed acquisition record, so that date is not imputed to it.
 
 The thin green whip visible in an older photo belongs to the monkey tail. It is
 etiolated growth from the low-light period, not a fifth cactus. Some of that
-stretched growth has since been trimmed. The improved new growth after a month
-outside is a good sign that its current light exposure is working.
+stretched growth has since been trimmed. The improved growth after that outdoor period documents its response to better light before the indoor move.
 
 Rehab-04 is no longer part of the planter or the active lighting and watering
 plan. Its inventory ID is intentionally not being reused.
@@ -206,7 +204,7 @@ the physical pots the same day.
 | Cactus-01    | `E1`     | [_Espostoa melanostele_ subsp. _nana_](./plants/cacti/espostoa-melanostele-nana.md), with _E. lanata_ as the main alternative | Dwarf old man cactus                 | Probable           | 4-inch pot; compact woolly column with hidden spines                            |
 | Cactus-02    | `E2`     | [_Echinopsis_ hybrid, Chamaelobivia Group](./plants/cacti/chamaelobivia-hybrid.md)                                            | Chamaelobivia / peanut cactus hybrid | Secure group level | Small 4-inch pot; exact cultivar requires flowers or a nursery label            |
 | Cactus-03    | `E3`     | [_Mammillaria mammillaris_](./plants/cacti/mammillaria-mammillaris.md); formerly _M._ cf. _melanocentra_                      | Woolly nipple cactus                 | Probable           | 4-inch pot; tiny cream flowers and a red club-shaped fruit support the revision |
-| Cactus-04    | `F3`     | [_Parodia leninghausii_](./plants/cacti/parodia-leninghausii.md)                                                              | Yellow tower / golden ball cactus    | High               | 4-inch pot; corrects the supplied spelling “lenninghausii”                      |
+| Cactus-04    | `F3`     | [_Parodia leninghausii_](./plants/cacti/parodia-leninghausii.md)                                                              | Yellow tower / golden ball cactus    | High               | 4-inch pot; dense golden spines                                                 |
 | Cactus-05    | `F2`     | [_Myrtillocactus geometrizans_ 'Fukurokuryuzinboku'](./plants/cacti/myrtillocactus-geometrizans-fukurokuryuzinboku.md)        | Boobie / breast cactus               | Very high          | Small 3-inch pot; rounded monstrose lobes are normal                            |
 | Cactus-06    | `F1`     | [_Mammillaria_ cf. _rekoi_](./plants/cacti/mammillaria-rekoi.md), with the _M. crinita_ complex or a hybrid as alternatives   | Hook-spined pincushion cactus        | Probable           | 4-inch pot; fine radial spines and hooked lower centrals need flower follow-up  |
 
@@ -229,14 +227,16 @@ money tree is `#3`, and the Kiwi aeonium is `#4`. The former `A4-B4` and
 
 ## September 20 Carlson's Greenhouses houseplants
 
-The owner purchased two separate basket-grown houseplants on **2026-09-20**. The photographs document their nursery labels and purchase containers. The owner confirmed purchasing both directly at Carlson's Greenhouses in owner-reported six-inch nursery pots; the tags also identify Carlson's as the grower. The owner confirmed both are currently on the floor on the room side near the money tree. Current nursery-pot depth, medium, drainage, and leaf-height light remain unrecorded. Leaves were wet at purchase, but the nursery supplied no watering or fertilizer history; wet foliage does not establish a root-ball watering event. The owner reports both nursery pots are quite full and thinks the plants are ready for larger pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes; the September 22 plan assigns the smallest Bamworld stool to P31 and places P32 closest to the living-room sliding door, explicitly off the tables; the ordered Bamworld Nature three-stool set had a September 21 delivery estimate, with seller-listed heights of 7.8, 8.6, and 11.5 inches. Receipt and placement remain unconfirmed; see the [equipment inventory](./equipment/inventory.md#display-and-support). The owner plans to blend loose, airy, perlite-containing greenhouse mix with Molly's Succulent Mix, with more perlite available but no ratio chosen. No completed repot, installation on stools, watering, or weight observation is implied.
+Two houseplants were purchased at **Carlson's Greenhouses on September 20, 2026**, in nursery baskets reported as six inches wide. Both tags identify Carlson's as grower and specify bright, indirect light. Their last recorded location is the room-side floor near the money tree. The nursery supplied no watering or fertilizer history; wet foliage at purchase does not establish root-ball moisture.
+
+Separate eight-inch Amazon Basics pots with drainage holes are planned, using airy greenhouse potting mix blended with Molly's Succulent Mix at a ratio still to be chosen. The [Bamworld Nature stools](./equipment/inventory.md#display-and-support) have seller-listed heights of 7.8, 8.6, and 11.5 inches. Delivery, repotting, and stool installation are unconfirmed; actual nursery-pot depth, root condition, and leaf-height light remain unmeasured.
 
 | Inventory ID  | Label ID | Tracker ID | Working identification                                                                         | Common name           | Evidence                                                                  |
 | ------------- | -------- | ---------- | ---------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------------------------------------- |
 | Houseplant-03 | `#7`     | `P31`      | [_Peperomia obtusifolia_ 'Obtipan Bicolor'](./plants/houseplants/peperomia-obtipan-bicolor.md) | Peperomia Bicolor     | Tag: “Peperomia obtipan Bicolor basket”; “bright, indirect light”; $14.99 |
 | Houseplant-04 | `#8`     | `P32`      | [_Tradescantia spathacea_ 'Tricolor'](./plants/houseplants/tradescantia-spathacea-tricolor.md) | Tricolor oyster plant | Tag: “Rhoeo spathacea Tricolor Basket”; “bright, indirect light”          |
 
-The owner explicitly assigned P31 / #7 to Peperomia Bicolor and P32 / #8 to Tricolor oyster plant on September 20. Archived Houseplant-02 and Succulent-11–14 retain research identities only, with no physical-label or tracker allocation. On **September 22**, the owner confirmed a planned position **side by side at the north-facing double glass sliding door in the living room: P32 closest to the glass, P31 on the smallest Bamworld stool, and the FECiDA clipped to a shelf**. This refines the September 21 living-room plan and earlier combined-lights intention. The **assistant recommends starting with the FECiDA alone for 12 daytime hours**, keeping the two Juhefa fixtures available for targeted fill if canopy measurements show gaps. The Diivoo remains optional and is omitted from that initial trial. The [equipment inventory](./equipment/inventory.md#lights-and-controls) preserves exact model and seller-rating evidence; the FECiDA's September 23 delivery estimate was last checked September 21. Receipt, the move, repots, and installation remain unconfirmed; final settings, distances, and measured exposure remain unrecorded. The previously reported 18–22 app-estimated DLI cactus-table area is not assigned to either plant. See the [living-room plan and light comparison](./layouts/table-placement-research.md#planned-living-room-window-and-leds) for inferred total DLI comparisons and measurements of whichever lamps are actually used.
+The **September 22 living-room plan** places the plants **side by side at the north-facing double glass sliding door: P32 closest to the glass, P31 on the smallest Bamworld stool, and the FECiDA clipped to a shelf**. Start with a **12-hour FECiDA-only trial** and add the two available Juhefa fixtures for targeted fill if measurements show dim areas. The optional Diivoo is not needed for this first trial. The move and installation remain unconfirmed. See the [equipment inventory](./equipment/inventory.md#lights-and-controls) for exact models and the [living-room light trial](./layouts/table-placement-research.md#planned-living-room-window-and-leds) for measuring total lamp and daylight exposure.
 
 ## September 2026 Home Depot succulent additions
 
@@ -244,13 +244,13 @@ The owner acquired both pots from Home Depot on 2026-09-02, repotted them the
 same day, and assigned the next permanent numbered labels. Photographed labels
 identify Altman Plants as grower and Smart Planet Home as the retail brand.
 Exact store, current measured pot dimensions, replacement-medium composition,
-weights, plant dimensions, and maintained placement were not recorded in the acquisition note; use the current placement guide and live ledger for subsequent observations.
+weights, plant dimensions, and maintained placement were not recorded in the acquisition note; use the current placement guide and care history for subsequent observations.
 
-The live setup-2 Repot records supply later details: **P30 / #6** is logged as **“5 inch shallow”** with **“Nursery cacti soil and my top dressing”** at **September 3, 2026, 12:18 a.m. EDT**; **P29 / #5** is logged as **“4.25 round, 4.25 deep”** with **80% Molly's Succulent Mix / 20% perlite with top dressing** at **12:23 a.m. EDT**. Both timestamps fall in the September 2 care day. These are owner-entered pot descriptions, not fresh ruler measurements. Current placement follows the confirmed placement guide; weights remain in the live observation ledger.
+The setup-2 repot descriptions are: **P30 / #6** is logged as **“5 inch shallow”** with **“Nursery cacti soil and my top dressing”** at **September 3, 2026, 12:18 a.m. EDT**; **P29 / #5** is logged as **“4.25 round, 4.25 deep”** with **80% Molly's Succulent Mix / 20% perlite with top dressing** at **12:23 a.m. EDT**. Both timestamps fall in the September 2 care day. These are owner-entered pot descriptions, not fresh ruler measurements. Current placement follows the confirmed placement guide; weights remain in the care history.
 
 | Inventory ID  | Label ID | Tracker ID | Working identification                                                                                          | Common name                  | Confidence                                  | Current record                                     |
 | ------------- | -------- | ---------- | --------------------------------------------------------------------------------------------------------------- | ---------------------------- | ------------------------------------------- | -------------------------------------------------- |
-| Succulent-09  | `#5`     | `P29`      | [Probable _Faucaria tuberculosa_](./plants/succulents/faucaria-tuberculosa.md); seller label says _F. tigrina_  | Tuberculate tiger jaws       | Qualified correction from seller label      | Altman 2.5-inch assortment; repotted 2026-09-02    |
+| Succulent-09  | `#5`     | `P29`      | [Probable _Faucaria tuberculosa_](./plants/succulents/faucaria-tuberculosa.md); seller label says _F. tigrina_  | Tuberculate tiger jaws       | Probable; differs from seller label         | Altman 2.5-inch assortment; repotted 2026-09-02    |
 | Succulent-10  | `#6`     | `P30`      | [Mixed succulent planter](./plants/succulents/tiny-mixed-succulent-planter.md); component taxa unresolved       | Tiny mixed succulent planter | Aggregate record; component IDs provisional | Smart Planet five-plant garden; tracked as one pot |
 | Succulent-10A | `#6`     | `P30`      | [_Echeveria_ sp.; species and cultivar unresolved](./plants/succulents/tiny-planter-echeveria.md)               | Pale rosette echeveria       | Provisional foliage group                   | Same shared container and history as Succulent-10  |
 | Succulent-10B | `#6`     | `P30`      | [Probable _Sedum adolphi_ / _S. nussbaumerianum_ complex](./plants/succulents/tiny-planter-coppertone-sedum.md) | Coppertone-type sedum        | Provisional foliage group                   | Same shared container and history as Succulent-10  |
@@ -270,14 +270,13 @@ These six records come from a Mountain Crest Gardens order placed on
 2026-08-25 and received on 2026-08-28. Every plant arrived rooted in a 2-inch
 nursery pot, but the received containers' shapes are not reliably documented.
 The owner reports removing about 95% of the nursery soil during repotting. The
-owner-entered live tracker pot size is 4 inches for all six. They now use the
+care log pot size is 4 inches for all six. They now use the
 same round 4 × 4 × 3.7-inch pot model.
 
 The owner hand-inspected every plant and chose not to quarantine the shipment.
 The box carried a California agriculture sticker reported to say the shipment
 was inspected and certified pest free, and the plants were described as grown
-outdoors in California sun. Preserve those as arrival evidence, not as a
-guarantee against later pest signs or indoor light-acclimation stress. Continue
+outdoors in California sun. Those arrival observations cannot rule out later pests or light-acclimation stress. Continue
 close inspections while the plants settle.
 
 | Inventory ID | Label ID | Tracker ID | Seller identification                                                                                               | Common name                     | Seller SKU | Received container     | Current pot                |
@@ -289,9 +288,9 @@ close inspections while the plants settle.
 | Succulent-07 | `H2`     | `P25`      | [_Echeveria_ 'Raindrops'](./plants/succulents/echeveria-raindrops.md)                                               | Raindrops echeveria             | `S2JN3225` | 2 in; shape unrecorded | 4 in round; 4 × 4 × 3.7 in |
 | Cactus-07    | `H3`     | `P26`      | [_Austrocylindropuntia subulata_](./plants/cacti/austrocylindropuntia-subulata.md)                                  | Eve's needle cactus             | `C2KY2600` | 2 in; shape unrecorded | 4 in round; 4 × 4 × 3.7 in |
 
-The 2026-08-28 live Check/Clean bulk round records the substrate as slightly
+The August 28, 2026 Check/Clean observations record the substrate as slightly
 moist for all six. This is a condition observation, not evidence of watering or
-fertilizer use. The live 2026-08-29 `History` measurements are:
+fertilizer use. The August 29, 2026 measurements were:
 
 | Tracker ID | Weight by Scale | Height by Ruler | Width by Ruler |
 | ---------- | --------------- | --------------- | -------------- |
@@ -302,7 +301,7 @@ fertilizer use. The live 2026-08-29 `History` measurements are:
 | `P27`      | 388 g           | 0.5 in          | 1.2 in         |
 | `P28`      | 353.5 g         | 1.3 in          | 1.7 in         |
 
-The owner confirmed the arrangement in the [current placement guide](./layouts/table-placement-research.md), including the later A3/F1 exchange. The owner clarified September 20 that all six received Molly's Succulent Mix with probably about 20% added perlite, or approximately 80/20 rather than the P01–P18 batch's 60/40. The ratio is recalled, not precisely measured. This clarifies the existing setup without creating a new repot or changing reference weights; exact individual light clearance remains unmeasured. The observed 2-inch-to-4-inch change is not a general up-pot rule;
+The owner confirmed the arrangement in the [current placement guide](./layouts/table-placement-research.md), including the later A3/F1 exchange. Their September 20 medium record is approximately 80% Molly's Succulent Mix / 20% perlite, recalled rather than measured. P01–P18 use the separately measured 60/40 blend. Exact individual light clearance remains unmeasured. The observed 2-inch-to-4-inch change is not a general up-pot rule;
 the current pots need their own drainage and dry-down observations.
 
 The Split Rock and hardy _Sempervivum_ are not additions to the established
@@ -313,7 +312,7 @@ lower-light houseplant.
 
 ## Abandoned September 19 Amazon plan
 
-All five unreceived plants are excluded from the active inventory. Their research is preserved in the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Succulent-11–14 and Houseplant-02 retain archived research identities; their physical-label and tracker allocations are withdrawn. The decorated pot is one of the two Amazon Basics destinations, with its specific plant assignment unconfirmed. The D'vine pot (selected 4.3-inch variant) now contains P35 / #9 shared Lithops; P36 / #10 split rock uses the Thirtypot selected 4.5-inch speckled-brown pot. Both repots and photographs are documented September 23.
+Research for unreceived plants is kept in the [archived purchase plan](./old-plans/amazon-plant-order-2026-09.md), separate from the active collection.
 
 ## Identification follow-ups
 

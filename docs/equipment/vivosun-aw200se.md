@@ -7,14 +7,7 @@ return reflector. The owner confirms an 18-inch plant-tip reference and the
 same 13 h 15 m total cycle for both lights, including 15-minute sunrise and
 sunset transitions at the start and end. This page preserves the earlier AW200SE research.
 
-**Equipment correction, September 9, 2026:** the owner identifies the installed
-fixture as **AW200 with tunable spectrum**, then at **60%** with a reported
-**13.25-hour daily program** and quarter-hour sunrise/sunset transitions.
-This page retains the earlier AW200SE research for provenance. Its product
-specifications, spectral assumptions, PPFD maps, and 12-hour conversions are
-not a verified specification or light survey for the AW200. See the current
-[setup correction](../setup.md#controlled-indoor-setup) and
-[table placement research](../layouts/table-placement-research.md).
+**Historical model research:** the installed fixture was identified as **AW200 with tunable spectrum** on September 9, when its reported program was **60%**, **13.25 hours daily**, with quarter-hour sunrise/sunset transitions. The AW200SE specifications, spectrum assumptions, PPFD maps and 12-hour conversions below do not describe a measured light survey of that AW200 or the current two-light setup. See the [current setup](../setup.md#controlled-indoor-setup) and [placement guide](../layouts/table-placement-research.md).
 
 Last updated: 2026-08-29
 
@@ -23,8 +16,7 @@ starting point for this cactus and succulent collection. The numerical targets
 are deliberately ranges. Exact species trials are unavailable for most of these
 plants, and a reflective tent map is not a measurement of an open shelf.
 
-For the settings to enter into the confirmed controller paths, use the separate
-[AW200SE and paired-fan operating schedule](./aw200se-operating-schedule.md).
+The [dated AW200SE operating schedule](./aw200se-operating-schedule.md) preserves the earlier controller and acclimation plan. Use the [installed two-light record](./aw200-and-aerolight-240w.md) for current reported settings.
 
 ## Hardware summary
 
@@ -283,8 +275,7 @@ dimensions are not measured light clearances or maintained positions, so their
 rows remain starting ranges. Do not move the fixture or raise the whole
 collection's power for them; use the outer zone and watch for the response to
 indoor acclimation. The Split Rock and indoor-grown _Sempervivum_ keep separate
-seasonal and watering logic even when they share the room with the cacti. Exact
-maintained placement remains unrecorded.
+seasonal and watering logic even when they share the room with the cacti. Their later positions are recorded in the [current placement guide](../layouts/table-placement-research.md).
 
 If plants spend meaningful hours outside, outdoor and indoor DLI add together.
 Do not automatically give a full 12-hour lamp day after a sunny outdoor day.

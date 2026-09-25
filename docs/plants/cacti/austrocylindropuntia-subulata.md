@@ -1,13 +1,14 @@
 # Eve's needle cactus
 
 - Inventory: Cactus-07 — _Austrocylindropuntia subulata_
-- Label ID: `H3` — owner-corrected after arrival
+- Label ID: `H3`
 - Tracker ID: `P26`
 - Visual description: Upright, branching green cylinders carry narrow awl-shaped leaves between pale areoles and sharp spines, giving the plant a leafy silhouette that is unusual for a cactus.
 - Interesting fact: Unlike most adult cacti, Eve's needle keeps conspicuous succulent leaves on its young growth—the feature behind both the common name and the species epithet _subulata_.
-- Identification: **seller-labeled; individual side and overview condition views archived, but identity is not independently proven**
-- Ordered from: Mountain Crest Gardens on 2026-08-25
-- Order status: **Received 2026-08-28; owner inspected roots and plant by hand**
+- Identification: **seller-labeled; species not independently confirmed**
+- Acquired from: Mountain Crest Gardens
+- Acquired on: 2026-08-28
+- Status: Active
 - Received container: **2-inch nursery pot; shape not reliably documented**
 - Current pot: **4-inch round pot (4 × 4 × 3.7 in); repotted 2026-08-28**
 - Photo archive: [licensed species-reference images](../../../assets/plants/austrocylindropuntia-subulata/)
@@ -20,39 +21,30 @@
 | Seller name             | _Austrocylindropuntia subulata_ — Eve's Needle |
 | Other common name       | Eve's pin cactus                               |
 
-This record preserves the seller's identification after documented receipt.
 The long, awl-shaped leaves on young green growth are normal for the species;
 they are not a sign that the plant is becoming a leafy houseplant.
 
-## Order evidence and status
+## Collection history
 
-Mountain Crest Gardens listed one plant in the 2026-08-25 order, and the owner
-documented receipt on 2026-08-28. It arrived rooted in a 2-inch nursery pot;
-the received container's shape is not reliably documented. The owner reports
-removing about 95% of the nursery soil during repotting. The owner-entered live
-tracker pot size is 4 inches. The current pot is the same 4 × 4 × 3.7-inch
-round model used for all six plants in this shipment. The
-corrected pot label is `H3`, and the permanent tracker ID is `P26`.
+Ordered from Mountain Crest Gardens on August 25, 2026, this plant arrived
+rooted on August 28 in a 2-inch nursery pot; its original pot shape was not
+recorded. It was inspected and repotted that day into a **4 × 4 × 3.7-inch
+round pot**, with approximately 95% of the nursery soil removed according to
+the owner. The substrate was slightly moist at inspection.
 
-Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
-slightly moist substrate. The live 2026-08-29 Measurement record is **357.5 g**
-by Scale and **1.8 in high × 1.6 in wide** by Ruler. These are measured records,
-not watering or fertilizer events. The owner confirmed the arrangement recorded in the [current placement guide](../../layouts/table-placement-research.md), including the later A3/F1 exchange. Exact individual clearance remains unrecorded; placement completion is no longer pending.
+The August 29 measurements were **357.5 g** for the potted plant and
+**1.8 in high × 1.6 in wide** for the plant itself, measured with a scale
+and ruler. Collection photographs include side and overview views.
 
-On September 20, 2026, the owner confirmed Molly's Succulent Mix with added perlite for all six G/H pots, estimating approximately 80% Molly's / 20% added perlite from memory rather than the earlier 60/40 description. The proportion is an uncertain recollection, not a measured recipe or a newly dated repot.
+The mix is Molly's Succulent Mix with added perlite. On September 20, the owner
+estimated the blend as approximately **80% Molly's / 20% added perlite**; the
+ratio was recalled rather than measured. See the [current placement guide](../../layouts/table-placement-research.md)
+for the indoor arrangement. Individual lamp clearance has not been measured.
 
-The owner chose not to quarantine this shipment after hand inspection, owner-
-reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
-the box that said it was inspected and certified pest free. The plants were
-also described as outdoor-grown in California sun. Those are useful arrival
-observations, but the sticker is shipment evidence rather than a guarantee that
-the plant remains pest-free; continue close inspections during acclimation.
+## Nursery description
 
-## Seller listing snapshot
-
-These fields preserve Mountain Crest Gardens' product-page claims as inspected
-on 2026-08-26. They describe the purchase-time listing, not measurements or
-current observations of the specimen received on 2026-08-28.
+Mountain Crest Gardens' listing, recorded August 26, 2026, describes the
+nursery offering. Pot size and hardiness below are seller specifications.
 
 | Seller field            | Listing value                               |
 | ----------------------- | ------------------------------------------- |
@@ -85,19 +77,18 @@ _Cylindropuntia_.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                                      |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual side and overview views are archived; add base and complete all-side diagnostic views when available.                                                                                           |
-| Grow-light position | **Photo-matched R4C4 · High.** September 15 six-column/four-row front grid, facing the window. Back row of small pots, near the shared cactus; preserve clear light and separation from trailing stems. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use medium dryness, plant response, and pot-weight trend as evidence.                                                                                                                                                                             |
-| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape is unrecorded. The owner recalls Molly's Succulent Mix with approximately 20% added perlite (September 20 report; ratio estimated); monitor the larger mix volume closely.                                                                                   |
-| Long-term size      | Keep it where future height and branching will not crowd the fixture or snag nearby plants.                                                                                                                                                                                                                                      |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                  |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Grow-light position | **Photo-matched R4C4 · High.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Back row of small pots, near the shared cactus; preserve clear light and separation from trailing stems. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Let the root zone dry before watering, using pot-weight trends and plant firmness together. The larger pot can remain damp below a dry surface.                                                                                                                                                              |
+| Pot and mix         | 4 × 4 × 3.7-inch round pot with Molly's Succulent Mix and approximately 20% added perlite (owner estimate). Keep drainage clear and avoid persistent moisture around the base.                                                                                                                               |
+| Long-term size      | Keep it where future height and branching will not crowd the fixture or snag nearby plants.                                                                                                                                                                                                                  |
 
 ## Rotation, propagation, and watch points
 
-- Start ordinary 90° weekly rotation only after the `H3` label is attached and
-  its light orientation is recorded.
-- Detached healthy stem segments can root, but do not cut the arrival plant
+- When rotating the pot, use the `H3` label as an orientation reference and
+  keep its spines clear of neighboring plants.
+- Detached healthy stem segments can root, but do not cut the plant
   merely to make it fit the current layout.
 - Treat the glochids and longer spines as hazardous even when the green leaves
   make the plant look soft.
@@ -105,7 +96,7 @@ _Cylindropuntia_.
 
 ## Sources
 
-- Owner clarification on September 20, 2026: all six G1/G2/G3 and H1/H2/H3 pots contain Molly's Succulent Mix with added perlite; approximately 20% added perlite is an uncertain recollection that supersedes the earlier 40% description. This clarifies the existing setup without dating a new repot or changing recorded weights.
+- Owner observations, August 28–29 and September 20, 2026: receipt, repotting, substrate condition, scale/ruler measurements, and estimated Molly's Succulent Mix/perlite blend.
 
 - [Mountain Crest Gardens: seller listing for Eve's Needle](https://mountaincrestgardens.com/austrocylindropuntia-subulata-eves-needle/)
 - [LLIFLE cactus encyclopedia: _Austrocylindropuntia subulata_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/4092/Austrocylindropuntia_subulata)

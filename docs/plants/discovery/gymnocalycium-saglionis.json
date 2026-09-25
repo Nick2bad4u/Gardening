@@ -1,0 +1,125 @@
+{
+    "anatomy": {
+        "intro": "Rounded rib segments and substantial curved spines give this cactus its heavy-built outline.",
+        "parts": [
+            {
+                "function": "The raised green ridge is part of the photosynthetic stem.",
+                "label": "Broad rib"
+            },
+            {
+                "function": "A rounded swelling divides the rib into a series of prominent segments.",
+                "label": "Chin-like tubercle"
+            },
+            {
+                "function": "The pale growing cushion carries a cluster of spines.",
+                "label": "Woolly areole"
+            },
+            {
+                "function": "A stout spine projects beyond the fleshy body; the apparent thickness is not soft tissue.",
+                "label": "Curved spine"
+            }
+        ],
+        "sourceIds": [
+            "rhs",
+            "cactus-structure"
+        ]
+    },
+    "comparisonSourceIds": [
+        "rhs",
+        "moon-comparison"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "rhs"
+        ],
+        "text": "Pale pink, broad funnels are only about 2 cm across in the RHS description. Their modest scale is a useful surprise beside the substantial ribbed body and heavy spines; this is species biology, not a report of a collection bloom."
+    },
+    "growth": {
+        "note": "Watch the developing proportions rather than expecting a rapid transformation into a tall column.",
+        "sourceIds": [
+            "rhs"
+        ],
+        "stages": [
+            {
+                "text": "The young cactus is broad and relatively flattened.",
+                "title": "Low globe"
+            },
+            {
+                "text": "The ribs and their rounded segments become more substantial as the plant enlarges.",
+                "title": "Heavier body"
+            },
+            {
+                "text": "Mature plants can carry small funnels around the upper body.",
+                "title": "Flowering adult"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew",
+            "moon-comparison"
+        ],
+        "text": "This is a northwestern Argentine species; Kew places it in the subtropical biome. Its broad green or bluish stem and stout spines belong to a succulent subshrub, despite the common name giant chin cactus. The regional origin helps distinguish it from the smaller Paraguay-associated moon cactus sharing its genus in this collection."
+    },
+    "image": {
+        "alt": "Giant chin cactus with numbered broad rib, rounded chin-like tubercle, woolly areole and stout curved spine.",
+        "file": "assets/plant-explainers/gymnocalycium-saglionis.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024x1024 scientific botanical educational illustration. Warm ivory background; muted forest-green, sage and ochre with natural species colors; clean accurate pen-and-watercolor style, large central specimen, ample whitespace. Exactly four large circled numbered markers 1-4 with clear thin leaders pointing to the features specified below in order. Numbers legible at 350px display width. No words, title, paragraphs, watering or calendar icons. No pot, roots, flowers or grafts unless explicitly requested. Gymnocalycium saglionis, giant chin cactus: a single broad flattened bluish-green globe, roughly twelve broad ribs divided into substantial rounded chin-like tubercles, widely spaced woolly areoles, clusters of stout recurved rusty-brown spines. 1 points to a broad green rib; 2 to one chin-like tubercle below an areole; 3 to a woolly areole; 4 to a thick curved spine. No flowers, no offsets, no exaggerated hair.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Variegated moon cactus",
+            "profileSlug": "gymnocalycium-mihanovichii-variegated",
+            "text": "Both have notched Gymnocalycium ribs, but the giant chin cactus develops broader tubercles and much stouter spines. Variegation is a separate trait and is not the defining difference between the species."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "rhs"
+        ],
+        "text": "RHS lists a cultivated spread of 10–50 cm. The rounded body may bear 10–30 or more tubercled ribs, so rib count alone is not a fixed identification key or an age measurement."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-23",
+            "sourcePath": "docs/plants/starter/gymnocalycium-saglionis.md",
+            "text": "Joined the collection from Costa Farms.",
+            "title": "Acquired"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "Kew traces the species to Echinocactus saglionis, published in 1847, with the Gymnocalycium combination following in 1922. Older reference names refer to the same botanical history."
+    },
+    "slug": "gymnocalycium-saglionis",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew — Gymnocalycium saglionis",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:1155453-2"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "rhs",
+            "title": "RHS — Gymnocalycium saglionis",
+            "url": "https://www.rhs.org.uk/plants/8153/gymnocalycium-saglionis/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "cactus-structure",
+            "title": "University of Illinois — cactus areoles",
+            "url": "https://www.life.illinois.edu/help/digitalflowers/Cactaceae/5.htm"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "moon-comparison",
+            "title": "NC State Extension — Gymnocalycium mihanovichii",
+            "url": "https://plants.ces.ncsu.edu/plants/gymnocalycium-mihanovichii/"
+        }
+    ]
+}

@@ -93,7 +93,19 @@ export function contentUrl(repositoryPath) {
             target
         );
     const plantSlug = plant?.groups?.["slug"];
-    if (plantSlug !== undefined) return `${profileUrl(plantSlug)}${suffix}`;
+    if (plantSlug !== undefined) {
+        const fragmentIndex = suffix.indexOf("#");
+        const fragment =
+            fragmentIndex === -1 ? "" : suffix.slice(fragmentIndex + 1);
+        const plantSuffix =
+            fragment === "" ||
+            fragment === plantSlug ||
+            fragment.startsWith(`${plantSlug}-`) ||
+            fragment.startsWith(":~:")
+                ? suffix
+                : `${suffix.slice(0, fragmentIndex + 1)}${plantSlug}-${fragment}`;
+        return `${profileUrl(plantSlug)}${plantSuffix}`;
+    }
     const equipment = /^docs\/equipment\/(?<slug>[^\/]+)\.md$/v.exec(target);
     const equipmentSlug = equipment?.groups?.["slug"];
     if (equipmentSlug !== undefined) {
@@ -101,7 +113,7 @@ export function contentUrl(repositoryPath) {
         return `${equipmentRoute}${suffix}`;
     }
     if (
-        /^assets\/(?:layouts|nursery-labels|plant-icons|plants|ui-icons)\/.+\.(?:csv|jpe?g|png|svg|webp)$/iv.test(
+        /^assets\/(?:layouts|nursery-labels|plant-explainers|plant-icons|plants|ui-icons)\/.+\.(?:csv|jpe?g|png|svg|webp)$/iv.test(
             target
         )
     )

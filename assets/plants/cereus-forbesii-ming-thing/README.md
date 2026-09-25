@@ -4,7 +4,7 @@ _Cereus forbesii_ - Starter-10
 
 Collection label ID: `D3`.
 
-The archive mixes normal species references with any reusable Ming Thing images found; the collection plant is the monstrose cultivar.
+Reference photographs show normal Cereus forbesii and monstrose forms; the collection plant is the Ming Thing cultivar.
 
 Collection research: [open the plant profile](../../../docs/plants/starter/cereus-forbesii-ming-thing.md).
 

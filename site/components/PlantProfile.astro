@@ -3,7 +3,10 @@ import { contentUrl, potUrl, profileUrl, repositoryUrl, siteUrl } from "../lib/r
 import { getProfiles, photoPreview } from "../lib/content.mjs";
 import { stripMarkdown } from "../lib/content/profile-source.mjs";
 import { getContainers } from "../lib/containers.mjs";
+import { getPlantDiscovery } from "../lib/plant-discovery.mjs";
 import ContainerMembers from "./ContainerMembers.astro";
+import PlantDiscovery from "./PlantDiscovery.astro";
+import ReferenceGallery from "./ReferenceGallery.astro";
 import SiteIcon from "./SiteIcon.astro";
 import ProfileNavigation from "./ProfileNavigation.astro";
 import "../styles/profile.css";
@@ -13,6 +16,7 @@ interface Props {
 }
 const { profile } = Astro.props;
 const profiles = await getProfiles();
+const discovery = await getPlantDiscovery(profile.slug, new Set(profiles.map((item) => item.slug)));
 const container = (await getContainers()).find((item) => item.id === profile.trackerId);
 const isOverview = container?.overview?.slug === profile.slug;
 const index = profiles.findIndex((item) => item.slug === profile.slug);
@@ -58,10 +62,18 @@ const metadata = [
     ["Permanent Label", profile.labelHtml, "label"],
     ["Identification", profile.identificationHtml, "identity"],
     ["Status", profile.statusHtml, "status"],
-    ["Acquired From", profile.acquiredFromHtml, "source"],
-    ["Acquired On", profile.acquiredOnHtml, "calendar"],
-    ["Ordered From", profile.orderedFromHtml, "seller"],
-].filter(([, value]) => value);
+    [
+        profile.receiptUnverified ? "Ordered From" : "Acquired From",
+        (profile.receiptUnverified ? profile.orderedFromHtml : profile.acquiredFromHtml) ||
+            "Not recorded",
+        "source",
+    ],
+    [
+        "Acquired On",
+        profile.acquiredOnHtml || (profile.receiptUnverified ? "Awaiting arrival" : "Not recorded"),
+        "calendar",
+    ],
+];
 ---
 
 <article
@@ -117,7 +129,7 @@ const metadata = [
                 </p>
                 <h1>{profile.title}</h1>
                 <div class="profile-badges">
-                    {isOverview && <span class="badge">Planter overview · shared evidence</span>}
+                    {isOverview && <span class="badge">Shared planter overview</span>}
                     <span class="badge badge-record">
                         <SiteIcon name="inventory" size={24} />
                         <span>
@@ -212,31 +224,38 @@ const metadata = [
                 <dd set:html={value} />
             </div>
         ))}
-        {profile.trackerId && profile.sheetUrl && (
-            <div class="profile-metadata profile-metadata-status">
-                <dt>
-                    <img
-                        src={siteUrl("assets/ui-icons/sheets.svg")}
-                        alt=""
-                        width="32"
-                        height="32"
-                    />
-                    <span>Google Sheets ID</span>
-                </dt>
-                <dd>
+        <div class="profile-metadata profile-metadata-status">
+            <dt>
+                <img src={siteUrl("assets/ui-icons/sheets.svg")} alt="" width="32" height="32" />
+                <span>Google Sheets ID</span>
+            </dt>
+            <dd>
+                {profile.trackerId && profile.sheetUrl ? (
                     <a href={profile.sheetUrl}>{profile.trackerId} ↗</a>
-                </dd>
-            </div>
-        )}
+                ) : (
+                    "No active pot · historical record"
+                )}
+            </dd>
+        </div>
         <div class="profile-metadata profile-metadata-photos">
             <dt>
                 <img src={siteUrl("assets/ui-icons/photos.svg")} alt="" width="32" height="32" />
                 <span>Photo History</span>
             </dt>
             <dd>
-                <a href={`#${profile.slug}-photo-history`}>
-                    {collectionCaptures.length}{" "}
-                    {collectionCaptures.length === 1 ? "capture" : "captures"}
+                <a
+                    href={`#${profile.slug}-${!collectionCaptures.length && profile.hasInlinePhotos ? "notes" : "photo-history"}`}
+                >
+                    {collectionCaptures.length ? (
+                        <>
+                            {collectionCaptures.length}{" "}
+                            {collectionCaptures.length === 1 ? "capture" : "captures"}
+                        </>
+                    ) : profile.hasInlinePhotos ? (
+                        "Photos in collection notes"
+                    ) : (
+                        "No collection photos yet"
+                    )}
                     {newestCapture && (
                         <>
                             {" "}
@@ -250,20 +269,6 @@ const metadata = [
                 </a>
             </dd>
         </div>
-        {profile.scopeNote && (
-            <div class="profile-metadata profile-metadata-scope">
-                <dt>
-                    <img
-                        src={siteUrl("assets/ui-icons/botanical.svg")}
-                        alt=""
-                        width="32"
-                        height="32"
-                    />
-                    <span>Photo Scope</span>
-                </dt>
-                <dd>{profile.scopeNote}</dd>
-            </div>
-        )}
     </dl>
     {profile.trackerId && (
         <div class="card record-actions">
@@ -313,6 +318,21 @@ const metadata = [
             </summary>
             <nav aria-label="On this page">
                 <ul>
+                    {[
+                        ["anatomy", "How this plant works", "botanical"],
+                        ["habitat", "Habitat and origins", "habitat"],
+                        ["growth", "Growth, flowers and mature form", "growth"],
+                        ["lookalikes", "Similar plants", "identity"],
+                        ["timeline", "Its story so far", "history"],
+                        ["sources", "Discovery sources", "research"],
+                    ].map(([section, title, icon]) => (
+                        <li>
+                            <a href={`#${profile.slug}-discovery-${section}`}>
+                                <SiteIcon name={icon ?? "botanical"} size={22} />
+                                {title}
+                            </a>
+                        </li>
+                    ))}
                     {profile.toc
                         .filter((item) => item.level === 2)
                         .map((item) => (
@@ -346,12 +366,13 @@ const metadata = [
                 </ul>
             </nav>
         </details>
-        <div class="prose profile-copy" set:html={profile.bodyHtml} />
+        <PlantDiscovery profile={profile} discovery={discovery} />
+        <div class="prose profile-copy" id={`${profile.slug}-notes`} set:html={profile.bodyHtml} />
     </div>
     <section class="photo-section" id={`${profile.slug}-photo-history`}>
         <div class="section-heading">
             <div>
-                <p class="eyebrow">Dated collection evidence</p>
+                <p class="eyebrow">Through the seasons</p>
                 <h2 id={`${profile.slug}-collection-heading`}>
                     <SiteIcon name="photos" size={36} />
                     Plant Photo History
@@ -363,10 +384,12 @@ const metadata = [
                 </a>
             )}
         </div>
-        <p>
-            The latest two owned-plant photographs. Open a capture or the full Collection for the
-            complete history.
-        </p>
+        {profile.ownedPhotos.length > 0 && (
+            <p>
+                Recent photographs of this plant. Open a photo or its collection for the complete
+                history.
+            </p>
+        )}
         {profile.ownedPhotos.length ? (
             <div class="photo-grid">
                 {profile.ownedPhotos.map((photo) => (
@@ -398,17 +421,28 @@ const metadata = [
                 ))}
             </div>
         ) : (
-            <p class="card">Collection photo pending. {profile.collectionRecord.pending_note}</p>
+            <p class="card">
+                {profile.hasInlinePhotos ? (
+                    <a href={`#${profile.slug}-notes`}>
+                        View photographs in the collection notes above ↑
+                    </a>
+                ) : (
+                    "No collection photos yet. Explore the reference gallery below."
+                )}
+            </p>
         )}
     </section>
     {profile.nurseryPhotos.length > 0 && (
         <section class="photo-section" id={`${profile.slug}-nursery-evidence`}>
-            <p class="eyebrow">Original identification evidence</p>
+            <p class="eyebrow">From the nursery</p>
             <h2 id={`${profile.slug}-nursery-heading`}>
                 <SiteIcon name="label" size={36} />
                 Nursery Labels
             </h2>
-            <p>Seller wording is evidence, not botanical proof.</p>
+            <p>
+                Original labels and packaging. Identification notes above explain any uncertain
+                names.
+            </p>
             <div class="photo-grid nursery-grid">
                 {profile.nurseryPhotos.map((photo) => (
                     <figure class="card" data-photo-kind="nursery-label">
@@ -429,9 +463,10 @@ const metadata = [
                                 {photoDate(photo.captured_on ?? photo.provided_on)} · © Nick, all
                                 rights reserved
                             </span>
-                            <a href={photo.page_url}>Open Nursery Evidence ↗</a>
+                            {photo.derived_note && <span>{photo.derived_note}</span>}
+                            <a href={photo.page_url}>View Full Label ↗</a>
                             {photo.source_file && (
-                                <a href={contentUrl(photo.source_file)}>Archived Evidence Crop</a>
+                                <a href={contentUrl(photo.source_file)}>Label Close-Up</a>
                             )}
                         </figcaption>
                     </figure>
@@ -439,47 +474,7 @@ const metadata = [
             </div>
         </section>
     )}
-    <section class="photo-section" aria-labelledby={`${profile.slug}-gallery-heading`}>
-        <p class="eyebrow">Licensed species references</p>
-        <h2 id={`${profile.slug}-gallery-heading`}>
-            <SiteIcon name="botanical" size={36} />
-            Reference Gallery
-        </h2>
-        <p>{profile.scopeNote}</p>
-        <p>
-            These photographs illustrate the stated species, cultivar, genus, or component taxa.
-            They are separate from photographs of the owned plant and do not establish its
-            identification.
-        </p>
-        <div class="photo-grid reference-grid">
-            {profile.allPhotos.map((photo) => (
-                <figure class="card" data-photo-kind="reference">
-                    <a href={photo.source_url}>
-                        <img
-                            src={contentUrl(photo.file)}
-                            alt={photo.title}
-                            width="640"
-                            height="480"
-                            loading="lazy"
-                            decoding="async"
-                        />
-                    </a>
-                    <figcaption>
-                        <span class="eyebrow">{photo.subject.replaceAll("-", " ")}</span>
-                        <strong>{photo.title}</strong>
-                        <span>
-                            {[photo.location, photo.observed_on].filter(Boolean).join(" · ")}
-                        </span>
-                        <span>
-                            {photo.author} · <a href={photo.license_url}>{photo.license}</a>
-                        </span>
-                        <a href={photo.source_url}>Photo Source and Attribution ↗</a>
-                    </figcaption>
-                </figure>
-            ))}
-        </div>
-        {!profile.allPhotos.length && <p>No licensed reference photographs are archived yet.</p>}
-    </section>
+    <ReferenceGallery profile={profile} />
     <section class="card research-links">
         <h2>
             <SiteIcon name="research" size={36} />
@@ -493,7 +488,7 @@ const metadata = [
                     rel="noopener noreferrer"
                 >
                     <SiteIcon name="field-guide" size={28} />
-                    Maintained Source Profile
+                    Collection Notes on GitHub
                 </a>
             </li>
             {profile.allPhotos.length > 0 && (

@@ -21,8 +21,7 @@
 
 Kew currently accepts _Nyctocereus_ as a one-species genus. Other taxonomic
 treatments place this plant in _Peniocereus_, so both names appear in serious
-references. The original label's “Nyctocerus serpteninus” is just a misspelling
-of the accepted name.
+references.
 
 ## Origin, form, and flowers
 
@@ -44,13 +43,13 @@ introductions beyond Mexico, including parts of Australia and South Africa.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                              |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R3C4 · Bright.** September 15 six-column/four-row front grid, facing the window. Interior-right upright plant. Keep its stems from shading the adjacent low H1 and G3. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Growth habit        | Give it a stake, trellis, or eventual hanging route. A horizontal stem is not automatically unhealthy; unsupported scrambling is normal.                                                                                                                                                                        |
-| Water               | During warm active growth it can use water more regularly than the small globular cacti, but still wait for the pot to dry. Reduce sharply when growth slows.                                                                                                                                                   |
-| Mix and pot         | Fast drainage remains essential. An established tuberous root system may eventually justify a deeper pot, but do not overpot a small specimen.                                                                                                                                                                  |
-| Temperature         | Favor warmth during growth and protect from frost. Keep a cool plant dry.                                                                                                                                                                                                                                       |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                          |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Photo-matched R3C4 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Interior-right upright plant. Keep its stems from shading the adjacent low H1 and G3. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Growth habit        | Give it a stake, trellis, or eventual hanging route. A horizontal stem is not automatically unhealthy; unsupported scrambling is normal.                                                                                                                                                    |
+| Water               | During warm active growth it can use water more regularly than the small globular cacti, but still wait for the pot to dry. Reduce sharply when growth slows.                                                                                                                               |
+| Mix and pot         | Fast drainage remains essential. An established tuberous root system may eventually justify a deeper pot, but do not overpot a small specimen.                                                                                                                                              |
+| Temperature         | Favor warmth during growth and protect from frost. Keep a cool plant dry.                                                                                                                                                                                                                   |
 
 Judge light by the new stem: it should emerge with a useful diameter, regular
 ribs, and normal spine spacing. A thin pale extension means it wants more light;

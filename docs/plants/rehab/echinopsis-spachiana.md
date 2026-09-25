@@ -1,7 +1,7 @@
 # Golden torch cactus
 
 - Inventory: Rehab-03 — probable _Echinopsis spachiana_
-- Label ID: `#1` — shared rehab cactus planter; formerly `A4-B4`
+- Label ID: `#1`
 - Tracker ID: `P19`
 - Visual description: An upright green column divided by strong vertical ribs, with close golden-brown spine clusters tracing each rib from base to tip like parallel dotted lines.
 - Interesting fact: Golden torch combines two very different horticultural roles: a mature column can open a large white flower at night, while vigorous stems are also used as grafting stock for other cacti.
@@ -18,11 +18,10 @@
 | Common names      | Golden torch cactus, white torch cactus, golden column |
 | Frequent synonyms | _Trichocereus spachianus_, _Soehrensia spachiana_      |
 
-The recent image shows continuous vertical ribs, a green column, and clusters of
-golden radial spines. That rules out the earlier thought of a _Mammillaria_,
-whose stem would be built from separate tubercles rather than unbroken ribs.
-Several golden-spined _Echinopsis_ columns look similar, so the species remains
-probable until a good flower and mature stem details are available.
+Continuous vertical ribs, a green column, and golden radial-spine clusters
+support an _Echinopsis_-type columnar cactus. Several golden-spined species
+look similar, so _E. spachiana_ remains a probable identification pending
+flowers and mature stem details.
 
 ## Origin, taxonomy, and mature form
 
@@ -40,13 +39,13 @@ it is also used as grafting stock for slower or chlorophyll-deficient cacti.
 
 ## Rehabilitation and grow-light care
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                                       |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Current status      | The tip is green and alive. Existing lean and narrow low-light growth are permanent history; evaluate only new growth.                                                                                                                                                                                                   |
-| Grow-light position | **Photo-matched rear center · Mixed.** September 15 rear wooden tables, facing the window. Compare both tall columns and trailing monkey tail; pale tissue and short neighbors need separate attention. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Outdoor light       | Increase direct sun gradually. A month of bright outdoor shade provides a head start but is not equivalent to all-day sun.                                                                                                                                                                                               |
-| Water               | Soak and drain after the planter dries in warm growth. Keep cool roots dry.                                                                                                                                                                                                                                              |
-| Support             | A weak old section may need a loose stake while stronger new growth develops; do not cinch wire against the skin.                                                                                                                                                                                                        |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                                                              |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Current status      | The tip is green and alive. Existing lean and narrow low-light growth are permanent history; evaluate only new growth.                                                                                                                                                                                                                          |
+| Grow-light position | **Photo-matched rear center · Mixed.** September 15, 2026 photo reference: rear wooden tables, facing the window. Compare both tall columns and trailing monkey tail; pale tissue and short neighbors need separate attention. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Outdoor light       | Increase direct sun gradually. Earlier growth in bright outdoor shade does not make an indoor plant ready for all-day sun.                                                                                                                                                                                                                      |
+| Water               | Soak and drain after the planter dries in warm growth. Keep cool roots dry.                                                                                                                                                                                                                                                                     |
+| Support             | A weak old section may need a loose stake while stronger new growth develops; do not cinch wire against the skin.                                                                                                                                                                                                                               |
 
 A healthy new column should maintain or increase diameter and develop stronger,
 more compact spine rows. Rotating the planter occasionally can balance indoor

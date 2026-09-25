@@ -1,0 +1,130 @@
+{
+    "anatomy": {
+        "intro": "A single green split-rock pair is shown with a schematic taproot, distinct from the collection's purple Royal Flush.",
+        "parts": [
+            {
+                "function": "The thick, nearly spherical leaf stores water.",
+                "label": "Rounded leaf"
+            },
+            {
+                "function": "Dark markings contribute to the stone-like appearance.",
+                "label": "Speckled surface"
+            },
+            {
+                "function": "New leaves and flowers emerge from between the paired leaves.",
+                "label": "Deep cleft"
+            },
+            {
+                "function": "The relatively long root anchors the plant and supports water uptake.",
+                "label": "Taproot"
+            }
+        ],
+        "sourceIds": [
+            "nelii",
+            "nelii-flora"
+        ]
+    },
+    "comparisonSourceIds": [
+        "nelii",
+        "lithops"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "nelii",
+            "nelii-flora"
+        ],
+        "text": "Flowers emerge from the cleft and can be roughly 60 mm across, with salmon, yellowish or orange tones. They open in the afternoon; no bloom is documented for this plant."
+    },
+    "growth": {
+        "note": "Judge the actual leaf stage indoors; SANBI's South African seasonal descriptions are not a Michigan watering calendar.",
+        "sourceIds": [
+            "nelii"
+        ],
+        "stages": [
+            {
+                "text": "Two rounded leaves make the compact visible body.",
+                "title": "Established pair"
+            },
+            {
+                "text": "A replacement pair develops between the older leaves.",
+                "title": "New leaves emerge"
+            },
+            {
+                "text": "Old leaves supply moisture to the new growth and eventually shrivel.",
+                "title": "Older pair absorbed"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "nelii"
+        ],
+        "text": "Wild P. nelii occurs in sparse Karoo vegetation near the Western and Eastern Cape boundary in South Africa. Rounded, spotted bodies blend into the stony ground. This plant came from Altman nursery stock; its wild habitat provides context for its form, not a recipe for reproducing regional rain seasons indoors."
+    },
+    "image": {
+        "alt": "One speckled green split-rock pair with numbered rounded leaf, spotted surface, deep cleft and schematic taproot.",
+        "file": "assets/plant-explainers/pleiospilos-nelii.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration on warm ivory. Clean botanically accurate pen-and-watercolor, muted forest-green, sage and ochre palette, generous whitespace, large central specimen. Exactly four large numbered circular markers 1, 2, 3, 4 with thin clear noncrossing leader lines to the specified features. Numerals legible at 350px display. No title, words, paragraphs, watering icons, calendar, border or logo. Schematic anatomy, not a photograph of an owned plant. Show ONE Pleiospilos nelii split-rock plant with exactly TWO opposite rounded nearly spherical grey-green leaves densely dotted with small dark speckles, deep central cleft, joined only at the base. No additional old or new pair, no flower, no Lithops flat patterned top. Three-quarter side view, schematic relatively long taproot and fine side roots beneath a small broken soil line. Marker1 to a rounded fleshy leaf; marker2 to clearly speckled surface patch; marker3 to deep central cleft; marker4 to taproot below. Green ordinary species form, never purple Royal Flush.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Royal Flush split rock",
+            "profileSlug": "pleiospilos-nelii-royal-flush",
+            "text": "The collection's purple-leaved cultivar has a separate pot and history; this new green plant has no cultivar on its label."
+        },
+        {
+            "name": "Lithops",
+            "profileSlug": "lithops-shared-planter",
+            "text": "Lithops have flatter windowed tops; their similar stone disguise does not make their leaf-cycle care interchangeable."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "nelii"
+        ],
+        "text": "The mature form stays dwarf and nearly stemless, with fleshy leaf pairs rather than a leafy branch system. Its long taproot makes usable pot depth relevant even when the visible plant looks small."
+    },
+    "milestones": [
+        {
+            "date": "2026-09-21",
+            "sourcePath": "docs/plants/succulents/pleiospilos-nelii.md",
+            "text": "Purchased in Howell, Michigan; the Altman label names Pleiospilos nelii without a cultivar.",
+            "title": "Home Depot arrival"
+        },
+        {
+            "date": "2026-09-23",
+            "sourcePath": "docs/plants/succulents/pleiospilos-nelii.md",
+            "text": "Moved into setup 2 with 80% Molly's Succulent Mix and 20% perlite; the single visible pair was firm.",
+            "title": "Speckled-pot repot"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "nelii"
+        ],
+        "text": "Pleiospilos refers to its many spots, while nelii honors botanist G. C. Nel."
+    },
+    "slug": "pleiospilos-nelii",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "nelii",
+            "title": "SANBI PlantZAfrica: Pleiospilos nelii",
+            "url": "https://pza.sanbi.org/pleiospilos-nelii"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "nelii-flora",
+            "title": "SANBI Biodiversity Advisor: Pleiospilos nelii",
+            "url": "https://biodiversityadvisor.sanbi.org/search/detail/9258486d-dc10-471d-a6c2-3c347842eec6"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "lithops",
+            "title": "Wisconsin Extension: Living stones",
+            "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"
+        }
+    ]
+}

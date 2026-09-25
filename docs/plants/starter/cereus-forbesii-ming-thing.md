@@ -22,8 +22,7 @@
 The original _Opuntia_ label does not fit. _Opuntia_ relatives show jointed
 segments and distinctive glochid-bearing areoles; this plant makes dense,
 knobby, rib fragments characteristic of the clone sold as 'Ming Thing'. The ID
-is strong from habit but remains a horticultural identification rather than a
-DNA result.
+is strongly supported by its growth form, although nursery provenance is incomplete.
 
 ## Species background and cultivar uncertainty
 
@@ -42,9 +41,9 @@ cultivar and describes the form as a naturally occurring mutation. Its breeder,
 first nursery, and release year are not documented in the botanical and
 extension sources checked. Sellers and collector pages repeat conflicting
 origin stories, and some plants under the name may not be one genetically
-identical clone. The defensible description is a monstrose _Cereus
-forbesii_-type cultivar widely traded as 'Ming Thing'. Species photos are useful
-for botanical context, not as a visual twin of the collection plant.
+identical clone. It is best described as a monstrose _Cereus forbesii_-type cultivar widely
+traded as 'Ming Thing'. Reference photos of the ordinary species show its
+botanical background rather than this cultivar's irregular shape.
 
 ## What monstrose growth means
 
@@ -55,13 +54,13 @@ compact new growth than by symmetry.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                                                     |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R1C1 · Gentler.** September 15 six-column/four-row front grid, facing the window. Front-left, where a gentler edge is plausible. Mylar can still return substantial light; this is not shade. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Water               | Soak and drain, then wait until the full pot is dry. Deep folds and slow growth give overwatering more downside than slight delay.                                                                                                                                                                                                     |
-| Light acclimation   | Increase gradually; high ridges can bleach while shaded valleys still look dark green.                                                                                                                                                                                                                                                 |
-| Pot and mix         | A small breathable root volume and fast drainage are useful. Keep grit out of crevices at the body base.                                                                                                                                                                                                                               |
-| Feeding             | Dilute feed during obvious warm-season growth only.                                                                                                                                                                                                                                                                                    |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                                 |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Grow-light position | **Photo-matched R1C1 · Gentler.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Front-left, where a gentler edge is plausible. Mylar can still return substantial light; this is not shade. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Soak and drain, then wait until the full pot is dry. Deep folds and slow growth give overwatering more downside than slight delay.                                                                                                                                                                                 |
+| Light acclimation   | Increase gradually; high ridges can bleach while shaded valleys still look dark green.                                                                                                                                                                                                                             |
+| Pot and mix         | A small breathable root volume and fast drainage are useful. Keep grit out of crevices at the body base.                                                                                                                                                                                                           |
+| Feeding             | Dilute feed during obvious warm-season growth only.                                                                                                                                                                                                                                                                |
 
 This plant does not need maximum output just because the normal species grows
 in sun. The irregular surface and nursery-grown epidermis make a conservative

@@ -1,11 +1,11 @@
 # Pulido's echeveria
 
 - Inventory: Succulent-01 — probable _Echeveria pulidonis_ or close hybrid
-- Label ID: `#2` — shared succulent planter; formerly `C4-D4`
+- Label ID: `#2`
 - Tracker ID: `P20`
 - Current pot: **square wooden shared planter with plastic liner and owner-drilled approximately one-inch hole through both bottom and liner; outside dimensions unmeasured**
 - Visual description: A symmetrical rosette of thick, pointed blue-green leaves, each carrying a fine powdery bloom and a narrow red outline that is strongest near the tip.
-- Interesting fact: The chalky farina is a one-time finish on each leaf: fingerprints or rub marks do not refill, although every new leaf emerges with a fresh waxy coating of its own.
+- Interesting fact: The species raises nodding yellow, urn-shaped flowers on long curved stalks; a bloom would add useful evidence to this plant's probable identification.
 - Identification: **probable; flowers would improve confidence**
 - Acquired from: Gerych's Greenhouse, as part of the mixed succulent planter
 - Acquired on: 2026-07-27
@@ -43,15 +43,15 @@ pot or lowest leaves rather than polishing the rosette.
 
 ## Care in the shared planter
 
-The owner clarified on September 20, 2026 that the square wooden P20 / #2 container has a plastic liner and an approximately one-inch drainage hole drilled through both the container bottom and liner. The report does not establish the drilling date, a new setup, or a tare adjustment. Keep the opening unobstructed and assess the shared root zone before watering; the hole does not itself establish dryness.
+The square wooden planter has a plastic liner and an approximately one-inch drainage hole through both the bottom and liner, documented September 20, 2026. Keep the opening clear and let the shared root zone dry before watering.
 
-| Topic                     | Practical approach                                                                                                                                                                                                                                                                                              |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position       | **Photo-matched rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Evidence behind the range | A 2026 study on other _Echeveria_ cultivars found 12.8 mol/m²/day produced more compact, better-performing plants than 4.8; it is guidance, not a species-specific threshold.                                                                                                                                   |
-| Water                     | Soak the shared root zone only after it has dried. Keep water out of the rosette in cool, still conditions.                                                                                                                                                                                                     |
-| Competition               | Prevent the elephant bush and kalanchoes from shading or physically crowding the rosette.                                                                                                                                                                                                                       |
-| Feeding                   | Light dilute feeding in active growth. Excess fertilizer plus weak light opens the rosette.                                                                                                                                                                                                                     |
+| Topic                     | Practical approach                                                                                                                                                                                                                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position       | **Rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Evidence behind the range | A 2026 study on other _Echeveria_ cultivars found 12.8 mol/m²/day produced more compact, better-performing plants than 4.8; it is guidance, not a species-specific threshold.                                                                                                                     |
+| Water                     | Soak the shared root zone only after it has dried. Keep water out of the rosette in cool, still conditions.                                                                                                                                                                                       |
+| Competition               | Prevent the elephant bush and kalanchoes from shading or physically crowding the rosette.                                                                                                                                                                                                         |
+| Feeding                   | Light dilute feeding in active growth. Excess fertilizer plus weak light opens the rosette.                                                                                                                                                                                                       |
 
 Red margins can intensify with useful light and normal mild stress. That is not
 the same as a bleached tan patch, translucent tissue, or a sharply scorched leaf
@@ -73,7 +73,7 @@ a raised center and widening gaps indicate stretch.
 
 ## Sources
 
-- Owner clarification on September 20, 2026: plastic liner and approximately one-inch hole drilled through both the P20 / #2 wooden container bottom and liner; exact drilling date and any removed mass were not supplied.
+- Owner observations, September 20, 2026: P20 / #2 wooden planter with a plastic liner and an approximately one-inch drainage hole through both layers.
 
 - [Kew Plants of the World Online: _Echeveria pulidonis_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A87059-2)
 - [Royal Horticultural Society: _Echeveria pulidonis_](https://www.rhs.org.uk/plants/6239/echeveria-pulidonis/details)

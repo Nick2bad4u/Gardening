@@ -1,0 +1,98 @@
+---
+import { contentUrl } from "../lib/routes.mjs";
+import { getReferenceGallery } from "../lib/reference-gallery.mjs";
+import SiteIcon from "./SiteIcon.astro";
+
+interface Props {
+    profile: import("../lib/content.mjs").SiteProfile;
+}
+const { profile } = Astro.props;
+const groups = await getReferenceGallery(profile.allPhotos);
+const groupId = (topic: string) => `${profile.slug}-reference-${topic}`;
+---
+
+<section class="photo-section curated-gallery" aria-labelledby={`${profile.slug}-gallery-heading`}>
+    <p class="eyebrow">Licensed botanical references</p>
+    <h2 id={`${profile.slug}-gallery-heading`}>
+        <SiteIcon name="botanical" size={36} /> Reference Gallery
+    </h2>
+    <p>{profile.scopeNote}</p>
+    <p>
+        Explore the form, surface details, and flowers shown in the archive. These reference
+        photographs are separate from the collection photos and do not establish this plant's
+        identification.
+    </p>
+    {groups.length > 1 && (
+        <nav class="gallery-topics" aria-label="Reference gallery topics">
+            {groups.map((group) => (
+                <a href={`#${groupId(group.id)}`}>
+                    {group.title} <span>({group.photos.length})</span>
+                </a>
+            ))}
+        </nav>
+    )}
+    {groups.map((group) => (
+        <section class="gallery-topic" aria-labelledby={groupId(group.id)}>
+            <h3 id={groupId(group.id)}>{group.title}</h3>
+            <div class="photo-grid reference-grid">
+                {group.photos.map(({ photo, annotation }) => (
+                    <figure class="card" data-photo-kind="reference" data-gallery-topic={group.id}>
+                        <a href={photo.source_url}>
+                            <img
+                                src={contentUrl(photo.file)}
+                                alt={annotation.caption}
+                                width="640"
+                                height="480"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                        </a>
+                        <figcaption>
+                            <span class="eyebrow">{photo.subject.replaceAll("-", " ")}</span>
+                            <strong>{annotation.caption}</strong>
+                            <span>{photo.title}</span>
+                            <span>
+                                {[photo.location, photo.observed_on].filter(Boolean).join(" · ")}
+                            </span>
+                            <span>
+                                {photo.author} · <a href={photo.license_url}>{photo.license}</a>
+                            </span>
+                            <a href={photo.source_url}>Photo Source and Attribution ↗</a>
+                        </figcaption>
+                    </figure>
+                ))}
+            </div>
+        </section>
+    ))}
+</section>
+
+<style>
+    .gallery-topics {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-block: 1rem 1.5rem;
+    }
+    .gallery-topics a {
+        padding: 0.6rem 0.9rem;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--surface-soft);
+    }
+    .gallery-topics span {
+        color: var(--muted);
+    }
+    .gallery-topic {
+        margin-block: 1.5rem;
+        min-inline-size: 0;
+    }
+    .gallery-topic h3 {
+        margin-block: 0 0.75rem;
+        scroll-margin-block-start: 7rem;
+    }
+    @media print {
+        .gallery-topics {
+            display: none;
+        }
+    }
+</style>

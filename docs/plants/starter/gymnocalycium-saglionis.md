@@ -20,7 +20,7 @@
 | Dedication              | Named for French cactus collector Joseph Saglio |
 
 The broad body, blunt ribs, and bundles of heavy curved spines suit this name:
-it is one of the genuinely large members of a genus often sold as small windowsill
+it is one of the larger members of a genus often sold as small windowsill
 cacti. The “chins” are the projecting portions of each rib immediately beneath
 the areoles.
 
@@ -37,18 +37,18 @@ spines can look much more strongly red. Pale pinkish-white flowers form near the
 crown. Later fruits split across the side rather than opening neatly at the tip.
 
 Jean-François Cels published the species in 1847 as an _Echinocactus_. Britton
-and Rose transferred it to _Gymnocalycium_ in 1922. As in Starter-07, the genus
-name refers to the smooth, hairless flower tube.
+and Rose transferred it to _Gymnocalycium_ in 1922. The genus name refers
+to its smooth, hairless flower tube.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                        |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R3C6 · Bright.** September 15 six-column/four-row front grid, facing the window. Preserve clear bright exposure; a photo position is not a measured light level. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Outdoor light       | Bright light with gradual direct-sun exposure. Young nursery plants appreciate acclimation more than massive habitat specimens suggest.                                                                                                                                                                   |
-| Water               | Full soak, complete drainage, then dry through. Reduce water sharply during cool slow growth.                                                                                                                                                                                                             |
-| Pot                 | Do not jump straight to a mature-size container. Move up one practical size when roots or body genuinely crowd the current pot.                                                                                                                                                                           |
-| Mix                 | Open, fast draining, and not excessively rich. Keep the body-to-soil line visible.                                                                                                                                                                                                                        |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                    |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Photo-matched R3C6 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Preserve clear bright exposure; a photo position is not a measured light level. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Outdoor light       | Bright light with gradual direct-sun exposure. Young nursery plants appreciate acclimation more than massive habitat specimens suggest.                                                                                                                                               |
+| Water               | Full soak, complete drainage, then dry through. Reduce water sharply during cool slow growth.                                                                                                                                                                                         |
+| Pot                 | Do not jump straight to a mature-size container. Move up one practical size when roots or body crowd the current pot.                                                                                                                                                                 |
+| Mix                 | Open, fast draining, and not excessively rich. Keep the body-to-soil line visible.                                                                                                                                                                                                    |
 
 The plant may flatten or contract modestly in a dry rest. That is safer than
 trying to maintain maximum summer plumpness in cool indoor conditions. Active

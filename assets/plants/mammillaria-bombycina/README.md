@@ -4,7 +4,7 @@ _Mammillaria bombycina_ - Rehab-04
 
 Collection label ID: none (historical record only).
 
-Species-reference photographs for the archived Rehab-04 record; the plant was removed on 2026-07-24 and its photo-based ID remains provisional.
+Species-reference photographs for this historical collection plant; its photo-based identification remains provisional.
 
 Collection research: [open the plant profile](../../../docs/plants/rehab/mammillaria-bombycina.md).
 

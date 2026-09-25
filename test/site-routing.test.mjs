@@ -1,6 +1,7 @@
 import { runInNewContext } from "node:vm";
 import { describe, expect, it } from "vitest";
 
+import { getProfiles } from "../site/lib/content.mjs";
 import { legacyData, legacyScript } from "../site/lib/legacy.mjs";
 import { contentUrl, siteUrl } from "../site/lib/routes.mjs";
 
@@ -156,10 +157,52 @@ describe("site routes and serialized legacy bookmarks", () => {
         expect.hasAssertions();
         expect(
             contentUrl("docs/plants/cacti/moon-cactus.md?q=pot#sources")
-        ).toBe("/Gardening/plants/moon-cactus/?q=pot#sources");
+        ).toBe("/Gardening/plants/moon-cactus/?q=pot#moon-cactus-sources");
         expect(
             contentUrl("docs/equipment/inventory.md?view=table#lights")
         ).toBe("/Gardening/setup/equipment/?view=table#lights");
+    });
+
+    it.each([
+        ["#sources", "#moon-cactus-sources"],
+        ["#moon-cactus-sources", "#moon-cactus-sources"],
+        ["#moon-cactus", "#moon-cactus"],
+        ["#:~:text=Water", "#:~:text=Water"],
+        ["?view=all", "?view=all"],
+        ["", ""],
+    ])(
+        "maps plant section suffix %s without duplicating its namespace",
+        (suffix, expected) => {
+            expect.hasAssertions();
+            expect(
+                contentUrl(`docs/plants/cacti/moon-cactus.md${suffix}`)
+            ).toBe(`/Gardening/plants/moon-cactus/${expected}`);
+        }
+    );
+
+    it("links shared-planter references to sections that exist on the target profile", async () => {
+        expect.hasAssertions();
+
+        const profiles = await getProfiles();
+        const targets = new Map(
+            profiles.map((profile) => [profile.slug, profile.bodyHtml])
+        );
+        const references = profiles.flatMap((profile) =>
+            profile.bodyHtml
+                .matchAll(
+                    /href="\/Gardening\/plants\/(?<slug>[^\/]+)\/#(?<fragment>[^"]+)"/gv
+                )
+                .toArray()
+        );
+
+        expect(references.length).toBeGreaterThan(0);
+
+        for (const reference of references) {
+            const slug = reference.groups?.["slug"] ?? "";
+            const fragment = reference.groups?.["fragment"] ?? "";
+
+            expect(targets.get(slug)).toContain(`id="${fragment}"`);
+        }
     });
 
     it("resolves plain and prefixed plant bookmarks including nested headings", () => {

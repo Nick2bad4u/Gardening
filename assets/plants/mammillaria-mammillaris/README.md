@@ -4,7 +4,7 @@ _Mammillaria mammillaris_ - Cactus-03
 
 Collection label ID: `E3`.
 
-Species-reference photographs; the collection ID is probable and replaces the former M. cf. melanocentra record after review of close photographs.
+Species-reference photographs; the collection plant identification remains probable.
 
 Collection research: [open the plant profile](../../../docs/plants/cacti/mammillaria-mammillaris.md).
 

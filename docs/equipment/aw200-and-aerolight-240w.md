@@ -1,13 +1,10 @@
 # AW200 + AeroLight 240 W — Installed Horizontal Pair
 
-Updated September 18, 2026. The owner installed the **AW200 + AeroLight 240 W** pair on September 13 and subsequently leveled the lights. On September 15 the owner added two tables and rearranged the pots; the placement guide retains that photo record and the later owner-confirmed A3/F1 exchange.
+The **AW200 + AeroLight 240 W** pair was installed September 13, 2026. The current display uses four wooden tables; the [placement guide](../layouts/table-placement-research.md) shows the pot positions, including the later A3/F1 exchange.
 
 The last reported settings are **AW200 45%** and **AeroLight 240 W 38%**, **Veg mode on both**, an **18-inch (45.7 cm) LED-to-plant-tip reference**, and **13 h 15 m total daily cycle** including **15 minutes of sunrise and 15 minutes of sunset**. The new photos do not remeasure controller settings, fixture centers or current individual clearances.
 
-This supersedes the [unavailable AW400 selection](./vivosun-aw400.md) and
-[canceled AW400SE order](./vivosun-aw400se.md). Reusing the AW200 costs the owner
-less than the replacement plan and preserves independent adjustment. It does
-not establish uniform light coverage.
+Each fixture has independent suspension and light control. Uniform coverage still needs checking at plant height. The [AW400](./vivosun-aw400.md) and [AW400SE](./vivosun-aw400se.md) pages retain the earlier, uninstalled alternatives.
 
 ## Exact Lights and Controls
 
@@ -43,7 +40,6 @@ chosen dimming settings. Both lights use the confirmed 13 h 15 m cycle. The
 transitions**. The owner subsequently confirmed **Veg mode on both fixtures**; exact clock times remain unrecorded.
 The 18-inch plant-tip reference is owner-reported;
 individual plant-tip distances remain unmeasured. The owner later supplied 48 approximate lux-derived light estimates at individual plant heights, rather than one common plane; see the [measurement record](../layouts/table-placement-research.md#owner-light-readings-and-confirmed-swap).
-No controller program was remotely changed for this update.
 
 ## Recommended Starting Decision
 
@@ -63,11 +59,11 @@ Keep both lights on their confirmed **13 h 15 m** cycle, including the
 15-minute sunrise and sunset transitions. Increasing duration and intensity
 together makes the cause of a response harder to judge.
 
-The first owner comparison is now recorded. If a follow-up is useful, measure A3 and F1 at their own heights after the exchange; different-height occupants do not inherit each other's old readings. Assess the money tree's upper leaves separately at its confirmed north-windowsill position, with daylight conditions recorded. Use both lights at their normal settings. A suitable quantum meter
+For a useful follow-up, measure A3 and F1 at their own heights after the exchange; different-height occupants do not inherit each other's old readings. Assess the money tree's upper leaves separately at its confirmed north-windowsill position, with daylight conditions recorded. Use both lights at their normal settings. A suitable quantum meter
 can measure PPFD; a consistent lux reading can reveal relative bright and dim
 spots, but do not apply an old AW200SE lux conversion to these mixed spectra.
 
-Keep low rosettes and split rock clearly lit without assigning the strongest exposure to all of them. Raindrops uses bright light rather than a maximum-intensity priority. The [placement review](../two-light-placement-review.md) explains the corrected written grid, retained earlier illustrations and approximate light comparison and the limits of edge, seam, and height assumptions. Any future fixture-height adjustment affects neighboring plants as well as the tallest tip.
+Keep low rosettes and split rock clearly lit without assigning the strongest exposure to all of them. Raindrops uses bright light rather than a maximum-intensity priority. The [placement review](../two-light-placement-review.md) explains the current grid, approximate light comparison, and limits of edge, overlap and height assumptions. Any future fixture-height adjustment affects neighboring plants as well as the tallest tip.
 
 The [new-model manual][new-manual] requires the growing space to stay **below
 86°F (30°C)** during operation. Recheck room temperature with both fixtures
@@ -85,16 +81,11 @@ The photo-matched D3 and F2 front corners are plausible gentler positions; Mylar
 
 ## Independent Ceiling Hooks
 
-The owner corrected the ceiling framing orientation on September 11 to
-**four ceiling hooks, two per fixture**. On September 13 the owner confirmed
-both lights hung, with separate adjustable suspension, and further leveling
-after the photographs. Each light can be raised or lowered independently.
+The installed suspension uses **four ceiling hooks, two per fixture**, with separate adjustable ropes. Both lights were hung September 13 and leveled after the photographs. Each light can be raised or lowered independently.
 
 The September 20 clarification identifies the installed hardware as **heavy-duty screw eyelets bought at a local hardware store**, used with **the adjustable ropes included with the fixtures**. Exact eyelet brand and load ratings were not supplied; no Amazon hanger listing is asserted for this installation.
 
-This replaces the earlier RIMLUFE shared-bar and KAROSOM anti-tip-wire proposal.
-Those accessories are no longer part of the mounting plan, and the two lights
-do not need to be balanced against each other. Use each fixture's manufacturer
+The fixtures hang independently and do not need balancing against one another. Use each fixture's manufacturer
 hanging points. The owner reports an 18-inch LED-to-plant-tip reference.
 Final hook positions and individual plant-tip distances are not mapped.
 

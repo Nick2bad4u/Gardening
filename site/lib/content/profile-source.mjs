@@ -28,6 +28,16 @@ import { siteUrl } from "../routes.mjs";
  */
 
 const speciesObservationScope = "Species observations";
+const planterReferenceScopes = new Map([
+    [
+        "lithops-shared-planter",
+        "Reference photographs of Lithops lesliei and Lithops salicola for comparison with the two probable species in this planter.",
+    ],
+    [
+        "tiny-mixed-succulent-planter",
+        "Reference photographs of Echeveria, coppertone-type Sedum, and paddle Kalanchoe for comparison with the three plant groups in this planter. Exact species and cultivars remain uncertain.",
+    ],
+]);
 
 const repositoryRoot = process.cwd();
 
@@ -49,7 +59,7 @@ const collectionPhotoManifestPath = path.join(
 const groups = [
     {
         description:
-            "Twenty cactus profiles plus one cactus-form Euphorbia, in Google Sheets P-ID order with permanent pot labels and collection IDs visible.",
+            "Spiny columns, compact globes, unusual cultivars, and a cactus-shaped Euphorbia, with care notes for each plant.",
         directories: ["starter", "cacti"],
         eyebrow: "Cactus collection",
         key: "cacti",
@@ -57,7 +67,7 @@ const groups = [
     },
     {
         description:
-            "Four records in the established shared planter, the Kiwi aeonium, three rooted Mountain Crest succulents, and two Home Depot arrivals added September 2.",
+            "Rosettes, branching succulents, living stones, and shared planters, each with its own growth and watering rhythm.",
         directories: ["succulents"],
         eyebrow: "Shared planter and individual succulents",
         key: "succulents",
@@ -65,7 +75,7 @@ const groups = [
     },
     {
         description:
-            "Three living cactus records plus the retained historical record for Rehab-04.",
+            "The long-established cactus planter, its recovering plants, and the history of a former member.",
         directories: ["rehab"],
         eyebrow: "Older planter and archive",
         key: "rehab",
@@ -73,9 +83,9 @@ const groups = [
     },
     {
         description:
-            "The money tree follows its own light and watering rules rather than the cactus baseline.",
+            "Money tree, variegated Peperomia, and Tricolor oyster plant, with care suited to their foliage and growing conditions.",
         directories: ["houseplants"],
-        eyebrow: "Tropical houseplant",
+        eyebrow: "Houseplant collection",
         key: "houseplants",
         title: "Houseplants",
     },
@@ -1026,6 +1036,7 @@ async function loadProfiles() {
                     photoCount: photos.length,
                     scientificHtml,
                     scopeNote:
+                        planterReferenceScopes.get(profile.slug) ??
                         photos[0]?.scope_note ??
                         "Reference photography is not archived yet; this page currently uses the collection record and linked research sources.",
                     selectedPhotos,

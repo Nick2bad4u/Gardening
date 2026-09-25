@@ -1,0 +1,125 @@
+{
+    "anatomy": {
+        "intro": "Terminal rosettes make leafy crowns at the ends of a branching framework.",
+        "parts": [
+            {
+                "function": "Fleshy blades combine green and yellow areas with colored margins.",
+                "label": "Variegated leaf"
+            },
+            {
+                "function": "The youngest leaves cluster at the growing tip.",
+                "label": "Rosette center"
+            },
+            {
+                "function": "Older stem sections hold each rosette above the ground.",
+                "label": "Woody branch"
+            },
+            {
+                "function": "Another growing tip adds a new leafy crown to the shrub.",
+                "label": "Side rosette"
+            }
+        ],
+        "sourceIds": [
+            "rhs",
+            "extension"
+        ]
+    },
+    "comparisonSourceIds": [
+        "rhs",
+        "pulidonis"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "rhs",
+            "extension"
+        ],
+        "text": "Aeoniums produce many small star-shaped flowers on a stalk above a rosette. Flowering is a mature-stage event, not a requirement for a healthy young plant. The illustrated crowns are vegetative; no bloom is documented for this specimen here."
+    },
+    "growth": {
+        "note": "Heat can slow growth; observe actual activity instead of assigning an indoor plant a fixed seasonal calendar.",
+        "sourceIds": [
+            "extension"
+        ],
+        "stages": [
+            {
+                "text": "Young central leaves spread into successive rings.",
+                "title": "Expand a rosette"
+            },
+            {
+                "text": "Stems lengthen and carry additional rosettes.",
+                "title": "Branch and lift"
+            },
+            {
+                "text": "A flowering rosette finishes its life while other branches can persist.",
+                "title": "Flower one crown"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "The wild species Aeonium haworthii is native to Tenerife in the Canary Islands and grows as a subtropical succulent subshrub. 'Dream Color' is a horticultural selection, not a wild population. This collection's colorful plant is a probable cultivar match; its island background is useful context without establishing an exact nursery lineage."
+    },
+    "image": {
+        "alt": "Variegated aeonium with numbered leaf, rosette center, woody branch and side crown.",
+        "file": "assets/plant-explainers/aeonium-haworthii-dream-color.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Scientific educational botanical illustration, square 1024x1024, warm ivory background, accurate clean pen-and-watercolor, forest-green/sage/ochre muted palette with natural species colors. Large central plant, generous whitespace. Exactly four large numbered markers 1–4 with thin clear leaders to the specified features, readable at 350px. No other text, titles, paragraphs, calendar, watering icons, roots or pots. Generic botanical anatomy, not a record of an individual collection specimen. Aeonium haworthii Dream Color, commonly Kiwi: branched subshrub with terminal rosettes of pointed fleshy green and creamy-yellow leaves with fine pink-red margins, visible short bare woody branches below rosettes. Large main rosette and two smaller side rosettes, three-quarter view. Markers: 1 fleshy variegated leaf, 2 tight central young leaves in main rosette, 3 woody branching stem, 4 a smaller side rosette. No flowers.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Echeveria pulidonis",
+            "profileSlug": "echeveria-pulidonis",
+            "text": "Both have colored rosettes, but this aeonium develops conspicuous woody branches with crowns at their tips; pulidonis stays lower and has thicker blue-grey leaves."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "rhs"
+        ],
+        "text": "RHS lists about 0.1–0.5 m in height and spread for the variegated pinwheel. Expect a branched cluster of crowns rather than one permanently flat rosette; pot conditions affect the eventual scale."
+    },
+    "milestones": [
+        {
+            "date": "2026-08-10",
+            "sourcePath": "docs/plants/succulents/aeonium-haworthii-dream-color.md",
+            "text": "Acquired from Carlsons' Greenhouse in its approximately 5-inch pot; now P22 / #4.",
+            "title": "Joined the collection"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "rhs"
+        ],
+        "text": "RHS connects 'Kiwi' with variegated pinwheel 'Dream Color' and lists several trade synonyms. Different labels can therefore describe a similar plant, while this specimen's cultivar remains probable."
+    },
+    "slug": "aeonium-haworthii-dream-color",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew: Aeonium haworthii",
+            "url": "https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A272228-1"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "rhs",
+            "title": "RHS: variegated pinwheel 'Dream Color'",
+            "url": "https://www.rhs.org.uk/plants/346092/aeonium-haworthii-kiwi/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "extension",
+            "title": "Wisconsin Extension: Aeonium",
+            "url": "https://hort.extension.wisc.edu/articles/aeonium/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "pulidonis",
+            "title": "RHS: Echeveria pulidonis",
+            "url": "https://www.rhs.org.uk/plants/6239/echeveria-pulidonis/details"
+        }
+    ]
+}

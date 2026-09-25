@@ -87,7 +87,7 @@ $plantCatalog = @(
         CommonsCategory = 'Gymnocalycium mihanovichii'
         CommonsSearch = 'Gymnocalycium mihanovichii variegata'
         INaturalistName = 'Gymnocalycium mihanovichii'
-        ScopeNote = 'Own-root variegated examples are prioritized; normal wild forms remain as species context. Grafted chlorophyll-free scions are excluded.'
+        ScopeNote = 'Own-root variegated and normal species-reference photographs. Grafted chlorophyll-free forms are not representative of the collection plant.'
     },
     [pscustomobject]@{
         Id = 'Starter-08'
@@ -120,7 +120,7 @@ $plantCatalog = @(
         CommonsCategory = 'Cereus forbesii'
         CommonsSearch = 'Cereus forbesii Ming Thing monstrose'
         INaturalistName = 'Cereus forbesii'
-        ScopeNote = 'The archive mixes normal species references with any reusable Ming Thing images found; the collection plant is the monstrose cultivar.'
+        ScopeNote = 'Reference photographs show normal Cereus forbesii and monstrose forms; the collection plant is the Ming Thing cultivar.'
     },
     [pscustomobject]@{
         Id = 'Starter-11'
@@ -176,7 +176,7 @@ $plantCatalog = @(
         CommonsCategory = 'Mammillaria mammillaris'
         CommonsSearch = 'Mammillaria mammillaris'
         INaturalistName = 'Mammillaria mammillaris'
-        ScopeNote = 'Species-reference photographs; the collection ID is probable and replaces the former M. cf. melanocentra record after review of close photographs.'
+        ScopeNote = 'Species-reference photographs; the collection plant identification remains probable.'
     },
     [pscustomobject]@{
         Id = 'Cactus-04'
@@ -220,7 +220,7 @@ $plantCatalog = @(
         CommonsCategory = 'Austrocylindropuntia subulata'
         CommonsSearch = 'Austrocylindropuntia subulata Eve needle'
         INaturalistName = 'Austrocylindropuntia subulata'
-        ScopeNote = 'Species-reference photographs. The collection plant was received and owner-inspected on 2026-08-28; these licensed images do not document its arrival condition, individual form, or exact identity.'
+        ScopeNote = 'Species-reference photographs of Austrocylindropuntia subulata.'
     },
     [pscustomobject]@{
         Id = 'Cactus-08'
@@ -231,7 +231,7 @@ $plantCatalog = @(
         CommonsCategory = 'Tephrocactus articulatus'
         CommonsSearch = 'Tephrocactus articulatus papyracanthus paper spine'
         INaturalistName = 'Tephrocactus articulatus'
-        ScopeNote = 'Species-reference photographs may show other T. articulatus forms; the ordered plant is the papery-spined horticultural variety.'
+        ScopeNote = 'Species-reference photographs may show other Tephrocactus articulatus forms; the collection plant is the papery-spined horticultural variety.'
     },
     [pscustomobject]@{
         Id = 'Cactus-09'
@@ -244,7 +244,7 @@ $plantCatalog = @(
         INaturalistName = 'Gymnocalycium mihanovichii'
         INaturalistResearchOnly = $false
         INaturalistWildOnly = $false
-        ScopeNote = 'Variegated and normal species references, including cultivated observations; no reusable image is assumed to show the exact Black Widow cultivar.'
+        ScopeNote = 'Variegated and normal species-reference photographs, including cultivated plants; these images do not establish the exact Black Widow cultivar.'
     },
     [pscustomobject]@{
         Id = 'Succulent-01'
@@ -312,7 +312,7 @@ $plantCatalog = @(
         INaturalistName = 'Pleiospilos nelii'
         INaturalistResearchOnly = $false
         INaturalistWildOnly = $false
-        ScopeNote = 'Species references, including cultivated observations, may show the normal green-gray form; the ordered plant is the purple Royal Flush cultivar.'
+        ScopeNote = 'Species-reference photographs, including cultivated plants, may show the normal green-gray form; the collection plant is the purple Royal Flush cultivar.'
     },
     [pscustomobject]@{
         Id = 'Succulent-07'
@@ -323,7 +323,7 @@ $plantCatalog = @(
         CommonsCategory = 'Echeveria'
         CommonsSearch = 'Echeveria Raindrops cultivar'
         INaturalistName = 'Echeveria'
-        ScopeNote = 'Cultivar search results are prioritized; broad Echeveria images are genus context and may not show the Raindrops leaf bumps.'
+        ScopeNote = 'Echeveria reference photographs may include other species or cultivars without the characteristic Raindrops leaf bumps.'
     },
     [pscustomobject]@{
         Id = 'Succulent-08'
@@ -334,7 +334,7 @@ $plantCatalog = @(
         CommonsCategory = 'Sempervivum'
         CommonsSearch = 'Sempervivum Coconut Crystal Colorockz'
         INaturalistName = 'Sempervivum'
-        ScopeNote = 'Genus-reference photographs; no reusable image is assumed to show the exact Colorockz Coconut Crystal cultivar.'
+        ScopeNote = 'Genus-reference photographs showing Sempervivum diversity; these images do not establish the exact Colorockz Coconut Crystal cultivar.'
     },
     [pscustomobject]@{
         Id = 'Rehab-01'
@@ -378,7 +378,7 @@ $plantCatalog = @(
         CommonsCategory = 'Mammillaria bombycina'
         CommonsSearch = 'Mammillaria bombycina'
         INaturalistName = 'Mammillaria bombycina'
-        ScopeNote = 'Species-reference photographs for the archived Rehab-04 record; the plant was removed on 2026-07-24 and its photo-based ID remains provisional.'
+        ScopeNote = 'Species-reference photographs for this historical collection plant; its photo-based identification remains provisional.'
     },
     [pscustomobject]@{
         Id = 'Houseplant-01'
@@ -389,7 +389,7 @@ $plantCatalog = @(
         CommonsCategory = 'Pachira glabra'
         CommonsSearch = 'Pachira glabra'
         INaturalistName = 'Pachira glabra'
-        ScopeNote = 'Species-reference photographs; the retail money-tree name is often confused with P. aquatica, so the original tag remains useful evidence.'
+        ScopeNote = 'Species-reference photographs of Pachira glabra, which is often confused with P. aquatica under the retail name money tree.'
     },
     [pscustomobject]@{
         Id = 'Succulent-09'

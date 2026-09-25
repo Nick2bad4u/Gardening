@@ -1,0 +1,123 @@
+{
+    "anatomy": {
+        "intro": "A representative rosette shows how overlapping leaves, a short stem and offsets build this growth form.",
+        "parts": [
+            {
+                "function": "A thick leaf stores water and presents a broad surface to light.",
+                "label": "Fleshy leaf"
+            },
+            {
+                "function": "New leaves crowd around the growing center.",
+                "label": "Rosette center"
+            },
+            {
+                "function": "The stem supports successive leaves and becomes exposed as lower leaves age.",
+                "label": "Short stem"
+            },
+            {
+                "function": "A small side rosette can enlarge beside the parent.",
+                "label": "Basal offset"
+            }
+        ],
+        "sourceIds": [
+            "echeveria"
+        ]
+    },
+    "comparisonSourceIds": [
+        "echeveria",
+        "sedum"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "echeveria"
+        ],
+        "text": "Echeveria flowers rise on stalks above the foliage; pink, red and yellow tones occur among species and hybrids. Exact flower form could help narrow this identification. No bloom is documented for this component."
+    },
+    "growth": {
+        "note": "These are genus-level possibilities, not a timetable or a confirmed count of connected plants in P30.",
+        "sourceIds": [
+            "echeveria"
+        ],
+        "stages": [
+            {
+                "text": "New leaves fill the center while older leaves sit farther out.",
+                "title": "Compact rosette"
+            },
+            {
+                "text": "Lower-leaf loss can reveal a stem; side rosettes may expand.",
+                "title": "Stem and offsets"
+            },
+            {
+                "text": "A sufficiently mature rosette may send a flower stalk above its leaves.",
+                "title": "Flowering plant"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "echeveria"
+        ],
+        "text": "Echeveria is an American genus extending from southwestern Texas to northwestern Argentina. Its many species and garden hybrids do not share one exact habitat. The pale rosettes here are identified only provisionally to genus, so an attractive resemblance cannot establish a particular mountain range, species or nursery cultivar."
+    },
+    "image": {
+        "alt": "Numbered pale Echeveria schematic: fleshy leaf, rosette center, short stem and basal offset.",
+        "file": "assets/plant-explainers/tiny-planter-echeveria.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration on warm ivory. Clean botanically accurate pen-and-watercolor, muted forest-green, sage and ochre palette, generous whitespace, large central specimen. Exactly four large numbered circular markers 1, 2, 3, 4 with thin clear noncrossing leader lines to the specified features. Numerals legible at 350px display. No title, words, paragraphs, watering icons, calendar, border or logo. Schematic anatomy, not a photograph of an owned plant. Show one pale blue-white powdery Echeveria rosette in three-quarter view, overlapping pointed fleshy leaves, short exposed stem at base and a small offset beside its base. No flowers or roots. Marker1 to one fleshy outer leaf; marker2 to the tightly arranged central rosette; marker3 to the short basal stem; marker4 to the small basal offset rosette. Preserve natural matte waxy appearance, no dew or glitter. Species/cultivar unspecified.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Coppertone-type sedum",
+            "profileSlug": "tiny-planter-coppertone-sedum",
+            "text": "Its narrower leaves and extending stems differ from this powdery, tightly overlapping rosette; both remain provisional foliage matches."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "echeveria"
+        ],
+        "text": "Expect a rosette or group of rosettes rather than a miniature tree. NC State gives a broad genus range reaching about 12 inches tall and wide; that is not a predicted size for this unidentified selection."
+    },
+    "milestones": [
+        {
+            "date": "2026-09-02",
+            "sourcePath": "docs/plants/succulents/tiny-planter-echeveria.md",
+            "text": "Acquired in the Smart Planet Home mixed succulent garden from Home Depot.",
+            "title": "Joined the collection"
+        },
+        {
+            "date": "2026-09-02",
+            "sourcePath": "docs/plants/succulents/tiny-mixed-succulent-planter.md",
+            "text": "The rosettes, copper-toned shoots and broad paddles stayed together in the terra-cotta planter.",
+            "title": "Repotted together"
+        },
+        {
+            "date": "2026-09-16",
+            "sourcePath": "docs/plants/succulents/tiny-planter-echeveria.md",
+            "text": "A close photograph documented the powdery rosettes, patchy coating loss and older leaf damage without assigning a diagnosis.",
+            "title": "Close view recorded"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "echeveria"
+        ],
+        "text": "The genus honors botanical illustrator Atanasio Echeverría y Godoy, a fitting namesake for these sculptural rosettes."
+    },
+    "slug": "tiny-planter-echeveria",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "echeveria",
+            "title": "NC State Extension: Echeveria",
+            "url": "https://plants.ces.ncsu.edu/plants/echeveria/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "sedum",
+            "title": "NParks: Sedum adolphi",
+            "url": "https://www.nparks.gov.sg/florafaunaweb/flora/6/1/6141"
+        }
+    ]
+}

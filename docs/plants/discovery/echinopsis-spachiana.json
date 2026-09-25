@@ -1,0 +1,124 @@
+{
+    "anatomy": {
+        "intro": "The numbered illustration explains the probable golden torch; it is a botanical guide, not a measured portrait.",
+        "parts": [
+            {
+                "function": "The long fold gives the water-storing stem room to expand.",
+                "label": "Rib"
+            },
+            {
+                "function": "A pale cushion on each rib produces a spine cluster.",
+                "label": "Areole"
+            },
+            {
+                "function": "Short sharp spines protect the stem surface.",
+                "label": "Golden spines"
+            },
+            {
+                "function": "A side shoot can become another upright column.",
+                "label": "Basal offset"
+            }
+        ],
+        "sourceIds": [
+            "form",
+            "anatomy"
+        ]
+    },
+    "comparisonSourceIds": [
+        "form",
+        "blue"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "The species opens large white flowers at night. This helps distinguish its flowering behavior from the red-flowered monkey tail nearby, but the record does not establish that this particular plant has bloomed."
+    },
+    "growth": {
+        "note": "The new growth can become sturdier, but existing scars and stretched sections do not reverse.",
+        "sourceIds": [
+            "form"
+        ],
+        "stages": [
+            {
+                "text": "A young stem forms a narrow upright tower.",
+                "title": "Single column"
+            },
+            {
+                "text": "New columns emerge near the base.",
+                "title": "Basal branching"
+            },
+            {
+                "text": "Several stems build a taller, potentially flowering framework.",
+                "title": "Mature shrub"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "Echinopsis spachiana is native to Bolivia and northwestern Argentina, in desert and dry shrubland. Its upright branching framework differs from the trailing monkey tail that shares this pot. The collection identification remains probable, based on green ribbed columns and golden spines; older leaning or stretched growth is a cultivation history, not a species trait."
+    },
+    "image": {
+        "alt": "Botanical anatomy of the probable golden torch, showing rib, areole, golden spines, basal offset with numbered markers.",
+        "file": "assets/plant-explainers/echinopsis-spachiana.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration, warm ivory background, precise pen-and-watercolor, muted forest green/sage/ochre palette, large centered specimen and generous whitespace. Exactly four large legible numbered markers 1, 2, 3, 4, each once, with fine leader lines ending clearly on the named structures. No title, words, border, watering symbols or calendar. No flowers, grafts, or roots. Numbers must remain readable at 350px. Generic anatomical specimen, not measurement evidence. Golden torch Echinopsis spachiana: two upright slender green columns and one small basal offset, straight vertical ribs with pale areoles bearing short golden-yellow needlelike spines. 1 points to a vertical rib; 2 to a pale areole on a rib; 3 to a cluster of short golden spines; 4 to a small basal offset. Not thick barrel cactus; no wool, no flowers.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Variegated blue torch",
+            "profileSlug": "pilosocereus-pachycladus-variegated",
+            "text": "Blue torch has a bluer surface, cream sectors on this specimen, and a different areole appearance; golden torch stays greener with more uniformly golden spines."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "RHS describes a multi-stemmed cactus reaching roughly 2 m, with branches arising at the base. That is a species-scale reference rather than a target for this recovering shared-pot specimen."
+    },
+    "milestones": [
+        {
+            "date": "2023-06-21",
+            "sourcePath": "docs/plants/rehab/echinopsis-spachiana.md",
+            "text": "Acquired from Gerych's Design in the cactus planter now tracked as P19.",
+            "title": "Arrived in the shared planter"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "The species was first named Cereus spachianus in 1839; the Echinopsis combination followed in 1974."
+    },
+    "slug": "echinopsis-spachiana",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "range",
+            "title": "Kew Plants of the World Online: Echinopsis spachiana",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:88507-2"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "form",
+            "title": "RHS: Echinopsis spachiana",
+            "url": "https://www.rhs.org.uk/plants/161594/echinopsis-spachiana/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "blue",
+            "title": "RHS: Pilosocereus pachycladus",
+            "url": "https://www.rhs.org.uk/plants/250738/pilosocereus-pachycladus/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "anatomy",
+            "title": "National Park Service: cactus adaptations",
+            "url": "https://www.nps.gov/tont/learn/nature/cacti.htm"
+        }
+    ]
+}

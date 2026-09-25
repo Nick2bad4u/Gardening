@@ -1,0 +1,141 @@
+{
+    "anatomy": {
+        "intro": "One representative head explains Lithops anatomy; the roots shown do not establish connections between the collection's heads.",
+        "parts": [
+            {
+                "function": "Two thickened leaves form one water-storing head.",
+                "label": "Paired fleshy leaves"
+            },
+            {
+                "function": "Translucent areas admit light to tissue inside the leaves.",
+                "label": "Upper windows"
+            },
+            {
+                "function": "Replacement growth and flowers emerge between the leaves.",
+                "label": "Central fissure"
+            },
+            {
+                "function": "A schematic taproot and finer roots anchor the head and absorb water.",
+                "label": "Root system"
+            }
+        ],
+        "sourceIds": [
+            "optica",
+            "olivacea"
+        ]
+    },
+    "comparisonSourceIds": [
+        "green"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "green"
+        ],
+        "text": "Typical L. lesliei flowers are yellow. A flower recorded for these exact heads could strengthen or challenge the working ID; no bloom is documented here."
+    },
+    "growth": {
+        "note": "Watch the tan and grey groups individually as their repeating leaf cycles unfold; new leaves matter more than the month.",
+        "sourceIds": [
+            "optica",
+            "lithops"
+        ],
+        "stages": [
+            {
+                "text": "A head maintains its paired leaves rather than a stem full of foliage.",
+                "title": "Leaf body"
+            },
+            {
+                "text": "Replacement leaves form within the old pair and draw on its reserves.",
+                "title": "Internal renewal"
+            },
+            {
+                "text": "The old leaves dry into a sheath; renewal may also produce extra heads.",
+                "title": "New body exposed"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "lesliei"
+        ],
+        "text": "If the working identification is right, this plant belongs to a species native from southeastern Botswana into South Africa's Free State. Kew places L. lesliei in dry shrubland and desert environments. That wild range describes the proposed species, not the nursery origin of these two tan-patterned heads."
+    },
+    "image": {
+        "alt": "One tan-patterned Lithops head with numbered paired leaves, upper windows, central fissure and schematic roots.",
+        "file": "assets/plant-explainers/lithops-lesliei.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Use case: scientific-educational. Asset type: a compact square anatomy illustration for a mobile botanical field-guide website. Subject: ONE representative Lithops lesliei-like living-stone head, explicitly a botanical schematic, not a portrait of a particular specimen. Draw exactly TWO thick fused fleshy leaves forming a squat paired body with one central fissure. The broad upper faces have plausible tan islands and brown-olive translucent window channels; matte grey-brown flanks. A subtle cutaway ground line shows the generic single tapering taproot with fine lateral roots, without a pot. Four crisp numbered callouts with thin clean leader lines, one each: 1 points to the fleshy leaf body; 2 points specifically to the patterned upper window surface; 3 points to the central fissure; 4 points to the schematic taproot and side-root system below soil. Numerals 1,2,3,4 only, each once in a small high-contrast ochre/forest-green round badge. Reserve generous whitespace around the central drawing, avoid any overlap of leader lines, make number positions obvious. Illustration style: refined botanical pen-and-watercolor diagram, naturalistic anatomy with simplified explanatory forms, warm ivory background, restrained forest-green, sage, tan and ochre accents, crisp contours with subtle shading. Composition square, central specimen occupies about65% of the frame, exactly4 simple callouts around it with ample margin, no additional insets. No headings, no words, no watermark, no seasons, no watering symbols, no invented flower, no extra heads, no joined root systems, no detailed speculative internal vascular or chlorophyll diagram. The website supplies large accessible labels and function explanations separately. Clearly legible as an educational image at350px width. Output approximately1024x1024.\nFinal refinement: Edit the supplied Lithops anatomy illustration, preserving its square composition, botanical watercolor style, plant shape, roots, colors, and all numbered badges 1 through 4. Correct ONLY the leader endpoint for badge 2: it currently lands on a pale tan opaque island. Move that line's small endpoint dot clearly into one of the DARK OLIVE-BROWN translucent window channels BETWEEN the pale tan islands on the left leaf's upper face. The line must visibly terminate inside a dark olive-brown window area, not a beige/tan island, not an outline. A broad dark channel near the middle-upper portion of the left patterned face is ideal. Keep a thin light outline around the dot so it remains visible. Keep the badge 2 in its existing top-left location and adjust only its leader and endpoint. All other numbers, leaders, plant structures and the ivory background must remain unchanged. No words, title, new insets, new leaves, extra markers, or other changes.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Lithops aucampiae",
+            "profileSlug": null,
+            "text": "Brown coloration and dark channels also occur in this species, so the present photographs do not securely separate it."
+        },
+        {
+            "name": "Probable Lithops salicola",
+            "profileSlug": "lithops-salicola",
+            "text": "The neighboring grey group has more open windows; that collection contrast is helpful but not diagnostic proof."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "lithops"
+        ],
+        "text": "Expect a low head or small cluster rather than a tall stem. Lithops remain small, but visible head count does not reveal how many independently rooted plants are present."
+    },
+    "milestones": [
+        {
+            "date": "2026-09-21",
+            "sourcePath": "docs/plants/succulents/lithops-lesliei.md",
+            "text": "Purchased at Home Depot in Howell, Michigan, from Altman Plants nursery stock.",
+            "title": "Home Depot arrival"
+        },
+        {
+            "date": "2026-09-23",
+            "sourcePath": "docs/plants/succulents/lithops-shared-planter.md",
+            "text": "Moved into the Blush Mauve planter with the other appearance group; all four heads were described as firm.",
+            "title": "Shared repot"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "lesliei"
+        ],
+        "text": "The species first carried the name Mesembryanthemum lesliei in 1912; its accepted combination in Lithops followed in 1922."
+    },
+    "slug": "lithops-lesliei",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "lesliei",
+            "title": "Kew Plants of the World Online: Lithops lesliei",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:362458-1"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "optica",
+            "title": "SANBI PlantZAfrica: Lithops optica and shared Lithops anatomy",
+            "url": "https://pza.sanbi.org/lithops-optica"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "olivacea",
+            "title": "SANBI PlantZAfrica: Lithops olivacea",
+            "url": "https://pza.sanbi.org/lithops-olivacea"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "lithops",
+            "title": "Wisconsin Extension: Living stones",
+            "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "green",
+            "title": "Keith Green: Lithops species descriptions",
+            "url": "https://scrapbooklithops.com/species.html"
+        }
+    ]
+}

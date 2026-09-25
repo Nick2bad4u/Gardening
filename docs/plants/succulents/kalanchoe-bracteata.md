@@ -1,11 +1,11 @@
 # Silver teaspoons
 
 - Inventory: Succulent-03 — probable _Kalanchoe bracteata_
-- Label ID: `#2` — shared succulent planter; formerly `C4-D4`
+- Label ID: `#2`
 - Tracker ID: `P20`
 - Current pot: **square wooden shared planter with plastic liner and owner-drilled approximately one-inch hole through both bottom and liner; outside dimensions unmeasured**
 - Visual description: A branching succulent with thick spoon-shaped leaves muted by a dense silver felt, making the foliage look almost white beside the greener plants in the shared planter.
-- Interesting fact: The silver is created by reflective leaf hairs rather than pigment alone; that felt reduces the intensity of sunlight reaching the living leaf surface beneath it.
+- Interesting fact: Its silver appearance comes from fine leaf hairs plus a waxy coating; the spoon shape and pale surface explain the common name, while the species remains a probable match.
 - Acquired from: Gerych's Greenhouse, as part of the mixed succulent planter
 - Acquired on: 2026-07-27
 - Identification: **probable; _K. hildebrandtii_ remains a lookalike**
@@ -43,15 +43,15 @@ retain scale.
 
 ## Care in the shared planter
 
-The owner clarified on September 20, 2026 that the square wooden P20 / #2 container has a plastic liner and an approximately one-inch drainage hole drilled through both the container bottom and liner. The report does not establish the drilling date, a new setup, or a tare adjustment. Keep the opening unobstructed and assess the shared root zone before watering; the hole does not itself establish dryness.
+The square wooden planter has a plastic liner and an approximately one-inch drainage hole through both the bottom and liner, documented September 20, 2026. Keep the opening clear and let the shared root zone dry before watering.
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                              |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Water               | Let the shared planter dry, then soak and drain. Hairy leaves do not benefit from frequent misting.                                                                                                                                                                                                             |
-| Light response      | Healthy light produces sturdy stems and well-spaced, densely silver leaves. Abrupt hot sun can scorch despite the hairs.                                                                                                                                                                                        |
-| Pruning             | Cut above a leaf node to branch the plant and keep it from shading the echeveria.                                                                                                                                                                                                                               |
-| Feeding             | Light fertilizer during warm active growth only.                                                                                                                                                                                                                                                                |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Water               | Let the shared planter dry, then soak and drain. Hairy leaves do not benefit from frequent misting.                                                                                                                                                                                               |
+| Light response      | Healthy light produces sturdy stems and well-spaced, densely silver leaves. Abrupt hot sun can scorch despite the hairs.                                                                                                                                                                          |
+| Pruning             | Cut above a leaf node to branch the plant and keep it from shading the echeveria.                                                                                                                                                                                                                 |
+| Feeding             | Light fertilizer during warm active growth only.                                                                                                                                                                                                                                                  |
 
 A controlled study of six other _Kalanchoe_ species found better dry mass and
 flowering at 8.6–17.2 mol/m²/day than at 4.3. It supports a bright starting
@@ -70,7 +70,7 @@ treated as an exact requirement.
 
 ## Sources
 
-- Owner clarification on September 20, 2026: plastic liner and approximately one-inch hole drilled through both the P20 / #2 wooden container bottom and liner; exact drilling date and any removed mass were not supplied.
+- Owner observations, September 20, 2026: P20 / #2 wooden planter with a plastic liner and an approximately one-inch drainage hole through both layers.
 
 - [Kew Plants of the World Online: _Kalanchoe bracteata_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A274287-1)
 - [NC State Extension: _Kalanchoe bracteata_](https://plants.ces.ncsu.edu/plants/kalanchoe-bracteata/)

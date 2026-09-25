@@ -1,0 +1,130 @@
+{
+    "anatomy": {
+        "intro": "The numbered illustration explains the Mammillaria cf. rekoi candidate; it is a botanical guide, not a measured portrait.",
+        "parts": [
+            {
+                "function": "A raised green mound forms part of the water-storing stem.",
+                "label": "Tubercle"
+            },
+            {
+                "function": "Spines emerge from the specialized cushion at the tubercle's tip.",
+                "label": "Areole"
+            },
+            {
+                "function": "Numerous fine pale spokes partly screen the green body.",
+                "label": "Radial spines"
+            },
+            {
+                "function": "A stronger amber-brown spine projects outward with a curved tip.",
+                "label": "Hooked central spine"
+            }
+        ],
+        "sourceIds": [
+            "form",
+            "anatomy"
+        ]
+    },
+    "comparisonSourceIds": [
+        "form",
+        "silk"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "Descriptions of M. rekoi give small deep pink to purple-pink flowers with darker midribs. An observed open flower would help compare this plant with other hooked-spine species; flowering is not yet established by the available record."
+    },
+    "growth": {
+        "note": "Hook shape and later flowers are more useful identification evidence than a promised age or size.",
+        "sourceIds": [
+            "form"
+        ],
+        "stages": [
+            {
+                "text": "A small rounded body carries tightly arranged tubercles.",
+                "title": "Bristly globe"
+            },
+            {
+                "text": "The stem can elongate while retaining its dense spine covering.",
+                "title": "Short cylinder"
+            },
+            {
+                "text": "Some forms produce offsets in cultivation, although wild plants may remain solitary.",
+                "title": "Possible clump"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "Kew places Mammillaria rekoi in Morelos, Puebla, and Oaxaca, Mexico, and describes a plant of dry shrubland that can grow on rock. This collection cactus resembles that species, but remains a qualified candidate. Other hooked-spine Mammillaria and nursery hybrids can share much of the same small, bristly outline."
+    },
+    "image": {
+        "alt": "Botanical anatomy of the Mammillaria cf. rekoi candidate, showing tubercle, areole, radial spines, hooked central spine with numbered markers.",
+        "file": "assets/plant-explainers/mammillaria-rekoi.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration, warm ivory background, precise pen-and-watercolor, muted forest green/sage/ochre palette, large centered specimen and generous whitespace. Exactly four large legible numbered markers 1, 2, 3, 4, each once, with fine leader lines ending clearly on the named structures. No title, words, border, watering symbols or calendar. No flowers, grafts, or roots. Numbers must remain readable at 350px. Generic anatomical specimen, not measurement evidence. A Mammillaria rekoi cactus: small solitary rounded green stem with many conical tubercles, dense fine white radial spines and several amber/reddish central spines with clearly hooked tips. 1 points to a green tubercle, 2 to an areole at its tip, 3 to the fine white radial spines, 4 to one clearly hooked amber central spine.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Silken pincushion cactus",
+            "profileSlug": "mammillaria-bombycina",
+            "text": "M. bombycina has a heavier white woolly coat and commonly makes a cluster of cylindrical heads; both can have brown hooked spines."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "The species description gives stems roughly 12–15 cm tall and 5–6 cm across. These figures describe a reference taxon; the collection's unresolved identity means they are a guide rather than a firm limit."
+    },
+    "milestones": [
+        {
+            "date": "2026-08-10",
+            "sourcePath": "docs/plants/cacti/mammillaria-rekoi.md",
+            "text": "Purchased at Carlsons' Greenhouse in a 4-inch individual pot.",
+            "title": "Joined the collection"
+        },
+        {
+            "date": "2026-08-11",
+            "sourcePath": "docs/plants/cacti/mammillaria-rekoi.md",
+            "text": "Close observations recorded a green rounded body, pale radial spines, and tan-to-red central spines with hooked tips.",
+            "title": "Hooked-spine comparison"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "The species began as Neomammillaria rekoi in 1923 and was transferred to Mammillaria in 1925."
+    },
+    "slug": "mammillaria-rekoi",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "range",
+            "title": "Kew Plants of the World Online: Mammillaria rekoi",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:151553-2"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "form",
+            "title": "LLIFLE: Mammillaria rekoi",
+            "url": "https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/13403/Mammillaria_rekoi"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "silk",
+            "title": "RHS: Mammillaria bombycina",
+            "url": "https://www.rhs.org.uk/plants/106175/mammillaria-bombycina/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "anatomy",
+            "title": "National Park Service: cactus adaptations",
+            "url": "https://www.nps.gov/tont/learn/nature/cacti.htm"
+        }
+    ]
+}

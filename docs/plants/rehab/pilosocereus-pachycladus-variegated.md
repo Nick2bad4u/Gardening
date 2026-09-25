@@ -1,7 +1,7 @@
 # Variegated blue torch cactus
 
 - Inventory: Rehab-01 — probable variegated _Pilosocereus pachycladus_
-- Label ID: `#1` — shared rehab cactus planter; formerly `A4-B4`
+- Label ID: `#1`
 - Tracker ID: `P19`
 - Visual description: A tall ribbed column with a powdery blue-green surface, vertical cream streaks, and regular golden areoles; the pale variegation runs with the ribs rather than forming isolated spots.
 - Interesting fact: Two different surface effects create the color: a waxy bloom produces the blue cast, while the cream sectors contain less chlorophyll and can scorch before the greener tissue does.
@@ -47,13 +47,13 @@ visual match.
 
 ## Rehabilitation and grow-light care
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                                       |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Grow-light position | **Photo-matched rear center · Mixed.** September 15 rear wooden tables, facing the window. Compare both tall columns and trailing monkey tail; pale tissue and short neighbors need separate attention. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Current status      | Living green tip and ribs are visible. Old scars, lean, and color boundaries will not disappear; judge the next band of growth.                                                                                                                                                                                          |
-| Water               | During warm active growth, soak and drain after the mixed planter dries. Keep much drier in cool slow conditions.                                                                                                                                                                                                        |
-| Temperature         | A warm-growing Brazilian cactus; protect from frost and cold wet roots.                                                                                                                                                                                                                                                  |
-| Space               | A healthy column eventually needs its own stable, deeper pot rather than permanent competition in a shallow mixed bowl.                                                                                                                                                                                                  |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                                                              |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Photo-matched rear center · Mixed.** September 15, 2026 photo reference: rear wooden tables, facing the window. Compare both tall columns and trailing monkey tail; pale tissue and short neighbors need separate attention. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Current status      | Living green tip and ribs are visible. Old scars, lean, and color boundaries will not disappear; judge the next band of growth.                                                                                                                                                                                                                 |
+| Water               | During warm active growth, soak and drain after the mixed planter dries. Keep much drier in cool slow conditions.                                                                                                                                                                                                                               |
+| Temperature         | A warm-growing Brazilian cactus; protect from frost and cold wet roots.                                                                                                                                                                                                                                                                         |
+| Space               | A healthy column eventually needs its own stable, deeper pot rather than permanent competition in a shallow mixed bowl.                                                                                                                                                                                                                         |
 
 Variegated tissue has less chlorophyll. The green sectors must carry more of the
 photosynthetic load, while the pale sectors can burn sooner. A bright setting

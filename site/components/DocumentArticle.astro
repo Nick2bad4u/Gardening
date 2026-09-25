@@ -24,14 +24,19 @@ const { appearance, introduction, sections } = documentSections(document);
             <h1>{document.title}</h1>
             <div class="document-metadata">
                 <span>{sections.length} Reference Sections</span>
-                <a class="source-link" href={`${repositoryUrl}/blob/main/${document.sourcePath}`}>
+                <a
+                    class="source-link"
+                    href={`${repositoryUrl}/blob/main/${document.sourcePath}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
                     <img
                         src={siteUrl("assets/ui-icons/source.svg")}
                         alt=""
                         width="18"
                         height="18"
                     />
-                    Maintained Source ↗
+                    View on GitHub ↗
                 </a>
             </div>
         </div>

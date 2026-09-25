@@ -1,0 +1,126 @@
+{
+    "anatomy": {
+        "intro": "The white dots are areoles on a green stem, not attached decorations.",
+        "parts": [
+            {
+                "function": "The broad green ridge forms part of the photosynthetic stem.",
+                "label": "Rounded rib"
+            },
+            {
+                "function": "The conspicuous woolly cushion carries the tiny spines.",
+                "label": "White areole"
+            },
+            {
+                "function": "Short dark-tipped spines can be easy to overlook among the white wool.",
+                "label": "Tiny spine"
+            },
+            {
+                "function": "A small side shoot repeats the parent’s ribbed body as the plant forms a clump.",
+                "label": "Basal offset"
+            }
+        ],
+        "sourceIds": [
+            "nparks",
+            "llifle",
+            "cactus-structure"
+        ]
+    },
+    "comparisonSourceIds": [
+        "nparks"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "llifle"
+        ],
+        "text": "Large white funnels are borne on tubes around 15–22 cm long. The fragrant display is brief and can extend through the night. Watching an enlarging bud is more useful than expecting a flower on a fixed date."
+    },
+    "growth": {
+        "note": "A photographed offset or bud is a useful milestone; neither is guaranteed by a particular birthday.",
+        "sourceIds": [
+            "llifle"
+        ],
+        "stages": [
+            {
+                "text": "The compact plant shows rounded ribs and scattered white areoles.",
+                "title": "Single globe"
+            },
+            {
+                "text": "Basal shoots may gradually build a cluster around the original body.",
+                "title": "Widening group"
+            },
+            {
+                "text": "Long flower tubes can rise well beyond the small green body.",
+                "title": "Flowering plant"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew",
+            "nparks"
+        ],
+        "text": "This familiar horticultural name carries a taxonomic wrinkle: NParks describes Echinopsis subdenudata from Bolivia and Paraguay, while Kew includes it within Echinopsis ancistrophora and gives that accepted species a northwestern Argentine range. These are different treatments, not evidence of this nursery plant’s exact origin. The collection retains its recognizable labeled name."
+    },
+    "image": {
+        "alt": "Domino cactus with numbered rounded rib, white woolly areole, tiny dark spine and basal offset.",
+        "file": "assets/plant-explainers/echinopsis-subdenudata.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024x1024 scientific botanical educational illustration. Warm ivory background; muted forest-green, sage and ochre with natural species colors; clean accurate pen-and-watercolor style, large central specimen, ample whitespace. Exactly four large circled numbered markers 1-4 with clear thin leaders pointing to the features specified below in order. Numbers legible at 350px display width. No words, title, paragraphs, watering or calendar icons. No pot, roots, flowers or grafts unless explicitly requested. Echinopsis subdenudata, domino cactus, a squat glossy green globular body with ten broad rounded ribs, well-spaced small round white woolly areoles and a very few tiny dark spines. Include one small basal offset attached at the base. 1 points to a green rib; 2 to a conspicuous white woolly areole; 3 to one tiny dark spine emerging from an areole, with a small unnumbered magnified inset only if needed; 4 to the small attached basal offset. No flower.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Astrophytum asterias",
+            "profileSlug": null,
+            "text": "Both can look like nearly spineless dotted globes. NParks distinguishes the domino cactus’s more sharply separated ribs from the broad, flatter ribs of A. asterias."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "llifle",
+            "kew"
+        ],
+        "text": "The horticultural subdenudata form stays compact: LLIFLE describes individual bodies around 7–12 cm across, with clumps becoming wider through offsets. A collection plant need not reach the dimensions of every form included under ancistrophora."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-23",
+            "sourcePath": "docs/plants/starter/echinopsis-subdenudata.md",
+            "text": "Joined the collection from Costa Farms.",
+            "title": "Acquired"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "Subdenudata remains useful on nursery labels even though Kew treats it as a synonym. Keeping both names visible makes the plant easier to recognize across horticultural and taxonomic references."
+    },
+    "slug": "echinopsis-subdenudata",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew — Echinopsis ancistrophora and synonyms",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:132593-1"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "nparks",
+            "title": "NParks — Echinopsis subdenudata",
+            "url": "https://www.nparks.gov.sg/florafaunaweb/flora/5/9/5908"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "cactus-structure",
+            "title": "University of Illinois — cactus areoles",
+            "url": "https://www.life.illinois.edu/help/digitalflowers/Cactaceae/5.htm"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "llifle",
+            "title": "LLIFLE — Echinopsis subdenudata",
+            "url": "https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/17377/Echinopsis_subdenudata"
+        }
+    ]
+}

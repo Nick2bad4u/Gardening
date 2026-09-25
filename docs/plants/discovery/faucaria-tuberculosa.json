@@ -1,0 +1,126 @@
+{
+    "anatomy": {
+        "intro": "Paired fleshy leaves carry two different textures: marginal teeth and raised face tubercles.",
+        "parts": [
+            {
+                "function": "The compact triangular to rhomboid blade stores water.",
+                "label": "Thick leaf blade"
+            },
+            {
+                "function": "Short pale projections line the leaf edge; they are not cactus areoles.",
+                "label": "Marginal teeth"
+            },
+            {
+                "function": "Blunt whitish bumps on the upper surface support the probable identification.",
+                "label": "Raised tubercles"
+            },
+            {
+                "function": "New paired leaves expand from the short shoot's center.",
+                "label": "Central leaf pair"
+            }
+        ],
+        "sourceIds": [
+            "sanbi",
+            "comparison"
+        ]
+    },
+    "comparisonSourceIds": [
+        "sanbi",
+        "comparison"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "sanbi",
+            "comparison"
+        ],
+        "text": "SANBI's taxonomic description gives yellow flowers for F. tuberculosa. A yellow flower alone would not distinguish it from F. tigrina, which also blooms yellow; leaf texture and other structures remain important."
+    },
+    "growth": {
+        "note": "The illustration represents the probable species; future growth and flowering can add identification evidence.",
+        "sourceIds": [
+            "sanbi",
+            "comparison"
+        ],
+        "stages": [
+            {
+                "text": "The central shoot develops another opposed pair.",
+                "title": "Add paired leaves"
+            },
+            {
+                "text": "Several thick leaves make the low, jaw-like rosette.",
+                "title": "Form a compact crown"
+            },
+            {
+                "text": "Additional shoots can broaden a mature plant beyond a single crown.",
+                "title": "Develop a clump"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "Kew places Faucaria tuberculosa in South Africa's Cape Provinces, specifically the Fort Beaufort area, and describes a subtropical succulent subshrub. This collection plant is a probable match based on its raised leaf bumps. Its seller's F. tigrina label is retained as provenance, so detailed habitat claims for that different species should not be transferred automatically."
+    },
+    "image": {
+        "alt": "Paired triangular leaves with numbered blade, marginal teeth, raised tubercles and growing center.",
+        "file": "assets/plant-explainers/faucaria-tuberculosa.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Scientific educational botanical illustration, square 1024x1024, warm ivory background, accurate clean pen-and-watercolor, forest-green/sage/ochre muted palette with natural species colors. Large central plant, generous whitespace. Exactly four large numbered markers 1–4 with thin clear leaders to the specified features, readable at 350px. No other text, titles, paragraphs, calendar, watering icons, roots or pots. Generic botanical anatomy, not a record of an individual collection specimen. Faucaria tuberculosa: low compact clump with 6 thick green triangular-rhomboid leaves in opposing pairs, stout short white teeth along each margin, conspicuous scattered raised blunt whitish tubercles on upper leaf faces. Three-quarter view shows center and leaf texture. Markers: 1 thick triangular leaf blade, 2 short white marginal teeth, 3 raised white tubercles on face of leaf, 4 small central emerging opposite leaf pair. No flowers, no cactus spines, no long threadlike tiger-jaws bristles.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Faucaria tigrina",
+            "profileSlug": null,
+            "text": "Tigrina has conspicuous soft, thread-tipped marginal teeth and white spotting. Tuberculosa's raised blunt bumps on the leaf faces and shorter teeth support the current probable identification."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "sanbi"
+        ],
+        "text": "The published description allows solitary plants or clumps, with 4–8 leaves per rosette and individual blades about 15–20 mm long and wide. Those are species reference dimensions, not measurements of P29."
+    },
+    "milestones": [
+        {
+            "date": "2026-09-02",
+            "sourcePath": "docs/plants/succulents/faucaria-tuberculosa.md",
+            "text": "Purchased from Home Depot with an Altman Plants 'Tiger Jaws' / F. tigrina label; assigned P29 / #5.",
+            "title": "Joined the collection"
+        },
+        {
+            "date": "2026-09-03",
+            "sourcePath": "docs/plants/succulents/faucaria-tuberculosa.md",
+            "text": "Repot logged at 12:23 a.m. EDT after the September 2 care session, into setup 2 described as '4.25 round, 4.25 deep'.",
+            "title": "Repot entered"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "Kew also lists Faucaria felina subsp. tuberculosa as a synonym. Finding that name in a reference does not necessarily indicate a different plant; taxonomic treatments have varied."
+    },
+    "slug": "faucaria-tuberculosa",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "sanbi",
+            "title": "SANBI: Faucaria tuberculosa morphology",
+            "url": "https://biodiversityadvisor.sanbi.org/search/detail/9555e14f-4916-4afa-9d2a-7c8eb0e09de9"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew: Faucaria tuberculosa",
+            "url": "https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A361856-1"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "comparison",
+            "title": "SANBI: Faucaria tigrina",
+            "url": "https://pza.sanbi.org/faucaria-tigrina"
+        }
+    ]
+}

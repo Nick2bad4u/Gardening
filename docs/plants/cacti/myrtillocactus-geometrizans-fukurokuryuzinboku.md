@@ -31,18 +31,17 @@ _Myrtillocactus_ combination dates to 1897. The cultivar's breeder and release
 year are not reliably documented.
 
 The ordinary species produces sweet edible berries known as garambullos and
-sold in Mexican markets. That is an interesting species fact, not a reason to
-eat fruit or tissue from an indoor collection plant with unknown treatment
-history.
+sold in Mexican markets. The treatment history of this nursery plant is
+unknown, so its fruit or tissue should not be used as food.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                                                                      |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R1C6 · Gentler.** September 15 six-column/four-row front grid, facing the window. Front-right corner. Compare its actual tip exposure before calling this gentler; small pot size does not prove juvenile age. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Water               | Soak and drain, then let the small 3-inch pot dry fully. Keep water from sitting in deep folds.                                                                                                                                                                                                                                                         |
-| Pot and mix         | The small pot dries quickly but should not be upsized until roots justify it; use a stable draining mix.                                                                                                                                                                                                                                                |
-| Handling            | Hold the pot, not the lobes; rubbing removes the protective wax and leaves permanent marks.                                                                                                                                                                                                                                                             |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                                                |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Photo-matched R1C6 · Gentler.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Front-right corner. Light at its growing tip may differ from light at the tabletop; acclimate the exposed lobes gradually. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Soak and drain, then let the small 3-inch pot dry fully. Keep water from sitting in deep folds.                                                                                                                                                                                                                                   |
+| Pot and mix         | The small pot dries quickly but should not be upsized until roots justify it; use a stable draining mix.                                                                                                                                                                                                                          |
+| Handling            | Hold the pot, not the lobes; rubbing removes the protective wax and leaves permanent marks.                                                                                                                                                                                                                                       |
 
 ## Rotation, propagation, and watch points
 

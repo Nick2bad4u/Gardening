@@ -13,7 +13,7 @@ const [manifest, profiles] = await Promise.all([getCollectionManifest(), getProf
     <header class="page-heading">
         <p class="eyebrow">The growing collection</p>
         <h1>Collection Photos</h1>
-        <p class="lede">Owned plants, dated evidence, and the changes between visits.</p>
+        <p class="lede">See the collection grow through dated photographs and nursery records.</p>
         <p>{manifest.copyright_notice}</p>
         <a class="button-secondary" href={manifest.gyazo_collection.url}>
             Full Collection Overview ↗
@@ -76,7 +76,15 @@ const [manifest, profiles] = await Promise.all([getCollectionManifest(), getProf
                             />
                         </a>
                     ) : (
-                        <p>Collection photo pending.</p>
+                        <p>
+                            {profile.hasInlinePhotos ? (
+                                <a href={`${profileUrl(profile.slug)}#${profile.slug}-notes`}>
+                                    View photographs in the collection notes →
+                                </a>
+                            ) : (
+                                "No collection photos yet."
+                            )}
+                        </p>
                     )}
                     {profile.ownedPhotos[0] && (
                         <p>

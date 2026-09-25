@@ -1,0 +1,125 @@
+{
+    "anatomy": {
+        "intro": "The ribs and the grass-blade-like spines are separate structures with very different shapes.",
+        "parts": [
+            {
+                "function": "Thin, strongly folded ribs divide the round green body.",
+                "label": "Wavy rib"
+            },
+            {
+                "function": "A small pale growing cushion occurs at intervals along a rib.",
+                "label": "Areole"
+            },
+            {
+                "function": "The long upper spine is broad and blade-like rather than a leaf.",
+                "label": "Flattened central spine"
+            },
+            {
+                "function": "Much shorter pale spines spread around the areole beneath the prominent central spine.",
+                "label": "Short radial spines"
+            }
+        ],
+        "sourceIds": [
+            "llifle",
+            "cactus-structure"
+        ]
+    },
+    "comparisonSourceIds": [
+        "llifle",
+        "saglionis-comparison"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "llifle"
+        ],
+        "text": "The usual species description gives small yellowish-white flowers with a reddish-brown throat. Pink- or violet-striped plants sold under this name can involve other forms or species, making a clear future flower photograph especially useful."
+    },
+    "growth": {
+        "note": "Spine and flower characters should be considered together; a species label is stronger evidence than a common name, but it is still not proof.",
+        "sourceIds": [
+            "llifle"
+        ],
+        "stages": [
+            {
+                "text": "A young plant develops crowded ribs and its first contrasting spine groups.",
+                "title": "Compact globe"
+            },
+            {
+                "text": "Long flattened upper spines become conspicuous above the wavy body.",
+                "title": "Blade-spined adult"
+            },
+            {
+                "text": "The body can become somewhat taller and develop corky tissue near its base.",
+                "title": "Older plant"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew",
+            "llifle"
+        ],
+        "text": "Kew records this species from Mexico in desert and dry shrubland. The profile’s nursery label is retained, but Stenocactus identification is not settled by a wavy outline alone: specialist descriptions emphasize variation and uncertain boundaries among closely related forms. Its unusual combination of narrow ribs and broad central spines is more useful than a single rib count."
+    },
+    "image": {
+        "alt": "Grass blade cactus with numbered narrow wavy rib, areole, long flattened central spine and shorter radial spines.",
+        "file": "assets/plant-explainers/stenocactus-phyllacanthus.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024x1024 scientific botanical educational illustration. Warm ivory background; muted forest-green, sage and ochre with natural species colors; clean accurate pen-and-watercolor style, large central specimen, ample whitespace. Exactly four large circled numbered markers 1-4 with clear thin leaders pointing to the features specified below in order. Numbers legible at 350px display width. No words, title, paragraphs, watering or calendar icons. No pot, roots, flowers or grafts unless explicitly requested. Stenocactus phyllacanthus grass blade cactus: solitary green round slightly flattened cactus with many narrow deeply sinuous accordion-like ribs and sparse areoles. Show distinctive long flattened papery straw-to-brown central spines projecting upward, with shorter pale radial spines. 1 points to one narrow wavy rib; 2 to a small woolly areole; 3 to one long flattened central spine; 4 to the shorter radial spines at that areole. No flowers, no offsets. Slightly elevated viewpoint clearly shows crowded wavy ribs.\nFinal refinement: Edit this exact square Stenocactus educational illustration. Preserve the cactus, wavy ribs, all spines, numbered circles 1,2,3,4, watercolor appearance and ivory background. Correct ONLY callout 4 at the lower right. Its endpoint currently lands on green stem immediately beyond the tip of a short thin tan radial spine. Move that small endpoint dot leftwards so it lands visibly ON THE MIDDLE OF THAT SHORT TAN RADIAL SPINE radiating down-right from the cream areole near image coordinates 688,643. The spine extends toward roughly 775,682; place the dot directly on its tan shaft near 738,662, never on green skin or empty space. Keep the circle marked 4 at its present position and redraw its thin leader to that endpoint. The shaft of this short spine should visibly continue on both sides of the dot so the targeted structure is unambiguous. Keep a thin white outline around the endpoint. No other changes; no words, extra numbers, extra circles, new insets or flowers. Output square.\nFinal clarity refinement: Edit only the lower-right callout area of this exact Stenocactus illustration. Keep the plant body, ivory background, numbers1,2,3 and their leaders identical. Callout4's circular endpoint currently sits just ABOVE the thin tan radial spine. Correct this unambiguously by moving its endpoint DOWN onto the SHORT TAN RADIAL SPINE emerging down-right from the adjacent cream areole. In addition, slightly adjust that single short spine's angle/width so its tan shaft runs visibly through and behind the endpoint dot, with tan spine visible on BOTH SIDES of the dot. This is a schematic, so a modestly wider shaft on that ONE small radial spine is acceptable for clarity. The endpoint must overlap TAN SPINE, never green stem. Keep circle4 in its current position and extend its thin leader to the corrected endpoint. Preserve the other short spines, all ribs and every other structure. No words, no extra numbers, no new flowers or inset; square format.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Giant chin cactus",
+            "profileSlug": "gymnocalycium-saglionis",
+            "text": "Gymnocalycium saglionis has broad, rounded tubercles and stout curved spines. Stenocactus has many thin wavy ribs with conspicuously flattened upper spines; both are ribbed globes, but their surface architecture differs."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "llifle"
+        ],
+        "text": "Specialist descriptions give bodies around 3–15 cm tall and 4–10 cm wide, usually solitary. Rib counts vary considerably; a compact pot specimen is not expected to match every published extreme."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-23",
+            "sourcePath": "docs/plants/starter/stenocactus-phyllacanthus.md",
+            "text": "Joined the collection from Costa Farms.",
+            "title": "Acquired"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "The accepted Stenocactus combination was published in 1929. Kew’s synonym list preserves older Echinocactus and Echinofossulocactus names, which explains why the same labeled plant can appear under unfamiliar headings in older books."
+    },
+    "slug": "stenocactus-phyllacanthus",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew — Stenocactus phyllacanthus",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:244573-2"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "llifle",
+            "title": "LLIFLE — Stenocactus phyllacanthus",
+            "url": "https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/906/Stenocactus_phyllacanthus"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "cactus-structure",
+            "title": "University of Illinois — cactus areoles",
+            "url": "https://www.life.illinois.edu/help/digitalflowers/Cactaceae/5.htm"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "saglionis-comparison",
+            "title": "RHS — Gymnocalycium saglionis",
+            "url": "https://www.rhs.org.uk/plants/8153/gymnocalycium-saglionis/details"
+        }
+    ]
+}
