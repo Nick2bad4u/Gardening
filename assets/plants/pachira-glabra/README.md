@@ -4,7 +4,7 @@ _Pachira glabra_ - Houseplant-01
 
 Collection label ID: `#3`.
 
-Species-reference photographs; the retail money-tree name is often confused with P. aquatica, so the original tag remains useful evidence.
+Species-reference photographs of Pachira glabra, which is often confused with P. aquatica under the retail name money tree.
 
 Collection research: [open the plant profile](../../../docs/plants/houseplants/pachira-glabra.md).
 

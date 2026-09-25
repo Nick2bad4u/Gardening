@@ -4,11 +4,11 @@
 - Label ID: `#3`
 - Tracker ID: `P21`
 - Visual description: A young tropical tree with a smooth green trunk and long leaf stalks ending in glossy, hand-shaped fans of narrow leaflets; its open canopy reads very differently from the compact succulents nearby.
-- Interesting fact: “Money tree” is a trade name shared by more than one cultivated _Pachira_. Because this retail tag says only _Pachira_, the working _P. glabra_ identification remains evidence-based rather than absolute.
+- Interesting fact: Each hand-shaped fan is one compound leaf made of several leaflets, all meeting at the end of a single long stalk. Counting the separate blades as whole leaves would miss this tree's distinctive structure; it does not, however, prove the working species identification.
 - Identification: **retail tag confirms genus _Pachira_; _P. glabra_ is a supplied working candidate, not a proven species identification**
 - Acquired from: Home Depot, Howell, Michigan
 - Acquired on: 2026-07-29
-- Current pot: transplanted from 4 inches into a 6-inch Amazon Basics pot; Baselines records retained nursery root-ball soil with Back to the Roots cactus/succulent soil filling the remaining space
+- Current pot: transplanted from 4 inches into a 6-inch Amazon Basics pot; retained nursery root-ball soil with Back to the Roots cactus/succulent soil filling the remaining space
 - Photo archive: [licensed species-reference images](../../../assets/plants/pachira-glabra/)
 
 ## Names and identity
@@ -34,11 +34,7 @@ and apply balanced fertilizer once every two months. The black
 [reverse](../../../assets/nursery-labels/pachira-livetrends-back-clean-crop.png)
 identifies LiveTrends as the supplier brand.
 
-Those directions are seller guidance, not measurements from this pot. The
-collection's actual pot-weight trend, room conditions, root-ball moisture, and
-low-dose MSU schedule remain the operating evidence. The saved files are
-clean, AI-assisted presentation crops made from the photographs supplied in
-chat on 2026-08-26; the untouched camera exports are not stored in this repo.
+The tag gives general seller guidance. For this pot, combine root-ball moisture, weight trends, and room conditions with the collection's low-dose MSU schedule. The archived images are AI-assisted presentation crops from photographs supplied August 26, 2026; untouched camera exports are not included.
 
 ## Origin, form, and publication
 
@@ -49,14 +45,14 @@ dry-down schedule.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                                                                                                                                                |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Light               | Useful bright indirect light. The confirmed north-facing windowsill location is outside the table arrangement; actual daylight and any lamp spill at its leaves remain unmeasured, so adequacy is not established.                                                                                                                                                                                                                |
-| Grow-light position | **Confirmed north-facing windowsill, off the tables · Gentler.** The owner confirmed the move complete on September 16 after planning it on September 15. The exact move time and cause of the downward-pointing leaves remain unconfirmed. The previous back-left table slot stays vacant; Kiwi stays in place. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Shade cloth         | Leave it off while foliage remains normally colored; add it if the window-facing leaves bleach or develop crisp tan patches.                                                                                                                                                                                                                                                                                                      |
-| Water               | Water when the upper portion of the mix has dried, then drain. Do not wait for the entire 6-inch root ball to become cactus-dry.                                                                                                                                                                                                                                                                                                  |
-| Pot                 | Keep the current 6-inch pot until roots justify the purchased 8-inch pot; moving up again immediately would retain unnecessary water.                                                                                                                                                                                                                                                                                             |
-| Temperature         | Keep warm and away from cold window glass or drafts; this tropical tree is less cold-tolerant than the cacti.                                                                                                                                                                                                                                                                                                                     |
+| Topic               | Practical approach                                                                                                                                                                                                 |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Light               | Useful bright indirect light. The confirmed north-facing windowsill location is outside the table arrangement; actual daylight and any lamp spill at its leaves remain unmeasured, so adequacy is not established. |
+| Grow-light position | **North-facing windowsill, off the tables · Gentler**, recorded September 16. Daylight and lamp spill at leaf height are unmeasured. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Shade cloth         | Leave it off while foliage remains normally colored; add it if the window-facing leaves bleach or develop crisp tan patches.                                                                                       |
+| Water               | Water when the upper portion of the mix has dried, then drain. Do not wait for the entire 6-inch root ball to become cactus-dry.                                                                                   |
+| Pot                 | Keep the current 6-inch pot until roots justify the purchased 8-inch pot; moving up again immediately would retain unnecessary water.                                                                              |
+| Temperature         | Keep warm and away from cold window glass or drafts; this tropical tree is less cold-tolerant than the cacti.                                                                                                      |
 
 The current 6-inch [Amazon Basics pot](https://www.amazon.com/dp/B0F4QBMJMN?th=1)
 is lightweight polypropylene with drainage. The stored
@@ -64,11 +60,11 @@ is lightweight polypropylene with drainage. The stored
 diameter and 6.7 inches high with its saucer; reserve it for a later root-led
 repot rather than using calendar age alone.
 
-The owner reported downward-pointing leaves and planned a north-windowsill move on September 15, then confirmed on September 16 that the move was complete. The exact move time was not supplied. Excess light is a suspected cause, not a diagnosis from leaf angle. [NC State's _P. aquatica_ guidance](https://plants.ces.ncsu.edu/plants/pachira-aquatica/) supports indirect light as a comparison for this genus-tagged specimen. [University of Maryland Extension](https://extension.umd.edu/resource/watering-indoor-plants) notes that both under- and overwatering can cause wilting. This move does not establish a need to water, repot or reset the pot's weight references. Sill size and clearance are unmeasured; fully support the pot and saucer, away from cold glass and drafts.
+Downward-pointing leaves were reported September 15; the north-windowsill placement was confirmed September 16, with the exact move time unrecorded. Excess light is a possible cause, but leaf angle alone is inconclusive. [NC State's _P. aquatica_ guidance](https://plants.ces.ncsu.edu/plants/pachira-aquatica/) supports indirect light as a comparison for this genus-tagged plant. [University of Maryland Extension](https://extension.umd.edu/resource/watering-indoor-plants) notes that both under- and overwatering can cause wilting. Check moisture before watering and support the entire pot and saucer clear of cold glass and drafts; sill dimensions remain unmeasured.
 
 ## Recorded pot changes
 
-On September 16, 2026, the owner added bone-dry top dressing and measured **1,638 g before and 1,746 g after**, a **108 g** addition. On September 17, the owner authorized adding that offset to the 30 earlier P21 workbook weights, preserving the original readings in cell notes and a backup. The pot remains setup 1; enter future weights directly from the scale without another offset.
+Bone-dry top dressing added September 16, 2026 increased the pot's weight from **1,638 g to 1,746 g**, a **108 g** addition. The 30 earlier P21 weights include that offset for comparison with the dressed pot; their original readings remain preserved. This is still setup 1. Record future weights directly from the scale.
 
 ## Rotation, propagation, and watch points
 
@@ -83,6 +79,7 @@ On September 16, 2026, the owner added bone-dry top dressing and measured **1,63
 ## Sources
 
 - [Kew Plants of the World Online: _Pachira glabra_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:562664-1)
+- [Kew's reproduced flora descriptions](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:562664-1/general-information): compound leaves, leaflets, and long petioles of the working species candidate.
 - [International Plant Names Index record](https://www.ipni.org/n/562664-1)
 - [GBIF Backbone Taxonomy record](https://www.gbif.org/species/4073899)
 - [Amazon Basics 6-inch pot](https://www.amazon.com/dp/B0F4QBMJMN?th=1)

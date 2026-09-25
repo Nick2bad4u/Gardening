@@ -5,7 +5,7 @@
 - Tracker ID: `P15`
 - Visual description: A woolly green globe built from large rounded tubercles, each carrying a star of pale radial spines and a few stronger dark central spines; a red club-shaped fruit stands out near the crown.
 - Interesting fact: The conspicuous red projection on this plant is a fruit rather than a flower—evidence of an earlier bloom that can remain visible long after the petals are gone.
-- Identification: **probable from close photographs; formerly recorded as _Mammillaria_ cf. _melanocentra_**
+- Identification: **probable from close photographs; no species label supplied**
 - Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan
 - Acquired on: 2026-08-10
 - Current pot: 4-inch individual pot
@@ -20,41 +20,32 @@
 | Permanent-label form   | PROB. _M. mammillaris_           |
 | Former identification  | _Mammillaria_ cf. _melanocentra_ |
 
-Owner-supplied 2026-08-11 close photographs reviewed during identification—but
-not retained in this repository—showed a shiny green body with large rounded
-tubercles, sparse dark-tipped central spines, tiny cream flowers or buds, and
-a red club-shaped fruit. That combination is a much better match for
-_Mammillaria mammillaris_ than the previous _M. melanocentra_ working ID.
-The identification remains probable because it is photo-based and the plant
-did not arrive with a species label.
+Close photographs reviewed on August 11, 2026 showed a shiny green body with
+large rounded tubercles, sparse dark-tipped central spines, tiny cream flowers
+or buds, and a red club-shaped fruit. These features favor _Mammillaria
+mammillaris_ over the earlier possibilities _M._ cf. _melanocentra_ and
+_M. mystax_. The identification remains probable: the plant had no species
+label, and those diagnostic close-ups are no longer available.
 
-## Identification history
-
-- The first collection record used _Mammillaria_ cf. _melanocentra_, with
-  _M. mystax_ as an alternative.
-- Close photographs reviewed on 2026-08-11 showed flower, fruit, tubercle, and
-  spine characters that conflict with that earlier match. Those diagnostic
-  files are not retained in the current collection-photo archive.
-- Future flower close-ups and a count of radial and central spines can further
-  test the current identification. Do not treat a licensed reference photo as
-  proof of the collection plant's identity.
+An open flower and counts of radial and central spines would help refine the
+identification.
 
 ## Origin, form, and publication
 
-GBIF accepts _Mammillaria mammillaris_ (L.) H.Karst., published in its current
-combination in 1882. The species occurs along the Venezuelan coast and on
+Kew accepts _Mammillaria mammillaris_ (L.) H.Karst., published in its current
+combination in 1886. The species occurs along the Venezuelan coast and on
 nearby Caribbean islands. LLIFLE describes shiny globose to short-cylindrical
 stems, ovoid to conical tubercles, small cream-to-greenish flowers, and scarlet
 club-shaped fruit.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                                                   |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Grow-light position | **Photo-matched R4C2 · Bright.** September 15 six-column/four-row front grid, facing the window. Back row of small pots. Preserve the probable Mammillaria identification and check shadow from Kiwi or #1. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Water               | Soak, drain, and allow the 4-inch pot to dry completely; keep the crown dry when the room is cool.                                                                                                                                                                                                                                   |
-| Pot and mix         | Keep the current pot until the body or roots crowd it; do not bury the lower tubercles.                                                                                                                                                                                                                                              |
-| Fruit               | Leave attached fruit until it loosens naturally unless rot or pests appear around it.                                                                                                                                                                                                                                                |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Photo-matched R4C2 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Back row of small pots. Check for shade from the neighboring Kiwi or shared cactus planter. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Soak, drain, and allow the 4-inch pot to dry completely; keep the crown dry when the room is cool.                                                                                                                                                                                                |
+| Pot and mix         | Keep the current pot until the body or roots crowd it; do not bury the lower tubercles.                                                                                                                                                                                                           |
+| Fruit               | Leave attached fruit until it loosens naturally unless rot or pests appear around it.                                                                                                                                                                                                             |
 
 ## Rotation, propagation, and watch points
 
@@ -67,5 +58,6 @@ club-shaped fruit.
 
 ## Sources
 
+- [Kew Plants of the World Online: _Mammillaria mammillaris_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:134797-1)
 - [GBIF Backbone Taxonomy: _Mammillaria mammillaris_](https://www.gbif.org/species/5626105)
 - [LLIFLE: _Mammillaria mammillaris_ description and distribution](https://llifle.com/Encyclopedia/CACTI/Family/Cactaceae/7413/Mammillaria_mammillaris)

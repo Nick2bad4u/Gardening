@@ -1,13 +1,14 @@
 # Black Widow chin cactus
 
 - Inventory: Cactus-09 — _Gymnocalycium mihanovichii_ f. variegata 'Black Widow'
-- Label ID: `G1` — owner-corrected after arrival
+- Label ID: `G1`
 - Tracker ID: `P27`
 - Visual description: A low, dark ribbed globe mottled in near-black purple, wine red, and patches of green, with pale areoles punctuating the sharp color changes.
 - Interesting fact: This dramatic dark plant belongs to the same species as the neon grafted “moon cacti” sold in stores; the difference is a horticultural color form, not a different cactus species.
-- Identification: **seller-labeled cultivar; individual top and side condition views archived, but identity is not independently proven**
-- Ordered from: Mountain Crest Gardens on 2026-08-25
-- Order status: **Received 2026-08-28; owner inspected roots and plant by hand**
+- Identification: **seller-labeled cultivar; identity not independently confirmed**
+- Acquired from: Mountain Crest Gardens
+- Acquired on: 2026-08-28
+- Status: Active
 - Received container: **2-inch nursery pot; shape not reliably documented**
 - Current pot: **4-inch round pot (4 × 4 × 3.7 in); repotted 2026-08-28**
 - Photo archive: [licensed cultivar and species references](../../../assets/plants/gymnocalycium-mihanovichii-black-widow/)
@@ -22,38 +23,30 @@
 | Cultivar range      | None; this is a horticultural selection, not a wild taxon. |
 
 The dark purple-to-nearly-black color and irregular green sectors are the
-cultivar's defining visual traits. Final notes must distinguish normal
-variegation from shipping or acclimation damage.
+cultivar's defining visual traits. Stable color patches remain firm; new
+bleaching, soft areas, or hard tan scars deserve closer inspection.
 
-## Order evidence and status
+## Collection history
 
-The 2026-08-25 order lists one 'Black Widow', and the owner documented receipt
-on 2026-08-28. It arrived rooted in a 2-inch nursery pot; the received
-container's shape is not reliably documented. The owner reports removing about
-95% of the nursery soil during repotting. The owner-entered live tracker pot
-size is 4 inches. The current pot is the same 4 × 4 × 3.7-inch round model used
-for all six plants in this shipment. The corrected pot
-label is `G1`, and the permanent tracker ID is `P27`.
+Ordered from Mountain Crest Gardens on August 25, 2026, this plant arrived
+rooted on August 28 in a 2-inch nursery pot; its original pot shape was not
+recorded. It was inspected and repotted that day into a **4 × 4 × 3.7-inch
+round pot**, with approximately 95% of the nursery soil removed according to
+the owner. The substrate was slightly moist at inspection.
 
-Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
-slightly moist substrate. The live 2026-08-29 Measurement record is **388 g**
-by Scale and **0.5 in high × 1.2 in wide** by Ruler. These are measured records,
-not watering or fertilizer events. The owner confirmed the arrangement recorded in the [current placement guide](../../layouts/table-placement-research.md), including the later A3/F1 exchange. Exact individual clearance remains unrecorded; placement completion is no longer pending.
+The August 29 measurements were **388 g** for the potted plant and
+**0.5 in high × 1.2 in wide** for the plant itself, measured with a scale
+and ruler. Collection photographs include top and side views.
 
-On September 20, 2026, the owner confirmed Molly's Succulent Mix with added perlite for all six G/H pots, estimating approximately 80% Molly's / 20% added perlite from memory rather than the earlier 60/40 description. The proportion is an uncertain recollection, not a measured recipe or a newly dated repot.
+The mix is Molly's Succulent Mix with added perlite. On September 20, the owner
+estimated the blend as approximately **80% Molly's / 20% added perlite**; the
+ratio was recalled rather than measured. See the [current placement guide](../../layouts/table-placement-research.md)
+for the indoor arrangement. Individual lamp clearance has not been measured.
 
-The owner chose not to quarantine this shipment after hand inspection, owner-
-reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
-the box that said it was inspected and certified pest free. The plants were
-also described as outdoor-grown in California sun. Those are useful arrival
-observations, but the sticker is shipment evidence rather than a guarantee that
-the plant remains pest-free; continue close inspections during acclimation.
+## Nursery description
 
-## Seller listing snapshot
-
-These Mountain Crest Gardens fields were captured from the product page on
-2026-08-26. They are purchase-time listing metadata, not measurements or
-current observations of the specimen received on 2026-08-28.
+Mountain Crest Gardens' listing, recorded August 26, 2026, describes the
+nursery offering. Pot size and hardiness below are seller specifications.
 
 | Seller field             | Listing value                                 |
 | ------------------------ | --------------------------------------------- |
@@ -81,18 +74,17 @@ variegated form as a separate botanical taxon.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                              |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. Individual top and side views are archived; add base and complete all-side diagnostic views when available.                                                                                        |
-| Grow-light position | **Photo-matched R1C3 · Bright.** September 15 six-column/four-row front grid, facing the window. Front-center bright position; dark color and variegation do not establish a shade requirement. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use medium dryness, plant response, and pot-weight trend as evidence.                                                                                                                                                                     |
-| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape is unrecorded. The owner recalls Molly's Succulent Mix with approximately 20% added perlite (September 20 report; ratio estimated); monitor the larger mix volume closely.                                                                           |
-| Color               | Judge new scars, bleaching, or translucence separately from stable dark purple and green variegation.                                                                                                                                                                                                                    |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                                                          |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Photo-matched R1C3 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Front-center bright position; dark color and variegation do not establish a shade requirement. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Let the root zone dry before watering, using pot-weight trends and plant firmness together. The larger pot can remain damp below a dry surface.                                                                                                                                                      |
+| Pot and mix         | 4 × 4 × 3.7-inch round pot with Molly's Succulent Mix and approximately 20% added perlite (owner estimate). Keep drainage clear and avoid persistent moisture around the base.                                                                                                                       |
+| Color               | Judge new scars, bleaching, or translucence separately from stable dark purple and green variegation.                                                                                                                                                                                                |
 
 ## Rotation, propagation, and watch points
 
-- Do not assign a routine rotation until the most variegated face and preferred
-  outward orientation have been photographed.
+- Acclimate the most variegated face gradually when changing the pot's
+  orientation; pale sectors can be more sensitive than green tissue.
 - More green tissue generally provides more photosynthetic capacity; do not
   remove green offsets merely to make the plant look darker.
 - A sudden pale, translucent, or hard tan patch after a light change is not a
@@ -101,7 +93,7 @@ variegated form as a separate botanical taxon.
 
 ## Sources
 
-- Owner clarification on September 20, 2026: all six G1/G2/G3 and H1/H2/H3 pots contain Molly's Succulent Mix with added perlite; approximately 20% added perlite is an uncertain recollection that supersedes the earlier 40% description. This clarifies the existing setup without dating a new repot or changing recorded weights.
+- Owner observations, August 28–29 and September 20, 2026: receipt, repotting, substrate condition, scale/ruler measurements, and estimated Molly's Succulent Mix/perlite blend.
 
 - [Mountain Crest Gardens: 'Black Widow' seller listing](https://mountaincrestgardens.com/gymnocalycium-mihanovichii-f-variegata-black-widow-wfzy/)
 - [Kew Plants of the World Online: _Gymnocalycium mihanovichii_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A115434-2)

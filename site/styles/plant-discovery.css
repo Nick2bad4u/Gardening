@@ -1,0 +1,235 @@
+.plant-discovery {
+    display: grid;
+    gap: 1.25rem;
+    margin-block: 1.5rem 2rem;
+    overflow-wrap: anywhere;
+
+    & > *,
+    & .discovery-anatomy-layout > *,
+    & .discovery-stories > * {
+        min-inline-size: 0;
+    }
+
+    & h2 {
+        display: flex;
+        gap: 0.65rem;
+        align-items: center;
+        margin-block: 0 0.75rem;
+        font-size: clamp(1.25rem, 2.5vi, 1.75rem);
+    }
+
+    & h3 {
+        margin-block: 0 0.25rem;
+        font-size: 1.125rem;
+    }
+
+    & .site-icon {
+        flex: none;
+    }
+
+    & p {
+        margin-block: 0.5rem;
+    }
+
+    & figure {
+        min-inline-size: 0;
+        margin: 0;
+    }
+
+    & figcaption {
+        display: grid;
+        gap: 0.25rem;
+        padding-block: 0.5rem;
+        font-size: 0.875rem;
+        color: var(--muted);
+    }
+
+    & figure img {
+        display: block;
+        inline-size: 100%;
+        block-size: auto;
+        border-radius: 0.75rem;
+    }
+
+    & .discovery-photo-pair img {
+        aspect-ratio: 4 / 3;
+        object-fit: contain;
+        background: var(--surface-soft);
+    }
+
+    & .discovery-anatomy figure img {
+        aspect-ratio: 1;
+        object-fit: contain;
+    }
+
+    & :where(h2, li[id]) {
+        scroll-margin-block-start: 7rem;
+    }
+}
+
+.discovery-anatomy-layout {
+    display: grid;
+    grid-template-columns: [art] minmax(0, 1fr) [key] minmax(0, 1fr) [end];
+    gap: 1rem;
+    align-items: center;
+    margin-block-start: 1rem;
+}
+
+.discovery-parts {
+    display: grid;
+    gap: 0.75rem;
+    padding: 0;
+    margin: 0;
+    list-style: "";
+
+    & li {
+        display: grid;
+        grid-template-columns: [number] 2rem [description] minmax(0, 1fr) [end];
+        gap: 0.65rem;
+        align-items: start;
+    }
+}
+
+.discovery-number {
+    display: grid;
+    place-items: center;
+    inline-size: 2rem;
+    block-size: 2rem;
+    font-weight: 800;
+    color: var(--ink);
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+}
+
+.discovery-citations {
+    margin-block-start: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+
+    & a {
+        display: inline-block;
+        padding: 0.25rem 0.35rem;
+    }
+}
+
+.discovery-stages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, [stage] minmax(12rem, 1fr)) [end];
+    gap: 0.75rem;
+    padding: 0;
+    margin-block: 1rem;
+    list-style: "";
+
+    & li {
+        padding: 1rem;
+        background: var(--surface-soft);
+        border-inline-start: 3px solid var(--accent);
+        border-radius: 0 0.65rem 0.65rem 0;
+    }
+}
+
+.discovery-stage-number {
+    display: block;
+    margin-block-end: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--muted);
+}
+
+.discovery-stories,
+.discovery-comparisons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, [panel] minmax(16rem, 1fr)) [end];
+    gap: 1rem;
+}
+
+.discovery-comparisons > div {
+    padding: 1rem;
+    background: var(--surface-soft);
+    border-radius: 0.75rem;
+}
+
+.discovery-timeline {
+    display: grid;
+    gap: 1rem;
+    padding-inline-start: 1rem;
+    margin-block: 1rem;
+    list-style: "";
+    border-inline-start: 2px solid var(--line);
+
+    & li {
+        display: grid;
+        grid-template-columns: [date] 8rem [event] minmax(0, 1fr) [end];
+        gap: 0.5rem 1rem;
+    }
+
+    & time {
+        font-weight: 700;
+        color: var(--muted);
+    }
+
+    & a {
+        font-size: 0.875rem;
+    }
+}
+
+.discovery-photo-comparison {
+    padding-block-start: 1rem;
+    margin-block-start: 1rem;
+    border-block-start: 1px solid var(--line);
+}
+
+.discovery-photo-pair {
+    display: grid;
+    grid-template-columns: [start] repeat(2, [photo] minmax(0, 1fr)) [end];
+    gap: 1rem;
+    margin-block-start: 1rem;
+}
+
+.discovery-sources li {
+    padding-block: 0.3rem;
+}
+
+@media (width <= 640px) {
+    .discovery-anatomy-layout,
+    .discovery-stages,
+    .discovery-stories,
+    .discovery-comparisons,
+    .discovery-timeline li {
+        grid-template-columns: [content] minmax(0, 1fr) [end];
+    }
+
+    .plant-discovery .card {
+        padding: 1rem;
+    }
+
+    .discovery-photo-pair {
+        gap: 0.65rem;
+    }
+}
+
+@media print {
+    .plant-discovery {
+        gap: 1rem;
+
+        & .card,
+        & .discovery-stages li,
+        & .discovery-comparisons > div {
+            color: #000000;
+            background: #ffffff;
+            box-shadow: none;
+        }
+
+        & figure,
+        & .discovery-parts li,
+        & .discovery-stages li,
+        & .discovery-timeline li {
+            break-inside: avoid;
+        }
+    }
+
+    .discovery-anatomy-layout {
+        grid-template-columns: [art] minmax(0, 1fr) [key] minmax(0, 1fr) [end];
+    }
+}

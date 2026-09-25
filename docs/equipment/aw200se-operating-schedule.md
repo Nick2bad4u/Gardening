@@ -14,14 +14,12 @@ The **two-foot return panel stays out**; the divider Mylar stays.
 
 Use the [two-light equipment record](./aw200-and-aerolight-240w.md) for exact
 dimensions, masses, and independent suspension from four ceiling hooks, and the
-[final placement guide](../layouts/table-placement-research.md) for the intended
-all-wood/near-half-glass exposure. Four E25 paths are planned including both
-canopy fans. The owner confirms an **18-inch plant-tip reference** and the
+[current placement guide](../layouts/table-placement-research.md) for the later four-table display. Four E25 paths serve the two lights and two canopy fans. The owner confirms an **18-inch plant-tip reference** and the
 same **13 h 15 m total cycle** for both lights, including **15-minute sunrise
 and sunset transitions** at the start and end. Exact clock times remain
 unrecorded. Keep the reported percentages and current
 positions provisionally while checking actual plant exposure.
-The owner handles acclimation; no new ramp or controller program was applied.
+The dated ramp below does not replace those reported settings.
 
 ## September 9 AW200 Record — Before the Replacement Order
 
@@ -30,7 +28,7 @@ spectrum**, at **60%** for a reported **13.25 hours daily**, with
 quarter-hour sunrise/sunset transitions. Exact clock times, the division of
 ramp and steady-output time, and current spectrum mode were not supplied.
 The last recorded 18-inch clearance remains a baseline to remeasure, not a
-fresh September measurement. No controller program was changed in this update.
+fresh September measurement.
 
 At that time, a Diamond Mylar foam-board return closed an approximately two-foot
 gap toward the room. The September 10 decision removed it from the plan; the September 11 plan keeps that end open. That earlier
@@ -46,11 +44,10 @@ without the current program's clock times and plant response.
 
 ## Earlier schedule and operating history
 
-This is the canonical dated schedule for the VIVOSUN AW200SE, two AeroWave E6
+This historical schedule covers the VIVOSUN AW200SE, two AeroWave E6
 Gen2 pole fans, GrowCam C4, reflector placement, the three confirmed GrowHub
 E25 controllers, the TABYIK DH-CS01 dehumidifier, the Levoit Core Mini-P air
-purifier, and the current
-collection in Fenton, Michigan. It covers the 2026 move indoors, the revised
+purifier, and the 2026 collection in Fenton, Michigan. It covers the 2026 move indoors, the revised
 light acclimation, paired airflow, time-lapse recording, room-air response, pot
 layout, rotations, local daylight, and the 2027 return outdoors.
 
@@ -80,7 +77,7 @@ or peripheral money-tree canopy.
 | August 17                           | Hold 45% at 18 in; inspect new tissue and the paired-fan sweep instead of making another change.                                                                                                                                                                                                                 |
 | August 21-24                        | Original cautious first post-repot watering window; no completed Water row is recorded in this window.                                                                                                                                                                                                           |
 | August 24                           | Hold 45% for another week while evaluating repot recovery and the first comparable new-medium dry-down.                                                                                                                                                                                                          |
-| August 25                           | Mountain Crest order recorded. Reserve cactus labels `G1`-`G3` and succulent labels `H1`-`H3`; collection receipt remains unverified, so do not assign table positions, tracker IDs, or watering events until each physical plant is documented and inspected.                                                   |
+| August 25                           | Mountain Crest order recorded. Reserve cactus labels `G1`-`G3` and succulent labels `H1`-`H3`; receipt followed August 28, with the final labels and tracker IDs recorded below.                                                                                                                                 |
 | August 26, 4:22 p.m.                | Actual first setup-2 soak: all `P01`-`P18` Water rows are active, use pot setup 2, record `Nutrients used = No`, and note `Beauchamp's RO only`.                                                                                                                                                                 |
 | August 27, 12:14–12:20 a.m.         | Wet setup-2 weights were recorded about eight hours after watering. Preserve that elapsed interval; these are not the originally planned 30-60-minute drainage readings. Begin dilute MSU only at the next otherwise-ready watering if growth and dry-down support it.                                           |
 | August 28                           | Receive six rooted Mountain Crest plants in 2-inch nursery pots; owner-inspect them, owner-report about 95% nursery-soil removal, repot into 4-inch pots, correct the G/H labels, and assign `P23`–`P28`. The Check/Clean bulk round records slightly moist substrate; it is not a watering or fertilizer event. |
@@ -227,8 +224,7 @@ The GrowCam is independent of both E25 controllers. Its 256 GB microSD card is
 within VIVOSUN's supported maximum of 512 GB. Insert or reseat the card only
 while the camera is powered off.
 
-Before relying on the multiweek clip, run the
-[documented 24-hour camera test](./growcam-c4-and-reflector.md#full-day-validation-test).
+The [24-hour camera test](./growcam-c4-and-reflector.md#full-day-validation-test) was completed by September 20; the following dates preserve the earlier recording plan.
 After the final August 2 layout, start the main 15-minute-interval time-lapse
 by 7:45 a.m. August 3 and end it after the light turns off September 14. Keep the
 camera fixed for the entire clip. If the app offers a daily capture window,
@@ -544,8 +540,7 @@ Use temporary edge placement without inventing risers or precise coordinates.
 'Black Widow' starts at the gentler variegated edge, Royal Flush keeps separate
 leaf-cycle watering, and indoor-only 'Coconut Crystal' gets the brightest and
 coolest practical succulent position rather than the warm center of the cactus
-canopy. Exact maintained placement and replacement-medium composition remain
-unrecorded.
+canopy. Later placement is recorded in the [current guide](../layouts/table-placement-research.md); the September 20 medium record is approximately 80% Molly's / 20% added perlite, recalled rather than measured.
 
 Orient the shared planters as follows:
 
@@ -710,9 +705,7 @@ say that it automatically looks up astronomical sunrise or sunset, and it does
 not document the fade duration. Treat it as a transition effect inside the
 schedule, not as a location-aware daylight service.
 
-On September 21, keep the successful light power and the approved paired-fan
-strength. Change only the timers.
-Thereafter, update every confirmed controller path on the listed dates. Times use Fenton
+The earlier plan proposed a seasonal timer change beginning September 21, keeping light power and fan strength steady. The last reported two-light program remains 13 h 15 m; the table below is an archived proposal, not confirmation that these timer changes were applied. Times use Fenton
 coordinates 42.7978° N, 83.7049° W, follow local daylight-saving time, and are
 rounded to the nearest 15 minutes. Summer light days longer than 14 hours are
 capped at 14 hours to avoid adding unnecessary indoor DLI.

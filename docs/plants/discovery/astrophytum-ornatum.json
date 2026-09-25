@@ -1,0 +1,125 @@
+{
+    "anatomy": {
+        "intro": "The star shape, white flecks and spines are three different features of the same stem.",
+        "parts": [
+            {
+                "function": "Each raised rib is part of the green photosynthetic stem.",
+                "label": "Broad rib"
+            },
+            {
+                "function": "This small woolly growing structure produces the cluster of spines.",
+                "label": "Areole"
+            },
+            {
+                "function": "The stiff yellow-brown structures are modified leaves, not branches.",
+                "label": "Spine"
+            },
+            {
+                "function": "Small patches of white wool mark the stem surface separately from the spine-bearing areoles.",
+                "label": "Woolly flecks"
+            }
+        ],
+        "sourceIds": [
+            "rhs",
+            "cactus-structure"
+        ]
+    },
+    "comparisonSourceIds": [
+        "sanbi",
+        "cactus-structure"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "rhs"
+        ],
+        "text": "Pale yellow, funnel-shaped flowers are carried near the crown. They are a mature-plant feature, not evidence that this collection plant has bloomed. A compact plant can remain an attractive architectural specimen for years before producing flowers."
+    },
+    "growth": {
+        "note": "RHS gives 10–20 years to maturity, not a guaranteed age for the first flower; a pot-grown plant develops at its own pace.",
+        "sourceIds": [
+            "rhs"
+        ],
+        "stages": [
+            {
+                "text": "A small rounded plant already shows the conspicuous ribs and white markings.",
+                "title": "Young globe"
+            },
+            {
+                "text": "New growth gradually changes the outline from a globe into a short column.",
+                "title": "Lengthening stem"
+            },
+            {
+                "text": "An established plant can produce yellow flowers from the upper stem.",
+                "title": "Mature crown"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew",
+            "cactus-structure"
+        ],
+        "text": "Wild monk’s hood cactus belongs to Mexico’s dry country, from the northeast toward Veracruz. Kew places it in desert and dry shrubland. Its sculpted body is a succulent stem rather than a bundle of leaves; the wild range gives context for its form, without prescribing an indoor watering calendar."
+    },
+    "image": {
+        "alt": "Numbered monk’s hood cactus drawing showing a broad rib, woolly areole, stiff spine and separate white surface flecks.",
+        "file": "assets/plant-explainers/astrophytum-ornatum.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024x1024 scientific botanical educational illustration of Astrophytum ornatum, monk's hood cactus. Warm ivory background, muted forest-green, sage and ochre, accurate clean pen-and-watercolor rendering, ample whitespace, large single central short columnar specimen viewed slightly from above. Show eight broad upright ribs, irregular diagonal bands of tiny white woolly flecks on the green rib surfaces, discrete woolly areoles along rib edges, and stiff ochre spines radiating from areoles. Exactly four large numbered markers with fine clear leader lines, no other text: 1 points to one broad green rib, 2 points to a white woolly areole at a spine base, 3 points to one long ochre spine, 4 points to a patch of the small white surface flecks away from the areoles. Markers correspond to rib, areole, spine, woolly flecks in that order. Numbers must remain legible at 350px display size. Anatomically accurate cactus, no flowers, no roots, no grafts, no pot, no title, no paragraphs, no watering or calendar icons.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Dragon’s Egg Euphorbia",
+            "profileSlug": "euphorbia-obesa-hybrid",
+            "text": "Both can look like ribbed balls, but the Euphorbia lacks the cactus’s woolly, spine-bearing areoles. Its striped stem belongs to a different plant family."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "rhs"
+        ],
+        "text": "The silhouette becomes columnar while retaining six to eight prominent ribs. RHS lists cultivated plants in a broad 10–50 cm height range; that is a horticultural guide rather than a maximum for every old wild specimen."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-23",
+            "sourcePath": "docs/plants/starter/astrophytum-ornatum.md",
+            "text": "Joined the collection from Costa Farms; recorded as Starter-12, label C3.",
+            "title": "Acquired"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "The species was first named Echinocactus ornatus in 1828. The familiar Astrophytum combination dates to 1922: an old name history behind a very modern-looking plant."
+    },
+    "slug": "astrophytum-ornatum",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew — Astrophytum ornatum",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:1063691-2"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "rhs",
+            "title": "RHS — Astrophytum ornatum",
+            "url": "https://www.rhs.org.uk/plants/1880/astrophytum-ornatum/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "cactus-structure",
+            "title": "University of Illinois — cactus areoles",
+            "url": "https://www.life.illinois.edu/help/digitalflowers/Cactaceae/5.htm"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "sanbi",
+            "title": "SANBI — Euphorbia obesa",
+            "url": "https://pza.sanbi.org/euphorbia-obesa"
+        }
+    ]
+}

@@ -11,6 +11,8 @@ import {
 import * as path from "node:path";
 import sharp from "sharp";
 
+import { getProfiles } from "../site/lib/content.mjs";
+import { getPlantDiscovery } from "../site/lib/plant-discovery.mjs";
 import { siteApps } from "../site/lib/site-apps.mjs";
 import {
     isCollectionManifest,
@@ -593,6 +595,13 @@ async function prepareSiteAssets({ directory = publicDirectory } = {}) {
             throw new Error(`Invalid nursery evidence path: ${filename}`);
         references.add(filename);
     }
+    const profiles = await getProfiles();
+    const profileSlugs = new Set(profiles.map((profile) => profile.slug));
+    const discoveries = await Promise.all(
+        profiles.map((profile) => getPlantDiscovery(profile.slug, profileSlugs))
+    );
+    // Publish only the reviewed image named by each validated plant record.
+    for (const discovery of discoveries) references.add(discovery.image.file);
     for (const relativeDirectory of ["assets/plant-icons", "assets/ui-icons"]) {
         // eslint-disable-next-line no-await-in-loop -- Only two explicit icon export directories are examined.
         const entries = await readdir(

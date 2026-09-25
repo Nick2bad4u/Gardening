@@ -1,0 +1,150 @@
+{
+    "anatomy": {
+        "intro": "Four visible heads share a pot; the drawing deliberately leaves their unknown root connections out.",
+        "parts": [
+            {
+                "function": "One two-leaf body represents the probable L. lesliei appearance group.",
+                "label": "Tan patterned head"
+            },
+            {
+                "function": "A second appearance group has more open upper windows.",
+                "label": "Grey-green head"
+            },
+            {
+                "function": "The division between a head's two leaves is the route for renewal and flowering.",
+                "label": "Fissure"
+            },
+            {
+                "function": "Water and whole-pot weights concern this common container, while each head needs inspection.",
+                "label": "Shared medium"
+            }
+        ],
+        "sourceIds": [
+            "optica",
+            "green"
+        ]
+    },
+    "comparisonSourceIds": [
+        "nelii",
+        "lithops"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "green"
+        ],
+        "text": "If the proposed species IDs hold, yellow and white blooms would be expected from the tan and grey groups respectively. Keep flower photographs linked to the head that produced them; no flowering is recorded."
+    },
+    "growth": {
+        "note": "These are observation stages for this shared arrangement, not a fixed seasonal watering schedule.",
+        "sourceIds": [
+            "optica",
+            "lithops"
+        ],
+        "stages": [
+            {
+                "text": "Compare the current leaf pairs in both appearance groups.",
+                "title": "Observe each head"
+            },
+            {
+                "text": "A new body may develop as the older leaves shrink.",
+                "title": "Watch replacement"
+            },
+            {
+                "text": "Record fresh heads and dried sheaths without assuming simultaneous renewal.",
+                "title": "Compare renewed growth"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "genus",
+            "lithops"
+        ],
+        "text": "Lithops are southern African succulents adapted to living among stones in dry habitats. This planter combines two nursery appearance groups, provisionally L. lesliei and L. salicola. It recreates neither species' exact habitat, and a shared container does not show that their water needs or replacement stages will coincide."
+    },
+    "image": {
+        "alt": "Four Lithops heads in a mauve pot: tan and grey groups, a fissure and shared medium, without roots.",
+        "file": "assets/plant-explainers/lithops-shared-planter.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration on warm ivory. Clean botanically accurate pen-and-watercolor, muted forest-green, sage and ochre palette, generous whitespace, large central specimen. Exactly four large numbered circular markers 1, 2, 3, 4 with thin clear noncrossing leader lines to the specified features. Numerals legible at 350px display. No title, words, paragraphs, watering icons, calendar, border or logo. Schematic anatomy, not a photograph of an owned plant. Show a blush-mauve round planter containing exactly FOUR Lithops heads in a loose square layout, two tan/brown patterned heads with island-and-channel top patterns and two grey-green heads with more open olive windows. Each head consists of exactly TWO thick leaves with ONE central fissure, no extra leaves, no flowers, NO ROOTS or cutaway, no asserted root connections. Marker1 to one tan patterned head; marker2 to one grey-green open-windowed head; marker3 to central fissure on another visible head; marker4 to visible shared gritty medium between the heads. Keep substantial pot visible and distinctlydifferent illustration from a single Lithops anatomy.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Split rock",
+            "profileSlug": "pleiospilos-nelii",
+            "text": "Pleiospilos nelii has rounder speckled leaves and a deeper cleft than the flatter windowed Lithops heads."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "lithops"
+        ],
+        "text": "A small cluster can form as some Lithops produce extra heads. The four visible heads currently came from two nursery pots; neither individual count nor root connections have been established."
+    },
+    "milestones": [
+        {
+            "date": "2026-09-21",
+            "sourcePath": "docs/plants/succulents/lithops-shared-planter.md",
+            "text": "Purchased at Home Depot in Howell, Michigan, from Altman Plants nursery stock.",
+            "title": "Home Depot arrival"
+        },
+        {
+            "date": "2026-09-23",
+            "sourcePath": "docs/plants/succulents/lithops-shared-planter.md",
+            "text": "Moved into the Blush Mauve planter with the other appearance group; all four heads were described as firm.",
+            "title": "Shared repot"
+        },
+        {
+            "date": "2026-09-23",
+            "sourcePath": "docs/plants/succulents/lithops-shared-planter.md",
+            "text": "A ruler reading recorded 1 inch tall by 1.25 inches wide; the measured head was not assigned to either probable species.",
+            "title": "One head measured"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "olivacea"
+        ],
+        "text": "The name Lithops evokes a stone-like face: the disguise belongs to living leaves rather than a cactus stem."
+    },
+    "slug": "lithops-shared-planter",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "genus",
+            "title": "Kew Plants of the World Online: Lithops",
+            "url": "https://powo.science.kew.org/taxon/16237-1"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "lithops",
+            "title": "Wisconsin Extension: Living stones",
+            "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "optica",
+            "title": "SANBI PlantZAfrica: Lithops optica and shared Lithops anatomy",
+            "url": "https://pza.sanbi.org/lithops-optica"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "green",
+            "title": "Keith Green: Lithops species descriptions",
+            "url": "https://scrapbooklithops.com/species.html"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "nelii",
+            "title": "SANBI PlantZAfrica: Pleiospilos nelii",
+            "url": "https://pza.sanbi.org/pleiospilos-nelii"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "olivacea",
+            "title": "SANBI PlantZAfrica: Lithops olivacea",
+            "url": "https://pza.sanbi.org/lithops-olivacea"
+        }
+    ]
+}

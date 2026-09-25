@@ -1,10 +1,10 @@
 # Tiny mixed succulent planter
 
 - Inventory: Succulent-10 — mixed succulent planter; component taxa unresolved
-- Label ID: `#6` — owner-assigned 2026-09-02
+- Label ID: `#6`
 - Tracker ID: `P30`
 - Visual description: A small shared planter combining pale powdery rosettes, copper-orange narrow-leaved rosettes on short stems, and broad green paddle leaves with red margins.
-- Interesting fact: Three component-group profiles make the visible plants easier to follow while preserving one shared pot, label, and observation history.
+- Interesting fact: One small planter brings together powdery rosettes, copper-toned stems, and broad red-edged paddles, each with a different growth habit.
 - Identification: **Smart Planet Home five-plant retail succulent garden; component-level foliage matches are provisional and no cultivar is treated as proven**
 - Acquired from: Home Depot; grown by Altman Plants under Smart Planet Home branding; exact store not recorded
 - Acquired on: 2026-09-02
@@ -29,7 +29,7 @@ frequently confused _Kalanchoe luciae_ / _K. thyrsiflora_ pair. Those working
 groups are enough to notice component-specific changes without inventing a
 precise retail cultivar history.
 
-The entire container stays `Succulent-10`, label `#6`, and tracker `P30`. On September 20 the owner requested separate component pages. `Succulent-10A`, `Succulent-10B`, and `Succulent-10C` identify those profile groups only; they are not new physical labels, separate weigh-ins, or proof of exactly three individual plants. The seller's five-plant description does not establish five verified identities.
+The planter is `Succulent-10`, label `#6`, and tracker `P30`. Its three component profiles describe recognizable foliage groups; the number of separately rooted individuals is unverified.
 
 ## Component pages
 
@@ -39,27 +39,22 @@ The entire container stays `Succulent-10`, label `#6`, and tracker `P30`. On Sep
 | Succulent-10B  | [Coppertone-type sedum — probable adolphi / nussbaumerianum complex](./tiny-planter-coppertone-sedum.md) | #6 / P30               |
 | Succulent-10C  | [Paddle kalanchoe — luciae / thyrsiflora complex](./tiny-planter-paddle-kalanchoe.md)                    | #6 / P30               |
 
-These pages describe the three visible foliage groups. They retain the same whole-pot history and shared acquisition evidence as this overview. No new acquisition, repot, planting, or measurement event was created when the pages were added.
+The component pages describe each group's appearance and care within the same shared planter.
 
 ## Acquisition and photo evidence
 
-The owner bought the discounted planter at Home Depot on 2026-09-02 because the
-container itself was useful, then chose to keep a lightweight record anyway.
+This discounted planter was purchased at Home Depot on September 2, 2026.
 The photographed reverse label records Smart Planet Home branding, Altman
 Plants as grower, a `$7.98` price, `5" CLAY TERRACOTTA C&S GDN`, Home Depot
 product `1002971690`, and 11 oz / 325 mL as the printed container-capacity
 marking. Home Depot's matching product page describes a five-inch deep-dish
-terra-cotta garden containing five plants. The generic QR destination is care
-marketing, not a component-identification source.
+terra-cotta garden containing five plants. The retail label does not identify the individual components.
 
 Source-quality photographs preserve receipt context, three current angles, a
-top view, and the shared post-repot context. They also make it possible to
-compare the separate components later without loading full-resolution files on
-the individual plant profile page.
+top view, and the shared post-repot context. These views provide a visual record of each component's growth.
 
 The components were kept together during the September 2 repot in the purchased
-five-inch-class terra-cotta planter. The live setup-2 Repot observation at **September 3, 2026, 12:18 a.m. EDT** records **“5 inch shallow”** and **“Nursery cacti soil and my top dressing.”** That timestamp belongs to the September 2 care day; it does not change the acquisition-day narrative. Exact measured depth, root condition, the soil's ingredient proportions, and any unlogged plant dimensions remain unknown. Current weights are recorded in the live ledger. Because several plants share one root volume, all
-weights and watering events belong to `P30` as a whole.
+five-inch-class terra-cotta planter. The repot was logged at **September 3, 2026, 12:18 a.m. EDT**, with **“5 inch shallow”** and **“Nursery cacti soil and my top dressing”** as its setup-2 descriptions. Exact depth and ingredient proportions remain unmeasured. All plants share the same root volume, watering, and whole-pot weight.
 
 ## Why the component names stay broad
 
@@ -71,7 +66,7 @@ accepted taxon name is not evidence that one retail cutting belongs to it.
 Flowers, mature growth, provenance, and clean close views after acclimation are
 better evidence than color alone.
 
-The separate component pages preserve this uncertainty while giving each recognizable group its own care notes and photographs. They do not upgrade a foliage-only match to a confirmed species, assign a cultivar, or claim that every rosette is a separate rooted individual.
+The component profiles keep these provisional names while explaining the care and growth of each foliage group.
 
 ## Care in this collection
 
@@ -81,8 +76,8 @@ The separate component pages preserve this uncertainty while giving each recogni
 | Grow-light position | **Photo-matched front of rear zone, between #1 and #5 · Bright.** September 15 rear wooden tables, facing the window. Compare the low rosettes and paddle leaves for shadows from the large pots. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
 | Water               | Judge the shared root volume by full dry-down and whole-pot weight. Water thoroughly and drain, but do not repeatedly wet the pot for one component while the others remain firm.                                                                                                                                  |
 | Pot and mix         | Setup 2 records “5 inch shallow” with “Nursery cacti soil and my top dressing.” Exact depth and ingredient proportions remain unrecorded; the pot description alone does not verify drainage performance.                                                                                                          |
-| Mixed growth        | Prune or separate only if one component begins shading, crowding, or demanding a materially different watering rhythm. Keep any future split linked back to this original P30 record.                                                                                                                              |
-| Feeding             | Use the collection's dilute succulent product only during an ordinary active-growth watering. A cheap retail mix does not need compensatory feeding during establishment.                                                                                                                                          |
+| Mixed growth        | Prune or separate only if one component begins shading, crowding, or demanding a materially different watering rhythm.                                                                                                                                                                                             |
+| Feeding             | Use the collection's dilute succulent product only during an ordinary active-growth watering. Avoid feeding stressed or poorly rooted components.                                                                                                                                                                  |
 
 ## Rotation and watch points
 
@@ -94,8 +89,6 @@ The separate component pages preserve this uncertainty while giving each recogni
   shift together with texture and growth, not color alone, as evidence.
 - If one plant rots, isolate the affected component and inspect adjoining roots;
   do not assume the whole planter needs more water.
-- If the components are separated later, record the event before assigning new
-  labels so the shared-pot history remains intelligible.
 
 ## Sources
 

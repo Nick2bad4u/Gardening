@@ -65,7 +65,7 @@ Group planting works without exact synchronization; reassess if needs actually c
 
 ## Split rocks: inspect the leaf stage
 
-**Royal Flush — P28 / G3; new split rock — P36 / #10.** Both use _Pleiospilos nelii_ species guidance. P36's nursery label and photographs support that species, with no cultivar supplied; its September 23 repot check recorded a firm single pair.
+**Royal Flush — P28 / G3; split rock — P36 / #10.** Both use _Pleiospilos nelii_ species guidance. P36's nursery label and photographs support that species, with no cultivar supplied; its September 23 repot check recorded a firm single pair.
 
 Check dry medium, current-leaf firmness, and leaf replacement together; inspect the new inner pair when visible. A temporarily visible old pair can be normal. Persistent extra pairs can reflect excess watering, but neither leaf count nor a wrinkled outer pair decides the next drink. When watering is supported, wet the root zone and drain; let it dry before reassessing. Do not copy a fixed Lithops calendar onto split rock. [SANBI's species account](https://pza.sanbi.org/pleiospilos-nelii)
 

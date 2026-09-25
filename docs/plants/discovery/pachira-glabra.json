@@ -1,0 +1,129 @@
+{
+    "anatomy": {
+        "intro": "The drawing separates a single leaflet from the whole hand-shaped leaf; it does not identify the owned tree to species.",
+        "parts": [
+            {
+                "function": "One blade is part of a larger compound leaf and presents a surface to light.",
+                "label": "Leaflet blade"
+            },
+            {
+                "function": "Several leaflets meet at one point, forming the hand-shaped leaf.",
+                "label": "Leaflet junction"
+            },
+            {
+                "function": "The long leaf stalk holds the entire compound leaf away from the trunk.",
+                "label": "Petiole"
+            },
+            {
+                "function": "The upright woody axis supports the canopy as the tree develops.",
+                "label": "Trunk"
+            }
+        ],
+        "sourceIds": [
+            "kew"
+        ]
+    },
+    "comparisonSourceIds": [
+        "florida"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "For P. glabra, botanical descriptions record pale flowers with narrow petals and numerous long stamens. These conspicuous reproductive structures would provide more useful identification evidence than the trade name. This collection record documents no flowering."
+    },
+    "growth": {
+        "note": "These are structural stages, not a timetable for this indoor plant. NParks describes the species as fast-growing, but this pot's rate is unmeasured.",
+        "sourceIds": [
+            "kew",
+            "nparks"
+        ],
+        "stages": [
+            {
+                "text": "Young shoots carry developing compound leaves whose separate leaflets unfold.",
+                "title": "Leaf expansion"
+            },
+            {
+                "text": "Successive shoots and branches enlarge the tree's leaf-bearing framework.",
+                "title": "Canopy building"
+            },
+            {
+                "text": "A mature candidate-species tree can form flowers and then seed capsules.",
+                "title": "Reproductive growth"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "If the working identification is correct, this is a wet-tropical Brazilian tree. Kew places Pachira glabra in southeastern and southern Brazil. That origin is quite different from the desert habitats represented elsewhere in this collection. The retail tag confirms only Pachira, so this habitat belongs to the candidate species rather than a proven identification."
+    },
+    "image": {
+        "alt": "Generated Pachira structure drawing: 1 leaflet blade, 2 compound-leaf junction, 3 petiole, and 4 trunk; no flowers or roots shown.",
+        "file": "assets/plant-explainers/pachira-glabra.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Use case: scientific-educational. Create a compact square 1024 by 1024 botanical anatomy illustration for a plant field guide. Subject: a young unbraided Pachira money tree, working identification Pachira cf. glabra. Show a single smooth green-brown upright trunk and an open canopy of palmately compound leaves, each with five to seven separate glossy elongated leaflets meeting at the end of one long petiole. Warm ivory background; accurate clean pen-and-watercolor, forest-green/sage/ochre palette, generous whitespace, large central specimen. Show exactly four bold legible circular numbered markers 1, 2, 3, 4 and thin clear leader lines, with no other text: 1 points into one individual leaflet blade; 2 points to the shared junction where the leaflets of one compound leaf meet; 3 points to the long petiole below that junction; 4 points to the smooth trunk. Keep number-marker endpoints unambiguous, legible at 350px width. No flowers, fruit, roots, braided stems, grafts, title, paragraphs, watering icons, calendar, pot, or decorative objects. This is a general botanical structural illustration, not a portrait or identification proof of a specific owned plant.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Pachira aquatica",
+            "profileSlug": null,
+            "text": "The Florida flora key separates red-tipped stamens and rough brown fruit in P. aquatica from white stamens and smooth green fruit in P. glabra. Without flowers or fruit, retain the qualified working ID."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "This is a tree, not a permanently miniature succulent. Flora Zambesiaca describes a 3–5 m tree in its treatment reproduced by Kew; that is botanical context, not an indoor height prediction or a universal maximum."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-29",
+            "sourcePath": "docs/plants/houseplants/pachira-glabra.md",
+            "text": "Purchased at Home Depot in Howell; the retail tag names only Pachira.",
+            "title": "Acquired"
+        },
+        {
+            "date": "2026-09-16",
+            "sourcePath": "docs/plants/houseplants/pachira-glabra.md",
+            "text": "The owner confirmed the north-facing windowsill location; the exact move time was not recorded.",
+            "title": "Windowsill placement confirmed"
+        },
+        {
+            "date": "2026-09-16",
+            "sourcePath": "docs/plants/houseplants/pachira-glabra.md",
+            "text": "Dry dressing added 108 g, taking the pot from 1,638 g to 1,746 g without starting a new setup.",
+            "title": "Top dressing recorded"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "Kew traces the accepted P. glabra name to an 1868 publication and includes older descriptions under Bombacopsis glabra and Bombax oleagineum. Those historical names help explain why reference sources can look inconsistent."
+    },
+    "slug": "pachira-glabra",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew: Pachira glabra and historical flora descriptions",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:562664-1/general-information"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "nparks",
+            "title": "NParks: Pachira glabra",
+            "url": "https://www.nparks.gov.sg/florafaunaweb/flora/9/0/9095"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "florida",
+            "title": "University of Florida Herbarium: Flora of Florida, Pachira key",
+            "url": "https://www.floridamuseum.ufl.edu/wp-content/uploads/sites/67/2025/01/Flora-of-Florida-Franck-2025.pdf"
+        }
+    ]
+}

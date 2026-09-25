@@ -1,0 +1,132 @@
+{
+    "anatomy": {
+        "intro": "The white hairs conceal a green ribbed stem and do not remove the stiff spines.",
+        "parts": [
+            {
+                "function": "Long pale hairs form the conspicuous covering over the column.",
+                "label": "White hairs"
+            },
+            {
+                "function": "Orange to reddish-brown spines project beyond the hair covering.",
+                "label": "Stiff spine"
+            },
+            {
+                "function": "The ribbed stem beneath the hairs is the photosynthetic body.",
+                "label": "Green stem"
+            },
+            {
+                "function": "A new shoot at the base contributes to the species’ clumping habit.",
+                "label": "Basal side stem"
+            }
+        ],
+        "sourceIds": [
+            "nparks",
+            "cactus-structure"
+        ]
+    },
+    "comparisonSourceIds": [
+        "nparks",
+        "feather-comparison"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "nparks"
+        ],
+        "text": "NParks records pink to red flowers around 4 cm long. The flowers provide a very different texture from the surrounding hair coat, but they are a possible mature feature rather than an event documented for this particular plant."
+    },
+    "growth": {
+        "note": "The diagram exposes a little green tissue for clarity; it does not imply that the coat needs brushing away.",
+        "sourceIds": [
+            "nparks"
+        ],
+        "stages": [
+            {
+                "text": "The young plant develops its white covering over a compact body.",
+                "title": "Small hairy stem"
+            },
+            {
+                "text": "The stem lengthens while colored spines remain visible through the hairs.",
+                "title": "Short column"
+            },
+            {
+                "text": "Side stems expand the group; mature growth can eventually produce flowers.",
+                "title": "Clumping plant"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew",
+            "nparks"
+        ],
+        "text": "Old Man of the Andes comes from Bolivia into Jujuy in northwestern Argentina. Kew places it in the montane tropical biome; NParks more specifically describes dry mountainous habitat. Its long white coat and stout colored spines occur together on the same plant, so the woolly appearance should not be mistaken for a soft, unarmed houseplant."
+    },
+    "image": {
+        "alt": "Old Man of the Andes cactus with numbered white hairs, projecting orange-brown spine, exposed green ribbed stem and basal side stem.",
+        "file": "assets/plant-explainers/oreocereus-trollii.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024x1024 scientific botanical educational illustration. Warm ivory background; muted forest-green, sage and ochre with natural species colors; clean accurate pen-and-watercolor style, large central specimen, ample whitespace. Exactly four large circled numbered markers 1-4 with clear thin leaders pointing to the features specified below in order. Numbers legible at 350px display width. No words, title, paragraphs, watering or calendar icons. No pot, roots, flowers or grafts unless explicitly requested. Oreocereus trollii, Old Man of the Andes: short stout columnar cactus with dense long white woolly hairs and several orange/rusty-brown stiff spines projecting through them, plus a small basal side stem. Preserve visible hints of green ribbed stem under the hairs; not a cotton ball. 1 points to dense long white hairs; 2 to a projecting stiff orange-brown spine; 3 to exposed green ribbed stem through a natural gap in hairs; 4 to the small basal side stem. No flowers or roots.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Feather cactus",
+            "profileSlug": "mammillaria-plumosa",
+            "text": "Mammillaria plumosa makes a low mound covered by interlacing feather-like radial spines. Oreocereus instead has longer hair-like strands and obvious projecting orange-brown spines on columnar stems."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "nparks",
+            "llifle"
+        ],
+        "text": "The species forms a clump of short columns. LLIFLE describes stems about 6–10 cm thick, usually under 50 cm high but occasionally approaching 1 m; these are species dimensions, not a promised final size for the indoor specimen."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-15",
+            "sourcePath": "docs/plants/starter/oreocereus-trollii.md",
+            "text": "Joined the collection from Altman Reserve.",
+            "title": "Acquired"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "The accepted Oreocereus combination dates to 1936. Kew also records the original Cereus trollii name from 1929, showing how this Andean cactus has moved among genera in different treatments."
+    },
+    "slug": "oreocereus-trollii",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew — Oreocereus trollii",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:175986-2"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "nparks",
+            "title": "NParks — Oreocereus trollii",
+            "url": "https://www.nparks.gov.sg/florafaunaweb/flora/6/1/6142"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "cactus-structure",
+            "title": "University of Illinois — cactus areoles",
+            "url": "https://www.life.illinois.edu/help/digitalflowers/Cactaceae/5.htm"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "feather-comparison",
+            "title": "Arizona-Sonora Desert Museum — Feather cactus",
+            "url": "https://www.desertmuseum.org/visit/sheets/Mamplu.pdf"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "llifle",
+            "title": "LLIFLE — Oreocereus trollii",
+            "url": "https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/3392/Oreocereus_trollii"
+        }
+    ]
+}

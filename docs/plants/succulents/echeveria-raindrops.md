@@ -1,13 +1,13 @@
 # Raindrops echeveria
 
 - Inventory: Succulent-07 — _Echeveria_ 'Raindrops'
-- Label ID: `H2` — confirmed after arrival
+- Label ID: `H2`
 - Tracker ID: `P25`
 - Visual description: The current young plant is a compact blue-green rosette with broad rounded leaves; as the cultivar matures, seller references show a raised, raindroplike bump developing near the center of each leaf.
 - Interesting fact: Those firm “raindrops” are intentional cultivar structures called caruncles, not edema, insect damage, or a symptom that should be scraped away.
-- Identification: **seller-labeled cultivar; an individual arrival condition crop is archived, but identity is not independently proven**
-- Ordered from: Mountain Crest Gardens on 2026-08-25
-- Order status: **Received 2026-08-28; owner inspected roots and plant by hand**
+- Identification: **seller-labeled cultivar**
+- Acquired from: Mountain Crest Gardens
+- Acquired on: 2026-08-28 — received
 - Received container: **2-inch nursery pot; shape not reliably documented**
 - Current pot: **4-inch round pot (4 × 4 × 3.7 in); repotted 2026-08-28**
 - Photo archive: [licensed genus and cultivar references](../../../assets/plants/echeveria-raindrops/)
@@ -27,30 +27,22 @@ bumps are a cultivar trait, not edema or pest damage. Young plants may arrive
 without prominent bumps, so their absence does not by itself contradict the
 seller label.
 
-## Order evidence and status
+## Arrival and repotting
 
-Mountain Crest Gardens listed one 'Raindrops' in the 2026-08-25 order, and the
-owner documented receipt on 2026-08-28. It arrived rooted in a 2-inch nursery
-pot; the received container's shape is not reliably documented. The owner
-reports removing about 95% of the nursery soil during repotting. The owner-
-entered live tracker pot size is 4 inches. The current pot is the same
-4 × 4 × 3.7-inch round model used for all six plants in this shipment. The
-confirmed pot label is `H2`, and the permanent tracker ID is
-`P25`.
+Ordered from Mountain Crest Gardens on **August 25, 2026**, this plant arrived
+on **August 28** in a **2-inch nursery pot**. Its roots were inspected by hand,
+and approximately **95% of the nursery soil** was removed before repotting into
+the current **4 × 4 × 3.7-inch round pot**. The arrival mix was slightly moist.
+On **August 29**, the complete pot weighed **344 g**, and the plant
+measured **1.35 in high × 2.75 in wide** with a ruler.
 
-Canonical `History` records a 2026-08-28 Check/Clean bulk observation of
-slightly moist substrate. The live 2026-08-29 Measurement record is **344 g**
-by Scale and **1.35 in high × 2.75 in wide** by Ruler. These are measured
-records, not watering or fertilizer events. The owner confirmed the arrangement recorded in the [current placement guide](../../layouts/table-placement-research.md), including the later A3/F1 exchange. Exact individual clearance remains unrecorded; placement completion is no longer pending.
+The mix is Molly's Succulent Mix with added perlite. The owner estimated
+**80% Molly's / 20% perlite** on September 20; this is a recollection rather
+than a measured recipe.
 
-On September 20, 2026, the owner confirmed Molly's Succulent Mix with added perlite for all six G/H pots, estimating approximately 80% Molly's / 20% added perlite from memory rather than the earlier 60/40 description. The proportion is an uncertain recollection, not a measured recipe or a newly dated repot.
-
-The owner chose not to quarantine this shipment after hand inspection, owner-
-reported near-complete nursery-soil removal, and seeing a California agriculture sticker on
-the box that said it was inspected and certified pest free. The plants were
-also described as outdoor-grown in California sun. Those are useful arrival
-observations, but the sticker is shipment evidence rather than a guarantee that
-the plant remains pest-free; continue close inspections during acclimation.
+The shipment was described as outdoor-grown in California sun and carried an
+agricultural inspection sticker. It was not quarantined after the initial hand
+inspection; routine pest checks remain useful.
 
 ## Seller listing snapshot
 
@@ -88,27 +80,24 @@ broad genus range must not be printed as this cultivar's origin.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                                               |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Receipt, repotting, the slightly moist Check/Clean observation, and the first Scale/Ruler measurement are documented. An individual arrival crop is archived; add top, side, base, and complete all-side diagnostic views when available.                                                                                                 |
-| Grow-light position | **Photo-matched R2C3 · Bright.** September 15 six-column/four-row front grid, facing the window. Low interior-left rosette. Keep clear bright light, without automatically assigning it the strongest intensity. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Water               | The 2026-08-28 substrate observation was slightly moist, not a watering event. Use medium dryness, plant response, and pot-weight trend as evidence.                                                                                                                                                                                      |
-| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. Received-pot shape is unrecorded. The owner recalls Molly's Succulent Mix with approximately 20% added perlite (September 20 report; ratio estimated); keep the crown above the medium.                                                                                                  |
-| Surface             | Avoid touching or wiping the powdery farina; fingerprints and rubbed patches do not grow back on the same leaf.                                                                                                                                                                                                                           |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                         |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **R2C3 · Bright.** September 15 six-column/four-row front grid, facing the window. Low interior-left rosette. Keep clear bright light, without automatically assigning it the strongest intensity. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Water               | Use medium dryness, plant response, and pot-weight trend as evidence.                                                                                                                                                                                                                                               |
+| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. The owner recalls Molly's Succulent Mix with approximately 20% added perlite (September 20 report; ratio estimated); keep the crown above the medium.                                                                                                              |
+| Surface             | Avoid touching or wiping the powdery farina; fingerprints and rubbed patches do not grow back on the same leaf.                                                                                                                                                                                                     |
 
 ## Rotation, propagation, and watch points
 
-- Rotate 90° weekly after the `H2` common-name label is applied and its starting
-  orientation is photographed.
+- Rotate 90° weekly for even exposure under the fixed grow light.
 - Distinguish the cultivar's firm, organized bumps from new translucent,
   blistered, or collapsing tissue.
 - Remove only fully dry lower leaves that release without pulling live tissue.
-- Healthy mature leaves may propagate, but the resulting offspring can vary;
-  preserve the named plant until its identity and condition are documented.
+- Healthy mature leaves may propagate, although offspring can vary.
 
 ## Sources
 
-- Owner clarification on September 20, 2026: all six G1/G2/G3 and H1/H2/H3 pots contain Molly's Succulent Mix with added perlite; approximately 20% added perlite is an uncertain recollection that supersedes the earlier 40% description. This clarifies the existing setup without dating a new repot or changing recorded weights.
+- Owner arrival and repot observations, August 28–29, 2026; medium description, September 20: Molly's Succulent Mix with approximately 20% added perlite, an estimated proportion.
 
 - [Mountain Crest Gardens: 'Raindrops' seller listing](https://mountaincrestgardens.com/echeveria-raindrops/)
 - [NC State Extension: _Echeveria_ genus profile](https://plants.ces.ncsu.edu/plants/echeveria/)

@@ -1,0 +1,117 @@
+{
+    "anatomy": {
+        "intro": "The illustration highlights a branching sedum habit rather than a flat, compact rosette.",
+        "parts": [
+            {
+                "function": "A narrow, pointed succulent leaf carries stored water.",
+                "label": "Fleshy leaf"
+            },
+            {
+                "function": "Leaves cluster around the end of an extending shoot.",
+                "label": "Shoot tip"
+            },
+            {
+                "function": "The reddish stem supports leaves beyond the original crown.",
+                "label": "Branching stem"
+            },
+            {
+                "function": "A node marks a leaf's attachment along the stem.",
+                "label": "Leaf node"
+            }
+        ],
+        "sourceIds": [
+            "sedum"
+        ]
+    },
+    "comparisonSourceIds": [
+        "sedum",
+        "echeveria"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "sedum"
+        ],
+        "text": "The reference species has lightly scented white, star-shaped flowers in a fairly flat cluster. No flowering has been recorded for this component."
+    },
+    "growth": {
+        "note": "The stages describe the proposed species group; color alone cannot confirm identity or indicate readiness for water.",
+        "sourceIds": [
+            "sedum"
+        ],
+        "stages": [
+            {
+                "text": "Short shoots hold the copper-toned foliage close together.",
+                "title": "Small leafy shoot"
+            },
+            {
+                "text": "Stems extend and turn upward at their tips.",
+                "title": "Spreading branches"
+            },
+            {
+                "text": "Established growth may produce pale flower clusters.",
+                "title": "Mature flowering shoot"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "sedum"
+        ],
+        "text": "The proposed Sedum adolphi group comes from Mexico. NParks describes a low succulent shrub suited to dry conditions. That geography belongs to the reference species; this component arrived in a nursery-made garden, and its precise identity, cultivar and original propagation history remain unknown."
+    },
+    "image": {
+        "alt": "Numbered copper-green Sedum schematic: pointed leaf, shoot tip, branching stem and leaf node.",
+        "file": "assets/plant-explainers/tiny-planter-coppertone-sedum.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration on warm ivory. Clean botanically accurate pen-and-watercolor, muted forest-green, sage and ochre palette, generous whitespace, large central specimen. Exactly four large numbered circular markers 1, 2, 3, 4 with thin clear noncrossing leader lines to the specified features. Numerals legible at 350px display. No title, words, paragraphs, watering icons, calendar, border or logo. Schematic anatomy, not a photograph of an owned plant. Show a low branching Sedum adolphi-type succulent with pointed narrow fleshy yellow-green to copper-orange leaves in loose rosettes along reddish arching stems, representative of probable adolphi/nussbaumerianum complex, not an exact cultivar. No roots or flowers. Marker1 to an individual fleshy pointed leaf; marker2 to the loose terminal rosette; marker3 to a visible branching stem; marker4 to a clearly visible leaf attachment node lower on the stem. Distinct branching silhouette, not a compact Echeveria.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Pale rosette echeveria",
+            "profileSlug": "tiny-planter-echeveria",
+            "text": "Compare its broad powdery leaves and compact crown with the sedum's narrower leaves on visible stems."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "sedum"
+        ],
+        "text": "NParks lists roughly 20 cm height and 60–90 cm spread for the reference species. A small shared pot will not necessarily reach that scale, but the spreading habit explains why stems may eventually crowd neighboring rosettes."
+    },
+    "milestones": [
+        {
+            "date": "2026-09-02",
+            "sourcePath": "docs/plants/succulents/tiny-planter-coppertone-sedum.md",
+            "text": "Acquired in the Smart Planet Home mixed succulent garden from Home Depot.",
+            "title": "Joined the collection"
+        },
+        {
+            "date": "2026-09-02",
+            "sourcePath": "docs/plants/succulents/tiny-mixed-succulent-planter.md",
+            "text": "The rosettes, copper-toned shoots and broad paddles stayed together in the terra-cotta planter.",
+            "title": "Repotted together"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "sedum"
+        ],
+        "text": "Coppertone describes the foliage's warm tint. NParks treats Sedum nussbaumerianum as a synonym of S. adolphi; the two names in this collection record preserve the uncertain retail match."
+    },
+    "slug": "tiny-planter-coppertone-sedum",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "sedum",
+            "title": "NParks: Sedum adolphi",
+            "url": "https://www.nparks.gov.sg/florafaunaweb/flora/6/1/6141"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "echeveria",
+            "title": "NC State Extension: Echeveria",
+            "url": "https://plants.ces.ncsu.edu/plants/echeveria/"
+        }
+    ]
+}

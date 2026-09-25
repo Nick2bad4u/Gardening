@@ -13,37 +13,35 @@
 
 ## Names and identity
 
-| Kind                    | Name                                    |
-| ----------------------- | --------------------------------------- |
-| Accepted botanical name | _Parodia leninghausii_                  |
-| Common names            | Yellow tower cactus, golden ball cactus |
-| Spelling note           | _leninghausii_, not “lenninghausii”     |
+| Kind                 | Name                                    |
+| -------------------- | --------------------------------------- |
+| Profile name         | _Parodia leninghausii_                  |
+| Common names         | Yellow tower cactus, golden ball cactus |
+| Current Kew spelling | _Parodia lenninghausii_                 |
 
 The golden-spined young globe becomes a tall column with age. Mature plants
 can produce repeated bursts of pale-yellow flowers around the crown.
 
-Owner-supplied 2026-08-11 close photographs reviewed during identification,
-but not retained in this repository, were consistent with this identification: the
-plant has numerous narrow ribs, fine golden radial spines, longer flexible
-golden central spines, and denser golden growth at the crown. No conflicting
-character was visible. The high-confidence working ID is retained as an owner-
-observed assessment; the current archive does not independently preserve those
-diagnostic close views.
+The identification is strongly supported by observations from August 11, 2026:
+numerous narrow ribs, fine golden radial spines, longer flexible golden central
+spines, and denser golden growth at the crown. The close photographs used for
+that assessment are no longer available.
 
 ## Origin, form, and publication
 
-The species is native to Rio Grande do Sul in southern Brazil. It was first
-published as _Pilocereus leninghausii_ in 1895 and transferred to _Parodia_
-in 1982. The earlier 1895 date is the one used on the collection label.
+The species is native to Rio Grande do Sul in southern Brazil. Kew records
+the basionym _Pilocereus lenninghausii_ from **1896** and the accepted
+_Parodia lenninghausii_ combination from **2010**. The collection profile retains
+the familiar horticultural spelling _leninghausii_.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                          |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R4C5 · Bright.** September 15 six-column/four-row front grid, facing the window. Back-right taller cactus; compare its tip separately from the short F1 beside it. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Water               | Soak and drain, then let the 4-inch pot dry. Reduce watering when cool or growth slows.                                                                                                                                                                                                                     |
-| Pot and mix         | A stable, mineral-heavy pot becomes important as the body changes from globe to column.                                                                                                                                                                                                                     |
-| Flowers             | Flowering normally requires maturity; absence of flowers on a young plant is not a care failure.                                                                                                                                                                                                            |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                      |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Photo-matched R4C5 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Back-right taller cactus; compare its tip separately from the short F1 beside it. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Soak and drain, then let the 4-inch pot dry. Reduce watering when cool or growth slows.                                                                                                                                                                                                 |
+| Pot and mix         | A stable, mineral-heavy pot becomes important as the body changes from globe to column.                                                                                                                                                                                                 |
+| Flowers             | Flowering normally requires maturity; absence of flowers on a young plant is not a care failure.                                                                                                                                                                                        |
 
 ## Rotation, propagation, and watch points
 

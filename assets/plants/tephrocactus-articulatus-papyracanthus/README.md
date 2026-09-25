@@ -4,7 +4,7 @@ _Tephrocactus articulatus var. papyracanthus_ - Cactus-08
 
 Collection label ID: `G2`.
 
-Species-reference photographs may show other T. articulatus forms; the ordered plant is the papery-spined horticultural variety.
+Species-reference photographs may show other Tephrocactus articulatus forms; the collection plant is the papery-spined horticultural variety.
 
 Collection research: [open the plant profile](../../../docs/plants/cacti/tephrocactus-articulatus-papyracanthus.md).
 

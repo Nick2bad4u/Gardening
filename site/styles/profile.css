@@ -376,10 +376,6 @@
         --pill-accent: #6588a9;
     }
 
-    & .profile-metadata-scope {
-        grid-column: 1 / -1;
-    }
-
     & .profile-metadata-label,
     & .profile-metadata-calendar {
         --pill-accent: #b18b41;

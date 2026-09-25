@@ -1,12 +1,13 @@
 # Silken pincushion cactus
 
 - Inventory: Rehab-04 — probable _Mammillaria bombycina_
-- Label ID: none — removed; historical record only
+- Label ID: none
 - Visual description: The historical plant was a small brown-green globe so densely covered with pale radial and reddish central spines that little stem tissue remained visible by the time it was removed.
-- Interesting fact: A tiny patch of green near the crown survived, but not enough sound tissue remained to make salvage practical; the page preserves that decision instead of implying a successful recovery.
+- Interesting fact: The species name means silky or cottony, referring to the wool and fine pale spines that cover living plants.
 - Identification: **probable from an older green photo**
 - Status: **removed 2026-07-24; historical record**
-- Acquired from: Existing shared cactus planter; exact source and date not recorded
+- Acquired from: Not recorded
+- Acquired on: Not recorded
 - Photo archive: [licensed living-species reference images](../../../assets/plants/mammillaria-bombycina/)
 
 ## Names and identification
@@ -17,13 +18,13 @@
 | Common names                | Silken pincushion cactus, silky pincushion |
 | Name clue                   | _bombycina_ means silky or cottony         |
 
-An older owner-supplied image, which is not retained in this repository, showed
+An older photograph, no longer available, showed
 a clustered green _Mammillaria_ with white radial spines,
 wool around the areoles, and longer reddish-brown central spines. That is a good
 match for _M. bombycina_, but the final almost-black shrunken plant no longer
 showed enough living diagnostic tissue for a confident identification.
 
-## What a living plant would be
+## Species background
 
 The species is native to a small area of west-central Mexico, principally
 southwestern Aguascalientes and northeastern Jalisco. It grows in dry rocky
@@ -34,46 +35,25 @@ branching to form a mound. Each tubercle carries fine white radial spines,
 silky wool, and longer brown central spines, some hooked. Deep rose-pink flowers
 form a ring near the crown.
 
-That description is for reference photos and any future replacement—not a claim
-that the brown tissue on the removed plant was dormant. A cactus with no firm
-green crown, no viable offset, and dry-brown tissue through the base is dead.
-The tiny patch found at final inspection was not a viable crown.
+## Collection history and removal
 
-## Removal outcome
+This plant formerly grew in the shared cactus planter. Its acquisition source
+and date were not recorded. It was removed on **July 24, 2026**, after final
+inspection found only a tiny patch of green flesh near the top and too little
+viable tissue to salvage. No offset or cutting was retained. The identification
+remains a probable match based on its earlier appearance; no photograph of the
+final inspection is available.
 
-Rehab-04 was removed from the shared planter on 2026-07-24. The owner recorded
-that final inspection found only a tiny patch of green flesh near the top; no
-supporting collection photograph is retained. That was too little viable
-tissue to salvage, so no offset or cutting was retained. This closes the active
-recovery record; the probable identification, older observations, and
-living-species reference photographs remain archived.
+The removal assessment focused on firmness, the condition of the base, and
+whether a healthy crown or offset could survive independently. The isolated
+green patch did not provide a viable cutting. The remaining three plants
+continue in the shared planter; this historical record has no active pot or
+watering schedule.
 
-### Historical decision checklist
+## Reference care for a future replacement
 
-The pre-removal checklist is retained to document how viability was judged:
-
-1. Remove the decorative moss immediately around it so the base is visible.
-2. Test gently from the side. A living dehydrated cactus remains at least
-   somewhat firm; dry-dead tissue is hollow or brittle, while rot is soft.
-3. Look for a firm green offset or active crown with enough healthy tissue to
-   survive separation. If present, pause and isolate that living portion. A
-   tiny isolated green patch is not necessarily viable.
-4. If uncertain, make one shallow scratch on a low inconspicuous area with a
-   clean blade. Moist pale or green tissue means reassess; dry brown tissue
-   throughout confirms death.
-5. Pull or tease out the dead crown and loose roots without tearing the three
-   living neighbors. Remove any sour, black, or mushy material.
-6. Leave the shared planter dry while checking the exposed neighboring bases.
-   Do not water as a “recovery” treatment for a dead plant.
-
-Gloves and tools are useful because the old central spines remain sharp even
-after death. Discard rotten material rather than attempting to compost it
-indoors.
-
-## Reference care for possible future material
-
-No viable offset was recovered. These notes remain for a future replacement or
-for a genuinely living offset from another plant:
+The following notes apply only to living replacement material, not to the
+removed plant:
 
 | Topic     | Practical approach                                                                                          |
 | --------- | ----------------------------------------------------------------------------------------------------------- |

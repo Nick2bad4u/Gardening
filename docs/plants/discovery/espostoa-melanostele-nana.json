@@ -1,0 +1,130 @@
+{
+    "anatomy": {
+        "intro": "Four structures that explain the form of the probable compact Espostoa.",
+        "parts": [
+            {
+                "function": "Fine pale hairs screen the green surface beneath.",
+                "label": "Woolly covering"
+            },
+            {
+                "function": "A sharp projecting spine remains hidden among the soft-looking hairs.",
+                "label": "Central spine"
+            },
+            {
+                "function": "The spine-bearing cushion organizes the wool and spines along the stem.",
+                "label": "Areole"
+            },
+            {
+                "function": "The living stem stores water and photosynthesizes beneath its covering.",
+                "label": "Green ribbed stem"
+            }
+        ],
+        "sourceIds": [
+            "form",
+            "anatomy"
+        ]
+    },
+    "comparisonSourceIds": [
+        "form",
+        "gold"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "flowers"
+        ],
+        "text": "RHS describes Espostoa flowers at genus level as white and bell- or cup-shaped, opening at night. This is a mature-plant feature; a small woolly nursery cactus should not be expected to flower on a schedule."
+    },
+    "growth": {
+        "note": "The illustration shows the probable identity; growth alone will not settle the subspecies.",
+        "sourceIds": [
+            "form"
+        ],
+        "stages": [
+            {
+                "text": "A short woolly column establishes its ribbed body.",
+                "title": "Compact juvenile"
+            },
+            {
+                "text": "Fresh tissue and new wool appear at the growing tip.",
+                "title": "Taller stem"
+            },
+            {
+                "text": "The parent species can form a clump of upright columns.",
+                "title": "Older branching plant"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "Kew records Espostoa melanostele subsp. nana from Ancash, Peru, in desert and dry shrubland. That is the background of the working identification, not a known collection locality for this nursery plant. Its woolly upright body fits Espostoa, but the precise identification remains probable, with E. lanata also considered."
+    },
+    "image": {
+        "alt": "Botanical anatomy of the probable compact Espostoa, with numbered markers for woolly covering, central spine, areole, green ribbed stem.",
+        "file": "assets/plant-explainers/espostoa-melanostele-nana.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration, warm ivory background, precise pen-and-watercolor, muted forest green/sage/ochre palette, large centered specimen and generous whitespace. Exactly four large legible numbered markers 1, 2, 3, 4, each once, with fine leader lines ending clearly on the named structures. No title, words, border, watering symbols or calendar. No flowers, grafts, or roots. Numbers must remain readable at 350px. Generic anatomical specimen, not measurement evidence. A compact Espostoa melanostele subsp nana cactus, upright short green column with vertical ribs, thick cream-white wool and a few visible long dark sharp central spines. Show a naturally thinner patch of hair to reveal structure, no shaved cutaway. 1 points to woolly hairs; 2 to one sharp central spine; 3 to a round areole beneath hairs; 4 to the green ribbed stem exposed through thinner hair.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Golden ball cactus",
+            "profileSlug": "parodia-leninghausii",
+            "text": "Parodia leninghausii has golden bristles rather than the thick white wool characteristic of this plant."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "The parent species is columnar and clump-forming, with 20–30 ribs. Its published size should not be treated as a precise ceiling for this uncertain compact plant."
+    },
+    "milestones": [
+        {
+            "date": "2026-08-10",
+            "sourcePath": "docs/plants/cacti/espostoa-melanostele-nana.md",
+            "text": "Purchased at Carlsons' Greenhouse in a 4-inch individual pot.",
+            "title": "Joined the collection"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "Kew recognizes nana as a subspecies under a combination published in 2002; it was first described as Espostoa nana in 1964."
+    },
+    "slug": "espostoa-melanostele-nana",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "range",
+            "title": "Kew Plants of the World Online: Espostoa melanostele subsp. nana",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:1133534-2"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "form",
+            "title": "RHS: Espostoa melanostele",
+            "url": "https://www.rhs.org.uk/plants/6869/espostoa-melanostele/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "flowers",
+            "title": "RHS: Espostoa melanostele subsp. nana",
+            "url": "https://www.rhs.org.uk/plants/341695/espostoa-melanostele-subsp-nana/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "gold",
+            "title": "RHS: Parodia leninghausii",
+            "url": "https://www.rhs.org.uk/plants/117769/parodia-leninghausii/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "anatomy",
+            "title": "National Park Service: cactus adaptations",
+            "url": "https://www.nps.gov/arch/learn/nature/cacti.htm"
+        }
+    ]
+}

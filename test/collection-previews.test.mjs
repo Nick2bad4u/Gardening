@@ -46,6 +46,45 @@ describe("collection preview publication", () => {
         );
     });
 
+    it.each(["first", "second"])(
+        "omits the whole comparison when its %s photo is unavailable while preserving nearby content and healthy pairs",
+        (missing) => {
+            expect.hasAssertions();
+
+            const secondId = "b".repeat(32);
+            const healthyId = "c".repeat(32);
+            const unavailableId = missing === "first" ? id : secondId;
+            const before =
+                '<section id="history"><p>Recorded milestones remain.</p>';
+            const incomplete = `<section class="discovery-photo-comparison" data-photo-comparison="synthetic-plant" aria-labelledby="comparison-title"><h3 id="comparison-title">Then and now</h3><div><figure><img src="https://thumb.gyazo.com/thumb/960/${id}.jpg"><figcaption>Earlier view</figcaption></figure><figure><img src="https://thumb.gyazo.com/thumb/960/${secondId}.jpg"><figcaption>Later view</figcaption></figure></div></section>`;
+            const healthy = `<section data-photo-comparison="healthy-plant" class="discovery-photo-comparison"><h3>Healthy comparison</h3><img src="https://thumb.gyazo.com/thumb/960/${healthyId}.jpg"><p>Keep this caption.</p></section>`;
+            const after =
+                '<p>Collection notes remain.</p></section><section id="sources">Sources remain.</section>';
+            const ordinary = `<a href="https://gyazo.com/${unavailableId}"><img src="https://thumb.gyazo.com/thumb/960/${unavailableId}.jpg"></a><figcaption>Ordinary photo credit</figcaption>`;
+            const html = before + incomplete + healthy + after + ordinary;
+            const output = rewriteUnavailableCollectionPreviews(
+                html,
+                new Set([unavailableId])
+            );
+
+            expect(output).toContain(before + healthy + after);
+            expect(output).not.toContain(
+                'data-photo-comparison="synthetic-plant"'
+            );
+            expect(output).not.toContain('id="comparison-title"');
+            expect(output).toContain(
+                `href="https://gyazo.com/${unavailableId}"`
+            );
+            expect(output).toContain(
+                `data-unavailable-capture="${unavailableId}"`
+            );
+            expect(output).toContain("Ordinary photo credit");
+            expect(rewriteUnavailableCollectionPreviews(html, new Set())).toBe(
+                html
+            );
+        }
+    );
+
     it("retries a transient thumbnail failure then uses only the reviewed capture original", async () => {
         expect.hasAssertions();
 

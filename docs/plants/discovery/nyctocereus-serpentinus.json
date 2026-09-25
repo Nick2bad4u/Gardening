@@ -1,0 +1,118 @@
+{
+    "anatomy": {
+        "intro": "A branching, flexible outline explains why a young upright pot can eventually need more room.",
+        "parts": [
+            {
+                "function": "The green cylindrical stem carries a series of low ribs.",
+                "label": "Slender stem"
+            },
+            {
+                "function": "Small felted growing cushions sit closely together along the ribs.",
+                "label": "Areole"
+            },
+            {
+                "function": "Fine pale-to-brown spines radiate from the areoles.",
+                "label": "Radial spines"
+            },
+            {
+                "function": "A new branch adds another extending stem to the scrambling plant.",
+                "label": "Side branch"
+            }
+        ],
+        "sourceIds": [
+            "britton-rose"
+        ]
+    },
+    "comparisonSourceIds": [
+        "britton-rose",
+        "ming-comparison"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "britton-rose"
+        ],
+        "text": "The classical description records white flowers roughly 15–19 cm long, emerging near the upper areoles, followed by red fruit. A potential bloom is much broader than the thin stem that bears it; flowering has not been recorded for this collection specimen."
+    },
+    "growth": {
+        "note": "A leaning mature stem can be consistent with its habit; sudden softness or a damaged base is a separate observation.",
+        "sourceIds": [
+            "britton-rose"
+        ],
+        "stages": [
+            {
+                "text": "Young stems can stand upright in a compact group.",
+                "title": "Upright start"
+            },
+            {
+                "text": "Longer stems branch and begin to lean or arch.",
+                "title": "Extending branches"
+            },
+            {
+                "text": "With age, stems can clamber through supports or trail when unsupported.",
+                "title": "Scrambling adult"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew",
+            "britton-rose"
+        ],
+        "text": "Serpent cactus is native to Mexico, where Kew describes it as a scrambling succulent shrub of seasonally dry tropical habitats. Its slender stems are built for a different life from a compact barrel cactus: the classic botanical description records stems climbing through bushes, trailing over walls or hanging when support is absent."
+    },
+    "image": {
+        "alt": "Serpent cactus with numbered slender ribbed stem, felted areole, fine radial spines and side-branch junction.",
+        "file": "assets/plant-explainers/nyctocereus-serpentinus.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024x1024 scientific botanical educational illustration. Warm ivory background; muted forest-green, sage and ochre with natural species colors; clean accurate pen-and-watercolor style, large central specimen, ample whitespace. Exactly four large circled numbered markers 1-4 with clear thin leaders pointing to the features specified below in order. Numbers legible at 350px display width. No words, title, paragraphs, watering or calendar icons. No pot, roots, flowers or grafts unless explicitly requested. Nyctocereus serpentinus, serpent cactus: a rooted-looking cluster shown without roots of several slender cylindrical green cactus stems; taller stems lean and arch gracefully, one side branch emerges naturally. Many low vertical ribs with close-set small areoles and short pale-to-brown spines. Do not draw snake heads or flat leaves. 1 points to one slender green ribbed stem; 2 to a spine-bearing areole with a small magnified detail if necessary; 3 to short radial spines; 4 to the point where a side branch joins a larger stem. No flowers.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Ming Thing",
+            "profileSlug": "cereus-forbesii-ming-thing",
+            "text": "Both are cacti, but Ming Thing grows in thick irregular clubs. Serpent cactus develops long, comparatively slender ribbed stems and a scrambling habit; its branches are not flat cactus pads."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "britton-rose"
+        ],
+        "text": "Stems in the botanical description can reach around 3 m long while remaining only about 2–5 cm thick. Those dimensions describe developed plants, not a growth promise for the indoor pot."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-23",
+            "sourcePath": "docs/plants/starter/nyctocereus-serpentinus.md",
+            "text": "Joined the collection from Costa Farms.",
+            "title": "Acquired"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "Kew currently accepts Nyctocereus serpentinus and lists Peniocereus serpentinus as a synonym. Finding either name in a reference does not by itself indicate a different plant."
+    },
+    "slug": "nyctocereus-serpentinus",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew — Nyctocereus serpentinus",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:171152-2"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "britton-rose",
+            "title": "Britton and Rose — The Cactaceae, volume 2",
+            "url": "https://upload.wikimedia.org/wikipedia/commons/b/b0/The_Cactaceae_-_descriptions_and_illustrations_of_plants_of_the_cactus_family_%28IA_cactaceaedescri02brit%29.pdf"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "ming-comparison",
+            "title": "NC State Extension — Ming Thing",
+            "url": "https://plants.ces.ncsu.edu/plants/cereus-forbesii-ming-thing/"
+        }
+    ]
+}

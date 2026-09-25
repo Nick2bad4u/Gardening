@@ -4,7 +4,7 @@ _Sempervivum Coconut Crystal_ - Succulent-08
 
 Collection label ID: `H1`.
 
-Genus-reference photographs; no reusable image is assumed to show the exact Colorockz Coconut Crystal cultivar.
+Genus-reference photographs showing Sempervivum diversity; these images do not establish the exact Colorockz Coconut Crystal cultivar.
 
 Collection research: [open the plant profile](../../../docs/plants/succulents/sempervivum-coconut-crystal.md).
 

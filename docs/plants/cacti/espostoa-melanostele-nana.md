@@ -21,9 +21,9 @@
 | Permanent-label form   | PROB. _Espostoa melanostele_ subsp. _nana_ |
 
 The plant is a compact column wrapped in dense white wool. That wool is not a
-soft protective surface: it conceals numerous sharp spines. Keep the probable
-wording until a clear mature areole, exposed spine pattern, or reliable nursery
-record separates it from _E. lanata_.
+soft protective surface: it conceals numerous sharp spines. Mature areoles,
+exposed spine patterns, and reliable nursery provenance may help distinguish
+this probable identification from _E. lanata_.
 
 ## Origin, form, and publication
 
@@ -34,12 +34,12 @@ accepted subspecies combination in 2002.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                                          |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R3C2 · High.** September 15 six-column/four-row front grid, facing the window. Interior-left tall white cactus; retain the qualified Espostoa identification and avoid shading H1. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Water               | Soak the root ball, drain fully, and wait for a complete dry-down. Keep the wool and crown dry when practical.                                                                                                                                                                                                              |
-| Pot and mix         | The current 4-inch pot is suitable while the base remains uncrowded; keep the neck visible above top dressing.                                                                                                                                                                                                              |
-| Airflow             | Gentle moving air helps wet wool dry; do not aim either pole fan hard enough to flatten it.                                                                                                                                                                                                                                 |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                     |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Grow-light position | **Photo-matched R3C2 · High.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Interior-left tall white cactus; keep its growing tip exposed and avoid shading nearby low plants. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Soak the root ball, drain fully, and wait for a complete dry-down. Keep the wool and crown dry when practical.                                                                                                                                                                                         |
+| Pot and mix         | The current 4-inch pot is suitable while the base remains uncrowded; keep the neck visible above top dressing.                                                                                                                                                                                         |
+| Airflow             | Gentle moving air helps wet wool dry; do not aim either pole fan hard enough to flatten it.                                                                                                                                                                                                            |
 
 ## Rotation, propagation, and watch points
 

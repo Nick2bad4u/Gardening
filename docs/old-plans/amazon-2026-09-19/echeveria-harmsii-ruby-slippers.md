@@ -1,20 +1,20 @@
 # Ruby Slippers echeveria — archived plan
 
-**Archived September 20, 2026. Unreceived plant; cancellation pending, not confirmed.** The owner abandoned this five-plant Amazon plan after reviewing seller feedback. This page preserves September 19 research and proposed care only. It is outside the active collection and is not a watering, weighing, or shopping task. See the [old-plan overview](../amazon-plant-order-2026-09.md).
+**Archived September 20, 2026. Seller cancellation confirmed September 21; no charge.** This plant was never received. The September 19 botanical research and proposed care remain here as an abandoned plan, outside the active collection. See the [old-plan overview](../amazon-plant-order-2026-09.md).
 
 - Former inventory allocation: Succulent-14 — probable _Echeveria harmsii_; seller name “Echeveria Ruby Slippers”
 - Physical-label allocation: none — withdrawn
 - Tracker allocation: none — withdrawn
-- Status: **Archived old plan — unreceived; plant-order cancellation pending as of 2026-09-20**
-- Visual description: Seller imagery shows fuzzy green leaves with red tips and margins; _Echeveria harmsii_ references describe a branching succulent with hairy, narrow leaves. The actual purchased plant has not been photographed individually.
+- Status: **Archived — never received; canceled 2026-09-21**
+- Visual description: Seller imagery shows fuzzy green leaves with red tips and margins; _Echeveria harmsii_ references describe a branching succulent with hairy, narrow leaves. No individual plant was received.
 - Interesting fact: The working species grows as a small branching subshrub, so it may eventually rise above its flatter rosette companions.
 - Identification: **seller-labeled Ruby Slippers echeveria; _Echeveria harmsii_ is a probable working identification, not a confirmed species or registered cultivar**
 - Ordered from: The Succulent Cult through Amazon; order screenshot supplied 2026-09-19
-- Order status: **Owner is canceling the plant order; seller cancellation and refund are not confirmed. The old October 1 delivery estimate is superseded planning context.**
-- Advertised container: Seller lists a rooted starter in a 2-inch nursery pot; receipt and root condition unrecorded
-- Former proposed pot: Owner-designated shared decorated Amazon Basics 8-inch white polypropylene pot with drainage, in Molly's Succulent Mix; actual planting date and measured dimensions unrecorded
+- Order status: **Seller cancellation confirmed 2026-09-21; no charge. Former estimated delivery: October 1, 2026.**
+- Advertised container: Seller lists a rooted starter in a 2-inch nursery pot; plant never received; root condition unknown
+- Former proposed pot: Owner-designated shared decorated Amazon Basics 8-inch white polypropylene pot with drainage, in Molly's Succulent Mix; arrangement never planted
 
-Physical-label and tracker allocations are withdrawn; this is botanical research only. The decorated 8-inch pot is not occupied by these plants; its current plan is recorded in the [equipment inventory](../../equipment/inventory.md).
+The decorated pot was a separate purchase. Its later use is described in the [equipment inventory](../../equipment/inventory.md).
 
 ## Names and identity
 
@@ -26,15 +26,15 @@ Physical-label and tracker allocations are withdrawn; this is botanical research
 | Reference common name     | Red echeveria                                                             |
 | Origin of working species | Mexico                                                                    |
 
-The trade name is commonly associated with _Echeveria harmsii_, but the supplied Amazon title does not contain that species epithet. RHS describes hairy green leaves with red margins and a branching habit for the species. Other hairy echeverias and hybrids can resemble this description. Preserve the qualified working ID until the actual plant, any tag, and stronger diagnostic evidence can be compared.
+The trade name is commonly associated with _Echeveria harmsii_, but the supplied Amazon title does not contain that species epithet. RHS describes hairy green leaves with red margins and a branching habit for the species. Other hairy echeverias and hybrids can resemble this description. The seller's plant therefore remains a probable _E. harmsii_ match.
 
-Kew records _Echeveria harmsii_ as an accepted Mexican species. Species nomenclature does not establish a particular retail selection's breeder, release year, or parentage, so none has been invented for “Ruby Slippers.”
+Kew records _Echeveria harmsii_ as an accepted Mexican species. The breeder, release year, and parentage behind this seller's “Ruby Slippers” trade name are unknown.
 
-## Collection evidence and shared container
+## Former shared-container plan
 
-The September 19 order described a two-inch rooted starter. The owner initially requested administrative enrollment, then abandoned the unreceived five-plant order on September 20 after reviewing seller feedback. Cancellation is pending, not confirmed; no receipt, planting, weight, or care event was recorded.
+The September 19 order described a two-inch rooted starter. The five-plant plan was abandoned September 20 after a review of seller feedback; Amazon confirmed all five seller cancellations on September 21, with no charge. None of the plants was received or planted.
 
-The abandoned shared-pot plan grouped [Cubic Frost](./echeveria-cubic-frost.md), [Coppertone](./sedum-adolphi-coppertone.md), [Deminuta](./echeveria-setosa-deminuta.md), and [Ruby Slippers](./echeveria-harmsii-ruby-slippers.md) in one decorated eight-inch pot. [Nanouk](./tradescantia-nanouk.md) was planned separately. The four botanical profiles were intended to share one whole-container history, but no actual care or weight history was established. These research pages have no physical-label or tracker allocation.
+The abandoned shared-pot plan grouped [Cubic Frost](./echeveria-cubic-frost.md), [Coppertone](./sedum-adolphi-coppertone.md), [Deminuta](./echeveria-setosa-deminuta.md), and [Ruby Slippers](./echeveria-harmsii-ruby-slippers.md) in one decorated eight-inch pot. [Nanouk](./tradescantia-nanouk.md) was planned separately. The four succulents would have shared one container, but the arrangement was never planted. The former research IDs remain archived without physical labels or tracker IDs.
 
 ## Proposed care — archived research
 
@@ -46,14 +46,15 @@ The abandoned shared-pot plan grouped [Cubic Frost](./echeveria-cubic-frost.md),
 | Mix and drainage    | The shared 8-inch drainage pot and Molly's Succulent Mix are owner-designated. Keep the base of the stems clear and use a future planting's own weight history.                                                                                                 |
 | Growth              | Reassess crowding as branches develop. The intended arrangement is not a guarantee of permanent size or compatibility.                                                                                                                                          |
 
-## Reference watch points — not current chores
+## Reference watch points
 
-Keep photographs of actual leaf shape, hairs, branching, and flowers separate from seller thumbnails. RHS describes red-and-yellow flowers for _E. harmsii_; flowers could improve the working identification, but no bloom has been observed in this collection record.
+RHS describes red-and-yellow flowers for _E. harmsii_. Leaf shape, hairs, branching, and flowers would help distinguish a future specimen from similar hairy echeverias.
 
-If one component becomes persistently shaded or needs an incompatible watering pattern, a documented separation is preferable to repeatedly watering the entire planter for it. In a future arrangement, use one shared record with component-specific notes.
+If one component becomes persistently shaded or needs an incompatible watering pattern, a documented separation is preferable to repeatedly watering the entire planter for it. Each plant's leaf condition would still need individual attention.
 
 ## Sources
 
-- Owner-supplied Amazon order screenshot, September 19, 2026: The Succulent Cult's “Echeveria Ruby Slippers” title and 2-inch retail size; private purchase evidence.
+- Amazon order review, September 21, 2026: all five The Succulent Cult plants canceled by the seller; no charge and no receipt.
+- Amazon order screenshot, September 19, 2026: The Succulent Cult's “Echeveria Ruby Slippers” title and 2-inch retail size; private purchase evidence.
 - [RHS: _Echeveria harmsii_](https://www.rhs.org.uk/plants/6232/echeveria-harmsii/details) — reference morphology, Mexican range, bright exposure, and drainage.
 - [Kew Plants of the World Online: _Echeveria harmsii_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A298512-2/general-information) — botanical name and species background; not a cultivar authentication.

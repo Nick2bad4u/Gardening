@@ -1,11 +1,11 @@
 # Practical care notes
 
-Last updated: 2026-09-23
+Last updated: 2026-09-24
 
 The goal is a simple routine that catches problems early. These plants do not
 need a separate spreadsheet of rules for every species.
 
-For detailed tracker guidance, read the [watering strategy](./watering-strategy.md), [weighing strategy](./weighing-strategy.md), and [spreadsheet/logger action guide](./logger-actions.md). The [daily task prompt](./daily-weighing-watering-prompt.md) applies the requested adaptive weighing policy with separate conditional Water candidates, reference-only holds, plant-specific Check-only exceptions, and useful weighing.
+Use the [watering strategy](./watering-strategy.md) for each plant group's readiness checks, the [weighing strategy](./weighing-strategy.md) for useful weight comparisons, and the [logger action guide](./logger-actions.md) for recording care. The daily report highlights useful inspections and weigh-ins; actual moisture and plant condition determine watering.
 
 The [AW200 + AeroLight 240 W pair](./equipment/aw200-and-aerolight-240w.md)
 was hung September 13 with **AW200 at 45% and AeroLight 240 W at 38%, both in Veg mode** and the room
@@ -27,13 +27,17 @@ The owner reports current conditions around **45–50% RH** and temperatures **i
 
 ## September 20 houseplant purchases
 
-**September 22 owner-confirmed plan:** P31/P32 will stand side by side at the **north-facing double glass sliding door in the living room**, with **P32 oyster plant closest to the glass**, **P31 Peperomia on the smallest Bamworld stool**, and the **FECiDA clipped to a shelf**. The September 21 intention to combine the lamps is historical. The current **assistant recommendation** is a **12-hour FECiDA-only first trial**, adding the two available Juhefa fixtures as targeted fill if canopy measurements show gaps; the optional Diivoo is omitted initially. The [equipment record](./equipment/inventory.md#lights-and-controls) preserves the exact models and seller ratings; the FECiDA's September 23 delivery estimate was last checked September 21. Receipt, the move, repots, and installation remain pending. Use the [living-room measurement trial](./layouts/table-placement-research.md#planned-living-room-window-and-leds) after dark and assess daylight separately; remeasure the actual combination if another lamp is added. The inferred total-light comparisons remain 4–6 DLI for Peperomia and 6–8 for Tricolor oyster plant, not cultivar thresholds. Acclimate gradually and judge compact new growth and color. Observe the new room's root-zone drying, temperature, humidity, and airflow after the move. A move alone does not reset weighing references or establish that water is due.
+The **September 22 living-room plan** places P31/P32 side by side at the **north-facing double glass sliding door**, with **P32 oyster plant closest to the glass**, **P31 Peperomia on the smallest Bamworld stool**, and the **FECiDA clipped to a shelf**. Start with a **12-hour FECiDA-only trial**, adding the two available Juhefas as targeted fill if canopy measurements show gaps. The optional Diivoo can stay off. Installation and the move remain unconfirmed.
+
+Use the [living-room measurement trial](./layouts/table-placement-research.md#planned-living-room-window-and-leds) to check lamp coverage after dark and assess daylight separately. Initial total-light comparisons are **4–6 DLI for Peperomia** and **6–8 for Tricolor oyster plant**, not established cultivar thresholds. Acclimate gradually and watch compact new growth, color, and root-zone drying in the new room. Exact models and seller ratings are in the [equipment record](./equipment/inventory.md#lights-and-controls).
 
 The owner purchased **P31 / #7 [Peperomia Bicolor](./plants/houseplants/peperomia-obtipan-bicolor.md)** and **P32 / #8 [Tricolor oyster plant](./plants/houseplants/tradescantia-spathacea-tricolor.md)** on September 20. The owner confirmed purchasing both directly at Carlson's Greenhouses in owner-reported six-inch nursery pots; the tags also identify Carlson's as the grower. Both labels specify bright, indirect light. Start with a gentler leaf-height exposure and gradual acclimation; the previously reported 18–22 app-estimated DLI far-table area is not automatically assigned. The [placement guide](./layouts/table-placement-research.md#september-20-houseplant-purchases) records explicitly inferred starting ranges.
 
 Check these as houseplants, without waiting for a cactus-style whole-pot dry plateau. Peperomia should partially dry between waterings without prolonged drought; for the oyster plant, check the upper 1–2 inches once the actual pot/root-ball depth is known. Check the current nursery-pot drainage and inspect below a dry surface before watering. A weight or model date is supporting evidence only. Inspect the new plants for pests, keep oyster-plant sap away from skin and chewing pets, and defer feeding until roots, nursery medium, and existing fertilizer are understood. Their profiles cite the species care guidance.
 
-Both current nursery pots are owner-reported as six inches in diameter. The owner reports both nursery pots are quite full and thinks the plants are ready for larger pots. The owner confirms two Amazon Basics eight-inch destination pots with many drainage holes, one previously decorated, and plans to keep them off the tables; the September 22 layout assigns the smallest Bamworld stool to P31 and puts P32 closest to the living-room sliding door; the ordered [Bamworld three-pack in Nature](https://www.amazon.com/dp/B0GTHQRZSL) had a September 21 delivery estimate (4:45–6:45 p.m.). The seller describes pine stools with heights of 7.8, 8.6, and 11.5 inches; these are listing dimensions, not measurements. Receipt and completed placement remain unconfirmed; the smallest stool is assigned to P31 in the plan. The proposed medium combines loose greenhouse-supplied potting mix, described by the owner as airy and containing perlite, with Molly's Succulent Mix. More perlite is available, but no ratio or completed blend is recorded. The repots and stool installation remain future plans. As confirmed September 20, both plants are currently on the floor on the room side near the money tree. Exact leaf-height light and current nursery-pot depth, drainage, and medium remain unmeasured or unrecorded. The nursery did not provide watering or feeding history. Wet leaves on arrival are recorded as an observation, not proof of root-ball watering, fertilizer, or a logged Water event. Purchase and future plans do not establish watering, scale observations, dry references, or a new pot setup. One destination pot is the previously decorated pot; its specific plant assignment is unconfirmed.
+Both houseplants were last recorded September 20 on the room-side floor near the money tree, in six-inch nursery pots. Separate eight-inch Amazon Basics pots with drainage holes are planned; one is decorated, with its plant assignment unrecorded. Compare the roots with the destination pots before repotting. The [Bamworld Nature stools](https://www.amazon.com/dp/B0GTHQRZSL) are seller-listed at 7.8, 8.6, and 11.5 inches high; receipt and installation are unconfirmed.
+
+The proposed medium blends airy, perlite-containing greenhouse potting mix with Molly's Succulent Mix. Additional perlite is available, but no completed blend is recorded. Nursery-pot depth, drainage, root condition, and feeding history are unknown. Wet leaves at purchase are not enough to judge root-ball moisture.
 
 For these planned repots, compare each actual root ball with the new pot rather than using leaf spread as the size guide. RHS recommends a Peperomia pot only a few centimetres wider than the root ball. Preserve healthy roots and the original planting depth. Use drainage holes and a uniform blend around the root ball; skip a separate clay-pebble bottom layer, because a fine-over-coarse boundary can hinder water movement. A few loose pebbles are not the same as a thick layer, but do not establish better drainage. See [RHS repotting guidance](https://www.rhs.org.uk/plants/peperomia/how-to-grow-peperomia) and [Washington State University on container drainage](https://s3.wp.wsu.edu/uploads/sites/403/2015/03/container-drainage.pdf).
 
@@ -42,7 +46,7 @@ A practical initial trial is **two parts greenhouse potting mix to one part Moll
 ## September 21 Lithops and split-rock additions
 
 Both Lithops nursery pots and the new split rock were purchased at Home Depot
-in Howell, Michigan, on September 21, 2026, as clarified by the owner September 23. P35's [probable _Lithops lesliei_](./plants/succulents/lithops-lesliei.md)
+in Howell, Michigan, on September 21, 2026. P35's [probable _Lithops lesliei_](./plants/succulents/lithops-lesliei.md)
 and [probable _Lithops salicola_](./plants/succulents/lithops-salicola.md)
 profiles describe the tan/brown and grey/green groups, respectively. Both share
 the same P35 / #9 assembly, care events, and setup references; the probable IDs
@@ -52,7 +56,7 @@ do not establish root connections between the four visible heads.
 
 The September 23 checks record Dry medium and firm plants: all four visible Lithops heads, and a single firm split-rock leaf pair. The owner describes nearly rootbound nursery plants and removed only freely detached, extremely dry Lithops leaves; the bumpier, lighter Lithops have small scars/fissures but remain firm. Routine weights were 1247 g for P35 and 713.5 g for P36. These are setup-2 observations, not verified dry baselines, and neither repot batch records watering.
 
-Measurement correction, September 23: the owner confirmed that the 02:38 “Measured individual light tube” entry belongs to **Lithops P35 / #9**. Its **1 in height × 1.25 in width** (2.54 × 3.175 cm) describes an individual head, not the shared planter. After a native backup, only that History entry's plant ID and pot label were reassigned, with original values retained in cell notes. P36 keeps its separate 02:37 measurement of 1 in × 2.25 in. Both measurement rows still carry the originally recorded setup 1 despite earlier setup-2 repots; that separate discrepancy was not changed by this identity correction.
+On September 23, the **02:38 P35 / #9 measurement** records an individual Lithops head at **1 in high × 1.25 in wide** (2.54 × 3.175 cm), not the whole planter. P36's separate **02:37 measurement** is **1 in × 2.25 in**. Both measurements are still marked setup 1 despite the earlier setup-2 repots, so their setup assignment needs checking before setup-specific comparisons.
 
 Treat both as manual leaf-cycle checks. A weight plateau, dry reference, or model date alone must not trigger watering. The shared Lithops planting does not require perfectly synchronized heads; inspect actual differences in firmness and replacement stage before watering the common root volume. Keep P36 separate from the existing G3 / P28 Royal Flush and retain separate observations. The profiles cite Wisconsin Extension and SANBI for drainage and leaf-replacement guidance. Do not copy a fixed seasonal calendar into this indoor setup or interpret wrinkling outer leaves alone as thirst.
 
@@ -64,8 +68,6 @@ member in the observation notes instead of duplicating its container's event.
 An aggregate overview adds context, not an extra plant or care task. The same
 P-ID follows a planting through repots; compare weights within the appropriate
 pot setup rather than carrying an older vessel's reference into the new one.
-
-**Archived plan:** the five unreceived Amazon plants are excluded from the active care routine; see the [abandoned Amazon plan](./old-plans/amazon-plant-order-2026-09.md). Their pot allocations are withdrawn and do not create current weighing, watering, or feeding tasks. Amazon confirmed cancellation on September 21 with no charge.
 
 1. Give the plants strong light, but increase intensity gradually after a
    low-light period or a major move.
@@ -100,7 +102,7 @@ use the skewer together with the pot's weight trend and plant condition.
 Remove it after checking and use a clean, dry skewer next time. Do not keep
 digging or unpot the plant just to establish an exact dry weight.
 
-The tracker now uses a sustained plateau or a crossed old weight reference to
+The tracker uses a sustained plateau or a crossed old weight reference to
 bring an **inspection** forward. A plateau alone does not mean water: poor root
 uptake, changed conditions, and scale noise can also produce a slow curve.
 The [current detector guide](../scripts/google-sheets/README.md#improved-drying-detector-5230)
@@ -122,7 +124,7 @@ dry and the plant is ready earlier, do not keep it dry until an estimated date.
 The logger does not automatically ingest a lighting change or use a skewer
 observation to prove that every part of a shared root ball is dry.
 
-**Daily care is retired.** Use the daily chat report and generated report page as the maintained care plan. The adaptive policy requests only useful weigh-ins, with no quota. The main Water list requires a confirmed plateau and the current validity/manual guards; reference-only hits stay in a separate hold/monitor category. The usual moisture/readiness check remains necessary before actual watering, and plant-specific Check-only exceptions remain separate. Neither a forecast nor a plateau proves physical dryness.
+Use the daily report for the current care plan. It requests useful weigh-ins without a quota and keeps reference-only monitoring separate from Water candidates. Moisture and readiness checks remain necessary before watering, with separate checks for houseplants and leaf-replacing succulents. Neither a forecast nor a plateau proves physical dryness.
 
 Do not deliberately extend a dry-down until the scale stops moving. Equally,
 1–2 g/day is not a universal watering threshold: a daily whole-pot difference
@@ -156,12 +158,12 @@ established, so do not use that claim to decide when to water.
 
 ### September 14 Detector Review
 
-The detector now keeps **reference reached** and **sustained plateau** as separate
+The tracker keeps **reference reached** and **sustained plateau** as separate
 observations, including when both agree. An observed reason to inspect does not
 need a calibrated forecast. A pot can still be drying after reaching its old
 reference; a flat curve alone cannot establish dry soil.
 
-The old seven-day minimum has been removed. Four time-spaced readings over
+The plateau comparison uses four time-spaced readings over
 2–10 days must show a sustained slowdown relative to an earlier measured
 decline after the first 24 hours. Small scale fluctuations are tolerated, while
 renewed rapid loss, unexplained gains, partial watering, and incompatible
@@ -177,9 +179,7 @@ documents the criteria and shared daily-report analyzer.
 
 ### September 13 Forecast Review
 
-The audit checked all 30 plants against the current 839-row observation ledger.
-The last readings were taken early September 13, before the new lights were
-reported installed, so those curves contain no measured response to the pair.
+The September 13 comparison used 839 observations for the 30 plants then tracked. Its latest readings predated the new lights, so it could not measure their effect on drying.
 
 - **Dates are prompts to inspect.** A crossed old reference or a sustained
   plateau can bring a check forward, but neither measures soil moisture.
@@ -197,9 +197,7 @@ reported installed, so those curves contain no measured response to the pair.
   needs the inner-leaf and replacement check; Kiwi aeonium uses observed growth
   or rest, not an assumed calendar season. Shared pots need every component
   inspected and drainage verified before a thorough watering.
-- **Input failures must stop a date.** The patch rejects text/boolean weights
-  and withholds the forecast around an undated watering or repot. It also
-  corrects missing-reference messages and the plateau/reference tooltips.
+- **Missing or invalid data limits a forecast.** Undated watering or repotting and invalid weights need checking before relying on a predicted date.
 
 The numeric plateau thresholds and exponential fit are practical starting
 heuristics, not validated species-specific moisture models. A good curve fit
@@ -215,15 +213,14 @@ can change with the growing environment.
 ## Earlier AW200SE Starting Plan
 
 The dated ramp below records earlier planning and observations. The
-September 9 AW200 correction and September 11 two-light plan supersede it.
+installed two-light setup supersedes it.
 Use the [two-light record](./equipment/aw200-and-aerolight-240w.md) for the current
 plan; earlier percentages and timers are not new combined-exposure measurements.
 
 The complete [AW200SE/E25 guide](./equipment/vivosun-aw200se.md) has the
 manufacturer's PPFD maps, DLI and lux math, and working ranges for every current
 plant. The [operating schedule](./equipment/aw200se-operating-schedule.md)
-is the canonical dated plan for the Fenton move indoors, confirmed and pending
-controller paths, light and paired-fan settings, placement and strength, pot
+records the dated plan for the Fenton move indoors, controller arrangements, light and paired-fan settings, placement and strength, pot
 layout, rotation, local daylight, and outdoor-day overrides.
 
 Before the July indoor transition, the older mixed planter had spent about a month outside in bright shade with a little direct sun after years in weak light. The monkey tail showed better growth then. This is historical rehabilitation evidence; the collection now uses the maintained indoor arrangement, not that outdoor program.
@@ -244,7 +241,7 @@ Before the July indoor transition, the older mixed planter had spent about a mon
 The earlier plan avoided an immediate jump to 100% at 12 inches and retained
 a normal dark period. It proposed 12 hours on and 12 hours off through
 September 20, then a seasonal timer. That timer is historical planning;
-both installed lights now share the owner-confirmed 13 h 15 m total cycle,
+both installed lights share the recorded 13 h 15 m total cycle,
 including 15-minute sunrise and sunset transitions at the start and end.
 
 The installed AW200SE/E25/VIVOSUN app combination was tested on 2026-07-24 and
@@ -266,7 +263,7 @@ Use gentle integrated-fan airflow and check it again with the wider fixture. Two
 pole-mounted circulation fans now approach the canopy from opposing directions.
 Both are VIVOSUN AeroWave E6 Gen2 units with independent E25 controllers. The
 second is clipped high on the opposite end of the black divider and aimed
-slightly downward. Keep both inside the 8:15 a.m.–7:45 p.m. indoor fan window:
+slightly downward. The earlier program used an 8:15 a.m.–7:45 p.m. indoor fan window; the current setup uses continuous rotating canopy airflow. Its starting settings were:
 
 - Natural Wind Level 1–2 of 10 on each E6 Gen2;
 - oscillation activated on each fan when supported, with the E6's app scale set
@@ -290,8 +287,7 @@ faster mean a fan is too close, too strong, or aimed too narrowly.
 ### Room temperature and humidity
 
 Keep the manual temperature/RH sensor shaded at canopy height, outside the
-direct AeroWave stream and away from wet trays. Read it at 7:30 p.m. each day
-from August 3 through 16, then as part of the Sunday inspection. Record current
+direct AeroWave stream and away from wet trays. The August 3–16 plan used daily 7:30 p.m. readings, followed by Sunday inspections. Record current
 temperature/RH plus the rolling 24-hour minimum and maximum; copy the all-time
 extremes on Sundays.
 
@@ -316,8 +312,7 @@ below the most intense part of the light until their response is known.
 
 ### August additions
 
-Do not reset the established collection's schedule. Treat the second wooden
-table as an acclimation overlay:
+The August arrival plan used the second wooden table for acclimation. These are historical starting positions; use the current placement guide for today's arrangement:
 
 | Plant group   | Initial position                                                                              | Watering and light rule                                                                                                 |
 | ------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
@@ -342,17 +337,16 @@ plant or planter IDs, not provisional table-position coordinates.
 The six plants ordered on 2026-08-25 were received rooted on 2026-08-28 and
 repotted from 2-inch nursery pots into 4-inch pots. Received-pot shapes are not
 reliably documented. The owner reports removing about 95% of the nursery soil
-during repotting. The owner-entered live tracker lists all six at 4 inches. All
+during repotting. The care log lists all six at 4 inches. All
 six now use the same round 4 × 4 × 3.7-inch pot model.
 
 The owner did not quarantine after hand inspection, near-complete soil removal,
 and seeing a California agriculture sticker on the box reported to say the
 shipment was inspected and certified pest free. Outdoor California production
-was also reported. Keep those reasons in the record without treating them as a
-guarantee: inspect bases, joints, leaf axils, and the new medium closely during
+was also reported. A clean arrival inspection cannot rule out later pests: inspect bases, joints, leaf axils, and the new medium closely during
 the next several weeks.
 
-1. The corrected mapping is `P23`/`G2` paper spine, `P24`/`H1` Coconut Crystal,
+1. The mapping is `P23`/`G2` paper spine, `P24`/`H1` Coconut Crystal,
    `P25`/`H2` Raindrops, `P26`/`H3` Eve's needle, `P27`/`G1` Black Widow, and
    `P28`/`G3` Royal Flush.
 2. Individual condition views are now archived for all six plants: top and
@@ -370,14 +364,14 @@ the next several weeks.
    brightest and coolest practical position with good airflow. Do not treat its
    hardiness as evidence that it will thrive in a warm, lower-light houseplant
    slot.
-7. The 4-inch repot is now an observed fact, not a general up-pot rule. It has
+7. The current 4-inch pot has
    roughly four times the surface area of a 2-inch pot and much more mix, so
    verify drainage and dry-down closely. For Royal Flush, active leaf state and
    depth still matter more than the group routine.
 
 The 2026-08-28 Check/Clean bulk round records slightly moist substrate for all
 six. This does not establish a watering or fertilizer event. Their deliberate
-2026-08-28 repots and 4-inch current pots establish pot setup 1. The [current placement guide](./layouts/table-placement-research.md) records the owner-confirmed arrangement and later A3/F1 exchange. The owner clarified September 20 that the existing mix is Molly's with probably about 20% added perlite, or approximately 80/20, recalled rather than measured. Exact individual light clearance remains unmeasured; this is not a new repot or setup.
+2026-08-28 repots and 4-inch current pots establish pot setup 1. The [current placement guide](./layouts/table-placement-research.md) records the owner-confirmed arrangement and later A3/F1 exchange. Their September 20 medium record is approximately 80% Molly's Succulent Mix / 20% perlite, recalled rather than measured. Individual light clearance remains unmeasured.
 
 | Tracker ID | Scale weight | Ruler height | Ruler width |
 | ---------- | ------------ | ------------ | ----------- |
@@ -407,7 +401,7 @@ universal recipe. A complete dry-down within seven days is plausible, and it
 may happen sooner. Treat that as a measurement target, not a seven-day watering
 schedule.
 
-For the first two or three comparable watering cycles:
+The initial setup-2 comparison used the following approach for its first two or three cycles:
 
 1. Use pot setup 2 for `P01`–`P18`. Keep every pre-repot setup-1 weight in
    history rather than averaging it into the new baseline.
@@ -426,16 +420,14 @@ For the first two or three comparable watering cycles:
    automatically harmful, but watch for premature wrinkling and be prepared to
    check readiness sooner. Do not give small daily sips to slow the curve.
 
-The first post-repot soak is now recorded in canonical `History`. All 18
+The first post-repot soak is recorded in the care history. All 18
 setup-2 pots (`P01`–`P18`) received plain Beauchamp's RO water with
 `Nutrients used = No` at 4:22 p.m. on **August 26**. Their Wet setup-2 weights were recorded between
 12:14 and 12:20 a.m. on **August 27**, about eight hours later. Those are useful
 first-cycle observations, but they are not 30–60-minute drainage weights; keep
 the actual interval visible when comparing this cycle with later wet baselines.
-Continue daily same-time Routine weights until each curve approaches its floor.
-The [MSU 13-3-15 fertilizer schedule](./equipment/msu-fertilizer-schedule.md)
-makes the next otherwise-ready watering the first possible dilute feed, subject
-to healthy active growth and a normal setup-2 dry-down.
+Current weigh-ins follow the daily report's adaptive cadence; the intensive first-cycle comparison is historical.
+Use the [MSU 13-3-15 fertilizer schedule](./equipment/msu-fertilizer-schedule.md) to assess feeding alongside healthy active growth and a normal dry-down.
 
 - Judge dryness below the rocky top layer, not from the appearance of the rocks.
 - A normal watering should soak the mix rather than only wetting the surface.
@@ -478,7 +470,7 @@ and separation will be easier than trying to split the difference forever.
 The monkey tail may use water a little faster during active growth than the
 upright desert cacti, but the shared planter still needs to dry between
 waterings. Its stretched growth has been trimmed multiple times, and the new
-growth is improving after about a month outside in bright shade with brief
+growth improved during its earlier month outside in bright shade with brief
 direct sun. Continue judging the current growing tips rather than the shape of
 old low-light growth.
 
@@ -521,7 +513,7 @@ weekly for even window growth.
   _Echeveria_-like rosettes, orange _Sedum_-like growth, and red-edged
   _Kalanchoe_-like paddles may respond differently, so inspect the components
   individually while watering and weighing the shared root volume as one pot.
-- Both were repotted on 2026-09-02. Exact pot size, mix, placement, weight, and dimensions were missing from the original acquisition note; consult the current placement guide and eligible live observations for later evidence. The new component pages do not reset P30's setup, references, or care clock.
+- Both were repotted on 2026-09-02. The [setup record](./setup.md) gives their logged pot descriptions and media; use the current placement guide and care history for later observations.
 
 ## Removed cactus: historical record
 

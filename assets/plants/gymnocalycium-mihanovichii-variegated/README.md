@@ -4,7 +4,7 @@ _Gymnocalycium mihanovichii_ - Starter-07
 
 Collection label ID: `A1`.
 
-Own-root variegated examples are prioritized; normal wild forms remain as species context. Grafted chlorophyll-free scions are excluded.
+Own-root variegated and normal species-reference photographs. Grafted chlorophyll-free forms are not representative of the collection plant.
 
 Collection research: [open the plant profile](../../../docs/plants/starter/gymnocalycium-mihanovichii-variegated.md).
 

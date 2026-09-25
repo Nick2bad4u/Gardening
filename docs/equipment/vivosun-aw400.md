@@ -25,7 +25,7 @@ Its specifications support the approximately 26 × 26-inch footprint:
 | Weight                   | **16.82 lb / 7.63 kg**                                                                                                              |
 | Rated input power        | **400 W**                                                                                                                           |
 | Spectrum                 | Tunable full spectrum; white, 660 nm deep red, 730 nm far-red, 450 nm blue, and 395 nm UVA are listed                               |
-| Spectrum modes           | Seedling, Veg, and Flower through GrowHub and the VIVOSUN app; installed mode not yet recorded                                      |
+| Spectrum modes           | Seedling, Veg, and Flower through GrowHub and the VIVOSUN app; fixture was not installed                                            |
 | White LED identification | Samsung 301H EVO in the selected LED Grow Lights Depot listing; the manufacturer manual identifies Samsung without the diode suffix |
 | Panels                   | Two angle-adjustable wings; the collection plan uses them fully flat                                                                |
 | Published growing area   | **4 × 4 ft tent** in the manufacturer's application table                                                                           |
@@ -59,9 +59,7 @@ is owner-reported, not a current retail-price comparison.
 
 ## September 10 Placement Proposal
 
-Use the [Table Placement Guide](../layouts/table-placement-research.md) for
-the 30 final recommended pot positions and the illustrated light-need groups.
-In its bird's-eye view:
+This September 10 proposal used the earlier 30-pot arrangement. The [current placement guide](../layouts/table-placement-research.md) records the later four-table display. In the proposal's bird's-eye view:
 
 - **Left:** open room-facing end; the two-foot return panel comes out.
 - **Top:** the existing Diamond Mylar divider stays.
@@ -94,16 +92,14 @@ does not establish bright indirect conditions. The plant's ongoing need stays I.
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | Last reported installed fixture | **AW200 with tunable spectrum**, reported September 9                                                                         |
 | Last AW200 program              | **60%**, **13.25 hours**, including quarter-hour sunrise/sunset transitions; exact clock times and ramp allocation unrecorded |
-| Replacement fixture             | **AW400**, selected after canceling the Amazon AW400SE order; arrival and installation unconfirmed                            |
-| AW400 intensity and clearance   | **Not set or measured yet**; the old 60% and 18-inch records belong to the AW200 setup                                        |
-| AW400 timer                     | Existing 13.25-hour day is the planning reference; the transferred program has not been confirmed                             |
+| Replacement fixture             | **AW400**, selected September 10 but unavailable September 11; not installed                                                  |
+| AW400 intensity and clearance   | **Not set or measured**; the 60% and 18-inch records belong to the earlier AW200 setup                                        |
+| AW400 timer                     | The 13.25-hour day was a planning reference; no AW400 program was installed                                                   |
 | Spectrum selection              | Tunable Seedling / Veg / Flower; actual selected mode unrecorded                                                              |
 | Reflectors                      | Divider Mylar retained; two-foot room-end panel removed from the plan                                                         |
 
 Do not copy 60% as though it preserves exposure: the replacement has a different
-rated power and distribution. The owner will handle acclimation; this document
-does not introduce another ramp schedule. Record the chosen intensity, actual
-LED-to-tallest-tip clearance, and timer once installed. Existing canopy fans
+rated power and distribution. The proposal left acclimation to observation rather than prescribing another ramp schedule. The AW400 was not installed; no intensity or clearance was recorded for it. Existing canopy fans
 and their independent controller paths remain part of the setup.
 
 The new fixture is listed at 16.82 lb, so check the existing mount and hangers

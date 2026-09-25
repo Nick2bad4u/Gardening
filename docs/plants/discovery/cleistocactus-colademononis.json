@@ -1,0 +1,125 @@
+{
+    "anatomy": {
+        "intro": "The numbered illustration explains monkey tail cactus; it is a botanical guide, not a measured portrait.",
+        "parts": [
+            {
+                "function": "The green cylinder stores water and carries the trailing growth.",
+                "label": "Pendant stem"
+            },
+            {
+                "function": "Long pale spines create the shaggy surface around the stem.",
+                "label": "Hairlike spines"
+            },
+            {
+                "function": "Repeated growth points bear spines and can produce flowers.",
+                "label": "Areole"
+            },
+            {
+                "function": "New tissue extends the lower end of the hanging stem.",
+                "label": "Growing tip"
+            }
+        ],
+        "sourceIds": [
+            "form",
+            "anatomy"
+        ]
+    },
+    "comparisonSourceIds": [
+        "form",
+        "wool"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "form",
+            "range"
+        ],
+        "text": "Red to pink flowers emerge from the stem sides; the collection has an observed red-orange bloom. Huntington describes a swollen nectar-holding spur at the flower base that attracts hummingbirds."
+    },
+    "growth": {
+        "note": "The collection's old stretched sections remain; compare new tips rather than expecting old growth to change shape.",
+        "sourceIds": [
+            "form"
+        ],
+        "stages": [
+            {
+                "text": "Young growth initially makes a compact fingerlike shoot.",
+                "title": "Short stem"
+            },
+            {
+                "text": "Lengthening stems arch over an edge and hang downward.",
+                "title": "Trailing tail"
+            },
+            {
+                "text": "An established plant can carry side-borne flowers among the hairs.",
+                "title": "Flowering cascade"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "Monkey tail cactus is a Bolivian rock-dweller. Huntington's introduction record gives the type locality at Cerro El Fraile, Florida Province, at 2,000 m. Hanging stems suit a plant growing from rock faces: their downward direction is natural architecture, not an automatic sign that the cactus is weak or needs staking."
+    },
+    "image": {
+        "alt": "Botanical anatomy of monkey tail cactus, showing pendant stem, hairlike spines, areole, growing tip with numbered markers.",
+        "file": "assets/plant-explainers/cleistocactus-colademononis.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration, warm ivory background, precise pen-and-watercolor, muted forest green/sage/ochre palette, large centered specimen and generous whitespace. Exactly four large legible numbered markers 1, 2, 3, 4, each once, with fine leader lines ending clearly on the named structures. No title, words, border, watering symbols or calendar. No flowers, grafts, or roots. Numbers must remain readable at 350px. Generic anatomical specimen, not measurement evidence. Monkey tail cactus Cleistocactus colademononis: two long gracefully hanging cylindrical green stems thickly covered with long soft white hairlike spines, rooted base emerges over a small neutral rock ledge at upper left, not a pot. 1 points to the green cylindrical pendant stem visible between hair; 2 to the long white hairlike spines; 3 to a small spine-bearing areole visible through a thinner patch of hair; 4 to the rounded growing tip at the lower end of a tail. No flowers.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Compact woolly Espostoa",
+            "profileSlug": "espostoa-melanostele-nana",
+            "text": "Espostoa stays upright with dense wool around a column; monkey tail naturally hangs and has long hairlike spines."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "RHS describes trailing stems reaching about 1 m in cultivation. A cascading outline needs clearance below the pot; stem length is more meaningful here than upright height."
+    },
+    "milestones": [
+        {
+            "date": "2023-06-21",
+            "sourcePath": "docs/plants/rehab/cleistocactus-colademononis.md",
+            "text": "Acquired from Gerych's Design as part of the cactus planter now tracked as P19.",
+            "title": "Arrived in the shared planter"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "Residents near Samaipata already called it cola de mono, or monkey's tail, before its botanical description in 2003."
+    },
+    "slug": "cleistocactus-colademononis",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "range",
+            "title": "Huntington ISI 2007-03: monkey tail",
+            "url": "https://media.huntington.org/ISI/ISI2007/2007-03.html"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "form",
+            "title": "RHS: Cleistocactus colademononis",
+            "url": "https://www.rhs.org.uk/plants/327556/cleistocactus-colademononis/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "wool",
+            "title": "RHS: Espostoa melanostele",
+            "url": "https://www.rhs.org.uk/plants/6869/espostoa-melanostele/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "anatomy",
+            "title": "National Park Service: cactus adaptations",
+            "url": "https://www.nps.gov/tont/learn/nature/cacti.htm"
+        }
+    ]
+}

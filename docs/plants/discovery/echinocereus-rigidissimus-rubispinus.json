@@ -1,0 +1,118 @@
+{
+    "anatomy": {
+        "intro": "Most of the rainbow effect sits outside the green stem, in its closely arranged spines.",
+        "parts": [
+            {
+                "function": "Green stem tissue remains beneath the covering of spines.",
+                "label": "Ribbed stem"
+            },
+            {
+                "function": "Each small growing cushion anchors a group of radial spines.",
+                "label": "Areole"
+            },
+            {
+                "function": "The closely arranged spines curve toward the stem instead of forming long outward spikes.",
+                "label": "Radial spine comb"
+            },
+            {
+                "function": "Newer spine growth near the top can be more strongly pink than older growth below.",
+                "label": "Crown"
+            }
+        ],
+        "sourceIds": [
+            "rhs",
+            "cactus-structure"
+        ]
+    },
+    "comparisonSourceIds": [
+        "rhs",
+        "kew"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "rhs"
+        ],
+        "text": "Bright pink flowers with a pale throat emerge near the top. They provide a dramatic contrast with the dense spine covering, but their presence and timing depend on the individual plant and conditions; no bloom is claimed for this specimen."
+    },
+    "growth": {
+        "note": "The sequence describes development, not annual deadlines; the crown’s colors can change without every band marking exactly one year.",
+        "sourceIds": [
+            "rhs"
+        ],
+        "stages": [
+            {
+                "text": "A small body is already covered with tightly arranged radial spines.",
+                "title": "Compact youngster"
+            },
+            {
+                "text": "The solitary stem extends upward while older spines become paler.",
+                "title": "Longer column"
+            },
+            {
+                "text": "A mature plant can carry a conspicuous pink flower near its upper areoles.",
+                "title": "Flowering crown"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "Kew places this subspecies in the Sierra Oscura of western Chihuahua, Mexico, within desert and dry shrubland. That is a much narrower origin than the range of rainbow cacti as a whole. The nursery label names the subspecies; its bright spine coat alone cannot establish the locality of the particular plant in this collection."
+    },
+    "image": {
+        "alt": "Rainbow hedgehog cactus with numbered green rib, areole, comb of pink radial spines and newer crown growth.",
+        "file": "assets/plant-explainers/echinocereus-rigidissimus-rubispinus.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024x1024 scientific botanical educational illustration. Warm ivory background; muted forest-green, sage and ochre with natural species colors; clean accurate pen-and-watercolor style, large central specimen, ample whitespace. Exactly four large circled numbered markers 1-4 with clear thin leaders pointing to the features specified below in order. Numbers legible at 350px display width. No words, title, paragraphs, watering or calendar icons. No pot, roots, flowers or grafts unless explicitly requested. Echinocereus rigidissimus subsp. rubispinus, one short cylindrical rainbow hedgehog cactus. Dense close parallel comb-like radial spines lie against the stem in rows, alternating rosy pink and pale cream bands. No long projecting central spines, no branches. One small natural gap allows the green rib to be seen without cutting tissue. 1 points to a visible green vertical rib beneath the spine cover; 2 to a small spine-bearing areole; 3 to the flat comb of pink radial spines; 4 to the densely pink new growth at the apical crown.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Echinocereus rigidissimus without a subspecies label",
+            "profileSlug": null,
+            "text": "The broader species also has closely pressed colored spines. Pink intensity is therefore not enough to separate rubispinus reliably; retain the nursery evidence rather than identifying by color alone."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "rhs"
+        ],
+        "text": "Expect a solitary upright body rather than a naturally broad mound. RHS places the species in a 10–50 cm height band; that broad species-level garden range is not a precise size forecast for this subspecies indoors."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-23",
+            "sourcePath": "docs/plants/starter/echinocereus-rigidissimus-rubispinus.md",
+            "text": "Joined the collection from Costa Farms.",
+            "title": "Acquired"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "The subspecies combination dates to 1997. Kew also records older names placing it under Echinocereus pectinatus or treating rubispinus as a variety, explaining the different labels found in older references."
+    },
+    "slug": "echinocereus-rigidissimus-rubispinus",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew — Echinocereus rigidissimus subsp. rubispinus",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:923228-1"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "rhs",
+            "title": "RHS — Echinocereus rigidissimus",
+            "url": "https://www.rhs.org.uk/plants/115504/echinocereus-rigidissimus/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "cactus-structure",
+            "title": "University of Illinois — cactus areoles",
+            "url": "https://www.life.illinois.edu/help/digitalflowers/Cactaceae/5.htm"
+        }
+    ]
+}

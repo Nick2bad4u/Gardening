@@ -4,7 +4,7 @@ _Austrocylindropuntia subulata_ - Cactus-07
 
 Collection label ID: `H3`.
 
-Species-reference photographs. The collection plant was received and owner-inspected on 2026-08-28; these licensed images do not document its arrival condition, individual form, or exact identity.
+Species-reference photographs of Austrocylindropuntia subulata.
 
 Collection research: [open the plant profile](../../../docs/plants/cacti/austrocylindropuntia-subulata.md).
 

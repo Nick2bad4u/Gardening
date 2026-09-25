@@ -22,7 +22,10 @@ import { archivedAmazonPlan } from "./old-plans.mjs";
 import { contentUrl } from "./routes.mjs";
 
 const root = process.cwd();
-const markdownProcessor = remark().use(remarkGfm).use(remarkHtml);
+const clobberPrefix = "user-content-";
+const markdownProcessor = remark()
+    .use(remarkGfm)
+    .use(remarkHtml, { sanitize: { clobberPrefix } });
 
 /**
  * @typedef {Awaited<ReturnType<typeof loadProfiles>>[number] & {
@@ -30,6 +33,7 @@ const markdownProcessor = remark().use(remarkGfm).use(remarkHtml);
  *     toc: { id: string; title: string; level: number }[];
  *     ownedPhotos: import("../../scripts/build-data.mjs").CollectionPhoto[];
  *     nurseryPhotos: import("../../scripts/build-data.mjs").CollectionPhoto[];
+ *     hasInlinePhotos: boolean;
  *     inaturalist: { scope: string; taxon: string } | undefined;
  *     searchText: string;
  * }} SiteProfile
@@ -55,7 +59,10 @@ export function headingSlug(text) {
  * @param {string} [prefix]
  */
 export async function renderMarkdown(markdown, sourcePath, prefix = "") {
-    const rendered = String(await markdownProcessor.process(markdown));
+    const rendered = namespaceSanitizedIds(
+        String(await markdownProcessor.process(markdown)),
+        prefix
+    );
     /** @type {{ id: string; title: string; level: number }[]} */
     const toc = [];
     /** @type {Map<string, number>} */
@@ -131,6 +138,52 @@ function escapeAttribute(text) {
         .replaceAll("<", "&lt;");
 }
 
+/**
+ * The sanitizer prefixes IDs (including already-prefixed GFM footnote IDs), but
+ * does not retarget fragment links. Resolve those links against the actual
+ * sanitized IDs and namespace all associated references when embedding a doc.
+ * Sanitizer protections remain intact; only known local targets are remapped.
+ *
+ * @param {string} html
+ * @param {string} prefix
+ */
+function namespaceSanitizedIds(html, prefix) {
+    const ids = html
+        .matchAll(/(?<=\s)id="(?<id>[^"<>]+)"/gv)
+        .map((match) => match.groups?.["id"] ?? "")
+        .toArray();
+    const targets = new Map(
+        ids.map((id) => [id, `${escapeAttribute(prefix)}${id}`])
+    );
+    for (const id of ids) {
+        if (!id.startsWith(clobberPrefix)) continue;
+        const original = id.slice(clobberPrefix.length);
+        if (!targets.has(original))
+            targets.set(original, `${escapeAttribute(prefix)}${id}`);
+    }
+    return html.replaceAll(
+        /(?<=\s)(?<attribute>aria-describedby|aria-labelledby|for|headers|href|id)="(?<value>[^"<>]+)"/gv,
+        (
+            /** @type {string} */ _match,
+            /** @type {string} */ attribute,
+            /** @type {string} */ value
+        ) => {
+            if (attribute === "href") {
+                const target = value.startsWith("#")
+                    ? targets.get(value.slice(1))
+                    : undefined;
+                const rewritten = target === undefined ? value : `#${target}`;
+                return `${attribute}="${rewritten}"`;
+            }
+            const target = value
+                .split(/\s+/v)
+                .map((id) => targets.get(id) ?? id)
+                .join(" ");
+            return `${attribute}="${target}"`;
+        }
+    );
+}
+
 const profilesPromise = loadSiteProfiles();
 
 /** Only sanitized public manifest data is read by website rendering. */
@@ -141,10 +194,11 @@ export async function getCollectionManifest() {
     );
 }
 
-/** @param {string} sourcePath @param {string} [slug] */
+/** @param {string} sourcePath @param {string} [slug] @param {string} [prefix] */
 export async function getDocument(
     sourcePath,
-    slug = path.basename(sourcePath, ".md")
+    slug = path.basename(sourcePath, ".md"),
+    prefix = ""
 ) {
     const markdown = await readFile(path.join(root, sourcePath), "utf8");
     const title = /^# (?<title>.+)$/mv
@@ -153,7 +207,7 @@ export async function getDocument(
     if (!isNonemptyString(title))
         throw new Error(`Missing document title: ${sourcePath}`);
     const content = markdown.replace(/^# [^\n]+\n+/v, "");
-    const rendered = await renderMarkdown(content, sourcePath);
+    const rendered = await renderMarkdown(content, sourcePath, prefix);
     const illustrations = markdownProcessor
         .parse(content)
         .children.flatMap((node) => {
@@ -262,6 +316,10 @@ async function loadSiteProfiles() {
             return {
                 ...profile,
                 bodyHtml: decorateProfileBody(body.html),
+                hasInlinePhotos:
+                    /<img\b[^>]+src="[^"]*\/assets\/nursery-labels\//v.test(
+                        body.html
+                    ),
                 inaturalist: inaturalistBySlug.get(profile.slug),
                 nurseryPhotos: profile.collectionRecord.photos.filter(
                     (photo) => photo.kind === "nursery-label"

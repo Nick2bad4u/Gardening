@@ -4,7 +4,7 @@
 - Label ID: `C3`
 - Tracker ID: `P09`
 - Visual description: A sharply star-ribbed green body patterned with bands of white flecks, with long yellow-brown spines projecting from the rib crests; the geometric markings remain visible between the spines.
-- Interesting fact: This is the largest and eventually tallest _Astrophytum_, yet it is in no hurry to perform—seed-grown plants may take roughly 10–20 years to reach flowering size in cultivation.
+- Interesting fact: Its white surface flecks are separate from the woolly areoles that carry the spines; a young star-shaped globe gradually becomes a column.
 - Identification: **labeled**
 - Acquired from: Costa Farms
 - Acquired on: 2026-07-23
@@ -31,7 +31,7 @@ and eventually tallest _Astrophytum_: a young globe slowly develops into a
 substantial column with usually six to eight ribs.
 
 Bright yellow flowers emerge from the woolly crown on mature plants. The RHS
-places flowering maturity on a long horizon—often 10–20 years under cultivation.
+gives 10–20 years to maturity, not a guaranteed age for the first flower.
 That is normal for a slow species rather than evidence that a small plant is
 being cared for incorrectly.
 
@@ -42,14 +42,14 @@ nursery-documented plants.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                        |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R2C5 · Bright.** September 15 six-column/four-row front grid, facing the window. Preserve clear bright exposure; a photo position is not a measured light level. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Outdoor light       | Gradually increase direct sun. Flecking provides some shade but does not make a nursery plant burn-proof.                                                                                                                                                                                                 |
-| Water               | Thorough soak followed by a complete dry-down during warm growth; keep cool winter roots nearly dry.                                                                                                                                                                                                      |
-| Mix                 | Very free-draining and mineral. A slightly alkaline component is compatible with its limestone habitat, but drainage matters more than chasing an exact pH.                                                                                                                                               |
-| Pot                 | It develops a substantial root system; use enough depth without surrounding a small root ball with a huge wet volume.                                                                                                                                                                                     |
-| Feeding             | Low-strength cactus fertilizer during active growth only.                                                                                                                                                                                                                                                 |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                    |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Photo-matched R2C5 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Preserve clear bright exposure; a photo position is not a measured light level. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Outdoor light       | Gradually increase direct sun. Flecking provides some shade but does not make a nursery plant burn-proof.                                                                                                                                                                             |
+| Water               | Thorough soak followed by a complete dry-down during warm growth; keep cool winter roots nearly dry.                                                                                                                                                                                  |
+| Mix                 | Very free-draining and mineral. A slightly alkaline component is compatible with its limestone habitat, but drainage matters more than chasing an exact pH.                                                                                                                           |
+| Pot                 | It develops a substantial root system; use enough depth without surrounding a small root ball with a huge wet volume.                                                                                                                                                                 |
+| Feeding             | Low-strength cactus fertilizer during active growth only.                                                                                                                                                                                                                             |
 
 Compact growth keeps the gaps between areoles short and the crown well armed.
 Elongation cannot be reversed, so tune the lamp based on the next band of

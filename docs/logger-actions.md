@@ -15,7 +15,7 @@ Read alongside the [watering strategy](./watering-strategy.md), [weighing strate
 | AppSheet Bulk Log                                            | Water, individual weights, combined Water + weigh, and supported shared-care rounds.                              | Writes to App bulk staging, then the bridge creates the per-plant History records.                                             |
 | History, History view, dashboards, Pxx pages, public tracker | Review, comparisons, charts, and history.                                                                         | Derived/read-only views are not a second place to type canonical measurements. Use the supported correction flow for an error. |
 
-Quick log is hidden for compatibility; use the mobile logger or AppSheet for routine entry. Daily care is retired; the daily chat report and generated report page provide the care plan.
+Quick log is hidden for compatibility; use the mobile logger or AppSheet for routine entry. Use the daily report for the care plan.
 
 **History** is the canonical observation ledger. **History view** is its sorted projection. AppSheet staging and a local browser queue are not confirmation that a record has reached History. The [AppSheet companion guide](./appsheet-companion.md#data-ownership-and-save-path) explains the bridge and receipts.
 
@@ -29,7 +29,7 @@ Quick log is hidden for compatibility; use the mobile logger or AppSheet for rou
 - **Plant condition**, **Soil moisture**, and **Medium / substrate** are different fields. Condition and moisture belong to Check; the growing-medium description belongs to Repot.
 - A shared planter receives one observation identity per event for that container. Its components do not receive invented individual weights.
 
-For example, `#2` / `P20` is one shared succulent container with several botanical profiles. Select P20 once for a whole-pot weight or watering and identify a particular component in the note when useful. The same applies to #6 / P30: its overview and Succulent-10A/B/C component pages share one pot entry, with no duplicate measurement or care event. The abandoned Amazon plants have no active pot allocation and are excluded from active entry; withdrawing an administrative plan is not a plant-care event.
+For example, `#2` / `P20` is one shared succulent container with several botanical profiles. Select P20 once for a whole-pot weight or watering and identify a particular component in the note when useful. The same applies to #6 / P30: its overview and Succulent-10A/B/C component pages share one pot entry, with no duplicate measurement or care event.
 
 ## The 12 Selectable Actions
 
@@ -114,7 +114,7 @@ A corrected gram typo is a correction, not a Repot. A lighting change can be Oth
 
 ## Photos and Other Detailed Observations
 
-For Photo, paste an existing Gyazo capture link, or use Open Google Photos and obtain the intended share link. Gyazo links use `https://gyazo.com/` followed by the 32-character lowercase capture ID. A browser file-picker path is not a durable share URL. Logging a photo link and publishing an image on the garden website are separate operations; the latter has its own checked photo-publication workflow.
+For Photo, paste an existing Gyazo capture link, or use Open Google Photos and obtain the intended share link. Gyazo links use `https://gyazo.com/` followed by the 32-character lowercase capture ID. A browser file-picker path is not a durable share URL. A saved photo link appears in the observation history; it does not automatically add the image to the plant's website gallery.
 
 For Flower, describe whether a count refers to open flowers, buds, or something else. A text description can record spent blooms without forcing a positive count. For Pest, retain uncertainty in the issue description and distinguish observation from treatment. Clean and Prune also benefit from a short, specific note because they have no separate structured quantity field.
 
@@ -171,7 +171,7 @@ Do not delete entire History rows, overwrite a formula on a Pxx page, or repeate
 | Only wrote a dated note with no selected event or measurement | Notes-only entry where supported                                  | An automatic Note record.                                                          |
 | Noticed a mistake in a saved Water amount                     | Correct that Water event with a reason                            | A reviewed replacement for that event; the accompanying Weigh row is unchanged.    |
 
-These examples explain the data contract. They are not instructions to perform the underlying care actions. The daily task prioritizes conditional plateau-supported watering and useful weighing, with separate dry-reference-only monitoring and plant-specific Check-only exceptions under the [current report policy](./daily-weighing-watering-prompt.md).
+These examples explain how to record care. Use the [daily report policy](./daily-weighing-watering-prompt.md) and each plant's readiness checks to decide which care is due.
 
 ## Sources and Implementation References
 

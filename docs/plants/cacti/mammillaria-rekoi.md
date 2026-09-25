@@ -20,38 +20,30 @@
 | Permanent-label form   | PROB. _M. rekoi_                                  |
 | Main alternatives      | _M. zeilmanniana_ / _M. crinita_; possible hybrid |
 
-Owner-supplied 2026-08-11 close photographs reviewed during identification—but
-not retained in this repository—showed a green globose body, fine white radial
-spines, tan-to-reddish central spines, and clearly hooked spines low on the
-body. That evidence supports _Mammillaria_ cf. _rekoi_ as the most useful
-working name, but it does not securely distinguish the species from the
-variable _M. crinita_ complex or a horticultural hybrid.
+Close photographs reviewed on August 11, 2026 showed a green globose body,
+fine white radial spines, tan-to-reddish central spines, and hooked spines low
+on the body. They support _Mammillaria_ cf. _rekoi_, but do not securely
+separate it from _M. zeilmanniana_ / the variable _M. crinita_ complex or a
+horticultural hybrid. The diagnostic close-ups are no longer available.
 
-## Identification history
-
-- The plant was first recorded as high-confidence _Mammillaria zeilmanniana_.
-- Community suggestions later included _M. rekoi_, _M. moelleriana_, and a
-  possible hybrid. Those suggestions are leads rather than proof.
-- The relatively open spination in those reviewed photographs is less consistent
-  with the much denser-looking _M. moelleriana_ alternative.
-- Revisit the identification after an open flower, mature fruit, and clean
-  close-ups of several mature areoles are available.
+_M. moelleriana_ was also considered, although its denser spination is a less
+convincing match. Open flowers, mature fruit, and close views of mature areoles
+would be useful for refining this probable identification.
 
 ## Origin, form, and publication
 
 Kew accepts _Mammillaria rekoi_, first published in its current combination in
 1925, and places its native range in Morelos, Puebla, and Oaxaca, Mexico. The
-collection plant is not being claimed as wild-origin material; this range only
-describes the proposed species.
+nursery plant's provenance does not establish a particular wild locality.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                                                               |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Grow-light position | **Photo-matched R4C6 · Bright.** September 15 six-column/four-row front grid, facing the window. Back-right corner of the small-pot zone. Preserve the cf. rekoi identification and compare shadows from the rear pots. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Water               | Soak, drain, and allow a complete dry-down. Avoid leaving a cool crown wet.                                                                                                                                                                                                                                                                      |
-| Pot and mix         | The 4-inch pot is suitable until offsets or roots crowd it; keep the body above the top dressing.                                                                                                                                                                                                                                                |
-| ID evidence         | Do not change care in response to a species guess; photograph flowers, fruit, and mature areoles.                                                                                                                                                                                                                                                |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                      |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Photo-matched R4C6 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Back-right corner of the small-pot zone. Check for shadows from taller rear pots. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Soak, drain, and allow a complete dry-down. Avoid leaving a cool crown wet.                                                                                                                                                                                                             |
+| Pot and mix         | The 4-inch pot is suitable until offsets or roots crowd it; keep the body above the top dressing.                                                                                                                                                                                       |
+| Identification      | Flowers, fruit, and mature areoles are more useful for refining the probable species than body color alone.                                                                                                                                                                             |
 
 ## Rotation, propagation, and watch points
 

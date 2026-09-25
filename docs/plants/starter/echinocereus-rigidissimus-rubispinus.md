@@ -19,8 +19,7 @@
 | Earlier rank seen in collections | _Echinocereus rigidissimus_ var. _rubispinus_                                  |
 | Name clue                        | _rubispinus_ means ruby- or red-spined                                         |
 
-The user-supplied “rubrispinus” was close, but the accepted epithet is
-_rubispinus_. New radial spines emerge ruby, pink, or magenta and fade as they
+New radial spines emerge ruby, pink, or magenta and fade as they
 age, producing horizontal color bands as the stem grows. There are normally no
 large projecting central spines; the dense comb of radials hugs the body.
 
@@ -42,16 +41,15 @@ Lau. Nigel Taylor published the subspecies combination accepted by Kew in 1997.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                                                        |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R3C5 · High.** September 15 six-column/four-row front grid, facing the window. Interior-right stronger-light priority. Keep a clear overhead path rather than assuming this cell is the maximum. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Outdoor light       | Increasing direct sun is useful, but a greenhouse-grown stem can burn before its spine cover and epidermis adapt.                                                                                                                                                                                                                         |
-| Water               | Thorough watering followed by a complete dry-down in warm growth. Keep dry or nearly dry during cool winter rest.                                                                                                                                                                                                                         |
-| Mix                 | Favor a very open mineral fraction around the roots. Never let the tray act as a reservoir.                                                                                                                                                                                                                                               |
-| Flowering support   | Strong seasonal light and a cool, dry winter rest are more useful than heavy fertilizer.                                                                                                                                                                                                                                                  |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                                    |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Photo-matched R3C5 · High.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Interior-right stronger-light priority. Keep a clear overhead path rather than assuming this cell is the maximum. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Outdoor light       | Increasing direct sun is useful, but a greenhouse-grown stem can burn before its spine cover and epidermis adapt.                                                                                                                                                                                                     |
+| Water               | Thorough watering followed by a complete dry-down in warm growth. Keep dry or nearly dry during cool winter rest.                                                                                                                                                                                                     |
+| Mix                 | Favor a very open mineral fraction around the roots. Never let the tray act as a reservoir.                                                                                                                                                                                                                           |
+| Flowering support   | Strong seasonal light and a cool, dry winter rest are more useful than heavy fertilizer.                                                                                                                                                                                                                              |
 
-The target range is a starting point, not a demand to run the grow light at full
-power. The best signal is dense, even, colorful new spination on a stem that
+Judge light by dense, even, colorful new spination on a stem that
 keeps its diameter. Pale corky patches on the lamp-facing side are a reason to
 back off.
 

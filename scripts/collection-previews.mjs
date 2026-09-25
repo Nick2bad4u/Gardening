@@ -165,14 +165,26 @@ export function rewriteCollectionPreviews(html, previews, prefix) {
 }
 
 /**
- * Show an absence state without changing enclosing capture links or captions.
- * Only IDs explicitly reported unavailable qualify; other missing previews
- * fail.
+ * Omit incomplete photo comparisons, then show ordinary unavailable previews
+ * without changing their enclosing capture links or captions. Only IDs
+ * explicitly reported unavailable qualify; other missing previews fail.
  *
  * @param {string} html @param {Set<string>} unavailableIds
  */
 export function rewriteUnavailableCollectionPreviews(html, unavailableIds) {
-    return html.replaceAll(/<img\b[^>]*>/gv, (imageTag) => {
+    // PlantDiscovery emits marked sections without nested sections. Match only
+    // that controlled wrapper so adjacent timeline content and healthy pairs remain.
+    const completeComparisons = html.replaceAll(
+        /<section\b[^>]*\sdata-photo-comparison="[^"]+"[^>]*>[\s\S]*?<\/section>/gv,
+        (section) => {
+            for (const match of section.matchAll(thumbnailPattern)) {
+                const id = match.groups?.["id"];
+                if (id !== undefined && unavailableIds.has(id)) return "";
+            }
+            return section;
+        }
+    );
+    return completeComparisons.replaceAll(/<img\b[^>]*>/gv, (imageTag) => {
         const match = imageTag.matchAll(thumbnailPattern).next().value;
         const id = match?.groups?.["id"];
         if (id === undefined || !unavailableIds.has(id)) return imageTag;

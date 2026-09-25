@@ -10,7 +10,7 @@
 - Acquired on: 2026-07-23
 - Photo archive: [licensed _E. obesa_ reference images](../../../assets/plants/euphorbia-obesa-hybrid/)
 
-## Identity and the important correction
+## Names and identity
 
 | Kind                 | Name                                                     |
 | -------------------- | -------------------------------------------------------- |
@@ -23,8 +23,8 @@
 ribbed ball and tiny structures at the crown resemble _E. obesa_, but the
 unusual texture and form could reflect another euphorbia parent. Current retail
 records do not publish parentage or a release year. Until a breeder or
-propagation label supplies the cross, writing it as pure _E. obesa_ would be
-more confidence than the evidence supports.
+propagation label supplies the cross, its identity remains a probable
+_E. obesa_-type hybrid or selection.
 
 ## Wild _Euphorbia obesa_
 
@@ -47,13 +47,13 @@ from the parent. Flowering from seed may take five to eight years.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                                                                            |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R1C4 · Bright.** September 15 six-column/four-row front grid, facing the window. Front-center probable Euphorbia hybrid. A bright position is appropriate; its exact species and maximum tolerance remain uncertain. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Water               | During warm growth, soak and drain after the pot is fully dry. Keep much drier during cool or stalled growth.                                                                                                                                                                                                                                                 |
-| Light               | Strong light helps maintain a compact ball, but exposed skin can scar from an abrupt jump.                                                                                                                                                                                                                                                                    |
-| Pot and mix         | Keep the drained 4-inch pot only as wet as the small root system can use. A mineral, airy mix is safer than rich moisture-retentive soil.                                                                                                                                                                                                                     |
-| Feeding             | Sparse dilute feeding in active growth; slow is normal.                                                                                                                                                                                                                                                                                                       |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                                                        |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Photo-matched R1C4 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Front-center probable Euphorbia hybrid. A bright position is appropriate; its exact species and maximum tolerance remain uncertain. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | During warm growth, soak and drain after the pot is fully dry. Keep much drier during cool or stalled growth.                                                                                                                                                                                                                             |
+| Light               | Strong light helps maintain a compact ball, but exposed skin can scar from an abrupt jump.                                                                                                                                                                                                                                                |
+| Pot and mix         | Keep the drained 4-inch pot only as wet as the small root system can use. A mineral, airy mix is safer than rich moisture-retentive soil.                                                                                                                                                                                                 |
+| Feeding             | Sparse dilute feeding in active growth; slow is normal.                                                                                                                                                                                                                                                                                   |
 
 Hybrid behavior can differ from the wild reference species, so plant response
 outranks a rigid seasonal recipe.

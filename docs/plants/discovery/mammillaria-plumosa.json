@@ -1,0 +1,135 @@
+{
+    "anatomy": {
+        "intro": "A close view separates the green tubercles from the feather-like spine covering.",
+        "parts": [
+            {
+                "function": "This small green projection is a unit of the stem’s bumpy surface.",
+                "label": "Tubercle"
+            },
+            {
+                "function": "The growing cushion at the tubercle’s tip produces the spine cluster.",
+                "label": "Areole"
+            },
+            {
+                "function": "Interlacing white spines form a shade-providing cover over the green body.",
+                "label": "Feathery spines"
+            },
+            {
+                "function": "A new side head repeats the same structure as the mound expands.",
+                "label": "Offset"
+            }
+        ],
+        "sourceIds": [
+            "rhs",
+            "museum",
+            "cactus-structure"
+        ]
+    },
+    "comparisonSourceIds": [
+        "museum",
+        "troll-comparison"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "rhs",
+            "museum"
+        ],
+        "text": "Small cream, white or pink flowers emerge through the spine covering. RHS gives a flower length around 1.5 cm, so flowering is a closer-looking reward rather than a giant display above the clump."
+    },
+    "growth": {
+        "note": "The illustration opens up the spine cover to explain it; an intact plant can conceal most of its green surface.",
+        "sourceIds": [
+            "rhs",
+            "museum"
+        ],
+        "stages": [
+            {
+                "text": "A young rounded stem is covered with a fine white spine mesh.",
+                "title": "Single head"
+            },
+            {
+                "text": "Offsets add new heads around the original plant.",
+                "title": "Growing cluster"
+            },
+            {
+                "text": "Many small globes become a low cushion that may produce tiny flowers.",
+                "title": "Mature mound"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew",
+            "museum"
+        ],
+        "text": "Feather cactus is native to northeastern Mexico, with Kew recording Coahuila, Nuevo León and Tamaulipas. It is a low succulent of desert and dry shrubland. Its white covering is part of the plant’s structure: the Arizona-Sonora Desert Museum explains that the interlacing spines shade the body beneath, rather than merely making it look fluffy."
+    },
+    "image": {
+        "alt": "Feather cactus clump with a magnified tubercle and numbered tubercle, areole, feathery spine cover and offset.",
+        "file": "assets/plant-explainers/mammillaria-plumosa.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024x1024 scientific botanical educational illustration. Warm ivory background; muted forest-green, sage and ochre with natural species colors; clean accurate pen-and-watercolor style, large central specimen, ample whitespace. Exactly four large circled numbered markers 1-4 with clear thin leaders pointing to the features specified below in order. Numbers legible at 350px display width. No words, title, paragraphs, watering or calendar icons. No pot, roots, flowers or grafts unless explicitly requested. Mammillaria plumosa feather cactus: a low cluster of three round small cactus heads blanketed in fine white feathery radial spines. Render genuine branched feather-like spines, not fur or cotton. Include a subtle small magnified anatomy inset of one green conical tubercle topped by a tiny areole and feathered radial spines, connected visually to the central plant. Exactly four numbered markers: 1 points to green tubercle in inset; 2 points to its apical areole in inset; 3 points to the feathery branched spine mesh of the central cactus; 4 points to an attached small side head/offset. No flowers or roots.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Old Man of the Andes",
+            "profileSlug": "oreocereus-trollii",
+            "text": "Oreocereus has long white hairs on columnar stems with conspicuous stiff orange-brown spines. Feather cactus stays low and shows a fine, interlacing radial-spine pattern when examined closely."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "rhs",
+            "museum"
+        ],
+        "text": "Individual heads can reach roughly 6 cm across. The Desert Museum describes mounds to about 40 cm wide, while the plant remains low; width grows by adding heads, not by turning into a single tall column."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-15",
+            "sourcePath": "docs/plants/starter/mammillaria-plumosa.md",
+            "text": "Joined the collection from Altman Reserve.",
+            "title": "Acquired"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "Kew records the name Mammillaria plumosa from 1898. Later authors tried several other genera, but the familiar Mammillaria name is currently accepted."
+    },
+    "slug": "mammillaria-plumosa",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew — Mammillaria plumosa",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:151448-2"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "rhs",
+            "title": "RHS — Mammillaria plumosa",
+            "url": "https://www.rhs.org.uk/plants/10832/mammillaria-plumosa/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "cactus-structure",
+            "title": "University of Illinois — cactus areoles",
+            "url": "https://www.life.illinois.edu/help/digitalflowers/Cactaceae/5.htm"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "museum",
+            "title": "Arizona-Sonora Desert Museum — Feather cactus",
+            "url": "https://www.desertmuseum.org/visit/sheets/Mamplu.pdf"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "troll-comparison",
+            "title": "NParks — Oreocereus trollii",
+            "url": "https://www.nparks.gov.sg/florafaunaweb/flora/6/1/6142"
+        }
+    ]
+}

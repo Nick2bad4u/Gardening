@@ -9,7 +9,7 @@ a plant controller. Current readings and plant-specific watering rules remain th
 
 The **dehumidifier is currently running directly from a wall outlet**, not from the A22. The **A22 controls fan cycles only**. The two under-table fans are the purchased Honeywell HT900 and an older, slightly larger Honeywell of unknown model; both are set to Low. The owner's roughly six-inch/nine-inch size estimates are not verified dimensions. The canopy fans' continuous operation is a separate record.
 
-Reported room conditions are approximately **45–50% RH and temperatures in the 70s °F**. The owner identifies a VIVOSUN **TH1GS** sensor alongside the A22 probe. The two probe locations are the **far pair of wooden tables** and the wall at plant height, with roughly two inches of the wall probe's free end leaning away from the wall. The exact probe-to-device assignment is unconfirmed. The body's internal sensor is on a shelf about two feet from the cacti. The owner corrected the earlier glass-table description: the former two wooden tables plus round glass table have been replaced by four 16 × 13-inch wooden tables, and the glass table is gone. These are location descriptions, not a calibration or evidence that all sensors read identically.
+Reported room conditions are approximately **45–50% RH and temperatures in the 70s °F**. The owner identifies a VIVOSUN **TH1GS** sensor alongside the A22 probe. The two probe locations are the **far pair of wooden tables** and the wall at plant height, with roughly two inches of the wall probe's free end leaning away from the wall. The exact probe-to-device assignment is unconfirmed. The body's internal sensor is on a shelf about two feet from the cacti. The current display uses four 16 × 13-inch wooden tables; the round glass table is no longer in use. These are location descriptions, not a calibration or evidence that all sensors read identically.
 
 The **Levoit LV600S humidifier is off**. The owner has not started using it because it is not winter yet; winter settings and a start date are unrecorded. The dehumidifier's current operation is recorded separately above. The older guidance below remains a reference for interpreting conditions; it is not an account of the devices' current program or an instruction to change the A22.
 
@@ -83,7 +83,7 @@ pot trays, keep normal airflow, and let the sensor show whether the room
 actually stayed humid. A short post-watering maximum above 60% is acceptable if
 the current reading and 24-hour minimum return to the normal band.
 
-The August 14 emergency repot and added perlite can create fine dust. Run the
+Repotting and handling perlite can create fine dust. Run the
 Core Mini-P on high only after the work surface is cleaned and all loose medium
 has settled, then return it to low. Do not use either canopy fan to blow repotting
 dust through the room or into the purifier.
@@ -100,7 +100,7 @@ particle care and would add an unnecessary variable beside the collection.
 
 ## August 4 commissioning check
 
-This dated commissioning procedure is historical, not a new September task.
+This commissioning procedure was written for August 4. It can also guide a comparison after changing appliance placement; it is not a recurring care task.
 
 1. With both new appliances off for at least an hour, record current
    temperature/RH and the 24-hour ranges.
@@ -115,8 +115,7 @@ This dated commissioning procedure is historical, not a new September task.
 5. After 72 hours, confirm neither adapter is unusually hot, both intakes are
    clean, the aisle remains clear, and no cord can enter a watering path.
 
-This short comparison is enough. There is no need to build a detailed air-
-quality or humidity experiment for a hobby collection.
+A short before/after comparison helps show whether the appliances affect this room's conditions.
 
 ## Maintenance and safety
 

@@ -1,14 +1,14 @@
 # Tuberculate tiger jaws
 
 - Inventory: Succulent-09 — probable _Faucaria tuberculosa_
-- Label ID: `#5` — owner-assigned 2026-09-02
+- Label ID: `#5`
 - Tracker ID: `P29`
 - Visual description: A compact mesemb with paired triangular green leaves, soft white marginal teeth, rough pale spots, and conspicuous raised white tubercles across the upper leaf surfaces.
-- Interesting fact: The jaw-like leaves grow in opposing pairs; mature _Faucaria_ can open daisy-like yellow flowers from the center without the flexible-looking marginal teeth being true defensive spines.
-- Identification: **seller-labeled _Faucaria tigrina_, but probable _F. tuberculosa_ from current owner photographs; the conspicuous raised white leaf tubercles are the reason for the qualified correction**
+- Interesting fact: Raised whitish bumps on the leaf faces are normal tubercles, not pests; their prominence is one reason this plant is recorded as probable Faucaria tuberculosa.
+- Identification: **seller-labeled _Faucaria tigrina_, but probable _F. tuberculosa_ from current owner photographs; raised white leaf tubercles support the working identification**
 - Acquired from: Home Depot; grown by Altman Plants under Smart Planet Home branding; exact store not recorded
 - Acquired on: 2026-09-02
-- Current pot: setup 2; live Repot record describes “4.25 round, 4.25 deep” with 80% Molly's Succulent Mix / 20% perlite and top dressing
+- Current pot: setup 2; described as “4.25 round, 4.25 deep” with 80% Molly's Succulent Mix / 20% perlite and top dressing
 
 ## Names and identification
 
@@ -25,14 +25,11 @@ _Faucaria_ match. The current close photograph also shows many prominent,
 wart-like white tubercles over the leaf faces. That feature is more consistent
 with _F. tuberculosa_ than with the smoother, finely spotted appearance usually
 associated with _F. tigrina_, so the collection record uses _F. tuberculosa_
-as a probable working identification rather than silently accepting the retail
-label.
+as a probable working identification.
 
-Both names are accepted species in current Kew taxonomy. Photographs alone do
-not prove the taxon or exclude every variable _Faucaria_ form, so the permanent
-record keeps the qualifier visible. The photographed Altman Plants tag is now
-preserved as provenance, but a clear flower, fruit capsule, and mature growth
-would still be useful identification evidence.
+Kew accepts both species. Flowers, fruit capsules, and mature growth could
+help distinguish them; the photographed Altman Plants tag preserves the
+original seller identification.
 
 ## Acquisition and photo evidence
 
@@ -46,11 +43,10 @@ fixed care rules or taxonomic proof.
 
 Source-quality photographs preserve its receipt condition, the repotted whole
 plant, a close diagnostic view of the tubercles, and shared context with the
-second Home Depot planter. The Gyazo photo history contains the complete
-publication set; only selected current views are inlined in the field guide.
+second Home Depot planter. The photo gallery provides views of both the plant and its original tag.
 
 The plant was repotted on acquisition day. The photographed label establishes
-a 2.5-inch retail assortment. The live setup-2 Repot observation at **September 3, 2026, 12:23 a.m. EDT** records the pot as **“4.25 round, 4.25 deep”** and medium as **80% Molly's Succulent Mix / 20% perlite with top dressing**. That timestamp belongs to the September 2 care day, consistent with the acquisition-day repot narrative. These are logged descriptions, not dimensions inferred from photographs. Exact store, price, root condition, and any unlogged plant dimensions remain unknown; current weight observations belong in the live ledger.
+a 2.5-inch retail assortment. The repot was logged at **September 3, 2026, 12:23 a.m. EDT**, with the setup-2 pot described as **“4.25 round, 4.25 deep”** and its medium as **80% Molly's Succulent Mix / 20% perlite with top dressing**.
 
 ## Origin and growth form
 
@@ -70,20 +66,19 @@ species identity.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                                         |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Treat the September 2 photographs and future measured readings as the baseline. Record any softening, translucent tissue, or root instability during establishment.                                                                                                                                                                 |
-| Grow-light position | **Photo-matched rear right, in front of the square box · Bright.** September 15 rear wooden tables, facing the window. Retain probable Faucaria tuberculosa / seller F. tigrina qualifier; compare at leaf height. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Water               | Soak only after the mix has dried through and the pot-weight trend supports it, then drain completely. Do not use a fixed calendar or misting routine.                                                                                                                                                                              |
-| Pot and mix         | Setup 2 records “4.25 round, 4.25 deep” and 80% Molly's Succulent Mix / 20% perlite with top dressing. Keep the paired-leaf crown above wet top dressing.                                                                                                                                                                           |
-| Temperature         | Favor warm active-growth conditions, airflow, and protection from cold wet roots. Indoor seasonal behavior should be observed rather than assumed from a retail calendar.                                                                                                                                                           |
-| Feeding             | If established growth is visible, use only the collection's dilute succulent feeding approach during a normal watering; do not feed a stressed or still-wet plant.                                                                                                                                                                  |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                           |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival             | Treat the September 2 photographs and future measured readings as the baseline. Record any softening, translucent tissue, or root instability during establishment.                                                                                                   |
+| Grow-light position | **Photo-matched rear right, in front of the square box · Bright.** September 15 rear wooden tables, facing the window. Compare light at leaf height. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Water               | Soak only after the mix has dried through and the pot-weight trend supports it, then drain completely. Do not use a fixed calendar or misting routine.                                                                                                                |
+| Pot and mix         | Setup 2 records “4.25 round, 4.25 deep” and 80% Molly's Succulent Mix / 20% perlite with top dressing. Keep the paired-leaf crown above wet top dressing.                                                                                                             |
+| Temperature         | Favor warm active-growth conditions, airflow, and protection from cold wet roots. Indoor seasonal behavior should be observed rather than assumed from a retail calendar.                                                                                             |
+| Feeding             | If established growth is visible, use only the collection's dilute succulent feeding approach during a normal watering; do not feed a stressed or still-wet plant.                                                                                                    |
 
 ## Rotation, propagation, and watch points
 
-- Keep the `#5` orientation consistent in photographs until its acclimation and
-  first measured baseline are recorded; then rotate only as needed for even
-  growth.
+- Use a consistent orientation in comparison photographs; rotate as needed
+  for even growth.
 - Distinguish ordinary old-leaf drying from translucent, spreading softness at
   the crown or base. The latter deserves a root and rot inspection rather than
   more water.
@@ -94,6 +89,8 @@ species identity.
   newly acquired plant is establishing.
 
 ## Sources
+
+- [SANBI: Faucaria tuberculosa morphological description](https://biodiversityadvisor.sanbi.org/search/detail/9555e14f-4916-4afa-9d2a-7c8eb0e09de9)
 
 - [Kew Plants of the World Online: _Faucaria tuberculosa_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:361856-1)
 - [Kew Plants of the World Online: _Faucaria tigrina_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:361855-1)

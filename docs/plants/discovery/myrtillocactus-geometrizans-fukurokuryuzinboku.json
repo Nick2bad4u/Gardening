@@ -1,0 +1,131 @@
+{
+    "anatomy": {
+        "intro": "Four structures that explain the form of 'Fukurokuryuzinboku'.",
+        "parts": [
+            {
+                "function": "An unusually swollen section of rib creates the cultivar's distinctive shape.",
+                "label": "Rounded lobe"
+            },
+            {
+                "function": "This small cushion carries the short spine cluster.",
+                "label": "Areole"
+            },
+            {
+                "function": "Spines defend the otherwise exposed succulent surface.",
+                "label": "Short spine"
+            },
+            {
+                "function": "New stem tissue extends the column and continues its lumpy rib pattern.",
+                "label": "Growing tip"
+            }
+        ],
+        "sourceIds": [
+            "form",
+            "anatomy"
+        ]
+    },
+    "comparisonSourceIds": [
+        "form",
+        "blue"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "LLIFLE describes greenish-white flowers only about 2.5–3.7 cm across for this cultivar. Their modest size contrasts with the exaggerated stem shape; a small indoor plant may be enjoyed for its form alone."
+    },
+    "growth": {
+        "note": "This is irregular cultivated growth, so symmetry and a precise annual height gain are not expectations.",
+        "sourceIds": [
+            "form"
+        ],
+        "stages": [
+            {
+                "text": "A young plant displays only a few swollen rib sections.",
+                "title": "Short rooted column"
+            },
+            {
+                "text": "Upward growth adds successive rounded projections.",
+                "title": "Repeated lobes"
+            },
+            {
+                "text": "Older stems can thicken and branch into a more substantial plant.",
+                "title": "Larger framework"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "Myrtillocactus geometrizans is a Mexican tree cactus of desert and dry shrubland. 'Fukurokuryuzinboku' is a cultivated monstrose form, not a separate wild species. Its repeated rounded swellings reshape the normal ribs, while the blue-green stem and widely spaced spine cushions retain the underlying species' recognizable character."
+    },
+    "image": {
+        "alt": "Botanical anatomy of 'Fukurokuryuzinboku', with numbered markers for rounded lobe, areole, short spine, growing tip.",
+        "file": "assets/plant-explainers/myrtillocactus-geometrizans-fukurokuryuzinboku.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration, warm ivory background, precise pen-and-watercolor, muted forest green/sage/ochre palette, large centered specimen and generous whitespace. Exactly four large legible numbered markers 1, 2, 3, 4, each once, with fine leader lines ending clearly on the named structures. No title, words, border, watering symbols or calendar. No flowers, grafts, or roots. Numbers must remain readable at 350px. Generic anatomical specimen, not measurement evidence. A Myrtillocactus geometrizans Fukurokuryuzinboku cultivar, one blue-green upright column whose ribs form repeated rounded breastlike lobes, accurate famous monstrose boobie cactus silhouette. Sparse small areoles and short sharp dark spines. 1 points to a rounded swollen lobe; 2 to one areole on a lobe; 3 to a short spine; 4 to the apical growing tip. This is a cactus, do not anthropomorphize.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Variegated blue torch",
+            "profileSlug": "pilosocereus-pachycladus-variegated",
+            "text": "Blue torch keeps comparatively straight ribs, with pale cream color sectors. This cultivar's key feature is swollen rib shape."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "tree",
+            "form"
+        ],
+        "text": "The normal species can become a branching tree around 4 m tall in suitable cultivation. The monstrose cultivar has a different outline and pace, so that figure is background rather than a predicted indoor height."
+    },
+    "milestones": [
+        {
+            "date": "2026-08-10",
+            "sourcePath": "docs/plants/cacti/myrtillocactus-geometrizans-fukurokuryuzinboku.md",
+            "text": "Purchased at Carlsons' Greenhouse in a 3-inch individual pot.",
+            "title": "Joined the collection"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "The species was described as Cereus geometrizans in 1837 and moved to Myrtillocactus in 1897; the cultivated shape is a later horticultural selection."
+    },
+    "slug": "myrtillocactus-geometrizans-fukurokuryuzinboku",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "range",
+            "title": "Kew Plants of the World Online: Myrtillocactus geometrizans",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:135710-1"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "form",
+            "title": "LLIFLE: Fukurokuryuzinboku morphology",
+            "url": "https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/14991/Myrtillocactus_geometrizans_cv._Fukurokuryuzinboku"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "tree",
+            "title": "RHS: Myrtillocactus geometrizans",
+            "url": "https://www.rhs.org.uk/plants/11310/myrtillocactus-geometrizans/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "blue",
+            "title": "RHS: Pilosocereus pachycladus",
+            "url": "https://www.rhs.org.uk/plants/250738/pilosocereus-pachycladus/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "anatomy",
+            "title": "National Park Service: cactus adaptations",
+            "url": "https://www.nps.gov/arch/learn/nature/cacti.htm"
+        }
+    ]
+}

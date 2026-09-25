@@ -1,0 +1,124 @@
+{
+    "anatomy": {
+        "intro": "Four structures that explain the form of the probable peanut cactus hybrid.",
+        "parts": [
+            {
+                "function": "The green succulent stem stores water and captures light.",
+                "label": "Finger-shaped stem"
+            },
+            {
+                "function": "Longitudinal folds organize the expanding stem surface.",
+                "label": "Shallow rib"
+            },
+            {
+                "function": "Small cushions carry neat clusters of short spines.",
+                "label": "Areole"
+            },
+            {
+                "function": "A young side shoot helps the plant spread into a low clump.",
+                "label": "Basal offset"
+            }
+        ],
+        "sourceIds": [
+            "form",
+            "anatomy"
+        ]
+    },
+    "comparisonSourceIds": [
+        "form",
+        "gold"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "The peanut-cactus ancestor has vivid red flowers about 5–7 cm across. Hybrid flowers can differ, so this plant's first clearly documented bloom will be more informative than a guessed cultivar name."
+    },
+    "growth": {
+        "note": "These expectations come from peanut-cactus ancestry; a hybrid can differ in vigor, stem size, and flower color.",
+        "sourceIds": [
+            "form"
+        ],
+        "stages": [
+            {
+                "text": "Short stems establish a compact starting group.",
+                "title": "Small cluster"
+            },
+            {
+                "text": "New fingers enlarge the plant sideways.",
+                "title": "Spreading offsets"
+            },
+            {
+                "text": "Mature stems can bear flowers much broader than the stems themselves.",
+                "title": "Flowering clump"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "Chamaelobivia is a horticultural hybrid group, not a wild species with one native range. Its peanut-cactus ancestor, Echinopsis chamaecereus, comes from northwestern Argentina. This plant's low cluster of finger-shaped stems supports the hybrid-group identification, but its exact parentage and cultivar remain unknown."
+    },
+    "image": {
+        "alt": "Botanical anatomy of the probable peanut cactus hybrid, with numbered markers for finger-shaped stem, shallow rib, areole, basal offset.",
+        "file": "assets/plant-explainers/chamaelobivia-hybrid.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration, warm ivory background, precise pen-and-watercolor, muted forest green/sage/ochre palette, large centered specimen and generous whitespace. Exactly four large legible numbered markers 1, 2, 3, 4, each once, with fine leader lines ending clearly on the named structures. No title, words, border, watering symbols or calendar. No flowers, grafts, or roots. Numbers must remain readable at 350px. Generic anatomical specimen, not measurement evidence. Probable Chamaelobivia peanut cactus hybrid: dense low cluster of short finger/peanut-shaped bright green stems, shallow ribs with neat white small radial spines. 1 points to a complete finger-like main stem; 2 to a shallow rib; 3 to a small areole bearing short spines; 4 to a tiny new basal offset. No flowers because cultivar is unknown.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Golden ball cactus",
+            "profileSlug": "parodia-leninghausii",
+            "text": "Parodia leninghausii develops a denser golden coat and an upright column; peanut hybrids spread as many fingerlike stems."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "Expect a low, spreading clump rather than a tall column. The ancestor's dimensions are not a reliable size limit for an unidentified hybrid."
+    },
+    "milestones": [
+        {
+            "date": "2026-08-10",
+            "sourcePath": "docs/plants/cacti/chamaelobivia-hybrid.md",
+            "text": "Purchased at Carlsons' Greenhouse in a 4-inch individual pot.",
+            "title": "Joined the collection"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "The familiar peanut shape belongs to a species now listed by Kew as Echinopsis chamaecereus; Chamaecereus survives widely in horticultural hybrid names."
+    },
+    "slug": "chamaelobivia-hybrid",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "range",
+            "title": "Kew Plants of the World Online: Echinopsis chamaecereus",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:907548-1"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "form",
+            "title": "RHS: Echinopsis chamaecereus",
+            "url": "https://www.rhs.org.uk/plants/31628/echinopsis-chamaecereus/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "gold",
+            "title": "RHS: Parodia leninghausii",
+            "url": "https://www.rhs.org.uk/plants/117769/parodia-leninghausii/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "anatomy",
+            "title": "National Park Service: cactus adaptations",
+            "url": "https://www.nps.gov/arch/learn/nature/cacti.htm"
+        }
+    ]
+}

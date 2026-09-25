@@ -4,7 +4,7 @@ _Gymnocalycium mihanovichii_ - Cactus-09
 
 Collection label ID: `G1`.
 
-Variegated and normal species references, including cultivated observations; no reusable image is assumed to show the exact Black Widow cultivar.
+Variegated and normal species-reference photographs, including cultivated plants; these images do not establish the exact Black Widow cultivar.
 
 Collection research: [open the plant profile](../../../docs/plants/cacti/gymnocalycium-mihanovichii-black-widow.md).
 

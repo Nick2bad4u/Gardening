@@ -4,7 +4,7 @@
 - Label ID: `A2`
 - Tracker ID: `P02`
 - Visual description: A low clustering mound almost completely hidden beneath overlapping white featherlike spines, with rounded heads merging into a soft, cloudlike surface.
-- Interesting fact: Each apparent feather is really a precisely arranged comb of many tiny spines, so the fluffy white coat is still a defensive cactus structure rather than fur.
+- Interesting fact: Its interlacing white spines shade the green body underneath; the fluffy-looking covering is a living cactus feature rather than fur.
 - Identification: **labeled**
 - Acquired from: Altman Reserve
 - Acquired on: 2026-07-15
@@ -43,13 +43,13 @@ preferable to plants without provenance.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                            |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R2C1 · Bright.** September 15 six-column/four-row front grid, facing the window. Left shoulder; its white covering does not mean it requires the strongest exposure. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Water               | Wet the mix thoroughly and let it drain; then wait for a full dry-down. Keep water out of a cool crown and reduce strongly in winter.                                                                                                                                                                         |
-| Pot and mix         | A wide, shallow pot can suit an expanding clump. The current individual pot is fine until heads reach its rim. Favor excellent mineral drainage.                                                                                                                                                              |
-| Temperature         | A dry plant handles cool nights better than a damp one. Protect from hard frost and cold rain.                                                                                                                                                                                                                |
-| Feeding             | Dilute cactus feed during active growth only; soft fast growth is not an improvement.                                                                                                                                                                                                                         |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                        |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Photo-matched R2C1 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Left shoulder; its white covering does not mean it requires the strongest exposure. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Wet the mix thoroughly and let it drain; then wait for a full dry-down. Keep water out of a cool crown and reduce strongly in winter.                                                                                                                                                     |
+| Pot and mix         | A wide, shallow pot can suit an expanding clump. The current individual pot is fine until heads reach its rim. Favor excellent mineral drainage.                                                                                                                                          |
+| Temperature         | A dry plant handles cool nights better than a damp one. Protect from hard frost and cold rain.                                                                                                                                                                                            |
+| Feeding             | Dilute cactus feed during active growth only; soft fast growth is not an improvement.                                                                                                                                                                                                     |
 
 Water the soil, not the wool. If the feathers get wet, airflow and warmth should
 let them dry quickly. Persistent mineral spotting is cosmetic; persistent damp
@@ -69,6 +69,7 @@ at the hidden body can become structural.
 
 ## Sources
 
+- [Arizona-Sonora Desert Museum: feather cactus structure and care](https://www.desertmuseum.org/visit/sheets/Mamplu.pdf)
 - [Altman Plants: feather cactus seller listing](https://shopaltmanplants.com/products/mammillaria-plumosa-feather-cactus-1)
 - [Kew Plants of the World Online: _Mammillaria plumosa_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A151448-2)
 - [LLIFLE cactus encyclopedia: _Mammillaria plumosa_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/9350/Mammillaria_plumosa)

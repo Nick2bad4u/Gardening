@@ -4,8 +4,8 @@
 
 Updated September 13, 2026. The owner canceled the Amazon AW400SE order,
 then selected the [AW400](./vivosun-aw400.md), which was subsequently reported
-sold out. The active plan is now **[the retained AW200 beside a new AeroLight
-240 W](./aw200-and-aerolight-240w.md)**, installed September 13 with separate
+sold out. The installed pair is **[AW200 beside AeroLight
+240 W](./aw200-and-aerolight-240w.md)**, in place since September 13 with separate
 reported settings of 45% / 38%.
 Neither 400 W model was recorded as received or installed.
 
@@ -16,7 +16,7 @@ out of the plan and the top divider Mylar stays.
 
 ## Canceled Model's Specifications
 
-These manufacturer figures are retained to explain the change in selection:
+Manufacturer specifications for the canceled model:
 
 | Item               | AW400SE manufacturer information                                     |
 | ------------------ | -------------------------------------------------------------------- |

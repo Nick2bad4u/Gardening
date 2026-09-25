@@ -1,0 +1,126 @@
+{
+    "anatomy": {
+        "intro": "Rounded leaf bumps develop on a powdery blue-green rosette as it matures.",
+        "parts": [
+            {
+                "function": "The raised rounded bump is part of the leaf, not a water droplet or insect.",
+                "label": "Caruncle"
+            },
+            {
+                "function": "A dusty wax layer gives the leaf its pale matte finish.",
+                "label": "Farina"
+            },
+            {
+                "function": "The broad leaf stores water and supports photosynthesis.",
+                "label": "Fleshy blade"
+            },
+            {
+                "function": "The smallest new leaves may not yet show the cultivar's bumps.",
+                "label": "Young center"
+            }
+        ],
+        "sourceIds": [
+            "nursery",
+            "extension"
+        ]
+    },
+    "comparisonSourceIds": [
+        "nursery",
+        "pulidonis"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "extension",
+            "nursery"
+        ],
+        "text": "Echeverias bear clusters of small bell-like flowers on stems above the foliage. The seller lists pink blooms for 'Raindrops'. A future flower record should describe this specimen's actual color and form rather than treating the nursery listing as an observation."
+    },
+    "growth": {
+        "note": "Bump development varies with maturity and growing conditions, so one smooth young leaf does not negate the seller's cultivar label.",
+        "sourceIds": [
+            "nursery"
+        ],
+        "stages": [
+            {
+                "text": "A small rosette may initially have few or no bumps.",
+                "title": "Grow young leaves"
+            },
+            {
+                "text": "Maturing leaves show the rounded structures characteristic of the cultivar.",
+                "title": "Develop raindrops"
+            },
+            {
+                "text": "The rosette expands; offsets may be infrequent.",
+                "title": "Broaden the crown"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "extension",
+            "nursery"
+        ],
+        "text": "'Raindrops' is a cultivated Echeveria rather than a species with its own wild range. The genus ranges from the southwestern United States into South America, and their fleshy rosettes reflect adaptation to dry conditions. Parentage is not established in this collection's evidence, so a precise ancestral habitat should not be assigned to this named hybrid."
+    },
+    "image": {
+        "alt": "Blue-green rosette with numbered raised caruncle, waxy surface, leaf blade and young center.",
+        "file": "assets/plant-explainers/echeveria-raindrops.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Scientific educational botanical illustration, square 1024x1024, warm ivory background, accurate clean pen-and-watercolor, forest-green/sage/ochre muted palette with natural species colors. Large central plant, generous whitespace. Exactly four large numbered markers 1–4 with thin clear leaders to the specified features, readable at 350px. No other text, titles, paragraphs, calendar, watering icons, roots or pots. Generic botanical anatomy, not a record of an individual collection specimen. Echeveria Raindrops: compact low blue-green rosette of broad rounded succulent leaves, dusty matte wax, pink edges. Mature outer and middle leaves each carry a single smooth rounded droplet-like mound (caruncle) on the upper surface near its outer end; smallest center leaves have no bumps. Markers: 1 a clearly visible rounded caruncle, 2 matte waxy leaf surface, 3 broad fleshy leaf blade, 4 young central leaves. No flowers or offsets. The caruncles are part of leaf tissue, not transparent water droplets.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Echeveria pulidonis",
+            "profileSlug": "echeveria-pulidonis",
+            "text": "Pulidonis has smooth pointed leaves with fine red margins. Mature 'Raindrops' has broader rounded blades carrying conspicuous bumps, though small new leaves can be smooth."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "nursery"
+        ],
+        "text": "The nursery describes a rosette reaching about 6 inches across and producing few offsets. That gives useful room-planning context; the recorded August size is a separate early measurement, not its mature limit."
+    },
+    "milestones": [
+        {
+            "date": "2026-08-28",
+            "sourcePath": "docs/plants/succulents/echeveria-raindrops.md",
+            "text": "Received from Mountain Crest Gardens and moved into a 4 × 4 × 3.7-inch round pot.",
+            "title": "Arrived and repotted"
+        },
+        {
+            "date": "2026-08-29",
+            "sourcePath": "docs/plants/succulents/echeveria-raindrops.md",
+            "text": "Measured 1.35 inches high × 2.75 inches wide, with a recorded pot weight of 344 g.",
+            "title": "Early size record"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "nursery"
+        ],
+        "text": "The nursery credits hybridizer Dick Wright. The name describes its droplet-like leaf bumps; they are normal cultivar growth and should not be scraped off."
+    },
+    "slug": "echeveria-raindrops",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "nursery",
+            "title": "Mountain Crest Gardens: Echeveria 'Raindrops'",
+            "url": "https://mountaincrestgardens.com/echeveria-raindrops/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "extension",
+            "title": "NC State: Echeveria",
+            "url": "https://plants.ces.ncsu.edu/plants/echeveria/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "pulidonis",
+            "title": "RHS: Echeveria pulidonis",
+            "url": "https://www.rhs.org.uk/plants/6239/echeveria-pulidonis/details"
+        }
+    ]
+}

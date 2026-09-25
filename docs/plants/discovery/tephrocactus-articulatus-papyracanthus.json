@@ -1,0 +1,130 @@
+{
+    "anatomy": {
+        "intro": "Four structures that explain the form of paper spine cactus.",
+        "parts": [
+            {
+                "function": "Each green joint stores water and contributes to photosynthesis.",
+                "label": "Stem segment"
+            },
+            {
+                "function": "The small cushion is the origin of the cactus's spines.",
+                "label": "Areole"
+            },
+            {
+                "function": "Broad, flattened spines give this form its distinctive ribbonlike surface.",
+                "label": "Papery spine"
+            },
+            {
+                "function": "The narrow connection can separate; a detached healthy segment can root.",
+                "label": "Segment joint"
+            }
+        ],
+        "sourceIds": [
+            "form",
+            "anatomy"
+        ]
+    },
+    "comparisonSourceIds": [
+        "form",
+        "eve"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "Mountain Crest describes this form as reluctant to flower. Its remarkable stems can therefore be the main display for a long time; a bloom is a bonus, not a requirement for healthy growth."
+    },
+    "growth": {
+        "note": "Detached joints are part of this plant's propagation strategy, but handle the collection specimen gently.",
+        "sourceIds": [
+            "form"
+        ],
+        "stages": [
+            {
+                "text": "A young plant may begin as one rooted segment.",
+                "title": "Single joint"
+            },
+            {
+                "text": "New joints form above or beside established segments.",
+                "title": "Stacked growth"
+            },
+            {
+                "text": "Successive segments build an irregular miniature shrub.",
+                "title": "Branching clump"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "The underlying species, Tephrocactus articulatus, is native to northwestern and north-central Argentina in desert and dry shrubland. This collection plant carries the papery-spined horticultural name. Its compact stack of separate joints makes a small branching framework, rather than the continuous column seen in many other cacti."
+    },
+    "image": {
+        "alt": "Botanical anatomy of paper spine cactus, with numbered markers for stem segment, areole, papery spine, segment joint.",
+        "file": "assets/plant-explainers/tephrocactus-articulatus-papyracanthus.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration for a cactus visitor guide. Subject: Tephrocactus articulatus papery-spined horticultural form, a small branching stack of three grey-green oval/pinecone-like stem segments with broad thin curling ivory paper-like spines. Accurate species silhouette, not flat prickly-pear pads. Warm ivory background, clean accurate pen-and-watercolor style, muted forest-green/sage/ochre palette, generous whitespace, specimen centered. Exactly four large legible numbered markers with fine clear leader lines: 1 points to a grey-green succulent stem segment; 2 points to a small round areole on the segment surface; 3 points to a broad flat curling papery spine emerging from an areole; 4 points to the narrow joint joining two segments. Numbers 1,2,3,4 only, each once. No title, no words, no decorative border, no flowers, no graft, no roots, no watering icons or calendar. Marker numbers and endpoints must be easy to read at 350px display width. Drawing is explanatory anatomy rather than a portrait of a measured individual.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Eve's needle",
+            "profileSlug": "austrocylindropuntia-subulata",
+            "text": "Eve's needle has long pointed leaves and elongated cylindrical branches, rather than papery spines on short joints."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "Maturity brings more stacked and branching joints. A fixed indoor height would be misleading because breakage and rooting can change the outline as much as upward growth."
+    },
+    "milestones": [
+        {
+            "date": "2026-08-28",
+            "sourcePath": "docs/plants/cacti/tephrocactus-articulatus-papyracanthus.md",
+            "text": "Received from Mountain Crest Gardens and repotted after removal of most nursery soil.",
+            "title": "Arrived and repotted"
+        },
+        {
+            "date": "2026-08-29",
+            "sourcePath": "docs/plants/cacti/tephrocactus-articulatus-papyracanthus.md",
+            "text": "Potted weight 375.5 g; plant 1.25 in high × 1.15 in wide.",
+            "title": "Measured reference"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "Kew treats the papyracanthus variety name within Tephrocactus articulatus; the species traces back to Cereus articulatus, published in 1837."
+    },
+    "slug": "tephrocactus-articulatus-papyracanthus",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "range",
+            "title": "Kew Plants of the World Online: Tephrocactus articulatus",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:250154-2"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "form",
+            "title": "Mountain Crest Gardens: paper spine cactus",
+            "url": "https://mountaincrestgardens.com/tephrocactus-articulatus-var-papyracanthus-paper-spine-cactus/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "eve",
+            "title": "NC State Extension: Eve's needle",
+            "url": "https://plants.ces.ncsu.edu/plants/austrocylindropuntia-subulata/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "anatomy",
+            "title": "National Park Service: cactus adaptations",
+            "url": "https://www.nps.gov/arch/learn/nature/cacti.htm"
+        }
+    ]
+}

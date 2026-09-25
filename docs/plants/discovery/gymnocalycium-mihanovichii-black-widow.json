@@ -1,0 +1,131 @@
+{
+    "anatomy": {
+        "intro": "Four structures that explain the form of 'Black Widow'.",
+        "parts": [
+            {
+                "function": "The rib's chinlike steps shape the expandable water-storing body.",
+                "label": "Notched rib"
+            },
+            {
+                "function": "A pale cushion produces the small spine cluster.",
+                "label": "Areole"
+            },
+            {
+                "function": "Short spines protect the surface around each areole.",
+                "label": "Curved spines"
+            },
+            {
+                "function": "Chlorophyll-bearing tissue contributes to the plant's photosynthesis.",
+                "label": "Green sector"
+            }
+        ],
+        "sourceIds": [
+            "form",
+            "anatomy"
+        ]
+    },
+    "comparisonSourceIds": [
+        "form"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "The species bears funnel-shaped flowers near the crown; NC State describes pale green to brownish-yellow flowers. That species description does not establish the eventual flower color of this individual cultivar."
+    },
+    "growth": {
+        "note": "Color intensity and offset production vary; the cultivar name does not specify a growth timetable.",
+        "sourceIds": [
+            "form",
+            "seller"
+        ],
+        "stages": [
+            {
+                "text": "The young plant develops a compact ribbed body.",
+                "title": "Small globe"
+            },
+            {
+                "text": "New growth adds to the notched ribs at the top.",
+                "title": "Widening crown"
+            },
+            {
+                "text": "Mountain Crest reports regular offsets that can form a cluster.",
+                "title": "Offsetting cluster"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "range",
+            "seller"
+        ],
+        "text": "The wild species comes from Paraguay and northeastern Argentina, including Chaco and Formosa. 'Black Widow' is a cultivated color form, so it has no separate wild habitat. Its smoky purple to nearly black body retains green tissue; the collection plant grows on its own roots rather than a graft."
+    },
+    "image": {
+        "alt": "Botanical anatomy of 'Black Widow', with numbered markers for notched rib, areole, curved spines, green sector.",
+        "file": "assets/plant-explainers/gymnocalycium-mihanovichii-black-widow.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration, warm ivory background, precise pen-and-watercolor, muted forest green/sage/ochre palette, large centered specimen and generous whitespace. Exactly four large legible numbered markers 1, 2, 3, 4, each once, with fine leader lines ending clearly on the named structures. No title, words, border, watering symbols or calendar. No flowers, grafts, or roots. Numbers must remain readable at 350px. Generic anatomical specimen, not measurement evidence. Black Widow Gymnocalycium mihanovichii cultivar: squat round ribbed cactus, dark wine-purple/near-black body with irregular green sectors, pale woolly areoles and short curved tan spines, standing on its own base with no graft. 1 points to a vertical rib with chin-like notch; 2 to an areole; 3 to short curved spines; 4 to a clearly green sector amid the wine-purple tissue. Show no flowers.\nFinal refinement: Edit this botanical educational illustration with one precise annotation correction only. Preserve the entire cactus drawing, colors, cream background, composition, all four numbers, and markers 1, 2 and 4 unchanged. Marker 3 at top-right currently terminates in blank cream space just below/right of a brown curved spine (existing endpoint approximately x756 y140 on this 1024-square image). Move ONLY that marker 3 line endpoint and its small green circular dot so the dot sits directly ON a clearly visible brown curved spine shaft, preferably the long right-curving spine immediately below the old endpoint, approximately x773 y155. Adjust the short connecting leader segment as necessary while keeping numeral 3 in its current position. The dot must touch and visibly identify the brown spine, never floating in background or touching wool. Do not alter any plant anatomy, add labels, or change any other leader. Output same square illustration at original framing.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Grafted moon cactus",
+            "profileSlug": null,
+            "text": "Many vividly colored moon cacti lack enough chlorophyll and use a separate green rootstock. This own-root plant has a continuous base and green sectors."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "seller"
+        ],
+        "text": "Expect a compact cactus that can broaden into an offsetting cluster. Nursery pot size is its sale size, not its mature diameter, and no measured adult size is yet available for this collection plant."
+    },
+    "milestones": [
+        {
+            "date": "2026-08-28",
+            "sourcePath": "docs/plants/cacti/gymnocalycium-mihanovichii-black-widow.md",
+            "text": "Received from Mountain Crest Gardens and moved from its 2-inch nursery pot into the collection pot.",
+            "title": "Arrived and repotted"
+        },
+        {
+            "date": "2026-08-29",
+            "sourcePath": "docs/plants/cacti/gymnocalycium-mihanovichii-black-widow.md",
+            "text": "Potted weight 388 g; plant 0.5 in high × 1.2 in wide.",
+            "title": "Measured reference"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "The species was first published as Echinocactus mihanovichii in 1905, then placed in Gymnocalycium in 1922."
+    },
+    "slug": "gymnocalycium-mihanovichii-black-widow",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "range",
+            "title": "Kew Plants of the World Online: Gymnocalycium mihanovichii",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:115434-2"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "form",
+            "title": "NC State Extension: Gymnocalycium mihanovichii",
+            "url": "https://plants.ces.ncsu.edu/plants/gymnocalycium-mihanovichii/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "seller",
+            "title": "Mountain Crest Gardens: Black Widow",
+            "url": "https://mountaincrestgardens.com/gymnocalycium-mihanovichii-f-variegata-black-widow-wfzy/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "anatomy",
+            "title": "National Park Service: cactus adaptations",
+            "url": "https://www.nps.gov/arch/learn/nature/cacti.htm"
+        }
+    ]
+}

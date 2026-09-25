@@ -1,0 +1,127 @@
+{
+    "anatomy": {
+        "intro": "The drawing explains a sword-leaved rosette and its possible flowers; flowering is illustrative, not a recorded event on P32.",
+        "parts": [
+            {
+                "function": "A long, narrow leaf presents its upper surface to light, with veins running lengthwise.",
+                "label": "Sword-shaped blade"
+            },
+            {
+                "function": "The lower leaf surface supplies a useful visual feature, but its color alone cannot authenticate a cultivar.",
+                "label": "Purple underside"
+            },
+            {
+                "function": "Young leaves emerge within the compact upright arrangement rather than along a trailing vine.",
+                "label": "Rosette center"
+            },
+            {
+                "function": "Small white flowers sit between boat-shaped bracts, which are modified leaves rather than petals.",
+                "label": "Flowers and bracts"
+            }
+        ],
+        "sourceIds": [
+            "ncsu",
+            "uf"
+        ]
+    },
+    "comparisonSourceIds": [
+        "ncsu",
+        "uf"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "uf"
+        ],
+        "text": "Look among the leaf bases for small white flowers cupped by purplish boat-shaped bracts. They can be easy to miss. University of Florida describes periodic flowering through the year in suitable conditions; that is not a predicted indoor flowering calendar."
+    },
+    "growth": {
+        "note": "Development depends on conditions; a nursery hanging basket does not change the species' upright growth habit.",
+        "sourceIds": [
+            "uf",
+            "ncsu"
+        ],
+        "stages": [
+            {
+                "text": "A short stem carries closely arranged upright leaves.",
+                "title": "Young rosette"
+            },
+            {
+                "text": "Growth broadens into a dense clump that can eventually be divided.",
+                "title": "Clump expansion"
+            },
+            {
+                "text": "Flower clusters form low among the leaves inside paired bracts.",
+                "title": "Hidden flowers"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew",
+            "ncsu"
+        ],
+        "text": "Kew places the species in the wet tropics from southern Mexico to Guatemala. It is an upright, clumping tropical plant rather than a trailing desert succulent. Tricolor is a cultivated variegated form, so its striped foliage does not represent a separate wild habitat or prove the exact cultivar from appearance alone."
+    },
+    "image": {
+        "alt": "Generated striped oyster-plant rosette: 1 sword-shaped blade, 2 purple underside, 3 young central leaves, and 4 illustrative white flowers within boat-shaped bracts.",
+        "file": "assets/plant-explainers/tradescantia-spathacea-tricolor.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Use case: scientific-educational. Create a compact square 1024 by 1024 botanical anatomy illustration of Tradescantia spathacea Tricolor type for a plant field guide. Accurate upright short-stemmed rosette, stiff sword-shaped leaves spirally clustered, striped green cream and muted pink upper faces, rich muted purple undersides; not a trailing vine, no succulent cactus form. Warm ivory background; clean detailed pen-and-watercolor, forest green/sage/ochre with restrained mauve. Large central specimen and generous whitespace. Include exactly four bold circular numbered markers 1,2,3,4 with clear thin leaders: 1 points into a sword-shaped leaf upper blade with visible parallel veins; 2 points to exposed purple underside of a gently turned leaf; 3 points to the rosette center with young upright leaves; 4 points to two small purple boat-shaped bracts in a leaf axil that cup three tiny white three-petaled flowers. Make the bract/flower structure large enough to read but botanically proportioned, not a giant bloom. No other words, title, calendar, water symbols, roots, pot, or decorative objects. Four numbered markers legible at 350px. This is general species anatomy and illustrative flowering potential, not an assertion this owned cultivar has flowered.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Green-leaved Tradescantia spathacea",
+            "profileSlug": null,
+            "text": "The ordinary species has green upper leaf surfaces and purple undersides; the nursery-labeled Tricolor adds pale and pink striping. Both share the upright rosette and boat-bracted flowers, so leaf color alone does not settle cultivar provenance."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "uf"
+        ],
+        "text": "UF/IFAS describes dense spreading clumps about 1–1.5 feet tall. This species-scale description is not an indoor size guarantee for Tricolor. A broadening clump, rather than long hanging stems, is the characteristic form."
+    },
+    "milestones": [
+        {
+            "date": "2026-09-20",
+            "sourcePath": "docs/plants/houseplants/tradescantia-spathacea-tricolor.md",
+            "text": "Purchased at Carlson's Greenhouses in a reported six-inch nursery basket labeled Rhoeo spathacea Tricolor.",
+            "title": "Purchased and labeled"
+        },
+        {
+            "date": "2026-09-22",
+            "sourcePath": "docs/plants/houseplants/tradescantia-spathacea-tricolor.md",
+            "text": "The owner placed P32 closest to the glass in the proposed living-room layout beside P31; completion is not recorded.",
+            "title": "Glass-side position planned"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "ncsu",
+            "kew"
+        ],
+        "text": "The species name spathacea means having a spathe, referring to the boatlike structures around the flowers. The older name Rhoeo spathacea still printed on the nursery tag is a botanical synonym, not a different plant."
+    },
+    "slug": "tradescantia-spathacea-tricolor",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew: Tradescantia spathacea",
+            "url": "https://powo.science.kew.org/taxon/173471-1"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "ncsu",
+            "title": "NC State Extension: Tradescantia spathacea",
+            "url": "https://plants.ces.ncsu.edu/plants/tradescantia-spathacea/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "uf",
+            "title": "UF/IFAS: Oyster plant, Moses in the cradle",
+            "url": "https://ask.ifas.ufl.edu/publication/FP510"
+        }
+    ]
+}

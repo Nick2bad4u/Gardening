@@ -1,0 +1,126 @@
+{
+    "anatomy": {
+        "intro": "One mother rosette can produce daughter rosettes on visible connecting stolons.",
+        "parts": [
+            {
+                "function": "Pointed leaves store water in the low crown.",
+                "label": "Fleshy leaf"
+            },
+            {
+                "function": "New leaves emerge at the growing center.",
+                "label": "Rosette center"
+            },
+            {
+                "function": "This slender stem extends outward to a developing daughter rosette.",
+                "label": "Stolon"
+            },
+            {
+                "function": "An offset can root and become another independent crown.",
+                "label": "Daughter rosette"
+            }
+        ],
+        "sourceIds": [
+            "extension"
+        ]
+    },
+    "comparisonSourceIds": [
+        "extension",
+        "raindrops"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "extension",
+            "nursery"
+        ],
+        "text": "Sempervivum raises a flowering stem from the rosette center, bearing clusters of star-shaped flowers. The nursery lists pink flowers for 'Coconut Crystal'; that is cultivar information, not a recorded bloom from H1."
+    },
+    "growth": {
+        "note": "Individual rosettes may grow for years before flowering; the drawing shows a general offsetting stage.",
+        "sourceIds": [
+            "extension"
+        ],
+        "stages": [
+            {
+                "text": "The rosette expands with tightly arranged leaves.",
+                "title": "Build a crown"
+            },
+            {
+                "text": "Stolons carry small offsets around the original crown.",
+                "title": "Send out chicks"
+            },
+            {
+                "text": "A flowering crown dies afterward; surviving offsets continue the colony.",
+                "title": "Flower and renew"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "extension",
+            "nursery"
+        ],
+        "text": "'Coconut Crystal' is a named garden selection, so it has no separate wild habitat. Its genus includes low rosette succulents suited to open, rocky, well-drained places and cool dormant periods. That background distinguishes hens-and-chicks from the tender tropical succulents nearby, even though they may all look comfortable in small pots."
+    },
+    "image": {
+        "alt": "Hens-and-chicks rosettes with numbered leaf, growing center, connecting stolon and daughter crown.",
+        "file": "assets/plant-explainers/sempervivum-coconut-crystal.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Scientific educational botanical illustration, square 1024x1024, warm ivory background, accurate clean pen-and-watercolor, forest-green/sage/ochre muted palette with natural species colors. Large central plant, generous whitespace. Exactly four large numbered markers 1–4 with thin clear leaders to the specified features, readable at 350px. No other text, titles, paragraphs, calendar, watering icons, roots or pots. Generic botanical anatomy, not a record of an individual collection specimen. Sempervivum Coconut Crystal: low compact lime-green rosette of many pointed fleshy leaves with soft maroon central shading, small daughter rosette connected to mother by a visibly above-ground thin stolon. Three-quarter view. Markers: 1 fleshy pointed leaf, 2 growing center of mother rosette, 3 thin above-ground stolon visibly joining mother to daughter, 4 daughter rosette. No flowers, no cobwebs, no subterranean connecting roots.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Echeveria 'Raindrops'",
+            "profileSlug": "echeveria-raindrops",
+            "text": "Both make fleshy rosettes, but hens-and-chicks spreads on stolons and loses each crown after flowering; 'Raindrops' is recognized by rounded leaf bumps and produces few offsets."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "nursery"
+        ],
+        "text": "Mountain Crest Gardens lists foliage under 3 inches high and rosettes up to 5–6 inches across. A colony can spread farther through offsets, so its total footprint differs from the width of one rosette."
+    },
+    "milestones": [
+        {
+            "date": "2026-08-28",
+            "sourcePath": "docs/plants/succulents/sempervivum-coconut-crystal.md",
+            "text": "Received from Mountain Crest Gardens and moved into the current 4 × 4 × 3.7-inch round pot.",
+            "title": "Arrived and repotted"
+        },
+        {
+            "date": "2026-08-29",
+            "sourcePath": "docs/plants/succulents/sempervivum-coconut-crystal.md",
+            "text": "Measured 1.0 inch high × 2.55 inches wide, with a recorded pot weight of 361.5 g.",
+            "title": "Early size record"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "extension",
+            "nursery"
+        ],
+        "text": "Sempervivum means 'forever alive': replacement offsets make a colony seem permanent even though a flowering rosette is not. Mountain Crest Gardens attributes 'Coconut Crystal' to Gielis."
+    },
+    "slug": "sempervivum-coconut-crystal",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "nursery",
+            "title": "Mountain Crest Gardens: 'Coconut Crystal'",
+            "url": "https://mountaincrestgardens.com/sempervivum-colorockz-coconut-crystal/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "extension",
+            "title": "NC State: Sempervivum",
+            "url": "https://plants.ces.ncsu.edu/plants/sempervivum/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "raindrops",
+            "title": "Mountain Crest Gardens: Echeveria 'Raindrops'",
+            "url": "https://mountaincrestgardens.com/echeveria-raindrops/"
+        }
+    ]
+}

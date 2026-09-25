@@ -1,0 +1,124 @@
+{
+    "anatomy": {
+        "intro": "The numbered illustration explains a living Mammillaria bombycina reference; it is a botanical guide, not a measured portrait.",
+        "parts": [
+            {
+                "function": "Fine covering between the tubercles helps create the silky appearance.",
+                "label": "White wool"
+            },
+            {
+                "function": "Pale spreading spokes surround each spine-bearing areole.",
+                "label": "Radial spines"
+            },
+            {
+                "function": "A stronger reddish-brown hook projects through the white covering.",
+                "label": "Hooked central spine"
+            },
+            {
+                "function": "A young side head can develop into another cylinder within the clump.",
+                "label": "Basal offset"
+            }
+        ],
+        "sourceIds": [
+            "form",
+            "anatomy"
+        ]
+    },
+    "comparisonSourceIds": [
+        "form",
+        "rekoi"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "Living M. bombycina can produce deep rose-pink flowers about 1.5 cm across. The bright flowers stand out against the white coat, but no flowering claim is made for the former collection plant."
+    },
+    "growth": {
+        "note": "These are species life stages; the historical collection plant was removed and has no retained living offset.",
+        "sourceIds": [
+            "form"
+        ],
+        "stages": [
+            {
+                "text": "A living juvenile begins as a small spiny globe.",
+                "title": "Young head"
+            },
+            {
+                "text": "The stem lengthens and develops a dense pale coat.",
+                "title": "Longer cylinder"
+            },
+            {
+                "text": "Offsets can gather into a spreading group.",
+                "title": "Cluster of heads"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "Mammillaria bombycina is native to southwestern Aguascalientes and northeastern Jalisco, Mexico, in dry shrubland. The illustrated plant represents that species, not a surviving collection specimen. The former collection plant was a probable identification from older photographs and remains a historical record after its removal on July 24, 2026."
+    },
+    "image": {
+        "alt": "Botanical anatomy of a living Mammillaria bombycina reference, showing white wool, radial spines, hooked central spine, basal offset with numbered markers.",
+        "file": "assets/plant-explainers/mammillaria-bombycina.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration, warm ivory background, precise pen-and-watercolor, muted forest green/sage/ochre palette, large centered specimen and generous whitespace. Exactly four large legible numbered markers 1, 2, 3, 4, each once, with fine leader lines ending clearly on the named structures. No title, words, border, watering symbols or calendar. No flowers, grafts, or roots. Numbers must remain readable at 350px. Generic anatomical specimen, not measurement evidence. A living botanical reference of Mammillaria bombycina: cluster of three short cylindrical green cactus stems covered in dense white radial spines and white wool between tubercles, with reddish-brown central spines with hooked tips. 1 points to white axillary wool between tubercles, 2 to a pale radial spine cluster at an areole, 3 to a reddish-brown hooked central spine, 4 to a small basal offset. Historical collection plant, illustration is only generic species anatomy.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Mammillaria cf. rekoi",
+            "profileSlug": "mammillaria-rekoi",
+            "text": "Both may have hooked central spines; the rekoi candidate has more exposed green tissue and a less heavily woolled appearance."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "form"
+        ],
+        "text": "RHS describes clustering cylindrical stems reaching about 20 cm. The width of a whole clump depends on its offset count, so a single stem's height does not describe the entire colony."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-24",
+            "sourcePath": "docs/plants/rehab/mammillaria-bombycina.md",
+            "text": "Final inspection found only a tiny surviving green patch; no offset was retained. The page preserves the plant's history.",
+            "title": "Removed from the collection"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "range"
+        ],
+        "text": "Kew records the species name as first published by Quehl in 1910."
+    },
+    "slug": "mammillaria-bombycina",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "range",
+            "title": "Kew Plants of the World Online: Mammillaria bombycina",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:150678-2"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "form",
+            "title": "RHS: Mammillaria bombycina",
+            "url": "https://www.rhs.org.uk/plants/106175/mammillaria-bombycina/details"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "rekoi",
+            "title": "LLIFLE: Mammillaria rekoi",
+            "url": "https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/13403/Mammillaria_rekoi"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "anatomy",
+            "title": "National Park Service: cactus adaptations",
+            "url": "https://www.nps.gov/tont/learn/nature/cacti.htm"
+        }
+    ]
+}

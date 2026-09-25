@@ -1,12 +1,12 @@
 # Containers and shared planters
 
-Last updated: 2026-09-23
+Last updated: 2026-09-24
 
 The collection has **34 tracked containers**, including **four shared
 planters**. Its **44 current profile pages** comprise **42 botanical profile
 groups and two whole-planter overviews**. One additional historical profile is
-kept for the removed silken pincushion. These are record counts, not a census
-of individual stems, heads, cuttings, or root systems.
+kept for the removed silken pincushion. A profile may cover a clump or several
+heads of the same kind of plant.
 
 Use the [container directory](https://nick2bad4u.github.io/Gardening/containers/)
 to see what shares a pot, then open a member's profile for identification and
@@ -22,10 +22,9 @@ context, and links to the existing observation history together.
 | Physical label           | The short label on that container                          | #9 is P35; an A/B profile suffix does not create another pot label               |
 | Pot setup                | A configuration within that container's history            | P35 moved to setup 2 at its September 23 repot                                   |
 
-A P-ID persists when the planting is repotted into a different vessel. Record
-the new pot, medium, and setup boundary; keep earlier observations under the
-same P-ID and their original setup. A change of room or a new species profile
-does not itself create another container or a new setup.
+A P-ID stays with the planting when it is repotted. Each setup records the pot
+and growing mix used at that stage, so its history can be followed across
+changes in containers.
 
 ## The four shared containers
 
@@ -36,35 +35,30 @@ does not itself create another container or a new setup.
 | [P30 / #6 — tiny mixed succulent planter](https://nick2bad4u.github.io/Gardening/containers/P30/) | [Pale rosette echeveria](./plants/succulents/tiny-planter-echeveria.md), [coppertone-type sedum](./plants/succulents/tiny-planter-coppertone-sedum.md), and [paddle kalanchoe](./plants/succulents/tiny-planter-paddle-kalanchoe.md)                        | Three probable botanical groups plus the [whole-planter overview](./plants/succulents/tiny-mixed-succulent-planter.md); the seller's five-plant description does not establish five verified identities |
 | [P35 / #9 — Lithops shared planter](https://nick2bad4u.github.io/Gardening/containers/P35/)       | [Probable _Lithops lesliei_](./plants/succulents/lithops-lesliei.md), tan/brown, and [probable _Lithops salicola_](./plants/succulents/lithops-salicola.md), grey/green                                                                                     | Two probable species groups plus the [whole-planter overview](./plants/succulents/lithops-shared-planter.md); four visible heads from two nursery pots, with root connections unverified                |
 
-All identification qualifiers remain in the member profiles. An overview
-describes the combined planting and is not counted as another botanical member.
-The other 30 containers each have one current botanical profile. P33 and P34
-remain retired redirects to P31 and P32, not additional container allocations.
+Member profiles explain each plant's identification and care. The two overview
+pages describe their combined plantings. The other 30 containers each have one
+current botanical profile.
 
 ## Record care once, describe members separately
 
 Weigh the complete assembly consistently and record the reading once for its
 P-ID. Watering or feeding the shared root volume is likewise one container
-action. Each component page links to the same history; it does not receive a
-copy of the observation or an independent dry/wet reference.
+action. Each member's profile links to that shared history.
 
 Use the observation notes to identify a particular member: for example,
 “P35: tan/brown probable lesliei heads firm; grey/green probable salicola heads
-beginning replacement.” This preserves separate observations without pretending
-the two groups have separately weighed or watered pots. Inspect every member
+beginning replacement.” This keeps each plant's condition easy to follow. Inspect every member
 before deciding to water the common root volume. Sharing soil does not guarantee
 that Lithops heads synchronize their cycles.
 
-Adding a component profile documents an existing planting; it does not create
-a second acquisition, repot, or watering event. A measurement must retain its
-scope: P35's September 23 **1 in × 1.25 in** measurement describes one head,
-not the whole planting, the pot diameter, or a verified species-group size.
+When recording size, say which plant or head was measured. P35's September 23
+**1 in × 1.25 in** measurement, for example, describes one Lithops head.
 See the [watering quick guide](./watering-quick-guide.md) for practical decisions
 and the [logger action guide](./logger-actions.md) for recording real events.
 
 ## Spreadsheet reference views
 
-The container catalog adds two reference tabs alongside the existing tracker:
+Two spreadsheet views make the collection easier to browse:
 
 - **Containers — 34 data rows:** one row per P-ID, with its label, members,
   shared care notes, setup context, and page links. Current setup, pot details,
@@ -73,11 +67,8 @@ The container catalog adds two reference tabs alongside the existing tracker:
   group, linked to its container, profile, and workbook page. The two aggregate
   overviews and the removed historical profile are excluded from member counts.
 
-These are reference views, not another place to enter observations. Continue
-using the existing logger and workbook input surfaces; `History` remains the
-canonical observation ledger. A catalog refresh does not append synthetic
-plant-care events or duplicate existing history. Acquisition details shown in
-the catalog describe the documented purchase; they are not new acquisitions.
+Use **Log Care** to record observations. These spreadsheet views bring the
+existing plant and container records together for reference.
 
 ## Maintained sources
 
@@ -87,11 +78,5 @@ the catalog describe the documented purchase; they are not new acquisitions.
   overview roles, care notes, and setup context.
 - [Plant profiles](./plants/README.md) — botanical identity, inventory IDs,
   evidence, and acquisition facts.
-- [Workbook catalog planner](../scripts/google-sheets/container-catalog.mjs) —
-  builds the two reference tabs from the catalog and existing tracker structure;
-  [operator runbook](../scripts/google-sheets/README.md) covers live deployment.
-
-The website derives its container membership and counts from these maintained
-records. Keep profiles and mappings aligned when membership changes; never
-hand-edit generated HTML or make an extra P-ID merely to give a species its own
-page.
+- [Logger action guide](./logger-actions.md) — how to record watering, weighing,
+  and other care events.

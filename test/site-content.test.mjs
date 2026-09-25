@@ -29,13 +29,15 @@ describe("field guide source rendering", () => {
                 id: "P35",
                 inventory: "Succulent-15",
                 label: "#9",
+                qualification: /probable|unconfirmed|unresolved/iv,
                 slug: "lithops-shared-planter",
             },
             {
-                confidence: "Likely Match",
+                confidence: "Nursery Label",
                 id: "P36",
                 inventory: "Succulent-16",
                 label: "#10",
+                qualification: /no cultivar supplied/iv,
                 slug: "pleiospilos-nelii",
             },
         ];
@@ -52,7 +54,7 @@ describe("field guide source rendering", () => {
             });
             expect(members[0]?.drawerLabel.primary).toBe(record.label);
             expect(members[0]?.identificationMarkdown).toMatch(
-                /unconfirmed|unresolved/iv
+                record.qualification
             );
             expect(
                 identificationLabel(members[0]?.identificationMarkdown ?? "")
@@ -297,8 +299,8 @@ describe("field guide source rendering", () => {
             expect(image.alt.length).toBeGreaterThan(20);
         }
 
-        expect(document.html).toContain(
-            "Money Tree is now on the north-facing windowsill"
+        expect(stripHtml(document.html)).toMatch(
+            /Money Tree.{0,80}north windowsill/v
         );
         expect(document.html).toContain("estimated-light-map-transparent.png");
         expect(names).not.toContain("estimated-light-map-transparent.png");
@@ -321,6 +323,111 @@ describe("field guide source rendering", () => {
         );
         expect(rendered.html).toContain("<strong>Estimated</strong>");
         expect(rendered.html).not.toMatch(/<script|onerror|javascript:/iv);
+    });
+
+    it.each([
+        "",
+        "profile-",
+        "review-",
+    ])(
+        "keeps sanitized footnotes, repeated backrefs and accessibility targets connected with prefix %j",
+        async (prefix) => {
+            expect.hasAssertions();
+
+            const rendered = await renderMarkdown(
+                [
+                    "## Care",
+                    "",
+                    "First[^source], repeated[^source], and another[^other].",
+                    "",
+                    "[Local heading](#care) · [Second heading](#care-2)",
+                    "[External](https://example.com/#user-content-fn-source)",
+                    "[Unresolved](#missing)",
+                    "",
+                    "## Care",
+                    "",
+                    "[^source]: Evidence with [heading link](#care).",
+                    "[^other]: More evidence.",
+                    "",
+                    '<script id="unsafe">alert(1)</script>',
+                    '<img src="invalid" onerror="alert(2)">',
+                ].join("\n"),
+                "docs/example.md",
+                prefix
+            );
+            const ids = rendered.html
+                .matchAll(/\bid="(?<target>[^"]+)"/gv)
+                .map((match) => match.groups?.["target"] ?? "")
+                .toArray();
+            const fragments = rendered.html
+                .matchAll(/\bhref="#(?<target>[^"]+)"/gv)
+                .map((match) => match.groups?.["target"] ?? "")
+                .filter((target) => target !== "missing")
+                .toArray();
+            const descriptions = rendered.html
+                .matchAll(
+                    /\baria-(?:describedby|labelledby)="(?<target>[^"]+)"/gv
+                )
+                .flatMap((match) =>
+                    (match.groups?.["target"] ?? "").split(/\s+/v)
+                )
+                .toArray();
+
+            const uniqueIds = new Set(ids);
+
+            expect(ids).toHaveLength(uniqueIds.size);
+            expect(fragments.length).toBeGreaterThanOrEqual(8);
+            expect(descriptions).toHaveLength(3);
+
+            for (const target of fragments.concat(descriptions)) {
+                expect(ids).toContain(target);
+                expect(target.startsWith(prefix)).toBe(true);
+            }
+
+            expect(rendered.toc.map((entry) => entry.id)).toStrictEqual([
+                `${prefix}care`,
+                `${prefix}care-2`,
+            ]);
+            expect(rendered.html).toContain(
+                'href="https://example.com/#user-content-fn-source"'
+            );
+            expect(rendered.html).toContain('href="#missing"');
+            expect(rendered.html).toContain(
+                'aria-label="Back to reference 1-2"'
+            );
+            expect(rendered.html).not.toMatch(/<script|onerror|id="unsafe"/iv);
+        }
+    );
+
+    it("namespaces embedded document footnotes without colliding with the containing document", async () => {
+        expect.hasAssertions();
+
+        const source = "docs/two-light-placement-review.md";
+        const document = await getDocument(source);
+        const embedded = await getDocument(source, undefined, "review-");
+        const ids = `${document.html}${embedded.html}`
+            .matchAll(/\bid="(?<target>[^"]+)"/gv)
+            .map((match) => match.groups?.["target"] ?? "")
+            .toArray();
+        const embeddedIds = embedded.html
+            .matchAll(/\bid="(?<target>[^"]+)"/gv)
+            .map((match) => match.groups?.["target"] ?? "")
+            .toArray();
+        const targets = embedded.html
+            .matchAll(/\bhref="#(?<target>[^"]+)"/gv)
+            .map((match) => match.groups?.["target"] ?? "")
+            .toArray();
+
+        const uniqueIds = new Set(ids);
+
+        expect(ids).toHaveLength(uniqueIds.size);
+        expect(targets.length).toBeGreaterThan(10);
+
+        for (const target of targets) expect(embeddedIds).toContain(target);
+        for (const entry of embedded.toc) {
+            expect(entry.id).toMatch(/^review-/v);
+            expect(embeddedIds).toContain(entry.id);
+        }
     });
 
     it("labels nursery acquisition photographs as evidence rather than planning illustrations", async () => {

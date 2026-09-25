@@ -107,7 +107,7 @@ export function buildContainers(profiles, mapping, metadata) {
             profiles: containerProfiles,
             setupNote:
                 details?.setupNote ??
-                "See the maintained plant profile and dated setup events in the container history. Unrecorded dimensions and medium details remain unknown.",
+                "The plant profile describes its growing conditions; the care history records repotting, mix changes, and measurements as they are added.",
             shared: members.length > 1,
             sheetUrl: primary.sheetUrl,
         };

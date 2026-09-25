@@ -19,9 +19,9 @@
 | Original published name | _Cereus trollii_ Kupper                                                                      |
 | Name meaning            | _Oreocereus_ means roughly “mountain cereus”; _trollii_ honors German botanist Wilhelm Troll |
 
-This is a genuinely woolly high-elevation cactus, not a sick or moldy one. The
-white hairs are modified spines surrounding a green column armed with much
-sharper reddish-brown central spines.
+The white wool is a normal feature of this high-elevation cactus. Its hairs
+are modified spines surrounding a green column armed with much sharper
+reddish-brown central spines.
 
 ## Origin, habitat, and history
 
@@ -44,14 +44,14 @@ may spend years simply building its column and wool.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                                         |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R2C2 · High.** September 15 six-column/four-row front grid, facing the window. Interior-left position with clear exposure at its growing tip; do not compare only tabletop light. See the [current placement guide](../../layouts/table-placement-research.md); labels and intensity remain to be checked. |
-| Outdoor light       | Bright light and increasing direct sun; acclimate because hairs do not prevent sunburn after a dim period.                                                                                                                                                                                                                 |
-| Water               | Soak the root ball, drain completely, then wait until it is dry and the pot is light. Water more readily during warm active growth and much less in a cool, slow winter period.                                                                                                                                            |
-| Mix and pot         | The current drained 4-inch pot and gritty mix are reasonable. Do not bury the woolly base or let the tray hold water.                                                                                                                                                                                                      |
-| Temperature         | It experiences cold in habitat, but a small watered pot is less forgiving. Keep it dry during cool spells and protect it from hard freezes.                                                                                                                                                                                |
-| Feeding             | A dilute, low-nitrogen cactus fertilizer a few times during active growth is plenty; the included fertilizer in fresh mix reduces urgency.                                                                                                                                                                                 |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                     |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Grow-light position | **Photo-matched R2C2 · High.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Interior-left position with clear exposure at its growing tip; do not compare only tabletop light. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Outdoor light       | Bright light and increasing direct sun; acclimate because hairs do not prevent sunburn after a dim period.                                                                                                                                                                                             |
+| Water               | Soak the root ball, drain completely, then wait until it is dry and the pot is light. Water more readily during warm active growth and much less in a cool, slow winter period.                                                                                                                        |
+| Mix and pot         | The current drained 4-inch pot and gritty mix are reasonable. Do not bury the woolly base or let the tray hold water.                                                                                                                                                                                  |
+| Temperature         | It experiences cold in habitat, but a small watered pot is less forgiving. Keep it dry during cool spells and protect it from hard freezes.                                                                                                                                                            |
+| Feeding             | A dilute, low-nitrogen cactus fertilizer a few times during active growth is plenty; the included fertilizer in fresh mix reduces urgency.                                                                                                                                                             |
 
 A powerful grow light can provide far more light than this small plant needs at close
 range. Compact new growth with strong spines is the goal. Fresh bleached or tan

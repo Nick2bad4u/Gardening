@@ -1,0 +1,118 @@
+{
+    "anatomy": {
+        "intro": "Broad opposing leaves give this young paddle plant a very different silhouette from its rosette neighbors.",
+        "parts": [
+            {
+                "function": "The broad succulent leaf stores water.",
+                "label": "Fleshy paddle"
+            },
+            {
+                "function": "Leaves attach in pairs without a long leaf stalk.",
+                "label": "Opposite leaf pair"
+            },
+            {
+                "function": "The short central stem holds the upright leaves.",
+                "label": "Supporting stem"
+            },
+            {
+                "function": "A new side plant can continue growing after a flowering rosette declines.",
+                "label": "Basal offset"
+            }
+        ],
+        "sourceIds": [
+            "flapjacks",
+            "luciae"
+        ]
+    },
+    "comparisonSourceIds": [
+        "flapjacks"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "flapjacks"
+        ],
+        "text": "Pale flowers with narrow lobes favor K. luciae; bright yellow flowers with broader lobes favor K. thyrsiflora. Photographs of an actual bloom would be more useful than red leaf margins alone."
+    },
+    "growth": {
+        "note": "Flowering has not been documented here; this life cycle does not predict when this indoor plant will bloom.",
+        "sourceIds": [
+            "flapjacks"
+        ],
+        "stages": [
+            {
+                "text": "Young paddles enlarge around the central stem.",
+                "title": "Leaf rosette"
+            },
+            {
+                "text": "A mature rosette can send up a much taller flower stalk.",
+                "title": "Flowering rosette"
+            },
+            {
+                "text": "The flowering rosette dies, while surviving offsets can carry on.",
+                "title": "Offset renewal"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "luciae",
+            "flapjacks"
+        ],
+        "text": "These paddles resemble the South African Kalanchoe luciae–thyrsiflora group. SANBI places K. luciae on rocky slopes and hilltops in grassland and bushveld, including Eswatini. The collection plant has no species-specific nursery label, so that habitat is background for a candidate identification, not a confirmed origin."
+    },
+    "image": {
+        "alt": "Numbered paddle Kalanchoe schematic: broad leaf, opposite leaf pair, supporting stem and basal offset.",
+        "file": "assets/plant-explainers/tiny-planter-paddle-kalanchoe.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Create a square 1024px botanical educational illustration on warm ivory. Clean botanically accurate pen-and-watercolor, muted forest-green, sage and ochre palette, generous whitespace, large central specimen. Exactly four large numbered circular markers 1, 2, 3, 4 with thin clear noncrossing leader lines to the specified features. Numerals legible at 350px display. No title, words, paragraphs, watering icons, calendar, border or logo. Schematic anatomy, not a photograph of an owned plant. Show one young paddle Kalanchoe in three-quarter side view: broad flattened round-obovate green leaves with muted red margins, opposing pairs forming an upright loose rosette on a short stem, and a single small basal offset. Species luciae/thyrsiflora unresolved so no diagnostic flowers. No roots. Marker1 to broad fleshy paddle leaf; marker2 to one pair of opposite leaves at their attachment; marker3 to the short central stem visible below lower leaves; marker4 to small basal offset. No spines, no toothed margins.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Kalanchoe thyrsiflora",
+            "profileSlug": null,
+            "text": "Often chalkier, with smaller leaves and yellow flowers; growing conditions blur foliage differences, so this species remains a candidate."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "flapjacks"
+        ],
+        "text": "Flapjack rosettes commonly reach about 12–18 inches tall; flower stalks can be several feet taller. That reference scale explains potential crowding in a tiny mixed pot, rather than promising indoor dimensions."
+    },
+    "milestones": [
+        {
+            "date": "2026-09-02",
+            "sourcePath": "docs/plants/succulents/tiny-planter-paddle-kalanchoe.md",
+            "text": "Acquired in the Smart Planet Home mixed succulent garden from Home Depot.",
+            "title": "Joined the collection"
+        },
+        {
+            "date": "2026-09-02",
+            "sourcePath": "docs/plants/succulents/tiny-mixed-succulent-planter.md",
+            "text": "The rosettes, copper-toned shoots and broad paddles stayed together in the terra-cotta planter.",
+            "title": "Repotted together"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "flapjacks"
+        ],
+        "text": "The common name flapjacks refers to the stacked paddle leaves, like a loose pile of pancakes."
+    },
+    "slug": "tiny-planter-paddle-kalanchoe",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "flapjacks",
+            "title": "Wisconsin Extension: Flapjacks",
+            "url": "https://hort.extension.wisc.edu/articles/flapjacks-kalanchoe-spp/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "luciae",
+            "title": "SANBI PlantZAfrica: Kalanchoe luciae",
+            "url": "https://pza.sanbi.org/kalanchoe-luciae"
+        }
+    ]
+}

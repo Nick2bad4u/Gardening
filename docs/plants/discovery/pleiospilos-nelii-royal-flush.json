@@ -1,0 +1,121 @@
+{
+    "anatomy": {
+        "intro": "One opposite leaf pair forms the stone-like body around a central cleft.",
+        "parts": [
+            {
+                "function": "A fleshy leaf holds water that can support the next pair.",
+                "label": "Thick leaf"
+            },
+            {
+                "function": "Fine spotting contributes to the stone-like appearance.",
+                "label": "Speckled surface"
+            },
+            {
+                "function": "The opening separates the opposing leaves and allows new growth to emerge.",
+                "label": "Central cleft"
+            },
+            {
+                "function": "The opposite leaves are joined at their lower base.",
+                "label": "Joined base"
+            }
+        ],
+        "sourceIds": [
+            "sanbi",
+            "nursery"
+        ]
+    },
+    "comparisonSourceIds": [
+        "sanbi",
+        "nursery"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "sanbi",
+            "nursery"
+        ],
+        "text": "Flowers emerge between the leaves and resemble large daisies. The nursery listing conflicts on 'Royal Flush' color, describing golden flowers in prose and pink in its product field; this collection's bloom color remains unrecorded."
+    },
+    "growth": {
+        "note": "Follow the visible stage rather than a month-based schedule; wrinkling outer leaves during renewal does not alone call for watering.",
+        "sourceIds": [
+            "sanbi",
+            "nursery"
+        ],
+        "stages": [
+            {
+                "text": "A compact pair forms the main visible plant.",
+                "title": "Hold a leaf pair"
+            },
+            {
+                "text": "The cleft opens around an emerging inner pair.",
+                "title": "Reveal new leaves"
+            },
+            {
+                "text": "Older leaves lose stored water and eventually dry as the new pair develops.",
+                "title": "Use the outer pair"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "sanbi",
+            "nursery"
+        ],
+        "text": "Wild Pleiospilos nelii occurs among sparse Karoo vegetation near the Western and Eastern Cape boundary in South Africa. Its rounded, speckled leaves resemble surrounding stones. 'Royal Flush' is a cultivated pink-purple form; the species habitat explains its structure but does not establish the origin or exact seasonal behavior of this nursery plant."
+    },
+    "image": {
+        "alt": "Purple split rock with numbered thick leaf, speckles, central cleft and joined leaf base.",
+        "file": "assets/plant-explainers/pleiospilos-nelii-royal-flush.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Scientific educational botanical illustration, square 1024x1024, warm ivory background, accurate clean pen-and-watercolor, forest-green/sage/ochre muted palette with natural species colors. Large central plant, generous whitespace. Exactly four large numbered markers 1–4 with thin clear leaders to the specified features, readable at 350px. No other text, titles, paragraphs, calendar, watering icons, roots or pots. Generic botanical anatomy, not a record of an individual collection specimen. Pleiospilos nelii Royal Flush: one single stemless split-rock plant, exactly TWO thick purple-mauve egg-shaped leaves forming ONE opposite leaf pair, joined at their low base, deep central cleft and fine dark speckles over the surfaces. Three-quarter close view, a few loose ground pebbles, leave lower joined base clearly visible. No inner new leaves at all, no flowers. Four numbered leaders: 1 points to the broad thick left leaf, 2 points to speckles on upper right leaf, 3 points into the central fissure between the pair, 4 points to the low joined base where the two leaves meet just above the soil. No stacked leaf pairs, no Lithops window patterns. Precisely two leaves, balanced natural anatomy.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Green split rock",
+            "profileSlug": "pleiospilos-nelii",
+            "text": "The same probable species can have grey-green leaves rather than the seller-labeled purple 'Royal Flush' coloring. Color supports comparison but does not independently authenticate a cultivar."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "nursery"
+        ],
+        "text": "The nursery lists roughly 3–5 inches high and 3–4 inches across. This is a compact leaf succulent, not a stem-forming shrub; several persistent stacked pairs are not the intended mature silhouette."
+    },
+    "milestones": [
+        {
+            "date": "2026-08-28",
+            "sourcePath": "docs/plants/succulents/pleiospilos-nelii-royal-flush.md",
+            "text": "Received from Mountain Crest Gardens and moved into a 4 × 4 × 3.7-inch round pot.",
+            "title": "Arrived and repotted"
+        },
+        {
+            "date": "2026-08-29",
+            "sourcePath": "docs/plants/succulents/pleiospilos-nelii-royal-flush.md",
+            "text": "Measured 1.3 inches high × 1.7 inches wide, with a recorded pot weight of 353.5 g.",
+            "title": "Early size record"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "sanbi"
+        ],
+        "text": "Pleiospilos refers to its many spots. The species' woody seed capsules open when wet, letting raindrops release some seeds before the capsules close again as they dry."
+    },
+    "slug": "pleiospilos-nelii-royal-flush",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "sanbi",
+            "title": "SANBI: Pleiospilos nelii",
+            "url": "https://pza.sanbi.org/pleiospilos-nelii"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "nursery",
+            "title": "Mountain Crest Gardens: 'Royal Flush' split rock",
+            "url": "https://mountaincrestgardens.com/pleiospilos-nelii-royal-flush-split-rock/"
+        }
+    ]
+}

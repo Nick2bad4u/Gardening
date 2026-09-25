@@ -1,0 +1,118 @@
+{
+    "anatomy": {
+        "intro": "Silver spoons combines finely hairy leaves with short leaf stalks and branching stems.",
+        "parts": [
+            {
+                "function": "Dense hairs and a waxy coating give the leaf its pale appearance.",
+                "label": "Silver surface"
+            },
+            {
+                "function": "The thick leaf supplies both photosynthetic area and water storage.",
+                "label": "Spoon-shaped blade"
+            },
+            {
+                "function": "A short stalk attaches the blade to the stem.",
+                "label": "Short petiole"
+            },
+            {
+                "function": "Somewhat woody stems support the spreading crown of opposite leaves.",
+                "label": "Branching stem"
+            }
+        ],
+        "sourceIds": [
+            "extension"
+        ]
+    },
+    "comparisonSourceIds": [
+        "extension",
+        "copper"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "extension"
+        ],
+        "text": "The species bears red tubular flowers in clusters at the branch ends. A clear flowering photograph would add a useful identifying feature to the current foliage evidence."
+    },
+    "growth": {
+        "note": "Slow growth is typical; the exact species remains probable until stronger identifying evidence is available.",
+        "sourceIds": [
+            "extension"
+        ],
+        "stages": [
+            {
+                "text": "Young shoots add paired leaves at their tips.",
+                "title": "Open leaf pairs"
+            },
+            {
+                "text": "An erect shoot develops a broader, mounding outline.",
+                "title": "Branch outward"
+            },
+            {
+                "text": "Mature shoot tips may develop a branched inflorescence.",
+                "title": "Form flower clusters"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew",
+            "extension"
+        ],
+        "text": "Kalanchoe bracteata is native to Madagascar, with Kew placing it in a seasonally dry tropical biome. It grows as a small succulent shrub rather than a ground-hugging rosette. The silver plant in this collection remains a probable match; that distinction matters because several related kalanchoes share pale, hairy foliage."
+    },
+    "image": {
+        "alt": "Silver leafy shrub with numbered hairy surface, spoon-shaped blade, petiole and stem.",
+        "file": "assets/plant-explainers/kalanchoe-bracteata.webp",
+        "generatedOn": "2026-09-24",
+        "prompt": "Scientific educational botanical illustration, square 1024x1024, warm ivory background, accurate clean pen-and-watercolor, forest-green/sage/ochre muted palette with natural species colors. Large central plant, generous whitespace. Exactly four large numbered markers 1–4 with thin clear leaders to the specified features, readable at 350px. No other text, titles, paragraphs, calendar, watering icons, roots or pots. Generic botanical anatomy, not a record of an individual collection specimen. Kalanchoe bracteata: compact branched shrub with opposite oval spoon-shaped silver-grey finely hairy leaves, pointed tips and short petioles, pale grey slightly angular stems. Draw one leaf turned enough to reveal its short petiole. Markers: 1 silver finely hairy leaf surface, 2 spoon-shaped fleshy leaf blade, 3 short leaf stalk (petiole), 4 branching pale stem. No flowers.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Copper spoons (Kalanchoe orgyalis)",
+            "profileSlug": "kalanchoe-orgyalis",
+            "text": "Copper spoons has cinnamon-colored upper leaf felt and greyer undersides. This probable silver-spoons plant has a predominantly silver to olive appearance; color alone does not settle every Kalanchoe identification."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "extension"
+        ],
+        "text": "NC State describes shrubs about 2–4 ft tall and similarly wide. That describes mature horticultural potential, not a target for this shared box. Leaving space between its crown and lower rosette neighbors helps keep the planting readable and evenly lit."
+    },
+    "milestones": [
+        {
+            "date": "2026-07-27",
+            "sourcePath": "docs/plants/succulents/kalanchoe-bracteata.md",
+            "text": "Acquired at Gerych's Greenhouse in the shared P20 / #2 succulent planter.",
+            "title": "Joined the collection"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "extension"
+        ],
+        "text": "Bracteata refers to floral bracts. The familiar 'silver spoons' name instead describes the silvery, spoon-shaped leaves visitors can recognize before it flowers."
+    },
+    "slug": "kalanchoe-bracteata",
+    "sources": [
+        {
+            "accessed": "2026-09-24",
+            "id": "extension",
+            "title": "NC State: Kalanchoe bracteata",
+            "url": "https://plants.ces.ncsu.edu/plants/kalanchoe-bracteata/"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "kew",
+            "title": "Kew: Kalanchoe bracteata",
+            "url": "https://powo.science.kew.org/taxon/274287-1"
+        },
+        {
+            "accessed": "2026-09-24",
+            "id": "copper",
+            "title": "Port St. Lucie Botanical Gardens: copper spoons",
+            "url": "https://www.pslbg.org/copper-spoon/"
+        }
+    ]
+}

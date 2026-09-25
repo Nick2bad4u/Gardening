@@ -2,6 +2,10 @@ import { expect, type Page, test } from "@playwright/test";
 
 // eslint-disable-next-line import-x/extensions -- The maintained Node ESM adapter requires its explicit .mjs extension.
 import { getProfiles } from "../../site/lib/content.mjs";
+// eslint-disable-next-line import-x/extensions -- The maintained Node ESM adapter requires its explicit .mjs extension.
+import { getPlantDiscovery } from "../../site/lib/plant-discovery.mjs";
+// eslint-disable-next-line import-x/extensions -- The maintained Node ESM adapter requires its explicit .mjs extension.
+import { getReferenceGallery } from "../../site/lib/reference-gallery.mjs";
 
 const profiles = await getProfiles();
 const representatives = profiles.filter((profile) =>
@@ -13,6 +17,18 @@ const representatives = profiles.filter((profile) =>
         "pilosocereus-pachycladus-variegated",
     ].includes(profile.slug)
 );
+const lithops = profiles.find((profile) => profile.slug === "lithops-lesliei");
+if (!lithops) throw new Error("Missing Lithops test profile");
+const lithopsDiscovery = await getPlantDiscovery(
+    lithops.slug,
+    new Set(profiles.map((profile) => profile.slug))
+);
+const anatomySource = lithopsDiscovery.sources.find(
+    (source) => source.id === lithopsDiscovery.anatomy.sourceIds[0]
+);
+const [galleryTopic] = await getReferenceGallery(lithops.allPhotos);
+if (!anatomySource || !galleryTopic)
+    throw new Error("Missing discovery references");
 const navigationName = "Plant navigation";
 const featherPath = "/Gardening/plants/mammillaria-plumosa/";
 
@@ -118,6 +134,101 @@ for (const theme of ["dark", "light"] as const) {
                             });
                     });
                 }
+
+                test("anatomy artwork and its sources remain readable and navigable", async ({
+                    page,
+                }) => {
+                    await openProfile(page, "lithops-lesliei", theme, width);
+                    const anatomy = page.getByRole("region", {
+                        name: "How this plant works",
+                    });
+                    const illustration = anatomy
+                        .getByRole("figure")
+                        .getByRole("img");
+                    await illustration.scrollIntoViewIfNeeded();
+                    await expect
+                        .soft(illustration)
+                        .toHaveJSProperty("naturalWidth", 1024);
+                    await expect
+                        .soft(
+                            anatomy
+                                .getByRole("list", { name: "Illustration key" })
+                                .getByRole("listitem")
+                        )
+                        .toHaveCount(4);
+                    const geometry = await illustration.evaluate((image) => {
+                        const rectangle = image.getBoundingClientRect();
+                        return {
+                            fits:
+                                document.documentElement.scrollWidth <=
+                                innerWidth,
+                            square:
+                                Math.abs(rectangle.width - rectangle.height) <
+                                1,
+                        };
+                    });
+                    expect.soft(geometry).toStrictEqual({
+                        fits: true,
+                        square: true,
+                    });
+
+                    const source = anatomy.getByRole("link", {
+                        exact: true,
+                        name: `Source: ${anatomySource.title}`,
+                    });
+                    await source.focus();
+                    await page.keyboard.press("Enter");
+                    await expect
+                        .soft(
+                            page
+                                .getByRole("region", {
+                                    name: "Explore the sources",
+                                })
+                                .getByRole("link", {
+                                    exact: true,
+                                    name: `${anatomySource.title} ↗`,
+                                })
+                        )
+                        .toBeInViewport();
+                    await page.emulateMedia({ media: "print" });
+                    await expect
+                        .soft(
+                            anatomy.getByRole("heading", {
+                                name: "How this plant works",
+                            })
+                        )
+                        .toBeVisible();
+                });
+
+                test("reference gallery topics retain every image and reach the correct group", async ({
+                    page,
+                }) => {
+                    await openProfile(page, "lithops-lesliei", theme, width);
+                    const gallery = page.getByRole("region", {
+                        exact: true,
+                        name: "Reference Gallery",
+                    });
+                    await expect
+                        .soft(gallery.getByRole("figure"))
+                        .toHaveCount(lithops.allPhotos.length);
+                    await gallery
+                        .getByRole("navigation", {
+                            name: "Reference gallery topics",
+                        })
+                        .getByRole("link", {
+                            exact: true,
+                            name: `${galleryTopic.title} (${galleryTopic.photos.length})`,
+                        })
+                        .click();
+                    await expect
+                        .soft(
+                            gallery.getByRole("heading", {
+                                exact: true,
+                                name: galleryTopic.title,
+                            })
+                        )
+                        .toBeInViewport();
+                });
 
                 test("floating navigation reveals by keyboard and remembers pinning", async ({
                     page,

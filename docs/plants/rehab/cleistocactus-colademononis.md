@@ -1,11 +1,11 @@
 # Monkey tail cactus
 
 - Inventory: Rehab-02 — _Cleistocactus colademononis_
-- Label ID: `#1` — shared rehab cactus planter; formerly `A4-B4`
+- Label ID: `#1`
 - Tracker ID: `P19`
 - Visual description: Long fingerlike stems trail over the planter edge beneath a dense coat of soft white hairs, turning each green cylinder into a shaggy silver tail.
-- Interesting fact: The hanging habit is not a sign that the stems need support: in its Bolivian habitat this cactus naturally spills from steep rock faces rather than growing as an upright column.
-- Identification: **high; an owner-observed red-orange flower strongly supports it, although the bloom photo is not retained here**
+- Interesting fact: Its bright flowers carry a swollen nectar-holding spur at the base; Huntington describes that nectar reward as an attraction for hummingbirds.
+- Identification: **high confidence from growth form and an observed red-orange flower**
 - Acquired from: Gerych's Design, Fenton, Michigan, as part of the shared cactus planter
 - Acquired on: 2023-06-21
 - Photo archive: [licensed reference images](../../../assets/plants/cleistocactus-colademononis/)
@@ -20,40 +20,40 @@
 | Sometimes sold as                   | _Cleistocactus winteri_ subsp. _colademononis_        |
 
 Long pendant stems, dense soft-looking white hairs, and side-borne red flowers
-make this a much stronger ID than the other rehab guesses. The hairs still
+strongly support this identification. The hairs still
 conceal fine spines, so it should not be handled like a plush plant.
 
 ## Discovery, habitat, and flowers
 
 The species is endemic to Santa Cruz, Bolivia. Huntington's International
 Succulent Introductions account says local residents near Samaipata already
-called it _cola de mono_—monkey's tail—when botanists documented it. It hangs
-from steep rocky cliffs below roughly 1,500 m in a relatively humid local
-setting, but with air and gravity draining water rapidly away from its roots.
+called it _cola de mono_—monkey's tail—when botanists documented it. Huntington
+records its type locality at Cerro El Fraile, Florida Province, at **2,000 m**.
+Its pendant growth suits a rock-dwelling cactus with room to hang over an edge.
 
 Diers and Krahn described it in 2003 as _Hildewintera colademononis_. Roy
 Mottram published the accepted _Cleistocactus_ combination in 2006. Its very
 recent formal description helps explain why multiple genus placements remain in
 horticultural catalogs.
 
-Established stems can trail to roughly 2.5 m. Bright red to orange-red,
+RHS describes cultivated stems trailing to roughly **1 m**. Bright red to orange-red,
 asymmetrical flowers emerge directly from the sides of hanging stems and can be
-followed by rounded fruits. The owner-observed collection bloom matched this
-pattern particularly well, but its supporting photograph is not retained in
-the current collection-photo archive.
+followed by rounded fruits. A red-orange bloom observed on this collection
+plant matched the description; its photograph is no longer available.
 
 ## Rehabilitation and grow-light care
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                                       |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Current progress    | It was trimmed several times after years of stretched growth. Before the indoor move, about a month outside in bright shade with brief direct sun produced better new growth. This is historical rehabilitation evidence; the plant now shares the indoor P19 planter.                                                   |
-| Grow-light position | **Photo-matched rear center · Mixed.** September 15 rear wooden tables, facing the window. Compare both tall columns and trailing monkey tail; pale tissue and short neighbors need separate attention. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Water               | In warm active growth it may use water sooner than the upright cacti, but the shared planter still needs to dry between soaks.                                                                                                                                                                                           |
-| Habit               | Let stems trail over a protected edge or move the plant eventually to a hanging pot. Forcing every stem upright fights its normal form.                                                                                                                                                                                  |
-| Winter              | Bright, cooler, and drier—without hard frost—gives a useful rest and may support flowering.                                                                                                                                                                                                                              |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                                                              |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Current progress    | Several trims removed stretched growth. Before the indoor move, about a month in bright outdoor shade with brief direct sun produced better new tips. It now grows in the indoor shared P19 planter.                                                                                                                                            |
+| Grow-light position | **Photo-matched rear center · Mixed.** September 15, 2026 photo reference: rear wooden tables, facing the window. Compare both tall columns and trailing monkey tail; pale tissue and short neighbors need separate attention. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Water               | In warm active growth it may use water sooner than the upright cacti, but the shared planter still needs to dry between soaks.                                                                                                                                                                                                                  |
+| Habit               | Let stems trail over a protected edge or move the plant eventually to a hanging pot. Forcing every stem upright fights its normal form.                                                                                                                                                                                                         |
+| Winter              | Bright, cooler, and drier—without hard frost—gives a useful rest and may support flowering.                                                                                                                                                                                                                                                     |
 
-The thin old sections will not become thick again. The meaningful evidence is
-the diameter, hair density, and spine spacing of each new tip. The earlier outdoor improvement is historical evidence, not its current location or a new lighting target. Use the maintained indoor placement and current observations rather than restarting the old transition.
+Old stretched sections remain part of the plant's shape. Judge recovery by
+the diameter, hair density, and spine spacing of each new tip under its current
+indoor lighting.
 
 ## Pruning, propagation, and watch points
 

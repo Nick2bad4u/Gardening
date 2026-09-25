@@ -4,7 +4,7 @@ Last updated: 2026-09-20
 
 The **AW200 + AeroLight 240 W** pair was installed September 13. The owner added two more 16 × 13-inch tables and rearranged the display September 15; see the [current four-table guide](../layouts/table-placement-research.md). Its diagram faces the window: Mylar left, white wall right, window top, open room bottom. The two-foot return panel remains absent. Keep the camera view clear of both fixtures and hangers; the old room framing and riser geometry below are a dated reference, not measurements of the new furniture.
 
-**September 20 owner confirmation:** both GrowCams are working, and the previously requested full-day check has been completed. The historical test procedure below is retained as a reference, not an outstanding task. Exact new per-camera export details, storage configuration and framing were not supplied. The older 24-inch round glass table is gone; current camera framing should be interpreted against the four-table arrangement, not the earlier three-surface geometry.
+**Both GrowCams were confirmed working September 20**, including a completed full-day recording check. Current per-camera storage, export settings and framing are unrecorded. Use the four-table arrangement for framing; the former round glass table is no longer in use.
 
 This guide keeps the GrowCam C4 and divider Mylar around an open plant display.
 The camera is for a stable collection-wide time-lapse, not close-up diagnosis
@@ -46,7 +46,7 @@ recording is active.
 - The lower-right power and controller area is close to the watering zone; keep
   it raised, secured, and below-protected by cable drip loops.
 
-The [historical layout tool](https://nick2bad4u.github.io/Gardening/setup/archive/layout/) retains these measured diagrams and riser assignments. The [current placement page](https://nick2bad4u.github.io/Gardening/setup/placement/) records the later installed setup; the AW400 proposal was superseded.
+The [historical layout tool](https://nick2bad4u.github.io/Gardening/setup/archive/layout/) retains these measured diagrams and riser assignments. The [current placement page](https://nick2bad4u.github.io/Gardening/setup/placement/) shows the four-table display.
 
 ## Recommended physical layout
 
@@ -88,7 +88,7 @@ That earlier plan used the following starting geometry; these are not current me
   several inches of growth space above the tallest plant;
 - the light itself and the brightest Mylar reflection kept near or outside the
   image edge; and
-- enough clearance from the incoming AW400 to follow VIVOSUN's instruction to install
+- enough clearance from the grow lights to follow VIVOSUN's instruction to install
   the camera away from grow lights to avoid overheating.
 
 Aim tightly enough that the couch, clothing area, and normal room traffic are
@@ -97,10 +97,7 @@ plant audio is not wanted. Although the hardware is listed as IP54, the manual
 calls it a dry indoor device; keep it and its 5 V connection outside watering
 and spray paths.
 
-Mark the final mount position and angle. The second wooden table and eight new
-plants materially change the scene, so end the earlier clip and start a fresh
-production clip once all three surfaces and labels are framed. After that,
-start a new clip whenever a table or camera must move.
+Mark the mount position and angle so framing can be repeated. Start a new clip whenever a table or camera moves enough to change the scene, then keep the camera fixed for that clip.
 
 ### Paired fans and electrical equipment
 
@@ -117,7 +114,7 @@ Both pole fans remain separate from the camera:
 
 ### Full-day validation test
 
-The original commissioning plan recorded an installed 256 GB card and successful short tests, then proposed a 24-hour test from Friday, July 31, into Saturday, August 1. The owner confirmed on September 20 that the full-day check is complete and both cameras work; the settings and review procedure below are retained as historical reference, without asserting that every option or export detail was used.
+The full-day check was completed by September 20. The following settings remain a useful commissioning reference after changing a camera, card or recording setup; the exact options used in the completed test were not recorded.
 
 | Setting              | Starting value                                                           |
 | -------------------- | ------------------------------------------------------------------------ |
@@ -134,19 +131,7 @@ exported from the current app version.
 
 ### Main acclimation time-lapse
 
-Start the production clip before the light turns on Monday, August 3, after
-the final table, Mylar, plants, labels, camera, and original fan are fixed.
-
-That first clip is now the pre-expansion record. After the second wooden table
-and eight additions are placed on August 8–9, verify that every pot fits in the
-frame and start a new clip. The E/F cactus mapping and the `#1`–`#4` numbered
-mapping are now recorded; use those permanent labels in notes.
-
-The August 14 emergency repot, second pole fan, and 45%-at-18-inch change form
-another useful visual boundary. Once the repotted pots and both fan mounts are
-stable, end the previous clip and start a fresh one labeled with that date. Do
-not move the camera merely to show the new fans if every plant and label is
-already framed.
+The original six-week acclimation recording plan covered August 3–September 14. The August 8–9 table expansion and August 14 repot, second fan and light change were useful boundaries for starting separate clips. The following table preserves that dated recording plan, rather than scheduling a new clip.
 
 | Setting              | Starting value                                                                               |
 | -------------------- | -------------------------------------------------------------------------------------------- |
@@ -170,13 +155,11 @@ camera angle, or table changes materially.
 
 The official manual documents the hardware, card requirement, and recording
 indicator but does not document every time-lapse interval, daily-window, export,
-or storage-management option in the changing app. Record the app version and
-the controls it actually exposes during the 24-hour test rather than assuming a
-menu option exists.
+or storage-management option in the changing app. Check the controls available in the installed app before planning a recording.
 
 ## Final checks
 
-The original main-clip checklist is retained below as a reference, not a list of outstanding checks:
+Use this checklist when setting up or reframing a recording:
 
 - camera is on a rigid mount and outside the lamp's heat path;
 - all pots and short position labels are visible while the couch and normal
@@ -187,11 +170,9 @@ The original main-clip checklist is retained below as a reference, not a list of
 - both fans reach their assigned canopy zones without moving the camera,
   reflector, or each other;
 - power equipment is raised outside the watering path; and
-- the app recognizes the 256 GB card and exports the 24-hour test.
+- the app recognizes the installed card and can export a playable test.
 
-Do not commit a raw microSD-card dump to Git. Keep final compressed clips
-outside the repository unless a deliberate media-storage or Git LFS plan is
-added later.
+Keep original recordings backed up separately from the camera card; export selected clips for viewing.
 
 ## Sources
 
