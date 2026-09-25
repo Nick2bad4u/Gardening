@@ -4,7 +4,7 @@
 - Label ID: `#9`
 - Tracker ID: `P35`
 - Status: Active aggregate profile; one shared container with two probable-species component profiles
-- Visual description: Four visible heads: two tan/brown patterned heads and two greyer green heads with darker windows, photographed together in the Blush Mauve pot on September 23, 2026. Each head has its own central fissure. Root connections remain unverified; the illustration is schematic.
+- Visual description: Four visible heads: two tan/brown patterned heads and two greyer green heads with darker windows, photographed together in the Blush Mauve pot on September 23, 2026. Each head has its own central fissure.
 - Interesting fact: A living-stone head consists of paired succulent leaves, and replacement growth draws on the older leaves; an aging outer pair does not by itself mean the plant needs watering.
 - Identification: **Probable species from photographs: Lithops lesliei for the tan/brown heads and Lithops salicola for the grey/green heads. Nursery labels say Lithops spp.; exact species, varieties, and cultivars remain unconfirmed.**
 - Acquired from: Home Depot, Howell, Michigan; nursery labels identify Altman Plants as grower
@@ -19,7 +19,7 @@
 | Species / cultivar     | Probable _L. lesliei_ (tan/brown) and _L. salicola_ (grey/green), based on photographs; cultivars unconfirmed |
 | Common / nursery names | Living stones; Stone Faces                                                                                    |
 | Collection record      | Four visible heads from two nursery pots, now in one shared pot                                               |
-| Native origin          | Southern Africa at genus level; no individual species range assigned                                          |
+| Native origin          | Southern Africa                                                                                               |
 
 Kew accepts the genus _Lithops_ N.E.Br., published in 1922.
 
@@ -42,26 +42,20 @@ their leaf cycles still need separate inspection.
 
 ### Probable species and alternatives
 
-**The tan/brown heads look like _Lithops lesliei_, and the grey/green heads
-look like _Lithops salicola_, but neither species is confirmed.** These are
-the leading comparisons from the September 23 photographs. The two appearance
-groups may be different species; sharing a pot does not establish their identity.
+The two leaf patterns offer useful comparisons with Keith Green's species
+descriptions:
 
 | Appearance group                     | Best comparison and useful alternatives                                                                                                          |
 | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Tan/brown patterned heads            | _L. lesliei_ is a plausible first comparison; _L. aucampiae_ is a close alternative. Surface pattern alone does not separate them reliably here. |
 | Grey/green, more open-windowed heads | _L. salicola_ is a plausible comparison; _L. olivacea_ and open-windowed forms of _L. lesliei_ remain alternatives.                              |
 
-These are visual inferences against Keith Green's species descriptions, not
-label identifications. Both nursery labels say only **Lithops spp.** Neither
-supplies a cultivar, collection number, or species provenance. Green coloration
-does not establish a named cultivar. The [tan/brown group's page](./lithops-lesliei.md) and
-[grey/green group's page](./lithops-salicola.md) describe these probable matches
-and their alternatives.
+The [tan/brown group's page](./lithops-lesliei.md) and
+[grey/green group's page](./lithops-salicola.md) explore the distinguishing
+windows, colors and flowers of these working matches.
 
-Future flowers recorded separately for each appearance group, plus neutral
-daylight top and side photos with a ruler, could narrow the comparison. Do not
-uproot the plants again just to answer the identity question.
+Neutral-daylight top and side photographs, followed by flowers from each
+group, will make it easier to compare their development.
 
 ## Nursery and repot evidence
 
@@ -73,7 +67,7 @@ label gives a nominal 2.5-inch assortment size. Both were purchased at
 
 [![Both Altman Plants nursery containers labelled Stone Faces, Lithops spp.](../../../assets/nursery-labels/2026-09-23-p35-lithops-nursery-labels.jpg)](../../../assets/nursery-labels/2026-09-23-p35-lithops-nursery-labels.jpg)
 
-Owner photograph, September 23, 2026: the two nursery labels establish the supplied genus, not a species or cultivar.
+Owner photograph, September 23, 2026: both nursery labels read Stone Faces / Lithops spp.
 
 At **02:34 EDT on September 23**, both groups were repotted
 into the D'vine Dev Blush Mauve pot, **setup 2**, with **80% Molly's Succulent
@@ -129,5 +123,5 @@ Owner photograph, September 23, 2026: completed shared planting.
 - [Equipment inventory](../../equipment/inventory.md) — exact ordered pot identity and seller variant, kept separate from the logged dimensions.
 - [Kew Plants of the World Online: _Lithops_](https://powo.science.kew.org/taxon/16237-1) — accepted genus, publication year, and genus-level range.
 - [University of Wisconsin–Madison Extension: Living Stones, Lithops](https://hort.extension.wisc.edu/articles/living-stones-lithops/) — paired-leaf replacement, light acclimation, drainage, and root-depth guidance; regional seasonal examples are not an indoor watering calendar.
-- [Keith Green: Lithops species descriptions](https://scrapbooklithops.com/species.html) — specialist descriptions used for the explicitly tentative appearance comparisons.
-- [International Cultivar Registration Authority: Lithops cultivar register](https://www.scrapbooklithops.com/cultivars.pdf) — named cultivars require evidence beyond a generic nursery label and color.
+- [Keith Green: Lithops species descriptions](https://scrapbooklithops.com/species.html) — species patterns, colors and flowers.
+- [International Cultivar Registration Authority: Lithops cultivar register](https://www.scrapbooklithops.com/cultivars.pdf) — registered cultivar names and descriptions.

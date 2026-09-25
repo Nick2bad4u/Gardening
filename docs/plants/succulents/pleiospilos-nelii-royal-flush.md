@@ -44,8 +44,7 @@ inspection; routine pest checks remain useful.
 
 ## Seller listing snapshot
 
-These values preserve Mountain Crest Gardens' product page as inspected on
-2026-08-26. They are seller claims, not measurements of the ordered plant.
+Mountain Crest Gardens listing, inspected 2026-08-26:
 
 | Seller field                 | Listing value                                  |
 | ---------------------------- | ---------------------------------------------- |
@@ -59,28 +58,23 @@ These values preserve Mountain Crest Gardens' product page as inspected on
 | Growth habit / seasonality   | Clumping or mounding / year-round color        |
 | Special characteristics      | Pet safe; showy blooms — seller fields         |
 
-The seller recommends an 80% mineral / 20% organic medium, a deep narrow pot,
-and cautious spring-and-fall watering only when the medium is dry and the inner
-leaf pair begins to soften. It says to leave the plant dry in summer and winter
-and to let the outer pair be consumed by new inner growth. Those seasonal rules
-are a useful warning against overwatering, but the collection will still record
-actual indoor growth state rather than watering by a retail calendar.
+The seller recommends an 80% mineral / 20% organic medium and a deep narrow pot. For this indoor plant, use root-zone dryness and the active leaf pair's firmness together: an older pair can wrinkle as the inner leaves draw on its stored water.
 
 ## Origin, form, and publication
 
 The underlying species is a South African mimicry plant whose speckled,
 angular leaf pairs resemble surrounding stone. GBIF accepts _Pleiospilos
 nelii_; the species was published in 1930. The cultivar name describes a
-horticultural color selection rather than a separate wild population.
+horticultural color selection. The species produces fragrant, insect-pollinated flowers that open in mid-afternoon; its seed capsules open when wet and close as they dry.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                  |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Grow-light position | **R2C4 · Bright.** September 15 six-column/four-row front grid, facing the window. Low central split rock. Compare rosette-height exposure and retain its leaf-cycle watering restrictions. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Water               | Use the active leaf cycle, firmness, medium dryness, and pot-weight trend as evidence.                                                                                                                                                                                                                       |
-| Leaf replacement    | Let the old pair be consumed while a new inner pair develops; wrinkling old leaves alone is not an automatic water signal.                                                                                                                                                                                   |
-| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. The owner recalls Molly's Succulent Mix with approximately 20% added perlite (September 20 report; ratio estimated); depth still matters.                                                                                                                   |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                               |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **R2C4 · Bright.** September 15 six-column/four-row front grid, facing the window. Low central split rock. Compare rosette-height exposure and retain its leaf-cycle watering restrictions. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Use the active leaf cycle, firmness, medium dryness, and pot-weight trend as evidence.                                                                                                                                                                                    |
+| Leaf replacement    | Let the old pair be consumed while a new inner pair develops; wrinkling old leaves alone is not an automatic water signal.                                                                                                                                                |
+| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. The owner recalls Molly's Succulent Mix with approximately 20% added perlite (September 20 report; ratio estimated); depth still matters.                                                                                |
 
 ## Rotation, propagation, and watch points
 
@@ -93,6 +87,8 @@ horticultural color selection rather than a separate wild population.
   the collection's ordinary cactus dry-down routine.
 
 ## Sources
+
+- [SANBI PlantZAfrica: split rock flowers, habitat and seed capsules](https://pza.sanbi.org/pleiospilos-nelii)
 
 - Owner arrival and repot observations, August 28–29, 2026; medium description, September 20: Molly's Succulent Mix with approximately 20% added perlite, an estimated proportion.
 

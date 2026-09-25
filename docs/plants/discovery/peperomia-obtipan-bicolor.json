@@ -1,9 +1,9 @@
 {
     "anatomy": {
-        "intro": "This illustration shows the leafy stems and possible flower spike of a variegated baby rubber plant, not a documented bloom on P31.",
+        "intro": "Glossy cupped leaves, short stalks, fleshy branches, and slender flower spikes make up this compact plant.",
         "parts": [
             {
-                "function": "The broad, cupped blade carries the green and cream pattern.",
+                "function": "The fleshy blade stores moisture and has a recessed midrib running toward its rounded tip.",
                 "label": "Thick leaf"
             },
             {
@@ -21,7 +21,8 @@
         ],
         "sourceIds": [
             "ncsu",
-            "rhs"
+            "rhs",
+            "rhs-care"
         ]
     },
     "comparisonSourceIds": [
@@ -32,21 +33,21 @@
         "sourceIds": [
             "ncsu"
         ],
-        "text": "What looks like a narrow tail is an inflorescence: many minute cream-white flowers packed along a spike. NC State describes flowers without petals. Flowering is not yet documented for this collection plant."
+        "text": "A cream-white spike about 3.5–5 inches long holds many minute flowers. Each flower has two stamens and no petals, creating a narrow, grainy-looking surface instead of a showy bloom."
     },
     "growth": {
-        "note": "These species-level stages are not a bloom schedule or a promise that a cutting will retain Bicolor's variegation.",
+        "note": "Softwood stem cuttings can root in free-draining medium or water before potting. NC State also lists leaf cuttings for the species; allow this recently purchased plant to establish first.",
         "sourceIds": [
             "ncsu",
-            "rhs"
+            "rhs-care"
         ],
         "stages": [
             {
-                "text": "An established plant produces new leaves along growing stems.",
+                "text": "Small leaves expand along growing shoots, gradually revealing their cupped shape and cream-green pattern.",
                 "title": "New leafy shoots"
             },
             {
-                "text": "Additional branches broaden the rounded foliage display.",
+                "text": "Side branches fill out the canopy; compare new stem spacing with older growth when reviewing light.",
                 "title": "Branching clump"
             },
             {
@@ -80,7 +81,7 @@
         "sourceIds": [
             "ncsu"
         ],
-        "text": "NC State gives a species range of roughly 6 inches to 2 feet in height and spread. Expect a branching herbaceous plant rather than a woody rubber tree; that range does not establish this cultivar's eventual dimensions indoors."
+        "text": "The species forms a rounded, branching herbaceous plant about 6 inches to 2 feet in height and spread. Fleshy stems and broad leaves create fullness without the woody trunk of a true rubber tree."
     },
     "milestones": [
         {
@@ -99,9 +100,10 @@
     "nameStory": {
         "sourceIds": [
             "patent",
-            "rhs"
+            "rhs",
+            "ncsu"
         ],
-        "text": "The breeder's Obtipan patent names two Peperomia obtusifolia parents. RHS separately accepts Obtipan Bicolor; the green Obtipan patent does not establish this variegated plant's exact origin or patent status."
+        "text": "The Obtipan breeder record describes a cross between two unnamed Peperomia obtusifolia cultivars. RHS lists Obtipan Bicolor separately. The species belongs to the pepper family, while its baby rubber plant nickname describes the thick leaves."
     },
     "slug": "peperomia-obtipan-bicolor",
     "sources": [
@@ -134,6 +136,12 @@
             "id": "patent",
             "title": "USPP29598P3: Peperomia plant named Obtipan",
             "url": "https://patents.google.com/patent/USPP29598P3/en"
+        },
+        {
+            "accessed": "2026-09-25",
+            "id": "rhs-care",
+            "title": "RHS: How to grow peperomia",
+            "url": "https://www.rhs.org.uk/plants/peperomia/how-to-grow-peperomia"
         }
     ]
 }

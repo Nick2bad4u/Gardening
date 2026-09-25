@@ -2,8 +2,10 @@
 
 Last updated: 2026-09-20
 
-These two small appliances support the open-table grow area, but neither one is
-a plant controller. Current readings and plant-specific watering rules remain the decision references. Two pole-mounted fans provide continuous rotating canopy airflow; two additional Honeywell fans below the tables run on Low with A22-controlled cycles of unrecorded duration.
+The TABYIK dehumidifier removes moisture; the Levoit purifier handles airborne
+dust and pollen. Use room readings to judge their effect. Two pole-mounted fans
+provide continuous rotating canopy airflow; two additional Honeywell fans below
+the tables run on Low with A22-controlled cycles of unrecorded duration.
 
 ## Owner-Confirmed Operating Record — September 20
 
@@ -11,7 +13,9 @@ The **dehumidifier is currently running directly from a wall outlet**, not from 
 
 Reported room conditions are approximately **45–50% RH and temperatures in the 70s °F**. The owner identifies a VIVOSUN **TH1GS** sensor alongside the A22 probe. The two probe locations are the **far pair of wooden tables** and the wall at plant height, with roughly two inches of the wall probe's free end leaning away from the wall. The exact probe-to-device assignment is unconfirmed. The body's internal sensor is on a shelf about two feet from the cacti. The current display uses four 16 × 13-inch wooden tables; the round glass table is no longer in use. These are location descriptions, not a calibration or evidence that all sensors read identically.
 
-The **Levoit LV600S humidifier is off**. The owner has not started using it because it is not winter yet; winter settings and a start date are unrecorded. The dehumidifier's current operation is recorded separately above. The older guidance below remains a reference for interpreting conditions; it is not an account of the devices' current program or an instruction to change the A22.
+The **Levoit LV600S humidifier is off**, pending winter use. The operating table
+below is earlier condition-based guidance; the September 20 record above gives
+the devices' reported running state.
 
 ## Current equipment
 

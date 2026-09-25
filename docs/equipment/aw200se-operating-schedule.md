@@ -404,9 +404,7 @@ increment size.
 
 On 2026-07-24, the installed AW200SE/E25/VIVOSUN app combination was tested and
 confirmed to accept every whole-percent setting from 25% through 100%. The 5%
-changes in this schedule are therefore available on this setup. This is a direct
-observation of the current hardware, firmware, and app combination, not a
-promise about every E25 or app version.
+changes in this schedule are therefore available on this setup. This records the hardware, firmware, and app combination tested that day.
 
 ## Dated six-week acclimation and first steady week
 

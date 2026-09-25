@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "Four visible heads share a pot; the drawing deliberately leaves their unknown root connections out.",
+        "intro": "Four two-leaf heads display two distinct patterns above the shared potting medium.",
         "parts": [
             {
                 "function": "One two-leaf body represents the probable L. lesliei appearance group.",
@@ -32,10 +32,10 @@
         "sourceIds": [
             "green"
         ],
-        "text": "If the proposed species IDs hold, yellow and white blooms would be expected from the tan and grey groups respectively. Keep flower photographs linked to the head that produced them; no flowering is recorded."
+        "text": "The working species matches suggest yellow blooms from the tan group and white blooms from the grey group. Photographing each flowering head would add a vivid new comparison to the leaf patterns."
     },
     "growth": {
-        "note": "These are observation stages for this shared arrangement, not a fixed seasonal watering schedule.",
+        "note": "The leaf stage of each head guides care through this repeating cycle.",
         "sourceIds": [
             "optica",
             "lithops"
@@ -60,10 +60,10 @@
             "genus",
             "lithops"
         ],
-        "text": "Lithops are southern African succulents adapted to living among stones in dry habitats. This planter combines two nursery appearance groups, provisionally L. lesliei and L. salicola. It recreates neither species' exact habitat, and a shared container does not show that their water needs or replacement stages will coincide."
+        "text": "Across southern Africa, Lithops grow among quartz, granite, shale and other stony substrates. Their varied patterns echo those surroundings: a useful way to understand the contrast between the tan islands and open olive windows in this planter."
     },
     "image": {
-        "alt": "Four Lithops heads in a mauve pot: tan and grey groups, a fissure and shared medium, without roots.",
+        "alt": "Four Lithops heads in a mauve pot: tan and grey groups, a fissure and shared medium.",
         "file": "assets/plant-explainers/lithops-shared-planter.webp",
         "generatedOn": "2026-09-24",
         "prompt": "Create a square 1024px botanical educational illustration on warm ivory. Clean botanically accurate pen-and-watercolor, muted forest-green, sage and ochre palette, generous whitespace, large central specimen. Exactly four large numbered circular markers 1, 2, 3, 4 with thin clear noncrossing leader lines to the specified features. Numerals legible at 350px display. No title, words, paragraphs, watering icons, calendar, border or logo. Schematic anatomy, not a photograph of an owned plant. Show a blush-mauve round planter containing exactly FOUR Lithops heads in a loose square layout, two tan/brown patterned heads with island-and-channel top patterns and two grey-green heads with more open olive windows. Each head consists of exactly TWO thick leaves with ONE central fissure, no extra leaves, no flowers, NO ROOTS or cutaway, no asserted root connections. Marker1 to one tan patterned head; marker2 to one grey-green open-windowed head; marker3 to central fissure on another visible head; marker4 to visible shared gritty medium between the heads. Keep substantial pot visible and distinctlydifferent illustration from a single Lithops anatomy.",
@@ -80,7 +80,7 @@
         "sourceIds": [
             "lithops"
         ],
-        "text": "A small cluster can form as some Lithops produce extra heads. The four visible heads currently came from two nursery pots; neither individual count nor root connections have been established."
+        "text": "Lithops grow slowly and can persist for decades; Wisconsin Extension reports lifespans reaching 40–50 years. Some heads divide during renewal, gradually changing a small planting into a low cluster."
     },
     "milestones": [
         {
@@ -117,7 +117,7 @@
             "url": "https://powo.science.kew.org/taxon/16237-1"
         },
         {
-            "accessed": "2026-09-24",
+            "accessed": "2026-09-25",
             "id": "lithops",
             "title": "Wisconsin Extension: Living stones",
             "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"
@@ -135,7 +135,7 @@
             "url": "https://scrapbooklithops.com/species.html"
         },
         {
-            "accessed": "2026-09-24",
+            "accessed": "2026-09-25",
             "id": "nelii",
             "title": "SANBI PlantZAfrica: Pleiospilos nelii",
             "url": "https://pza.sanbi.org/pleiospilos-nelii"

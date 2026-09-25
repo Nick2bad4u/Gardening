@@ -13,15 +13,14 @@
 
 ## Names and identification
 
-| Kind                      | Record                                                                                                           |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Common reference name     | Coppertone-type sedum                                                                                            |
-| Scientific name           | Probable _Sedum adolphi_ / _S. nussbaumerianum_ complex                                                          |
-| Identification confidence | Provisional foliage match to the coppertone sedum horticultural complex; exact identity and cultivar unconfirmed |
-| Seller evidence           | Mixed garden label only; no component-specific botanical name                                                    |
-| Profile scope             | One recognizable foliage group; number of individual plants or cuttings unverified                               |
+| Kind                  | Record                                                        |
+| --------------------- | ------------------------------------------------------------- |
+| Common reference name | Coppertone-type sedum                                         |
+| Scientific name       | Probable _Sedum adolphi_ / _S. nussbaumerianum_ complex       |
+| Seller evidence       | Mixed garden label only; no component-specific botanical name |
+| Profile scope         | One recognizable foliage group in the shared planter          |
 
-The narrow, orange-toned leaves and short stems in the September 2 and September 16 photographs fit the working coppertone-type sedum group. The retail label does not name this component. The foliage suggests the _S. adolphi_ / _S. nussbaumerianum_ complex; a species or cultivar cannot be established from color alone.
+The narrow, orange-toned leaves and short stems in the September 2 and September 16 photographs fit the working coppertone-type sedum group. Its narrow leaves and branching habit contrast with the broad-leaved rosettes beside it.
 
 ## Collection evidence and shared history
 
@@ -31,17 +30,17 @@ The other component pages are [pale rosette echeveria](./tiny-planter-echeveria.
 
 ## Botanical context
 
-NParks describes _Sedum adolphi_ from Mexico as a low succulent subshrub with pointed fleshy leaves, yellow-green to orange coloration, reddish margins, and white star-shaped flowers. It lists _S. nussbaumerianum_ as a synonym. Its cultivation guidance allows sun or semi-shade, calls for drying between waterings, and notes stem-rot risk when the medium stays too wet. These reference traits are consistent with the working match but do not confirm this particular plant.
+NParks describes _Sedum adolphi_ from Mexico as a low succulent subshrub with pointed fleshy leaves, yellow-green to orange coloration, reddish margins, and white star-shaped flowers. It lists _S. nussbaumerianum_ as a synonym. Its cultivation guidance allows sun or semi-shade, calls for drying between waterings, and notes stem-rot risk when the medium stays too wet.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                            |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Position            | Remains inside P30, at the photo-matched front of the rear zone between #1 and #5. See the [current placement guide](../../layouts/table-placement-research.md). Exposure at individual leaf height remains unmeasured.                                       |
-| Light and neighbors | Give the orange stems a clear view of the existing lights without moving the whole pot just to intensify color. Shading or elongation can be compared with the dated photographs; orange coloration alone does not establish a light requirement or distress. |
-| Water               | Follow the [shared-pot watering strategy](../../watering-strategy.md): assess dryness throughout the pot, the weight trend, and all three foliage groups before watering and draining the container.                                                          |
-| Weighing            | Weigh the complete P30 planter using the [adaptive weighing strategy](../../weighing-strategy.md).                                                                                                                                                            |
-| Feeding             | Use the shared planter's [fertilizer schedule](../../equipment/msu-fertilizer-schedule.md) during a normal watering; the dose applies to the whole pot.                                                                                                       |
+| Topic               | Practical approach                                                                                                                                                                                                      |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Position            | Remains inside P30, at the photo-matched front of the rear zone between #1 and #5. See the [current placement guide](../../layouts/table-placement-research.md). Exposure at individual leaf height remains unmeasured. |
+| Light and neighbors | Give the orange stems a clear view of the existing lights. Compare shoot length and leaf spacing with dated photographs, and acclimate gradually to lighting changes.                                                   |
+| Water               | Follow the [shared-pot watering strategy](../../watering-strategy.md): assess dryness throughout the pot, the weight trend, and all three foliage groups before watering and draining the container.                    |
+| Weighing            | Weigh the complete P30 planter using the [adaptive weighing strategy](../../weighing-strategy.md).                                                                                                                      |
+| Feeding             | Use the shared planter's [fertilizer schedule](../../equipment/msu-fertilizer-schedule.md) during a normal watering; the dose applies to the whole pot.                                                                 |
 
 ## Growth and watch points
 

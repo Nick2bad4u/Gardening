@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "Four structures that explain the form of the probable compact Espostoa.",
+        "intro": "Beneath the white wool is a ribbed green column with organized rows of spine-bearing cushions.",
         "parts": [
             {
                 "function": "Fine pale hairs screen the green surface beneath.",
@@ -32,10 +32,10 @@
         "sourceIds": [
             "flowers"
         ],
-        "text": "RHS describes Espostoa flowers at genus level as white and bell- or cup-shaped, opening at night. This is a mature-plant feature; a small woolly nursery cactus should not be expected to flower on a schedule."
+        "text": "Espostoa flowers generally open at night and are bell- or cup-shaped, usually white and occasionally red."
     },
     "growth": {
-        "note": "The illustration shows the probable identity; growth alone will not settle the subspecies.",
+        "note": "Look through naturally thin patches of wool to follow the ribs and the repeating spine cushions beneath.",
         "sourceIds": [
             "form"
         ],
@@ -56,9 +56,10 @@
     },
     "habitat": {
         "sourceIds": [
-            "range"
+            "range",
+            "form"
         ],
-        "text": "Kew records Espostoa melanostele subsp. nana from Ancash, Peru, in desert and dry shrubland. That is the background of the working identification, not a known collection locality for this nursery plant. Its woolly upright body fits Espostoa, but the precise identification remains probable, with E. lanata also considered."
+        "text": "Espostoa melanostele subsp. nana comes from Ancash, Peru, in desert and dry shrubland. Its upright stems carry a dense white covering that partly screens the green surface."
     },
     "image": {
         "alt": "Botanical anatomy of the probable compact Espostoa, with numbered markers for woolly covering, central spine, areole, green ribbed stem.",
@@ -78,7 +79,7 @@
         "sourceIds": [
             "form"
         ],
-        "text": "The parent species is columnar and clump-forming, with 20–30 ribs. Its published size should not be treated as a precise ceiling for this uncertain compact plant."
+        "text": "The parent species forms clumps of upright columns with 20–30 ribs. The dense wool partly hides this repeated structure."
     },
     "milestones": [
         {

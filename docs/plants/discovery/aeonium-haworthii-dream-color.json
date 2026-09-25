@@ -33,10 +33,10 @@
             "rhs",
             "extension"
         ],
-        "text": "Aeoniums produce many small star-shaped flowers on a stalk above a rosette. Flowering is a mature-stage event, not a requirement for a healthy young plant. The illustrated crowns are vegetative; no bloom is documented for this specimen here."
+        "text": "Aeoniums produce clusters of small star-shaped flowers above a mature rosette. That crown dies after flowering, while the other crowns of a branching plant can continue growing."
     },
     "growth": {
-        "note": "Heat can slow growth; observe actual activity instead of assigning an indoor plant a fixed seasonal calendar.",
+        "note": "Older leaves fall as new ones develop, naturally exposing the stems below the rosettes; sudden collapse or widespread soft leaves deserve a closer inspection.",
         "sourceIds": [
             "extension"
         ],
@@ -57,9 +57,11 @@
     },
     "habitat": {
         "sourceIds": [
-            "kew"
+            "kew",
+            "rhs",
+            "extension"
         ],
-        "text": "The wild species Aeonium haworthii is native to Tenerife in the Canary Islands and grows as a subtropical succulent subshrub. 'Dream Color' is a horticultural selection, not a wild population. This collection's colorful plant is a probable cultivar match; its island background is useful context without establishing an exact nursery lineage."
+        "text": "Aeonium haworthii is native to Tenerife in the Canary Islands, where it grows as a subtropical succulent subshrub. The cultivated Dream Color form brings yellow, green and pink-red tones to that branching shape. Older leaves gradually fall away, leaving visible stems topped by living rosettes."
     },
     "image": {
         "alt": "Variegated aeonium with numbered leaf, rosette center, woody branch and side crown.",
@@ -93,7 +95,7 @@
         "sourceIds": [
             "rhs"
         ],
-        "text": "RHS connects 'Kiwi' with variegated pinwheel 'Dream Color' and lists several trade synonyms. Different labels can therefore describe a similar plant, while this specimen's cultivar remains probable."
+        "text": "RHS links 'Kiwi' with variegated pinwheel 'Dream Color' and lists several trade synonyms, including 'Tricolor' and 'Keweonium'."
     },
     "slug": "aeonium-haworthii-dream-color",
     "sources": [

@@ -1,6 +1,8 @@
 # Spreadsheet and Logger Actions
 
-Updated: 2026-09-19. This guide describes the checked-in logger 5.26.0 entry contract and the documented AppSheet bridge. It explains what can be recorded; it is not a checklist of chores to perform daily. See the [deployment record](../scripts/google-sheets/README.md) for the separately verified production status.
+Use this guide to choose an action, record measurements, and correct saved care
+entries. The [deployment record](../scripts/google-sheets/README.md) keeps the
+logger version and production details.
 
 Read alongside the [watering strategy](./watering-strategy.md), [weighing strategy](./weighing-strategy.md), and [operator runbook](../scripts/google-sheets/README.md).
 
@@ -27,9 +29,13 @@ Quick log is hidden for compatibility; use the mobile logger or AppSheet for rou
 - **Pot setup** identifies the whole weighed configuration. It is not the pot size in inches.
 - **Notes** hold useful details not covered by structured fields. In a multi-event save, the note is attached to the first generated event rather than copied onto every row.
 - **Plant condition**, **Soil moisture**, and **Medium / substrate** are different fields. Condition and moisture belong to Check; the growing-medium description belongs to Repot.
-- A shared planter receives one observation identity per event for that container. Its components do not receive invented individual weights.
+- A shared planter receives one observation identity per event. Weigh the
+  whole container and name the relevant member in Notes when needed.
 
-For example, `#2` / `P20` is one shared succulent container with several botanical profiles. Select P20 once for a whole-pot weight or watering and identify a particular component in the note when useful. The same applies to #6 / P30: its overview and Succulent-10A/B/C component pages share one pot entry, with no duplicate measurement or care event.
+For example, select `#2` / `P20` once for a shared-planter weight or watering.
+The same applies to #6 / P30 and #9 / P35: their botanical pages share one pot
+entry. “Tan/brown Lithops firm; grey/green heads beginning replacement” belongs
+in P35's note. Find each planter's members in the [container guide](./containers.md).
 
 ## The 12 Selectable Actions
 
@@ -64,7 +70,7 @@ This means one click on Save is not always one History row. Review the event sum
 
 The exact choices are **Flood / soak-through**, **Thorough**, **Partial**, and **Spot**. Flood / soak-through is the default. Change it when that does not describe what happened. A blank historical application remains legacy/unspecified; do not relabel it without evidence.
 
-Partial and Spot waterings remain real Water events, but do not qualify for the normal full-cycle forecast. Flood / soak-through and Thorough can qualify when the other model evidence is valid. Choosing a more favorable label to restore a forecast would corrupt the record.
+Partial and Spot waterings remain real Water events, but do not qualify for the normal full-cycle forecast. Flood / soak-through and Thorough can qualify when the other model evidence is valid. Choose the label that describes the watering you performed.
 
 ### Amount Fields
 
@@ -102,7 +108,10 @@ Quick log dimensions are currently recorded with Estimated quality and Unspecifi
 
 The soil-moisture choices exposed by the detailed form are **Dry**, **Slightly moist**, **Moist**, **Wet**, and **Unknown**. These describe an observation, not a sensor reading automatically inferred from pot weight. Use Unknown when appropriate; a blank or Unknown field does not mean Dry.
 
-Condition describes the plant, while medium describes what it is growing in. For example, a note about new growth belongs with condition; the potting-mix recipe belongs with Repot. A moisture selection does not itself cause the forecast model to certify all parts of a shared root ball or automatically authorize water.
+Condition describes the plant, while medium describes what it is growing in.
+For example, new growth belongs with condition; the potting-mix recipe belongs
+with Repot. In a shared planter, mention which member or part of the root zone
+you checked.
 
 ### Repot and Setup Boundaries
 

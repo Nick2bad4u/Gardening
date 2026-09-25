@@ -33,7 +33,7 @@
             "sanbi",
             "nursery"
         ],
-        "text": "Flowers emerge between the leaves and resemble large daisies. The nursery listing conflicts on 'Royal Flush' color, describing golden flowers in prose and pink in its product field; this collection's bloom color remains unrecorded."
+        "text": "Flowers emerge from the cleft and resemble large daisies. SANBI describes the species’ fragrant blooms opening in mid-afternoon. The Royal Flush nursery listing gives conflicting golden and pink color descriptions."
     },
     "growth": {
         "note": "Follow the visible stage rather than a month-based schedule; wrinkling outer leaves during renewal does not alone call for watering.",
@@ -61,7 +61,7 @@
             "sanbi",
             "nursery"
         ],
-        "text": "Wild Pleiospilos nelii occurs among sparse Karoo vegetation near the Western and Eastern Cape boundary in South Africa. Its rounded, speckled leaves resemble surrounding stones. 'Royal Flush' is a cultivated pink-purple form; the species habitat explains its structure but does not establish the origin or exact seasonal behavior of this nursery plant."
+        "text": "Wild Pleiospilos nelii grows among sparse Karoo vegetation near South Africa’s Western and Eastern Cape boundary. Rounded speckled leaves blend with the surrounding stones. 'Royal Flush' is a cultivated pink-purple form of this compact mimicry plant, retaining the deep cleft and thick opposing leaves."
     },
     "image": {
         "alt": "Purple split rock with numbered thick leaf, speckles, central cleft and joined leaf base.",
@@ -74,14 +74,14 @@
         {
             "name": "Green split rock",
             "profileSlug": "pleiospilos-nelii",
-            "text": "The same probable species can have grey-green leaves rather than the seller-labeled purple 'Royal Flush' coloring. Color supports comparison but does not independently authenticate a cultivar."
+            "text": "The green split rock has the same thick, speckled leaf-pair structure, with grey-green coloring compared with Royal Flush’s pink-purple tones."
         }
     ],
     "mature": {
         "sourceIds": [
             "nursery"
         ],
-        "text": "The nursery lists roughly 3–5 inches high and 3–4 inches across. This is a compact leaf succulent, not a stem-forming shrub; several persistent stacked pairs are not the intended mature silhouette."
+        "text": "The nursery lists roughly 3–5 inches high and 3–4 inches across. The body stays compact as one leaf generation gradually replaces another."
     },
     "milestones": [
         {

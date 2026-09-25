@@ -32,10 +32,10 @@
         "sourceIds": [
             "rhs"
         ],
-        "text": "The species has small yellow, urn-shaped flowers that hang from long curved stalks. Flower shape and color would be useful additional identification evidence for this probable plant; foliage alone leaves room for similar hybrids."
+        "text": "Small yellow, urn-shaped flowers hang from long curved stalks above the rosette. Their nodding shape and bright color make the flowering silhouette very different from the tight, nearly stemless leaf crown."
     },
     "growth": {
-        "note": "These are possible stages, not a timetable; a close hybrid may differ in flower details.",
+        "note": "Offsets widen the planting while the original crown keeps adding leaves at its center.",
         "sourceIds": [
             "rhs",
             "extension"
@@ -59,7 +59,7 @@
         "sourceIds": [
             "kew"
         ],
-        "text": "The species comes from Hidalgo, Puebla and Veracruz in Mexico, where Kew places it in desert or dry shrubland. Its compact succulent rosette belongs to that setting; it is not a tropical foliage plant. This collection plant remains probable E. pulidonis or a close hybrid, so the species story provides context rather than proof of its identity."
+        "text": "Echeveria pulidonis comes from Hidalgo, Puebla and Veracruz in Mexico, in desert or dry shrubland. Thick leaves hold a water reserve within a low, compact rosette. In the shared planter, its short crown needs an open view of the light beneath the taller branching succulents."
     },
     "image": {
         "alt": "Blue-green red-edged rosette with numbered leaf, margin, growing center and basal offset.",
@@ -72,14 +72,14 @@
         {
             "name": "Echeveria 'Raindrops'",
             "profileSlug": "echeveria-raindrops",
-            "text": "Both form blue-green rosettes, but mature 'Raindrops' develops rounded raised bumps; probable pulidonis has smooth blades with a narrow red outline."
+            "text": "Both form blue-green rosettes, but mature 'Raindrops' develops rounded raised bumps; pulidonis has smooth blades with a narrow red outline."
         }
     ],
     "mature": {
         "sourceIds": [
             "rhs"
         ],
-        "text": "RHS describes individual rosettes reaching about 12 cm across. Offsets can broaden the group, while flowering stalks rise above the low leaf crown. That species scale is a reference, not a prediction for a shaded corner of the shared planter."
+        "text": "Individual rosettes reach about 12 cm across. Basal offsets can broaden the group, while the long flowering stems extend well above the leaf crown."
     },
     "milestones": [
         {
@@ -91,9 +91,10 @@
     ],
     "nameStory": {
         "sourceIds": [
-            "kew"
+            "kew",
+            "extension"
         ],
-        "text": "Kew records the name Echeveria pulidonis as published by E. Walther in 1972. The botanical name and the collection's probable identification are separate facts."
+        "text": "The genus honors Mexican botanical artist Atanasio Echeverría y Godoy. Kew records E. Walther’s publication of the species name in 1972."
     },
     "slug": "echeveria-pulidonis",
     "sources": [

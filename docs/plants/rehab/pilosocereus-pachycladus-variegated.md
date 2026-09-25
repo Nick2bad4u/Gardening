@@ -22,9 +22,7 @@
 The smooth-edged pale stripes follow the growth axis and repeat over a long
 section, which is more consistent with stable variegation than a random burn or
 rot lesion. The blue skin, golden-brown areole wool, rib number, and columnar
-habit support _P. pachycladus_, but several traded blue _Pilosocereus_ look
-similar. A flower, fruit, or sharp close-up of mature areoles would be stronger
-evidence.
+habit support the blue-torch appearance.
 
 ## Normal species: origin and life cycle
 
@@ -41,9 +39,8 @@ pollination in the Caatinga. Research on the species indicates it is mainly
 outcrossing, so successful seed production benefits from pollen from another
 genetically distinct plant.
 
-The normal species reference photos will be much bluer and more regular than
-this variegated specimen. They document the underlying taxon, not an exact
-visual match.
+The collection plant's cream stripes contrast with the normal species'
+blue-green color.
 
 ## Rehabilitation and grow-light care
 

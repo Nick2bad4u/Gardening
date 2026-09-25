@@ -12,22 +12,19 @@
 
 ## Names and identification
 
-| Kind                          | Name                                                                                           |
-| ----------------------------- | ---------------------------------------------------------------------------------------------- |
-| Collection record             | Smart Planet Home five-plant succulent garden; one tracked pot                                 |
-| Visible seller label          | `5" CLAY TERRACOTTA C&S GDN`; Home Depot product `1002971690`; Altman Plants                   |
-| Pale powdery rosettes         | _Echeveria_ sp.; species and cultivar unresolved                                               |
-| Copper-orange narrow rosettes | Probable _Sedum adolphi_ / _Sedum nussbaumerianum_ horticultural complex                       |
-| Broad red-edged paddle leaves | _Kalanchoe luciae_ / _Kalanchoe thyrsiflora_ complex                                           |
-| Identification caution        | Foliage-only photographs do not establish exact species, cultivars, or the original seller mix |
+| Kind                          | Name                                                                         |
+| ----------------------------- | ---------------------------------------------------------------------------- |
+| Collection record             | Smart Planet Home five-plant succulent garden; one tracked pot               |
+| Visible seller label          | `5" CLAY TERRACOTTA C&S GDN`; Home Depot product `1002971690`; Altman Plants |
+| Pale powdery rosettes         | _Echeveria_ sp.; species and cultivar unresolved                             |
+| Copper-orange narrow rosettes | Probable _Sedum adolphi_ / _Sedum nussbaumerianum_ horticultural complex     |
+| Broad red-edged paddle leaves | _Kalanchoe luciae_ / _Kalanchoe thyrsiflora_ complex                         |
+| Identification caution        | Working matches are based on foliage; the retail label names the garden only |
 
-The current images support three practical foliage groups, not three confirmed
-names. Powdery compact rosettes fit _Echeveria_ broadly. The orange-toned,
-narrower leaves resemble plants traded around _Sedum adolphi_ and
-_S. nussbaumerianum_. The broad green paddles with red margins resemble the
-frequently confused _Kalanchoe luciae_ / _K. thyrsiflora_ pair. Those working
-groups are enough to notice component-specific changes without inventing a
-precise retail cultivar history.
+Three foliage groups give this garden its layered appearance: powdery
+Echeveria-type rosettes, orange-toned sedum shoots and broad red-edged
+paddle-kalanchoe leaves. Their different shapes also make each group easy
+to follow as the shared planting grows.
 
 The planter is `Succulent-10`, label `#6`, and tracker `P30`. Its three component profiles describe recognizable foliage groups; the number of separately rooted individuals is unverified.
 
@@ -58,15 +55,10 @@ five-inch-class terra-cotta planter. The repot was logged at **September 3, 2026
 
 ## Why the component names stay broad
 
-GBIF treats _Echeveria_ as a genus containing many closely related rosette
-succulents, and the NC State Extension profile illustrates how much leaf form
-and color vary across cultivated members. GBIF currently accepts
-_Sedum adolphi_, _Kalanchoe luciae_, and _Kalanchoe thyrsiflora_, but an
-accepted taxon name is not evidence that one retail cutting belongs to it.
-Flowers, mature growth, provenance, and clean close views after acclimation are
-better evidence than color alone.
-
-The component profiles keep these provisional names while explaining the care and growth of each foliage group.
+Echeveria includes many species and cultivated hybrids, while the two
+paddle-kalanchoe species are often confused in the nursery trade. Flowers and
+mature growth offer useful distinguishing features. The component pages
+explain those comparisons alongside each group's growth habit.
 
 ## Care in this collection
 

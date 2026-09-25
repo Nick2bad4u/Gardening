@@ -9,19 +9,50 @@ interface Props {
 const { profile } = Astro.props;
 const groups = await getReferenceGallery(profile.allPhotos);
 const groupId = (topic: string) => `${profile.slug}-reference-${topic}`;
+const comparisonLabel = new Map([
+    ["aeonium-haworthii-dream-color", "Aeonium haworthii species and cultivated forms"],
+    ["cereus-forbesii-ming-thing", "Cereus forbesii: regular and monstrose forms"],
+    ["chamaelobivia-hybrid", "Peanut-cactus ancestry comparisons"],
+    ["echeveria-raindrops", "Echeveria species and cultivar comparisons"],
+    ["euphorbia-obesa-hybrid", "Euphorbia obesa species comparisons"],
+    [
+        "gymnocalycium-mihanovichii-black-widow",
+        "Gymnocalycium mihanovichii: green and variegated forms",
+    ],
+    [
+        "gymnocalycium-mihanovichii-variegated",
+        "Gymnocalycium mihanovichii: green and variegated forms",
+    ],
+    ["lithops-shared-planter", "Lithops lesliei and Lithops salicola comparisons"],
+    ["myrtillocactus-geometrizans-fukurokuryuzinboku", "Myrtillocactus geometrizans species forms"],
+    ["myrtillocactus-geometrizans-indigo-wave", "Myrtillocactus geometrizans species forms"],
+    ["pachira-glabra", "Pachira glabra species comparisons"],
+    ["peperomia-obtipan-bicolor", "Peperomia obtusifolia: green and variegated selections"],
+    ["pilosocereus-pachycladus-variegated", "Pilosocereus pachycladus species forms"],
+    ["pleiospilos-nelii-royal-flush", "Pleiospilos nelii species and cultivated forms"],
+    ["portulacaria-afra", "Portulacaria afra species forms"],
+    ["sempervivum-coconut-crystal", "Sempervivum genus comparisons"],
+    ["tephrocactus-articulatus-papyracanthus", "Tephrocactus articulatus forms"],
+    [
+        "tiny-mixed-succulent-planter",
+        "Echeveria, coppertone sedum, and paddle kalanchoe comparisons",
+    ],
+    ["tiny-planter-coppertone-sedum", "Sedum adolphi / S. nussbaumerianum comparisons"],
+    ["tiny-planter-echeveria", "Echeveria genus comparisons"],
+    ["tiny-planter-paddle-kalanchoe", "Kalanchoe luciae and K. thyrsiflora comparisons"],
+    [
+        "tradescantia-spathacea-tricolor",
+        "Tradescantia spathacea: green-purple and variegated forms",
+    ],
+]).get(profile.slug);
 ---
 
 <section class="photo-section curated-gallery" aria-labelledby={`${profile.slug}-gallery-heading`}>
-    <p class="eyebrow">Licensed botanical references</p>
+    <p class="eyebrow">Botanical reference photos</p>
     <h2 id={`${profile.slug}-gallery-heading`}>
         <SiteIcon name="botanical" size={36} /> Reference Gallery
     </h2>
-    <p>{profile.scopeNote}</p>
-    <p>
-        Explore the form, surface details, and flowers shown in the archive. These reference
-        photographs are separate from the collection photos and do not establish this plant's
-        identification.
-    </p>
+    {comparisonLabel && <p>{comparisonLabel}</p>}
     {groups.length > 1 && (
         <nav class="gallery-topics" aria-label="Reference gallery topics">
             {groups.map((group) => (

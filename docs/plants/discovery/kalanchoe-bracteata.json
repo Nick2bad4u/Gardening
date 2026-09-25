@@ -31,10 +31,10 @@
         "sourceIds": [
             "extension"
         ],
-        "text": "The species bears red tubular flowers in clusters at the branch ends. A clear flowering photograph would add a useful identifying feature to the current foliage evidence."
+        "text": "Red tubular flowers grow in branched clusters at the shoot tips. They add a strong color contrast to the grey-silver foliage."
     },
     "growth": {
-        "note": "Slow growth is typical; the exact species remains probable until stronger identifying evidence is available.",
+        "note": "The pale stems are four-angled and become somewhat woody as the shrub develops.",
         "sourceIds": [
             "extension"
         ],
@@ -58,7 +58,7 @@
             "kew",
             "extension"
         ],
-        "text": "Kalanchoe bracteata is native to Madagascar, with Kew placing it in a seasonally dry tropical biome. It grows as a small succulent shrub rather than a ground-hugging rosette. The silver plant in this collection remains a probable match; that distinction matters because several related kalanchoes share pale, hairy foliage."
+        "text": "Kalanchoe bracteata is native to Madagascar’s seasonally dry tropical regions. It develops a branching shrub with pale leaves held above somewhat woody stems. The silvery surface combines dense hairs with a waxy coating, giving the foliage a soft appearance beside smooth green succulents."
     },
     "image": {
         "alt": "Silver leafy shrub with numbered hairy surface, spoon-shaped blade, petiole and stem.",
@@ -71,14 +71,14 @@
         {
             "name": "Copper spoons (Kalanchoe orgyalis)",
             "profileSlug": "kalanchoe-orgyalis",
-            "text": "Copper spoons has cinnamon-colored upper leaf felt and greyer undersides. This probable silver-spoons plant has a predominantly silver to olive appearance; color alone does not settle every Kalanchoe identification."
+            "text": "Copper spoons has cinnamon-colored upper felt and greyer undersides; silver spoons has predominantly silver to olive foliage."
         }
     ],
     "mature": {
         "sourceIds": [
             "extension"
         ],
-        "text": "NC State describes shrubs about 2–4 ft tall and similarly wide. That describes mature horticultural potential, not a target for this shared box. Leaving space between its crown and lower rosette neighbors helps keep the planting readable and evenly lit."
+        "text": "Plants can reach about 2–4 ft tall and similarly wide. Prune taller shoots to keep this shrub in scale with the shared box and leave the lower echeveria exposed to light."
     },
     "milestones": [
         {

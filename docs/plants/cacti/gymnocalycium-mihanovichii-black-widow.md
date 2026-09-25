@@ -15,12 +15,12 @@
 
 ## Names and identity
 
-| Kind                | Name                                                       |
-| ------------------- | ---------------------------------------------------------- |
-| Underlying species  | _Gymnocalycium mihanovichii_                               |
-| Seller designation  | _G. mihanovichii_ f. variegata 'Black Widow'               |
-| Working common name | Black Widow chin cactus                                    |
-| Cultivar range      | None; this is a horticultural selection, not a wild taxon. |
+| Kind                | Name                                         |
+| ------------------- | -------------------------------------------- |
+| Underlying species  | _Gymnocalycium mihanovichii_                 |
+| Seller designation  | _G. mihanovichii_ f. variegata 'Black Widow' |
+| Working common name | Black Widow chin cactus                      |
+| Cultivar range      | Horticultural selection                      |
 
 The dark purple-to-nearly-black color and irregular green sectors are the
 cultivar's defining visual traits. Stable color patches remain firm; new
@@ -29,8 +29,8 @@ bleaching, soft areas, or hard tan scars deserve closer inspection.
 ## Collection history
 
 Ordered from Mountain Crest Gardens on August 25, 2026, this plant arrived
-rooted on August 28 in a 2-inch nursery pot; its original pot shape was not
-recorded. It was inspected and repotted that day into a **4 × 4 × 3.7-inch
+rooted on August 28 in a 2-inch nursery pot. It was inspected and repotted
+that day into a **4 × 4 × 3.7-inch
 round pot**, with approximately 95% of the nursery soil removed according to
 the owner. The substrate was slightly moist at inspection.
 
@@ -39,14 +39,12 @@ The August 29 measurements were **388 g** for the potted plant and
 and ruler. Collection photographs include top and side views.
 
 The mix is Molly's Succulent Mix with added perlite. On September 20, the owner
-estimated the blend as approximately **80% Molly's / 20% added perlite**; the
-ratio was recalled rather than measured. See the [current placement guide](../../layouts/table-placement-research.md)
+estimated the blend as approximately **80% Molly's / 20% added perlite**. See the [current placement guide](../../layouts/table-placement-research.md)
 for the indoor arrangement. Individual lamp clearance has not been measured.
 
 ## Nursery description
 
-Mountain Crest Gardens' listing, recorded August 26, 2026, describes the
-nursery offering. Pot size and hardiness below are seller specifications.
+Mountain Crest Gardens' specifications, recorded August 26, 2026:
 
 | Seller field             | Listing value                                 |
 | ------------------------ | --------------------------------------------- |
@@ -58,19 +56,17 @@ nursery offering. Pot size and hardiness below are seller specifications.
 | Growth habit             | Vertical grower / tall stem — seller category |
 | Special characteristics  | Slow grower; variegated                       |
 
-The seller describes a smoky purple-to-black cactus that offsets regularly and
-can form a cluster. The “vertical grower / tall stem” value is retained as a
-seller catalog category; it should not override the received plant's measured
-globular form.
+Mountain Crest describes a smoky purple-to-black cactus that offsets
+regularly, gradually building a cluster around the original globe.
 
 ## Origin, form, and publication
 
-The cultivar has no wild range. The underlying species is native to Paraguay
+The underlying species is native to Paraguay
 and northeastern Argentina. _Gymnocalycium mihanovichii_ was first published
 under _Echinocactus_ in 1905 and transferred to _Gymnocalycium_ in 1922.
 
-GBIF accepts the species but does not recognize the horticultural cultivar or
-variegated form as a separate botanical taxon.
+The genus name means “naked calyx,” referring to smooth flower buds without
+hairs or spines. Look for those buds emerging near the crown.
 
 ## Care in this collection
 

@@ -19,12 +19,9 @@
 | Species common names | Baseball plant, sea-urchin euphorbia                     |
 | Family               | Euphorbiaceae—not the cactus family                      |
 
-“Dragon's Egg” is an Altman Plants retail name, not a botanical identity. The
-ribbed ball and tiny structures at the crown resemble _E. obesa_, but the
-unusual texture and form could reflect another euphorbia parent. Current retail
-records do not publish parentage or a release year. Until a breeder or
-propagation label supplies the cross, its identity remains a probable
-_E. obesa_-type hybrid or selection.
+“Dragon's Egg” is the Altman Plants retail name. Its ribbed ball and tiny crown
+structures resemble _E. obesa_; the collection records it as an obesa-type
+hybrid or selection.
 
 ## Wild _Euphorbia obesa_
 
@@ -40,23 +37,21 @@ habitat pressure devastated some populations. South Africa lists it as
 Endangered, protects exact locality data, and regulates trade.
 Nursery-propagated plants are the ethical source.
 
-The crown makes cyathia, the tiny specialized flower structures of
-_Euphorbia_, rather than cactus flowers. Wild _E. obesa_ plants are normally
-male or female, so seed requires both sexes. Ripe capsules can eject seeds away
+The crown makes tiny cups called cyathia, each containing highly reduced
+flowers. In wild _E. obesa_, a male cyathium contains several pollen-bearing
+flowers and a female cyathium contains one female flower. Plants are male or
+female, so seed requires both sexes. Ripe capsules can eject seeds away
 from the parent. Flowering from seed may take five to eight years.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                                                        |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R1C4 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Front-center probable Euphorbia hybrid. A bright position is appropriate; its exact species and maximum tolerance remain uncertain. See the [current placement guide](../../layouts/table-placement-research.md). |
-| Water               | During warm growth, soak and drain after the pot is fully dry. Keep much drier during cool or stalled growth.                                                                                                                                                                                                                             |
-| Light               | Strong light helps maintain a compact ball, but exposed skin can scar from an abrupt jump.                                                                                                                                                                                                                                                |
-| Pot and mix         | Keep the drained 4-inch pot only as wet as the small root system can use. A mineral, airy mix is safer than rich moisture-retentive soil.                                                                                                                                                                                                 |
-| Feeding             | Sparse dilute feeding in active growth; slow is normal.                                                                                                                                                                                                                                                                                   |
-
-Hybrid behavior can differ from the wild reference species, so plant response
-outranks a rigid seasonal recipe.
+| Topic               | Practical approach                                                                                                                                                                                                                          |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **R1C4 · Bright.** September 15, 2026 photo layout, facing the window (six columns, four rows). Front-center, with bright exposure and room around the crown. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | During warm growth, soak and drain after the pot is fully dry. Keep much drier during cool or stalled growth.                                                                                                                               |
+| Light               | Strong light helps maintain a compact ball, but exposed skin can scar from an abrupt jump.                                                                                                                                                  |
+| Pot and mix         | Keep the drained 4-inch pot only as wet as the small root system can use. A mineral, airy mix is safer than rich moisture-retentive soil.                                                                                                   |
+| Feeding             | Sparse dilute feeding in active growth; slow is normal.                                                                                                                                                                                     |
 
 ## Latex safety and watch points
 

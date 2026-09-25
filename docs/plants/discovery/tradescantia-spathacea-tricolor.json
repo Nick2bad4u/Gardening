@@ -1,17 +1,17 @@
 {
     "anatomy": {
-        "intro": "The drawing explains a sword-leaved rosette and its possible flowers; flowering is illustrative, not a recorded event on P32.",
+        "intro": "The rosette packs sword-shaped leaves around a short stem, with small flowers tucked into the leaf axils.",
         "parts": [
             {
                 "function": "A long, narrow leaf presents its upper surface to light, with veins running lengthwise.",
                 "label": "Sword-shaped blade"
             },
             {
-                "function": "The lower leaf surface supplies a useful visual feature, but its color alone cannot authenticate a cultivar.",
+                "function": "The purple lower surface contrasts with the striped upper face and is exposed as the blade arches.",
                 "label": "Purple underside"
             },
             {
-                "function": "Young leaves emerge within the compact upright arrangement rather than along a trailing vine.",
+                "function": "New leaves emerge at the center; their broad, stalkless bases sheath the short stem.",
                 "label": "Rosette center"
             },
             {
@@ -30,12 +30,13 @@
     ],
     "flowers": {
         "sourceIds": [
-            "uf"
+            "uf",
+            "ncsu"
         ],
-        "text": "Look among the leaf bases for small white flowers cupped by purplish boat-shaped bracts. They can be easy to miss. University of Florida describes periodic flowering through the year in suitable conditions; that is not a predicted indoor flowering calendar."
+        "text": "Look among the leaf bases for two purplish boat-shaped bracts holding several small white flowers. Each flower has three equal petals. Flowering can recur through the year in suitable conditions; dry seed capsules follow the flowers."
     },
     "growth": {
-        "note": "Development depends on conditions; a nursery hanging basket does not change the species' upright growth habit.",
+        "note": "An established clump can be divided into smaller rooted plants. Wear gloves during division or stem cutting because the sap can irritate skin.",
         "sourceIds": [
             "uf",
             "ncsu"
@@ -60,7 +61,7 @@
             "kew",
             "ncsu"
         ],
-        "text": "Kew places the species in the wet tropics from southern Mexico to Guatemala. It is an upright, clumping tropical plant rather than a trailing desert succulent. Tricolor is a cultivated variegated form, so its striped foliage does not represent a separate wild habitat or prove the exact cultivar from appearance alone."
+        "text": "The species comes from the wet tropics of southern Mexico to Guatemala. It grows as an upright, clumping perennial, with tightly arranged leaves surrounding short stems. In warm landscapes it can spread into dense groundcover; indoors, the expanding rosette cluster gives a container its shape."
     },
     "image": {
         "alt": "Generated striped oyster-plant rosette: 1 sword-shaped blade, 2 purple underside, 3 young central leaves, and 4 illustrative white flowers within boat-shaped bracts.",
@@ -73,14 +74,14 @@
         {
             "name": "Green-leaved Tradescantia spathacea",
             "profileSlug": null,
-            "text": "The ordinary species has green upper leaf surfaces and purple undersides; the nursery-labeled Tricolor adds pale and pink striping. Both share the upright rosette and boat-bracted flowers, so leaf color alone does not settle cultivar provenance."
+            "text": "Green-leaved Tradescantia spathacea has plain green upper leaf surfaces and purple undersides. The nursery-labeled Tricolor adds pale and pink longitudinal stripes; both have upright rosettes and boat-bracted flowers."
         }
     ],
     "mature": {
         "sourceIds": [
             "uf"
         ],
-        "text": "UF/IFAS describes dense spreading clumps about 1–1.5 feet tall. This species-scale description is not an indoor size guarantee for Tricolor. A broadening clump, rather than long hanging stems, is the characteristic form."
+        "text": "UF/IFAS describes spreading clumps about 1–1.5 feet tall. Side rosettes broaden the plant while stiff leaves rise from short stems, producing a dense mound rather than long hanging vines."
     },
     "milestones": [
         {

@@ -4,7 +4,7 @@
 - Label ID: `E1`
 - Tracker ID: `P13`
 - Visual description: A compact upright column almost completely wrapped in cream-white wool, with the darker stem and fine spines only peeking through where the fibers separate.
-- Interesting fact: The invitingly soft coat is camouflage: it conceals numerous sharp spines, so this is a look-don't-stroke cactus despite its plush appearance.
+- Interesting fact: The white coat hides a repeated structure: rows of spine-bearing cushions follow the ribs of the green column beneath.
 - Identification: **probable; _Espostoa lanata_ remains the main alternative**
 - Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan
 - Acquired on: 2026-08-10
@@ -20,10 +20,8 @@
 | Main alternative       | _Espostoa lanata_                          |
 | Permanent-label form   | PROB. _Espostoa melanostele_ subsp. _nana_ |
 
-The plant is a compact column wrapped in dense white wool. That wool is not a
-soft protective surface: it conceals numerous sharp spines. Mature areoles,
-exposed spine patterns, and reliable nursery provenance may help distinguish
-this probable identification from _E. lanata_.
+The dense wool partly hides the ribbed green column. Look through natural
+gaps to see the repeating spine cushions without disturbing the coat.
 
 ## Origin, form, and publication
 
@@ -56,3 +54,4 @@ accepted subspecies combination in 2002.
 - [Kew Plants of the World Online: _Espostoa melanostele_ subsp. _nana_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:1133534-2)
 - [International Plant Names Index record](https://www.ipni.org/n/1133534-2)
 - [GBIF Backbone Taxonomy record](https://www.gbif.org/species/3960843)
+- [RHS: Espostoa melanostele form, wool, and flowers](https://www.rhs.org.uk/plants/6869/espostoa-melanostele/details)

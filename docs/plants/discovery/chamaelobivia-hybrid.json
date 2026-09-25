@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "Four structures that explain the form of the probable peanut cactus hybrid.",
+        "intro": "Each peanut-shaped stem repeats a simple pattern of shallow ribs, small spine cushions, and side shoots.",
         "parts": [
             {
                 "function": "The green succulent stem stores water and captures light.",
@@ -32,10 +32,10 @@
         "sourceIds": [
             "form"
         ],
-        "text": "The peanut-cactus ancestor has vivid red flowers about 5–7 cm across. Hybrid flowers can differ, so this plant's first clearly documented bloom will be more informative than a guessed cultivar name."
+        "text": "The peanut-cactus ancestor has funnel-shaped vermilion-red flowers 5–7 cm long. Hybrid flowers span a wider color palette, which makes the first open bloom especially interesting."
     },
     "growth": {
-        "note": "These expectations come from peanut-cactus ancestry; a hybrid can differ in vigor, stem size, and flower color.",
+        "note": "The clump fills outward through offsets, so increasing spread can be more noticeable than increasing height.",
         "sourceIds": [
             "form"
         ],
@@ -56,9 +56,10 @@
     },
     "habitat": {
         "sourceIds": [
-            "range"
+            "range",
+            "form"
         ],
-        "text": "Chamaelobivia is a horticultural hybrid group, not a wild species with one native range. Its peanut-cactus ancestor, Echinopsis chamaecereus, comes from northwestern Argentina. This plant's low cluster of finger-shaped stems supports the hybrid-group identification, but its exact parentage and cultivar remain unknown."
+        "text": "Chamaelobivia hybrids combine peanut-cactus ancestry with other Echinopsis or Lobivia lines. The peanut-cactus ancestor, Echinopsis chamaecereus, comes from northwestern Argentina and grows as a low mat of slender, sprawling stems."
     },
     "image": {
         "alt": "Botanical anatomy of the probable peanut cactus hybrid, with numbered markers for finger-shaped stem, shallow rib, areole, basal offset.",
@@ -78,7 +79,7 @@
         "sourceIds": [
             "form"
         ],
-        "text": "Expect a low, spreading clump rather than a tall column. The ancestor's dimensions are not a reliable size limit for an unidentified hybrid."
+        "text": "Expect a low, spreading clump of many fingerlike stems. Hybrids vary in stem size and vigor."
     },
     "milestones": [
         {

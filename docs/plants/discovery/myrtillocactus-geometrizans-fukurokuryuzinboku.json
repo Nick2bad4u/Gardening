@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "Four structures that explain the form of 'Fukurokuryuzinboku'.",
+        "intro": "Rounded swellings reshape the ribs, while the spine cushions remain recognizable along the blue-green column.",
         "parts": [
             {
                 "function": "An unusually swollen section of rib creates the cultivar's distinctive shape.",
@@ -32,10 +32,10 @@
         "sourceIds": [
             "form"
         ],
-        "text": "LLIFLE describes greenish-white flowers only about 2.5–3.7 cm across for this cultivar. Their modest size contrasts with the exaggerated stem shape; a small indoor plant may be enjoyed for its form alone."
+        "text": "Greenish-white flowers about 2.5–3.7 cm across contrast with the exaggerated stem shape."
     },
     "growth": {
-        "note": "This is irregular cultivated growth, so symmetry and a precise annual height gain are not expectations.",
+        "note": "The cultivar adds irregular lobes as the tip extends; branches can make the outline increasingly asymmetrical.",
         "sourceIds": [
             "form"
         ],
@@ -56,9 +56,11 @@
     },
     "habitat": {
         "sourceIds": [
-            "range"
+            "range",
+            "tree",
+            "form"
         ],
-        "text": "Myrtillocactus geometrizans is a Mexican tree cactus of desert and dry shrubland. 'Fukurokuryuzinboku' is a cultivated monstrose form, not a separate wild species. Its repeated rounded swellings reshape the normal ribs, while the blue-green stem and widely spaced spine cushions retain the underlying species' recognizable character."
+        "text": "Myrtillocactus geometrizans is a Mexican tree cactus of desert and dry shrubland. The normal species has blue-green ribs and clusters of 5–9 spines at each areole. In the cultivated 'Fukurokuryuzinboku' form, rounded swellings reshape those ribs into its distinctive knobby outline."
     },
     "image": {
         "alt": "Botanical anatomy of 'Fukurokuryuzinboku', with numbered markers for rounded lobe, areole, short spine, growing tip.",
@@ -79,7 +81,7 @@
             "tree",
             "form"
         ],
-        "text": "The normal species can become a branching tree around 4 m tall in suitable cultivation. The monstrose cultivar has a different outline and pace, so that figure is background rather than a predicted indoor height."
+        "text": "The normal species becomes a branching tree around 4 m tall in its native Mexico. This cultivated monstrose form develops a more irregular, knobby framework."
     },
     "milestones": [
         {

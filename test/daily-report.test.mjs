@@ -312,7 +312,9 @@ describe("daily report evidence", () => {
         expect(html).toContain(
             'loading="lazy" decoding="async" referrerpolicy="no-referrer"'
         );
-        expect(html).toContain("Photo-only limits:");
+        expect(html).toContain(
+            '<details class="photo-limitations"><summary>Photo notes</summary>'
+        );
         expect(html).toContain("Open full photo ↗");
         expect(html).toContain("Original photo ↗");
         expect(html).toContain(

@@ -61,7 +61,7 @@ During observed rest, reduce watering. Heat can slow growth, but the indoor envi
 - **Replacement complete and actively growing:** consider watering when the root zone is dry and the current leaves show a real hydration need. A firm plant does not need water just because its pot is light.
 - **Unusual collapse or stalled recovery:** inspect roots and conditions rather than automatically adding water or imposing an indefinite drought.
 
-Group planting works without exact synchronization; reassess if needs actually conflict. These are conservative starting rules: growers adjust watering to conditions rather than imposing an absolute prohibition. [Wisconsin Extension](https://hort.extension.wisc.edu/articles/living-stones-lithops/), [Living Stones Nursery](https://lithops.com/plants/lithops/)
+Group planting works without exact synchronization. If one group repeatedly needs water while another is still absorbing old leaves, reconsider keeping them together. Follow their actual condition and leaf stage. [Wisconsin Extension](https://hort.extension.wisc.edu/articles/living-stones-lithops/), [Living Stones Nursery](https://lithops.com/plants/lithops/)
 
 ## Split rocks: inspect the leaf stage
 
@@ -81,7 +81,7 @@ Keep both split rocks and the Lithops outside automatic cactus feeding alternati
 
 ## Find every plant in its group
 
-The linked profiles retain scientific names and identification qualifiers. This index covers the **44 active profiles across 34 tracker allocations** as of September 23. The removed silken pincushion and canceled orders are excluded; a shared container is listed once with all its members.
+This index covers **42 botanical profile groups in 34 containers**, plus the two whole-planter overview pages, as of September 24. A shared container is listed once with all its members. The removed silken pincushion and canceled orders are in their historical records.
 
 ### Cacti and Dragon's Egg
 

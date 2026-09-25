@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "Four structures that explain the form of golden ball cactus.",
+        "intro": "Many narrow ribs carry repeating spine cushions, creating the golden coat over a green water-storing stem.",
         "parts": [
             {
                 "function": "The folded stem surface can accommodate changes in stored water.",
@@ -32,12 +32,13 @@
         "sourceIds": [
             "form"
         ],
-        "text": "RHS describes lemon-yellow, bowl-shaped flowers about 4–5 cm across. They rise above the spine coat on established plants, making a striking contrast between the soft-looking gold body and bright open flowers."
+        "text": "Lemon-yellow, bowl-shaped flowers about 4–5 cm across rise above the golden spine coat on established plants."
     },
     "growth": {
-        "note": "Look for gradual changes in shape; indoor light and growing conditions affect the pace.",
+        "note": "The ribbed body can expand as water is stored and contract as it is used; vertical growth gradually changes a globe into a column.",
         "sourceIds": [
-            "form"
+            "form",
+            "water-storage"
         ],
         "stages": [
             {
@@ -78,7 +79,7 @@
         "sourceIds": [
             "form"
         ],
-        "text": "RHS describes columns reaching about 60 cm, either alone or in clusters. A small pot-bound globe therefore represents an early form, rather than a permanently spherical species."
+        "text": "Columns can reach about 60 cm, growing alone or with smaller offsets clustered around the base."
     },
     "milestones": [
         {
@@ -119,6 +120,12 @@
             "id": "anatomy",
             "title": "National Park Service: cactus adaptations",
             "url": "https://www.nps.gov/arch/learn/nature/cacti.htm"
+        },
+        {
+            "accessed": "2026-09-25",
+            "id": "water-storage",
+            "title": "National Park Service: expanding cactus ribs",
+            "url": "https://home.nps.gov/bibe/learn/nature/bibecacti.htm"
         }
     ]
 }

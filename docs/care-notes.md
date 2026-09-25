@@ -2,8 +2,9 @@
 
 Last updated: 2026-09-24
 
-The goal is a simple routine that catches problems early. These plants do not
-need a separate spreadsheet of rules for every species.
+Start with the [watering quick guide](./watering-quick-guide.md) for each group's
+drying target. This page brings together the collection's routine checks,
+equipment changes, repot history, and care exceptions.
 
 Use the [watering strategy](./watering-strategy.md) for each plant group's readiness checks, the [weighing strategy](./weighing-strategy.md) for useful weight comparisons, and the [logger action guide](./logger-actions.md) for recording care. The daily report highlights useful inspections and weigh-ins; actual moisture and plant condition determine watering.
 
@@ -23,7 +24,7 @@ For the installed 240 W fixture, the [manufacturer's operating limit](https://vi
 requires the growing space below **86°F (30°C)**. The older outdoor weather
 triggers below do not replace that equipment limit.
 
-The owner reports current conditions around **45–50% RH** and temperatures **in the 70s °F**, with three sensing points described in the [setup record](./setup.md). Two under-table Honeywell fans are set to low; A22 control is limited to fan cycles. These are operating observations, not a new watering interval or proof of uniform root-zone aeration.
+The owner reports current conditions around **45–50% RH** and temperatures **in the 70s °F**, with three sensing points described in the [setup record](./setup.md). Two under-table Honeywell fans are set to low; A22 control is limited to fan cycles. Use those readings alongside each pot's drying pattern.
 
 ## September 20 houseplant purchases
 
@@ -39,9 +40,9 @@ Both houseplants were last recorded September 20 on the room-side floor near the
 
 The proposed medium blends airy, perlite-containing greenhouse potting mix with Molly's Succulent Mix. Additional perlite is available, but no completed blend is recorded. Nursery-pot depth, drainage, root condition, and feeding history are unknown. Wet leaves at purchase are not enough to judge root-ball moisture.
 
-For these planned repots, compare each actual root ball with the new pot rather than using leaf spread as the size guide. RHS recommends a Peperomia pot only a few centimetres wider than the root ball. Preserve healthy roots and the original planting depth. Use drainage holes and a uniform blend around the root ball; skip a separate clay-pebble bottom layer, because a fine-over-coarse boundary can hinder water movement. A few loose pebbles are not the same as a thick layer, but do not establish better drainage. See [RHS repotting guidance](https://www.rhs.org.uk/plants/peperomia/how-to-grow-peperomia) and [Washington State University on container drainage](https://s3.wp.wsu.edu/uploads/sites/403/2015/03/container-drainage.pdf).
+For these planned repots, compare each actual root ball with the new pot rather than using leaf spread as the size guide. RHS recommends a Peperomia pot only a few centimetres wider than the root ball. Preserve healthy roots and the original planting depth. Use drainage holes and a uniform blend around the root ball; skip a separate clay-pebble bottom layer, because a fine-over-coarse boundary can hinder water movement. See [RHS repotting guidance](https://www.rhs.org.uk/plants/peperomia/how-to-grow-peperomia) and [Washington State University on container drainage](https://s3.wp.wsu.edu/uploads/sites/403/2015/03/container-drainage.pdf).
 
-A practical initial trial is **two parts greenhouse potting mix to one part Molly's by volume**, without adding extra perlite automatically. This is a collection-specific suggestion, not a tested optimum or an owner-confirmed recipe. The supplied mix already contains perlite according to the owner, and [Molly's ingredient list](https://veryplants.com/products/mollys-succulent-mix-premium-gritty-soil-mix) includes coarse mineral material and bark. Actual drainage, moisture retention, and the existing inner root ball still need to be judged in the finished pot. Floor stools do not establish the same light or airflow as the perforated tables.
+A practical initial trial is **two parts greenhouse potting mix to one part Molly's by volume**, without adding extra perlite automatically. This is a proposed starting blend; the owner has not yet recorded the final recipe. The supplied mix already contains perlite according to the owner, and [Molly's ingredient list](https://veryplants.com/products/mollys-succulent-mix-premium-gritty-soil-mix) includes coarse mineral material and bark. Actual drainage, moisture retention, and the existing inner root ball still need to be judged in the finished pot. Check light and airflow at the new stool positions.
 
 ## September 21 Lithops and split-rock additions
 
@@ -164,7 +165,7 @@ need a calibrated forecast. A pot can still be drying after reaching its old
 reference; a flat curve alone cannot establish dry soil.
 
 The plateau comparison uses four time-spaced readings over
-2–10 days must show a sustained slowdown relative to an earlier measured
+2–10 days to check for a sustained slowdown relative to an earlier measured
 decline after the first 24 hours. Small scale fluctuations are tolerated, while
 renewed rapid loss, unexplained gains, partial watering, and incompatible
 weighing setups retain their review rules. The numerical criteria are practical
@@ -215,11 +216,11 @@ can change with the growing environment.
 The dated ramp below records earlier planning and observations. The
 installed two-light setup supersedes it.
 Use the [two-light record](./equipment/aw200-and-aerolight-240w.md) for the current
-plan; earlier percentages and timers are not new combined-exposure measurements.
+settings.
 
 The complete [AW200SE/E25 guide](./equipment/vivosun-aw200se.md) has the
-manufacturer's PPFD maps, DLI and lux math, and working ranges for every current
-plant. The [operating schedule](./equipment/aw200se-operating-schedule.md)
+manufacturer's PPFD maps, DLI and lux math, and the earlier collection's working
+ranges. The [operating schedule](./equipment/aw200se-operating-schedule.md)
 records the dated plan for the Fenton move indoors, controller arrangements, light and paired-fan settings, placement and strength, pot
 layout, rotation, local daylight, and outdoor-day overrides.
 

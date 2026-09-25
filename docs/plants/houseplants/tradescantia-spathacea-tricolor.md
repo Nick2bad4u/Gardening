@@ -20,7 +20,7 @@
 | Collection common name      | Tricolor oyster plant               |
 | Other species common names  | Boat lily; Moses-in-the-cradle      |
 
-Kew accepts _Tradescantia spathacea_, and NC State records _Rhoeo spathacea_ among its synonyms. The nursery label supplies the 'Tricolor' name. The specialist cultivar register Tradescantia Hub treats 'Tricolor' as an established synonym of 'Sitara'; that is a nomenclatural cross-reference, not an independent authentication of this individual plant.
+_Rhoeo spathacea_ is the older botanical name still printed on the nursery tag. Kew accepts _Tradescantia spathacea_. Tradescantia Hub's cultivar register lists 'Tricolor' as a synonym of 'Sitara', a useful cross-reference when comparing plant labels.
 
 This rosette-forming houseplant is **P32 / #8 / Houseplant-04**.
 
@@ -44,11 +44,11 @@ The September 22 plan places **P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor 
 
 For this layout, try the **FECiDA alone for 12 daytime hours** first. Two Juhefa three-head fixtures, each seller-rated about 10 W total, are available to fill dim areas if repositioning the six FECiDA heads leaves gaps. A separate Diivoo is optional; its input power is unverified. Installation, settings, and canopy coverage remain unrecorded. See the [equipment inventory](../../equipment/inventory.md#lights-and-controls) for exact models and the [living-room measurement trial](../../layouts/table-placement-research.md#planned-living-room-window-and-leds) for checking coverage.
 
-Give this plant priority for the stronger measured position while checking both canopies. NC State notes that insufficient light can produce lanky growth and reduced purple coloration in the species. Bright indirect exposure and compact new growth are better aims than merely surviving a dim window; the source does not establish a 'Tricolor'-specific DLI threshold.
+Give this plant priority for the stronger measured position while checking both canopies. NC State notes that insufficient light can produce lanky growth and reduced purple coloration. Watch the new central leaves for compact spacing as the light trial progresses.
 
 ## Origin, publication, and form
 
-Kew records the species as first published in **1788** and native from southern Mexico to Guatemala. The cultivated variegated form has no separate wild native range. NC State describes a clumping tropical perennial with purple-backed foliage and small white flowers enclosed by boat-shaped bracts. It can spread outdoors in suitable climates; this collection record is for an indoor container.
+Kew records the species as first published in **1788** and native from southern Mexico to Guatemala. The stiff leaves spiral around a short stem, with their broad bases wrapping around it. This close arrangement produces the upright rosette. New rosettes broaden the clump, while small white flowers sit low among the leaves inside boat-shaped bracts.
 
 ## Care in this collection
 
@@ -73,7 +73,7 @@ For the proposed living-room trial, 6–8 DLI over a constant **12-hour** light 
 - Inspect leaf bases, undersides, and the basket for pests before integrating it with the established collection.
 - Soft bases or persistently wet medium call for root-zone inspection. Dry tips or drooping leaves alone do not distinguish excess light, inconsistent moisture, drafts, or root trouble.
 - Avoid leaving water pooled around the crowded leaf bases, and preserve airflow without using a harsh fan stream.
-- NC State describes division, stem cuttings, and seed propagation. Division or offsets can wait until the purchased plant is established; use gloves because of irritating sap.
+- After the plant establishes, division separates an expanded clump into smaller rooted plants. NC State also lists stem cuttings and seed propagation. Wear gloves when handling cut surfaces because the sap irritates skin.
 
 ## Sources
 

@@ -2,7 +2,7 @@
 
 The **AW200 + AeroLight 240 W** pair was installed September 13, 2026. The current display uses four wooden tables; the [placement guide](../layouts/table-placement-research.md) shows the pot positions, including the later A3/F1 exchange.
 
-The last reported settings are **AW200 45%** and **AeroLight 240 W 38%**, **Veg mode on both**, an **18-inch (45.7 cm) LED-to-plant-tip reference**, and **13 h 15 m total daily cycle** including **15 minutes of sunrise and 15 minutes of sunset**. The new photos do not remeasure controller settings, fixture centers or current individual clearances.
+The last reported settings are **AW200 45%** and **AeroLight 240 W 38%**, **Veg mode on both**, an **18-inch (45.7 cm) LED-to-plant-tip reference**, and **13 h 15 m total daily cycle** including **15 minutes of sunrise and 15 minutes of sunset**. Individual plant clearances and exact fixture centers still need measuring.
 
 Each fixture has independent suspension and light control. Uniform coverage still needs checking at plant height. The [AW400](./vivosun-aw400.md) and [AW400SE](./vivosun-aw400se.md) pages retain the earlier, uninstalled alternatives.
 
@@ -44,8 +44,7 @@ individual plant-tip distances remain unmeasured. The owner later supplied 48 ap
 ## Recommended Starting Decision
 
 **Keep the reported AW200 45% and AeroLight 240 W 38% settings.** The owner's later 48-reading comparison spans 145–677 estimated PPFD across the full mapped rectangle, including the intentionally unlit far edge; its app DLI is 6.8–31.7 at the 13-hour setting. These lux-derived per-height estimates do not establish calibrated PAR, uniformity, or a reason to change both dimmers. Only the A3 Serpent / F1 Hook-spined exchange was confirmed after review. Do not carry the old glass-spill gradient into the current plan.
-The confirmed 18-inch reference supports retaining this starting setup while
-checking actual plant exposure; the photograph cannot provide PPFD.
+Use the 18-inch reference when checking clearance, then compare exposure at each plant's growing surface.
 
 If dimming roughly follows rated input, AW200 at 45% corresponds to about
 **90 W**, and AL240 at 38% to about **91 W**, or **181 W combined**. The former
@@ -77,13 +76,13 @@ The [placement guide](../layouts/table-placement-research.md) faces the window: 
 
 Each fixture is about 26 × 13 inches. Adjacent bodies would occupy roughly 26 × 26 inches before their gap, compared with the inferred 26 × 32-inch furniture block. Light spreads beyond a fixture outline, but body dimensions do not prove adequate or uniform illumination. Preserve adjustable independent suspension and unobstructed fans. Recheck the tallest #1 tips and low rosettes if furniture or fixture positions changed; compare money-tree leaves separately on the north windowsill, whose daylight and lamp spill remain unmeasured; the earlier 18-inch reference is not a measurement at every plant.
 
-The photo-matched D3 and F2 front corners are plausible gentler positions; Mylar and the wall can keep either side bright. The later owner comparison does not authorize additional moves for B3, H1 or other pots. Preserve the remaining arrangement while considering actual plant-height exposure and shadows. The rear group requires leaf- and tip-height comparisons rather than a universal weaker-glass assumption. The two-foot return reflector stays out of the display.
+The photo-matched D3 and F2 front corners are plausible gentler positions; Mylar and the wall can keep either side bright. Only the A3/F1 exchange followed the later comparison. Preserve the remaining arrangement while considering actual plant-height exposure and shadows. The rear group requires leaf- and tip-height comparisons rather than a universal weaker-glass assumption. The two-foot return reflector stays out of the display.
 
 ## Independent Ceiling Hooks
 
 The installed suspension uses **four ceiling hooks, two per fixture**, with separate adjustable ropes. Both lights were hung September 13 and leveled after the photographs. Each light can be raised or lowered independently.
 
-The September 20 clarification identifies the installed hardware as **heavy-duty screw eyelets bought at a local hardware store**, used with **the adjustable ropes included with the fixtures**. Exact eyelet brand and load ratings were not supplied; no Amazon hanger listing is asserted for this installation.
+The September 20 clarification identifies the installed hardware as **heavy-duty screw eyelets bought at a local hardware store**, used with **the adjustable ropes included with the fixtures**. The eyelet brand and load rating are unrecorded; check the actual hardware when reviewing the suspension.
 
 The fixtures hang independently and do not need balancing against one another. Use each fixture's manufacturer
 hanging points. The owner reports an 18-inch LED-to-plant-tip reference.
@@ -111,7 +110,7 @@ Final hook positions and individual plant-tip distances are not mapped.
 - [VIVOSUN AeroLight 120/180/240 W manual][new-manual] — VSL-AL240 identity,
   mass, input, dimension drawings, and E25 connection diagram.
 - [VIVOSUN AeroLight 240 W product page][new-product] — dimensions and tunable
-  spectrum. Its tent coverage claim is not an open-room measurement.
+  spectrum.
 - [Ordered light listing][ordered-light] — inspected September 11; the product
   title identifies the new 240 W model, while some technical details describe
   an older 200 W model.

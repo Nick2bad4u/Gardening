@@ -28,9 +28,6 @@ The seller describes a lime-green rosette whose maroon center shading changes
 seasonally. Color change is expected; a mushy crown or translucent lower
 leaves are not part of the cultivar pattern.
 
-The listing supplies no species epithet or parentage. Its identity is recorded at genus, trade-series,
-and cultivar level.
-
 ## Arrival and repotting
 
 Ordered from Mountain Crest Gardens on **August 25, 2026**, this plant arrived
@@ -50,8 +47,7 @@ inspection; routine pest checks remain useful.
 
 ## Seller listing snapshot
 
-These Mountain Crest Gardens fields were inspected on 2026-08-26. They are
-seller metadata rather than measurements of the ordered plant.
+Mountain Crest Gardens listing, inspected 2026-08-26:
 
 | Seller field                  | Listing value                                 |
 | ----------------------------- | --------------------------------------------- |
@@ -69,39 +65,34 @@ The seller credits Gielis and describes lime-green rosettes whose maroon
 shading begins near the center and spreads seasonally. It emphasizes outdoor
 sun for compact color, stolon-borne offsets, spring-and-summer growth, afternoon
 shade above 80 °F, frost hardiness, and protection from heavy rain or standing
-water. Because this collection will keep `H1` indoors, the outdoor wording is a
-comparison point rather than its placement plan.
+water. Indoors, give `H1` the brightest, coolest suitable position with good airflow.
 
 ## Origin, form, and life cycle
 
-The cultivar has no wild range. _Sempervivum_ is a hardy, cool-season genus
-that forms offsets on stolons. Each rosette is monocarpic: a rosette dies after
+_Sempervivum_ is a hardy rosette-forming genus that spreads through offsets on stolons. A mature crown can stretch into a flower stalk about 1 ft tall, carrying clusters of star-shaped blooms. Each rosette is monocarpic: a rosette dies after
 flowering, while its offsets continue the clump.
 
-This plant will remain indoors by choice, but it should not be treated like a
-warm, lower-light houseplant. Both the seller and NC State describe
+This plant will remain indoors by choice. Give it strong light and cooler nights. Both the seller and NC State describe
 _Sempervivum_ as a sun-loving hardy plant that benefits from cold seasons and
 excellent drainage. Indoors, the practical compromise is the brightest and
 coolest available succulent position with steady airflow.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                                                     |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **R3C3 · High.** September 15 six-column/four-row front grid, facing the window. Low central rosette. Compare the growing surface for shadows from E1, A3 and the rear shared cactus; strong light does not mean maximum heat. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Water               | Use drainage, rosette firmness, and pot-weight trend; never leave water standing in the crown or saucer.                                                                                                                                                                                                                                        |
-| Heat                | Move toward a cooler edge or add distance if leaves bleach, the rosette opens, or sustained canopy heat becomes excessive.                                                                                                                                                                                                                      |
-| Winter              | Keep indoors; favor cooler nights and seasonal temperature variation without exposing it to freezing drafts.                                                                                                                                                                                                                                    |
-| Pot                 | The current pot is a 4 × 4 × 3.7-inch round pot. The owner recalls Molly's Succulent Mix with approximately 20% added perlite (September 20 report; ratio estimated); monitor the larger mix volume indoors.                                                                                                                                    |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                  |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Grow-light position | **R3C3 · High.** September 15 six-column/four-row front grid, facing the window. Low central rosette. Compare the growing surface for shadows from E1, A3 and the rear shared cactus; strong light does not mean maximum heat. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Use drainage, rosette firmness, and pot-weight trend; never leave water standing in the crown or saucer.                                                                                                                                                                                                     |
+| Heat                | Move toward a cooler edge or add distance if leaves bleach, the rosette opens, or sustained canopy heat becomes excessive.                                                                                                                                                                                   |
+| Winter              | Keep indoors; favor cooler nights and seasonal temperature variation without exposing it to freezing drafts.                                                                                                                                                                                                 |
+| Pot                 | The current pot is a 4 × 4 × 3.7-inch round pot. The owner recalls Molly's Succulent Mix with approximately 20% added perlite (September 20 report; ratio estimated); monitor the larger mix volume indoors.                                                                                                 |
 
 ## Rotation, propagation, and watch points
 
-- Rotate 90° weekly under the fixed grow light, unless one side is intentionally
-  sheltered during acclimation or recovery.
+- Rotate for even growth under the fixed light, keeping any side intentionally sheltered during acclimation or recovery.
 - Offsets can be separated once rooted; do not mistake normal offset production
   for overcrowding on arrival.
-- A flowering rosette will die after seed production. That is the life cycle,
-  not a collection-wide care failure.
+- After flowering, remove the spent rosette once dry and leave the living offsets to expand.
 - Keep it out of the humid, shaded interior of a mixed planter.
 
 ## Sources

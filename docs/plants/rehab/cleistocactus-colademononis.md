@@ -19,9 +19,8 @@
 | Original botanical name             | _Hildewintera colademononis_ Diers & Krahn            |
 | Sometimes sold as                   | _Cleistocactus winteri_ subsp. _colademononis_        |
 
-Long pendant stems, dense soft-looking white hairs, and side-borne red flowers
-strongly support this identification. The hairs still
-conceal fine spines, so it should not be handled like a plush plant.
+Long pendant stems, dense white hairs, and side-borne red flowers distinguish
+the monkey tail. Fine spines remain among the hairs; handle it by the pot.
 
 ## Discovery, habitat, and flowers
 
@@ -32,9 +31,7 @@ records its type locality at Cerro El Fraile, Florida Province, at **2,000 m**.
 Its pendant growth suits a rock-dwelling cactus with room to hang over an edge.
 
 Diers and Krahn described it in 2003 as _Hildewintera colademononis_. Roy
-Mottram published the accepted _Cleistocactus_ combination in 2006. Its very
-recent formal description helps explain why multiple genus placements remain in
-horticultural catalogs.
+Mottram published the accepted _Cleistocactus_ combination in 2006.
 
 RHS describes cultivated stems trailing to roughly **1 m**. Bright red to orange-red,
 asymmetrical flowers emerge directly from the sides of hanging stems and can be
@@ -57,7 +54,7 @@ indoor lighting.
 
 ## Pruning, propagation, and watch points
 
-- Trimming stretched stems was reasonable. Make future cuts with a clean blade,
+- Make future cuts with a clean blade,
   let sections callus, and root healthy pieces in an airy mix.
 - Branching after a cut is normal and can create a fuller hanging plant.
 - Avoid frequent small waterings just because the stems are long. Root-zone

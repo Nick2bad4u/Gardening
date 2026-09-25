@@ -13,15 +13,14 @@
 
 ## Names and identification
 
-| Kind                      | Record                                                                                                          |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| Common reference name     | Paddle kalanchoe                                                                                                |
-| Scientific name           | _Kalanchoe luciae_ / _K. thyrsiflora_ complex                                                                   |
-| Identification confidence | Provisional paddle-kalanchoe foliage match; the frequently confused species pair and cultivar remain unresolved |
-| Seller evidence           | Mixed garden label only; no component-specific botanical name                                                   |
-| Profile scope             | One recognizable foliage group; number of individual plants or cuttings unverified                              |
+| Kind                  | Record                                                        |
+| --------------------- | ------------------------------------------------------------- |
+| Common reference name | Paddle kalanchoe                                              |
+| Scientific name       | _Kalanchoe luciae_ / _K. thyrsiflora_ complex                 |
+| Seller evidence       | Mixed garden label only; no component-specific botanical name |
+| Profile scope         | One recognizable foliage group in the shared planter          |
 
-The broad paired paddles and red margins support the existing _Kalanchoe luciae_ / _K. thyrsiflora_ working group. Red coloration is suggestive of _K. luciae_, but this mixed retail label supplies no species name and the photos do not establish flowering characters. The species and cultivar remain unresolved.
+The broad paired paddles and red margins support the existing _Kalanchoe luciae_ / _K. thyrsiflora_ working group. Red margins favor _K. luciae_; flower color and lobe shape provide a stronger distinction from _K. thyrsiflora_.
 
 ## Collection evidence and shared history
 
@@ -31,23 +30,23 @@ The other component pages are [pale rosette echeveria](./tiny-planter-echeveria.
 
 ## Botanical context
 
-University of Wisconsin Extension explains that these two South African species are often confused, with growth conditions affecting appearance; flowering characters help separate them. It recommends bright sun, well-drained soil, and watering after drying for both. Their flowering rosettes can die after blooming while leaving offsets. Flowering has not been documented in this planter.
+University of Wisconsin Extension explains that these two South African species are often confused, with growth conditions affecting appearance; flowering characters help separate them. It recommends bright sun, well-drained soil, and watering after drying for both. Their flowering rosettes can die after blooming while leaving offsets.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                     |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Position            | Remains inside P30, at the photo-matched front of the rear zone between #1 and #5. See the [current placement guide](../../layouts/table-placement-research.md). Exposure at individual leaf height remains unmeasured.                                                                |
-| Light and neighbors | Check the paddles at their own height because they stand above the pale rosettes. Keep them from shading those smaller neighbors. Preserve the current acclimated setting unless actual growth or measured exposure supports a change; a red margin by itself is not a burn diagnosis. |
-| Water               | Follow the [shared-pot watering strategy](../../watering-strategy.md): assess dryness throughout the pot, the weight trend, and all three foliage groups before watering and draining the container.                                                                                   |
-| Weighing            | Weigh the complete P30 planter using the [adaptive weighing strategy](../../weighing-strategy.md).                                                                                                                                                                                     |
-| Feeding             | Use the shared planter's [fertilizer schedule](../../equipment/msu-fertilizer-schedule.md) during a normal watering; the dose applies to the whole pot.                                                                                                                                |
+| Topic               | Practical approach                                                                                                                                                                                                                 |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Position            | Remains inside P30, at the photo-matched front of the rear zone between #1 and #5. See the [current placement guide](../../layouts/table-placement-research.md). Exposure at individual leaf height remains unmeasured.            |
+| Light and neighbors | Check the paddles at their own height because they stand above the pale rosettes. Keep them from shading those smaller neighbors. Use new growth and measured exposure to guide any lighting adjustment, with gradual acclimation. |
+| Water               | Follow the [shared-pot watering strategy](../../watering-strategy.md): assess dryness throughout the pot, the weight trend, and all three foliage groups before watering and draining the container.                               |
+| Weighing            | Weigh the complete P30 planter using the [adaptive weighing strategy](../../weighing-strategy.md).                                                                                                                                 |
+| Feeding             | Use the shared planter's [fertilizer schedule](../../equipment/msu-fertilizer-schedule.md) during a normal watering; the dose applies to the whole pot.                                                                            |
 
 ## Growth and watch points
 
 The broad leaves can shade their neighbors and make the shared container crowded before its smaller rosettes appear large. Follow the P30 whole-pot watering decision. A change in one paddle leaf cannot establish that every root in the planter is dry.
 
-If flowers eventually develop, photograph their color and form before revisiting the species identification. Overlapping leaves can hide offsets, so the number of separately rooted plants remains uncertain.
+Watch around the leaf bases for small offsets as the plant develops. If it flowers, photograph the color and shape of the individual blooms to distinguish the two species.
 
 ## Sources
 

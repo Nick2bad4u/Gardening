@@ -4,7 +4,7 @@
 - Label ID: `#3`
 - Tracker ID: `P21`
 - Visual description: A young tropical tree with a smooth green trunk and long leaf stalks ending in glossy, hand-shaped fans of narrow leaflets; its open canopy reads very differently from the compact succulents nearby.
-- Interesting fact: Each hand-shaped fan is one compound leaf made of several leaflets, all meeting at the end of a single long stalk. Counting the separate blades as whole leaves would miss this tree's distinctive structure; it does not, however, prove the working species identification.
+- Interesting fact: Each hand-shaped fan is one compound leaf made of several leaflets, all meeting at the end of a single long stalk. Follow that stalk back to the branch to see where one complete leaf begins.
 - Identification: **retail tag confirms genus _Pachira_; _P. glabra_ is a supplied working candidate, not a proven species identification**
 - Acquired from: Home Depot, Howell, Michigan
 - Acquired on: 2026-07-29
@@ -19,11 +19,10 @@
 | Common name            | Money tree                                                        |
 | Common confusion       | _Pachira aquatica_ is also widely sold under the same common name |
 
-The record retains the supplied _Pachira glabra_ identification as a working
-candidate, written _Pachira_ cf. _glabra_ rather than as a confirmed species.
-The archived retail tag supports the genus but does not print a
-species epithet, so it cannot distinguish _P. glabra_ from _P. aquatica_. Clear
-leaf, trunk, flower, and fruit photographs remain useful future evidence.
+“Money tree” is a trade name shared by _P. glabra_ and _P. aquatica_. Flowers
+and fruit offer useful distinguishing features: the Florida flora key contrasts
+_P. glabra_'s white stamens and smooth green fruit with _P. aquatica_'s
+red-tipped stamens and rough brown fruit.
 
 ## Retail label evidence
 
@@ -34,20 +33,21 @@ and apply balanced fertilizer once every two months. The black
 [reverse](../../../assets/nursery-labels/pachira-livetrends-back-clean-crop.png)
 identifies LiveTrends as the supplier brand.
 
-The tag gives general seller guidance. For this pot, combine root-ball moisture, weight trends, and room conditions with the collection's low-dose MSU schedule. The archived images are AI-assisted presentation crops from photographs supplied August 26, 2026; untouched camera exports are not included.
+The tag gives general seller guidance. For this pot, combine root-ball moisture, weight trends, and room conditions with the collection's low-dose MSU schedule.
 
 ## Origin, form, and publication
 
-For the working species candidate, Kew accepts _Pachira glabra_, first published
-in 1868, and places its native range in southeastern and southern Brazil. It is
-a wet-tropical tree, not a succulent, so it should not follow the cactus
-dry-down schedule.
+Kew places _Pachira glabra_, first published in 1868, in the wet tropics of
+southeastern and southern Brazil. Its long leaf stalks spread hand-shaped fans
+through an open canopy. On a leaflet, the side veins curve toward one another
+inside the edge; they are more prominent beneath the blade. This tropical tree
+needs moisture checks separate from the cactus dry-down routine.
 
 ## Care in this collection
 
 | Topic               | Practical approach                                                                                                                                                                                                 |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Light               | Useful bright indirect light. The confirmed north-facing windowsill location is outside the table arrangement; actual daylight and any lamp spill at its leaves remain unmeasured, so adequacy is not established. |
+| Light               | Provide bright indirect light and acclimate gradually when increasing exposure. Keep foliage clear of cold glass and drafts.                                                                                       |
 | Grow-light position | **North-facing windowsill, off the tables · Gentler**, recorded September 16. Daylight and lamp spill at leaf height are unmeasured. See the [current placement guide](../../layouts/table-placement-research.md). |
 | Shade cloth         | Leave it off while foliage remains normally colored; add it if the window-facing leaves bleach or develop crisp tan patches.                                                                                       |
 | Water               | Water when the upper portion of the mix has dried, then drain. Do not wait for the entire 6-inch root ball to become cactus-dry.                                                                                   |
@@ -80,6 +80,7 @@ Bone-dry top dressing added September 16, 2026 increased the pot's weight from *
 
 - [Kew Plants of the World Online: _Pachira glabra_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:562664-1)
 - [Kew's reproduced flora descriptions](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:562664-1/general-information): compound leaves, leaflets, and long petioles of the working species candidate.
+- [University of Florida Herbarium: _Flora of Florida_, _Pachira_ key](https://www.floridamuseum.ufl.edu/wp-content/uploads/sites/67/2025/01/Flora-of-Florida-Franck-2025.pdf): flower and fruit distinctions between _P. glabra_ and _P. aquatica_.
 - [International Plant Names Index record](https://www.ipni.org/n/562664-1)
 - [GBIF Backbone Taxonomy record](https://www.gbif.org/species/4073899)
 - [Amazon Basics 6-inch pot](https://www.amazon.com/dp/B0F4QBMJMN?th=1)

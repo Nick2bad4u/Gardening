@@ -20,26 +20,20 @@
 | Trade names     | 'Kiwi', 'Tricolor', 'Variegatum', 'Keweonium', 'Kiwionium' |
 | Cultivar origin | Unknown                                                    |
 
-The branching green-and-yellow rosettes with bright pink edges support the
-working cultivar match. Appearance alone does not prove an exact cultivar,
-so 'Dream Color' remains probable unless nursery or seller provenance is
-recovered. Trade names vary; this is the name retained in the collection record.
+The green-and-yellow rosettes with pink edges give this aeonium its pinwheel appearance. Older leaves gradually fall away as new ones develop, exposing the branching stems beneath the leafy crowns.
 
 ## Origin, form, and publication
 
-The cultivar has no wild range. Kew accepts the underlying species
-_Aeonium haworthii_, first published in 1841, and places it on Tenerife in
-the Canary Islands. The species is a subtropical succulent shrub rather than
-a desert cactus.
+The cultivated form belongs to _Aeonium haworthii_, a subtropical succulent shrub native to Tenerife in the Canary Islands. Kew records the species name as first published in 1841.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                   |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Grow-light position | **Rear left · Bright.** September 15 rear wooden tables, facing the window. Keep substantial lamp contribution without allowing its canopy to shade the small pots. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Water               | Let much of the pot dry, then water and drain. Do not force it through cactus-level drought during active growth.                                                                                                                                                                    |
-| Pot and mix         | Keep the current 5-inch pot while drainage and drying are satisfactory.                                                                                                                                                                                                              |
-| Seasonal behavior   | Aeoniums often slow in summer heat and grow more actively in cooler bright conditions.                                                                                                                                                                                               |
+| Topic               | Practical approach                                                                                                                                                                                                                                |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Rear left · Bright.** September 15 rear wooden tables, facing the window. Keep substantial lamp contribution without allowing its canopy to shade the small pots. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Let much of the pot dry, then water and drain. Do not force it through cactus-level drought during active growth.                                                                                                                                 |
+| Pot and mix         | Keep the current 5-inch pot while drainage and drying are satisfactory.                                                                                                                                                                           |
+| Seasonal behavior   | Aeoniums often slow in summer heat and grow more actively in cooler bright conditions.                                                                                                                                                            |
 
 ## Recorded pot changes
 
@@ -47,13 +41,11 @@ Bone-dry top dressing was added on September 16, 2026, increasing the pot weight
 
 ## Rotation, propagation, and watch points
 
-- Rotate 90° clockwise weekly so the branching rosettes do not lean toward one
-  side of the fixture.
+- Rotate when growth begins leaning toward one side of the fixture.
 - Stem rosettes root readily after the cut end has dried.
 - Crisp tan patches or bleached yellow centers after a move indicate too much
   light too quickly; stretched open rosettes indicate too little.
-- Do not rub the leaves repeatedly; handling marks and broken rosettes are
-  permanent.
+- Handle by the pot to protect the leaves and avoid breaking the branching crowns.
 
 ## Sources
 

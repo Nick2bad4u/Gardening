@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "The same ribbed stem carries green working tissue and lighter variegated sectors.",
+        "intro": "Green and variegated sectors share the same notched, ribbed stem.",
         "parts": [
             {
                 "function": "A notch beneath an areole gives the rib its characteristic chin-shaped projection.",
@@ -15,7 +15,7 @@
                 "label": "Green sector"
             },
             {
-                "function": "Lighter sectors interrupt the green pattern without representing a second grafted plant.",
+                "function": "Lighter yellow and pink sectors interrupt the green pattern across the stem.",
                 "label": "Variegated sector"
             }
         ],
@@ -33,10 +33,10 @@
             "costa",
             "ncsu"
         ],
-        "text": "Costa Farms describes creamy to pinkish flowers for this exact variegated selection, while ordinary species accounts include greener or yellow-brown blooms. The seller description is a useful expectation, but the color of a future flower on this specimen still needs an observation."
+        "text": "Costa Farms describes creamy to pinkish flowers for this variegated selection. The species produces fleshy fruits that ripen from gray-green to red and contain small black seeds."
     },
     "growth": {
-        "note": "Color pattern is not a cultivar-level identification by itself, and no offset or bloom is claimed for this specimen.",
+        "note": "The notches beneath the areoles give each rib a row of small chin-like projections, the feature behind the common name chin cactus.",
         "sourceIds": [
             "ncsu",
             "costa"
@@ -61,7 +61,7 @@
             "ncsu",
             "costa"
         ],
-        "text": "The wild species occurs in rocky places in Paraguay and northeastern Argentina. This variegated nursery plant is a cultivated form, so yellow and pink sectors should not be presented as the normal appearance of every wild population. Its collection record is specifically an own-root plant, unlike the two-part grafted moon cacti often sold beside it."
+        "text": "The wild species grows in rocky places in Paraguay and northeastern Argentina. This cultivated variegated form combines green tissue with yellow and pink sectors and grows on its own roots."
     },
     "image": {
         "alt": "Own-root variegated moon cactus with numbered chin-shaped rib, areole, green sector and yellow-pink variegated sector.",
@@ -81,7 +81,7 @@
         "sourceIds": [
             "costa"
         ],
-        "text": "Costa Farms gives about 15 cm tall or wide for its selection. This is a seller estimate for the cultivated form, not a measurement or a deadline for the collection plant."
+        "text": "Costa Farms gives about 15 cm tall or wide for its variegated selection, with a compact rounded body."
     },
     "milestones": [
         {

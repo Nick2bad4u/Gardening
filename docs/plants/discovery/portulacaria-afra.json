@@ -7,7 +7,7 @@
                 "label": "Fleshy leaf"
             },
             {
-                "function": "Flexible-looking reddish shoots carry new foliage before developing older woody tissue.",
+                "function": "Reddish young shoots carry new foliage and gradually develop woody tissue.",
                 "label": "Young stem"
             },
             {
@@ -31,10 +31,10 @@
             "sanbi",
             "extension"
         ],
-        "text": "Small pink, sometimes whitish star-shaped flowers appear in clusters at branch tips. Cultivated indoor plants flower irregularly, so a healthy leafy plant need not bloom to be growing successfully."
+        "text": "Tiny pink or whitish flowers cluster at branch tips. Each has five pointed petals and prominent stamens; successful pollination produces a small dry fruit containing one seed. Flowering is irregular in cultivation."
     },
     "growth": {
-        "note": "Light, pruning and shared root space strongly affect the indoor shape; this is not an age-to-height schedule.",
+        "note": "Pruning just above a leaf pair encourages a denser canopy and helps keep the low echeveria in the shared box exposed to light.",
         "sourceIds": [
             "extension"
         ],
@@ -57,7 +57,7 @@
         "sourceIds": [
             "sanbi"
         ],
-        "text": "Elephant bush grows on warm rocky slopes, in thicket and along dry valleys in southern Africa, extending into Mozambique. It can form substantial shrubs in this landscape. Its small leaves and woody branches make a miniature-looking houseplant, but a plant in a shared indoor box occupies a very different space from a wild thicket."
+        "text": "Elephant bush grows on warm rocky slopes, in thicket and along dry valleys in southern Africa, extending into Mozambique. Mature shrubs form dense canopies. Browsed or fallen branches can root against the ground, helping a stand spread and recover through vegetative growth."
     },
     "image": {
         "alt": "Branching elephant bush with numbered leaf, red shoot, node and woody trunk.",
@@ -77,7 +77,7 @@
         "sourceIds": [
             "sanbi"
         ],
-        "text": "SANBI gives 2–5 m for the shrub or small tree, usually less in gardens. Containers and pruning keep indoor plants much smaller; that wild scale explains its branching habit, not the expected size of P20."
+        "text": "SANBI describes shrubs or small trees reaching 2–5 m, commonly smaller in gardens. Containers and pruning keep the fine branching framework compact indoors."
     },
     "milestones": [
         {

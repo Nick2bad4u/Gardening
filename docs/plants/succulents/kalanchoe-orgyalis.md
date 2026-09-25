@@ -4,7 +4,7 @@
 - Label ID: `#2`
 - Tracker ID: `P20`
 - Current pot: **square wooden shared planter with plastic liner and owner-drilled approximately one-inch hole through both bottom and liner; outside dimensions unmeasured**
-- Visual description: An upright fuzzy succulent with broad spoon-shaped leaves, pale silver-green at the newest tips and progressively warmer copper-brown on older exposed surfaces.
+- Visual description: An upright fuzzy succulent with broad spoon-shaped leaves, cinnamon-colored felt on the upper surfaces and contrasting grey-bronze undersides.
 - Interesting fact: Each spoon-shaped leaf has contrasting surfaces: cinnamon-colored felt above and a greyer bronze underside, making a turned leaf a useful identification view.
 - Acquired from: Gerych's Greenhouse, as part of the mixed succulent planter
 - Acquired on: 2026-07-27
@@ -20,39 +20,30 @@
 | Collection nickname        | “Brown spoons”                                                      |
 | Synonym seen in references | _Kalanchoe antanosiana_                                             |
 
-The brown color is a feature. Young leaves and stems carry a dense copper or
-cinnamon felt; older leaves often fade through silver to olive green. A lower
-green leaf beside a copper growing tip can therefore be normal aging, not loss
-of health.
+The leaves fold upward along their middle, creating the spoon shape. Cinnamon-colored hairs cover the upper surface, while the underside is greyer and bronze-toned.
 
 ## Origin, history, and mature form
 
 This is another Malagasy dry-country shrub. Kew accepts the species as native
 to Madagascar and records _K. antanosiana_ as a synonym. John Gilbert Baker
-published _K. orgyalis_ in 1882. More specific locality claims appear in
-horticultural sources, but the label keeps the range at the level supported by
-the current Kew record.
+published _K. orgyalis_ in 1882.
 
 In time it can reach roughly 3–6 ft, with woody branching stems and thick
-spoon-shaped leaves. Clusters of small yellow flowers appear on mature plants.
-Kew's automated assessment predicts possible conservation concern, but with
-low confidence; it is not a substitute for a field-based Red List assessment.
+spoon-shaped leaves. Flower clusters appear at mature branch tips. Port St. Lucie Botanical Gardens describes yellow or pink blooms and notes that growth can speed up as a young plant matures.
 
-The copper hairs soften the leaf outline and reflect light. They also make
-spraying and wiping unattractive: a rubbed patch does not regain its original
-felt on that old leaf.
+The copper felt softens the leaf outline. Handle the plant by its pot and inspect leaf axils gently to avoid rubbing the hairy surfaces.
 
 ## Care in the shared planter
 
 The square wooden planter has a plastic liner and an approximately one-inch drainage hole through both the bottom and liner, documented September 20, 2026. Keep the opening clear and let the shared root zone dry before watering.
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Outdoor light       | Full sun to partial shade is possible after acclimation; very hot abrupt sun can still burn felted leaves.                                                                                                                                                                                        |
-| Water               | Soak the dry shared planter and drain. Reduce water when growth slows, especially in cool conditions.                                                                                                                                                                                             |
-| Pruning             | Head back tall stems above a node to create branches and keep the mixed planting balanced.                                                                                                                                                                                                        |
-| Feeding             | Dilute balanced fertilizer in active growth; avoid forcing weak winter stems.                                                                                                                                                                                                                     |
+| Topic               | Practical approach                                                                                                                                                                                                                                             |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Outdoor light       | Full sun to partial shade is possible after acclimation; very hot abrupt sun can still burn felted leaves.                                                                                                                                                     |
+| Water               | Soak the dry shared planter and drain. Reduce water when growth slows, especially in cool conditions.                                                                                                                                                          |
+| Pruning             | Head back tall stems above a node to create branches and keep the mixed planting balanced.                                                                                                                                                                     |
+| Feeding             | Dilute balanced fertilizer in active growth; avoid forcing weak winter stems.                                                                                                                                                                                  |
 
 More light often deepens copper color and keeps internodes short. Color alone is
 not a meter, however: genetics, leaf age, temperature, and water status all

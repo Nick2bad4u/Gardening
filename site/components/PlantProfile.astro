@@ -439,10 +439,7 @@ const metadata = [
                 <SiteIcon name="label" size={36} />
                 Nursery Labels
             </h2>
-            <p>
-                Original labels and packaging. Identification notes above explain any uncertain
-                names.
-            </p>
+            <p>Original nursery labels and packaging.</p>
             <div class="photo-grid nursery-grid">
                 {profile.nurseryPhotos.map((photo) => (
                     <figure class="card" data-photo-kind="nursery-label">
@@ -463,7 +460,6 @@ const metadata = [
                                 {photoDate(photo.captured_on ?? photo.provided_on)} · © Nick, all
                                 rights reserved
                             </span>
-                            {photo.derived_note && <span>{photo.derived_note}</span>}
                             <a href={photo.page_url}>View Full Label ↗</a>
                             {photo.source_file && (
                                 <a href={contentUrl(photo.source_file)}>Label Close-Up</a>

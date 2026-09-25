@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "The white hairs conceal a green ribbed stem and do not remove the stiff spines.",
+        "intro": "Long white hairs surround the ribbed green column and its stout colored spines.",
         "parts": [
             {
                 "function": "Long pale hairs form the conspicuous covering over the column.",
@@ -30,12 +30,13 @@
     ],
     "flowers": {
         "sourceIds": [
-            "nparks"
+            "nparks",
+            "llifle"
         ],
-        "text": "NParks records pink to red flowers around 4 cm long. The flowers provide a very different texture from the surrounding hair coat, but they are a possible mature feature rather than an event documented for this particular plant."
+        "text": "Pink to red flowers around 4 cm long emerge near the upper part of mature stems, contrasting with the surrounding white hair."
     },
     "growth": {
-        "note": "The diagram exposes a little green tissue for clarity; it does not imply that the coat needs brushing away.",
+        "note": "New shoots arise from the base, gradually turning a single hairy column into a clump.",
         "sourceIds": [
             "nparks"
         ],
@@ -59,7 +60,7 @@
             "kew",
             "nparks"
         ],
-        "text": "Old Man of the Andes comes from Bolivia into Jujuy in northwestern Argentina. Kew places it in the montane tropical biome; NParks more specifically describes dry mountainous habitat. Its long white coat and stout colored spines occur together on the same plant, so the woolly appearance should not be mistaken for a soft, unarmed houseplant."
+        "text": "Native to dry mountainous regions of Bolivia and northwestern Argentina, this cactus grows a dense white coat around its green stems. Stiff orange to reddish-brown spines project through the hair."
     },
     "image": {
         "alt": "Old Man of the Andes cactus with numbered white hairs, projecting orange-brown spine, exposed green ribbed stem and basal side stem.",
@@ -80,7 +81,7 @@
             "nparks",
             "llifle"
         ],
-        "text": "The species forms a clump of short columns. LLIFLE describes stems about 6–10 cm thick, usually under 50 cm high but occasionally approaching 1 m; these are species dimensions, not a promised final size for the indoor specimen."
+        "text": "The species forms a clump of short columns. Specialist descriptions give stems about 6–10 cm thick, usually under 50 cm high but occasionally approaching 1 m."
     },
     "milestones": [
         {

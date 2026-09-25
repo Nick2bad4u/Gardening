@@ -1,9 +1,9 @@
 {
     "anatomy": {
-        "intro": "The drawing separates a single leaflet from the whole hand-shaped leaf; it does not identify the owned tree to species.",
+        "intro": "Follow one complete compound leaf from its separate blades to the stalk that joins the branch.",
         "parts": [
             {
-                "function": "One blade is part of a larger compound leaf and presents a surface to light.",
+                "function": "The broad blade catches light; its side veins loop together inside the margin.",
                 "label": "Leaflet blade"
             },
             {
@@ -30,10 +30,10 @@
         "sourceIds": [
             "kew"
         ],
-        "text": "For P. glabra, botanical descriptions record pale flowers with narrow petals and numerous long stamens. These conspicuous reproductive structures would provide more useful identification evidence than the trade name. This collection record documents no flowering."
+        "text": "Pachira glabra bears pale green to whitish flowers in leaf axils. Narrow petals curl backward, exposing a brush of long stamens. The smooth, egg-shaped capsule contains many large seeds."
     },
     "growth": {
-        "note": "These are structural stages, not a timetable for this indoor plant. NParks describes the species as fast-growing, but this pot's rate is unmeasured.",
+        "note": "Watch shoot tips for unfolding leaflets and follow the shared stalk to distinguish a new leaf from a new branch. NParks describes the species as fast-growing.",
         "sourceIds": [
             "kew",
             "nparks"
@@ -48,7 +48,7 @@
                 "title": "Canopy building"
             },
             {
-                "text": "A mature candidate-species tree can form flowers and then seed capsules.",
+                "text": "Flowers form at leaf axils and can develop into smooth seed capsules.",
                 "title": "Reproductive growth"
             }
         ]
@@ -57,7 +57,7 @@
         "sourceIds": [
             "kew"
         ],
-        "text": "If the working identification is correct, this is a wet-tropical Brazilian tree. Kew places Pachira glabra in southeastern and southern Brazil. That origin is quite different from the desert habitats represented elsewhere in this collection. The retail tag confirms only Pachira, so this habitat belongs to the candidate species rather than a proven identification."
+        "text": "Pachira glabra comes from southeastern and southern Brazil and grows in the wet tropical biome. Its leafy tree form brings a different growth pattern to this collection: an expanding woody framework carries an open canopy of compound leaves, rather than a compact water-storing cactus body."
     },
     "image": {
         "alt": "Generated Pachira structure drawing: 1 leaflet blade, 2 compound-leaf junction, 3 petiole, and 4 trunk; no flowers or roots shown.",
@@ -70,14 +70,14 @@
         {
             "name": "Pachira aquatica",
             "profileSlug": null,
-            "text": "The Florida flora key separates red-tipped stamens and rough brown fruit in P. aquatica from white stamens and smooth green fruit in P. glabra. Without flowers or fruit, retain the qualified working ID."
+            "text": "The Florida flora key distinguishes P. aquatica by red-tipped stamens and rough brown fruit. P. glabra has white stamens and smooth green fruit; these reproductive details are more useful than the shared money-tree name."
         }
     ],
     "mature": {
         "sourceIds": [
             "kew"
         ],
-        "text": "This is a tree, not a permanently miniature succulent. Flora Zambesiaca describes a 3–5 m tree in its treatment reproduced by Kew; that is botanical context, not an indoor height prediction or a universal maximum."
+        "text": "Flora Zambesiaca describes a 3–5 m tree with compound leaves on stalks reaching about 15 cm. Leaflets spread from a shared point, giving the canopy its open, hand-shaped outline."
     },
     "milestones": [
         {

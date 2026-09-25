@@ -5,7 +5,7 @@
 - Tracker ID: `P20`
 - Current pot: **square wooden shared planter with plastic liner and owner-drilled approximately one-inch hole through both bottom and liner; outside dimensions unmeasured**
 - Visual description: A branching succulent with thick spoon-shaped leaves muted by a dense silver felt, making the foliage look almost white beside the greener plants in the shared planter.
-- Interesting fact: Its silver appearance comes from fine leaf hairs plus a waxy coating; the spoon shape and pale surface explain the common name, while the species remains a probable match.
+- Interesting fact: Fine hairs and a waxy coating create the silver leaf surface; beneath the foliage, pale four-angled stems gradually become woody.
 - Acquired from: Gerych's Greenhouse, as part of the mixed succulent planter
 - Acquired on: 2026-07-27
 - Identification: **probable; _K. hildebrandtii_ remains a lookalike**
@@ -21,10 +21,7 @@
 | Name clue              | _bracteata_ refers to conspicuous bracts associated with the flowers |
 
 The dense silver coating and rounded spoon-shaped leaves support
-_K. bracteata_. These two Malagasy silver shrubs are often mislabeled in trade.
-Flower color is useful evidence: _K. bracteata_ typically makes red flowers,
-while _K. hildebrandtii_ is commonly described with white flowers. A flower and
-clear stem/leaf close-ups should decide more than a seller's common name.
+_K. bracteata_. Flower color is useful when comparing the similar silver-leaved shrubs: _K. bracteata_ has red tubular flowers.
 
 ## Origin, form, and flowers
 
@@ -34,24 +31,21 @@ the later name _Kalanchoe nadyae_ as a synonym.
 
 It is a branching succulent shrub rather than a permanently compact rosette.
 NC State describes plants reaching roughly 2–4 ft under favorable conditions.
-Leaves are coated in short silvery hairs that reduce the intensity at the leaf
-surface. Clusters of red, four-parted flowers may appear on mature stems.
+Leaves have short silvery hairs and a waxy coating, while the pale stems have a distinctive four-angled shape. Clusters of red, four-parted flowers may appear on mature stems.
 
-The plant therefore has a different long-term shape from the echeveria beside
-it. Pruning is not a failure of the arrangement; it is how the arrangement can
-retain scale.
+Prune its taller shoots to keep the shrub in scale with the shared planter and leave the low echeveria exposed to light.
 
 ## Care in the shared planter
 
 The square wooden planter has a plastic liner and an approximately one-inch drainage hole through both the bottom and liner, documented September 20, 2026. Keep the opening clear and let the shared root zone dry before watering.
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Water               | Let the shared planter dry, then soak and drain. Hairy leaves do not benefit from frequent misting.                                                                                                                                                                                               |
-| Light response      | Healthy light produces sturdy stems and well-spaced, densely silver leaves. Abrupt hot sun can scorch despite the hairs.                                                                                                                                                                          |
-| Pruning             | Cut above a leaf node to branch the plant and keep it from shading the echeveria.                                                                                                                                                                                                                 |
-| Feeding             | Light fertilizer during warm active growth only.                                                                                                                                                                                                                                                  |
+| Topic               | Practical approach                                                                                                                                                                                                                                             |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Let the shared planter dry, then soak and drain. Hairy leaves do not benefit from frequent misting.                                                                                                                                                            |
+| Light response      | Healthy light produces sturdy stems and well-spaced, densely silver leaves. Abrupt hot sun can scorch despite the hairs.                                                                                                                                       |
+| Pruning             | Cut above a leaf node to branch the plant and keep it from shading the echeveria.                                                                                                                                                                              |
+| Feeding             | Light fertilizer during warm active growth only.                                                                                                                                                                                                               |
 
 A controlled study of six other _Kalanchoe_ species found better dry mass and
 flowering at 8.6–17.2 mol/m²/day than at 4.3. It supports a bright starting

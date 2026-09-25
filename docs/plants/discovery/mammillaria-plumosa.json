@@ -34,10 +34,10 @@
             "rhs",
             "museum"
         ],
-        "text": "Small cream, white or pink flowers emerge through the spine covering. RHS gives a flower length around 1.5 cm, so flowering is a closer-looking reward rather than a giant display above the clump."
+        "text": "Small cream, white or pink flowers emerge through the white spine mesh. RHS gives their length at around 1.5 cm."
     },
     "growth": {
-        "note": "The illustration opens up the spine cover to explain it; an intact plant can conceal most of its green surface.",
+        "note": "The Desert Museum reports that deeply shaded new growth can develop a thinner, less white spine cover. The density of the fresh feathering is a useful feature to watch as the clump grows.",
         "sourceIds": [
             "rhs",
             "museum"
@@ -62,7 +62,7 @@
             "kew",
             "museum"
         ],
-        "text": "Feather cactus is native to northeastern Mexico, with Kew recording Coahuila, Nuevo León and Tamaulipas. It is a low succulent of desert and dry shrubland. Its white covering is part of the plant’s structure: the Arizona-Sonora Desert Museum explains that the interlacing spines shade the body beneath, rather than merely making it look fluffy."
+        "text": "Feather cactus grows in northeastern Mexico, including Coahuila, Nuevo León and Tamaulipas, in desert and dry shrubland. Its interlacing white spines shade the green body beneath."
     },
     "image": {
         "alt": "Feather cactus clump with a magnified tubercle and numbered tubercle, areole, feathery spine cover and offset.",
@@ -83,7 +83,7 @@
             "rhs",
             "museum"
         ],
-        "text": "Individual heads can reach roughly 6 cm across. The Desert Museum describes mounds to about 40 cm wide, while the plant remains low; width grows by adding heads, not by turning into a single tall column."
+        "text": "Individual heads reach roughly 6 cm across. New heads gradually build a low cushion; the Desert Museum describes mounds to about 40 cm wide."
     },
     "milestones": [
         {

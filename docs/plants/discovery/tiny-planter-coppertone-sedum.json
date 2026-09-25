@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "The illustration highlights a branching sedum habit rather than a flat, compact rosette.",
+        "intro": "Narrow fleshy leaves cluster around the tips of spreading, branching stems.",
         "parts": [
             {
                 "function": "A narrow, pointed succulent leaf carries stored water.",
@@ -31,10 +31,10 @@
         "sourceIds": [
             "sedum"
         ],
-        "text": "The reference species has lightly scented white, star-shaped flowers in a fairly flat cluster. No flowering has been recorded for this component."
+        "text": "White, lightly scented stars gather in fairly flat clusters. Look closely at a flower’s center for the stamens, the slender pollen-bearing parts surrounding the center."
     },
     "growth": {
-        "note": "The stages describe the proposed species group; color alone cannot confirm identity or indicate readiness for water.",
+        "note": "Follow new shoots and branching over time; leaf color can shift with growing conditions.",
         "sourceIds": [
             "sedum"
         ],
@@ -57,10 +57,10 @@
         "sourceIds": [
             "sedum"
         ],
-        "text": "The proposed Sedum adolphi group comes from Mexico. NParks describes a low succulent shrub suited to dry conditions. That geography belongs to the reference species; this component arrived in a nursery-made garden, and its precise identity, cultivar and original propagation history remain unknown."
+        "text": "Sedum adolphi comes from Mexico and grows as a low succulent subshrub. Its stems spread along the ground before turning upward at their tips, allowing the plant to extend sideways while keeping its leafy shoots raised."
     },
     "image": {
-        "alt": "Numbered copper-green Sedum schematic: pointed leaf, shoot tip, branching stem and leaf node.",
+        "alt": "Numbered copper-green Sedum illustration: pointed leaf, shoot tip, branching stem and leaf node.",
         "file": "assets/plant-explainers/tiny-planter-coppertone-sedum.webp",
         "generatedOn": "2026-09-24",
         "prompt": "Create a square 1024px botanical educational illustration on warm ivory. Clean botanically accurate pen-and-watercolor, muted forest-green, sage and ochre palette, generous whitespace, large central specimen. Exactly four large numbered circular markers 1, 2, 3, 4 with thin clear noncrossing leader lines to the specified features. Numerals legible at 350px display. No title, words, paragraphs, watering icons, calendar, border or logo. Schematic anatomy, not a photograph of an owned plant. Show a low branching Sedum adolphi-type succulent with pointed narrow fleshy yellow-green to copper-orange leaves in loose rosettes along reddish arching stems, representative of probable adolphi/nussbaumerianum complex, not an exact cultivar. No roots or flowers. Marker1 to an individual fleshy pointed leaf; marker2 to the loose terminal rosette; marker3 to a visible branching stem; marker4 to a clearly visible leaf attachment node lower on the stem. Distinct branching silhouette, not a compact Echeveria.",
@@ -77,7 +77,7 @@
         "sourceIds": [
             "sedum"
         ],
-        "text": "NParks lists roughly 20 cm height and 60–90 cm spread for the reference species. A small shared pot will not necessarily reach that scale, but the spreading habit explains why stems may eventually crowd neighboring rosettes."
+        "text": "NParks lists roughly 20 cm height and 60–90 cm spread for S. adolphi. That broad, low habit explains how its stems can gradually weave through neighboring rosettes in a container."
     },
     "milestones": [
         {
@@ -97,18 +97,18 @@
         "sourceIds": [
             "sedum"
         ],
-        "text": "Coppertone describes the foliage's warm tint. NParks treats Sedum nussbaumerianum as a synonym of S. adolphi; the two names in this collection record preserve the uncertain retail match."
+        "text": "Coppertone describes the warm tint of the leaves. NParks lists Sedum nussbaumerianum as a synonym of S. adolphi, explaining why both names occur in horticulture."
     },
     "slug": "tiny-planter-coppertone-sedum",
     "sources": [
         {
-            "accessed": "2026-09-24",
+            "accessed": "2026-09-25",
             "id": "sedum",
             "title": "NParks: Sedum adolphi",
             "url": "https://www.nparks.gov.sg/florafaunaweb/flora/6/1/6141"
         },
         {
-            "accessed": "2026-09-24",
+            "accessed": "2026-09-25",
             "id": "echeveria",
             "title": "NC State Extension: Echeveria",
             "url": "https://plants.ces.ncsu.edu/plants/echeveria/"

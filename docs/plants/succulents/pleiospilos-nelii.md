@@ -3,7 +3,7 @@
 - Inventory: Succulent-16 — _Pleiospilos nelii_; no cultivar supplied
 - Label ID: `#10`
 - Tracker ID: `P36`
-- Visual description: One visible pair of rounded grey-green, densely speckled leaves with a deep central cleft and pale inner faces, photographed in the speckled-brown pot on September 23, 2026. No extra old pair is visible. The illustration is schematic.
+- Visual description: One visible pair of rounded grey-green, densely speckled leaves with a deep central cleft and pale inner faces, photographed in the speckled-brown pot on September 23, 2026. No extra old pair is visible.
 - Interesting fact: Split-rock seed capsules open when wet and close again as they dry, letting raindrops scatter some seeds while others remain protected for another shower.
 - Identification: **Labeled Pleiospilos nelii by Altman Plants; no cultivar supplied**
 - Acquired from: Home Depot, Howell, Michigan; nursery label identifies Altman Plants as grower
@@ -40,7 +40,7 @@ the two Lithops nursery pots.
 
 [![Altman Plants nursery label reading Split Rock, Pleiospilos nelii](../../../assets/nursery-labels/2026-09-23-p36-split-rock-nursery-label.jpg)](../../../assets/nursery-labels/2026-09-23-p36-split-rock-nursery-label.jpg)
 
-Owner photograph, September 23, 2026: species-level nursery label, with no cultivar supplied.
+Owner photograph, September 23, 2026: Altman Plants Split Rock / Pleiospilos nelii label.
 
 At **02:30 EDT on September 23**, the plant was repotted into
 the Thirtypot speckled-brown pot, **setup 2**, logged as **4 in round**. The
@@ -70,7 +70,7 @@ Owner photograph, September 23, 2026: speckled leaf surfaces and central cleft.
 
 | Topic       | Practical starting approach                                                                                                                                                                                                                                  |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Light       | Final position and leaf-height exposure remain unrecorded. Acclimate gradually to a bright position; do not copy P28's exposure automatically.                                                                                                               |
+| Light       | Acclimate gradually to a bright position. Record its final placement and leaf-height exposure.                                                                                                                                                               |
 | Water       | Assess root disturbance after the repot, then use the live leaf cycle, firmness, base, and actual medium dryness. A firm single pair does not need an automatic post-repot drink. Weight or a plateau alone cannot establish readiness.                      |
 | Pot and mix | The recorded recipe is 80% Molly's Succulent Mix plus 20% added perlite, not a measured mineral percentage. SANBI describes a relatively long taproot and well-drained soil. Confirm usable depth and drainage; a seller diameter does not establish either. |
 | Tracking    | Use the complete P36 assembly and setup-2 history only. P28's weights and nursery history do not transfer; the first Routine weight is not a calibrated reference.                                                                                           |
@@ -82,9 +82,8 @@ leaf stage before acting: softening, translucence, a compromised base, or
 unexpectedly prolonged wet medium calls for inspection. When replacement is
 visible, do not water merely to plump an old outer pair being reabsorbed. Only one visible pair was documented on September 23.
 
-Regional seasonal descriptions are context, not a Northern Hemisphere watering
-calendar for this indoor plant. Lithops and Pleiospilos need separate
-observations even though both resemble stones.
+Use the visible leaf stage to guide indoor care, and observe this pot
+separately from the Lithops planter.
 
 ## Sources
 

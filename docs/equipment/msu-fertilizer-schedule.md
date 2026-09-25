@@ -5,10 +5,10 @@ Last updated: 2026-09-21
 This is the working nutrient plan for the collection's Tezula/Greencare **MSU
 13-3-15 Tap/Rain/RO formula**. It is a low-dose starting plan for these actual
 pots, the 60/40 Molly's-and-perlite cactus mix, RO water, indoor grow lights, and the
-indoor dry-down trial. It is not a fixed command to water on a calendar date.
+indoor dry-down trial. Choose feeding only at an otherwise-ready watering.
 
-The installed [AW200 + AeroLight 240 W pair](./aw200-and-aerolight-240w.md) lights the display while the room end stays open. It does not, by itself, change fertilizer doses or
-make a pot ready to water.
+The display uses the installed [AW200 + AeroLight 240 W pair](./aw200-and-aerolight-240w.md).
+Follow growth and normal drying when reviewing the feeding rate.
 
 ## September 20 foliage-basket exceptions
 
@@ -88,7 +88,7 @@ successful feed cycles. **1.00 g per gallon** is an optional future ceiling,
 not a scheduled increase. Consider it only if several cycles show compact
 active growth, a normal dry-down, no mineral crust, and a reason to suspect the
 lower dose is insufficient. It provides about 34 mg/L nitrogen, 21 mg/L
-calcium, and 5 mg/L magnesium. More fertilizer is not a growth goal.
+calcium, and 5 mg/L magnesium.
 
 When growth slows with the shorter seasonal light program or cooler room
 conditions, use plain RO and stop feeding. If the cacti continue producing

@@ -3,17 +3,14 @@
 Last updated: 2026-09-24
 
 This is the current working inventory plus historical records for plants
-removed from the collection. A label is useful evidence, but not a guarantee;
-photo-only identifications are deliberately marked as probable.
+removed from the collection. Photo-based identifications are marked as probable, with nursery names retained alongside them.
 
 The [original nursery-label archive](../assets/nursery-labels/) keeps
 supplier wording alongside the current working identifications.
 
 Every record has a [deep plant profile](./plants/) and a
 [licensed reference gallery](../assets/plants/) when reusable photography is
-available. Gallery captions identify the scope of each reference image. Reference photos document the working
-taxon or stated ancestry/species scope; they do not increase the confidence of
-a photo-only collection ID.
+available. Gallery captions distinguish species and ancestry references from photographs of the owned plants.
 
 The short label IDs are permanent plant or shared-planter identifiers, not
 table coordinates. They are shown beside the longer historical inventory IDs.
@@ -67,7 +64,7 @@ Both repots record **80% Molly's Succulent Mix + 20% perlite**. Neither batch co
   photo could change it.
 - **Genus tag; working species ID** — the physical tag confirms the genus, while
   the species remains a working identification that needs stronger evidence.
-- **Seller-labeled** — the seller's name is retained as provenance. Receipt and owner inspection, when separately recorded, document the physical plant; an order alone does not. Cultivar-level identity can still benefit from individual diagnostic photographs.
+- **Seller-labeled** — the supplier's identification, retained until the owned plant provides stronger diagnostic evidence.
 
 ## Collection setup history
 
@@ -154,7 +151,7 @@ evidence; the working identification is still _Cereus forbesii_ 'Ming Thing'.
 These four plants share a **square wooden box** with weathered gray-brown sides,
 confirmed by the owner and collection photographs. Its outside side length and
 height remain unmeasured. The [Table Placement Guide](./layouts/table-placement-research.md)
-shows its photo-matched rear-right position on the September 15 wooden tables; it remains a square wooden box.
+shows its photo-matched rear-right position on the September 15 wooden tables.
 The species-level IDs are
 strong working matches, but cultivar names should stay provisional without
 labels or flowers. The complete planter was acquired from Gerych's Greenhouse
@@ -262,7 +259,7 @@ _F. tigrina_ seller label. `P30` remains one tracked pot with an aggregate overv
 the pale rosettes are provisionally _Echeveria_ sp., the copper-orange narrow
 rosettes resemble the _Sedum adolphi_ / _S. nussbaumerianum_ horticultural
 complex, and the broad red-edged paddles resemble the _Kalanchoe luciae_ /
-_K. thyrsiflora_ complex. None of those component names is treated as proven. The additional profile records do not establish the number of rooted individuals or create additional care tasks.
+_K. thyrsiflora_ complex. These remain probable component groups within one care history; the number of independently rooted plants is unknown.
 
 ## Mountain Crest Gardens arrivals — received 2026-08-28
 

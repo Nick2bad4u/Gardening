@@ -131,7 +131,9 @@ exported from the current app version.
 
 ### Main acclimation time-lapse
 
-The original six-week acclimation recording plan covered August 3–September 14. The August 8–9 table expansion and August 14 repot, second fan and light change were useful boundaries for starting separate clips. The following table preserves that dated recording plan, rather than scheduling a new clip.
+The original six-week recording plan covered August 3–September 14. The August
+8–9 table expansion and August 14 repot, second fan and light change marked
+useful boundaries for separate clips. The table preserves that dated plan.
 
 | Setting              | Starting value                                                                               |
 | -------------------- | -------------------------------------------------------------------------------------------- |

@@ -96,7 +96,7 @@ export function buildContainers(profiles, mapping, metadata) {
         return {
             careNote:
                 details?.careNote ??
-                "Use the plant's care profile together with this container's current setup and observed dry-down. Elapsed days alone are not a watering instruction.",
+                "Follow the plant's moisture cues and this pot's drying pattern. Its care profile and history bring those observations together.",
             currentPot: primary.currentPotMarkdown,
             id,
             label,

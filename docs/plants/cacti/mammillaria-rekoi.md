@@ -22,19 +22,15 @@
 
 Close photographs reviewed on August 11, 2026 showed a green globose body,
 fine white radial spines, tan-to-reddish central spines, and hooked spines low
-on the body. They support _Mammillaria_ cf. _rekoi_, but do not securely
-separate it from _M. zeilmanniana_ / the variable _M. crinita_ complex or a
-horticultural hybrid. The diagnostic close-ups are no longer available.
+on the body. The diagnostic close-ups are no longer available.
 
 _M. moelleriana_ was also considered, although its denser spination is a less
-convincing match. Open flowers, mature fruit, and close views of mature areoles
-would be useful for refining this probable identification.
+convincing match.
 
 ## Origin, form, and publication
 
 Kew accepts _Mammillaria rekoi_, first published in its current combination in
-1925, and places its native range in Morelos, Puebla, and Oaxaca, Mexico. The
-nursery plant's provenance does not establish a particular wild locality.
+1925, and places its native range in Morelos, Puebla, and Oaxaca, Mexico.
 
 ## Care in this collection
 

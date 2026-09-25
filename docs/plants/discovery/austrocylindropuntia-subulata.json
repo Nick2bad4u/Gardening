@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "Four structures that explain the form of Eve's needle.",
+        "intro": "Fleshy leaves, spiny cushions, and cylindrical branches give Eve's needle its unusually leafy outline.",
         "parts": [
             {
                 "function": "A fleshy, pointed leaf adds photosynthetic surface to young growth.",
@@ -32,10 +32,10 @@
         "sourceIds": [
             "form"
         ],
-        "text": "Flowers are tubular, with colors ranging through yellow-green to orange-red. NC State notes that plants in containers typically do not flower, so healthy leafy growth is a more useful everyday measure of progress."
+        "text": "Tubular flowers reach about 2–3 inches long, in yellow-green, orange-red, or red. Container-grown plants rarely bloom."
     },
     "growth": {
-        "note": "These describe the species' form, not a timetable for this small indoor specimen.",
+        "note": "Older stems develop dark brown bark and a woody trunk beneath the younger green branches.",
         "sourceIds": [
             "form"
         ],
@@ -58,7 +58,7 @@
         "sourceIds": [
             "range"
         ],
-        "text": "Eve's needle comes from the Peruvian Andes, where its shrubby, water-storing stems suit arid conditions. Unlike many familiar cacti, it retains conspicuous fleshy leaves on young growth. This upright, branching plant is a very different growth strategy from the low globes beside it in the collection."
+        "text": "Eve's needle comes from the Peruvian Andes. Its branching, spiny framework provides shelter for small animals and birds, while its roots help stabilize soil in dry landscapes."
     },
     "image": {
         "alt": "Botanical anatomy of Eve's needle, with numbered markers for awl-shaped leaf, areole, spine, cylindrical stem.",
@@ -78,7 +78,7 @@
         "sourceIds": [
             "form"
         ],
-        "text": "In its native habitat the species can reach roughly 13 ft (4 m); cultivation usually keeps it smaller. That wild scale explains why this miniature purchase can eventually become a substantial shrub."
+        "text": "In habitat it can reach roughly 13 ft (4 m), with a trunk up to 4 inches across; plants in cultivation usually stay much smaller."
     },
     "milestones": [
         {
